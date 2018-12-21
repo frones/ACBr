@@ -114,6 +114,9 @@ type
     OpenDialog1: TOpenDialog;
     ACBrGNRE1: TACBrGNRE;
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
+    Label42: TLabel;
+    edtPathSchemas: TEdit;
+    spPathSchemas: TSpeedButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -131,6 +134,7 @@ type
     procedure ACBrGNRE1StatusChange(Sender: TObject);
     procedure ACBrGNRE1GerarLog(const ALogLine: String;
       var Tratado: Boolean);
+    procedure spPathSchemasClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -187,6 +191,7 @@ begin
 
   Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked);
   Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text);
+  Ini.WriteString( 'Geral','PathSchemas'  ,edtPathSchemas.Text);
 
   Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
   Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
@@ -264,10 +269,11 @@ begin
     sbtnCaminhoCert.Visible := False;
     {$ENDIF}
 
-    ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
-    edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
+    ckSalvar.Checked    := Ini.ReadBool(   'Geral','Salvar'     , True);
+    edtPathLogs.Text    := Ini.ReadString( 'Geral','PathSalvar' , '');
+    edtPathSchemas.Text := Ini.ReadString( 'Geral','PathSchemas', '' );
 
-    ACBrGNRE1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
+    ACBrGNRE1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
 
     cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
     rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
@@ -280,6 +286,10 @@ begin
     ACBrGNRE1.Configuracoes.Arquivos.SepararPorMes    := True;
     ACBrGNRE1.Configuracoes.Arquivos.AdicionarLiteral := True;
     ACBrGNRE1.Configuracoes.Arquivos.PathGNRE         := edtPathLogs.Text;
+    ACBrGNRE1.Configuracoes.Arquivos.EmissaoPathGNRE  := True;
+    ACBrGNRE1.Configuracoes.Arquivos.PathArqTXT       := edtPathLogs.Text;
+    ACBrGNRE1.Configuracoes.Arquivos.SalvarTXT        := True;
+    ACBrGNRE1.Configuracoes.Arquivos.PathSchemas      := edtPathSchemas.Text;
 
     Caminho := ACBrGNRE1.Configuracoes.Arquivos.GetPathGNRE(0);
 
@@ -375,6 +385,7 @@ begin
     c15_convenio := '16461313';
     c17_inscricaoEstadualEmitente := '9023725557';
     c33_dataPagamento := Now;
+    c42_identificadorGuia := '001';
   end;
 end;
 
@@ -407,6 +418,19 @@ begin
 
   if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
     edtPathLogs.Text := Dir;
+end;
+
+procedure TfrmDemo_ACBrGNRE.spPathSchemasClick(Sender: TObject);
+var
+ Dir : string;
+begin
+  if Length(edtPathSchemas.Text) <= 0 then
+    Dir := ExtractFileDir(application.ExeName)
+  else
+    Dir := edtPathSchemas.Text;
+
+  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
+    edtPathSchemas.Text := Dir;
 end;
 
 procedure TfrmDemo_ACBrGNRE.FormCreate(Sender: TObject);

@@ -93,7 +93,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet7
+        ActivePage = TabSheet2
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -224,6 +224,34 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               NumGlyphs = 2
               OnClick = sbtnPathSalvarClick
             end
+            object Label42: TLabel
+              Left = 8
+              Top = 70
+              Width = 199
+              Height = 13
+              Caption = 'Diret'#243'rios com os arquivos XSD(Schemas)'
+            end
+            object spPathSchemas: TSpeedButton
+              Left = 235
+              Top = 83
+              Width = 23
+              Height = 24
+              Glyph.Data = {
+                76010000424D7601000000000000760000002800000020000000100000000100
+                04000000000000010000130B0000130B00001000000000000000000000000000
+                800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                3BB33773333773333773B333333B3333333B7333333733333337}
+              NumGlyphs = 2
+              OnClick = spPathSchemasClick
+            end
             object edtPathLogs: TEdit
               Left = 8
               Top = 40
@@ -244,6 +272,13 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               Font.Style = []
               ParentFont = False
               TabOrder = 1
+            end
+            object edtPathSchemas: TEdit
+              Left = 8
+              Top = 86
+              Width = 228
+              Height = 21
+              TabOrder = 2
             end
           end
         end
@@ -875,8 +910,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 440
-    Top = 224
+    Left = 528
+    Top = 200
   end
   object ACBrGNRE1: TACBrGNRE
     OnStatusChange = ACBrGNRE1StatusChange
@@ -891,8 +926,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     GNREGuia = ACBrGNREGuiaRL1
-    Left = 406
-    Top = 225
+    Left = 334
+    Top = 201
   end
   object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
@@ -905,7 +940,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
     PrintDialog = True
-    Left = 405
-    Top = 270
+    Left = 427
+    Top = 200
   end
 end

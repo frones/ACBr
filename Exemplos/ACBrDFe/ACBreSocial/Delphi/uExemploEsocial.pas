@@ -979,15 +979,15 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
-        IndApuracao := tpIndApuracao(iapuMensal);
-        perApur := '052015';
+        IndApuracao := iapuMensal;
+        perApur := '2015-05';
         TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '012345678987654';
+      IdeEmpregador.NrInsc := '01234567';
 
       with ideTrabalhador do
       begin
@@ -1023,7 +1023,8 @@ begin
 
           with sucessaoVinc do
           begin
-            cnpjEmpregAnt := '12345678987654';
+            tpInscAnt := tiCNPJ;
+            cnpjEmpregAnt := '12345678901234';
             MatricAnt := '123';
             DtAdm := Now;
             observacao := 'obs sucessao vinc';
@@ -1052,7 +1053,7 @@ begin
         with infoPerApur.ideEstabLot.Add do
         begin
           TpInsc := tiCNPJ;
-          NrInsc := '012345678987654';
+          NrInsc := '01234567891234';
           codLotacao := 'SACI54321';
           qtdDiasAv := 22;
 
@@ -1079,7 +1080,7 @@ begin
 
             with infoSaudeColet.detOper.Add do
             begin
-              cnpjOper := '01234567898765';
+              cnpjOper := '01234567891234';
               regANS := 'A1B2C3';
               vrPgTit := 1.50;
 
@@ -1088,7 +1089,7 @@ begin
               with detPlano.Add do
               begin
                 tpDep := tdConjuge;
-                cpfDep := '01234567898';
+                cpfDep := '01234567891';
                 nmDep := 'José das Areias';
                 DtNascto := date;
                 vlrPgDep := 0.75;
@@ -1113,14 +1114,14 @@ begin
 
           with IdePeriodo.Add do
           begin
-            perRef := '201504';
+            perRef := '2015-04';
 
             ideEstabLot.Clear;
 
             with ideEstabLot.Add do
             begin
               TpInsc := tiCNPJ;
-              NrInsc := '01234567898765';
+              NrInsc := '01234567891234';
               codLotacao := 'TESTE123';
 
               remunPerAnt.Clear;
@@ -1169,8 +1170,8 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
-        IndApuracao := tpIndApuracao(iapuMensal);
-        perApur := '052015';
+        IndApuracao := iapuMensal;
+        perApur := '2015-05';
         TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
@@ -1364,7 +1365,7 @@ begin
         indRetif := ireOriginal;
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatório se indRetif = ireRetificacao.
         IndApuracao := iapuMensal;
-        perApur := '052015';
+        perApur := '2015-05';
         TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
@@ -1392,7 +1393,7 @@ begin
 
           with detPgtoFl.Add do
           begin
-            perRef := '052015';
+            perRef := '2015-05';
             ideDmDev := '2';
             indPagtoTt := tpSim;
             vrLiq := 12365.43;
@@ -1547,7 +1548,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -1871,7 +1872,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2040,7 +2041,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2123,7 +2124,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2166,7 +2167,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2197,7 +2198,7 @@ begin
 
       with IdeEvento do
       begin
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2222,7 +2223,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -2266,7 +2267,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        IndApuracao := tpIndApuracao(iapuMensal);
+        IndApuracao := iapuMensal;
         perApur := '2015-06';
         TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
@@ -4331,7 +4332,7 @@ begin
         ideTrabalhador.CpfTrab := '12345678950';
         ideTrabalhador.NisTrab := '12345678901';
 
-        IdeFolhaPagto.IndApuracao := tpIndApuracao(0);
+        IdeFolhaPagto.IndApuracao := iapuMensal;
         IdeFolhaPagto.perApur := '2015-05';
       end;
     end;

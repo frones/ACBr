@@ -1065,12 +1065,15 @@ var
 
 begin
   Port     := '';
+  User     := '';
+  Password := '';
   Server   := GetProxyServer;
-  User     := GetOptionString(INTERNET_OPTION_PROXY_USERNAME);
-  Password := GetOptionString(INTERNET_OPTION_PROXY_PASSWORD);
 
   if Server <> '' then
   begin
+     User     := GetOptionString(INTERNET_OPTION_PROXY_USERNAME);
+     Password := GetOptionString(INTERNET_OPTION_PROXY_PASSWORD);
+
      i := Pos('http=', Server);
      if i > 0 then
      begin

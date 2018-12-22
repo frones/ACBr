@@ -308,9 +308,9 @@ begin
     QRCode       := TDelphiZXingQRCode.Create;
     QRCodeBitmap := TBitmap.Create;
     try
-      QRCode.Data      := WideString(QRCodeData);
       QRCode.Encoding  := qrUTF8NoBOM;
       QRCode.QuietZone := 1;
+      QRCode.Data      := WideString(QRCodeData);
 
       QRCodeBitmap.Width  := QRCode.Columns;
       QRCodeBitmap.Height := QRCode.Rows;

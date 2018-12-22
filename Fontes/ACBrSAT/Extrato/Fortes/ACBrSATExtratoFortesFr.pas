@@ -512,9 +512,10 @@ begin
   QRCode       := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
   try
-    QRCode.Data      := WideString(QRCodeData);
-    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.Encoding  := qrUTF8BOM;
     QRCode.QuietZone := 1;
+    QRCode.CorrectionLevel := qrclL;
+    QRCode.Data      := WideString(QRCodeData);
 
     //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
     QRCodeBitmap.Width  := QRCode.Columns;

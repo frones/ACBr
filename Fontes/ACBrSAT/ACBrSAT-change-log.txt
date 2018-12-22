@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2018
+-- ACBrSATExtratoFortesFr --
+[+] Possível correção para o problema de leitura do QR code no aplicativo
+    "De Olho na nota"
+    https://www.projetoacbr.com.br/forum/topic/48381-qrcode-não-é-valida/
+
 20/12/2018
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
 [*] Ajustado para ficar de acordo com  Manual de Orientação, Ver 2.17.07

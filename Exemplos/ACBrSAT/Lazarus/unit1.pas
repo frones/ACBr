@@ -1038,8 +1038,6 @@ begin
   ACBrSAT1.Config.ArqSchema := edSchemaVendaSAT.Text;
   PageControl1.ActivePageIndex := 0;
 
-  ACBrSAT1.SSL.SSLCryptLib := cryOpenSSL;
-
   if ACBrSAT1.SSL.VerificarAssinatura(ACBrSAT1.CFe.AsXMLString, Erro, 'infCFe') then
     mLog.Lines.Add('OK: Assinatura do XML retornado pelo SAT é válida')
   else

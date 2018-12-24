@@ -74,15 +74,9 @@ const
   cCryptLibMSCrypto = 'mscrypto';
   cCryptLibOpenSSL = 'openssl';
 
-  cErrMngrCreate =
-    'Erro: Falha ao criar Gerenciador de Chaves "xmlSecKeysMngrCreate"';
-  cErrMngrInit =
-    'Erro: Falha ao inicializar o Gerenciador de Chaves "xmlSecCryptoAppDefaultKeysMngrInit"';
-  cErrCertLoad =
-    'Erro: Falha ao ler informação do Certificado no Gerenciador de Chaves';
-  cErrParseDoc = 'Erro: Falha ao interpretar o XML "xmlParseDoc"';
-  cErrFindSignNode = 'Erro: Falha ao localizar o nó de Assinatura';
-  cErrFindRootNode = 'Erro: Falha ao localizar o nó Raiz';
+  cErrMngrCreate = 'Erro: Falha ao criar Gerenciador de Chaves "xmlSecKeysMngrCreate"';
+  cErrMngrInit = 'Erro: Falha ao inicializar o Gerenciador de Chaves "xmlSecCryptoAppDefaultKeysMngrInit"';
+  cErrCertLoad = 'Erro: Falha ao ler informação do Certificado no Gerenciador de Chaves';
   cErrCtxCreate = 'Erro: Falha ao criar Ctx "xmlSecDSigCtxCreate"';
   cErrNoPFxData = 'Erro: Falha ao ler DadosPFX';
   cErrPrivKeyLoad = 'Erro: Falha ao ler a Chave Privada de DadosPFX';
@@ -92,12 +86,9 @@ const
   cErrDSigInvalid = 'Erro: Assinatura é inválida';
 
   cErrXmlSecInit = 'Falha ao inicializar Biblioteca XMLSec.';
-  cErrXmlSecWrongVersion =
-    'Essa version da Biblioteca XMLSec não é compatível com o ACBr.';
-  cErrXmlSecLoadCriptoLib =
-    'Falha ao carregar biblioteca de Criptografia do XMLSec [%s]';
-  cErrXmlSecInitCriptoLib =
-    'Falha ao inicializar a Biblioteca de Criptografia do XMLSec [%s]';
+  cErrXmlSecWrongVersion = 'Essa versão da Biblioteca XMLSec não é compatível com o ACBr.';
+  cErrXmlSecLoadCriptoLib = 'Falha ao carregar biblioteca de Criptografia do XMLSec [%s]';
+  cErrXmlSecInitCriptoLib = 'Falha ao inicializar a Biblioteca de Criptografia do XMLSec [%s]';
 
 type
 
@@ -115,7 +106,7 @@ type
     procedure InitXmlSec;
     procedure CreateCtx;
     procedure DestroyCtx;
-    function XmlSecSign(const ConteudoXML: String;
+    function XmlSecSign(const aDoc: xmlDocPtr;
       SignatureNode, SelectionNamespaces, InfElement: String): String;
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
@@ -174,7 +165,8 @@ implementation
 Uses
   strutils, math,
   ACBrUtil, ACBrConsts,
-  synautil, synacode;
+  synautil, synacode,
+  ACBrDFeUtil;
 
 var
   XMLSecLoaded: String;
@@ -427,31 +419,23 @@ begin
   end;
 end;
 
-function TDFeSSLXmlSignXmlSec.XmlSecSign(const ConteudoXML: String;
+function TDFeSSLXmlSignXmlSec.XmlSecSign(const aDoc: xmlDocPtr;
   SignatureNode, SelectionNamespaces, InfElement: String): String;
 var
-  doc: xmlDocPtr;
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
   bufSize, SignResult: integer;
   xmlsecMsg: PAnsiChar;
 begin
-  doc := Nil;
   Result := '';
-
-  if Trim(ConteudoXML) = '' then
-    Exit;
 
   CreateCtx;
   try
-    { load template }
-    doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
-    if (doc = nil) then
-      raise EACBrDFeException.Create(cErrParseDoc);
 
     { Dispara Exception se não encontrar o SignNode }
-    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces,
-      InfElement);
+    SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, InfElement);
+    if (SignNode = Nil) then
+      raise EACBrDFeException.Create(cErrFindSignNode);
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
@@ -466,7 +450,7 @@ begin
     // xmlDocDump(stdout, doc);
     // Can't use "stdout" from Delphi, so we'll use xmlDocDumpMemory instead...
     buffer := nil;
-    xmlDocDumpMemory(doc, @buffer, @bufSize);
+    xmlDocDumpMemory(aDoc, @buffer, @bufSize);
     if (buffer <> nil) then
       { success }
       Result := String(buffer);
@@ -474,9 +458,6 @@ begin
     { cleanup }
     if (buffer <> nil) then
       xmlFree(buffer);
-
-    if (doc <> nil) then
-      xmlFreeDoc(doc);
 
     DestroyCtx;
   end;
@@ -486,8 +467,10 @@ function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
   InfElement: String; SignatureNode: String; SelectionNamespaces: String;
   IdSignature: String; IdAttr: String): String;
 var
-  AXml, XmlAss, DTD: String;
+  doc: xmlDocPtr;
+  AXml, XmlAss, DTD, URI: String;
   TemDeclaracao: Boolean;
+  SignNode: xmlNodePtr;
 begin
   InitXmlSec;
 
@@ -511,32 +494,42 @@ begin
     AXml := InserirDTD(AXml, DTD);
   end;
 
-  // Inserindo Template da Assinatura digital //
-  if (not LibXmlEstaAssinado(AXml, SignatureNode, SelectionNamespaces,
-    InfElement)) then
-    AXml := AdicionarSignatureElement(AXml, True, docElement,
-      IdSignature, IdAttr);
+  URI := ExtraiURI(aXML, IdAttr);
 
-  // Assinando com XMLSec //
-  // DEBUG
-  // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
+  try
+    { load template }
+    doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
+    if (doc = nil) then
+      raise EACBrDFeException.Create(cErrParseDoc);
 
-  XmlAss := XmlSecSign(AXml, SignatureNode,
-    SelectionNamespaces, InfElement);
+    // Inserindo Template da Assinatura digital //
+    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, infElement);
+    if (SignNode = nil) then
+      SignNode := AdicionarNode(doc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
 
-  // DEBUG
-  // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
+    // Assinando com XMLSec //
+    // DEBUG
+    // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-  if not TemDeclaracao then
-    XmlAss := RemoverDeclaracaoXML(XmlAss);
+    XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement);
 
-  XmlAss := AjustarXMLAssinado(XmlAss, FpDFeSSL.DadosCertificado.DERBase64);
+    // DEBUG
+    // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
 
-  // DEBUG
-  // WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
+    if not TemDeclaracao then
+      XmlAss := RemoverDeclaracaoXML(XmlAss);
 
-  // Removendo DTD //
-  Result := StringReplace(XmlAss, DTD, '', []);
+    XmlAss := AjustarXMLAssinado(XmlAss, FpDFeSSL.DadosCertificado.DERBase64);
+
+    // DEBUG
+    // WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
+
+    // Removendo DTD //
+    Result := StringReplace(XmlAss, DTD, '', []);
+  finally
+    if (doc <> nil) then
+      xmlFreeDoc(doc);
+  end;
 end;
 
 function TDFeSSLXmlSignXmlSec.Validar(const ConteudoXML, ArqSchema: String;
@@ -700,15 +693,11 @@ begin
     end;
 
     { Achando o nó da Assinatura }
-    try
-      SignNode := LibXmlFindSignatureNode(doc, SignatureNode,
-        SelectionNamespaces, InfElement);
-    except
-      On E: Exception do
-      begin
-        MsgErro := E.message;
-        Exit;
-      end
+    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, InfElement);
+    if (SignNode = nil) or (SignNode.Name <> SignatureNode) then
+    begin
+       MsgErro := ACBrStr(cErrFindSignNode);
+       Exit;
     end;
 
     dsigCtx := xmlSecDSigCtxCreate(mngr);
@@ -827,7 +816,7 @@ begin
     SelectionNamespaces := RetornarConteudoEntre(SelectionNamespaces, '"', '"');
 
     if strutils.LeftStr(SelectionNamespaces, Length(DSigNs)) <> DSigNs then
-      SelectionNamespaces := DSigNs + ' ' + SelectionNamespaces;
+      SelectionNamespaces := Trim(DSigNs + ' ' + SelectionNamespaces);
   end;
 end;
 

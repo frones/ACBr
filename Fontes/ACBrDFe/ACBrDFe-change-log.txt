@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2018
+-- ACBrDFeXsLibXml2, ACBrDFeXsXmlSec --
+[*] Otimizações para melhor velocidade na Assinatura e Verificação de assinatura
+    (Por: Rafael Teno Dias e DSA)
+
 17/12/2018
 -- ACBrDFeXsLibXml2 --
 [*] Melhoria na rotina de empacotamento do XML, removendo xPath (por: Rafael Teno Dias)

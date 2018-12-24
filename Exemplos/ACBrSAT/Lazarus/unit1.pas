@@ -67,7 +67,6 @@ type
     cbPreview: TCheckBox;
     cbxRedeSeg: TComboBox;
     cbxUTF8: TCheckBox;
-    cbxXmlSignLib: TComboBox;
     edChaveCancelamento: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
@@ -113,7 +112,6 @@ type
     Label32: TLabel;
     Label33: TLabel;
     Label34: TLabel;
-    Label35: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
@@ -380,10 +378,6 @@ begin
   For O := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(O) ) ) ;
 
-  cbxXmlSignLib.Items.Clear ;
-  For P := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
-     cbxXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(P) ) ) ;
-
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Add('LPT1') ;
@@ -541,7 +535,6 @@ begin
     cbxSepararPorAno.Checked := INI.ReadBool('SAT','SepararPorANO', True);
     edSchemaVendaAPL.Text := INI.ReadString('SAT','SchemaVendaAPL','');
     edSchemaVendaSAT.Text := INI.ReadString('SAT','SchemaVendaSAT','');
-    cbxXmlSignLib.ItemIndex := INI.ReadInteger('SAT','XMLLib',Integer(ACBrSAT1.Config.XmlSignLib));
     sePagCodChange(Sender);
 
     cbxModeloPosPrinter.ItemIndex := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
@@ -776,7 +769,6 @@ begin
     INI.WriteBool('SAT','SepararPorANO', cbxSepararPorAno.Checked);
     INI.WriteString('SAT','SchemaVendaAPL',edSchemaVendaAPL.Text);
     INI.WriteString('SAT','SchemaVendaSAT',edSchemaVendaSAT.Text);
-    INI.WriteInteger('SAT','XMLLib',cbxXmlSignLib.ItemIndex);
 
     INI.WriteInteger('PosPrinter','Modelo',cbxModeloPosPrinter.ItemIndex);
     INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
@@ -1021,7 +1013,9 @@ procedure TForm1.MenuItem19Click(Sender: TObject);
 var
   Erro: String;
 begin
-  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.SSL.SSLXmlSignLib := xsLibXml2;
+  ACBrSAT1.SSL.SSLCryptLib := cryOpenSSL;
+
   ACBrSAT1.Config.ArqSchema := edSchemaVendaAPL.Text;
   PageControl1.ActivePageIndex := 0;
 
@@ -1038,15 +1032,27 @@ procedure TForm1.MenuItem22Click(Sender: TObject);
 var
   Erro: String;
 begin
-  ACBrSAT1.Config.XmlSignLib := TSSLXmlSignLib(cbxXmlSignLib.ItemIndex);
+  ACBrSAT1.SSL.SSLXmlSignLib := xsLibXml2;
+  ACBrSAT1.SSL.SSLCryptLib := cryOpenSSL;
+
   ACBrSAT1.Config.ArqSchema := edSchemaVendaSAT.Text;
   PageControl1.ActivePageIndex := 0;
 
-  if ACBrSAT1.ValidarDadosVenda( mRecebido.Text, Erro ) then
-    mLog.Lines.Add('XML Recebido do SAT, validado com sucesso')
+  ACBrSAT1.SSL.SSLCryptLib := cryOpenSSL;
+
+  if ACBrSAT1.SSL.VerificarAssinatura(ACBrSAT1.CFe.AsXMLString, Erro, 'infCFe') then
+    mLog.Lines.Add('OK: Assinatura do XML retornado pelo SAT é válida')
   else
   begin
-    mLog.Lines.Add('Erro na Validação do XML Recebido do SAT.');
+    mLog.Lines.Add('ERRO: Assinatura do XML retornado pelo SAT, é inválida: ');
+    mLog.Lines.Add(Erro);
+  end;
+
+  if ACBrSAT1.ValidarDadosVenda( mRecebido.Text, Erro ) then
+    mLog.Lines.Add('OK: XML Recebido do SAT, validado com sucesso, contra o Schema: '+ACBrSAT1.Config.ArqSchema)
+  else
+  begin
+    mLog.Lines.Add('ERRO: Erro na Validação de Schema, do XML Recebido do SAT.');
     mLog.Lines.Add(Erro);
   end;
 end;
@@ -1318,13 +1324,6 @@ begin
   begin
     mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
     PageControl1.ActivePage := tsRecebido;
-
-{    ACBrSAT1.CFe.ide.dEmi;
-    ACBrSAT1.CFe.infCFe.ID;
-    ACBrSAT1.CFe.Total.vCFe;
-    ACBrSAT1.CFe.Dest.CNPJCPF;
-    ACBrSAT1.CFe.ide.assinaturaQRCODE;      }
-
   end;
 end;
 

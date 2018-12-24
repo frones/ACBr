@@ -124,14 +124,13 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     property RegistroY001: TRegistroY001     read FRegistroY001 write FRegistroY001;
     property RegistroY990: TRegistroY990     read FRegistroY990 write FRegistroY990;
 
     property RegistroY650Count: Integer read FRegistroY650Count write FRegistroY650Count;
     property RegistroY681Count: Integer read FRegistroY681Count write FRegistroY681Count;
-  published
   end;
 
 implementation

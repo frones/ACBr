@@ -79,7 +79,7 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     property RegistroT001: TRegistroT001 read FRegistroT001 write FRegistroT001;
     property RegistroT030: TRegistroT030List read FRegistroT030 write FregistroT030;
@@ -89,7 +89,6 @@ type
     property RegistroT150Count: Integer read FRegistroT150Count write FRegistroT150Count;
     property RegistroT170Count: Integer read FRegistroT170Count write FRegistroT170Count;
     property RegistroT181Count: Integer read FRegistroT181Count write FRegistroT181Count;
-  published
   end;
 
 
@@ -102,6 +101,7 @@ uses
 
 constructor TBloco_T.Create;
 begin
+  inherited Create;
   FRegistroT001 := TRegistroT001.Create;
   FRegistroT030 := TRegistroT030List.Create;
   FRegistroT990 := TRegistroT990.Create;
@@ -131,6 +131,7 @@ begin
   FRegistroT001.Free;
   FRegistroT030.Free;
   FRegistroT990.Free;
+  inherited;
 end;
 
 procedure TBloco_T.LiberaRegistros;

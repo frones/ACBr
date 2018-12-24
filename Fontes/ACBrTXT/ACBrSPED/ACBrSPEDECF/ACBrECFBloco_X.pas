@@ -1559,6 +1559,7 @@ end;
 
 constructor TRegistroX001.Create;
 begin
+  inherited Create;
   FRegistroX280 := TRegistroX280List.Create;
   FRegistroX291 := TRegistroX291List.Create;
   FRegistroX292 := TRegistroX292List.Create;

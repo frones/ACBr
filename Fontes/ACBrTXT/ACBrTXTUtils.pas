@@ -88,7 +88,7 @@ function funChecaGENERO(const COD: String): Boolean;
 function funChecaPAISIBGE(const COD: String): Boolean;
 function funChecaMODNF(const COD: String): Boolean;
 function funChecaSITDOCTO(const COD: String): Boolean;
-function funStrZero(Zeros: String; Quant: Integer): String;
+function funStrZero(const Zeros: String; Quant: Integer): String;
 function funChecaCOD_CONS(const COD_MOD, COD_CONS: String): Boolean;
 
 function IfThen(AValue: Boolean; const ATrue: Char; AFalse: Char): Char; overload;
@@ -1120,7 +1120,7 @@ begin
   Result := booFind;
 end;
 
-function funStrZero(Zeros: String; Quant: Integer): String;
+function funStrZero(const Zeros: String; Quant: Integer): String;
 begin
   Result := Zeros;
   Quant := Quant - Length(Result);

@@ -2288,6 +2288,7 @@ end;
 
 constructor TRegistroD001.Create;
 begin
+  inherited Create;
   FRegistroD100 := TRegistroD100List.Create;
   FRegistroD300 := TRegistroD300List.Create;
   FRegistroD350 := TRegistroD350List.Create;

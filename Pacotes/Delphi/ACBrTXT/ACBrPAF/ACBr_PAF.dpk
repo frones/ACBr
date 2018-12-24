@@ -73,9 +73,12 @@ contains
   ACBrPAF_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_J_Class.pas',
   ACBrPAF_L in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L.pas',
   ACBrPAF_L_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_L_Class.pas',
+  ACBrPAF_W in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_W.pas',
+  ACBrPAF_W_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_W_Class.pas',
   ACBrPAF_M in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M.pas',
   ACBrPAF_M_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPAF\ACBrPAF_M_Class.pas';
 
 end.
+
 
 

@@ -80,7 +80,7 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroJ001New: TRegistroJ001;
     function RegistroJ050New: TRegistroJ050;

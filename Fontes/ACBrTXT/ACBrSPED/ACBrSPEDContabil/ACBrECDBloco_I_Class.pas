@@ -157,6 +157,7 @@ uses ACBrTXTClass;
 
 constructor TBLOCO_I.Create;
 begin
+  inherited Create;
   FRegistroI001 := TRegistroI001.Create;
   FRegistroI010 := TRegistroI010.Create;
   FRegistroI012 := TRegistroI012List.Create;

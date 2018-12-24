@@ -786,6 +786,7 @@ end;
 
 constructor TRegistroM030.Create;
 begin
+  inherited Create;
   FRegistroM300 := TRegistroM300List.Create;
   FRegistroM350 := TRegistroM350List.Create;
   FRegistroM410 := TRegistroM410List.Create;
@@ -805,6 +806,7 @@ end;
 
 constructor TRegistroM300.Create;
 begin
+  inherited Create;
   FRegistroM305 := TRegistroM305List.Create;
   FRegistroM310 := TRegistroM310List.Create;
   FRegistroM315 := TRegistroM315List.Create;
@@ -822,6 +824,7 @@ end;
 
 constructor TRegistroM310.Create;
 begin
+  inherited Create;
   FRegistroM312 := TRegistroM312List.Create;
 end;
 
@@ -835,6 +838,7 @@ end;
 
 constructor TRegistroM350.Create;
 begin
+  inherited Create;
   RegistroM355 := TRegistroM355List.Create;
   RegistroM360 := TRegistroM360List.Create;
   RegistroM365 := TRegistroM365List.Create;
@@ -852,6 +856,7 @@ end;
 
 constructor TRegistroM360.Create;
 begin
+  inherited Create;
   FRegistroM362 := TRegistroM362List.Create;
 end;
 
@@ -865,6 +870,7 @@ end;
 
 constructor TRegistroM410.Create;
 begin
+  inherited Create;
   FRegistroM415 := TRegistroM415List.Create;
 end;
 
@@ -878,6 +884,7 @@ end;
 
 constructor TRegistroM001.Create;
 begin
+  inherited Create;
   FRegistroM010 := TRegistroM010List.Create;
   FRegistroM030 := TRegistroM030List.Create;
   IND_DAD := idComDados;;

@@ -552,12 +552,14 @@ begin
    FRegistroP150.Free;
    FRegistroP130.Free;
    FRegistroP100.Free;
+   inherited;
 end;
 
 { TRegistroP001 }
 
 constructor TRegistroP001.Create;
 begin
+  inherited Create;
   fRegistroP030 := TRegistroP030List.Create;
 end;
 

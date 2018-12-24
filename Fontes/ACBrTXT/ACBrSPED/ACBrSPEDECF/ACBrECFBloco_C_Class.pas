@@ -84,10 +84,10 @@ type
     procedure CriaRegistros;
     procedure LiberaRegistros;
   public
-    constructor Create; overload;
-    destructor Destroy; overload;
+    constructor Create;
+    destructor Destroy; override;
 
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroC001New: TRegistroC001;
     function RegistroC040New: TRegistroC040;
@@ -123,7 +123,6 @@ type
     property RegistroC350Count: Integer read FRegistroC350Count write FRegistroC350Count;
     property RegistroC355Count: Integer read FRegistroC355Count write FRegistroC355Count;
 
-  published
   end;
 
 
@@ -136,6 +135,7 @@ uses
 
 constructor TBloco_C.Create;
 begin
+  inherited Create;
   CriaRegistros;
 end;
 
@@ -150,6 +150,7 @@ end;
 destructor TBloco_C.Destroy;
 begin
   LiberaRegistros;
+  inherited;
 end;
 
 procedure TBloco_C.LiberaRegistros;

@@ -78,7 +78,7 @@ type
   public
     constructor Create; /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function WriteRegistroI001: String;
     function WriteRegistroI050: String;
@@ -116,6 +116,7 @@ implementation
 
 constructor TBLOCO_I.Create;
 begin
+  inherited Create;
   FRegistroI001 := TRegistroI001.Create;
   FRegistroI050 := TRegistroI050List.Create;
   FRegistroI075 := TRegistroI075List.Create;

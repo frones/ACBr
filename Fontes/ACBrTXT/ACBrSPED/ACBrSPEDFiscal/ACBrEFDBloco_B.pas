@@ -488,6 +488,7 @@ implementation
 
 constructor TRegistroB001.Create;
 begin
+  inherited Create;
   FRegistroB020 := TRegistroB020List.Create;
   FRegistroB030 := TRegistroB030List.Create;
   FRegistroB350 := TRegistroB350List.Create;

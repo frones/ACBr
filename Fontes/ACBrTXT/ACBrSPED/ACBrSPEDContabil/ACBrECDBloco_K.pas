@@ -122,7 +122,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroK100);
   public
     function New: TRegistroK100;
-    function LocalizaRegistro(pEMP_COD: String): boolean;
+    function LocalizaRegistro(const pEMP_COD: String): boolean;
     property Items[Index: Integer]: TRegistroK100 read GetItem write SetItem;
   end;
 
@@ -377,7 +377,7 @@ begin
   Result := TRegistroK100(Inherited Items[Index]);
 end;
 
-function TRegistroK100List.LocalizaRegistro(pEMP_COD: String): boolean;
+function TRegistroK100List.LocalizaRegistro(const pEMP_COD: String): boolean;
 var
 intFor: integer;
 begin

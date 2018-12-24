@@ -228,7 +228,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro0150);
   public
     function New: TRegistro0150;
-    function LocalizaRegistro(pCOD_PART: String): boolean;
+    function LocalizaRegistro(const pCOD_PART: String): boolean;
     property Items[Index: Integer]: TRegistro0150 read GetItem write SetItem;
   end;
 
@@ -310,7 +310,7 @@ begin
   Result := TRegistro0150(Inherited Items[Index]);
 end;
 
-function TRegistro0150List.LocalizaRegistro(pCOD_PART: String): boolean;
+function TRegistro0150List.LocalizaRegistro(const pCOD_PART: String): boolean;
 var
 intFor: integer;
 begin

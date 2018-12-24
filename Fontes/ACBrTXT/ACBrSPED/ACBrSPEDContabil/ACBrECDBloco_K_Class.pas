@@ -102,6 +102,7 @@ uses ACBrTXTUtils;
 
 constructor TBloco_K.Create;
 begin
+  inherited Create;
   FRegistroK001 := TRegistroK001.Create;
   FRegistroK030 := TRegistroK030.Create;
   FRegistroK990 := TRegistroK990.Create;

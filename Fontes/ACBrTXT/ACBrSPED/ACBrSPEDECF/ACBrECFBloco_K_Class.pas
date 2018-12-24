@@ -82,7 +82,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroK001New: TRegistroK001;
     function RegistroK030New: TRegistroK030;
@@ -103,7 +103,6 @@ type
     property RegistroK156Count: Integer read FRegistroK156Count write FRegistroK156Count;
     property RegistroK355Count: Integer read FRegistroK355Count write FRegistroK355Count;
     property RegistroK356Count: Integer read FRegistroK356Count write FRegistroK356Count;
-  published
   end;
 
 
@@ -116,6 +115,7 @@ uses
 
 constructor TBloco_K.Create;
 begin
+  inherited Create;
   CriaRegistros;
 end;
 

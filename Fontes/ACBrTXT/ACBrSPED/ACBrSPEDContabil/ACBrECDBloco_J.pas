@@ -144,7 +144,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroJ100);
   public
     function New: TRegistroJ100;
-    function LocalizaRegistro(pCOD_AGL: String): boolean;
+    function LocalizaRegistro(const pCOD_AGL: String): boolean;
     property Items[Index: Integer]: TRegistroJ100 read GetItem write SetItem;
   end;
 
@@ -179,7 +179,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroJ150);
   public
     function New: TRegistroJ150;
-    function LocalizaRegistro(pCOD_AGL: String): boolean;
+    function LocalizaRegistro(const pCOD_AGL: String): boolean;
     property Items[Index: Integer]: TRegistroJ150 read GetItem write SetItem;
   end;
 
@@ -202,7 +202,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroJ200);
   public
     function New: TRegistroJ200;
-    function LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+    function LocalizaRegistro(const pCOD_HIST_FAT: String): boolean;
     property Items[Index: Integer]: TRegistroJ200 read GetItem write SetItem;
 
   end;
@@ -243,7 +243,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroJ210);
   public
     function New: TRegistroJ210;
-    function LocalizaRegistro(pCOD_AGL: String): boolean;
+    function LocalizaRegistro(const pCOD_AGL: String): boolean;
     property Items[Index: Integer]: TRegistroJ210 read GetItem write SetItem;
   end;
 
@@ -267,7 +267,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroJ215);
   public
     function New: TRegistroJ215;
-    function LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+    function LocalizaRegistro(const pCOD_HIST_FAT: String): boolean;
     property Items[Index: Integer]: TRegistroJ215 read GetItem write SetItem;
   end;
 
@@ -466,7 +466,7 @@ begin
   Result := TRegistroJ100(Inherited Items[Index]);
 end;
 
-function TRegistroJ100List.LocalizaRegistro(pCOD_AGL: String): boolean;
+function TRegistroJ100List.LocalizaRegistro(const pCOD_AGL: String): boolean;
 var
 intFor: integer;
 begin
@@ -499,7 +499,7 @@ begin
   Result := TRegistroJ150(Inherited Items[Index]);
 end;
 
-function TRegistroJ150List.LocalizaRegistro(pCOD_AGL: String): boolean;
+function TRegistroJ150List.LocalizaRegistro(const pCOD_AGL: String): boolean;
 var
 intFor: integer;
 begin
@@ -532,7 +532,7 @@ begin
   Result := TRegistroJ200(Inherited Items[Index]);
 end;
 
-function TRegistroJ200List.LocalizaRegistro(pCOD_HIST_FAT: String): boolean;
+function TRegistroJ200List.LocalizaRegistro(const pCOD_HIST_FAT: String): boolean;
 var
 intFor: integer;
 begin
@@ -565,7 +565,7 @@ begin
   Result := TRegistroJ210(Inherited Items[Index]);
 end;
 
-function TRegistroJ210List.LocalizaRegistro(pCOD_AGL: String): boolean;
+function TRegistroJ210List.LocalizaRegistro(const pCOD_AGL: String): boolean;
 var
 intFor: integer;
 begin
@@ -609,7 +609,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroJ215List.LocalizaRegistro(pCOD_HIST_FAT : string): boolean;
+function TRegistroJ215List.LocalizaRegistro(const pCOD_HIST_FAT : string): boolean;
 var
 intFor: integer;
 begin

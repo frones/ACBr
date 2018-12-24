@@ -1522,7 +1522,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroC400); /// SetItem
   public
     function New: TRegistroC400;
-    function LocalizaRegistro(pECF_FAB: string): boolean; {:Número de série de fabricação do ECF :AJ-31/8/2011 13:57:12:}
+    function LocalizaRegistro(const pECF_FAB: string): boolean; {:Número de série de fabricação do ECF :AJ-31/8/2011 13:57:12:}
     property Items[Index: Integer]: TRegistroC400 read GetItem write SetItem;
   end;
 
@@ -3160,7 +3160,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroC400List.LocalizaRegistro(pECF_FAB: string): boolean;
+function TRegistroC400List.LocalizaRegistro(const pECF_FAB: string): boolean;
 {:Número de série de fabricação do ECF :AJ-31/8/2011 13:57:12:}
 var
   intFor: integer;
@@ -3780,6 +3780,7 @@ end;
 
 constructor TRegistroC001.Create;
 begin
+   inherited Create;
    FRegistroC100 := TRegistroC100List.Create;
    FRegistroC300 := TRegistroC300List.Create;
    FRegistroC350 := TRegistroC350List.Create;

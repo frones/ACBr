@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -501,6 +501,7 @@ end;
 
 constructor TRegistroI001.Create;
 begin
+  inherited Create;
   FRegistroI010 := TRegistroI010List.Create;
 end;
 

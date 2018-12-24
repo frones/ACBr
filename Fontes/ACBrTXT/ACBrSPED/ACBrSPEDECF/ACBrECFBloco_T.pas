@@ -322,6 +322,7 @@ begin
    FRegistroT150.Free;
    FRegistroT170.Free;
    FRegistroT181.Free;
+   inherited;
 end;
 
 end.

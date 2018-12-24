@@ -134,7 +134,7 @@ type
     function GetPath: String;
     function GetTrimString: boolean;
     procedure SetLinesBuffer(AValue: Integer);
-    procedure SetPath(AValue: String);
+    procedure SetPath(const AValue: String);
     procedure SetTrimString(const Value: boolean);
 
     function AjustaNomeArquivo(Arquivo: String): String;
@@ -181,7 +181,7 @@ type
     property PAF_Z: TPAF_Z read FPAF_Z write FPAF_Z;
 
     Function GetACBrEAD : TACBrEAD ;
-    function AssinaArquivoComEAD(Arquivo: String): Boolean;
+    function AssinaArquivoComEAD(const Arquivo: String): Boolean;
   published
     property About        : String   read GetAbout stored False ;
     property LinesBuffer  : Integer  read FLinesBuffer write SetLinesBuffer ;
@@ -332,7 +332,7 @@ begin
   FPAF_Z.LinhasBuffer    := AValue;
 end;
 
-procedure TACBrPAF.SetPath(AValue: String);
+procedure TACBrPAF.SetPath(const AValue: String);
 begin
   FPath := PathWithDelim(Trim(AValue));
 end;
@@ -697,7 +697,7 @@ begin
    end ;
 end ;
 
-function TACBrPAF.AssinaArquivoComEAD(Arquivo: String): Boolean;
+function TACBrPAF.AssinaArquivoComEAD(const Arquivo: String): Boolean;
 begin
   if Assigned( fsOnPAFCalcEAD ) then
      fsOnPAFCalcEAD( Arquivo )

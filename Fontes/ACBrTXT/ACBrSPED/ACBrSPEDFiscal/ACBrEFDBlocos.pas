@@ -765,7 +765,7 @@ type
   function StrToOrigemDocto(const AValue: string): TACBrOrigemDocto;
 
   function IndTipoTituloToStr(AValue: TACBrTipoTitulo): string;
-  function StrToIndTipoTitulo(AValue: string): TACBrTipoTitulo;
+  function StrToIndTipoTitulo(const AValue: string): TACBrTipoTitulo;
 
   function MovimentoDIFALToStr(AValue: TACBrMovimentoDIFAL): string;
   function StrToMovimentoDIFAL(const AValue: string): TACBrMovimentoDIFAL;
@@ -1437,7 +1437,7 @@ begin
      end;
 end;
 
-function StrToIndTipoTitulo(AValue: string): TACBrTipoTitulo;
+function StrToIndTipoTitulo(const AValue: string): TACBrTipoTitulo;
 begin
      if AValue = '00' then
             Result:= tcDuplicata

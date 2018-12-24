@@ -76,7 +76,7 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
 
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function Registro0000New : TRegistro0000;
     function Registro0001New : TRegistro0001;
@@ -114,7 +114,6 @@ type
     property Registro0030Count: Integer read FRegistro0030Count write FRegistro0030Count;
     property Registro0035Count: Integer read FRegistro0035Count write FRegistro0035Count;
     property Registro0930Count: Integer read FRegistro0930Count write FRegistro0930Count;                
-  published
   end;
 
 implementation

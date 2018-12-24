@@ -111,7 +111,6 @@ type
     property NUM_REC: string read FNUM_REC write FNUM_REC;
     property TIP_ECF: string read FTIP_ECF write FTIP_ECF;
     property COD_SCP: string read FCOD_SCP write FCOD_SCP;
-  published
   end;
 
   { TRegistro0001 }

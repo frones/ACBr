@@ -1401,6 +1401,7 @@ end;
 
 constructor TRegistroY001.Create;
 begin
+  inherited Create;
   FRegistroY520 := TRegistroY520List.Create;
   FRegistroY540 := TRegistroY540List.Create;
   FRegistroY550 := TRegistroY550List.Create;

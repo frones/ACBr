@@ -75,6 +75,7 @@ implementation
 
 constructor TBloco_9.Create;
 begin
+  inherited Create;
   FRegistro9001 := TRegistro9001.Create;
   FRegistro9900 := TRegistro9900List.Create;
   FRegistro9990 := TRegistro9990.Create;

@@ -76,7 +76,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroU001New: TRegistroU001;
     function RegistroU030New: TRegistroU030;
@@ -97,7 +97,6 @@ type
     property RegistroU150Count: Integer read FRegistroU150Count write FRegistroU150Count;
     property RegistroU180Count: Integer read FRegistroU180Count write FRegistroU180Count;
     property RegistroU182Count: Integer read FRegistroU182Count write FRegistroU182Count;
-  published
   end;
 
 
@@ -110,6 +109,7 @@ uses
 
 constructor TBloco_U.Create;
 begin
+  inherited Create;
   CriaRegistros;
 end;
 

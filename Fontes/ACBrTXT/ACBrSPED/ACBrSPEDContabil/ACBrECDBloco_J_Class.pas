@@ -122,6 +122,7 @@ implementation
 
 constructor TBloco_J.Create;
 begin
+  inherited Create;
   FRegistroJ001 := TRegistroJ001.Create;
   FRegistroJ005 := TRegistroJ005List.Create;
   FRegistroJ800 := TRegistroJ800List.Create;

@@ -86,7 +86,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroN001New :TRegistroN001;
     function RegistroN030New :TRegistroN030;
@@ -117,7 +117,6 @@ type
     property RegistroN650Count: Integer read FRegistroN650Count write FRegistroN650Count;
     property RegistroN660Count: Integer read FRegistroN660Count write FRegistroN660Count;
     property RegistroN670Count: Integer read FRegistroN670Count write FRegistroN670Count;
-  published
   end;
 
 

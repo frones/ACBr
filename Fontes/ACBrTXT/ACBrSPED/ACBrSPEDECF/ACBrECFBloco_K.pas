@@ -291,6 +291,7 @@ end;
 
 constructor TRegistroK030.Create(AOwner: TRegistroK001);
 begin
+   inherited Create;
    FRegistroK155 := TRegistroK155List.Create;
    FRegistroK355 := TRegistroK355List.Create;
 end;
@@ -325,6 +326,7 @@ end;
 
 constructor TRegistroK155.Create;
 begin
+   inherited Create;
    FRegistroK156 := TRegistroK156List.Create;
 end;
 
@@ -356,6 +358,7 @@ end;
 
 constructor TRegistroK355.Create;
 begin
+   inherited Create;
    FRegistroK356 := TRegistroK356List.Create;
 end;
 
@@ -369,6 +372,7 @@ end;
 
 constructor TRegistroK001.Create;
 begin
+   inherited Create;
    FRegistroK030 := TRegistroK030List.Create;
    //
    IND_DAD := idComDados;;

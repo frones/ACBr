@@ -1058,6 +1058,7 @@ implementation
 
 constructor TRegistroF001.Create;
 begin
+  inherited Create;
   FRegistroF010 := TRegistroF010List.Create;
 end;
 

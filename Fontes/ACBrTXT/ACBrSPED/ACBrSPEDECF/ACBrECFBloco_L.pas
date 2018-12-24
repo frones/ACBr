@@ -323,6 +323,7 @@ end;
 
 constructor TRegistroL030.Create(AOwner: TRegistroL001);
 begin
+   inherited Create;
    FRegistroL100 := TRegistroL100List.Create;
    FRegistroL200 := TRegistroL200List.Create;
    FRegistroL210 := TRegistroL210List.Create;
@@ -342,6 +343,7 @@ end;
 
 constructor TRegistroL001.Create;
 begin
+  inherited Create;
   FRegistroL030 := TRegistroL030List.Create;
   //
   IND_DAD := idComDados;;
@@ -357,24 +359,28 @@ end;
 
 constructor TRegistroL100.Create(AOwner: TRegistroL030);
 begin
+  inherited Create;
 end;
 
 { TRegistroL300 }
 
 constructor TRegistroL300.Create(AOwner: TRegistroL030);
 begin
+  inherited Create;
 end;
 
 { TRegistroL200 }
 
 constructor TRegistroL200.Create(AOwner: TRegistroL030);
 begin
+  inherited Create;
 end;
 
 { TRegistroL210 }
 
 constructor TRegistroL210.Create(AOwner: TRegistroL030);
 begin
+  inherited Create;
 end;
 
 end.

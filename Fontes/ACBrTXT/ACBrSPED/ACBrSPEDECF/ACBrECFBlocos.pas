@@ -818,43 +818,43 @@ type
 
   // Fuções do ACBrECFBlocos.
 function CodVerToStr(AValue: TACBrECFCodVer): string;
-function StrToCodVer(AValue: string): TACBrECFCodVer;
+function StrToCodVer(const AValue: string): TACBrECFCodVer;
 
 function IndOperToStr(AVAlue: TACBrIndOper): string;
-function StrToIndOper(AVAlue: string): TACBrIndOper;
+function StrToIndOper(const AVAlue: string): TACBrIndOper;
 function TipoItemToStr(AValue: TACBrTipoItem): string;
-function StrToTipoItem(AValue: string): TACBrTipoItem;
+function StrToTipoItem(const AValue: string): TACBrTipoItem;
 function IndEmitToStr(AValue: TACBrIndEmit): string;
-function StrToIndEmit(AValue: string): TACBrIndEmit;
+function StrToIndEmit(const AValue: string): TACBrIndEmit;
 function CodSitToStr(AValue: TACBrCodSit): string;
-function StrToCodSit(AValue: string): TACBrCodSit;
+function StrToCodSit(const AValue: string): TACBrCodSit;
 function IndPgtoToStr(AValue: TACBrIndPgto): string;
-function StrToIndPgto(AValue: string): TACBrIndPgto;
+function StrToIndPgto(const AValue: string): TACBrIndPgto;
 function IndFrtToStr(AValue: TACBrIndFrt): string;
-function StrToIndFrt(AValue: string): TACBrIndFrt;
+function StrToIndFrt(const AValue: string): TACBrIndFrt;
 function IndMovFisicaToStr(AValue: TACBrIndMovFisica): string;
-function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+function StrToIndMovFisica(const AValue: string): TACBrIndMovFisica;
  //  function CstIcmsToStr(AValue: TACBrCstIcms): string;
  //  function StrToCstIcms(AValue: String): TACBrCstIcms;
-function StrToMotInv(AValue: string): TACBrMotInv;
+function StrToMotInv(const AValue: string): TACBrMotInv;
 function MotInvToStr(AValue: TACBrMotInv): string;
 function IndPropToStr(AValue: TACBrIndProp): string;
-function StrToIndProp(AValue: string): TACBrIndProp;
+function StrToIndProp(const AValue: string): TACBrIndProp;
 function TpLigacaoToStr(AValue: TACBrTpLigacao): string;
-function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+function StrToTpLigacao(const AValue: string): TACBrTpLigacao;
 function GrupoTensaoToStr(AValue: TACBrGrupoTensao): string;
-function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+function StrToGrupoTensao(const AValue: string): TACBrGrupoTensao;
 function IndRecToStr(AValue: TACBrIndRec): string;
-function StrToIndRec(AValue: string): TACBrIndRec;
+function StrToIndRec(const AValue: string): TACBrIndRec;
 function TpAssinanteToStr(AValue: TACBrTpAssinante): string;
-function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+function StrToTpAssinante(const AValue: string): TACBrTpAssinante;
 function IndReceitaToStr(AValue: TACBrIndReceita): string;
-function StrToIndReceita(AValue: string): TACBrIndReceita;
+function StrToIndReceita(const AValue: string): TACBrIndReceita;
 
 implementation
 
 { TOpenBlocos }
-function StrToCodVer(AValue: string): TACBrECFCodVer;
+function StrToCodVer(const AValue: string): TACBrECFCodVer;
 begin
   if AValue = '0001' then
     Result := ECFVersao100
@@ -891,7 +891,7 @@ begin
   Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndOper(AValue: string): TACBrIndOper;
+function StrToIndOper(const AValue: string): TACBrIndOper;
 begin
   Result := TACBrIndOper(StrToIntDef(AValue, 0));
 end;
@@ -904,7 +904,7 @@ begin
     Result := FormatFloat('00', integer(AValue));
 end;
 
-function StrToTipoItem(AValue: string): TACBrTipoItem;
+function StrToTipoItem(const AValue: string): TACBrTipoItem;
 begin
   if AValue = '99' then
     Result := tiOutras
@@ -917,7 +917,7 @@ begin
   Result := IntToStr(integer(AValue) + 1);
 end;
 
-function StrToIndEmit(AValue: string): TACBrIndEmit;
+function StrToIndEmit(const AValue: string): TACBrIndEmit;
 begin
   Result := TACBrIndEmit(StrToIntDef(AValue, 0));
 end;
@@ -927,7 +927,7 @@ begin
   Result := FormatFloat('00', integer(AValue));
 end;
 
-function StrToCodSit(AValue: string): TACBrCodSit;
+function StrToCodSit(const AValue: string): TACBrCodSit;
 begin
   Result := TACBrCodSit(StrToIntDef(AValue, 0));
 end;
@@ -943,7 +943,7 @@ begin
     Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndPgto(AValue: string): TACBrIndPgto;
+function StrToIndPgto(const AValue: string): TACBrIndPgto;
 begin
   if AValue = '9' then
     Result := tpSemPagamento
@@ -970,7 +970,7 @@ begin
   Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndFrt(AValue: string): TACBrIndFrt;
+function StrToIndFrt(const AValue: string): TACBrIndFrt;
 begin
   if AValue = '9' then
   begin
@@ -991,7 +991,7 @@ begin
   Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndMovFisica(AValue: string): TACBrIndMovFisica;
+function StrToIndMovFisica(const AValue: string): TACBrIndMovFisica;
 begin
   Result := TACBrIndMovFisica(StrToIntDef(AValue, 0));
 end;
@@ -1017,7 +1017,7 @@ begin
 end;
 }
 
-function StrToMotInv(AValue: string): TACBrMotInv;
+function StrToMotInv(const AValue: string): TACBrMotInv;
 begin
   if AValue = '01' then
     Result := miFinalPeriodo
@@ -1060,7 +1060,7 @@ begin
   Result := FormatFloat('00', integer(AValue));
 end;
 
-function StrToIndProp(AValue: string): TACBrIndProp;
+function StrToIndProp(const AValue: string): TACBrIndProp;
 begin
   Result := TACBrIndProp(StrToIntDef(AValue, 0));
 end;
@@ -1070,7 +1070,7 @@ begin
   Result := IntToStr(integer(AValue) + 1);
 end;
 
-function StrToTpLigacao(AValue: string): TACBrTpLigacao;
+function StrToTpLigacao(const AValue: string): TACBrTpLigacao;
 begin
   Result := TACBrTpLigacao(StrToIntDef(AValue, 0));
 end;
@@ -1083,7 +1083,7 @@ begin
     Result := FormatFloat('00', integer(AValue) + 1);
 end;
 
-function StrToGrupoTensao(AValue: string): TACBrGrupoTensao;
+function StrToGrupoTensao(const AValue: string): TACBrGrupoTensao;
 begin
   if AValue = '' then
     Result := gtNenhum
@@ -1096,7 +1096,7 @@ begin
   Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndRec(AValue: string): TACBrIndRec;
+function StrToIndRec(const AValue: string): TACBrIndRec;
 begin
   Result := TACBrIndRec(StrToIntDef(AValue, 0));
 end;
@@ -1106,7 +1106,7 @@ begin
   Result := IntToStr(integer(AValue));
 end;
 
-function StrToTpAssinante(AValue: string): TACBrTpAssinante;
+function StrToTpAssinante(const AValue: string): TACBrTpAssinante;
 begin
   if AValue = '' then
     Result := assNenhum
@@ -1122,7 +1122,7 @@ begin
     Result := IntToStr(integer(AValue));
 end;
 
-function StrToIndReceita(AValue: string): TACBrIndReceita;
+function StrToIndReceita(const AValue: string): TACBrIndReceita;
 begin
   if AValue = '9' then
     Result := recTerceiroOutras

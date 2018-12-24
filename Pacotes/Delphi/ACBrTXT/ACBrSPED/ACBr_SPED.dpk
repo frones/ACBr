@@ -43,6 +43,8 @@ contains
   ACBrECDBloco_J in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_J.pas',
   ACBrECDBloco_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_J_Class.pas',
   ACBrECDBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBlocos.pas',
+  ACBrECDBloco_K in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_K.pas',
+  ACBrECDBloco_K_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrECDBloco_K_Class.pas',
   ACBrSpedContabil in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil\ACBrSpedContabil.pas',
   ACBrEFDBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0.pas',
   ACBrEFDBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0_Class.pas',
@@ -134,6 +136,10 @@ contains
   ACBrEFDBloco_D_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_D_Events.pas',
   ACBrEFDBloco_E_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_E_Events.pas',
   ACBrEFDBloco_0_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_0_Events.pas',
+  ACBrEFDBloco_B in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_B.pas',
+  ACBrEFDBloco_B_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_B_Class.pas',
+  ACBrEFDBloco_B_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal\ACBrEFDBloco_B_Events.pas',
   ACBrEPCBloco_C_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_C_Events.pas';
 
 end.
+

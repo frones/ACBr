@@ -244,6 +244,7 @@ end;
 
 constructor TRegistroD3.Create;
 begin
+   inherited Create;
    fRegistroValido := True;
 end;
 
@@ -287,6 +288,7 @@ end;
 
 constructor TRegistroD4.Create;
 begin
+   inherited Create;
   fRegistroValido := True;
 end;
 

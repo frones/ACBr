@@ -144,6 +144,7 @@ end;
 
 constructor TTITP_Mercadoria.Create;
 begin
+  inherited Create;
   FInsumos := TTITP_Insumos.Create;
 end;
 

@@ -53,7 +53,8 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+
+    procedure LimpaRegistros; override;
 
     function WriteRegistro0000: String;
 
@@ -68,6 +69,7 @@ uses ACBrTXTUtils;
 
 constructor TBloco_0.Create;
 begin
+  inherited Create;
   FRegistro0000 := TRegistro0000.Create;
 end;
 

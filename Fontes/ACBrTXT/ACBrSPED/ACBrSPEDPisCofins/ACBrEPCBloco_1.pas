@@ -804,6 +804,7 @@ implementation
 
 constructor TRegistro1001.Create;
 begin
+  inherited Create;
   FRegistro1010 := TRegistro1010List.Create;
   FRegistro1020 := TRegistro1020List.Create;
   FRegistro1100 := TRegistro1100List.Create;

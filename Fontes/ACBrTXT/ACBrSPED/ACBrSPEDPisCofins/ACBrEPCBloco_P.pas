@@ -254,6 +254,7 @@ implementation
 
 constructor TRegistroP001.Create;
 begin
+  inherited;
   fRegistroP010 := TRegistroP010List.Create;
   fRegistroP200 := TRegistroP200List.Create;
 end;

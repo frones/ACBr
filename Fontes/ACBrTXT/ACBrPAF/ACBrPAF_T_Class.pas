@@ -134,7 +134,7 @@ begin
    end;
 end;
 
-function OrdenarT2(ACampo1, ACampo2: Pointer): Integer;
+function OrdenarT2(const ACampo1, ACampo2: Pointer): Integer;
 var
   Campo1, Campo2: String;
 begin

@@ -567,6 +567,7 @@ end;
 
 constructor TRegistroN001.Create;
 begin
+  inherited Create;
   FRegistroN030 := TRegistroN030List.Create;
 
   IND_DAD := idSemDados;

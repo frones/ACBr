@@ -100,6 +100,7 @@ uses ACBrTXTClass, ACBrTXTUtils;
 
 constructor TBloco_0.Create;
 begin
+  inherited Create;
   FRegistro0000 := TRegistro0000.Create;
   FRegistro0001 := TRegistro0001.Create;
   FRegistro0007 := TRegistro0007List.Create;

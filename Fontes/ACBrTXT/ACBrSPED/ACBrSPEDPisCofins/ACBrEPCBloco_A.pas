@@ -314,6 +314,7 @@ implementation
 
 constructor TRegistroA001.Create;
 begin
+  inherited Create;
   FRegistroA010 := TRegistroA010List.Create;
 end;
 

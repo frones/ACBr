@@ -379,6 +379,7 @@ end;
 
 constructor TRegistroG001.Create;
 begin
+   inherited Create;
    FRegistroG110 := TRegistroG110List.Create;
    //
    IND_MOV := imSemDados;

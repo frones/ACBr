@@ -69,7 +69,7 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroQ001New : TRegistroQ001;
     function RegistroQ100New : TRegistroQ100;
@@ -77,7 +77,6 @@ type
     property RegistroQ001: TRegistroQ001 read FRegistroQ001 write FRegistroQ001;
     property RegistroQ100: TRegistroQ100List read FRegistroQ100 write FRegistroQ100;
     property RegistroQ990: TRegistroQ990 read FRegistroQ990 write FRegistroQ990;
-  published
   end;
 
 

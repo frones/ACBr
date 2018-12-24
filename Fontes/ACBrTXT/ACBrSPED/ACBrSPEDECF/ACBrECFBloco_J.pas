@@ -288,6 +288,7 @@ end;
 
 constructor TRegistroJ001.Create;
 begin
+   inherited Create;
    FRegistroJ050 := TRegistroJ050List.Create;
    FRegistroJ100 := TRegistroJ100List.Create;
    //

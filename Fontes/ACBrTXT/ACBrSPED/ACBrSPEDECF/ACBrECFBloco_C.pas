@@ -393,6 +393,7 @@ implementation
 
 constructor TRegistroC001.Create;
 begin
+   inherited Create;
    FRegistroC040 := TRegistroC040List.Create;
    //
    IND_DAD := idComDados;
@@ -485,6 +486,7 @@ end;
 
 constructor TRegistroC040.Create(AOwner: TRegistroC001);
 begin
+   inherited Create;
    FRegistroC050 := TRegistroC050List.Create;
    FRegistroC100 := TRegistroC100List.Create;
    FRegistroC150 := TRegistroC150List.Create;
@@ -504,6 +506,7 @@ end;
 
 constructor TRegistroC050.Create(AOwner: TRegistroC040);
 begin
+  inherited Create;
   FRegistroC051 := TRegistroC051List.Create;
   FRegistroC053 := TRegistroC053List.Create;
 end;
@@ -520,21 +523,21 @@ end;
 
 constructor TRegistroC051.Create(AOwner: TRegistroC050);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroC053 }
 
 constructor TRegistroC053.Create(AOwner: TRegistroC050);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroC100 }
 
 constructor TRegistroC100.Create(AOwner: TRegistroC040);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroC100List }
@@ -560,6 +563,7 @@ end;
 
 constructor TRegistroC150.Create(AOwner: TRegistroC040);
 begin
+  inherited Create;
   FRegistroC155 := TRegistroC155List.Create;
 end;
 
@@ -592,6 +596,7 @@ end;
 
 constructor TRegistroC155.Create(AOwner: TRegistroC150);
 begin
+  inherited Create;
   FRegistroC157 := TRegistroC157List.Create();
 end;
 
@@ -643,6 +648,7 @@ end;
 
 constructor TRegistroC157.Create(AOwner: TRegistroC155);
 begin
+  inherited Create;
 
 end;
 
@@ -650,6 +656,7 @@ end;
 
 constructor TRegistroC350.Create(AOwner: TRegistroC040);
 begin
+  inherited Create;
   FRegistroC355 := TRegistroC355List.Create();
 end;
 
@@ -682,7 +689,7 @@ end;
 
 constructor TRegistroC355.Create(AOwner: TRegistroC350);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroC355List }

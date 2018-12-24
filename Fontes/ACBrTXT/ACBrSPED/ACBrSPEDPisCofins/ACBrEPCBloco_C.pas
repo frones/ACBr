@@ -1848,6 +1848,7 @@ end;
 
 constructor TRegistroC001.Create;
 begin
+  inherited Create;
   RegistroC010 := TRegistroC010List.Create;
 end;
 

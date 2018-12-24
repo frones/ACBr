@@ -67,11 +67,11 @@ type
 
     FConteudo : TStringList;
 
-    procedure AssignError(MsnError: String);
+    procedure AssignError(const MsnError: String);
     procedure SetLinhasBuffer(const AValue: Integer);
     procedure SetNomeArquivo(const AValue: String);
   public
-    constructor create ;
+    constructor Create ;
     destructor Destroy ; override ;
 
     procedure WriteBuffer ;
@@ -82,7 +82,7 @@ type
     function DFill(Value: Double;
                    Decimal: Integer = 2;
                    Nulo: Boolean = false): String;
-    function LFill(Value: String;
+    function LFill(const Value: String;
                    Size: Integer = 0;
                    Nulo: Boolean = false;
                    Caracter: Char = '0'): String; overload;
@@ -91,10 +91,10 @@ type
                    Decimal: Integer = 2;
                    Nulo: Boolean = false;
                    Caracter: Char = '0';
-                   Mascara: String = ''): String; overload;
+                   const Mascara: String = ''): String; overload;
     function LFill(Value: Int64; Size: Integer; Nulo: Boolean = false; Caracter: Char = '0'): String; overload;
-    function LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
-    function RFill(Value: String;
+    function LFill(Value: TDateTime; const Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String; overload;
+    function RFill(const Value: String;
                    Size: Integer = 0;
                    Caracter: Char = ' '): String;
 
@@ -104,10 +104,10 @@ type
                     Size: Integer;
                     Decimal: Integer = 2;
                     Caracter: Char = '0';
-                    Mascara: String = ''): String;
+                    const Mascara: String = ''): String;
     ///
     procedure Check(Condicao: Boolean; const Msg: String); overload;
-    procedure Check(Condicao: Boolean; Msg: String; Fmt: array of const); overload;
+    procedure Check(Condicao: Boolean; const Msg: String; Fmt: array of const); overload;
     ///
     property NomeArquivo : String read FNomeArquivo write SetNomeArquivo ;
     property LinhasBuffer : Integer read FLinhasBuffer write SetLinhasBuffer ;
@@ -127,7 +127,7 @@ Uses
 
 (* TACBrTXTClass *)
 
-constructor TACBrTXTClass.create;
+constructor TACBrTXTClass.Create;
 begin
    FConteudo     := TStringList.Create ;
    FOnError      := Nil;
@@ -224,12 +224,12 @@ begin
   if not Condicao then AssignError(Msg);
 end;
 
-procedure TACBrTXTClass.Check(Condicao: Boolean; Msg: String; Fmt: array of const);
+procedure TACBrTXTClass.Check(Condicao: Boolean; const Msg: String; Fmt: array of const);
 begin
   Check(Condicao, Format(Msg, Fmt));
 end;
 
-function TACBrTXTClass.RFill(Value: String;
+function TACBrTXTClass.RFill(const Value: String;
                              Size: Integer = 0;
                              Caracter: Char = ' '): String;
 begin
@@ -249,7 +249,7 @@ begin
      Result := Trim(Result);
 end;
 
-function TACBrTXTClass.LFill(Value: String;
+function TACBrTXTClass.LFill(const Value: String;
                              Size: Integer = 0;
                              Nulo: Boolean = false;
                              Caracter: Char = '0'): String;
@@ -278,7 +278,7 @@ function TACBrTXTClass.LFill(Value: Extended;
                         Decimal: Integer = 2;
                         Nulo: Boolean = false;
                         Caracter: Char = '0';
-                        Mascara: String = ''): String;
+                        const Mascara: String = ''): String;
 var
 strCurMascara: string;
 AStr: String;
@@ -347,7 +347,7 @@ begin
   Result := LFill(IntToStr(Value), Size, False, Caracter);
 end;
 
-function TACBrTXTClass.LFill(Value: TDateTime; Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String;
+function TACBrTXTClass.LFill(Value: TDateTime; const Mask: String = 'ddmmyyyy'; Nulo: Boolean = True): String;
 begin
   /// Se o parametro Value = 0, será retornado '|'
   if (Nulo) and (Value = 0) then
@@ -358,7 +358,7 @@ begin
   Result := FDelimitador + FormatDateTime(Mask, Value);
 end;
 
-procedure TACBrTXTClass.AssignError(MsnError: String);
+procedure TACBrTXTClass.AssignError(const MsnError: String);
 begin
   if Assigned(FOnError) then FOnError( ACBrStr(MsnError) );
 end;
@@ -379,7 +379,7 @@ function TACBrTXTClass.VLFill(Value: Variant;
                              Size: Integer;
                              Decimal: Integer;
                              Caracter: Char;
-                             Mascara: String): String;
+                             const Mascara: String): String;
 var
 AExt: Extended;
 begin

@@ -868,6 +868,7 @@ implementation
 
 constructor TRegistroD001.Create;
 begin
+  inherited Create;
   FRegistroD010 := TRegistroD010List.Create;
 end;
 

@@ -1396,6 +1396,7 @@ end;
 
 constructor TRegistroE001.Create;
 begin
+   inherited Create;
    FRegistroE100 := TRegistroE100List.Create;
    FRegistroE200 := TRegistroE200List.Create;
    FRegistroE300 := TRegistroE300List.Create;

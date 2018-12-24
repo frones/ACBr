@@ -95,12 +95,12 @@ type
   public
     constructor Create;  virtual;              /// Create
     destructor  Destroy; override;             /// Destroy
-    function LocalizaRegistroM400(ACST_PIS: TACBrCstPis;  
-                                  ACOD_CTA: String='';
-                                  ADESC_COMPL : String='') : TRegistroM400;
+    function LocalizaRegistroM400(ACST_PIS: TACBrCstPis;
+                                  const ACOD_CTA: String='';
+                                  const ADESC_COMPL : String='') : TRegistroM400;
     function LocalizaRegistroM800(ACST_COFINS: TACBrCstCofins;
-                                  ACOD_CTA: String=''; 
-                                  ADESC_COMPL : String='') : TRegistroM800;
+                                  const ACOD_CTA: String='';
+                                  const ADESC_COMPL : String='') : TRegistroM800;
     property RegistroM100 : TRegistroM100List read FRegistroM100 write FRegistroM100;
     property RegistroM200 : TRegistroM200     read FRegistroM200 write FRegistroM200;
     property RegistroM300 : TRegistroM300List read FRegistroM300 write FRegistroM300;
@@ -553,9 +553,9 @@ type
   public
     constructor Create;  virtual;              /// Create
     destructor  Destroy; override;             /// Destroy
-    function LocalizaRegistroM410(ANAT_REC: String;
-                                  ACOD_CTA: String='';
-                                  ADESC_COMPL : String=''): TRegistroM410;
+    function LocalizaRegistroM410(const ANAT_REC: String;
+                                  const ACOD_CTA: String='';
+                                  const ADESC_COMPL : String=''): TRegistroM410;
     property CST_PIS      : TACBrCstPis read FCST_PIS      write FCST_PIS;
     property VL_TOT_REC   : currency    read FVL_TOT_REC   write FVL_TOT_REC;
     property COD_CTA      : string      read FCOD_CTA      write FCOD_CTA;
@@ -1019,9 +1019,9 @@ type
   public
     constructor Create; virtual;               /// Create
     destructor Destroy; override;              /// Destroy
-    function LocalizaRegistroM810(ANAT_REC: String;
-                                  ACOD_CTA: String=''; 
-                                  ADESC_COMPL : String=''): TRegistroM810;
+    function LocalizaRegistroM810(const ANAT_REC: String;
+                                  const ACOD_CTA: String='';
+                                  const ADESC_COMPL : String=''): TRegistroM810;
     property CST_COFINS   : TACBrSituacaoTribCOFINS read FCST_COFINS   write FCST_COFINS;
     property VL_TOT_REC   : currency                read FVL_TOT_REC   write FVL_TOT_REC;
     property COD_CTA      : string                  read FCOD_CTA      write FCOD_CTA;
@@ -1084,6 +1084,7 @@ end;
 destructor TRegistroM620.Destroy;
 begin
   FRegistroM625.Free;
+  inherited;
 end;
 
 { TRegistroM625List }
@@ -1132,6 +1133,7 @@ end;
 destructor TRegistroM510.Destroy;
 begin
   FRegistroM515.Free;
+  inherited;
 end;
 
 { TRegistroM515List }
@@ -1162,6 +1164,7 @@ end;
 destructor TRegistroM220.Destroy;
 begin
   FRegistroM225.Free;
+  inherited;
 end;
 
 { TRegistroM225List }
@@ -1192,6 +1195,7 @@ end;
 destructor TRegistroM110.Destroy;
 begin
   FRegistroM115.Destroy;
+  inherited;
 end;
 
 { TRegistroM115List }
@@ -1234,6 +1238,7 @@ end;
 {TRegistroM001}
 constructor TRegistroM001.Create;
 begin
+  inherited Create;
   FRegistroM100 := TRegistroM100List.Create;
   FRegistroM200 := TRegistroM200.Create;
   FRegistroM300 := TRegistroM300List.Create;
@@ -1260,7 +1265,7 @@ begin
 end;
 
 function TRegistroM001.LocalizaRegistroM400(ACST_PIS: TACBrCstPis;
-  ACOD_CTA: String=''; ADESC_COMPL : String=''): TRegistroM400;
+  const ACOD_CTA: String=''; const ADESC_COMPL : String=''): TRegistroM400;
  var
   I : Integer;
   VReg : TRegistroM400;
@@ -1279,9 +1284,9 @@ begin
    end;
 end;
 
-function TRegistroM800.LocalizaRegistroM810(ANAT_REC: String;
-                                            ACOD_CTA: String='';
-                                            ADESC_COMPL : String=''): TRegistroM810;
+function TRegistroM800.LocalizaRegistroM810(const ANAT_REC: String;
+                                            const ACOD_CTA: String='';
+                                            const ADESC_COMPL : String=''): TRegistroM810;
  var
   I : Integer;
   VReg : TRegistroM810;
@@ -1301,7 +1306,7 @@ begin
 end;
 
 function TRegistroM001.LocalizaRegistroM800(ACST_COFINS: TACBrCstCofins;
-  ACOD_CTA: String=''; ADESC_COMPL : String=''): TRegistroM800;
+  const ACOD_CTA: String=''; const ADESC_COMPL : String=''): TRegistroM800;
  var
   I : Integer;
   VReg : TRegistroM800;
@@ -1508,9 +1513,9 @@ begin
   inherited;
 end;
 
-function TRegistroM400.LocalizaRegistroM410(ANAT_REC: String;
-                                            ACOD_CTA: String='';
-                                            ADESC_COMPL : String=''): TRegistroM410;
+function TRegistroM400.LocalizaRegistroM410(const ANAT_REC: String;
+                                            const ACOD_CTA: String='';
+                                            const ADESC_COMPL : String=''): TRegistroM410;
  var
   I : Integer;
   VReg : TRegistroM410;

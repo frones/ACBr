@@ -106,7 +106,7 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroM001New: TRegistroM001;
     function RegistroM010New: TRegistroM010;
@@ -146,7 +146,6 @@ type
     property RegistroM410Count: Integer read FRegistroM410Count write FRegistroM410Count;
     property RegistroM415Count: Integer read FRegistroM415Count write FRegistroM415Count;
     property RegistroM500Count: Integer read FRegistroM500Count write FRegistroM500Count;
-  published
   end;
 
 

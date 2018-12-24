@@ -266,6 +266,7 @@ implementation
 
 constructor TRegistroE001.Create;
 begin
+  inherited Create;
   FRegistroE010 := TRegistroE010List.Create;
   FRegistroE020 := TRegistroE020List.Create;
   FRegistroE030 := TRegistroE030List.Create;
@@ -303,6 +304,7 @@ end;
 
 constructor TRegistroE010.Create(AOwner: TRegistroE001);
 begin
+  inherited Create;
   FRegistroE015 := TRegistroE015List.Create();
 end;
 
@@ -335,7 +337,7 @@ end;
 
 constructor TRegistroE015.Create(AOwner: TRegistroE010);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroE020List }
@@ -361,13 +363,14 @@ end;
 
 constructor TRegistroE020.Create(AOwner: TRegistroE001);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroE030 }
 
 constructor TRegistroE030.Create(AOwner: TRegistroE001);
 begin
+  inherited Create;
   FRegistroE155 := TRegistroE155List.Create;
   FRegistroE355 := TRegistroE355List.Create;
 end;
@@ -402,14 +405,14 @@ end;
 
 constructor TRegistroE155.Create(AOwner: TRegistroE030);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroE355 }
 
 constructor TRegistroE355.Create(AOwner: TRegistroE030);
 begin
-
+  inherited Create;
 end;
 
 { TRegistroE155List }

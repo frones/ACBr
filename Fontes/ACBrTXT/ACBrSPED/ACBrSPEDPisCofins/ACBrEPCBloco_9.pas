@@ -101,6 +101,7 @@ implementation
 
 constructor TRegistro9001.Create;
 begin
+  inherited Create;
   FRegistro9900 := TRegistro9900List.Create;
 end;
 

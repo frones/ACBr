@@ -711,9 +711,10 @@ implementation
 
 constructor TRegistroK001.Create;
 begin
-     FRegistroK100 := TRegistroK100List.Create;
-     //
-     IND_MOV := imSemDados;
+   inherited Create;
+   FRegistroK100 := TRegistroK100List.Create;
+   //
+   IND_MOV := imSemDados;
 end;
 
 destructor TRegistroK001.Destroy;

@@ -946,6 +946,8 @@ const
   CKeySATExtImprimeEmUmaLinha =             'ImprimeEmUmaLinha';
   CKeySATExtImprimeChaveEmUmaLinha =        'ImprimeChaveEmUmaLinha';
   CKeySATExtUsaCodigoEanImpressao =         'UsaCodigoEanImpressao';
+  CKeySATExtLogoLateral =                   'LogoLateral';
+  CKeySATExtQRCodeLateral =                 'QRCodeLateral';
 
   CSecSATEmit =                             'SATEmit';
   CKeySATEmitCNPJ =                         'CNPJ';

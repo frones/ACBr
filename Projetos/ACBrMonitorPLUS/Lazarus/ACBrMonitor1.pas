@@ -251,6 +251,7 @@ type
     cbFormaEmissaoGNRe: TComboBox;
     cbGavetaSinalInvertido: TCheckBox;
     cbLog: TCheckBox;
+    cbxLogoLateral: TCheckBox;
     cbMonitorarPasta: TCheckBox;
     cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
@@ -282,6 +283,7 @@ type
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
     cbOrigem: TComboBox;
+    cbxQRCodeLateral: TCheckBox;
     cbSenha: TCheckBox;
     cbUnidade: TComboBox;
     cbRetirarAcentosNaResposta: TCheckBox;
@@ -4699,20 +4701,26 @@ begin
     cbxSATSepararPorCNPJ.Checked       := SepararPorCNPJ;
     cbxSATSepararPorMES.Checked        := SepararPorMES;
 
-    with SATImpressao.SATExtrado do
+    with SATImpressao.SATExtrato do
     begin
       ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString := ParamsString;
       ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
       ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
       ACBrSATExtratoESCPOS1.ImprimeCodigoEan               := UsaCodigoEanImpressao;
+      ACBrSATExtratoESCPOS1.ImprimeQRCodeLateral           := ImprimeQRCodeLateral;
+      ACBrSATExtratoESCPOS1.ImprimeLogoLateral             := ImprimeLogoLateral;
 
       ACBrSATExtratoFortes1.ImprimeDescAcrescItem          := ImprimeDescAcrescItem;
       ACBrSATExtratoFortes1.ImprimeEmUmaLinha              := ImprimeEmUmaLinha;
       ACBrSATExtratoFortes1.ImprimeCodigoEan               := UsaCodigoEanImpressao;
+      ACBrSATExtratoFortes1.ImprimeQRCodeLateral           := ImprimeQRCodeLateral;
+      ACBrSATExtratoFortes1.ImprimeLogoLateral             := ImprimeLogoLateral;
 
       cbxImprimirDescAcresItemSAT.Checked   := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
       cbxImprimirItem1LinhaSAT.Checked      := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
       cbxImprimirCodEANitemSAT.Checked      := ACBrSATExtratoESCPOS1.ImprimeCodigoEan;
+      cbxQRCodeLateral.Checked              := ACBrSATExtratoESCPOS1.ImprimeQRCodeLateral;
+      cbxLogoLateral.Checked                := ACBrSATExtratoESCPOS1.ImprimeLogoLateral;
 
       rdgImprimeChave1LinhaSAT.ItemIndex    := ImprimeChaveEmUmaLinha;
       ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
@@ -5671,13 +5679,15 @@ begin
       SepararPorCNPJ                   := cbxSATSepararPorCNPJ.Checked;
       SepararPorMES                    := cbxSATSepararPorMES.Checked;
 
-      with SATImpressao.SATExtrado do
+      with SATImpressao.SATExtrato do
       begin
         ParamsString                   := ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString;
         ImprimeDescAcrescItem          := cbxImprimirDescAcresItemSAT.Checked;
         ImprimeEmUmaLinha              := cbxImprimirItem1LinhaSAT.Checked;
         ImprimeChaveEmUmaLinha         := rdgImprimeChave1LinhaSAT.ItemIndex;
         UsaCodigoEanImpressao          := cbxImprimirCodEANitemSAT.Checked;
+        ImprimeQRCodeLateral           := cbxQRCodeLateral.Checked;
+        ImprimeLogoLateral             := cbxLogoLateral.Checked;
       end;
 
       with SATImpressao.SATEmit do
@@ -8066,8 +8076,10 @@ begin
     ACBrSATExtratoFortes1.MostraPreview    := cbPreview.Checked;
 
     ACBrSATExtratoFortes1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemSAT.Checked;
-    ACBrSATExtratoFortes1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaSAT.Checked;
-    ACBrSATExtratoFortes1.ImprimeCodigoEan  := cbxImprimirCodEANitemSAT.Checked;
+    ACBrSATExtratoFortes1.ImprimeEmUmaLinha     := cbxImprimirItem1LinhaSAT.Checked;
+    ACBrSATExtratoFortes1.ImprimeCodigoEan      := cbxImprimirCodEANitemSAT.Checked;
+    ACBrSATExtratoFortes1.ImprimeQRCodeLateral  := cbxQRCodeLateral.Checked;
+    ACBrSATExtratoFortes1.ImprimeLogoLateral    := cbxLogoLateral.Checked;
 
     if ( GerarPDF ) then
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiPDF)
@@ -8104,7 +8116,9 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
-    ACBrSATExtratoESCPOS1.ImprimeCodigoEan   := cbxImprimirDescAcresItemSAT.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeCodigoEan        := cbxImprimirCodEANitemSAT.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeQRCodeLateral    := cbxQRCodeLateral.Checked;
+    ACBrSATExtratoESCPOS1.ImprimeLogoLateral      := cbxLogoLateral.Checked;
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;

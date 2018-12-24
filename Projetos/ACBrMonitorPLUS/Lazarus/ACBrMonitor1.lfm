@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.0.2'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 850
-        ActivePage = tsDFe
+        ActivePage = tsSat
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -1426,7 +1426,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 140
                 Width = 449
                 Anchors = [akTop, akLeft, akRight]
-                Increment = 1
                 MaxValue = 999999999
                 MinValue = -1
                 OnExit = seUSUGTCadastroExit
@@ -7981,7 +7980,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 0
                       Value = 0.8
@@ -7992,7 +7990,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 1
                       Value = 0.8
@@ -8003,7 +8000,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 2
                       Value = 0.51
@@ -8014,7 +8010,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 3
                       Value = 0.6
@@ -8774,7 +8769,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 0
                       Value = 0.8
@@ -8785,7 +8779,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 1
                       Value = 0.8
@@ -8796,7 +8789,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 2
                       Value = 0.51
@@ -8807,7 +8799,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 18
                       Width = 64
                       Increment = 0.1
-                      MaxValue = 100
                       MinValue = 0
                       TabOrder = 3
                       Value = 0.6
@@ -9928,7 +9919,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   SelectedColor.StrikeOutPriority = 50
                   inline SynLeftGutterPartList1: TSynGutterPartList
                     object SynGutterMarks1: TSynGutterMarks
-                      Width = 23
+                      Width = 0
                       MouseActions = <>
                     end
                     object SynGutterLineNumber1: TSynGutterLineNumber
@@ -9942,18 +9933,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       LeadingZeros = False
                     end
                     object SynGutterChanges1: TSynGutterChanges
-                      Width = 4
+                      Width = 0
                       MouseActions = <>
                       ModifiedColor = 59900
                       SavedColor = clGreen
                     end
                     object SynGutterSeparator1: TSynGutterSeparator
-                      Width = 2
+                      Width = 0
                       MouseActions = <>
                       MarkupInfo.Background = clWhite
                       MarkupInfo.Foreground = clGray
                     end
                     object SynGutterCodeFolding1: TSynGutterCodeFolding
+                      Width = 0
                       MouseActions = <>
                       MarkupInfo.Background = clNone
                       MarkupInfo.Foreground = clGray
@@ -9976,9 +9968,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsDadosSAT
+            ActivePage = Impressao
             Align = alClient
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               HelpType = htKeyword
@@ -10111,7 +10103,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 257
                 Height = 17
                 Top = 106
-                Width = 41
+                Width = 40
                 Caption = 'Versão'
                 ParentColor = False
               end
@@ -10836,7 +10828,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 96
                   Height = 17
                   Top = 0
-                  Width = 31
+                  Width = 30
                   Caption = 'Topo'
                   ParentColor = False
                 end
@@ -11013,32 +11005,52 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 1
                 Width = 280
                 Caption = 'Impressão Extrato'
+                ChildSizing.EnlargeHorizontal = crsHomogenousSpaceResize
+                ChildSizing.EnlargeVertical = crsHomogenousSpaceResize
+                ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                ChildSizing.ControlsPerLine = 1
                 ClientHeight = 193
                 ClientWidth = 276
                 TabOrder = 2
                 object cbxImprimirItem1LinhaSAT: TCheckBox
-                  Left = 8
+                  Left = 16
                   Height = 21
-                  Top = 8
-                  Width = 218
+                  Top = 15
+                  Width = 244
                   Caption = 'Imprimir itens somente em 1 linha'
                   TabOrder = 0
                 end
                 object cbxImprimirDescAcresItemSAT: TCheckBox
-                  Left = 8
+                  Left = 16
                   Height = 21
-                  Top = 33
+                  Top = 51
                   Width = 244
                   Caption = 'Imprime desconto/acréscimo por item'
                   TabOrder = 1
                 end
                 object cbxImprimirCodEANitemSAT: TCheckBox
-                  Left = 8
+                  Left = 16
                   Height = 21
-                  Top = 59
-                  Width = 149
+                  Top = 87
+                  Width = 244
                   Caption = 'Imprimir Código GTIN'
                   TabOrder = 2
+                end
+                object cbxLogoLateral: TCheckBox
+                  Left = 16
+                  Height = 21
+                  Top = 123
+                  Width = 244
+                  Caption = 'Logo Lateral'
+                  TabOrder = 3
+                end
+                object cbxQRCodeLateral: TCheckBox
+                  Left = 16
+                  Height = 21
+                  Top = 159
+                  Width = 244
+                  Caption = 'QRCode Lateral'
+                  TabOrder = 4
                 end
               end
             end
@@ -11047,7 +11059,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsIntegrador: TTabSheet
           Caption = 'Integrador'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 28
           object Label189: TLabel
             Left = 8
@@ -11273,7 +11285,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 24
-                Width = 21
+                Width = 20
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
@@ -11282,7 +11294,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 71
                 Height = 15
                 Top = 24
-                Width = 21
+                Width = 20
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
@@ -11545,9 +11557,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object Label136: TLabel
                 Left = 211
-                Height = 16
+                Height = 17
                 Top = 56
-                Width = 71
+                Width = 72
                 Caption = 'Pag. Código'
                 Font.Height = -13
                 Font.Name = 'Default'
@@ -11616,7 +11628,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 11
                 Height = 17
                 Top = 0
-                Width = 65
+                Width = 64
                 Caption = 'Tempo ON'
                 ParentColor = False
               end
@@ -11643,7 +11655,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 87
                 Height = 17
                 Top = 0
-                Width = 67
+                Width = 66
                 Caption = 'Tempo OFF'
                 ParentColor = False
               end
@@ -13424,87 +13436,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 554
   end
   object pmTray: TPopupMenu
+    Images = ImageList1
     left = 440
     top = 688
     object Restaurar1: TMenuItem
       Caption = 'Restaurar'
-      Bitmap.Data = {
-        36040000424D3604000000000000360000002800000010000000100000000100
-        2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF008300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FF00
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF008300
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00830000FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FF00
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FF830000FFFF0000FFFFFFFF00FFFFFF00FFFFFF008300
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00830000FFFFFFFF00830000FFFFFFFF00FFFFFF00FFFFFF00FF00
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FFFFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF008300
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00830000FFFFFFFF00830000FFFFFFFF00FFFFFF00FFFFFF00FF00
-        00FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FFFFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF008300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFFFFFF00830000FFFFFFFF00FFFFFF00FFFFFF00FF00
-        00FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF00
-        00FF830000FFFF0000FFFFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF008300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFFFFFF00830000FFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FF0000FFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFF0000FF830000FFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF00
-        00FF830000FFFF0000FF830000FFFF0000FFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFF0000FF830000FFFFFFFF00FFFFFF00
-      }
       ImageIndex = 7
       OnClick = Restaurar1Click
     end
     object Ocultar1: TMenuItem
       Caption = 'Ocultar'
-      Bitmap.Data = {
-        36040000424D3604000000000000360000002800000010000000100000000100
-        2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF008300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FFFFFFFF00FFFFFF00FF00
-        00FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF00
-        00FF830000FFFF0000FF830000FFFF0000FF830000FFFFFFFF00FFFFFF008300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FF830000FFFF0000FF8300
-        00FFFF0000FF830000FFFF0000FF830000FFFF0000FFFFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00
-      }
       ImageIndex = 8
       OnClick = Ocultar1Click
     end
@@ -13513,42 +13454,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object Encerrar1: TMenuItem
       Caption = 'Encerrar Monitor'
-      Bitmap.Data = {
-        36040000424D3604000000000000360000002800000010000000100000000100
-        2000000000000004000064000000640000000000000000000000FFFFFF00FFFF
-        FF00101073FF000029FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF00000431FF10106AFFFFFFFF00FFFFFF00FFFFFF000000
-        8BFF5234FFFF0808EEFF000031FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00000039FF080CEEFF3130FFFF00009CFFFFFFFF00000062FF0808
-        FFFF4A48F6FF4A4CFFFF0000C5FF000039FFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF0000004AFF0004EEFF5A59F6FF5A59FFFF0808DEFF00004AFF0004A4FF2020
-        FFFF3134FFFF5A59FFFF6A4CFFFF0004E6FF000062FFFFFFFF00FFFFFF000000
-        52FF0808EEFF5A59FFFF9481FFFF5255FFFF3134FFFF00046AFF000473FF181C
-        FFFF2928FFFF3938FFFF5255FFFF4144FFFF0004C5FF00004AFF00005AFF0808
-        EEFF5255F6FF8B69FFFF5250FFFF4140FFFF3130FFFF080C52FFFFFFFF000808
-        7BFF181CFFFF2928FFFF3134FFFF4A48FFFF5234FFFF0000DEFF0004E6FF4144
-        FFFF7B69FFFF4144FFFF393CFFFF292CFFFF080C83FFFFFFFF00FFFFFF00FFFF
-        FF0008086AFF1818FFFF292CFFFF393CFFFF4A4CFFFF3130FFFF3134F6FF4A48
-        FFFF3938FFFF3130FFFF2024FFFF08084AFFFFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00000452FF5A3CFFFF6261FFFF8371FFFF6261FFFF8371FFFF6261
-        FFFF7B69FFFF2928FFFF00045AFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00FFFFFF0000048BFF393CFFFF6261FFFF6A61FFFF6265FFFF6265
-        FFFF3134F6FF00046AFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF0000005AFF0000C5FF3130FFFF8B79FFFF6A69FFFF8B79FFFF6A69
-        FFFF4120FFFF00009CFF000062FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00000052FF0000C5FF3134FFFF9C79FFFF7B79FFFF7B79FFFF7B79FFFF9C79
-        FFFF7375FFFF2024FFFF000094FF000039FFFFFFFF00FFFFFF00FFFFFF000000
-        52FF0000BDFF4140FFFFAC99FFFF8B89FFFFAC99FFFF3130CDFF6A4CFFFF8B8D
-        FFFFAC99FFFF8385FFFF4A28FFFF00008BFF000039FFFFFFFF00000018FF0000
-        BDFF4A48FFFFBD9DFFFF9C99FFFFBD9DFFFF3134BDFFFFFFFF00000020FF5255
-        FFFF9C9DFFFFBD9DFFFF9495FFFF292CFFFF00007BFFFFFFFF00000029FF5255
-        FFFFCDBEFFFFB4AAFFFFCDBAFFFF393CBDFFFFFFFF00FFFFFF00FFFFFF000000
-        29FF7B6DFFFFB4AEFFFFCDBAFFFFACAAFFFF5230FFFFFFFFFF00FFFFFF004144
-        DEFFBDBAFFFFDECAFFFF393CBDFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00000029FF6A69FFFFCDCAFFFFC5B6FFFF20248BFFFFFFFF00FFFFFF00FFFF
-        FF00393CDEFF4140CDFFFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
-        FF00FFFFFF00000029FF7B69FFFF181C7BFFFFFFFF00FFFFFF00
-      }
       ImageIndex = 9
       OnClick = Encerrar1Click
     end
@@ -13689,6 +13594,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13779,6 +13685,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 448
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
@@ -13794,6 +13701,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 448
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
@@ -13808,6 +13716,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 448
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.7
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
@@ -14863,6 +14772,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 448
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
@@ -14901,6 +14811,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 453
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6

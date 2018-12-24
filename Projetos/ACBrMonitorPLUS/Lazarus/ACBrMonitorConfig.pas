@@ -375,6 +375,8 @@ type
     ImprimeEmUmaLinha           : Boolean;
     ImprimeChaveEmUmaLinha      : Integer;
     UsaCodigoEanImpressao       : Boolean;
+    ImprimeQRCodeLateral         : Boolean;
+    ImprimeLogoLateral          : Boolean;
   end;
 
   TSATEmit = record
@@ -427,7 +429,7 @@ type
 
   TSATImpressao = record
     SATEmit                    : TSATEmit;
-    SATExtrado                 : TSATExtrato;
+    SATExtrato                 : TSATExtrato;
     SATFortes                  : TSATFortes;
     SATPrinter                 : TSATPrinter;
   end;
@@ -1048,13 +1050,15 @@ begin
       ini.WriteBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
     end;
 
-    with SAT.SATImpressao.SATExtrado do
+    with SAT.SATImpressao.SATExtrato do
     begin
       ini.WriteString(  CSecSATExtrato, CKeySATExtParamsString           , ParamsString          );
       ini.WriteBool(    CSecSATExtrato, CKeySATExtImprimeDescAcrescItem  , ImprimeDescAcrescItem );
       ini.WriteBool(    CSecSATExtrato, CKeySATExtImprimeEmUmaLinha      , ImprimeEmUmaLinha     );
       ini.WriteInteger( CSecSATExtrato, CKeySATExtImprimeChaveEmUmaLinha , ImprimeChaveEmUmaLinha);
       ini.WriteBool(    CSecSATExtrato, CKeySATExtUsaCodigoEanImpressao  , UsaCodigoEanImpressao );
+      Ini.WriteBool(    CSecSATExtrato, CKeySATExtQRCodeLateral          , ImprimeQRCodeLateral);
+      Ini.WriteBool(    CSecSATExtrato, CKeySATExtLogoLateral            , ImprimeLogoLateral);
     end;
 
     with SAT.SATImpressao.SATEmit do
@@ -1662,13 +1666,15 @@ begin
       SepararPorMES             := ini.ReadBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
     end;
 
-    with SAT.SATImpressao.SATExtrado do
+    with SAT.SATImpressao.SATExtrato do
     begin
       ParamsString           := ini.ReadString(  CSecSATExtrato, CKeySATExtParamsString           , ParamsString          );
       ImprimeDescAcrescItem  := ini.ReadBool(    CSecSATExtrato, CKeySATExtImprimeDescAcrescItem  , ImprimeDescAcrescItem );
       ImprimeEmUmaLinha      := ini.ReadBool(    CSecSATExtrato, CKeySATExtImprimeEmUmaLinha      , ImprimeEmUmaLinha     );
       ImprimeChaveEmUmaLinha := ini.ReadInteger( CSecSATExtrato, CKeySATExtImprimeChaveEmUmaLinha , ImprimeChaveEmUmaLinha);
       UsaCodigoEanImpressao  := ini.ReadBool(    CSecSATExtrato, CKeySATExtUsaCodigoEanImpressao  , UsaCodigoEanImpressao );
+      ImprimeQRCodeLateral   := Ini.ReadBool(    CSecSATExtrato, CKeySATExtQRCodeLateral          , ImprimeQRCodeLateral);
+      ImprimeLogoLateral     := Ini.ReadBool(    CSecSATExtrato, CKeySATExtLogoLateral            , ImprimeLogoLateral);
     end;
 
     with SAT.SATImpressao.SATEmit do
@@ -1853,6 +1859,7 @@ var
   FS: TFileStream;
 begin
   ValidarNomeCaminho(False);
+  DefinirValoresPadrao;
 
   FS := TFileStream.Create(FNomeArquivo, fmOpenRead);
   try
@@ -2253,13 +2260,15 @@ begin
     SepararPorMES             := True;
   end;
 
-  with SAT.SATImpressao.SATExtrado do
+  with SAT.SATImpressao.SATExtrato do
   begin
     ParamsString           := '';
     ImprimeDescAcrescItem  := True;
     ImprimeEmUmaLinha      := False;
     ImprimeChaveEmUmaLinha := 0;
     UsaCodigoEanImpressao  := False;
+    ImprimeQRCodeLateral   := True;
+    ImprimeLogoLateral     := True;
   end;
 
   with SAT.SATImpressao.SATEmit do
@@ -2452,6 +2461,7 @@ end;
 procedure TMonitorConfig.CriarArquivo;
 begin
   DefinirValoresPadrao;
+  SalvarArquivo;
 end;
 
 procedure TMonitorConfig.DoOnGravarConfig;

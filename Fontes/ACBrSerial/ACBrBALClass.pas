@@ -229,7 +229,7 @@ begin
 
   if (fpModeloStr = 'Generica') then
   begin
-    AguardarRespostaPeso(MillisecTimeOut, True);
+    Result := AguardarRespostaPeso(MillisecTimeOut, True);
     Exit;
   end;
 

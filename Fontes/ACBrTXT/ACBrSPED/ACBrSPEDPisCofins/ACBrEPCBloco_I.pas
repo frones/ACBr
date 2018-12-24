@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -35,7 +35,7 @@
 |* Historico
 |*
 |* 20/02/2014: Juliomar Marchetti
-|*  - Cria√ß√£o
+|*  - CriaÁ„o
 *******************************************************************************}
 
 unit ACBrEPCBloco_I;
@@ -66,15 +66,15 @@ type
     property RegistroI010: TRegistroI010List read FRegistroI010 write FRegistroI010;
   end;
 
-  /// REGISTRO I010: IDENTIFICA√á√ÉO DA PESSOA JURIDICA/ESTABELECIMENTO
+  /// REGISTRO I010: IDENTIFICA«√O DA PESSOA JURIDICA/ESTABELECIMENTO
 
   TRegistroI010 = class
   private
     FRegistroI100: TRegistroI100List;
 
-    fCNPJ: string;                           //02 N√∫mero de inscri√ß√£o da pessoa jur√≠dica no CNPJ. N 014*
-    fIND_ATIV: integer;                      //03 Indicador de opera√ß√µes realizadas no per√≠odo N 002*
-    fINFO_COMPL: string;                     //04 Informa√ß√£o Complementar C
+    fCNPJ: string;                           //02 N˙mero de inscriÁ„o da pessoa jurÌdica no CNPJ. N 014*
+    fIND_ATIV: integer;                      //03 Indicador de operaÁıes realizadas no perÌodo N 002*
+    fINFO_COMPL: string;                     //04 InformaÁ„o Complementar C
   public
     constructor Create;  virtual;  /// Create
     destructor  Destroy; override; /// Destroy
@@ -97,7 +97,7 @@ type
     property Items[Index: Integer]: TRegistroI010 read GetItem write SetItem;
   end;
 
-  /// REGISTRO I100: CONSOLIDA√á√ÉO DAS OPERA√á√ïES DO PER√çODO
+  /// REGISTRO I100: CONSOLIDA«√O DAS OPERA«’ES DO PERÕODO
 
   { TRegistroI100 }
 
@@ -106,17 +106,17 @@ type
     FRegistroI199: TRegistroI199List;
     FRegistroI200 : TRegistroI200List;
 
-    fVL_REC: Double;                        //02 Valor Total do Faturamento/Receita Bruta no Per√≠odo N - 02
-    fCST_PIS_COFINS: TACBrCstPisCofins;     //03 C√≥digo de Situa√ß√£o Tribut√°ria referente √† Receita informada no Campo 02 (Tabelas 4.3.3 e 4.3.4) N 002* -
-    fVL_TOT_DED_GER: Double;                //04 Valor Total das Dedu√ß√µes e Exclus√µes de Car√°ter Geral N - 02
-    fVL_TOT_DED_ESP: Double;                //05 Valor Total das Dedu√ß√µes e Exclus√µes de Car√°ter Espec√≠fico N - 02
-    fALIQ_COFINS: Double;                   //06 Valor da base de c√°lculo do PIS/PASEP N - 02
-    fVL_BC_PIS: Double;                     //07 Al√≠quota do PIS/PASEP (em percentual) N 008 02
+    fVL_REC: Double;                        //02 Valor Total do Faturamento/Receita Bruta no PerÌodo N - 02
+    fCST_PIS_COFINS: TACBrCstPisCofins;     //03 CÛdigo de SituaÁ„o Tribut·ria referente ‡ Receita informada no Campo 02 (Tabelas 4.3.3 e 4.3.4) N 002* -
+    fVL_TOT_DED_GER: Double;                //04 Valor Total das DeduÁıes e Exclusıes de Car·ter Geral N - 02
+    fVL_TOT_DED_ESP: Double;                //05 Valor Total das DeduÁıes e Exclusıes de Car·ter EspecÌfico N - 02
+    fALIQ_COFINS: Double;                   //06 Valor da base de c·lculo do PIS/PASEP N - 02
+    fVL_BC_PIS: Double;                     //07 AlÌquota do PIS/PASEP (em percentual) N 008 02
     fALIQ_PIS: Double;                      //08 Valor do PIS/PASEP N - 02
-    fVL_PIS: Double;                        //09 Valor da base de c√°lculo da Cofins N - 02
-    fVL_BC_COFINS: Double;                  //10 Al√≠quota da COFINS (em percentual) N 008 02
+    fVL_PIS: Double;                        //09 Valor da base de c·lculo da Cofins N - 02
+    fVL_BC_COFINS: Double;                  //10 AlÌquota da COFINS (em percentual) N 008 02
     fVL_COFINS: double;                     //11 Valor da COFINS N - 02
-    fINFO_COMPL: string;                    //12 Informa√ß√£o Complementar dos dados informados no registro C - -
+    fINFO_COMPL: string;                    //12 InformaÁ„o Complementar dos dados informados no registro C - -
 
   public
     constructor Create;  virtual;  /// Create
@@ -173,18 +173,18 @@ type
     property Items[Index: Integer]: TRegistroI199 read GetItem write SetItem;
   end;
 
-  /// REGISTRO I200: COMPOSI√á√ÉO DAS RECEITAS, DEDU√á√ïES E/OU EXCLUS√ïES DO PER√çODO
+  /// REGISTRO I200: COMPOSI«√O DAS RECEITAS, DEDU«’ES E/OU EXCLUS’ES DO PERÕODO
 
   TRegistroI200 = class
   private
     FRegistroI299 : TRegistroI299List;
     FRegistroI300 : TRegistroI300List;
 
-    fNUM_CAMPO: string;                     //02 Informar o n√∫mero do campo do registro ‚ÄúI100‚Äù (Campos 02, 04 ou 05), objeto de informa√ß√£o neste registro.C 002* -
-    fCOD_DET: string;                       //03 C√≥digo do tipo de detalhamento, conforme Tabelas 7.1.1 e/ou 7.1.2 C 005* -
+    fNUM_CAMPO: string;                     //02 Informar o n˙mero do campo do registro ìI100î (Campos 02, 04 ou 05), objeto de informaÁ„o neste registro.C 002* -
+    fCOD_DET: string;                       //03 CÛdigo do tipo de detalhamento, conforme Tabelas 7.1.1 e/ou 7.1.2 C 005* -
     fDET_VALOR: double;                     //04 Valor detalhado referente ao campo 03 (COD_DET) deste registro N - 02
-    fCOD_CTA: string;                       //05 C√≥digo da conta cont√°bil referente ao valor informado no campo 04 (DET_VALOR) C 060 -
-    fINFO_COMPL: string;                    //06 Informa√ß√£o Complementar dos dados informados no registro C - -
+    fCOD_CTA: string;                       //05 CÛdigo da conta cont·bil referente ao valor informado no campo 04 (DET_VALOR) C 060 -
+    fINFO_COMPL: string;                    //06 InformaÁ„o Complementar dos dados informados no registro C - -
   public
     constructor Create;  virtual;  /// Create
     destructor  Destroy; override; /// Destroy
@@ -214,7 +214,7 @@ type
 
   TRegistroI299 = class
   private
-    fNUM_PROC: string;                    //02 Identifica√ß√£o do processo ou ato concess√≥rio C 020 -
+    fNUM_PROC: string;                    //02 IdentificaÁ„o do processo ou ato concessÛrio C 020 -
     fIND_PROC: TACBrOrigemProcesso;       //03 Indicador da origem do processo: C 001* -
   public
     constructor Create;  virtual;  /// Create
@@ -235,16 +235,16 @@ type
     property Items[Index: Integer]: TRegistroI299 read GetItem write SetItem;
   end;
 
-  /// REGISTRO I300: COMPLEMENTO DAS OPERA√á√ïES ‚Äì DETALHAMENTO DAS RECEITAS, DEDU√á√ïES E/OU EXCLUS√ïES DO PER√çODO
+  /// REGISTRO I300: COMPLEMENTO DAS OPERA«’ES ñ DETALHAMENTO DAS RECEITAS, DEDU«’ES E/OU EXCLUS’ES DO PERÕODO
 
   TRegistroI300 = class
   private
     FRegistroI399 : TRegistroI399List;
 
-    fCOD_COMP: string;                          //02 C√≥digo das Tabelas 7.1.3 (Receitas ‚Äì Vis√£o Anal√≠tica/Referenciada) e/ou 7.1.4 (Dedu√ß√µes e exclus√µes ‚Äì Vis√£o Anal√≠tica/Referenciada), objeto de complemento neste registro C 060 -
-    fDET_VALOR: Double;                         //03 Valor da receita, dedu√ß√£o ou exclus√£o, objeto de complemento/detalhamento neste registro, conforme c√≥digo informado no campo 02 (especificados nas tabelas anal√≠ticas 7.1.3 e 7.1.4) ou no campo 04 (c√≥digo da conta cont√°bil) N - 02
-    fCOD_CTA: string;                           //04 C√≥digo da conta cont√°bil referente ao valor informado no campo 03 C 060 -
-    fINFO_COMPL: string;                        //05 Informa√ß√£o Complementar dos dados informados no registro C - -
+    fCOD_COMP: string;                          //02 CÛdigo das Tabelas 7.1.3 (Receitas ñ Vis„o AnalÌtica/Referenciada) e/ou 7.1.4 (DeduÁıes e exclusıes ñ Vis„o AnalÌtica/Referenciada), objeto de complemento neste registro C 060 -
+    fDET_VALOR: Double;                         //03 Valor da receita, deduÁ„o ou exclus„o, objeto de complemento/detalhamento neste registro, conforme cÛdigo informado no campo 02 (especificados nas tabelas analÌticas 7.1.3 e 7.1.4) ou no campo 04 (cÛdigo da conta cont·bil) N - 02
+    fCOD_CTA: string;                           //04 CÛdigo da conta cont·bil referente ao valor informado no campo 03 C 060 -
+    fINFO_COMPL: string;                        //05 InformaÁ„o Complementar dos dados informados no registro C - -
   public
     constructor Create;  virtual;  /// Create
     destructor  Destroy; override; /// Destroy
@@ -272,8 +272,8 @@ type
 
   TRegistroI399 = class
   private
-    fNUM_PROC: string;               //02 Identifica√ß√£o do processo ou ato concess√≥rio C 020 -
-    fIND_PROC: TACBrOrigemProcesso;  //03 Indicador da origem do processo: 1 - Justi√ßa Federal; 3 ‚Äì Secretaria da Receita Federal do Brasil 9 ‚Äì Outros. C 001* -
+    fNUM_PROC: string;               //02 IdentificaÁ„o do processo ou ato concessÛrio C 020 -
+    fIND_PROC: TACBrOrigemProcesso;  //03 Indicador da origem do processo: 1 - JustiÁa Federal; 3 ñ Secretaria da Receita Federal do Brasil 9 ñ Outros. C 001* -
   public
     constructor Create;  virtual;  /// Create
     destructor  Destroy; override; /// Destroy

@@ -267,9 +267,9 @@ var
    ATipoOcorrencia, ATipoBoleto : String;
    ADataMoraJuros, ADataDesconto: String;
    ANossoNumero, ATipoAceite    : String;
-   aAgencia, aConta, aDV        : String;
+   aAgencia, aConta{, aDV}        : String;
    ProtestoBaixa                : String;
-   wTamConvenio, wTamNossoNum   : Integer;
+//   wTamConvenio, wTamNossoNum   : Integer;
    wCarteira                    : Integer;
    ACaracTitulo, wTipoCarteira  : Char;
 begin

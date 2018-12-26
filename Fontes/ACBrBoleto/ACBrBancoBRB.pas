@@ -49,7 +49,7 @@ type
     procedure GerarRegistroHeader400(NumeroRemessa: Integer; aRemessa: TStringList); override;
     procedure GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList); override;
     function MontarChaveASBACE(const ACBrTitulo: TACBrTitulo): string;
-    function CalculaDigitosChaveASBACE(ChaveASBACESemDigito: string): string;
+    function CalculaDigitosChaveASBACE(const ChaveASBACESemDigito: string): string;
     procedure LerRetorno400(ARetorno: TStringList); override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; overload; override;
   end;
@@ -75,7 +75,7 @@ begin
   fpTamanhoCarteira       := 3;
 end;
 
-function Modulo11(Valor: string; Base: Integer = 9; Resto: boolean = false): string;
+function Modulo11(const Valor: string; Base: Integer = 9; Resto: boolean = false): string;
 var
   Soma: integer;
   Contador, Peso, Digito: integer;
@@ -105,7 +105,7 @@ begin
     end
 end;
 
-function TACBrBancoBRB.CalculaDigitosChaveASBACE(ChaveASBACESemDigito: string): string;
+function TACBrBancoBRB.CalculaDigitosChaveASBACE(const ChaveASBACESemDigito: string): string;
 {Calcula os 2 dígitos usados na CHAVE ASBACE - Código usado por bancos estaduais}
 var
   Digito1, Digito2: integer;

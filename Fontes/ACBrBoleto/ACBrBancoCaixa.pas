@@ -54,7 +54,7 @@ type
     fQtRegLote: Integer;
     function RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
-    function RetornaCodCarteira(Carteira: string; const ACBrTitulo : TACBrTitulo): integer;
+    function RetornaCodCarteira(const Carteira: string; const ACBrTitulo : TACBrTitulo): integer;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -261,7 +261,7 @@ begin
     Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44);
 end;
 
-function TACBrCaixaEconomica.RetornaCodCarteira(Carteira: string; const ACBrTitulo: TACBrTitulo): integer;
+function TACBrCaixaEconomica.RetornaCodCarteira(const Carteira: string; const ACBrTitulo: TACBrTitulo): integer;
 
 begin
     if (Carteira = 'RG') and (ACBrTitulo.CarteiraEnvio = tceCedente) then

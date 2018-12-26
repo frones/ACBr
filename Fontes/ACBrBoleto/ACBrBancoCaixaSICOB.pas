@@ -55,7 +55,7 @@ type
    private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function CalcularDVAgCD(Header: Boolean = False): string;
-    function RetornaCodCarteira(Carteira : string): integer;
+    function RetornaCodCarteira(const Carteira : string): integer;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -479,7 +479,7 @@ begin
    Result:= copy( CodigoBarras, 1, 4) + DigitoCodBarras + copy( CodigoBarras, 5, 44);
 end;
 
-function TACBrCaixaEconomicaSICOB.RetornaCodCarteira(Carteira: string): integer;
+function TACBrCaixaEconomicaSICOB.RetornaCodCarteira(const Carteira: string): integer;
 begin
 if Carteira = 'CS' then
   Result := 11

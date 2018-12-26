@@ -53,6 +53,12 @@ contains
   ACBrBancoSafra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas',
   ACBrBancoAmazonia in '..\..\..\Fontes\ACBrBoleto\ACBrBancoAmazonia.pas',
   ACBrBancoSafraBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas',
-  ACBrBancoBrasilSICOOB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas';
+  ACBrBancoBrasilSICOOB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas',
+  ACBrBancoBanese in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanese.pas',
+  ACBrBancoCredisis in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCredisis.pas',
+  ACBrBancoCresol in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas',
+  ACBrBancoUnicredES in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredES.pas',
+  ACBrBancoUnicredRS in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredRS.pas',
+  ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas';
 
 end.

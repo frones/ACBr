@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2018
+-- pcnNFeW --
+[*] Correção no ID de algumas tags.
+  Por: Roberto S Filho
+
 21/12/2018
 -- Diversos --
 [+] Implementado o evento teCancSubst (Cancelamento por substituição) para a NFC-e

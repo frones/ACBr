@@ -1319,9 +1319,9 @@ begin
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCP > 0) or (nfe.Det[i].Imposto.ICMS.pFCP > 0) or (nfe.Det[i].Imposto.ICMS.vFCP > 0) then
                       begin
-                        Gerador.wCampo(tcDe2, 'N23a', 'vBCFCP', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCFCP, DSC_VBCFCP);
-                        Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N23b', 'pFCP', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pFCP, DSC_PFCP);
-                        Gerador.wCampo(tcDe2, 'N23d', 'vFCP  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP);
+                        Gerador.wCampo(tcDe2, 'N17a', 'vBCFCP', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCFCP, DSC_VBCFCP);
+                        Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N17b', 'pFCP', 01, IIf(Usar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pFCP, DSC_PFCP);
+                        Gerador.wCampo(tcDe2, 'N17c', 'vFCP  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vFCP, DSC_VFCP);
                       end;
                     end;
 

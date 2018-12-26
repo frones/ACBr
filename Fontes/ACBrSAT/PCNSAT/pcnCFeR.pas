@@ -69,6 +69,7 @@ uses ACBrConsts, ACBrUtil;
 
 constructor TCFeR.Create(AOwner: TCFe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FCFe := AOwner;
 end;

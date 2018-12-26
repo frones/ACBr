@@ -68,6 +68,7 @@ uses ACBrConsts;
 
 constructor TRedeR.Create(AOwner: TRede);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FRede := AOwner;
 end;

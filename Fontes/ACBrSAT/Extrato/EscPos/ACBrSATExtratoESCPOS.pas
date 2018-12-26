@@ -84,7 +84,7 @@ type
 
     function SuportaQRCodeLateral: Boolean;
     function SuportaLogoLateral: Boolean;
-    function ComandosQRCode(DadosQRCode: String): String;
+    function ComandosQRCode(const DadosQRCode: String): String;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -494,7 +494,7 @@ begin
   end;
 end;
 
-function TACBrSATExtratoESCPOS.ComandosQRCode(DadosQRCode: String): String;
+function TACBrSATExtratoESCPOS.ComandosQRCode(const DadosQRCode: String): String;
 begin
   Result := '<qrcode_tipo>2</qrcode_tipo>'+
             '<qrcode_error>0</qrcode_error>'+

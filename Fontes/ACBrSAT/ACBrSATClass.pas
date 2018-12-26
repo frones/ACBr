@@ -157,9 +157,9 @@ type
     function GetPastaCFeCancelamento: String;
     function GetPastaCFeVenda: String;
     function GetPastaEnvio: String;
-    procedure SetPastaCFeCancelamento(AValue: String);
-    procedure SetPastaCFeVenda(AValue: String);
-    procedure SetPastaEnvio(AValue: String);
+    procedure SetPastaCFeCancelamento(const AValue: String);
+    procedure SetPastaCFeVenda(const AValue: String);
+    procedure SetPastaEnvio(const AValue: String);
     procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
     procedure SetSepararPorAno(const Value: Boolean);
@@ -168,7 +168,7 @@ type
     destructor Destroy; override;
 
     procedure Clear;
-    function CalcPath(APath: String; CNPJ: String; Data: TDateTime): String;
+    function CalcPath(const APath: String; CNPJ: String; Data: TDateTime): String;
   published
     property SalvarCFe: Boolean read fsSalvarCFe write fsSalvarCFe default false;
     property SalvarCFeCanc: Boolean read fsSalvarCFeCanc write fsSalvarCFeCanc default false;
@@ -200,7 +200,7 @@ type
     fmensagemSEFAZ : String;
     fRetornoLst : TStringList ;
     fRetornoStr : String ;
-    procedure SetRetornoStr(AValue : String) ;
+    procedure SetRetornoStr(const AValue : String) ;
   public
     constructor Create ;
     Destructor Destroy ; override ;
@@ -282,7 +282,7 @@ type
      function GetnumeroSessao : Integer ;
      function GetNomeDLL : string ;
 
-     procedure ErroAbstract( NomeProcedure : String ) ;
+     procedure ErroAbstract( const NomeProcedure : String ) ;
      function GetsignAC : AnsiString ;
    protected
      fpOwner : TComponent ;   { Componente ACBrSAT }
@@ -400,17 +400,17 @@ begin
   Result := fsPastaEnvio ;
 end;
 
-procedure TACBrSATConfigArquivos.SetPastaCFeCancelamento(AValue: String);
+procedure TACBrSATConfigArquivos.SetPastaCFeCancelamento(const AValue: String);
 begin
   fsPastaCFeCancelamento := PathWithoutDelim( AValue );
 end;
 
-procedure TACBrSATConfigArquivos.SetPastaCFeVenda(AValue: String);
+procedure TACBrSATConfigArquivos.SetPastaCFeVenda(const AValue: String);
 begin
   fsPastaCFeVenda := PathWithoutDelim( AValue );
 end;
 
-procedure TACBrSATConfigArquivos.SetPastaEnvio(AValue: String);
+procedure TACBrSATConfigArquivos.SetPastaEnvio(const AValue: String);
 begin
   fsPastaEnvio := PathWithoutDelim( AValue );
 end;
@@ -434,7 +434,7 @@ begin
   fsSepararPorAno := Value;
 end;
 
-function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;
+function TACBrSATConfigArquivos.CalcPath(const APath: String; CNPJ: String;
   Data: TDateTime): String;
 var
   wDia, wMes, wAno: Word;
@@ -563,7 +563,7 @@ end;
 
 { TACBrSATRespostaClass }
 
-procedure TACBrSATResposta.SetRetornoStr(AValue : String) ;
+procedure TACBrSATResposta.SetRetornoStr(const AValue : String) ;
 var
   index : integer;
   AStr: String;
@@ -743,7 +743,7 @@ begin
   Result := TACBrSAT(fpOwner).NomeDLL;
 end;
 
-procedure TACBrSATClass.ErroAbstract(NomeProcedure : String) ;
+procedure TACBrSATClass.ErroAbstract(const NomeProcedure : String) ;
 begin
   raise EACBrSATErro.create( Format( cACBrSATCMDInvalidoException,
                                      [NomeProcedure, ModeloStr] )) ;

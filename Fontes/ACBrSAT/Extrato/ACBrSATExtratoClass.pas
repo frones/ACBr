@@ -93,9 +93,9 @@ type
     FImprimeCodigoEan: Boolean;
 
 
-    procedure ErroAbstract(NomeProcedure : String) ;
+    procedure ErroAbstract(const NomeProcedure : String) ;
     function GetAbout: String;
-    procedure SetAbout(AValue: String);
+    procedure SetAbout(const AValue: String);
     {$IFNDEF NOGUI}
      procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
     {$ENDIF}
@@ -122,8 +122,8 @@ type
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); virtual;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); virtual;
 
-    function CalcularConteudoQRCode(ID: String; dEmi_hEmi: TDateTime;
-      Valor: Double; CNPJCPF: String; assinaturaQRCODE: String): String;
+    function CalcularConteudoQRCode(const ID: String; dEmi_hEmi: TDateTime;
+      Valor: Double; const CNPJCPF: String; const assinaturaQRCODE: String): String;
   published
     property ACBrSAT  : TComponent  read FACBrSAT write SetSAT ;
     property About  : String read GetAbout write SetAbout stored False ;
@@ -197,9 +197,9 @@ begin
   FLayOut := lCancelamento;
 end;
 
-function TACBrSATExtratoClass.CalcularConteudoQRCode(ID: String;
-  dEmi_hEmi:TDateTime; Valor: Double; CNPJCPF: String;
-  assinaturaQRCODE: String): String;
+function TACBrSATExtratoClass.CalcularConteudoQRCode(const ID: String;
+  dEmi_hEmi:TDateTime; Valor: Double; const CNPJCPF: String;
+  const assinaturaQRCODE: String): String;
 begin
   Result := ID + '|' +
             FormatDateTime('yyyymmddhhmmss',dEmi_hEmi) + '|' +
@@ -223,7 +223,7 @@ begin
      FACBrSAT := nil ;
 end;
 
-procedure TACBrSATExtratoClass.ErroAbstract(NomeProcedure : String) ;
+procedure TACBrSATExtratoClass.ErroAbstract(const NomeProcedure : String) ;
 begin
   raise EACBrSATErro.create( Format( 'Procedure: %s '+ sLineBreak +
                                      ' não implementada para o Extrato: %s' ,
@@ -240,7 +240,7 @@ begin
    Result := PathWithDelim(aInitialPath) + 'SAT';
 end;
 
-procedure TACBrSATExtratoClass.SetAbout(AValue: String);
+procedure TACBrSATExtratoClass.SetAbout(const AValue: String);
 begin
   {}
 end;

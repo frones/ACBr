@@ -84,10 +84,10 @@ type
     procedure Clear ;
     procedure ClearSessao ;
 
-    function LoadFromFile(AFileName : String): boolean;
-    function SaveToFile(AFileName : String): boolean;
+    function LoadFromFile(const AFileName : String): boolean;
+    function SaveToFile(const AFileName : String): boolean;
     function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
-    procedure SetXMLString(AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString) ;
 
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
     property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
@@ -564,7 +564,7 @@ begin
 end;
 
 
-procedure TCFeCanc.SetXMLString(AValue : AnsiString) ;
+procedure TCFeCanc.SetXMLString(const AValue : AnsiString) ;
 var
  LocCFeCancR : TCFeCancR;
 begin
@@ -579,7 +579,7 @@ begin
   FXMLOriginal := AValue;
 end;
 
-function TCFeCanc.LoadFromFile(AFileName : String) : boolean ;
+function TCFeCanc.LoadFromFile(const AFileName : String) : boolean ;
 var
   SL : TStringList;
 begin
@@ -595,7 +595,7 @@ begin
   end;
 end ;
 
-function TCFeCanc.SaveToFile(AFileName : String) : boolean ;
+function TCFeCanc.SaveToFile(const AFileName : String) : boolean ;
 begin
   WriteToTXT(AFileName, AsXMLString, False, False);
   FNomeArquivo := AFileName;

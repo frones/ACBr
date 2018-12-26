@@ -69,6 +69,7 @@ implementation
 
 constructor TRedeW.Create(AOwner: TRede);
 begin
+  inherited Create;
   FRede := AOwner;
   FGerador := TGerador.Create;
 end;

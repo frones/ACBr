@@ -76,10 +76,10 @@ type
     destructor Destroy; override;
     procedure Clear ;
 
-    function LoadFromFile(AFileName : String): boolean;
-    function SaveToFile(AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
+    function LoadFromFile(const AFileName : String): boolean;
+    function SaveToFile(const AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
     function GetXMLString: AnsiString;
-    procedure SetXMLString(AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString) ;
 
     property AsXMLString : AnsiString read GetXMLString write SetXMLString ;
   published
@@ -150,6 +150,7 @@ end;
 
 constructor TRede.Create;
 begin
+  inherited Create;
   Clear;
 end;
 
@@ -179,7 +180,7 @@ begin
   Fsenha      := '';
 end;
 
-function TRede.LoadFromFile(AFileName: String): boolean;
+function TRede.LoadFromFile(const AFileName: String): boolean;
 var
   SL : TStringList;
 begin
@@ -194,7 +195,7 @@ begin
   end;
 end;
 
-function TRede.SaveToFile(AFileName: String; ApenasTagsAplicacao: Boolean
+function TRede.SaveToFile(const AFileName: String; ApenasTagsAplicacao: Boolean
   ): boolean;
 var
   SL : TStringList;
@@ -227,7 +228,7 @@ begin
   end ;
 end;
 
-procedure TRede.SetXMLString(AValue: AnsiString);
+procedure TRede.SetXMLString(const AValue: AnsiString);
 var
  LocRedeR : TRedeR;
 begin

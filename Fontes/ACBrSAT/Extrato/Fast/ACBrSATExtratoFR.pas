@@ -72,12 +72,12 @@ begin
   inherited create( AOwner );
 
   
-  fpAbout := 'ACBrSATExtratoFast ver: ' + CACBrSATExtratoFast_Versao  ;
+  fAbout := 'ACBrSATExtratoFast ver: ' + CACBrSATExtratoFast_Versao  ;
 end;
 
 destructor TACBrSATExtratoFortesClass.Destroy;
 begin
-  fMargens.Free;
+//  fMargens.Free;
 
   inherited Destroy ;
 end;

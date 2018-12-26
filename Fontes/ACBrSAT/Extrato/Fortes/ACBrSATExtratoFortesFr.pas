@@ -311,7 +311,7 @@ type
     fHeightDetItem: Integer;
     fResumido: Boolean;
 
-    procedure PintarQRCode(QRCodeData: String; APict: TPicture);
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
 
@@ -503,7 +503,7 @@ begin
   RecordAction := raUseIt ;
 end;
 
-procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
+procedure TACBrSATExtratoFortesFr.PintarQRCode(const QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
   QRCodeBitmap: TBitmap;
@@ -847,7 +847,7 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbTotalBrutoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  Descontos, Acrescimos: Double;
+//  Descontos, Acrescimos: Double;
   TotalDescAcresItem: Currency;
 begin
   with ACBrSATExtrato.CFe do

@@ -124,6 +124,7 @@ Uses
 
 constructor TCFeW.Create(AOwner: TCFe);
 begin
+  inherited Create;
   FCFe := AOwner;
   FApenasTagsAplicacao := False;
   FGerador := TGerador.Create;

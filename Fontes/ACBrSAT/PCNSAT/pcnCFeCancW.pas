@@ -107,6 +107,7 @@ implementation
 
 constructor TCFeCancW.Create(AOwner: TCFeCanc);
 begin
+  inherited Create;
   FCFeCanc := AOwner;
   FGerador := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|CFe xmlns|infCFe versao|obsCont|obsFisco|';

@@ -99,8 +99,8 @@ type
      fsErrosSessaoCount: Integer;
      fsSessaoAVerificar: Integer;
 
-     function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
-     function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
+     function CodificarPaginaDeCodigoSAT(const ATexto: String): AnsiString;
+     function DecodificarPaginaDeCodigoSAT(const ATexto: AnsiString): String;
 
      function GetAbout : String;
      function GetcodigoDeAtivacao : AnsiString ;
@@ -109,13 +109,13 @@ type
      procedure SetAbout(const Value: String);{%h-}
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
-     procedure SetNomeDLL(AValue : string) ;
+     procedure SetNomeDLL(const AValue : string) ;
      procedure SetAguardandoResposta(AValue: Boolean);
 
      procedure VerificaInicializado ;
      procedure VerificaCondicoesImpressao( EhCancelamento: Boolean = False);
 
-     procedure GravaLog(AString : AnsiString ) ;
+     procedure GravaLog(const AString : AnsiString ) ;
      procedure SetExtrato(const Value: TACBrSATExtratoClass);
      procedure SetMAIL(const AValue: TACBrMail);
      procedure SetIntegrador(AValue: TACBrIntegrador);
@@ -125,7 +125,7 @@ type
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
      procedure IniciaComando ;
-     function FinalizaComando(AResult: String): String;
+     function FinalizaComando(const AResult: String): String;
      procedure DecodificaRetorno6000;
      procedure DecodificaRetorno7000;
      property SAT : TACBrSATClass read fsSATClass ;
@@ -161,9 +161,9 @@ type
      procedure InicializaCFe( ACFe : TCFe = nil );
      function VerificarVersaoSAT(const VersaoLayout: Double = 0): Double;
 
-     procedure DoLog(AString : String ) ;
+     procedure DoLog(const AString : String ) ;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ): String ;
+     function AssociarAssinatura( CNPJvalue: AnsiString; const assinaturaCNPJs : AnsiString ): String ;
      function AtivarSAT(subComando : Integer ; CNPJ : AnsiString ; cUF : Integer
        ) : String ;
      function AtualizarSoftwareSAT : String ;
@@ -172,7 +172,7 @@ type
      function CancelarUltimaVenda :String ; overload;
      function CancelarUltimaVenda( chave, dadosCancelamento : AnsiString ) :
        String ; overload;
-     function ComunicarCertificadoICPBRASIL( certificado : AnsiString ) :
+     function ComunicarCertificadoICPBRASIL( const certificado : AnsiString ) :
        String ;
      function ConfigurarInterfaceDeRede( dadosConfiguracao : AnsiString = '') :
        String ;
@@ -182,28 +182,28 @@ type
      function DesbloquearSAT : String ;
      function EnviarDadosVenda : String ; overload;
      function EnviarDadosVenda( dadosVenda : AnsiString ) : String ; overload;
-     procedure ExtrairLogs( NomeArquivo : String ); overload;
+     procedure ExtrairLogs( const NomeArquivo : String ); overload;
      procedure ExtrairLogs( AStringList : TStrings ); overload;
      procedure ExtrairLogs( AStream : TStream ); overload;
-     function TesteFimAFim( dadosVenda : AnsiString) : String ;
-     function TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
-       opcao: Integer; novoCodigo: AnsiString): String;
+     function TesteFimAFim( const dadosVenda : AnsiString) : String ;
+     function TrocarCodigoDeAtivacao(const codigoDeAtivacaoOuEmergencia: AnsiString;
+       opcao: Integer; const novoCodigo: AnsiString): String;
      function ValidarDadosVenda( dadosVenda : AnsiString; out msgErro: String) : Boolean;
 
     procedure ImprimirExtrato;
     procedure ImprimirExtratoResumido;
     procedure ImprimirExtratoCancelamento;
 
-    function CalcCFeNomeArq( Pasta: String; NomeArquivo: String = '';
-      Sufixo: String = ''; Extensao: String = '.xml'): String;
-    function CalcCFeCancNomeArq( Pasta: String; NomeArquivo: String = '';
-      Sufixo: String = ''; Extensao: String = '.xml'): String;
+    function CalcCFeNomeArq( const Pasta: String; NomeArquivo: String = '';
+      const Sufixo: String = ''; const Extensao: String = '.xml'): String;
+    function CalcCFeCancNomeArq( const Pasta: String; NomeArquivo: String = '';
+      const Sufixo: String = ''; const Extensao: String = '.xml'): String;
 
-    procedure EnviarEmail(sPara, sAssunto: String; NomeArq: String = '';
+    procedure EnviarEmail(const sPara, sAssunto: String; const NomeArq: String = '';
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamCFe: TStream = nil); overload;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil); overload;
 
    published
@@ -859,7 +859,7 @@ begin
   SetAguardandoResposta(True);
 end ;
 
-function TACBrSAT.FinalizaComando( AResult : String ) : String ;
+function TACBrSAT.FinalizaComando( const AResult : String ) : String ;
 var
   AStr : String ;
   SessaoEnviada: Integer;
@@ -941,7 +941,7 @@ begin
   end;
 end;
 
-procedure TACBrSAT.DoLog(AString : String) ;
+procedure TACBrSAT.DoLog(const AString : String) ;
 var
   Tratado: Boolean;
 begin
@@ -953,10 +953,10 @@ begin
     GravaLog( AString );
 end ;
 
-procedure TACBrSAT.GravaLog(AString : AnsiString) ;
+procedure TACBrSAT.GravaLog(const AString : AnsiString) ;
 begin
   if (ArqLOG = '') then
-    exit;
+    Exit;
 
   WriteLog( ArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now) + ' - ' + AString );
 end ;
@@ -998,8 +998,7 @@ begin
   end ;
 end ;
 
-function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : AnsiString
-  ) : String ;
+function TACBrSAT.AssociarAssinatura(CNPJvalue: AnsiString; const assinaturaCNPJs : AnsiString) : String ;
 var
   SATResp: String;
 begin
@@ -1107,7 +1106,7 @@ begin
   DecodificaRetorno7000;
 end ;
 
-function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString) : String ;
+function TACBrSAT.ComunicarCertificadoICPBRASIL(const certificado : AnsiString) : String ;
 var
   SATResp: String;
 begin
@@ -1309,7 +1308,7 @@ begin
   DecodificaRetorno6000;
 end ;
 
-procedure TACBrSAT.ExtrairLogs(NomeArquivo: String);
+procedure TACBrSAT.ExtrairLogs(const NomeArquivo: String);
 var
   SL: TStringList;
 begin
@@ -1372,7 +1371,7 @@ begin
   end;
 end;
 
-function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
+function TACBrSAT.TesteFimAFim(const dadosVenda : AnsiString) : String ;
 var
   XMLRecebido, NomeCFe , SATResp: String;
 begin
@@ -1409,8 +1408,8 @@ begin
   end;
 end ;
 
-function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
-  opcao: Integer; novoCodigo: AnsiString): String;
+function TACBrSAT.TrocarCodigoDeAtivacao(const codigoDeAtivacaoOuEmergencia: AnsiString;
+  opcao: Integer; const novoCodigo: AnsiString): String;
 var
   SATResp: String;
 begin
@@ -1554,7 +1553,7 @@ begin
   fsModelo := AValue;
 end ;
 
-procedure TACBrSAT.SetNomeDLL(AValue : string) ;
+procedure TACBrSAT.SetNomeDLL(const AValue : string) ;
 var
   FileName: String;
 begin
@@ -1690,8 +1689,8 @@ begin
   Extrato.ImprimirExtratoCancelamento;
 end;
 
-function TACBrSAT.CalcCFeNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String; Extensao: String): String;
+function TACBrSAT.CalcCFeNomeArq(const Pasta: String; NomeArquivo: String;
+  const Sufixo: String; const Extensao: String): String;
 var
   Dir: String;
 begin
@@ -1706,8 +1705,8 @@ begin
   Result := Dir + NomeArquivo + Sufixo + Extensao;
 end;
 
-function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String; Extensao: String): String;
+function TACBrSAT.CalcCFeCancNomeArq(const Pasta: String; NomeArquivo: String;
+  const Sufixo: String; const Extensao: String): String;
 var
   Dir, Chave: String;
 begin
@@ -1728,7 +1727,7 @@ begin
   Result := Dir + NomeArquivo + Sufixo + Extensao;
 end;
 
-function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
+function TACBrSAT.CodificarPaginaDeCodigoSAT(const ATexto: String): AnsiString;
 begin
   if fsConfig.PaginaDeCodigo > 0 then
      Result := TranslateString( ACBrStrToAnsi( ATexto ), fsConfig.PaginaDeCodigo )
@@ -1736,7 +1735,7 @@ begin
      Result := TiraAcentos( ATexto );
 end ;
 
-function TACBrSAT.DecodificarPaginaDeCodigoSAT(ATexto : AnsiString
+function TACBrSAT.DecodificarPaginaDeCodigoSAT(const ATexto : AnsiString
    ) : String ;
 begin
   if fsConfig.PaginaDeCodigo > 0 then
@@ -1771,7 +1770,7 @@ begin
     raise EACBrSATErro.CreateFmt('VerificarVersaoSAT: SAT não suporta a versão [%f]', [VersaoLayout]);
 end;
 
-procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String; NomeArq: String;
+procedure TACBrSAT.EnviarEmail(const sPara, sAssunto: String; const NomeArq: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings; StreamCFe: TStream);
 var
   i: Integer;
@@ -1807,7 +1806,7 @@ begin
   MAIL.Send;
 end;
 
-procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String;
+procedure TACBrSAT.EnviarEmail(const sPara, sAssunto: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
 var
   AnexosEmail:TStrings;

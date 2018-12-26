@@ -81,7 +81,7 @@ InstallPassword
 {}
 
 InstallVersion
-{1.2.0.32}
+{1.2.0.34}
 
 Language,ca
 {No}
@@ -192,7 +192,7 @@ UpgradeApplicationID
 {}
 
 Version
-{1.2.0.32}
+{1.2.0.34}
 
 ViewReadme
 {Yes}
@@ -311,7 +311,6 @@ File ::6A8B9D5B-50E3-4CBD-0DBD-80EF0DCB71AD -name ../../../../.././Fontes/ACBrDF
 FileGroup ::A7445EB0-8070-6A51-67CA-70F86582B322 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name ACBrMonitorConsole -parent FileGroups
 FileGroup ::A0AAD91A-0EEE-FEE2-D547-23427A537F3A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name Documentacao -parent FileGroups
 File ::CCDA6226-D16D-F951-BA85-5293BF5E2C5B -name ACBrMonitor.chm -location ../../ -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A
-File ::990A3CB9-D3F2-1E6F-0511-C3759A0696C7 -name ../../../../.././Projetos/ACBrMonitorPLUS/Lazarus/ACBrMonitor.pdf -location ../../ -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A
 File ::1DAA4FF1-5333-E682-7A6C-FEDA68B9D13C -name ../../../../.././Projetos/ACBrMonitorPLUS/Lazarus/ACBrMonitor-change-log.txt -location ../../ -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A
 File ::8F47A99B-7896-F715-BD25-D090CE81C13D -name ../../../../.././Fontes/ACBrDFe/ACBrNFe/ACBrNFe-change-log.txt -location ../../../../.././Fontes/ACBrDFe/ACBrNFe -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A
 File ::84DA5890-6062-E9C9-FAD6-364A8F9C1D00 -name ../../../../.././Fontes/ACBrDFe/ACBrDFe-change-log.txt -location ../../../../.././Fontes/ACBrDFe -parent A0AAD91A-0EEE-FEE2-D547-23427A537F3A

@@ -56,7 +56,7 @@ uses
   DoACBrReinfUnit, DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit,
   DoIBGEUnit, DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit,
   DoACBrGNReUnit, DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32,
-  DoSATUnit,DoACBreSocialUnit;
+  DoSATUnit, DoACBreSocialUnit;
 
 const
   //{$I versao.txt}

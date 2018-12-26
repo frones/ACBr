@@ -1077,7 +1077,7 @@ procedure TACBrNFeDANFCeFortesFr.lSistemaBeforePrint(Sender: TObject;
 begin
   PrintIt := True;
   if NaoEstaVazio(fACBrNFeDANFCeFortes.Sistema) then
-    Text := fACBrNFeDANFCeFortes.Sistema + Space(3);
+    Text := fACBrNFeDANFCeFortes.Sistema + Space(8);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pAsteriscoBeforePrint(Sender: TObject;

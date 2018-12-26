@@ -133,8 +133,9 @@ begin
       FPArquivoPDF := FPArquivoPDF + PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) +
           OnlyNumber(TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe.infCTe.ID) + '-cte.pdf';
 
-      if i < TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 then
-        FPArquivoPDF := FPArquivoPDF + sLinebreak;
+      TACBrCTe(ACBrCTE).Conhecimentos.Items[i].NomeArqPDF := FPArquivoPDF;
+//      if i < TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 then
+//        FPArquivoPDF := FPArquivoPDF + sLinebreak;
 
       case TamanhoPapel of
         tpA5: TfrmDACTeRLRetratoA5.SalvarPDF(Self, TACBrCTe(ACBrCTe).Conhecimentos.Items[i].CTe, FPArquivoPDF);
@@ -144,7 +145,8 @@ begin
   end
   else
   begin
-    FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) + OnlyNumber(CTe.infCTe.ID) + '-cte.pdf';
+    FPArquivoPDF := PathWithDelim(TACBrCTe(ACBrCTe).DACTE.PathPDF) +
+                    OnlyNumber(CTe.infCTe.ID) + '-cte.pdf';
 
     case TamanhoPapel of
         tpA5: TfrmDACTeRLRetratoA5.SalvarPDF(Self, CTe, FPArquivoPDF);

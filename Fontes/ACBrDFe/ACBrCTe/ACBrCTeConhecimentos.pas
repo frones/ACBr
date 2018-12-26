@@ -65,6 +65,7 @@ type
     FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
+    FNomeArqPDF: String;
 
     function GetConfirmado: Boolean;
     function GetProcessado: Boolean;
@@ -107,6 +108,7 @@ type
       PathArquivo: String = ''): String;
 
     property NomeArq: String read FNomeArq write FNomeArq;
+    property NomeArqPDF: String read FNomeArqPDF write FNomeArqPDF;
 
     property CTe: TCTe read FCTe;
 

@@ -47,10 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2018
+-- ACBrCTeConhecimentos / ACBrCTeDACTeRLClass --
+[+] Incluido a propriedade NomeArqPDF que é alimentada quando se gera o PDF de
+    um DACTE.
+    Para se ter acesso a propriedade NomeArqPDF basta fazer da seguinte forma:
+
+    NomedoPDF := ACBrCTe1.Conhecimentos.Items[x].NomeArqPDF
+
+  Por: Italo Jurisato Junior
+
 21/12/2018
 -- ACBrCTeDACTeRLRetrato--
 [*] https://www.projetoacbr.com.br/forum/topic/48390-impress%C3%A3o-chave-de-cte-anulado-substitu%C3%ADdo-e-chave-do-cte-de-anula%C3%A7%C3%A3o/
-  Por:Cleonir
+  Por: Cleonir
 
 17/12/2018
 -- Diversos --

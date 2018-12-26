@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] Adicionada configuração para modificar o nome do arquivo do boleto.
+https://www.projetoacbr.com.br/forum/topic/48372-mudar-o-nome-do-boletopdf-para-outro-nome/
+por: Juliana Tamizou
+
+[+] Novas configurações para QRCode lateral e logo adiconadas.
+https://www.projetoacbr.com.br/forum/topic/48406-qrcode-lateral-no-cfe/
+por: DSA
+
 [*] ACBrMonitorPLUS.iss
 Removido manual em PDF do instalador diminuindo o tamanho do instalador em ~50%
 

@@ -397,6 +397,7 @@ type
     deUSUDataCadastro: TDateEdit;
     eAvanco: TEdit;
     eCopias: TEdit;
+    edNomeArquivo: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edtArquivoPFX: TEdit;
@@ -487,6 +488,7 @@ type
     Label224: TLabel;
     Label225: TLabel;
     Label226: TLabel;
+    Label4: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     lbAvanco: TLabel;
@@ -4059,7 +4061,7 @@ var
   ETQAtivado, ESCPOSAtivado: boolean;
   wSenha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams: string;
   //PathApplication: string;
-  wNomeArquivo: string;
+  wDirArquivo, wNomeArquivo, wPathArquivo: string;
   OK: boolean;
 begin
   //PathApplication := PathWithDelim(ExtractFilePath(Application.ExeName));
@@ -4330,6 +4332,7 @@ begin
       cbxBOLLayout.ItemIndex           := Layout;
       cbxBOLFiltro.ItemIndex           := Filtro;
       deBOLDirArquivo.Text             := DirArquivoBoleto;
+      edNomeArquivo.Text               := NomeArquivoBoleto;
       cbxBOLImpressora.ItemIndex       := cbxBOLImpressora.Items.IndexOf(Impressora);
     end;
 
@@ -5092,17 +5095,26 @@ begin
     MostrarSetup := ckgBOLMostrar.Checked[2];
     PrinterName := cbxBOLImpressora.Text;
 
-    wNomeArquivo := Trim(deBOLDirArquivo.Text);
-    if wNomeArquivo = '' then
-      wNomeArquivo := ExtractFilePath(Application.ExeName)
+    wDirArquivo := Trim(deBOLDirArquivo.Text);
+    if wDirArquivo = '' then
+      wDirArquivo := ExtractFilePath(Application.ExeName)
     else
-      wNomeArquivo := PathWithDelim(wNomeArquivo);
+      wDirArquivo := PathWithDelim(wDirArquivo);
+
+    wNomeArquivo:= edNomeArquivo.Text;
+
+    if wNomeArquivo <> '' then
+      wPathArquivo:= wDirArquivo + wNomeArquivo
+    else
+      wPathArquivo:= wDirArquivo + 'boleto';
 
     if Filtro = TACBrBoletoFCFiltro(fiHTML) then
-      NomeArquivo := wNomeArquivo + 'boleto.html'
+      NomeArquivo := wPathArquivo + '.html'
     else
-      NomeArquivo := wNomeArquivo + 'boleto.pdf';
+      NomeArquivo := wPathArquivo + '.pdf';
+    
   end;
+
 
   if cbxTCModelo.ItemIndex > 0 then
     bTCAtivar.Click;
@@ -5888,6 +5900,7 @@ begin
        Layout                   := cbxBOLLayout.ItemIndex;
        Filtro                   := cbxBOLFiltro.ItemIndex;
        DirArquivoBoleto         := PathWithoutDelim(deBOLDirArquivo.Text);
+       NomeArquivoBoleto        := trim(edNomeArquivo.Text);
        Impressora               := cbxBOLImpressora.Text;
      end;
 

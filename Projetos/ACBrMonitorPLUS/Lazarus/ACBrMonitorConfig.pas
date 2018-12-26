@@ -532,6 +532,7 @@ type
     Filtro                     : Integer;
     DirArquivoBoleto           : String ;
     Impressora                 : String ;
+    NomeArquivoBoleto          : String;
   end;
 
   TBoletoRemessaRetorno = record
@@ -1207,6 +1208,7 @@ begin
       ini.WriteInteger(CSecBOLETO, CKeyBOLETOFiltro,        Filtro        );
       ini.WriteString( CSecBOLETO, CKeyBOLETODirArquivoBoleto,  DirArquivoBoleto       );
       Ini.WriteString( CSecBOLETO, CKeyBOLETOImpressora,                Impressora             );
+      Ini.WriteString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
     end;
 
     with BOLETO.RemessaRetorno do
@@ -1823,6 +1825,8 @@ begin
       Filtro                 :=  ini.ReadInteger(CSecBOLETO, CKeyBOLETOFiltro,           Filtro                 );
       DirArquivoBoleto       :=  ini.ReadString( CSecBOLETO, CKeyBOLETODirArquivoBoleto,   DirArquivoBoleto     );
       Impressora             :=  Ini.ReadString( CSecBOLETO, CKeyBOLETOImpressora,       Impressora             );
+      NomeArquivoBoleto      :=  Ini.ReadString( CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivoBoleto);
+      
     end;
 
     with BOLETO.RemessaRetorno do
@@ -2416,6 +2420,7 @@ begin
     Layout                 :=  0;
     Filtro                 :=  0;
     DirArquivoBoleto       :=  '';
+    NomeArquivoBoleto      :=  '';
     Impressora             :=  '';
   end;
 

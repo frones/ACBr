@@ -1074,6 +1074,7 @@ const
   CKeyBOLETOEmailAssuntoBoleto =            'EmailAssuntoBoleto';
   CKeyBOLETOEmailMensagemBoleto =           'EmailMensagemBoleto';
   CKeyBOLETOImpressora =                    'Impressora';
+  CKeyBOLETONomeArquivoBoleto =             'NomeArquivoBoleto';
   //Manter Compatibilidade
   CKeyBOLETOCedenteNome =                   'Cedente.Nome';
   CKeyBOLETOCedenteCNPJCPF =                'Cedente.CNPJCPF';

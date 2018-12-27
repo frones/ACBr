@@ -359,8 +359,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoEmpregador do
       begin
@@ -458,8 +458,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with infoEstab do
       begin
@@ -537,8 +537,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoRubrica do
       begin
@@ -616,8 +616,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with infoLotacao do
       begin
@@ -679,8 +679,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoCargo do
       begin
@@ -725,8 +725,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoCarreira do
       begin
@@ -759,8 +759,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoFuncao do
       begin
@@ -791,8 +791,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoHorContratual do
       begin
@@ -846,8 +846,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with infoAmbiente do
       begin
@@ -894,8 +894,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoProcesso do
       begin
@@ -947,8 +947,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoOperPortuario do
       begin
@@ -987,7 +987,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '01234567';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with ideTrabalhador do
       begin
@@ -1178,7 +1178,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '012345678987654';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with ideTrabalhador do
       begin
@@ -1319,8 +1319,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       ideBenef.cpfBenef := '88888888888';
 
@@ -1372,7 +1372,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '9632587410123';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with IdeBenef do
       begin
@@ -1555,8 +1555,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoAquisProd.IdeEstabAdquir do
       begin
@@ -1879,8 +1879,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tiCPF;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoComProd do
       begin
@@ -2049,7 +2049,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       remunAvNp.Clear;
 
@@ -2131,8 +2131,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       InfoSubstPatr.indSubstPatr := tpIndSubstPatrOpPort(0);
       InfoSubstPatr.percRedContrib := 500.20;
@@ -2174,8 +2174,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with IdeRespInf do
       begin
@@ -2205,8 +2205,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
     end;
   end;
 end;
@@ -2230,8 +2230,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with IdeRespInf do
       begin
@@ -2274,8 +2274,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       ContribSind.Clear;
 
@@ -2301,8 +2301,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       InfoRegPrelim.CpfTrab := '12345678901';
       InfoRegPrelim.DtNascto := Now - 9125;
@@ -2329,7 +2329,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with Trabalhador do
       begin
@@ -2346,7 +2346,7 @@ begin
         with Nascimento do
         begin
           DtNascto := date;
-          codMunic := 51268;
+          codMunic := 1234567;
           uf := 'PR';
           PaisNascto := '565';
           PaisNac := '545';
@@ -2395,7 +2395,7 @@ begin
             Complemento := 'AP 101';
             Bairro := 'CENTRO';
             Cep := '85500000';
-            codMunic := 11111;
+            codMunic := 1234567;
             uf := tpuf(ufPR);
           end;
 
@@ -2554,7 +2554,7 @@ begin
               Complemento := 'Complemento';
               Bairro      := 'Bairro';
               Cep         := '85202630';
-              CodMunic    := 123;
+              CodMunic    := 1234567;
               Uf          := tpuf(ufPR);
             end;
           end;
@@ -2586,7 +2586,7 @@ begin
           with FiliacaoSindical.Add do
             CnpjSindTrab := '12345678901234';
 
-          AlvaraJudicial.nrProcJud := '123';
+          AlvaraJudicial.nrProcJud := '12345678901234567890';
 
           observacoes.Clear;
 
@@ -2596,6 +2596,7 @@ begin
 
         with SucessaoVinc do
         begin
+          tpInscAnt := tiCNPJ;
           cnpjEmpregAnt := '12345678901234';
           MatricAnt := '123';
           dtTransf := date;
@@ -2632,8 +2633,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       ideTrabalhador.CpfTrab := '12345678901';
 
@@ -2793,7 +2794,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '96325874103';
@@ -2913,8 +2914,8 @@ begin
       IdeRegistrador.TpInsc := tpTpInsc(1);
       IdeRegistrador.NrInsc := '12345678901234';
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       ideTrabalhador.CpfTrab := '12345678901';
       ideTrabalhador.NisTrab := '12345678901';
@@ -3024,8 +3025,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
@@ -3103,7 +3104,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
@@ -3193,7 +3194,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
@@ -3351,7 +3352,7 @@ begin
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
@@ -3493,8 +3494,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
@@ -3538,8 +3539,8 @@ begin
         VerProc  := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '12345678901234';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab   := '04855800392';
       IdeVinculo.NisTrab   := '16179749354';
@@ -3592,8 +3593,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '88888888888';
@@ -3628,8 +3629,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeVinculo.CpfTrab := '33333333303';
       IdeVinculo.NisTrab := '11111111111';
@@ -3810,7 +3811,7 @@ begin
       IdeEvento.VerProc := '1.0';
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678987654';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with Trabalhador do
       begin
@@ -4031,7 +4032,7 @@ begin
       IdeEvento.VerProc := '1.0';
 
       IdeEmpregador.TpInsc := tiCNPJ;
-      IdeEmpregador.NrInsc := '12345678987654';
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeTrabSemVinc.CpfTrab := '12345678901';
       IdeTrabSemVinc.NisTrab := '00000000000';
@@ -4110,8 +4111,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       IdeTrabSemVinc.CpfTrab := '12345678987';
       IdeTrabSemVinc.NisTrab := '98765432123';
@@ -4223,8 +4224,8 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with ideBenef do
       begin
@@ -4321,8 +4322,8 @@ begin
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
-      IdeEmpregador.TpInsc := tpTpInsc(1);
-      IdeEmpregador.NrInsc := '0123456789';
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
       with InfoExclusao do
       begin

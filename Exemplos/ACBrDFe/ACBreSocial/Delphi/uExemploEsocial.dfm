@@ -27,7 +27,7 @@ object FExemploEsocial: TFExemploEsocial
       Top = 1
       Width = 738
       Height = 332
-      ActivePage = tbsEventosNaoPeriodicos
+      ActivePage = tbsEventosTabela
       Align = alTop
       TabOrder = 0
       object tbsEventosTabela: TTabSheet

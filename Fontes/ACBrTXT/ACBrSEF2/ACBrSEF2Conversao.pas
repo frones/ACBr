@@ -339,7 +339,7 @@ Uses
 
     TACBrSEFIIRegistros = class(TObjectList)
     public
-      function AchaUltimoPai(ANomePai, ANomeFilho: String): Integer;
+      function AchaUltimoPai(const ANomePai, ANomeFilho: String): Integer;
     end;
 
     TACBrSEFIIEDOC = class(TACBrTXTClass)
@@ -1174,8 +1174,7 @@ end;
 
 { TACBrSEFIIRegistros }
 
-function TACBrSEFIIRegistros.AchaUltimoPai(ANomePai,
-  ANomeFilho: String): Integer;
+function TACBrSEFIIRegistros.AchaUltimoPai(const ANomePai, ANomeFilho: String): Integer;
 begin
    Result := Count - 1;
    if Result < 0 then

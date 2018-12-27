@@ -71,14 +71,14 @@ uses
     FRegistro0465Count: Integer;
     FRegistro0470Count: Integer;
 
-    FRegistro0005: TRegistroSEF0005;
+//    FRegistro0005: TRegistroSEF0005;
     FRegistro0025: TRegistroSEF0025;
-    FRegistro0030: TRegistroSEF0030;
-    FRegistro0100: TRegistroSEF0100;
+//    FRegistro0030: TRegistroSEF0030;
+//    FRegistro0100: TRegistroSEF0100;
 
     FRegistro0150: TRegistroSEF0150List;
-    FRegistro0200: TRegistroSEF0200List;
-    FRegistro0205: TRegistroSEF0205List;
+//    FRegistro0200: TRegistroSEF0200List;
+//    FRegistro0205: TRegistroSEF0205List;
     FRegistro0400: TRegistroSEF0400List;
     FRegistro0450: TRegistroSEF0450List;
     FRegistro0460: TRegistroSEF0460List;

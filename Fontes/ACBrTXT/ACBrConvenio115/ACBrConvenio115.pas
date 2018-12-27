@@ -345,13 +345,13 @@ type
     property Detalhes: TACBrConvenio115Items read FDetalhes;
     function AutenticacaoDocumentoFiscal: string;
     function RegistroEAssinatura(AVersaoAnterior: Boolean): TConvenio115AssinaturaMD5;
-    class function MontaAutenticacaoDocumentoFiscal(ACnpjCpf: string;
+    class function MontaAutenticacaoDocumentoFiscal(const ACnpjCpf: string;
                                                     ANumeroNF: Integer;
                                                     AValorTotal: Double;
                                                     AIcmsBaseCalculo: Double;
                                                     AIcmsValor: Double;
                                                     ADataEmissao: TDateTime;
-                                                    ACnpjEmitente: string): string;
+                                                    const ACnpjEmitente: string): string;
   end;
 
   { Lista de objetos do tipo TConvenio115Mestre }
@@ -539,13 +539,13 @@ begin
   Result := '00';
 end;
 
-class function TACBrConvenio115Mestre.MontaAutenticacaoDocumentoFiscal(ACnpjCpf: string;
+class function TACBrConvenio115Mestre.MontaAutenticacaoDocumentoFiscal(const ACnpjCpf: string;
                                                                        ANumeroNF: Integer;
                                                                        AValorTotal: Double;
                                                                        AIcmsBaseCalculo: Double;
                                                                        AIcmsValor: Double;
                                                                        ADataEmissao: TDateTime;
-                                                                       ACnpjEmitente: string): string;
+                                                                       const ACnpjEmitente: string): string;
 var
   SRec: string;
 begin
@@ -927,7 +927,6 @@ begin
     FMestre[I].FReferenciaItemNF := ICount;
     for A := 0 to FMestre[I].Detalhes.Count -1 do
     begin
-      FMestre[I].Detalhes[A].FTipoAssinanteAte201612 := FMestre[I].TipoAssinanteAte201612;
       FMestre[I].Detalhes[A].FTipoAssinanteAte201612 := FMestre[I].TipoAssinanteAte201612;
       FMestre[I].Detalhes[A].FTipoUtilizacao := FMestre[I].TipoUtilizacao;
       FMestre[I].Detalhes[A].FCnpjCpf := FMestre[I].Destinatario.CnpjCpf;

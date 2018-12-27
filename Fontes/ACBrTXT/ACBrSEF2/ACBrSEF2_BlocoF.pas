@@ -38,7 +38,7 @@ unit ACBrSEF2_BlocoF;
 interface
 
 uses
-  Classes, Contnrs, SysUtils, ACBrSEF2Conversao, Controls;
+  Classes, Contnrs, SysUtils, ACBrSEF2Conversao;
 
 type
   TRegistroSEFF200List = class;

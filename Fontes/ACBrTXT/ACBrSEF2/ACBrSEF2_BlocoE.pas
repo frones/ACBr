@@ -1250,7 +1250,7 @@ end;
 
 destructor TRegistroSEFE120.Destroy;
 begin
-
+  inherited;
 end;
 
 
@@ -1626,6 +1626,7 @@ end;
 
 constructor TRegistroSEFE001.Create;
 begin
+   inherited Create;
    fRegistroE003 := TRegistroSEFE003List.Create;
    fRegistroE020 := TRegistroSEFE020List.Create;
    fRegistroE050 := TRegistroSEFE050List.Create;

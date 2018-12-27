@@ -258,7 +258,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0150);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0150;
-    function LocalizaRegistro(pCOD_PART: String): boolean;
+    function LocalizaRegistro(const pCOD_PART: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0150 read GetItem write SetItem;
   end;
 
@@ -288,7 +288,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0200);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
-    function LocalizaRegistro(pCOD_ITEM: String): boolean;
+    function LocalizaRegistro(const pCOD_ITEM: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0200 read GetItem write SetItem;
   end;
 
@@ -384,7 +384,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0400);
   public
     function New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
-    function LocalizaRegistro(pCOD_NAT: String): boolean;
+    function LocalizaRegistro(const pCOD_NAT: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0400 read GetItem write SetItem;
   end;
 
@@ -576,6 +576,7 @@ implementation
 
 constructor TRegistroSEF0001.Create;
 begin
+   inherited Create;
    FRegistro0005 := TRegistroSEF0005.Create(self);
    FRegistro0030 := TRegistroSEF0030.Create(self);
    FRegistro0100 := TRegistroSEF0100.Create(self);
@@ -629,7 +630,7 @@ begin
 end;
 
 
-function TRegistroSEF0150List.LocalizaRegistro(pCOD_PART: String): boolean;
+function TRegistroSEF0150List.LocalizaRegistro(const pCOD_PART: String): boolean;
 var
 intFor: integer;
 begin
@@ -674,7 +675,7 @@ begin
   Result := TRegistroSEF0400(Inherited Items[Index]);
 end;
 
-function TRegistroSEF0400List.LocalizaRegistro(pCOD_NAT: String): boolean;
+function TRegistroSEF0400List.LocalizaRegistro(const pCOD_NAT: String): boolean;
 var
 intFor: integer;
 begin
@@ -804,7 +805,7 @@ begin
   Result := TRegistroSEF0200(Inherited Items[Index]);
 end;
 
-function TRegistroSEF0200List.LocalizaRegistro(pCOD_ITEM: String): boolean;
+function TRegistroSEF0200List.LocalizaRegistro(const pCOD_ITEM: String): boolean;
 var
 intFor: integer;
 begin

@@ -79,6 +79,7 @@ implementation
 
 constructor TPonto_ACJEF.Create;
 begin
+   inherited Create;
    CriaRegistros;
 end;
 

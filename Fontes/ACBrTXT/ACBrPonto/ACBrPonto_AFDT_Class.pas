@@ -76,6 +76,7 @@ implementation
 
 constructor TPonto_AFDT.Create;
 begin
+   inherited Create;
    CriaRegistros;
 end;
 

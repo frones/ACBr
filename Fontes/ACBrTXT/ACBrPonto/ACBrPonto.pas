@@ -98,11 +98,11 @@ type
     constructor Create(AOwner: TComponent); override; // Create
     destructor Destroy; override; // Destroy
 
-    function SaveFileTXT_AFD(Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_AFDT(Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
-    function SaveFileTXT_ACJEF(Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
+    function SaveFileTXT_AFD(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
+    function SaveFileTXT_AFDT(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
+    function SaveFileTXT_ACJEF(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
 
-    function ProcessarArquivo_AFD(Arquivo: String): TPonto_AFD;
+    function ProcessarArquivo_AFD(const Arquivo: String): TPonto_AFD;
 
     property Ponto_AFD: TPonto_AFD read FPonto_AFD write FPonto_AFD;
     property Ponto_AFDT: TPonto_AFDT read FPonto_AFDT write FPonto_AFDT;
@@ -224,7 +224,7 @@ begin
   FPonto_ACJEF.OnError := Value;
 end;
 
-function TACBrPonto.SaveFileTXT_AFD(Arquivo: String): boolean;
+function TACBrPonto.SaveFileTXT_AFD(const Arquivo: String): boolean;
 var
   txtFile: TextFile;
 begin
@@ -267,7 +267,7 @@ begin
   end;
 end;
 
-function TACBrPonto.SaveFileTXT_AFDT(Arquivo: String): boolean;
+function TACBrPonto.SaveFileTXT_AFDT(const Arquivo: String): boolean;
 var
   txtFile: TextFile;
 begin
@@ -302,7 +302,7 @@ begin
   end;
 end;
 
-function TACBrPonto.SaveFileTXT_ACJEF(Arquivo: String): boolean;
+function TACBrPonto.SaveFileTXT_ACJEF(const Arquivo: String): boolean;
 var
   txtFile: TextFile;
 begin
@@ -340,112 +340,109 @@ begin
   end;
 end;
 
-function TACBrPonto.ProcessarArquivo_AFD(Arquivo: String): TPonto_AFD;
+function TACBrPonto.ProcessarArquivo_AFD(const Arquivo: String): TPonto_AFD;
 var
   LerArquivo: TStringList;
   i: Integer;
 begin
-  try
-    Result := TPonto_AFD.Create;
+  Result := TPonto_AFD.Create;
 
-    LerArquivo := TStringList.Create;
-    LerArquivo.LoadFromFile(Arquivo);
-    for i := 0 to LerArquivo.Count - 1 do
+  LerArquivo := TStringList.Create;
+  LerArquivo.LoadFromFile(Arquivo);
+  for i := 0 to LerArquivo.Count - 1 do
+  begin
+    //cabecalho
+    if Copy(LerArquivo[i], 10, 1) = '1' then
     begin
-      //cabecalho
-      if Copy(LerArquivo[i], 10, 1) = '1' then
+      with Result.Cabecalho.Create do
       begin
-        with Result.Cabecalho.Create do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := Copy(LerArquivo[i], 10, 1);
-          Campo03 := Copy(LerArquivo[i], 11, 1);
-          Campo04 := Copy(LerArquivo[i], 12, 14);
-          Campo05 := Copy(LerArquivo[i], 26, 12);
-          Campo06 := Copy(LerArquivo[i], 38, 150);
-          Campo07 := Copy(LerArquivo[i], 188, 17);
-          Campo08 := Copy(LerArquivo[i], 205, 8);
-          Campo09 := Copy(LerArquivo[i], 213, 8);
-          Campo10 := Copy(LerArquivo[i], 221, 8);
-          Campo11 := Copy(LerArquivo[i], 229, 4);
-        end;
-      end
-
-      //registro tipo 2
-      else if Copy(LerArquivo[i], 10, 1) = '2' then
-      begin
-        with Result.Registro2.Create do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := Copy(LerArquivo[i], 10, 1);
-          Campo03 := Copy(LerArquivo[i], 11, 8);
-          Campo04 := Copy(LerArquivo[i], 19, 4);
-          Campo05 := Copy(LerArquivo[i], 23, 1);
-          Campo06 := Copy(LerArquivo[i], 24, 14);
-          Campo07 := Copy(LerArquivo[i], 38, 12);
-          Campo08 := Copy(LerArquivo[i], 50, 150);
-          Campo09 := Copy(LerArquivo[i], 200, 100);
-        end;
-      end
-
-      //registros tipo 3
-      else if Copy(LerArquivo[i], 10, 1) = '3' then
-      begin
-        with Result.Registro3.New do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := Copy(LerArquivo[i], 10, 1);
-          Campo03 := Copy(LerArquivo[i], 11, 8);
-          Campo04 := Copy(LerArquivo[i], 19, 4);
-          Campo05 := Copy(LerArquivo[i], 23, 12);
-        end;
-      end
-
-      //registros tipo 4
-      else if Copy(LerArquivo[i], 10, 1) = '4' then
-      begin
-        with Result.Registro4.New do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := Copy(LerArquivo[i], 10, 1);
-          Campo03 := Copy(LerArquivo[i], 11, 8);
-          Campo04 := Copy(LerArquivo[i], 19, 4);
-          Campo05 := Copy(LerArquivo[i], 23, 8);
-          Campo06 := Copy(LerArquivo[i], 31, 4);
-        end;
-      end
-
-      //registros tipo 5
-      else if Copy(LerArquivo[i], 10, 1) = '5' then
-      begin
-        with Result.Registro5.New do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := Copy(LerArquivo[i], 10, 1);
-          Campo03 := Copy(LerArquivo[i], 11, 8);
-          Campo04 := Copy(LerArquivo[i], 19, 4);
-          Campo05 := Copy(LerArquivo[i], 23, 1);
-          Campo06 := Copy(LerArquivo[i], 24, 12);
-          Campo07 := Copy(LerArquivo[i], 36, 52);
-        end;
-      end
-
-      //trailer
-      else if Copy(LerArquivo[i], 1, 9) = '999999999' then
-      begin
-        with Result.Trailer.Create do
-        begin
-          Campo01 := Copy(LerArquivo[i], 1, 9);
-          Campo02 := StrToInt(Copy(LerArquivo[i], 10, 9));
-          Campo03 := StrToInt(Copy(LerArquivo[i], 19, 9));
-          Campo04 := StrToInt(Copy(LerArquivo[i], 28, 9));
-          Campo05 := StrToInt(Copy(LerArquivo[i], 37, 9));
-          Campo06 := Copy(LerArquivo[i], 46, 1);
-        end;
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
+        Campo03 := Copy(LerArquivo[i], 11, 1);
+        Campo04 := Copy(LerArquivo[i], 12, 14);
+        Campo05 := Copy(LerArquivo[i], 26, 12);
+        Campo06 := Copy(LerArquivo[i], 38, 150);
+        Campo07 := Copy(LerArquivo[i], 188, 17);
+        Campo08 := Copy(LerArquivo[i], 205, 8);
+        Campo09 := Copy(LerArquivo[i], 213, 8);
+        Campo10 := Copy(LerArquivo[i], 221, 8);
+        Campo11 := Copy(LerArquivo[i], 229, 4);
       end;
+    end
 
+    //registro tipo 2
+    else if Copy(LerArquivo[i], 10, 1) = '2' then
+    begin
+      with Result.Registro2.Create do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
+        Campo03 := Copy(LerArquivo[i], 11, 8);
+        Campo04 := Copy(LerArquivo[i], 19, 4);
+        Campo05 := Copy(LerArquivo[i], 23, 1);
+        Campo06 := Copy(LerArquivo[i], 24, 14);
+        Campo07 := Copy(LerArquivo[i], 38, 12);
+        Campo08 := Copy(LerArquivo[i], 50, 150);
+        Campo09 := Copy(LerArquivo[i], 200, 100);
+      end;
+    end
+
+    //registros tipo 3
+    else if Copy(LerArquivo[i], 10, 1) = '3' then
+    begin
+      with Result.Registro3.New do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
+        Campo03 := Copy(LerArquivo[i], 11, 8);
+        Campo04 := Copy(LerArquivo[i], 19, 4);
+        Campo05 := Copy(LerArquivo[i], 23, 12);
+      end;
+    end
+
+    //registros tipo 4
+    else if Copy(LerArquivo[i], 10, 1) = '4' then
+    begin
+      with Result.Registro4.New do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
+        Campo03 := Copy(LerArquivo[i], 11, 8);
+        Campo04 := Copy(LerArquivo[i], 19, 4);
+        Campo05 := Copy(LerArquivo[i], 23, 8);
+        Campo06 := Copy(LerArquivo[i], 31, 4);
+      end;
+    end
+
+    //registros tipo 5
+    else if Copy(LerArquivo[i], 10, 1) = '5' then
+    begin
+      with Result.Registro5.New do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
+        Campo03 := Copy(LerArquivo[i], 11, 8);
+        Campo04 := Copy(LerArquivo[i], 19, 4);
+        Campo05 := Copy(LerArquivo[i], 23, 1);
+        Campo06 := Copy(LerArquivo[i], 24, 12);
+        Campo07 := Copy(LerArquivo[i], 36, 52);
+      end;
+    end
+
+    //trailer
+    else if Copy(LerArquivo[i], 1, 9) = '999999999' then
+    begin
+      with Result.Trailer.Create do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := StrToInt(Copy(LerArquivo[i], 10, 9));
+        Campo03 := StrToInt(Copy(LerArquivo[i], 19, 9));
+        Campo04 := StrToInt(Copy(LerArquivo[i], 28, 9));
+        Campo05 := StrToInt(Copy(LerArquivo[i], 37, 9));
+        Campo06 := Copy(LerArquivo[i], 46, 1);
+      end;
     end;
-  finally
+
   end;
 end;
 

@@ -85,6 +85,7 @@ implementation
 
 constructor TPonto_AFD.Create;
 begin
+   inherited Create;
    CriaRegistros;
 end;
 

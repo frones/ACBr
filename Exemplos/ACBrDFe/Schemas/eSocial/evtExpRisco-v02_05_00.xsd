@@ -90,7 +90,7 @@
                                       <xs:documentation>Codigo da atividade conforme tabela 28</xs:documentation>
                                     </xs:annotation>
                                     <xs:restriction base="xs:string">
-                                      <xs:pattern value="\w{6}"/>
+                                      <xs:pattern value="\d{2}\.\d{3}"/>
                                     </xs:restriction>
                                   </xs:simpleType>
                                 </xs:element>

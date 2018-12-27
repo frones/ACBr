@@ -858,6 +858,7 @@ type
 
   TSucessaoVinc = class
   private
+    FtpInscAnt: tpTpInsc;
     FCnpjEmpregAnt: string;
     FMatricAnt: string;
     FdtTransf: TDateTime;
@@ -867,6 +868,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    property tpInscAnt: tpTpInsc read FtpInscAnt write FtpInscAnt;
     property cnpjEmpregAnt: string read FCnpjEmpregAnt write FCnpjEmpregAnt;
     property CnpjEmpSucessora: string read FCnpjEmpSucessora write FCnpjEmpSucessora;
     property MatricAnt: string read FMatricAnt write FMatricAnt;

@@ -771,6 +771,11 @@ begin
   if pSucessaoVinc.cnpjEmpregAnt <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
+
+//    if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= ve02_05_00) then
+    if VersaoDF >= ve02_05_00 then
+      Gerador.wCampo(tcStr, '', 'tpInscAnt', 1, 1, 1, eSTpInscricaoToStr(pSucessaoVinc.TpInscAnt));
+
     Gerador.wCampo(tcStr, '', 'cnpjEmpregAnt', 14, 014, 1, pSucessaoVinc.cnpjEmpregAnt);
     Gerador.wCampo(tcStr, '', 'matricAnt',      0, 030, 0, pSucessaoVinc.MatricAnt);
     Gerador.wCampo(tcDat, '', 'dtTransf',      10, 010, 1, pSucessaoVinc.dtTransf);

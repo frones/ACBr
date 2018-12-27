@@ -572,6 +572,7 @@ begin
       sSecao := 'sucessaoVinc';
       if INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '') <> '' then
       begin
+        vinculo.sucessaoVinc.tpInscAnt     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscAnt', '1'));
         vinculo.sucessaoVinc.cnpjEmpregAnt := INIRec.ReadString(sSecao, 'cnpjEmpregAnt', '');
         vinculo.sucessaoVinc.MatricAnt     := INIRec.ReadString(sSecao, 'matricAnt', '');
         vinculo.sucessaoVinc.dtTransf      := StringToDateTime(INIRec.ReadString(sSecao, 'dtTransf', '0'));

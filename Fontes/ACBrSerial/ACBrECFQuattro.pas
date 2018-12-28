@@ -1486,9 +1486,8 @@ begin
   begin
      Msg := ACBrStr( 'Arquivo '+fsArqFormato_ChequeTXT+' não encontrado. '+
                      'Valores padrões serão utilizados.' ) ;
-     raise EACBrECFErro.Create( Msg );
-
      fsArqFormato_ChequeTXT := '' ;
+     raise EACBrECFErro.Create( Msg );
   end ;
 
   if fsArqFormato_ChequeTXT = '' then

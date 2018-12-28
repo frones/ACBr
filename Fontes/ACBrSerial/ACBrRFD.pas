@@ -1758,10 +1758,10 @@ end;
 
 function TACBrRFD.NomeArqRFD( DtMov : TDatetime ): String;
 Var
-  DirECFMes : String ;
+  DirECFMes_temp : String ;
 begin
-   DirECFMes := fsDirECF + PathDelim + FormatDateTime('yyyymm',DtMov) ;
-   Result    := DirECFMes + PathDelim +
+   DirECFMes_temp := fsDirECF + PathDelim + FormatDateTime('yyyymm',DtMov) ;
+   Result    := DirECFMes_temp + PathDelim +
                 NomeArqCAT52( fsECF_RFDID, fsECF_NumSerie, DtMov);
 end;
 

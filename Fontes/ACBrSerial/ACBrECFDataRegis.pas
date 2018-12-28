@@ -1833,9 +1833,8 @@ begin
   begin
      Msg := ACBrStr( 'Arquivo '+fsArqPrgBcoTXT+' não encontrado. '+
                      'Valores padrões serão utilizados.' ) ;
-     raise EACBrECFErro.Create( Msg );
-
      fsArqPrgBcoTXT := '' ;
+     raise EACBrECFErro.Create( Msg );
   end ;
 
   if fsArqPrgBcoTXT = '' then

@@ -1219,7 +1219,7 @@ end;
 procedure TACBrECFEscECFResposta.SetResposta(const AValue: AnsiString);
 Var
   Soma, I, F, LenCmd : Integer ;
-  CHK  : Byte ;
+  vCHK  : Byte ;
 begin
   Clear( False ) ;    // Não Zera Params, pois pode acumular 2 retornos
 
@@ -1251,13 +1251,13 @@ begin
 
   Soma := 0 ;
   LenCmd := fsTBR+11;
-  For I := 2 to LenCmd do  
+  For I := 2 to LenCmd do
      Soma := Soma + ord( AValue[I] ) ;
-  CHK := Soma mod 256  ;
+  vCHK := Soma mod 256  ;
 
-  if CHK <> fsCHK then
+  if vCHK <> fsCHK then
      raise EACBrECFSemResposta.Create(ACBrStr('Erro CHK Resposta. '+
-        'Calculado:'+IntToStr(CHK)+' Recebido:'+IntToStr(fsCHK)));
+        'Calculado:'+IntToStr(vCHK)+' Recebido:'+IntToStr(fsCHK)));
 
   { Quebrando Parametros Separados por '|' e inserindo-os em fsParams }
   I := 1;

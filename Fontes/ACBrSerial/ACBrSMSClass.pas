@@ -185,11 +185,11 @@ var
   I, J : Integer;
   FimSMS : Boolean;
 begin
+  Self.Clear;
+  if not FileExists(APath) then
+    raise EACBrSMSException.CreateFmt('Arquivo "%s" não encontrado.', [APath]);
+  ListaSMS := TStringList.Create;
   try
-    Self.Clear;
-    if not FileExists(APath) then
-      raise EACBrSMSException.CreateFmt('Arquivo "%s" não encontrado.', [APath]);
-    ListaSMS := TStringList.Create;
     ListaSMS.LoadFromFile(APath);
     if ListaSMS.Count = 0 then
       Exit;

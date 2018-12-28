@@ -103,7 +103,7 @@ begin
       wDecimais := 1000;
 
     {APENAS BLOCO PROCESSADO}
-    wResposta := wStrListDados[1];
+//    wResposta := wStrListDados[1];
     wResposta := Copy(wStrListDados[1], 5, 7);
 
     if (Length(wResposta) <= 0) then
@@ -120,7 +120,7 @@ begin
         Result := (StrToInt(wResposta) / wDecimais);
 
       case AnsiIndexText(Copy(wStrListDados[1], 3, 1), ['x','r','s']) of
-        0: Result := Result;         { Instavel }
+        0: {Result := Result};         { Instavel }
         1: Result := Result * (-1);  { Peso Negativo }
         2: Result := -10;            { Sobrecarga de Peso }
       end;

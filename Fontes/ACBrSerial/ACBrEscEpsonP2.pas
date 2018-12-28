@@ -94,10 +94,10 @@ begin
   end;
   {*)}
 
-  For I := 0 to Length(cTAGS_BARRAS) do
+  For I := 0 to (Length(cTAGS_BARRAS) -1)  do
     TagsNaoSuportadas.Add( cTAGS_BARRAS[I] );
 
-  For I := 0 to Length(cTAGS_ALINHAMENTO) do
+  For I := 0 to (Length(cTAGS_ALINHAMENTO) -1)  do
     TagsNaoSuportadas.Add( cTAGS_ALINHAMENTO[I] );
 
   TagsNaoSuportadas.Add( cTagLigaInvertido );

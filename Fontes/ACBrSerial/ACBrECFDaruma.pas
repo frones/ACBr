@@ -4635,7 +4635,6 @@ begin
   begin
     RetCmd := EnviaComando( ESC + #240 );
     RetCmd := Copy(RetCmd, 92, Length(RetCmd));
-    RetCmd := RetCmd;
     for A := 0 to fpAliquotas.Count-1 do
     begin
       fpAliquotas[A].Total := RoundTo( StrToFloatDef(Copy(RetCmd,(A*14)+1,14),0)

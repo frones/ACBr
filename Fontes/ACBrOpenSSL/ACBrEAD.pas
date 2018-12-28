@@ -143,7 +143,7 @@ type
     Function CalcularChavePublica : AnsiString ;
     Function ConverteXMLeECFcParaOpenSSL(const  ArquivoXML: String) : AnsiString;
 
-    function ConverteChavePublicaParaOpenSSH(const AChavePublicaOpenSSL: String): String;
+    function ConverteChavePublicaParaOpenSSH(): String;
     function ConverterChavePublicaDeOpenSSH(const AChavePublicaOpenSSH: String): String;
 
     function CalcularHashArquivo( const NomeArquivo: String;
@@ -265,7 +265,7 @@ begin
   Result := String(CalcularHash(AnsiString(AString), dgstMD5));
 end;
 
-function TACBrEAD.ConverteChavePublicaParaOpenSSH( const AChavePublicaOpenSSL: String): String;
+function TACBrEAD.ConverteChavePublicaParaOpenSSH(): String;
 Var
   Buffer, Modulo, Expoente: AnsiString;
 

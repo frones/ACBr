@@ -82,8 +82,8 @@ type
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override ;
-    Procedure MontaCMC7(pBanco,pAgencia,pConta,pNrCheque,
-       pCamaraCompesacao : String; pTipificacao : String = '5') ; overload ;
+    Procedure MontaCMC7(pBanco, pAgencia, pConta, pNrCheque, pCamaraCompesacao: string;
+      const pTipificacao : String = '5') ; overload ;
     Procedure MontaCMC7(Bloco1, Bloco2, Bloco3 : String) ; overload ;
   published
     { Published declarations }
@@ -349,7 +349,8 @@ begin
 end;
 
 
-Procedure TACBrCMC7.MontaCMC7(pBanco,pAgencia,pConta,pNrCheque,pCamaraCompesacao,pTipificacao : String) ;
+Procedure TACBrCMC7.MontaCMC7(pBanco, pAgencia, pConta, pNrCheque, pCamaraCompesacao: string;
+      const pTipificacao : String = '5') ;
 // Dica retirada do site http://www.ramosdainformatica.com.br/art_recentes01.php?CDA=297 e ajustado conforme necessidade
 var
   vDv1, vDv2, vDv3 : string;

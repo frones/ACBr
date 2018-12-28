@@ -384,7 +384,7 @@ begin
   if (TotalDescAcresItem <> 0) then
   begin
     Sinal := IfThen(TotalDescAcresItem < 0,'-','+');
-    FPosPrinter.Buffer.Add(PadSpace(ACBrStr('Total de descontos/acrésimos sobre item|')+
+    FPosPrinter.Buffer.Add(PadSpace(ACBrStr('Total de descontos/acréscimos sobre item|')+
        FormatFloatBr(TotalDescAcresItem, Sinal+',0.00'),
        FPosPrinter.ColunasFonteCondensada, '|'));
   end;

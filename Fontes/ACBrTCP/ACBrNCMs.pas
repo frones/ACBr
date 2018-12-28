@@ -74,7 +74,7 @@ type
     function Add(Obj: TACBrNCM): integer;
     function New: TACBrNCM;
     property Objects[Index: integer]: TACBrNCM read GetObject write SetObject; default;
-    procedure SaveToFile(AFileName: String);
+    procedure SaveToFile(const AFileName: String);
   end;
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -86,7 +86,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ListarNcms(codigoCapitulo: string = '');
+    procedure ListarNcms(const codigoCapitulo: string = '');
     function Validar(const CodigoNcm: string): boolean;
     function DescricaoNcm(const CodigoNcm: string): string;
     property NCMS: TACBrNCMsList read fNcms write fNcms;
@@ -121,7 +121,7 @@ begin
   Add(Result);
 end;
 
-procedure TACBrNCMsList.SaveToFile(AFileName: String);
+procedure TACBrNCMsList.SaveToFile(const AFileName: String);
 Var
   SL : TStringList;
   I: Integer;
@@ -148,7 +148,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrNCMs.ListarNcms(codigoCapitulo: string = '');
+procedure TACBrNCMs.ListarNcms(const codigoCapitulo: string = '');
 var
   Buffer: string;
   SL1, SL2: TStringList;
@@ -212,10 +212,9 @@ var
     Buffer := StringReplace(Buffer, '&lt;', '<', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '&gt;', '>' + sLineBreak, [rfReplaceAll]);
 
+    SL2 := TStringList.Create;
+    SL1 := TStringList.Create;
     try
-      SL2 := TStringList.Create;
-
-      SL1 := TStringList.Create;
       SL1.Text := Buffer;
       bcboPosicao := false;
       for i := 0 to SL1.Count - 1 do
@@ -234,8 +233,8 @@ var
       SL1.Free;
     end;
 
+    SL1 := TStringList.Create;
     try
-      SL1 := TStringList.Create;
       SL1.Text := Buffer;
       for i := 0 to SL1.Count - 1 do
       begin

@@ -55,6 +55,8 @@ contains
   ACBrWinHTTPReqResp in '..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas',
   ACBr_WinHttp in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinHttp.pas',
   ACBr_WinCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinCrypt.pas',
+  ACBr_NCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_NCrypt.pas',
+  ACBr_BCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_BCrypt.pas',
   ACBrFeriado in '..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas',
   ACBrFeriadoWSClass in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas',
   ACBrFeriadoWSCalendario in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas',

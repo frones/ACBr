@@ -252,6 +252,7 @@ end;
 
 constructor TRegistro9001.Create;
 begin
+  inherited Create;
   FRegistro9020 := TRegistro9020List.Create;
 end;
 

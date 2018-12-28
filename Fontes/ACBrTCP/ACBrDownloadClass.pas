@@ -176,9 +176,10 @@ uses ACBrDownload, ACBrUtil;
 
 constructor TACBrDownloadClass.Create(AOwner: TComponent);
 begin
+
    if not (AOwner is TACBrDownload) then
       raise Exception.Create('Essa Classe deve ser instanciada por TACBrDownload');
-
+   inherited Create;
    fOwner := AOwner;
 
    fFileStream := nil;
@@ -421,6 +422,7 @@ end;
 
 constructor TACBrProxy.Create;
 begin
+   inherited Create;
    fProxyHost := '';
    fProxyPort := '';
    fProxyUser := '';
@@ -433,6 +435,7 @@ end;
 
 constructor TACBrFTP.Create;
 begin
+   inherited Create;
    fFtpHost := '';
    fFtpPort := '';
    fFtpUser := '';

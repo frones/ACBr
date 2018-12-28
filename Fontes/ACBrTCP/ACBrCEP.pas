@@ -1773,29 +1773,26 @@ procedure TACBrWSWSCEP.ProcessaResposta;
 var
   Buffer: string;
 begin
-  try
-    Buffer := fOwner.RespHTTP.Text;
+  Buffer := fOwner.RespHTTP.Text;
 
-    Buffer := StringReplace(Buffer, '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<cep>', '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<resposta>', [rfReplaceAll]);
-    Buffer := StringReplace(Buffer, '</estado>'+ sLineBreak+'</cep>', '</estado>'+ sLineBreak+'</resposta>', [rfReplaceAll]);
-    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
+  Buffer := StringReplace(Buffer, '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<cep>', '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<resposta>', [rfReplaceAll]);
+  Buffer := StringReplace(Buffer, '</estado>'+ sLineBreak+'</cep>', '</estado>'+ sLineBreak+'</resposta>', [rfReplaceAll]);
+  Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
 
-    if LerTagXML(Buffer, 'cep') <> '' then
+  if LerTagXML(Buffer, 'cep') <> '' then
+  begin
+    with fOwner.Enderecos.New do
     begin
-      with fOwner.Enderecos.New do
-      begin
-        CEP             := LerTagXML(Buffer, 'cep');
-        Logradouro      := LerTagXML(Buffer, 'logradouro');
-        Bairro          := LerTagXML(Buffer, 'bairro');
-        Municipio       := LerTagXML(Buffer, 'cidade');
-        UF              := LerTagXML(Buffer, 'uf');
-        IBGE_Municipio  := LerTagXML(Buffer, 'cod_ibge_municipio');
-        Altitude        := LerTagXML(Buffer, 'alt');
-        Latitude        := LerTagXML(Buffer, 'lat');
-        Longitude       := LerTagXML(Buffer, 'lng');
-      end;
+      CEP             := LerTagXML(Buffer, 'cep');
+      Logradouro      := LerTagXML(Buffer, 'logradouro');
+      Bairro          := LerTagXML(Buffer, 'bairro');
+      Municipio       := LerTagXML(Buffer, 'cidade');
+      UF              := LerTagXML(Buffer, 'uf');
+      IBGE_Municipio  := LerTagXML(Buffer, 'cod_ibge_municipio');
+      Altitude        := LerTagXML(Buffer, 'alt');
+      Latitude        := LerTagXML(Buffer, 'lat');
+      Longitude       := LerTagXML(Buffer, 'lng');
     end;
-  finally
   end;
 
   if Assigned(fOwner.OnBuscaEfetuada) then

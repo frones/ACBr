@@ -265,6 +265,7 @@ implementation
 
 constructor TRegistro0001.Create;
 begin
+  inherited Create;
   FRegistro0002 := TRegistro0002List.Create;
   FRegistro0005 := TRegistro0005.Create(Self);
   FRegistro0030 := TRegistro0030.Create(Self);

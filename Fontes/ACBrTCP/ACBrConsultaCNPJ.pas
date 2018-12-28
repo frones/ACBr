@@ -87,7 +87,7 @@ type
     //Function GetCaptchaURL: String;
     function GetIBGE_UF : String ;
 
-    function VerificarErros(Str: String): String;
+    function VerificarErros(const Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
   public
     procedure Captcha(Stream: TStream);
@@ -168,7 +168,7 @@ begin
   end;
 end;
 
-function TACBrConsultaCNPJ.VerificarErros(Str: String): String;
+function TACBrConsultaCNPJ.VerificarErros(const Str: String): String;
   var
     Res: String;
 begin

@@ -1038,7 +1038,7 @@ type
     fEmail       : String;
     fFone        : String;
     function GetNomeAvalista: String;
-    procedure SetNomeAvalista(AValue: String);
+    procedure SetNomeAvalista(const AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1138,13 +1138,13 @@ type
     fCaracTitulo          :TACBrCaracTitulo;
 
     procedure SetCarteira(const AValue: String);
-    procedure SetCodigoMora(AValue: String);
+    procedure SetCodigoMora(const AValue: String);
     procedure SetDiasDeProtesto(AValue: Integer);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
     procedure SetTipoDiasProtesto(AValue: TACBrTipoDiasIntrucao);
     procedure SetTotalParcelas ( const AValue: Integer );
-    procedure SetCodigoGeracao (AValue: String);
+    procedure SetCodigoGeracao (const AValue: String);
     procedure SetDataProtesto(AValue: TDateTime);
     procedure SetVencimento(AValue: TDateTime);
     procedure AtualizaDadosProtesto();
@@ -1543,7 +1543,7 @@ begin
   Result:= Self.SacadoAvalista.NomeAvalista;
 end;
 
-procedure TACBrSacado.SetNomeAvalista(AValue: String);
+procedure TACBrSacado.SetNomeAvalista(const AValue: String);
 begin
    if Self.SacadoAvalista.NomeAvalista = AValue then
      Exit;
@@ -1601,7 +1601,7 @@ begin
    end;
 end;
 
-procedure TACBrTitulo.SetCodigoMora(AValue: String);
+procedure TACBrTitulo.SetCodigoMora(const AValue: String);
 begin
   if fCodigoMora = AValue then
       exit;
@@ -1623,7 +1623,7 @@ begin
   AtualizaDadosProtesto();
 end;
 
-procedure TACBrTitulo.SetCodigoGeracao(AValue: String);
+procedure TACBrTitulo.SetCodigoGeracao(const AValue: String);
 begin
   if fCodigoGeracao = AValue then
     Exit;

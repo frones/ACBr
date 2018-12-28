@@ -222,14 +222,14 @@ type
   end;
 
   //Funcoes do ACBrDeSTDABlocos
-  function strToCodAssinante( AValue: string ): TACBrAssinante;
+  function strToCodAssinante( const AValue: string ): TACBrAssinante;
   function codAssinanteToStr( AValue: TACBrAssinante ): string;
 
 implementation
 
 
 
-function strToCodAssinante( AValue: string ): TACBrAssinante;
+function strToCodAssinante( const AValue: string ): TACBrAssinante;
 begin
  if AValue = '203' then Result := asDiretor
  else if AValue = '204' then Result := asConsAdm

@@ -120,7 +120,7 @@ type
   private
     { Private declarations }
     procedure SetDataSetsToFrxReport;
-    procedure ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
+    procedure ImprimeLogoMarca(const sCaminhoFoto, sfrxPicture: string);
   public
     { Public declarations }
 
@@ -147,7 +147,7 @@ begin
   Result := fACBrBoleto.ListadeBoletos[fIndice];
 end;
 
-procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
+procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(const sCaminhoFoto, sfrxPicture: string);
 var
   strAux: String; // Variável String auxiliar
   frxPict: TfrxPictureView; // Componente para inserção de imagem na impressão.

@@ -84,7 +84,7 @@ type
     fRegiao: String;
     fUF: String;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
   public
     constructor Create;
     procedure Clear;
@@ -123,13 +123,13 @@ type
 
     function Find(ACodUF: Integer): Integer; overload;
     function Find(AUF: String): Integer; overload;
-    function UFToCodUF(AUF: String): Integer;
+    function UFToCodUF(const AUF: String): Integer;
 
     procedure SortCodUF;
     procedure SortNome;
 
-    procedure AddFromJSonStr(AJSonStr: String);
-    procedure ParseJSonStat(AJSonStr: String);
+    procedure AddFromJSonStr(const AJSonStr: String);
+    procedure ParseJSonStat(const AJSonStr: String);
   end;
 
   { TACBrIBGECidade }
@@ -144,7 +144,7 @@ type
     fArea       : Double ;
     fPopulacao: Integer;
     function GetAsString: String;
-    procedure SetAsString(AValue: String);
+    procedure SetAsString(const AValue: String);
 
   public
     constructor Create;
@@ -183,13 +183,13 @@ type
 
     function Copy(Obj: TACBrIBGECidade): Integer;
 
-    function Find(AMunicipio: String; Exact: Boolean = False): Integer; overload;
+    function Find(const AMunicipio: String; Exact: Boolean = False): Integer; overload;
     function Find(ACodMunicio: Integer; Exact: Boolean = True): Integer; overload;
     procedure SortByCodMunicipio;
     procedure SortByMunicipio;
 
-    procedure AddFromJSonStr(AJSonStr: String);
-    procedure ParseJSonStat(AJSonStr: String);
+    procedure AddFromJSonStr(const AJSonStr: String);
+    procedure ParseJSonStat(const AJSonStr: String);
   end;
 
   TACBrIBGELerGravarCache = procedure(ConteudoCache: TStrings; var Tratado: Boolean) of object;
@@ -226,7 +226,7 @@ type
 
     procedure ObterUFs;
     procedure ObterEstatisticasUF;
-    function UFToCodUF(AUF: String): Integer;
+    function UFToCodUF(const AUF: String): Integer;
 
     procedure ObterCidades; overload;
     procedure ObterCidades(const ACodUF: Integer); overload;
@@ -283,7 +283,7 @@ begin
             IntToStr(fPopulacao);
 end;
 
-procedure TACBrIBGEUF.SetAsString(AValue: String);
+procedure TACBrIBGEUF.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -396,7 +396,7 @@ begin
   end;
 end;
 
-function TACBrIBGEUFs.UFToCodUF(AUF: String): Integer;
+function TACBrIBGEUFs.UFToCodUF(const AUF: String): Integer;
 var
   I: Integer;
 begin
@@ -425,7 +425,7 @@ begin
   FSortOrder := 2;
 end;
 
-procedure TACBrIBGEUFs.AddFromJSonStr(AJSonStr: String);
+procedure TACBrIBGEUFs.AddFromJSonStr(const AJSonStr: String);
 var
   AJSon: TJson;
   I: Integer;
@@ -455,7 +455,7 @@ begin
   end;
 end;
 
-procedure TACBrIBGEUFs.ParseJSonStat(AJSonStr: String);
+procedure TACBrIBGEUFs.ParseJSonStat(const AJSonStr: String);
 var
   AJSon: TJson;
   I, J, idPesq, CodUF, iUF: Integer;
@@ -557,7 +557,7 @@ begin
             IntToStr(fPopulacao);
 end;
 
-procedure TACBrIBGECidade.SetAsString(AValue: String);
+procedure TACBrIBGECidade.SetAsString(const AValue: String);
 var
   SL: TStringList;
 begin
@@ -636,7 +636,7 @@ begin
   Result := Add(oCidade);
 end;
 
-function TACBrIBGECidades.Find(AMunicipio: String; Exact: Boolean): Integer;
+function TACBrIBGECidades.Find(const AMunicipio: String; Exact: Boolean): Integer;
 var
   I: Integer;
   oCidadeFind: TACBrIBGECidade;
@@ -695,7 +695,7 @@ begin
   FSortOrder := 2;
 end;
 
-procedure TACBrIBGECidades.AddFromJSonStr(AJSonStr: String);
+procedure TACBrIBGECidades.AddFromJSonStr(const AJSonStr: String);
 var
   AJSon: TJson;
   I, CodMunicipio: Integer;
@@ -732,7 +732,7 @@ begin
   end;
 end;
 
-procedure TACBrIBGECidades.ParseJSonStat(AJSonStr: String);
+procedure TACBrIBGECidades.ParseJSonStat(const AJSonStr: String);
 var
   AJSon: TJson;
   I, J, idPesq, CodMun, iCidade: Integer;
@@ -1270,7 +1270,7 @@ begin
   fListaUFs.ParseJSonStat(RespHTTP.Text);
 end;
 
-function TACBrIBGE.UFToCodUF(AUF: String): Integer;
+function TACBrIBGE.UFToCodUF(const AUF: String): Integer;
 begin
   if (fListaUFs.Count = 0) then
     ObterUFs;

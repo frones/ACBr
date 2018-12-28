@@ -164,7 +164,7 @@ type
     procedure ExportarXML(const AArquivo: String);
     procedure ExportarTXT(const AArquivo: String);
     function PopularItens: Integer;
-    function TraduzStrToAnsi(AValue : String) : string;
+    function TraduzStrToAnsi(const AValue : String) : string;
     procedure EventoErroImportacao(const Alinha, AErro: String);
   public
     destructor Destroy; override;
@@ -408,7 +408,7 @@ begin
 
 end;
 
-function TACBrIBPTax.TraduzStrToAnsi(AValue: String): string;
+function TACBrIBPTax.TraduzStrToAnsi(const AValue: String): string;
 begin
  Result := string( ACBrStrToAnsi( AValue ) );
 end;

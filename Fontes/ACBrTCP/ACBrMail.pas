@@ -179,10 +179,10 @@ type
     function GetAutoTLS: Boolean;
     function GetPriority: TMessPriority;
 
-    procedure SetHost(aValue: string);
-    procedure SetPort(aValue: string);
-    procedure SetUsername(aValue: string);
-    procedure SetPassword(aValue: string);
+    procedure SetHost(const aValue: string);
+    procedure SetPort(const aValue: string);
+    procedure SetUsername(const aValue: string);
+    procedure SetPassword(const aValue: string);
     procedure SetFullSSL(aValue: Boolean);
     procedure SetAutoTLS(aValue: Boolean);
     procedure SetPriority(aValue: TMessPriority);
@@ -209,18 +209,18 @@ type
     procedure SaveToFile(const AFileName: String);
     function SaveToStream(AStream: TStream): Boolean;
 
-    procedure AddAttachment(aFileName: string; aDescription: string;
+    procedure AddAttachment(const aFileName: string; aDescription: string;
       const aDisposition: TMailAttachmentDisposition = adInline); overload;
-    procedure AddAttachment(aFileName: string); overload;
+    procedure AddAttachment(const aFileName: string); overload;
     procedure AddAttachment(aStream: TStream; aDescription: string;
       const aDisposition: TMailAttachmentDisposition = adInline); overload;
     procedure AddAttachment(aStream: TStream); overload;
     procedure ClearAttachments;
 
-    procedure AddAddress(aEmail: string; aName: string = '');
-    procedure AddReplyTo(aEmail: string; aName: string = '');
-    procedure AddCC(aEmail: string; aName: string = '');
-    procedure AddBCC(aEmail: string);
+    procedure AddAddress(const aEmail: string; const aName: string = '');
+    procedure AddReplyTo(const aEmail: string; const aName: string = '');
+    procedure AddCC(const aEmail: string; const aName: string = '');
+    procedure AddBCC(const aEmail: string);
 
     property SMTP: TSMTPSend read fSMTP;
     property MIMEMess: TMimeMess read fMIMEMess;
@@ -375,22 +375,22 @@ begin
   Result := fSMTP.AutoTLS;
 end;
 
-procedure TACBrMail.SetHost(aValue: string);
+procedure TACBrMail.SetHost(const aValue: string);
 begin
   fSMTP.TargetHost := aValue;
 end;
 
-procedure TACBrMail.SetPort(aValue: string);
+procedure TACBrMail.SetPort(const aValue: string);
 begin
   fSMTP.TargetPort := aValue;
 end;
 
-procedure TACBrMail.SetUsername(aValue: string);
+procedure TACBrMail.SetUsername(const aValue: string);
 begin
   fSMTP.UserName := aValue;
 end;
 
-procedure TACBrMail.SetPassword(aValue: string);
+procedure TACBrMail.SetPassword(const aValue: string);
 begin
   fSMTP.Password := aValue;
 end;
@@ -904,7 +904,7 @@ begin
   fAttachments.Clear;
 end;
 
-procedure TACBrMail.AddAttachment(aFileName: string; aDescription: string;
+procedure TACBrMail.AddAttachment(const aFileName: string; aDescription: string;
   const aDisposition: TMailAttachmentDisposition = adInline);
 var
   AAttachment: TMailAttachment;
@@ -926,7 +926,7 @@ begin
   AAttachment.Stream.LoadFromFile(aFileName)
 end;
 
-procedure TACBrMail.AddAttachment(aFileName: string);
+procedure TACBrMail.AddAttachment(const aFileName: string);
 begin
   AddAttachment(aFileName, '');
 end;
@@ -955,7 +955,7 @@ begin
   AddAttachment(aStream, '');
 end;
 
-procedure TACBrMail.AddAddress(aEmail: string; aName: string);
+procedure TACBrMail.AddAddress(const aEmail: string; const aName: string);
 begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.ToList.Add('"' + aName + '" <' + aEmail + '>')
@@ -963,7 +963,7 @@ begin
     AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.ToList);
 end;
 
-procedure TACBrMail.AddReplyTo(aEmail: string; aName: string);
+procedure TACBrMail.AddReplyTo(const aEmail: string; const aName: string);
 begin
   if Trim(aName) <> '' then
     fReplyTo.Add('"' + aName + '" <' + aEmail + '>')
@@ -971,7 +971,7 @@ begin
     AddEmailWithDelimitersToList(aEmail, fReplyTo);
 end;
 
-procedure TACBrMail.AddCC(aEmail: string; aName: string);
+procedure TACBrMail.AddCC(const aEmail: string; const aName: string);
 begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.CCList.Add('"' + aName + '" <' + aEmail + '>')
@@ -979,7 +979,7 @@ begin
     AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.CCList);
 end;
 
-procedure TACBrMail.AddBCC(aEmail: string);
+procedure TACBrMail.AddBCC(const aEmail: string);
 begin
   AddEmailWithDelimitersToList(aEmail, fBCC);
 end;

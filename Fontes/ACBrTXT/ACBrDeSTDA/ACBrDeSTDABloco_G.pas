@@ -266,6 +266,7 @@ implementation
 
 constructor TRegistroG001.Create;
 begin
+  inherited Create;
   FRegistroG020 := TRegistroG020.Create(Self);
 end;
 
@@ -365,6 +366,7 @@ end;
 
 constructor TRegistroG615.Create();
 begin
+  inherited Create;
 
 end;
 

@@ -62,7 +62,7 @@ type
     FCodCtrlControle: String;
     FTokenCaptcha: String;
 
-    function VerificarErros(Str: String): String;
+    function VerificarErros(const Str: String): String;
     function LerCampo(Texto: TStringList; NomeCampo: String): String;
     function GetCaptchaURL : String ;
   public
@@ -129,7 +129,7 @@ begin
   end;
 end;
 
-function TACBrConsultaCPF.VerificarErros(Str: String): String;
+function TACBrConsultaCPF.VerificarErros(const Str: String): String;
 var
   Res: String;
 begin

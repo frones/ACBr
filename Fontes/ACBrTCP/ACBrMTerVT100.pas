@@ -65,9 +65,9 @@ type
     function ComandoBoasVindas: AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEnviarParaParalela(aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; override;
+    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
+    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
+    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
@@ -132,8 +132,7 @@ begin
     Result := Result + wCmd;
 end;
 
-function TACBrMTerVT100.ComandoEnviarParaParalela(aDados: AnsiString
-  ): AnsiString;
+function TACBrMTerVT100.ComandoEnviarParaParalela(const aDados: AnsiString ): AnsiString;
 begin
   Result := ESC + '[?24l';  // Seleciona porta paralela
 
@@ -142,8 +141,7 @@ begin
   Result := Result + ESC + '[4i';  // Desabilita serviço de impressão
 end;
 
-function TACBrMTerVT100.ComandoEnviarParaSerial(aDados: AnsiString;
-  aSerial: Byte): AnsiString;
+function TACBrMTerVT100.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
 begin
   if (aSerial = 1) then
     Result := ESC + '[?24r'   // Seleciona porta serial 1
@@ -155,7 +153,7 @@ begin
   Result := Result + ESC + '[4i';  // Desabilita serviço de impressão
 end;
 
-function TACBrMTerVT100.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
+function TACBrMTerVT100.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
 begin
   Result := aTexto;
 end;

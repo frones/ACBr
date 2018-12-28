@@ -56,7 +56,7 @@ type
 
   TACBrMTerPMTG = class(TACBrMTerClass)
   private
-    function PrepararCmd(aCmd: Integer; aParams: AnsiString = ''): AnsiString;
+    function PrepararCmd(aCmd: Integer; const aParams: AnsiString = ''): AnsiString;
   public
     constructor Create(aOwner: TComponent);
 
@@ -65,23 +65,23 @@ type
     function ComandoBeep: AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEco(aValue: AnsiString): AnsiString; override;
-    function ComandoEnviarParaParalela(aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; override;
+    function ComandoEco(const aValue: AnsiString): AnsiString; override;
+    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
+    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
+    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
     function ComandoOnline: AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
 
-    function InterpretarResposta(aRecebido: AnsiString): AnsiString; override;
+    function InterpretarResposta(const aRecebido: AnsiString): AnsiString; override;
   end;
 
 implementation
 
 { TACBrMTerPMTG }
 
-function TACBrMTerPMTG.PrepararCmd(aCmd: Integer; aParams: AnsiString): AnsiString;
+function TACBrMTerPMTG.PrepararCmd(aCmd: Integer; const aParams: AnsiString): AnsiString;
 var
   wTamParams: Integer;
 begin
@@ -125,7 +125,7 @@ begin
   Result := PrepararCmd(43, PadRight(IntToLEStr(aValue, 1), 3, NUL));
 end;
 
-function TACBrMTerPMTG.ComandoEco(aValue: AnsiString): AnsiString;
+function TACBrMTerPMTG.ComandoEco(const aValue: AnsiString): AnsiString;
 var
   I: Integer;
   C: AnsiChar;
@@ -145,14 +145,13 @@ begin
   end;
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
+function TACBrMTerPMTG.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
 begin
   { Apenas GE750 possui porta Paralela }
   Result := PrepararCmd(73, aDados);
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaSerial(aDados: AnsiString;
-  aSerial: Byte): AnsiString;
+function TACBrMTerPMTG.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
 begin
   { Portas COM disponíveis:
     - GE750: 1 e 2;
@@ -162,7 +161,7 @@ begin
   Result := PrepararCmd(63, AnsiChr(aSerial-1) + aDados);
 end;
 
-function TACBrMTerPMTG.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
+function TACBrMTerPMTG.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
 begin
   Result := PrepararCmd(51, PadRight(aTexto, 29, NUL));
 end;
@@ -192,7 +191,7 @@ begin
   Result := PrepararCmd(41, wLinhaStr + wColunaStr);
 end;
 
-function TACBrMTerPMTG.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+function TACBrMTerPMTG.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
 var
   wCmd, wLenParams, wLen, wPosCmd: Integer;
 begin

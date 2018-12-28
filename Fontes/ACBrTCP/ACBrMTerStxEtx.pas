@@ -56,7 +56,7 @@ type
 
   TACBrMTerStxEtx = class(TACBrMTerClass)
   private
-    function PrepararCmd(aCmd: Char; aParams: AnsiString = ''): AnsiString;
+    function PrepararCmd(aCmd: Char; const aParams: AnsiString = ''): AnsiString;
   public
     constructor Create(aOwner: TComponent);
 
@@ -65,22 +65,22 @@ type
     function ComandoBoasVindas: AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEnviarParaParalela(aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; override;
+    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
+    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
+    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
     function ComandoOnline: AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
 
-    function InterpretarResposta(aRecebido: AnsiString): AnsiString; override;
+    function InterpretarResposta(const aRecebido: AnsiString): AnsiString; override;
   end;
 
 implementation
 
 { TACBrMTerStxEtx }
 
-function TACBrMTerStxEtx.PrepararCmd(aCmd: Char; aParams: AnsiString): AnsiString;
+function TACBrMTerStxEtx.PrepararCmd(aCmd: Char; const aParams: AnsiString): AnsiString;
 begin
   Result := STX + aCmd + aParams + ETX;
 end;
@@ -125,7 +125,7 @@ begin
   Result := PrepararCmd('C', '100');
   end;
 
-function TACBrMTerStxEtx.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
+function TACBrMTerStxEtx.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
 var
   I: Integer;
 begin
@@ -134,8 +134,7 @@ begin
     Result := Result + PrepararCmd('P', aDados[I]);
 end;
 
-function TACBrMTerStxEtx.ComandoEnviarParaSerial(aDados: AnsiString;
-  aSerial: Byte): AnsiString;
+function TACBrMTerStxEtx.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
 var
   wPorta: Char;
   I: Integer;
@@ -151,7 +150,7 @@ begin
     Result := Result + PrepararCmd(wPorta, aDados[I]);
 end;
 
-function TACBrMTerStxEtx.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
+function TACBrMTerStxEtx.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
 begin
   Result := PrepararCmd('D', aTexto);
 end;
@@ -180,7 +179,7 @@ begin
   Result := PrepararCmd('L');
 end;
 
-function TACBrMTerStxEtx.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+function TACBrMTerStxEtx.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
 begin
   if (aRecebido[1] = STX) and (aRecebido[Length(aRecebido)] = ETX) then
     Exit;

@@ -60,7 +60,7 @@ type
 
   TACBrMTerClass = class
   private
-    procedure DisparaErroNaoImplementado( NomeMetodo: String );
+    procedure DisparaErroNaoImplementado( const NomeMetodo: String );
 
   protected
     fpModeloStr: String;
@@ -73,17 +73,17 @@ type
     function ComandoBoasVindas: AnsiString; virtual;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; virtual;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; virtual;
-    function ComandoEco(aValue: AnsiString): AnsiString; virtual;
-    function ComandoEnviarParaParalela(aDados: AnsiString): AnsiString; virtual;
-    function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; virtual;
-    function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; virtual;
+    function ComandoEco(const aValue: AnsiString): AnsiString; virtual;
+    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; virtual;
+    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; virtual;
+    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; virtual;
     function ComandoOnline: AnsiString; virtual;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; virtual;
     function ComandoLimparDisplay: AnsiString; virtual;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; virtual;
 
-    function InterpretarResposta(aRecebido: AnsiString): AnsiString; virtual;
-    function LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
+    function InterpretarResposta(const aRecebido: AnsiString): AnsiString; virtual;
+    function LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;
 
     property ModeloStr: String read fpModeloStr;
   end;
@@ -96,7 +96,7 @@ uses
 
 { TACBrMTerClass }
 
-procedure TACBrMTerClass.DisparaErroNaoImplementado(NomeMetodo: String);
+procedure TACBrMTerClass.DisparaErroNaoImplementado(const NomeMetodo: String);
 begin
   raise Exception.Create(ACBrStr('Metodo: '+NomeMetodo+', não implementada em: '+ModeloStr));
 end;
@@ -139,25 +139,25 @@ begin
   DisparaErroNaoImplementado('ComandoDeslocarCursor');
 end;
 
-function TACBrMTerClass.ComandoEco(aValue: AnsiString): AnsiString;
+function TACBrMTerClass.ComandoEco(const aValue: AnsiString): AnsiString;
 begin
   Result := ComandoEnviarTexto(LimparConteudoParaEnviar(aValue));
 end;
 
-function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
+function TACBrMTerClass.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaParalela');
 end;
 
-function TACBrMTerClass.ComandoEnviarParaSerial(aDados: AnsiString;
+function TACBrMTerClass.ComandoEnviarParaSerial(const aDados: AnsiString;
   aSerial: Byte): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaSerial');
 end;
 
-function TACBrMTerClass.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
+function TACBrMTerClass.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoEnviarTexto');
@@ -186,12 +186,12 @@ begin
   DisparaErroNaoImplementado('ComandoLimparLinha');
 end;
 
-function TACBrMTerClass.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+function TACBrMTerClass.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
 begin
   Result := aRecebido;
 end;
 
-function TACBrMTerClass.LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
+function TACBrMTerClass.LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;
 var
   aChar: AnsiChar;
   I: Integer;

@@ -95,7 +95,7 @@ type
     procedure DoHookEnviaString(const aCmd: AnsiString);
     //procedure DoHookLeString(const aNumBytes, aTimeOut: Integer;
     //  var aRetorno: AnsiString);
-    procedure SetUltimoDadoRecebido(AValue: AnsiString);
+    procedure SetUltimoDadoRecebido(const AValue: AnsiString);
   public
     constructor Create(aOwner: TACBrMTerConexoes);
     destructor Destroy; override;
@@ -167,11 +167,11 @@ type
     procedure SetAtivo(AValue: Boolean);
     procedure SetBalanca(AValue: TACBrBAL);
     procedure SetEchoMode(AValue: TACBrMTerEchoMode);
-    procedure SetIP(AValue: AnsiString);
+    procedure SetIP(const AValue: AnsiString);
     procedure SetModelo(AValue: TACBrMTerModelo);
     procedure SetPasswordChar(AValue: Char);
-    procedure SetPort(AValue: AnsiString);
-    procedure SetTerminador(AValue: AnsiString);
+    procedure SetPort(const AValue: AnsiString);
+    procedure SetTerminador(const AValue: AnsiString);
     procedure SetTimeOut(AValue: Integer);
 
     procedure DoConecta(const TCPBlockSocket: TTCPBlockSocket;
@@ -184,13 +184,13 @@ type
 
     procedure EnviarComando(ASocket: TTCPBlockSocket; const ACmd: AnsiString); overload;
     function LerResposta(ASocket: TTCPBlockSocket; const aTimeOut: Integer;
-      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString; overload;
+      NumBytes: Integer = 0; const Terminador: AnsiString = ''): AnsiString; overload;
 
-    function BuscarPorIP(aIP: AnsiString): TTCPBlockSocket;
+    function BuscarPorIP(const aIP: AnsiString): TTCPBlockSocket;
     function EncontrarConexao(aIP: AnsiString = ''): TTCPBlockSocket;
 
-    procedure AdicionarConexao(aIP: AnsiString);
-    procedure DesconectarConexao(aIP: AnsiString);
+    procedure AdicionarConexao(const aIP: AnsiString);
+    procedure DesconectarConexao(const aIP: AnsiString);
 
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -205,22 +205,22 @@ type
 
     procedure EnviarComando(const aIP: AnsiString; const ACmd: AnsiString); overload;
     function LerResposta(const aIP: AnsiString; const aTimeOut: Integer;
-      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString; overload;
+      NumBytes: Integer = 0; const Terminador: AnsiString = ''): AnsiString; overload;
 
     procedure GravaLog(aString: AnsiString; Traduz: Boolean = False);
 
-    procedure BackSpace(aIP: AnsiString);
-    procedure Beep(aIP: AnsiString);
-    procedure DeslocarCursor(aIP: AnsiString; aValue: Integer);
-    procedure DeslocarLinha(aIP: AnsiString; aValue: Integer);
-    procedure EnviarParaParalela(aIp, aDados: AnsiString);
-    procedure EnviarParaSerial(aIP, aDados: AnsiString; aSerial: Integer);
-    procedure EnviarTexto(aIP, aTexto: AnsiString);
-    procedure LimparDisplay(aIP: AnsiString);
-    procedure LimparLinha(aIP: AnsiString; aLinha: Integer);
-    procedure PosicionarCursor(aIP: AnsiString; aLinha, aColuna: Integer);
-    procedure SolicitarPeso(aIP: AnsiString; aSerial: Integer);
-    function Online(aIP: AnsiString): Boolean;
+    procedure BackSpace(const aIP: AnsiString);
+    procedure Beep(const aIP: AnsiString);
+    procedure DeslocarCursor(const aIP: AnsiString; aValue: Integer);
+    procedure DeslocarLinha(const aIP: AnsiString; aValue: Integer);
+    procedure EnviarParaParalela(const aIp, aDados: AnsiString);
+    procedure EnviarParaSerial(const aIP, aDados: AnsiString; aSerial: Integer);
+    procedure EnviarTexto(const aIP, aTexto: AnsiString);
+    procedure LimparDisplay(const aIP: AnsiString);
+    procedure LimparLinha(const aIP: AnsiString; aLinha: Integer);
+    procedure PosicionarCursor(const aIP: AnsiString; aLinha, aColuna: Integer);
+    procedure SolicitarPeso(const aIP: AnsiString; aSerial: Integer);
+    function Online(const aIP: AnsiString): Boolean;
 
     //function LePeso(aIP: AnsiString; aSerial: Integer): Double;
 
@@ -334,7 +334,7 @@ begin
     aRetorno := fBalResp;
 end;   }
 
-procedure TACBrMTerConexao.SetUltimoDadoRecebido(AValue: AnsiString);
+procedure TACBrMTerConexao.SetUltimoDadoRecebido(const AValue: AnsiString);
 begin
   if (AValue = EmptyStr) then
     Exit;
@@ -413,7 +413,7 @@ end;}
 
 { TACBrMTer }
 
-procedure TACBrMTer.SetPort(AValue: AnsiString);
+procedure TACBrMTer.SetPort(const AValue: AnsiString);
 begin
   if (fTCPServer.Port = AValue) then
     Exit;
@@ -422,7 +422,7 @@ begin
   fTCPServer.Port := AValue;
 end;
 
-procedure TACBrMTer.SetTerminador(AValue: AnsiString);
+procedure TACBrMTer.SetTerminador(const AValue: AnsiString);
 begin
   if (fTCPServer.Terminador = AValue) then
     Exit;
@@ -548,13 +548,13 @@ begin
 end;
 
 function TACBrMTer.LerResposta(const aIP: AnsiString; const aTimeOut: Integer;
-  NumBytes: Integer; Terminador: AnsiString): AnsiString;
+  NumBytes: Integer; const Terminador: AnsiString): AnsiString;
 begin
   Result := LerResposta( EncontrarConexao(aIP), aTimeOut, NumBytes, Terminador );
 end;
 
 function TACBrMTer.LerResposta(ASocket: TTCPBlockSocket; const aTimeOut: Integer;
-  NumBytes: Integer; Terminador: AnsiString): AnsiString;
+  NumBytes: Integer; const Terminador: AnsiString): AnsiString;
 begin
   if NumBytes > 0 then
      Result := ASocket.RecvBufferStr( NumBytes, aTimeOut)
@@ -564,7 +564,7 @@ begin
      Result := ASocket.RecvPacket( aTimeOut );
 end;
 
-function TACBrMTer.BuscarPorIP(aIP: AnsiString): TTCPBlockSocket;
+function TACBrMTer.BuscarPorIP(const aIP: AnsiString): TTCPBlockSocket;
 var
   wIP: AnsiString;
   I: Integer;
@@ -607,7 +607,7 @@ begin
     raise Exception.Create(ACBrStr('Terminal '+ QuotedStr(aIP) +' não encontrado'));
 end;
 
-procedure TACBrMTer.AdicionarConexao(aIP: AnsiString);
+procedure TACBrMTer.AdicionarConexao(const aIP: AnsiString);
 var
   wConexao: TACBrMTerConexao;
 begin
@@ -626,7 +626,7 @@ begin
   wConexao.OnRecebePeso := DoConexaoRecebePeso;
 end;
 
-procedure TACBrMTer.DesconectarConexao(aIP: AnsiString);
+procedure TACBrMTer.DesconectarConexao(const aIP: AnsiString);
 var
   wConexao: TACBrMTerConexao;
 begin
@@ -690,7 +690,7 @@ begin
   end;
 end;
 
-procedure TACBrMTer.SetIP(AValue: AnsiString);
+procedure TACBrMTer.SetIP(const AValue: AnsiString);
 begin
   if (fTCPServer.IP = AValue) then
     Exit;
@@ -837,65 +837,65 @@ begin
                       ' -- ' + aString);
 end;
 
-procedure TACBrMTer.BackSpace(aIP: AnsiString);
+procedure TACBrMTer.BackSpace(const aIP: AnsiString);
 begin
   EnviarComando(aIP, fMTer.ComandoBackSpace);
 end;
 
-procedure TACBrMTer.Beep(aIP: AnsiString);
+procedure TACBrMTer.Beep(const aIP: AnsiString);
 begin
   EnviarComando(aIP, fMTer.ComandoBeep);
 end;
 
-procedure TACBrMTer.DeslocarCursor(aIP: AnsiString; aValue: Integer);
+procedure TACBrMTer.DeslocarCursor(const aIP: AnsiString; aValue: Integer);
 begin
   // Desloca Cursor a partir da posição atual (Permite valores negativos)
   EnviarComando(aIP, fMTer.ComandoDeslocarCursor(aValue));
 end;
 
-procedure TACBrMTer.DeslocarLinha(aIP: AnsiString; aValue: Integer);
+procedure TACBrMTer.DeslocarLinha(const aIP: AnsiString; aValue: Integer);
 begin
   // Desloca Linha a partir da posição atual(Valores: 1 ou -1)
   EnviarComando(aIP, fMTer.ComandoDeslocarLinha(aValue));
 end;
 
-procedure TACBrMTer.EnviarParaParalela(aIp, aDados: AnsiString);
+procedure TACBrMTer.EnviarParaParalela(const aIp, aDados: AnsiString);
 begin
   // Envia String para Porta Paralela
   EnviarComando(aIP, fMTer.ComandoEnviarParaParalela(aDados));
 end;
 
-procedure TACBrMTer.EnviarParaSerial(aIP, aDados: AnsiString; aSerial: Integer);
+procedure TACBrMTer.EnviarParaSerial(const aIP, aDados: AnsiString; aSerial: Integer);
 begin
   // Envia String para Porta Serial
   EnviarComando(aIP, fMTer.ComandoEnviarParaSerial(aDados, aSerial));
 end;
 
-procedure TACBrMTer.EnviarTexto(aIP, aTexto: AnsiString);
+procedure TACBrMTer.EnviarTexto(const aIP, aTexto: AnsiString);
 begin
   // Envia String para o Display
   EnviarComando(aIP, fMTer.ComandoEnviarTexto(aTexto));
 end;
 
-procedure TACBrMTer.LimparDisplay(aIP: AnsiString);
+procedure TACBrMTer.LimparDisplay(const aIP: AnsiString);
 begin
   // Limpa Display e posiciona cursor em 0,0
   EnviarComando(aIP, fMTer.ComandoLimparDisplay);
 end;
 
-procedure TACBrMTer.LimparLinha(aIP: AnsiString; aLinha: Integer);
+procedure TACBrMTer.LimparLinha(const aIP: AnsiString; aLinha: Integer);
 begin
   // Apaga Linha, mantendo cursor na posição atual
   EnviarComando(aIP, fMTer.ComandoLimparLinha(aLinha));
 end;
 
-procedure TACBrMTer.PosicionarCursor(aIP: AnsiString; aLinha, aColuna: Integer);
+procedure TACBrMTer.PosicionarCursor(const aIP: AnsiString; aLinha, aColuna: Integer);
 begin
   // Posiciona cursor na posição informada
   EnviarComando(aIP, fMTer.ComandoPosicionarCursor(aLinha, aColuna));
 end;
 
-procedure TACBrMTer.SolicitarPeso(aIP: AnsiString; aSerial: Integer);
+procedure TACBrMTer.SolicitarPeso(const aIP: AnsiString; aSerial: Integer);
 var
   wConexao: TACBrMTerConexao;
 begin
@@ -927,7 +927,7 @@ begin
   end;
 end;}
 
-function TACBrMTer.Online(aIP: AnsiString): Boolean;
+function TACBrMTer.Online(const aIP: AnsiString): Boolean;
 var
   aSocket: TTCPBlockSocket;
   CmdOnLine, Resp: AnsiString;

@@ -997,18 +997,8 @@ begin
           FieldByName('XProd').AsString             := StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
           FieldByName('VProd').AsString             := FDANFEClassOwner.ManterVprod(Prod.VProd , Prod.vDesc );
           FieldByName('vTotTrib').AsString          := FDANFEClassOwner.ManterdvTotTrib(Imposto.vTotTrib );
-
-          if FDANFEClassOwner is TACBrNFeDANFEClass then
-          begin
-            FieldByName('infAdProd').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterinfAdProd(FNFe, inItem);
-            FieldByName('DescricaoProduto').AsString := TACBrNFeDANFEClass(FDANFEClassOwner).ManterXProd(FNFe, inItem);
-          end
-          else
-          begin
-            FieldByName('infAdProd').AsString := FNFe.Det[inItem].infAdProd;
-            FieldByName('DescricaoProduto').AsString := FieldByName('XProd').AsString;
-          end;
-
+          FieldByName('infAdProd').AsString         := FDANFEClassOwner.ManterinfAdProd(FNFe, inItem);
+          FieldByName('DescricaoProduto').AsString  := FDANFEClassOwner.ManterXProd(FNFe, inItem);
           FieldByName('NCM').AsString               := Prod.NCM;
           FieldByName('EXTIPI').AsString            := Prod.EXTIPI;
           FieldByName('genero').AsString            := '';

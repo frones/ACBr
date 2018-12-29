@@ -102,8 +102,7 @@ type
     constructor Create(AOwner: TComponent); override;
 
     function QuebrarLinha: String; virtual;
-    function ManterXProd(aNFE: TNFe; inItem: Integer): String; virtual;
-    function ManterinfAdProd(aNFE: TNFe; inItem: Integer): String; virtual;
+    function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; override;
     function ManterVeiculos(aNFE: TNFe; inItem: Integer): String; virtual;
     function ManterMedicamentos(aNFE: TNFe; inItem: Integer): String; virtual;
     function ManterArma(aNFE: TNFe; inItem: Integer): String; virtual;
@@ -162,6 +161,8 @@ type
     property ImprimeItens: Boolean read FImprimeItens write FImprimeItens default True;
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default False;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default False;
+
+    function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; override;
   end;
 
 implementation
@@ -218,20 +219,11 @@ begin
     FTributosPercentualPersonalizado := 0;
 end;
 
-function TACBrNFeDANFEClass.ManterXProd(aNFE: TNFe; inItem: Integer): String;
-begin
-  Result := '';
-  if (inItem < 0) or (inItem >= aNFE.Det.Count) then
-    Exit;
-
-  Result := aNFE.Det.Items[inItem].Prod.XProd + ManterinfAdProd(aNFE, inItem);
-end;
-
-function TACBrNFeDANFEClass.ManterinfAdProd(aNFE: TNFe; inItem: Integer): String;
+function TACBrNFeDANFEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
 var
   sQuebraLinha: String;
 begin
-  Result := '';
+  inherited;
   if (inItem < 0) or (inItem >= aNFE.Det.Count) then
     Exit;
 
@@ -655,6 +647,20 @@ begin
   FvTroco := 0;
   FImprimeQRCodeLateral := False;
   FImprimeLogoLateral := False;
+end;
+
+function TACBrNFeDANFCEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
+begin
+  inherited;
+  if (inItem < 0) or (inItem >= aNFE.Det.Count) then
+    Exit;
+
+  Result := aNFE.Det.Items[inItem].infAdProd;
+  if Result = '' then
+    Exit;
+
+  Result := sLineBreak +
+    StringReplace(Result, ';', sLineBreak, [rfReplaceAll, rfIgnoreCase]);
 end;
 
 end.

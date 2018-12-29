@@ -93,11 +93,13 @@ type
 
     function ManterCodigo(scEAN, scProd: String): String; virtual;
     function ManterNomeImpresso(sXNome, sXFant: String): String; virtual;
+    function ManterXProd(aNFE: TNFe; const inItem: Integer): String;
     function ManterUnidades(sUCom, sUTrib: String): String; virtual;
     function ManterQuantidades(dQCom, dQTrib: Double): String; virtual;
     function ManterValoresUnitarios(dVCom, dVTrib: Double): String; virtual;
     function ManterInfAdFisco(ANFe: TNFe): String; virtual;
     function TrataDocumento(sCNPJCPF: String): String; virtual;
+    function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; virtual;
     function ManterInfCompl(ANFe: TNFe): String; virtual;
     function ManterInfContr(ANFe: TNFe): String; virtual;
     function ManterObsFisco(ANFe: TNFe): String; virtual;
@@ -349,6 +351,12 @@ begin
   end;
 end;
 
+function TACBrDFeDANFeReport.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
+begin
+  { sobrescrever }
+  Result := '';
+end;
+
 function TACBrDFeDANFeReport.ManterInfCompl(ANFe: TNFe): String;
   // Informações de interesse do contribuinte
 begin
@@ -438,6 +446,15 @@ begin
     dValor := dVProd;
 
   Result := FormatarValorUnitario(dValor);
+end;
+
+function TACBrDFeDANFeReport.ManterXProd(aNFE: TNFe; const inItem: Integer): String;
+begin
+  Result := '';
+  if (inItem < 0) or (inItem >= aNFE.Det.Count) then
+    Exit;
+
+  Result := aNFE.Det.Items[inItem].Prod.XProd + ManterinfAdProd(aNFE, inItem);
 end;
 
 function TACBrDFeDANFeReport.ManterCst(dCRT: TpcnCRT; dCSOSN: TpcnCSOSNIcms; dCST: TpcnCSTIcms): String;

@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/12/2018
+-- ACBrNFeDANFEFR --
+[-] Correção para impressão das informações adicionais do item (infAdProd) no
+    DANFE NFCe.
+    https://www.projetoacbr.com.br/forum/topic/48434-par%C3%A2metro-exibe-inforadicproduto/
+	
 04/12/2018
 -- ACBrNFeDANFEFR --
 [+] Adicionado componente para impressão de NFCe devido a separação dos componentes de impressão do Refactory.

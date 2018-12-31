@@ -53,6 +53,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/12/2018
+-- DemoDANFeFR --- 
+[+] Teste de Canhoto a esquerda
+     Demostra a utilização a apresentação do canhoto a esquerda 
+	na danfe paisagem
+      Por : Henrique Leonardo
+
 
 12/06/2017
 -- DemoDANFeFR --- 

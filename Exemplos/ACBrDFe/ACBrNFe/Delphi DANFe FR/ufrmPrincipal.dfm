@@ -112,11 +112,12 @@ object frmPrincipal: TfrmPrincipal
         Height = 46
         Align = alTop
         Caption = 'Canhoto'
-        Columns = 2
+        Columns = 3
         ItemIndex = 0
         Items.Strings = (
           'Cabe'#231'alho '
-          'Rodap'#233)
+          'Rodap'#233
+          'Esquerda')
         TabOrder = 0
       end
       object GroupBox1: TGroupBox
@@ -218,6 +219,10 @@ object frmPrincipal: TfrmPrincipal
     object Decimais: TTabSheet
       Caption = 'Decimais'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RgTipodedecimais: TRadioGroup
         Left = 0
         Top = 0
@@ -242,6 +247,10 @@ object frmPrincipal: TfrmPrincipal
         object TabtdetInteger: TTabSheet
           Caption = 'tdetInteger'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label5: TLabel
             Left = 16
             Top = 24
@@ -300,6 +309,10 @@ object frmPrincipal: TfrmPrincipal
         object TabtdetMascara: TTabSheet
           Caption = 'tdetMascara'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label7: TLabel
             Left = 5
             Top = 5
@@ -376,6 +389,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 30
   end
   object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
@@ -387,6 +401,7 @@ object frmPrincipal: TfrmPrincipal
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrNFe = ACBrNFe1
     TipoDANFE = tiSemGeracao
+    ExibeInforAdicProduto = True
     EspessuraBorda = 1
     ExpandirDadosAdicionaisAuto = False
     IncorporarBackgroundPdf = True
@@ -402,7 +417,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object frxReport1: TfrxReport
     Tag = 1
-    Version = '5.3.14'
+    Version = '5.4.6'
     DotMatrixReport = False
     EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'

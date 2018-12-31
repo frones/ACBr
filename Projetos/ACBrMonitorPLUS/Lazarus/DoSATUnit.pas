@@ -1532,7 +1532,8 @@ begin
   try
     with fACBrSAT do
     begin
-      Resp.Arquivo:= Extrato.ArquivoPDF;
+      Resp.Arquivo:= Extrato.NomeDocumento;
+      Resp.XML:= Extrato.CFe.XMLOriginal;
 
       fpCmd.Resposta := sLineBreak + Resp.Gerar;
 

@@ -108,6 +108,8 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.btnImprimirPDFCFe = new System.Windows.Forms.Button();
+            this.btnConsultarStatusOperacional = new System.Windows.Forms.Button();
+            this.btnConsultarSAT = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -147,7 +149,7 @@
             // 
             // btnCriarCFe
             // 
-            this.btnCriarCFe.Location = new System.Drawing.Point(12, 223);
+            this.btnCriarCFe.Location = new System.Drawing.Point(12, 252);
             this.btnCriarCFe.Name = "btnCriarCFe";
             this.btnCriarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnCriarCFe.TabIndex = 29;
@@ -157,7 +159,7 @@
             // 
             // btnCriarEnviarCFe
             // 
-            this.btnCriarEnviarCFe.Location = new System.Drawing.Point(130, 223);
+            this.btnCriarEnviarCFe.Location = new System.Drawing.Point(130, 252);
             this.btnCriarEnviarCFe.Name = "btnCriarEnviarCFe";
             this.btnCriarEnviarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnCriarEnviarCFe.TabIndex = 30;
@@ -177,7 +179,7 @@
             // 
             // btnEnviarCFe
             // 
-            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 252);
+            this.btnEnviarCFe.Location = new System.Drawing.Point(12, 281);
             this.btnEnviarCFe.Name = "btnEnviarCFe";
             this.btnEnviarCFe.Size = new System.Drawing.Size(112, 23);
             this.btnEnviarCFe.TabIndex = 32;
@@ -187,7 +189,7 @@
             // 
             // btnImprimirCFe
             // 
-            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 281);
+            this.btnImprimirCFe.Location = new System.Drawing.Point(12, 310);
             this.btnImprimirCFe.Name = "btnImprimirCFe";
             this.btnImprimirCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirCFe.TabIndex = 33;
@@ -197,7 +199,7 @@
             // 
             // btnImprimiCFeRed
             // 
-            this.btnImprimiCFeRed.Location = new System.Drawing.Point(130, 281);
+            this.btnImprimiCFeRed.Location = new System.Drawing.Point(130, 310);
             this.btnImprimiCFeRed.Name = "btnImprimiCFeRed";
             this.btnImprimiCFeRed.Size = new System.Drawing.Size(112, 23);
             this.btnImprimiCFeRed.TabIndex = 34;
@@ -1005,7 +1007,7 @@
             // 
             // btnImprimirPDFCFe
             // 
-            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 310);
+            this.btnImprimirPDFCFe.Location = new System.Drawing.Point(12, 339);
             this.btnImprimirPDFCFe.Name = "btnImprimirPDFCFe";
             this.btnImprimirPDFCFe.Size = new System.Drawing.Size(112, 23);
             this.btnImprimirPDFCFe.TabIndex = 36;
@@ -1013,11 +1015,33 @@
             this.btnImprimirPDFCFe.UseVisualStyleBackColor = true;
             this.btnImprimirPDFCFe.Click += new System.EventHandler(this.btnImprimirPDFCFe_Click);
             // 
+            // btnConsultarStatusOperacional
+            // 
+            this.btnConsultarStatusOperacional.Location = new System.Drawing.Point(130, 223);
+            this.btnConsultarStatusOperacional.Name = "btnConsultarStatusOperacional";
+            this.btnConsultarStatusOperacional.Size = new System.Drawing.Size(112, 23);
+            this.btnConsultarStatusOperacional.TabIndex = 38;
+            this.btnConsultarStatusOperacional.Text = "Consultar Status";
+            this.btnConsultarStatusOperacional.UseVisualStyleBackColor = true;
+            this.btnConsultarStatusOperacional.Click += new System.EventHandler(this.btnConsultarStatusOperacional_Click);
+            // 
+            // btnConsultarSAT
+            // 
+            this.btnConsultarSAT.Location = new System.Drawing.Point(12, 223);
+            this.btnConsultarSAT.Name = "btnConsultarSAT";
+            this.btnConsultarSAT.Size = new System.Drawing.Size(112, 23);
+            this.btnConsultarSAT.TabIndex = 37;
+            this.btnConsultarSAT.Text = "Consultar SAT";
+            this.btnConsultarSAT.UseVisualStyleBackColor = true;
+            this.btnConsultarSAT.Click += new System.EventHandler(this.btnConsultarSAT_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 417);
+            this.Controls.Add(this.btnConsultarStatusOperacional);
+            this.Controls.Add(this.btnConsultarSAT);
             this.Controls.Add(this.btnImprimirPDFCFe);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnImprimiCFeRed);
@@ -1138,6 +1162,8 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox cbbImpressora;
         private System.Windows.Forms.Button btnImprimirPDFCFe;
+        private System.Windows.Forms.Button btnConsultarStatusOperacional;
+        private System.Windows.Forms.Button btnConsultarSAT;
     }
 }
 

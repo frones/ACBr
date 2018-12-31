@@ -135,10 +135,11 @@ public class FrmMain extends javax.swing.JFrame {
         btnImprimirCFe = new javax.swing.JButton();
         btnImprimirPDFCFe = new javax.swing.JButton();
         btnImprimiCFeRed = new javax.swing.JButton();
+        btnConsultarSAT = new javax.swing.JButton();
+        btnConsultarStatus = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ACBrLibSat Demo");
-        setPreferredSize(new java.awt.Dimension(758, 456));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -719,6 +720,21 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
+        btnConsultarSAT.setText("Consultar SAT");
+        btnConsultarSAT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarSATActionPerformed(evt);
+            }
+        });
+
+        btnConsultarStatus.setText("Consultar Status");
+        btnConsultarStatus.setToolTipText("");
+        btnConsultarStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarStatusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -728,7 +744,6 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnIniDesini, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCriarCFe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -738,7 +753,12 @@ public class FrmMain extends javax.swing.JFrame {
                                 .addComponent(btnImprimirCFe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnImprimiCFeRed, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnImprimirPDFCFe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnImprimirPDFCFe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIniDesini, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnConsultarSAT, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnConsultarStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -756,6 +776,10 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnIniDesini)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnConsultarSAT)
+                            .addComponent(btnConsultarStatus))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCriarCFe)
                             .addComponent(btnCriarEnviarCFe))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -768,6 +792,8 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnImprimirPDFCFe)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnConsultarSAT.getAccessibleContext().setAccessibleName("Consultar SAT");
 
         setBounds(0, 0, 809, 450);
     }// </editor-fold>//GEN-END:initComponents
@@ -980,6 +1006,50 @@ public class FrmMain extends javax.swing.JFrame {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnImprimirPDFCFeActionPerformed
+
+    private void btnConsultarSATActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarSATActionPerformed
+        try
+        {
+            int ret;
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+            
+            ret = acbrSat.SAT_ConsultarSAT(buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarSATActionPerformed
+
+    private void btnConsultarStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarStatusActionPerformed
+        try
+        {
+            int ret;
+            ByteBuffer buffer = ByteBuffer.allocate(256);
+            IntByReference bufferLen = new IntByReference(256);
+            
+            ret = acbrSat.SAT_ConsultarStatusOperacional(buffer, bufferLen);
+            ACBrSat.checkResult(ret);
+            
+            if(bufferLen.getValue() > 256){
+                buffer = ByteBuffer.allocate(bufferLen.getValue());                        
+                ret = acbrSat.SAT_UltimoRetorno(buffer, bufferLen);
+                ACBrSat.checkResult(ret);
+            }
+            
+            rtbRespostas.append(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));            
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarStatusActionPerformed
 
     private void loadConfig(){
         try{
@@ -1520,6 +1590,8 @@ public class FrmMain extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultarSAT;
+    private javax.swing.JButton btnConsultarStatus;
     private javax.swing.JButton btnCriarCFe;
     private javax.swing.JButton btnCriarEnviarCFe;
     private javax.swing.JButton btnEnviarCFe;

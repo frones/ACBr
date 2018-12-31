@@ -33,6 +33,10 @@ namespace ACBrLibSat.Demo
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
                 cbbImpressora.Items.Add(printer);
+                cbbImpressora.Items.Add(printer);
+                cbbImpressora.Items.Add(printer);
+                cbbImpressora.Items.Add(printer);
+                cbbImpressora.Items.Add(printer);
                 cbbPortas.Items.Add($"RAW:{printer}");
             }
 
@@ -87,6 +91,46 @@ namespace ACBrLibSat.Demo
             }
         }
 
+        private void btnConsultarSAT_Click(object sender, EventArgs e)
+        {
+            var bufferLen = 256;
+            var buffer = new StringBuilder(bufferLen);
+
+            var ret = ACBrSat.SAT_ConsultarSAT(buffer, ref bufferLen);
+            ACBrSat.CheckResult(ret);
+
+            if (bufferLen > 256)
+            {
+                buffer.Clear();
+                buffer.Capacity = bufferLen;
+
+                ret = ACBrSat.SAT_UltimoRetorno(buffer, ref bufferLen);
+                ACBrSat.CheckResult(ret);
+            }
+
+            rtbRespostas.AppendLine(buffer.FromUTF8());
+        }
+
+        private void btnConsultarStatusOperacional_Click(object sender, EventArgs e)
+        {
+            var bufferLen = 256;
+            var buffer = new StringBuilder(bufferLen);
+
+            var ret = ACBrSat.SAT_ConsultarStatusOperacional(buffer, ref bufferLen);
+            ACBrSat.CheckResult(ret);
+
+            if (bufferLen > 256)
+            {
+                buffer.Clear();
+                buffer.Capacity = bufferLen;
+
+                ret = ACBrSat.SAT_UltimoRetorno(buffer, ref bufferLen);
+                ACBrSat.CheckResult(ret);
+            }
+
+            rtbRespostas.AppendLine(buffer.FromUTF8());
+        }
+
         private void btnCriarCFe_Click(object sender, EventArgs e)
         {
             var iniPath = Helpers.OpenFile("Arquivo Ini CFe (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*");
@@ -107,7 +151,7 @@ namespace ACBrLibSat.Demo
                 ACBrSat.CheckResult(ret);
             }
 
-            rtbRespostas.AppendText(buffer.ToString());
+            rtbRespostas.AppendLine(buffer.FromUTF8());
         }
 
         private void btnCriarEnviarCFe_Click(object sender, EventArgs e)
@@ -130,7 +174,7 @@ namespace ACBrLibSat.Demo
                 ACBrSat.CheckResult(ret);
             }
 
-            rtbRespostas.AppendText(buffer.ToString());
+            rtbRespostas.AppendLine(buffer.FromUTF8());
         }
 
         private void btnEnviarCFe_Click(object sender, EventArgs e)
@@ -153,7 +197,7 @@ namespace ACBrLibSat.Demo
                 ACBrSat.CheckResult(ret);
             }
 
-            rtbRespostas.AppendText(buffer.ToString());
+            rtbRespostas.AppendLine(buffer.FromUTF8());
         }
 
         private void btnImprimirCFe_Click(object sender, EventArgs e)
@@ -164,7 +208,7 @@ namespace ACBrLibSat.Demo
             var ret = ACBrSat.SAT_ImprimirExtratoVenda(xmlPath.ToUTF8(), "".ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            rtbRespostas.AppendText("Impressão efetuada com sucesso.");
+            rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
         }
 
         private void btnImprimiCFeRed_Click(object sender, EventArgs e)
@@ -175,7 +219,7 @@ namespace ACBrLibSat.Demo
             var ret = ACBrSat.SAT_ImprimirExtratoResumido(xmlPath.ToUTF8(), "".ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            rtbRespostas.AppendText("Impressão efetuada com sucesso.");
+            rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
         }
 
         private void btnImprimirPDFCFe_Click(object sender, EventArgs e)
@@ -201,7 +245,7 @@ namespace ACBrLibSat.Demo
                 ACBrSat.CheckResult(ret);
             }
 
-            rtbRespostas.AppendText(buffer.ToString());
+            rtbRespostas.AppendLine(buffer.FromUTF8());
         }
 
         private void LoadConfig()
@@ -325,7 +369,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "Impresora".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "Impressora".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             cbbImpressora.Text = pValue.ToString();

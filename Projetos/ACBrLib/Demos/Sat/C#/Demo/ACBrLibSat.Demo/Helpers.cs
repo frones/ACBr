@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace ACBrLibSat.Demo
 {
@@ -52,6 +53,14 @@ namespace ACBrLibSat.Demo
                 fbd.ShowNewFolderButton = true;
                 return fbd.ShowDialog().Equals(DialogResult.Cancel) ? string.Empty : fbd.SelectedPath;
             }
+        }
+
+        public static void AppendLine(this RichTextBox rtb, string line)
+        {
+            if (rtb.Text != string.Empty)
+                rtb.AppendText(Environment.NewLine);
+
+            rtb.AppendText(line);
         }
     }
 }

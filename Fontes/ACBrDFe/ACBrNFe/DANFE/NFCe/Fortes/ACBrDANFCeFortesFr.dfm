@@ -1101,7 +1101,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Lines.Strings = (
             'Nome do Consumidor')
           ParentFont = False
@@ -1152,7 +1152,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Layout = tlBottom
           ParentFont = False
         end
@@ -1168,7 +1168,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           Layout = tlBottom
           ParentFont = False
         end

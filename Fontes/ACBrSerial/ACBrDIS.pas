@@ -727,7 +727,7 @@ begin
      if Length(TextoComp)  < (Colunas - 4) then
      begin
         try
-           if Trim(Linhas[ Cursor.X-1 ].Texto) <> '' then ;
+           if Trim(Linhas[ Cursor.X-1 ].Texto) <> '' then
               LimparLinha( Cursor.X );
 
            PosicionarCursor( Cursor.X, (Colunas - Length(TrimLeft(AText)) + 1));

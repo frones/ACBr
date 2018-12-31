@@ -847,7 +847,6 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbTotalBrutoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-//  Descontos, Acrescimos: Double;
   TotalDescAcresItem: Currency;
 begin
   with ACBrSATExtrato.CFe do
@@ -945,18 +944,19 @@ begin
   begin
     if (Trim(Dest.xNome) <> '') then
       NomeConsumidor := Trim(Dest.xNome)
-    else if ACBrSATExtrato.ImprimeCPFNaoInformado then
+    else if (ACBrSATExtrato.ImprimeCPFNaoInformado and (Trim(Dest.CNPJCPF) = '')) then
       NomeConsumidor := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
     else
       NomeConsumidor := '';
 
-    PrintIt := (Trim(Dest.CNPJCPF) <> '') or (NomeConsumidor <> '');
+    if (Trim(Dest.CNPJCPF) <> '') then
+      NomeConsumidor := FormatarCNPJouCPF(Dest.CNPJCPF) +
+                        IfThen(NomeConsumidor<>'', ' - '+NomeConsumidor, '');
+
+    PrintIt := (NomeConsumidor <> '');
 
     if PrintIt then
-    begin
-      mConsumidorLateral.Lines.Text := FormatarCNPJouCPF(Dest.CNPJCPF) +
-        IfThen(NomeConsumidor<>'', ' - '+ NomeConsumidor, '');
-    end;
+      mConsumidorLateral.Lines.Text := NomeConsumidor;
   end;
 end;
 

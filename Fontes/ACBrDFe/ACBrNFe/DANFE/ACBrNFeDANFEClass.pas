@@ -223,7 +223,7 @@ function TACBrNFeDANFEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): 
 var
   sQuebraLinha: String;
 begin
-  inherited;
+  inherited ManterinfAdProd(aNFE, inItem);
   if (inItem < 0) or (inItem >= aNFE.Det.Count) then
     Exit;
 
@@ -651,7 +651,7 @@ end;
 
 function TACBrNFeDANFCEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
 begin
-  inherited;
+  inherited ManterinfAdProd(aNFe, inItem);
   if (inItem < 0) or (inItem >= aNFE.Det.Count) then
     Exit;
 

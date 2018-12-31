@@ -53,6 +53,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2018
+-- DanfePaisagem_2019.fr3 ( Refatoração da DanfePaisagem_2018.fr3 ) 
+[+] Nova fonte padrão Times New roman ( antiga Arial )
+[-] Ajuste na apresentação do logo
+[-] Ajuste no alinhamento nos nomes/linhas dos quadros
+[+] Apresentação do Local de Entrega
+[+] Apresentação do Local de Retirada
+[*] Ajuste na descrição do produto 
+      ter o mesmo comportamento da danfe retrato
+      Por : Henrique Leonardo
+
+30/12/2018
+-- DanfeRetrato_2019.fr3 ( Refatoração da DanfePaisagem_2018.fr3 )
+[*] Ajuste para apresentar canhoto no rodapé
+      Por : Henrique Leonardo
 
 30/01/2018
 -- DANFeNFCe3_50 DANFeNFCe4_10 DANFeNFCeImagemElgin DANFeNFCeA4 DANFeNFCe4_20

@@ -112,7 +112,7 @@ type
     fCOD_INF_OBS: String;             /// Código da observação do lançamento fiscal(campo 02 do Registro 0460)
     fRegistroB025: TRegistroB025List; /// Bloco b - Lista de RegistroB025 (FILHO)
   public
-    constructor Create(AOwner: TRegistroB001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override;                       /// Destroy
     property IND_OPER: TACBrIndOper           read fIND_OPER      write fIND_OPER;
     property IND_EMIT: TACBrIndEmit           read fIND_EMIT      write fIND_EMIT;
@@ -143,7 +143,7 @@ type
     function GetItem(Index: Integer): TRegistroB020; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroB020); /// SetItem
   public
-    function New(AOwner: TRegistroB001): TRegistroB020;
+    function New(): TRegistroB020;
     property Items[Index: Integer]: TRegistroB020 read GetItem write SetItem;
   end;
 
@@ -191,7 +191,7 @@ type
     fCOD_INF_OBS: String;             /// Código da observação do lançamento fiscal(campo 02 do Registro 0460)
     fRegistroB035: TRegistroB035List; /// Bloco b - Lista de RegistroB035 (FILHO)
   public
-    constructor Create(AOwner: TRegistroB001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override;                       /// Destroy
     property COD_MOD: String                  read fCOD_MOD       write fCOD_MOD;
     property SER: String                      read fSER           write fSER;
@@ -213,7 +213,7 @@ type
     function GetItem(Index: Integer): TRegistroB030; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroB030); /// SetItem
   public
-    function New(AOwner: TRegistroB001): TRegistroB030;
+    function New(): TRegistroB030;
     property Items[Index: Integer]: TRegistroB030 read GetItem write SetItem;
   end;
 
@@ -427,7 +427,7 @@ type
     fVL_OR: currency;    //Valor do ISS devido
     FRegistroB510 :TRegistroB510List;
   public
-    constructor Create(AOwner: TRegistroB001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
     property VL_REC: currency   read fVL_REC   write fVL_REC;
     property QTD_PROF: currency read fQTD_PROF write fQTD_PROF;
@@ -441,7 +441,7 @@ type
     function GetItem(Index: Integer): TRegistroB500; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroB500); /// SetItem
   public
-    function New(AOwner: TRegistroB001): TRegistroB500;
+    function New(): TRegistroB500;
     property Items[Index: Integer]: TRegistroB500 read GetItem write SetItem;
   end;
 
@@ -515,8 +515,9 @@ end;
 
 { TRegistroB020 }
 
-constructor TRegistroB020.Create(AOwner: TRegistroB001);
+constructor TRegistroB020.Create();
 begin
+  inherited Create;
   FRegistroB025 := TRegistroB025List.Create;
 end;
 
@@ -533,9 +534,9 @@ begin
   Result := TRegistroB020(Inherited Items[Index]);
 end;
 
-function TRegistroB020List.New(AOwner: TRegistroB001): TRegistroB020;
+function TRegistroB020List.New(): TRegistroB020;
 begin
-  Result := TRegistroB020.Create(AOwner);
+  Result := TRegistroB020.Create();
   Add(Result);
 end;
 
@@ -564,8 +565,9 @@ end;
 
 { TRegistroB030 }
 
-constructor TRegistroB030.Create(AOwner: TRegistroB001);
+constructor TRegistroB030.Create();
 begin
+  inherited Create;
   FRegistroB035 := TRegistroB035List.Create;
 end;
 
@@ -582,9 +584,9 @@ begin
   Result := TRegistroB030(Inherited Items[Index]);
 end;
 
-function TRegistroB030List.New(AOwner: TRegistroB001): TRegistroB030;
+function TRegistroB030List.New(): TRegistroB030;
 begin
-  Result := TRegistroB030.Create(AOwner);
+  Result := TRegistroB030.Create();
   Add(Result);
 end;
 
@@ -706,9 +708,9 @@ begin
   Result := TRegistroB500(Inherited Items[Index]);
 end;
 
-function TRegistroB500List.New(AOwner: TRegistroB001): TRegistroB500;
+function TRegistroB500List.New(): TRegistroB500;
 begin
-  Result := TRegistroB500.Create(AOwner);
+  Result := TRegistroB500.Create();
   Add(Result);
 end;
 
@@ -737,8 +739,9 @@ end;
 
 { TRegistroB500 }
 
-constructor TRegistroB500.Create(AOwner: TRegistroB001);
+constructor TRegistroB500.Create();
 begin
+  inherited Create;
   FRegistroB510 := TRegistroB510List.Create;  /// BLOCO B - Lista de RegistroB510 (FILHO)
 end;
 

@@ -137,7 +137,7 @@ end;
 
 function TBloco_H.RegistroH005New: TRegistroH005;
 begin
-   Result := FRegistroH001.RegistroH005.New(FRegistroH001);
+   Result := FRegistroH001.RegistroH005.New();
 end;
 
 function TBloco_H.RegistroH010New: TRegistroH010;
@@ -150,7 +150,7 @@ begin
       raise Exception.Create('O registro H010 deve ser filho do registro H005, e não existe nenhum H005 pai!');
 
    H005   := FRegistroH001.RegistroH005.Items[H005Count];
-   Result := H005.RegistroH010.New(H005);
+   Result := H005.RegistroH010.New();
 end;
 
 function TBloco_H.RegistroH020New: TRegistroH020;

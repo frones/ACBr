@@ -147,7 +147,7 @@ begin
   begin
     PER_REF := Valor;
     VL_TOT_CONT_APU := ValorF;
-    VL_TOT_AJ_ACRES := ValorF;
+    VL_TOT_AJ_REDUC := ValorF;
     VL_TOT_AJ_ACRES := ValorF;
     VL_TOT_CONT_DEV := ValorF;
     COD_REC         := Valor;

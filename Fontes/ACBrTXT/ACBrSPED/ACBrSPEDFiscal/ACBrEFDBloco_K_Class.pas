@@ -761,7 +761,7 @@ end;
 
 function TBloco_K.RegistroK100New: TRegistroK100;
 begin
-  Result := FRegistroK001.RegistroK100.New(FRegistroK001);
+  Result := FRegistroK001.RegistroK100.New();
 end;
 
 function TBloco_K.RegistroK200New: TRegistroK200;
@@ -787,7 +787,7 @@ begin
       raise Exception.Create('O registro K210 deve ser filho do registro K100, e não existe nenhum K100 pai!');
 
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK210.New(K100);
+   Result := K100.RegistroK210.New();
 end;
 
 function TBloco_K.RegistroK215New: TRegistroK215;
@@ -828,7 +828,7 @@ begin
       raise Exception.Create('O registro K230 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK230.New(K100);
+   Result := K100.RegistroK230.New();
 end;
 
 function TBloco_K.RegistroK235New: TRegistroK235;
@@ -856,7 +856,7 @@ begin
       raise Exception.Create('O registro K250 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK250.New(K100);
+   Result := K100.RegistroK250.New();
 end;
 
 function TBloco_K.RegistroK255New: TRegistroK255;
@@ -884,7 +884,7 @@ begin
       raise Exception.Create('O registro K260 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK260.New(K100);
+   Result := K100.RegistroK260.New();
 end;
 
 function TBloco_K.RegistroK265New: TRegistroK265;
@@ -912,7 +912,7 @@ begin
       raise Exception.Create('O registro K270 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK270.New(K100);
+   Result := K100.RegistroK270.New();
 end;
 
 function TBloco_K.RegistroK275New: TRegistroK275;
@@ -953,7 +953,7 @@ begin
       raise Exception.Create('O registro K290 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK290.New(K100);
+   Result := K100.RegistroK290.New();
 end;
 
 function TBloco_K.RegistroK291New: TRegistroK291;
@@ -996,7 +996,7 @@ begin
       raise Exception.Create('O registro K300 deve ser filho do registro K100, e não existe nenhum K100 pai!');
    //
    K100   := FRegistroK001.RegistroK100.Items[K100Count];
-   Result := K100.RegistroK300.New(K100);
+   Result := K100.RegistroK300.New();
 end;
 
 function TBloco_K.RegistroK301New: TRegistroK301;

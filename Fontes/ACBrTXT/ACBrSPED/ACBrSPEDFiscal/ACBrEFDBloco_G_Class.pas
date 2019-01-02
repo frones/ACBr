@@ -147,7 +147,7 @@ end;
 
 function TBloco_G.RegistroG110New: TRegistroG110;
 begin
-   Result := FRegistroG001.RegistroG110.New(FRegistroG001);
+   Result := FRegistroG001.RegistroG110.New();
 end;
 
 function TBloco_G.RegistroG125New: TRegistroG125;
@@ -160,7 +160,7 @@ begin
       raise Exception.Create('O registro G125 deve ser filho do registro G110, e não existe nenhum G110 pai!');
    //
    G110   := FRegistroG001.RegistroG110.Items[G110Count];
-   Result := G110.RegistroG125.New(G110);
+   Result := G110.RegistroG125.New();
 end;
 
 function TBloco_G.RegistroG130New: TRegistroG130;
@@ -175,7 +175,7 @@ begin
       raise Exception.Create('O registro G130 deve ser filho do registro G125, e não existe nenhum G125 pai!');
    //
    G125   := FRegistroG001.RegistroG110.Items[G110Count].RegistroG125.Items[G125Count];
-   Result := G125.RegistroG130.New(G125);
+   Result := G125.RegistroG130.New();
 end;
 
 function TBloco_G.RegistroG140New: TRegistroG140;

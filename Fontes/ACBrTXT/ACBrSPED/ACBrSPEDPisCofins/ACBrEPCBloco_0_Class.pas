@@ -245,7 +245,7 @@ end;
 
 function TBloco_0.Registro0140New: TRegistro0140;
 begin
-   Result := FRegistro0001.Registro0140.New(FRegistro0001);
+   Result := FRegistro0001.Registro0140.New();
 end;
 
 function TBloco_0.Registro0150New: TRegistro0150;
@@ -284,7 +284,7 @@ begin
       raise Exception.Create('O registro 0200 deve ser filho do registro 0140, e não existe nenhum 0140 pai!');
    //
    U0140  := FRegistro0001.Registro0140.Items[U0140Count];
-   Result := U0140.Registro0200.New(U0140);
+   Result := U0140.Registro0200.New();
 end;
 
 function TBloco_0.Registro0205New: TRegistro0205;

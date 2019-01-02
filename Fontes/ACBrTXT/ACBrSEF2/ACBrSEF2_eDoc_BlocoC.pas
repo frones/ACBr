@@ -120,7 +120,7 @@ type
     fRegistroC300: TRegistroSEFC300List;
     fRegistroC040: TRegistroSEFC040;
   public
-    constructor Create(AOwner: TRegistroSEFC001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override;
 
     property IND_OPER   : TIndiceOperacao read fIND_OPER write fIND_OPER;
@@ -203,7 +203,7 @@ type
     fUNID        : String;
     fRegistroC310: TRegistroSEFC310;
   public
-    constructor Create(AOwner: TRegistroSEFC020); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override;
     property NUM_ITEM    : Integer  read fNUM_ITEM     write fNUM_ITEM;
     property CFOP        : Integer  read fCFOP         write FCFOP;
@@ -262,7 +262,7 @@ type
     fCOD_SIT     : TCodigoSituacao;
     fRegistroC560: TRegistroSEFC560List;
   public
-    constructor Create(AOwner: TRegistroSEFC001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy;
 
     property COD_SIT     : TCodigoSituacao read FCOD_SIT write FCOD_SIT;
@@ -395,7 +395,7 @@ type
     fRegistroC610: TRegistroSEFC610List;
     FRegistroC605: TRegistroSEFC605;
   public
-    constructor Create(AOwner: TRegistroSEFC001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy;
 
     property COD_SIT     : TCodigoSituacao read FCOD_SIT write FCOD_SIT;
@@ -552,14 +552,15 @@ end;
 
 function TRegistroSEFC550List.New(AOwner: TRegistroSEFC001): TRegistroSEFC550;
 begin
-   Result := TRegistroSEFC550.Create(AOwner);
+   Result := TRegistroSEFC550.Create();
    Add(Result);
 end;
 
 { TRegistroSEFC550 }
 
-constructor TRegistroSEFC550.Create(AOwner: TRegistroSEFC001);
+constructor TRegistroSEFC550.Create();
 begin
+   inherited Create;
    fRegistroC560 := TRegistroSEFC560List.Create;
 end;
 
@@ -589,8 +590,9 @@ end;
 
 { TRegistroSEFC020 }
 
-constructor TRegistroSEFC020.Create(AOwner: TRegistroSEFC001);
+constructor TRegistroSEFC020.Create();
 begin
+  inherited Create;
   FRegistroC300 := TRegistroSEFC300List.Create;
 end;
 
@@ -610,7 +612,7 @@ end;
 
 function TRegistroSEFC300List.New(AOwner: TRegistroSEFC020): TRegistroSEFC300;
 begin
-  Result := TRegistroSEFC300.Create(AOwner);
+  Result := TRegistroSEFC300.Create();
   Add(Result);
 end;
 
@@ -622,8 +624,9 @@ end;
 
 { TRegistroSEFC600 }
 
-constructor TRegistroSEFC600.Create(AOwner: TRegistroSEFC001);
+constructor TRegistroSEFC600.Create();
 begin
+  inherited Create;
   FRegistroC610 := TRegistroSEFC610List.Create;
 end;
 
@@ -644,7 +647,7 @@ end;
 
 function TRegistroSEFC020List.New(AOwner: TRegistroSEFC001): TRegistroSEFC020;
 begin
-  Result := TRegistroSEFC020.create(AOwner);
+  Result := TRegistroSEFC020.Create();
   Add(Result);
 end;
 
@@ -663,7 +666,7 @@ end;
 
 function TRegistroSEFC600List.New(AOwner: TRegistroSEFC001): TRegistroSEFC600;
 begin
-  Result := TRegistroSEFC600.Create(AOwner);
+  Result := TRegistroSEFC600.Create();
   Add(Result);
 end;
 
@@ -709,7 +712,7 @@ end;
 
 { TRegistroSEFC300 }
 
-constructor TRegistroSEFC300.Create(AOwner: TRegistroSEFC020);
+constructor TRegistroSEFC300.Create();
 begin
   inherited Create;
 end;

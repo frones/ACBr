@@ -164,7 +164,7 @@ end;
 
 function TBloco_L.RegistroL030New: TRegistroL030;
 begin
-  Result := FRegistroL001.RegistroL030.New(FRegistroL001);
+  Result := FRegistroL001.RegistroL030.New();
 end;
 
 function TBloco_L.RegistroL100New: TRegistroL100;
@@ -177,7 +177,7 @@ begin
     raise Exception.Create('O registro L100 deve ser filho do registro L030, e não existe nenhum L030 pai!');
 
   UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
-  Result := UL030.RegistroL100.New(UL030);
+  Result := UL030.RegistroL100.New();
 end;
 
 function TBloco_L.RegistroL200New: TRegistroL200;
@@ -190,7 +190,7 @@ begin
     raise Exception.Create('O registro L200 deve ser filho do registro L030, e não existe nenhum L030 pai!');
 
   UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
-  Result := UL030.RegistroL200.New(UL030);
+  Result := UL030.RegistroL200.New();
 end;
 
 function TBloco_L.RegistroL210New: TRegistroL210;
@@ -203,7 +203,7 @@ begin
     raise Exception.Create('O registro L210 deve ser filho do registro L030, e não existe nenhum L030 pai!');
 
   UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
-  Result := UL030.RegistroL210.New(UL030);
+  Result := UL030.RegistroL210.New();
 end;
 
 function TBloco_L.RegistroL300New: TRegistroL300;
@@ -216,7 +216,7 @@ begin
     raise Exception.Create('O registro L300 deve ser filho do registro L030, e não existe nenhum L030 pai!');
 
   UL030  := FRegistroL001.RegistroL030.Items[UL030Count];
-  Result := UL030.RegistroL300.New(UL030);
+  Result := UL030.RegistroL300.New();
 end;
 
 procedure TBloco_L.WriteRegistroL100(RegL030: TRegistroL030);

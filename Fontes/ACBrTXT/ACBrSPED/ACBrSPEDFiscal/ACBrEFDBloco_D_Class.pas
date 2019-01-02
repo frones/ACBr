@@ -338,7 +338,7 @@ end;
 
 function TBloco_D.RegistroD100New: TRegistroD100;
 begin
-   Result := FRegistroD001.RegistroD100.New(FRegistroD001);
+   Result := FRegistroD001.RegistroD100.New();
 end;
 
 // EC 87/2015 
@@ -357,7 +357,7 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro D110 deve ser filho do registro D100, e não existe nenhum D100 pai!');
 
    D100   := FRegistroD001.RegistroD100.Items[D100Count];
-   Result := D100.RegistroD110.New(D100);
+   Result := D100.RegistroD110.New();
 end;
 
 function TBloco_D.RegistroD411New: TRegistroD411;

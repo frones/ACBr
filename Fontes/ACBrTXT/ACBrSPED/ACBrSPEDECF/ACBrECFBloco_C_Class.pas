@@ -174,7 +174,7 @@ end;
 
 function TBloco_C.RegistroC040New: TRegistroC040;
 begin
-  Result := FRegistroC001.RegistroC040.New(FRegistroC001);
+  Result := FRegistroC001.RegistroC040.New();
 end;
 
 function TBloco_C.RegistroC050New: TRegistroC050;
@@ -187,7 +187,7 @@ begin
     raise Exception.Create('O registro C040 deve ser filho do registro C001, e não existe nenhum C001 pai!');
 
   UC040  := FRegistroC001.RegistroC040.Items[UC040Count];
-  Result := UC040.RegistroC050.New(UC040);
+  Result := UC040.RegistroC050.New();
 end;
 
 function TBloco_C.RegistroC051New: TRegistroC051;
@@ -202,7 +202,7 @@ begin
     raise Exception.Create('O registro C051 deve ser filho do registro C050, e não existe nenhum C050 pai!');
 
   UC050  := FRegistroC001.RegistroC040.Items[UC040Count].RegistroC050.Items[UC050Count];
-  Result := UC050.RegistroC051.New(UC050);
+  Result := UC050.RegistroC051.New();
 end;
 
 function TBloco_C.RegistroC053New: TRegistroC053;
@@ -217,7 +217,7 @@ begin
     raise Exception.Create('O registro C053 deve ser filho do registro C050, e não existe nenhum C050 pai!');
 
   UC050  := FRegistroC001.RegistroC040.Items[UC040Count].RegistroC050.Items[UC050Count];
-  Result := UC050.RegistroC053.New(UC050);
+  Result := UC050.RegistroC053.New();
 end;
 
 function TBloco_C.RegistroC100New: TRegistroC100;
@@ -230,7 +230,7 @@ begin
     raise Exception.Create('O registro C040 deve ser filho do registro C001, e não existe nenhum C001 pai!');
 
   UC040  := FRegistroC001.RegistroC040.Items[UC040Count];
-  Result := UC040.RegistroC100.New(UC040);
+  Result := UC040.RegistroC100.New();
 end;
 
 function TBloco_C.RegistroC150New: TRegistroC150;
@@ -243,7 +243,7 @@ begin
     raise Exception.Create('O registro C040 deve ser filho do registro C001, e não existe nenhum C001 pai!');
 
   UC040  := FRegistroC001.RegistroC040.Items[UC040Count];
-  Result := UC040.RegistroC150.New(UC040);
+  Result := UC040.RegistroC150.New();
 end;
 
 function TBloco_C.RegistroC155New: TRegistroC155;
@@ -258,7 +258,7 @@ begin
     raise Exception.Create('O registro C155 deve ser filho do registro C150, e não existe nenhum C150 pai!');
 
   UC150  := FRegistroC001.RegistroC040.Items[UC040Count].RegistroC150.Items[UC150Count];
-  Result := UC150.RegistroC155.New(UC150);
+  Result := UC150.RegistroC155.New();
 end;
 
 function TBloco_C.RegistroC157New: TRegistroC157;
@@ -275,7 +275,7 @@ begin
     raise Exception.Create('O registro C157 deve ser filho do registro C155, e não existe nenhum C155 pai!');
 
   UC155  := FRegistroC001.RegistroC040.Items[UC040Count].RegistroC150.Items[UC150Count].RegistroC155.Items[UC155Count];
-  Result := UC155.RegistroC157.New(UC155);
+  Result := UC155.RegistroC157.New();
 end;
 
 function TBloco_C.RegistroC350New: TRegistroC350;
@@ -288,7 +288,7 @@ begin
     raise Exception.Create('O registro C040 deve ser filho do registro C001, e não existe nenhum C001 pai!');
 
   UC040  := FRegistroC001.RegistroC040.Items[UC040Count];
-  Result := UC040.RegistroC350.New(UC040);
+  Result := UC040.RegistroC350.New();
 end;
 
 function TBloco_C.RegistroC355New: TRegistroC355;
@@ -303,7 +303,7 @@ begin
     raise Exception.Create('O registro C355 deve ser filho do registro C350, e não existe nenhum C350 pai!');
 
   UC350  := FRegistroC001.RegistroC040.Items[UC040Count].RegistroC350.Items[UC350Count];
-  Result := UC350.RegistroC355.New(UC350);
+  Result := UC350.RegistroC355.New();
 end;
 
 procedure TBloco_C.WriteRegistroC001;

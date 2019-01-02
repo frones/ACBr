@@ -275,7 +275,7 @@ end;
 
 function TBloco_0.Registro0150New: TRegistro0150;
 begin
-   Result := FRegistro0001.Registro0150.New(FRegistro0001);
+   Result := FRegistro0001.Registro0150.New();
 end;
 
 function TBloco_0.Registro0175New: TRegistro0175;
@@ -298,7 +298,7 @@ end;
 
 function TBloco_0.Registro0200New: TRegistro0200;
 begin
-   Result := FRegistro0001.Registro0200.New(FRegistro0001);
+   Result := FRegistro0001.Registro0200.New();
 end;
 
 function TBloco_0.Registro0205New: TRegistro0205;
@@ -355,7 +355,7 @@ end;
 
 function TBloco_0.Registro0300New: TRegistro0300;
 begin
-   Result := FRegistro0001.Registro0300.New(FRegistro0001);
+   Result := FRegistro0001.Registro0300.New();
 end;
 
 function TBloco_0.Registro0305New: TRegistro0305;

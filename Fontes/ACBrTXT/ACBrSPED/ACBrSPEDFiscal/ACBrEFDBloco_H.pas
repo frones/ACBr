@@ -76,7 +76,7 @@ type
 
     FRegistroH010: TRegistroH010List;  /// BLOCO H - Lista de RegistroH010 (FILHO)
   public
-    constructor Create(AOwner: TRegistroH001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_INV: TDateTime read FDT_INV write FDT_INV;
@@ -94,7 +94,7 @@ type
     function GetItem(Index: Integer): TRegistroH005; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroH005); /// SetItem
   public
-    function New(AOwner: TRegistroH001): TRegistroH005;
+    function New(): TRegistroH005;
     property Items[Index: Integer]: TRegistroH005 read GetItem write SetItem;
   end;
 
@@ -117,7 +117,7 @@ type
 
     FRegistroH020: TRegistroH020List;  /// BLOCO H - Lista de RegistroH020 (FILHO)
   public
-    constructor Create(AOwner: TRegistroH005); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
@@ -142,7 +142,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistroH010); /// SetItem
   public
     function LocalizaRegistro(const pCOD_ITEM: String): boolean;
-    function New(AOwner: TRegistroH005): TRegistroH010;
+    function New(): TRegistroH010;
     property Items[Index: Integer]: TRegistroH010 read GetItem write SetItem;
   end;
 
@@ -205,9 +205,9 @@ begin
    end;
 end;
 
-function TRegistroH010List.New(AOwner: TRegistroH005): TRegistroH010;
+function TRegistroH010List.New(): TRegistroH010;
 begin
-  Result := TRegistroH010.Create(AOwner);
+  Result := TRegistroH010.Create();
   Add(Result);
 end;
 
@@ -223,9 +223,9 @@ begin
   Result := TRegistroH005(Inherited Items[Index]);
 end;
 
-function TRegistroH005List.New(AOwner: TRegistroH001): TRegistroH005;
+function TRegistroH005List.New(): TRegistroH005;
 begin
-  Result := TRegistroH005.Create(AOwner);
+  Result := TRegistroH005.Create();
   Add(Result);
 end;
 
@@ -236,8 +236,9 @@ end;
 
 { TRegistroH005 }
 
-constructor TRegistroH005.Create(AOwner: TRegistroH001);
+constructor TRegistroH005.Create();
 begin
+  inherited Create;
   FRegistroH010 := TRegistroH010List.Create;
 end;
 
@@ -284,8 +285,9 @@ end;
 
 { TRegistroH010 }
 
-constructor TRegistroH010.Create(AOwner: TRegistroH005);
+constructor TRegistroH010.Create();
 begin
+  inherited Create;
   FRegistroH020 := TRegistroH020List.Create;
 end;
 

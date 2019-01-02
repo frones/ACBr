@@ -81,7 +81,7 @@ type
     FRegistroK155: TRegistroK155List;
     FRegistroK355: TRegistroK355List;
   public
-    constructor Create(AOwner: TRegistroK001); Virtual;/// Create
+    constructor Create(); Virtual;/// Create
     destructor Destroy;  override;
 
     property DT_INI:   TDateTime read fDT_INI write fDT_INI;
@@ -99,7 +99,7 @@ type
     function GetItem(Index: Integer): TRegistroK030;
     procedure SetItem(Index: Integer; const Value: TRegistroK030);
   public
-    function New(AOwner: TRegistroK001): TRegistroK030;
+    function New(): TRegistroK030;
     property Items[Index: Integer]: TRegistroK030 read GetItem write SetItem;
   end;
 
@@ -162,7 +162,7 @@ type
     function GetItem(Index: Integer): TRegistroK156;
     procedure SetItem(Index: Integer; const Value: TRegistroK156);
   public
-    function New(AOwner: TRegistroK155): TRegistroK156;
+    function New(): TRegistroK156;
     property Items[Index: Integer]: TRegistroK156 read GetItem write SetItem;
   end;
 
@@ -220,7 +220,7 @@ type
     function GetItem(Index: Integer): TRegistroK356;
     procedure SetItem(Index: Integer; const Value: TRegistroK356);
   public
-    function New(AOwner: TRegistroK355): TRegistroK356;
+    function New(): TRegistroK356;
     property Items[Index: Integer]: TRegistroK356 read GetItem write SetItem;
   end;
 
@@ -240,9 +240,9 @@ begin
   Result := TRegistroK030(Inherited Items[Index]);
 end;
 
-function TRegistroK030List.New(AOwner: TRegistroK001): TRegistroK030;
+function TRegistroK030List.New(): TRegistroK030;
 begin
-  Result := TRegistroK030.Create(AOwner);
+  Result := TRegistroK030.Create();
   Add(Result);
 end;
 
@@ -276,7 +276,7 @@ begin
   Result := TRegistroK156(Inherited Items[Index]);
 end;
 
-function TRegistroK156List.New(AOwner: TRegistroK155): TRegistroK156;
+function TRegistroK156List.New(): TRegistroK156;
 begin
   Result := TRegistroK156.Create;
   Add(Result);
@@ -289,7 +289,7 @@ end;
 
 { TRegistroK030 }
 
-constructor TRegistroK030.Create(AOwner: TRegistroK001);
+constructor TRegistroK030.Create();
 begin
    inherited Create;
    FRegistroK155 := TRegistroK155List.Create;
@@ -343,7 +343,7 @@ begin
    Result := TRegistroK356(Inherited Items[Index]);
 end;
 
-function TRegistroK356List.New(AOwner: TRegistroK355): TRegistroK356;
+function TRegistroK356List.New(): TRegistroK356;
 begin
   Result := TRegistroK356.Create;
   Add(Result);

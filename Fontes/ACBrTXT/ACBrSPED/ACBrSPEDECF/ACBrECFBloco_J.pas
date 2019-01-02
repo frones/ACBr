@@ -86,7 +86,7 @@ type
     FRegistroJ051: TRegistroJ051List;
     FRegistroJ053: TRegistroJ053List;
   public
-    constructor Create(AOwner :TRegistroJ001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_ALT:      TDateTime read fDT_ALT write fDT_ALT;
@@ -107,7 +107,7 @@ type
     function GetItem(Index: Integer): TRegistroJ050;
     procedure SetItem(Index: Integer; const Value: TRegistroJ050);
   public
-    function New(AOwner :TRegistroJ001): TRegistroJ050;
+    function New(): TRegistroJ050;
     property Items[Index: Integer]: TRegistroJ050 read GetItem write SetItem;
   end;
 
@@ -197,8 +197,9 @@ type
 
 implementation
 
-constructor TRegistroJ050.Create(AOwner :TRegistroJ001);
+constructor TRegistroJ050.Create();
 begin
+   inherited Create;
    FRegistroJ051 := TRegistroJ051List.Create;
    FRegistroJ053 := TRegistroJ053List.Create;
 end;
@@ -217,9 +218,9 @@ begin
   Result := TRegistroJ050(Inherited Items[Index]);
 end;
 
-function TRegistroJ050List.New(AOwner :TRegistroJ001): TRegistroJ050;
+function TRegistroJ050List.New(): TRegistroJ050;
 begin
-  Result := TRegistroJ050.Create(AOwner);
+  Result := TRegistroJ050.Create();
   Add(Result);
 end;
 

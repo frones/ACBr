@@ -372,7 +372,7 @@ type
     FCargo: string;
     FResponsavel: string;
   public
-    constructor Create(AOwner: TComponent);
+    constructor Create;
   published
     property Nome: string read FResponsavel write FResponsavel;
     property Cargo: string read FCargo write FCargo;
@@ -729,9 +729,9 @@ end;
 
 constructor TACBrConvenio115.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create(AOwner);
   FMestre := TACBrConvenio115Mestres.Create;
-  FResponsavel := TACBrConvenio115Responsavel.Create(Self);
+  FResponsavel := TACBrConvenio115Responsavel.Create();
   FNumeroArquivoSubstituido := 1;
   Ordernar := False;
 end;
@@ -961,7 +961,7 @@ end;
 
 { TConvenio115Responsavel }
 
-constructor TACBrConvenio115Responsavel.Create(AOwner: TComponent);
+constructor TACBrConvenio115Responsavel.Create;
 begin
   inherited Create;
 end;

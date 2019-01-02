@@ -157,7 +157,7 @@ end;
 
 function TBloco_U.RegistroU030New: TRegistroU030;
 begin
-  Result := FRegistroU001.RegistroU030.New(FRegistroU001);
+  Result := FRegistroU001.RegistroU030.New();
 end;
 
 function TBloco_U.RegistroU100New: TRegistroU100;
@@ -170,7 +170,7 @@ begin
     raise Exception.Create('O registro U100 deve ser filho do registro U030, e não existe nenhum U030 pai!');
 
   UU030  := FRegistroU001.RegistroU030.Items[UU030Count];
-  Result := UU030.RegistroU100.New(UU030);
+  Result := UU030.RegistroU100.New();
 end;
 
 function TBloco_U.RegistroU150New: TRegistroU150;
@@ -183,7 +183,7 @@ begin
     raise Exception.Create('O registro U150 deve ser filho do registro U030, e não existe nenhum U030 pai!');
 
   UU030  := FRegistroU001.RegistroU030.Items[UU030Count];
-  Result := UU030.RegistroU150.New(UU030);
+  Result := UU030.RegistroU150.New();
 end;
 
 function TBloco_U.RegistroU180New: TRegistroU180;
@@ -196,7 +196,7 @@ begin
     raise Exception.Create('O registro U180 deve ser filho do registro U030, e não existe nenhum U030 pai!');
 
   UU030  := FRegistroU001.RegistroU030.Items[UU030Count];
-  Result := UU030.RegistroU180.New(UU030);
+  Result := UU030.RegistroU180.New();
 end;
 
 function TBloco_U.RegistroU182New: TRegistroU182;
@@ -209,7 +209,7 @@ begin
     raise Exception.Create('O registro U182 deve ser filho do registro U030, e não existe nenhum U030 pai!');
 
   UU030  := FRegistroU001.RegistroU030.Items[UU030Count];
-  Result := UU030.RegistroU182.New(UU030);
+  Result := UU030.RegistroU182.New();
 end;
 
 

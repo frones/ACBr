@@ -254,7 +254,7 @@ end;
 
 function TBloco_E.RegistroE100New: TRegistroE100;
 begin
-   Result := FRegistroE001.RegistroE100.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE100.New();
 end;
 
 function TBloco_E.RegistroE110New: TRegistroE110;
@@ -272,7 +272,7 @@ begin
       raise Exception.Create('O registro E111 deve ser filho do registro E110, e não existe nenhum E110 pai!');
 
    E110   := FRegistroE001.RegistroE100.Items[E110Count].RegistroE110;
-   Result := E110.RegistroE111.New(E110);
+   Result := E110.RegistroE111.New();
 end;
 
 function TBloco_E.RegistroE112New: TRegistroE112;
@@ -333,7 +333,7 @@ end;
 
 function TBloco_E.RegistroE200New: TRegistroE200;
 begin
-   Result := FRegistroE001.RegistroE200.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE200.New();
 end;
 
 function TBloco_E.RegistroE210New: TRegistroE210;
@@ -346,7 +346,7 @@ begin
       raise Exception.Create('O registro E210 deve ser filho do registro E200, e não existe nenhum E200 pai!');
 
    E200   := FRegistroE001.RegistroE200.Items[E200Count];
-   Result := E200.RegistroE210.New(E200);
+   Result := E200.RegistroE210.New();
 end;
 
 function TBloco_E.RegistroE220New: TRegistroE220;
@@ -361,7 +361,7 @@ begin
       raise Exception.Create('O registro E220 deve ser filho do registro E210, e não existe nenhum E210 pai!');
 
    E210   := FRegistroE001.RegistroE200.Items[E200Count].RegistroE210.Items[E210Count];
-   Result := E210.RegistroE220.New(E210);
+   Result := E210.RegistroE220.New();
 end;
 
 function TBloco_E.RegistroE230New: TRegistroE230;
@@ -415,7 +415,7 @@ end;
 
 function TBloco_E.RegistroE300New: TRegistroE300;
 begin
-   Result := FRegistroE001.RegistroE300.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE300.New();
 end;
 
 function TBloco_E.RegistroE310New: TRegistroE310;
@@ -428,7 +428,7 @@ begin
       raise Exception.Create('O registro E310 deve ser filho do registro E300, e não existe nenhum E300 pai!');
 
    E300   := FRegistroE001.RegistroE300.Items[E300Count];
-   Result := E300.RegistroE310.New(E300);
+   Result := E300.RegistroE310.New();
 end;
 
 function TBloco_E.RegistroE311New: TRegistroE311;
@@ -443,7 +443,7 @@ begin
       raise Exception.Create('O registro E311 deve ser filho do registro E310, e não existe nenhum E310 pai!');
 
    E310   := FRegistroE001.RegistroE300.Items[E300Count].RegistroE310.Items[E310Count];
-   Result := E310.RegistroE311.New(E310);
+   Result := E310.RegistroE311.New();
 end;
 
 function TBloco_E.RegistroE312New: TRegistroE312;
@@ -497,7 +497,7 @@ end;
 
 function TBloco_E.RegistroE500New: TRegistroE500;
 begin
-   Result := FRegistroE001.RegistroE500.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE500.New();
 end;
 
 function TBloco_E.RegistroE510New: TRegistroE510;
@@ -523,7 +523,7 @@ begin
       raise Exception.Create('O registro E510 deve ser filho do registro E500, e não existe nenhum E500 pai!');
 
    E500   := FRegistroE001.RegistroE500.Items[E500Count];
-   Result := E500.RegistroE520.New(E500);
+   Result := E500.RegistroE520.New();
 end;
 
 function TBloco_E.RegistroE530New: TRegistroE530;
@@ -538,7 +538,7 @@ begin
       raise Exception.Create('O registro E530 deve ser filho do registro E520, e não existe nenhum E520 pai!');
 
    E520   := FRegistroE001.RegistroE500.Items[E500Count].RegistroE520.Items[E520Count];
-   Result := E520.RegistroE530.New(E520);
+   Result := E520.RegistroE530.New();
 end;
 
 function TBloco_E.RegistroE531New: TRegistroE531;

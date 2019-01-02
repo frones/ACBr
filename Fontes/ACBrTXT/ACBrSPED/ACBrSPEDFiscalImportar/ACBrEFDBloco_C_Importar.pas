@@ -146,7 +146,6 @@ begin
   else if (vHead = 'C115') then RegC115
   else if (vHead = 'C116') then RegC116
   else if (vHead = 'C120') then RegC120
-  else if (vHead = 'C120') then RegC120
   else if (vHead = 'C130') then RegC130
   else if (vHead = 'C140') then RegC140
   else if (vHead = 'C141') then RegC141

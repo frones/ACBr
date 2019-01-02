@@ -187,7 +187,7 @@ end;
 
 function TBloco_P.RegistroP030New: TRegistroP030;
 begin
-  Result := RegistroP001.RegistroP030.New(FRegistroP001);
+  Result := RegistroP001.RegistroP030.New();
 end;
 
 function TBloco_P.RegistroP100New: TRegistroP100;

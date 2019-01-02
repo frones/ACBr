@@ -199,12 +199,12 @@ end;
 
 function TBloco_0.Registro0035New: TRegistro0035;
 begin
-  Result := Registro0001.Registro0035.New(FRegistro0001);
+  Result := Registro0001.Registro0035.New();
 end;
 
 function TBloco_0.Registro0930New: TRegistro0930;
 begin
-  Result := Registro0001.Registro0930.New(FRegistro0001);
+  Result := Registro0001.Registro0930.New();
 end;
 
 procedure TBloco_0.WriteRegistro0000;

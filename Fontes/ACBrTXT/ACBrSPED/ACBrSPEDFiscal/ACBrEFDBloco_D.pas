@@ -152,7 +152,7 @@ type
     FRegistroD190: TRegistroD190List; /// BLOCO D - Lista de RegistroD190 (FILHO)
     FRegistroD195: TRegistroD195List;
   public
-    constructor Create(AOwner: TRegistroD001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property IND_OPER: TACBrIndOper read FIND_OPER write FIND_OPER;
@@ -199,7 +199,7 @@ type
     function GetItem(Index: Integer): TRegistroD100; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroD100); /// SetItem
   public
-    function New(AOwner: TRegistroD001): TRegistroD100;
+    function New(): TRegistroD100;
     property Items[Index: Integer]: TRegistroD100 read GetItem write SetItem;
   end;
 
@@ -238,7 +238,7 @@ type
 
     FRegistroD120: TRegistroD120List;
   public
-    constructor Create(AOwner: TRegistroD100); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property NUN_ITEM: integer read fMUN_ITEM write fMUN_ITEM;
@@ -256,7 +256,7 @@ type
     function GetItem(Index: Integer): TRegistroD110; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroD110); /// SetItem
   public
-    function New(AOwner: TRegistroD100): TRegistroD110;
+    function New(): TRegistroD110;
     property Items[Index: Integer]: TRegistroD110 read GetItem write SetItem;
   end;
 
@@ -1543,9 +1543,9 @@ begin
   Result := TRegistroD100(Inherited Items[Index]);
 end;
 
-function TRegistroD100List.New(AOwner: TRegistroD001): TRegistroD100;
+function TRegistroD100List.New(): TRegistroD100;
 begin
-  Result := TRegistroD100.Create(AOwner);
+  Result := TRegistroD100.Create();
   Add(Result);
 end;
 
@@ -1597,9 +1597,9 @@ begin
   Result := TRegistroD110(Inherited Items[Index]);
 end;
 
-function TRegistroD110List.New(AOwner: TRegistroD100): TRegistroD110;
+function TRegistroD110List.New(): TRegistroD110;
 begin
-  Result := TRegistroD110.Create(AOwner);
+  Result := TRegistroD110.Create();
   Add(Result);
 end;
 
@@ -2255,8 +2255,9 @@ end;
 
 { TRegistroD100 }
 
-constructor TRegistroD100.Create(AOwner: TRegistroD001);
+constructor TRegistroD100.Create();
 begin
+  inherited Create;
   FRegistroD101 := TRegistroD101List.Create;
   FRegistroD110 := TRegistroD110List.Create;
   FRegistroD130 := TRegistroD130List.Create;
@@ -2314,8 +2315,9 @@ end;
 
 { TRegistroD110 }
 
-constructor TRegistroD110.Create(AOwner: TRegistroD100);
+constructor TRegistroD110.Create();
 begin
+  inherited Create;
   FRegistroD120 := TRegistroD120List.Create;
 end;
 

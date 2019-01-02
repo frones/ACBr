@@ -80,7 +80,7 @@ type
     FRegistroU180: TRegistroU180List;
     FRegistroU182: TRegistroU182List;
   public
-    constructor Create(AOwner: TRegistroU001); /// Create
+    constructor Create(); /// Create
     destructor Destroy; override; /// Destroy
 
     property DT_INI: TDateTime read fDT_INI write fDT_INI;
@@ -99,7 +99,7 @@ type
     function GetItem(Index: Integer): TRegistroU030;
     procedure SetItem(Index: Integer; const Value: TRegistroU030);
   public
-    function New(AOwner: TRegistroU001): TRegistroU030;
+    function New(): TRegistroU030;
     property Items[Index: Integer]: TRegistroU030 read GetItem write SetItem;
   end;
 
@@ -121,7 +121,7 @@ type
     fVAL_CTA_REF_FIN: variant;
     fVAL_CTA_REF_INI: variant;
   public
-    constructor Create(AOwner: TRegistroU030); virtual; /// Create
+    constructor Create(); virtual; /// Create
 
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
@@ -140,7 +140,7 @@ type
     function GetItem(Index: Integer): TRegistroU100;
     procedure SetItem(Index: Integer; const Value: TRegistroU100);
   public
-    function New(AOwner: TRegistroU030): TRegistroU100;
+    function New(): TRegistroU100;
     property Items[Index: Integer]: TRegistroU100 read GetItem write SetItem;
   end;
 
@@ -159,7 +159,7 @@ type
     fTIPO:  string;
     fVALOR: variant;
   public
-    constructor Create(AOwner: TRegistroU030); virtual; /// Create
+    constructor Create(); virtual; /// Create
 
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
@@ -176,7 +176,7 @@ type
     function GetItem(Index: Integer): TRegistroU150;
     procedure SetItem(Index: Integer; const Value: TRegistroU150);
   public
-    function New(AOwner: TRegistroU030): TRegistroU150;
+    function New(): TRegistroU150;
     property Items[Index: Integer]: TRegistroU150 read GetItem write SetItem;
   end;
 
@@ -190,7 +190,7 @@ type
     fDESCRICAO: string;
     fVALOR:     variant;
   public
-    constructor Create(AOwner: TRegistroU030); virtual; /// Create
+    constructor Create(); virtual; /// Create
 
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
@@ -202,7 +202,7 @@ type
     function GetItem(Index: Integer): TRegistroU180;
     procedure SetItem(Index: Integer; const Value: TRegistroU180);
   public
-    function New(AOwner: TRegistroU030): TRegistroU180;
+    function New(): TRegistroU180;
     property Items[Index: Integer]: TRegistroU180 read GetItem write SetItem;
   end;
 
@@ -217,7 +217,7 @@ type
     fDESCRICAO: string;
     fVALOR:     variant;
   public
-    constructor Create(AOwner: TRegistroU030); virtual; /// Create
+    constructor Create(); virtual; /// Create
 
     property CODIGO: string read fCODIGO write fCODIGO;
     property DESCRICAO: string read fDESCRICAO write fDESCRICAO;
@@ -229,7 +229,7 @@ type
     function GetItem(Index: Integer): TRegistroU182;
     procedure SetItem(Index: Integer; const Value: TRegistroU182);
   public
-    function New(AOwner: TRegistroU030): TRegistroU182;
+    function New(): TRegistroU182;
     property Items[Index: Integer]: TRegistroU182 read GetItem write SetItem;
   end;
 
@@ -248,9 +248,9 @@ begin
   Result := TRegistroU030(Inherited Items[Index]);
 end;
 
-function TRegistroU030List.New(AOwner: TRegistroU001): TRegistroU030;
+function TRegistroU030List.New(): TRegistroU030;
 begin
-  Result := TRegistroU030.Create(AOwner);
+  Result := TRegistroU030.Create();
   Add(Result);
 end;
 
@@ -266,9 +266,9 @@ begin
   Result := TRegistroU180(Inherited Items[Index]);
 end;
 
-function TRegistroU180List.New(AOwner: TRegistroU030): TRegistroU180;
+function TRegistroU180List.New(): TRegistroU180;
 begin
-  Result := TRegistroU180.Create(AOwner);
+  Result := TRegistroU180.Create();
   Add(Result);
 end;
 
@@ -284,9 +284,9 @@ begin
   Result := TRegistroU150(Inherited Items[Index]);
 end;
 
-function TRegistroU150List.New(AOwner: TRegistroU030): TRegistroU150;
+function TRegistroU150List.New(): TRegistroU150;
 begin
-  Result := TRegistroU150.Create(AOwner);
+  Result := TRegistroU150.Create();
   Add(Result);
 end;
 
@@ -302,9 +302,9 @@ begin
   Result := TRegistroU182(Inherited Items[Index]);
 end;
 
-function TRegistroU182List.New(AOwner: TRegistroU030): TRegistroU182;
+function TRegistroU182List.New(): TRegistroU182;
 begin
-  Result := TRegistroU182.Create(AOwner);
+  Result := TRegistroU182.Create();
   Add(Result);
 end;
 
@@ -320,9 +320,9 @@ begin
   Result := TRegistroU100(Inherited Items[Index]);
 end;
 
-function TRegistroU100List.New(AOwner: TRegistroU030): TRegistroU100;
+function TRegistroU100List.New(): TRegistroU100;
 begin
-  Result := TRegistroU100.Create(AOwner);
+  Result := TRegistroU100.Create();
   Add(Result);
 end;
 
@@ -333,7 +333,7 @@ end;
 
 { TRegistroU030 }
 
-constructor TRegistroU030.Create(AOwner: TRegistroU001);
+constructor TRegistroU030.Create();
 begin
    inherited Create;
    FRegistroU100 := TRegistroU100List.Create;
@@ -369,28 +369,28 @@ end;
 
 { TRegistroU100 }
 
-constructor TRegistroU100.Create(AOwner: TRegistroU030);
+constructor TRegistroU100.Create();
 begin
   inherited Create;
 end;
 
 { TRegistroU150 }
 
-constructor TRegistroU150.Create(AOwner: TRegistroU030);
+constructor TRegistroU150.Create();
 begin
   inherited Create;
 end;
 
 { TRegistroU182 }
 
-constructor TRegistroU182.Create(AOwner: TRegistroU030);
+constructor TRegistroU182.Create();
 begin
   inherited Create;
 end;
 
 { TRegistroU180 }
 
-constructor TRegistroU180.Create(AOwner: TRegistroU030);
+constructor TRegistroU180.Create();
 begin
   inherited Create;
 end;

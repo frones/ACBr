@@ -166,7 +166,7 @@ type
     fRegistroE025: TRegistroSEFE025List;
     fCOP: String;
   public
-    constructor Create(AOwner: TRegistroSEFE001); virtual;
+    constructor Create(); virtual;
     destructor Destroy; override;
 
     property IND_OPER   : TIndiceOperacao  read	fIND_OPER write fIND_OPER;           //Indicador de operação: 0- Entrada ou aquisição1- Saída ou prestação
@@ -551,7 +551,7 @@ type
     fVL_BC_ICMS: Currency;
     fRegistroE105: TRegistroSEFE105List;
   public
-    constructor Create(AOwner: TRegistroSEFE001); virtual;
+    constructor Create(); virtual;
     destructor Destroy; override;
 
     property IND_OPER     : TIndiceOperacao read	fIND_OPER     write fIND_OPER;           //Indicador de operação: 0- Entrada ou aquisição1- Saída ou prestação
@@ -1232,8 +1232,9 @@ begin
   Add(Result);
 end;
 
-constructor TRegistroSEFE020.Create(AOwner: TRegistroSEFE001);
+constructor TRegistroSEFE020.Create();
 begin
+  inherited Create;
   FRegistroE025 := TRegistroSEFE025List.Create;
 end;
 
@@ -1507,7 +1508,7 @@ end;
 
 function TRegistroSEFE020List.New(AOwner: TRegistroSEFE001): TRegistroSEFE020;
 begin
-   Result := TRegistroSEFE020.Create(AOwner);
+   Result := TRegistroSEFE020.Create();
    Add(Result);
 end;
 
@@ -1750,7 +1751,7 @@ end;
 
 { TRegistroSEFE100 }
 
-constructor TRegistroSEFE100.Create(AOwner: TRegistroSEFE001);
+constructor TRegistroSEFE100.Create();
 begin
   inherited Create;
 
@@ -1772,7 +1773,7 @@ end;
 
 function TRegistroSEFE100List.New(AOwner: TRegistroSEFE001): TRegistroSEFE100;
 begin
-   Result := TRegistroSEFE100.Create(AOwner);
+   Result := TRegistroSEFE100.Create();
    Add(Result);
 end;
 

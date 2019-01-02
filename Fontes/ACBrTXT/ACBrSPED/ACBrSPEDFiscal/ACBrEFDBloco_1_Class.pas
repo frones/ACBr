@@ -288,7 +288,7 @@ end;
 
 function TBloco_1.Registro1100New: TRegistro1100;
 begin
-   Result := FRegistro1001.Registro1100.New(FRegistro1001);
+   Result := FRegistro1001.Registro1100.New();
 end;
 
 function TBloco_1.Registro1010New: TRegistro1010;
@@ -307,7 +307,7 @@ begin
       raise Exception.Create('O registro 1105 deve ser filho do registro 1100, e não existe nenhum 1100 pai!');
 
    U1100  := FRegistro1001.Registro1100.Items[U1100Count];
-   Result := U1100.Registro1105.New(U1100);
+   Result := U1100.Registro1105.New();
 end;
 
 function TBloco_1.Registro1110New: TRegistro1110;
@@ -327,7 +327,7 @@ end;
 
 function TBloco_1.Registro1200New: TRegistro1200;
 begin
-   Result := FRegistro1001.Registro1200.New(FRegistro1001);
+   Result := FRegistro1001.Registro1200.New();
 end;
 
 function TBloco_1.Registro1210New: TRegistro1210;
@@ -345,7 +345,7 @@ end;
 
 function TBloco_1.Registro1300New: TRegistro1300;
 begin
-   Result := FRegistro1001.Registro1300.New(FRegistro1001);
+   Result := FRegistro1001.Registro1300.New();
 end;
 
 function TBloco_1.Registro1310New: TRegistro1310;
@@ -358,7 +358,7 @@ begin
       raise Exception.Create('O registro 1310 deve ser filho do registro 1300, e não existe nenhum 1300 pai!');
 
    U1300  := FRegistro1001.Registro1300.Items[U1300Count];
-   Result := U1300.Registro1310.New(U1300);
+   Result := U1300.Registro1310.New();
 end;
 
 function TBloco_1.Registro1320New: TRegistro1320;
@@ -378,7 +378,7 @@ end;
 
 function TBloco_1.Registro1350New: TRegistro1350;
 begin
-   Result := FRegistro1001.Registro1350.New(FRegistro1001);
+   Result := FRegistro1001.Registro1350.New();
 end;
 
 function TBloco_1.Registro1360New: TRegistro1360;
@@ -409,7 +409,7 @@ end;
 
 function TBloco_1.Registro1390New: TRegistro1390;
 begin
-   Result := FRegistro1001.Registro1390.New(FRegistro1001);
+   Result := FRegistro1001.Registro1390.New();
 end;
 
 function TBloco_1.Registro1391New: TRegistro1391;
@@ -430,7 +430,7 @@ end;
 
 function TBloco_1.Registro1500New: TRegistro1500;
 begin
-   Result := FRegistro1001.Registro1500.New(FRegistro1001);
+   Result := FRegistro1001.Registro1500.New();
 end;
 
 function TBloco_1.Registro1510New: TRegistro1510;
@@ -453,7 +453,7 @@ end;
 
 function TBloco_1.Registro1700New: TRegistro1700;
 begin
-   Result := FRegistro1001.Registro1700.New(FRegistro1001);
+   Result := FRegistro1001.Registro1700.New();
 end;
 
 function TBloco_1.Registro1710New: TRegistro1710;
@@ -1220,7 +1220,7 @@ end;
 
 function TBloco_1.Registro1900New: TRegistro1900;
 begin
-   Result := FRegistro1001.Registro1900.New(FRegistro1001);
+   Result := FRegistro1001.Registro1900.New();
 end;
 
 procedure TBloco_1.WriteRegistro1900(Reg1001: TRegistro1001);
@@ -1255,24 +1255,24 @@ begin
       raise Exception.Create('O registro 1910 deve ser filho do registro 1900, e não existe nenhum 1900 pai!');
 
    U1900  := FRegistro1001.Registro1900.Items[U1900Count];
-   Result := U1900.Registro1910.New(U1900);
+   Result := U1900.Registro1910.New();
 end;
 
 function TBloco_1.Registro1920New: TRegistro1920;
 var
-  U1910: TRegistro1910;
+//  U1910: TRegistro1910;
   U1900Count: Integer;
   U1910Count: Integer;
 begin
   U1900Count := FRegistro1001.Registro1900.Count -1;
   U1910Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Count -1;
-  U1910 := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[u1910Count];
-  Result := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.New(U1910);
+//  U1910 := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[u1910Count];
+  Result := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.New();
 end;
 
 function TBloco_1.Registro1921New: TRegistro1921;
 var
-  U1920: TRegistro1920;
+//  U1920: TRegistro1920;
   U1900Count: Integer;
   U1910Count: Integer;
   U1920Count: Integer;
@@ -1281,8 +1281,8 @@ begin
   U1910Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Count -1;
   U1920Count := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Count -1;
 
-  U1920 := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[u1910Count].Registro1920.Items[U1920Count];
-  Result := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Items[U1920Count].Registro1921.New(U1920);
+//  U1920 := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[u1910Count].Registro1920.Items[U1920Count];
+  Result := FRegistro1001.Registro1900.Items[U1900Count].Registro1910.Items[U1910Count].Registro1920.Items[U1920Count].Registro1921.New();
 end;
 
 function TBloco_1.Registro1922New: TRegistro1922;
@@ -1349,7 +1349,7 @@ end;
 
 function TBloco_1.Registro1970New: TRegistro1970;
 begin
-  Result := FRegistro1001.Registro1970.New(FRegistro1001);
+  Result := FRegistro1001.Registro1970.New();
 end;
 
 function TBloco_1.Registro1975New: TRegistro1975;
@@ -1362,7 +1362,7 @@ begin
     raise Exception.Create('O registro 1975 deve ser filho do registro 1970, e não existe nenhum 1970 pai!');
 
   U1970  := FRegistro1001.Registro1970.Items[U1970Count];
-  Result := U1970.Registro1975.New(U1970);
+  Result := U1970.Registro1975.New();
 end;
 
 function TBloco_1.Registro1980New: TRegistro1980;

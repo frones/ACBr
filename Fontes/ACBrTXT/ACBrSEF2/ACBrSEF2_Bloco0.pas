@@ -271,7 +271,7 @@ type
     FRegistro0205: TRegistroSEF0205List;
     FRegistro0215: TRegistroSEF0215List;
   public
-    constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
     property COD_ITEM    : String  read fCOD_ITEM   write fCOD_ITEM;
     property DESCR_ITEM  : String  read fDESCR_ITEM write fDESCR_ITEM;
@@ -370,7 +370,7 @@ type
     fDESCR_NAT   : String;
     fCOP         : String;
   public
-    constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
     property COD_NAT     : String read fCOD_NAT   write fCOD_NAT;
     property DESCR_NAT   : String read fDESCR_NAT write fDESCR_NAT;
@@ -397,7 +397,7 @@ type
     fRegistro0465: TRegistroSEF0465List;
     fRegistro0470: TRegistroSEF0470List;
   public
-    constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
+    constructor Create; virtual; /// Create
     property COD_INF : String read fCOD_INF write fCOD_INF;
     property TXT     : String read fTXT     write fTXT;
     property Registro0460: TRegistroSEF0460List read fRegistro0460 write fRegistro0460;
@@ -659,8 +659,9 @@ end;
 
 { TRegistroSEF0400 }
 
-constructor TRegistroSEF0400.Create(AOwner: TRegistroSEF0001);
+constructor TRegistroSEF0400.Create();
 begin
+  inherited Create;
 end;
 
 destructor TRegistroSEF0400.Destroy;
@@ -692,7 +693,7 @@ end;
 
 function TRegistroSEF0400List.New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
 begin
-  Result := TRegistroSEF0400.create(AOwner);
+  Result := TRegistroSEF0400.Create();
   Add(Result);
 end;
 
@@ -711,7 +712,7 @@ end;
 
 function TRegistroSEF0450List.New(AOwner: TRegistroSEF0001): TRegistroSEF0450;
 begin
-  Result := TRegistroSEF0450.Create(AOwner);
+  Result := TRegistroSEF0450.Create();
   Add(Result);
 end;
 
@@ -787,8 +788,9 @@ end;
 
 { TRegistroSEF0200 }
 
-constructor TRegistroSEF0200.Create(AOwner: TRegistroSEF0001);
+constructor TRegistroSEF0200.Create();
 begin
+   inherited Create;
    FRegistro0205 := TRegistroSEF0205List.Create;
 end;
 
@@ -822,7 +824,7 @@ end;
 
 function TRegistroSEF0200List.New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
 begin
-  Result := TRegistroSEF0200.create(AOwner);
+  Result := TRegistroSEF0200.Create();
   Add(Result);
 end;
 
@@ -876,8 +878,9 @@ end;
 
 { TRegistroSEF0450 }
 
-constructor TRegistroSEF0450.Create(AOwner: TRegistroSEF0001);
+constructor TRegistroSEF0450.Create();
 begin
+   inherited Create;
    FRegistro0460 := TRegistroSEF0460List.Create;
    FRegistro0465 := TRegistroSEF0465List.Create;
    FRegistro0470 := TRegistroSEF0470List.Create;

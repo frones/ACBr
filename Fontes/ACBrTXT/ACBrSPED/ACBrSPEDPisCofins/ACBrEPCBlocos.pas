@@ -858,12 +858,15 @@ type
                 );
   //4.3.8 - Tabela Código de Ajustes de Contribuição ou Créditos:
   TACBrCodAj = (
-                  codAjAcaoJudicial,      // '01' // Ajuste Oriundo de Ação Judicial
-                  codAjProAdministrativo, // '02' // Ajuste Oriundo de Processo Administrativo
-                  codAjLegTributaria,     // '03' // Ajuste Oriundo da Legislação Tributária
-                  codAjEspRTI,            // '04' // Ajuste Oriundo Especificamente do RTT
-                  codAjOutrasSituacaoes,  // '05' // Ajuste Oriundo de Outras Situações
-                  codAjEstorno            // '06' // Estorno
+                  codAjAcaoJudicial,        // '01' // Ajuste Oriundo de Ação Judicial
+                  codAjProAdministrativo,   // '02' // Ajuste Oriundo de Processo Administrativo
+                  codAjLegTributaria,       // '03' // Ajuste Oriundo da Legislação Tributária
+                  codAjEspRTI,              // '04' // Ajuste Oriundo Especificamente do RTT
+                  codAjOutrasSituacaoes,    // '05' // Ajuste Oriundo de Outras Situações
+                  codAjEstorno,             // '06' // Estorno
+                  codAjCPRBAdocaoRegCaixa,  // '07' // Ajuste da CPRB: Adoção do Regime de Caixa
+                  codAjCPRBDiferValRecPer,  // '08' // Ajuste da CPRB: Diferimento de Valores a Recolher no Período
+                  codAjCPRBAdicValDifPerAnt // '09' // Ajuste da CPRB: Adição de Valores Diferidos em Período(s) Anterior(es)
                 );
   //Indicador da Natureza da Receita
   TACBrIndNatRec = (
@@ -1531,8 +1534,8 @@ begin
     Result := nfcTransfAcabadosPJ
   else if AValue = '5' then
     Result :=  nfcTransfNaoAcabadosPJ
-  else if AValue = '9' then
-    Result := nfcOutras
+//  else if AValue = '9' then
+//    Result := nfcOutras
   else
     Result := nfcOutras;
 end;
@@ -2070,7 +2073,7 @@ function CodAjToStr(const AValue: TACBrCodAj): string;
 begin
   if AValue = codAjAcaoJudicial then
     Result := '01'
-  else if AValue = codAjAcaoJudicial then
+  else if AValue = codAjProAdministrativo then
     Result :=  '02'
   else if AValue = codAjLegTributaria then
     Result := '03'
@@ -2079,7 +2082,14 @@ begin
   else if AValue = codAjOutrasSituacaoes then
     Result := '05'
   else if AValue = codAjEstorno then
-    Result := '06';
+    Result := '06'
+  else if AValue = codAjCPRBAdocaoRegCaixa then
+    Result := '07'
+  else if AValue = codAjCPRBDiferValRecPer then
+    Result := '08'
+  else if AValue = codAjCPRBAdicValDifPerAnt then
+    Result := '09';
+
 end;
 
 function NatCredDescToStr(const AValue: TACBrNatCredDesc): string;

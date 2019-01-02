@@ -3398,33 +3398,14 @@ var
 begin
   witem1 := TRegistro60A(Item1);
   witem2 := TRegistro60A(Item2);
-  if witem1.Emissao>witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
-  else if witem1.Emissao = witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
+
+  if witem1.NumSerie>witem2.NumSerie then
+    Result:=1
+  else if witem1.NumSerie=witem2.NumSerie then
+    Result:=0
   else
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end;
+    Result:=-1;
+
 end;
 
 { TRegistro60M }
@@ -3473,33 +3454,13 @@ var
 begin
   witem1 := TRegistro60D(Item1);
   witem2 := TRegistro60D(Item2);
-  if witem1.Emissao>witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
-  else if witem1.Emissao = witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
+
+  if witem1.NumSerie>witem2.NumSerie then
+    Result:=1
+  else if witem1.NumSerie=witem2.NumSerie then
+    Result:=0
   else
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end;
+    Result:=-1;
 end;
 
 { TRegistros74 }
@@ -3510,33 +3471,13 @@ var
 begin
   witem1 := TRegistro74(Item1);
   witem2 := TRegistro74(Item2);
-  if witem1.Data>witem2.Data then
-  begin
-    if witem1.Codigo>witem2.Codigo then
-      Result:=1
-    else if witem1.Codigo=witem2.Codigo then
-      Result:=0
-    else
-      Result:=-1;
-  end
-  else if witem1.Data = witem2.Data then
-  begin
-    if witem1.Codigo>witem2.Codigo then
-      Result:=1
-    else if witem1.Codigo=witem2.Codigo then
-      Result:=0
-    else
-      Result:=-1;
-  end
+
+  if witem1.Codigo>witem2.Codigo then
+    Result:=1
+  else if witem1.Codigo=witem2.Codigo then
+    Result:=0
   else
-  begin
-    if witem1.Codigo>witem2.Codigo then
-      Result:=1
-    else if witem1.Codigo=witem2.Codigo then
-      Result:=0
-    else
-      Result:=-1;
-  end;
+    Result:=-1;
 end;
 
 function TRegistros74.Add(Obj: TRegistro74): Integer;
@@ -3651,33 +3592,13 @@ var
 begin
   witem1 := TRegistro60I(Item1);
   witem2 := TRegistro60I(Item2);
-  if witem1.Emissao>witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
-  else if witem1.Emissao = witem2.Emissao then
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end
+
+  if witem1.NumSerie>witem2.NumSerie then
+    Result:=1
+  else if witem1.NumSerie=witem2.NumSerie then
+    Result:=0
   else
-  begin
-    if witem1.NumSerie>witem2.NumSerie then
-      Result:=1
-    else if witem1.NumSerie=witem2.NumSerie then
-      Result:=0
-    else
-      Result:=-1;
-  end;
+    Result:=-1;
 end;
 
 { TRegistros60R }

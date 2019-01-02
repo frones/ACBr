@@ -79,7 +79,7 @@ type
     FSOM_ICMS_OC: Currency;     /// Valor de outros créditos a ser apropriado na Apuração do ICMS, correspondente ao somatório do campo 09 do registro G126
     FRegistroG125: TRegistroG125List;  /// BLOCO G - Lista de RegistroG110 (FILHO fo FILHO)
   public
-    constructor Create(AOwner: TRegistroG001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property MODO_CIAP: String read fMODO_CIAP write fMODO_CIAP;                /// Até versão 102
@@ -102,7 +102,7 @@ type
     function GetItem(Index: Integer): TRegistroG110; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroG110); /// SetItem
   public
-    function New(AOwner: TRegistroG001): TRegistroG110;
+    function New(): TRegistroG110;
     property Items[Index: Integer]: TRegistroG110 read GetItem write SetItem;
   end;
 
@@ -124,7 +124,7 @@ type
     FRegistroG130: TRegistroG130List;  /// BLOCO G - Lista de RegistroG130 (FILHO do FILHO)
     FRegistroG126: TRegistroG126List;
   public
-    constructor Create(AOwner: TRegistroG110); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property COD_IND_BEM: String read fCOD_IND_BEM write fCOD_IND_BEM;
@@ -149,7 +149,7 @@ type
     function GetItem(Index: Integer): TRegistroG125; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroG125); /// SetItem
   public
-    function New(AOwner: TRegistroG110): TRegistroG125;
+    function New(): TRegistroG125;
     property Items[Index: Integer]: TRegistroG125 read GetItem write SetItem;
   end;
 
@@ -202,7 +202,7 @@ type
 
     FRegistroG140: TRegistroG140List;  /// BLOCO G - Lista de RegistroG130 (FILHO fo FILHO)
   public
-    constructor Create(AOwner: TRegistroG125); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property IND_EMIT: TACBrIndEmit read fIND_EMIT write fIND_EMIT;
@@ -222,7 +222,7 @@ type
     function GetItem(Index: Integer): TRegistroG130; /// GetItem
     procedure SetItem(Index: Integer; const Value: TRegistroG130); /// SetItem
   public
-    function New(AOwner: TRegistroG125): TRegistroG130;
+    function New(): TRegistroG130;
     property Items[Index: Integer]: TRegistroG130 read GetItem write SetItem;
   end;
 
@@ -264,8 +264,9 @@ implementation
 
 { TRegistroG110 }
 
-constructor TRegistroG110.Create(AOwner: TRegistroG001);
+constructor TRegistroG110.Create();
 begin
+  inherited Create;
   FRegistroG125 := TRegistroG125List.Create;  /// BLOCO G - Lista de RegistroG125 (FILHO fo FILHO)
 end;
 
@@ -282,9 +283,9 @@ begin
   Result := TRegistroG110(Inherited Items[Index]);
 end;
 
-function TRegistroG110List.New(AOwner: TRegistroG001): TRegistroG110;
+function TRegistroG110List.New(): TRegistroG110;
 begin
-  Result := TRegistroG110.Create(AOwner);
+  Result := TRegistroG110.Create();
   Add(Result);
 end;
 
@@ -295,8 +296,9 @@ end;
 
 { TRegistroG125 }
 
-constructor TRegistroG125.Create(AOwner: TRegistroG110);
+constructor TRegistroG125.Create();
 begin
+  inherited Create;
   FRegistroG130 := TRegistroG130List.Create;  /// BLOCO G - Lista de RegistroG130 (FILHO fo FILHO)
   FRegistroG126 := TRegistroG126List.Create;  /// BLOCO G - Lista de RegistroG126 (FILHO fo FILHO)
 end;
@@ -315,9 +317,9 @@ begin
   Result := TRegistroG125(Inherited Items[Index]);
 end;
 
-function TRegistroG125List.New(AOwner: TRegistroG110): TRegistroG125;
+function TRegistroG125List.New(): TRegistroG125;
 begin
-  Result := TRegistroG125.Create(AOwner);
+  Result := TRegistroG125.Create();
   Add(Result);
 end;
 
@@ -328,8 +330,9 @@ end;
 
 { TRegistroG130 }
 
-constructor TRegistroG130.Create(AOwner: TRegistroG125);
+constructor TRegistroG130.Create();
 begin
+  inherited Create;
   FRegistroG140 := TRegistroG140List.Create;  /// BLOCO G - Lista de RegistroG130 (FILHO fo FILHO)
 end;
 
@@ -346,9 +349,9 @@ begin
   Result := TRegistroG130(Inherited Items[Index]);
 end;
 
-function TRegistroG130List.New(AOwner: TRegistroG125): TRegistroG130;
+function TRegistroG130List.New(): TRegistroG130;
 begin
-  Result := TRegistroG130.Create(AOwner);
+  Result := TRegistroG130.Create();
   Add(Result);
 end;
 

@@ -476,7 +476,7 @@ end;
 
 function TBloco_C.RegistroC100New: TRegistroC100;
 begin
-   Result := FRegistroC001.RegistroC100.New(FRegistroC001);
+   Result := FRegistroC001.RegistroC100.New();
 end;
 
 function TBloco_C.RegistroC101New: TRegistroC101;
@@ -508,7 +508,7 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro C105 deve ser filho do registro C100, e não existe nenhum C100 pai!');
 
    C100   := FRegistroC001.RegistroC100.Items[C100Count];
-   Result := C100.RegistroC110.New(C100);
+   Result := C100.RegistroC110.New();
 end;
 
 function TBloco_C.RegistroC111New: TRegistroC111;

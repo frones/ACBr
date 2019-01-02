@@ -179,8 +179,11 @@ begin
       raise EACBrDFeException.Create(cErrParseDoc);
 
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
-    if (SignNode = Nil) then
-      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
+    if (SignNode <> Nil) then
+    begin
+      xmlUnlinkNode(SignNode);
+      xmlFreeNode(SignNode);
+    end;
 
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlSign.xml', aXML, False, False, True);
@@ -193,6 +196,8 @@ begin
 
     // DEBUG
     //WriteToTXT('C:\TEMP\CanonDigest.xml', Canon, False, False, True);
+
+    SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
 
     // gerar o hash
     DigestValue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64);

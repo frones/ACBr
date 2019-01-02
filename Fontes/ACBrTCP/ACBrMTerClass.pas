@@ -203,7 +203,7 @@ begin
   if (aString = EmptyStr) then
     Exit;
 
-  for I := 0 to Length(aString) do
+  for I := 1 to Length(aString) do
   begin
     aChar := aString[I];
 

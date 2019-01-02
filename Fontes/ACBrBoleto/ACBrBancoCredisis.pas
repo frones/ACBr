@@ -270,8 +270,8 @@ var
    aAgencia, aConta{, aDV}        : String;
    ProtestoBaixa                : String;
 //   wTamConvenio, wTamNossoNum   : Integer;
-   wCarteira                    : Integer;
-   ACaracTitulo, wTipoCarteira  : Char;
+//   wCarteira                    : Integer;
+   {ACaracTitulo,} wTipoCarteira  : Char;
 begin
    with ACBrTitulo do
    begin
@@ -309,9 +309,9 @@ begin
      else if EspecieDoc = 'NE' then
        EspecieDoc   := '21'
      else if EspecieDoc = 'NF' then
-       EspecieDoc   := '23'
-     else
-       EspecieDoc := EspecieDoc;
+       EspecieDoc   := '23';
+//     else
+//       EspecieDoc := EspecieDoc;
 
      { Pegando o Aceite do Titulo }
      case Aceite of
@@ -328,19 +328,19 @@ begin
        tbBancoReemite    : ATipoBoleto := '4' + '1';
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
-     ACaracTitulo := ' ';
-     case CaracTitulo of
-       tcSimples     : ACaracTitulo  := '1';
-       tcVinculada   : ACaracTitulo  := '2';
-       tcCaucionada  : ACaracTitulo  := '3';
-       tcDescontada  : ACaracTitulo  := '4';
-       tcVendor      : ACaracTitulo  := '5';
-     end;
+//     ACaracTitulo := ' ';
+//     case CaracTitulo of
+//       tcSimples     : ACaracTitulo  := '1';
+//       tcVinculada   : ACaracTitulo  := '2';
+//       tcCaucionada  : ACaracTitulo  := '3';
+//       tcDescontada  : ACaracTitulo  := '4';
+//       tcVendor      : ACaracTitulo  := '5';
+//     end;
 
-     wCarteira:= StrToIntDef(Carteira,0);
-     if (wCarteira = 18) and (ACaracTitulo = '1') then
-       wTipoCarteira := '1'
-     else
+//     wCarteira:= StrToIntDef(Carteira,0);
+//     if (wCarteira = 18) and (ACaracTitulo = '1') then
+//       wTipoCarteira := '1'
+//     else
        wTipoCarteira := '1';
 
      {Mora Juros}

@@ -468,9 +468,9 @@ begin
           else if EspecieDoc = 'ND' then
                EspecieDoc := '19'
           else if EspecieDoc = 'DS' then
-               EspecieDoc := '04'
-          else
-               EspecieDoc := EspecieDoc;
+               EspecieDoc := '04';
+//          else
+//               EspecieDoc := EspecieDoc;
 
           { Pegando o Aceite do Titulo }
           case Aceite of

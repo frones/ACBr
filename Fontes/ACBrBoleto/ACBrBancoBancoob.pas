@@ -50,7 +50,7 @@ type
   TACBrBancoob = class(TACBrBancoClass)
    protected
    private
-      I: Int64;
+      FNumeroSequencialRegistroNoLote: Int64;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -689,7 +689,7 @@ function TACBrBancoob.GerarRegistroHeader240(
 var
   ATipoInscricao: string;
 begin
-  I := 0;
+  FNumeroSequencialRegistroNoLote := 0;
 
   with ACBrBanco.ACBrBoleto.Cedente do
     begin
@@ -865,8 +865,8 @@ begin
         AEspecieTitulo := '24'
       else if EspecieDoc = 'BDP' then
         AEspecieTitulo := '32'
-      else if EspecieDoc = 'Outros' then
-        AEspecieTitulo := '99'
+//      else if EspecieDoc = 'Outros' then
+//        AEspecieTitulo := '99'
       else
         AEspecieTitulo := '99';
 
@@ -922,7 +922,7 @@ begin
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                             + //1 a 3 - Código do banco
                '0001'                                                        + //4 a 7 - Lote de serviço
                '3'                                                           +
-               IntToStrZero((i)+ 1 ,5)                                       + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1 ,5)                                       + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'P'                                                           + //14 - Código do segmento do registro detalhe
                ' '                                                           + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                               + //16 a 17 - Código de movimento
@@ -977,7 +977,7 @@ begin
                          '09'                                             + //
                          '0000000000'                                     + // Numero contrato da operação
                          ' ';
-        Inc(i);
+        Inc(FNumeroSequencialRegistroNoLote);
       {SEGMENTO Q}
       {Pegando tipo de pessoa do Sacado}
       case Sacado.Pessoa of
@@ -1002,7 +1002,7 @@ begin
                IntToStrZero(ACBrBanco.Numero, 3)                          + // Código do banco
                '0001'                                                     + // Número do lote
                '3'                                                        + // Tipo do registro: Registro detalhe
-               IntToStrZero((i)+ 1 ,5)                                    + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1 ,5)       + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'Q'                                                        + // Código do segmento do registro detalhe
                ' '                                                        + // Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + // 16 a 17 - Código de movimento
@@ -1023,7 +1023,7 @@ begin
                space(10)                                                  + // Uso exclusivo FEBRABAN/CNAB
                PadRight('0',3, '0')                                       + // Uso exclusivo FEBRABAN/CNAB
                space(28);                                                   // Uso exclusivo FEBRABAN/CNAB
-                Inc(i);
+                Inc(FNumeroSequencialRegistroNoLote);
       //Registro detalhe R
       {Descontos 2}
        if (ValorDesconto2 > 0) then
@@ -1039,7 +1039,7 @@ begin
                IntToStrZero(ACBrBanco.Numero, 3)                          + // Código do banco
                '0001'                                                     + // Número do lote
                '3'                                                        + // Tipo do registro: Registro detalhe
-               IntToStrZero((i)+ 1 ,5)                                    + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1 ,5)       + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'R'                                                        + // Código do segmento do registro detalhe
                ' '                                                        + // Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + // 16 a 17 - Código de movimento
@@ -1087,13 +1087,13 @@ begin
                ' '                                                        + // 230 Dv agencia e conta
                '0'                                                        + // 231 Aviso debito automatico
                space(9);                                                    // 232-240 Uso FEBRABAN
-           Inc(i);
+           Inc(FNumeroSequencialRegistroNoLote);
       //Registro detalhe S
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)  + // Código do banco
                '0001'                             + // Número do lote
                '3'                                + // Tipo do registro: Registro detalhe
-               IntToStrZero((i)+ 1 ,5)            + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((FNumeroSequencialRegistroNoLote)+ 1 ,5) + // 9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'S'                                + // Código do segmento do registro detalhe
                ' '                                + // Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                    + // 16 a 17 - Código de movimento
@@ -1105,7 +1105,7 @@ begin
                PadRight(MsgBoleto[5], 40)+ //179	a 218	040	-	Alfa	Informação 9				"Mensagem 9: Texto de observações destinado ao envio de mensagens livres, a serem impressas no campo de instruções da ficha de compensação do bloqueto.               As mensagens 5 à 9 prevalecem sobre as anteriores."
                space(22) //219 a	240	022	-	Alfa	CNAB				Uso Exclusivo FEBRABAN/CNAB: Preencher com espaços em branco
                ;                          // 217-228 Conta corrente para debito
-               Inc(i);
+               Inc(FNumeroSequencialRegistroNoLote);
   end;
 end;
 

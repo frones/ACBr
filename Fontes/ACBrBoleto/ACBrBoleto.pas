@@ -706,7 +706,7 @@ type
 
   TACBrBancoClass = class
   private
-     procedure ErroAbstract( NomeProcedure : String ) ;
+     procedure ErroAbstract( const NomeProcedure : String ) ;
   protected
     fpDigito: Integer;
     fpNome:   String;
@@ -1304,7 +1304,7 @@ type
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
     function GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
-    procedure GravarArqIni(DirIniRetorno, NomeArquivo: String);
+    procedure GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
 
   published
     property About : String read GetAbout write SetAbout stored False ;
@@ -1356,7 +1356,7 @@ type
     procedure SetAbout(const AValue: String);
     procedure SetACBrBoleto(const Value: TACBrBoleto);
     procedure SetDirLogo(const AValue: String);
-    procedure SetNomeArquivo(AValue: String);
+    procedure SetNomeArquivo(const AValue: String);
   protected
     fpAbout : String ;
     fACBrBoleto : TACBrBoleto;
@@ -2576,7 +2576,7 @@ begin
    Result:= ACBrBanco.Numero;
 end;
 }
-procedure TACBrBancoClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrBancoClass.ErroAbstract(const NomeProcedure: String);
 begin
    raise Exception.Create(Format(ACBrStr('Função %s não implementada '+
                                          ' para o banco %s') + sLineBreak +
@@ -3055,7 +3055,7 @@ begin
           with Titulo do
           begin
             Aceite        := TACBrAceiteTitulo(IniBoletos.ReadInteger(Sessao,'Aceite',1));
-            Sacado.Pessoa := TACBrPessoa( IniBoletos.ReadInteger(Sessao,'Sacado.Pessoa',2) );
+//            Sacado.Pessoa := TACBrPessoa( IniBoletos.ReadInteger(Sessao,'Sacado.Pessoa',2) );
             Sacado.Pessoa := TACBrPessoa( IniBoletos.ReadInteger(Sessao,'Sacado.Pessoa',2) );
             OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
                   IniBoletos.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
@@ -3136,7 +3136,7 @@ begin
 
 end;
 
-procedure TACBrBoleto.GravarArqIni(DirIniRetorno, NomeArquivo: String);
+procedure TACBrBoleto.GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
 var
   IniRetorno: TMemIniFile;
   wSessao: String;
@@ -3284,7 +3284,7 @@ begin
   fDirLogo := PathWithoutDelim( Trim(AValue) );
 end;
 
-procedure TACBrBoletoFCClass.SetNomeArquivo(AValue: String);
+procedure TACBrBoletoFCClass.SetNomeArquivo(const AValue: String);
 begin
   fNomeArquivo := Trim(AValue);
   fPathNomeArquivo := '';

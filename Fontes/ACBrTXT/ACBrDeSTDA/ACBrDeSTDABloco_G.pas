@@ -80,7 +80,7 @@ type
     FRegistroG610: TRegistroG610;     ///
     FRegistroG620: TRegistroG620List; ///
   public
-    constructor Create(AOwner: TRegistroG001); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property RegistroG600: TRegistroG600     read FRegistroG600 write FRegistroG600;
@@ -101,7 +101,7 @@ type
 
     FRegistroG605List: TRegistroG605List;
   public
-    constructor Create(AOwner: TRegistroG020); virtual; /// Create
+    constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property VL_TOT_NF   : Variant           read FVL_TOT_NF        write FVL_TOT_NF;
@@ -267,7 +267,7 @@ implementation
 constructor TRegistroG001.Create;
 begin
   inherited Create;
-  FRegistroG020 := TRegistroG020.Create(Self);
+  FRegistroG020 := TRegistroG020.Create();
 end;
 
 destructor TRegistroG001.Destroy;
@@ -278,9 +278,10 @@ end;
 
 { TRegistroG020 }
 
-constructor TRegistroG020.Create(AOwner: TRegistroG001);
+constructor TRegistroG020.Create();
 begin
-  FRegistroG600 := TRegistroG600.Create(Self);
+  inherited Create;
+  FRegistroG600 := TRegistroG600.Create();
   FRegistroG610 := TRegistroG610.Create;
   FRegistroG620 := TRegistroG620List.Create;
 end;
@@ -293,8 +294,9 @@ end;
 
 { TRegistroG600 }
 
-constructor TRegistroG600.Create(AOwner: TRegistroG020);
+constructor TRegistroG600.Create();
 begin
+  inherited Create;
   FRegistroG605List := TRegistroG605List.Create;
 end;
 

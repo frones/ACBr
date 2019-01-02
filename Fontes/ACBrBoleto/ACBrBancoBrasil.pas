@@ -479,9 +479,9 @@ begin
      else if EspecieDoc = 'ND' then
        EspecieDoc   := '19'
      else if EspecieDoc = 'DS' then
-       EspecieDoc   := '04'
-     else
-       EspecieDoc := EspecieDoc;
+       EspecieDoc   := '04';
+//     else
+//       EspecieDoc := EspecieDoc;
 
      { Pegando o Aceite do Titulo }
      case Aceite of
@@ -520,8 +520,8 @@ begin
      else if (((wCarteira = 11) or (wCarteira = 17)) and (ACaracTitulo = '4')) or
              (wCarteira = 51) then
        wTipoCarteira := ACaracTitulo
-     else  if (wCarteira = 17) and (ACaracTitulo = '1') then
-       wTipoCarteira := '7'
+//     else  if (wCarteira = 17) and (ACaracTitulo = '1') then
+//       wTipoCarteira := '7'
      else
        wTipoCarteira := '7';
 

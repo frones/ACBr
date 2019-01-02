@@ -205,11 +205,11 @@ begin
 
       if (ACBrTitulo.Carteira = 'RG') or (ACBrTitulo.Carteira = 'SR') then
       begin
-        if ACBrTitulo.CarteiraEnvio = tceCedente then
-          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
-        else if (StrToIntDef(ANossoNumero,0)) <> 0  then
-          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
-        else
+//        if ACBrTitulo.CarteiraEnvio = tceCedente then
+//          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
+//        else if (StrToIntDef(ANossoNumero,0)) <> 0  then
+//          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
+//        else
           ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
       end
       else

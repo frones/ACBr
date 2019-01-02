@@ -302,8 +302,8 @@ begin
         AEspecieDoc := '17'
        else if AnsiSameText(EspecieDoc,'BDP') then
         AEspecieDoc := '18'
-       else if AnsiSameText(EspecieDoc,'DV') then
-        AEspecieDoc := '99'
+//       else if AnsiSameText(EspecieDoc,'DV') then
+//        AEspecieDoc := '99'
        else
         AEspecieDoc := '99';
 

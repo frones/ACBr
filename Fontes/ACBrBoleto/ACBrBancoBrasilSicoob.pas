@@ -493,9 +493,9 @@ begin
   else if ACBrTitulo.EspecieDoc = 'ND' then
      ACBrTitulo.EspecieDoc   := '19'
   else if ACBrTitulo.EspecieDoc = 'DS' then
-     ACBrTitulo.EspecieDoc   := '04'
-  else
-     ACBrTitulo.EspecieDoc := ACBrTitulo.EspecieDoc;
+     ACBrTitulo.EspecieDoc   := '04';
+//  else
+//     ACBrTitulo.EspecieDoc := ACBrTitulo.EspecieDoc;
 
   ANossoNumero := FormataNossoNumero(ACBrTitulo);
 
@@ -564,7 +564,7 @@ begin
 
   AValorCEP := OnlyNumber(ACBrTitulo.Sacado.CEP);
 
-  ATipoInscricao := IfThen((ACBrTitulo.Sacado.Pessoa = pFisica),'01','02');
+//  ATipoInscricao := IfThen((ACBrTitulo.Sacado.Pessoa = pFisica),'01','02');
   ATipoInscricao := IfThen((ACBrTitulo.Sacado.Pessoa = pFisica),'01','02');
 
   {Avalista}

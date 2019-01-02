@@ -1,4 +1,4 @@
-﻿object FrmSPEDFiscal: TFrmSPEDFiscal
+object FrmSPEDFiscal: TFrmSPEDFiscal
   Left = 356
   Top = 153
   Caption = 'ACBrSpedFiscal - Demo'

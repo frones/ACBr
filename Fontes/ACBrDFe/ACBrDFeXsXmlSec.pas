@@ -432,10 +432,10 @@ begin
   CreateCtx;
   try
 
-    { Dispara Exception se não encontrar o SignNode }
-    SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, InfElement);
-    if (SignNode = Nil) then
-      raise EACBrDFeException.Create(cErrFindSignNode);
+    // Inserindo Template da Assinatura digital //
+    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, infElement);
+    if (SignNode = nil) then
+      SignNode := AdicionarNode(doc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
@@ -470,7 +470,6 @@ var
   doc: xmlDocPtr;
   AXml, XmlAss, DTD, URI: String;
   TemDeclaracao: Boolean;
-  SignNode: xmlNodePtr;
 begin
   InitXmlSec;
 
@@ -500,12 +499,7 @@ begin
     { load template }
     doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
     if (doc = nil) then
-      raise EACBrDFeException.Create(cErrParseDoc);
-
-    // Inserindo Template da Assinatura digital //
-    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, infElement);
-    if (SignNode = nil) then
-      SignNode := AdicionarNode(doc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
+      raise EACBrDFeException.Create(cErrParseDoc);    
 
     // Assinando com XMLSec //
     // DEBUG

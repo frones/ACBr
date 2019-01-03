@@ -458,7 +458,9 @@ var
   INIRec : TMemIniFile ;
   ok     : Boolean;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := False;
+{$ENDIF}
   Self.Evento.Clear;
 
   INIRec := TMemIniFile.Create('');

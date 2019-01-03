@@ -225,7 +225,9 @@ end;
 
 function TACBrBALClass.LePeso(MillisecTimeOut: Integer): Double;
 begin
+{$IFNDEF COMPILER23_UP}
   Result := -1;
+{$ENDIF}
 
   if (fpModeloStr = 'Generica') then
   begin

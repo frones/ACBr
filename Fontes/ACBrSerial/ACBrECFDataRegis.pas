@@ -1719,9 +1719,10 @@ begin
    inherited CarregaComprovantesNaoFiscais ;
 
    try
-      if IsV03 or IsV04 then
-         {Versao 0203}
-      else
+//      if IsV03 or IsV04 then
+//         {Versao 0203}
+//      else
+      if not(IsV03 or IsV04) then
        begin
          {Versao 0205}
          Cont      := 1 ;

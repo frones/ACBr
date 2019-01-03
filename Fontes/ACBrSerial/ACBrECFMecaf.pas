@@ -744,11 +744,12 @@ begin
      CodTroco := '00' ;
      FPG      := AchaFPGDescricao('Dinheiro') ;
 
-     if FPG = nil then
-{        MessageDlg('Forma de pagamento DINHEIRO não encontrada. '+#10+
+{     if FPG = nil then
+        MessageDlg('Forma de pagamento DINHEIRO não encontrada. '+#10+
                     'Usando Forma de Pagamento "00" para lançar o Troco.',
-                    mtWarning,[mbOk],0)}
-     else
+                    mtWarning,[mbOk],0)
+     else}
+     if FPG <> nil then
         CodTroco := FPG.Indice ;
 
      EnviaComando( '07' + CodTroco + StringOfChar('0' ,15) ,5) ;

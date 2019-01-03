@@ -106,8 +106,8 @@ type
     procedure InitXmlSec;
     procedure CreateCtx;
     procedure DestroyCtx;
-    function XmlSecSign(const aDoc: xmlDocPtr;
-      SignatureNode, SelectionNamespaces, InfElement: String): String;
+    function XmlSecSign(aDoc: xmlDocPtr;
+      SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); override;
@@ -419,8 +419,8 @@ begin
   end;
 end;
 
-function TDFeSSLXmlSignXmlSec.XmlSecSign(const aDoc: xmlDocPtr;
-  SignatureNode, SelectionNamespaces, InfElement: String): String;
+function TDFeSSLXmlSignXmlSec.XmlSecSign(aDoc: xmlDocPtr;
+ SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
 var
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
@@ -431,7 +431,6 @@ begin
 
   CreateCtx;
   try
-
     // Inserindo Template da Assinatura digital //
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode = nil) then
@@ -495,17 +494,18 @@ begin
 
   URI := ExtraiURI(aXML, IdAttr);
 
-  try
-    { load template }
-    doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
-    if (doc = nil) then
-      raise EACBrDFeException.Create(cErrParseDoc);    
 
+  { load template }
+  doc := xmlParseDoc(PAnsiChar(AnsiString(AXml)));
+  if (doc = nil) then
+    raise EACBrDFeException.Create(cErrParseDoc);
+
+  try
     // Assinando com XMLSec //
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-    XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement);
+    XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement, URI, IdSignature);
 
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
@@ -521,8 +521,7 @@ begin
     // Removendo DTD //
     Result := StringReplace(XmlAss, DTD, '', []);
   finally
-    if (doc <> nil) then
-      xmlFreeDoc(doc);
+    xmlFreeDoc(doc);
   end;
 end;
 

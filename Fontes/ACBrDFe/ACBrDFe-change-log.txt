@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2019
+-- ACBrDFeXsXmlSec --
+[*] Melhoria no codigo de assinatura e remoção de codigo não utilizado.
+    (Por: Rafael Teno Dias)
+
+02/01/2019
+-- ACBrDFeXsLibXml2 --
+[*] Correção no metodo de assinatura do da LibXml2 quando a URI é vazia.
+    (Por: Rafael Teno Dias)
+
 24/12/2018
 -- ACBrDFeXsLibXml2, ACBrDFeXsXmlSec --
 [*] Otimizações para melhor velocidade na Assinatura e Verificação de assinatura

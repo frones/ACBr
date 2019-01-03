@@ -433,9 +433,9 @@ begin
   try
 
     // Inserindo Template da Assinatura digital //
-    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, infElement);
+    SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode = nil) then
-      SignNode := AdicionarNode(doc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
+      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);

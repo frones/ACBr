@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 06/12/2018
+
+04-01-2019 -- ACBrBancoNordeste
+[*] Ajuste na geração CNAB400, validação tipo de aceite e dias para protesto
+https://www.projetoacbr.com.br/forum/topic/48504-ajustes-nos-campos-instrucao-aceite-e-dias-para-protesto-no-acbrboleto-bnb/
+
 -- ACBrBoleto --
 [-] TACBrCedente, remoção de propriedade interna "ACBrBoleto", da sessão Published
 [*] TACBrBoleto.EnviarEmail, assinatura modificada, para assumir valores default

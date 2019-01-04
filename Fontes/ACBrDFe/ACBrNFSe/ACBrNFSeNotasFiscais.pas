@@ -915,6 +915,10 @@ var
       // Provedor ISSDSF
       if Result = 0 then
         Result := Pos('</RPS>', AXMLString);
+
+      if Result = 0 then  //Equiplano
+        Result := Pos('</rps>', AXMLString);
+
       // Provedor Governa
       if Result = 0 then
       begin

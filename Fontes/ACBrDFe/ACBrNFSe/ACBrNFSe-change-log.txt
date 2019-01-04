@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2019
+-- ACBrNFSeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/48525-equiplano-n%C3%A3o-carrega-o-proprio-xml-gerado/
+   Por: Marcos
+
 21/12/2018
 -- Diversos --
 [*] Realizadas remoção de blocos comentados e variaveis que estavam definidas

@@ -47,11 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2019
+-- ACBrSATExtratoFortesFr --
+[*] Ajuste para melhor detectção de Logotipo, não atribuido...
+    https://www.projetoacbr.com.br/forum/topic/48536-sat-cabe%C3%A7alho-desconfigurado/
+    (por: DSA)
+
 22/12/2018
 -- ACBrSATExtratoFortesFr --
 [+] Possível correção para o problema de leitura do QR code no aplicativo
     "De Olho na nota"
     https://www.projetoacbr.com.br/forum/topic/48381-qrcode-não-é-valida/
+    (por: DSA)
 
 20/12/2018
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --

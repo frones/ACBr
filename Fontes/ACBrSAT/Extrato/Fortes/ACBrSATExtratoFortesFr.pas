@@ -371,7 +371,9 @@ begin
 
     //Detalhes de Dimensionamento LogoTipo
     {$IfNDef NOGUI}
-     paLogo.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo);
+     paLogo.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo) and
+                       ((ACBrSATExtrato.PictureLogo.Height + ACBrSATExtrato.PictureLogo.Width) > 0);
+
      if paLogo.Visible then
      begin
        imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
@@ -397,7 +399,9 @@ begin
        end;
      end;
 
-     rlLogoCanc.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo);
+     rlLogoCanc.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo) and
+                            ((ACBrSATExtrato.PictureLogo.Height + ACBrSATExtrato.PictureLogo.Width) > 0);
+
      if rlLogoCanc.Visible then
      begin
        imgLogoCanc.Picture.Assign( ACBrSATExtrato.PictureLogo );

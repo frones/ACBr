@@ -179,6 +179,7 @@ type
     FvrCPDescPR: Double;
     FvrRatDescPR: Double;
     FvrSenarDesc: Double;
+    FIndOpcCP: TpIndOpcCP;
 
     FNfs: TNfsColecao;
     FInfoProcJud: TInfoProcJudCollection;
@@ -192,6 +193,7 @@ type
     property vrCPDescPR: Double read FvrCPDescPR write FvrCPDescPR;
     property vrRatDescPR: Double read FvrRatDescPR write FvrRatDescPR;
     property vrSenarDesc: Double read FvrSenarDesc write FvrSenarDesc;
+    property IndOpcCP: TpIndOpcCP read FIndOpcCP write FIndOpcCP;
 
     property Nfs: TNfsColecao read FNfs write FNfs;
     property InfoProcJud: TInfoProcJudCollection read FInfoProcJud write FInfoProcJud;
@@ -296,6 +298,9 @@ begin
     Gerador.wCampo(tcDe2, '', 'vrCPDescPR',  1, 14, 1, pIdeProdutor.Items[i].vrCPDescPR);
     Gerador.wCampo(tcDe2, '', 'vrRatDescPR', 1, 14, 1, pIdeProdutor.Items[i].vrRatDescPR);
     Gerador.wCampo(tcDe2, '', 'vrSenarDesc', 1, 14, 1, pIdeProdutor.Items[i].vrSenarDesc);
+
+    if (VersaoDF >= ve02_05_00) and (pIdeProdutor.Items[i].IndOpcCP <> icpNenhum) then
+      Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 001, 1, eSIndOpcCPToStr(pIdeProdutor.Items[i].IndOpcCp));
 
     GerarNfs(pIdeProdutor.Items[i].Nfs);
     GerarInfoProcJud(pIdeProdutor.Items[i].InfoProcJud);
@@ -548,6 +553,7 @@ begin
               vrCPDescPR  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrCPDescPR', ''), 0);
               vrRatDescPR := StringToFloatDef(INIRec.ReadString(sSecao, 'vrRatDescPR', ''), 0);
               vrSenarDesc := StringToFloatDef(INIRec.ReadString(sSecao, 'vrSenarDesc', ''), 0);
+              IndOpcCP    := eSStrToIndOpcCP(Ok, INIRec.ReadString(sSecao, 'indOpcCP', '0'));
 
               K := 1;
               while true do

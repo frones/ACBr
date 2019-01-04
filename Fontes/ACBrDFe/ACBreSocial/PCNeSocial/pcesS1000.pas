@@ -156,6 +156,7 @@ type
     FIndConstr: TpIndConstr;
     FIndDesFolha: TpIndDesFolha;
     FIndOptRegEletron: TpIndOptRegEletron;
+    FIndOpcCP: TpIndOpcCP;
     FIndEntEd: tpSimNao;
     FIndEtt: tpSimNao;
     FNrRegEtt: String;
@@ -184,6 +185,7 @@ type
     property IndConstr: TpIndConstr read FIndConstr write FIndConstr;
     property IndDesFolha: TpIndDesFolha read FIndDesFolha write FIndDesFolha;
     property IndOptRegEletron: TpIndOptRegEletron read FIndOptRegEletron write FIndOptRegEletron;
+    property IndOpcCP: TpIndOpcCP read FIndOpcCP write FIndOpcCP;
     property IndEntEd: tpSimNao read FIndEntEd write FIndEntEd;
     property IndEtt: tpSimNao read FIndEtt write FIndEtt;
     property nrRegEtt: String read FNrRegEtt write FNrRegEtt;
@@ -488,6 +490,10 @@ begin
   end;
 
   Gerador.wCampo(tcStr, '', 'indDesFolha',      1, 001, 1, eSIndDesFolhaToStr(Self.infoEmpregador.infoCadastro.IndDesFolha));
+
+  if (VersaoDF >= ve02_05_00) and (Self.infoEmpregador.infoCadastro.ClassTrib in [ct07, ct08, ct21]) and (Self.infoEmpregador.infoCadastro.IndOpcCP <> icpNenhum) then
+    Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 001, 0, eSIndOpcCPToStr(Self.infoEmpregador.infoCadastro.IndOpcCP));
+
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 
   if (Self.ideEmpregador.TpInsc = tiCNPJ) then
@@ -659,6 +665,7 @@ begin
         infoEmpregador.infoCadastro.IndCoop          := eSStrToIndCooperativa(Ok, INIRec.ReadString(sSecao, 'indCoop', '0'));
         infoEmpregador.infoCadastro.IndConstr        := eSStrToIndConstrutora(Ok, INIRec.ReadString(sSecao, 'indConstr', '0'));
         infoEmpregador.infoCadastro.IndDesFolha      := eSStrToIndDesFolha(Ok, INIRec.ReadString(sSecao, 'indDesFolha', '0'));
+        infoEmpregador.infoCadastro.IndOpcCP         := eSStrToIndOpcCP(Ok, INIRec.ReadString(sSecao, 'indOpcCP', '0'));
         infoEmpregador.infoCadastro.IndOptRegEletron := eSStrToIndOptRegEletronico(Ok, INIRec.ReadString(sSecao, 'indOptRegEletron', '0'));
         infoEmpregador.infoCadastro.IndEntEd         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
         infoEmpregador.infoCadastro.IndEtt           := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));

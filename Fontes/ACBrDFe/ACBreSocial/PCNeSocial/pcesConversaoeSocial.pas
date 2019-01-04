@@ -121,6 +121,8 @@ type
 
   TpIndOptRegEletron      = (iorNaooptou, iorOptoupeloregistro);
 
+  TpIndOpcCP              = (icpComercializacao, icpFolhaPagamento, icpNenhum);
+
   tpAliqRat               = (arat1, arat2, arat3 );
 
   tpTpProc                = (tpAdministrativo, tpJudicial, tpINSS, tpFAP);
@@ -506,6 +508,9 @@ function eSStrToIndDesFolha(var ok: boolean; const s: string): TpIndDesFolha;
 
 function eSIndOptRegEletronicoToStr(const t: TpIndOptRegEletron ): string;
 function eSStrToIndOptRegEletronico(var ok: boolean; const s: string): TpIndOptRegEletron;
+
+function eSIndOpcCPToStr(const t: TpIndOpcCP ): string;
+function eSStrToIndOpcCP(var ok: boolean; const s: string): TpIndOpcCP;
 
 function eSAliqRatToStr(const t: TpAliqRat ): string;
 function eSStrToAliqRat(var ok: boolean; const s: string): TpAliqRat;
@@ -1530,6 +1535,16 @@ end;
 function eSStrToIndOptRegEletronico(var ok: boolean; const s: string): TpIndOptRegEletron;
 begin
   result := TpIndOptRegEletron( StrToEnumerado2(ok , s, TGenericosString0_1 ) );
+end;
+
+function eSIndOpcCPToStr(const t:TpIndOpcCP ): string;
+begin
+  result := EnumeradoToStr2(t,TGenericosString1_2 );
+end;
+
+function eSStrToIndOpcCP(var ok: boolean; const s: string): TpIndOpcCP;
+begin
+  result := TpIndOpcCP( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
 
 function eSAliqRatToStr(const t:tpAliqRat ): string;

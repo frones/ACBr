@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2019
+-- Diversos --
+[*] Alterações visando a versão 2.5
+   Por: Paulo Aguiar Junior
+
 27/12/2018
 -- pcesGerador / pcesCommon / pces2200 --
 [*] Alterações visando a versão 2.5

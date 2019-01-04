@@ -231,8 +231,8 @@ begin
     if ImprimeCPFNaoInformado or (Trim(Cfe.Dest.CNPJCPF) <> '') then
     begin
       ImprimiuConsumidor := True;
-      FPosPrinter.Buffer.Add('</linha_simples>');
-      FPosPrinter.Buffer.Add('</ae><c>CPF/CNPJ do Consumidor: '+
+      FPosPrinter.Buffer.Add('</ae><c></linha_simples>');
+      FPosPrinter.Buffer.Add('CPF/CNPJ do Consumidor: '+
                   IfThen( Trim(CFe.Dest.CNPJCPF)<>'',
                           FormatarCNPJouCPF(CFe.Dest.CNPJCPF),
                           ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')));
@@ -257,7 +257,7 @@ var
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrBruto,
     sVlrImpostos, LinhaCmd: String;
 begin
-  FPosPrinter.Buffer.Add('</ce><c>'+
+  FPosPrinter.Buffer.Add('</ae><c>'+
                          PadSpace('#|COD|DESC|QTD|UN|VL UN R$|(VL TR R$)*|VL ITEM R$',
                          FPosPrinter.ColunasFonteCondensada,'|'));
   FPosPrinter.Buffer.Add('</linha_simples>');

@@ -49,7 +49,7 @@ Símbolo : Significado
 
 04/01/2019
 -- ACBrSATExtratoFortesFr --
-[*] Ajuste para melhor detectção de Logotipo, não atribuido...
+[*] Ajuste para melhor detecção de Logotipo, não atribuido...
     https://www.projetoacbr.com.br/forum/topic/48536-sat-cabe%C3%A7alho-desconfigurado/
 [+] Adicionado suporte a carga de Logo pela propriedade "Logo: String"
     (que pode conter o Path para um arquivo de imagem)
@@ -62,7 +62,7 @@ Símbolo : Significado
     cancelamento
 [+] Adicionada linha separadora contínua, após a impressão do QRCode e mensagens
     de "Sistema" e "SoftwareHouse"
-[-] Corrigio problema de ordem de exibição do Logo no extrato de Cancelamento
+[-] Corrigido problema de ordem de exibição do Logo no extrato de Cancelamento
     (por: DSA)
 
 22/12/2018

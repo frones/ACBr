@@ -25,6 +25,9 @@ type
     procedure Test_SAT_Versao;
     procedure Test_SAT_ConfigLerValor;
     procedure Test_SAT_ConfigGravarValor;
+    procedure Test_SAT_CriarCFe;
+    procedure Test_SAT_EnviarCFe;
+    procedure Test_SAT_CriarEnviarCFe;
     procedure Test_SAT_ImpressaoExtratoFortes;
     procedure Test_SAT_ImpressaoExtratoEscPOS;
   end;
@@ -151,6 +154,89 @@ begin
   AssertEquals(ErrOk, SAT_ConfigLerValor(CSessaoPrincipal, CChaveLogNivel, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals('Erro ao Mudar configuração', '4', AStr);
+end;
+
+procedure TTestACBrSATLib.Test_SAT_CriarCFe;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+
+   // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar criar o CFe', ErrOK, SAT_CriarCFe('..\CFe.ini', PChar(AStr), Bufflen));
+
+  if Bufflen > 255 then
+  begin
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+  end;
+
+  AssertEquals(ErrOK, SAT_Finalizar());
+end;
+
+procedure TTestACBrSATLib.Test_SAT_EnviarCFe;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+    AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+
+   // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar enviar o CFe', ErrOK, SAT_EnviarCFe('..\001-000000-satcfe.xml', PChar(AStr), Bufflen));
+
+  if Bufflen > 255 then
+  begin
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+  end;
+
+  AssertEquals(ErrOK, SAT_Finalizar());
+end;
+
+procedure TTestACBrSATLib.Test_SAT_CriarEnviarCFe;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveCodigoDeAtivacao, 'sefaz1234'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveSignAC, '111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111111111111122222222222222111111111111112222222222222211111111111111222222222222221111'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+
+   // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar criar e enviar o CFe', ErrOK, SAT_CriarEnviarCFe('..\CFe.ini', PChar(AStr), Bufflen));
+
+  if Bufflen > 255 then
+  begin
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+  end;
+
+  AssertEquals(ErrOK, SAT_Finalizar());
 end;
 
 procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoFortes;

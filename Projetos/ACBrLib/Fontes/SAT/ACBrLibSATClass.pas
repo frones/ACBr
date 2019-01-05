@@ -183,9 +183,9 @@ begin
   FSatDM.CriarACBrMail;
   FSatDM.CriarACBrPosPrinter;
 
-  GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
-
   inherited Inicializar;
+
+  GravarLog('TACBrLibSAT.Inicializar - Feito', logParanoico);
 end;
 
 procedure TACBrLibSAT.CriarConfiguracao(ArqConfig: string; ChaveCrypt: ansistring);
@@ -1032,6 +1032,7 @@ begin
         SatDM.ConfigurarImpressao(NomeImpressora);
         SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ACBrSAT1.ImprimirExtrato;
+        SatDM.ACBrSAT1.Extrato := nil;
         Result := SetRetorno(ErrOK);
       finally
         SatDM.Destravar;
@@ -1069,6 +1070,7 @@ begin
         SatDM.ConfigurarImpressao(NomeImpressora);
         SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ACBrSAT1.ImprimirExtratoResumido;
+        SatDM.ACBrSAT1.Extrato := nil;
         Result := SetRetorno(ErrOK);
       finally
         SatDM.Destravar;
@@ -1109,6 +1111,7 @@ begin
         SatDM.CarregarDadosVenda(ArqXMLVenda);
         SatDM.CarregarDadosCancelamento(ArqXMLCancelamento);
         SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
+        SatDM.ACBrSAT1.Extrato := nil;
         Result := SetRetorno(ErrOK);
       finally
         SatDM.Destravar;
@@ -1151,7 +1154,7 @@ begin
           Resposta := TACBrSATExtratoESCPOS(SatDM.ACBrSAT1.Extrato).GerarImpressaoFiscalMFe();
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
         end;
-
+        SatDM.ACBrSAT1.Extrato := nil;
         Result := SetRetorno(ErrOK, Resposta);
       finally
         SatDM.Destravar;
@@ -1169,7 +1172,8 @@ end;
 function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  ArqXMLVenda, NomeArquivo: String;
+  Resp: TPadraoSATResposta;
+  ArqXMLVenda, NomeArquivo, Resposta: String;
 begin
    try
     VerificarLibInicializada;
@@ -1186,12 +1190,19 @@ begin
       SatDM.Travar;
 
       try
+        Resposta := '';
         SatDM.ConfigurarImpressao('', True);
         SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
         SatDM.ACBrSAT1.ImprimirExtrato;
+        SatDM.ACBrSAT1.Extrato := nil;
 
-        MoverStringParaPChar(SatDM.ACBrSAT1.Extrato.NomeDocumento, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, SatDM.ACBrSAT1.Extrato.NomeDocumento);
+        Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
+        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
+        Resp.XML:= SatDM.ACBrSAT1.CFe.XMLOriginal;
+        Resposta := Resp.Gerar;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         SatDM.Destravar;
       end;

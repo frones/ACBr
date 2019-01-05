@@ -30,6 +30,7 @@ object LibSatDM: TLibSatDM
     top = 80
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
@@ -45,6 +46,7 @@ object LibSatDM: TLibSatDM
     top = 160
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     Site = 'http://www.projetoacbr.com.br'
     MargemInferior = 4
     MargemSuperior = 2

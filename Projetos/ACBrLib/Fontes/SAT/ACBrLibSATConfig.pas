@@ -602,20 +602,16 @@ begin
   FArqLOG := AIni.ReadString(CSessaoSAT, CChaveArqLog, FArqLOG);
   FCodigoDeAtivacao := AIni.ReadString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);
   FSignAC := AIni.ReadString(CSessaoSAT, CChaveSignAC, FSignAC);
-  FValidarNumeroSessaoResposta :=
-    AIni.ReadBool(CSessaoSAT, CChaveValidarNumero, FValidarNumeroSessaoResposta);
-  FNumeroTentativasValidarSessao :=
-    AIni.ReadInteger(CSessaoSAT, CChaveNumeroTentativas, FNumeroTentativasValidarSessao);
+  FValidarNumeroSessaoResposta := AIni.ReadBool(CSessaoSAT, CChaveValidarNumero, FValidarNumeroSessaoResposta);
+  FNumeroTentativasValidarSessao := AIni.ReadInteger(CSessaoSAT, CChaveNumeroTentativas, FNumeroTentativasValidarSessao);
 
   with FRede do
   begin
-    tipoInter := TTipoInterface(AIni.ReadInteger(CSessaoSATRede,
-      CChaveTipoInter, integer(tipoInter)));
+    tipoInter := TTipoInterface(AIni.ReadInteger(CSessaoSATRede, CChaveTipoInter, integer(tipoInter)));
     SSID := AIni.ReadString(CSessaoSATRede, CChaveSSID, SSID);
     seg := TSegSemFio(AIni.ReadInteger(CSessaoSATRede, CChaveSeg, integer(seg)));
     codigo := AIni.ReadString(CSessaoSATRede, CChaveCodigo, codigo);
-    tipoLan := TTipoLan(AIni.ReadInteger(CSessaoSATRede, CChaveTipoLan,
-      integer(tipoLan)));
+    tipoLan := TTipoLan(AIni.ReadInteger(CSessaoSATRede, CChaveTipoLan, integer(tipoLan)));
     lanIP := AIni.ReadString(CSessaoSATRede, CChaveLanIP, lanIP);
     lanMask := AIni.ReadString(CSessaoSATRede, CChaveLanMask, lanMask);
     lanGW := AIni.ReadString(CSessaoSATRede, CChaveLanGW, lanGW);

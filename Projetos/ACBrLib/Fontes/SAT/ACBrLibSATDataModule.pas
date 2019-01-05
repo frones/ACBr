@@ -64,7 +64,7 @@ type
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
-    procedure CarregarDadosVenda(aStr: String; aNomePDF: String = '');
+    procedure CarregarDadosVenda(XmlArquivoOuString: String; aNomePDF: String = '');
     procedure CarregarDadosCancelamento(aStr: String);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
@@ -268,7 +268,7 @@ end;
 procedure TLibSatDM.AplicarConfigMail;
 begin
 
-  if Assigned(FLibMail) and (not Assigned(FACBrMail)) then
+  if Assigned(FLibMail) then
   begin
     FLibMail.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
@@ -298,7 +298,7 @@ end;
 
 procedure TLibSatDM.AplicarConfigPosPrinter;
 begin
-  if Assigned(FLibPosPrinter) and (not Assigned(FACBrPosPrinter)) then
+  if Assigned(FLibPosPrinter) then
   begin
     FLibPosPrinter.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
@@ -420,22 +420,22 @@ begin
   end;
 end;
 
-procedure TLibSatDM.CarregarDadosVenda(aStr: String; aNomePDF: String);
+procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: String; aNomePDF: String);
 begin
-  if Trim(aStr) = '' then exit;
+  if Trim(XmlArquivoOuString) = '' then exit;
 
-  if FileExists(aStr) then
+  if FileExists(XmlArquivoOuString) then
   begin
     GravarLog('Carregando arquivo xml', logParanoico);
-    ACBrSAT1.CFe.LoadFromFile(aStr);
+    ACBrSAT1.CFe.LoadFromFile(XmlArquivoOuString);
   end
   else
   begin
     GravarLog('Carregando xml string', logParanoico);
-    ACBrSAT1.CFe.AsXMLString := aStr;
+    ACBrSAT1.CFe.AsXMLString := XmlArquivoOuString;
   end;
 
-  if (ACBrSAT1.Extrato.Filtro = fiPDF) then
+  if Assigned(ACBrSAT1.Extrato) and (ACBrSAT1.Extrato.Filtro = fiPDF) then
       ACBrSAT1.Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
         ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda, ACBrSAT1.CFe.infCFe.ID,'','.pdf'));
 end;

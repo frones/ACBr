@@ -44,9 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-24/07/2018
---- ACBrLibsat ---
+05/01/2019
+[-] Corrigido erro ao carregar xml do CFe, no metodo EnviarCFe.
+    (por Rafael Dias)
 
+24/07/2018
 [+] Adicionado métodos para retorno de envio do XML do componente sat
  (Utilizado também pelo ACBrMonitorPlus).
 

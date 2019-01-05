@@ -51,6 +51,18 @@ Símbolo : Significado
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para melhor detectção de Logotipo, não atribuido...
     https://www.projetoacbr.com.br/forum/topic/48536-sat-cabe%C3%A7alho-desconfigurado/
+[+] Adicionado suporte a carga de Logo pela propriedade "Logo: String"
+    (que pode conter o Path para um arquivo de imagem)
+[*] Melhorado espaçamento do numero do título com o número do SAT
+[*] Melhorado espaçamento entre Itens, quando imprimir Descontos, Acrescimos ou
+    rateios do Item
+[-] Ajuste para correto funcionamento da propriedade "LogoAutoSize", quando não
+    estiver em uso a impressão de Logo lateral
+[-] Corrigida a ordem de exibição de Nome e Endereço no título do extrato de
+    cancelamento
+[+] Adicionada linha separadora contínua, após a impressão do QRCode e mensagens
+    de "Sistema" e "SoftwareHouse"
+[-] Corrigio problema de ordem de exibição do Logo no extrato de Cancelamento
     (por: DSA)
 
 22/12/2018

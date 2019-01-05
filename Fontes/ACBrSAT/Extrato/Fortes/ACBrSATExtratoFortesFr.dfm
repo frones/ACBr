@@ -1,6 +1,6 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 440
-  Top = 16
+  Left = 449
+  Top = 7
   Width = 805
   Height = 1067
   Caption = 'ACBrSATExtratoFortes'
@@ -41,7 +41,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 608
       Width = 286
-      Height = 310
+      Height = 316
       AutoSize = True
       BandType = btSummary
       object pSATSerieHora: TRLPanel
@@ -56,7 +56,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Left = 0
           Top = 16
           Width = 286
-          Height = 20
+          Height = 14
           Align = faTop
           Alignment = taCenter
           Caption = '14/08/1971 - 08:00:00'
@@ -305,16 +305,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           end
         end
       end
-      object pGapAposQRCode: TRLPanel
-        Left = 0
-        Top = 240
-        Width = 286
-        Height = 4
-        Align = faBottom
-      end
       object mMsgAppQRCode: TRLMemo
         Left = 0
-        Top = 244
+        Top = 250
         Width = 286
         Height = 24
         Align = faBottom
@@ -332,7 +325,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object mSwHouseSite: TRLMemo
         Left = 0
-        Top = 268
+        Top = 274
         Width = 286
         Height = 20
         Align = faBottom
@@ -350,7 +343,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object pEspacoFinal: TRLPanel
         Left = 0
-        Top = 288
+        Top = 294
         Width = 286
         Height = 22
         Align = faBottom
@@ -367,6 +360,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Pen.Style = psDot
         end
       end
+      object RLDraw6: TRLDraw
+        Left = 0
+        Top = 240
+        Width = 286
+        Height = 10
+        Align = faBottom
+        DrawKind = dkLine
+      end
     end
     object rlsbDetItem: TRLSubDetail
       Left = 8
@@ -381,14 +382,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Font.Style = []
       ParentFont = False
       OnDataRecord = rlsbDetItemDataRecord
-      object rlbGap: TRLBand
-        Left = 0
-        Top = 96
-        Width = 286
-        Height = 7
-        BandType = btSummary
-        BeforePrint = rlbGapBeforePrint
-      end
       object rlbDetItem: TRLBand
         Left = 0
         Top = 0
@@ -587,7 +580,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTotalBruto: TRLBand
         Left = 0
-        Top = 103
+        Top = 109
         Width = 286
         Height = 14
         AutoSize = True
@@ -619,7 +612,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDescontos: TRLBand
         Left = 0
-        Top = 131
+        Top = 137
         Width = 286
         Height = 14
         AutoSize = True
@@ -651,7 +644,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbAcrescimos: TRLBand
         Left = 0
-        Top = 145
+        Top = 151
         Width = 286
         Height = 14
         AutoSize = True
@@ -683,7 +676,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTotal: TRLBand
         Left = 0
-        Top = 159
+        Top = 165
         Width = 286
         Height = 16
         AutoSize = True
@@ -717,7 +710,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbSubDescAcresItem: TRLBand
         Left = 0
-        Top = 117
+        Top = 123
         Width = 286
         Height = 14
         AutoSize = True
@@ -747,6 +740,22 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Caption = '99.999,99'
         end
       end
+      object rlbGapDescAcres: TRLBand
+        Left = 0
+        Top = 96
+        Width = 286
+        Height = 6
+        AutoExpand = False
+        BeforePrint = rlbGapDescAcresBeforePrint
+      end
+      object rlbGapTotItens: TRLBand
+        Left = 0
+        Top = 102
+        Width = 286
+        Height = 7
+        BandType = btSummary
+        BeforePrint = rlbGapTotItensBeforePrint
+      end
     end
     object rlsbPagamentos: TRLSubDetail
       Left = 8
@@ -760,7 +769,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 6
         BandType = btHeader
-        BeforePrint = rlbGapBeforePrint
       end
       object rlbPagamento: TRLBand
         Left = 0
@@ -1032,11 +1040,18 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 68
         Width = 286
-        Height = 12
+        Height = 26
         AutoSize = True
-        object lNumeroExtrato: TRLMemo
+        object pGap9: TRLPanel
           Left = 0
           Top = 0
+          Width = 286
+          Height = 7
+          Align = faTop
+        end
+        object lNumeroExtrato: TRLMemo
+          Left = 0
+          Top = 7
           Width = 286
           Height = 12
           Align = faTop
@@ -1051,6 +1066,13 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Lines.Strings = (
             'EXTRATO N'#176' <NUMERO> do CUPOM FISCAL ELETR'#212'NICO - SAT')
           ParentFont = False
+        end
+        object pGap10: TRLPanel
+          Left = 0
+          Top = 19
+          Width = 286
+          Height = 7
+          Align = faTop
         end
       end
       object rlbDadosCliche: TRLBand
@@ -1155,7 +1177,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             Left = 0
             Top = 0
             Width = 40
-            Height = 40
+            Height = 1
             Align = faLeftTop
             AutoExpand = True
             AutoSize = True
@@ -1163,8 +1185,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
               Left = 0
               Top = 0
               Width = 40
-              Height = 40
-              Align = faClient
+              Height = 1
+              Align = faClientTop
               AutoSize = True
               Center = True
               Scaled = True
@@ -1175,14 +1197,32 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTeste: TRLBand
         Left = 0
-        Top = 80
+        Top = 94
         Width = 286
-        Height = 93
+        Height = 74
         AutoSize = True
         BeforePrint = rlbTesteBeforePrint
+        object lTeste: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 286
+          Height = 14
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Caption = '= T E S T E ='
+          Layout = tlCenter
+        end
+        object pGap11: TRLPanel
+          Left = 0
+          Top = 14
+          Width = 286
+          Height = 9
+          Align = faTop
+        end
         object lFiller1: TRLLabel
           Left = 0
-          Top = 70
+          Top = 23
           Width = 286
           Height = 14
           Align = faTop
@@ -1192,7 +1232,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller2: TRLLabel
           Left = 0
-          Top = 42
+          Top = 37
           Width = 286
           Height = 14
           Align = faTop
@@ -1202,7 +1242,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller3: TRLLabel
           Left = 0
-          Top = 56
+          Top = 51
           Width = 286
           Height = 14
           Align = faTop
@@ -1210,23 +1250,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
           Layout = tlBottom
         end
-        object lTeste: TRLMemo
-          Left = 0
-          Top = 0
-          Width = 286
-          Height = 42
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Layout = tlCenter
-          Lines.Strings = (
-            ''
-            '= T E S T E ='
-            '')
-        end
         object pGap8: TRLPanel
           Left = 0
-          Top = 84
+          Top = 65
           Width = 286
           Height = 9
           Align = faBottom
@@ -1234,7 +1260,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 173
+        Top = 168
         Width = 286
         Height = 52
         AutoSize = True
@@ -1249,7 +1275,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Behavior = [beSiteExpander]
           Lines.Strings = (
             'Raz'#227'o Social/Nome: <xNome>')
-          BeforePrint = lRazaoSocialNomeBeforePrint
         end
         object lCPF_CNPJ: TRLMemo
           Left = 0
@@ -1261,7 +1286,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Behavior = [beSiteExpander]
           Lines.Strings = (
             'CPF/CNPJ Consumidor: <CPF_CNPJ>')
-          BeforePrint = lCPF_CNPJBeforePrint
         end
         object RLDraw3: TRLDraw
           Left = 0
@@ -1285,7 +1309,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Top = 225
+        Top = 220
         Width = 286
         Height = 20
         AutoSize = True
@@ -1344,7 +1368,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbCanRodape: TRLBand
       Left = 8
-      Top = 320
+      Top = 318
       Width = 286
       Height = 589
       AutoSize = True
@@ -1654,12 +1678,12 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 8
       Width = 286
-      Height = 146
+      Height = 147
       AutoSize = True
       BandType = btHeader
       object RLDraw11: TRLDraw
         Left = 0
-        Top = 96
+        Top = 97
         Width = 286
         Height = 8
         Align = faBottom
@@ -1668,7 +1692,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lNumeroExtratoCan: TRLLabel
         Left = 0
-        Top = 104
+        Top = 105
         Width = 286
         Height = 14
         Align = faBottom
@@ -1684,7 +1708,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lTitCancelamento: TRLLabel
         Left = 0
-        Top = 132
+        Top = 133
         Width = 286
         Height = 14
         Align = faBottom
@@ -1700,7 +1724,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lNomeFantasiaCan: TRLMemo
         Left = 0
-        Top = 0
+        Top = 1
         Width = 286
         Height = 20
         Align = faTop
@@ -1718,7 +1742,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lEnderecoCan: TRLMemo
         Left = 0
-        Top = 20
+        Top = 45
         Width = 286
         Height = 24
         Align = faBottom
@@ -1736,7 +1760,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lRazaoSocialCan: TRLMemo
         Left = 0
-        Top = 44
+        Top = 21
         Width = 286
         Height = 24
         Align = faBottom
@@ -1754,7 +1778,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lCupomFiscalEletronicoCan: TRLMemo
         Left = 0
-        Top = 118
+        Top = 119
         Width = 286
         Height = 14
         Align = faBottom
@@ -1772,7 +1796,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lEmitCNPJ_IE_IMCan: TRLMemo
         Left = 0
-        Top = 68
+        Top = 69
         Width = 286
         Height = 28
         Align = faBottom
@@ -1784,10 +1808,30 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
             '3')
       end
+      object paLogoCanc: TRLPanel
+        Left = 0
+        Top = 0
+        Width = 286
+        Height = 1
+        Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        object imgLogoCanc: TRLImage
+          Left = 0
+          Top = 0
+          Width = 286
+          Height = 1
+          Align = faClientTop
+          AutoSize = True
+          Center = True
+          Scaled = True
+          Transparent = False
+        end
+      end
     end
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
-      Top = 241
+      Top = 239
       Width = 286
       Height = 79
       object RLDraw13: TRLDraw
@@ -1810,7 +1854,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Layout = tlBottom
         Lines.Strings = (
           'Raz'#227'o Social/Nome: <xNome>')
-        BeforePrint = lRazaoSocialNomeBeforePrint
       end
       object pTotalCanc: TRLPanel
         Left = 0
@@ -1858,7 +1901,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Layout = tlBottom
         Lines.Strings = (
           'CPF/CNPJ Consumidor: <CPF_CNPJ>')
-        BeforePrint = lCPF_CNPJBeforePrint
       end
       object lTitCancelamento1: TRLMemo
         Left = 0
@@ -1881,7 +1923,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlbTesteCan: TRLBand
       Left = 8
-      Top = 154
+      Top = 155
       Width = 286
       Height = 84
       AutoSize = True
@@ -1930,25 +1972,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           ''
           '= T E S T E ='
           '')
-      end
-    end
-    object rlLogoCanc: TRLBand
-      Left = 8
-      Top = 238
-      Width = 286
-      Height = 3
-      BandType = btTitle
-      Visible = False
-      object imgLogoCanc: TRLImage
-        Left = 0
-        Top = 0
-        Width = 286
-        Height = 1
-        Align = faTop
-        AutoSize = True
-        Center = True
-        Scaled = True
-        Transparent = False
       end
     end
   end

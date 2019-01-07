@@ -445,7 +445,7 @@ begin
   else
     dValor := dVProd;
 
-  Result := FormatarValorUnitario(dValor);
+  Result := FormatFloatBr( dValor );
 end;
 
 function TACBrDFeDANFeReport.ManterXProd(aNFE: TNFe; const inItem: Integer): String;

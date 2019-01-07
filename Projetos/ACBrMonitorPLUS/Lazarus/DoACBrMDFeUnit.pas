@@ -63,6 +63,8 @@ public
   procedure RespostaCancelamento;
   procedure RespostaRecibo;
   procedure RespostaItensRecibo(ItemID: integer = 0);
+  procedure RespostaEvento;
+  procedure RespostaItensEvento(ItemID: integer = 0);
 
   property ACBrMDFe: TACBrMDFe read fACBrMDFe;
 end;
@@ -290,6 +292,12 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoEnviarEvento}
+TMetodoEnviarEvento = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses IniFiles, DateUtils, Forms, strutils,
@@ -340,6 +348,7 @@ begin
   ListaDeMetodos.Add(CMetodoLoadfromfile);
   ListaDeMetodos.Add(CMetodoLerini);
   ListaDeMetodos.Add(CMetodoSetcertificado);
+  ListaDeMetodos.Add(CMetodoEnviarEvento);
   ListaDeMetodos.Add(CMetodoRestaurar);
   ListaDeMetodos.Add(CMetodoOcultar);
   ListaDeMetodos.Add(CMetodoEncerrarmonitor);
@@ -396,7 +405,8 @@ begin
     28 : AMetodoClass := TMetodoGeraChave;
     29 : AMetodoClass := TMetodoVersao;
     30 : AMetodoClass := TMetodoSetTipoImpressao;
-    31..45 : DoACbr(ACmd);
+    31 : AMetodoClass := TMetodoEnviarEvento;
+    32..46 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -739,6 +749,61 @@ begin
       Resp.digVal := digVal;
 
       fpCmd.Resposta := Resp.Gerar;
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoMDFe.RespostaEvento;
+var
+  Resp: TEventoResposta;
+begin
+  Resp := TEventoResposta.Create(resINI);
+  try
+    with fACBrMDFe.WebServices.EnvEvento.EventoRetorno do
+    begin
+      Resp.VerAplic := VerAplic;
+      Resp.tpAmb := TpAmbToStr(tpAmb);
+      Resp.CStat := cStat;
+      Resp.XMotivo := XMotivo;
+      Resp.idLote := IdLote;
+      Resp.cOrgao := cOrgao;
+
+      fpCmd.Resposta := sLineBreak + Resp.Gerar;
+    end;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoMDFe.RespostaItensEvento(ItemID: integer);
+var
+  Resp: TEventoItemResposta;
+begin
+  Resp := TEventoItemResposta.Create(
+    'Evento' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+  try
+    with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfEvento do
+    begin
+      Resp.Id := Id;
+      Resp.tpAmb := TpAmbToStr(tpAmb);
+      Resp.verAplic := verAplic;
+      Resp.cOrgao := cOrgao;
+      Resp.cStat := cStat;
+      Resp.xMotivo := xMotivo;
+      Resp.chMDFe := chMDFe;
+      Resp.tpEvento := TpEventoToStr(tpEvento);
+      Resp.xEvento := xEvento;
+      Resp.nSeqEvento := nSeqEvento;
+      Resp.CNPJDest := CNPJDest;
+      Resp.emailDest := emailDest;
+      Resp.dhRegEvento := dhRegEvento;
+      Resp.nProt := nProt;
+      Resp.Arquivo := NomeArquivo;
+      Resp.XML := XML;
+
+      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
   finally
     Resp.Free;
@@ -2141,6 +2206,33 @@ begin
     end;
     ACBrMDFe.EnviarEvento(ALote);
     RespostaCancelamento;
+  end;
+end;
+
+{ TMetodoEnviarEvento }
+
+{ Params: 0 - IniFile - Uma String com um Path completo arquivo .ini Evento
+                         ou Uma String com conteúdo txt do Evento
+}
+procedure TMetodoEnviarEvento.Executar;
+var
+  AArq: String;
+  I: Integer;
+begin
+  AArq := fpCmd.Params(0);
+
+  with TACBrObjetoMDFe(fpObjetoDono) do
+  begin
+    ACBrMDFe.EventoMDFe.Evento.Clear;
+
+    ACBrMDFe.EventoMDFe.LerFromIni( AArq );
+
+    ACBrMDFe.EnviarEvento(ACBrMDFe.EventoMDFe.idLote);
+
+    RespostaEvento;
+
+    for I := 0 to ACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Count - 1 do
+       RespostaItensEvento(I);
   end;
 end;
 

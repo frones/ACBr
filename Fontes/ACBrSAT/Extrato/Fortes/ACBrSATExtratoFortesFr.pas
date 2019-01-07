@@ -1072,18 +1072,17 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbGapDescAcresBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := fNumItem < (ACBrSATExtrato.CFe.Det.Count-1);
+  PrintIt := (not Resumido) and (fNumItem < (ACBrSATExtrato.CFe.Det.Count-1));
   if not PrintIt then
     Exit;
 
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
-    PrintIt := ACBrSATExtrato.ImprimeDescAcrescItem and (not Resumido) and
+    PrintIt := ACBrSATExtrato.ImprimeDescAcrescItem and
               ( (Prod.vDesc > 0) or (Prod.vOutro > 0) or
                 (Prod.vRatDesc > 0) or (Prod.vRatAcr > 0) );
 
-    PrintIt := PrintIt or
-              ((not Resumido) and (Imposto.ISSQN.vDeducISSQN > 0));
+    PrintIt := PrintIt or (Imposto.ISSQN.vDeducISSQN > 0);
   end;
 end;
 

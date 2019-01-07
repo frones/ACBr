@@ -1,9 +1,9 @@
 object frmDemo: TfrmDemo
   Left = 288
   Top = 133
-  Width = 827
-  Height = 577
   Caption = 'Demo ACBrBoleto '
+  ClientHeight = 538
+  ClientWidth = 811
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -93,7 +93,6 @@ object frmDemo: TfrmDemo
       Top = 32
       Width = 73
       Height = 21
-      ItemHeight = 13
       TabOrder = 3
       Text = 'Sim'
       Items.Strings = (
@@ -114,7 +113,7 @@ object frmDemo: TfrmDemo
       Width = 103
       Height = 21
       TabOrder = 5
-      Text = '1'
+      Text = '00000000000'
     end
   end
   object GroupBox2: TGroupBox
@@ -463,7 +462,7 @@ object frmDemo: TfrmDemo
     end
     object Label31: TLabel
       Left = 424
-      Top = 98
+      Top = 96
       Width = 34
       Height = 13
       Caption = 'LayOut'
@@ -551,13 +550,21 @@ object frmDemo: TfrmDemo
     end
     object cbxLayOut: TComboBox
       Left = 424
-      Top = 114
-      Width = 138
+      Top = 112
+      Width = 161
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
       TabOrder = 10
       OnChange = cbxLayOutChange
+    end
+    object cbxImprimirVersoFatura: TCheckBox
+      Left = 596
+      Top = 112
+      Width = 172
+      Height = 17
+      Caption = 'Imprimir Verso da Fatura'
+      Enabled = False
+      TabOrder = 11
     end
   end
   object Panel1: TPanel
@@ -592,6 +599,7 @@ object frmDemo: TfrmDemo
       Height = 25
       Caption = 'Zerar Lista de Boletos'
       TabOrder = 2
+      OnClick = Button3Click
     end
     object Button4: TButton
       Left = 336

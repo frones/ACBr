@@ -923,6 +923,7 @@ type
     fComplemento: String;
     fTelefone: String;
     fNomeCedente   : String;
+    fFantasiaCedente : String;
     fAgencia       : String;
     fAgenciaDigito : String;
     fConta         : String;
@@ -949,6 +950,7 @@ type
     property ACBrBoleto  : TACBrBoleto read fACBrBoleto;
   published
     property Nome         : String read fNomeCedente   write fNomeCedente;
+    property FantasiaCedente: String read fFantasiaCedente   write fFantasiaCedente;
     property CodigoCedente: String read fCodigoCedente write fCodigoCedente;
     property CodigoTransmissao : String read fCodigoTransmissao write fCodigoTransmissao;
     property Agencia      : String read fAgencia       write SetAgencia;
@@ -1095,6 +1097,10 @@ type
     fInstrucoes        : TStrings;
     fSacado            : TACBrSacado;
     fLiquidacao        : TACBrTituloLiquidacao;
+    fDetalhamento      : TStrings;
+    fVerso             : Boolean;
+    fArquivoLogoEmp    : String;
+    fCompetencia       : string;
 
     fMotivoRejeicaoComando          : TStrings;
     fDescricaoMotivoRejeicaoComando : TStrings;
@@ -1151,6 +1157,7 @@ type
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
+     procedure CarregaLogoEmp( const PictureLogo : TPicture );
 
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
@@ -1181,6 +1188,10 @@ type
      property TotalParcelas     :Integer      read fTotalParcelas     write SetTotalParcelas default 1;
      property CodigoLiquidacao  : String      read fCodigoLiquidacao  write fCodigoLiquidacao;
      property CodigoLiquidacaoDescricao : String read fCodigoLiquidacaoDescricao write fCodigoLiquidacaoDescricao;
+     property Detalhamento      : TStrings    read fDetalhamento      write fDetalhamento;
+     property Verso             : Boolean     read fVerso             write fVerso default False;
+     property ArquivoLogoEmp    : String      read fArquivoLogoEmp    write fArquivoLogoEmp;
+     property Competencia       : string      read fCompetencia       write fCompetencia;
 
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
      property TipoDesconto       : TACBrTipoDesconto read fTipoDesconto write fTipoDesconto;
@@ -1239,7 +1250,7 @@ type
       read GetObject write SetObject; default;
   end;
 
-  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2) ;
+  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal) ;
 
   {TACBrTipoOcorrenciaRemessa}
   TACBrOcorrenciaRemessa = Record
@@ -1708,6 +1719,12 @@ end;
 
 { TACBrTitulo }
 
+procedure TACBrTitulo.CarregaLogoEmp(const PictureLogo: TPicture);
+begin
+  if FileExists( ArquivoLogoEmp ) then
+    PictureLogo.LoadFromFile( ArquivoLogoEmp );
+end;
+
 constructor TACBrTitulo.Create(ACBrBoleto:TACBrBoleto);
 begin
    inherited Create;
@@ -1729,6 +1746,7 @@ begin
    fInstrucao2        := '';
    fInstrucao3        := '';
    fMensagem          := TStringList.Create;
+   fDetalhamento      := TStringList.Create;
    fInformativo       := TStringList.Create;
    fInstrucoes        := TStringList.Create;
    fSacado            := TACBrSacado.Create;
@@ -1780,6 +1798,7 @@ end;
 destructor TACBrTitulo.Destroy;
 begin
    fMensagem.Free;
+   fDetalhamento.Free;
    fInformativo.Free;
    fSacado.Free;
    fLiquidacao.Free;
@@ -2062,9 +2081,9 @@ begin
             AStringList.Add(ACBrStr('Cobrar juros de '                        +
                             ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
                                    FormatCurr('R$ #,##0.00 por dia',ValorMoraJuros))         +
-                             ' de atraso para pagamento a partir de ' +
-                             FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
-                                                                IncDay(DataMoraJuros,1),DataMoraJuros))))
+                             ' de atraso para pagamento '+
+                             ifthen(Vencimento = DataMoraJuros, 'após o vencimento.',
+                                    'a partir de '+FormatDateTime('dd/mm/yyyy',DataMoraJuros))))
          else
             AStringList.Add(ACBrStr('Cobrar juros de '                +
                                     ifthen(((CodigoMora = '2') or (CodigoMora = 'B')), FloatToStr(ValorMoraJuros) + '% ao mês',
@@ -2075,10 +2094,10 @@ begin
       if PercentualMulta <> 0 then   
       begin
         if DataMulta <> 0 then
-          AStringList.Add(ACBrStr('Multa de ' + FormatCurr('R$ #,##0.00',
+          AStringList.Add(ACBrStr('Cobrar multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
-                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMulta,
-                                                                IncDay(DataMulta,1),DataMulta))))
+                         ' para pagamento'+ IfThen(DataMulta = Vencimento, ' após o vencimento.',
+                                                   ' a partir de '+ FormatDateTime('dd/mm/yyyy',DataMulta))))
         else
           AStringList.Add(ACBrStr('Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +

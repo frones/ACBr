@@ -1,7 +1,5 @@
 object dmForte: TdmForte
   OldCreateOrder = False
-  Left = 511
-  Top = 250
   Height = 150
   Width = 215
   object ACBrBoletoReport: TACBrBoletoFCFortes

@@ -1008,11 +1008,12 @@ begin
         FieldByName('IssRetido').AsString             := SituacaoTributariaDescricao(IssRetido);
         FieldByName('ValorIss').AsFloat               := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat        := OutrasRetencoes;
+        FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
         if Provedor = proWebISS then
           FieldByName('Aliquota').AsFloat := Aliquota * 100
         else
           FieldByName('Aliquota').AsFloat := Aliquota;
-        FieldByName('Aliquota').AsFloat               := Aliquota;
+
         FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;
         FieldByName('ValorIssRetido').AsFloat         := ValorIssRetido;
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;

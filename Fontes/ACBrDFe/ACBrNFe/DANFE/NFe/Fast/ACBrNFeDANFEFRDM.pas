@@ -1015,9 +1015,45 @@ begin
           FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
 
           if FDANFEClassOwner is TACBrNFeDANFEClass then
-            FieldByName('vDesc').AsString           := FormatFloatBr( TACBrNFeDANFEClass(FDANFEClassOwner).ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00')
+          begin
+            case TACBrNFeDANFEClass(FDANFEClassOwner).ImprimeValor of
+            iuComercial:
+              begin
+                FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
+                FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
+                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
+              end;
+            iuTributavel:
+              begin
+                FieldByName('Unidade').AsString       := FieldByName('UTrib').AsString;
+                FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QTrib').AsFloat );
+                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnTrib').AsFloat);
+              end;
+            iuComercialETributavel:
+              begin
+                if FieldByName('Ucom').AsString = FieldByName('UTrib').AsString then
+                begin
+                  FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
+                  FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
+                  FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
+                end
+                else
+                begin
+                  FieldByName('Unidade').AsString       := FDANFEClassOwner.ManterUnidades(FieldByName('Ucom').AsString, FieldByName('UTrib').AsString);
+                  FieldByName('Quantidade').AsString    := FDANFEClassOwner.ManterQuantidades(FieldByName('QCom').AsFloat, FieldByName('QTrib').AsFloat);
+                  FieldByName('ValorUnitario').AsString := FDANFEClassOwner.ManterValoresUnitarios(FieldByName('VUnCom').AsFloat, FieldByName('VUnTrib').AsFloat);
+                end;
+              end;
+            end;
+            FieldByName('vDesc').AsString           := FormatFloatBr( TACBrNFeDANFEClass(FDANFEClassOwner).ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
+          end
           else
+          begin
+            FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
+            FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
+            FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
             FieldByName('vDesc').AsString           := FormatFloatBr( Prod.vDesc,'###,###,##0.00');
+          end;
 
           FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
           FieldByName('CST').AsString               := FDANFEClassOwner.ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
@@ -1033,35 +1069,6 @@ begin
           FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
           FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
 
-          case FDANFEClassOwner.ImprimeValor of
-          iuComercial:
-            begin
-              FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
-              FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
-              FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
-            end;
-          iuTributavel:
-            begin
-              FieldByName('Unidade').AsString       := FieldByName('UTrib').AsString;
-              FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QTrib').AsFloat );
-              FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnTrib').AsFloat);
-            end;
-          iuComercialETributavel:
-            begin
-              if FieldByName('Ucom').AsString = FieldByName('UTrib').AsString then
-              begin
-                FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
-                FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
-                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
-              end
-              else
-              begin
-                FieldByName('Unidade').AsString       := FDANFEClassOwner.ManterUnidades(FieldByName('Ucom').AsString, FieldByName('UTrib').AsString);
-                FieldByName('Quantidade').AsString    := FDANFEClassOwner.ManterQuantidades(FieldByName('QCom').AsFloat, FieldByName('QTrib').AsFloat);
-                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.ManterValoresUnitarios(FieldByName('VUnCom').AsFloat, FieldByName('VUnTrib').AsFloat);
-              end;
-            end;
-          end;
           Post;
         end;
       end;

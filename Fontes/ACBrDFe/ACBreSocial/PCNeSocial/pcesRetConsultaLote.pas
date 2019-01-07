@@ -52,7 +52,7 @@ uses
   SysUtils, Classes,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
-  pcesS5001, pcesS5002, pcesS5011, pcesS5012;
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003;
 
 type
   TtotCollection = class;
@@ -500,6 +500,12 @@ begin
             if RetEventos.Items[i].tot.Items[j].tipo = 'S5002' then
             begin
               RetEventos.Items[i].tot.Items[j].Evento := TS5002.Create;
+              RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
+            end;
+
+            if RetEventos.Items[i].tot.Items[j].tipo = 'S5003' then
+            begin
+              RetEventos.Items[i].tot.Items[j].Evento := TS5003.Create;
               RetEventos.Items[i].tot.Items[j].Evento.Xml := RetEventos.Items[i].tot.Items[j].XML;
             end;
 

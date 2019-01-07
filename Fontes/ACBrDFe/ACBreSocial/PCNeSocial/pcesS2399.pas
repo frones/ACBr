@@ -118,6 +118,9 @@ type
     FmtvDesligTSV : string;
     FverbasResc : TVerbasRescS2399;
     Fquarentena : TQuarentena;
+    FPensAlim: tpPensaoAlim;
+    FpercAliment: Double;
+    FVrAlim: Double;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -126,6 +129,9 @@ type
     property mtvDesligTSV : string read FmtvDesligTSV write FmtvDesligTSV;
     property verbasResc : TVerbasRescS2399 read FverbasResc write FverbasResc;
     property quarentena : TQuarentena read Fquarentena write Fquarentena;
+    property percAliment : Double read FpercAliment write FpercAliment;
+    property vrAlim: Double read FVrAlim write FVrAlim;
+    property pensAlim: tpPensaoAlim read FPensAlim write FPensAlim;
   end;
 
   TDmDevCollection = class(TCollection)
@@ -302,6 +308,17 @@ begin
   Gerador.wCampo(tcDat, '', 'dtTerm',       10, 10, 1, obj.dtTerm);
   Gerador.wCampo(tcStr, '', 'mtvDesligTSV',  1,  2, 0, obj.mtvDesligTSV);
 
+  if (
+       (Self.IdeTrabSemVInc.codCateg = 201) or
+       (Self.IdeTrabSemVInc.codCateg = 202) or
+       (Self.IdeTrabSemVInc.codCateg = 721)
+     ) and (VersaoDF >= ve02_05_00) then
+  begin
+    Gerador.wCampo(tcStr, '', 'pensAlim',    1,  1, 1, obj.pensAlim);
+    Gerador.wCampo(tcDe2, '', 'percAliment', 1,  5, 0, obj.percAliment);
+    Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
+  end;
+
   GerarVerbasResc(obj.verbasResc);
 //  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
   GerarQuarentena(obj.quarentena);
@@ -412,6 +429,21 @@ begin
       sSecao := 'infoTSVTermino';
       infoTSVTermino.dtTerm       := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
       infoTSVTermino.mtvDesligTSV := INIRec.ReadString(sSecao, 'mtvDesligTSV', '');
+
+      if (
+           (IdeTrabSemVInc.codCateg = 201) or
+           (IdeTrabSemVInc.codCateg = 202) or
+           (IdeTrabSemVInc.codCateg = 721)
+         ) and (VersaoDF >= ve02_05_00) then
+      begin
+        infoTSVTermino.pensAlim := eSStrToTpPensaoAlim(Ok, INIREC.ReadString(sSecao, 'pensAlim', EmptyStr));
+
+        if (InfoTSVTermino.pensAlim <> paNaoExistePensaoAlimenticia) then
+        begin
+          infoTSVTermino.percAliment := StringToFloatDef(INIRec.ReadString(sSecao, 'percAliment', ''), 0);
+          infoTSVTermino.vrAlim      := StringToFloatDef(INIRec.ReadString(sSecao, 'vrAlim', ''), 0);
+        end;
+      end;
 
       I := 1;
       while true do

@@ -925,7 +925,7 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  LinhaItem, LinhaTotal, sDescricao : string;
+  LinhaItem, infoAdProd, LinhaTotal, sDescricao : string;
   nTamDescricao, maxCaracter: Integer;
   {$IFNDEF FPC}
     BMP : TBitmap;
@@ -969,8 +969,9 @@ begin
                                ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
                                Trim(Prod.xProd);
 
-      if Trim(infAdProd) <> '' then
-        LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+      infoAdProd := ACBrNFeDANFCeFortes.ManterinfAdProd(ACBrNFeDANFCeFortes.FpNFe, fNumItem);
+      if Trim(infoAdProd) <> '' then
+        LinhaItem := LinhaItem + '-'+ infoAdProd;
 
       mLinhaItem.Lines.Add(LinhaItem);
 
@@ -1092,18 +1093,6 @@ begin
   pLogoLateral.Visible := ACBrNFeDANFCeFortes.ImprimeLogoLateral;
   if not ACBrNFeDANFCeFortes.ImprimeLogoLateral then
     pLogoLateral.Width := 0;
-
-{  if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
-  begin
-    pLogoLateral.Visible := True;
-    pLogoeCliche.Align := faClientTop;
-  end
-  else
-  begin
-    pLogoLateral.Visible := False;
-    pLogoeCliche.Align := faTop;
-  end;
- }
 end;
 
 procedure TACBrNFeDANFCeFortesFr.pLogoLateralBeforePrint(Sender: TObject;

@@ -637,7 +637,7 @@ implementation
 uses
   DateUtils, StrUtils, Math,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil,
-  ACBrDFeReportFortes,
+  ACBrDFeDANFeReport, ACBrDFeReportFortes,
   pcnNFe, pcnConversaoNFe, ACBrNFe;
 
 {$IfNDef FPC}
@@ -2022,7 +2022,8 @@ function TfrlDANFeRLRetrato.ManterBandinfAdProd(sInforAdicProduto: String): Stri
 begin
   Result := Trim(sInforAdicProduto);
   Result := StringReplace(Result, ';', slineBreak, [rfReplaceAll]);
-  RLBandInfAd.Visible := NaoEstaVazio(Result) and fpDANFe.ExibeInforAdicProduto;
+
+  RLBandInfAd.Visible := (Result <> '') and (fpDANFe.ExibeInforAdicProduto = infSeparadamente);
 end;
 
 end.

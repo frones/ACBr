@@ -79,15 +79,14 @@ type
   private
     FImprimeDescPorPercentual: Boolean;
     FFormularioContinuo: Boolean;
+    FImprimeValor: TImprimirUnidQtdeValor;
     FImprimeDetalhamentoEspecifico: Boolean;
     FPosCanhoto: TPosRecibo;
     FExibeResumoCanhoto: Boolean;
     FTextoResumoCanhoto: String;
     FExibeCampoFatura: Boolean;
     FExibeDadosISSQN: Boolean;
-    FExibeInforAdicProduto: Boolean;
     FExibeDadosDocReferenciados: Boolean;
-    FQuebraLinhaEmDetalhamentoEspecifico: Boolean;
     FDetVeiculos: TDetVeiculos;
     FDetMedicamentos: TDetMedicamentos;
     FDetArmamentos: TDetArmamentos;
@@ -101,7 +100,6 @@ type
   public
     constructor Create(AOwner: TComponent); override;
 
-    function QuebrarLinha: String; virtual;
     function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; override;
     function ManterVeiculos(aNFE: TNFe; inItem: Integer): String; virtual;
     function ManterMedicamentos(aNFE: TNFe; inItem: Integer): String; virtual;
@@ -116,6 +114,7 @@ type
 
   published
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo default False;
+    property ImprimeValor: TImprimirUnidQtdeValor read FImprimeValor write FImprimeValor default iuComercial;
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual default False;
     property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico default True;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
@@ -123,9 +122,7 @@ type
     property TextoResumoCanhoto: String read FTextoResumoCanhoto write FTextoResumoCanhoto;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
     property ExibeDadosISSQN: Boolean read FExibeDadosISSQN write FExibeDadosISSQN default False;
-    property ExibeInforAdicProduto: Boolean read FExibeInforAdicProduto write FExibeInforAdicProduto default False; // Exibir a banda de informação Adicionais do produto.
     property ExibeDadosDocReferenciados: Boolean read FExibeDadosDocReferenciados write FExibeDadosDocReferenciados default True;
-    property QuebraLinhaEmDetalhamentoEspecifico: Boolean read FQuebraLinhaEmDetalhamentoEspecifico write FQuebraLinhaEmDetalhamentoEspecifico default True;
     property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
     property DetMedicamentos: TDetMedicamentos read FDetMedicamentos write FDetMedicamentos default [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
     property DetArmamentos: TDetArmamentos read FDetArmamentos write FDetArmamentos default [da_tpArma, da_nSerie, da_nCano, da_descr];
@@ -161,8 +158,6 @@ type
     property ImprimeItens: Boolean read FImprimeItens write FImprimeItens default True;
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default False;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default False;
-
-    function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; override;
   end;
 
 implementation
@@ -178,6 +173,7 @@ begin
   inherited Create(AOwner);
 
   FFormularioContinuo := False;
+  FImprimeValor := iuComercial;
   FImprimeDetalhamentoEspecifico := True;
   FPosCanhoto := prCabecalho;
   FExibeResumoCanhoto := True;
@@ -185,23 +181,13 @@ begin
   FImprimeDescPorPercentual := False;
   FExibeCampoFatura := True;
   FExibeDadosISSQN := False;
-  FExibeInforAdicProduto := False;
   FExibeDadosDocReferenciados := True;
-  FQuebraLinhaEmDetalhamentoEspecifico := True;
   FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
-end;
-
-function TACBrNFeDANFEClass.QuebrarLinha: String;
-begin
-  if FQuebraLinhaEmDetalhamentoEspecifico then
-    Result := sLineBreak
-  else
-    Result := ' - ';
 end;
 
 procedure TACBrNFeDANFEClass.SetTributosPercentual(const AValue: TpcnPercentualTributos);
@@ -220,24 +206,9 @@ begin
 end;
 
 function TACBrNFeDANFEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
-var
-  sQuebraLinha: String;
 begin
-  inherited ManterinfAdProd(aNFE, inItem);
-  if (inItem < 0) or (inItem >= aNFE.Det.Count) then
-    Exit;
-
-  Result := Trim(aNFE.Det.Items[inItem].infAdProd) + ManterValAprox(aNFE, inItem);
-
-  if ExibeInforAdicProduto then
-  begin
-    sQuebraLinha := QuebrarLinha;
-    Result := StringReplace(Result, ';', sQuebraLinha, [rfReplaceAll, rfIgnoreCase]);
-    if (Result <> '') then
-      Result := sQuebraLinha + Result;
-  end
-  else
-    Result := '';
+  Result := inherited ManterinfAdProd(aNFE, inItem) + 
+            ManterValAprox(aNFE, inItem);
 
   if FImprimeDetalhamentoEspecifico then
   begin
@@ -291,7 +262,7 @@ begin
   begin
     if NaoEstaVazio(veicProd.chassi) then
     begin
-      sQuebraLinha := QuebrarLinha;
+      sQuebraLinha := SeparadorDetalhamentos;
 
       Result := sQuebraLinha;
       if (dv_tpOp in FDetVeiculos) then
@@ -359,7 +330,7 @@ begin
   begin
     if (med.Count > 0) then
     begin
-      sQuebraLinha := QuebrarLinha;
+      sQuebraLinha := SeparadorDetalhamentos;
 
       Result := sQuebraLinha;
       for i := 0 to med.Count - 1 do
@@ -399,7 +370,7 @@ begin
   begin
     if (arma.Count > 0) then
     begin
-      sQuebraLinha := QuebrarLinha;
+      sQuebraLinha := SeparadorDetalhamentos;
 
       Result := sQuebraLinha;
       for i := 0 to arma.Count - 1 do
@@ -429,7 +400,7 @@ begin
   begin
     if (comb.cProdANP > 0) then
     begin
-      sQuebraLinha := QuebrarLinha;
+      sQuebraLinha := SeparadorDetalhamentos;
 
       Result := sQuebraLinha;
       if (dc_cProdANP in FDetCombustiveis) then
@@ -483,7 +454,7 @@ begin
   begin
     if (Rastro.Count > 0) then
     begin
-      sQuebraLinha := QuebrarLinha;
+      sQuebraLinha := SeparadorDetalhamentos;
 
       Result := sQuebraLinha;
       for i := 0 to Rastro.Count - 1 do
@@ -552,7 +523,7 @@ begin
   if (not ExibeDadosDocReferenciados) or (ANFe.Ide.NFref.Count < 1) then
     Exit;
 
-  sQuebraLinha := QuebrarLinha;
+  sQuebraLinha := SeparadorDetalhamentos;
 
   for i := 0 to (ANFe.ide.NFref.Count - 1) do
   begin
@@ -648,19 +619,4 @@ begin
   FImprimeQRCodeLateral := False;
   FImprimeLogoLateral := False;
 end;
-
-function TACBrNFeDANFCEClass.ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String;
-begin
-  inherited ManterinfAdProd(aNFe, inItem);
-  if (inItem < 0) or (inItem >= aNFE.Det.Count) then
-    Exit;
-
-  Result := aNFE.Det.Items[inItem].infAdProd;
-  if Result = '' then
-    Exit;
-
-  Result := sLineBreak +
-    StringReplace(Result, ';', sLineBreak, [rfReplaceAll, rfIgnoreCase]);
-end;
-
 end.

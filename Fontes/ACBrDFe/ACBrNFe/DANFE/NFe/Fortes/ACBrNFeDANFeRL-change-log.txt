@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2018   
+-- ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
+[*] Ajuste para considerar a propriedade "ExibeInforAdicProduto"
+	(por Rafael Dias e DSA)
+
 29/10/2018
 -- ACBrNFeDANFeEventoRLRetrato --
 [*] Adicionada o evento EPEC que estava faltando.

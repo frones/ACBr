@@ -47,6 +47,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2018
+-- ACBrDFeDANFeReport, ACBrNFeDANFEClass --
+[*] Propriedade "TACBrNFeDANFEClass.QuebraLinhaEmDetalhamentoEspecifico" movida
+    para classe ancestral, em: "TACBrDFeDANFeReport.QuebraLinhaEmDetalhamentos"
+[*] Propriedade "TACBrNFeDANFEClass.ExibeInforAdicProduto: Boolean" movida para
+    classe ancestral, em: "TACBrDFeDANFeReport.ExibeInforAdicProduto: TinfAdcProd",
+    sendo que: "TinfAdcProd = (infNenhum, infDescricao, infSeparadamente)"
+[*] Método "TACBrNFeDANFEClass.QuebrarLinha: String; virtual" movido para classe
+     ancestral "TACBrDFeDANFeReport.SeparadorDetalhamentos: String; virtual"
+[*] Propriedade "TACBrDFeDANFeReport.ImprimeValor: TImprimirUnidQtdeValor" movida
+    para classe específica "TACBrNFeDANFEClass.ImprimeValor: TImprimirUnidQtdeValor"
+[+] Implementado código genérico em: "TACBrDFeDANFeReport.ManterinfAdProd", fazendo
+    uso da propriedade "ExibeInforAdicProduto", e que deve servir para a maioria
+    das classes filhas
+    (por Rafael Dias e DSA)
+
 26/12/2018
 -- pcnNFeW --
 [*] Correção no ID de algumas tags.

@@ -521,7 +521,7 @@ uses
   DateUtils, StrUtils, Math,
   pcnNFe, pcnConversao, pcnConversaoNFe,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador,
-  ACBrDFeReportFortes, ACBrUtil, ACBrNFe;
+  ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrUtil, ACBrNFe;
 
 {$IfNDef FPC}
   {$R *.dfm}
@@ -1990,7 +1990,7 @@ begin
   Result := Trim(sInforAdicProduto);
   Result := StringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
 
-  RLBandInfAd.Visible := (Result <> '') and (fpDANFe.ExibeInforAdicProduto);
+  RLBandInfAd.Visible := (Result <> '') and (fpDANFe.ExibeInforAdicProduto = infSeparadamente);
 end;
 
 procedure TfrlDANFeRLPaisagem.RLMemoInfAdAfterPrint(Sender: TObject);

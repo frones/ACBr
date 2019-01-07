@@ -1681,6 +1681,9 @@ begin
     FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais.qCom;
     FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais.vUnCom;
 
+    if (FDANFEClassOwner is TACBrNFeDANFCEClass) then
+      FieldByName('ImprimeDescAcrescItem').AsInteger    := IfThen( TACBrNFeDANFCEFR(FDANFEClassOwner).ImprimeDescAcrescItem, 1 , 0 );
+
     // Carregamento da imagem
     if NaoEstaVazio(DANFEClassOwner.Logo) then
     begin

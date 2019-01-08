@@ -559,9 +559,11 @@ begin
 
   Gerador.wCampo(tcStr, '', 'tpContr', 1, 1, 1, eSTpContrToStr(pDuracao.TpContr));
 
+  if pDuracao.dtTerm <> 0 then
+    Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, pDuracao.dtTerm);
+
   if (eSTpContrToStr(pDuracao.TpContr) = '2') then
   begin
-    Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, pDuracao.dtTerm);
 
     if pTipo in  [1,2] then
       Gerador.wCampo(tcStr, '', 'clauAssec',  1,  1, 0, eSSimNaoToStr(pDuracao.clauAssec));

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2019
+-- ACBrPosPrinter --
+[+] Adicionado o método CalcularLinhasAltura(AAltura: Integer): Integer;
+    que faz o inverso de "CalcularAlturaTexto"
+[-] Ajuste em "CalcularAlturaQRCodeAlfaNumM", para calcular altura necessária,
+    para Epson TM-T20
+
 15/12/2018
 -- ACBrPosPrinter --
 [+] Adicionado o método "ConfigurarRegiaoModoPagina", que retorna Tags necessárias

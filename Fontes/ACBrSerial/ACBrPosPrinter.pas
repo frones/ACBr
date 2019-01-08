@@ -378,7 +378,8 @@ type
     function LerStatusImpressora( Tentativas: Integer = 1): TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
 
-    function CalcularAlturaTexto(Linhas: Integer): Integer;
+    function CalcularAlturaTexto(ALinhas: Integer): Integer;
+    function CalcularLinhasAltura(AAltura: Integer): Integer;
     function CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String): Integer;
     function ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura, ALargura: Integer): String;
 
@@ -1637,9 +1638,14 @@ begin
   end;
 end;
 
-function TACBrPosPrinter.CalcularAlturaTexto(Linhas: Integer): Integer;
+function TACBrPosPrinter.CalcularAlturaTexto(ALinhas: Integer): Integer;
 begin
-  Result := (FEspacoEntreLinhas+2) * Linhas;
+  Result := (FEspacoEntreLinhas+2) * ALinhas;
+end;
+
+function TACBrPosPrinter.CalcularLinhasAltura(AAltura: Integer): Integer;
+begin
+  Result := round(AAltura / (FEspacoEntreLinhas+2));
 end;
 
 function TACBrPosPrinter.CalcularAlturaQRCodeAlfaNumM(const QRCodeData: String
@@ -1685,7 +1691,7 @@ begin
     raise EPosPrinterException.Create('QRCode muito grande');
 
   // http://www.qrcode.com/en/howto/code.html
-  Result := (QRCodeModules + 8) * CDotsMM;
+  Result := (QRCodeModules + 10) * CDotsMM;
 end;
 
 function TACBrPosPrinter.ConfigurarRegiaoModoPagina(AEsquerda, ATopo, AAltura,

@@ -2829,6 +2829,14 @@ begin
       FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
   end;
 
+  {
+  Teste
+  FPDadosMsg := StringReplace(FPDadosMsg, '></CanonicalizationMethod>', '/>', [rfReplaceAll]);
+  FPDadosMsg := StringReplace(FPDadosMsg, '></SignatureMethod>', '/>', [rfReplaceAll]);
+  FPDadosMsg := StringReplace(FPDadosMsg, '></Transform>', '/>', [rfReplaceAll]);
+  FPDadosMsg := StringReplace(FPDadosMsg, '></DigestMethod>', '/>', [rfReplaceAll]);
+  }
+
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
@@ -3662,6 +3670,8 @@ begin
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
+var
+  i: Integer;
 begin
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_CabecalhoStr;
   FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_DadosStr;
@@ -3689,11 +3699,12 @@ begin
 
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
-//    case FProvedor of
+    case FProvedor of
+      proPublica: FinfElemento := 'Prestador';
 //      proIssDSF: FinfElemento := 'Lote';
-//    else
+    else
       FinfElemento := '';
-//    end;
+    end;
 
     InicializarTagITagF;
 
@@ -3701,7 +3712,7 @@ begin
 
     with GerarDadosMsg do
     begin
-      Protocolo := FProtocolo; 
+      Protocolo := FProtocolo;
 
       // Necessário para o provedor Equiplano / Infisc
       NumeroLote := FNumeroLote; 
@@ -3725,12 +3736,23 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
 
-  if FProvedor = proTinus then
-  begin
-    FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarSituacaoLoteRpsEnvio', 'Arg', [rfReplaceAll]);
+  case FProvedor of
+    proPublica:
+      begin
+        i := Pos('</Signature>', FPDadosMsg);
 
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+        FPDadosMsg := Copy(FPDadosMsg, 1, i -1) + '</Signature>' +
+                      '<Protocolo>' + FProtocolo + '</Protocolo>' +
+                      '</ConsultarSituacaoLoteRpsEnvio>';
+      end;
+
+    proTinus:
+      begin
+        FPDadosMsg := StringReplace(FPDadosMsg, 'ConsultarSituacaoLoteRpsEnvio', 'Arg', [rfReplaceAll]);
+
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+          FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
+      end;
   end;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then

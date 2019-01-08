@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrDFeConfiguracoes, pcnConversao, pnfsConversao;
+  ACBrDFeConfiguracoes, ACBrDFeSSL, pcnConversao, pnfsConversao;
 
 type
 
@@ -644,6 +644,9 @@ begin
   FConfigAssinar.RPS := FPIniParams.ReadBool('Assinar', 'RPS', False);
   FConfigAssinar.Lote := FPIniParams.ReadBool('Assinar', 'Lote', False);
   FConfigAssinar.URI := FPIniParams.ReadBool('Assinar', 'URI', False);
+
+  FConfigAssinar.URI := (SSLLib <> libCapicom) and (FConfigGeral.Identificador = 'id');
+
   FConfigAssinar.ConsSit := FPIniParams.ReadBool('Assinar', 'ConsSit', False);
   FConfigAssinar.ConsLote := FPIniParams.ReadBool('Assinar', 'ConsLote', False);
   FConfigAssinar.ConsNFSeRps := FPIniParams.ReadBool('Assinar', 'ConsNFSeRps', False);

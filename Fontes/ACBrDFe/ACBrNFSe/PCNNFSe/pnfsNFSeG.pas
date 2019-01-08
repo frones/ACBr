@@ -857,6 +857,21 @@ begin
                   Gerador.wGrupoNFSe('/Cabecalho');
                 end;
 
+    proPublica: begin
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wGrupoNFSe('Prestador' + Identificador + '="Ass_' +
+                                         Cnpj + IM + '"');
+
+                  Gerador.Prefixo := Prefixo4;
+
+                  GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
+
+                  if (Provedor <> proBetha) or (IM <> '') then
+                    Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wGrupoNFSe('/Prestador');
+                end
   else
     begin
       Gerador.Prefixo := Prefixo3;

@@ -2026,14 +2026,15 @@ procedure TMetodoEnviarLoteCTe.Executar;
 var
   RetFind: integer;
   SearchRec: TSearchRec;
-  ALote, ALoteEnvio: Integer;
+  ALote: String;
+  ALoteEnvio: Integer;
   AImprime: Boolean;
   AImpressora: String;
   APreview: Boolean;
   ACopias: Integer;
   APDF: Boolean;
 begin
-  ALote := StrToIntDef(fpCmd.Params(0), 0);
+  ALote := Trim(fpCmd.Params(0));
   ALoteEnvio := StrToIntDef(fpCmd.Params(1), 1);
   AImprime := StrToBoolDef(fpCmd.Params(2), False);
   AImpressora := fpCmd.Params(3);
@@ -2044,24 +2045,24 @@ begin
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
     if not DirectoryExists(PathWithDelim(ExtractFilePath(Application.ExeName)) +
-      'Lotes' + PathDelim + 'Lote' + IntToStr(ALoteEnvio)) then
+      'Lotes' + PathDelim + 'Lote' + ALote ) then
       raise Exception.Create('Diretório não encontrado:' + PathWithDelim(
         ExtractFilePath(Application.ExeName)) +
-        'Lotes' + PathDelim + 'Lote' + IntToStr(ALoteEnvio))
+        'Lotes' + PathDelim + 'Lote' + ALote)
     else
     begin
       ACBrCTe.Conhecimentos.Clear;
       RetFind := SysUtils.FindFirst(
         PathWithDelim(ExtractFilePath(Application.ExeName)) +
-        'Lotes' + PathDelim + 'Lote' + IntToStr(
-        ALoteEnvio) + PathDelim + '*-cte.xml', faAnyFile, SearchRec);
+        'Lotes' + PathDelim + 'Lote' +
+        ALote + PathDelim + '*-cte.xml', faAnyFile, SearchRec);
       if (RetFind = 0) then
       begin
         while RetFind = 0 do
         begin
           ACBrCTe.Conhecimentos.LoadFromFile(PathWithDelim(ExtractFilePath(Application.ExeName)) +
             'Lotes' + PathDelim +
-            'Lote' + IntToStr(ALoteEnvio) + PathDelim + SearchRec.Name);
+            'Lote' + ALote + PathDelim + SearchRec.Name);
           RetFind := FindNext(SearchRec);
         end;
         ACBrCTe.Conhecimentos.GerarCTe;
@@ -2070,7 +2071,7 @@ begin
       end
       else
         raise Exception.Create('Não foi encontrada nenhuma nota para o Lote: ' +
-          IntToStr(ALote));
+          ALote);
     end;
 
     ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);

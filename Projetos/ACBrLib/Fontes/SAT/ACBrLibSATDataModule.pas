@@ -407,7 +407,7 @@ begin
     ACBrSAT1.Extrato.NumCopias := NumCopias;
     ACBrSAT1.Extrato.NomeDocumento := NomeDocumento;
     ACBrSAT1.Extrato.Sistema := pLibConfig.Sistema.Nome;
-    ACBrSAT1.Extrato.Site := pLibConfig.SoftwareHouse.WebSite;
+    ACBrSAT1.Extrato.Site := pLibConfig.Emissor.WebSite;
     ACBrSAT1.Extrato.MsgAppQRCode := MsgAppQRCode;
     ACBrSAT1.Extrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
     ACBrSAT1.Extrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;

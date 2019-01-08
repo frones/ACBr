@@ -16,10 +16,13 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
+      <MajorVersionNr Value="2019"/>
       <MinorVersionNr Value="1"/>
+      <RevisionNr Value="7"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="0.0.0.0"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductVersion="2019.1.7.1"/>
     </VersionInfo>
     <BuildModes Count="5">
       <Item1 Name="x86 - CDECL" Default="True"/>

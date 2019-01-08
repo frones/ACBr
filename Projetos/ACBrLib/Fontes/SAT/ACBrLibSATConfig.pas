@@ -403,28 +403,20 @@ end;
 
 procedure TSATConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  infCFe_versaoDadosEnt := AIni.ReadFloat(CSessaoSATConfig,
-    CChaveVersaoDadosEnt, infCFe_versaoDadosEnt);
+  infCFe_versaoDadosEnt := AIni.ReadFloat(CSessaoSATConfig, CChaveVersaoDadosEnt, infCFe_versaoDadosEnt);
   ide_CNPJ := AIni.ReadString(CSessaoSATConfig, CChaveIdeCNPJ, ide_CNPJ);
-  ide_numeroCaixa := AIni.ReadInteger(CSessaoSATConfig, CChaveIdeNumeroCaixa,
-    ide_numeroCaixa);
-  ide_tpAmb := TpcnTipoAmbiente(AIni.ReadInteger(CSessaoSATConfig,
-    CChaveIdeTpAmb, integer(ide_tpAmb)));
+  ide_numeroCaixa := AIni.ReadInteger(CSessaoSATConfig, CChaveIdeNumeroCaixa, ide_numeroCaixa);
+  ide_tpAmb := TpcnTipoAmbiente(AIni.ReadInteger(CSessaoSATConfig, CChaveIdeTpAmb, integer(ide_tpAmb)));
   emit_CNPJ := AIni.ReadString(CSessaoSATConfig, CChaveEmitCNPJ, emit_CNPJ);
   emit_IE := AIni.ReadString(CSessaoSATConfig, CChaveEmitIE, emit_IE);
   emit_IM := AIni.ReadString(CSessaoSATConfig, CChaveEmitIM, emit_IM);
-  emit_cRegTrib := TpcnRegTrib(AIni.ReadInteger(CSessaoSATConfig,
-    CChaveEmitcRegTrib, integer(emit_cRegTrib)));
-  emit_cRegTribISSQN := TpcnRegTribISSQN(AIni.ReadInteger(CSessaoSATConfig,
-    CChaveEmitcRegTribISSQN, integer(emit_cRegTribISSQN)));
-  emit_indRatISSQN := TpcnindRatISSQN(AIni.ReadInteger(CSessaoSATConfig,
-    CChaveEmitIndRatISSQN, integer(emit_indRatISSQN)));
+  emit_cRegTrib := TpcnRegTrib(AIni.ReadInteger(CSessaoSATConfig, CChaveEmitcRegTrib, integer(emit_cRegTrib)));
+  emit_cRegTribISSQN := TpcnRegTribISSQN(AIni.ReadInteger(CSessaoSATConfig, CChaveEmitcRegTribISSQN, integer(emit_cRegTribISSQN)));
+  emit_indRatISSQN := TpcnindRatISSQN(AIni.ReadInteger(CSessaoSATConfig, CChaveEmitIndRatISSQN, integer(emit_indRatISSQN)));
   EhUTF8 := AIni.ReadBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
-  PaginaDeCodigo := AIni.ReadInteger(CSessaoSATConfig, CChavePaginaDeCodigo,
-    PaginaDeCodigo);
+  PaginaDeCodigo := AIni.ReadInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
   ArqSchema := AIni.ReadString(CSessaoSATConfig, CChaveArqSchema, ArqSchema);
-  XmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSessaoSATConfig,
-    CChaveXmlSignLib, integer(XmlSignLib)));
+  XmlSignLib := TSSLXmlSignLib(AIni.ReadInteger(CSessaoSATConfig, CChaveXmlSignLib, integer(XmlSignLib)));
 end;
 
 procedure TSATConfig.GravarIni(const AIni: TCustomIniFile);
@@ -437,8 +429,7 @@ begin
   AIni.WriteString(CSessaoSATConfig, CChaveEmitIE, emit_IE);
   AIni.WriteString(CSessaoSATConfig, CChaveEmitIM, emit_IM);
   AIni.WriteInteger(CSessaoSATConfig, CChaveEmitcRegTrib, integer(emit_cRegTrib));
-  AIni.WriteInteger(CSessaoSATConfig, CChaveEmitcRegTribISSQN,
-    integer(emit_cRegTribISSQN));
+  AIni.WriteInteger(CSessaoSATConfig, CChaveEmitcRegTribISSQN, integer(emit_cRegTribISSQN));
   AIni.WriteInteger(CSessaoSATConfig, CChaveEmitIndRatISSQN, integer(emit_indRatISSQN));
   AIni.WriteBool(CSessaoSATConfig, CChaveEhUTF8, EhUTF8);
   AIni.WriteInteger(CSessaoSATConfig, CChavePaginaDeCodigo, PaginaDeCodigo);
@@ -547,8 +538,7 @@ begin
   AIni.WriteBool(CSessaoSATConfigArquivos, CChaveSepararPorMes, SepararPorMes);
   AIni.WriteBool(CSessaoSATConfigArquivos, CChaveSepararPorDia, SepararPorDia);
   AIni.WriteString(CSessaoSATConfigArquivos, CChavePastaCFeVenda, PastaCFeVenda);
-  AIni.WriteString(CSessaoSATConfigArquivos, CChavePastaCFeCancelamento,
-    PastaCFeCancelamento);
+  AIni.WriteString(CSessaoSATConfigArquivos, CChavePastaCFeCancelamento, PastaCFeCancelamento);
   AIni.WriteString(CSessaoSATConfigArquivos, CChavePastaEnvio, PastaEnvio);
   AIni.WriteString(CSessaoSATConfigArquivos, CChavePrefixoArqCFe, PrefixoArqCFe);
   AIni.WriteString(CSessaoSATConfigArquivos, CChavePrefixoArqCFeCanc, PrefixoArqCFeCanc);
@@ -620,10 +610,10 @@ begin
     usuario := AIni.ReadString(CSessaoSATRede, CChaveUsuario, usuario);
     senha := AIni.ReadString(CSessaoSATRede, CChaveSenha, '');
     proxy := AIni.ReadInteger(CSessaoSATRede, CChaveProxy, proxy);
-    proxy_ip := AIni.ReadString(CSessaoSATRede, CChaveProxyIp, proxy_ip);
-    proxy_porta := AIni.ReadInteger(CSessaoSATRede, CChaveProxyPorta, proxy_porta);
-    proxy_user := AIni.ReadString(CSessaoSATRede, CChaveProxyUser, proxy_user);
-    proxy_senha := AIni.ReadString(CSessaoSATRede, CChaveProxySenha, '');
+    proxy_ip := AIni.ReadString(CSessaoProxy, CChaveServidor, proxy_ip);
+    proxy_porta := AIni.ReadInteger(CSessaoProxy, CChavePorta, proxy_porta);
+    proxy_user := AIni.ReadString(CSessaoProxy, CChaveUsuario, proxy_user);
+    proxy_senha := AIni.ReadString(CSessaoProxy, CChaveSenha, '');
   end;
 
   FConfig.LerIni(AIni);
@@ -657,10 +647,6 @@ begin
     AIni.WriteString(CSessaoSATRede, CChaveUsuario, usuario);
     AIni.WriteString(CSessaoSATRede, CChaveSenha, StringToB64Crypt(senha, FChaveCrypt));
     AIni.WriteInteger(CSessaoSATRede, CChaveProxy, proxy);
-    AIni.WriteString(CSessaoSATRede, CChaveProxyIp, proxy_ip);
-    AIni.WriteInteger(CSessaoSATRede, CChaveProxyPorta, proxy_porta);
-    AIni.WriteString(CSessaoSATRede, CChaveProxyUser, proxy_user);
-    AIni.WriteString(CSessaoSATRede, CChaveProxySenha, StringToB64Crypt(proxy_senha, FChaveCrypt));
   end;
 
   FConfig.GravarIni(AIni);

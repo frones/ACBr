@@ -93,13 +93,8 @@ const
   CChaveLanGW = 'lanGW';
   CChaveLanDNS1 = 'lanDNS1';
   CChaveLanDNS2 = 'lanDNS2';
-  CChaveUsuario = 'usuario';
   CChaveSenha = 'senha';
   CChaveProxy = 'proxy';
-  CChaveProxyIp = 'proxy_ip';
-  CChaveProxyPorta = 'proxy_porta';
-  CChaveProxyUser = 'proxy_user';
-  CChaveProxySenha = 'proxy_senha';
 
   CSessaoExtrato = 'Extrato';
   CChaveTipo = 'Tipo';

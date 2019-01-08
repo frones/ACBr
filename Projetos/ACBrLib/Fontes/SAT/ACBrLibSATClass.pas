@@ -812,6 +812,7 @@ begin
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
         SatDM.ACBrSAT1.CFe.GerarXML(True);
 
@@ -865,6 +866,7 @@ begin
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
 
         Resp := TRetornoEnvio.Create(Config.TipoResposta);
@@ -922,9 +924,7 @@ begin
         SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp := TRetornoEnvio.Create(Config.TipoResposta);
-
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
-
         Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
         Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
         Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
@@ -1029,6 +1029,7 @@ begin
       SatDM.Travar;
 
       try
+        SatDM.ACBrSAT1.CFe.Clear;
         SatDM.ConfigurarImpressao(NomeImpressora);
         SatDM.CarregarDadosVenda(ArquivoXml);
         SatDM.ACBrSAT1.ImprimirExtrato;

@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2019
+[*] Melhorias no codigo de carregamento do INI.
+    (por Rafael Dias)
+
 05/01/2019
 [-] Corrigido erro ao carregar xml do CFe, no metodo EnviarCFe.
     (por Rafael Dias)

@@ -184,7 +184,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 46
         Width = 30
         Height = 12
-        Caption = 'Sï¿½RIE:'
+        Caption = 'SÉRIE:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -256,7 +256,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAï¿½DA DATA/HORA'
+        Caption = 'SAÍDA DATA/HORA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -360,7 +360,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DOCUMENTOS ORIGINï¿½RIOS'
+        Caption = 'DOCUMENTOS ORIGINÁRIOS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -394,7 +394,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 86
         Height = 8
-        Caption = 'Sï¿½RIE/NRO. DOCUMENTO'
+        Caption = 'SÉRIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -474,7 +474,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 86
         Height = 8
-        Caption = 'Sï¿½RIE/NRO. DOCUMENTO'
+        Caption = 'SÉRIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -596,7 +596,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 724
         Height = 31
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGAï¿½ï¿½O - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGray
@@ -613,7 +613,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'OBSERVAï¿½ï¿½ES'
+        Caption = 'OBSERVAÇÕES'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -810,7 +810,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletrï¿½nico'
+        Caption = 'Documento Auxiliar do Conhecimento de Transporte Eletrônico'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -896,7 +896,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 21
         Height = 8
         Alignment = taCenter
-        Caption = 'Sï¿½RIE'
+        Caption = 'SÉRIE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -931,7 +931,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Nï¿½MERO'
+        Caption = 'NÚMERO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -982,7 +982,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 95
         Height = 9
         AutoSize = False
-        Caption = 'DATA E HORA DE EMISSï¿½O'
+        Caption = 'DATA E HORA DE EMISSÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1075,7 +1075,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 156
         Width = 81
         Height = 8
-        Caption = 'TOMADOR DO SERVIï¿½O'
+        Caption = 'TOMADOR DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1169,7 +1169,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 34
         Width = 120
         Height = 8
-        Caption = 'INSC. SUFRAMA DO DESTINATï¿½RIO'
+        Caption = 'INSC. SUFRAMA DO DESTINATÁRIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1283,7 +1283,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 127
         Width = 61
         Height = 8
-        Caption = 'TIPO DO SERVIï¿½O'
+        Caption = 'TIPO DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1386,7 +1386,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DADOS ESPECï¿½FICOS DO MODAL RODOVIï¿½RIO - CARGA FRACIONADA'
+        Caption = 'DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1449,8 +1449,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 
-          'ESTE CONHECIMENTO DE TRANSPORTE ATENDE ï¿½ LEGISLAï¿½ï¿½O DE TRANSPORT' +
-          'E RODOVIï¿½RIO EM VIGOR'
+          'ESTE CONHECIMENTO DE TRANSPORTE ATENDE À LEGISLAÇÃO DE TRANSPORT' +
+          'E RODOVIÁRIO EM VIGOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1482,7 +1482,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 35
         Height = 8
-        Caption = 'LOTAï¿½ï¿½O'
+        Caption = 'LOTAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1936,7 +1936,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES REFERENTES AO VALE-PEDï¿½GIO'
+        Caption = 'INFORMAÇÕES REFERENTES AO VALE-PEDÁGIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1954,7 +1954,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'IDENTIFICAï¿½ï¿½O DO CONJ. TRANSPORTADOR'
+        Caption = 'IDENTIFICAÇÃO DO CONJ. TRANSPORTADOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1970,7 +1970,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 84
         Width = 148
         Height = 8
-        Caption = 'IDENTIFICAï¿½ï¿½O DOS LACRES EM TRï¿½NSITO'
+        Caption = 'IDENTIFICAÇÃO DOS LACRES EM TRÂNSITO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2018,7 +2018,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 31
         Width = 86
         Height = 8
-        Caption = 'Cï¿½DIGO DA TRANSAï¿½ï¿½O'
+        Caption = 'CÓDIGO DA TRANSAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2034,7 +2034,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 31
         Width = 88
         Height = 8
-        Caption = 'Nï¿½MERO DO DISPOSITIVO'
+        Caption = 'NÚMERO DO DISPOSITIVO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2050,7 +2050,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 31
         Width = 35
         Height = 8
-        Caption = 'VIGï¿½NCIA'
+        Caption = 'VIGÊNCIA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2098,7 +2098,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 15
         Width = 51
         Height = 8
-        Caption = 'RESPONSï¿½VEL'
+        Caption = 'RESPONSÁVEL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2973,7 +2973,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 170
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3021,7 +3021,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 87
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3069,7 +3069,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 135
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3085,7 +3085,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 119
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3133,7 +3133,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 178
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3149,7 +3149,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 170
         Width = 81
         Height = 8
-        Caption = 'TOMADOR DO SERVIï¿½O'
+        Caption = 'TOMADOR DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3197,7 +3197,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 78
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3213,7 +3213,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 62
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3229,7 +3229,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 2
         Width = 115
         Height = 8
-        Caption = 'CFOP - NATUREZA DA OPERAï¿½ï¿½O'
+        Caption = 'CFOP - NATUREZA DA OPERAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3245,7 +3245,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 54
         Width = 52
         Height = 8
-        Caption = 'DESTINATï¿½RIO'
+        Caption = 'DESTINATÁRIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3261,7 +3261,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 96
         Width = 17
         Height = 8
-        Caption = 'PAï¿½S'
+        Caption = 'PAÍS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3293,7 +3293,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 78
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3309,7 +3309,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 62
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3325,7 +3325,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 28
         Width = 86
         Height = 8
-        Caption = 'DESTINO DA PRESTAï¿½ï¿½O'
+        Caption = 'DESTINO DA PRESTAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3389,7 +3389,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 144
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3405,7 +3405,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 28
         Width = 84
         Height = 8
-        Caption = 'ORIGEM DA PRESTAï¿½ï¿½O'
+        Caption = 'ORIGEM DA PRESTAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3453,7 +3453,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 87
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3469,7 +3469,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 178
         Width = 17
         Height = 8
-        Caption = 'PAï¿½S'
+        Caption = 'PAÍS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3517,7 +3517,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 187
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3549,7 +3549,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 144
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3565,7 +3565,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 153
         Width = 17
         Height = 8
-        Caption = 'PAï¿½S'
+        Caption = 'PAÍS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3597,7 +3597,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 135
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3613,7 +3613,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 119
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3918,7 +3918,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 90
         Height = 8
         AutoSize = False
-        Caption = 'Nï¿½MERO DA AVERBAï¿½ï¿½O'
+        Caption = 'NÚMERO DA AVERBAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3935,7 +3935,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 135
         Height = 8
         AutoSize = False
-        Caption = 'OUTRAS CARACTERï¿½STICAS DA CARGA'
+        Caption = 'OUTRAS CARACTERÍSTICAS DA CARGA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3952,7 +3952,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 75
         Height = 8
         AutoSize = False
-        Caption = 'Nï¿½MERO DA APï¿½LICE'
+        Caption = 'NÚMERO DA APÓLICE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3969,7 +3969,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 51
         Height = 8
         AutoSize = False
-        Caption = 'RESPONSï¿½VEL'
+        Caption = 'RESPONSÁVEL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3987,7 +3987,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PESO BASE Cï¿½LC. (Kg)'
+        Caption = 'PESO BASE CÁLC. (Kg)'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4385,7 +4385,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 0
         Width = 140
         Height = 12
-        Caption = 'DATA E HORA DA IMPRESSï¿½O: '
+        Caption = 'DATA E HORA DA IMPRESSÃO: '
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4939,7 +4939,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 95
         Width = 39
         Height = 8
-        Caption = 'ALï¿½Q. ICMS'
+        Caption = 'ALÍQ. ICMS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -4955,7 +4955,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 95
         Width = 66
         Height = 8
-        Caption = 'BASE DE Cï¿½LCULO'
+        Caption = 'BASE DE CÁLCULO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5003,7 +5003,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 95
         Width = 81
         Height = 8
-        Caption = 'SITUAï¿½ï¿½O TRIBUTï¿½RIA'
+        Caption = 'SITUAÇÃO TRIBUTÁRIA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5021,7 +5021,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES RELATIVAS AO IMPOSTO'
+        Caption = 'INFORMAÇÕES RELATIVAS AO IMPOSTO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5055,7 +5055,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 96
         Height = 9
         AutoSize = False
-        Caption = 'VALOR TOTAL DO SERVIï¿½O'
+        Caption = 'VALOR TOTAL DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5169,7 +5169,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'COMPONENTES DO VALOR DA PRESTAï¿½ï¿½O DE SERVIï¿½O'
+        Caption = 'COMPONENTES DO VALOR DA PRESTAÇÃO DE SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5707,7 +5707,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 152
         Height = 8
-        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVIï¿½O'
+        Caption = 'CARACTERISTICAS ADICIONAIS DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5725,7 +5725,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 11
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES ESPECï¿½FICAS DO MODAL Aï¿½REO'
+        Caption = 'INFORMAÇÕES ESPECÍFICAS DO MODAL AÉREO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5773,7 +5773,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 40
         Width = 73
         Height = 8
-        Caption = 'Nï¿½MERO DA MINUTA'
+        Caption = 'NÚMERO DA MINUTA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5805,7 +5805,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 50
         Width = 29
         Height = 8
-        Caption = 'Cï¿½DIGO'
+        Caption = 'CÓDIGO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5871,7 +5871,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 83
         Height = 8
-        Caption = 'Nï¿½MERO OPERACIONAL'
+        Caption = 'NÚMERO OPERACIONAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -5928,7 +5928,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'DADOS ESPECï¿½FICOS DO MODAL AQUAVIï¿½RIO'
+        Caption = 'DADOS ESPECÍFICOS DO MODAL AQUAVIÁRIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6020,7 +6020,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 41
         Width = 141
         Height = 8
-        Caption = 'IDENTIFICAï¿½ï¿½O DO NAVIO / REBOCADOR'
+        Caption = 'IDENTIFICAÇÃO DO NAVIO / REBOCADOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6058,7 +6058,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 65
         Width = 108
         Height = 8
-        Caption = 'IDENTIFICAï¿½ï¿½O DA(S) BALSA(S)'
+        Caption = 'IDENTIFICAÇÃO DA(S) BALSA(S)'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6155,7 +6155,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 41
         Width = 74
         Height = 8
-        Caption = 'TIPO DE NAVEGAï¿½ï¿½O'
+        Caption = 'TIPO DE NAVEGAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6185,7 +6185,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 41
         Width = 33
         Height = 8
-        Caption = 'DIREï¿½ï¿½O'
+        Caption = 'DIREÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6236,7 +6236,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 65
         Width = 116
         Height = 8
-        Caption = 'IDENTIFICAï¿½ï¿½O DOS CONTEINERS'
+        Caption = 'IDENTIFICAÇÃO DOS CONTEINERS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6374,16 +6374,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 48
         AutoSize = False
         Caption = 
-          'O Transporte coberto por este conhecimento se rege pelo cï¿½digo B' +
-          'rasileiro de Aeronï¿½utica (Lei 7.565 de 19/12/1986), especificame' +
+          'O Transporte coberto por este conhecimento se rege pelo código B' +
+          'rasileiro de Aeronáutica (Lei 7.565 de 19/12/1986), especificame' +
           'nte pelas regras relativas a responsabilidade Civil prevista nos' +
           ' artigos 193, 241, 244, 262 e 264, de cujo teor o Expedidor / Re' +
-          'metente declara concordar e ter plena ciï¿½ncia. O Expedidor / Rem' +
-          'etente aceita como corretas todas as especificaï¿½ï¿½es impressas, m' +
+          'metente declara concordar e ter plena ciência. O Expedidor / Rem' +
+          'etente aceita como corretas todas as especificações impressas, m' +
           'anuscritas, datilografadas ou carimbadas neste conhecimento, cer' +
-          'tificando que os artigos perigosos descritos pela regulamentaï¿½ï¿½o' +
+          'tificando que os artigos perigosos descritos pela regulamentação' +
           ' da I.C.A.O. foram devidamente informados e acondicionados para ' +
-          'transporte Aï¿½reo.'
+          'transporte Aéreo.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6435,7 +6435,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Width = 100
         Height = 8
         Alignment = taCenter
-        Caption = 'DESTINATï¿½RIO / RECEBEDOR'
+        Caption = 'DESTINATÁRIO / RECEBEDOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6657,7 +6657,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES REFERENTES AO VALE-PEDï¿½GIO'
+        Caption = 'INFORMAÇÕES REFERENTES AO VALE-PEDÁGIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6675,7 +6675,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'IDENTIFICAï¿½ï¿½O DO CONJ. TRANSPORTADOR'
+        Caption = 'IDENTIFICAÇÃO DO CONJ. TRANSPORTADOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6691,7 +6691,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 82
         Width = 148
         Height = 8
-        Caption = 'IDENTIFICAï¿½ï¿½O DOS LACRES EM TRï¿½NSITO'
+        Caption = 'IDENTIFICAÇÃO DOS LACRES EM TRÂNSITO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6739,7 +6739,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 87
         Height = 8
-        Caption = 'Nï¿½MERO COMPROVANTE'
+        Caption = 'NÚMERO COMPROVANTE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -6755,7 +6755,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 70
         Height = 8
-        Caption = 'CNPJ RESPONSï¿½VEL'
+        Caption = 'CNPJ RESPONSÁVEL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7167,7 +7167,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 71
         Width = 30
         Height = 12
-        Caption = 'Sï¿½RIE:'
+        Caption = 'SÉRIE:'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7239,7 +7239,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 9
         Alignment = taCenter
         AutoSize = False
-        Caption = 'SAï¿½DA DATA/HORA'
+        Caption = 'SAÍDA DATA/HORA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7367,7 +7367,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES SOBRE OS PRODUTOS PERIGOSOS'
+        Caption = 'INFORMAÇÕES SOBRE OS PRODUTOS PERIGOSOS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7423,7 +7423,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 19
         Width = 145
         Height = 8
-        Caption = 'CLASSE/SUBCLASSE E RISCO SUBSIDIï¿½RIO'
+        Caption = 'CLASSE/SUBCLASSE E RISCO SUBSIDIÁRIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7660,7 +7660,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES SOBRE OS VEï¿½CULOS NOVOS TRANSPORTADOS'
+        Caption = 'INFORMAÇÕES SOBRE OS VEÍCULOS NOVOS TRANSPORTADOS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7732,7 +7732,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 19
         Width = 78
         Height = 8
-        Caption = 'VR. UNIT. DO VEï¿½CULO'
+        Caption = 'VR. UNIT. DO VEÍCULO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7907,7 +7907,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'PREVISï¿½O DO FLUXO DA CARGA'
+        Caption = 'PREVISÃO DO FLUXO DA CARGA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7932,7 +7932,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 234
         Height = 8
-        Caption = 'SIGLA/Cï¿½D. INT. DA FILIAL/PORTO/ESTAï¿½ï¿½O/AEROPORTO DE ORIGEM'
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE ORIGEM'
         Color = clWhite
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -7949,7 +7949,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 244
         Height = 8
-        Caption = 'SIGLA/Cï¿½D. INT. DA FILIAL/PORTO/ESTAï¿½ï¿½O/AEROPORTO DE PASSAGEM'
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE PASSAGEM'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7965,7 +7965,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 236
         Height = 8
-        Caption = 'SIGLA/Cï¿½D. INT. DA FILIAL/PORTO/ESTAï¿½ï¿½O/AEROPORTO DE DESTINO'
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE DESTINO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8073,7 +8073,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 3
         Width = 78
         Height = 8
-        Caption = 'INï¿½CIO DA PRESTAï¿½ï¿½O'
+        Caption = 'INÍCIO DA PRESTAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8089,7 +8089,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 3
         Width = 88
         Height = 8
-        Caption = 'Tï¿½RMINO DA PRESTAï¿½ï¿½O'
+        Caption = 'TÉRMINO DA PRESTAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8105,7 +8105,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 3
         Width = 83
         Height = 8
-        Caption = 'PERCURSO DO VEï¿½CULO'
+        Caption = 'PERCURSO DO VEÍCULO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8231,7 +8231,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 32
         Width = 38
         Height = 8
-        Caption = 'MUNICï¿½PIO'
+        Caption = 'MUNICÍPIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8247,7 +8247,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 32
         Width = 81
         Height = 8
-        Caption = 'TOMADOR DO SERVIï¿½O'
+        Caption = 'TOMADOR DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8293,7 +8293,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 43
         Width = 17
         Height = 8
-        Caption = 'PAï¿½S'
+        Caption = 'PAÍS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8324,7 +8324,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 43
         Width = 39
         Height = 8
-        Caption = 'ENDEREï¿½O'
+        Caption = 'ENDEREÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8386,7 +8386,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 55
         Width = 78
         Height = 8
-        Caption = 'INSCRIï¿½ï¿½O ESTADUAL'
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8498,7 +8498,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 51
         Height = 8
-        Caption = 'RESPONSï¿½VEL'
+        Caption = 'RESPONSÁVEL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8530,7 +8530,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 75
         Height = 8
-        Caption = 'Nï¿½MERO DA APï¿½LICE'
+        Caption = 'NÚMERO DA APÓLICE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8652,7 +8652,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 136
         Height = 8
-        Caption = 'DESCRIï¿½ï¿½O DOS SERVIï¿½OS PRESTADOS'
+        Caption = 'DESCRIÇÃO DOS SERVIÇOS PRESTADOS'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8670,7 +8670,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'INFORMAï¿½ï¿½ES DA PRESTAï¿½ï¿½O DO SERVIï¿½O'
+        Caption = 'INFORMAÇÕES DA PRESTAÇÃO DO SERVIÇO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8713,7 +8713,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 12
         Alignment = taCenter
         AutoSize = False
-        Caption = 'CT-e  ANULADO / SUBSTITUï¿½DO'
+        Caption = 'CT-e  ANULADO / SUBSTITUÍDO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8747,7 +8747,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 90
         Height = 8
-        Caption = 'CHAVE CT-E SUBSTITUï¿½DO'
+        Caption = 'CHAVE CT-E SUBSTITUÍDO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -8763,7 +8763,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 17
         Width = 84
         Height = 8
-        Caption = 'CHAVE CT-E ANULAï¿½ï¿½O'
+        Caption = 'CHAVE CT-E ANULAÇÃO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

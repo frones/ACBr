@@ -290,7 +290,7 @@ type
     QuebrarLinhasDetalheItens        : Boolean;
     ImprimirDetalhamentoEspecifico   : Boolean;
     ImprimirDadosDocReferenciados    : Boolean;
-    ExibirBandInforAdicProduto       : Boolean;
+    ExibirBandInforAdicProduto       : Integer;
     LogoEmCima                       : Boolean;
   end;
 
@@ -1002,7 +1002,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEQuebrarLinhasDetalheItens      , QuebrarLinhasDetalheItens );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
-      Ini.WriteBool( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto     , ExibirBandInforAdicProduto );
+      Ini.WriteInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto     , ExibirBandInforAdicProduto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFELogoEmCima                     , LogoEmCima );
     end;
 
@@ -1605,7 +1605,7 @@ begin
       QuebrarLinhasDetalheItens :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEQuebrarLinhasDetalheItens         , QuebrarLinhasDetalheItens );
       ImprimirDetalhamentoEspecifico := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       ImprimirDadosDocReferenciados := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
-      ExibirBandInforAdicProduto := Ini.ReadBool( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto        , ExibirBandInforAdicProduto );
+      ExibirBandInforAdicProduto := Ini.ReadInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto        , ExibirBandInforAdicProduto );
       LogoEmCima                 := Ini.ReadBool( CSecDANFE,  CKeyDANFELogoEmCima                        , LogoEmCima );
     end;
 
@@ -2201,7 +2201,7 @@ begin
     QuebrarLinhasDetalheItens :=  False;
     ImprimirDetalhamentoEspecifico := True;
     ImprimirDadosDocReferenciados := True;
-    ExibirBandInforAdicProduto := False;
+    ExibirBandInforAdicProduto := 0;
     LogoEmCima                 := False;
   end;
 

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 288
+  Left = 190
   Height = 659
-  Top = 18
+  Top = 12
   Width = 1055
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 850
-        ActivePage = tsACBrBoleto
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 11
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -6187,9 +6187,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsWebServiceDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -6994,7 +6994,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 17
                       Top = 45
-                      Width = 67
+                      Width = 68
                       Caption = 'Versão NFe'
                       ParentColor = False
                     end
@@ -7107,7 +7107,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 80
                       Height = 17
                       Top = 45
-                      Width = 65
+                      Width = 67
                       Caption = 'Versão CTe'
                       ParentColor = False
                     end
@@ -7129,7 +7129,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 155
                       Height = 17
                       Top = 45
-                      Width = 78
+                      Width = 79
                       Caption = 'Versão MDFe'
                       ParentColor = False
                     end
@@ -7233,7 +7233,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 100
                       Height = 17
                       Top = 24
-                      Width = 57
+                      Width = 58
                       Caption = 'Tentativas'
                       ParentColor = False
                     end
@@ -7314,7 +7314,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 8
                       Height = 17
                       Top = 26
-                      Width = 21
+                      Width = 22
                       Caption = 'CTe'
                       ParentColor = False
                     end
@@ -8613,20 +8613,37 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Caption = 'Imprimir Dados Documentos Referenciados'
                     TabOrder = 17
                   end
-                  object cbxExibirInfAdicProduto: TCheckBox
-                    Left = 555
-                    Height = 21
-                    Top = 171
-                    Width = 219
-                    Caption = 'Exibir Inf. Adicionais dos Produtos'
-                    TabOrder = 18
-                  end
                   object cbxExibirLogoEmCima: TCheckBox
                     Left = 555
                     Height = 21
-                    Top = 193
+                    Top = 171
                     Width = 141
                     Caption = 'Exibir Logo em Cima'
+                    TabOrder = 18
+                  end
+                  object rgInfAdicProduto: TRadioGroup
+                    Left = 501
+                    Height = 55
+                    Top = 5
+                    Width = 306
+                    AutoFill = True
+                    Caption = 'Exibir Inf. Adicionais Produto'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 3
+                    ClientHeight = 33
+                    ClientWidth = 302
+                    Columns = 3
+                    ItemIndex = 0
+                    Items.Strings = (
+                      'Nenhum'
+                      'Descrição'
+                      'Separados'
+                    )
                     TabOrder = 19
                   end
                 end

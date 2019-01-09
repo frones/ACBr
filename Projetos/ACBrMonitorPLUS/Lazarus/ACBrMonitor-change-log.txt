@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2019
+[*] ACBrMonitor1
+Ajustes na propriedade da NFe "Exibir Inf Adic. Produto" na impressão.
+
 08/01/2019
 [-] DoACBrCTeUnit
 Correção no método: EnviarLoteCTe na pesquisa e parâmetro do lote a ser enviado

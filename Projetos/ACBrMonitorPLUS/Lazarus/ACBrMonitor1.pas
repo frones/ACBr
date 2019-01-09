@@ -298,7 +298,6 @@ type
     cbVersaoWSMDFe: TComboBox;
     cbVersaoWSeSocial: TComboBox;
     cbxUsarSeparadorPathPDF: TCheckBox;
-    cbxExibirInfAdicProduto: TCheckBox;
     cbxExibirLogoEmCima: TCheckBox;
     cbxImpDocsReferenciados: TCheckBox;
     cbxImprimirNomeFantasiaNFCe: TCheckBox;
@@ -532,6 +531,7 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
+    rgInfAdicProduto: TRadioGroup;
     rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
@@ -1616,7 +1616,7 @@ uses
   ConfiguraSerial, SelecionarCertificado, ACBrSATExtratoClass,
   ACBrNFeConfiguracoes, ACBrNFeDANFEClass, ACBrCTeConfiguracoes,
   ACBrMDFeConfiguracoes, ACBrGNREConfiguracoes, ACBreSocialConfiguracoes,
-  ACBrReinfConfiguracoes;
+  ACBrReinfConfiguracoes, ACBrDFeDANFeReport;
 
 {$R *.lfm}
 
@@ -4552,7 +4552,7 @@ begin
       cbxQuebrarLinhasDetalhesItens.Checked:=QuebrarLinhasDetalheItens;
       cbxImpDetEspNFe.Checked             := ImprimirDetalhamentoEspecifico;
       cbxImpDocsReferenciados.Checked     := ImprimirDadosDocReferenciados;
-      cbxExibirInfAdicProduto.Checked     := ExibirBandInforAdicProduto;
+      rgInfAdicProduto.ItemIndex          := ExibirBandInforAdicProduto;
       cbxExibirLogoEmCima.Checked         := LogoEmCima;
     end;
 
@@ -5641,7 +5641,7 @@ begin
         QuebrarLinhasDetalheItens  := cbxQuebrarLinhasDetalhesItens.Checked ;
         ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
         ImprimirDadosDocReferenciados  := cbxImpDocsReferenciados.Checked;
-        ExibirBandInforAdicProduto     := cbxExibirInfAdicProduto.Checked;
+        ExibirBandInforAdicProduto     := rgInfAdicProduto.ItemIndex;
         LogoEmCima                     := cbxExibirLogoEmCima.Checked;
       end;
 
@@ -8408,14 +8408,14 @@ begin
       ACBrNFeDANFeRL1.LarguraCodProd := speLargCodProd.Value;
       ACBrNFeDANFeRL1.ExibeEAN := cbxExibirEAN.Checked;
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
-      ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentoEspecifico := cbxQuebrarLinhasDetalhesItens.Checked;
+      ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentos := cbxQuebrarLinhasDetalhesItens.Checked;
       ACBrNFeDANFeRL1.Fonte.TamanhoFonteRazaoSocial := speFonteRazao.Value;
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.ImprimeValor := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
       ACBrNFeDANFeRL1.ImprimeDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
       ACBrNFeDANFeRL1.ExibeDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
-      ACBrNFeDANFeRL1.ExibeInforAdicProduto := cbxExibirInfAdicProduto.Checked;
+      ACBrNFeDANFeRL1.ExibeInforAdicProduto := TinfAdcProd(rgInfAdicProduto.ItemIndex);
       ACBrNFeDANFeRL1.LogoemCima := cbxExibirLogoEmCima.Checked;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then

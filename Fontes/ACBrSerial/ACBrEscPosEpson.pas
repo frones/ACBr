@@ -398,7 +398,7 @@ begin
       dirDireitaParaEsquerda: CharDir := #2;
       dirTopoParaBaixo: CharDir := #3;
     else
-      CharDir := #0;
+      CharDir := #0;  // dirEsquerdaParaDireita
     end;
 
     Result := ESC + 'T' + CharDir +                  // Ajusta a Direcao

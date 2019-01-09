@@ -77,8 +77,8 @@ type
     FPMimeType: String;
 
   protected
-    procedure FazerLog(Msg: String; Exibir: Boolean = False); virtual;
-    procedure GerarException(Msg: String; E: Exception = nil); virtual;
+    procedure FazerLog(const Msg: String; Exibir: Boolean = False); virtual;
+    procedure GerarException(const Msg: String; E: Exception = nil); virtual;
     procedure AjustarOpcoes(AOpcoes: TGeradorOpcoes);
 
     procedure InicializarServico; virtual;
@@ -97,8 +97,8 @@ type
     function GetUrlWsd: String; virtual;
 
     procedure AssinarXML(const AXML, docElement, infElement: String;
-      MsgErro: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = '' ); virtual;
+      MsgErro: String; const SignatureNode: String = '';
+      const SelectionNamespaces: String = ''; const IdSignature: String = '' ); virtual;
 
     function GerarMsgLog: String; virtual;
     function GerarMsgErro(E: Exception): String; virtual;
@@ -417,7 +417,7 @@ end;
 
 procedure TDFeWebService.SalvarEnvio;
 var
-  Prefixo, ArqEnv: String;
+  Prefixo, ArqEnv_temp: String;
   IsUTF8: Boolean;
 begin
   { Sobrescrever apenas se necessário }
@@ -429,24 +429,24 @@ begin
 
   if FPConfiguracoes.Geral.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
+    ArqEnv_temp := Prefixo + '-' + FPArqEnv + '.xml';
 
     IsUTF8  := XmlEstaAssinado(FPDadosMsg);
-    FPDFeOwner.Gravar(ArqEnv, FPDadosMsg, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv_temp, FPDadosMsg, '', IsUTF8);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
+    ArqEnv_temp := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
     IsUTF8  := XmlEstaAssinado(FPEnvelopeSoap);
-    FPDFeOwner.Gravar(ArqEnv, FPEnvelopeSoap, '', IsUTF8);
+    FPDFeOwner.Gravar(ArqEnv_temp, FPEnvelopeSoap, '', IsUTF8);
   end;
 end;
 
 procedure TDFeWebService.SalvarResposta;
 var
-  Prefixo, ArqResp: String;
+  Prefixo, ArqResp_temp: String;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -457,14 +457,14 @@ begin
 
   if FPConfiguracoes.Geral.Salvar then
   begin
-    ArqResp := Prefixo + '-' + FPArqResp + '.xml';
-    FPDFeOwner.Gravar(ArqResp, FPRetWS);  // FPRetWS já está em UTF8
+    ArqResp_temp := Prefixo + '-' + FPArqResp + '.xml';
+    FPDFeOwner.Gravar(ArqResp_temp, FPRetWS);  // FPRetWS já está em UTF8
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
-    ArqResp := Prefixo + '-' + FPArqResp + '-soap.xml';
-    FPDFeOwner.Gravar(ArqResp, FPRetornoWS );   // FPRetornoWS já está em UTF8
+    ArqResp_temp := Prefixo + '-' + FPArqResp + '-soap.xml';
+    FPDFeOwner.Gravar(ArqResp_temp, FPRetornoWS );   // FPRetornoWS já está em UTF8
   end;
 end;
 
@@ -483,7 +483,7 @@ begin
   GerarException(ACBrStr('TratarResposta não implementado para: ') + ClassName);
 end;
 
-procedure TDFeWebService.FazerLog(Msg: String; Exibir: Boolean);
+procedure TDFeWebService.FazerLog(const Msg: String; Exibir: Boolean);
 var
   Tratado: Boolean;
 begin
@@ -501,7 +501,7 @@ begin
   end;
 end;
 
-procedure TDFeWebService.GerarException(Msg: String; E: Exception);
+procedure TDFeWebService.GerarException(const Msg: String; E: Exception);
 begin
   FPDFeOwner.GerarException(Msg, E);
 end;
@@ -519,7 +519,6 @@ end;
 function TDFeWebService.GerarMsgErro(E: Exception): String;
 begin
   { Sobrescrever com mensagem adicional, se desejar }
-
   Result := '';
 end;
 
@@ -550,8 +549,8 @@ begin
 end;
 
 procedure TDFeWebService.AssinarXML(const AXML, docElement, infElement: String;
-  MsgErro: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String);
+  MsgErro: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String);
 begin
   try
     FPDadosMsg := FPDFeOwner.SSL.Assinar(AXML, docElement, infElement,

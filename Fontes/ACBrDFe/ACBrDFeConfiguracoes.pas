@@ -67,10 +67,10 @@ type
     FVerificarValidade: Boolean;
 
     function GetSenha: AnsiString;
-    procedure SetArquivoPFX(AValue: String);
-    procedure SetDadosPFX(AValue: AnsiString);
+    procedure SetArquivoPFX(const AValue: String);
+    procedure SetDadosPFX(const AValue: AnsiString);
     procedure SetNumeroSerie(const AValue: String);
-    procedure SetSenha(AValue: AnsiString);
+    procedure SetSenha(const AValue: AnsiString);
   protected
     fpConfiguracoes: TConfiguracoes;
 
@@ -114,14 +114,14 @@ type
     FQuebradeLinha: String;
 
     function GetAmbienteCodigo: integer;
-    procedure SetProxyHost(AValue: String);
-    procedure SetProxyPass(AValue: String);
-    procedure SetProxyPort(AValue: String);
-    procedure SetProxyUser(AValue: String);
+    procedure SetProxyHost(const AValue: String);
+    procedure SetProxyPass(const AValue: String);
+    procedure SetProxyPort(const AValue: String);
+    procedure SetProxyUser(const AValue: String);
     procedure SetSSLType(AValue: TSSLType);
     procedure SetTimeOut(AValue: Integer);
     procedure SetTimeOutPorThread(AValue: Boolean);
-    procedure SetUF(AValue: String);
+    procedure SetUF(const AValue: String);
     procedure SetTentativas(const Value: integer);
     procedure SetIntervaloTentativas(const Value: cardinal);
     procedure SetParams(const AValue: TStrings);
@@ -282,8 +282,8 @@ type
     procedure GravarIni( const AIni: TCustomIniFile ); virtual;
     procedure LerIni( const AIni: TCustomIniFile ); virtual;
 
-    function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
-      Data: TDateTime = 0; ModeloDescr: String = ''): String; virtual;
+    function GetPath(const APath: String; const ALiteral: String; CNPJ: String = '';
+      Data: TDateTime = 0; const ModeloDescr: String = ''): String; virtual;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
@@ -323,7 +323,7 @@ type
     procedure GravarIni( const AIni: TCustomIniFile ); virtual;
     procedure LerIni( const AIni: TCustomIniFile ); virtual;
 
-    procedure LerParams(NomeArqParams: String = '');
+    procedure LerParams(const NomeArqParams: String = '');
 
     property Geral: TGeralConf read FPGeral;
     property WebServices: TWebServicesConf read FPWebServices;
@@ -415,7 +415,7 @@ begin
   Arquivos.Assign(DeConfiguracoes.Arquivos);
 end;
 
-procedure TConfiguracoes.LerParams(NomeArqParams: String);
+procedure TConfiguracoes.LerParams(const NomeArqParams: String);
 var
   SL: TStringList;
 begin
@@ -859,7 +859,7 @@ begin
     FTentativas := Value;
 end;
 
-procedure TWebServicesConf.SetUF(AValue: String);
+procedure TWebServicesConf.SetUF(const AValue: String);
 var
   Codigo, i: integer;
 begin
@@ -880,7 +880,7 @@ begin
   end;
 end;
 
-procedure TWebServicesConf.SetProxyHost(AValue: String);
+procedure TWebServicesConf.SetProxyHost(const AValue: String);
 begin
   if FProxyHost = AValue then Exit;
 
@@ -894,7 +894,7 @@ begin
   Result := StrToInt(TpAmbToStr(FAmbiente));
 end;
 
-procedure TWebServicesConf.SetProxyPass(AValue: String);
+procedure TWebServicesConf.SetProxyPass(const AValue: String);
 begin
   if FProxyPass = AValue then Exit;
 
@@ -903,7 +903,7 @@ begin
     TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPass := AValue;
 end;
 
-procedure TWebServicesConf.SetProxyPort(AValue: String);
+procedure TWebServicesConf.SetProxyPort(const AValue: String);
 begin
   if FProxyPort = AValue then Exit;
 
@@ -912,7 +912,7 @@ begin
     TACBrDFe(fpConfiguracoes.Owner).SSL.ProxyPort := AValue;
 end;
 
-procedure TWebServicesConf.SetProxyUser(AValue: String);
+procedure TWebServicesConf.SetProxyUser(const AValue: String);
 begin
   if FProxyUser = AValue then Exit;
 
@@ -1018,7 +1018,7 @@ begin
     TACBrDFe(fpConfiguracoes.Owner).SSL.NumeroSerie := FNumeroSerie;
 end;
 
-procedure TCertificadosConf.SetSenha(AValue: AnsiString);
+procedure TCertificadosConf.SetSenha(const AValue: AnsiString);
 begin
   if (FK <> '') and (FSenha = StrCrypt(AValue, FK)) then
     Exit;
@@ -1030,7 +1030,7 @@ begin
     TACBrDFe(fpConfiguracoes.Owner).SSL.Senha := AValue;
 end;
 
-procedure TCertificadosConf.SetArquivoPFX(AValue: String);
+procedure TCertificadosConf.SetArquivoPFX(const AValue: String);
 begin
   if FArquivoPFX = AValue then Exit;
 
@@ -1044,7 +1044,7 @@ begin
   Result := StrCrypt(FSenha, FK)  // Descritografa a Senha
 end;
 
-procedure TCertificadosConf.SetDadosPFX(AValue: AnsiString);
+procedure TCertificadosConf.SetDadosPFX(const AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
 
@@ -1185,8 +1185,8 @@ begin
   Result := FIniServicos;
 end;
 
-function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
-  Data: TDateTime; ModeloDescr: String): String;
+function TArquivosConf.GetPath(const APath: String; const ALiteral: String; CNPJ: String;
+  Data: TDateTime; const ModeloDescr: String): String;
 
   procedure AddPathOrder(AAdicionar: Boolean; AItemOrdenacaoPath: TTagOrdenacaoPath);
   begin

@@ -79,7 +79,7 @@ type
     FTamanhoFonte: Integer;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetSeparadorPathPDF(aInitialPath: String): String; override;
+    function GetSeparadorPathPDF(const aInitialPath: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -206,7 +206,7 @@ begin
   end;
 end;
 
-function TACBrNFSeDANFSeClass.GetSeparadorPathPDF(aInitialPath: String): String;
+function TACBrNFSeDANFSeClass.GetSeparadorPathPDF(const aInitialPath: String): String;
 var
    dhEmissao: TDateTime;
    DescricaoModelo: String;

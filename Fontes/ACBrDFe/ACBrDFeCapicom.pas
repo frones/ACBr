@@ -92,7 +92,7 @@ end;
 
 procedure TDFeCapicom.CarregarCertificado;
 var
-  Store: IStore3;
+  Store_temp: IStore3;
   Certs: ICertificates2;
   Cert: ICertificate2;
   KeyLocation, i: Integer;
@@ -100,7 +100,7 @@ var
   ResultInitialize: HRESULT;
 begin
   inherited CarregarCertificado;   // Carrega o Certificado com WinCrypt
-  
+
   FpCertificadoLido := False;
 
   ResultInitialize := CoInitialize(nil);
@@ -112,11 +112,11 @@ begin
     if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
     begin
       // Lendo lista de Certificados //
-      Store := CoStore.Create;
+      Store_temp := CoStore.Create;
       try
-        Store.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
+        Store_temp.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
         FCertificado := nil;
-        Certs := Store.Certificates as ICertificates2;
+        Certs := Store_temp.Certificates as ICertificates2;
 
         // Verificando se "FpDFeSSL.NumeroSerie" está na lista de certificados encontrados //;
         for i := 1 to Certs.Count do
@@ -129,7 +129,7 @@ begin
           end;
         end;
       finally
-        Store.Close;
+        Store_temp.Close;
       end;
     end
 
@@ -193,15 +193,15 @@ end;
 
 function TDFeCapicom.SelecionarCertificado: String;
 var
-  Store: IStore3;
+  Store_temp: IStore3;
   Certs: ICertificates2;
   Certs2: ICertificates2;
   Cert: ICertificate2;
 begin
-  Store := CoStore.Create;
-  Store.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
+  Store_temp := CoStore.Create;
+  Store_temp.Open(Integer(FpDFeSSL.StoreLocation), WideString(FpDFeSSL.StoreName), CAPICOM_STORE_OPEN_READ_ONLY);
 
-  Certs := Store.Certificates as ICertificates2;
+  Certs := Store_temp.Certificates as ICertificates2;
   Certs2 := Certs.Select('Certificado(s) Digital(is) disponível(is)',
     'Selecione o Certificado Digital para uso no aplicativo', False);
 

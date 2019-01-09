@@ -56,14 +56,14 @@ type
        var SelectionNamespaces: String);
    public
      function Assinar(const ConteudoXML, docElement, infElement: String;
-       SignatureNode: String = ''; SelectionNamespaces: String = '';
-       IdSignature: String = ''; IdAttr: String = ''): String; override;
+       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+       const IdSignature: String = ''; const IdAttr: String = ''): String; override;
      function Validar(const ConteudoXML, ArqSchema: String;
        out MsgErro: String): Boolean; override;
      function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-       const infElement: String; SignatureNode: String = '';
-       SelectionNamespaces: String = ''; IdSignature: String = '';
-       IdAttr: String = ''): Boolean;
+       const infElement: String; const SignatureNode: String = '';
+       const SelectionNamespaces: String = ''; const IdSignature: String = '';
+       const IdAttr: String = ''): Boolean;
        override;
    end;
 
@@ -92,8 +92,8 @@ begin
 end;
 
 function TDFeSSLXmlSignMsXml.Assinar(const ConteudoXML, docElement,
-  infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String; IdAttr: String): String;
+  infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String; const IdAttr: String): String;
 var
   AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
@@ -108,6 +108,7 @@ var
   { // Nova implementação usando IXMLDigitalSignatureEx. porem, falha em algumas raras situações
   xmldsigEx: IXMLDigitalSignatureEx;
   dsigKeyEx: IXMLDSigKeyEx;}
+  var vSignatureNode, vSelectionNamespaces: string;
 begin
   Result := '';
   ResultInitialize := CoInitialize(nil);
@@ -127,10 +128,12 @@ begin
     XmlAss := '';
 
     // Usa valores default, se não foram informados //
-    VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+    vSignatureNode       := SignatureNode;
+    vSelectionNamespaces := SelectionNamespaces;
+    VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
 
     // Inserindo Template da Assinatura digital //
-    if (not XmlEstaAssinado(AXml)) or (SignatureNode <> CSIGNATURE_NODE) then
+    if (not XmlEstaAssinado(AXml)) or (vSignatureNode <> CSIGNATURE_NODE) then
       AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
 
     try
@@ -144,7 +147,7 @@ begin
       if (not xmldoc.loadXML( WideString(AXml) )) then
         raise EACBrDFeException.Create('Não foi possível carregar XML'+sLineBreak+ AXml);
 
-      xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
+      xmldoc.setProperty('SelectionNamespaces', vSelectionNamespaces);
 
       //DEBUG
       //xmldoc.save('c:\temp\xmldoc.xml');
@@ -158,7 +161,7 @@ begin
         raise EACBrDFeException.Create('Erro ao criar Elemento para Assinatura');
 
       // Lendo elemento de Assinatura de XMLDOC //
-      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
+      xmldsig.signature := xmldoc.selectSingleNode( WideString(vSignatureNode) );
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('Erro ao encontrar nó para Assinatura');
 
@@ -293,9 +296,9 @@ begin
 end;
 
 function TDFeSSLXmlSignMsXml.VerificarAssinatura(const ConteudoXML: String; out
-  MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String;
-  IdAttr: String): Boolean;
+  MsgErro: String; const infElement: String; const SignatureNode: String;
+  const SelectionNamespaces: String; const IdSignature: String;
+  const IdAttr: String): Boolean;
 var
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;
@@ -304,12 +307,15 @@ var
   AXml: String;
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
+  SignatureNode_temp, SelectionNamespaces_temp: string;
 begin
-{$IFNDEF COMPILER23_UP}
+{$IFNDEF COMPILER25_UP}
   Result := False;
 {$ENDIF}
   // Usa valores default, se não foram informados //
-  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+  SignatureNode_temp       := SignatureNode;
+  SelectionNamespaces_temp := SelectionNamespaces;
+  VerificarValoresPadrao(SignatureNode_temp, SelectionNamespaces_temp);
 
   ResultInitialize := CoInitialize(nil);
   if (ResultInitialize = E_FAIL) then
@@ -337,11 +343,11 @@ begin
         exit;
       end;
 
-      xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
-      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode));
+      xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces_temp);
+      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode_temp));
       if (xmldsig.signature = nil) then
       begin
-        MsgErro := ACBrStr('Não foi possível ler o nó de Assinatura (')+SignatureNode+')';
+        MsgErro := ACBrStr('Não foi possível ler o nó de Assinatura (')+SignatureNode_temp+')';
         exit;
       end;
 

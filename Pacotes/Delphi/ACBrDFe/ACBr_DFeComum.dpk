@@ -47,6 +47,16 @@ contains
   ACBRDFeWinCrypt in '..\..\..\Fontes\ACBrDFe\ACBRDFeWinCrypt.pas',
   ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas',
   ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas',
-  ACBrDFeReport in '..\..\..\Fontes\ACBrDFe\ACBrDFeReport.pas';
+  ACBrDFeReport in '..\..\..\Fontes\ACBrDFe\ACBrDFeReport.pas',
+  ACBrDFeOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas',
+  ACBrDFeHttpOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpOpenSSL.pas',
+  ACBrDFeCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas',
+  ACBrCAPICOM_TLB in '..\..\..\Fontes\ACBrDFe\ACBrCAPICOM_TLB.pas',
+  ACBrMSXML2_TLB in '..\..\..\Fontes\ACBrDFe\ACBrMSXML2_TLB.pas',
+  ACBrDFeXsMsXmlCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXmlCapicom.pas',
+  ACBrDFeHttpIndy in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpIndy.pas',
+  ACBrDFeXsXmlSec in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsXmlSec.pas',
+  ACBrDFeXsLibXml2 in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsLibXml2.pas';
 
 end.
+

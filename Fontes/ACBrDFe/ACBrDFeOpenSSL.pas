@@ -66,7 +66,7 @@ type
   protected
 
     function GetCertContextWinApi: Pointer; override;
-    function LerPFXInfo(PFXData: Ansistring): Boolean;
+    function LerPFXInfo(const PFXData: Ansistring): Boolean;
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
@@ -82,13 +82,13 @@ type
 
     procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
-    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; override;
+    function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; override;
 
     property Certificado: pX509 read FCert;
   end;
 
 function CertToDERBase64(cert: pX509): AnsiString;
-function GetCertExt(cert: pX509; FlagExt: AnsiString): AnsiString;
+function GetCertExt(cert: pX509; const FlagExt: AnsiString): AnsiString;
 function GetIssuerName(cert: pX509): String;
 function GetNotAfter(cert: pX509): TDateTime;
 function GetSerialNumber(cert: pX509): String;
@@ -195,7 +195,7 @@ begin
     Result := X509NameToString(X509SubjectName);
 end;
 
-function GetCertExt(cert: pX509; FlagExt: AnsiString): AnsiString;
+function GetCertExt(cert: pX509; const FlagExt: AnsiString): AnsiString;
 var
   ext: pX509_EXTENSION;
   ExtPos, P: Integer;
@@ -490,7 +490,7 @@ begin
   inherited DescarregarCertificado;
 end;
 
-function TDFeOpenSSL.LerPFXInfo(PFXData: Ansistring): Boolean;
+function TDFeOpenSSL.LerPFXInfo(const PFXData: Ansistring): Boolean;
 var
   ca, p12: Pointer;
   b: PBIO;
@@ -546,12 +546,12 @@ begin
   end;
 end;
 
-function TDFeOpenSSL.CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean;
+function TDFeOpenSSL.CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean;
 var
   b: PBIO;
   BinaryX509: AnsiString;
 begin
-  Result := False; 
+  Result := False;
   DescarregarCertificado;
 
   BinaryX509 := DecodeBase64( DadosX509Base64 );
@@ -661,7 +661,7 @@ Var
   Ret, BytesRead: LongInt;
   pubKey: pEVP_PKEY;
 begin
-{$IFNDEF COMPILER23_UP}
+{$IFNDEF COMPILER25_UP}
   Result := False;
 {$ENDIF}
   NameDgst := '';

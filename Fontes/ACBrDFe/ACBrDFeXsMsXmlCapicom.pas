@@ -52,8 +52,8 @@ type
    protected
    public
      function Assinar(const ConteudoXML, docElement, infElement: String;
-       SignatureNode: String = ''; SelectionNamespaces: String = '';
-       IdSignature: String = ''; IdAttr: String = ''): String; override;
+       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+       const IdSignature: String = ''; const IdAttr: String = ''): String; override;
    end;
 
 
@@ -67,8 +67,8 @@ uses
 { TDFeSSLXmlSignMsXmlCapicom }
 
 function TDFeSSLXmlSignMsXmlCapicom.Assinar(const ConteudoXML, docElement,
-  infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String; IdAttr: String): String;
+  infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String; const IdAttr: String): String;
 var
   AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
@@ -77,6 +77,7 @@ var
   signedKey: IXMLDSigKey;
   PrivateKey: IPrivateKey;
   Inicializado: Boolean;
+  vSignatureNode, vSelectionNamespaces: string;
 begin
   if not (FpDFeSSL.SSLCryptClass is TDFeCapicom) then
     raise EACBrDFeException.Create('Erro de configuração. SSLCryptClass não é TDFeCapicom');
@@ -94,10 +95,12 @@ begin
     XmlAss := '';
 
     // Usa valores default, se não foram informados //
-    VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+    vSignatureNode       := SignatureNode;
+    vSelectionNamespaces := SelectionNamespaces;
+    VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
 
     // Inserindo Template da Assinatura digital //
-    if (not XmlEstaAssinado(AXml)) or (SignatureNode <> CSIGNATURE_NODE) then
+    if (not XmlEstaAssinado(AXml)) or (vSignatureNode <> CSIGNATURE_NODE) then
       AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
 
     try
@@ -111,7 +114,7 @@ begin
       if (not xmldoc.loadXML( WideString(AXml) )) then
         raise EACBrDFeException.Create('Não foi possível carregar XML'+sLineBreak+ AXml);
 
-      xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
+      xmldoc.setProperty('SelectionNamespaces', vSelectionNamespaces);
 
       //DEBUG
       //xmldoc.save('c:\temp\xmldoc.xml');
@@ -120,7 +123,7 @@ begin
       xmldsig := CoMXDigitalSignature50.Create;
 
       // Lendo elemento de Assinatura de XMLDOC //
-      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
+      xmldsig.signature := xmldoc.selectSingleNode( WideString(vSignatureNode) );
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('É preciso carregar o template antes de assinar.');
 

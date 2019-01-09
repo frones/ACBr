@@ -42,29 +42,29 @@ interface
 
 uses
   Classes, StrUtils, SysUtils,
-  IniFiles, ACBrDFeSSL, pcnAuxiliar;
+  {IniFiles,} ACBrDFeSSL, pcnAuxiliar;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
 
 function GerarCodigoNumerico(numero: integer): integer;
-function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ:String;
+function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ:String;
                           ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer = 55): String;
 function FormatarChaveAcesso(AValue: String): String;
 
 function ValidaUFCidade(const UF, Cidade: integer): Boolean; overload;
 procedure ValidaUFCidade(const UF, Cidade: integer; const AMensagem: String); overload;
 function ValidaDIDSI(AValue: String): Boolean;
-function ValidaDIRE(AValue: String): Boolean;
-function ValidaRE(AValue: String): Boolean;
+function ValidaDIRE(const AValue: String): Boolean;
+function ValidaRE(const AValue: String): Boolean;
 function ValidaDrawback(AValue: String): Boolean;
 function ValidaSUFRAMA(AValue: String): Boolean;
 function ValidaRECOPI(AValue: String): Boolean;
-function ValidaNVE(AValue: string): Boolean;
+function ValidaNVE(const AValue: string): Boolean;
 
 function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
-    IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
+    const IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
 function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
 function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
                               const APathArqMun: String): String;
@@ -118,7 +118,7 @@ begin
   Result := StrToInt(copy(s, 1, 8));
 end;
 
-function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
                           ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
@@ -196,7 +196,7 @@ begin
   end;
 end;
 
-function ValidaDIRE(AValue: String): Boolean;
+function ValidaDIRE(const AValue: String): Boolean;
 var
   AnoData, AnoValue: integer;
 begin
@@ -215,7 +215,7 @@ begin
   end;
 end;
 
-function ValidaRE(AValue: String): Boolean;
+function ValidaRE(const AValue: String): Boolean;
 var
   AnoData, AnoValue, SerieRE: integer;
 begin
@@ -301,10 +301,16 @@ begin
     Result := copy(AValue, 20, 1) = Modulo11(copy(AValue, 1, 19), 1, 19);
 end;
 
-function ValidaNVE(AValue: string): Boolean;
+function ValidaNVE(const AValue: string): Boolean;
 begin
-  //TODO:
-  Result := True;
+  //TODO: A NVE (Nomenclatura de Valor Aduaneiro e Estatística) é baseada no NCM,
+  // mas formada de 2 letras (atributos) e 4 números (especificações). Ex: AA0001
+  Result := ( (Length(AValue) = 6) and ( CharIsAlpha(AValue[1]) and
+                                         CharIsAlpha(AValue[2]) and
+                                         CharIsNum(AValue[3])   and
+                                         CharIsNum(AValue[4])   and
+                                         CharIsNum(AValue[5])   and
+                                         CharIsNum(AValue[6]) ));
 end;
 
 function XmlEstaAssinado(const AXML: String): Boolean;
@@ -313,7 +319,7 @@ begin
 end;
 
 function SignatureElement(const URI: String; AddX509Data: Boolean;
-  IdSignature: String; const Digest: TSSLDgst): String;
+  const IdSignature: String; const Digest: TSSLDgst): String;
 var
   MethodAlgorithm, DigestAlgorithm: String;
 begin

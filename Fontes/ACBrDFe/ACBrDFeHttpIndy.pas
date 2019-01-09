@@ -58,14 +58,14 @@ type
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data: Pointer);
   protected
     function GetHTTPResultCode: Integer; override;
-    procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String); override;
+    procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
     function Enviar(const ConteudoXML: String; const AURL: String;
-      const ASoapAction: String; AMimeType: String = ''): String; override;
+      const ASoapAction: String; const AMimeType: String = ''): String; override;
     procedure Abortar; override;
   end;
 
@@ -93,7 +93,7 @@ begin
 end;
 
 function TDFeHttpIndy.Enviar(const ConteudoXML, AURL, ASoapAction: String;
-  AMimeType: String): String;
+  const AMimeType: String): String;
 var
   Resp: TMemoryStream;
 begin
@@ -131,7 +131,7 @@ begin
 end;
 
 procedure TDFeHttpIndy.ConfigurarHTTP(const AURL, ASoapAction: String;
-  AMimeType: String);
+  const AMimeType: String);
 begin
   with FpDFeSSL do
   begin

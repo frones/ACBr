@@ -98,7 +98,7 @@ type
   private
     FdsigCtx: xmlSecDSigCtxPtr;
 
-    function InserirDTD(AXml: String; const DTD: String): String;
+    function InserirDTD(const AXml: String; const DTD: String): String;
 {$IFDEF USE_MSCRYPO}
     function UseMSCrypto: Boolean;
     function SSLUsaMSCrypto: Boolean;
@@ -107,7 +107,7 @@ type
     procedure CreateCtx;
     procedure DestroyCtx;
     function XmlSecSign(aDoc: xmlDocPtr;
-      SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
+      const SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); override;
@@ -116,14 +116,14 @@ type
     destructor Destroy; override;
 
     function Assinar(const ConteudoXML, docElement, InfElement: String;
-      SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''; IdAttr: String = ''): String; override;
+      const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''; const IdAttr: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String; out MsgErro: String)
       : Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-      const InfElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = '';
-      IdAttr: String = ''): Boolean; override;
+      const InfElement: String; const SignatureNode: String = '';
+      const SelectionNamespaces: String = ''; const IdSignature: String = '';
+      const IdAttr: String = ''): Boolean; override;
   end;
 
 procedure InitXmlSec(XMLSecCryptoLib: String);
@@ -420,7 +420,7 @@ begin
 end;
 
 function TDFeSSLXmlSignXmlSec.XmlSecSign(aDoc: xmlDocPtr;
- SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
+ const SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
 var
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
@@ -463,12 +463,13 @@ begin
 end;
 
 function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
-  InfElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String; IdAttr: String): String;
+  InfElement: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String; const IdAttr: String): String;
 var
   doc: xmlDocPtr;
   AXml, XmlAss, DTD, URI: String;
   TemDeclaracao: Boolean;
+  IdAttr_temp: string;
 begin
   InitXmlSec;
 
@@ -484,15 +485,15 @@ begin
 
   if InfElement <> '' then
   begin
-    IdAttr := IfEmptyThen(IdAttr, 'Id');
+    IdAttr_temp := IfEmptyThen(IdAttr, 'Id');
 
     DTD := StringReplace(cDTD, '&infElement&', InfElement, []);
-    DTD := StringReplace(DTD, '&IdAttribute&', IdAttr, []);
+    DTD := StringReplace(DTD, '&IdAttribute&', IdAttr_temp, []);
 
     AXml := InserirDTD(AXml, DTD);
   end;
 
-  URI := ExtraiURI(aXML, IdAttr);
+  URI := ExtraiURI(aXML, IdAttr_temp);
 
 
   { load template }
@@ -615,8 +616,8 @@ begin
 end;
 
 function TDFeSSLXmlSignXmlSec.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String; const InfElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String; IdAttr: String): Boolean;
+  out MsgErro: String; const InfElement: String; const SignatureNode: String;
+  const SelectionNamespaces: String; const IdSignature: String; const IdAttr: String): Boolean;
 var
   doc: xmlDocPtr;
   SignNode: xmlNodePtr;
@@ -625,6 +626,7 @@ var
   AXml, X509Certificate, DTD: String;
   asSignatureNode, asSelectionNamespaces: String;
   MS: TMemoryStream;
+  IdAttr_temp: string;
 begin
   InitXmlSec;
 
@@ -638,10 +640,10 @@ begin
 
   if InfElement <> '' then
   begin
-    IdAttr := IfEmptyThen(IdAttr, 'Id');
+    IdAttr_temp := IfEmptyThen(IdAttr, 'Id');
 
     DTD := StringReplace(cDTD, '&infElement&', InfElement, []);
-    DTD := StringReplace(DTD, '&IdAttribute&', IdAttr, []);
+    DTD := StringReplace(DTD, '&IdAttribute&', IdAttr_temp, []);
 
     AXml := InserirDTD(AXml, DTD);
   end;
@@ -732,7 +734,7 @@ begin
   end;
 end;
 
-function TDFeSSLXmlSignXmlSec.InserirDTD(AXml: String;
+function TDFeSSLXmlSignXmlSec.InserirDTD(const AXml: String;
   const DTD: String): String;
 var
   I: integer;

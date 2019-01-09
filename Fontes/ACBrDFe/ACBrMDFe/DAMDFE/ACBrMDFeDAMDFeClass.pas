@@ -65,7 +65,7 @@ type
     FMDFeEncerrado: Boolean;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetSeparadorPathPDF(aInitialPath: String): String; override;
+    function GetSeparadorPathPDF(const aInitialPath: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -170,7 +170,7 @@ begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;
 
-function TACBrMDFeDAMDFeClass.GetSeparadorPathPDF(aInitialPath: String): String;
+function TACBrMDFeDAMDFeClass.GetSeparadorPathPDF(const aInitialPath: String): String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;

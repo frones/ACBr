@@ -79,15 +79,15 @@ type
     FSubjectName: String;
     FTipo: TSSLTipoCertificado;
     FDER64base: String;
-    procedure SetIssuerName(AValue: String);
-    procedure SetSubjectName(AValue: String);
+    procedure SetIssuerName(const AValue: String);
+    procedure SetSubjectName(const AValue: String);
   public
     constructor Create;
     procedure Clear;
 
-    function GetCertificadoraFromIssuerName(SubjectName: String): String;
-    function GetCNPJFromSubjectName(SubjectName: String): String;
-    function GetRazaoSocialFromSubjectName(SubjectName: String): String;
+    function GetCertificadoraFromIssuerName(const SubjectName: String): String;
+    function GetCNPJFromSubjectName(const SubjectName: String): String;
+    function GetRazaoSocialFromSubjectName(const SubjectName: String): String;
 
     property NumeroSerie: String read FNumeroSerie write FNumeroSerie;
     property IssuerName: String read FIssuerName write SetIssuerName;
@@ -158,7 +158,7 @@ type
     procedure DescarregarCertificado; virtual;
     function SelecionarCertificado: String; virtual;
     procedure LerCertificadosStore; virtual;
-    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; virtual;
+    function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; virtual;
 
     property CertContextWinApi: Pointer read GetCertContextWinApi;
     property CertPFXData: AnsiString read GetCertPFXData;
@@ -187,14 +187,14 @@ type
 
     function GetHTTPResultCode: Integer; virtual;
     function GetInternalErrorCode: Integer; virtual;
-    procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String);
+    procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String);
       virtual;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
     destructor Destroy; override;
 
     function Enviar(const ConteudoXML: String; const AURL: String;
-      const ASoapAction: String; AMimeType: String = ''): String; virtual;
+      const ASoapAction: String; const AMimeType: String = ''): String; virtual;
     procedure Abortar; virtual;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
@@ -211,22 +211,22 @@ type
   protected
     FpDFeSSL: TDFeSSL;
 
-    function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
-      docElement, IdSignature: String; IdAttr: String = ''): String;
-    function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
+    function AdicionarSignatureElement( const ConteudoXML: String; AddX509Data: Boolean;
+      const docElement, IdSignature: String; const IdAttr: String = ''): String;
+    function AjustarXMLAssinado(const ConteudoXML: String; const X509DER: String = ''): String;
     function GetSignDigestAlgorithm(const SignatureNode: String): TSSLDgst;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
     function Assinar(const ConteudoXML, docElement, infElement: String;
-      SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''; IdAttr: String = ''): String; virtual;
+      const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''; const IdAttr: String = ''): String; virtual;
     function Validar(const ConteudoXML, ArqSchema: String;
       out MsgErro: String): Boolean; virtual;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-      const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = '';
-      IdAttr: String = ''): Boolean; virtual;
+      const infElement: String; const SignatureNode: String = '';
+      const SelectionNamespaces: String = ''; const IdSignature: String = '';
+      const IdAttr: String = ''): Boolean; virtual;
   end;
 
   TDFeSSLAntesDeAssinar = procedure (var ConteudoXML: String;
@@ -251,7 +251,7 @@ type
   protected
     procedure Execute; override;
   public
-    constructor Create(ADFeSSL: TDFeSSL; SSLHttpClass: TDFeSSLHttpClassOf; AConteudoXML, AURL,
+    constructor Create(ADFeSSL: TDFeSSL; SSLHttpClass: TDFeSSLHttpClassOf; const AConteudoXML, AURL,
        ASoapAction, AMimeType: String); reintroduce;
     destructor Destroy; override;
 
@@ -307,10 +307,10 @@ type
     function GetInternalErrorCode: Integer;
     function GetSenha: AnsiString;
 
-    procedure SetArquivoPFX(AValue: String);
-    procedure SetDadosPFX(AValue: AnsiString);
-    procedure SetNumeroSerie(AValue: String);
-    procedure SetSenha(AValue: AnsiString);
+    procedure SetArquivoPFX(const AValue: String);
+    procedure SetDadosPFX(const AValue: AnsiString);
+    procedure SetNumeroSerie(const AValue: String);
+    procedure SetSenha(const AValue: AnsiString);
 
     procedure SetSSLCryptLib(ASSLCryptLib: TSSLCryptLib);
     procedure SetSSLHttpLib(ASSLHttpLib: TSSLHttpLib);
@@ -326,21 +326,21 @@ type
 
     // Nota: ConteudoXML, DEVE estar em UTF8 //
     function Assinar(const ConteudoXML, docElement, infElement: String;
-      SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''; IdAttr: String = ''): String;
+      const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''; const IdAttr: String = ''): String;
     // Envia por SoapAction o ConteudoXML (em UTF8) para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const AURL: String;
       const ASoapAction: String; AMimeType: String = ''): String;
     // Valida um Arquivo contra o seu Schema. Retorna True se OK, preenche MsgErro se False //
     // ConteudoXML, DEVE estar em UTF8
-    function Validar(const ConteudoXML: String; ArqSchema: String;
+    function Validar(const ConteudoXML: String; const ArqSchema: String;
       out MsgErro: String): Boolean;
     // Verifica se assinatura de um XML é válida. Retorna True se OK, preenche MsgErro se False //
     // ConteudoXML, DEVE estar em UTF8
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-      const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = '';
-      IdAttr: String = ''): Boolean;
+      const infElement: String; const SignatureNode: String = '';
+      const SelectionNamespaces: String = ''; const IdSignature: String = '';
+      const IdAttr: String = ''): Boolean;
 
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
@@ -381,7 +381,7 @@ type
     procedure DescarregarCertificado;
     procedure LerCertificadosStore;
     function SelecionarCertificado: String;
-    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; virtual;
+    function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; virtual;
 
     procedure ValidarCNPJCertificado(CNPJDocumento: String);
 
@@ -474,7 +474,7 @@ uses
 { TDFeSendThread }
 
 constructor TDFeSendThread.Create(ADFeSSL: TDFeSSL;
-  SSLHttpClass: TDFeSSLHttpClassOf; AConteudoXML, AURL, ASoapAction,
+  SSLHttpClass: TDFeSSLHttpClassOf; const AConteudoXML, AURL, ASoapAction,
   AMimeType: String);
 begin
   FreeOnTerminate := False; // Sem liberação automática da Thread
@@ -564,7 +564,7 @@ begin
   FDER64base     := '';
 end;
 
-procedure TDadosCertificado.SetSubjectName(AValue: String);
+procedure TDadosCertificado.SetSubjectName(const AValue: String);
 begin
   if FSubjectName = AValue then Exit;
   FSubjectName := AValue;
@@ -573,7 +573,7 @@ begin
   FCNPJ := GetCNPJFromSubjectName(FSubjectName);
 end;
 
-procedure TDadosCertificado.SetIssuerName(AValue: String);
+procedure TDadosCertificado.SetIssuerName(const AValue: String);
 begin
   if FIssuerName = AValue then Exit;
   FIssuerName := AValue;
@@ -581,7 +581,7 @@ begin
   FCertificadora := GetCertificadoraFromIssuerName( FIssuerName );
 end;
 
-function TDadosCertificado.GetCNPJFromSubjectName( SubjectName: String ): String;
+function TDadosCertificado.GetCNPJFromSubjectName( const SubjectName: String ): String;
 var
   P: Integer;
 begin
@@ -600,7 +600,7 @@ begin
   end;
 end;
 
-function TDadosCertificado.GetRazaoSocialFromSubjectName( SubjectName: String ): String;
+function TDadosCertificado.GetRazaoSocialFromSubjectName( const SubjectName: String ): String;
 var
   P1, P2: Integer;
 begin
@@ -618,7 +618,7 @@ begin
   end;
 end;
 
-function TDadosCertificado.GetCertificadoraFromIssuerName( SubjectName: String ): String;
+function TDadosCertificado.GetCertificadoraFromIssuerName( const SubjectName: String ): String;
 var
   P1, P2: Integer;
 begin
@@ -716,7 +716,7 @@ begin
   raise EACBrDFeException.Create('"LerCertificadosStore" não suportado em: ' +ClassName);
 end;
 
-function TDFeSSLCryptClass.CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean;
+function TDFeSSLCryptClass.CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean;
 begin
   {$IfDef FPC}Result := False;{$EndIf}
   raise EACBrDFeException.Create('"CarregarCertificadoPublico" não suportado em: ' +ClassName);
@@ -827,13 +827,13 @@ begin
 end;
 
 procedure TDFeSSLHttpClass.ConfigurarHTTP(const AURL, ASoapAction: String;
-  AMimeType: String);
+  const AMimeType: String);
 begin
   raise EACBrDFeException.Create('Método "ConfigurarHTTP" não implementado em: '+ClassName);
 end;
 
 function TDFeSSLHttpClass.Enviar(const ConteudoXML: String; const AURL: String;
-  const ASoapAction: String; AMimeType: String): String;
+  const ASoapAction: String; const AMimeType: String): String;
 begin
   {$IFDEF FPC}
   Result := '';
@@ -855,9 +855,9 @@ begin
   FpDFeSSL := ADFeSSL;
 end;
 
-function TDFeSSLXmlSignClass.AdicionarSignatureElement(ConteudoXML: String;
-  AddX509Data: Boolean; docElement, IdSignature: String;
-  IdAttr: String = ''): String;
+function TDFeSSLXmlSignClass.AdicionarSignatureElement(const ConteudoXML: String;
+  AddX509Data: Boolean; const docElement, IdSignature: String;
+  const IdAttr: String = ''): String;
 var
   URI, TagEndDocElement: String;
   I: Integer;
@@ -875,7 +875,7 @@ begin
 end;
 
 function TDFeSSLXmlSignClass.AjustarXMLAssinado(const ConteudoXML: String;
-  X509DER: String): String;
+  const X509DER: String): String;
 var
   XmlAss: String;
   PosSig, PosIni, PosFim: Integer;
@@ -990,8 +990,8 @@ begin
 end;
 
 function TDFeSSLXmlSignClass.Assinar(const ConteudoXML, docElement,
-  infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String; IdAttr: String): String;
+  infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String; const IdAttr: String): String;
 begin
   {$IFDEF FPC}
   Result := '';
@@ -1009,8 +1009,8 @@ begin
 end;
 
 function TDFeSSLXmlSignClass.VerificarAssinatura(const ConteudoXML: String; out
-  MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String; IdAttr: String): Boolean;
+  MsgErro: String; const infElement: String; const SignatureNode: String;
+  const SelectionNamespaces: String; const IdSignature: String; const IdAttr: String): Boolean;
 begin
   {$IFDEF FPC}
   Result := False;
@@ -1092,8 +1092,8 @@ begin
 end;
 
 function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
-  SignatureNode: String; SelectionNamespaces: String; IdSignature: String;
-  IdAttr: String ): String;
+  const SignatureNode: String; const SelectionNamespaces: String; const IdSignature: String;
+  const IdAttr: String ): String;
 Var
   XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois: String;
   Assinado: Boolean;
@@ -1188,7 +1188,7 @@ begin
   end;
 end;
 
-function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
+function TDFeSSL.Validar(const ConteudoXML: String; const ArqSchema: String;
   out MsgErro: String): Boolean;
 begin
   if EstaVazio(ArqSchema) then
@@ -1203,8 +1203,8 @@ begin
 end;
 
 function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
-  MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String; IdAttr: String): Boolean;
+  MsgErro: String; const infElement: String; const SignatureNode: String;
+  const SelectionNamespaces: String; const IdSignature: String; const IdAttr: String): Boolean;
 begin
   Result := FSSLXmlSignClass.VerificarAssinatura(ConteudoXML, MsgErro,
                               infElement, SignatureNode, SelectionNamespaces,
@@ -1378,7 +1378,7 @@ begin
     FSSLCryptClass.CarregarCertificado;
 end;
 
-function TDFeSSL.CarregarCertificadoPublico(DadosX509Base64: Ansistring
+function TDFeSSL.CarregarCertificadoPublico(const DadosX509Base64: Ansistring
   ): Boolean;
 begin
   DescarregarCertificado;
@@ -1492,7 +1492,7 @@ begin
   Result := StrCrypt(FSenha, FK)  // Descritografa a Senha
 end;
 
-procedure TDFeSSL.SetArquivoPFX(AValue: String);
+procedure TDFeSSL.SetArquivoPFX(const AValue: String);
 begin
   if FArquivoPFX = AValue then Exit;
   FArquivoPFX := AValue;
@@ -1501,7 +1501,7 @@ begin
     DescarregarCertificado;
 end;
 
-procedure TDFeSSL.SetDadosPFX(AValue: AnsiString);
+procedure TDFeSSL.SetDadosPFX(const AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
   FDadosPFX := AValue;
@@ -1509,7 +1509,7 @@ begin
     DescarregarCertificado;
 end;
 
-procedure TDFeSSL.SetNumeroSerie(AValue: String);
+procedure TDFeSSL.SetNumeroSerie(const AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
@@ -1518,7 +1518,7 @@ begin
     DescarregarCertificado;
 end;
 
-procedure TDFeSSL.SetSenha(AValue: AnsiString);
+procedure TDFeSSL.SetSenha(const AValue: AnsiString);
 begin
   if (FK <> '') and (FSenha = StrCrypt(AValue, FK)) then
     Exit;

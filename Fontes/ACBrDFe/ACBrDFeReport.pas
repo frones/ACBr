@@ -116,7 +116,7 @@ type
     function GetPathPDF: String;
   protected
     FPArquivoPDF: String;
-    function GetSeparadorPathPDF(aInitialPath: String): String; virtual;
+    function GetSeparadorPathPDF(const aInitialPath: String): String; virtual;
 
     function AplicarAtributoTexto(const ATexto, ABloco, ATag: String): String;
 
@@ -284,7 +284,7 @@ begin
     Result := PathWithDelim(GetSeparadorPathPDF(Result));
 end;
 
-function TACBrDFeReport.GetSeparadorPathPDF(aInitialPath: String): String;
+function TACBrDFeReport.GetSeparadorPathPDF(const aInitialPath: String): String;
 begin
   // Esse método deve ser sobreposto pelas Classes Filhas //
   Result := aInitialPath;

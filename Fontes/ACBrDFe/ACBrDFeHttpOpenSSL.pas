@@ -62,14 +62,14 @@ type
   protected
     function GetHTTPResultCode: Integer; override;
     function GetInternalErrorCode: Integer; override;
-    procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String); override;
+    procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
     function Enviar(const ConteudoXML: String; const AURL: String;
-      const ASoapAction: String; AMimeType: String = ''): String; override;
+      const ASoapAction: String; const AMimeType: String = ''): String; override;
     procedure Abortar; override;
   end;
 
@@ -104,7 +104,7 @@ begin
 end;
 
 function TDFeHttpOpenSSL.Enviar(const ConteudoXML: String; const AURL: String;
-  const ASoapAction: String; AMimeType: String): String;
+  const ASoapAction: String; const AMimeType: String): String;
 var
   OK: Boolean;
 begin
@@ -147,7 +147,7 @@ begin
 end;
 
 procedure TDFeHttpOpenSSL.ConfigurarHTTP(const AURL, ASoapAction: String;
-  AMimeType: String);
+  const AMimeType: String);
 begin
   FHTTP.Clear;
 

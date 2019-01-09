@@ -84,7 +84,7 @@ type
     function SelecionarCertificado: String; override;
     procedure LerCertificadosStore; override;
     procedure DescarregarCertificado; override;
-    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; override;
+    function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; override;
 
     property Certificado: PCCERT_CONTEXT read FpCertContext;
   end;
@@ -113,17 +113,17 @@ function GetCNGProviderIsHardware(ACryptHandle: NCRYPT_HANDLE): Boolean;
 procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
    out ProviderType: DWORD; out ProviderName, ContainerName: String);
 
-function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
-function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
-function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtensionName: String ): CERT_NAME_BLOB;
-function AdjustAnsiOID(aOID: AnsiString): AnsiString;
+function GetCertExtension(ACertContext: PCCERT_CONTEXT; const ExtensionName: String): PCERT_EXTENSION;
+function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; const ExtensionName: String): PCERT_ALT_NAME_INFO;
+function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; const AExtensionName: String ): CERT_NAME_BLOB;
+function AdjustAnsiOID(const aOID: AnsiString): AnsiString;
 function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT): String;
 
 function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
 
-procedure PFXDataToCertContextWinApi( AData, APass: AnsiString; var AStore, ACertContext: Pointer);
-function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; APass: AnsiString): AnsiString;
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+procedure PFXDataToCertContextWinApi( const AData, APass: AnsiString; var AStore, ACertContext: Pointer);
+function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; const APass: AnsiString): AnsiString;
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; const APass: AnsiString;
    RaiseUnknownErrors: Boolean = True);
 
 Var
@@ -444,7 +444,7 @@ begin
   end;
 end;
 
-function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
+function GetCertExtension(ACertContext: PCCERT_CONTEXT; const ExtensionName: String): PCERT_EXTENSION;
 begin
   Result := nil;
   if Assigned(ACertContext) then
@@ -453,7 +453,7 @@ begin
                                  PCERT_EXTENSION(ACertContext^.pCertInfo^.rgExtension));
 end;
 
-function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
+function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; const ExtensionName: String): PCERT_ALT_NAME_INFO;
 var
   BufferSize: DWORD;
 begin
@@ -482,7 +482,7 @@ begin
   end;
 end;
 
-function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtensionName: String ): CERT_NAME_BLOB;
+function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; const AExtensionName: String ): CERT_NAME_BLOB;
 type
   ArrCERT_ALT_NAME_ENTRY = array of CERT_ALT_NAME_ENTRY;
 var
@@ -505,7 +505,7 @@ begin
   end;
 end;
 
-function AdjustAnsiOID(aOID: AnsiString): AnsiString;
+function AdjustAnsiOID(const aOID: AnsiString): AnsiString;
 var
   LenOID: Integer;
 begin
@@ -576,7 +576,7 @@ begin
   end;
 end;
 
-procedure PFXDataToCertContextWinApi(AData, APass: AnsiString; var AStore,
+procedure PFXDataToCertContextWinApi(const AData, APass: AnsiString; var AStore,
   ACertContext: Pointer);
 var
   PFXBlob: CRYPT_DATA_BLOB;
@@ -635,7 +635,7 @@ begin
       'PFXDataToCertContextWinApi: Falha ao localizar o Certificado com a Chave Privada.');
 end;
 
-function ExportCertContextToPFXData(ACertContext: PCCERT_CONTEXT; APass: AnsiString
+function ExportCertContextToPFXData(ACertContext: PCCERT_CONTEXT; const APass: AnsiString
   ): AnsiString;
 type
   ArrPCERT_CHAIN_ELEMENT = array of PCERT_CHAIN_ELEMENT;
@@ -746,7 +746,7 @@ begin
   end;
 end;
 
-procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString;
+procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; const APass: AnsiString;
   RaiseUnknownErrors: Boolean);
 var
   dwKeySpec: DWORD;
@@ -1111,7 +1111,7 @@ begin
   inherited DescarregarCertificado;
 end;
 
-function TDFeWinCrypt.CarregarCertificadoPublico(DadosX509Base64: Ansistring
+function TDFeWinCrypt.CarregarCertificadoPublico(const DadosX509Base64: Ansistring
   ): Boolean;
 var
   BinaryX509: AnsiString;
@@ -1333,7 +1333,7 @@ var
   mHashBuffer: array [0..1023] of AnsiChar;
   HashResult, ReverseHash: AnsiString;
 begin
-{$IFNDEF COMPILER23_UP}
+{$IFNDEF COMPILER25_UP}
   Result := False;
 {$ENDIF}
 

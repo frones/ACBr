@@ -73,7 +73,7 @@ type
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
-    procedure SetAbout(AValue: String);
+    procedure SetAbout(const AValue: String);
     procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
     procedure SetIntegrador(AValue: TACBrIntegrador);
@@ -91,9 +91,9 @@ type
     procedure LerParamsIni( ApenasSeNaoLido: Boolean = False); virtual;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
-    function ExtrairVersaoNomeArquivoSchema(ArqSchema: String): String; virtual;
+    function ExtrairVersaoNomeArquivoSchema(const ArqSchema: String): String; virtual;
     function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
-    function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
+    function VersaoSchemaStringToDouble(const AVersao: String): Double; virtual;
     procedure AchaArquivoSchema(NomeSchema: String; var AVersao: Double; var ArqSchema: String); virtual;
 
   public
@@ -105,11 +105,11 @@ type
     function GetNomeModeloDFe: String; virtual;
     function GetNameSpaceURI: String; virtual;
 
-    function Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String = '';
+    function Gravar(NomeArquivo: String; ConteudoXML: String; const aPath: String = '';
       ConteudoEhUTF8: Boolean = True): Boolean;
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
+      StreamNFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
@@ -232,7 +232,7 @@ begin
   Result := 'ACBrDFe Ver: ' + ACBRDFE_VERSAO;
 end;
 
-procedure TACBrDFe.SetAbout(AValue: String);
+procedure TACBrDFe.SetAbout(const AValue: String);
 begin
   {nada aqui}
 end;
@@ -249,7 +249,7 @@ end;
 
 
 function TACBrDFe.Gravar(NomeArquivo: String; ConteudoXML: String;
-  aPath: String; ConteudoEhUTF8: Boolean): Boolean;
+  const aPath: String; ConteudoEhUTF8: Boolean): Boolean;
 var
   UTF8Str, SoNome, SoPath: String;
 begin
@@ -288,8 +288,8 @@ begin
   end;
 end;
 
-procedure TACBrDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String;
+procedure TACBrDFe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; const NomeArq: String;
   sReplyTo: TStrings);
 var
   i: Integer;
@@ -338,7 +338,7 @@ begin
   Result := '';
 end;
 
-function TACBrDFe.ExtrairVersaoNomeArquivoSchema(ArqSchema: String): String;
+function TACBrDFe.ExtrairVersaoNomeArquivoSchema(const ArqSchema: String): String;
 var
   P1, P2: Integer;
 begin
@@ -363,7 +363,7 @@ begin
     Result := '';
 end;
 
-function TACBrDFe.VersaoSchemaStringToDouble(AVersao: String): Double;
+function TACBrDFe.VersaoSchemaStringToDouble(const AVersao: String): Double;
 begin
   Result := StringToFloatDef(AVersao, 0);
 end;

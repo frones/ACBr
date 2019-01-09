@@ -82,9 +82,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFSe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamNFSe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function GerarLote(ALote: Integer; AqMaxRps: Integer = 50): Boolean; overload;
     function GerarLote(ALote: String; AqMaxRps: Integer = 50): Boolean; overload;
@@ -181,8 +181,8 @@ begin
   inherited;
 end;
 
-procedure TACBrNFSe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFSe: TStream; NomeArq: String;
+procedure TACBrNFSe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamNFSe: TStream; const NomeArq: String;
   sReplyTo: TStrings);
 begin
   SetStatus( stNFSeEmail );

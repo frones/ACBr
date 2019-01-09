@@ -107,7 +107,7 @@ type
     FAbout : String ;
     FLayOut: TACBrSATExtratoLayOut;
 
-    function GetSeparadorPathPDF(aInitialPath: String): String; override;
+    function GetSeparadorPathPDF(const aInitialPath: String): String; override;
     procedure SetInternalCFe(ACFe: TCFe);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
@@ -235,7 +235,7 @@ begin
   Result := FAbout ;
 end;
 
-function TACBrSATExtratoClass.GetSeparadorPathPDF(aInitialPath: String): String;
+function TACBrSATExtratoClass.GetSeparadorPathPDF(const aInitialPath: String): String;
 begin
    Result := PathWithDelim(aInitialPath) + 'SAT';
 end;

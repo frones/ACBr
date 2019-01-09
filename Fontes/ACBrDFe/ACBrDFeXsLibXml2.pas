@@ -79,23 +79,23 @@ type
       : xmlNodeSetPtr;
     function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring;
     function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
-      var SignatureNode: String; var SelectionNamespaces: String;
+      const SignatureNode: String; const SelectionNamespaces: String;
       infElement: String): xmlNodePtr;
-    function LibXmlLookUpNode(ParentNode: xmlNodePtr; NodeName: String;
-      NameSpace: String = ''): xmlNodePtr;
-    function LibXmlNodeWasFound(ANode: xmlNodePtr; NodeName: String;
-      NameSpace: String): boolean;
-    function AdicionarNode(var aDoc: xmlDocPtr; ConteudoXML: String): xmlNodePtr;
+    function LibXmlLookUpNode(ParentNode: xmlNodePtr; const NodeName: String;
+      const NameSpace: String = ''): xmlNodePtr;
+    function LibXmlNodeWasFound(ANode: xmlNodePtr; const NodeName: String;
+      const NameSpace: String): boolean;
+    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String): xmlNodePtr;
   public
     function Assinar(const ConteudoXML, docElement, infElement: String;
-      SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''; IdAttr: String = ''): String; override;
+      const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''; const IdAttr: String = ''): String; override;
     function Validar(const ConteudoXML, ArqSchema: String; out MsgErro: String)
       : boolean; override;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-      const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''; IdSignature: String = '';
-      IdAttr: String = ''): boolean; override;
+      const infElement: String; const SignatureNode: String = '';
+      const SelectionNamespaces: String = ''; const IdSignature: String = '';
+      const IdAttr: String = ''): boolean; override;
   end;
 
 procedure LibXmlInit();
@@ -143,8 +143,8 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.Assinar(const ConteudoXML, docElement,
-  infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String; IdAttr: String): String;
+  infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String; const IdAttr: String): String;
 var
   aDoc: xmlDocPtr;
   SignNode, XmlNode: xmlNodePtr;
@@ -307,6 +307,7 @@ var
   xpathExpr: AnsiString;
   xpathObj: xmlXPathObjectPtr;
 begin
+  Result := nil;
   // Cria o contexto XPath
   xpathCtx := xmlXPathNewContext(aDoc);
   try
@@ -413,8 +414,8 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.VerificarAssinatura(const ConteudoXML: String;
-  out MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String; IdSignature: String; IdAttr: String): boolean;
+  out MsgErro: String; const infElement: String; const SignatureNode: String;
+  const SelectionNamespaces: String; const IdSignature: String; const IdAttr: String): boolean;
 var
   aDoc: xmlDocPtr;
   SignElement, URI: String;
@@ -444,7 +445,8 @@ begin
     end;
 
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
-    if (SignNode = nil) or (SignNode.Name <> SignatureNode) then
+    //LibXmlFindSignatureNode deve retornar nil caso não encontre o nó.
+    if (SignNode = nil) {or (SignNode.Name <> SignatureNode)} then
     begin
        MsgErro := ACBrStr(cErrFindSignNode);
        Exit;
@@ -504,18 +506,19 @@ end;
 procedure TDFeSSLXmlSignLibXml2.VerificarValoresPadrao(var SignatureNode
   : String; var SelectionNamespaces: String);
 begin
-  if (SignatureNode <> cSignatureNode) then
+  if (SignatureNode <> '') then
     SignatureNode := cSignatureNode;
 
-  if (SelectionNamespaces <> cSignatureNameSpace) then
+  if (SelectionNamespaces <> '') then
     SelectionNamespaces := cSignatureNameSpace;
 end;
 
 function TDFeSSLXmlSignLibXml2.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
-  var SignatureNode: String; var SelectionNamespaces: String; infElement: String
+  const SignatureNode: String; const SelectionNamespaces: String; infElement: String
   ): xmlNodePtr;
 var
   rootNode, infNode, SignNode: xmlNodePtr;
+  vSignatureNode, vSelectionNamespaces: String;
 begin
   Result := nil;
 
@@ -524,7 +527,9 @@ begin
   if (rootNode = nil) then
     Exit;
 
-  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+  vSignatureNode       := SignatureNode;
+  vSelectionNamespaces := SelectionNamespaces;
+  VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
 
   { Se infElement possui prefixo o mesmo tem que ser removido }
   if Pos(':', infElement) > 0 then
@@ -561,12 +566,12 @@ begin
   { Procurando pelo nó de assinatura...
     Primeiro vamos verificar manualmente se é o último no do nosso infNode atual };
   SignNode := infNode^.last;
-  if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
+  if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
   begin
     { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
     SignNode := infNode^.next;
     while (SignNode <> nil)  and
-      (not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces)) do
+      (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
     begin
       SignNode := SignNode^.next;
     end;
@@ -575,10 +580,10 @@ begin
     if (SignNode = nil) then
     begin
       SignNode := rootNode^.last;
-      if not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
+      if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
       begin
         SignNode := rootNode^.next;
-        while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, SignatureNode, SelectionNamespaces)) do
+        while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
         begin
           SignNode := SignNode^.next;
         end;
@@ -590,14 +595,14 @@ begin
 end;
 
 function TDFeSSLXmlSignLibXml2.LibXmlNodeWasFound(ANode: xmlNodePtr;
-  NodeName: String; NameSpace: String): boolean;
+  const NodeName: String; const NameSpace: String): boolean;
 begin
   Result := (ANode <> nil) and (ANode^.Name = NodeName) and
     ((NameSpace = '') or (ANode^.ns^.href = NameSpace));
 end;
 
 function TDFeSSLXmlSignLibXml2.LibXmlLookUpNode(ParentNode: xmlNodePtr;
-  NodeName: String; NameSpace: String): xmlNodePtr;
+  const NodeName: String; const NameSpace: String): xmlNodePtr;
 
   function _LibXmlLookUpNode(ParentNode: xmlNodePtr; NodeName: String;
     NameSpace: String): xmlNodePtr;
@@ -639,7 +644,7 @@ begin
   Result := _LibXmlLookUpNode(ParentNode^.children, NodeName, NameSpace);
 end;
 
-function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr; ConteudoXML: String): xmlNodePtr;
+function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String): xmlNodePtr;
 Var
   NewNode: xmlNodePtr;
   memDoc: xmlDocPtr;

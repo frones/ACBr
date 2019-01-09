@@ -90,9 +90,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamBPe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamBPe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
@@ -192,8 +192,8 @@ begin
   inherited;
 end;
 
-procedure TACBrBPe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamBPe: TStream; NomeArq: String;
+procedure TACBrBPe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamBPe: TStream; const NomeArq: String;
   sReplyTo: TStrings);
 begin
   SetStatus( stBPeEmail );

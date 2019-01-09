@@ -78,9 +78,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamANe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamANe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar: Boolean;
 
@@ -147,8 +147,8 @@ begin
   inherited;
 end;
 
-procedure TACBrANe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamANe: TStream; NomeArq: String;
+procedure TACBrANe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamANe: TStream; const NomeArq: String;
   sReplyTo: TStrings);
 begin
   SetStatus( stANeEmail );

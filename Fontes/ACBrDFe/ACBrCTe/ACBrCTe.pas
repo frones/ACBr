@@ -127,9 +127,9 @@ type
       ACNPJCPF, ANSU: String): Boolean;
     function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
       ACNPJCPF, AchCTe: String): Boolean;
-    procedure EnviarEmail(sPara, sAssunto: String;
+    procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamCTe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
+      StreamCTe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     procedure EnviarEmailEvento(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -867,8 +867,8 @@ begin
 //  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchCTe);
 end;
 
-procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String;
+procedure TACBrCTe.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; const NomeArq: String;
   sReplyTo: TStrings);
 begin
   SetStatus( stCTeEmail );

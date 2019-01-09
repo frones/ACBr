@@ -61,7 +61,7 @@ type
     procedure ErroAbstract(NomeProcedure: String);
 
   protected
-   function GetSeparadorPathPDF(aInitialPath: String): String; override;
+   function GetSeparadorPathPDF(const aInitialPath: String): String; override;
 
   protected
     FACBrBPe: TComponent;
@@ -193,7 +193,7 @@ begin
   raise EACBrBPeException.Create(NomeProcedure + ' não implementado em: ' + ClassName);
 end;
 
-function TACBrBPeDABPEClass.GetSeparadorPathPDF(aInitialPath: String): String;
+function TACBrBPeDABPEClass.GetSeparadorPathPDF(const aInitialPath: String): String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;

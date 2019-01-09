@@ -159,26 +159,26 @@ begin
 end;
 
 function TBloco_H.RegistroH030New: TRegistroH030;
-var
-  H020: TRegistroH020;
+//var
+  //H020: TRegistroH020;
 begin
 end;
 
 function TBloco_H.RegistroH040New: TRegistroH040;
-var
-  H020: TRegistroH020;
+//var
+//  H020: TRegistroH020;
 begin
 end;
 
 function TBloco_H.RegistroH050New: TRegistroH050;
-var
-  H020: TRegistroH020;
+//var
+//  H020: TRegistroH020;
 begin
 end;
 
 function TBloco_H.RegistroH060New: TRegistroH060;
-var
-  H020: TRegistroH020;
+//var
+//  H020: TRegistroH020;
 begin
 end;
 

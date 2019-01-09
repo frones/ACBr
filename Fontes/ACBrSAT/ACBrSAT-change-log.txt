@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2019
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para correta impressão do Logotipo na lateral, na TM-T20
+[*] Melhor destaque no número do Extrato, imprimindo em Expandido
+[+] Inserido Espaço após a impressão de Descontos/Acréscimos do Item
+
 04/01/2019
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para melhor detecção de Logotipo, não atribuido...

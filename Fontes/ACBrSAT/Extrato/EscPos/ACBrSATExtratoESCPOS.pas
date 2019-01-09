@@ -136,7 +136,7 @@ end;
 procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
 var
   sCFe, DocsEmit, TextoLateral: String;
-  MetadeColunas, Altura: Integer;
+  MetadeColunas, Altura, LinhasTextoLateral: Integer;
   SL: TStringList;
   ImprimiuConsumidor: Boolean;
 
@@ -172,13 +172,15 @@ begin
     SL := TStringList.Create;
     try
       SL.Text := TextoLateral;
-      Altura := max(FPosPrinter.CalcularAlturaTexto(SL.Count),250);
+      LinhasTextoLateral := SL.Count;
+      Altura := max(FPosPrinter.CalcularAlturaTexto(LinhasTextoLateral),230);
     finally
       SL.Free;
     end;
+
     FPosPrinter.Buffer.Add('</zera><mp>' +
-                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda) +
-                           '</logo>');
+                           FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda)+
+                           StringOfChar(LF, LinhasTextoLateral)+ '</logo>');
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                            '</ae><c>'+TextoLateral +
                            '</mp>');
@@ -207,7 +209,7 @@ begin
   else
     sCFe := IntToStrZero( CFE.ide.nCFe, 6);
 
-  FPosPrinter.Buffer.Add('</ce><c><n>EXTRATO No. '+ sCFe + ACBrStr(' do CUPOM FISCAL ELETRÔNICO - SAT</n>'));
+  FPosPrinter.Buffer.Add('</ce><c><n>EXTRATO No. <e>' + sCFe + '</e>'+ ACBrStr(' do CUPOM FISCAL ELETRÔNICO - SAT</n>'));
   if Cancelamento then
   begin
     FPosPrinter.Buffer.Add('</ce></fn><n>CANCELAMENTO</n>');
@@ -216,7 +218,7 @@ begin
 
   if (CFe.ide.tpAmb = taHomologacao) then
   begin
-    FPosPrinter.Buffer.Add('</ce></fn> ');
+    FPosPrinter.Buffer.Add('</ce></fn>');
     FPosPrinter.Buffer.Add(' = T E S T E =');
     FPosPrinter.Buffer.Add(' ');
     FPosPrinter.Buffer.Add(StringOfChar('>',FPosPrinter.ColunasFonteNormal));
@@ -256,6 +258,7 @@ var
   fQuant: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrBruto,
     sVlrImpostos, LinhaCmd: String;
+  GapItem: Boolean;
 begin
   FPosPrinter.Buffer.Add('</ae><c>'+
                          PadSpace('#|COD|DESC|QTD|UN|VL UN R$|(VL TR R$)*|VL ITEM R$',
@@ -318,35 +321,50 @@ begin
       FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
     end;
 
+    GapItem := False;
+
     if ImprimeDescAcrescItem then
     begin
       // desconto
       if (CFe.Det.Items[i].Prod.vDesc > 0) then
+      begin
+        GapItem := True;
         FPosPrinter.Buffer.Add('</ae><c>' + padSpace( 'desconto sobre item|' +
           FormatFloatBr(CFe.Det.Items[i].Prod.vDesc, '-,0.00'),
           FPosPrinter.ColunasFonteCondensada, '|'));
+      end;
 
       // acrescimo
       if (CFe.Det.Items[i].Prod.vOutro > 0) then
+      begin
+        GapItem := True;
         FPosPrinter.Buffer.Add('</ae><c>' + padSpace( ACBrStr('acréscimo sobre item|') +
           FormatFloatBr(CFe.Det.Items[i].Prod.vOutro, '+,0.00'),
           FPosPrinter.ColunasFonteCondensada, '|'));
+      end;
 
       // Rateio de Desconto
       if (CFe.Det.Items[i].Prod.vRatDesc > 0) then
+      begin
+        GapItem := True;
         FPosPrinter.Buffer.Add('</ae><c>' + padSpace( 'rateio de desconto sobre subtotal|' +
           FormatFloatBr(CFe.Det.Items[i].Prod.vRatDesc, '-,0.00'),
           FPosPrinter.ColunasFonteCondensada, '|'));
+      end;
 
       // Rateio de Desconto
       if (CFe.Det.Items[i].Prod.vRatAcr > 0) then
+      begin
+        GapItem := True;
         FPosPrinter.Buffer.Add('</ae><c>' + padSpace( ACBrStr('rateio de acréscimo sobre subtotal|') +
           FormatFloatBr(CFe.Det.Items[i].Prod.vRatAcr, '+,0.00'),
           FPosPrinter.ColunasFonteCondensada, '|'));
+      end;
     end;
 
     if (CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN > 0) then
     begin
+      GapItem := True;
       FPosPrinter.Buffer.Add('</ae><c>' + PadSpace( ACBrStr('dedução para ISSQN|')+
          FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vDeducISSQN, '-,0.00'),
          FPosPrinter.ColunasFonteCondensada, '|'));
@@ -354,6 +372,9 @@ begin
          FormatFloatBr(CFe.Det.Items[i].Imposto.ISSQN.vBC),
          FPosPrinter.ColunasFonteCondensada, '|'));
     end;
+
+    if GapItem and (i < CFe.Det.Count-1) then
+      FPosPrinter.Buffer.Add(' ');
   end;
 end;
 

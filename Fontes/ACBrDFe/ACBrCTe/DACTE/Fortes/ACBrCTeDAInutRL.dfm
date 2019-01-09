@@ -32,7 +32,7 @@ object frmCTeDAInutRL: TfrmCTeDAInutRL
       'FortesReport 3.23 - Copyright '#195#8218#194#169' 1999-2009 Fortes Inform'#195#402#194#161'ti' +
       'ca'
     DocumentInfo.Creator = 'Projeto ACBr (Componente CT-e)'
-    DisplayName = 'Documento PDF'
+    DisplayName = 'Documento  PDF'
     Left = 369
     Top = 174
   end

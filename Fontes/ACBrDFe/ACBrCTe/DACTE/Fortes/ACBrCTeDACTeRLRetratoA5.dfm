@@ -4,7 +4,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   Width = 974
   Height = 919
   VertScrollBar.Position = 251
-  Caption = 'DACTe - Retrato A5'
+  Caption = 'DACTe -  Retrato A5'
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]

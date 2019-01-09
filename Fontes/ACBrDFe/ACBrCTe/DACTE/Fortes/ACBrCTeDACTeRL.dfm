@@ -33,7 +33,7 @@ object frmDACTeRL: TfrmDACTeRL
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 
-      'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#194#169' 1999-20' +
+      'FortesReport (Open Source)  v3.24(B14)  \251 Copyright '#194#169' 1999-20' +
       '08 Fortes Inform'#195#161'tica'
     DisplayName = 'Documento PDF'
     Left = 136

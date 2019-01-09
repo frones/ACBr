@@ -1,7 +1,7 @@
 inherited frmCTeDAEventoRLRetrato: TfrmCTeDAEventoRLRetrato
   Left = 274
   Top = 83
-  Caption = 'Evento - Retrato'
+  Caption = 'Evento -  Retrato'
   ClientHeight = 745
   ClientWidth = 829
   Font.Height = -8

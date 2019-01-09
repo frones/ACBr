@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2018
+-- ACBrDFeDANFeReport --
+[*] Ajustes para ignora a impressão do EAN quando for o literal "SEM GTIN".
+    (por Rafael Dias).
+
 07/01/2018
 -- ACBrDFeDANFeReport, ACBrNFeDANFEClass --
 [*] Propriedade "TACBrNFeDANFEClass.QuebraLinhaEmDetalhamentoEspecifico" movida

@@ -302,7 +302,7 @@ end;
 
 function TACBrDFeDANFeReport.ManterCodigo(scEAN, scProd: String): String;
 begin
-  if (Length(scEAN) > 0) and (ImprimeCodigoEan) then
+  if (Length(Trim(scEAN)) > 0) and (Trim(scEAN) <> 'SEM GTIN') and (ImprimeCodigoEan) then
     Result := Trim(scEAN)
   else
     Result := Trim(scProd);

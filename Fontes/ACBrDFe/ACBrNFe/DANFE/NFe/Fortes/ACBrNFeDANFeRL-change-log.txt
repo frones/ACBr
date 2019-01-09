@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2018
+-- ACBrNFeDAInutRL.lfm, ACBrNFeDAInutRLRetrato.lfm --
+[*] Ajuste no arquivo .lfm seguindo alterações realizadas no .dfm
+    Por: José M S Junior
+
 07/01/2018   
 -- ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
 [*] Ajuste para considerar a propriedade "ExibeInforAdicProduto"

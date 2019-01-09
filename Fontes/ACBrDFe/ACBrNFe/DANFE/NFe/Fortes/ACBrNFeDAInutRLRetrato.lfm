@@ -1,7 +1,9 @@
 inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
-  Left = 338
-  Top = 190
+  Left = 345
+  Height = 496
+  Top = 171
   Caption = 'Inutilização - Retrato'
+  ClientHeight = 496
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -10,7 +12,6 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     Top = 1
     Font.Height = -8
     Font.Name = 'Courier New'
-    PrintDialog = True
     BeforePrint = RLInutBeforePrint
     object rlb_01_Titulo: TRLBand[0]
       Left = 38
@@ -88,7 +89,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     object rlb_07_Rodape: TRLBand[1]
       Left = 38
       Height = 32
-      Top = 433
+      Top = 428
       Width = 718
       BandType = btFooter
       Color = clWhite
@@ -97,7 +98,6 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = rlb_07_RodapeBeforePrint
       object rlShape1: TRLDraw
         Left = 0
         Height = 1
@@ -129,7 +129,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rlLabel15: TRLLabel
+      object rllDataHoraImpressao: TRLLabel
         Left = 6
         Height = 12
         Top = 6
@@ -149,9 +149,11 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     end
     object rlb_03_Inutilizacao: TRLBand[2]
       Left = 38
-      Height = 220
+      Height = 215
       Top = 213
       Width = 718
+      AutoSize = True
+      BandType = btTitle
       Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False
@@ -159,7 +161,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = RLb_03_InutilizacaoBeforePrint
+      Transparent = False
       object rlsLinhaV01: TRLDraw
         Left = 70
         Height = 33
@@ -614,6 +616,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       Top = 99
       Width = 718
       AutoSize = True
+      BandType = btTitle
       Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False

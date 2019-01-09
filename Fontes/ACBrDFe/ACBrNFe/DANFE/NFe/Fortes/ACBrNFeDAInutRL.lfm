@@ -1,7 +1,7 @@
 object frmNFeDAInutRL: TfrmNFeDAInutRL
-  Left = 183
+  Left = 157
   Height = 404
-  Top = 260
+  Top = 241
   Width = 880
   Caption = 'frmNFeDAInutRL'
   ClientHeight = 404
@@ -10,16 +10,12 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  OnCreate = FormCreate
-	OnDestroy = FormDestroy
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  LCLVersion = '1.8.4.0'
   object RLNFeInut: TRLReport
-    Left = 21
+    Left = 0
     Height = 1123
-    Top = 51
+    Top = 0
     Width = 794
-    DataSource = DataSource1
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
@@ -38,9 +34,5 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     DisplayName = 'Documento PDF'
     left = 369
     top = 174
-  end
-  object DataSource1: TDataSource
-    left = 428
-    top = 180
   end
 end

@@ -145,6 +145,52 @@ type
     property Items[Index: Integer]: TRegistro1020 read GetItem write SetItem;
   end;
 
+
+ //REGISTRO 1050:  Detalhamento de Ajustes de Base de Cálculo – Valores Extra Apuração
+  TRegistro1050 = class
+  private
+    FVL_AJ_CST01            : currency;
+    FVL_AJ_CST06            : currency;
+    FVL_AJ_CST07            : currency;
+    FCNPJ                   : String;
+    FVL_AJ_CST04            : currency;
+    FVL_AJ_CST05            : currency;
+    FNUM_REC                : String;
+    FDT_REF                 : TDateTime;
+    FVL_AJ_TOT              : currency;
+    FVL_AJ_CST99            : currency;
+    FIND_AJ_BC              : TACBrTabCodAjBaseCalcContrib;
+    FINFO_COMPL             : String;
+    FVL_AJ_CST08            : currency;
+    FVL_AJ_CST09            : currency;
+    FIND_APROP              : TACBrIndicadorApropAjuste;
+    FVL_AJ_CST49            : currency;
+    FVL_AJ_CST02            : currency;
+    FVL_AJ_CST03            : currency;
+  public
+    property DT_REF         : TDateTime                      read FDT_REF          write FDT_REF;
+    property IND_AJ_BC      : TACBrTabCodAjBaseCalcContrib   read FIND_AJ_BC       write FIND_AJ_BC;
+    property CNPJ           : String                         read FCNPJ            write FCNPJ;
+    property VL_AJ_TOT      : currency                       read FVL_AJ_TOT       write FVL_AJ_TOT;
+    property VL_AJ_CST01    : currency                       read FVL_AJ_CST01     write FVL_AJ_CST01;
+    property VL_AJ_CST02    : currency                       read FVL_AJ_CST02     write FVL_AJ_CST02;
+    property VL_AJ_CST03    : currency                       read FVL_AJ_CST03     write FVL_AJ_CST03;
+    property VL_AJ_CST04    : currency                       read FVL_AJ_CST04     write FVL_AJ_CST04;
+    property VL_AJ_CST05    : currency                       read FVL_AJ_CST05     write FVL_AJ_CST05;
+    property VL_AJ_CST06    : currency                       read FVL_AJ_CST06     write FVL_AJ_CST06;
+    property VL_AJ_CST07    : currency                       read FVL_AJ_CST07     write FVL_AJ_CST07;
+    property VL_AJ_CST08    : currency                       read FVL_AJ_CST08     write FVL_AJ_CST08;
+    property VL_AJ_CST09    : currency                       read FVL_AJ_CST09     write FVL_AJ_CST09;
+    property VL_AJ_CST49    : currency                       read FVL_AJ_CST49     write FVL_AJ_CST49;
+    property VL_AJ_CST99    : currency                       read FVL_AJ_CST99     write FVL_AJ_CST99;
+    property IND_APROP      : TACBrIndicadorApropAjuste      read FIND_APROP       write FIND_APROP;
+    property NUM_REC        : String                         read FNUM_REC         write FNUM_REC;
+    property INFO_COMPL     : String                         read FINFO_COMPL      write FINFO_COMPL;
+  end;
+
+
+
+
   //REGISTRO 1100: CONTROLE DE CRÉDITOS FISCAIS – PIS/PASEP
   TRegistro1100 = class
   private

@@ -58,7 +58,8 @@ type
                  vlVersao101,  // Código 002 - Versão 101 ADE Cofis nº 34/2010 de 01/01/2011
                  vlVersao200,  // Código 002 - Versão 200 ADE Cofis nº 20/2012
                  vlVersao201,  // Código 003 - Versão 201 ADE Cofis nº 20/2012 de 14/03/2012
-				 				 vlVersao202   // Código 004
+                 vlVersao202,  // Código 004
+                 vlVersao310   // Código 005
                 );
   TACBrVersaoLeiaute = TACBrCodVer;
 
@@ -1012,6 +1013,23 @@ type
                  );
    TACBrIndicadorDaComposicaoDaReceitaRecebida = TACBrInd_Rec;
 
+   // Tabela Código de Ajustes de Base de Cálculo das Contribuições (*) – Versão 1.01
+
+   TACBrTabCodAjBaseCalcContrib = (tcaVendasCanceladas,      // 01 - Vendas canceladas de receitas tributadas em períodos anteriores
+                                   tcaDevolucoesVendas,      // 02 - Devoluções de vendas tributadas em períodos anteriores
+                                   tcaICMSaRecolher,         // 21 - ICMS a recolher sobre Operações próprias
+                                   tcaOutrVlrsDecJudicial,   // 41 - Outros valores a excluir, vinculados a decisão judicial
+                                   tcaOutrVlrsSemDecJudicial // 42 - Outros valores a excluir, não vinculados a decisão judicial
+                                   );
+
+   // Indicador de apropriação do ajuste
+   TACBrIndicadorApropAjuste = (iaaRefPisCofins,  //   01 – Referente ao PIS/Pasep e a Cofins
+                                iaaUnicaPISPasep, //   02 – Referente unicamente ao PIS/Pasep
+                                iaaRefUnicaCofins //   03 – Referente unicamente à Cofins
+                                );
+
+
+
   TOpenBlocos = class
   private
     FIND_MOV: TACBrIndMov;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
@@ -1703,7 +1721,10 @@ begin
       Result := '003'
    else
    if AValue = vlVersao202 then
-      Result := '004';
+      Result := '004'
+   else
+   if AValue = vlVersao310 then
+      Result := '005';
 end;
 
 function StrToCodVer(const AValue: string): TACBrCodVer;
@@ -1717,10 +1738,13 @@ begin
    if AValue = '003' then
       Result := vlVersao201
 	else
-	if AValue = '004' then
-		Result := vlVersao202
+    if AValue = '004' then
+      Result := vlVersao202
+	else
+    if AValue = '005' then
+      Result := vlVersao310
     else
-     raise Exception.Create(format('Valor informado [%s] deve estar entre (001, 002, 003 e 004)',[AValue]));
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (001, 002, 003, 004 e 005)',[AValue]));
 end;
 
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;

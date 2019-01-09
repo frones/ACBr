@@ -46,10 +46,10 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrEPCBlocos;
 
 type
-  TRegistroM400 = class;
-  TRegistroM410 = class;
-  TRegistroM800 = class;
-  TRegistroM810 = class;
+  TRegistroM400     = class;
+  TRegistroM410     = class;
+  TRegistroM800     = class;
+  TRegistroM810     = class;
   TRegistroM100List = class;
   TRegistroM105List = class;
   TRegistroM110List = class;
@@ -58,6 +58,7 @@ type
   TRegistroM205List = class;
   TRegistroM210List = class;
   TRegistroM211     = class;
+  TRegistroM215     = class;
   TRegistroM220List = class;
   TRegistroM225List = class;
   TRegistroM230List = class;
@@ -73,6 +74,7 @@ type
   TRegistroM605List = class;
   TRegistroM610List = class;
   TRegistroM611     = class;
+  TRegistroM615     = class;
   TRegistroM620List = class;
   TRegistroM625List = class;
   TRegistroM630List = class;
@@ -346,30 +348,38 @@ type
     FVL_REC_BRT                : currency;
     FQUANT_BC_PIS              : Variant;
     FCOD_CONT                  : TACBrCodCont;
+    FVL_AJUS_ACRES_BC_PIS      : currency;
+    FVL_AJUS_REDUC_BC_PIS      : currency;
+    FVL_BC_CONT_AJUS           : currency;
 
     FRegistroM211              : TRegistroM211;     // NIVEL 4
+    FRegistroM215              : TRegistroM215;     // NIVEL 4
     FRegistroM220              : TRegistroM220List; // NIVEL 4
     FRegistroM230              : TRegistroM230List; // NIVEL 4
   public
     constructor Create; virtual;                    /// Create
     destructor Destroy; override;                   /// Destroy
 
-    property COD_CONT          : TACBrCodCont      read FCOD_CONT          write FCOD_CONT;
-    property VL_REC_BRT        : currency          read FVL_REC_BRT        write FVL_REC_BRT;
-    property VL_BC_CONT        : currency          read FVL_BC_CONT        write FVL_BC_CONT;
-    property ALIQ_PIS          : Variant           read FALIQ_PIS          write FALIQ_PIS;
-    property QUANT_BC_PIS      : Variant           read FQUANT_BC_PIS      write FQUANT_BC_PIS;
-    property ALIQ_PIS_QUANT    : Variant           read FALIQ_PIS_QUANT    write FALIQ_PIS_QUANT;
-    property VL_CONT_APUR      : currency          read FVL_CONT_APUR      write FVL_CONT_APUR;
-    property VL_AJUS_ACRES     : currency          read FVL_AJUS_ACRES     write FVL_AJUS_ACRES;
-    property VL_AJUS_REDUC     : currency          read FVL_AJUS_REDUC     write FVL_AJUS_REDUC;
-    property VL_CONT_DIFER     : Variant           read FVL_CONT_DIFER     write FVL_CONT_DIFER;
-    property VL_CONT_DIFER_ANT : Variant           read FVL_CONT_DIFER_ANT write FVL_CONT_DIFER_ANT;
-    property VL_CONT_PER       : currency          read FVL_CONT_PER       write FVL_CONT_PER;
+    property COD_CONT             : TACBrCodCont      read FCOD_CONT             write FCOD_CONT;
+    property VL_REC_BRT           : currency          read FVL_REC_BRT           write FVL_REC_BRT;
+    property VL_BC_CONT           : currency          read FVL_BC_CONT           write FVL_BC_CONT;
+    property VL_AJUS_ACRES_BC_PIS : currency          read FVL_AJUS_ACRES_BC_PIS write FVL_AJUS_ACRES_BC_PIS;
+    property VL_AJUS_REDUC_BC_PIS : currency          read FVL_AJUS_REDUC_BC_PIS write FVL_AJUS_REDUC_BC_PIS;
+    property VL_BC_CONT_AJUS      : currency          read FVL_BC_CONT_AJUS      write FVL_BC_CONT_AJUS;
+    property ALIQ_PIS             : Variant           read FALIQ_PIS             write FALIQ_PIS;
+    property QUANT_BC_PIS         : Variant           read FQUANT_BC_PIS         write FQUANT_BC_PIS;
+    property ALIQ_PIS_QUANT       : Variant           read FALIQ_PIS_QUANT       write FALIQ_PIS_QUANT;
+    property VL_CONT_APUR         : currency          read FVL_CONT_APUR         write FVL_CONT_APUR;
+    property VL_AJUS_ACRES        : currency          read FVL_AJUS_ACRES        write FVL_AJUS_ACRES;
+    property VL_AJUS_REDUC        : currency          read FVL_AJUS_REDUC        write FVL_AJUS_REDUC;
+    property VL_CONT_DIFER        : Variant           read FVL_CONT_DIFER        write FVL_CONT_DIFER;
+    property VL_CONT_DIFER_ANT    : Variant           read FVL_CONT_DIFER_ANT    write FVL_CONT_DIFER_ANT;
+    property VL_CONT_PER          : currency          read FVL_CONT_PER          write FVL_CONT_PER;
 
-    property RegistroM211      : TRegistroM211     read FRegistroM211      write FRegistroM211;
-    property RegistroM220      : TRegistroM220List read FRegistroM220      write FRegistroM220;
-    property RegistroM230      : TRegistroM230List read FRegistroM230      write FRegistroM230;
+    property RegistroM211         : TRegistroM211     read FRegistroM211         write FRegistroM211;
+    property RegistroM215         : TRegistroM215     read FRegistroM215         write FRegistroM215;
+    property RegistroM220         : TRegistroM220List read FRegistroM220         write FRegistroM220;
+    property RegistroM230         : TRegistroM230List read FRegistroM230         write FRegistroM230;
   end;
 
   // Registro M210 - Lista
@@ -397,6 +407,33 @@ type
     property VL_EXC_ESP_COOP         : currency          read FVL_EXC_ESP_COOP         write FVL_EXC_ESP_COOP;
     property VL_BC_CONT              : currency          read FVL_BC_CONT              write FVL_BC_CONT;
   end;
+
+
+  //REGISTRO M215: Ajustes da Base de Cálculo da Contribuição para o PIS/Pasep Apurada
+  { TRegistroM215 }
+  TRegistroM215 = class
+  private
+    FVL_AJ_BC             : currency;
+    FCNPJ                 : string;
+    FDT_REF               : TDateTime;
+    FDESCR_AJ_BC          : string;
+    FIND_AJ_BC            : TACBrIndAJ;
+    FNUM_DOC              : string;
+    FINFO_COMPL           : string;
+    FCOD_AJ_BC            : TACBrTabCodAjBaseCalcContrib;
+    FCOD_CTA              : string;
+  public
+    property IND_AJ_BC    : TACBrIndAJ                    read FIND_AJ_BC       write FIND_AJ_BC;
+    property VL_AJ_BC     : currency                      read FVL_AJ_BC        write FVL_AJ_BC;
+    property COD_AJ_BC    : TACBrTabCodAjBaseCalcContrib  read FCOD_AJ_BC       write FCOD_AJ_BC;
+    property NUM_DOC      : string                        read FNUM_DOC         write FNUM_DOC;
+    property DESCR_AJ_BC  : string                        read FDESCR_AJ_BC     write FDESCR_AJ_BC;
+    property DT_REF       : TDateTime                     read FDT_REF          write FDT_REF;
+    property COD_CTA      : string                        read FCOD_CTA         write FCOD_CTA;
+    property CNPJ         : string                        read FCNPJ            write FCNPJ;
+    property INFO_COMPL   : string                        read FINFO_COMPL      write FINFO_COMPL;
+  end;
+
 
   //REGISTRO M220: AJUSTES DA CONTRIBUIÇÃO PARA O PIS/PASEP APURADA
 
@@ -827,30 +864,38 @@ type
     FVL_REC_BRT                : currency;
     FQUANT_BC_COFINS           : Variant;
     FCOD_CONT                  : TACBrCodCont;
+    FVL_AJUS_ACRES_BC_COFINS   : currency;
+    FVL_AJUS_REDUC_BC_COFINS   : currency;
+    FVL_BC_CONT_AJUS           : currency;
 
     FRegistroM611              : TRegistroM611;     // NIVEL 4
+    FRegistroM615              : TRegistroM615;     // NIVEL 4
     FRegistroM620              : TRegistroM620List; // NIVEL 4
     FRegistroM630              : TRegistroM630List; // NIVEL 4
   public
     constructor Create;  virtual;                   /// Create
     destructor  Destroy; override;                  /// Destroy
 
-    property COD_CONT          : TACBrCodCont      read FCOD_CONT          write FCOD_CONT;
-    property VL_REC_BRT        : currency          read FVL_REC_BRT        write FVL_REC_BRT;
-    property VL_BC_CONT        : currency          read FVL_BC_CONT        write FVL_BC_CONT;
-    property ALIQ_COFINS       : Variant           read FALIQ_COFINS       write FALIQ_COFINS;
-    property QUANT_BC_COFINS   : Variant           read FQUANT_BC_COFINS   write FQUANT_BC_COFINS;
-    property ALIQ_COFINS_QUANT : Variant           read FALIQ_COFINS_QUANT write FALIQ_COFINS_QUANT;
-    property VL_CONT_APUR      : currency          read FVL_CONT_APUR      write FVL_CONT_APUR;
-    property VL_AJUS_ACRES     : currency          read FVL_AJUS_ACRES     write FVL_AJUS_ACRES;
-    property VL_AJUS_REDUC     : currency          read FVL_AJUS_REDUC     write FVL_AJUS_REDUC;
-    property VL_CONT_DIFER     : Variant           read FVL_CONT_DIFER     write FVL_CONT_DIFER;
-    property VL_CONT_DIFER_ANT : Variant           read FVL_CONT_DIFER_ANT write FVL_CONT_DIFER_ANT;
-    property VL_CONT_PER       : currency          read FVL_CONT_PER       write FVL_CONT_PER;
+    property COD_CONT                : TACBrCodCont      read FCOD_CONT                write FCOD_CONT;
+    property VL_REC_BRT              : currency          read FVL_REC_BRT              write FVL_REC_BRT;
+    property VL_BC_CONT              : currency          read FVL_BC_CONT              write FVL_BC_CONT;
+    property VL_AJUS_ACRES_BC_COFINS : currency          read FVL_AJUS_ACRES_BC_COFINS write FVL_AJUS_ACRES_BC_COFINS;
+    property VL_AJUS_REDUC_BC_COFINS : currency          read FVL_AJUS_REDUC_BC_COFINS write FVL_AJUS_REDUC_BC_COFINS;
+    property VL_BC_CONT_AJUS         : currency          read FVL_BC_CONT_AJUS         write FVL_BC_CONT_AJUS;
+    property ALIQ_COFINS             : Variant           read FALIQ_COFINS             write FALIQ_COFINS;
+    property QUANT_BC_COFINS         : Variant           read FQUANT_BC_COFINS         write FQUANT_BC_COFINS;
+    property ALIQ_COFINS_QUANT       : Variant           read FALIQ_COFINS_QUANT       write FALIQ_COFINS_QUANT;
+    property VL_CONT_APUR            : currency          read FVL_CONT_APUR            write FVL_CONT_APUR;
+    property VL_AJUS_ACRES           : currency          read FVL_AJUS_ACRES           write FVL_AJUS_ACRES;
+    property VL_AJUS_REDUC           : currency          read FVL_AJUS_REDUC           write FVL_AJUS_REDUC;
+    property VL_CONT_DIFER           : Variant           read FVL_CONT_DIFER           write FVL_CONT_DIFER;
+    property VL_CONT_DIFER_ANT       : Variant           read FVL_CONT_DIFER_ANT       write FVL_CONT_DIFER_ANT;
+    property VL_CONT_PER             : currency          read FVL_CONT_PER             write FVL_CONT_PER;
 
-    property RegistroM611      : TRegistroM611     read FRegistroM611      write FRegistroM611;
-    property RegistroM620      : TRegistroM620List read FRegistroM620      write FRegistroM620;
-    property RegistroM630      : TRegistroM630List read FRegistroM630      write FRegistroM630;
+    property RegistroM611            : TRegistroM611     read FRegistroM611            write FRegistroM611;
+    property RegistroM615            : TRegistroM615     read FRegistroM615            write FRegistroM615;
+    property RegistroM620            : TRegistroM620List read FRegistroM620            write FRegistroM620;
+    property RegistroM630            : TRegistroM630List read FRegistroM630            write FRegistroM630;
   end;
 
   // Registro M610 - Lista
@@ -878,6 +923,35 @@ type
     property VL_EXC_ESP_COOP         : currency          read FVL_EXC_ESP_COOP         write FVL_EXC_ESP_COOP;
     property VL_BC_CONT              : currency          read FVL_BC_CONT              write FVL_BC_CONT;
   end;
+
+
+  //REGISTRO M615:  Ajustes da Base de Cálculo da COFINS Apurada
+  { TRegistroM615 }
+  TRegistroM615 = class
+  private
+    FVL_AJ_BC             : currency;
+    FCNPJ                 : string;
+    FDT_REF               : TDateTime;
+    FDESCR_AJ_BC          : string;
+    FIND_AJ_BC            : TACBrIndAJ;
+    FNUM_DOC              : string;
+    FINFO_COMPL           : string;
+    FCOD_AJ_BC            : TACBrTabCodAjBaseCalcContrib;
+    FCOD_CTA              : string;
+  public
+    property IND_AJ_BC    : TACBrIndAJ                    read FIND_AJ_BC       write FIND_AJ_BC;
+    property VL_AJ_BC     : currency                      read FVL_AJ_BC        write FVL_AJ_BC;
+    property COD_AJ_BC    : TACBrTabCodAjBaseCalcContrib  read FCOD_AJ_BC       write FCOD_AJ_BC;
+    property NUM_DOC      : string                        read FNUM_DOC         write FNUM_DOC;
+    property DESCR_AJ_BC  : string                        read FDESCR_AJ_BC     write FDESCR_AJ_BC;
+    property DT_REF       : TDateTime                     read FDT_REF          write FDT_REF;
+    property COD_CTA      : string                        read FCOD_CTA         write FCOD_CTA;
+    property CNPJ         : string                        read FCNPJ            write FCNPJ;
+    property INFO_COMPL   : string                        read FINFO_COMPL      write FINFO_COMPL;
+  end;
+
+
+
 
   //REGISTRO M620: AJUSTES DA COFINS APURADA
 
@@ -1416,6 +1490,7 @@ end;
 constructor TRegistroM210.Create;
 begin
   FRegistroM211 := TRegistroM211.Create;
+  FRegistroM215 := TRegistroM215.Create;
   FRegistroM220 := TRegistroM220List.Create;
   FRegistroM230 := TRegistroM230List.Create;
 end;
@@ -1423,6 +1498,7 @@ end;
 destructor TRegistroM210.Destroy;
 begin
   FRegistroM211.Free;
+  FRegistroM215.Free;
   FRegistroM220.Free;
   FRegistroM230.Free;
   inherited;
@@ -1644,6 +1720,7 @@ end;
 constructor TRegistroM610.Create;
 begin
   FRegistroM611 := TRegistroM611.Create;
+  FRegistroM615 := TRegistroM615.Create;
   FRegistroM620 := TRegistroM620List.Create;
   FRegistroM630 := TRegistroM630List.Create;
 end;
@@ -1651,6 +1728,7 @@ end;
 destructor TRegistroM610.Destroy;
 begin
   FRegistroM611.Free;
+  FRegistroM615.Free;
   FRegistroM620.Free;
   FRegistroM630.Free;
   inherited;

@@ -506,10 +506,10 @@ end;
 procedure TDFeSSLXmlSignLibXml2.VerificarValoresPadrao(var SignatureNode
   : String; var SelectionNamespaces: String);
 begin
-  if (SignatureNode <> '') then
+  if (SignatureNode <> cSignatureNode) then
     SignatureNode := cSignatureNode;
 
-  if (SelectionNamespaces <> '') then
+  if (SelectionNamespaces <> cSignatureNameSpace) then
     SelectionNamespaces := cSignatureNameSpace;
 end;
 

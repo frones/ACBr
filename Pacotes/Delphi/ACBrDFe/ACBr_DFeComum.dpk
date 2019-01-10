@@ -44,9 +44,51 @@ contains
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas',
   ACBrDFeException in '..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas',
   ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas',
+  ACBrDFeReport in '..\..\..\Fontes\ACBrDFe\ACBrDFeReport.pas'
+   {$IfNDef DFE_SEM_MSXML}
+  ,
+  ACBrMSXML2_TLB in '..\..\..\Fontes\Terceiros\Ole\ACBrMSXML2_TLB.pas'
+   {$EndIf}
+
+  {$IfNDef DFE_SEM_OPENSSL}
+  ,
+  ACBrDFeOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas',
+  ACBrDFeHttpOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpOpenSSL.pas'
+   {$IfNDef DFE_SEM_XMLSEC}
+  ,
+  ACBrDFeXsXmlSec in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsXmlSec.pas'
+   {$EndIf}
+   {$IfNDef DFE_SEM_LIBXML2}
+  ,
+  ACBrDFeXsLibXml2 in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsLibXml2.pas'
+   {$EndIf}
+  {$EndIf}
+
+  {$IfNDef DFE_SEM_CAPICOM}
+  ,
+  ACBrDFeCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas',
+  ACBrCAPICOM_TLB in '..\..\..\Fontes\Terceiros\Ole\ACBrCAPICOM_TLB.pas'
+
+   {$IfNDef DFE_SEM_MSXML}
+  ,
+  ACBrDFeXsMsXmlCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXmlCapicom.pas'
+
+   {$EndIf}
+  {$EndIf}
+  {$IfNDef DFE_SEM_INDY}
+  ,
+  ACBrDFeHttpIndy in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpIndy.pas'
+  {$EndIf}
+
+
+  {$IfDef MSWINDOWS}
+  ,
   ACBRDFeWinCrypt in '..\..\..\Fontes\ACBrDFe\ACBRDFeWinCrypt.pas',
-  ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas',
-  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas',
-  ACBrDFeReport in '..\..\..\Fontes\ACBrDFe\ACBrDFeReport.pas';
+  ACBrDFeHttpWinApi in '..\..\..\Fontes\ACBrDFe\ACBrDFeHttpWinApi.pas'
+   {$IfNDef DFE_SEM_MSXML}
+  ,
+  ACBrDFeXsMsXml in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsMsXml.pas'
+   {$EndIf}
+  {$EndIf};
 
 end.

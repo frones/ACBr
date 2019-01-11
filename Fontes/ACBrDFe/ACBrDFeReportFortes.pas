@@ -49,7 +49,7 @@ type
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String);
-    class procedure CarregarLogo(ALogoImage: TRLImage; ALogo: string);
+    class procedure CarregarLogo(ALogoImage: TRLImage; const ALogo: string);
   end;
 
 
@@ -102,7 +102,7 @@ begin
   PDFFilter.FileName := AFile;
 end;
 
-class procedure TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; ALogo: string);
+class procedure TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; const ALogo: string);
 var
   LogoStream: TStringStream;
 begin

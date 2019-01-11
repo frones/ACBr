@@ -23,7 +23,7 @@ package ACBr_DFeComum;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - Biblioteca com Mï¿½todos e Classes em comum a todos Documentos Fiscais Eletrï¿½nicos'}
+{$DESCRIPTION 'ACBr - Biblioteca com Métodos e Classes em comum a todos Documentos Fiscais Eletrônicos'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 

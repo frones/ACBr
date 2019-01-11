@@ -392,8 +392,9 @@ var
   pdwDataLen, pcbResult: DWORD;
   Ret: SECURITY_STATUS;
 begin
+  Result     := 0;
   pdwDataLen := SizeOf(DWORD);
-  pcbResult := 0;
+  pcbResult  := 0;
   Ret := NCryptGetProperty(ACryptHandle, dwParam, @Result, pdwDataLen, pcbResult, 0);
   if (Ret <> ERROR_SUCCESS) then
     raise EACBrDFeException.Create('GetCNGProviderParamDWord. Erro: '+IntToHex(Ret, 8));

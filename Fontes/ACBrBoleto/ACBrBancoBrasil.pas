@@ -403,7 +403,7 @@ var
       begin
         if ((Mensagem.Count - 1) = 2) then
           Result := Copy(PadRight(Mensagem[1] +' / '+ Mensagem[2], 140, ' '), 1, 140)
-        else
+        else if Mensagem.Count > 1 then
           Result := Copy(PadRight(Mensagem[1], 140, ' '), 1, 140);
 
         Exit;
@@ -550,7 +550,7 @@ begin
        AMensagem   := Mensagem.Strings[0];
 
 
-     if (ACBrTitulo.CarteiraEnvio = tceBanco) and (Mensagem.Count > 0) then
+     if (ACBrTitulo.CarteiraEnvio = tceBanco) and (Mensagem.Count > 1) then
       begin
        QtdRegTitulo:= 4;
        GeraSegS    := True;

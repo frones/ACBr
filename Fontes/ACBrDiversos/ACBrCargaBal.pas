@@ -210,6 +210,7 @@ type
   {$ENDIF RTL230_UP}	
   TACBrCargaBal = class( TACBrComponent )
   private
+    FArquivosGerados: TStringList;
     FOnProgresso: TACBrCargaBalProgresso;
     FProdutos: TACBrCargaBalItens;
     FModelo: TACBrCargaBalModelo;
@@ -255,6 +256,8 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure GerarArquivos(const ADiretorio: String);
+
+    property ArquivosGerados: TStringList read FArquivosGerados;
   published
     property Modelo: TACBrCargaBalModelo read FModelo write FModelo;
     property ModeloStr: String read GetModeloStr;
@@ -376,11 +379,13 @@ constructor TACBrCargaBal.Create(AOwner: TComponent);
 begin
   inherited;
   FProdutos := TACBrCargaBalItens.Create;
+  FArquivosGerados := TStringList.Create ;
 end;
 
 destructor TACBrCargaBal.Destroy;
 begin
   FProdutos.Free;
+  FArquivosGerados.Free ;
   inherited;
 end;
 
@@ -1266,30 +1271,16 @@ begin
   if Self.Produtos.Count = 0 then
     raise EACBrCargaBal.Create(ACBrStr('Não foram informados os produtos para a geração!'));
 
+  FArquivosGerados.Clear;
+
   Produto := TStringList.Create;
-  Produto.Clear;
-
   Setor := TStringList.Create;
-  Setor.Clear;
-
   Receita := TStringList.Create;
-  Receita.Clear;
-
   Tara := TStringList.Create;
-  Tara.Clear;
-
   Nutricional := TStringList.Create;
-  Nutricional.Clear;
-
   RelacaoProdutoNutricional := TStringList.Create;
-  RelacaoProdutoNutricional.Clear;
-
   RelacaoProdutoReceita := TStringList.Create;
-  RelacaoProdutoReceita.Clear;
-
   Fornecedor := TStringList.Create;
-  Fornecedor.Clear;
-
   try
     Total := Self.Produtos.Count;
     Progresso(ACBrStr('Iniciando a geração dos arquivos'), 0, Total);
@@ -1314,6 +1305,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoProduto;
       Produto.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     // Gerar arquivo de setores se houverem dados e o arquivo for separado
@@ -1321,6 +1313,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoSetor;
       Setor.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     // Gerar arquivo de receitas se houverem dados e o arquivo for separado
@@ -1328,6 +1321,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoReceita;
       Receita.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     // Gerar arquivo de Nutricionais se houverem dados e o arquivo for separado
@@ -1335,6 +1329,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoNutricional;
       Nutricional.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     // Gerar arquivo de relação entre Produto e Nutricionais se houverem dados e o arquivo for separado
@@ -1342,6 +1337,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoRelacaoProdutoNutricional;
       RelacaoProdutoNutricional.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     // Gerar arquivo de relção entre Produto e Receita se houverem dados e o arquivo for separado
@@ -1349,6 +1345,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoRelacaoProdutoReceita;
       RelacaoProdutoReceita.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     //Gerar arquivo de taras(peso de embalagens)
@@ -1356,6 +1353,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoTaras;
       Tara.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     //Gerar arquivo de fornecedor
@@ -1363,6 +1361,7 @@ begin
     begin
       NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoFornecedor;
       Fornecedor.SaveToFile(NomeArquivo);
+      FArquivosGerados.Add(NomeArquivo) ;
     end;
 
     Progresso('Terminado', Total, Total);

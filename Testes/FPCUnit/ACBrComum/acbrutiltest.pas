@@ -153,6 +153,16 @@ type
     procedure ComVariasTags;
   end;
 
+  { TestXmlEhUTF8 }
+
+  TestXmlEhUTF8 = class(TTestCase)
+  published
+    procedure PadraoUTF8AspasDuplasUpperCase;
+    procedure PadraoUTF8AspasSimplesLowerCase;
+    procedure NaoUTF8;
+    procedure ApenasXML10;
+  end;
+
   { DecodeToStringTest }
 
   DecodeToStringTest = class(TTestCase)
@@ -4076,6 +4086,28 @@ begin
   CheckEquals('mais um teste', LerTagXML('<ACBr> teste <br> outro teste </br> <b>mais um teste</b> </ACBr>', 'b'));
 end;
 
+{ TestXmlEhUTF8 }
+
+procedure TestXmlEhUTF8.PadraoUTF8AspasDuplasUpperCase;
+begin
+  CheckTrue( XmlEhUTF8( '<?xml version="1.0" encoding="UTF-8"?>' ) );
+end;
+
+procedure TestXmlEhUTF8.PadraoUTF8AspasSimplesLowerCase;
+begin
+  CheckTrue( XmlEhUTF8( '<?xml version=''1.0'' encoding=''UTF-8''?>' ) );
+end;
+
+procedure TestXmlEhUTF8.NaoUTF8;
+begin
+  CheckFalse( XmlEhUTF8( '<?xml version="1.0" encoding="iso-8859-15"?>' ) );
+end;
+
+procedure TestXmlEhUTF8.ApenasXML10;
+begin
+  CheckFalse( XmlEhUTF8( '<?xml version="1.0"?>' ) );
+end;
+
 { ParseTextTest }
 
 procedure ParseTextTest.ParseDecode;
@@ -4354,6 +4386,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TestXmlEhUTF8{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', DecodeToStringTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest{$ifndef FPC}.Suite{$endif});

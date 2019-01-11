@@ -4046,8 +4046,13 @@ end ;
    Retorna True se o XML contêm a TAG de encoding em UTF8, no seu início.
  ------------------------------------------------------------------------------}
 function XmlEhUTF8(const AXML: String): Boolean;
+var
+  XmlStart: String;
+  P: Integer;
 begin
-  Result := (pos('encoding="utf-8"', LowerCase(LeftStr(AXML, 50))) > 0);
+  XmlStart := LowerCase(LeftStr(AXML, 50));
+  P := pos('encoding', XmlStart);
+  Result := (P > 0) and (pos('utf-8', XmlStart) > P);
 end;
 
 {------------------------------------------------------------------------------

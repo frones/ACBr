@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/01/2019
+-- ACBrUtil --
+[*] Ajuste no método "XmlEhUTF8", para permitir Aspas Simples na Declaração de XML
+    (por: DSA)
+
 Data: 19/19/2018
 -- ACBr.inc --
 [*] Desabilitada por padrão a diretiva $DEFINE USE_MINGW

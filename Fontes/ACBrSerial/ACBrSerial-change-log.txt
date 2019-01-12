@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2019
+-- ACBrETQClass, ACBrETQEpl2, ACBrETQPpla, ACBrETQZplII --
+[+] Adicionado métodos para detecção de Imagens BMP e PCX, monocromáticas
+
+-- ACBrETQZplII --
+[+] Adicionado método de conversão de imagem BMP para formato Zebra (GRF)
+[-] Correção para carga de Imagens em PCX
+[-] Correção para carga de Imagens em BMP
+    (por: DSA)
+
 08/01/2019
 -- ACBrPosPrinter --
 [+] Adicionado o método CalcularLinhasAltura(AAltura: Integer): Integer;

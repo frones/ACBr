@@ -67,9 +67,7 @@ type
 
     function ConverterVelocidade(Velocidade: Integer): Char;
 
-    function ComandoTipoImagem(const aNomeImagem: String; aFlipped: Boolean; aTipo: String): String;
     function ConverterMultiplicadorImagem(aMultiplicador: Integer): String;
-
     function ConverterEspessura(aVertical, aHorizontal: Integer): String;
 
   protected
@@ -240,36 +238,6 @@ function TACBrETQPpla.PrefixoComandoLinhaECaixa(aOrientacao: TACBrETQOrientacao
   ): String;
 begin
   Result := ConverterOrientacao(aOrientacao) + 'X11000';
-end;
-
-function TACBrETQPpla.ComandoTipoImagem(const aNomeImagem: String; aFlipped: Boolean;
-  aTipo: String): String;
-var
-  Cmd: Char;
-begin
-  aTipo := UpperCase(LeftStr(aTipo,3));
-
-  if (aTipo = 'PCX') then
-    Cmd := 'p'
-  else if (aTipo = 'IMG') then
-    Cmd := 'i'
-  else if (aTipo = 'HEX') then
-    Cmd := 'f'
-  else if (aTipo = 'BMP') then
-    Cmd := 'b'
-  else
-    raise Exception.Create(ACBrStr(
-      'Formato de Imagem deve ser Monocromático e do atipo: BMP, PCX, IMG ou HEX'));
-
-  if aFlipped then
-    Cmd := UpCase(Cmd);
-
-  Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem);
-end;
-
-function TACBrETQPpla.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
-begin
-  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
 end;
 
 function TACBrETQPpla.ConverterMultiplicadorImagem(aMultiplicador: Integer
@@ -482,6 +450,11 @@ begin
             ConverterEspessura(aEspVertical, aEspHorizontal);
 end;
 
+function TACBrETQPpla.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
+begin
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 16));
+end;
+
 function TACBrETQPpla.ComandoImprimirImagem(aMultImagem, aVertical,
   aHorizontal: Integer; aNomeImagem: String): AnsiString;
 begin
@@ -493,14 +466,41 @@ end;
 
 function TACBrETQPpla.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+var
+  Cmd: Char;
 begin
   if (aTipo = '') then
-     aTipo := 'BMP'
+    aTipo := 'BMP'
   else
     aTipo := UpperCase(RightStr(aTipo, 3));
 
+  if (aTipo = 'PCX') then
+  begin
+    if not ImgIsPCX(aStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgPCXMono));
+
+    Cmd := 'p'
+  end
+  else if (aTipo = 'BMP') then
+  begin
+    if not ImgIsBMP(aStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgBMPMono));
+
+    Cmd := 'b'
+  end
+  else if (aTipo = 'IMG') then
+    Cmd := 'i'
+  else if (aTipo = 'HEX') then
+    Cmd := 'f'
+  else
+    raise Exception.Create(ACBrStr(
+      'Formato de Imagem deve ser: BMP, PCX, IMG ou HEX, e Monocromática'));
+
+  if aFlipped then
+    Cmd := UpCase(Cmd);
+
   aStream.Position := 0;
-  Result := ComandoTipoImagem(aNomeImagem, aFlipped, aTipo) + CR +
+  Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem) + CR +
             ReadStrFromStream(aStream, aStream.Size);
 end;
 

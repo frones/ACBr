@@ -48,6 +48,8 @@ type
 
   TACBrETQZplII = class(TACBrETQClass)
   private
+    FImagensPCX: String;
+
     function ComandoCampo(const aTexto: String): String;
 
     function ConverterOrientacao(aOrientacao: TACBrETQOrientacao): String;
@@ -101,16 +103,17 @@ type
 
     function ComandoImprimirImagem(aMultImagem, aVertical, aHorizontal: Integer;
       aNomeImagem: String): AnsiString; override;
-
     function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
+    function ComandoBMP2GRF(aStream: TStream; aNomeImagem: String; Inverter: Boolean = True): AnsiString;
   end;
 
 implementation
 
 uses
   math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
-  ACBrUtil, ACBrConsts, synautil, synacode;
+  synautil,
+  ACBrUtil, ACBrConsts;
 
 { TACBrETQPpla }
 
@@ -120,6 +123,7 @@ begin
 
   fpModeloStr := 'ZPLII';
   fpLimiteCopias := 999;
+  FImagensPCX := '';
 end;
 
 function TACBrETQZplII.ComandoLimparMemoria: AnsiString;
@@ -211,7 +215,7 @@ end;
 
 function TACBrETQZplII.AjustarNomeArquivoImagem(const aNomeImagem: String): String;
 begin
-  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8))+'.GRF';
+  Result := UpperCase(LeftStr(OnlyAlphaNum(aNomeImagem), 8));
 end;
 
 function TACBrETQZplII.ConverterMultiplicadorImagem(aMultiplicador: Integer
@@ -420,57 +424,133 @@ end;
 
 function TACBrETQZplII.ComandoImprimirImagem(aMultImagem, aVertical,
   aHorizontal: Integer; aNomeImagem: String): AnsiString;
+var
+  ANome, ATipo: String;
 begin
+  ATipo := ExtractFileExt(aNomeImagem);
+  if (ATipo <> '') then
+  begin
+    ATipo := UpperCase(RightStr(ATipo, 3));
+    ANome := ExtractFileName(aNomeImagem);
+  end
+  else
+    ANome := aNomeImagem;
+
+  ANome := AjustarNomeArquivoImagem(ANome);
+
+  if (ATipo = '') then
+    if (pos(ANome, FImagensPCX) > 0) then
+      ATipo := 'PCX';
+
+  if (ATipo <> 'PCX') then
+    ATipo := 'GRF';
+
   Result := ComandoCoordenadas(aVertical, aHorizontal) +
-            '^XGE:'                                    +
-            AjustarNomeArquivoImagem(aNomeImagem)      + ',' +
-            ConverterMultiplicadorImagem(aMultImagem)  + ',' +
-            ConverterMultiplicadorImagem(aMultImagem);
+            '^XGE:' + ANome + '.' + ATipo +  ',' +
+                      ConverterMultiplicadorImagem(aMultImagem) + ',' +
+                      ConverterMultiplicadorImagem(aMultImagem) +
+            '^FS';
 end;
 
 function TACBrETQZplII.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 var
-  b, x: Char;
-  Data: AnsiString;
+  ANome: String;
 begin
   if (aTipo = '') then
-     aTipo := 'BMP'
+    aTipo := 'BMP'
   else
     aTipo := UpperCase(RightStr(aTipo, 3));
 
-  b := 'B';
-
   if (aTipo = 'PCX') then
-    x := 'X'
-  else if (aTipo = 'GRF') then
-    x := 'G'
-  else if (aTipo = 'BMP') then
-    x := 'B'
-  else if (aTipo = 'PNG') then
   begin
-    x := 'P';
-    b := 'P';
+    if not ImgIsPCX(aStream, True) then
+      raise Exception.Create(ACBrStr(cErrImgPCXMono));
+  end
+  else if (aTipo <> 'BMP') then
+    raise Exception.Create(ACBrStr(
+      'Formato de Imagem deve ser: BMP ou PCX e Monocromática'));
+
+  ANome := AjustarNomeArquivoImagem(aNomeImagem);
+  aStream.Position := 0;
+
+  if (aTipo = 'BMP') then
+  begin
+    ANome := ANome + '.GRF';
+    Result := ComandoBMP2GRF(aStream, ANome);
   end
   else
-    raise Exception.Create(ACBrStr(
-      'Formato de Imagem deve ser Monocromático e do atipo: BMP, PCX, GRF ou PNG'));
+  begin
+    FImagensPCX := FImagensPCX + ANome + ',';
+    ANome := ANome + '.PCX';
+    Result := '~DYE:' + ANome + ',B,X,' +
+              IntToStr(aStream.Size)   + ',0,' +
+              ReadStrFromStream(aStream, aStream.Size);
+  end;
 
-  aStream.Position := 0;
-  Data := ReadStrFromStream(aStream, aStream.Size);
+  Result := '^IDE:' + ANome + '^FS' +  // Apaga a imagem existente com o mesmo nome
+            Result;
+end;
 
-  if b <> 'B' then
-    Data := EncodeBase64mod(Data);
+// Fonte: https://github.com/asharif/img2grf/blob/master/src/main/java/org/orphanware/App.java
+function TACBrETQZplII.ComandoBMP2GRF(aStream: TStream; aNomeImagem: String;
+  Inverter: Boolean): AnsiString;
+var
+  bWidth, bHeight, bPixelOffset: LongWord;
+  bPixel: Byte;
+  i, j, tmp, byteW, LenImg{, lbCount, k}: Int64;
+  ImgHex: String;
+begin
+  if not ImgIsBMP(aStream, True) then
+    raise Exception.Create(ACBrStr(cErrImgBMPMono));
 
-  aStream.Position := 0;
-  Result := '~DYE:' +
-            AjustarNomeArquivoImagem(aNomeImagem) + ',' +
-            b                                     + ',' +
-            x                                     + ',' +
-            IntToStr(aStream.Size)                + ',,' +
-            Data;
+  // Lendo posição do Off-set da imagem
+  AStream.Position := 10;
+  bPixelOffset := 0;
+  AStream.ReadBuffer(bPixelOffset, 4);
+
+  // Lendo dimensões da imagem
+  AStream.Position := 18;
+  bWidth := 0; bHeight := 0;
+  AStream.ReadBuffer(bWidth, 4);
+  AStream.ReadBuffer(bHeight, 4);
+
+  LenImg := aStream.Size - bPixelOffset;
+  byteW := ceil(bWidth / 8);
+  //lbCount := ceil(bWidth / 4);
+
+  ImgHex := '';
+  //k := 0;
+  i := aStream.Size-1;
+  while (i >= bPixelOffset) do
+  begin
+    tmp := i - (byteW-1);
+    j := tmp;
+    aStream.Position := tmp;
+    while (j < (tmp + byteW)) do
+    begin
+      bPixel := 0;
+      aStream.ReadBuffer(bPixel,1);
+      if Inverter then
+        bPixel := bPixel xor $FF;
+
+      //if ((k mod lbCount) = 0) then
+      //  ImgHex := ImgHex + LF;
+
+      ImgHex := ImgHex + IntToHex(bPixel,2);
+
+      inc(j);
+      //inc(k);
+    end;
+    i := tmp-1;
+  end;
+
+  //DEBUG
+  //WriteToFile('c:\temp\ImgHex.txt',ImgHex);
+
+  Result := '~DGE:' + aNomeImagem + ',' + IntToStr(LenImg)+ ',' +
+            IntToStr(byteW) + ',' + ImgHex;
 end;
 
 end.
-
 

@@ -381,6 +381,8 @@ end;
 
 function TACBrETQEpl2.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
+var
+  ImgData: AnsiString;
 begin
   Result := EmptyStr;
 
@@ -389,24 +391,18 @@ begin
   else
     aTipo := UpperCase(RightStr(aTipo, 3));
 
-  if (aTipo <> 'PCX') then
-    raise Exception.Create(ModeloStr+' suporta apenas Imagens no formato PCX');
+  if (aTipo <> 'PCX') or (not ImgIsPCX(aStream, True)) then
+    raise Exception.Create(ACBrStr(cErrImgPCXMono));
 
+  aStream.Position := 0;
+  ImgData := ReadStrFromStream(aStream, aStream.Size);
   aNomeImagem := AjustarNomeArquivoImagem(aNomeImagem);
-  AStream.Position := 0;
 
   Result := 'GK' + aNomeImagem     + LF +    // deletes graphic "NomeImagem" - Required
             'GK' + aNomeImagem     + LF +    // second delete graphic - Required
             'GM' + aNomeImagem     +         // Prepares printer to receive graphic "NomeImagem";
             IntToStr(aStream.Size) + LF +    // The Data Size
-            ReadStrFromStream(aStream, aStream.Size); // The Image Data
+            ImgData;                         // The Image Data
 end;
-
-// ToDo:
-//  - Verificar se precisa:
-//    '^@'   // Reset na impressora
-//    'xa'   // Força a detecçao da Medida da Etiqueta e Gap
-//    'Q' + IntToStr(AvancoEtq) + ',' +  // Label length
-//          IntToStr(EspacoEtq) +        // Gap length
 
 end.

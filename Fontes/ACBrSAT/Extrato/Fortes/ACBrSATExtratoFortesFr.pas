@@ -365,7 +365,7 @@ begin
     if TemLogo then
     begin
       TemLogo := Assigned(ACBrSATExtrato.PictureLogo) and
-                 ((ACBrSATExtrato.PictureLogo.Height + ACBrSATExtrato.PictureLogo.Width) > 0);
+                 (not ACBrSATExtrato.PictureLogo.Bitmap.Empty);
 
       if (not TemLogo) and (Logo <> '') and FileExists(Logo) then
       begin

@@ -47,12 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-09/01/2018
+13/01/2019
+-- ACBrDANFCeFortesFr --
+[-] Ajustes para correta impressão do DANFCe, com Logo Lateral ou no topo, e
+    SEM Logo
+[+] Adicionada a propriedade "EspacoFinal: integer default 38"
+[*] Valores default de "TamanhoLogoHeight" modificado para 50, e de
+    "TamanhoLogoWidth" para 77;
+    (por: DSA)
+
+09/01/2019
 -- ACBrDFeDANFeReport --
 [*] Ajustes para ignora a impressão do EAN quando for o literal "SEM GTIN".
     (por Rafael Dias).
 
-07/01/2018
+07/01/2019
 -- ACBrDFeDANFeReport, ACBrNFeDANFEClass --
 [*] Propriedade "TACBrNFeDANFEClass.QuebraLinhaEmDetalhamentoEspecifico" movida
     para classe ancestral, em: "TACBrDFeDANFeReport.QuebraLinhaEmDetalhamentos"

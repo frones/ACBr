@@ -709,7 +709,7 @@ begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
   TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
 
-  if (rliLogo.Picture = Nil) then
+  if rliLogo.Picture.Bitmap.Empty then
   begin
     rlmEndereco.Left := rlmEmitente.Left;
     rlmEndereco.Width := rlmEmitente.Width;

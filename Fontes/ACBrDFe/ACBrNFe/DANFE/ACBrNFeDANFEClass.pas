@@ -139,6 +139,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrNFeDANFCEClass = class(TACBrDFeDANFeReport)
   private
+    FEspacoFinal: Integer;
     FLarguraBobina: Integer;
     FImprimeDescAcrescItem: Boolean;
     FImprimeItens: Boolean;
@@ -158,6 +159,7 @@ type
     property ImprimeItens: Boolean read FImprimeItens write FImprimeItens default True;
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default False;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default False;
+    property EspacoFinal: Integer read FEspacoFinal write FEspacoFinal default 38;
   end;
 
 implementation
@@ -618,5 +620,6 @@ begin
   FvTroco := 0;
   FImprimeQRCodeLateral := False;
   FImprimeLogoLateral := False;
+  FEspacoFinal := 38;
 end;
 end.

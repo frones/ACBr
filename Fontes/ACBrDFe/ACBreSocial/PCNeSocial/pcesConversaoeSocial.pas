@@ -2431,7 +2431,7 @@ begin
 
   try
     for i := 0 to 43 do
-      if Pos('<' + TEventoString[i], s) > 0 then
+      if Pos('<' + TEventoString[i]+ ' Id="', s) > 0 then
       begin
         ok := True;
         result := TTipoEvento( i );

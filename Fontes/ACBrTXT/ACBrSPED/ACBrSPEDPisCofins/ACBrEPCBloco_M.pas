@@ -58,7 +58,7 @@ type
   TRegistroM205List = class;
   TRegistroM210List = class;
   TRegistroM211     = class;
-  TRegistroM215     = class;
+  TRegistroM215List = class;
   TRegistroM220List = class;
   TRegistroM225List = class;
   TRegistroM230List = class;
@@ -74,7 +74,7 @@ type
   TRegistroM605List = class;
   TRegistroM610List = class;
   TRegistroM611     = class;
-  TRegistroM615     = class;
+  TRegistroM615List = class;
   TRegistroM620List = class;
   TRegistroM625List = class;
   TRegistroM630List = class;
@@ -353,7 +353,7 @@ type
     FVL_BC_CONT_AJUS           : currency;
 
     FRegistroM211              : TRegistroM211;     // NIVEL 4
-    FRegistroM215              : TRegistroM215;     // NIVEL 4
+    FRegistroM215              : TRegistroM215List; // NIVEL 4
     FRegistroM220              : TRegistroM220List; // NIVEL 4
     FRegistroM230              : TRegistroM230List; // NIVEL 4
   public
@@ -377,7 +377,7 @@ type
     property VL_CONT_PER          : currency          read FVL_CONT_PER          write FVL_CONT_PER;
 
     property RegistroM211         : TRegistroM211     read FRegistroM211         write FRegistroM211;
-    property RegistroM215         : TRegistroM215     read FRegistroM215         write FRegistroM215;
+    property RegistroM215         : TRegistroM215List read FRegistroM215         write FRegistroM215;
     property RegistroM220         : TRegistroM220List read FRegistroM220         write FRegistroM220;
     property RegistroM230         : TRegistroM230List read FRegistroM230         write FRegistroM230;
   end;
@@ -432,6 +432,17 @@ type
     property COD_CTA      : string                        read FCOD_CTA         write FCOD_CTA;
     property CNPJ         : string                        read FCNPJ            write FCNPJ;
     property INFO_COMPL   : string                        read FINFO_COMPL      write FINFO_COMPL;
+  end;
+
+
+  // Registro M215 - Lista
+  TRegistroM215List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM215;
+    procedure SetItem(Index: Integer; const Value: TRegistroM215);
+  public
+    function New: TRegistroM215;
+    property Items[Index: Integer]: TRegistroM215 read GetItem write SetItem;
   end;
 
 
@@ -869,7 +880,7 @@ type
     FVL_BC_CONT_AJUS           : currency;
 
     FRegistroM611              : TRegistroM611;     // NIVEL 4
-    FRegistroM615              : TRegistroM615;     // NIVEL 4
+    FRegistroM615              : TRegistroM615List; // NIVEL 4
     FRegistroM620              : TRegistroM620List; // NIVEL 4
     FRegistroM630              : TRegistroM630List; // NIVEL 4
   public
@@ -893,7 +904,7 @@ type
     property VL_CONT_PER             : currency          read FVL_CONT_PER             write FVL_CONT_PER;
 
     property RegistroM611            : TRegistroM611     read FRegistroM611            write FRegistroM611;
-    property RegistroM615            : TRegistroM615     read FRegistroM615            write FRegistroM615;
+    property RegistroM615            : TRegistroM615List read FRegistroM615            write FRegistroM615;
     property RegistroM620            : TRegistroM620List read FRegistroM620            write FRegistroM620;
     property RegistroM630            : TRegistroM630List read FRegistroM630            write FRegistroM630;
   end;
@@ -951,6 +962,15 @@ type
   end;
 
 
+  // Registro 615 - Lista
+  TRegistroM615List = class(TObjectList)
+  private
+    function  GetItem(Index: Integer): TRegistroM615;
+    procedure SetItem(Index: Integer; const Value: TRegistroM615);
+  public
+    function New: TRegistroM615;
+    property Items[Index: Integer]: TRegistroM615 read GetItem write SetItem;
+  end;
 
 
   //REGISTRO M620: AJUSTES DA COFINS APURADA
@@ -1490,7 +1510,7 @@ end;
 constructor TRegistroM210.Create;
 begin
   FRegistroM211 := TRegistroM211.Create;
-  FRegistroM215 := TRegistroM215.Create;
+  FRegistroM215 := TRegistroM215List.Create;
   FRegistroM220 := TRegistroM220List.Create;
   FRegistroM230 := TRegistroM230List.Create;
 end;
@@ -1503,6 +1523,26 @@ begin
   FRegistroM230.Free;
   inherited;
 end;
+
+
+{TRegistroM215}
+
+function TRegistroM215List.GetItem(Index: Integer): TRegistroM215;
+begin
+  Result := TRegistroM215(Inherited Items[Index]);
+end;
+
+function TRegistroM215List.New: TRegistroM215;
+begin
+  Result := TRegistroM215.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM215List.SetItem(Index: Integer; const Value: TRegistroM215);
+begin
+  Put(Index, Value);
+end;
+
 
 {TRegistroM220}
 
@@ -1720,7 +1760,7 @@ end;
 constructor TRegistroM610.Create;
 begin
   FRegistroM611 := TRegistroM611.Create;
-  FRegistroM615 := TRegistroM615.Create;
+  FRegistroM615 := TRegistroM615List.Create;
   FRegistroM620 := TRegistroM620List.Create;
   FRegistroM630 := TRegistroM630List.Create;
 end;
@@ -1733,6 +1773,27 @@ begin
   FRegistroM630.Free;
   inherited;
 end;
+
+
+{TRegistroM615}
+
+function TRegistroM615List.GetItem(Index: Integer): TRegistroM615;
+begin
+  Result := TRegistroM615(Inherited Items[Index]);
+end;
+
+function TRegistroM615List.New: TRegistroM615;
+begin
+  Result := TRegistroM615.Create;
+  Add(Result);
+end;
+
+procedure TRegistroM615List.SetItem(Index: Integer; const Value: TRegistroM615);
+begin
+  Put(Index, Value);
+end;
+
+
 
 {TRegistroM620}
 

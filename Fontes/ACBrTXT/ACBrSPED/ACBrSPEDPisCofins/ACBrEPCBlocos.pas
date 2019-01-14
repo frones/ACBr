@@ -1273,6 +1273,11 @@ function CodContToStr(const AValue: TACBrCodCont): string;
 function IndTipCoopToStr(const AValue: TACBrIndTipCoop): string;
 function CodAjToStr(const AValue: TACBrCodAj): string;
 function NatCredDescToStr(const AValue: TACBrNatCredDesc): string;
+function TabCodAjBaseCalcToStr(const AValue: TACBrTabCodAjBaseCalcContrib): string;
+function IndicadorApropAjusteToStr(const AValue: TACBrIndicadorApropAjuste): string;
+
+
+
 
 // 20-02-2015 - Data Lider - Novas Conversões para Importação
 function StrToIndCodIncidencia(const AValue: string): TACBrIndCodIncidencia;
@@ -2127,6 +2132,34 @@ begin
   else if AValue = ncdPresAgroindustria then
     Result := '04';
 end;
+
+
+
+function TabCodAjBaseCalcToStr(const AValue: TACBrTabCodAjBaseCalcContrib): string;
+begin
+  if AValue = tcaVendasCanceladas then
+    Result := '01'
+  else if AValue = tcaDevolucoesVendas then
+    Result := '02'
+  else if AValue = tcaICMSaRecolher then
+    Result := '21'
+  else if AValue = tcaOutrVlrsDecJudicial then
+    Result := '41'
+  else if AValue = tcaOutrVlrsSemDecJudicial then
+    Result := '42';
+end;
+
+
+function IndicadorApropAjusteToStr(const AValue: TACBrIndicadorApropAjuste): string;
+begin
+  if AValue = iaaRefPisCofins then
+    Result := '01'
+  else if AValue = iaaUnicaPISPasep then
+    Result := '02'
+  else if AValue = iaaRefUnicaCofins then
+    Result := '03';
+end;
+
 
 function NatFrtContratadoToStr(AValue: TACBrNaturezaFrtContratado): string;
 begin

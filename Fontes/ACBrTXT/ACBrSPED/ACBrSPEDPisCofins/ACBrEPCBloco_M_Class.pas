@@ -63,6 +63,7 @@ type
     FRegistroM205Count                  : integer;
     FRegistroM210Count                  : integer;
     FRegistroM211Count                  : integer;
+    FRegistroM215Count                  : integer;
     FRegistroM220Count                  : integer;
     FRegistroM225Count                  : integer;
     FRegistroM230Count                  : integer;
@@ -78,6 +79,7 @@ type
     FRegistroM605Count                  : integer;
     FRegistroM610Count                  : integer;
     FRegistroM611Count                  : integer;
+    FRegistroM615Count                  : integer;
     FRegistroM620Count                  : integer;
     FRegistroM625Count                  : integer;
     FRegistroM630Count                  : integer;
@@ -94,6 +96,7 @@ type
     procedure WriteRegistroM205(RegM200 : TRegistroM200);
     procedure WriteRegistroM210(RegM200 : TRegistroM200);
     procedure WriteRegistroM211(RegM210 : TRegistroM210);
+    procedure WriteRegistroM215(RegM210 : TRegistroM210);
     procedure WriteRegistroM220(RegM210 : TRegistroM210);
     procedure WriteRegistroM225(RegM220 : TRegistroM220);
     procedure WriteRegistroM230(RegM210 : TRegistroM210);
@@ -109,6 +112,7 @@ type
     procedure WriteRegistroM605(RegM600 : TRegistroM600);
     procedure WriteRegistroM610(RegM600 : TRegistroM600);
     procedure WriteRegistroM611(RegM610 : TRegistroM610);
+    procedure WriteRegistroM615(RegM610 : TRegistroM610);
     procedure WriteRegistroM620(RegM610 : TRegistroM610);
     procedure WriteRegistroM625(RegM620 : TRegistroM620);
     procedure WriteRegistroM630(RegM610 : TRegistroM610);
@@ -132,6 +136,7 @@ type
     function RegistroM205New            : TRegistroM205;
     function RegistroM210New            : TRegistroM210;
     function RegistroM211New            : TRegistroM211;
+    function RegistroM215New            : TRegistroM215;
     function RegistroM220New            : TRegistroM220;
     function RegistroM225New            : TRegistroM225;
     function RegistroM230New            : TRegistroM230;
@@ -147,6 +152,7 @@ type
     function RegistroM605New            : TRegistroM605;
     function RegistroM610New            : TRegistroM610;
     function RegistroM611New            : TRegistroM611;
+    function RegistroM615New            : TRegistroM615;
     function RegistroM620New            : TRegistroM620;
     function RegistroM625New            : TRegistroM625;
     function RegistroM630New            : TRegistroM630;
@@ -169,6 +175,7 @@ type
     property RegistroM205Count          : integer       read FRegistroM205Count write FRegistroM205Count;
     property RegistroM210Count          : integer       read FRegistroM210Count write FRegistroM210Count;
     property RegistroM211Count          : integer       read FRegistroM211Count write FRegistroM211Count;
+    property RegistroM215Count          : integer       read FRegistroM215Count write FRegistroM215Count;
     property RegistroM220Count          : integer       read FRegistroM220Count write FRegistroM220Count;
     property RegistroM225Count          : integer       read FRegistroM225Count write FRegistroM225Count;
     property RegistroM230Count          : integer       read FRegistroM230Count write FRegistroM230Count;
@@ -184,6 +191,7 @@ type
     property RegistroM605Count          : integer       read FRegistroM605Count write FRegistroM605Count;
     property RegistroM610Count          : integer       read FRegistroM610Count write FRegistroM610Count;
     property RegistroM611Count          : integer       read FRegistroM611Count write FRegistroM611Count;
+    property RegistroM615Count          : integer       read FRegistroM615Count write FRegistroM615Count;
     property RegistroM620Count          : integer       read FRegistroM620Count write FRegistroM620Count;
     property RegistroM625Count          : integer       read FRegistroM625Count write FRegistroM625Count;
     property RegistroM630Count          : integer       read FRegistroM630Count write FRegistroM630Count;
@@ -221,6 +229,7 @@ begin
   FRegistroM205Count      := 0;
   FRegistroM210Count      := 0;
   FRegistroM211Count      := 0;
+  FRegistroM215Count      := 0;
   FRegistroM220Count      := 0;
   FRegistroM225Count      := 0;
   FRegistroM230Count      := 0;
@@ -236,6 +245,7 @@ begin
   FRegistroM605Count      := 0;
   FRegistroM610Count      := 0;
   FRegistroM611Count      := 0;
+  FRegistroM615Count      := 0;
   FRegistroM620Count      := 0;
   FRegistroM625Count      := 0;
   FRegistroM630Count      := 0;
@@ -324,6 +334,16 @@ begin
    //
    Result := FRegistroM001.RegistroM200.RegistroM210.Items[M210Count].RegistroM211;
 end;
+
+function TBloco_M.RegistroM215New: TRegistroM215;
+var
+   M210Count: integer;
+begin
+   M210Count := FRegistroM001.RegistroM200.RegistroM210.Count -1;
+   //
+   Result := FRegistroM001.RegistroM200.RegistroM210.Items[M210Count].RegistroM215.New;
+end;
+
 
 function TBloco_M.RegistroM220New: TRegistroM220;
 var
@@ -435,6 +455,17 @@ begin
    //
    Result := FRegistroM001.RegistroM600.RegistroM610.Items[M610Count].RegistroM611;
 end;
+
+function TBloco_M.RegistroM615New: TRegistroM615;
+var
+   M610Count: integer;
+begin
+   M610Count := FRegistroM001.RegistroM600.RegistroM610.Count -1;
+   //
+   Result := FRegistroM001.RegistroM600.RegistroM610.Items[M610Count].RegistroM615.New;
+end;
+
+
 
 function TBloco_M.RegistroM620New: TRegistroM620;
 var
@@ -751,42 +782,50 @@ begin
      begin
         with RegM200.RegistroM210.Items[intFor] do
         begin
+          strCOD_CONT := CodContToStr(COD_CONT);
 
-          case COD_CONT of
-                    ccNaoAcumAliqBasica                 : strCOD_CONT :='01' ; // Contribuição não-cumulativa apurada a alíquota básica
-                    ccNaoAcumAliqDiferenciada           : strCOD_CONT :='02' ; // Contribuição não-cumulativa apurada a alíquotas diferenciadas
-                    ccNaoAcumAliqUnidProduto            : strCOD_CONT :='03' ; // Contribuição não-cumulativa apurada a alíquota por unidade de medida de produto
-                    ccNaoAcumAliqBasicaAtivImobiliaria  : strCOD_CONT :='04' ; // Contribuição não-cumulativa apurada a alíquota básica - Atividade Imobiliária
-                    ccApuradaPorST                      : strCOD_CONT :='31' ; // Contribuição apurada por substituição tributária
-                    ccApuradaPorSTManaus                : strCOD_CONT :='32' ; // Contribuição apurada por substituição tributária - Vendas à Zona Franca de Manaus
-                    ccAcumAliqBasica                    : strCOD_CONT :='51' ; // Contribuição cumulativa apurada a alíquota básica
-                    ccAcumAliqDiferenciada              : strCOD_CONT :='52' ; // Contribuição cumulativa apurada a alíquotas diferenciadas
-                    ccAcumAliqUnidProduto               : strCOD_CONT :='53' ; // Contribuição cumulativa apurada a alíquota por unidade de medida de produto
-                    ccAcumAliqBasicaAtivImobiliaria     : strCOD_CONT :='54' ; // Contribuição cumulativa apurada a alíquota básica - Atividade Imobiliária
-                    ccApuradaAtivImobiliaria            : strCOD_CONT :='70' ; // Contribuição apurada da Atividade Imobiliária - RET
-                    ccApuradaSCPNaoCumulativa           : strCOD_CONT :='71' ; // Contribuição apurada de SCP - Incidência Não Cumulativa
-                    ccApuradaSCPCumulativa              : strCOD_CONT :='72' ; // Contribuição apurada de SCP - Incidência Cumulativa
-                    ccPISPasepSalarios                  : strCOD_CONT :='99' ; // Contribuição para o PIS/Pasep - Folha de Salários
+          if (Bloco_0.Registro0000.COD_VER >= vlVersao310) then
+          begin
+            Add( LFill('M210')                       +
+                 LFill( strCOD_CONT )                +
+                 LFill( VL_AJUS_ACRES_BC_PIS, 0, 2 ) +
+                 LFill( VL_AJUS_REDUC_BC_PIS, 0, 2 ) +
+                 LFill( VL_BC_CONT_AJUS, 0, 2 )      +
+                 LFill( VL_REC_BRT, 0, 2 )           +
+                 LFill( VL_BC_CONT, 0, 2 )           +
+                 VDFill( ALIQ_PIS       , 4)         +
+                 VDFill( QUANT_BC_PIS   , 3)         +
+                 VDFill( ALIQ_PIS_QUANT , 4)         +
+                 LFill( VL_CONT_APUR,   0, 2 )       +
+                 LFill( VL_AJUS_ACRES,  0, 2 )       +
+                 LFill( VL_AJUS_REDUC,  0, 2 )       +
+                 VLFill( VL_CONT_DIFER, 0, 2)        +
+                 VLFill( VL_CONT_DIFER_ANT, 0, 2)    +
+                 LFill( VL_CONT_PER ,0,2 ) ) ;
+          end
+          else
+          begin
+            // ou (Bloco_0.Registro0000.DT_FIN <= EndOfAYear(2018))
+            Add( LFill('M210')                     +
+                 LFill( strCOD_CONT )              +
+                 LFill( VL_REC_BRT, 0, 2 )         +
+                 LFill( VL_BC_CONT, 0, 2 )         +
+                 VDFill( ALIQ_PIS       , 4)       +
+                 VDFill( QUANT_BC_PIS   , 3)       +
+                 VDFill( ALIQ_PIS_QUANT , 4)       +
+                 LFill( VL_CONT_APUR,   0, 2 )     +
+                 LFill( VL_AJUS_ACRES,  0, 2 )     +
+                 LFill( VL_AJUS_REDUC,  0, 2 )     +
+                 VLFill( VL_CONT_DIFER, 0, 2)      +
+                 VLFill( VL_CONT_DIFER_ANT, 0, 2)  +
+                 LFill( VL_CONT_PER ,0,2 ) ) ;
           end;
-
-          Add( LFill('M210')                     +
-               LFill( strCOD_CONT )              +
-               LFill( VL_REC_BRT, 0, 2 )         +
-               LFill( VL_BC_CONT, 0, 2 )         +
-               VDFill( ALIQ_PIS       , 4)       +
-               VDFill( QUANT_BC_PIS   , 3)       +
-               VDFill( ALIQ_PIS_QUANT , 4)       +
-               LFill( VL_CONT_APUR,   0, 2 )     +
-               LFill( VL_AJUS_ACRES,  0, 2 )     +
-               LFill( VL_AJUS_REDUC,  0, 2 )     +
-               VLFill( VL_CONT_DIFER, 0, 2)      +
-               VLFill( VL_CONT_DIFER_ANT, 0, 2)  +
-               LFill( VL_CONT_PER ,0,2 ) ) ;
         end;
 
         // Registros FILHOS
         if (Bloco_0.Registro0000.IND_NAT_PJ = indNatPJSocCooperativa) then
           WriteRegistroM211( RegM200.RegistroM210.Items[intFor] );
+        WriteRegistroM215( RegM200.RegistroM210.Items[intFor] );
         WriteRegistroM220( RegM200.RegistroM210.Items[intFor] );
         WriteRegistroM230( RegM200.RegistroM210.Items[intFor] );
         ///
@@ -805,15 +844,7 @@ begin
   begin
      with RegM210.RegistroM211 do
      begin
-        case IND_TIP_COOP of
-          itcProdAgropecuaria: strIND_TIP_COOP :='01' ; // Cooperativa de Produção Agropecuária;
-          itcConsumo         : strIND_TIP_COOP :='02' ; // Cooperativa de Consumo;
-          itcCredito         : strIND_TIP_COOP :='03' ; // Cooperativa de Crédito;
-          itcEletRural       : strIND_TIP_COOP :='04' ; // Cooperativa de Eletrificação Rural;
-          itcTransCargas     : strIND_TIP_COOP :='05' ; // Cooperativa de Transporte Rodoviário de Cargas;
-          itcMedicos         : strIND_TIP_COOP :='06' ; // Cooperativa de Médicos;
-          itcOutras          : strIND_TIP_COOP :='99' ; // Outras.
-        end;
+       strIND_TIP_COOP := IndTipCoopToStr(IND_TIP_COOP);
 
        Add( LFill('M211')                        +
             LFill( strIND_TIP_COOP )             +    
@@ -829,6 +860,38 @@ begin
      FRegistroM211Count := FRegistroM211Count + 1;
   end;
 end;
+
+
+procedure TBloco_M.WriteRegistroM215(RegM210: TRegistroM210) ;
+var
+  intFor : integer;
+begin
+  if Assigned(RegM210.RegistroM215) then
+  begin
+     for intFor := 0 to RegM210.RegistroM215.Count - 1 do
+     begin
+        with RegM210.RegistroM215.Items[intFor] do
+        begin
+          Add( LFill('M215')                             +
+               LFill( IndAJToStr(IND_AJ_BC) )            +
+               LFill( VL_AJ_BC ,0,2 )                    +
+               LFill( TabCodAjBaseCalcToStr(COD_AJ_BC) ) +
+               LFill( NUM_DOC )                          +
+               LFill( DESCR_AJ_BC )                      +
+               LFill( DT_REF )                           +
+               LFill( COD_CTA )                          +
+               LFill( CNPJ )                             +
+               LFill( INFO_COMPL ) );
+        end;
+        ///
+        RegistroM990.QTD_LIN_M := RegistroM990.QTD_LIN_M + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroM215Count := FRegistroM215Count + RegM210.RegistroM215.Count;
+  end;
+end;
+
+
 
 procedure TBloco_M.WriteRegistroM220(RegM210: TRegistroM210) ;
   var
@@ -858,9 +921,9 @@ begin
           end;
 
           Add( LFill('M220')       +
-               LFill( strIND_AJ )  +        
+               LFill( strIND_AJ )  +
                LFill( VL_AJ ,0,2 ) +
-               LFill( strCOD_AJ )  +        
+               LFill( strCOD_AJ )  +
                LFill( NUM_DOC )    +
                LFill( DESCR_AJ )   +
                LFill( DT_REF ) ) ;
@@ -1340,6 +1403,7 @@ begin
         // Registros FILHOS
         if (Bloco_0.Registro0000.IND_NAT_PJ = indNatPJSocCooperativa) then
           WriteRegistroM611( RegM600.RegistroM610.Items[intFor] );
+        WriteRegistroM615( RegM600.RegistroM610.Items[intFor] );
         WriteRegistroM620( RegM600.RegistroM610.Items[intFor] );
         WriteRegistroM630( RegM600.RegistroM610.Items[intFor] );
         ///
@@ -1382,6 +1446,39 @@ begin
      FRegistroM611Count := FRegistroM611Count + 1;
   end;
 end;
+
+
+procedure TBloco_M.WriteRegistroM615(RegM610: TRegistroM610) ;
+var
+  intFor : integer;
+begin
+  if Assigned(RegM610.RegistroM615) then
+  begin
+     for intFor := 0 to RegM610.RegistroM615.Count - 1 do
+     begin
+        with RegM610.RegistroM615.Items[intFor] do
+        begin
+          Add( LFill('M615')                             +
+               LFill( IndAJToStr(IND_AJ_BC) )            +
+               LFill( VL_AJ_BC ,0,2 )                    +
+               LFill( TabCodAjBaseCalcToStr(COD_AJ_BC) ) +
+               LFill( NUM_DOC )                          +
+               LFill( DESCR_AJ_BC )                      +
+               LFill( DT_REF )                           +
+               LFill( COD_CTA )                          +
+               LFill( CNPJ )                             +
+               LFill( INFO_COMPL ) );
+        end;
+        ///
+        RegistroM990.QTD_LIN_M := RegistroM990.QTD_LIN_M + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroM615Count := FRegistroM615Count + RegM610.RegistroM615.Count;
+  end;
+end;
+
+
+
 
 procedure TBloco_M.WriteRegistroM620(RegM610: TRegistroM610) ;
 var

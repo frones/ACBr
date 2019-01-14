@@ -48,6 +48,7 @@ uses
 type
   TRegistro1010List = class;
   TRegistro1020List = class;
+  TRegistro1050List = class;
   TRegistro1100List = class;
   TRegistro1101List = class;
   TRegistro1102 = class;
@@ -71,6 +72,7 @@ type
   private
     FRegistro1010: TRegistro1010List; // NIVEL 2
     FRegistro1020: TRegistro1020List; // NIVEL 2
+    FRegistro1050: TRegistro1050List; // NIVEL 2
     FRegistro1100: TRegistro1100List; // NIVEL 2
     FRegistro1200: TRegistro1200List; // NIVEL 2
     FRegistro1300: TRegistro1300List; // NIVEL 2
@@ -85,6 +87,7 @@ type
 
     property Registro1010: TRegistro1010List read FRegistro1010 write FRegistro1010;
     property Registro1020: TRegistro1020List read FRegistro1020 write FRegistro1020;
+    property Registro1050: TRegistro1050List read FRegistro1050 write FRegistro1050;
     property Registro1100: TRegistro1100List read FRegistro1100 write FRegistro1100;
     property Registro1200: TRegistro1200List read FRegistro1200 write FRegistro1200;
     property Registro1300: TRegistro1300List read FRegistro1300 write FRegistro1300;
@@ -189,6 +192,15 @@ type
   end;
 
 
+  // Registro 1050 - Lista
+  TRegistro1050List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistro1050;
+    procedure SetItem(Index: Integer; const Value: TRegistro1050);
+  public
+    function New: TRegistro1050;
+    property Items[Index: Integer]: TRegistro1050 read GetItem write SetItem;
+  end;
 
 
   //REGISTRO 1100: CONTROLE DE CRÉDITOS FISCAIS – PIS/PASEP
@@ -913,6 +925,27 @@ procedure TRegistro1020List.SetItem(Index: Integer; const Value: TRegistro1020);
 begin
   Put(Index, Value);
 end;
+
+
+
+{TRegistro1050}
+
+function TRegistro1050List.GetItem(Index: Integer): TRegistro1050;
+begin
+  Result := TRegistro1050(Inherited Items[Index]);
+end;
+
+function TRegistro1050List.New: TRegistro1050;
+begin
+  Result := TRegistro1050.Create;
+  Add(Result);
+end;
+
+procedure TRegistro1050List.SetItem(Index: Integer; const Value: TRegistro1050);
+begin
+  Put(Index, Value);
+end;
+
 
 {TRegistro1100}
 

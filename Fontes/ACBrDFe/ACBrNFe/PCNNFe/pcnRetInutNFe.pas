@@ -111,6 +111,7 @@ implementation
 
 constructor TRetInutNFe.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
 end;
 

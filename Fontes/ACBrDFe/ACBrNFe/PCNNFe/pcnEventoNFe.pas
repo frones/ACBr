@@ -441,6 +441,7 @@ end;
 
 constructor TRetInfEvento.Create;
 begin
+  inherited Create;
   FchNFePend := TRetchNFePendCollection.Create(Self);
 end;
 

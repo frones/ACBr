@@ -163,6 +163,7 @@ uses
 
 constructor TRetConsCad.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FInfCad := TInfCadCollection.Create(Self);
 end;

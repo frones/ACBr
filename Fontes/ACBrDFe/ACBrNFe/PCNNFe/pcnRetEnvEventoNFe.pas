@@ -158,6 +158,7 @@ end;
 
 constructor TRetEventoNFe.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FretEvento := TRetInfEventoCollection.Create(Self);
   FInfEvento := TInfEvento.Create;

@@ -130,6 +130,7 @@ implementation
 
 constructor TRetConsReciNFe.Create;
 begin
+  inherited Create;
   FLeitor  := TLeitor.Create;
   FProtNFe := TProtNFeCollection.Create(self);
 end;

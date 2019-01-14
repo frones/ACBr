@@ -146,7 +146,7 @@ type
     procedure GerarDeduc;
 
     procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer;
-      cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+      cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 
   public
     constructor Create(AOwner: TNFe);
@@ -194,6 +194,7 @@ Uses
 
 constructor TNFeW.Create(AOwner: TNFe);
 begin
+  inherited Create;
   FNFe := AOwner;
   FGerador := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|NFe xmlns|infNFe versao|obsCont|obsFisco|';
@@ -2594,7 +2595,7 @@ end;
 // Outras //////////////////////////////////////////////////////////////////////
 
 procedure TNFeW.AjustarMunicipioUF(out xUF: String; out xMun: String; out
-  cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+  cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 var
   PaisBrasil: Boolean;
 begin

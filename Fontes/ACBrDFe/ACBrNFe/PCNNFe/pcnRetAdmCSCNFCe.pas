@@ -147,6 +147,7 @@ end;
 
 constructor TRetAdmCSCNFCe.Create;
 begin
+  inherited Create;
   FLeitor   := TLeitor.Create;
   FdadosCsc := TRetdadosCscCollection.Create(Self);
 end;

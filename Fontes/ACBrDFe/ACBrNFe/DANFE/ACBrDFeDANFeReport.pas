@@ -72,7 +72,7 @@ type
     FTipoDANFE: TpcnTipoImpressao;
 
     procedure SetNFE(const AValue: TComponent);
-    procedure ErroAbstract(NomeProcedure: String);
+    procedure ErroAbstract(const NomeProcedure: String);
 
   protected
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -94,14 +94,14 @@ type
     procedure ImprimirINUTILIZACAOPDF(ANFe: TNFe = nil); virtual;
 
     function SeparadorDetalhamentos: String; virtual;
-    function ManterCodigo(scEAN, scProd: String): String; virtual;
-    function ManterNomeImpresso(sXNome, sXFant: String): String; virtual;
+    function ManterCodigo(const scEAN, scProd: String): String; virtual;
+    function ManterNomeImpresso(const sXNome, sXFant: String): String; virtual;
     function ManterXProd(aNFE: TNFe; const inItem: Integer): String;
-    function ManterUnidades(sUCom, sUTrib: String): String; virtual;
+    function ManterUnidades(const sUCom, sUTrib: String): String; virtual;
     function ManterQuantidades(dQCom, dQTrib: Double): String; virtual;
     function ManterValoresUnitarios(dVCom, dVTrib: Double): String; virtual;
     function ManterInfAdFisco(ANFe: TNFe): String; virtual;
-    function TrataDocumento(sCNPJCPF: String): String; virtual;
+    function TrataDocumento(const sCNPJCPF: String): String; virtual;
     function ManterinfAdProd(aNFE: TNFe; const inItem: Integer): String; virtual;
     function ManterInfCompl(ANFe: TNFe): String; virtual;
     function ManterInfContr(ANFe: TNFe): String; virtual;
@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-procedure TACBrDFeDANFeReport.ErroAbstract(NomeProcedure: String);
+procedure TACBrDFeDANFeReport.ErroAbstract(const NomeProcedure: String);
 begin
   raise EACBrNFeException.Create(NomeProcedure + ' não implementado em: ' + ClassName);
 end;
@@ -300,7 +300,7 @@ begin
     Result := ' - ';
 end;
 
-function TACBrDFeDANFeReport.ManterCodigo(scEAN, scProd: String): String;
+function TACBrDFeDANFeReport.ManterCodigo(const scEAN, scProd: String): String;
 begin
   if (Length(Trim(scEAN)) > 0) and (Trim(scEAN) <> 'SEM GTIN') and (ImprimeCodigoEan) then
     Result := Trim(scEAN)
@@ -308,7 +308,7 @@ begin
     Result := Trim(scProd);
 end;
 
-function TACBrDFeDANFeReport.ManterNomeImpresso(sXNome, sXFant: String): String;
+function TACBrDFeDANFeReport.ManterNomeImpresso(const sXNome, sXFant: String): String;
 begin
   if (FImprimeNomeFantasia) and (sXFant <> '') then
     Result := sXFant
@@ -323,7 +323,7 @@ begin
     Result := Result + sLineBreak + FormatarQuantidade(dQTrib);
 end;
 
-function TACBrDFeDANFeReport.ManterUnidades(sUCom, sUTrib: String): String;
+function TACBrDFeDANFeReport.ManterUnidades(const sUCom, sUTrib: String): String;
 begin
   Result := Trim(sUCom);
   if Trim(sUTrib) <> '' then
@@ -337,7 +337,7 @@ begin
     Result := Result + sLineBreak + FormatarValorUnitario(dVTrib);
 end;
 
-function TACBrDFeDANFeReport.TrataDocumento(sCNPJCPF: String): String;
+function TACBrDFeDANFeReport.TrataDocumento(const sCNPJCPF: String): String;
 begin
   Result := sCNPJCPF;
   if NaoEstaVazio(Result) then

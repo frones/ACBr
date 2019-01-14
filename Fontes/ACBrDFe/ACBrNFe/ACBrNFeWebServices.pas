@@ -291,7 +291,7 @@ type
     FprotNFe: TProcNFe;
     FretCancNFe: TRetCancNFe;
     FprocEventoNFe: TRetEventoNFeCollection;
-    procedure SetNFeChave(AValue: String);
+    procedure SetNFeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -348,7 +348,7 @@ type
 
     FXML_ProcInutNFe: String;
 
-    procedure SetJustificativa(AValue: String);
+    procedure SetJustificativa(const AValue: String);
     function GerarPathPorCNPJ: String;
   protected
     procedure DefinirURL; override;
@@ -1991,7 +1991,7 @@ begin
   FprocEventoNFe := TRetEventoNFeCollection.Create(FOwner);
 end;
 
-procedure TNFeConsulta.SetNFeChave(AValue: String);
+procedure TNFeConsulta.SetNFeChave(const AValue: String);
 var
   NumChave: String;
 begin
@@ -2160,7 +2160,6 @@ begin
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
     FprotNFe.PathNFe := NFeRetorno.protNFe.PathNFe;
     FprotNFe.PathRetConsReciNFe := NFeRetorno.protNFe.PathRetConsReciNFe;
-    FprotNFe.PathRetConsSitNFe := NFeRetorno.protNFe.PathRetConsSitNFe;
     FprotNFe.PathRetConsSitNFe := NFeRetorno.protNFe.PathRetConsSitNFe;
     FprotNFe.tpAmb := NFeRetorno.protNFe.tpAmb;
     FprotNFe.verAplic := NFeRetorno.protNFe.verAplic;
@@ -2467,7 +2466,7 @@ begin
   end
 end;
 
-procedure TNFeInutilizacao.SetJustificativa(AValue: String);
+procedure TNFeInutilizacao.SetJustificativa(const AValue: String);
 var
   TrimValue: String;
 begin
@@ -2486,14 +2485,14 @@ end;
 
 function TNFeInutilizacao.GerarPathPorCNPJ: String;
 var
-  CNPJ: String;
+  CNPJ_Temp: String;
 begin
   if FPConfiguracoesNFe.Arquivos.SepararPorCNPJ then
-    CNPJ := FCNPJ
+    CNPJ_Temp := FCNPJ
   else
-    CNPJ := '';
+    CNPJ_Temp := '';
 
-  Result := FPConfiguracoesNFe.Arquivos.GetPathInu(CNPJ);
+  Result := FPConfiguracoesNFe.Arquivos.GetPathInu(CNPJ_Temp);
 end;
 
 procedure TNFeInutilizacao.DefinirURL;
@@ -2792,11 +2791,11 @@ end;
 
 procedure TNFeConsultaCadastro.DefinirURL;
 var
-  Versao: Double;
+  Versao_temp: Double;
 begin
   FPVersaoServico := '';
   FPURL := '';
-  Versao := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+  Versao_temp := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
 
   if EstaVazio(FUF) then
     FUF := FPConfiguracoesNFe.WebServices.UF;
@@ -2806,12 +2805,12 @@ begin
     FUF,
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
-    Versao,
+    Versao_temp,
     FPURL,
     FPServico,
     FPSoapAction);
 
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+  FPVersaoServico := FloatToString(Versao_temp, '.', '0.00');
 end;
 
 procedure TNFeConsultaCadastro.DefinirDadosMsg;

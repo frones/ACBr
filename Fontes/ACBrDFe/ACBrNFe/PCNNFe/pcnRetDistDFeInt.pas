@@ -288,7 +288,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-    function LerXMLFromFile(CaminhoArquivo: String): Boolean;
+    function LerXMLFromFile(const CaminhoArquivo: String): Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
@@ -384,6 +384,7 @@ end;
 
 constructor TRetDistDFeInt.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FdocZip := TdocZipCollection.Create(Self);
 end;
@@ -591,7 +592,7 @@ begin
   end;
 end;
 
-function TRetDistDFeInt.LerXMLFromFile(CaminhoArquivo: String): Boolean;
+function TRetDistDFeInt.LerXMLFromFile(const CaminhoArquivo: String): Boolean;
 var
   ArqDist: TStringList;
 begin

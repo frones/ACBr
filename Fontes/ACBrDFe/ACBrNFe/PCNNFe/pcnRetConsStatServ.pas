@@ -91,6 +91,7 @@ implementation
 
 constructor TRetConsStatServ.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
 end;
 

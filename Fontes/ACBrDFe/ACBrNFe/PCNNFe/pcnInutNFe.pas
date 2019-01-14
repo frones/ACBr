@@ -86,7 +86,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-    function LerXML(CaminhoArquivo: String): Boolean;
+    function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo: String;
   published
@@ -116,6 +116,7 @@ Uses pcnAuxiliar,
 
 constructor TinutNFe.Create;
 begin
+  inherited Create;
   FGerador    := TGerador.Create;
   FRetInutNFe := TRetInutNFe.Create;
   FLeitor     := TLeitor.Create;
@@ -182,7 +183,7 @@ begin
 
 end;
 
-function TinutNFe.LerXML(CaminhoArquivo: String): Boolean;
+function TinutNFe.LerXML(const CaminhoArquivo: String): Boolean;
 var
   ArqInut: TStringList;
 begin

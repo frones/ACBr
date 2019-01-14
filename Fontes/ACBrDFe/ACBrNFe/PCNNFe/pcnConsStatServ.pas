@@ -88,6 +88,7 @@ Uses pcnAuxiliar;
 
 constructor TConsStatServ.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

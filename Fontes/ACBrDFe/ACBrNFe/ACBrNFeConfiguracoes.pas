@@ -59,8 +59,8 @@ type
     FVersaoQRCode: TpcnVersaoQrCode;
     FCamposFatObrigatorios: Boolean;
 
-    procedure SetCSC(AValue: String);
-    procedure SetIdCSC(AValue: String);
+    procedure SetCSC(const AValue: String);
+    procedure SetIdCSC(const AValue: String);
     procedure SetModeloDF(AValue: TpcnModeloDF);
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
@@ -119,7 +119,7 @@ type
     function GetPathInu(CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownload(const xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -167,6 +167,7 @@ uses
 
 constructor TDownloadConfNFe.Create;
 begin
+  inherited Create;
   FPathDownload := '';
   FSepararPorNome := False;
 end;
@@ -281,7 +282,7 @@ begin
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
 end;
 
-procedure TGeralConfNFe.SetCSC(AValue: String);
+procedure TGeralConfNFe.SetCSC(const AValue: String);
 begin
   if FCSC=AValue then
     Exit;
@@ -289,7 +290,7 @@ begin
   FCSC:=Trim(AValue);
 end;
 
-procedure TGeralConfNFe.SetIdCSC(AValue: String);
+procedure TGeralConfNFe.SetIdCSC(const AValue: String);
 begin
   if FIdCSC=AValue then
     Exit;
@@ -372,7 +373,7 @@ begin
   DownloadNFe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
 end;
 
-function TArquivosConfNFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+function TArquivosConfNFe.GetPathDownload(const xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   rPathDown: String;
 begin

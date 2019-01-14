@@ -96,6 +96,7 @@ implementation
 
 constructor TretEnvNFe.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FinfRec := TInfREC.Create
 end;

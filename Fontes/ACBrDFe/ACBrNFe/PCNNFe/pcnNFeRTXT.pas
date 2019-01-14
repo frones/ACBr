@@ -68,7 +68,7 @@ type
     function LerTxt: Boolean;
     function CarregarArquivo(const CaminhoArquivo: String): Boolean;
     procedure LerRegistro(const Registro: String);
-    function LerCampo(const Tipo: TpcnTipoCampo; TAG: String): variant;
+    function LerCampo(const Tipo: TpcnTipoCampo; const TAG: String): variant;
     function RetornarConteudoTag(const TAG: String): String;
     function LocalizarPosicaoTAG(TAG: String; Conteudo: String): Integer;
   published
@@ -88,6 +88,7 @@ Uses ACBrConsts, ACBrUtil,
 
 constructor TNFeRTXT.Create(AOwner: TNFe);
 begin
+  inherited Create;
   FNFe              := AOwner;
   FConteudoArquivo  := TStringList.create;
   FLayoutArquivoTXT := TStringList.create;
@@ -145,7 +146,7 @@ begin
   Result := True;
 end;
 
-function TNFeRTXT.LerCampo(const Tipo: TpcnTipoCampo; TAG: String): variant;
+function TNFeRTXT.LerCampo(const Tipo: TpcnTipoCampo; const TAG: String): variant;
 var
   ConteudoTag: String;
   LenTag: Integer;

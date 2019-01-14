@@ -85,6 +85,7 @@ uses
 
 constructor TNFeR.Create(AOwner: TNFe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FNFe    := AOwner;
 end;

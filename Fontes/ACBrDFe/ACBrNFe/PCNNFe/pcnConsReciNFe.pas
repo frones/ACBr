@@ -89,6 +89,7 @@ Uses
 
 constructor TConsReciNFe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

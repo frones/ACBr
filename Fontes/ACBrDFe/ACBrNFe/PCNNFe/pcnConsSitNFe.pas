@@ -89,6 +89,7 @@ Uses
 
 constructor TConsSitNFe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

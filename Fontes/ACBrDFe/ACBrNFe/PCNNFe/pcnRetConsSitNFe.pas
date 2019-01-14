@@ -148,6 +148,7 @@ implementation
 
 constructor TRetConsSitNFe.Create;
 begin
+  inherited Create;
   FLeitor     := TLeitor.Create;
   FprotNFe    := TProcNFe.create;
   FretCancNFe := TRetCancNFe.create;

@@ -108,6 +108,7 @@ uses
 
 constructor TProcNFe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
   FnProt   := '';
 end;

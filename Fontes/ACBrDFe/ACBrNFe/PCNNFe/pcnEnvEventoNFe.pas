@@ -121,6 +121,7 @@ uses
 
 constructor TEventoNFe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
   FEvento  := TInfEventoCollection.Create(Self);
 end;

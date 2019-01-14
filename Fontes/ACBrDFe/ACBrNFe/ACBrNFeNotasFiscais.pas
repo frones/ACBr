@@ -83,8 +83,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -3399,7 +3399,7 @@ end;
 procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq : String;
+  NomeArq_temp : String;
   AnexosEmail:TStrings;
   StreamNFe : TMemoryStream;
 begin
@@ -3422,8 +3422,8 @@ begin
         if Assigned(DANFE) then
         begin
           DANFE.ImprimirDANFEPDF(FNFe);
-          NomeArq := PathWithDelim(DANFE.PathPDF) + NumID + '-nfe.pdf';
-          AnexosEmail.Add(NomeArq);
+          NomeArq_temp := PathWithDelim(DANFE.PathPDF) + NumID + '-nfe.pdf';
+          AnexosEmail.Add(NomeArq_temp);
         end;
       end;
 
@@ -3616,12 +3616,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure NotaFiscal.SetXML(AValue: String);
+procedure NotaFiscal.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure NotaFiscal.SetXMLOriginal(AValue: String);
+procedure NotaFiscal.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin

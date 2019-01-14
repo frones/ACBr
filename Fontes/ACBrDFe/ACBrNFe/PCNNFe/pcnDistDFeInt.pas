@@ -92,6 +92,7 @@ Uses pcnAuxiliar;
 
 constructor TDistDFeInt.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

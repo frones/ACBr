@@ -89,6 +89,7 @@ implementation
 
 constructor TConsCad.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

@@ -92,6 +92,7 @@ Uses pcnAuxiliar;
 
 constructor TAdmCSCNFCe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

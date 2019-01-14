@@ -264,6 +264,7 @@ end;
 
 constructor TErros.Create(AOwner: TRetEnvANe);
 begin
+  inherited Create;
   FErro := TErroCollection.Create(Self);
 end;
 
@@ -320,6 +321,7 @@ end;
 
 constructor TAverbado.Create(AOwner: TRetEnvANe);
 begin
+  inherited Create;
   FDadosSeguro := TDadosSeguroCollection.Create(Self);
 end;
 
@@ -375,6 +377,7 @@ end;
 
 constructor TDeclarado.Create(AOwner: TRetEnvANe);
 begin
+  inherited Create;
 
 end;
 
@@ -388,6 +391,7 @@ end;
 
 constructor TInfos.Create(AOwner: TRetEnvANe);
 begin
+  inherited Create;
   FInfo := TInfoCollection.Create(Self);
 end;
 
@@ -407,6 +411,7 @@ end;
 
 constructor TRetEnvANe.Create;
 begin
+  inherited Create;
   FLeitor    := TLeitor.Create;
   FErros     := TErros.Create( Self );
   FAverbado  := TAverbado.Create( Self );

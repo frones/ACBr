@@ -68,6 +68,7 @@ implementation
 
 constructor TANeR.Create(AOwner: TANe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FANe := AOwner;
 end;

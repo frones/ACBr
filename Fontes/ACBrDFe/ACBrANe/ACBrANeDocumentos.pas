@@ -78,9 +78,9 @@ type
 
     procedure Assinar;
 
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(const AXML: AnsiString): Boolean;
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-function Documento.LerXML(AXML: AnsiString): Boolean;
+function Documento.LerXML(const AXML: AnsiString): Boolean;
 var
   XMLStr: String;
 begin
@@ -216,7 +216,7 @@ begin
   Result := True;
 end;
 
-function Documento.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function Documento.GravarXML(const NomeArquivo: String; PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;

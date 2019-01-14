@@ -92,7 +92,7 @@ implementation
 
 constructor TANe.Create;
 begin
-
+  inherited Create;
 end;
 
 destructor TANe.Destroy;

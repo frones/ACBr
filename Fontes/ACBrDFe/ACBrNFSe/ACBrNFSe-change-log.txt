@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/48710-valor-iss-retido-provedor-tecnos-flores-da-cunha-rs/
+   Por: Mateus Brunelli
+
 08/01/2019
 -- Diversos --
 [*] Possivel correção na assinatura do Consultar Situação do provedor Publica.

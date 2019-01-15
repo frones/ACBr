@@ -230,7 +230,7 @@ begin
 
       {Pegando Tipo de Boleto}
       if (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) or 
-         (CarteiraEnvio = tceBanco) then  
+         (CarteiraEnvio <> tceCedente) then
         TipoBoleto := 'A'
       else
         TipoBoleto := 'B';       

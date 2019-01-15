@@ -891,8 +891,8 @@ type
   {Define se a carteira é Cobrança Simples / Registrada}
   TACBrTipoCarteira = (tctSimples, tctRegistrada, tctEletronica);
 
-  {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco }
-  TACBrCarteiraEnvio = (tceCedente, tceBanco);
+  {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco via correio ou Banco via email }
+  TACBrCarteiraEnvio = (tceCedente, tceBanco, tceBancoEmail);
 
   {Definir codigo Desconto }
   TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo);

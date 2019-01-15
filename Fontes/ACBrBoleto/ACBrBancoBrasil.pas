@@ -392,22 +392,35 @@ var
    ACaracTitulo, wTipoCarteira  : Char;
    AMensagem                    : String;
    ACodProtesto                 : Char;
-   GeraSegS                     : Boolean;
+   BoletoEmail,GeraSegS         : Boolean;
 
   function MontarInstrucoes2: string;
   begin
     Result := '';
+
     with ACBrTitulo do
     begin
-      if ((Mensagem.Count - 1) <= 2) then
-      begin
-        if ((Mensagem.Count - 1) = 2) then
-          Result := Copy(PadRight(Mensagem[1] +' / '+ Mensagem[2], 140, ' '), 1, 140)
-        else if Mensagem.Count > 1 then
-          Result := Copy(PadRight(Mensagem[1], 140, ' '), 1, 140);
+       Result:= Copy(PadRight(Mensagem[1], 40, ' '), 1, 40);
 
-        Exit;
-      end;
+       if Mensagem.Count > 2 then
+          Result:= Result + Copy(PadRight(Mensagem[2], 40, ' '), 1, 40)
+       else
+          exit;
+
+       if Mensagem.Count > 3 then
+          Result:= Result + Copy(PadRight(Mensagem[3], 40, ' '), 1, 40)
+       else
+         exit;
+
+       if Mensagem.Count > 4 then
+          Result:= Result + Copy(PadRight(Mensagem[4], 40, ' '), 1, 40)
+       else
+          exit;
+
+       if Mensagem.Count > 5 then
+          Result:= Result + Copy(PadRight(Mensagem[5], 40, ' '), 1, 40)
+       else
+          exit;
     end;
   end;
 
@@ -550,7 +563,8 @@ begin
        AMensagem   := Mensagem.Strings[0];
 
 
-     if (ACBrTitulo.CarteiraEnvio = tceBanco) and (Mensagem.Count > 1) then
+     BoletoEmail:= ACBrTitulo.CarteiraEnvio = tceBancoEmail;
+     if (BoletoEmail) or (Mensagem.Count > 1) then
       begin
        QtdRegTitulo:= 4;
        GeraSegS    := True;
@@ -608,7 +622,8 @@ begin
               '000'                                                                     + // 225 a 227 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
               '09'                                                                      + // 228 a 229 - Código da moeda: Real
               StringOfChar('0', 10)                                                     + // 230 a 239 - Uso exclusivo FEBRABAN/CNAB
-              ' ';                                                                        // 240 - Uso exclusivo FEBRABAN/CNAB
+              ' ';
+                                                                    // 240 - Uso exclusivo FEBRABAN/CNAB
 
      {SEGMENTO Q}
      Result:= Result + #13#10 +
@@ -668,16 +683,15 @@ begin
                 IntToStrZero((QtdRegTitulo * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 4 ,5)     + // 009 - 013 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
                 'S'                                                                         + // 014 - 014 - Cód. Segmento do registro detalhe
                 Space(1)                                                                    + // 015 - 015 - Reservado (uso Banco)
-                ATipoOcorrencia                                                             + // 016 - 017 - Código de movimento remessa
-                ifthen( ((Mensagem.Count - 1) <= 2), '8', '0' )                             + // 018 - 018 - Identificação da impressão
-                ifthen( ((Mensagem.Count - 1) <= 2), '00', '' )                             + // 019 - 020 - Reservado (uso Banco) para tipo de impressão 1 e 2
-                MontarInstrucoes2                                                           + // 019 - 058 - Mensagem 5
-                                                                                              // 059 - 098 - Mensagem 6
-                                                                                              // 099 - 138 - Mensagem 7
-                                                                                              // 139 - 178 - Mensagem 8
-                                                                                              // 179 - 218 - Mensagem 9
-                ifthen( ((Mensagem.Count - 1) <= 2), '00' + Space(78) ,Space(222));           // 019 - 240 - Preenchido em branco para tipo de impressão 3
-                                                                                              // 161 - 240 - Reservado (uso Banco) para tipo de impressão 1 e 2
+                ATipoOcorrencia;                                                              // 016 - 017 - Código de movimento remessa
+
+       if BoletoEmail then
+          Result:= Result + '8' + '00'                                                     + // 018 - 018 - Identificação da impressão // 019 - 020 - Zeros
+                   PadRight(ACBrTitulo.Sacado.Email, 140)                                  + // 21-160  Email
+                  '00'                                                                     + // 161-162 Zeros
+                  Space(78)                                                                  // 163-240 brancos
+       else
+          Result:= Result + '3' + PadRight(MontarInstrucoes2, 222);
 
        inc(fQtMsg);
      end;

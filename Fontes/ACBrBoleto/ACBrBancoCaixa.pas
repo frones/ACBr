@@ -264,16 +264,24 @@ end;
 function TACBrCaixaEconomica.RetornaCodCarteira(const Carteira: string; const ACBrTitulo: TACBrTitulo): integer;
 
 begin
-    if (Carteira = 'RG') and (ACBrTitulo.CarteiraEnvio = tceCedente) then
-    Result := 14
-    else if (Carteira = 'RG') and (ACBrTitulo.CarteiraEnvio = tceBanco) then
-    Result := 11
-    else if (Carteira = 'SR') and (ACBrTitulo.CarteiraEnvio = tceCedente) then
-    Result := 24
-    else if (Carteira = 'SR') and (ACBrTitulo.CarteiraEnvio = tceBanco) then
-    Result := 21
+    if (Carteira = 'RG') then
+     begin
+       if (ACBrTitulo.CarteiraEnvio = tceCedente) then
+          Result := 14
+       else
+          Result := 11;
+     end
+    else if (Carteira = 'SR') then
+     begin
+       if (ACBrTitulo.CarteiraEnvio = tceCedente) then
+          Result := 24
+       else
+         Result := 21;
+     end
     else
-      raise Exception.Create(ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"'));
+       raise Exception.Create(ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"'));
+
+
 end;
 
 function TACBrCaixaEconomica.TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;

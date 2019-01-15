@@ -51,6 +51,15 @@ Símbolo : Significado
 ver: 0.1.0
 06/12/2018
 
+15/01/2019 -- ACBrBancoBrasil
+[-] Ajuste na geração da remessa CNAB240 para montar corretamente o segmento S conforme a propriedade Titulo.CarteiraEnvio.
+    A justado também para incluir até 6 mensagens a remessa (máximo suportado pelo banco).
+https://www.projetoacbr.com.br/forum/topic/48686-corre%C3%A7%C3%A3o-acbrboleto-bando-brasil/
+
+
+11-01-2019 -- ACBrBancoBrasil
+[-] Ajuste na função MontarInstrucoes2() para evitar erro de List of Index
+
 04-01-2019 -- ACBrBancoNordeste
 [*] Ajuste na geração CNAB400, validação tipo de aceite e dias para protesto
 https://www.projetoacbr.com.br/forum/topic/48504-ajustes-nos-campos-instrucao-aceite-e-dias-para-protesto-no-acbrboleto-bnb/

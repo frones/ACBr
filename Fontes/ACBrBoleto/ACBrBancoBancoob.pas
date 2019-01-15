@@ -322,11 +322,10 @@ begin
       else
          wRespEntrega := '1';
       
-      if (ACBrTitulo.CarteiraEnvio = tceBanco) then
-        strCarteiraEnvio := '1'
+      if (ACBrTitulo.CarteiraEnvio = tceCedente) then
+        strCarteiraEnvio := '2'
       else
-        strCarteiraEnvio := '2';
-
+        strCarteiraEnvio := '1';
 
       DiasProtesto := IntToStrZero(DiasDeProtesto,2);
          
@@ -914,10 +913,10 @@ begin
      else
        ValorMora := IntToStrZero(Round(ValorMoraJuros * 100), 15);
     
-     if (ACBrTitulo.CarteiraEnvio = tceBanco) then
-       strCarteiraEnvio := '1'
-     else
-       strCarteiraEnvio := '2';
+     if (ACBrTitulo.CarteiraEnvio = tceCedente) then
+        strCarteiraEnvio := '2'
+      else
+        strCarteiraEnvio := '1';
 
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                             + //1 a 3 - Código do banco
                '0001'                                                        + //4 a 7 - Lote de serviço
@@ -958,7 +957,8 @@ begin
                          FormatDateTime('ddmmyyyy', DataDocumento)        + // 110 a 117 - Data da emissão do documento
                          PadRight(CodigoMora, 1, '0')                     + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
                          ADataMoraJuros                                   + //119 a 126 - Data a partir da qual serão cobrados juros
-                         ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
+                    '0'                                              + // 224 - Código de Baixa
+                         space(3)                                         + // 225 A 227 - Dias para baixa         ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
                          TipoDescontoToString(TipoDesconto)               + // 142 - "Código do Desconto 1
                                                                             // '0'  =  Não Conceder desconto
                                                                             // '1'  =  Valor Fixo Até a Data Informada

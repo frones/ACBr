@@ -687,7 +687,7 @@ procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
   qrcode: String;
-  CarregouLogo: Boolea;
+  CarregouLogo: Boolean;
 begin
   fNumItem  := 0;
   fNumPagto := 0;

@@ -113,7 +113,7 @@ implementation
 uses
   math, {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF} sysutils, strutils,
   synautil,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrImage, ACBrConsts;
 
 { TACBrETQPpla }
 
@@ -464,7 +464,7 @@ begin
 
   if (aTipo = 'PCX') then
   begin
-    if not ImgIsPCX(aStream, True) then
+    if not IsPCX(aStream, True) then
       raise Exception.Create(ACBrStr(cErrImgPCXMono));
   end
   else if (aTipo <> 'BMP') then
@@ -496,60 +496,19 @@ end;
 function TACBrETQZplII.ComandoBMP2GRF(aStream: TStream; aNomeImagem: String;
   Inverter: Boolean): AnsiString;
 var
-  bWidth, bHeight, bPixelOffset: LongWord;
-  bPixel: Byte;
-  i, j, tmp, byteW, LenImg{, lbCount, k}: Int64;
+  ARasterImg: AnsiString;
+  AHeight, AWidth, LenImg, BytesPerRow: Integer;
   ImgHex: String;
 begin
-  if not ImgIsBMP(aStream, True) then
-    raise Exception.Create(ACBrStr(cErrImgBMPMono));
+  AWidth := 0; AHeight := 0; ARasterImg := '';
+  BMPToRasterStr(aStream, Inverter, AWidth, AHeight, ARasterImg);
 
-  // Lendo posição do Off-set da imagem
-  AStream.Position := 10;
-  bPixelOffset := 0;
-  AStream.ReadBuffer(bPixelOffset, 4);
-
-  // Lendo dimensões da imagem
-  AStream.Position := 18;
-  bWidth := 0; bHeight := 0;
-  AStream.ReadBuffer(bWidth, 4);
-  AStream.ReadBuffer(bHeight, 4);
-
-  LenImg := aStream.Size - bPixelOffset;
-  byteW := ceil(bWidth / 8);
-  //lbCount := ceil(bWidth / 4);
-
-  ImgHex := '';
-  //k := 0;
-  i := aStream.Size-1;
-  while (i >= bPixelOffset) do
-  begin
-    tmp := i - (byteW-1);
-    j := tmp;
-    aStream.Position := tmp;
-    while (j < (tmp + byteW)) do
-    begin
-      bPixel := 0;
-      aStream.ReadBuffer(bPixel,1);
-      if Inverter then
-        bPixel := bPixel xor $FF;
-
-      //if ((k mod lbCount) = 0) then
-      //  ImgHex := ImgHex + LF;
-
-      ImgHex := ImgHex + IntToHex(bPixel,2);
-
-      inc(j);
-      //inc(k);
-    end;
-    i := tmp-1;
-  end;
-
-  //DEBUG
-  //WriteToFile('c:\temp\ImgHex.txt',ImgHex);
+  LenImg := Length(ARasterImg);
+  ImgHex := AsciiToHex(ARasterImg);
+  BytesPerRow := ceil(AWidth / 8);
 
   Result := '~DGE:' + aNomeImagem + ',' + IntToStr(LenImg)+ ',' +
-            IntToStr(byteW) + ',' + ImgHex;
+            IntToStr(BytesPerRow) + ',' + ImgHex;
 end;
 
 end.

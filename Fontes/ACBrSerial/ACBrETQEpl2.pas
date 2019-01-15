@@ -104,7 +104,7 @@ implementation
 uses
   math, SysUtils,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  ACBrUtil, ACBrConsts, synautil;
+  ACBrUtil, ACBrImage, ACBrConsts, synautil;
 
 { TACBrETQEpl2 }
 
@@ -391,7 +391,7 @@ begin
   else
     aTipo := UpperCase(RightStr(aTipo, 3));
 
-  if (aTipo <> 'PCX') or (not ImgIsPCX(aStream, True)) then
+  if (aTipo <> 'PCX') or (not IsPCX(aStream, True)) then
     raise Exception.Create(ACBrStr(cErrImgPCXMono));
 
   aStream.Position := 0;

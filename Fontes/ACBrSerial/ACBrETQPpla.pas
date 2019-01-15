@@ -117,7 +117,7 @@ implementation
 uses
   math, sysutils, strutils,
   {$IFNDEF COMPILER6_UP} ACBrD5, Windows, {$ENDIF}
-  ACBrUtil, ACBrConsts, synautil;
+  ACBrUtil, ACBrImage, ACBrConsts, synautil;
 
 { TACBrETQPpla }
 
@@ -476,14 +476,14 @@ begin
 
   if (aTipo = 'PCX') then
   begin
-    if not ImgIsPCX(aStream, True) then
+    if not IsPCX(aStream, True) then
       raise Exception.Create(ACBrStr(cErrImgPCXMono));
 
     Cmd := 'p'
   end
   else if (aTipo = 'BMP') then
   begin
-    if not ImgIsBMP(aStream, True) then
+    if not IsBMP(aStream, True) then
       raise Exception.Create(ACBrStr(cErrImgBMPMono));
 
     Cmd := 'b'

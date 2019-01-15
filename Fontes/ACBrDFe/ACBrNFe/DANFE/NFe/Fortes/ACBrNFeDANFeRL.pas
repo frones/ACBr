@@ -192,6 +192,7 @@ begin
   {$IfNDef FPC}
   Self.Scaled := False;
   {$EndIf}
+  fpCorDestaqueProdutos := StringToColor('$00E5E5E5');
 end;
 
 procedure TfrlDANFeRL.ConfigurarVariavies(ATipoDANFE: TpcnTipoImpressao);

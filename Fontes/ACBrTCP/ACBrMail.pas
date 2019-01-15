@@ -313,6 +313,7 @@ begin
   FDescription  := Source.Description;
   Source.Stream.Position := 0;
   FStream.CopyFrom(Source.Stream, Stream.Size);
+  FDisposition := Source.Disposition;
 end;
 
 { TMailAttachments }

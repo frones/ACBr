@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2019
+-- ACBrMail --
+[*] Ajuste no envio de e-mail por thread, validação na assinatuda da classe TMailAttachment, preenchimento da propriedade Disposition.
+    (por: José M S Junior)
+
 19/11/2018
 -- ACBrMail --
 [-] Corrigido o erro de envio quando o numero de tentativas é zero.

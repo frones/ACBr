@@ -38,5 +38,6 @@ contains
   ACBrReg in '..\..\..\Fontes\ACBrComum\ACBrReg.pas',
   ACBrAAC in '..\..\..\Fontes\ACBrComum\ACBrAAC.pas',
   ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
+  ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
   ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas';
 end.

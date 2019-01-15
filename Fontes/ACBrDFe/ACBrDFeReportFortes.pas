@@ -49,7 +49,7 @@ type
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String);
-    class procedure CarregarLogo(ALogoImage: TRLImage; const ALogo: string);
+    class function CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
   end;
 
 
@@ -102,22 +102,27 @@ begin
   PDFFilter.FileName := AFile;
 end;
 
-class procedure TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; const ALogo: string);
+class function TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
 var
   LogoStream: TStringStream;
 begin
+  Result := False;
   ALogoImage.Picture := nil;
   if EstaVazio(Trim(ALogo)) then
     Exit;
 
   if FileExists(ALogo) then
-    ALogoImage.Picture.LoadFromFile(ALogo)
+  begin
+    ALogoImage.Picture.LoadFromFile(ALogo);
+    Result := True;
+  end
   else
   begin
     LogoStream := TStringStream.Create(ALogo);
     try
       try
         ALogoImage.Picture.Bitmap.LoadFromStream(LogoStream);
+        Result := True;
       except
         ALogoImage.Picture := nil;
       end;

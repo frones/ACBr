@@ -355,11 +355,13 @@ end;
 
 procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  CarregouLogo: Boolean;
 begin
   inherited;
   if Trim(fpDANFSe.Logo) <> '' then
   begin
-    TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
+    CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFSe.Logo);
   end;
 
   rlmPrefeitura.Lines.Clear;
@@ -495,9 +497,11 @@ end;
 
 procedure TfrlDANFSeRLRetrato.rlbPrestadorBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  CarregouLogoPrest: Boolean;
 begin
   inherited;
-  TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.PrestLogo);
+  CarregouLogoPrest := TDFeReportFortes.CarregarLogo(rliPrestLogo, fpDANFSe.PrestLogo);
 
   With fpNFSe do
   begin

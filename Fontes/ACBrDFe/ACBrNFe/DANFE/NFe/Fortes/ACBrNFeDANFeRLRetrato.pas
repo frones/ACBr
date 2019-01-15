@@ -705,11 +705,12 @@ procedure TfrlDANFeRLRetrato.InicializarDados;
 var
   i, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
   vAutoSizeAux: Boolean;
+  CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
 
-  if rliLogo.Picture.Bitmap.Empty then
+  if not CarregouLogo then
   begin
     rlmEndereco.Left := rlmEmitente.Left;
     rlmEndereco.Width := rlmEmitente.Width;

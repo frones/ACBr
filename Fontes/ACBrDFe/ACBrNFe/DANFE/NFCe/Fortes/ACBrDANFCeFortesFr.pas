@@ -687,6 +687,7 @@ procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
   qrcode: String;
+  CarregouLogo: Boolea;
 begin
   fNumItem  := 0;
   fNumPagto := 0;
@@ -705,8 +706,8 @@ begin
     lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
-    TDFeReportFortes.CarregarLogo(imgLogo, ACBrNFeDANFCeFortes.Logo);
-    pLogo.Visible := not imgLogo.Picture.Bitmap.Empty;
+    CarregouLogo := TDFeReportFortes.CarregarLogo(imgLogo, ACBrNFeDANFCeFortes.Logo);
+    pLogo.Visible := CarregouLogo;
 
     if pLogo.Visible then
     begin
@@ -1169,7 +1170,6 @@ procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   qrcode: String;
-  LogoStream: TStringStream;
 begin
   fNumItem  := 0;
   fNumPagto := 0;

@@ -215,12 +215,14 @@ uses
 {$EndIf}
 
 procedure TfrlDANFeEventoRLRetrato.InicializarDados;
+var
+  CarregouLogo: Boolean;
 begin
   // Carrega logomarca
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
 
   // Centraliza as linhas do cabeçalho caso o logo não seja informado
-  if (rliLogo.Picture <> Nil) then
+  if (CarregouLogo) then
   begin
     rllTitulo.Left := 88;
     rllCabecalhoLinha1.Left := 88;

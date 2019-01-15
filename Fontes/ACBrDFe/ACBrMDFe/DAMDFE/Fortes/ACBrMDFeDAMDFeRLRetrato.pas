@@ -215,6 +215,8 @@ var
   nItemControle: integer;
 
 procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  CarregouLogo: Boolean;
 begin
   inherited;
   if  (RLMDFe.PageNumber <> 1) then
@@ -229,7 +231,7 @@ begin
     RLMemo1.Font.Size := 6;
   {$ENDIF}
 
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDAMDFe.Logo);
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDAMDFe.Logo);
 
 
   if fpDAMDFe.ExpandeLogoMarca then
@@ -241,9 +243,8 @@ begin
     rliLogo.Stretch := True;
     rlmEmitente.visible := False;
     rlmDadosEmitente.visible := False;
-  end;
-
-  if not fpDAMDFe.ExpandeLogoMarca then
+  end
+  else
   begin
     rliLogo.Stretch := true;
     rlmEmitente.Enabled := True;

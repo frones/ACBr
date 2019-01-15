@@ -561,9 +561,10 @@ procedure TfrlDANFeRLPaisagem.InicializarDados;
 var
   i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
   vAutoSizeAux: Boolean;
+  CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
 
   if NaoEstaVazio(fpDANFe.MarcaDagua) and FileExists(fpDANFe.MarcaDagua) then
     rliMarcaDagua1.Picture.LoadFromFile(fpDANFe.MarcaDagua);

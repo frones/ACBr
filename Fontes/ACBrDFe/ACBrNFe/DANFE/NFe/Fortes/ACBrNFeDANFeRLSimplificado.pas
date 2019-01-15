@@ -157,6 +157,8 @@ begin
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  CarregouLogo: Boolean;
 begin
   inherited;
 
@@ -170,7 +172,7 @@ begin
     rlmEmitente.Enabled := False;
   end;
 
-  TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
 
   if not fpDANFe.ExpandeLogoMarca then
   begin

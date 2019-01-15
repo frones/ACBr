@@ -116,10 +116,10 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathInu(CNPJ: String = ''): String;
-    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(const xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathInu(const CNPJ: String = ''): String;
+    function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -373,7 +373,7 @@ begin
   DownloadNFe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
 end;
 
-function TArquivosConfNFe.GetPathDownload(const xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+function TArquivosConfNFe.GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   rPathDown: String;
 begin
@@ -389,7 +389,7 @@ begin
   Result := GetPath(rPathDown, 'Down', CNPJ, Data);
 end;
 
-function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String;
+function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;
   Data: TDateTime): String;
 var
   Dir: String;
@@ -405,12 +405,12 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfNFe.GetPathInu(CNPJ: String = ''): String;
+function TArquivosConfNFe.GetPathInu(const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
+function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin

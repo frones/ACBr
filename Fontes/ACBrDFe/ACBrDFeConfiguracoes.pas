@@ -282,7 +282,7 @@ type
     procedure GravarIni( const AIni: TCustomIniFile ); virtual;
     procedure LerIni( const AIni: TCustomIniFile ); virtual;
 
-    function GetPath(const APath: String; const ALiteral: String; CNPJ: String = '';
+    function GetPath(const APath: String; const ALiteral: String; const CNPJ: String = '';
       Data: TDateTime = 0; const ModeloDescr: String = ''): String; virtual;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
@@ -1185,7 +1185,7 @@ begin
   Result := FIniServicos;
 end;
 
-function TArquivosConf.GetPath(const APath: String; const ALiteral: String; CNPJ: String;
+function TArquivosConf.GetPath(const APath: String; const ALiteral: String; const CNPJ: String;
   Data: TDateTime; const ModeloDescr: String): String;
 
   procedure AddPathOrder(AAdicionar: Boolean; AItemOrdenacaoPath: TTagOrdenacaoPath);
@@ -1193,10 +1193,10 @@ function TArquivosConf.GetPath(const APath: String; const ALiteral: String; CNPJ
     if AAdicionar then
       FOrdenacaoPath.Add.Item := AItemOrdenacaoPath;
   end;
-  
+
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, sAno, sMes, sDia: String;
+  Dir, Modelo, sAno, sMes, sDia, CNPJ_temp: String;
   LenLiteral, i: integer;
 begin
   if EstaVazio(APath) then
@@ -1218,14 +1218,14 @@ begin
     case FOrdenacaoPath[i].Item of
       opCNPJ:
         begin
-          CNPJ := OnlyNumber(CNPJ);
+          CNPJ_temp := OnlyNumber(CNPJ);
 
-          if EstaVazio(CNPJ) then
+          if EstaVazio(CNPJ_temp) then
             if Assigned(fpConfiguracoes.Owner) then
-              CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
+              CNPJ_temp := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
 
-          if NaoEstaVazio(CNPJ) then
-            Dir := PathWithDelim(Dir) + CNPJ;
+          if NaoEstaVazio(CNPJ_temp) then
+            Dir := PathWithDelim(Dir) + CNPJ_temp;
         end;
 
       opModelo:

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2019
+-- pcesS5003 --
+[*] Implementação do Evento de Retorno 5003.
+   Por: Arce
+
 14/01/2019
 -- pcesConversaoeSocial --
 [*] Possível correção para identificação correta do evento.

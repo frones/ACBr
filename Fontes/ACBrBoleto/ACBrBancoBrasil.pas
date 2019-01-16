@@ -400,25 +400,25 @@ var
 
     with ACBrTitulo do
     begin
-       Result:= Copy(PadRight(Mensagem[1], 40, ' '), 1, 40);
+       Result:= PadRight(Mensagem[1], 40, ' ');
 
        if Mensagem.Count > 2 then
-          Result:= Result + Copy(PadRight(Mensagem[2], 40, ' '), 1, 40)
+          Result:= Result + PadRight(Mensagem[2], 40, ' ')
        else
           exit;
 
        if Mensagem.Count > 3 then
-          Result:= Result + Copy(PadRight(Mensagem[3], 40, ' '), 1, 40)
+          Result:= Result + PadRight(Mensagem[3], 40, ' ')
        else
          exit;
 
        if Mensagem.Count > 4 then
-          Result:= Result + Copy(PadRight(Mensagem[4], 40, ' '), 1, 40)
+          Result:= Result + PadRight(Mensagem[4], 40, ' ')
        else
           exit;
 
        if Mensagem.Count > 5 then
-          Result:= Result + Copy(PadRight(Mensagem[5], 40, ' '), 1, 40)
+          Result:= Result + PadRight(Mensagem[5], 40, ' ')
        else
           exit;
     end;

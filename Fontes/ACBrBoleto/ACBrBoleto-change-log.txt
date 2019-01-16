@@ -57,6 +57,11 @@ ver: 0.1.0
     https://www.projetoacbr.com.br/forum/topic/48764-arquivo-de-remessa-rejeitado-sicoob-formato-utf-8-para-ansi/
     (por: DSA)
 
+-- ACBrBancoBrasil --
+[-] Correção para iniciar o Result da função CodMotivoRejeicaoToDescricao
+https://www.projetoacbr.com.br/forum/topic/48742-corre%C3%A7%C3%A3o-na-identifica%C3%A7%C3%A3o-do-motivo-da-rejei%C3%A7%C3%A3o-para-banco-do-brasil/
+
+
 15/01/2019 -- ACBrBancoBrasil
 [-] Ajuste na geração da remessa CNAB240 para montar corretamente o segmento S conforme a propriedade Titulo.CarteiraEnvio.
     A justado também para incluir até 6 mensagens a remessa (máximo suportado pelo banco).

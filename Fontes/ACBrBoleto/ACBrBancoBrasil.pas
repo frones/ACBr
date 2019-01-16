@@ -1411,6 +1411,8 @@ end;
 
 function TACBrBancoBrasil.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
+  Result := '';
+
   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c400) then
   begin
     case TipoOcorrencia of

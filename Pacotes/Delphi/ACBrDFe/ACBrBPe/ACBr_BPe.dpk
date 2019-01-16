@@ -90,15 +90,11 @@ contains
   pcnConversaoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConversaoBPe.pas',
   pcnProcBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnProcBPe.pas',
   pcnConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsSitBPe.pas',
-  pcnConsStatServBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsStatServBPe.pas',
   pcnEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEventoBPe.pas',
   pcnEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEnvEventoBPe.pas',
-//  pcnDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnDistDFeIntBPe.pas',
   pcnRetEnvBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvBPe.pas',
-  pcnRetConsStatServBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsStatServBPe.pas',
   pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',
   pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
-//  pcnRetDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetDistDFeIntBPe.pas',
   ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
 
 end.

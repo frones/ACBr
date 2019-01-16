@@ -36,6 +36,8 @@ contains
   pcnConsts in '..\..\..\Fontes\PCNComum\pcnConsts.pas',
   pcnConsCad in '..\..\..\Fontes\PCNComum\pcnConsCad.pas',
   pcnRetConsCad in '..\..\..\Fontes\PCNComum\pcnRetConsCad.pas',
+  pcnConsStatServ in '..\..\..\Fontes\PCNComum\pcnConsStatServ.pas',
+  pcnRetConsStatServ in '..\..\..\Fontes\PCNComum\pcnRetConsStatServ.pas',
   pcnDistDFeInt in '..\..\..\Fontes\PCNComum\pcnDistDFeInt.pas',
   pcnRetDistDFeInt in '..\..\..\Fontes\PCNComum\pcnRetDistDFeInt.pas',
   pcnSignature in '..\..\..\Fontes\PCNComum\pcnSignature.pas',

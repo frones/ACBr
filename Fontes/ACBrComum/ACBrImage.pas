@@ -1,36 +1,36 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÃ§Ã£o com equipa- }
-{ mentos de AutomaÃ§Ã£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  VocÃª pode obter a Ãºltima versÃ£o desse arquivo na pagina do  Projeto ACBr    }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
-{  Algumas funÃ§oes dessa Unit foram extraidas de outras Bibliotecas, veja no   }
-{ cabeÃ§alho das FunÃ§oes no cÃ³digo abaixo a origem das informaÃ§oes, e autores...}
+{  Algumas funçoes dessa Unit foram extraidas de outras Bibliotecas, veja no   }
+{ cabeçalho das Funçoes no código abaixo a origem das informaçoes, e autores...}
 {                                                                              }
-{  Esta biblioteca Ã© software livre; vocÃª pode redistribuÃ­-la e/ou modificÃ¡-la }
-{ sob os termos da LicenÃ§a PÃºblica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versÃ£o 2.1 da LicenÃ§a, ou (a seu critÃ©rio) }
-{ qualquer versÃ£o posterior.                                                   }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca Ã© distribuÃ­da na expectativa de que seja Ãºtil, porÃ©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÃ­cita de COMERCIABILIDADE OU      }
-{ ADEQUAÃ‡ÃƒO A UMA FINALIDADE ESPECÃFICA. Consulte a LicenÃ§a PÃºblica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÃ‡A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÃª deve ter recebido uma cÃ³pia da LicenÃ§a PÃºblica Geral Menor do GNU junto}
-{ com esta biblioteca; se nÃ£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÃ§o 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÃª tambÃ©m pode obter uma copia da licenÃ§a em:                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/gpl-license.php                           }
 {                                                                              }
-{ Daniel SimÃµes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÃ§a Anita Costa, 34 - TatuÃ­ - SP - 18270-410                  }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -42,10 +42,12 @@ interface
 
 uses
   Classes, SysUtils;
+  //{$IfNDef NOGUI}, Graphics, windows{$EndIf};
 
 const
-  cErrImgPCXMono = 'Imagem nÃ£o Ã© PCX MonocromÃ¡tica';
-  cErrImgBMPMono = 'Imagem nÃ£o Ã© BMP MonocromÃ¡tica';
+  cErrImgPCXMono = 'Imagem não é PCX Monocromática';
+  cErrImgBMPMono = 'Imagem não é BMP Monocromática';
+  //C_LUMINOSITY_THRESHOLD = 127;
 
 type
   EACBrImage = class(Exception);
@@ -55,14 +57,19 @@ function IsBMP(S: TStream; CheckIsMono: Boolean = True): Boolean;
 
 procedure BMPToRasterStr(AStream: TStream; InvertImg: Boolean; var AWidth: Integer;
   var AHeight: Integer; var RasterStr: AnsiString);
+procedure RasterStrToAscII(AWidth: Integer; const RasterStr: AnsiString; AscIIArtLines: TStrings);
+procedure AscIIToRasterStr(AscIIArtLines: TStrings; var AWidth: Integer;
+  var AHeight: Integer; var RasterStr: AnsiString);
 
-
+{$IfNDef NOGUI}
+//procedure ConvertBMPToMono(ABmpSrc: TBitmap; ABmpMono: TBitMap);
+{$EndIf}
 
 implementation
 
 uses
   math,
-  ACBrUtil;
+  ACBrUtil, ACBrConsts;
 
 function IsPCX(S: TStream; CheckIsMono: Boolean): Boolean;
 var
@@ -122,8 +129,9 @@ var
   bPixelOffset, bWidth, bHeight: LongWord;
   bPixel: Byte;
   StreamLastPos, RowStart, BytesPerRow, i: Int64;
+  HasPadBits: Boolean;
 begin
-  // InspiraÃ§Ã£o:
+  // Inspiração:
   // http://www.nonov.io/convert_bmp_to_ascii
   // https://en.wikipedia.org/wiki/BMP_file_format
   // https://github.com/asharif/img2grf/blob/master/src/main/java/org/orphanware/App.java
@@ -131,12 +139,12 @@ begin
   if not IsBMP(AStream, True) then
     raise EACBrImage.Create(ACBrStr(cErrImgBMPMono));
 
-  // Lendo posiÃ§Ã£o do Off-set da imagem
+  // Lendo posição do Off-set da imagem
   AStream.Position := 10;
   bPixelOffset := 0;
   AStream.ReadBuffer(bPixelOffset, 4);
 
-  // Lendo dimensÃµes da imagem
+  // Lendo dimensões da imagem
   AStream.Position := 18;
   bWidth := 0; bHeight := 0;
   AStream.ReadBuffer(bWidth, 4);
@@ -146,7 +154,10 @@ begin
   AHeight := bHeight;
   RasterStr := '';
 
+  // BMP é organizado da Esquerda para a Direita e de Baixo para cima.. serializando..
   BytesPerRow := ceil(bWidth / 8);
+  HasPadBits := (BytesPerRow > (trunc(bWidth/8)));
+
   StreamLastPos := AStream.Size-1;
   while (StreamLastPos >= bPixelOffset) do
   begin
@@ -158,7 +169,12 @@ begin
       bPixel := 0;
       AStream.ReadBuffer(bPixel,1);
       if InvertImg then
-        bPixel := bPixel xor $FF;
+      begin
+        if (not HasPadBits) or (i < BytesPerRow) then
+          bPixel := bPixel xor $FF
+        else
+          bPixel := bPixel xor bPixel;
+      end;
 
       RasterStr := RasterStr + chr(bPixel);
       inc(i);
@@ -167,5 +183,113 @@ begin
   end;
 end;
 
+procedure RasterStrToAscII(AWidth: Integer; const RasterStr: AnsiString;
+  AscIIArtLines: TStrings);
+var
+  BytesPerRow, LenRaster, i: Integer;
+  ALine: String;
+begin
+  AscIIArtLines.Clear;
+  if (AWidth <= 0) then
+    raise EACBrImage.Create(ACBrStr('RasterStrToAscII: AWidth é obrigatório'));
+
+  BytesPerRow := ceil(AWidth / 8);
+
+  ALine := '';
+  LenRaster := Length(RasterStr);
+  for i := 1 to LenRaster do
+  begin
+    ALine := ALine + IntToBin(ord(RasterStr[i]), 8);
+    if ((i mod BytesPerRow) = 0) then
+    begin
+      AscIIArtLines.Add(ALine);
+      ALine := '';
+    end;
+  end;
+end;
+
+procedure AscIIToRasterStr(AscIIArtLines: TStrings; var AWidth: Integer;
+  var AHeight: Integer; var RasterStr: AnsiString);
+var
+  BytesPerRow, RealWidth, i, j: Integer;
+  ALine, BinaryByte: String;
+begin
+  AWidth := 0;
+  RasterStr := '';
+  AHeight := AscIIArtLines.Count;
+  if AHeight < 1 then
+    Exit;
+
+  AWidth := Length(AscIIArtLines[1]);
+  BytesPerRow := ceil(AWidth / 8);
+  RealWidth := BytesPerRow * 8;
+
+  for i := 0 to AHeight-1 do
+  begin
+    if AWidth = RealWidth then
+      ALine := AscIIArtLines[i]
+    else
+      ALine := PadRight(AscIIArtLines[i], RealWidth, '0');
+
+    j := 1;
+    while J < RealWidth do
+    begin
+      BinaryByte := copy(ALine,j,8);
+      RasterStr := RasterStr + chr(BinToInt(BinaryByte));
+      inc(j,8);
+    end;
+  end;
+end;
+
+(*
+{$IfNDef NOGUI}
+{$IfNDef FPC}
+procedure RedGreenBlue(rgb: TColor; out Red, Green, Blue: Byte);
+begin
+  Red := rgb and $000000ff;
+  Green := (rgb shr 8) and $000000ff;
+  Blue := (rgb shr 16) and $000000ff;
+end;
+{$EndIf}
+
+// Fonte: https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
+procedure ConvertBMPToMono(ABmpSrc: TBitmap; ABmpMono: TBitMap);
+var
+  Row, Col: Integer;
+  APixel: TColor;
+  Red, Green, Blue: Byte;
+  Luminosity: Integer;
+begin
+  ABmpMono.PixelFormat := pf1bit;
+  ABmpMono.Monochrome := True;
+  ABmpMono.Height := ABmpSrc.Height;
+  ABmpMono.Width  := ABmpSrc.Width;
+
+  if (ABmpSrc.PixelFormat = pf1bit) then
+    ABmpMono.Assign(ABmpSrc)
+  else
+  begin
+    for Row := 0 to ABmpSrc.Height - 1 do
+    begin
+      for Col := 0 to ABmpSrc.Width - 1 do
+      begin
+        APixel := ABmpSrc.Canvas.Pixels[Col, Row];
+        Red := 0; Green := 0; Blue := 0;
+        RedGreenBlue(APixel, Red, Green, Blue);
+        Luminosity := Trunc( ( Red * 0.3 ) + ( Green  * 0.59 ) + ( Blue * 0.11 ) );
+
+        if ( Luminosity < C_LUMINOSITY_THRESHOLD ) then
+          ABmpMono.Canvas.Pixels[Col, Row] := clBlack
+        else
+          ABmpMono.Canvas.Pixels[Col, Row] := clWhite;
+      end;
+    end;
+  end;
+
+  //DEBUG
+  //ABmpMono.SaveToFile('c:\temp\chemono.bmp');
+end;
+{$EndIf}
+*)
 end.
 

@@ -227,6 +227,8 @@ const
   cTagQRCodeLargura = '<qrcode_largura>';
   cTagQRCodeError = '<qrcode_error>';
 
+  cTagBMP = '<bmp>';
+
   cTagModoPaginaLiga       = '<mp>';
   cTagModoPaginaDesliga    = '</mp>';
   cTagModoPaginaImprimir   = '</mp_imprimir>';

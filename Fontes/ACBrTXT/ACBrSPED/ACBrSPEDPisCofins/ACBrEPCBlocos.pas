@@ -1306,6 +1306,10 @@ function StrToIndTipCoop(const AValue: string): TACBrIndTipCoop;
 function StrToNatCredDesc(const AValue: string): TACBrNatCredDesc;
 function StrToIndCredOri(const AValue: string):TACBrIndCredOri;
 function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
+function StrToCodAjBaseCalcContrib(const AValue: string):TACBrTabCodAjBaseCalcContrib;
+function StrToIndicadorApropAjuste(const AValue: string): TACBrIndicadorApropAjuste;
+
+
 
 implementation
 function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
@@ -2368,5 +2372,36 @@ function StrToIndMovFisica(const AValue: string): TACBrIndMovFisica;
 begin
    Result := TACBrIndMovFisica( StrToIntDef( AValue, 0) );
 end;
+
+function StrToCodAjBaseCalcContrib(const AValue: string): TACBrTabCodAjBaseCalcContrib;
+begin
+  if AValue = '01' then
+    Result := tcaVendasCanceladas
+  else if AValue = '02' then
+    Result :=  tcaDevolucoesVendas
+  else if AValue = '21' then
+    Result := tcaICMSaRecolher
+  else if AValue = '41' then
+    Result := tcaOutrVlrsDecJudicial
+  else if AValue = '42' then
+    Result := tcaOutrVlrsSemDecJudicial
+  else
+    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
+end;
+
+
+function StrToIndicadorApropAjuste(const AValue: string): TACBrIndicadorApropAjuste;
+begin
+  if AValue = '01' then
+    Result := iaaRefPisCofins
+  else if AValue = '02' then
+    Result :=  iaaUnicaPISPasep
+  else if AValue = '03' then
+    Result := iaaRefUnicaCofins
+  else
+    raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
+end;
+
+
 
 end.

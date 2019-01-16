@@ -51,6 +51,12 @@ Símbolo : Significado
 ver: 0.1.0
 06/12/2018
 
+16/01/2019
+-- ACBrBoleto --
+[-] Possível correção para geração de Remessa em UTF8
+    https://www.projetoacbr.com.br/forum/topic/48764-arquivo-de-remessa-rejeitado-sicoob-formato-utf-8-para-ansi/
+    (por: DSA)
+
 15/01/2019 -- ACBrBancoBrasil
 [-] Ajuste na geração da remessa CNAB240 para montar corretamente o segmento S conforme a propriedade Titulo.CarteiraEnvio.
     A justado também para incluir até 6 mensagens a remessa (máximo suportado pelo banco).

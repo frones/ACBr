@@ -2803,7 +2803,9 @@ begin
       end;
 
       if RemoveAcentosArqRemessa then
-        SLRemessa.Text := TiraAcentos(SLRemessa.Text);
+        SLRemessa.Text := TiraAcentos(SLRemessa.Text)
+      else
+        SLRemessa.Text := NativeStringToAnsi(SLRemessa.Text);
 
       SLRemessa.SaveToFile( NomeArq );
       Result:= NomeArq;

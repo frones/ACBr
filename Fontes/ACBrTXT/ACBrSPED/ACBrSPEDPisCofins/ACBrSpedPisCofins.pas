@@ -1904,6 +1904,14 @@ begin
                QTD_REG_BLC := Bloco_F.RegistroF550Count;
             end;
          end;
+         if Bloco_F.RegistroF559Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'F559';
+               QTD_REG_BLC := Bloco_F.RegistroF559Count;
+            end;
+         end;
          if Bloco_F.RegistroF560Count > 0 then
          begin
             with New do

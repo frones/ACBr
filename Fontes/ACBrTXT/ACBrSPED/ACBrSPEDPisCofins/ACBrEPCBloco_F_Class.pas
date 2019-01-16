@@ -975,7 +975,7 @@ end;
 
 procedure TBloco_F.WriteRegistroF550(RegF010: TRegistroF010) ;
   var
-    intFor : integer;
+    intFor, intF559 : integer;
 begin
   //(*) Os registros referentes à escrituração do PIS/Pasep e da Cofins das pessoas jurídicas sujeitas ao regime de tributação
   //com  base  no  lucro  presumido,  aplicável  para  os  fatos  geradores  a  ocorrer  a  partir  de  01  de  janeiro  de  2012,  serão
@@ -1006,6 +1006,18 @@ begin
                   LFill( COD_CTA )             +
                   LFill( INFO_COMPL ) ) ;
            end;
+
+           for intF559 := 0 to RegF010.RegistroF550.Items[intFor].RegistroF559.Count -1 do
+           begin
+               with RegF010.RegistroF550.Items[intFor].RegistroF559.Items[intF559] do
+               begin
+                   Add( LFill('F559') +
+                     LFill( NUM_PROC, 20) +
+                     LFill( OrigemProcessoToStr(IND_PROC), 1));
+               end;
+               RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;
+           end;
+           FRegistroF559Count := FRegistroF559Count + RegF010.RegistroF550.Items[intFor].RegistroF559.Count;
            ///
            RegistroF990.QTD_LIN_F := RegistroF990.QTD_LIN_F + 1;
         end;

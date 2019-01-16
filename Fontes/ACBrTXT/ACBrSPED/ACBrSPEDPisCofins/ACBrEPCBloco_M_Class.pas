@@ -787,12 +787,12 @@ begin
           if (Bloco_0.Registro0000.COD_VER >= vlVersao310) then
           begin
             Add( LFill('M210')                       +
-                 LFill( strCOD_CONT )                +
-                 LFill( VL_AJUS_ACRES_BC_PIS, 0, 2 ) +
-                 LFill( VL_AJUS_REDUC_BC_PIS, 0, 2 ) +
-                 LFill( VL_BC_CONT_AJUS, 0, 2 )      +
+                 LFill( strCOD_CONT )                +                 
                  LFill( VL_REC_BRT, 0, 2 )           +
                  LFill( VL_BC_CONT, 0, 2 )           +
+				 LFill( VL_AJUS_ACRES_BC_PIS, 0, 2 ) +
+                 LFill( VL_AJUS_REDUC_BC_PIS, 0, 2 ) +
+                 LFill( VL_BC_CONT_AJUS, 0, 2 )      +
                  VDFill( ALIQ_PIS       , 4)         +
                  VDFill( QUANT_BC_PIS   , 3)         +
                  VDFill( ALIQ_PIS_QUANT , 4)         +
@@ -1385,19 +1385,41 @@ begin
                     ccPISPasepSalarios                  : strCOD_CONT :='99' ; // Contribuição para o PIS/Pasep - Folha de Salários
           end;
 
-          Add( LFill('M610')                      +
-               LFill( strCOD_CONT )               +
-               LFill( VL_REC_BRT, 0, 2 )          +
-               LFill( VL_BC_CONT, 0, 2 )          +
-               VDFill( ALIQ_COFINS, 4 )           +
-               VDFill( QUANT_BC_COFINS,   3)      +
-               VDFill( ALIQ_COFINS_QUANT, 4)      +
-               LFill( VL_CONT_APUR,  0, 2 )       +
-               LFill( VL_AJUS_ACRES, 0, 2 )       +
-               LFill( VL_AJUS_REDUC, 0, 2 )       +
-               VLFill( VL_CONT_DIFER, 0, 2 )      +
-               VLFill( VL_CONT_DIFER_ANT, 0, 2)   +
-               LFill( VL_CONT_PER ,0,2 ) ) ;
+          if (Bloco_0.Registro0000.COD_VER >= vlVersao310) then
+          begin
+            Add( LFill('M610')                          +
+                 LFill( strCOD_CONT )                   +                 
+                 LFill( VL_REC_BRT, 0, 2 )              +
+                 LFill( VL_BC_CONT, 0, 2 )              +
+				 LFill( VL_AJUS_ACRES_BC_COFINS, 0, 2 ) +
+                 LFill( VL_AJUS_REDUC_BC_COFINS, 0, 2 ) +
+                 LFill( VL_BC_CONT_AJUS, 0, 2 )         +
+                 VDFill( ALIQ_COFINS    , 4)            +
+                 VDFill( QUANT_BC_COFINS, 3)            +
+                 VDFill( ALIQ_COFINS_QUANT , 4)         +
+                 LFill( VL_CONT_APUR,   0, 2 )          +
+                 LFill( VL_AJUS_ACRES,  0, 2 )          +
+                 LFill( VL_AJUS_REDUC,  0, 2 )          +
+                 VLFill( VL_CONT_DIFER, 0, 2)           +
+                 VLFill( VL_CONT_DIFER_ANT, 0, 2)       +
+                 LFill( VL_CONT_PER ,0,2 ) ) ;
+          end
+          else
+          begin
+             Add( LFill('M610')                      +
+                  LFill( strCOD_CONT )               +
+                  LFill( VL_REC_BRT, 0, 2 )          +
+                  LFill( VL_BC_CONT, 0, 2 )          +
+                  VDFill( ALIQ_COFINS, 4 )           +
+                  VDFill( QUANT_BC_COFINS,   3)      +
+                  VDFill( ALIQ_COFINS_QUANT, 4)      +
+                  LFill( VL_CONT_APUR,  0, 2 )       +
+                  LFill( VL_AJUS_ACRES, 0, 2 )       +
+                  LFill( VL_AJUS_REDUC, 0, 2 )       +
+                  VLFill( VL_CONT_DIFER, 0, 2 )      +
+                  VLFill( VL_CONT_DIFER_ANT, 0, 2)   +
+                  LFill( VL_CONT_PER ,0,2 ) ) ;
+          end;
         end;
 
         // Registros FILHOS

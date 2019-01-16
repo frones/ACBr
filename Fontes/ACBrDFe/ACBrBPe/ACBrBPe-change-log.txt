@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2019
+-- Diversos --
+[*] Remoção das units que foram Generalizadas em PCNComum e os ajustes necessários.
+   Por: Italo Jurisato Junior
+
 17/12/2018
 -- ACBrBPeServicos --
 [*] Algumas UF foi informado por hora a mesma URL do QR-Code para a URL de Consulta.

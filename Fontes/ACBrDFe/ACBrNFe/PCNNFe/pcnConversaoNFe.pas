@@ -54,7 +54,6 @@ uses
 
 type
 
-  TpcnTipoNFe = (tnEntrada, tnSaida);
   TpcnFinalidadeNFe = (fnNormal, fnComplementar, fnAjuste, fnDevolucao);
 
   (* IMPORTANTE - Sempre que alterar um Tipo efetuar a atualização das funções de conversão correspondentes *)
@@ -66,7 +65,7 @@ type
 
   TSchemaNFe = (schErro, schNfe, schcancNFe, schInutNFe, schEnvCCe,
                 schEnvEventoCancNFe, schEnvConfRecebto, schEnvEPEC,
-                schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
+//                schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
                 schconsReciNFe, schconsSitNFe, schconsStatServ, schconsCad,
                 schenvEvento, schconsNFeDest, schdownloadNFe, schretEnviNFe,
                 schadmCscNFCe, schdistDFeInt, scheventoEPEC);
@@ -94,9 +93,6 @@ function LayOutToSchema(const t: TLayOut): TSchemaNFe;
 
 function SchemaNFeToStr(const t: TSchemaNFe): String;
 function StrToSchemaNFe(out ok: Boolean; const s: String): TSchemaNFe;
-
-function tpNFToStr(const t: TpcnTipoNFe): String;
-function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 
 function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
 function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
@@ -225,17 +221,6 @@ begin
     SchemaStr := 'sch'+SchemaStr;
 
   Result := TSchemaNFe( GetEnumValue(TypeInfo(TSchemaNFe), SchemaStr ) );
-end;
-
-// B11 - Tipo do Documento Fiscal **********************************************
-function tpNFToStr(const t: TpcnTipoNFe): String;
-begin
-  Result := EnumeradoToStr(t, ['0', '1'], [tnEntrada, tnSaida]);
-end;
-
-function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
-begin
-  Result := StrToEnumerado(ok, s, ['0', '1'], [tnEntrada, tnSaida]);
 end;
 
 // B25 - Finalidade de emissão da NF-e *****************************************

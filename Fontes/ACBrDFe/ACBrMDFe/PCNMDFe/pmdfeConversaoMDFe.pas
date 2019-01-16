@@ -56,7 +56,7 @@ type
                      LayMDFeDistDFeInt);
 
   TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
-                     schresMDFe, schresEvento, schprocMDFe, schprocEventoMDFe,
+                 //    schresMDFe, schresEvento, schprocMDFe, schprocEventoMDFe,
                      schconsReciMDFe, schconsSitMDFe, schconsStatServMDFe,
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,

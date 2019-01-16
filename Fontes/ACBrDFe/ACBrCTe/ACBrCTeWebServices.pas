@@ -46,9 +46,9 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
-  pcteCTe, pcteRetConsReciCTe, pcteRetConsCad, pcnAuxiliar, pcnConversao,
+  pcteCTe, pcteRetConsReciCTe, pcnRetConsCad, pcnAuxiliar, pcnConversao,
   pcteConversaoCTe, pcteProcCte, pcteEnvEventoCTe, pcteRetEnvEventoCTe,
-  pcteRetConsSitCTe, pcteRetEnvCTe, pcteDistDFeInt, pcteRetDistDFeInt,
+  pcteRetConsSitCTe, pcteRetEnvCTe, pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes;
 
 type
@@ -576,8 +576,8 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrCTe,
-  pcteCTeW, pcnGerador, pcteConsStatServ, pcteRetConsStatServ, pcteConsSitCTe,
-  pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe, pcteConsCad, pcnLeitor;
+  pcnGerador, pcnLeitor, pcnConsCad, pcnConsStatServ, pcnRetConsStatServ,
+  pcteConsSitCTe, pcteInutCTe, pcteRetInutCTe, pcteConsReciCTe, pcteCTeW;
 
 { TCTeWebService }
 
@@ -678,11 +678,11 @@ procedure TCTeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  ConsStatServ := TConsStatServ.Create;
+  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_CTE, 'Cte', False);
   try
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
-    ConsStatServ.Versao := FPVersaoServico;
+//    ConsStatServ.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
 
@@ -701,7 +701,7 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteStatusServicoCTResult');
 
-  CTeRetorno := TRetConsStatServ.Create;
+  CTeRetorno := TRetConsStatServ.Create('Cte');
   try
     CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     CTeRetorno.LerXml;
@@ -3038,7 +3038,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('CTe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -3081,15 +3081,15 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-  DistDFeInt := TDistDFeInt.Create;
+  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_CTE,
+                                     'cteDadosMsg', 'consChCTe', 'chCTe', True);
   try
     DistDFeInt.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
-    DistDFeInt.chCTe := trim(FchCTe);
-    DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.Chave := trim(FchCTe);
 
     AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
 
@@ -3134,7 +3134,7 @@ begin
         *)
         schprocCTe,
         schprocCTeOS:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-cte.xml';
 
         schprocEventoCTe:
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
@@ -3158,7 +3158,7 @@ begin
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
   FretDistDFeInt.Free;   // Limpando a lista
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('CTe');
 
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
@@ -3198,7 +3198,7 @@ var
 begin
   if FPConfiguracoesCTe.Arquivos.EmissaoPathCTe then
   begin
-    Data := AItem.resCTe.dhEmi;
+    Data := AItem.resDFe.dhEmi;
     if Data = 0 then
       Data := AItem.procEvento.dhEvento;
   end
@@ -3213,8 +3213,8 @@ begin
 
     schprocCTe,
     schprocCTeOS:
-      Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,
-                                                        AItem.resCTe.CNPJCPF,
+      Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
+                                                        AItem.resDFe.CNPJCPF,
                                                         Data);
   end;
 end;

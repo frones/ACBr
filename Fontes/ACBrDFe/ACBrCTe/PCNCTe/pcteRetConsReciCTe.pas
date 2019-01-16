@@ -58,7 +58,7 @@ type
   TProtCTeCollection = class;
   TProtCTeCollectionItem = class;
 
-  TRetConsReciCTe = class(TPersistent)
+  TRetConsReciCTe = class
   private
     FLeitor: TLeitor;
     Fversao: String;

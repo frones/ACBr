@@ -4507,8 +4507,10 @@ procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i, iPos: Integer;
   Gerador: TGerador;
-  sAssinatura: String;
+  sAssinatura, idAttr: String;
 begin
+  idAttr := '';
+
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
@@ -4608,7 +4610,6 @@ begin
       proEquiplano,
       proISSCuritiba,
       proPronimv2,
-      proPublica,
       proSP,
       proNotaBlu,
       proSMARAPD,
@@ -4625,6 +4626,12 @@ begin
       proABase,
       proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                   IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
+
+      proPublica:
+        begin
+          FURI := 'C' + TNFSeCancelarNfse(Self).FNumeroNFSe;
+          idAttr := 'id';
+        end;
 
       proRJ,
       proFriburgo: FURI := 'Cancelamento_NF' + TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4799,7 +4806,8 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
+               'Falha ao Assinar - Cancelar NFS-e: ', '', idAttr);
 
   case FProvedor of
     proGINFES,

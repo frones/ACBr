@@ -34,6 +34,10 @@ contains
   pcnAuxiliar in '..\..\..\Fontes\PCNComum\pcnAuxiliar.pas',
   pcnConversao in '..\..\..\Fontes\PCNComum\pcnConversao.pas',
   pcnConsts in '..\..\..\Fontes\PCNComum\pcnConsts.pas',
+  pcnConsCad in '..\..\..\Fontes\PCNComum\pcnConsCad.pas',
+  pcnRetConsCad in '..\..\..\Fontes\PCNComum\pcnRetConsCad.pas',
+  pcnDistDFeInt in '..\..\..\Fontes\PCNComum\pcnDistDFeInt.pas',
+  pcnRetDistDFeInt in '..\..\..\Fontes\PCNComum\pcnRetDistDFeInt.pas',
   pcnSignature in '..\..\..\Fontes\PCNComum\pcnSignature.pas',
   pcnGerador in '..\..\..\Fontes\PCNComum\pcnGerador.pas',
   pcnLeitor in '..\..\..\Fontes\PCNComum\pcnLeitor.pas';

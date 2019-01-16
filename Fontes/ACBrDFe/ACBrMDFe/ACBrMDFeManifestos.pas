@@ -274,37 +274,27 @@ end;
 
 procedure Manifesto.Validar;
 var
-  Erro, AXML, DeclaracaoXML, AXMLModal: String;
+  Erro, AXML, DeclaracaoXML, AXMLModal, TagModal: String;
   MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
   AXML := FXMLAssinado;
+
   if AXML = '' then
     AXML := XMLOriginal;
 
   AXMLModal := Trim(RetornarConteudoEntre(AXML, '<infModal', '</infModal>'));
+
   case TACBrMDFe(TManifestos(Collection).ACBrMDFe).IdentificaSchemaModal(AXML) of
-   schmdfeModalAereo: begin
-                        AXMLModal := '<aereo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                       Trim(RetornarConteudoEntre(AXML, '<aereo>', '</aereo>')) +
-                                     '</aereo>';
-                      end;
-   schmdfeModalAquaviario: begin
-                             AXMLModal := '<aquav xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                            Trim(RetornarConteudoEntre(AXML, '<aquav>', '</aquav>')) +
-                                          '</aquav>';
-                           end;
-   schmdfeModalFerroviario: begin
-                              AXMLModal := '<ferrov xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                             Trim(RetornarConteudoEntre(AXML, '<ferrov>', '</ferrov>')) +
-                                           '</ferrov>';
-                            end;
-   schmdfeModalRodoviario: begin
-                             AXMLModal := '<rodo xmlns="' + ACBRMDFE_NAMESPACE + '">' +
-                                            Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
-                                          '</rodo>';
-                           end;
+    schmdfeModalAereo:       TagModal := 'aereo';
+    schmdfeModalAquaviario:  TagModal := 'aquav';
+    schmdfeModalFerroviario: TagModal := 'ferrov';
+    schmdfeModalRodoviario:  TagModal := 'rodo';
   end;
+
+  AXMLModal := '<' + TagModal + ' xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                  Trim(RetornarConteudoEntre(AXML, '<' + TagModal + '>', '</' + TagModal + '>')) +
+               '</' + TagModal + '>';
 
   AXMLModal := '<?xml version="1.0" encoding="UTF-8" ?>' + AXMLModal;
 
@@ -538,8 +528,8 @@ begin
 
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
-//    FMDFeW.idCSRT  := Configuracoes.Geral.IdCSRT;
-//    FMDFeW.CSRT  := Configuracoes.Geral.CSRT;
+    FMDFeW.idCSRT := Configuracoes.RespTec.IdCSRT;
+    FMDFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
   FMDFeW.GerarXml;
@@ -1521,17 +1511,22 @@ begin
       while true do
       begin
         sSecao := 'seg' + IntToStrZero(I, 3);
-        sFim   := INIRec.ReadString(sSecao, 'CNPJ', 'FIM');
+//        sFim   := INIRec.ReadString(sSecao, 'CNPJ', 'FIM');
 
-        if sFim = 'FIM' then
-          break;
+        if (INIRec.ReadString(sSecao, 'xSeg', '') = '') and
+           (INIRec.ReadString(sSecao, 'nApol', '') = '') and
+           not INIRec.SectionExists('aver' + IntToStrZero(I, 3) + '001') then
+          Break;
+
+//        if sFim = 'FIM' then
+//          break;
 
         with seg.Add do
         begin
           respSeg :=  StrToRspSeguroMDFe(OK, INIRec.ReadString(sSecao, 'respSeg', '1'));
           CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
           xSeg    := INIRec.ReadString(sSecao, 'xSeg', '');
-          CNPJ    := sFim;
+          CNPJ    := INIRec.ReadString(sSecao, 'CNPJ', '');
           nApol   := INIRec.ReadString(sSecao, 'nApol', '');
 
           J := 1;

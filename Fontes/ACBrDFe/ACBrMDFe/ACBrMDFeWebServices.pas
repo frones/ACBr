@@ -47,7 +47,7 @@ uses
   pmdfeRetConsReciMDFe, pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe,
   pmdfeProcMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
   pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
-  pmdfeDistDFeInt, pmdfeRetDistDFeInt,
+  pcnDistDFeInt, pcnRetDistDFeInt,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
 type
@@ -392,6 +392,7 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FchMDFe: String;
     FNomeArq: String;
     FlistaArqs: TStringList;
 
@@ -414,6 +415,7 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
+    property chMDFe: String read FchMDFe write FchMDFe;
     property NomeArq: String read FNomeArq;
     property ListaArqs: TStringList read FlistaArqs;
 
@@ -488,9 +490,8 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrMDFe,
-  pcnGerador, pmdfeConsStatServ, pmdfeRetConsStatServ,
-  pmdfeConsSitMDFe, pmdfeConsReciMDFe, pmdfeConsMDFeNaoEnc,
-  pcnLeitor, pmdfeMDFeW;
+  pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
+  pmdfeConsSitMDFe, pmdfeConsReciMDFe, pmdfeConsMDFeNaoEnc, pmdfeMDFeW;
 
 { TMDFeWebService }
 
@@ -591,11 +592,11 @@ procedure TMDFeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  ConsStatServ := TConsStatServ.Create;
+  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_MDFE, 'MDFe', False);
   try
     ConsStatServ.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
-    ConsStatServ.Versao := FPVersaoServico;
+//    ConsStatServ.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
 
@@ -614,7 +615,7 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeStatusServicoMDFResult');
 
-  MDFeRetorno := TRetConsStatServ.Create;
+  MDFeRetorno := TRetConsStatServ.Create('MDFe');
   try
     MDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     MDFeRetorno.LerXml;
@@ -2274,7 +2275,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('MDFe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -2292,13 +2293,14 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-  DistDFeInt := TDistDFeInt.Create;
+  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_MDFE,
+                                 'mdfeDadosMsg', 'consChMDFe', 'chMDFe', False);
   try
     DistDFeInt.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
-    DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.Chave := trim(FchMDFe);
 
     AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
 
@@ -2339,7 +2341,7 @@ begin
                      '-resEventoMDFe.xml';
         *)
         schprocMDFe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resMDFe.chMDFe + '-mdfe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-mdfe.xml';
 
         schprocEventoMDFe:
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
@@ -2363,7 +2365,7 @@ begin
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
   FretDistDFeInt.Free;   // Limpando a lista
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('MDFe');
 
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
@@ -2403,7 +2405,7 @@ var
 begin
   if FPConfiguracoesMDFe.Arquivos.EmissaoPathMDFe then
   begin
-    Data := AItem.resMDFe.dhEmi;
+    Data := AItem.resDFe.dhEmi;
     if Data = 0 then
       Data := AItem.procEvento.dhEvento;
   end
@@ -2417,8 +2419,8 @@ begin
                                                            Data);
 
     schprocMDFe:
-      Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resMDFe.xNome,
-                                                             AItem.resMDFe.CNPJCPF,
+      Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
+                                                             AItem.resDFe.CNPJCPF,
                                                              Data);
   end;
 end;

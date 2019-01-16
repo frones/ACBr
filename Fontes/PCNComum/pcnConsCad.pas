@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//              PCN - Projeto Cooperar CTe                                    //
+//              PCN - Projeto Cooperar NFe                                    //
 //                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
+//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
 //                                                                            //
-//        site: www.projetocooperar.org/cte                                   //
+//        site: www.projetocooperar.org                                       //
 //       email: projetocooperar@zipmail.com.br                                //
-//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_cte/        //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
 //     projeto: http://code.google.com/p/projetocooperar/                     //
 //         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
 //                                                                            //
@@ -43,15 +43,22 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
+{*******************************************************************************
+|* Historico
+|*
+|* 28/09/2012: Italo
+|*  - Revisado geração do XML e adicionado propriedade para controle de Versão
+|*    do WebService Utilizado
+*******************************************************************************}
+
 {$I ACBr.inc}
 
-unit pcteConsCad;
+unit pcnConsCad;
 
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe,
-  pcnConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
 
 type
 
@@ -82,6 +89,8 @@ implementation
 
 constructor TConsCad.Create;
 begin
+  inherited Create;
+
   FGerador := TGerador.Create;
 end;
 
@@ -104,13 +113,13 @@ begin
   i := 0;
   if FIE <> EmptyStr then
    begin
-    i := 1;
-    Gerador.wCampo(tcStr, 'GP06', 'IE  ', 002, 014, 1, FIE, DSC_IE);
+     i := 1;
+     Gerador.wCampo(tcStr, 'GP06', 'IE  ', 002, 014, 1, FIE, DSC_IE);
    end;
   if (FCNPJ <> EmptyStr) and (i = 0) then
    begin
-    i := 1;
-    Gerador.wCampoCNPJCPF('GP07', 'CNPJ', FCNPJ);
+     i := 1;
+     Gerador.wCampoCNPJCPF('GP07', 'CNPJ', FCNPJ);
    end;
   if (FCPF <> EmptyStr) and (i = 0) then
     Gerador.wCampoCNPJCPF('GP08', 'CPF ', FCPF);

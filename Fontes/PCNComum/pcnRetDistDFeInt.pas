@@ -51,10 +51,10 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnConversaoNFe, pcnLeitor, synacode;
+  pcnConversao, {pcnConversaoNFe, }pcnLeitor, synacode;
 
 type
-  TresNFe               = class;
+  TresDFe               = class;
   TresEvento            = class;
   TprocEvento           = class;
   TdocZipCollection     = class;
@@ -119,7 +119,7 @@ type
     FcOrgao: Integer;
     FcStat: Integer;
     FxMotivo: String;
-    FchNFe: String;
+    FchDFe: String;
     FtpEvento: TpcnTpEvento;
     FxEvento: String;
     FnSeqEvento: Integer;
@@ -135,7 +135,8 @@ type
     property cOrgao: Integer         read FcOrgao      write FcOrgao;
     property cStat: Integer          read FcStat       write FcStat;
     property xMotivo: String         read FxMotivo     write FxMotivo;
-    property chNFe: String           read FchNFe       write FchNFe;
+    // Alterado de chNFe/chCTe e chMDFe para chDFe (italo)
+    property chDFe: String           read FchDFe       write FchDFe;
     property tpEvento: TpcnTpEvento  read FtpEvento    write FtpEvento;
     property xEvento: String         read FxEvento     write FxEvento;
     property nSeqEvento: Integer     read FnSeqEvento  write FnSeqEvento;
@@ -146,9 +147,10 @@ type
     property nProt: String           read FnProt       write FnProt;
   end;
 
-  TresNFe = class
+  // Alterado de resNFe/resCTe e resMDFe para resDFe (italo)
+  TresDFe = class
   private
-    FchNFe: String;
+    FchDFe: String;
     FCNPJCPF: String;
     FxNome: String;
     FIE: String;
@@ -158,9 +160,10 @@ type
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
-    FcSitNFe: TSituacaoDFe;
+    FcSitDFe: TSituacaoDFe;
   public
-    property chNFe: String            read FchNFe    write FchNFe;
+    // Alterado de chNFe/chCTe e chMDFe para chDFe (italo)
+    property chDFe: String            read FchDFe    write FchDFe;
     property CNPJCPF: String          read FCNPJCPF  write FCNPJCPF;
     property xNome: String            read FxNome    write FxNome;
     property IE: String               read FIE       write FIE;
@@ -170,14 +173,15 @@ type
     property digVal: String           read FdigVal   write FdigVal;
     property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
     property nProt: String            read FnProt    write FnProt;
-    property cSitNFe: TSituacaoDFe    read FcSitNFe  write FcSitNFe;
+  // Alterado de cSitNFe/cSitCTe e cSitMDFe para cSitDFe (italo)
+    property cSitDFe: TSituacaoDFe    read FcSitDFe  write FcSitDFe;
   end;
 
   TresEvento = class
   private
     FcOrgao: Integer;
     FCNPJCPF: String;
-    FchNFe: String;
+    FchDFe: String;
     FdhEvento: TDateTime;
     FtpEvento: TpcnTpEvento;
     FnSeqEvento: ShortInt;
@@ -187,7 +191,8 @@ type
   public
     property cOrgao: Integer        read FcOrgao     write FcOrgao;
     property CNPJCPF: String        read FCNPJCPF    write FCNPJCPF;
-    property chNFe: String          read FchNFe      write FchNFe;
+    // Alterado de chNFe/chCTe e chMDFe para chDFe (italo)
+    property chDFe: String          read FchDFe      write FchDFe;
     property dhEvento: TDateTime    read FdhEvento   write FdhEvento;
     property tpEvento: TpcnTpEvento read FtpEvento   write FtpEvento;
     property nSeqEvento: ShortInt   read FnSeqEvento write FnSeqEvento;
@@ -202,7 +207,7 @@ type
     FcOrgao: Integer;
     FtpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
-    FchNFe: String;
+    FchDFe: String;
     FdhEvento: TDateTime;
     FtpEvento: TpcnTpEvento;
     FnSeqEvento: Integer;
@@ -218,7 +223,8 @@ type
     property cOrgao: Integer         read FcOrgao         write FcOrgao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb          write FtpAmb;
     property CNPJ: String            read FCNPJ           write FCNPJ;
-    property chNFe: String           read FchNFe          write FchNFe;
+    // Alterado de chNFe/chCTe e chMDFe para chDFe (italo)
+    property chDFe: String           read FchDFe          write FchDFe;
     property dhEvento: TDateTime     read FdhEvento       write FdhEvento;
     property tpEvento: TpcnTpEvento  read FtpEvento       write FtpEvento;
     property nSeqEvento: Integer     read FnSeqEvento     write FnSeqEvento;
@@ -240,16 +246,16 @@ type
 
   TdocZipCollectionItem = class(TCollectionItem)
   private
-    // Atributos do resumo da NFe ou Evento
+    // Atributos do resumo do DFe ou Evento
     FNSU: String;
-    Fschema: TSchemaNFe;
+    Fschema: TSchemaDFe;
 
     // A propriedade InfZip contem a informação Resumida ou documento fiscal
     // eletrônico Compactado no padrão gZip
     FInfZip: String;
 
     // Resumos e Processamento de Eventos Descompactados
-    FresNFe: TresNFe;
+    FresDFe: TresDFe;
     FresEvento: TresEvento;
     FprocEvento: TprocEvento;
 
@@ -261,9 +267,10 @@ type
     destructor Destroy; override;
   published
     property NSU: String             read FNSU        write FNSU;
-    property schema: TSchemaNFe      read Fschema     write Fschema;
+    property schema: TSchemaDFe      read Fschema     write Fschema;
     property InfZip: String          read FInfZip     write FInfZip;
-    property resNFe: TresNFe         read FresNFe     write FresNFe;
+    // Alterado de resNFe/resCTe e resMDFe para resDFe (italo)
+    property resDFe: TresDFe         read FresDFe     write FresDFe;
     property resEvento: TresEvento   read FresEvento  write FresEvento;
     property procEvento: TprocEvento read FprocEvento write FprocEvento;
     property XML: String             read FXML        write FXML;
@@ -282,13 +289,14 @@ type
     FmaxNSU: String;
     FXML: AnsiString;
     FdocZip: TdocZipCollection;
+    FtpDFe: string;
 
     procedure SetdocZip(const Value: TdocZipCollection);
   public
-    constructor Create;
+    constructor Create(Const AtpDFe: String);
     destructor Destroy; override;
     function LerXml: boolean;
-    function LerXMLFromFile(const CaminhoArquivo: String): Boolean;
+    function LerXMLFromFile(Const CaminhoArquivo: String): Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
@@ -321,6 +329,7 @@ destructor TprocEvento_DetEvento.Destroy;
 begin
   CTe.Free;
   emit.Free;
+
   inherited;
 end;
 
@@ -336,6 +345,7 @@ destructor TprocEvento.Destroy;
 begin
   FdetEvento.Free;
   FRetInfEvento.Free;
+
   inherited;
 end;
 
@@ -367,32 +377,35 @@ end;
 
 constructor TdocZipCollectionItem.Create;
 begin
-  FresNFe     := TresNFe.Create;
+  FresDFe     := TresDFe.Create;
   FresEvento  := TresEvento.Create;
   FprocEvento := TprocEvento.Create;
 end;
 
 destructor TdocZipCollectionItem.Destroy;
 begin
-  FresNFe.Free;
+  FresDFe.Free;
   FresEvento.Free;
   FprocEvento.Free;
+
   inherited;
 end;
 
 { TRetDistDFeInt }
 
-constructor TRetDistDFeInt.Create;
+constructor TRetDistDFeInt.Create(Const AtpDFe: String);
 begin
-  inherited Create;
   FLeitor := TLeitor.Create;
   FdocZip := TdocZipCollection.Create(Self);
+
+  FtpDFe := AtpDFe;
 end;
 
 destructor TRetDistDFeInt.Destroy;
 begin
   FLeitor.Free;
   FdocZip.Free;
+
   inherited;
 end;
 
@@ -415,7 +428,7 @@ begin
 
     if (Leitor.rExtrai(1, 'retDistDFeInt') <> '') then
     begin
-      Fversao   := Leitor.rAtributo('versao');
+      Fversao   := Leitor.rAtributo('versao', 'retDistDFeInt');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       FcStat    := Leitor.rCampo(tcInt, 'cStat');
@@ -428,8 +441,8 @@ begin
       while Leitor.rExtrai(2, 'docZip', '', i + 1) <> '' do
       begin
         FdocZip.Add;
-        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU');
-        FdocZip.Items[i].schema := StrToSchemaNFe(ok, Leitor.rAtributo('schema'));
+        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
+        FdocZip.Items[i].schema := StrToSchemaDFe(ok, Leitor.rAtributo('schema', 'docZip'));
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         FdocZip.Items[i].FInfZip := StrAux;
@@ -439,25 +452,26 @@ begin
         try
           oLeitorInfZip.Arquivo := StrDecod;
 
-          if (oLeitorInfZip.rExtrai(1, 'resNFe') <> '') then
+          if (oLeitorInfZip.rExtrai(1, 'res' + FtpDFe) <> '') then
           begin
             FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
-            FdocZip.Items[i].FresNFe.chNFe    := oLeitorInfZip.rCampo(tcStr, 'chNFe');
-            FdocZip.Items[i].FresNFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+            FdocZip.Items[i].FresDFe.chDFe := oLeitorInfZip.rCampo(tcStr, 'ch' + FtpDFe);
 
-            if FdocZip.Items[i].FresNFe.FCNPJCPF = '' then
-              FdocZip.Items[i].FresNFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
+            FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
 
-            FdocZip.Items[i].FresNFe.FxNome    := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
-            FdocZip.Items[i].FresNFe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
-            FdocZip.Items[i].FresNFe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
-            FdocZip.Items[i].FresNFe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
-            FdocZip.Items[i].FresNFe.FvNF      := oLeitorInfZip.rCampo(tcDe2, 'vNF');
-            FdocZip.Items[i].FresNFe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
-            FdocZip.Items[i].FresNFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-            FdocZip.Items[i].FresNFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
-            FdocZip.Items[i].FresNFe.FcSitNFe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitNFe'));
+            if FdocZip.Items[i].FresDFe.FCNPJCPF = '' then
+              FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
+
+            FdocZip.Items[i].FresDFe.FxNome    := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+            FdocZip.Items[i].FresDFe.FIE       := oLeitorInfZip.rCampo(tcStr, 'IE');
+            FdocZip.Items[i].FresDFe.FdhEmi    := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+            FdocZip.Items[i].FresDFe.FtpNF     := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
+            FdocZip.Items[i].FresDFe.FvNF      := oLeitorInfZip.rCampo(tcDe2, 'vNF');
+            FdocZip.Items[i].FresDFe.FdigVal   := oLeitorInfZip.rCampo(tcStr, 'digVal');
+            FdocZip.Items[i].FresDFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+            FdocZip.Items[i].FresDFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
+            FdocZip.Items[i].FresDFe.FcSitDFe  := StrToSituacaoDFe(ok, oLeitorInfZip.rCampo(tcStr, 'cSitNFe'));
           end;
 
           if (oLeitorInfZip.rExtrai(1, 'resEvento') <> '') then
@@ -470,7 +484,8 @@ begin
             if FdocZip.Items[i].FresEvento.FCNPJCPF = '' then
               FdocZip.Items[i].FresEvento.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FresEvento.chNFe       := oLeitorInfZip.rCampo(tcStr, 'chNFe');
+            FdocZip.Items[i].FresEvento.chDFe := oLeitorInfZip.rCampo(tcStr, 'ch' + FtpDFe);
+
             FdocZip.Items[i].FresEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
             FdocZip.Items[i].FresEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
             FdocZip.Items[i].FresEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
@@ -479,46 +494,53 @@ begin
             FdocZip.Items[i].FresEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
           end;
 
-          if (oLeitorInfZip.rExtrai(1, 'nfeProc') <> '') then
+          if (oLeitorInfZip.rExtrai(1, LowerCase(FtpDFe) + 'Proc') <> '') then
           begin
             FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
-            oLeitorInfZip.rExtrai(1, 'infNFe');
-            FdocZip.Items[i].FresNFe.chNFe := copy(oLeitorInfZip.Grupo, pos('Id="NFe', oLeitorInfZip.Grupo)+7, 44);
+            // no caso do cte não é CTe e sim Cte.
+            if FtpDFe = 'CTe' then
+              oLeitorInfZip.rExtrai(1, 'infCte')
+            else
+              oLeitorInfZip.rExtrai(1, 'inf' + FtpDFe);
+
+            FdocZip.Items[i].FresDFe.chDFe := copy(oLeitorInfZip.Grupo,
+               pos('Id="' + FtpDFe, oLeitorInfZip.Grupo) + 4 + length(FtpDFe), 44);
 
             oLeitorInfZip.rExtrai(1, 'emit');
-            FdocZip.Items[i].FresNFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-            if FdocZip.Items[i].FresNFe.FCNPJCPF = '' then
-              FdocZip.Items[i].FresNFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
+            FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
+            if FdocZip.Items[i].FresDFe.FCNPJCPF = '' then
+              FdocZip.Items[i].FresDFe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CPF');
 
-            FdocZip.Items[i].FresNFe.FxNome := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
-            FdocZip.Items[i].FresNFe.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
+            FdocZip.Items[i].FresDFe.FxNome := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+            FdocZip.Items[i].FresDFe.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
 
             oLeitorInfZip.rExtrai(1, 'ide');
-            FdocZip.Items[i].FresNFe.FdhEmi := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
+            FdocZip.Items[i].FresDFe.FdhEmi := oLeitorInfZip.rCampo(tcDatHor, 'dhEmi');
 
             // Se for Versão 2.00 a data de emissão está em dEmi
-            if FdocZip.Items[i].FresNFe.FdhEmi = 0 then
-              FdocZip.Items[i].FresNFe.FdhEmi := oLeitorInfZip.rCampo(tcDat, 'dEmi');
+            if FdocZip.Items[i].FresDFe.FdhEmi = 0 then
+              FdocZip.Items[i].FresDFe.FdhEmi := oLeitorInfZip.rCampo(tcDat, 'dEmi');
 
-            FdocZip.Items[i].FresNFe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
+            FdocZip.Items[i].FresDFe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
 
             oLeitorInfZip.rExtrai(1, 'total');
-            FdocZip.Items[i].FresNFe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
+            FdocZip.Items[i].FresDFe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
 
             oLeitorInfZip.rExtrai(1, 'infProt');
-            FdocZip.Items[i].FresNFe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');
-            FdocZip.Items[i].FresNFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
-            FdocZip.Items[i].FresNFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
+            FdocZip.Items[i].FresDFe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');
+            FdocZip.Items[i].FresDFe.FdhRecbto := oLeitorInfZip.rCampo(tcDatHor, 'dhRecbto');
+            FdocZip.Items[i].FresDFe.FnProt    := oLeitorInfZip.rCampo(tcStr, 'nProt');
 
             case oLeitorInfZip.rCampo(tcInt, 'cStat') of
-              100: FdocZip.Items[i].FresNFe.FcSitNFe := snAutorizado;
-              101: FdocZip.Items[i].FresNFe.FcSitNFe := snCancelado;
-              110: FdocZip.Items[i].FresNFe.FcSitNFe := snDenegado;
-            end;
+              100: FdocZip.Items[i].FresDFe.FcSitDFe := snAutorizado;
+              101: FdocZip.Items[i].FresDFe.FcSitDFe := snCancelado;
+              110: FdocZip.Items[i].FresDFe.FcSitDFe := snDenegado;
+              132: FdocZip.Items[i].FresDFe.FcSitDFe := snEncerrado;
+           end;
           end;
 
-          if (oLeitorInfZip.rExtrai(1, 'procEventoNFe') <> '') then
+          if (oLeitorInfZip.rExtrai(1, 'procEvento' + FtpDFe) <> '') then
           begin
             FdocZip.Items[i].XML := InserirDeclaracaoXMLSeNecessario(oLeitorInfZip.Grupo);
 
@@ -526,7 +548,7 @@ begin
             FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
             FdocZip.Items[i].FprocEvento.FtpAmb      := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
             FdocZip.Items[i].FprocEvento.FCNPJ       := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
-            FdocZip.Items[i].FprocEvento.FchNFe      := oLeitorInfZip.rCampo(tcStr, 'chNFe');
+            FdocZip.Items[i].FprocEvento.FchDFe      := oLeitorInfZip.rCampo(tcStr, 'ch' + FtpDFe);
             FdocZip.Items[i].FprocEvento.FdhEvento   := oLeitorInfZip.rCampo(tcDatHor, 'dhEvento');
             FdocZip.Items[i].FprocEvento.FtpEvento   := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
             FdocZip.Items[i].FprocEvento.FnSeqEvento := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
@@ -565,7 +587,7 @@ begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcStat       := oLeitorInfZip.rCampo(tcInt, 'cStat');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FxMotivo     := ParseText(oLeitorInfZip.rCampo(tcStr, 'xMotivo'));
-              FdocZip.Items[i].FprocEvento.RetinfEvento.FchNFe       := oLeitorInfZip.rCampo(tcStr, 'chNFe');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FchDFe       := oLeitorInfZip.rCampo(tcStr, 'ch' + FtpDFe);
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpEvento    := StrToTpEvento(ok, oLeitorInfZip.rCampo(tcStr, 'tpEvento'));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FxEvento     := ParseText(oLeitorInfZip.rCampo(tcStr, 'xEvento'));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FnSeqEvento  := oLeitorInfZip.rCampo(tcInt, 'nSeqEvento');
@@ -592,7 +614,7 @@ begin
   end;
 end;
 
-function TRetDistDFeInt.LerXMLFromFile(const CaminhoArquivo: String): Boolean;
+function TRetDistDFeInt.LerXMLFromFile(Const CaminhoArquivo: String): Boolean;
 var
   ArqDist: TStringList;
 begin

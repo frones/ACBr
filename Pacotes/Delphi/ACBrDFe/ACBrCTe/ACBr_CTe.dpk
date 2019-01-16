@@ -86,7 +86,7 @@ contains
   ACBrCTeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeReg.pas',
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
   pcteConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas',
-  pcteConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsCad.pas',
+//  pcteConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsCad.pas',
   pcteConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsReciCTe.pas',
   pcteConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas',
   pcteConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsStatServ.pas',
@@ -100,15 +100,15 @@ contains
   pcteLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas',
   pcteModeloCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
-  pcteRetConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas',
+//  pcteRetConsCad in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas',
   pcteRetConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsReciCTe.pas',
   pcteRetConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsSitCTe.pas',
   pcteRetConsStatServ in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsStatServ.pas',
   pcteRetEnvCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvCTe.pas',
   pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',
   pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
-  ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas',
-  pcteDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteDistDFeInt.pas',
-  pcteRetDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetDistDFeInt.pas';
+  ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas';
+//  pcteDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteDistDFeInt.pas',
+//  pcteRetDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetDistDFeInt.pas';
 
 end.

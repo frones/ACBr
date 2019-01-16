@@ -321,6 +321,7 @@ begin
   if Leitor.rExtrai(1, 'retirada') <> '' then
   begin
     (*F02/F02a*)NFe.Retirada.CNPJCPF := Leitor.rCampoCNPJCPF;
+    (*F02b*)NFe.Retirada.xNome       := Leitor.rCampo(tcStr, 'xNome');
     (*F03*)NFe.Retirada.xLgr         := Leitor.rCampo(tcStr, 'xLgr');
     (*F04*)NFe.Retirada.nro          := Leitor.rCampo(tcStr, 'nro');
     (*F05*)NFe.Retirada.xCpl         := Leitor.rCampo(tcStr, 'xCpl');
@@ -328,12 +329,19 @@ begin
     (*F07*)NFe.Retirada.cMun         := Leitor.rCampo(tcInt, 'cMun');
     (*F08*)NFe.Retirada.xMun         := Leitor.rCampo(tcStr, 'xMun');
     (*F09*)NFe.Retirada.UF           := Leitor.rCampo(tcStr, 'UF');
+    (*F10*)NFe.Retirada.CEP          := Leitor.rCampo(tcInt, 'CEP');
+    (*F11*)NFe.Retirada.cPais        := Leitor.rCampo(tcStr, 'cPais');
+    (*F12*)NFe.Retirada.xPais        := Leitor.rCampo(tcStr, 'xPais');
+    (*F13*)NFe.Retirada.fone         := Leitor.rCampo(tcStr, 'fone');
+    (*F14*)NFe.Retirada.Email        := Leitor.rCampo(tcStr, 'email');
+    (*F15*)NFe.Retirada.IE           := Leitor.rCampo(tcStr, 'IE');
   end;
 
   (* Grupo da TAG <entrega> ***************************************************)
   if Leitor.rExtrai(1, 'entrega') <> '' then
   begin
     (*G02/G02a*)NFe.Entrega.CNPJCPF := Leitor.rCampoCNPJCPF;
+    (*G02b*)NFe.Entrega.xNome       := Leitor.rCampo(tcStr, 'xNome');
     (*G03*)NFe.Entrega.xLgr         := Leitor.rCampo(tcStr, 'xLgr');
     (*G04*)NFe.Entrega.nro          := Leitor.rCampo(tcStr, 'nro');
     (*G05*)NFe.Entrega.xCpl         := Leitor.rCampo(tcStr, 'xCpl');
@@ -341,6 +349,12 @@ begin
     (*G07*)NFe.Entrega.cMun         := Leitor.rCampo(tcInt, 'cMun');
     (*G08*)NFe.Entrega.xMun         := Leitor.rCampo(tcStr, 'xMun');
     (*G09*)NFe.Entrega.UF           := Leitor.rCampo(tcStr, 'UF');
+    (*G10*)NFe.Entrega.CEP          := Leitor.rCampo(tcInt, 'CEP');
+    (*G11*)NFe.Entrega.cPais        := Leitor.rCampo(tcStr, 'cPais');
+    (*G12*)NFe.Entrega.xPais        := Leitor.rCampo(tcStr, 'xPais');
+    (*G13*)NFe.Entrega.fone         := Leitor.rCampo(tcStr, 'fone');
+    (*G14*)NFe.Entrega.Email        := Leitor.rCampo(tcStr, 'email');
+    (*G15*)NFe.Entrega.IE           := Leitor.rCampo(tcStr, 'IE');
   end;
 
   (* Grupo da TAG <autXML> ****************************************************)
@@ -535,6 +549,7 @@ begin
     begin
       NFe.Det[i].Prod.med.Add;
       (*K01a*)NFe.Det[i].Prod.med[j].cProdANVISA := Leitor.rCampo(tcStr, 'cProdANVISA');
+      (*K01b*)NFe.Det[i].Prod.med[j].xMotivoIsencao := Leitor.rCampo(tcStr, 'xMotivoIsencao');
       (*K02*)NFe.Det[i].Prod.med[j].nLote := Leitor.rCampo(tcStr, 'nLote');
       (*K03*)NFe.Det[i].Prod.med[j].qLote := Leitor.rCampo(tcDe3, 'qLote');
       (*K04*)NFe.Det[i].Prod.med[j].dFab  := Leitor.rCampo(tcDat, 'dFab ');
@@ -1061,6 +1076,16 @@ begin
       inc(i);
     end;
 
+  end;
+
+  if Leitor.rExtrai(1, 'infRespTec') <> '' then
+  begin
+    NFe.infRespTec.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+    NFe.infRespTec.xContato := Leitor.rCampo(tcStr, 'xContato');
+    NFe.infRespTec.email    := Leitor.rCampo(tcStr, 'email');
+    NFe.infRespTec.fone     := Leitor.rCampo(tcStr, 'fone');
+    NFe.infRespTec.idCSRT   := Leitor.rCampo(tcInt, 'idCSRT');
+    NFe.infRespTec.hashCSRT := Leitor.rCampo(tcStr, 'hashCSRT');
   end;
 
   (* Grupo da TAG <signature> *************************************************)

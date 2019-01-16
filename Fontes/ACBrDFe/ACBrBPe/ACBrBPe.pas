@@ -49,7 +49,7 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrBPeConfiguracoes, ACBrBPeWebServices, ACBrBPeBilhetes, ACBrBPeDABPEClass,
-  pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe, pcnRetDistDFeIntBPe,
+  pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe, 
   ACBrUtil;
 
 const
@@ -70,7 +70,6 @@ type
     FDABPE: TACBrBPeDABPEClass;
     FBilhetes: TBilhetes;
     FEventoBPe: TEventoBPe;
-    FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrBPe;
     FWebServices: TWebServices;
 
@@ -125,7 +124,6 @@ type
     property WebServices: TWebServices read FWebServices write FWebServices;
     property Bilhetes: TBilhetes read FBilhetes write FBilhetes;
     property EventoBPe: TEventoBPe read FEventoBPe write FEventoBPe;
-    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrBPe read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrBPe);
@@ -178,7 +176,6 @@ begin
 
   FBilhetes := TBilhetes.Create(Self, Bilhete);
   FEventoBPe := TEventoBPe.Create;
-  FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
@@ -186,7 +183,6 @@ destructor TACBrBPe.Destroy;
 begin
   FBilhetes.Free;
   FEventoBPe.Free;
-  FRetDistDFeInt.Free;
   FWebServices.Free;
 
   inherited;

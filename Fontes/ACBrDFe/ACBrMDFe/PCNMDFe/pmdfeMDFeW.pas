@@ -54,6 +54,9 @@ type
     FMDFe: TMDFe;
     FOpcoes: TGeradorOpcoes;
     FVersaoDF: TVersaoMDFe;
+    ChaveMDFe: string;
+    FIdCSRT: Integer;
+    FCSRT: String;
 
     procedure GerarInfMDFe;       // Nivel 0
 
@@ -83,7 +86,7 @@ type
     procedure GerarLacres;        // Nivel 1
     procedure GerarautXML;        // Nivel 1
     procedure GerarInfAdic;       // Nivel 1
-    procedure GerarinfRespTec; // Nivel 1
+    procedure GerarinfRespTec;    // Nivel 1
 
     procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
@@ -96,6 +99,8 @@ type
     property MDFe: TMDFe            read FMDFe     write FMDFe;
     property Opcoes: TGeradorOpcoes read FOpcoes   write FOpcoes;
     property VersaoDF: TVersaoMDFe  read FVersaoDF write FVersaoDF;
+    property IdCSRT: Integer        read FIdCSRT   write FIdCSRT;
+    property CSRT: String           read FCSRT     write FCSRT;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -143,7 +148,7 @@ end;
 
 function TMDFeW.GerarXml: boolean;
 var
-  chave: String;
+//  chave: String;
   Gerar, Ok: boolean;
   xProtMDFe: String;
 begin
@@ -156,10 +161,10 @@ begin
 
   VersaoDF := DblToVersaoMDFe(Ok, MDFe.infMDFe.versao);
 
-  chave := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF, MDFe.ide.serie,
+  ChaveMDFe := GerarChaveAcesso(MDFe.ide.cUF, MDFe.ide.dhEmi, MDFe.emit.CNPJCPF, MDFe.ide.serie,
                             MDFe.ide.nMDF, StrToInt(TpEmisToStr(MDFe.ide.tpEmis)),
                             MDFe.ide.cMDF, StrToInt(MDFe.ide.modelo));
-  MDFe.infMDFe.ID := 'MDFe' + chave;
+  MDFe.infMDFe.ID := 'MDFe' + ChaveMDFe;
 
   MDFe.ide.cDV  := ExtrairDigitoChaveAcesso(MDFe.infMDFe.ID);
   MDFe.Ide.cMDF := ExtrairCodigoChaveAcesso(MDFe.infMDFe.ID);
@@ -1217,11 +1222,10 @@ begin
     Gerador.wCampo(tcStr, '#084', 'email   ', 06, 60, 1, MDFe.infRespTec.email, DSC_EMAIL);
     Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, MDFe.infRespTec.fone, DSC_FONE);
 
-    // Implementação Futura
-    if (MDFe.infRespTec.idCSRT <> 0) and (MDFe.infRespTec.hashCSRT <> '') then
+    if (idCSRT <> 0) and (CSRT <> '') then
     begin
-//      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, MDFe.infRespTec.idCSRT, DSC_IDCSRT);
-//      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, MDFe.infRespTec.hashCSRT, DSC_HASHCSRT);
+      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, idCSRT, DSC_IDCSRT);
+      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, ChaveMDFe), DSC_HASHCSRT);
     end;
 
     Gerador.wGrupo('/infRespTec');
@@ -1248,4 +1252,3 @@ begin
 end;
 
 end.
-

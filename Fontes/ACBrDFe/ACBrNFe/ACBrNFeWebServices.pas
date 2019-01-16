@@ -807,12 +807,12 @@ procedure TNFeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-  ConsStatServ := TConsStatServ.Create;
+  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE, '', True);
   try
     ConsStatServ.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesNFe.WebServices.UFCodigo;
 
-    ConsStatServ.Versao := FPVersaoServico;
+//    ConsStatServ.Versao := FPVersaoServico;
     AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
     ConsStatServ.GerarXML;
 
@@ -833,7 +833,7 @@ begin
 
   VerificarSemResposta;
 
-  NFeRetorno := TRetConsStatServ.Create;
+  NFeRetorno := TRetConsStatServ.Create('');
   try
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXml;
@@ -3455,7 +3455,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('NFe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -3499,15 +3499,16 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-  DistDFeInt := TDistDFeInt.Create;
+  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE,
+                                     'nfeDadosMsg', 'consChNFe', 'chNFe', True);
   try
     DistDFeInt.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
     DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := trim(FultNSU);
     DistDFeInt.NSU := trim(FNSU);
-    DistDFeInt.chNFe := trim(FchNFe);
-    DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.Chave := trim(FchNFe);
+
     AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
     DistDFeInt.GerarXML;
 
@@ -3539,16 +3540,16 @@ begin
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
         schresNFe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-resNFe.xml';
 
         schresEvento:
           FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                      FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
+                      FretDistDFeInt.docZip.Items[I].resEvento.chDFe +
                       Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
                       '-resEventoNFe.xml';
 
         schprocNFe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-nfe.xml';
 
         schprocEventoNFe:
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
@@ -3573,7 +3574,7 @@ begin
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
   FretDistDFeInt.Free;   // Limpando a lista
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('NFe');
 
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
@@ -3614,7 +3615,7 @@ var
 begin
   if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
   begin
-    Data := AItem.resNFe.dhEmi;
+    Data := AItem.resDFe.dhEmi;
     if Data = 0 then
     begin
       Data := AItem.resEvento.dhEvento;
@@ -3638,8 +3639,8 @@ begin
 
     schresNFe,
     schprocNFe:
-      Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
-                                                        AItem.resNFe.CNPJCPF,
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
+                                                        AItem.resDFe.CNPJCPF,
                                                         Data);
   end;
 end;

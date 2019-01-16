@@ -61,7 +61,7 @@ uses
 
 type
 
-  TConsSitBPe = class(TPersistent)
+  TConsSitBPe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;

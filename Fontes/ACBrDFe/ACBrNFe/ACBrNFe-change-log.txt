@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2019
+-- Diversos --
+[*] Remoção das units que foram Generalizadas em PCNComum e os ajustes necessários.
+   Por: Italo Jurisato Junior
+
 13/01/2019
 -- ACBrDANFCeFortesFr --
 [-] Ajustes para correta impressão do DANFCe, com Logo Lateral ou no topo, e

@@ -963,7 +963,11 @@ begin
     FCTeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
     FCTeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FCTeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
+
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+
+    FCTeW.idCSRT := Configuracoes.RespTec.IdCSRT;
+    FCTeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
   FCTeW.GerarXml;
@@ -2781,8 +2785,6 @@ begin
           xContato := INIRec.ReadString(sSecao, 'xContato', '');
           email    := INIRec.ReadString(sSecao, 'email', '');
           fone     := INIRec.ReadString(sSecao, 'fone', '');
-          idCSRT   := INIRec.ReadInteger(sSecao, 'idCSRT', 0);
-          hashCSRT := INIRec.ReadString(sSecao, 'hashCSRT', '');
         end;
       end;
      {$ENDIF}

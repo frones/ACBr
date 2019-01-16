@@ -72,7 +72,7 @@ type
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
-    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve310;
+    property VersaoDF: TpcnVersaoDF read FVersaoDF write SetVersaoDF default ve400;
     property AtualizarXMLCancelado: Boolean
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
@@ -155,6 +155,7 @@ type
     property Arquivos: TArquivosConfNFe read GetArquivos;
     property WebServices;
     property Certificados;
+    property RespTec;
   end;
 
 implementation
@@ -199,6 +200,7 @@ begin
   WebServices.Assign(DeConfiguracoesNFe.WebServices);
   Certificados.Assign(DeConfiguracoesNFe.Certificados);
   Arquivos.Assign(DeConfiguracoesNFe.Arquivos);
+  RespTec.Assign(DeConfiguracoesNFe.RespTec);
 end;
 
 function TConfiguracoesNFe.GetArquivos: TArquivosConfNFe;
@@ -229,7 +231,7 @@ begin
 
   FModeloDF := moNFe;
   FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
-  FVersaoDF := ve310;
+  FVersaoDF := ve400;
   FAtualizarXMLCancelado := False;
   FIdCSC := '';
   FCSC := '';
@@ -323,6 +325,7 @@ end;
 destructor TArquivosConfNFe.Destroy;
 begin
   FDownloadNFe.Free;
+
   inherited;
 end;
 

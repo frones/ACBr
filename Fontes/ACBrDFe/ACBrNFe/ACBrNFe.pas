@@ -46,7 +46,7 @@ uses
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrDFeDANFeReport,
   pcnNFe, pcnConversao, pcnConversaoNFe,
-  pcnEnvEventoNFe, pcnInutNFe, pcnRetDistDFeInt,
+  pcnEnvEventoNFe, pcnInutNFe, 
   ACBrUtil;
 
 const
@@ -81,7 +81,6 @@ type
     FCartaCorrecao: TCartaCorrecao;
     FEventoNFe: TEventoNFe;
     FInutNFe: TInutNFe;
-    FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrNFe;
     FWebServices: TWebServices;
 
@@ -148,7 +147,6 @@ type
     property CartaCorrecao: TCartaCorrecao read FCartaCorrecao write FCartaCorrecao;
     property EventoNFe: TEventoNFe read FEventoNFe write FEventoNFe;
     property InutNFe: TInutNFe read FInutNFe write FInutNFe;
-    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrNFe read FStatus;
 
     procedure SetStatus(const stNewStatus: TStatusACBrNFe);
@@ -206,7 +204,6 @@ begin
   FCartaCorrecao := TCartaCorrecao.Create; //(Self);
   FEventoNFe := TEventoNFe.Create;
   FInutNFe := TInutNFe.Create;
-  FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
@@ -216,7 +213,6 @@ begin
   FCartaCorrecao.Free;
   FEventoNFe.Free;
   FInutNFe.Free;
-  FRetDistDFeInt.Free;
   FWebServices.Free;
 
   inherited;

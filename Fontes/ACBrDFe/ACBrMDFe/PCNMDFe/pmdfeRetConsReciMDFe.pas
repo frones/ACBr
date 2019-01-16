@@ -50,7 +50,7 @@ type
   TProtMDFeCollection     = class;
   TProtMDFeCollectionItem = class;
 
-  TRetConsReciMDFe = class(TPersistent)
+  TRetConsReciMDFe = class
   private
     FLeitor: TLeitor;
     Fversao: String;

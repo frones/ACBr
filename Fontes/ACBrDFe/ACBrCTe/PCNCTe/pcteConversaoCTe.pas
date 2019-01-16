@@ -60,13 +60,13 @@ type
                 LayCTeDistDFeInt, LayCTeRecepcaoOS);
 
   TSchemaCTe = ( schErro, schCTe, schCTeOS, schcancCTe, schInutCTe, schEventoCTe,
-                 schresCTe, schresEvento, schprocCTe, schprocEventoCTe,
+           //      schresCTe, schresEvento, schprocCTe, schprocEventoCTe,
                  schconsReciCTe, schconsSitCTe, schconsStatServCTe, schconsCad,
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
                  schdistDFeInt, schcteModalRodoviarioOS, schevPrestDesacordo,
-                 schevGTV, schprocCTeOS );
+                 schevGTV{, schprocCTeOS} );
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,

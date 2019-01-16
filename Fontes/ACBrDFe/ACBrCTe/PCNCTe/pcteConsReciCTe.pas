@@ -50,12 +50,13 @@ unit pcteConsReciCTe;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
-  pcteConversaoCTe, pcnConsts;
+  SysUtils, Classes,
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
+  {pcteConversaoCTe,} pcnConsts;
 
 type
 
-  TConsReciCTe = class(TPersistent)
+  TConsReciCTe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;

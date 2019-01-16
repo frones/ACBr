@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//              PCN - Projeto Cooperar BPe                                    //
+//              PCN - Projeto Cooperar NFe                                    //
 //                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml do BPe          //
+//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
 //                                                                            //
 //        site: www.projetocooperar.org                                       //
 //       email: projetocooperar@zipmail.com.br                                //
@@ -43,16 +43,9 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-{*******************************************************************************
-|* Historico
-|*
-|* 20/06/2017: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
-*******************************************************************************}
-
 {$I ACBr.inc}
 
-unit pcnDistDFeIntBPe;
+unit pcnDistDFeInt;
 
 interface
 
@@ -61,33 +54,41 @@ uses
 
 type
 
-  TDistDFeInt = class(TPersistent)
+  { TDistDFeInt }
+
+  TDistDFeInt = class
   private
     FGerador: TGerador;
-    FVersao: String;
     FtpAmb: TpcnTipoAmbiente;
     FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
-    // Usado no Grupo de informações para consultar um DF-e a partir de um
-    // NSU específico.
     FNSU: String;
-    // Usado no Grupo de informações para consultar um DF-e a partir de uma
-    // chave de BP-e específica.
-    FchBPe: String;
+    FChave: String;
+
+    FVersao: String;
+    FNameSpace: String;
+    FtagGrupoMsg: String;
+    FtagconsChDFe: String;
+    FtagchDFe: String;
+    FGerarcUFAutor: Boolean;
   public
-    constructor Create;
+    constructor Create(const AVersao, ANameSpace, AtagGrupoMsg, AtagconsChDFe, AtagchDFe: String; AGerarcUFAutor: Boolean);
     destructor Destroy; override;
-    function GerarXML: Boolean;
+    function GerarXML: boolean;
+    function ObterNomeArquivo: string;
   published
     property Gerador: TGerador       read FGerador  write FGerador;
-    property Versao: String          read FVersao   write FVersao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property cUFAutor: Integer       read FcUFAutor write FcUFAutor;
     property CNPJCPF: String         read FCNPJCPF  write FCNPJCPF;
     property ultNSU: String          read FultNSU   write FultNSU;
+    // Usado no Grupo de informações para consultar um DF-e a partir de um
+    // NSU específico.
     property NSU: String             read FNSU      write FNSU;
-    property chBPe: String           read FchBPe    write FchBPe;
+    // Usado no Grupo de informações para consultar um DF-e a partir de uma
+    // chave específica.
+    property Chave: String           read FChave    write FChave;
   end;
 
 implementation
@@ -97,57 +98,87 @@ uses
 
 { TDistDFeInt }
 
-constructor TDistDFeInt.Create;
+constructor TDistDFeInt.Create(const AVersao, ANameSpace, AtagGrupoMsg,
+  AtagconsChDFe, AtagchDFe: String; AGerarcUFAutor: Boolean);
 begin
   FGerador := TGerador.Create;
+  FVersao := AVersao;
+  FNameSpace := ANameSpace;
+  FtagGrupoMsg := AtagGrupoMsg;
+  FtagconsChDFe := AtagconsChDFe;
+  FtagchDFe := AtagchDFe;
+  FGerarcUFAutor := AGerarcUFAutor;
 end;
 
 destructor TDistDFeInt.Destroy;
 begin
   FGerador.Free;
+
   inherited;
 end;
 
-function TDistDFeInt.GerarXML: Boolean;
+function TDistDFeInt.ObterNomeArquivo: string;
+var
+  DataHora: TDateTime;
+  Year, Month, Day, Hour, Min, Sec, Milli: Word;
+  AAAAMMDDTHHMMSS: string;
+begin
+  Datahora := now;
+  DecodeTime(DataHora, Hour, Min, Sec, Milli);
+  DecodeDate(DataHora, Year, Month, Day);
+  AAAAMMDDTHHMMSS := IntToStrZero(Year, 4) + IntToStrZero(Month, 2) + IntToStrZero(Day, 2) +
+    IntToStrZero(Hour, 2) + IntToStrZero(Min, 2) + IntToStrZero(Sec, 2);
+  Result := AAAAMMDDTHHMMSS + '-con-dist-dfe.xml';
+end;
+
+function TDistDFeInt.GerarXML: boolean;
 var
  sNSU: String;
 begin
   Gerador.ArquivoFormatoXML := '';
-  Gerador.wGrupo('BPeDadosMsg');
-  Gerador.wGrupo('distDFeInt ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
+
+  if FtagGrupoMsg <> '' then
+    Gerador.wGrupo(FtagGrupoMsg);
+
+  Gerador.wGrupo('distDFeInt ' + FNameSpace + ' versao="' + FVersao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 0, FcUFAutor, DSC_UF);
+
+  if FGerarcUFAutor then
+    Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 0, FcUFAutor, DSC_UF);
+
   Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF);
 
   if FNSU = '' then
   begin
-    if FchBPe = '' then
+    if FChave = '' then
     begin
-      sNSU := IntToStrZero(StrToIntDef(FultNSU, 0), 15);
+      sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
       Gerador.wGrupo('distNSU');
       Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
       Gerador.wGrupo('/distNSU');
     end
     else begin
-      Gerador.wGrupo('consChBPe');
-      Gerador.wCampo(tcStr, 'A12', 'chBPe', 44, 44, 1, FchBPe, DSC_CHAVE);
+      Gerador.wGrupo(FtagconsChDFe);
+      Gerador.wCampo(tcStr, 'A12', FtagchDFe, 44, 44, 1, FChave, DSC_CHAVE);
 
-      if not ValidarChave(FchBPe) then
-        Gerador.wAlerta('A12', 'chBPe', '', 'Chave de BPe inválida');
+      if not ValidarChave(FChave) then
+        Gerador.wAlerta('A12', FtagchDFe, '', 'Chave do DFe inválida');
 
-      Gerador.wGrupo('/consChBPe');
+      Gerador.wGrupo('/' + FtagconsChDFe);
     end;
   end
   else
   begin
-    sNSU := IntToStrZero(StrToIntDef(FNSU, 0), 15);
+    sNSU := IntToStrZero(StrToIntDef(FNSU,0),15);
     Gerador.wGrupo('consNSU');
     Gerador.wCampo(tcStr, 'A10', 'NSU', 01, 15, 1, sNSU, DSC_NSU);
     Gerador.wGrupo('/consNSU');
   end;
 
   Gerador.wGrupo('/distDFeInt');
-  Gerador.wGrupo('/BPeDadosMsg');
+
+  if FtagGrupoMsg <> '' then
+    Gerador.wGrupo('/' + FtagGrupoMsg);
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

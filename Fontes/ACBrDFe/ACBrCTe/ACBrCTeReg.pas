@@ -80,13 +80,13 @@ begin
   RegisterPropertyEditor(TypeInfo(String), TWebServicesConf, 'UF',
      TACBrUFProperty);
 
-  RegisterPropertyEditor(TypeInfo(TGeralConf), TConfiguracoes, 'Geral',
+  RegisterPropertyEditor(TypeInfo(TGeralConfCTe), TConfiguracoes, 'Geral',
     TClassProperty);
 
   RegisterPropertyEditor(TypeInfo(String), TGeralConfCTe, 'PathSalvar',
      TACBrDirProperty);
 
-  RegisterPropertyEditor(TypeInfo(TArquivosConf), TConfiguracoes, 'Arquivos',
+  RegisterPropertyEditor(TypeInfo(TArquivosConfCTe), TConfiguracoes, 'Arquivos',
     TClassProperty);
 
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfCTe, 'PathCTe',
@@ -97,6 +97,9 @@ begin
 
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfCTe, 'PathEvento',
      TACBrDirProperty);
+
+  RegisterPropertyEditor(TypeInfo(TRespTecConf), TConfiguracoes, 'RespTec',
+     TClassProperty);
 end;
 
 {$IFDEF FPC}

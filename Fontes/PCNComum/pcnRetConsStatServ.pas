@@ -54,7 +54,7 @@ uses
 
 type
 
-  TRetConsStatServ = class(TPersistent)
+  TRetConsStatServ = class
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -67,8 +67,9 @@ type
     FtMed: Integer;
     FdhRetorno: TDateTime;
     FxObs: String;
+    FtagGrupoMsg: String;
   public
-    constructor Create;
+    constructor Create(const AtagGrupoMsg: String);
     destructor Destroy; override;
     function LerXml: Boolean;
   published
@@ -89,15 +90,19 @@ implementation
 
 { TRetConsStatServ }
 
-constructor TRetConsStatServ.Create;
+constructor TRetConsStatServ.Create(const AtagGrupoMsg: String);
 begin
   inherited Create;
+
   FLeitor := TLeitor.Create;
+
+  FtagGrupoMsg := AtagGrupoMsg;
 end;
 
 destructor TRetConsStatServ.Destroy;
 begin
   FLeitor.Free;
+
   inherited;
 end;
 
@@ -108,18 +113,19 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'retConsStatServ') <> '' then
+
+    if leitor.rExtrai(1, 'retConsStatServ' + FtagGrupoMsg) <> '' then
     begin
-              Fversao    := Leitor.rAtributo('versao');
-      (*FR03*)FtpAmb     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-      (*FR04*)FverAplic  := Leitor.rCampo(tcStr, 'verAplic');
-      (*FR05*)FcStat     := Leitor.rCampo(tcInt, 'cStat');
-      (*FR06*)FxMotivo   := Leitor.rCampo(tcStr, 'xMotivo');
-      (*FR07*)FcUF       := Leitor.rCampo(tcInt, 'cUF');
-      (*FR08*)FdhRecbto  := Leitor.rCampo(tcDatHor, 'dhRecbto');
-      (*FR09*)FtMed      := Leitor.rCampo(tcInt, 'tMed');
-      (*FR10*)FdhRetorno := Leitor.rCampo(tcDatHor, 'dhRetorno');
-      (*FR11*)FxObs      := Leitor.rCampo(tcStr, 'xObs');
+      Fversao    := Leitor.rAtributo('versao', 'retConsStatServ' + FtagGrupoMsg);
+      FtpAmb     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      FverAplic  := Leitor.rCampo(tcStr, 'verAplic');
+      FcStat     := Leitor.rCampo(tcInt, 'cStat');
+      FxMotivo   := Leitor.rCampo(tcStr, 'xMotivo');
+      FcUF       := Leitor.rCampo(tcInt, 'cUF');
+      FdhRecbto  := Leitor.rCampo(tcDatHor, 'dhRecbto');
+      FtMed      := Leitor.rCampo(tcInt, 'tMed');
+      FdhRetorno := Leitor.rCampo(tcDatHor, 'dhRetorno');
+      FxObs      := Leitor.rCampo(tcStr, 'xObs');
       
       Result := True;
     end;

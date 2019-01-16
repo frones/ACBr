@@ -66,7 +66,7 @@ type
   published
     property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
-    property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
+    property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve300;
   end;
 
   { TDownloadConfCTe }
@@ -136,6 +136,7 @@ type
     property Arquivos: TArquivosConfCTe read GetArquivos;
     property WebServices;
     property Certificados;
+    property RespTec;
   end;
 
 implementation
@@ -179,6 +180,7 @@ begin
   WebServices.Assign(DeConfiguracoesCTe.WebServices);
   Certificados.Assign(DeConfiguracoesCTe.Certificados);
   Arquivos.Assign(DeConfiguracoesCTe.Arquivos);
+  RespTec.Assign(DeConfiguracoesCTe.RespTec);
 end;
 
 { TGeralConfCTe }
@@ -197,7 +199,7 @@ begin
 
   FModeloDF := moCTe;
   FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
-  FVersaoDF := ve200;
+  FVersaoDF := ve300;
 end;
 
 procedure TGeralConfCTe.GravarIni(const AIni: TCustomIniFile);

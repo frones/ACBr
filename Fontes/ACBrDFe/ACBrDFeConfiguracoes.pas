@@ -41,9 +41,8 @@ unit ACBrDFeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, types, IniFiles,
+  Classes, SysUtils, types, IniFiles, blcksock,
   pcnConversao, pcnAuxiliar,
-  blcksock,
   ACBrDFeSSL;
 
 const
@@ -250,6 +249,29 @@ type
       read FValidarDigest write FValidarDigest default True;
   end;
 
+  { TRespTecConf }
+
+  TRespTecConf = class(TComponent)
+  private
+    FIdCSRT: Integer;
+    FCSRT: String;
+
+    procedure SetCSRT(const Value: String);
+    procedure SetIdCSRT(const Value: Integer);
+  protected
+    fpConfiguracoes: TConfiguracoes;
+
+  public
+    constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    procedure Assign(DeRespTecConf: TRespTecConf); reintroduce; virtual;
+    procedure GravarIni( const AIni: TCustomIniFile ); virtual;
+    procedure LerIni( const AIni: TCustomIniFile ); virtual;
+
+  published
+    property IdCSRT: Integer read FIdCSRT write SetIdCSRT;
+    property CSRT: String read FCSRT write SetCSRT;
+  end;
+
   { TArquivosConf }
 
   TArquivosConf = class(TComponent)
@@ -309,12 +331,14 @@ type
     FPArquivos: TArquivosConf;
     FPSessaoIni: String;
     FChaveCryptINI: AnsiString;
+    FPRespTec: TRespTecConf;
 
   protected
     procedure CreateGeralConf; virtual;
     procedure CreateWebServicesConf; virtual;
     procedure CreateCertificadosConf; virtual;
     procedure CreateArquivosConf; virtual;
+    procedure CreateRespTecConf; virtual;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -331,6 +355,7 @@ type
     property Arquivos: TArquivosConf read FPArquivos;
     property SessaoIni: String read FPSessaoIni;
     property ChaveCryptINI: AnsiString read FChaveCryptINI write FChaveCryptINI;
+    property RespTec: TRespTecConf read FPRespTec;
   end;
 
 implementation
@@ -375,11 +400,22 @@ begin
   {$IFDEF COMPILER6_UP}
   FPArquivos.SetSubComponent(True);{ para gravar no DFM/XFM }
   {$ENDIF}
+
+  CreateRespTecConf;
+  FPRespTec.Name := 'RespTecConf';
+  {$IFDEF COMPILER6_UP}
+  FPRespTec.SetSubComponent(True);{ para gravar no DFM/XFM }
+  {$ENDIF}
 end;
 
 procedure TConfiguracoes.CreateGeralConf;
 begin
   FPGeral := TGeralConf.Create(Self);
+end;
+
+procedure TConfiguracoes.CreateRespTecConf;
+begin
+  FPRespTec := TRespTecConf.Create(Self);
 end;
 
 procedure TConfiguracoes.CreateWebServicesConf;
@@ -403,6 +439,7 @@ begin
   FPWebServices.Free;
   FPCertificados.Free;
   FPArquivos.Free;
+  FPRespTec.Free;
 
   inherited;
 end;
@@ -413,6 +450,7 @@ begin
   WebServices.Assign(DeConfiguracoes.WebServices);
   Certificados.Assign(DeConfiguracoes.Certificados);
   Arquivos.Assign(DeConfiguracoes.Arquivos);
+  RespTec.Assign(DeConfiguracoes.RespTec);
 end;
 
 procedure TConfiguracoes.LerParams(const NomeArqParams: String);
@@ -437,6 +475,7 @@ begin
   WebServices.GravarIni( AIni );
   Certificados.GravarIni( AIni );
   Arquivos.GravarIni( AIni );
+  RespTec.GravarIni( AIni );
 end;
 
 procedure TConfiguracoes.LerIni(const AIni: TCustomIniFile);
@@ -445,6 +484,7 @@ begin
   WebServices.LerIni( AIni );
   Certificados.LerIni( AIni );
   Arquivos.LerIni( AIni );
+  RespTec.LerIni( AIni );
 end;
 
 { TGeralConf }
@@ -1321,5 +1361,55 @@ begin
   end;
 end;
 
-end.
+{ TRespTecConf }
 
+procedure TRespTecConf.Assign(DeRespTecConf: TRespTecConf);
+begin
+  idCSRT := DeRespTecConf.idCSRT;
+  CSRT   := DeRespTecConf.CSRT;
+end;
+
+constructor TRespTecConf.Create(AConfiguracoes: TConfiguracoes);
+begin
+  inherited Create(AConfiguracoes);
+
+  fpConfiguracoes := AConfiguracoes;
+  FIdCSRT := 0;
+  FCSRT := '';
+end;
+
+procedure TRespTecConf.GravarIni(const AIni: TCustomIniFile);
+begin
+  if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
+  begin
+    AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'IdCSRT', FIdCSRT);
+    AIni.WriteString(fpConfiguracoes.SessaoIni, 'CSRT', FCSRT);
+  end;
+end;
+
+procedure TRespTecConf.LerIni(const AIni: TCustomIniFile);
+begin
+  if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
+  begin
+    FIdCSRT := AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'IdCSRT', IdCSRT);
+    FCSRT := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSRT', CSRT);
+  end;
+end;
+
+procedure TRespTecConf.SetCSRT(const Value: String);
+begin
+  if FCSRT = Value then
+    Exit;
+
+  FCSRT := Value;
+end;
+
+procedure TRespTecConf.SetIdCSRT(const Value: Integer);
+begin
+  if FIdCSRT = Value then
+    Exit;
+
+  FIdCSRT := Value;
+end;
+
+end.

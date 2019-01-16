@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //                                                                            //
-//              PCN - Projeto Cooperar CTe                                    //
+//              PCN - Projeto Cooperar NFe                                    //
 //                                                                            //
-//   Descrição: Classes para geração/leitura dos arquivos xml da CTe          //
+//   Descrição: Classes para geração/leitura dos arquivos xml da NFe          //
 //                                                                            //
-//        site: www.projetocooperar.org/cte                                   //
+//        site: www.projetocooperar.org                                       //
 //       email: projetocooperar@zipmail.com.br                                //
-//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_cte/        //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
 //     projeto: http://code.google.com/p/projetocooperar/                     //
 //         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
 //                                                                            //
@@ -45,17 +45,17 @@
 
 {$I ACBr.inc}
 
-unit pcteRetConsCad;
+unit pcnRetConsCad;
 
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+  SysUtils, Classes, pcnConversao, pcnLeitor;
 
 type
 
-  TRetConsCad = class;
-  TInfCadCollection = class;
+  TRetConsCad           = class;
+  TInfCadCollection     = class;
   TInfCadCollectionItem = class;
 
   TRetConsCad = class(TPersistent)
@@ -77,7 +77,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXML: boolean;
+    function LerXML: Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
@@ -156,10 +156,15 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
 { RetConsCad }
 
 constructor TRetConsCad.Create;
 begin
+  inherited Create;
+
   FLeitor := TLeitor.Create;
   FInfCad := TInfCadCollection.Create(Self);
 end;
@@ -168,6 +173,7 @@ destructor TRetConsCad.Destroy;
 begin
   FLeitor.Free;
   FInfCad.Free;
+
   inherited;
 end;
 
@@ -198,24 +204,36 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-function TRetConsCad.LerXML: boolean;
+function TRetConsCad.LerXML: Boolean;
 var
   i: Integer;
 begin
-  i := 0; 
+  i := 0;
   Result := False;
   try
+    Leitor.Grupo := Leitor.Arquivo;
+    
     Fversao := Leitor.rAtributo('versao');
 
     if Leitor.rExtrai(1, 'infCons') <> '' then
     begin
+      // tratamento para quando o webservice não retorna os zeros a esquerda
+      // na consulta
+      cnpj := trim(Leitor.rCampo(tcStr, 'CNPJ'));
+      if (cnpj <> '') and (length(cnpj) < 14) then
+        cnpj := PadLeft(cnpj, 14, '0');
+
+      cpf := trim(Leitor.rCampo(tcStr, 'CPF'));
+      if (cpf <> '') and (length(cpf) < 11) then
+        cpf := PadLeft(cpf, 11, '0');
+
       (*GR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*GR05 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');
       (*GR06 *)FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
       (*GR06a*)FUF       := Leitor.rCampo(tcStr, 'UF');
       (*GR06b*)FIE       := Leitor.rCampo(tcStr, 'IE');
-      (*GR06c*)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
-      (*GR06d*)FCPF      := Leitor.rCampo(tcStr, 'CPF');
+      (*GR06c*)FCNPJ     := cnpj;
+      (*GR06d*)FCPF      := cpf;
       (*GR06e*)FdhCons   := Leitor.rCampo(tcDatHor, 'dhCons');
       (*GR06f*)FcUF      := Leitor.rCampo(tcInt, 'cUF');
 
@@ -223,9 +241,20 @@ begin
       begin
         InfCad.Add;
 
+        // tratamento para quando o webservice não retorna os zeros a esquerda
+        // na consulta
+        cnpj := trim(Leitor.rCampo(tcStr, 'CNPJ'));
+        if (cnpj <> '') and (length(cnpj) < 14) then
+          cnpj := PadLeft(cnpj, 14, '0');
+
+        cpf := trim(Leitor.rCampo(tcStr, 'CPF'));
+        if (cpf <> '') and (length(cpf) < 11) then
+          cpf  := PadLeft(cpf, 11, '0');
+
+
         (*GR08 *)InfCad[i].FIE         := Leitor.rCampo(tcStr, 'IE');
-        (*GR09 *)InfCad[i].FCNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
-        (*GR10 *)InfCad[i].FCPF        := Leitor.rCampo(tcStr, 'CPF');
+        (*GR09 *)InfCad[i].FCNPJ       := cnpj;
+        (*GR10 *)InfCad[i].FCPF        := cpf;
         (*GR11 *)InfCad[i].FUF         := Leitor.rCampo(tcStr, 'UF');
         (*GR12 *)InfCad[i].FcSit       := Leitor.rCampo(tcInt, 'cSit');
         (*GR12a*)InfCad[i].FindCredNFe := Leitor.rCampo(tcInt, 'indCredNFe');
@@ -249,15 +278,13 @@ begin
 
         inc(i);
       end;
-      
-      if i = 0 then InfCad.Add;
-
+      if i = 0 then
+        InfCad.Add;
       Result := True;
     end;
   except
     Result := False;
   end;
 end;
-
 end.
 

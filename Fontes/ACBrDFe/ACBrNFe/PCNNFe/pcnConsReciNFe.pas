@@ -62,7 +62,7 @@ uses
 
 type
 
-  TConsReciNFe = class(TPersistent)
+  TConsReciNFe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;

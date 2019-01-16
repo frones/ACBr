@@ -42,12 +42,12 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil, pcnConsts,
-  pmdfeConversaoMDFe;
+  pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil, pcnConsts{,
+  pmdfeConversaoMDFe};
 
 type
 
-  TConsSitMDFe = class(TPersistent)
+  TConsSitMDFe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;

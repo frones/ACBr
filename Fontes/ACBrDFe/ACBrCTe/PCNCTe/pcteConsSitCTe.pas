@@ -51,11 +51,11 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrUtil,
-  pcnConsts, pcteConversaoCTe;
+  pcnConsts{, pcteConversaoCTe};
 
 type
 
-  TConsSitCTe = class(TPersistent)
+  TConsSitCTe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;

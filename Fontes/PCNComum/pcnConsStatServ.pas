@@ -62,14 +62,17 @@ uses
 
 type
 
-  TConsStatServ = class(TPersistent)
+  TConsStatServ = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
     FcUF: Integer;
     FVersao: String;
+    FNameSpace: String;
+    FtagGrupoMsg: String;
+    FGerarcUF: Boolean;
   public
-    constructor Create;
+    constructor Create(const AVersao, ANameSpace, AtagGrupoMsg: String; AGerarcUF: Boolean);
     destructor Destroy; override;
     function GerarXML: Boolean;
     function ObterNomeArquivo: string;
@@ -77,7 +80,7 @@ type
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property cUF: Integer            read FcUF     write FcUF;
-    property Versao: String          read FVersao  write FVersao;
+//    property Versao: String          read FVersao  write FVersao;
   end;
 
 implementation
@@ -86,15 +89,22 @@ Uses pcnAuxiliar;
 
 { TConsStatServ }
 
-constructor TConsStatServ.Create;
+constructor TConsStatServ.Create(const AVersao, ANameSpace, AtagGrupoMsg: String; AGerarcUF: Boolean);
 begin
   inherited Create;
+
   FGerador := TGerador.Create;
+
+  FVersao := AVersao;
+  FNameSpace := ANameSpace;
+  FtagGrupoMsg := AtagGrupoMsg;
+  FGerarcUF := AGerarcUF;
 end;
 
 destructor TConsStatServ.Destroy;
 begin
   FGerador.Free;
+
   inherited;
 end;
 
@@ -116,11 +126,14 @@ function TConsStatServ.GerarXML: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('consStatServ ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wGrupo('consStatServ' + FtagGrupoMsg + ' ' + FNameSpace + ' versao="' + FVersao + '"');
   Gerador.wCampo(tcStr, 'FP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcInt, 'FP04', 'cUF  ', 002, 002, 1, FcUF, DSC_CUF);
+
+  if FGerarcUF then
+    Gerador.wCampo(tcInt, 'FP04', 'cUF  ', 002, 002, 1, FcUF, DSC_CUF);
+
   Gerador.wCampo(tcStr, 'FP05', 'xServ', 006, 006, 1, 'STATUS', DSC_XSERV);
-  Gerador.wGrupo('/consStatServ');
+  Gerador.wGrupo('/consStatServ' + FtagGrupoMsg);
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

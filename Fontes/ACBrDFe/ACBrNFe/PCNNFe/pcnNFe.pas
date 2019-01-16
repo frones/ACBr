@@ -152,6 +152,8 @@ type
 
   TinfNFeSupl = class;
 
+  TinfRespTec = class;
+
   { TNFe }
 
   TNFe = class(TPersistent)
@@ -176,6 +178,7 @@ type
     FProcNFe: TProcNFe;
     FautXML: TautXMLCollection;
     FinfNFeSupl: TinfNFeSupl;
+    FinfRespTec: TinfRespTec;
 
     procedure SetDet(Value: TDetCollection);
     procedure Setpag(Value: TpagCollection);
@@ -185,7 +188,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
-    procedure SetXMLString(const AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString);
   published
     property infNFe: TinfNFe read FinfNFe write FinfNFe;
     property Ide: TIde read FIde write FIde;
@@ -207,6 +210,7 @@ type
     property infNFeSupl: TinfNFeSupl read FinfNFeSupl write FinfNFeSupl;
     property signature: Tsignature read Fsignature write Fsignature;
     property procNFe: TProcNFe read FProcNFe write FProcNFe;
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
   end;
 
   TinfNFeSupl = class(TPersistent)
@@ -432,8 +436,8 @@ type
     property xMun: String read FxMun write FxMun;
     property UF: String read FUF write FUF;
     property CEP: Integer read FCEP write FCEP;
-    property cPais: Integer read FcPais write FcPais ;
-    property xPais: String read FxPais write FxPais ;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: String read FxPais write FxPais;
     property fone: String read Ffone write Ffone;
   end;
 
@@ -518,14 +522,15 @@ type
     property xMun: String read FxMun write FxMun;
     property UF: String read FUF write FUF;
     property CEP: Integer read FCEP write FCEP;
-    property cPais: Integer read FcPais write FcPais ;
-    property xPais: String read FxPais write FxPais ;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: String read FxPais write FxPais;
     property fone: String read Ffone write Ffone;
   end;
 
   TRetirada = class(TPersistent)
   private
     FCNPJCPF: String;
+    FxNome: String;
     FxLgr: String;
     Fnro: String;
     fxCpl: String;
@@ -533,10 +538,17 @@ type
     FcMun: Integer;
     FxMun: String;
     FUF: String;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: String;
+    Ffone: String;
+    Femail: String;
+    FIE: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xNome: String read FxNome write FxNome;
     property xLgr: String read FxLgr write FxLgr;
     property nro: String read Fnro write Fnro;
     property xCpl: String read FxCpl write FxCpl;
@@ -544,11 +556,18 @@ type
     property cMun: Integer read FcMun write FcMun;
     property xMun: String read FxMun write FxMun;
     property UF: String read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: String read FxPais write FxPais;
+    property fone: String read Ffone write Ffone;
+    property Email: String read Femail write Femail;
+    property IE: String read FIE write FIE;
   end;
 
   TEntrega = class(TPersistent)
   private
     FCNPJCPF: String;
+    FxNome: String;
     FxLgr: String;
     Fnro: String;
     fxCpl: String;
@@ -556,10 +575,17 @@ type
     FcMun: Integer;
     FxMun: String;
     FUF: String;
+    FCEP: Integer;
+    FcPais: Integer;
+    FxPais: String;
+    Ffone: String;
+    Femail: String;
+    FIE: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xNome: String read FxNome write FxNome;
     property xLgr: String read FxLgr write FxLgr;
     property nro: String read Fnro write Fnro;
     property xCpl: String read FxCpl write FxCpl;
@@ -567,6 +593,12 @@ type
     property cMun: Integer read FcMun write FcMun;
     property xMun: String read FxMun write FxMun;
     property UF: String read FUF write FUF;
+    property CEP: Integer read FCEP write FCEP;
+    property cPais: Integer read FcPais write FcPais;
+    property xPais: String read FxPais write FxPais;
+    property fone: String read Ffone write Ffone;
+    property Email: String read Femail write Femail;
+    property IE: String read FIE write FIE;
   end;
 
   TDetCollection = class(TCollection)
@@ -793,6 +825,7 @@ type
   TMedCollectionItem = class(TCollectionItem)
   private
     FcProdANVISA: String;
+    FxMotivoIsencao: String;
     FnLote: String;
     FqLote: Currency;
     FdFab: TDateTime;
@@ -802,6 +835,7 @@ type
     procedure Assign(Source: TPersistent); override;
   published
     property cProdANVISA: String read FcProdANVISA write FcProdANVISA;
+    property xMotivoIsencao: String read FxMotivoIsencao write FxMotivoIsencao;
     property nLote: String read FnLote write FnLote;
     property qLote: Currency read FqLote write FqLote;
     property dFab: TDateTime read FdFab write FdFab;
@@ -1979,6 +2013,25 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
   end;
 
+  TinfRespTec = class(TPersistent)
+  private
+    FCNPJ: String;
+    FxContato: String;
+    Femail: String;
+    Ffone: String;
+    FidCSRT: Integer;
+    FhashCSRT: String;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property CNPJ: String     read FCNPJ     write FCNPJ;
+    property xContato: String read FxContato write FxContato;
+    property email: String    read Femail    write Femail;
+    property fone: String     read Ffone     write Ffone;
+    property idCSRT: Integer  read FidCSRT   write FidCSRT;
+    property hashCSRT: String read FhashCSRT write FhashCSRT;
+  end;
+
 const
 
   CMUN_EXTERIOR: Integer = 9999999;
@@ -2013,6 +2066,7 @@ begin
     infNFeSupl.Assign(TNFe(Source).infNFeSupl);
     signature.Assign(TNFe(Source).signature);
     procNFe.Assign(TNFe(Source).procNFe);
+    infRespTec.Assign(TNFe(Source).infRespTec);
   end
   else
     inherited; 
@@ -2054,6 +2108,7 @@ begin
   FinfNFeSupl := TinfNFeSupl.Create;
   Fsignature := Tsignature.create;
   FProcNFe := TProcNFe.create;
+  FinfRespTec := TinfRespTec.create;
 
   FinfNFe.Versao := 0;
 
@@ -2086,6 +2141,8 @@ begin
   FinfNFeSupl.Free;
   Fsignature.Free;
   FProcNFe.Free;
+  FinfRespTec.Free;
+
   inherited Destroy;
 end;
 
@@ -3444,6 +3501,7 @@ begin
   if Source is TRetirada then
   begin
     CNPJCPF := TRetirada(Source).CNPJCPF;
+    xNome := TRetirada(Source).xNome;
     xLgr := TRetirada(Source).xLgr;
     nro := TRetirada(Source).nro;
     xCpl := TRetirada(Source).xCpl;
@@ -3451,6 +3509,12 @@ begin
     cMun := TRetirada(Source).cMun;
     xMun := TRetirada(Source).xMun;
     UF := TRetirada(Source).UF;
+    CEP := TRetirada(Source).CEP;
+    cPais := TRetirada(Source).cPais;
+    xPais := TRetirada(Source).xPais;
+    fone := TRetirada(Source).fone;
+    email := TRetirada(Source).email;
+    IE := TRetirada(Source).IE;
   end
   else
     inherited;
@@ -3463,6 +3527,7 @@ begin
   if Source is TEntrega then
   begin
     CNPJCPF := TEntrega(Source).CNPJCPF;
+    xNome := TEntrega(Source).xNome;
     xLgr := TEntrega(Source).xLgr;
     nro := TEntrega(Source).nro;
     xCpl := TEntrega(Source).xCpl;
@@ -3470,6 +3535,12 @@ begin
     cMun := TEntrega(Source).cMun;
     xMun := TEntrega(Source).xMun;
     UF := TEntrega(Source).UF;
+    CEP := TEntrega(Source).CEP;
+    cPais := TEntrega(Source).cPais;
+    xPais := TEntrega(Source).xPais;
+    fone := TEntrega(Source).fone;
+    email := TEntrega(Source).email;
+    IE := TEntrega(Source).IE;
   end
   else
     inherited;
@@ -3543,6 +3614,8 @@ procedure TMedCollectionItem.Assign(Source: TPersistent);
 begin
   if Source is TMedCollectionItem then
   begin
+    cProdANVISA := TMedCollectionItem(Source).cProdANVISA;
+    xMotivoIsencao := TMedCollectionItem(Source).xMotivoIsencao;
     nLote := TMedCollectionItem(Source).nLote;
     qLote := TMedCollectionItem(Source).qLote;
     dFab := TMedCollectionItem(Source).dFab;
@@ -4204,6 +4277,23 @@ begin
     vFCPUFDest := TICMSUFDest(Source).vFCPUFDest;
     vICMSUFDest := TICMSUFDest(Source).vICMSUFDest;
     vICMSUFRemet := TICMSUFDest(Source).vICMSUFRemet;
+  end
+  else
+    inherited;
+end;
+
+{ TinfRespTec }
+
+procedure TinfRespTec.Assign(Source: TPersistent);
+begin
+  if Source is TinfRespTec then
+  begin
+    CNPJ := TinfRespTec(Source).CNPJ;
+    xContato := TinfRespTec(Source).xContato;
+    email := TinfRespTec(Source).email;
+    fone := TinfRespTec(Source).fone;
+    idCSRT := TinfRespTec(Source).idCSRT;
+    hashCSRT := TinfRespTec(Source).hashCSRT;
   end
   else
     inherited;

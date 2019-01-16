@@ -60,7 +60,7 @@ type
     procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
-    property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
+    property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve300;
   end;
 
   { TDownloadConfMDFe }
@@ -129,6 +129,7 @@ type
     property Arquivos: TArquivosConfMDFe read GetArquivos;
     property WebServices;
     property Certificados;
+    property RespTec;
   end;
 
 implementation
@@ -172,6 +173,7 @@ begin
   WebServices.Assign(DeConfiguracoesMDFe.WebServices);
   Certificados.Assign(DeConfiguracoesMDFe.Certificados);
   Arquivos.Assign(DeConfiguracoesMDFe.Arquivos);
+  RespTec.Assign(DeConfiguracoesMDFe.RespTec);
 end;
 
 { TGeralConfMDFe }
@@ -187,7 +189,7 @@ constructor TGeralConfMDFe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FVersaoDF := ve100;
+  FVersaoDF := ve300;
 end;
 
 procedure TGeralConfMDFe.GravarIni(const AIni: TCustomIniFile);
@@ -235,12 +237,12 @@ begin
   FPathMDFe := '';
   FPathEvento := '';
   FPathArquivoMunicipios := '';
-
 end;
 
 destructor TArquivosConfMDFe.Destroy;
 begin
   FDownloadMDFe.Free;
+
   inherited;
 end;
 

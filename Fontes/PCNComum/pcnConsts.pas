@@ -162,6 +162,9 @@ const
   DSC_TBAND = 'Bandeira da Operadora de Cartão';
   DSC_CAUT = 'Número da Autorização';
 
+  DSC_IDCSRT = 'Identificador CSRT - Código de Segurança do Responsável Técnico';
+  DSC_HASHCSRT = 'Hash do CSRT - Código de Segurança do Responsável Técnico';
+
 implementation
 
 end.

@@ -41,7 +41,7 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  Classes, StrUtils, SysUtils,
+  Classes, StrUtils, SysUtils, synacode,
   {IniFiles,} ACBrDFeSSL, pcnAuxiliar;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
@@ -69,6 +69,8 @@ function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
 function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
                               const APathArqMun: String): String;
 function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
+
+function CalcularHashCSRT(ACSRT, AChave: String): string;
 
 implementation
 
@@ -462,6 +464,11 @@ begin
       List.free;
     end;
   end;
+end;
+
+function CalcularHashCSRT(ACSRT, AChave: String): string;
+begin
+  Result := SHA1(ACSRT + AChave);
 end;
 
 initialization

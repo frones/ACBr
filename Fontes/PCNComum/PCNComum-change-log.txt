@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2019
+-- Diversos --
+[*] Inclusão das units que foram Generalizadas em PCNComum e os ajustes necessários.
+   Por: Italo Jurisato Junior
+
 28/11/2018
 -- pcnConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/47855-icms51-com-diferimento-total-pdif100/?do=findComment&comment=315345

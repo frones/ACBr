@@ -49,8 +49,8 @@ uses
   Classes, SysUtils, dateutils, blcksock, synacode,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
   pcnAuxiliar, pcnConversao, pcnBPe, pcnConversaoBPe, pcnProcBPe,
-  pcnEnvEventoBPe, pcnRetEnvEventoBPe, pcnRetConsSitBPe, pcnDistDFeIntBPe,
-  pcnRetDistDFeIntBPe, pcnRetEnvBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes;
+  pcnEnvEventoBPe, pcnRetEnvEventoBPe, pcnRetConsSitBPe, pcnDistDFeInt,
+  pcnRetDistDFeInt, pcnRetEnvBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes;
 
 type
 
@@ -355,7 +355,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrCompress, ACBrBPe,
-  pcnGerador, pcnLeitor, pcnConsStatServBPe, pcnRetConsStatServBPe,
+  pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitBPe;
 
 { TBPeWebService }
@@ -466,14 +466,12 @@ procedure TBPeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
-//  FPBodyElement := 'bpeDadosMsg';
-
-  ConsStatServ := TConsStatServ.Create;
+  ConsStatServ := TConsStatServ.Create(FPVersaoServico, NAME_SPACE_BPE,
+                                       'BPe', False);
   try
     ConsStatServ.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesBPe.WebServices.UFCodigo;
 
-    ConsStatServ.Versao := FPVersaoServico;
     AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
     ConsStatServ.GerarXML;
 
@@ -490,7 +488,7 @@ var
 begin
   FPRetWS := SeparaDadosArray(['bpeResultMsg', 'bpeStatusServicoBPResult'], FPRetornoWS );
 
-  BPeRetorno := TRetConsStatServ.Create;
+  BPeRetorno := TRetConsStatServ.Create('BPe');
   try
     BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     BPeRetorno.LerXml;
@@ -671,8 +669,6 @@ end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
 begin
-//  FPBodyElement := 'bpeDadosMsgZip';
-
   // No envio só podemos ter apena UM BP-e, pois o seu processamento é síncrono
   if FBilhetes.Count > 1 then
     GerarException(ACBrStr('ERRO: Conjunto de BP-e transmitidos (máximo de 1 BP-e)' +
@@ -949,8 +945,6 @@ procedure TBPeConsulta.DefinirDadosMsg;
 var
   ConsSitBPe: TConsSitBPe;
 begin
-//  FPBodyElement := 'bpeDadosMsg';
-
   ConsSitBPe := TConsSitBPe.Create;
   try
     ConsSitBPe.TpAmb := FTpAmb;
@@ -1359,9 +1353,8 @@ var
   EventoEhValido: Boolean;
   SchemaEventoBPe: TSchemaBPe;
 begin
-//  FPBodyElement := 'bpeDadosMsg';
-
   EventoBPe := TEventoBPe.Create;
+
   try
     EventoBPe.idLote := FidLote;
     SchemaEventoBPe  := schErro;
@@ -1644,7 +1637,7 @@ begin
   if Assigned(FretDistDFeInt) then
     FretDistDFeInt.Free;
 
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('BPe');
 
   if Assigned(FlistaArqs) then
     FlistaArqs.Free;
@@ -1687,17 +1680,16 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
-//  FPBodyElement := 'bpeDadosMsg';
-
-  DistDFeInt := TDistDFeInt.Create;
+  DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_BPE,
+                                     'bpeDadosMsg', 'consChBPe', 'chBPe', True);
   try
     DistDFeInt.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
     DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := trim(FultNSU);
     DistDFeInt.NSU := trim(FNSU);
-    DistDFeInt.chBPe := trim(FchBPe);
-    DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.Chave := trim(FchBPe);
+
     AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
     DistDFeInt.GerarXML;
 
@@ -1726,16 +1718,16 @@ begin
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
         schresBPe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resBPe.chBPe + '-resBPe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-resBPe.xml';
 
-        schresEventoBPe:
+        schresEvento:
           FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                     FretDistDFeInt.docZip.Items[I].resEvento.chBPe +
+                     FretDistDFeInt.docZip.Items[I].resEvento.chDFe +
                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
                      '-resEventoBPe.xml';
 
         schprocBPe:
-          FNomeArq := FretDistDFeInt.docZip.Items[I].resBPe.chBPe + '-bpe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resDFe.chDFe + '-bpe.xml';
 
         schprocEventoBPe:
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
@@ -1760,7 +1752,7 @@ begin
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
   FretDistDFeInt.Free;   // Limpando a lista
-  FretDistDFeInt := TRetDistDFeInt.Create;
+  FretDistDFeInt := TRetDistDFeInt.Create('BPe');
 
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
@@ -1800,19 +1792,19 @@ var
   Data: TDateTime;
 begin
   if FPConfiguracoesBPe.Arquivos.EmissaoPathBPe then
-    Data := AItem.resBPe.dhEmi
+    Data := AItem.resDFe.dhEmi
   else
     Data := Now;
 
   case AItem.schema of
     schprocEventoBPe:
       Result := FPConfiguracoesBPe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
-                                                          AItem.resBPe.CNPJCPF,
+                                                          AItem.resDFe.CNPJCPF,
                                                           Data);
 
     schprocBPe:
-      Result := FPConfiguracoesBPe.Arquivos.GetPathDownload(AItem.resBPe.xNome,
-                                                        AItem.resBPe.CNPJCPF,
+      Result := FPConfiguracoesBPe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
+                                                        AItem.resDFe.CNPJCPF,
                                                         Data);
   end;
 end;

@@ -48,7 +48,7 @@ uses
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
   pcteCTe, pcnConversao, pcteConversaoCTe,
-  pcteEnvEventoCTe, pcteInutCTe, pcteRetDistDFeInt,
+  pcteEnvEventoCTe, pcteInutCTe, 
   ACBrDFeUtil, ACBrUtil;
 
 const
@@ -70,7 +70,6 @@ type
     FConhecimentos: TConhecimentos;
     FEventoCTe: TEventoCTe;
     FInutCTe: TInutCTe;
-    FRetDistDFeInt: TRetDistDFeInt;
     FStatus: TStatusACBrCTe;
     FWebServices: TWebServices;
 
@@ -144,7 +143,6 @@ type
     property Conhecimentos: TConhecimentos read FConhecimentos write FConhecimentos;
     property EventoCTe: TEventoCTe         read FEventoCTe     write FEventoCTe;
     property InutCTe: TInutCTe             read FInutCTe       write FInutCTe;
-    property RetDistDFeInt: TRetDistDFeInt read FRetDistDFeInt write FRetDistDFeInt;
     property Status: TStatusACBrCTe        read FStatus;
 
   published
@@ -177,7 +175,6 @@ begin
   FConhecimentos := TConhecimentos.Create(Self, Conhecimento);
   FEventoCTe := TEventoCTe.Create;
   FInutCTe := TInutCTe.Create;
-  FRetDistDFeInt := TRetDistDFeInt.Create;
   FWebServices := TWebServices.Create(Self);
 end;
 
@@ -186,7 +183,6 @@ begin
   FConhecimentos.Free;
   FEventoCTe.Free;
   FInutCTe.Free;
-  FRetDistDFeInt.Free;
   FWebServices.Free;
 
   inherited;

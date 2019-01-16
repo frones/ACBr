@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2019
+-- Diversos --
+[*] Remoção das units que foram Generalizadas em PCNComum e os ajustes necessários.
+   Por: Italo Jurisato Junior
+
 26/12/2018
 -- ACBrCTeConhecimentos / ACBrCTeDACTeRLClass --
 [+] Incluido a propriedade NomeArqPDF que é alimentada quando se gera o PDF de

@@ -67,8 +67,8 @@ type
   TModalBPe = (moRodoviario, moAquaviario, moFerroviario);
 
   TSchemaBPe = (schErro, schBPe, schconsSitBPe, schconsStatServ, schEventoBPe,
-                schdistDFeInt, schevCancBPe, schevNaoEmbBPe,
-                schresBPe, schresEventoBPe, schprocBPe, schprocEventoBPe);
+                schdistDFeInt, schevCancBPe, schevNaoEmbBPe{,
+                schresBPe, schresEventoBPe, schprocBPe, schprocEventoBPe});
 
   TLayOutBPe = (LayBPeRecepcao, LayBPeRetRecepcao, LayBPeConsulta,
                 LayBPeStatusServico, LayBPeEvento, LayBPeEventoAN, LayDistDFeInt);

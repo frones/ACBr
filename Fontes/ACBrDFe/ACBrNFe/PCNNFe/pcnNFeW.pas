@@ -76,6 +76,9 @@ type
 
     Usar_tcDe4: Boolean;
     Versao: String;
+    ChaveNFe: string;
+    FIdCSRT: Integer;
+    FCSRT: String;
 
     procedure GerarInfNFe;
     procedure GerarIde;
@@ -144,6 +147,7 @@ type
     procedure GerarCana;
     procedure GerarforDia;
     procedure GerarDeduc;
+    procedure GerarinfRespTec;
 
     procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer;
       cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
@@ -157,6 +161,8 @@ type
     property Gerador: TGerador      read FGerador write FGerador;
     property NFe: TNFe              read FNFe     write FNFe;
     property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
+    property IdCSRT: Integer        read FIdCSRT  write FIdCSRT;
+    property CSRT: String           read FCSRT    write FCSRT;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -226,7 +232,7 @@ end;
 
 function TNFeW.GerarXml: Boolean;
 var
-  chave: String;
+//  chave: String;
   Gerar: Boolean;
   xProtNFe : String;
   xCNPJCPF : string;
@@ -241,10 +247,10 @@ begin
   if not EstaVazio(nfe.Avulsa.CNPJ) then
     xCNPJCPF := nfe.Avulsa.CNPJ;
 
-  chave := GerarChaveAcesso(nfe.ide.cUF, nfe.ide.dEmi, xCNPJCPF, nfe.ide.serie,
+  ChaveNFe := GerarChaveAcesso(nfe.ide.cUF, nfe.ide.dEmi, xCNPJCPF, nfe.ide.serie,
                             nfe.ide.nNF, StrToInt(TpEmisToStr(nfe.ide.tpEmis)),
                             nfe.ide.cNF, nfe.ide.modelo);
-  nfe.infNFe.ID := 'NFe' + chave;
+  nfe.infNFe.ID := 'NFe' + ChaveNFe;
 
   nfe.ide.cDV := ExtrairDigitoChaveAcesso(nfe.infNFe.ID);
   nfe.Ide.cNF := ExtrairCodigoChaveAcesso(nfe.infNFe.ID);
@@ -350,6 +356,9 @@ begin
   GerarExporta;
   GerarCompra;
   GerarCana;
+
+  if nfe.infNFe.Versao >= 4 then
+    GerarinfRespTec;
 end;
 
 procedure TNFeW.GerarIde;
@@ -694,6 +703,7 @@ begin
     AjustarMunicipioUF(xUF, xMun, cMun, nfe.Emit.EnderEmit.cPais, nfe.Retirada.UF, nfe.Retirada.xMun, nfe.Retirada.cMun);
     Gerador.wGrupo('retirada', 'F01');
     Gerador.wCampoCNPJCPF('F02', 'F02a', nfe.Retirada.CNPJCPF, True, False);
+    Gerador.wCampo(tcStr, 'F02b', 'xNome ', 02, 60, 0, nfe.Retirada.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, 'F03', 'xLgr   ', 02, 60, 1, nfe.Retirada.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'F04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Retirada.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'F05', 'xCpl   ', 01, 60, 0, nfe.Retirada.xCpl, DSC_XCPL);
@@ -705,6 +715,16 @@ begin
     Gerador.wCampo(tcStr, 'F09', 'UF     ', 02, 02, 1, xUF, DSC_UF);
     if not pcnAuxiliar.ValidarUF(xUF) then
       Gerador.wAlerta('F09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+
+    Gerador.wCampo(tcInt, 'F10', 'CEP   ', 08, 08, 0, nfe.Retirada.CEP, DSC_CEP);
+    Gerador.wCampo(tcInt, 'F11', 'cPais ', 02, 04, 0, nfe.Retirada.cPais, DSC_CPAIS);
+    if not ValidarCodigoPais(nfe.Retirada.cPais) = -1 then
+      Gerador.wAlerta('F11', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
+    Gerador.wCampo(tcStr, 'F12', 'xPais  ', 02, 60, 0, nfe.Retirada.xPais, DSC_XPAIS);
+    Gerador.wCampo(tcStr, 'F13', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Retirada.fone), DSC_FONE);
+    Gerador.wCampo(tcStr, 'F14', 'email  ', 01, 60, 0, nfe.Retirada.Email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, 'F15', 'IE     ', 02, 14, 0, OnlyNumber(nfe.Retirada.IE), DSC_IE);
+
     Gerador.wGrupo('/retirada');
   end;
 end;
@@ -715,6 +735,7 @@ begin
   begin
     Gerador.wGrupo('entrega', 'G01');
     Gerador.wCampoCNPJCPF('G02', 'G02a', nfe.Entrega.CNPJCPF, True, False);
+    Gerador.wCampo(tcStr, 'G02b', 'xNome ', 02, 60, 0, nfe.Entrega.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, 'G03', 'xLgr   ', 02, 60, 1, nfe.Entrega.xLgr, DSC_XLGR);
     Gerador.wCampo(tcStr, 'G04', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, nfe.Entrega.nro), DSC_NRO);
     Gerador.wCampo(tcStr, 'G05', 'xCpl   ', 01, 60, 0, nfe.Entrega.xCpl, DSC_XCPL);
@@ -726,6 +747,16 @@ begin
     Gerador.wCampo(tcStr, 'G09', 'UF     ', 02, 02, 1, nfe.Entrega.UF, DSC_UF);
     if not pcnAuxiliar.ValidarUF(nfe.Entrega.UF) then
       Gerador.wAlerta('G09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+
+    Gerador.wCampo(tcInt, 'G10', 'CEP   ', 08, 08, 0, nfe.Entrega.CEP, DSC_CEP);
+    Gerador.wCampo(tcInt, 'G11', 'cPais ', 02, 04, 0, nfe.Entrega.cPais, DSC_CPAIS);
+    if not ValidarCodigoPais(nfe.Entrega.cPais) = -1 then
+      Gerador.wAlerta('G11', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
+    Gerador.wCampo(tcStr, 'G12', 'xPais  ', 02, 60, 0, nfe.Entrega.xPais, DSC_XPAIS);
+    Gerador.wCampo(tcStr, 'G13', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Entrega.fone), DSC_FONE);
+    Gerador.wCampo(tcStr, 'G14', 'email  ', 01, 60, 0, nfe.Entrega.Email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, 'G15', 'IE     ', 02, 14, 0, OnlyNumber(nfe.Entrega.IE), DSC_IE);
+
     Gerador.wGrupo('/entrega');
   end;
 end;
@@ -1032,8 +1063,13 @@ begin
   for j := 0 to nfe.Det[i].Prod.med.Count - 1 do
   begin
     Gerador.wGrupo('med', 'K01');
+
     if NFe.infNFe.Versao >= 4 then
-      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA', 13, 13, 1, nfe.Det[i].Prod.med[j].cProdANVISA, DSC_CPRODANVISA);
+    begin
+      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA   ', 13, 013, 1, nfe.Det[i].Prod.med[j].cProdANVISA, DSC_CPRODANVISA);
+      Gerador.wCampo(tcStr, 'K01b', 'xMotivoIsencao', 01, 255, 0, nfe.Det[i].Prod.med[j].xMotivoIsencao, DSC_CPRODANVISA);
+    end;
+
     if NFe.infNFe.Versao < 4 then
     begin
       Gerador.wCampo(tcStr, 'K02', 'nLote', 01, 20, 1, nfe.Det[i].Prod.med[j].nLote, DSC_NLOTE);
@@ -1041,6 +1077,7 @@ begin
       Gerador.wCampo(tcDat, 'K04', 'dFab ', 10, 10, 1, nfe.Det[i].Prod.med[j].dFab, DSC_DFAB);
       Gerador.wCampo(tcDat, 'K05', 'dVal ', 10, 10, 1, nfe.Det[i].Prod.med[j].dVal, DSC_DVAL);
     end;
+
     Gerador.wCampo(tcDe2, 'K06', 'vPMC ', 00, 15, 1, nfe.Det[i].Prod.med[j].vPMC, DSC_VPMC);
     Gerador.wGrupo('/med');
   end;
@@ -1577,6 +1614,16 @@ begin
                      // ICMSST - Repasse
                      Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRet, DSC_VBCICMSST );
                      Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRet, DSC_VICMSSTRET);
+
+                      if (nfe.Det[i].Imposto.ICMS.vBCFCPSTRet > 0) or
+                         (nfe.Det[i].Imposto.ICMS.pFCPSTRet > 0) or
+                         (nfe.Det[i].Imposto.ICMS.vFCPSTRet > 0) then
+                      begin
+                        Gerador.wCampo(tcDe2, 'N27a', 'vBCFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBCFCPSTRet, DSC_VBCFCP);
+                        Gerador.wCampo(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N27b', 'pFCPSTRet', 01, IIf(Usar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pFCPSTRet, DSC_PFCP);
+                        Gerador.wCampo(tcDe2, 'N27c', 'vFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPSTRet, DSC_VFCP);
+                      end;
+
                      Gerador.wCampo(tcDe2, 'N31', 'vBCSTDest  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTDest, DSC_VBCICMSSTDEST);
                      Gerador.wCampo(tcDe2, 'N32', 'vICMSSTDest', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTDest, DSC_VBCICMSSTDEST);
                   end;
@@ -2590,6 +2637,26 @@ begin
 
   if nfe.pag.Count > 100 then
     Gerador.wAlerta('YA01', 'pag', '', ERR_MSG_MAIOR_MAXIMO + '100');
+end;
+
+procedure TNFeW.GerarinfRespTec;
+begin
+  if (nfe.infRespTec.CNPJ <> '') then
+  begin
+    Gerador.wGrupo('infRespTec', '#081');
+    Gerador.wCampoCNPJ('#82', nfe.infRespTec.CNPJ, CODIGO_BRASIL, True);
+    Gerador.wCampo(tcStr, '#083', 'xContato', 02, 60, 1, nfe.infRespTec.xContato, DSC_XCONTATO);
+    Gerador.wCampo(tcStr, '#084', 'email   ', 06, 60, 1, nfe.infRespTec.email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, nfe.infRespTec.fone, DSC_FONE);
+
+    if (idCSRT <> 0) and (CSRT <> '') then
+    begin
+      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 02, 02, 1, idCSRT, DSC_IDCSRT);
+      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, ChaveNFe), DSC_HASHCSRT);
+    end;
+
+    Gerador.wGrupo('/infRespTec');
+  end;
 end;
 
 // Outras //////////////////////////////////////////////////////////////////////

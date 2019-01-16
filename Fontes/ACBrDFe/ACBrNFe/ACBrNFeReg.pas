@@ -107,6 +107,8 @@ begin
   RegisterPropertyEditor(TypeInfo(String), TArquivosConfNFe, 'PathInu',
      TACBrDirProperty);
 
+  RegisterPropertyEditor(TypeInfo(TRespTecConf), TConfiguracoes, 'RespTec',
+     TClassProperty);
 end;
 
 {$ifdef FPC}

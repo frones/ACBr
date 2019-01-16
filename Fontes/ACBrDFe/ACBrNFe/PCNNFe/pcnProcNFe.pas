@@ -71,6 +71,9 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FVersao: String;
+    FcMsg: Integer;
+    FxMsg: String;
+
     // Usando na Montagem do nfeProc
     FXML_NFe: String;
     FXML_prot: String;
@@ -94,6 +97,9 @@ type
     property cStat: Integer             read FcStat              write FcStat;
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Versao: String             read FVersao             write FVersao;
+    property cMsg: Integer              read FcMsg               write FcMsg;
+    property xMsg: String               read FxMsg               write FxMsg;
+
     // Usando na Montagem do nfeProc
     property XML_NFe: String            read FXML_NFe            write FXML_NFe;
     property XML_prot: String           read FXML_prot           write FXML_prot;
@@ -243,6 +249,8 @@ begin
                         PreencherTAG('digVal', XMLinfProt.text) +
                         PreencherTAG('cStat', XMLinfProt.text) +
                         PreencherTAG('xMotivo', XMLinfProt.text) +
+                        PreencherTAG('cMsg', XMLinfProt.text) +
+                        PreencherTAG('xMsg', XMLinfProt.text) +
                        '</infProt>' +
                       '</protNFe>';
         end;
@@ -270,6 +278,8 @@ begin
                       '<digVal>' + FdigVal + '</digVal>' +
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                       '<xMotivo>' + FxMotivo + '</xMotivo>' +
+                      '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
+                      '<xMMsg>' + FxMsg + '</xMsg>' +
                      '</infProt>' +
                     '</protNFe>';
       end;
@@ -315,6 +325,9 @@ begin
     cStat := TprocNFe(Source).cStat;
     xMotivo := TprocNFe(Source).xMotivo;
     Versao := TprocNFe(Source).Versao;
+    cMsg := TprocNFe(Source).cMsg;
+    xMsg := TprocNFe(Source).xMsg;
+
     XML_NFe := TprocNFe(Source).XML_NFe;
     XML_prot := TprocNFe(Source).XML_prot;
   end

@@ -53,8 +53,7 @@ unit pcnConversao;
 interface
 
 uses
-  SysUtils,
-  Classes;
+  SysUtils, StrUtils, Classes;
 
 type
 
@@ -171,6 +170,14 @@ type
   TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
 
   TIndicador = (tiSim, tiNao);
+
+  TpcnTipoNFe = (tnEntrada, tnSaida);
+
+  TSchemaDFe = (schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
+                schresCTe, schprocCTe, schprocCTeOS, schprocEventoCTe,
+                schresMDFe, schprocMDFe, schprocEventoMDFe,
+                schresBPe, schprocBPe, schprocEventoBPe);
+
 const
   TpcnTpEventoString : array[0..53] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
@@ -362,6 +369,11 @@ function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 
 function TIndicadorToStr(const t: TIndicador): string;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+
+function tpNFToStr(const t: TpcnTipoNFe): String;
+function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
+
+function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;
 
 implementation
 
@@ -1529,6 +1541,33 @@ end;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 begin
   Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function tpNFToStr(const t: TpcnTipoNFe): String;
+begin
+  Result := EnumeradoToStr(t, ['0', '1'], [tnEntrada, tnSaida]);
+end;
+
+function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1'], [tnEntrada, tnSaida]);
+end;
+
+function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;
+var
+  P: Integer;
+  SchemaStr: String;
+begin
+  P := pos('_',s);
+  if p > 0 then
+    SchemaStr := copy(s,1,P-1)
+  else
+    SchemaStr := s;
+
+  if LeftStr(SchemaStr,3) <> 'sch' then
+    SchemaStr := 'sch' + SchemaStr;
+
+  Result := TSchemaDFe( GetEnumValue(TypeInfo(TSchemaDFe), SchemaStr ) );
 end;
 
 end.

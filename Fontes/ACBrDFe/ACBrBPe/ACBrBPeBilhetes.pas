@@ -968,24 +968,29 @@ begin
         with pag.Add do
         begin
           tPag  := StrToFormaPagamento(OK, sFim);
+          xPag  := INIRec.ReadString(sSecao, 'xPag', '');
           vPag  := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);
 
           tpIntegra := StrTotpIntegra(OK,INIRec.ReadString(sSecao, 'tpIntegra', ''));
           CNPJ      := INIRec.ReadString(sSecao, 'CNPJ', '');
           tBand     := StrToBandeiraCartao(OK, INIRec.ReadString(sSecao, 'tBand', '99'));
+          xBand     := INIRec.ReadString(sSecao, 'xBand', '');
           cAut      := INIRec.ReadString(sSecao, 'cAut', '');
+          nsuTrans  := INIRec.ReadString(sSecao, 'nsuTrans', '');
+          nsuHost   := INIRec.ReadString(sSecao, 'nsuHost', '');
+          nParcelas := INIRec.ReadInteger(sSecao, 'nParcelas', 1);
         end;
 
         Inc(I);
       end;
 
       //
-      // Seção [auxXMLxxx] Autorizados para Download do XML do BPe
+      // Seção [auxXMLxx] Autorizados para Download do XML do BPe 01-10
       //
       I := 1 ;
       while true do
       begin
-        sSecao := 'autXML'+IntToStrZero(I,3) ;
+        sSecao := 'autXML' + IntToStrZero(I,2) ;
         sFim   := OnlyNumber(INIRec.ReadString(sSecao, 'CNPJCPF', 'FIM'));
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;

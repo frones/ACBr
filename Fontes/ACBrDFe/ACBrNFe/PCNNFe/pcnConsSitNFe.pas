@@ -62,7 +62,7 @@ uses
 
 type
 
-  TConsSitNFe = class(TPersistent)
+  TConsSitNFe = class
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
@@ -82,7 +82,7 @@ type
 
 implementation
 
-Uses
+uses
   ACBrUtil;
 
 { TConsSitNFe }
@@ -117,5 +117,6 @@ begin
   Result := (Gerador.ListaDeAlertas.Count = 0);
 
 end;
+
 end.
 

@@ -7879,7 +7879,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       ParentFont = False
     end
     object RLBand6: TRLBand
-      AlignWithMargins = True
       Left = 15
       Top = 516
       Width = 768

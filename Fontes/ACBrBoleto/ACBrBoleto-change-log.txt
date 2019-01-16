@@ -61,6 +61,9 @@ ver: 0.1.0
 [-] Correção para iniciar o Result da função CodMotivoRejeicaoToDescricao
 https://www.projetoacbr.com.br/forum/topic/48742-corre%C3%A7%C3%A3o-na-identifica%C3%A7%C3%A3o-do-motivo-da-rejei%C3%A7%C3%A3o-para-banco-do-brasil/
 
+-- ACBrBancoBrasil --
+[*] Completado lista de Especies do documento para remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/48598-remessa-bb-cnab240-seg-pqrsty/
 
 15/01/2019 -- ACBrBancoBrasil
 [-] Ajuste na geração da remessa CNAB240 para montar corretamente o segmento S conforme a propriedade Titulo.CarteiraEnvio.

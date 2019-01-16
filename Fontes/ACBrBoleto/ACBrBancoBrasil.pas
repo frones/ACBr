@@ -481,20 +481,53 @@ begin
      end;
 
      { Pegando o tipo de EspecieDoc }
-     if EspecieDoc = 'DM' then
+     if EspecieDoc = 'CH' then
+       EspecieDoc   := '01'
+     else if EspecieDoc = 'DM' then
        EspecieDoc   := '02'
-     else if EspecieDoc = 'RC' then
-       EspecieDoc   := '17'
+     else if EspecieDoc = 'DMI' then
+       EspecieDoc   := '03'
+     else if EspecieDoc = 'DS' then
+       EspecieDoc   := '04'
+     else if EspecieDoc = 'DSI' then
+       EspecieDoc   := '05'
+     else if EspecieDoc = 'DR' then
+       EspecieDoc   := '06'
+     else if EspecieDoc = 'LC' then
+       EspecieDoc   := '07'
+     else if EspecieDoc = 'NCC' then
+       EspecieDoc   := '08'
+     else if EspecieDoc = 'NCE' then
+            EspecieDoc   := '09'
+     else if EspecieDoc = 'NCI' then
+       EspecieDoc   := '10'
+     else if EspecieDoc = 'NCR' then
+       EspecieDoc   := '11'
      else if EspecieDoc = 'NP' then
        EspecieDoc   := '12'
+     else if EspecieDoc = 'NPR' then
+       EspecieDoc   := '13'
+     else if EspecieDoc = 'TM' then
+       EspecieDoc   := '14'
+     else if EspecieDoc = 'TS' then
+       EspecieDoc   := '15'
      else if EspecieDoc = 'NS' then
        EspecieDoc   := '16'
+     else if EspecieDoc = 'RC' then
+       EspecieDoc   := '17'
+     else if EspecieDoc = 'FAT' then
+       EspecieDoc   := '18'
      else if EspecieDoc = 'ND' then
        EspecieDoc   := '19'
+     else if EspecieDoc = 'AP' then
+       EspecieDoc   := '20'
+     else if EspecieDoc = 'ME' then
+       EspecieDoc   := '21'
+     else if EspecieDoc = 'PC' then
+       EspecieDoc   := '22'
      else if EspecieDoc = 'DS' then
        EspecieDoc   := '04';
-//     else
-//       EspecieDoc := EspecieDoc;
+
 
      { Pegando o Aceite do Titulo }
      case Aceite of

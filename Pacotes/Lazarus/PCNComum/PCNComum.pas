@@ -7,7 +7,9 @@ unit PCNComum;
 interface
 
 uses
-  pcnAuxiliar, pcnGerador, pcnLeitor, pcnSignature, pcnConsts, pcnConversao;
+  pcnAuxiliar, pcnGerador, pcnLeitor, pcnSignature, pcnConsts, pcnConversao,
+  pcnConsCad, pcnRetConsCad, pcnConsStatServ, pcnRetConsStatServ,
+  pcnDistDFeInt, pcnRetDistDFeInt;
 
 implementation
 

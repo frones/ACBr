@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)"/>
     <Version Minor="1"/>
-    <Files Count="6">
+    <Files Count="12">
       <Item1>
         <Filename Value="..\..\..\Fontes\PCNComum\pcnAuxiliar.pas"/>
         <UnitName Value="pcnAuxiliar"/>
@@ -45,6 +45,30 @@
         <Filename Value="..\..\..\Fontes\PCNComum\pcnConversao.pas"/>
         <UnitName Value="pcnConversao"/>
       </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConsCad.pas"/>
+        <UnitName Value="pcnConsCad"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnRetConsCad.pas"/>
+        <UnitName Value="pcnRetConsCad"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConsStatServ.pas"/>
+        <UnitName Value="pcnConsStatServ"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnRetConsStatServ.pas"/>
+        <UnitName Value="pcnRetConsStatServ"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnDistDFeInt.pas"/>
+        <UnitName Value="pcnDistDFeInt"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnRetDistDFeInt.pas"/>
+        <UnitName Value="pcnRetDistDFeInt"/>
+      </Item12>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

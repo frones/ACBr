@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="33">
+    <Files Count="27">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe.pas"/>
         <UnitName Value="ACBrNFe"/>
@@ -51,109 +51,85 @@
         <UnitName Value="pcnAdmCSCNFCe"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsCad.pas"/>
-        <UnitName Value="pcnConsCad"/>
-      </Item8>
-      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsReciNFe.pas"/>
         <UnitName Value="pcnConsReciNFe"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsSitNFe.pas"/>
         <UnitName Value="pcnConsSitNFe"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsStatServ.pas"/>
-        <UnitName Value="pcnConsStatServ"/>
-      </Item11>
-      <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnDistDFeInt.pas"/>
-        <UnitName Value="pcnDistDFeInt"/>
-      </Item12>
-      <Item13>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnEnvEventoNFe.pas"/>
         <UnitName Value="pcnEnvEventoNFe"/>
-      </Item13>
-      <Item14>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnEventoNFe.pas"/>
         <UnitName Value="pcnEventoNFe"/>
-      </Item14>
-      <Item15>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnInutNFe.pas"/>
         <UnitName Value="pcnInutNFe"/>
-      </Item15>
-      <Item16>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnLayoutTXT.pas"/>
         <UnitName Value="pcnLayoutTXT"/>
-      </Item16>
-      <Item17>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFe.pas"/>
         <UnitName Value="pcnNFe"/>
-      </Item17>
-      <Item18>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeR.pas"/>
         <UnitName Value="pcnNFeR"/>
-      </Item18>
-      <Item19>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeRTXT.pas"/>
         <UnitName Value="pcnNFeRTXT"/>
-      </Item19>
-      <Item20>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeW.pas"/>
         <UnitName Value="pcnNFeW"/>
-      </Item20>
-      <Item21>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnProcNFe.pas"/>
         <UnitName Value="pcnProcNFe"/>
-      </Item21>
-      <Item22>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetAdmCSCNFCe.pas"/>
         <UnitName Value="pcnRetAdmCSCNFCe"/>
-      </Item22>
-      <Item23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsCad.pas"/>
-        <UnitName Value="pcnRetConsCad"/>
-      </Item23>
-      <Item24>
+      </Item19>
+      <Item20>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsReciNFe.pas"/>
         <UnitName Value="pcnRetConsReciNFe"/>
-      </Item24>
-      <Item25>
+      </Item20>
+      <Item21>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsSitNFe.pas"/>
         <UnitName Value="pcnRetConsSitNFe"/>
-      </Item25>
-      <Item26>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsStatServ.pas"/>
-        <UnitName Value="pcnRetConsStatServ"/>
-      </Item26>
-      <Item27>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetDistDFeInt.pas"/>
-        <UnitName Value="pcnRetDistDFeInt"/>
-      </Item27>
-      <Item28>
+      </Item21>
+      <Item22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvEventoNFe.pas"/>
         <UnitName Value="pcnRetEnvEventoNFe"/>
-      </Item28>
-      <Item29>
+      </Item22>
+      <Item23>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvNFe.pas"/>
         <UnitName Value="pcnRetEnvNFe"/>
-      </Item29>
-      <Item30>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetInutNFe.pas"/>
         <UnitName Value="pcnRetInutNFe"/>
-      </Item30>
-      <Item31>
+      </Item24>
+      <Item25>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConversaoNFe.pas"/>
         <UnitName Value="pcnConversaoNFe"/>
-      </Item31>
-      <Item32>
+      </Item25>
+      <Item26>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeConsts.pas"/>
         <UnitName Value="pcnNFeConsts"/>
-      </Item32>
-      <Item33>
+      </Item26>
+      <Item27>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrDFeDANFeReport.pas"/>
         <UnitName Value="ACBrDFeDANFeReport"/>
-      </Item33>
+      </Item27>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

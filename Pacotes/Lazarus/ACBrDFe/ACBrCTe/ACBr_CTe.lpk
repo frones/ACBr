@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="20">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeConhecimentos.pas"/>
         <UnitName Value="ACBrCTeConhecimentos"/>
@@ -46,69 +46,57 @@
         <UnitName Value="ACBrCTeWebServices"/>
       </Item7>
       <Item8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsCad.pas"/>
-        <UnitName Value="pcteConsCad"/>
-      </Item8>
-      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsReciCTe.pas"/>
         <UnitName Value="pcteConsReciCTe"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas"/>
         <UnitName Value="pcteConsSitCTe"/>
-      </Item10>
-      <Item11>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsStatServ.pas"/>
-        <UnitName Value="pcteConsStatServ"/>
-      </Item11>
-      <Item12>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas"/>
         <UnitName Value="pcteCTe"/>
-      </Item12>
-      <Item13>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeR.pas"/>
         <UnitName Value="pcteCTeR"/>
-      </Item13>
-      <Item14>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTeW.pas"/>
         <UnitName Value="pcteCTeW"/>
-      </Item14>
-      <Item15>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEnvEventoCTe.pas"/>
         <UnitName Value="pcteEnvEventoCTe"/>
-      </Item15>
-      <Item16>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteEventoCTe.pas"/>
         <UnitName Value="pcteEventoCTe"/>
-      </Item16>
-      <Item17>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteInutCTe.pas"/>
         <UnitName Value="pcteInutCTe"/>
-      </Item17>
-      <Item18>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas"/>
         <UnitName Value="pcteLayoutTXT"/>
-      </Item18>
-      <Item19>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas"/>
         <UnitName Value="pcteModeloCTe"/>
-      </Item19>
-      <Item20>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas"/>
         <UnitName Value="pcteProcCTe"/>
-      </Item20>
-      <Item21>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsCad.pas"/>
-        <UnitName Value="pcteRetConsCad"/>
-      </Item21>
-      <Item22>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas"/>
         <UnitName Value="ACBrCTeDACTEClass"/>
-      </Item22>
-      <Item23>
+      </Item19>
+      <Item20>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas"/>
         <UnitName Value="pcteConsts"/>
-      </Item23>
+      </Item20>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

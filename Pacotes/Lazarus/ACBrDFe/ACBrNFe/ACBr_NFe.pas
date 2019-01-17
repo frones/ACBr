@@ -9,11 +9,11 @@ interface
 
 uses
   ACBrNFe, ACBrNFeReg, ACBrNFeNotasFiscais, ACBrNFeConfiguracoes, 
-  ACBrNFeWebServices, ACBrNFeDANFEClass, pcnAdmCSCNFCe, pcnConsCad, 
-  pcnConsReciNFe, pcnConsSitNFe, pcnConsStatServ, pcnDistDFeInt, 
+  ACBrNFeWebServices, ACBrNFeDANFEClass, pcnAdmCSCNFCe, 
+  pcnConsReciNFe, pcnConsSitNFe,  
   pcnEnvEventoNFe, pcnEventoNFe, pcnInutNFe, pcnLayoutTXT, pcnNFe, pcnNFeR, 
-  pcnNFeRTXT, pcnNFeW, pcnProcNFe, pcnRetAdmCSCNFCe, pcnRetConsCad, 
-  pcnRetConsReciNFe, pcnRetConsSitNFe, pcnRetConsStatServ, pcnRetDistDFeInt, 
+  pcnNFeRTXT, pcnNFeW, pcnProcNFe, pcnRetAdmCSCNFCe, 
+  pcnRetConsReciNFe, pcnRetConsSitNFe, 
   pcnRetEnvEventoNFe, pcnRetEnvNFe, pcnRetInutNFe, pcnConversaoNFe, 
   pcnNFeConsts, ACBrDFeDANFeReport, 
   LazarusPackageIntf;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="22">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPe.pas"/>
         <UnitName Value="pcnBPe"/>
@@ -33,78 +33,62 @@
         <UnitName Value="pcnConsSitBPe"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsStatServBPe.pas"/>
-        <UnitName Value="pcnConsStatServBPe"/>
-      </Item5>
-      <Item6>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConversaoBPe.pas"/>
         <UnitName Value="pcnConversaoBPe"/>
-      </Item6>
-      <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnDistDFeIntBPe.pas"/>
-        <UnitName Value="pcnDistDFeIntBPe"/>
-      </Item7>
-      <Item8>
+      </Item5>
+      <Item6>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEnvEventoBPe.pas"/>
         <UnitName Value="pcnEnvEventoBPe"/>
-      </Item8>
-      <Item9>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEventoBPe.pas"/>
         <UnitName Value="pcnEventoBPe"/>
-      </Item9>
-      <Item10>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnProcBPe.pas"/>
         <UnitName Value="pcnProcBPe"/>
-      </Item10>
-      <Item11>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas"/>
         <UnitName Value="pcnRetConsSitBPe"/>
-      </Item11>
-      <Item12>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsStatServBPe.pas"/>
-        <UnitName Value="pcnRetConsStatServBPe"/>
-      </Item12>
-      <Item13>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetDistDFeIntBPe.pas"/>
-        <UnitName Value="pcnRetDistDFeIntBPe"/>
-      </Item13>
-      <Item14>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvBPe.pas"/>
         <UnitName Value="pcnRetEnvBPe"/>
-      </Item14>
-      <Item15>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas"/>
         <UnitName Value="pcnRetEnvEventoBPe"/>
-      </Item15>
-      <Item16>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas"/>
         <UnitName Value="ACBrBPe"/>
-      </Item16>
-      <Item17>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeBilhetes.pas"/>
         <UnitName Value="ACBrBPeBilhetes"/>
-      </Item17>
-      <Item18>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeConfiguracoes.pas"/>
         <UnitName Value="ACBrBPeConfiguracoes"/>
-      </Item18>
-      <Item19>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrBPeReg"/>
-      </Item19>
-      <Item20>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas"/>
         <UnitName Value="ACBrBPeWebServices"/>
-      </Item20>
-      <Item21>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas"/>
         <UnitName Value="ACBrBPeDABPEClass"/>
-      </Item21>
-      <Item22>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeConsts.pas"/>
         <UnitName Value="pcnBPeConsts"/>
-      </Item22>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

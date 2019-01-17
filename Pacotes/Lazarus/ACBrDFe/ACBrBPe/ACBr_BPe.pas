@@ -7,10 +7,8 @@ unit ACBr_BPe;
 interface
 
 uses
-  pcnBPe, pcnBPeR, pcnBPeW, pcnConsSitBPe, pcnConsStatServBPe, 
-  pcnConversaoBPe, pcnDistDFeIntBPe, pcnEnvEventoBPe, pcnEventoBPe, 
-  pcnProcBPe, pcnRetConsSitBPe, pcnRetConsStatServBPe, pcnRetDistDFeIntBPe, 
-  pcnRetEnvBPe, pcnRetEnvEventoBPe, ACBrBPe, ACBrBPeBilhetes, 
+  pcnBPe, pcnBPeR, pcnBPeW, pcnConsSitBPe, pcnConversaoBPe, pcnEnvEventoBPe, pcnEventoBPe, 
+  pcnProcBPe, pcnRetConsSitBPe, pcnRetEnvBPe, pcnRetEnvEventoBPe, ACBrBPe, ACBrBPeBilhetes, 
   ACBrBPeConfiguracoes, ACBrBPeReg, ACBrBPeWebServices, ACBrBPeDABPEClass, 
   pcnBPeConsts, LazarusPackageIntf;
 

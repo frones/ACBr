@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2019
+-- pcnConversao --
+[+] Inclusão da função SchemaDFeToStr.
+   Por: Italo Jurisato Junior
+
 16/01/2019
 -- Diversos --
 [*] Inclusão das units que foram Generalizadas em PCNComum e os ajustes necessários.

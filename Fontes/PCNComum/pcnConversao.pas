@@ -373,6 +373,7 @@ function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 function tpNFToStr(const t: TpcnTipoNFe): String;
 function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 
+function SchemaDFeToStr(const t: TSchemaDFe): String;
 function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;
 
 implementation
@@ -1551,6 +1552,12 @@ end;
 function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 begin
   Result := StrToEnumerado(ok, s, ['0', '1'], [tnEntrada, tnSaida]);
+end;
+
+function SchemaDFeToStr(const t: TSchemaDFe): String;
+begin
+  Result := GetEnumName(TypeInfo(TSchemaDFe), Integer( t ) );
+  Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
 function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;

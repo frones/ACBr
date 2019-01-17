@@ -1101,10 +1101,10 @@ begin
   Resp := TDistribuicaoDFeItemResposta.Create(
     'ResNFe' + Trim(IntToStrZero(TagID, 3)), resINI);
   try
-    with fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resNFe do
+    with fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
     begin
       Resp.NSU := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chNFe := chNFe;
+      Resp.chNFe := chDFe;
       Resp.CNPJCPF := CNPJCPF;
       Resp.xNome := xNome;
       Resp.IE := IE;
@@ -1113,11 +1113,11 @@ begin
       Resp.vNF := vNF;
       Resp.digVal := digVal;
       Resp.dhRecbto := dhRecbto;
-      Resp.cSitNFe := SituacaoDFeToStr(cSitNFe);
+      Resp.cSitNFe := SituacaoDFeToStr(cSitDFe);
       Resp.nProt := nProt;
       Resp.XML := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrNFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1136,7 +1136,7 @@ begin
     with fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resEvento do
     begin
       Resp.NSU := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chNFe := chNFe;
+      Resp.chNFe := chDFe;
       Resp.CNPJCPF := CNPJCPF;
       Resp.dhEvento := dhEvento;
       Resp.tpEvento := TpEventoToStr(tpEvento);
@@ -1147,7 +1147,7 @@ begin
       Resp.nProt := nProt;
       Resp.XML := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrNFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1166,7 +1166,7 @@ begin
     with fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
     begin
       Resp.NSU := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chNFe := chNFe;
+      Resp.chNFe := chDFe;
       Resp.cOrgao := cOrgao;
       Resp.CNPJ := CNPJ;
       Resp.Id := Id;
@@ -1193,7 +1193,7 @@ begin
 
       Resp.XML := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrNFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1215,7 +1215,7 @@ begin
       Resp.VerAplic := VerAplic;
       Resp.tpAmb := TpAmbToStr(tpAmb);
       Resp.cOrgao := cOrgao;
-      Resp.chNFe := chNFe;
+      Resp.chNFe := chDFe;
       Resp.CStat := cStat;
       Resp.CNPJDest := CNPJDest;
       Resp.cOrgaoAutor := cOrgaoAutor;
@@ -1229,7 +1229,7 @@ begin
 
       Resp.XML := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrNFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -3122,7 +3122,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resNFe.chNFe) <> '') then
+      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResNFe(I,J);
         inc(J);
@@ -3130,7 +3130,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chNFe) <> '') then
+      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResEve(I,J);
         inc(J);
@@ -3185,7 +3185,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resNFe.chNFe) <> '') then
+      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResNFe(I,J);
         inc(J);
@@ -3193,7 +3193,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chNFe) <> '') then
+      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResEve(I,J);
         inc(J);
@@ -3248,7 +3248,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resNFe.chNFe) <> '') then
+      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResNFe(I,J);
         inc(J);
@@ -3256,7 +3256,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chNFe) <> '') then
+      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResEve(I,J);
         inc(J);
@@ -3845,7 +3845,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resNFe.chNFe) <> '') then
+      if ( Trim(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResNFe(I,J);
         inc(J);
@@ -3853,7 +3853,7 @@ begin
 
     J := 1;
     for I := 0 to ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chNFe) <> '') then
+      if ( Trim(AcbrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
       begin
         RespostaItensDistribuicaoDFeResEve(I,J);
         inc(J);

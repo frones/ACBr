@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2019
+[*] ACBrMonitor1, DoACBrNFeUnit, DoACBrCTeUnit
+Ajustes nas classes do Monitor referente Refactory realizado nas classes de unificação do DFe
+
 09/01/2019
 [*] ACBrMonitor1
 Ajustes na propriedade da NFe "Exibir Inf Adic. Produto" na impressão.

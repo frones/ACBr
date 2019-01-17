@@ -1023,10 +1023,10 @@ begin
   Resp := TDistribuicaoDFeItemResposta.Create(
     'ResCTe' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
   try
-    with fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resCTe do
+    with fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
     begin
       Resp.NSU := fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chCTe := chCTe;
+      Resp.chCTe := chDFe;
       Resp.CNPJCPF := CNPJCPF;
       Resp.xNome := xNome;
       Resp.IE := IE;
@@ -1034,11 +1034,11 @@ begin
       Resp.vNF := vNF;
       Resp.digVal := digVal;
       Resp.dhRecbto := dhRecbto;
-      Resp.cSitCTe := SituacaoDFeToStr(cSitCTe);
+      Resp.cSitCTe := SituacaoDFeToStr(cSitDFe);
       Resp.nProt := nProt;
       Resp.XML := fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrCTe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaCTeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1090,7 +1090,7 @@ begin
     with fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
     begin
       Resp.NSU := fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chCTe := chCTe;
+      Resp.chCTe := chDFe;
       Resp.cOrgao := cOrgao;
       Resp.CNPJ := CNPJ;
       Resp.Id := Id;
@@ -1116,7 +1116,7 @@ begin
 
       Resp.XML := fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrCTe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaCTeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -1138,7 +1138,7 @@ begin
       Resp.VerAplic := VerAplic;
       Resp.tpAmb := TpAmbToStr(tpAmb);
       Resp.cOrgao := cOrgao;
-      Resp.chCTe := chCTe;
+      Resp.chCTe := chDFe;
       Resp.CStat := cStat;
       Resp.CNPJDest := CNPJDest;
       Resp.cOrgaoAutor := cOrgaoAutor;
@@ -1152,7 +1152,7 @@ begin
 
       Resp.XML := fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := fACBrCTe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaCTeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(fACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;

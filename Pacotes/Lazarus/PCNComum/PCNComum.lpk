@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Projeto Cooperar - (http://br.groups.yahoo.com/group/projeto_cooperar_nfe/)"/>
     <Version Minor="1"/>
-    <Files Count="12">
+    <Files Count="14">
       <Item1>
         <Filename Value="..\..\..\Fontes\PCNComum\pcnAuxiliar.pas"/>
         <UnitName Value="pcnAuxiliar"/>

@@ -330,7 +330,7 @@ begin
     (*F08*)NFe.Retirada.xMun         := Leitor.rCampo(tcStr, 'xMun');
     (*F09*)NFe.Retirada.UF           := Leitor.rCampo(tcStr, 'UF');
     (*F10*)NFe.Retirada.CEP          := Leitor.rCampo(tcInt, 'CEP');
-    (*F11*)NFe.Retirada.cPais        := Leitor.rCampo(tcStr, 'cPais');
+    (*F11*)NFe.Retirada.cPais        := Leitor.rCampo(tcInt, 'cPais');
     (*F12*)NFe.Retirada.xPais        := Leitor.rCampo(tcStr, 'xPais');
     (*F13*)NFe.Retirada.fone         := Leitor.rCampo(tcStr, 'fone');
     (*F14*)NFe.Retirada.Email        := Leitor.rCampo(tcStr, 'email');
@@ -350,7 +350,7 @@ begin
     (*G08*)NFe.Entrega.xMun         := Leitor.rCampo(tcStr, 'xMun');
     (*G09*)NFe.Entrega.UF           := Leitor.rCampo(tcStr, 'UF');
     (*G10*)NFe.Entrega.CEP          := Leitor.rCampo(tcInt, 'CEP');
-    (*G11*)NFe.Entrega.cPais        := Leitor.rCampo(tcStr, 'cPais');
+    (*G11*)NFe.Entrega.cPais        := Leitor.rCampo(tcInt, 'cPais');
     (*G12*)NFe.Entrega.xPais        := Leitor.rCampo(tcStr, 'xPais');
     (*G13*)NFe.Entrega.fone         := Leitor.rCampo(tcStr, 'fone');
     (*G14*)NFe.Entrega.Email        := Leitor.rCampo(tcStr, 'email');

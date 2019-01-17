@@ -1909,11 +1909,13 @@ object Form1: TForm1
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     Configuracoes.WebServices.TimeOut = 20000
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
     Left = 322
     Top = 343
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
@@ -1940,6 +1942,7 @@ object Form1: TForm1
     Top = 343
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.700000000000000000
     MargemSuperior = 0.700000000000000000
     MargemEsquerda = 0.700000000000000000
@@ -1956,6 +1959,7 @@ object Form1: TForm1
     Top = 343
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000

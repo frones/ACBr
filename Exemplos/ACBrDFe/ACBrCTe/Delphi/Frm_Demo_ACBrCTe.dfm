@@ -271,8 +271,6 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         object TabSheet2: TTabSheet
           Caption = 'Geral'
           ImageIndex = 1
-          ExplicitLeft = 6
-          ExplicitTop = 31
           object GroupBox3: TGroupBox
             Left = 0
             Top = 4
@@ -1192,7 +1190,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 474
+    Left = 578
     Top = 304
   end
   object ACBrCTe1: TACBrCTe
@@ -1201,10 +1199,9 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.SSLCryptLib = cryOpenSSL
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
-    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
+    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ModeloDF = moCTeOS
-    Configuracoes.Geral.VersaoDF = ve300
     Configuracoes.Arquivos.PathSalvar = 'C:\ZettaBrasil\DeltaCTe\XMLRet\'
     Configuracoes.Arquivos.PathSchemas = 'D:\Componentes\DelphiXE3\ACBR\Exemplos\ACBrDFe\Schemas\CTe\'
     Configuracoes.Arquivos.OrdenacaoPath = <>
@@ -1215,6 +1212,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
     Left = 330
     Top = 302
@@ -1227,27 +1225,30 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 403
-    Top = 302
+    Left = 504
+    Top = 300
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
-    ACBrCTE = ACBrCTe1
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDACTE = tiSemGeracao
-    TamanhoPapel = tpA4
-    NumCopias = 1
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    CTeCancelada = False
-    ExibirResumoCanhoto = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrCTE = ACBrCTe1
+    ImprimirHoraSaida = False
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    Cancelada = False
+    ExibeResumoCanhoto = False
     EPECEnviado = False
-    ImprimirDescPorc = False
+    ImprimeDescPorc = False
     PrintDialog = True
-    Left = 383
-    Top = 378
+    Left = 410
+    Top = 302
   end
 end

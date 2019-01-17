@@ -40,6 +40,8 @@ contains
   pcnRetConsStatServ in '..\..\..\Fontes\PCNComum\pcnRetConsStatServ.pas',
   pcnDistDFeInt in '..\..\..\Fontes\PCNComum\pcnDistDFeInt.pas',
   pcnRetDistDFeInt in '..\..\..\Fontes\PCNComum\pcnRetDistDFeInt.pas',
+  pcnConsReciDFe in '..\..\..\Fontes\PCNComum\pcnConsReciDFe.pas',
+  pcnRetConsReciDFe in '..\..\..\Fontes\PCNComum\pcnRetConsReciDFe.pas',
   pcnSignature in '..\..\..\Fontes\PCNComum\pcnSignature.pas',
   pcnGerador in '..\..\..\Fontes\PCNComum\pcnGerador.pas',
   pcnLeitor in '..\..\..\Fontes\PCNComum\pcnLeitor.pas';

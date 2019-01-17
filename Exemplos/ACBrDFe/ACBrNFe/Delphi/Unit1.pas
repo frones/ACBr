@@ -4,7 +4,8 @@ unit Unit1;
 
 interface
 
-uses IniFiles, ShellAPI, pcnRetConsReciNFe,
+uses
+  IniFiles, ShellAPI, pcnRetConsReciDFe,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,

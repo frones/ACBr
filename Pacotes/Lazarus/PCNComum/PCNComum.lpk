@@ -69,6 +69,14 @@
         <Filename Value="..\..\..\Fontes\PCNComum\pcnRetDistDFeInt.pas"/>
         <UnitName Value="pcnRetDistDFeInt"/>
       </Item12>
+      <Item13>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnConsReciDFe.pas"/>
+        <UnitName Value="pcnConsReciDFe"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\Fontes\PCNComum\pcnRetConsReciDFe.pas"/>
+        <UnitName Value="pcnRetConsReciDFe"/>
+      </Item14>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

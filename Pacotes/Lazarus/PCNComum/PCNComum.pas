@@ -9,7 +9,7 @@ interface
 uses
   pcnAuxiliar, pcnGerador, pcnLeitor, pcnSignature, pcnConsts, pcnConversao,
   pcnConsCad, pcnRetConsCad, pcnConsStatServ, pcnRetConsStatServ,
-  pcnDistDFeInt, pcnRetDistDFeInt;
+  pcnDistDFeInt, pcnRetDistDFeInt, pcnConsReciDFe, pcnRetConsReciDFe;
 
 implementation
 

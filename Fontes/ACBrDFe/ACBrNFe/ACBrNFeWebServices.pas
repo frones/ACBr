@@ -44,7 +44,7 @@ uses
   Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
   blcksock, synacode,
-  pcnNFe, pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, 
+  pcnNFe, pcnRetConsReciDFe, pcnRetConsCad, pcnAuxiliar, pcnConversao,
   pcnConversaoNFe, pcnProcNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe, 
   pcnAdmCSCNFCe, pcnRetAdmCSCNFCe, pcnDistDFeInt, pcnRetDistDFeInt, pcnRetEnvNFe,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes;
@@ -188,7 +188,7 @@ type
     FxMsg: String;
     FVersaoDF: TpcnVersaoDF;
 
-    FNFeRetorno: TRetConsReciNFe;
+    FNFeRetorno: TRetConsReciDFe;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
@@ -223,7 +223,7 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
     property ChaveNFe: String read FChaveNFe write FChaveNFe;
 
-    property NFeRetorno: TRetConsReciNFe read FNFeRetorno;
+    property NFeRetorno: TRetConsReciDFe read FNFeRetorno;
   end;
 
   { TNFeRecibo }
@@ -242,7 +242,7 @@ type
     FcMsg: integer;
     FVersaoDF: TpcnVersaoDF;
 
-    FNFeRetorno: TRetConsReciNFe;
+    FNFeRetorno: TRetConsReciDFe;
   protected
     procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
@@ -268,7 +268,7 @@ type
     property cMsg: integer read FcMsg;
     property Recibo: String read FRecibo write FRecibo;
 
-    property NFeRetorno: TRetConsReciNFe read FNFeRetorno;
+    property NFeRetorno: TRetConsReciDFe read FNFeRetorno;
   end;
 
   { TNFeConsulta }
@@ -623,7 +623,7 @@ uses
   StrUtils, Math,
   ACBrUtil, ACBrCompress, ACBrNFe,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
-  pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
+  pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciDFe,
   pcnConsCad, pcnLeitor, ACBrIntegrador;
 
 { TNFeWebService }
@@ -1380,14 +1380,14 @@ begin
   end;
 
   if Assigned(FNFeRetorno) and Assigned(FNotasFiscais)
-		and Assigned(FNFeRetorno.ProtNFe) then
+		and Assigned(FNFeRetorno.ProtDFe) then
   begin
     // Limpa Dados dos retornos das notas Fiscais;
-    for i := 0 to FNFeRetorno.ProtNFe.Count - 1 do
+    for i := 0 to FNFeRetorno.ProtDFe.Count - 1 do
     begin
       for j := 0 to FNotasFiscais.Count - 1 do
       begin
-        if OnlyNumber(FNFeRetorno.ProtNFe.Items[i].chNFe) = FNotasFiscais.Items[J].NumID then
+        if OnlyNumber(FNFeRetorno.ProtDFe.Items[i].chDFe) = FNotasFiscais.Items[J].NumID then
         begin
           FNotasFiscais.Items[j].NFe.procNFe.verAplic := '';
           FNotasFiscais.Items[j].NFe.procNFe.chNFe    := '';
@@ -1404,7 +1404,7 @@ begin
   if Assigned( FNFeRetorno ) then
     FreeAndNil(FNFeRetorno);
 
-  FNFeRetorno := TRetConsReciNFe.Create;
+  FNFeRetorno := TRetConsReciDFe.Create('NFe');
 end;
 
 function TNFeRetRecepcao.Executar: Boolean;
@@ -1523,13 +1523,13 @@ end;
 
 procedure TNFeRetRecepcao.DefinirDadosMsg;
 var
-  ConsReciNFe: TConsReciNFe;
+  ConsReciNFe: TConsReciDFe;
 begin
-  ConsReciNFe := TConsReciNFe.Create;
+  ConsReciNFe := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE, 'NFe');
   try
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
-    ConsReciNFe.Versao := FPVersaoServico;
+
     AjustarOpcoes( ConsReciNFe.Gerador.Opcoes );
     ConsReciNFe.GerarXML;
 
@@ -1568,18 +1568,18 @@ function TNFeRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: integer;
   AProcNFe: TProcNFe;
-  AInfProt: TProtNFeCollection;
+  AInfProt: TProtDFeCollection;
   SalvarXML: Boolean;
   NomeXMLSalvo: String;
 begin
   Result := False;
 
-  AInfProt := FNFeRetorno.ProtNFe;
+  AInfProt := FNFeRetorno.ProtDFe;
 
   if (AInfProt.Count > 0) then
   begin
-    FPMsg := FNFeRetorno.ProtNFe.Items[0].xMotivo;
-    FxMotivo := FNFeRetorno.ProtNFe.Items[0].xMotivo;
+    FPMsg := FNFeRetorno.ProtDFe.Items[0].xMotivo;
+    FxMotivo := FNFeRetorno.ProtDFe.Items[0].xMotivo;
   end;
 
   //Setando os retornos das notas fiscais;
@@ -1587,7 +1587,7 @@ begin
   begin
     for J := 0 to FNotasFiscais.Count - 1 do
     begin
-      if OnlyNumber(AInfProt.Items[I].chNFe) = FNotasFiscais.Items[J].NumID then
+      if OnlyNumber(AInfProt.Items[I].chDFe) = FNotasFiscais.Items[J].NumID then
       begin
         if (FPConfiguracoesNFe.Geral.ValidarDigest) and
            (AInfProt.Items[I].digVal <> '') and
@@ -1601,7 +1601,7 @@ begin
         begin
           NFe.procNFe.tpAmb := AInfProt.Items[I].tpAmb;
           NFe.procNFe.verAplic := AInfProt.Items[I].verAplic;
-          NFe.procNFe.chNFe := AInfProt.Items[I].chNFe;
+          NFe.procNFe.chNFe := AInfProt.Items[I].chDFe;
           NFe.procNFe.dhRecbto := AInfProt.Items[I].dhRecbto;
           NFe.procNFe.nProt := AInfProt.Items[I].nProt;
           NFe.procNFe.digVal := AInfProt.Items[I].digVal;
@@ -1617,7 +1617,7 @@ begin
           AProcNFe := TProcNFe.Create;
           try
             AProcNFe.XML_NFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
-            AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotNFe;
+            AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotDFe;
             AProcNFe.Versao := FPVersaoServico;
             AjustarOpcoes( AProcNFe.Gerador.Opcoes );
             AProcNFe.GerarXML;
@@ -1686,7 +1686,7 @@ begin
 
   if AInfProt.Count > 0 then
   begin
-    FChaveNFe := AInfProt.Items[0].chNFe;
+    FChaveNFe := AInfProt.Items[0].chDFe;
     FProtocolo := AInfProt.Items[0].nProt;
     FcStat := AInfProt.Items[0].cStat;
   end;
@@ -1767,7 +1767,7 @@ begin
   if Assigned(FNFeRetorno) then
     FNFeRetorno.Free;
 
-  FNFeRetorno := TRetConsReciNFe.Create;
+  FNFeRetorno := TRetConsReciDFe.Create('NFe');
 end;
 
 procedure TNFeRecibo.InicializarServico;
@@ -1876,13 +1876,13 @@ end;
 
 procedure TNFeRecibo.DefinirDadosMsg;
 var
-  ConsReciNFe: TConsReciNFe;
+  ConsReciNFe: TConsReciDFe;
 begin
-  ConsReciNFe := TConsReciNFe.Create;
+  ConsReciNFe := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE, 'NFe');
   try
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
-    ConsReciNFe.Versao := FPVersaoServico;
+
     AjustarOpcoes( ConsReciNFe.Gerador.Opcoes );
     ConsReciNFe.GerarXML;
 

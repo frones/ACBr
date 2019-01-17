@@ -1216,6 +1216,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
     Left = 466
     Top = 297
@@ -1229,9 +1230,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 383
-    Top = 341
+    Top = 349
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000

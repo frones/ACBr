@@ -44,7 +44,7 @@ uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeWebService,
   pmdfeMDFe,
-  pmdfeRetConsReciMDFe, pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe,
+  pcnRetConsReciDFe, pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe,
   pmdfeProcMDFe, pmdfeEnvEventoMDFe, pmdfeRetEnvEventoMDFe,
   pmdfeRetConsSitMDFe, pmdfeRetConsMDFeNaoEnc, pmdfeRetEnvMDFe,
   pcnDistDFeInt, pcnRetDistDFeInt,
@@ -177,7 +177,7 @@ type
     FxMsg: String;
     FVersaoDF: TVersaoMDFe;
 
-    FMDFeRetorno: TRetConsReciMDFe;
+    FMDFeRetorno: TRetConsReciDFe;
 
     function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
@@ -211,7 +211,7 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
     property ChaveMDFe: String read FChaveMDFe write FChaveMDFe;
 
-    property MDFeRetorno: TRetConsReciMDFe read FMDFeRetorno;
+    property MDFeRetorno: TRetConsReciDFe read FMDFeRetorno;
   end;
 
   { TMDFeRecibo }
@@ -230,7 +230,7 @@ type
     FcMsg: Integer;
     FVersaoDF: TVersaoMDFe;
 
-    FMDFeRetorno: TRetConsReciMDFe;
+    FMDFeRetorno: TRetConsReciDFe;
   protected
     procedure InicializarServico; override;
     procedure DefinirServicoEAction; override;
@@ -255,7 +255,7 @@ type
     property cMsg: Integer read FcMsg;
     property Recibo: String read FRecibo write FRecibo;
 
-    property MDFeRetorno: TRetConsReciMDFe read FMDFeRetorno;
+    property MDFeRetorno: TRetConsReciDFe read FMDFeRetorno;
   end;
 
   { TMDFeConsulta }
@@ -491,7 +491,7 @@ uses
   StrUtils, Math,
   ACBrUtil, ACBrMDFe,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
-  pmdfeConsSitMDFe, pmdfeConsReciMDFe, pmdfeConsMDFeNaoEnc, pmdfeMDFeW;
+  pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc, pmdfeMDFeW;
 
 { TMDFeWebService }
 
@@ -904,11 +904,11 @@ begin
   if Assigned(FMDFeRetorno) and Assigned(FManifestos) then
   begin
     // Limpa Dados dos retornos dos manifestos
-    for i := 0 to FMDFeRetorno.ProtMDFe.Count - 1 do
+    for i := 0 to FMDFeRetorno.ProtDFe.Count - 1 do
     begin
       for j := 0 to FManifestos.Count - 1 do
       begin
-        if OnlyNumber(FMDFeRetorno.ProtMDFe.Items[i].chMDFe) = FManifestos.Items[J].NumID then
+        if OnlyNumber(FMDFeRetorno.ProtDFe.Items[i].chDFe) = FManifestos.Items[J].NumID then
         begin
           FManifestos.Items[j].MDFe.procMDFe.verAplic := '';
           FManifestos.Items[j].MDFe.procMDFe.chMDFe   := '';
@@ -924,7 +924,7 @@ begin
     FreeAndNil(FMDFeRetorno);
   end;
 
-  FMDFeRetorno := TRetConsReciMDFe.Create;
+  FMDFeRetorno := TRetConsReciDFe.Create('MDFe');
 end;
 
 function TMDFeRetRecepcao.GetRecibo: String;
@@ -1004,13 +1004,13 @@ end;
 
 procedure TMDFeRetRecepcao.DefinirDadosMsg;
 var
-  ConsReciMDFe: TConsReciMDFe;
+  ConsReciMDFe: TConsReciDFe;
 begin
-  ConsReciMDFe := TConsReciMDFe.Create;
+  ConsReciMDFe := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'MDFe');
   try
     ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsReciMDFe.nRec := FRecibo;
-    ConsReciMDFe.Versao := FPVersaoServico;
+//    ConsReciMDFe.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
 
@@ -1046,18 +1046,18 @@ function TMDFeRetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
   AProcMDFe: TProcMDFe;
-  AInfProt: TProtMDFeCollection;
+  AInfProt: TProtDFeCollection;
   SalvarXML: Boolean;
   NomeXMLSalvo: String;
 begin
   Result := False;
 
-  AInfProt := FMDFeRetorno.ProtMDFe;
+  AInfProt := FMDFeRetorno.ProtDFe;
 
   if (AInfProt.Count > 0) then
   begin
-    FPMsg := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
-    FxMotivo := FMDFeRetorno.ProtMDFe.Items[0].xMotivo;
+    FPMsg := FMDFeRetorno.ProtDFe.Items[0].xMotivo;
+    FxMotivo := FMDFeRetorno.ProtDFe.Items[0].xMotivo;
   end;
 
   //Setando os retornos dos Manifestos;
@@ -1065,7 +1065,7 @@ begin
   begin
     for J := 0 to FManifestos.Count - 1 do
     begin
-      if OnlyNumber(AInfProt.Items[I].chMDFe) = FManifestos.Items[J].NumID then
+      if OnlyNumber(AInfProt.Items[I].chDFe) = FManifestos.Items[J].NumID then
       begin
         if (TACBrMDFe(FPDFeOwner).Configuracoes.Geral.ValidarDigest) and
           (FManifestos.Items[J].MDFe.signature.DigestValue <>
@@ -1079,7 +1079,7 @@ begin
         begin
           MDFe.procMDFe.tpAmb := AInfProt.Items[I].tpAmb;
           MDFe.procMDFe.verAplic := AInfProt.Items[I].verAplic;
-          MDFe.procMDFe.chMDFe := AInfProt.Items[I].chMDFe;
+          MDFe.procMDFe.chMDFe := AInfProt.Items[I].chDFe;
           MDFe.procMDFe.dhRecbto := AInfProt.Items[I].dhRecbto;
           MDFe.procMDFe.nProt := AInfProt.Items[I].nProt;
           MDFe.procMDFe.digVal := AInfProt.Items[I].digVal;
@@ -1093,7 +1093,7 @@ begin
           AProcMDFe := TProcMDFe.Create;
           try
             AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(FManifestos.Items[J].XMLAssinado);
-            AProcMDFe.XML_Prot := AInfProt.Items[I].XMLprotMDFe;
+            AProcMDFe.XML_Prot := AInfProt.Items[I].XMLprotDFe;
             AProcMDFe.Versao := FPVersaoServico;
             AProcMDFe.GerarXML;
 
@@ -1165,7 +1165,7 @@ begin
 
   if AInfProt.Count > 0 then
   begin
-    FChaveMDFe := AInfProt.Items[0].chMDFe;
+    FChaveMDFe := AInfProt.Items[0].chDFe;
     FProtocolo := AInfProt.Items[0].nProt;
     FcStat := AInfProt.Items[0].cStat;
   end;
@@ -1240,7 +1240,7 @@ begin
   if Assigned(FMDFeRetorno) then
     FMDFeRetorno.Free;
 
-  FMDFeRetorno := TRetConsReciMDFe.Create;
+  FMDFeRetorno := TRetConsReciDFe.Create('MDFe');
 end;
 
 procedure TMDFeRecibo.InicializarServico;
@@ -1300,13 +1300,13 @@ end;
 
 procedure TMDFeRecibo.DefinirDadosMsg;
 var
-  ConsReciMDFe: TConsReciMDFe;
+  ConsReciMDFe: TConsReciDFe;
 begin
-  ConsReciMDFe := TConsReciMDFe.Create;
+  ConsReciMDFe := TConsReciDFe.Create(FPVersaoServico, NAME_SPACE_MDFE, 'MDFe');
   try
     ConsReciMDFe.tpAmb := FTpAmb;
     ConsReciMDFe.nRec := FRecibo;
-    ConsReciMDFe.Versao := FPVersaoServico;
+//    ConsReciMDFe.Versao := FPVersaoServico;
 
     AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
 

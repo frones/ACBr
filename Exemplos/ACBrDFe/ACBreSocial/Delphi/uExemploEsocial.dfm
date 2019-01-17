@@ -1569,7 +1569,7 @@ object FExemploEsocial: TFExemploEsocial
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 416
+    Left = 424
     Top = 368
   end
 end

@@ -8,7 +8,8 @@ uses
   IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  ACBrCTe, ACBrCTeDACTEClass, ACBrMail, ACBrBase, ACBrDFe, ACBrCTeDACTeRLClass, ACBrDFeSSL;
+  ACBrCTe, ACBrCTeDACTEClass, ACBrMail, ACBrBase, ACBrDFe, ACBrCTeDACTeRLClass, ACBrDFeSSL,
+  ACBrDFeReport;
 
 type
   TfrmDemo_ACBrCTe = class(TForm)

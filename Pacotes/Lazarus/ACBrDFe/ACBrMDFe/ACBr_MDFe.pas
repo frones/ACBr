@@ -8,11 +8,10 @@ interface
 
 uses
   ACBrMDFe, ACBrMDFeConfiguracoes, ACBrMDFeManifestos, ACBrMDFeReg, 
-  ACBrMDFeWebServices, pmdfeConsMDFeNaoEnc, pmdfeConsReciMDFe, 
-  pmdfeConsSitMDFe, pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, 
-  pmdfeEventoMDFe, pmdfeMDFe, pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, 
-  pmdfeRetConsMDFeNaoEnc, pmdfeRetConsReciMDFe, pmdfeRetConsSitMDFe, 
-  pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
+  ACBrMDFeWebServices, pmdfeConsMDFeNaoEnc, pmdfeConsSitMDFe, 
+  pmdfeConversaoMDFe, pmdfeEnvEventoMDFe, pmdfeEventoMDFe, pmdfeMDFe, 
+  pmdfeMDFeR, pmdfeMDFeW, pmdfeProcMDFe, pmdfeRetConsMDFeNaoEnc, 
+  pmdfeRetConsSitMDFe, pmdfeRetEnvEventoMDFe, pmdfeRetEnvMDFe, 
   ACBrMDFeDAMDFeClass, pmdfeConsts, LazarusPackageIntf;
 
 implementation

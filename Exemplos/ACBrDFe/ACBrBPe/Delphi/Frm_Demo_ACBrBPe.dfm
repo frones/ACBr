@@ -217,7 +217,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -248,7 +248,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -274,7 +274,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Left = 0
           Top = 0
           Width = 605
-          Height = 344
+          Height = 343
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1760,7 +1760,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Configuracoes.WebServices.QuebradeLinha = '|'
     DABPE = ACBrBPeDABPeESCPOS1
     Left = 336
-    Top = 384
+    Top = 280
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1783,6 +1783,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Top = 385
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
@@ -1798,8 +1799,8 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     ViaConsumidor = True
     ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
-    Left = 382
-    Top = 385
+    Left = 430
+    Top = 281
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     ConfigBarras.MostrarCodigo = False
@@ -1811,7 +1812,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
     CortaPapel = False
-    Left = 334
-    Top = 425
+    Left = 430
+    Top = 337
   end
 end

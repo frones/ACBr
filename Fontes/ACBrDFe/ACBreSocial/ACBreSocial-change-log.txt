@@ -50,6 +50,11 @@ Símbolo : Significado
 
 17/01/2019
 -- pcesS5013 --
+[*] Correção no nome de uma tag que estava com a grafria errada.
+   Por: Arce
+
+17/01/2019
+-- pcesS5013 --
 [*] Implementação do Evento de Retorno 5013.
    Por: Arce
 

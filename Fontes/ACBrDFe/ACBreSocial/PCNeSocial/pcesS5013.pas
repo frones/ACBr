@@ -321,7 +321,7 @@ begin
            begin
              InfoFGTS.infoBaseFGTS.basePerApur.Add;
              InfoFGTS.infoBaseFGTS.basePerApur.Items[i].tpValor  := leitor.rCampo(tcInt, 'tpValor');
-             InfoFGTS.infoBaseFGTS.basePerApur.Items[i].baseFGTS := leitor.rCampo(tcDe2, 'remFGTS');
+             InfoFGTS.infoBaseFGTS.basePerApur.Items[i].baseFGTS := leitor.rCampo(tcDe2, 'baseFGTS');
              inc(i);
            end;
         end;

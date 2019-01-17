@@ -865,6 +865,7 @@ begin
   inherited Create;
   FRegistro1010 := TRegistro1010List.Create;
   FRegistro1020 := TRegistro1020List.Create;
+  FRegistro1050 := TRegistro1050List.Create;
   FRegistro1100 := TRegistro1100List.Create;
   FRegistro1200 := TRegistro1200List.Create;
   FRegistro1300 := TRegistro1300List.Create;
@@ -879,6 +880,7 @@ destructor TRegistro1001.Destroy;
 begin
   FRegistro1010.Free;
   FRegistro1020.Free;
+  FRegistro1050.Free;
   FRegistro1100.Free;
   FRegistro1200.Free;
   FRegistro1300.Free;

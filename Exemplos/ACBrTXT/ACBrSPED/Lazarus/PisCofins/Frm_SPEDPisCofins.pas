@@ -492,6 +492,28 @@ begin
       with Registro1001New do
       begin
          IND_MOV := imSemDados;
+
+         with Registro1050New do
+         begin
+           DT_REF         :=now;
+           IND_AJ_BC      := tcaDevolucoesVendas   ;
+           CNPJ           := '12345678901234';
+           VL_AJ_TOT      :=0;
+           VL_AJ_CST01    :=0;
+           VL_AJ_CST02    :=0;
+           VL_AJ_CST03    :=0;
+           VL_AJ_CST04    :=0;
+           VL_AJ_CST05    :=0;
+           VL_AJ_CST06    :=0;
+           VL_AJ_CST07    :=0;
+           VL_AJ_CST08    :=0;
+           VL_AJ_CST09    :=0;
+           VL_AJ_CST49    :=0;
+           VL_AJ_CST99    :=0;
+           IND_APROP      :=iaaRefPisCofins      ;
+           NUM_REC        :='1234';
+           INFO_COMPL     :='';
+         end;
       end;
    end;
 

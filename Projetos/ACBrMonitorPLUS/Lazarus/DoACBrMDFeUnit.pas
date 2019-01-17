@@ -479,11 +479,11 @@ var
 begin
   with fACBrMDFe do
   begin
-    for I := 0 to WebServices.Retorno.MDFeRetorno.ProtMDFe.Count - 1 do
+    for I := 0 to WebServices.Retorno.MDFeRetorno.ProtDFe.Count - 1 do
     begin
       for J := 0 to Manifestos.Count - 1 do
       begin
-        if ('MDFe' + WebServices.Retorno.MDFeRetorno.ProtMDFe.Items[i].chMDFe =
+        if ('MDFe' + WebServices.Retorno.MDFeRetorno.ProtDFe.Items[i].chDFe =
           Manifestos.Items[j].MDFe.infMDFe.Id) then
         begin
           RespostaItensMDFe(J, I, True);
@@ -517,7 +517,7 @@ begin
     'MDFe' + Trim(IntToStr(
     fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)), resINI);
   try
-    with fACBrMDFe.WebServices.Retorno.MDFeRetorno.ProtMDFe.Items[ItemID] do
+    with fACBrMDFe.WebServices.Retorno.MDFeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -525,7 +525,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrMDFe.WebServices.Retorno.MDFeRetorno.cUF;
-      Resp.ChMDFe := chMDFe;
+      Resp.ChMDFe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.DigVal := digVal;
@@ -715,7 +715,7 @@ begin
       begin
         Resp.ChMDFe := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe;
         Resp.NProt := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt;
-        Resp.MotivoMDFe := MDFeRetorno.ProtMDFe.Items[0].xMotivo;
+        Resp.MotivoMDFe := MDFeRetorno.ProtDFe.Items[0].xMotivo;
       end;
 
       fpCmd.Resposta := Msg + sLineBreak;
@@ -732,10 +732,10 @@ var
 begin
   Resp := TRetornoItemResposta.Create(
     'MDFe' + Trim(IntToStr(StrToInt(copy(
-    fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Items
-    [ItemID].chMDFe, 26, 9)))), resINI);
+    fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items
+    [ItemID].chDFe, 26, 9)))), resINI);
   try
-    with fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Items[ItemID] do
+    with fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -743,7 +743,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrMDFe.WebServices.Recibo.MDFeRetorno.cUF;
-      Resp.ChMDFe := chMDFe;
+      Resp.ChMDFe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.digVal := digVal;
@@ -1451,7 +1451,7 @@ begin
     ACBrMDFe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
-    for I := 0 to ACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtMDFe.Count - 1 do
+    for I := 0 to ACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Count - 1 do
       RespostaItensRecibo(I);
 
     if ACBrMDFe.Configuracoes.Geral.Salvar then

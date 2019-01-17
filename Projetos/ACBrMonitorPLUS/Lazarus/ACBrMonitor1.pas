@@ -467,6 +467,7 @@ type
     Label202: TLabel;
     Label203: TLabel;
     Label204: TLabel;
+    Label205: TLabel;
     Label207: TLabel;
     Label208: TLabel;
     Label209: TLabel;
@@ -496,7 +497,6 @@ type
     lbCopias: TLabel;
     lbDPI: TLabel;
     lblBOLLogoEmpresa: TLabel;
-    Label205: TLabel;
     Label206: TLabel;
     Label40: TLabel;
     Label50: TLabel;

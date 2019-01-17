@@ -693,11 +693,11 @@ var
 begin
   with fACBrNFe do
   begin
-    for I := 0 to WebServices.Retorno.NFeRetorno.ProtNFe.Count - 1 do
+    for I := 0 to WebServices.Retorno.NFeRetorno.ProtDFe.Count - 1 do
     begin
       for J := 0 to NotasFiscais.Count - 1 do
       begin
-        if ('NFe' + WebServices.Retorno.NFeRetorno.ProtNFe.Items[I].chNFe =
+        if ('NFe' + WebServices.Retorno.NFeRetorno.ProtDFe.Items[I].chDFe =
           NotasFiscais.Items[J].NFe.infNFe.Id) then
         begin
           RespostaItensNFe(J, I, True);
@@ -745,7 +745,7 @@ begin
     'NFe' + Trim(IntToStr(
     fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.Ide.nNF)), resINI);
   try
-    with fACBrNFe.WebServices.Retorno.NFeRetorno.ProtNFe.Items[ItemID] do
+    with fACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -753,7 +753,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrNFe.WebServices.Retorno.NFeRetorno.cUF;
-      Resp.ChNFe := chNFe;
+      Resp.ChNFe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.DigVal := digVal;
@@ -890,10 +890,10 @@ var
 begin
   Resp := TRetornoItemResposta.Create(
     'NFe' + Trim(IntToStr(StrToInt(copy(
-    fACBrNFe.WebServices.Recibo.NFeRetorno.ProtNFe.Items
-    [ItemID].chNFe, 26, 9)))), resINI);
+    fACBrNFe.WebServices.Recibo.NFeRetorno.ProtDFe.Items
+    [ItemID].chDFe, 26, 9)))), resINI);
   try
-    with fACBrNFe.WebServices.Recibo.NFeRetorno.ProtNFe.Items[ItemID] do
+    with fACBrNFe.WebServices.Recibo.NFeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -901,7 +901,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrNFe.WebServices.Recibo.NFeRetorno.cUF;
-      Resp.ChNFe := chNFe;
+      Resp.ChNFe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.digVal := digVal;
@@ -1966,7 +1966,7 @@ begin
     ACBrNFe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
-    for I := 0 to ACBrNFe.WebServices.Recibo.NFeRetorno.ProtNFe.Count - 1 do
+    for I := 0 to ACBrNFe.WebServices.Recibo.NFeRetorno.ProtDFe.Count - 1 do
       RespostaItensRecibo(I);
 
     if ACBrNFe.Configuracoes.Geral.Salvar then

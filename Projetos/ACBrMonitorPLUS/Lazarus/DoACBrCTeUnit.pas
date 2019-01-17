@@ -617,11 +617,11 @@ var
 begin
   with fACBrCTe do
   begin
-    for I := 0 to WebServices.Retorno.CTeRetorno.ProtCTe.Count - 1 do
+    for I := 0 to WebServices.Retorno.CTeRetorno.ProtDFe.Count - 1 do
     begin
       for J := 0 to Conhecimentos.Count - 1 do
       begin
-        if ('CTe' + WebServices.Retorno.CTeRetorno.ProtCTe.Items[i].chCTe =
+        if ('CTe' + WebServices.Retorno.CTeRetorno.ProtDFe.Items[i].chDFe =
           Conhecimentos.Items[j].CTe.infCTe.Id) then
         begin
           RespostaItensCTe(J, I, True);
@@ -669,7 +669,7 @@ begin
     'CTe' + Trim(IntToStr(
     fACBrCTe.Conhecimentos.Items[ConhecimentosID].CTe.Ide.nCT)), resINI);
   try
-    with fACBrCTe.WebServices.Retorno.CTeRetorno.ProtCTe.Items[ItemID] do
+    with fACBrCTe.WebServices.Retorno.CTeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -677,7 +677,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrCTe.WebServices.Retorno.CTeRetorno.cUF;
-      Resp.ChCTe := chCTe;
+      Resp.ChCTe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.DigVal := digVal;
@@ -813,10 +813,10 @@ var
 begin
   Resp := TRetornoItemResposta.Create(
     'CTe' + Trim(IntToStr(StrToInt(copy(
-    fACBrCTe.WebServices.Recibo.CTeRetorno.ProtCTe.Items
-    [ItemID].chCTe, 26, 9)))), resINI);
+    fACBrCTe.WebServices.Recibo.CTeRetorno.ProtDFe.Items
+    [ItemID].chDFe, 26, 9)))), resINI);
   try
-    with fACBrCTe.WebServices.Recibo.CTeRetorno.ProtCTe.Items[ItemID] do
+    with fACBrCTe.WebServices.Recibo.CTeRetorno.ProtDFe.Items[ItemID] do
     begin
       Resp.Versao := verAplic;
       Resp.TpAmb := TpAmbToStr(TpAmb);
@@ -824,7 +824,7 @@ begin
       Resp.CStat := cStat;
       Resp.XMotivo := XMotivo;
       Resp.CUF := fACBrCTe.WebServices.Recibo.CTeRetorno.cUF;
-      Resp.ChCTe := chCTe;
+      Resp.ChCTe := chDFe;
       Resp.DhRecbto := dhRecbto;
       Resp.NProt := nProt;
       Resp.digVal := digVal;
@@ -1632,7 +1632,7 @@ begin
     ACBrCTe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
-    for I := 0 to ACBrCTe.WebServices.Recibo.CTeRetorno.ProtCTe.Count - 1 do
+    for I := 0 to ACBrCTe.WebServices.Recibo.CTeRetorno.ProtDFe.Count - 1 do
       RespostaItensRecibo(I);
 
     if ACBrCTe.Configuracoes.Geral.Salvar then

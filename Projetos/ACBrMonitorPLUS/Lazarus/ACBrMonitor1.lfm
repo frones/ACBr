@@ -384,10 +384,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 850
-        ActivePage = tsMonitor
+        ActivePage = tsACBrBoleto
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 11
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -3934,17 +3934,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 842
-            ActivePage = tsLayoutBoleto
+            ActivePage = tsCedente
             Align = alClient
-            ShowTabs = False
-            TabIndex = 2
+            TabIndex = 0
             TabOrder = 0
             OnChange = pgBoletoChange
             object tsCedente: TTabSheet
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/Cedente.htm'
               Caption = 'Cedente'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object lblBOLNomeRazao: TLabel
                 AnchorSideLeft.Control = edtBOLRazaoSocial
@@ -4215,7 +4214,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/ContaBancaria.htm'
               Caption = 'Conta Bancária'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object cbxBOLBanco: TComboBox
                 AnchorSideLeft.Control = lblBOLBanco
@@ -4509,7 +4508,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/Layout.htm'
               Caption = 'Layout'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object deBOLDirLogo: TDirectoryEdit
                 AnchorSideTop.Control = lblBOLDirLogo
@@ -4558,7 +4557,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 99
                 Top = 192
                 Width = 224
-                Anchors = []
+                Anchors = [akTop, akLeft, akRight]
                 AutoFill = True
                 Caption = 'Mostrar'
                 ChildSizing.LeftRightSpacing = 6
@@ -4700,7 +4699,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/RemessaRetorno.htm'
               Caption = 'Remessa\Retorno'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object deBolDirRemessa: TDirectoryEdit
                 AnchorSideTop.Side = asrBottom
@@ -4819,14 +4818,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/RemessaRetorno.htm'
               Caption = 'Relatorio Retorno'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object GroupBox3: TGroupBox
                 Left = 0
                 Height = 276
                 Top = 8
                 Width = 249
-                Anchors = [akTop, akLeft, akBottom]
+                Anchors = [akTop, akLeft, akRight]
                 Caption = 'Arquivos de Retorno Encontrados'
                 ClientHeight = 254
                 ClientWidth = 245
@@ -4868,11 +4867,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Control = deBolDirRetorno
                   AnchorSideTop.Side = asrCenter
                   AnchorSideBottom.Control = deBolDirRetorno
-                  Left = 8
+                  Left = 10
                   Height = 17
-                  Top = -5
+                  Top = 0
                   Width = 152
-                  Anchors = [akLeft, akBottom]
+                  Anchors = [akTop, akLeft, akRight]
                   Caption = 'Diretório Arquivo Retorno'
                   ParentColor = False
                 end
@@ -5143,7 +5142,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/EmailBoleto.htm'
               Caption = 'E-mail Boleto'
-              ClientHeight = 319
+              ClientHeight = 297
               ClientWidth = 834
               object bvCadastro2: TBevel
                 Left = 58
@@ -5195,7 +5194,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object edtBOLEmailMensagem: TMemo
                 Left = 8
-                Height = 179
+                Height = 157
                 Top = 105
                 Width = 810
                 Anchors = [akTop, akLeft, akRight, akBottom]
@@ -5469,17 +5468,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/EMail.htm'
           Caption = 'E-mail'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 0
             Height = 289
             Top = 4
-            Width = 841
+            Width = 836
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
             ClientHeight = 267
-            ClientWidth = 837
+            ClientWidth = 832
             TabOrder = 0
             object Label33: TLabel
               Left = 19
@@ -5511,7 +5510,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 32
-              Width = 569
+              Width = 564
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -5560,7 +5559,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 89
-              Width = 458
+              Width = 453
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
             end
@@ -5645,7 +5644,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 10
               Top = 179
-              Width = 837
+              Width = 832
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
@@ -5653,7 +5652,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
-              Left = 717
+              Left = 712
               Height = 25
               Top = 88
               Width = 100
@@ -5775,7 +5774,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
-              Left = 717
+              Left = 712
               Height = 17
               Top = 70
               Width = 68
@@ -5806,7 +5805,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/Sedex.htm'
           Caption = 'Sedex'
           ClientHeight = 327
-          ClientWidth = 847
+          ClientWidth = 842
           ImageIndex = 24
           object Label42: TLabel
             Left = 15
@@ -11331,7 +11330,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 24
-                Width = 20
+                Width = 21
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
@@ -11340,7 +11339,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 71
                 Height = 15
                 Top = 24
-                Width = 20
+                Width = 21
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
@@ -11603,9 +11602,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object Label136: TLabel
                 Left = 211
-                Height = 17
+                Height = 16
                 Top = 56
-                Width = 72
+                Width = 71
                 Caption = 'Pag. Código'
                 Font.Height = -13
                 Font.Name = 'Default'
@@ -11674,7 +11673,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 11
                 Height = 17
                 Top = 0
-                Width = 64
+                Width = 65
                 Caption = 'Tempo ON'
                 ParentColor = False
               end
@@ -11701,7 +11700,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 87
                 Height = 17
                 Top = 0
-                Width = 66
+                Width = 67
                 Caption = 'Tempo OFF'
                 ParentColor = False
               end
@@ -13826,13 +13825,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
-    Configuracoes.Geral.VersaoDF = ve400
     Configuracoes.Geral.VersaoQRCode = veqr200
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
     left = 552
     top = 448
@@ -14918,11 +14917,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.VersaoDF = ve300
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
     left = 496
     top = 448
@@ -14963,6 +14962,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
     left = 456
     top = 453

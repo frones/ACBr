@@ -51,6 +51,16 @@ Símbolo : Significado
 ver: 0.1.0
 06/12/2018
 
+17/01/2019
+-- ACBrBoleto --
+[*] Adicionado Campos novos na leitura do Arquivo .INI da classe TACBrBanco,
+referente as novas propriedades dessa classe
+
+17/01/2019
+-- ACBrBancoBancoob --
+[*] Ajuste Remessa CNAB240, para preenchimento da data limite de pagamento
+    https://www.projetoacbr.com.br/forum/topic/48664-banco-sicoob-remessa-240/
+
 16/01/2019
 -- ACBrBoleto --
 [-] Possível correção para geração de Remessa em UTF8

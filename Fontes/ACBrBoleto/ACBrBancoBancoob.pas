@@ -1078,7 +1078,9 @@ begin
 
                Result := Result +
                space(20)                                                  + // 180-199 Uso da FEBRABAN "Brancos"
-               PadLeft('0', 08, '0')                                      + // 200-207 Código oco. sacado "0000000"
+              //   PadLeft('0', 8, '0')                                      + // 200-207 Código oco. sacado "0000000"
+              IfThen((DataLimitePagto > 0),
+                     FormatDateTime('ddmmyyyy', DataLimitePagto),'00000000') +
                PadLeft('0', 3, '0')                                       + // 208-210 Código do banco na conta de débito "000"
                PadLeft('0', 5, '0')                                       + // 211-215 Código da ag. debito
                ' '                                                        + // 216 Digito da agencia

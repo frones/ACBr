@@ -2953,7 +2953,8 @@ var
   IniBoletos : TMemIniFile ;
   Titulo : TACBrTitulo;
   wTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
-  wNumeroBanco, wIndiceACBr, wCNAB: Integer;
+  wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
+  wVersaoLote, wVersaoArquivo: Integer;
   wLocalPagto, MemFormatada: String;
   Sessao, sFim: String;
   I: Integer;
@@ -3012,6 +3013,9 @@ begin
         wNumeroBanco := IniBoletos.ReadInteger(CBanco,'Numero', 0 );
         wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr', 0 );
         wCNAB        := IniBoletos.ReadInteger(CBanco,'CNAB', Integer(LayoutRemessa) );
+        wNumeroCorrespondente  := IniBoletos.ReadInteger(CBanco,'NumeroCorrespondente', 0 );
+        wVersaoArquivo := IniBoletos.ReadInteger(CBanco,'VersaoArquivo', 0 );
+        wVersaoLote := IniBoletos.ReadInteger(CBanco,'VersaoLote', 0 );
 
         if ( wCNAB = 0 ) then
            LayoutRemessa := c240
@@ -3026,6 +3030,15 @@ begin
         if (trim(Banco.Nome) = 'Não definido') then
            raise exception.Create('Banco não definido ou não '+
                                   'implementado no ACBrBoleto!');
+
+        if ( wNumeroCorrespondente > 0 ) then
+          Banco.NumeroCorrespondente:= wNumeroCorrespondente;
+
+        if ( wVersaoArquivo > 0 ) then
+          Banco.LayoutVersaoArquivo:= wVersaoArquivo;
+
+        if ( wVersaoLote > 0 ) then
+          Banco.LayoutVersaoLote:= wVersaoLote;
 
         Result := True;
       end;
@@ -3180,6 +3193,9 @@ begin
 
        IniRetorno.WriteInteger(CBanco,'Numero',Banco.Numero);
        IniRetorno.WriteInteger(CBanco,'IndiceACBr',Integer(Banco.TipoCobranca));
+       IniRetorno.WriteInteger(CBanco,'NumeroCorrespondente',Banco.NumeroCorrespondente);
+       IniRetorno.WriteInteger(CBanco,'VersaoArquivo',Banco.LayoutVersaoArquivo);
+       IniRetorno.WriteInteger(CBanco,'VersaoLote',Banco.LayoutVersaoLote);
 
        IniRetorno.WriteString(CConta,'Conta',Cedente.Conta);
        IniRetorno.WriteString(CConta,'DigitoConta',Cedente.ContaDigito);

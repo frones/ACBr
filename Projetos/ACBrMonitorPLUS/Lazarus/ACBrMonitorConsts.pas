@@ -328,6 +328,7 @@ const
   CMetodoLoadfromfile =                'loadfromfile';
   CMetodoLerini =                      'lerini';
   CMetodoSetcertificado =              'setcertificado';
+  CMetodoDistribuicaoDFeporChaveMDFe = 'distribuicaodfeporchavemdfe';
   CMetodoRestaurar =                   'restaurar';
   CMetodoOcultar =                     'ocultar';
   CMetodoEncerrarmonitor =             'encerrarmonitor';

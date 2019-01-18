@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2019
+[+] DoACBrMDFeUnit, ACBrMonitorConsts
+Adicionado Metodos DistribuicaoDFe para o MDFe no ACBrMonitor.
+
 17/01/2019
 [*] ACBrMonitor1
 Ajustes de tela

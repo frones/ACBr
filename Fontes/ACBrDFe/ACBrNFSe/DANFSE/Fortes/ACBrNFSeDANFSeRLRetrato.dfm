@@ -4906,11 +4906,13 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = True
+      OnDataRecord = subItensDataRecord
       object rlbItensServico: TRLBand
         Left = 1
         Top = 0
         Width = 750
         Height = 16
+        BeforePrint = rlbItensServicoBeforePrint
         object txtServicoQtde: TRLLabel
           Left = 5
           Top = 2

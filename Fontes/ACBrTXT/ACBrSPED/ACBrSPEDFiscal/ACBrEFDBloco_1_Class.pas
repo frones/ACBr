@@ -1492,7 +1492,8 @@ begin
                LFill( NUM_DOC ) +
                LFill( DT_DOC ) +
                LFill( COD_ITEM ) +
-               LFill( VL_AJ_ITEM,0,2 ) );
+               LFill( VL_AJ_ITEM,0,2 ) +
+               LFill( CHV_DOCe ) );
         end;
         Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
      end;

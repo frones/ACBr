@@ -1097,6 +1097,7 @@ type
     fDT_DOC: TDateTime;
     fCOD_ITEM: String;
     fVL_AJ_ITEM: Currency;
+    fCHV_DOCe: String;
   public
     property COD_PART   : String    read fCOD_PART   write fCOD_PART;
     property COD_MOD    : String    read fCOD_MOD    write fCOD_MOD;
@@ -1106,6 +1107,7 @@ type
     property DT_DOC     : TDateTime read fDT_DOC     write fDT_DOC;
     property COD_ITEM   : String    read fCOD_ITEM   write fCOD_ITEM;
     property VL_AJ_ITEM : Currency  read fVL_AJ_ITEM write fVL_AJ_ITEM;
+    property CHV_DOCe   : String    read fCHV_DOCe   write fCHV_DOCe;
   end;
 
   TRegistro1923List = class(TObjectList)

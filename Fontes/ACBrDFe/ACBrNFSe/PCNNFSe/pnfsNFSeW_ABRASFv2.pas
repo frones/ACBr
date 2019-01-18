@@ -495,7 +495,7 @@ begin
       Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 0, NFSe.Servico.ItemListaServico, DSC_CLISTSERV);
     end;
 
-    if FProvedor = proVersaTecnologia then
+    if FProvedor in [proVersaTecnologia, proDesenvolve]  then
       Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE)
     else
       Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 0, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
@@ -668,7 +668,7 @@ begin
   case FProvedor of
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
-    proCoplan, proSIAPNet, proSystemPro, proISSJoinville:
+    proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
     proDeISS:
@@ -704,7 +704,7 @@ begin
       proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
       proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proTiplanv2,
-      proSigep:
+      proSigep, proDesenvolve:
           Gerador.wGrupoNFSe('Rps');
 
       proISSDigital:

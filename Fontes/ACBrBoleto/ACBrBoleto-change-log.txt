@@ -49,7 +49,10 @@ Símbolo : Significado
 
 
 ver: 0.1.0
-06/12/2018
+
+18/01/2019
+-- ACBrBancoBancoob --
+[-] Correção na geração da remessa CNAB240 (ajuste na posição 127 do Arq. )
 
 17/01/2019
 -- ACBrBoleto --

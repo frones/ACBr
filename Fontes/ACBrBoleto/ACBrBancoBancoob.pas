@@ -957,8 +957,7 @@ begin
                          FormatDateTime('ddmmyyyy', DataDocumento)        + // 110 a 117 - Data da emissão do documento
                          PadRight(CodigoMora, 1, '0')                     + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
                          ADataMoraJuros                                   + //119 a 126 - Data a partir da qual serão cobrados juros
-                    '0'                                              + // 224 - Código de Baixa
-                         space(3)                                         + // 225 A 227 - Dias para baixa         ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
+                         ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
                          TipoDescontoToString(TipoDesconto)               + // 142 - "Código do Desconto 1
                                                                             // '0'  =  Não Conceder desconto
                                                                             // '1'  =  Valor Fixo Até a Data Informada

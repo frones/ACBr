@@ -77,7 +77,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  ACBr_PCNComum;
 
 contains
   ACBrCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTe.pas',
@@ -86,7 +87,6 @@ contains
   ACBrCTeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeReg.pas',
   ACBrCTeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeWebServices.pas',
   pcteConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsts.pas',
-//  pcteConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsReciCTe.pas',
   pcteConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConsSitCTe.pas',
   pcteConversaoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteConversaoCTe.pas',
   pcteCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteCTe.pas',
@@ -98,7 +98,6 @@ contains
   pcteLayoutTXT in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteLayoutTXT.pas',
   pcteModeloCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteModeloCTe.pas',
   pcteProcCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteProcCTe.pas',
-//  pcteRetConsReciCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsReciCTe.pas',
   pcteRetConsSitCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetConsSitCTe.pas',
   pcteRetEnvCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvCTe.pas',
   pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',

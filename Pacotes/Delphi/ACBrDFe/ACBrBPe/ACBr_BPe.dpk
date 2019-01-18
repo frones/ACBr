@@ -75,7 +75,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  ACBr_PCNComum;
 
 contains
   ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',

@@ -75,7 +75,8 @@ requires
   rtl,
   vcl,
   designide,
-  ACBr_DFeComum;
+  ACBr_DFeComum,
+  ACBr_PCNComum;
 
 contains
   ACBrNFeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeConfiguracoes.pas',
@@ -86,7 +87,6 @@ contains
   pcnNFeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeConsts.pas',
   pcnAdmCSCNFCe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnAdmCSCNFCe.pas',
   pcnRetInutNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetInutNFe.pas',
-//  pcnConsReciNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsReciNFe.pas',
   pcnConsSitNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConsSitNFe.pas',
   pcnConversaoNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConversaoNFe.pas',
   pcnEnvEventoNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnEnvEventoNFe.pas',
@@ -99,7 +99,6 @@ contains
   pcnNFeW in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeW.pas',
   pcnProcNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnProcNFe.pas',
   pcnRetAdmCSCNFCe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetAdmCSCNFCe.pas',
-//  pcnRetConsReciNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsReciNFe.pas',
   pcnRetConsSitNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetConsSitNFe.pas',
   pcnRetEnvEventoNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvEventoNFe.pas',
   pcnRetEnvNFe in '..\..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnRetEnvNFe.pas',

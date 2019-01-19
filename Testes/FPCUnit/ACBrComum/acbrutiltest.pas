@@ -686,6 +686,44 @@ type
     procedure TextoComCaractersEspeciais;
   end;
 
+  { StrIsHexaTest }
+
+  StrIsHexaTest = class(TTestCase)
+  published
+    procedure TextoVazio;
+    procedure TextoEmHexaMaiusculo;
+    procedure TextoEmHexaMinusculo;
+    procedure TextoEmHexaComEspacos;
+    procedure TextoNaoHexa;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { StrIsBinaryTest }
+
+  StrIsBinaryTest = class(TTestCase)
+  published
+    procedure TextoVazio;
+    procedure TextoEmBinario;
+    procedure TextoEmBinarioComEspacos;
+    procedure TextoNaoBinario;
+    procedure TextoComCaractersEspeciais;
+  end;
+
+  { StrIsBase64Test }
+
+  StrIsBase64Test = class(TTestCase)
+  published
+    procedure TextoVazio;
+    procedure TextoEmBase64SemPad;
+    procedure TextoEmBase64ComUmPad;
+    procedure TextoEmBase64ComDoisPads;
+    procedure TextoEmBase64TamanhoErrado;
+    procedure TextoEmBase64ComExcessoDePad;
+    procedure TextoEmBase64ComEspacos;
+    procedure TextoNaoBase64;
+    procedure TextoComCaractersEspeciais;
+  end;
+
   { CharIsAlphaTest }
 
   CharIsAlphaTest = class(TTestCase)
@@ -988,6 +1026,113 @@ uses
   Math, dateutils,
   synacode,
   ACBrUtil, ACBrCompress, ACBrConsts;
+
+{ StrIsBase64Test }
+
+procedure StrIsBase64Test.TextoVazio;
+begin
+  CheckFalse(StrIsBase64(''));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64SemPad;
+begin
+  CheckTrue(StrIsBase64('UHJvamV0byBBQ0Jy'));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64ComUmPad;
+begin
+  CheckTrue(StrIsBase64('UHJvamV0b0FDQnI='));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64ComDoisPads;
+begin
+  CheckTrue(StrIsBase64('UHJvamV0b0FDQg=='));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64TamanhoErrado;
+begin
+  CheckFalse(StrIsBase64('UHJvamV0byBBQ0J'));
+  CheckFalse(StrIsBase64('UHJvamV0byBBQ0Jy='));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64ComExcessoDePad;
+begin
+  CheckFalse(StrIsBase64('UHJvamV0b0FDQ==='));
+end;
+
+procedure StrIsBase64Test.TextoEmBase64ComEspacos;
+begin
+  CheckFalse(StrIsBase64('UHJv amV0 byBB Q0Jy'));
+end;
+
+procedure StrIsBase64Test.TextoNaoBase64;
+begin
+  CheckFalse(StrIsBase64('Projeto ACBr'));
+end;
+
+procedure StrIsBase64Test.TextoComCaractersEspeciais;
+begin
+  CheckFalse(StrIsBase64('Projeto@ACBR#123.90'));
+end;
+
+{ StrIsBinaryTest }
+
+procedure StrIsBinaryTest.TextoVazio;
+begin
+  CheckTrue(StrIsBinary(''));
+end;
+
+procedure StrIsBinaryTest.TextoEmBinario;
+begin
+  CheckTrue(StrIsBinary('0001110111110000'));
+end;
+
+procedure StrIsBinaryTest.TextoEmBinarioComEspacos;
+begin
+  CheckFalse(StrIsBinary('00011 1011 1110 000'));
+end;
+
+procedure StrIsBinaryTest.TextoNaoBinario;
+begin
+  CheckFalse(StrIsBinary('ProjetoACBR'));
+end;
+
+procedure StrIsBinaryTest.TextoComCaractersEspeciais;
+begin
+  CheckFalse(StrIsBinary('Projeto@ACBR#123.90'));
+end;
+
+{ StrIsHexaTest }
+
+procedure StrIsHexaTest.TextoVazio;
+begin
+  CheckTrue(StrIsHexa(''));
+end;
+
+procedure StrIsHexaTest.TextoEmHexaMaiusculo;
+begin
+  CheckTrue(StrIsHexa('1234567890ABCDEF'));
+end;
+
+procedure StrIsHexaTest.TextoEmHexaMinusculo;
+begin
+  CheckTrue(StrIsHexa('1234567890abcdef'));
+end;
+
+procedure StrIsHexaTest.TextoEmHexaComEspacos;
+begin
+  CheckFalse(StrIsHexa('0A 12 13 A6 DF FF'));
+end;
+
+procedure StrIsHexaTest.TextoNaoHexa;
+begin
+  CheckFalse(StrIsHexa('ProjetoACBR'));
+end;
+
+procedure StrIsHexaTest.TextoComCaractersEspeciais;
+begin
+  CheckFalse(StrIsHexa('Projeto@ACBR#123.90'));
+end;
 
 { ChangeLineBreakTest }
 
@@ -4438,6 +4583,9 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsAlphaNumTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', StrIsNumberTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsHexaTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsBinaryTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', StrIsBase64Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsAlphaNumTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CharIsNumTest{$ifndef FPC}.suite{$endif});

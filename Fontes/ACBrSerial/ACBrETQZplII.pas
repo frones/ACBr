@@ -501,7 +501,7 @@ var
   ImgHex: String;
 begin
   AWidth := 0; AHeight := 0; ARasterImg := '';
-  BMPToRasterStr(aStream, Inverter, AWidth, AHeight, ARasterImg);
+  BMPMonoToRasterStr(aStream, Inverter, AWidth, AHeight, ARasterImg);
 
   LenImg := Length(ARasterImg);
   ImgHex := AsciiToHex(ARasterImg);

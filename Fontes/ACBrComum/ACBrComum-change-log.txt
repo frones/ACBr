@@ -38,6 +38,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/01/2019
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function StrIsBinary(const S: String): Boolean;
+    function StrIsBase64(const S: String): Boolean;
+    function CharIsBinary(const C: Char): Boolean;
+    function CharIsBase64(const C: Char): Boolean;
+    (por: DSA)
+
+Data: 16/01/2019
+-- ACBrImage --
+[+] Adicionado novos métodos, para permitir transforma um BMP em ASCII ART e
+    vice-versa:
+    procedure RasterStrToAscII(AWidth: Integer; const RasterStr: AnsiString;
+      AscIIArtLines: TStrings);
+    procedure AscIIToRasterStr(AscIIArtLines: TStrings; var AWidth: Integer;
+      var AHeight: Integer; var RasterStr: AnsiString);
+[-] Método "BMPToRasterStr", corrigido para não inverter Bits não utilizados
+    no final da Imagem
+
+Data: 14/01/2019
+-- ACBrImage --
+[+] Adicionada nova Unit ACBrImage.pas, para permitir a manipulaçao de Imagens
+    BMP, PCX, que serão usadas em ACBrPosPrinter e ACBrETQ
+    (por: DSA)
+
 Data: 11/01/2019
 -- ACBrUtil --
 [*] Ajuste no método "XmlEhUTF8", para permitir Aspas Simples na Declaração de XML

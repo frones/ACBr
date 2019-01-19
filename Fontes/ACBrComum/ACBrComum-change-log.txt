@@ -39,6 +39,24 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 19/01/2019
+-- ACBrImage --
+[*] Método "BMPToRasterStr" renomeado para "BMPMonoToRasterStr"
+[-] Corrigido Bug em "BMPMonoToRasterStr", para conseguir processar corretamente
+    imagens cuja largura não é multiplo de 32
+[+] Adiconado o método:
+    procedure RasterStrToBMPMono(ARasterStr: AnsiString; AWidth: Integer;
+      InvertImg: Boolean; ABMPStream: TStream);
+    - Para permite converter uma String em Raster para um BMP Mono. O conteúdo
+      do BMP será salvo em ABMPStream.
+[+] Adiconado o método:
+    procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
+      out AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
+      LuminosityThreshold: Byte = C_LUMINOSITY_THRESHOLD);
+    - Somente disponível se não for compilação em modo console {$IfNDef NOGUI}
+    - Permiter converter qualquer BitMap, Colorido ou em escala de Cinza, gerando
+      uma String no formato Raster do equivalente em Monocromático
+    (por: DSA)
+
 -- ACBrUtil --
 [+] Adicionado os métodos:
     function StrIsBinary(const S: String): Boolean;

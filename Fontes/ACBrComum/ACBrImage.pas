@@ -41,13 +41,20 @@ unit ACBrImage;
 interface
 
 uses
-  Classes, SysUtils;
-  //{$IfNDef NOGUI}, Graphics, windows{$EndIf};
+  Classes, SysUtils
+  {$IfNDef NOGUI}
+   {$IfDef FPC}
+    ,LCLType, InterfaceBase
+   {$Else}
+    ,windows
+   {$EndIf}
+   ,Graphics
+  {$EndIf};
 
 const
   cErrImgPCXMono = 'Imagem não é PCX Monocromática';
   cErrImgBMPMono = 'Imagem não é BMP Monocromática';
-  //C_LUMINOSITY_THRESHOLD = 127;
+  C_LUMINOSITY_THRESHOLD = 127;
 
 type
   EACBrImage = class(Exception);
@@ -55,20 +62,26 @@ type
 function IsPCX(S: TStream; CheckIsMono: Boolean = True): Boolean;
 function IsBMP(S: TStream; CheckIsMono: Boolean = True): Boolean;
 
-procedure BMPToRasterStr(AStream: TStream; InvertImg: Boolean; var AWidth: Integer;
-  var AHeight: Integer; var RasterStr: AnsiString);
-procedure RasterStrToAscII(AWidth: Integer; const RasterStr: AnsiString; AscIIArtLines: TStrings);
-procedure AscIIToRasterStr(AscIIArtLines: TStrings; var AWidth: Integer;
-  var AHeight: Integer; var RasterStr: AnsiString);
+procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
+  InvertImg: Boolean; AscIIArtLines: TStrings);
+procedure AscIIToRasterStr(AscIIArtLines: TStrings; out AWidth: Integer;
+  out AHeight: Integer; out ARasterStr: AnsiString);
+
+procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out AWidth: Integer;
+  out AHeight: Integer; out ARasterStr: AnsiString);
+procedure RasterStrToBMPMono(ARasterStr: AnsiString; AWidth: Integer;
+  InvertImg: Boolean; ABMPStream: TStream);
 
 {$IfNDef NOGUI}
-//procedure ConvertBMPToMono(ABmpSrc: TBitmap; ABmpMono: TBitMap);
+procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean;
+  out AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
+  LuminosityThreshold: Byte = C_LUMINOSITY_THRESHOLD);
 {$EndIf}
 
 implementation
 
 uses
-  math,
+  math, strutils,
   ACBrUtil, ACBrConsts;
 
 function IsPCX(S: TStream; CheckIsMono: Boolean): Boolean;
@@ -123,51 +136,61 @@ begin
   S.Position := p;
 end;
 
-procedure BMPToRasterStr(AStream: TStream; InvertImg: Boolean;
-  var AWidth: Integer; var AHeight: Integer; var RasterStr: AnsiString);
+procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out
+  AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString);
 var
-  bPixelOffset, bWidth, bHeight: LongWord;
+  bPixelOffset, bSizePixelArr, bWidth, bHeight: LongWord;
   bPixel: Byte;
-  StreamLastPos, RowStart, BytesPerRow, i: Int64;
+  StreamLastPos, RowStart, BytesPerRow, i, RealWidth: Int64;
   HasPadBits: Boolean;
+  BytesPerWidth: Integer;
 begin
   // Inspiração:
   // http://www.nonov.io/convert_bmp_to_ascii
   // https://en.wikipedia.org/wiki/BMP_file_format
   // https://github.com/asharif/img2grf/blob/master/src/main/java/org/orphanware/App.java
 
-  if not IsBMP(AStream, True) then
+  if not IsBMP(ABMPStream, True) then
     raise EACBrImage.Create(ACBrStr(cErrImgBMPMono));
 
   // Lendo posição do Off-set da imagem
-  AStream.Position := 10;
+  ABMPStream.Position := 10;
   bPixelOffset := 0;
-  AStream.ReadBuffer(bPixelOffset, 4);
+  ABMPStream.ReadBuffer(bPixelOffset, 4);
+
+  // Lendo Tamanho do Pixel array
+  ABMPStream.Position := 34;
+  bSizePixelArr := 0;
+  ABMPStream.ReadBuffer(bSizePixelArr, 4);
 
   // Lendo dimensões da imagem
-  AStream.Position := 18;
+  ABMPStream.Position := 18;
   bWidth := 0; bHeight := 0;
-  AStream.ReadBuffer(bWidth, 4);
-  AStream.ReadBuffer(bHeight, 4);
+  ABMPStream.ReadBuffer(bWidth, 4);
+  ABMPStream.ReadBuffer(bHeight, 4);
 
-  AWidth := bWidth;
   AHeight := bHeight;
-  RasterStr := '';
+  //AWidth := bWidth;
+  ARasterStr := '';
 
   // BMP é organizado da Esquerda para a Direita e de Baixo para cima.. serializando..
   BytesPerRow := ceil(bWidth / 8);
   HasPadBits := (BytesPerRow > (trunc(bWidth/8)));
+  BytesPerRow := ceil(bWidth / 8);
+  AWidth := BytesPerRow*8;
+  RealWidth := trunc((bSizePixelArr*8)/bHeight);
+  BytesPerWidth := ceil(RealWidth / 8);
 
-  StreamLastPos := AStream.Size-1;
+  StreamLastPos := bPixelOffset + bSizePixelArr - 1; // ABMPStream.Size-1;
   while (StreamLastPos >= bPixelOffset) do
   begin
-    RowStart := StreamLastPos - (BytesPerRow - 1);
+    RowStart := StreamLastPos - (BytesPerWidth - 1);
     i := 1;
-    AStream.Position := RowStart;
+    ABMPStream.Position := RowStart;
     while (i <= BytesPerRow) do
     begin
       bPixel := 0;
-      AStream.ReadBuffer(bPixel,1);
+      ABMPStream.ReadBuffer(bPixel,1);
       if InvertImg then
       begin
         if (not HasPadBits) or (i < BytesPerRow) then
@@ -176,18 +199,22 @@ begin
           bPixel := bPixel xor bPixel;
       end;
 
-      RasterStr := RasterStr + chr(bPixel);
+      ARasterStr := ARasterStr + chr(bPixel);
       inc(i);
     end;
     StreamLastPos := RowStart-1;
   end;
+
+  //DEBUG
+  //WriteToFile('c:\temp\Raster.txt', ARasterStr);
 end;
 
-procedure RasterStrToAscII(AWidth: Integer; const RasterStr: AnsiString;
-  AscIIArtLines: TStrings);
+procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
+  InvertImg: Boolean; AscIIArtLines: TStrings);
 var
   BytesPerRow, LenRaster, i: Integer;
   ALine: String;
+  AByte: Byte;
 begin
   AscIIArtLines.Clear;
   if (AWidth <= 0) then
@@ -196,10 +223,14 @@ begin
   BytesPerRow := ceil(AWidth / 8);
 
   ALine := '';
-  LenRaster := Length(RasterStr);
+  LenRaster := Length(ARasterStr);
   for i := 1 to LenRaster do
   begin
-    ALine := ALine + IntToBin(ord(RasterStr[i]), 8);
+    AByte := ord(ARasterStr[i]);
+    if InvertImg then
+      AByte := AByte xor $FF;
+
+    ALine := ALine + IntToBin(AByte, 8);
     if ((i mod BytesPerRow) = 0) then
     begin
       AscIIArtLines.Add(ALine);
@@ -208,14 +239,14 @@ begin
   end;
 end;
 
-procedure AscIIToRasterStr(AscIIArtLines: TStrings; var AWidth: Integer;
-  var AHeight: Integer; var RasterStr: AnsiString);
+procedure AscIIToRasterStr(AscIIArtLines: TStrings; out AWidth: Integer; out
+  AHeight: Integer; out ARasterStr: AnsiString);
 var
   BytesPerRow, RealWidth, i, j: Integer;
   ALine, BinaryByte: String;
 begin
   AWidth := 0;
-  RasterStr := '';
+  ARasterStr := '';
   AHeight := AscIIArtLines.Count;
   if AHeight < 1 then
     Exit;
@@ -235,16 +266,107 @@ begin
     while J < RealWidth do
     begin
       BinaryByte := copy(ALine,j,8);
-      RasterStr := RasterStr + chr(BinToInt(BinaryByte));
+      ARasterStr := ARasterStr + chr(BinToInt(BinaryByte));
       inc(j,8);
     end;
   end;
 end;
 
-(*
+procedure RasterStrToBMPMono(ARasterStr: AnsiString; AWidth: Integer;
+  InvertImg: Boolean; ABMPStream: TStream);
+var
+  AByte: Byte;
+  AWord: Word;
+  ALongWord: LongWord;
+  LenPixArrIn, LenPixArrOut, BytesPerRowIn, BytesPerRowOut, RowStart: Integer;
+  AHeight, i, p, b: Integer;
+  PixArr: array of Byte;
+begin
+  BytesPerRowIn := ceil(AWidth / 8);
+  LenPixArrIn := Length(ARasterStr);
+  AHeight := Trunc(LenPixArrIn / BytesPerRowIn);
+
+  // O BMP deve estar blocos de DWORD(32bits), calculando a Largura multiplo de 32
+  BytesPerRowOut := ceil(AWidth / 32) * 4;
+  LenPixArrOut := BytesPerRowOut * AHeight;
+  SetLength(PixArr,LenPixArrOut);
+
+  // BMP é organizado da Esquerda para a Direita e de Baixo para cima.. serializando..
+  b := 0;
+  p := LenPixArrIn-1;
+  while (p > 0) do
+  begin
+    RowStart := p - (BytesPerRowIn - 1);
+    i := 1;
+    while (i <= BytesPerRowOut) do
+    begin
+      if i > BytesPerRowIn then
+        AByte := 0
+      else
+      begin
+        AByte := ord(ARasterStr[RowStart+i]);
+        if InvertImg then
+          AByte := AByte xor $FF;
+      end;
+
+      PixArr[b] := AByte;
+      inc(i);
+      inc(b);
+    end;
+    p := RowStart-1;
+  end;
+
+  with ABMPStream do
+  begin
+    Size := 0;  // Trunc Stream
+
+    // BMP header   14 bytes
+    Write('BM',2);    // BitMap signature
+    ALongWord := 14 + 40 + 8 + LenPixArrOut ;
+    WriteBuffer(ALongWord, 4);  // Tamanho do arquivo
+    ALongWord := 0;
+    WriteBuffer(ALongWord, 4);  // Reservado para a aplicação
+    ALongWord := 62;
+    WriteBuffer(ALongWord, 4);  // Inicio do Pixel array
+
+    //DIB Header    40 bytes
+    ALongWord := 40;
+    WriteBuffer(ALongWord, 4);  // Tamanho do cabeçalho DIB
+    ALongWord := AWidth;
+    WriteBuffer(ALongWord, 4); // Largura
+    ALongWord := AHeight;
+    WriteBuffer(ALongWord, 4);  // Altura
+    AWord := 1;
+    WriteBuffer(AWord, 2);      // Numero de Planos
+    WriteBuffer(AWord, 2);      // Numero de Bits (1bpp)
+    ALongWord := 0;
+    WriteBuffer(ALongWord, 4);  // Método de Compressão
+    ALongWord := LenPixArrOut;
+    WriteBuffer(ALongWord, 4);  // Tamanho do Pixel array
+    ALongWord := 0 ;
+    WriteBuffer(ALongWord, 4);  // Print resolution of the image, 72DPI - H
+    WriteBuffer(ALongWord, 4);  // Print resolution of the image, 72DPI - V
+    ALongWord := 2;
+    WriteBuffer(ALongWord, 4);  // Numero de cores na paleta
+    ALongWord := 0;
+    WriteBuffer(ALongWord, 4);  // Numero de cores importantes
+
+    // Tabela de Cores    8 bytes
+    ALongWord := 0;
+    WriteBuffer(ALongWord, 4);  // Cor Preta
+    ALongWord := $ffffff;
+    WriteBuffer(ALongWord, 4);  // Cor Branca
+
+    // Pixel array
+    Write(Pointer(PixArr)^, LenPixArrOut);
+    //Write(PAnsiChar(ARasterStr)^, LenPixArrIn);
+    Position := 0;
+  end;
+end;
+
 {$IfNDef NOGUI}
 {$IfNDef FPC}
-procedure RedGreenBlue(rgb: TColor; out Red, Green, Blue: Byte);
+procedure RedGreenBlue(rgb: TColorRef; out Red, Green, Blue: Byte);
 begin
   Red := rgb and $000000ff;
   Green := (rgb shr 8) and $000000ff;
@@ -252,44 +374,62 @@ begin
 end;
 {$EndIf}
 
-// Fonte: https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
-procedure ConvertBMPToMono(ABmpSrc: TBitmap; ABmpMono: TBitMap);
+procedure BitmapToRasterStr(ABmpSrc: TBitmap; InvertImg: Boolean; out
+  AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString;
+  LuminosityThreshold: Byte);
 var
+  MS: TMemoryStream;
   Row, Col: Integer;
+  cRed, cGreen, cBlue: Byte;
   APixel: TColor;
-  Red, Green, Blue: Byte;
-  Luminosity: Integer;
+  Luminosity: Int64;
+  ByteStr: String;
+  Bit: Boolean;
 begin
-  ABmpMono.PixelFormat := pf1bit;
-  ABmpMono.Monochrome := True;
-  ABmpMono.Height := ABmpSrc.Height;
-  ABmpMono.Width  := ABmpSrc.Width;
+  AWidth := 0; AHeight := 0; ARasterStr := '';
 
-  if (ABmpSrc.PixelFormat = pf1bit) then
-    ABmpMono.Assign(ABmpSrc)
-  else
+  if (ABmpSrc.PixelFormat = pf1bit) then  // Já é Mono ?
   begin
-    for Row := 0 to ABmpSrc.Height - 1 do
-    begin
-      for Col := 0 to ABmpSrc.Width - 1 do
-      begin
-        APixel := ABmpSrc.Canvas.Pixels[Col, Row];
-        Red := 0; Green := 0; Blue := 0;
-        RedGreenBlue(APixel, Red, Green, Blue);
-        Luminosity := Trunc( ( Red * 0.3 ) + ( Green  * 0.59 ) + ( Blue * 0.11 ) );
-
-        if ( Luminosity < C_LUMINOSITY_THRESHOLD ) then
-          ABmpMono.Canvas.Pixels[Col, Row] := clBlack
-        else
-          ABmpMono.Canvas.Pixels[Col, Row] := clWhite;
-      end;
+    MS := TMemoryStream.Create;
+    try
+      ABmpSrc.SaveToStream(MS);
+      BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr);
+    finally
+      MS.Free;
     end;
+
+    Exit;
   end;
 
-  //DEBUG
-  //ABmpMono.SaveToFile('c:\temp\chemono.bmp');
+  AWidth := ABmpSrc.Width;
+  AHeight := ABmpSrc.Height;
+  for Row := 0 to AHeight - 1 do
+  begin
+    ByteStr := '';
+
+    for Col := 0 to AWidth - 1 do
+    begin
+      APixel := ABmpSrc.Canvas.Pixels[Col, Row];
+      cRed := 0; cGreen := 0; cBlue := 0;
+      RedGreenBlue(APixel, cRed, cGreen, cBlue);
+      Luminosity := Trunc( ( cRed * 0.3 ) + ( cGreen  * 0.59 ) + ( cBlue * 0.11 ) );
+      Bit := ( Luminosity > LuminosityThreshold );
+      if InvertImg then
+        Bit := not Bit;
+
+      ByteStr := ByteStr + ifthen(Bit,'1','0');
+      if (Length(ByteStr) = 8) then
+      begin
+        ARasterStr := ARasterStr + chr(BinToInt(ByteStr));
+        ByteStr := '';
+      end;
+    end;
+
+    if (Length(ByteStr) > 0) then
+      ARasterStr := ARasterStr + chr(BinToInt(PadRight(ByteStr, 8, '0')));
+  end;
 end;
 {$EndIf}
-*)
+
 end.
 

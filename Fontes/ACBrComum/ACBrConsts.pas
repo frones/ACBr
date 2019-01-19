@@ -379,6 +379,7 @@ const
 
   cACBrDFeSSLEnviarException = 'Erro Interno: %d'+sLineBreak+'Erro HTTP: %d'+sLineBreak+
                                'URL: %s';
+  cACBrArquivoNaoEncontrado = 'Arquivo: %s não encontrado';
 
   sDisplayFormat = ',#0.%.*d';
 

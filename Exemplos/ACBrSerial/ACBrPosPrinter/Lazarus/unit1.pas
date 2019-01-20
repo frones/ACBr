@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ACBrPosPrinter, ACBrBase,
-  ACBrEscPosHookElginDLL, ACBrDevice;
+  strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
+  ACBrBase, ACBrEscPosHookElginDLL, ACBrDevice;
 
 type
 
@@ -16,15 +16,18 @@ type
   TFrPosPrinterTeste = class(TForm)
     ACBrPosPrinter1: TACBrPosPrinter;
     bAtivar: TBitBtn;
+    bApagarLogo: TButton;
     bImprimir: TBitBtn;
+    bImprimirLogo: TButton;
     bImpTagsValidas: TButton;
     bLerInfo: TButton;
     bLimpar: TBitBtn;
     bTagFormtacaoCaracter: TButton;
     bTagGaveta: TButton;
+    bTagLogo: TButton;
+    bTagBMP: TButton;
     bTagQRCode: TButton;
     bLerStatus: TButton;
-    bTagLogo: TButton;
     bTagsAlinhamento: TButton;
     bTagsCodBarras: TButton;
     bTagsTesteInvalidas: TButton;
@@ -32,6 +35,10 @@ type
     bImpLinhaALinha: TButton;
     bTagsTestePageMode: TButton;
     Button1: TButton;
+    bCaregarImagem: TButton;
+    bImprimirImagem: TButton;
+    bGravarLogo: TButton;
+    bConverter: TButton;
     cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
     cbGavetaSinalInvertido: TCheckBox;
@@ -42,12 +49,14 @@ type
     cbIgnorarTags: TCheckBox;
     cbTraduzirTags: TCheckBox;
     cbControlePorta: TCheckBox;
+    edImagem: TEdit;
     edLog: TEdit;
     gbCodBarrasConfig1: TGroupBox;
     gbCodBarrasConfig2: TGroupBox;
     gbGavetaConfig: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbCodBarrasConfig: TGroupBox;
+    Image1: TImage;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
@@ -70,20 +79,26 @@ type
     Label9: TLabel;
     mImp: TMemo;
     mLog: TMemo;
+    OpenPictureDialog1: TOpenPictureDialog;
     PageControl1: TPageControl;
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     Panel4: TPanel;
+    Panel5: TPanel;
+    rbArquivo: TRadioButton;
+    rbStream: TRadioButton;
     SbArqLog: TSpeedButton;
     btSerial: TSpeedButton;
+    ScrollBox1: TScrollBox;
     seGavetaTempoON: TSpinEdit;
     seGavetaTempoOFF: TSpinEdit;
     seLogoFatorX: TSpinEdit;
     seLogoFatorY: TSpinEdit;
+    seLogoKC1: TSpinEdit;
+    seLogoKC2: TSpinEdit;
     seQRCodeLarguraModulo: TSpinEdit;
     seQRCodeErrorLevel: TSpinEdit;
-    seLogoKC2: TSpinEdit;
     seQRCodeTipo: TSpinEdit;
     seColunas: TSpinEdit;
     seBarrasLargura: TSpinEdit;
@@ -91,8 +106,9 @@ type
     seBarrasAltura: TSpinEdit;
     seLinhasBuffer: TSpinEdit;
     seLinhasPular: TSpinEdit;
-    seLogoKC1: TSpinEdit;
     seGavetaNum: TSpinEdit;
+    Splitter1: TSplitter;
+    tsImagens: TTabSheet;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
     procedure ACBrDeviceHookAtivar(const APort: String; Params: String);
@@ -102,12 +118,19 @@ type
       var Retorno: AnsiString);
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
       var Tratado: Boolean);
+    procedure bApagarLogoClick(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
+    procedure bCaregarImagemClick(Sender: TObject);
+    procedure bConverterClick(Sender: TObject);
+    procedure bGravarLogoClick(Sender: TObject);
     procedure bImprimirClick(Sender: TObject);
+    procedure bImprimirImagemClick(Sender: TObject);
+    procedure bImprimirLogoClick(Sender: TObject);
     procedure bImpTagsValidasClick(Sender: TObject);
     procedure bLerInfoClick(Sender: TObject);
     procedure bLerStatusClick(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
+    procedure bTagBMPClick(Sender: TObject);
     procedure bTagFormtacaoCaracterClick(Sender: TObject);
     procedure bTagGavetaClick(Sender: TObject);
     procedure bTagLogoClick(Sender: TObject);
@@ -154,6 +177,7 @@ type
     FElginUSB : TElginUSBPrinter;
 
     Procedure GravarINI ;
+    procedure ImprimirBMP(AStream: TStream);
     Procedure LerINI ;
   public
     { public declarations }
@@ -165,9 +189,9 @@ var
 implementation
 
 Uses
-  typinfo, IniFiles, Printers,
+  typinfo, IniFiles, Printers, math, synacode,
   ConfiguraSerial,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrImage, ACBrConsts;
 
 {$R *.lfm}
 
@@ -225,6 +249,65 @@ end;
 procedure TFrPosPrinterTeste.bLimparClick(Sender: TObject);
 begin
   mImp.Clear;
+end;
+
+procedure TFrPosPrinterTeste.bTagBMPClick(Sender: TObject);
+var
+  SL: TStringList;
+  MS: TMemoryStream;
+  AWidth, AHeight: Integer;
+  ARasterStr: AnsiString;
+  mResp: TModalResult;
+  SS: TStringStream;
+begin
+  mImp.Lines.Add('</zera></ce>');
+
+  if rbStream.Checked then
+  begin
+    mResp := MessageDlg('Escolha o formato','SIM - Em ASCII Art'+sLineBreak+
+                                            'NÃO - Em Base64', mtConfirmation, mbYesNoCancel, 0);
+
+    if (mResp = mrYes) then
+    begin
+      SL := TStringList.Create;
+      MS := TMemoryStream.Create;
+      try
+        Image1.Picture.Bitmap.SaveToStream(MS);
+        MS.Position := 0;
+        BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr);
+        RasterStrToAscII(ARasterStr, AWidth, False, SL);
+        mImp.Lines.Add('<bmp>');
+        mImp.Lines.AddStrings(SL);
+        mImp.Lines.Add('</bmp>');
+      finally
+        MS.Free;
+        SL.Free;
+      end;
+    end;
+
+    if (mResp = mrNo) then
+    begin
+      SS := TStringStream.Create('');
+      try
+        Image1.Picture.Bitmap.SaveToStream(SS);
+        mImp.Lines.Add('<bmp>');
+        mImp.Lines.Add(EncodeBase64(SS.DataString));
+        mImp.Lines.Add('</bmp>');
+      finally
+        SS.Free;
+      end;
+    end;
+
+  end
+  else
+  begin
+    if (edImagem.Text = '') then
+      raise Exception.Create('Nome de Arquivo de Imagem não especificado');
+
+    mImp.Lines.Add('<bmp>'+edImagem.Text+'</bmp>');
+  end;
+
+  PageControl1.ActivePageIndex := 0;
 end;
 
 procedure TFrPosPrinterTeste.bTagFormtacaoCaracterClick(Sender: TObject);
@@ -744,6 +827,11 @@ begin
   end ;
 end;
 
+procedure TFrPosPrinterTeste.ImprimirBMP(AStream: TStream);
+begin
+
+end;
+
 procedure TFrPosPrinterTeste.LerINI;
 Var
   ArqINI : String ;
@@ -790,6 +878,30 @@ procedure TFrPosPrinterTeste.bImprimirClick(Sender: TObject);
 begin
   ACBrPosPrinter1.Buffer.Text := mImp.Lines.Text;
   ACBrPosPrinter1.Imprimir;
+end;
+
+procedure TFrPosPrinterTeste.bImprimirImagemClick(Sender: TObject);
+var
+  MS: TMemoryStream;
+begin
+  if rbStream.Checked then
+  begin
+    MS := TMemoryStream.Create;
+    try
+      Image1.Picture.Bitmap.SaveToStream(MS);
+      MS.Position := 0;
+      ACBrPosPrinter1.ImprimirImagemStream(MS);
+    finally
+      MS.Free ;
+    end ;
+  end
+  else
+    ACBrPosPrinter1.ImprimirImagemArquivo(edImagem.Text);
+end;
+
+procedure TFrPosPrinterTeste.bImprimirLogoClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ImprimirLogo(seLogoKC1.Value, seLogoKC2.Value, seLogoFatorX.Value, seLogoFatorY.Value);
 end;
 
 procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);
@@ -875,11 +987,67 @@ begin
   end;
 end;
 
+procedure TFrPosPrinterTeste.bCaregarImagemClick(Sender: TObject);
+begin
+  OpenPictureDialog1.Filter := 'BMP MonoCromático|*.bmp';
+
+  if OpenPictureDialog1.Execute then
+  begin
+    try
+      Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+      edImagem.Text := OpenPictureDialog1.FileName;
+    except
+      Image1.Picture.Clear;
+    end;
+  end;
+end;
+
+procedure TFrPosPrinterTeste.bConverterClick(Sender: TObject);
+var
+  ARasterStr: AnsiString;
+  AWidth, AHeight: Integer;
+  MS: TMemoryStream;
+begin
+  BitmapToRasterStr(Image1.Picture.Bitmap, True, AWidth, AHeight, ARasterStr);
+  MS := TMemoryStream.Create;
+  try
+    RasterStrToBMPMono(ARasterStr, AWidth, True, MS);
+    Image1.Picture.Bitmap.LoadFromStream(MS);
+    ACBrPosPrinter1.ImprimirImagemStream(MS);
+  finally
+    MS.Free;
+  end;
+end;
+
+procedure TFrPosPrinterTeste.bGravarLogoClick(Sender: TObject);
+var
+  MS: TMemoryStream;
+begin
+  if rbStream.Checked then
+  begin
+    MS := TMemoryStream.Create;
+    try
+      Image1.Picture.Bitmap.SaveToStream(MS);
+      MS.Position := 0;
+      ACBrPosPrinter1.GravarLogoStream(MS, seLogoKC1.Value, seLogoKC2.Value);
+    finally
+      MS.Free ;
+    end ;
+  end
+  else
+    ACBrPosPrinter1.GravarLogoArquivo(edImagem.Text, seLogoKC1.Value, seLogoKC2.Value);
+end;
+
 procedure TFrPosPrinterTeste.ACBrPosPrinter1GravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
   mLog.Lines.Add(ALogLine);
   Tratado := False;
+end;
+
+procedure TFrPosPrinterTeste.bApagarLogoClick(Sender: TObject);
+begin
+  ACBrPosPrinter1.ApagarLogo(seLogoKC1.Value, seLogoKC2.Value);
 end;
 
 procedure TFrPosPrinterTeste.ACBrDeviceHookAtivar(const APort: String;

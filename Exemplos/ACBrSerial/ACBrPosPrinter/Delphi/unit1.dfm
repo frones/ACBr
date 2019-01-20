@@ -1,8 +1,8 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 630
-  Top = 311
-  Width = 885
-  Height = 569
+  Left = 543
+  Top = 240
+  Width = 854
+  Height = 561
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
   Color = clBtnFace
@@ -13,6 +13,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   Font.Style = []
   OldCreateOrder = True
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -20,30 +21,30 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 613
-    Height = 530
+    Width = 582
+    Height = 522
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Top = 356
-      Width = 611
+      Top = 348
+      Width = 580
       Height = 173
       Align = alBottom
       TabOrder = 0
       object bTagFormtacaoCaracter: TButton
-        Left = 24
-        Top = 48
+        Left = 8
+        Top = 44
         Width = 183
         Height = 25
-        Caption = 'Tags de Formata'#231#227'o de Caracter'
+        Caption = 'Tags de Format. de Caracter'
         TabOrder = 0
         OnClick = bTagFormtacaoCaracterClick
       end
       object bTagsAlinhamento: TButton
-        Left = 24
-        Top = 72
+        Left = 8
+        Top = 68
         Width = 183
         Height = 25
         Caption = 'Tags de Alinhamento'
@@ -51,26 +52,26 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsAlinhamentoClick
       end
       object bTagQRCode: TButton
-        Left = 216
-        Top = 72
+        Left = 200
+        Top = 68
         Width = 183
         Height = 25
         Caption = 'Tags de QRCode'
-        TabOrder = 5
+        TabOrder = 6
         OnClick = bTagQRCodeClick
       end
       object bTagsCodBarras: TButton
-        Left = 216
-        Top = 48
+        Left = 200
+        Top = 44
         Width = 183
         Height = 25
         Caption = 'Tags de Codigo de Barras'
-        TabOrder = 4
+        TabOrder = 5
         OnClick = bTagsCodBarrasClick
       end
       object bTagsTesteInvalidas: TButton
-        Left = 24
-        Top = 96
+        Left = 8
+        Top = 92
         Width = 183
         Height = 25
         Caption = 'Teste de Tags Invalidas'
@@ -78,8 +79,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsTesteInvalidasClick
       end
       object bTagsTestePagCodigo: TButton
-        Left = 24
-        Top = 120
+        Left = 8
+        Top = 116
         Width = 183
         Height = 25
         Caption = 'Teste de P'#225'gina de C'#243'digo'
@@ -87,8 +88,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bTagsTestePagCodigoClick
       end
       object bImpLinhaALinha: TButton
-        Left = 216
-        Top = 120
+        Left = 200
+        Top = 116
         Width = 183
         Height = 25
         Caption = 'Teste Impress'#227'o Linha a Linha'
@@ -96,52 +97,52 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = bImpLinhaALinhaClick
       end
       object bImpTagsValidas: TButton
-        Left = 408
-        Top = 48
+        Left = 392
+        Top = 44
         Width = 183
         Height = 25
         Caption = 'Ajuda - Tags Validas'
-        TabOrder = 8
+        TabOrder = 9
         OnClick = bImpTagsValidasClick
       end
       object bLerStatus: TButton
-        Left = 408
-        Top = 120
+        Left = 392
+        Top = 116
         Width = 183
         Height = 25
         Caption = 'Leitura de Status'
-        TabOrder = 11
+        TabOrder = 12
         OnClick = bLerStatusClick
       end
       object bLerInfo: TButton
-        Left = 408
-        Top = 96
+        Left = 392
+        Top = 92
         Width = 183
         Height = 25
         Caption = 'Leitura de Informa'#231#245'es'
-        TabOrder = 10
+        TabOrder = 11
         OnClick = bLerInfoClick
       end
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 609
+        Width = 578
         Height = 39
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
-        TabOrder = 12
+        TabOrder = 13
         DesignSize = (
-          609
+          578
           39)
         object bLimpar: TBitBtn
-          Left = 420
+          Left = 389
           Top = 7
           Width = 83
           Height = 26
           Anchors = [akTop, akRight]
           Caption = 'Limpar'
-          TabOrder = 0
+          TabOrder = 1
           OnClick = bLimparClick
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -180,13 +181,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
         end
         object bImprimir: TBitBtn
-          Left = 511
+          Left = 484
           Top = 7
           Width = 92
           Height = 26
           Anchors = [akTop, akRight]
           Caption = 'Imprimir'
-          TabOrder = 1
+          TabOrder = 2
           OnClick = bImprimirClick
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
@@ -224,60 +225,61 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             0000000000000000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000}
         end
-        object Button1: TButton
-          Left = 64
+        object cbxLimparTexto: TCheckBox
+          Left = 16
           Top = 8
-          Width = 75
-          Height = 25
-          Caption = 'Senha'
-          TabOrder = 2
-          OnClick = Button1Click
+          Width = 217
+          Height = 19
+          Caption = 'Limpar texto a cada teste selecionado'
+          TabOrder = 0
         end
       end
-      object bTagLogo: TButton
-        Left = 216
-        Top = 96
-        Width = 183
-        Height = 25
-        Caption = 'Tags de Logotipo'
-        TabOrder = 6
-        OnClick = bTagLogoClick
-      end
       object bTagGaveta: TButton
-        Left = 408
-        Top = 72
+        Left = 392
+        Top = 68
         Width = 183
         Height = 25
         Caption = 'Tag de Gaveta'
-        TabOrder = 9
+        TabOrder = 10
         OnClick = bTagGavetaClick
       end
       object bTagsTestePageMode: TButton
-        Left = 24
-        Top = 144
+        Left = 8
+        Top = 140
         Width = 183
         Height = 25
         Caption = 'Teste de Page Mode'
-        TabOrder = 13
+        TabOrder = 4
         OnClick = bTagsTestePageModeClick
+      end
+      object Button1: TButton
+        Left = 200
+        Top = 140
+        Width = 183
+        Height = 25
+        Caption = 'Senha'
+        TabOrder = 8
+        OnClick = Button1Click
       end
     end
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 611
-      Height = 355
-      ActivePage = tsImprimir
+      Width = 580
+      Height = 347
+      ActivePage = tsImagens
       Align = alClient
+      TabHeight = 40
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 603
-          Height = 327
+          Width = 572
+          Height = 297
           Align = alClient
+          ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
         end
@@ -287,10 +289,346 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mLog: TMemo
           Left = 0
           Top = 0
-          Width = 603
-          Height = 327
+          Width = 572
+          Height = 297
           Align = alClient
           TabOrder = 0
+        end
+      end
+      object tsImagens: TTabSheet
+        Caption = 'Imagens e Logo'
+        object Splitter1: TSplitter
+          Left = 0
+          Top = 137
+          Width = 572
+          Height = 5
+          Cursor = crVSplit
+          Align = alTop
+        end
+        object gbCodBarrasConfig2: TGroupBox
+          Left = 0
+          Top = 208
+          Width = 572
+          Height = 88
+          Align = alTop
+          Caption = 'LogoTipo'
+          TabOrder = 0
+          object Label14: TLabel
+            Left = 16
+            Top = 16
+            Width = 20
+            Height = 13
+            Caption = 'KC1'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label15: TLabel
+            Left = 72
+            Top = 16
+            Width = 20
+            Height = 13
+            Caption = 'KC2'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label16: TLabel
+            Left = 128
+            Top = 16
+            Width = 31
+            Height = 13
+            Caption = 'FatorX'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object Label17: TLabel
+            Left = 185
+            Top = 16
+            Width = 31
+            Height = 13
+            Caption = 'FatorY'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object seLogoKC1: TSpinEdit
+            Left = 16
+            Top = 32
+            Width = 41
+            Height = 22
+            MaxValue = 126
+            MinValue = 0
+            TabOrder = 0
+            Value = 32
+            OnChange = seLogoKC1Change
+          end
+          object seLogoKC2: TSpinEdit
+            Left = 72
+            Top = 32
+            Width = 41
+            Height = 22
+            MaxValue = 126
+            MinValue = 0
+            TabOrder = 1
+            Value = 32
+            OnChange = seLogoKC2Change
+          end
+          object seLogoFatorX: TSpinEdit
+            Left = 129
+            Top = 32
+            Width = 41
+            Height = 22
+            MaxValue = 4
+            MinValue = 1
+            TabOrder = 2
+            Value = 4
+            OnChange = seLogoFatorXChange
+          end
+          object seLogoFatorY: TSpinEdit
+            Left = 184
+            Top = 32
+            Width = 41
+            Height = 22
+            MaxValue = 4
+            MinValue = 1
+            TabOrder = 3
+            Value = 4
+            OnChange = seLogoFatorYChange
+          end
+          object bGravarLogo: TButton
+            Left = 344
+            Top = 24
+            Width = 90
+            Height = 25
+            Caption = 'Gravar Logo'
+            TabOrder = 4
+            OnClick = bGravarLogoClick
+          end
+          object bTagLogo: TButton
+            Left = 240
+            Top = 56
+            Width = 118
+            Height = 25
+            Caption = 'Tags de Logotipo'
+            TabOrder = 5
+            OnClick = bTagLogoClick
+          end
+          object bImprimirLogo: TButton
+            Left = 240
+            Top = 24
+            Width = 72
+            Height = 25
+            Caption = 'Imprimir'
+            TabOrder = 6
+            OnClick = bImprimirLogoClick
+          end
+          object bApagarLogo: TButton
+            Left = 464
+            Top = 24
+            Width = 94
+            Height = 25
+            Caption = 'Apagar Logo'
+            TabOrder = 7
+            OnClick = bApagarLogoClick
+          end
+        end
+        object Panel5: TPanel
+          Left = 0
+          Top = 142
+          Width = 572
+          Height = 66
+          Align = alTop
+          BevelInner = bvRaised
+          BevelOuter = bvLowered
+          TabOrder = 1
+          object bCaregarImagem: TButton
+            Left = 8
+            Top = 7
+            Width = 118
+            Height = 25
+            Caption = 'Carregar Imagem'
+            TabOrder = 0
+            OnClick = bCaregarImagemClick
+          end
+          object bImprimirImagem: TButton
+            Left = 232
+            Top = 35
+            Width = 72
+            Height = 25
+            Caption = 'Imprimir'
+            TabOrder = 2
+            OnClick = bImprimirImagemClick
+          end
+          object bTagBMP: TButton
+            Left = 394
+            Top = 35
+            Width = 168
+            Height = 25
+            Caption = 'Tags de Impress'#227'o de BMP'
+            TabOrder = 3
+            OnClick = bTagBMPClick
+          end
+          object edImagem: TEdit
+            Left = 131
+            Top = 7
+            Width = 431
+            Height = 21
+            TabOrder = 1
+          end
+          object rbArquivo: TRadioButton
+            Left = 121
+            Top = 41
+            Width = 100
+            Height = 19
+            Caption = 'De um Arquivo'
+            TabOrder = 4
+          end
+          object rbStream: TRadioButton
+            Left = 16
+            Top = 41
+            Width = 95
+            Height = 19
+            Caption = 'De um Stream'
+            Checked = True
+            TabOrder = 5
+            TabStop = True
+          end
+          object bConverter: TButton
+            Left = 310
+            Top = 35
+            Width = 78
+            Height = 25
+            Caption = 'Converter'
+            TabOrder = 6
+            OnClick = bConverterClick
+          end
+        end
+        object ScrollBox1: TScrollBox
+          Left = 0
+          Top = 0
+          Width = 572
+          Height = 137
+          Align = alTop
+          TabOrder = 2
+          object Image1: TImage
+            Left = 0
+            Top = 0
+            Width = 568
+            Height = 126
+            Align = alTop
+            Center = True
+            Picture.Data = {
+              07544269746D6170DE0D0000424DDE0D0000000000003E00000028000000FA00
+              00006D0000000100010000000000A00D00000000000000000000020000000000
+              000000000000FFFFFF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FE00000000000000000000000F00F000000000000000
+              00000000000000003FC0FC00000000000000000000000F00F800000000000000
+              00000000000000000FC0F800000000000000000000000F007C00000000000000
+              000000000000000007C0E000000000000000000000000F003E00000000000000
+              200000000000000001C0C000000000000000000000000F001F00000000000001
+              C00000000000000001C0C000000000000000000000000F000F8000000000001F
+              800000000000000000C0800000000000000000000380040007C000000000007F
+              8000000000000000004080000000000000000000008000000100000000000000
+              00000000000000000040000000000C3BE39E7367E3CF67807C38CCCF9C3CCFCC
+              0FCC3B3CEE0000000000000000000C37E7BF7367E7EFEFC0FE7CCCCFDC7ECFCC
+              0FEC7776EE0000000000000000000FF666737367660EECE0C6C6CCDFDCE0CECC
+              0C6C771EEE000000000000000000066666737363EE07ECE1C0C6CCDFDCE0C7CC
+              0CEE1F7EEE00000000000000000007E6663377606660ECC1C0E6EECCDCE6C4CC
+              0FCE0760EE00000000000000000007C66F9E7EE7E7C7C781C07CFFCF9F7CC7CC
+              0CEFBF3EEE00000000000000000003C00600000000000000EE0000000000000C
+              0CE000000E00000000008000000003C00200000000078000FC0000300000C00C
+              0FC00000EE00000000408000000000000000000000000F003803E1FFE00003C0
+              00000000000000000040C000000000000000000000000F000001FFFE000007C0
+              000000000000000000C0E000000000000000000000000F000000FFF000000780
+              000000000000000001C0F000000000000000000000000F0000007FC000000700
+              000000000000000003C0F800000000000000000000000F0000003C0000000E00
+              000000000000000007C0FE00000000000000000000000F000000000000001E00
+              00000000000000001FC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFF8003FFFFF01FFFFFFF800FFFFFFFFFF80
+              7FFFF807FFFFFFFFFFC0FFFFFFE000780078001E03F80001FC00F00000007FE0
+              78007807FFFFFFFFFFC0FFFFFFE000380078001E07E000007E00F000000007F0
+              78007807FFFFFFFFFFC0FFFFFFF000380078001E0F8000001F00F000000001F0
+              78007807FFFFFFFFFFC0FFFFFFF0003C0070001C3E0000000780F0000000007C
+              78007807FFFFFFFFFFC0FFFFFFF8003FFFF0003C3E00000007C0F0000000003C
+              78007807FFFFFFFFFFC0FFFFFFF8001FFFF000387800000001E0F0000000001E
+              78007807FFFFFFFFFFC0FFFFFFFC001FFFF00078F800000001E0F0000000001E
+              78007807FFFFFFFFFFC0FFFFFFFC001FFFE00078F000000000F0F0000000000E
+              78007807FFFFFFFFFFC0FFFFFFFC0000000000F1E000000000F8F0000000000F
+              7800780FFFFFFFFFFFC0FFFFFFFC0000000000F1C00000000078F0000000000F
+              7800780FFFFFFFFFFFC0FFFFFFFE0000000000E3C0003FC00038F0003FF80007
+              7800780FFFFFFFFFFFC0FFFFFFFE0000000000E3C0007FE00038F0003FFC0007
+              F800780FFFFFFFFFFFC0FFFFFFFF0000000001EF8000FFF0003CF0003FFE0007
+              F800781FFFFFFFFFFFC0FFFFFFFF0000000001FF8001F0F8003CF00039FE0007
+              F800781FFFFFFFFFFFC0FFFFFFFF0000000003FF0001E07C001CF0003BCE0007
+              F800781FFFFFFFFFFFC0FFFFFFFF8000000003FF0003C03C00FEF0003FFE0007
+              7800783FFFFFFFFFFFC0FFFFFFFF8000000003E70003801C07FEF0003FFE000F
+              7800783FFFFFFFFFFFC0FFFFFFFFC001FF00078F0003801C1FFEF0003FFC000F
+              7800383FFFFFFFFFFFC0FFFFFFFFC001FF00070F0003801FFFC0F0003FE0000E
+              7800383FFFFFFFFFFFC0FFFFFFFFC001FE000F0F0007801FFF00F0000000001E
+              78003C7FFFFFFFFFFFC0FFFFFFFFE001FE000F0F0007800FE000F0000000003E
+              78001FFFFFFFFFFFFFC0FFFFFFFFE001FE000F0F0007800F8000F0000000007C
+              78001FFFFFFFFFFFFFC0FFFFFFFFE000FE001FEF0007800C0000F000000000F8
+              78001FFFFFFFFFFFFFC0FFFFFFFFF000FC001FFF000780000000F000000007F0
+              7800073FFFFFFFFFFFC0FFFFFFFFF0007C001FFF000780000000F000000007E0
+              7800001FFFFFFFFFFFC0FFFFFFFFF8007C003C7F0007800E0000F000000001F0
+              7800000FFFFFFFFFFFC0FFFFFFFFF80078003C0F0003801FE000F000000000F0
+              7800000FFFFFFFFFFFC0FFFFFFFFF8003800780F0003801FFE00F00000000078
+              7800000FFFFFFFFFFFC0FFFFFFFFFC00300078070003801FFFF8F0003FF0003C
+              78008007FFFFFFFFFFC0FFFFFFFFFC00300070070003C01CFFFEF0003FF8003C
+              78008007FFFFFFFFFFC0FFFFFFFFFE003000F0070001FC7C03FEF0003FF8003C
+              7800C003FFFFFFFFFFC0FFFFFFFFFE001000E0078001FFF8003CF0003838001C
+              7800E003FFFFFFFFFFC0FFFFFFFFFE001000E0078000FFF8003CF0003CF8001E
+              7800F007FFFFFFFFFFC0FFFFFFFFFF000001E00380007FE00038F0003FF8001E
+              7FFFFFFFFFFFFFFFFFC0FFFFFFFFFF000001E003C0003FC00038F0003FF8001E
+              7FFFFFFFFFFFFFFFFFC0FFFFFFFFFF000003C001C00000000078F0003FC0001E
+              7FFFFFFFFFFFFFFFFFC0FFFFFFFFFF800003C001E000000000F0F0000000001C
+              00007FFFFFFFFFFFFFC0FFFFFFFFFF8000038000E000000000F0F0000000003C
+              00007FFFFFFFFFFFFFC0FFFFFFFFFFC000078000F800000001E0F0000000003C
+              0000FFFFFFFFFFFFFFC0FFFFFFFFFFC0000780007800000003C0F00000000038
+              0001FFFFFFFFFFFFFFC0FFFFFFFFFFC0000F00003E00000007C0F000000000FC
+              0003FFFFFFFFFFFFFFC0FFFFFFFFFFC0000F00003E0000000F80F000000000FE
+              0003FFFFFFFFFFFFFFC0FFFFFFFFFFE0000F00001F8000001F00F000000001FE
+              0007FFFFFFFFFFFFFFC0FFFFFFFFFFE0000E000007E000007E00F000000007CF
+              000FFFFFFFFFFFFFFFC0FFFFFFFFFFF0001E000003F80001FC00F00000003FCF
+              800FFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFC000001FFFFFFF000FFFFFFFFFF07
+              C01FFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFC0000007FFFFFE000FFFFFFFFFFF3
+              C03FFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFE0000001FFFFF8001FFFFFFFFFFFF
+              E07FFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFF00000000FFF00001E000000007FF
+              F0FFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFF8000000000700003C0000000007F
+              F9FFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFC000000000700007C00000000001
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFE000000000700007800000000000
+              1FFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFF00000000070000F000000000000
+              0FFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFF80000000070001E000000000000
+              1FFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFC0000000070003E000000000000
+              3FFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFF00000000700078000000000000
+              7FFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFF000000007800F8000000000000
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFF800000007800F0000000000001
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFE00000007801E0000000000007
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFF00000007803C000000000000F
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFC0000007807C000000000003F
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFE00000078078000000000007F
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFF000000380F000000000000FF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFC00000381F000000000003FF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFF00000381E00000000000FFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFC00003C7C00000000003FFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFF00003C780000000000FFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFC0003CF80000000001FFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFF0003DE0000000000FFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFE003FE0000000003FFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFC03FC000000003FFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFF01F800000000FFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFE1F000000007FFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000FFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFC00003FFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFC0}
+          end
         end
       end
     end
@@ -299,7 +637,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Left = 0
     Top = 0
     Width = 256
-    Height = 530
+    Height = 522
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -351,7 +689,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object Label5: TLabel
         Left = 127
-        Top = 200
+        Top = 194
         Width = 54
         Height = 13
         Caption = 'Pag.codigo'
@@ -421,11 +759,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = SbArqLogClick
       end
       object Label7: TLabel
-        Left = 192
+        Left = 178
         Top = 104
-        Width = 58
+        Width = 67
         Height = 13
-        Caption = 'Linhas Pular'
+        Caption = 'Linhas '#224' Pular'
         Color = clBtnFace
         ParentColor = False
       end
@@ -439,7 +777,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Checked = True
         State = cbChecked
         TabOrder = 0
-        OnClick = cbTraduzirTagsClick
       end
       object cbIgnorarTags: TCheckBox
         Left = 15
@@ -449,7 +786,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Hint = 'N'#227'o processa as Tags, imprime-as como texto normal'
         Caption = 'IgnorarTags'
         TabOrder = 1
-        OnClick = cbIgnorarTagsClick
       end
       object cbxModelo: TComboBox
         Left = 16
@@ -491,7 +827,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           'ta Serial ap'#243's o envio'
         Caption = 'Controle Porta'
         TabOrder = 5
-        OnClick = cbControlePortaClick
       end
       object seEspLinhas: TSpinEdit
         Left = 72
@@ -506,7 +841,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object cbxPagCodigo: TComboBox
         Left = 127
-        Top = 216
+        Top = 210
         Width = 117
         Height = 21
         Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
@@ -527,7 +862,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seLinhasBufferChange
       end
       object edLog: TEdit
-        Left = 129
+        Left = 127
         Top = 168
         Width = 84
         Height = 21
@@ -605,7 +940,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Checked = True
         State = cbChecked
         TabOrder = 12
-        OnClick = cbCortarPapelClick
       end
     end
     object gbCodBarrasConfig: TGroupBox
@@ -666,7 +1000,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           'ta Serial ap'#243's o envio'
         Caption = 'Exibe Numero'
         TabOrder = 2
-        OnClick = cbHRIClick
       end
     end
     object gbCodBarrasConfig1: TGroupBox
@@ -738,103 +1071,14 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = seQRCodeErrorLevelChange
       end
     end
-    object gbCodBarrasConfig2: TGroupBox
+    object gbGavetaConfig: TGroupBox
       Left = 1
       Top = 376
       Width = 254
       Height = 64
       Align = alTop
-      Caption = 'LogoTipo'
-      TabOrder = 3
-      object Label14: TLabel
-        Left = 16
-        Top = 16
-        Width = 20
-        Height = 13
-        Caption = 'KC1'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object Label15: TLabel
-        Left = 72
-        Top = 16
-        Width = 20
-        Height = 13
-        Caption = 'KC2'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object Label16: TLabel
-        Left = 128
-        Top = 16
-        Width = 31
-        Height = 13
-        Caption = 'FatorX'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object Label17: TLabel
-        Left = 185
-        Top = 16
-        Width = 31
-        Height = 13
-        Caption = 'FatorY'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object seLogoKC1: TSpinEdit
-        Left = 16
-        Top = 32
-        Width = 41
-        Height = 22
-        MaxValue = 126
-        MinValue = 0
-        TabOrder = 0
-        Value = 32
-        OnChange = seLogoKC1Change
-      end
-      object seLogoKC2: TSpinEdit
-        Left = 72
-        Top = 32
-        Width = 41
-        Height = 22
-        MaxValue = 126
-        MinValue = 0
-        TabOrder = 1
-        Value = 32
-        OnChange = seLogoKC2Change
-      end
-      object seLogoFatorX: TSpinEdit
-        Left = 129
-        Top = 32
-        Width = 41
-        Height = 22
-        MaxValue = 4
-        MinValue = 1
-        TabOrder = 2
-        Value = 4
-        OnChange = seLogoFatorXChange
-      end
-      object seLogoFatorY: TSpinEdit
-        Left = 184
-        Top = 32
-        Width = 41
-        Height = 22
-        MaxValue = 4
-        MinValue = 1
-        TabOrder = 3
-        Value = 4
-        OnChange = seLogoFatorYChange
-      end
-    end
-    object gbGavetaConfig: TGroupBox
-      Left = 1
-      Top = 440
-      Width = 254
-      Height = 64
-      Align = alTop
       Caption = 'Gaveta'
-      TabOrder = 4
+      TabOrder = 3
       object Label18: TLabel
         Left = 63
         Top = 16
@@ -883,7 +1127,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           'ta Serial ap'#243's o envio'
         Caption = 'Invertido'
         TabOrder = 3
-        OnClick = cbGavetaSinalInvertidoClick
       end
       object seGavetaTempoOFF: TSpinEdit
         Left = 112
@@ -926,7 +1169,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     CortaPapel = False
     VerificarImpressora = True
     OnGravarLog = ACBrPosPrinter1GravarLog
-    Left = 280
-    Top = 256
+    Left = 120
+    Top = 456
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 16
+    Top = 448
   end
 end

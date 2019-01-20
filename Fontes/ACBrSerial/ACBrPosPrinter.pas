@@ -180,7 +180,6 @@ type
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; virtual;
     function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
-    function ComandoLogo: AnsiString; virtual;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; virtual;
     function ComandoInicializa: AnsiString; virtual;
     function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
@@ -190,6 +189,21 @@ type
     procedure Configurar; virtual;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
+
+    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; virtual;
+    function ComandoImprimirImagemArquivo(ArquivoBMP: String): AnsiString;
+    function ComandoImprimirImagemStream(ABMPStream: TStream): AnsiString;
+
+    function ComandoLogo: AnsiString; virtual;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; virtual;
+    function ComandoGravarLogoArquivo(ArquivoBMP: String): AnsiString;
+    function ComandoGravarLogoStream(ABMPStream: TStream): AnsiString;
+    function ComandoApagarLogo: AnsiString; virtual;
+
+    procedure ArquivoImagemToRasterStr(ArquivoImagem: String; out AWidth: Integer;
+      out AHeight: Integer; out ARasterStr: AnsiString);
 
     constructor Create(AOwner: TACBrPosPrinter);
     destructor Destroy; override;
@@ -335,6 +349,8 @@ type
     procedure SetPorta(const AValue: String);
     procedure SetTraduzirTags(AValue: Boolean);
     procedure SetModelo(AValue: TACBrPosPrinterModelo);
+    procedure VerificarParametrosLogo(const AKC2: Integer = -1; const AKC1: Integer = -1);
+    function ProcessarComandoBMP(const ConteudoBloco: String): AnsiString;
 
   protected
     FPosPrinterClass: TACBrPosPrinterClass;
@@ -348,6 +364,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+
+    property PosPrinter: TACBrPosPrinterClass read FPosPrinterClass;
 
     procedure Ativar;
     procedure Desativar;
@@ -377,6 +395,18 @@ type
 
     function LerStatusImpressora( Tentativas: Integer = 1): TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
+
+    procedure ImprimirImagemStream(ABMPStream: TStream);
+    procedure ImprimirImagemArquivo(ArquivoBMP: String);
+    procedure ImprimirImagemRasterStr(const ARasterStr: AnsiString; AWidth, AHeight: Integer);
+
+    procedure ImprimirLogo(AKC1: Integer = -1; AKC2: Integer = -1;
+      AFatorX: Integer = -1; AFatorY: Integer = -1);
+    procedure GravarLogoStream(ABMPStream: TStream; AKC1: Integer = -1;
+      AKC2: Integer = -1);
+    procedure GravarLogoArquivo(ArquivoBMP: String; AKC1: Integer = -1;
+      AKC2: Integer = -1);
+    procedure ApagarLogo(AKC1: Integer = -1; AKC2: Integer = -1);
 
     function CalcularAlturaTexto(ALinhas: Integer): Integer;
     function CalcularLinhasAltura(AAltura: Integer): Integer;
@@ -433,8 +463,9 @@ type
 implementation
 
 uses
-  strutils, Math, typinfo,
-  ACBrUtil, ACBrConsts,
+  strutils, Math, typinfo, {$IfNDef NOGUI}Graphics,{$EndIf}
+  ACBrUtil, ACBrImage, ACBrConsts,
+  synacode,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold, ACBrEscEpsonP2;
 
 { TACBrConfigModoPagina }
@@ -574,11 +605,6 @@ begin
   Result := '';
 end;
 
-function TACBrPosPrinterClass.ComandoLogo: AnsiString;
-begin
-  Result := '';
-end;
-
 function TACBrPosPrinterClass.ComandoGaveta(NumGaveta: Integer): AnsiString;
 begin
   Result := '';
@@ -654,6 +680,107 @@ end;
 function TACBrPosPrinterClass.ComandoConfiguraModoPagina: AnsiString;
 begin
   Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoImprimirImagemRasterStr(const RasterStr: AnsiString;
+  AWidth: Integer; AHeight: Integer): AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoImprimirImagemArquivo(ArquivoBMP: String): AnsiString;
+var
+  AWidth, AHeight: Integer;
+  ARasterStr: AnsiString;
+begin
+  AWidth := 0; AHeight := 0; ARasterStr := '';
+  ArquivoImagemToRasterStr(ArquivoBMP, AWidth, AHeight, ARasterStr);
+  Result := ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight);
+end;
+
+function TACBrPosPrinterClass.ComandoImprimirImagemStream(ABMPStream: TStream
+  ): AnsiString;
+var
+  AWidth, AHeight: Integer;
+  ARasterStr: AnsiString;
+begin
+  AWidth := 0; AHeight := 0; ARasterStr := '';
+  BMPMonoToRasterStr(ABMPStream, True, AWidth, AHeight, ARasterStr );
+
+  Result := ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight);
+end;
+
+function TACBrPosPrinterClass.ComandoLogo: AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoGravarLogoRasterStr(const RasterStr: AnsiString;
+  AWidth: Integer; AHeight: Integer): AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrPosPrinterClass.ComandoGravarLogoArquivo(ArquivoBMP: String): AnsiString;
+var
+  AWidth, AHeight: Integer;
+  ARasterStr: AnsiString;
+begin
+  AWidth := 0; AHeight := 0; ARasterStr := '';
+  ArquivoImagemToRasterStr(ArquivoBMP, AWidth, AHeight, ARasterStr);
+  Result := ComandoGravarLogoRasterStr(ARasterStr, AWidth, AHeight);
+end;
+
+function TACBrPosPrinterClass.ComandoGravarLogoStream(ABMPStream: TStream
+  ): AnsiString;
+var
+  AWidth, AHeight: Integer;
+  ARasterStr: AnsiString;
+begin
+  AWidth := 0; AHeight := 0; ARasterStr := '';
+  BMPMonoToRasterStr(ABMPStream, True, AWidth, AHeight, ARasterStr );
+
+  Result := ComandoGravarLogoRasterStr(ARasterStr, AWidth, AHeight);
+end;
+
+function TACBrPosPrinterClass.ComandoApagarLogo: AnsiString;
+begin
+  Result := '';
+end;
+
+procedure TACBrPosPrinterClass.ArquivoImagemToRasterStr(ArquivoImagem: String; out
+  AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString);
+var
+  {$IfNDef NOGUI}
+   APicture: TPicture;
+  {$Else}
+   MS: TMemoryStream;
+  {$EndIf}
+begin
+  AWidth := 0; AHeight := 0; ARasterStr := '';
+  if (Trim(ArquivoImagem) = '') then
+    Exit;
+
+  if not FileExists(ArquivoImagem) then
+    raise EPosPrinterException.Create(ACBrStr(Format(cACBrArquivoNaoEncontrado,[ArquivoImagem])));
+
+  {$IfNDef NOGUI}
+   APicture := TPicture.Create;
+   try
+     APicture.LoadFromFile(ArquivoImagem);
+     BitmapToRasterStr(APicture.Bitmap, True, AWidth, AHeight, ARasterStr);
+   finally
+     APicture.Free;
+   end;
+  {$Else}
+   MS := TMemoryStream.Create;
+   try
+     MS.LoadFromFile(ArquivoBMP);
+     BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr );
+   finally
+     MS.Free;
+   end;
+  {$EndIf}
 end;
 
 procedure TACBrPosPrinterClass.Configurar;
@@ -765,6 +892,14 @@ begin
   begin
     Nome := cTagQRCodeError;
     Ajuda := 'Configura o Error Level do QRCode: 0 a 3';
+    EhBloco := True;
+  end;
+
+  // Tag de Impressão de Imagem
+  with FTagProcessor.Tags.New do
+  begin
+    Nome := cTagBMP;
+    Ajuda := 'Imprime Imagem BMP monocromática. Conteúdo pode ser: Path da Imagem, Stream em Base64 ou AscII Art (0 e 1)';
     EhBloco := True;
   end;
 
@@ -974,6 +1109,60 @@ begin
   end;
 
   FModelo := AValue;
+end;
+
+procedure TACBrPosPrinter.VerificarParametrosLogo(const AKC2: Integer;
+  const AKC1: Integer);
+begin
+  if AKC1 >= 0 then
+    FConfigLogo.KeyCode1 := AKC1;
+
+  if AKC2 >= 0 then
+    FConfigLogo.KeyCode2 := AKC2;
+end;
+
+function TACBrPosPrinter.ProcessarComandoBMP(const ConteudoBloco: String
+  ): AnsiString;
+var
+  ARasterStr: AnsiString;
+  AHeight, AWidth: Integer;
+  SL: TStringList;
+  AData: String;
+  SS: TStringStream;
+begin
+  AData := Trim(ConteudoBloco);
+
+  Result := '';
+  if (AData = '') then
+    Exit;
+
+  if StrIsBinary(LeftStr(AData,10)) then           // AscII Art
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Text := AData;
+      AWidth := 0; AHeight := 0; ARasterStr := '';
+      AscIIToRasterStr(SL, AWidth, AHeight, ARasterStr);
+    finally
+      SL.Free;
+    end;
+
+    if (Length(ARasterStr) > 0) and (AWidth > 0) and (AHeight > 0) then
+      Result := FPosPrinterClass.ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight);
+  end
+
+  else if StrIsBase64(AData) then
+  begin
+    SS := TStringStream.Create(DecodeBase64(AData));
+    try
+      Result := FPosPrinterClass.ComandoImprimirImagemStream(SS);
+    finally
+      SS.Free;
+    end;
+  end
+
+  else
+    Result := FPosPrinterClass.ComandoImprimirImagemArquivo(AData);
 end;
 
 procedure TACBrPosPrinter.DoLinesChange(Sender: TObject);
@@ -1259,6 +1448,11 @@ begin
     else if ATag = cTagQRCode then
     begin
       BlocoTraduzido := FPosPrinterClass.ComandoQrCode(ConteudoBloco);
+    end
+
+    else if ATag = cTagBMP then
+    begin
+      BlocoTraduzido := ProcessarComandoBMP(ConteudoBloco);
     end
 
     else if ATag = cTagModoPaginaDirecao then
@@ -1636,6 +1830,66 @@ begin
   finally
     Ativo := OldAtivo;
   end;
+end;
+
+procedure TACBrPosPrinter.ImprimirImagemStream(ABMPStream: TStream);
+begin
+  GravarLog('ImprimirBMP( '+IntToStr(ABMPStream.Size)+' bytes )');
+  ImprimirCmd(FPosPrinterClass.ComandoImprimirImagemStream(ABMPStream));
+end;
+
+procedure TACBrPosPrinter.ImprimirImagemArquivo(ArquivoBMP: String);
+begin
+  GravarLog('ImprimirBMP( '+ArquivoBMP+' )');
+  ImprimirCmd(FPosPrinterClass.ComandoImprimirImagemArquivo(ArquivoBMP));
+end;
+
+procedure TACBrPosPrinter.ImprimirImagemRasterStr(const ARasterStr: AnsiString; AWidth,
+  AHeight: Integer);
+begin
+  GravarLog('ImprimirBMP( '+IntToStr(Length(ARasterStr))+' bytes, '+
+            IntToStr(AWidth)+', '+IntToStr(AHeight)+' )');
+  ImprimirCmd(FPosPrinterClass.ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight));
+end;
+
+procedure TACBrPosPrinter.ImprimirLogo(AKC1: Integer; AKC2: Integer;
+  AFatorX: Integer; AFatorY: Integer);
+begin
+  GravarLog('ImprimirLogo( '+IntToStr(AKC1)+', '+IntToStr(AKC2)+', '+
+    IntToStr(AFatorX)+', '+IntToStr(AFatorY)+' )');
+
+  VerificarParametrosLogo(AKC2, AKC1);
+
+  if AFatorX >= 0 then
+    FConfigLogo.FatorX := AFatorX;
+
+  if AFatorY >= 0 then
+    FConfigLogo.FatorY := AFatorY;
+
+  ImprimirCmd(FPosPrinterClass.ComandoLogo)
+end;
+
+procedure TACBrPosPrinter.GravarLogoStream(ABMPStream: TStream; AKC1: Integer;
+  AKC2: Integer);
+begin
+  GravarLog('GravarLogo( '+IntToStr(ABMPStream.Size)+' bytes, '+IntToStr(AKC1)+', '+IntToStr(AKC2)+' )');
+  VerificarParametrosLogo(AKC2, AKC1);
+  ImprimirCmd(FPosPrinterClass.ComandoGravarLogoStream(ABMPStream));
+end;
+
+procedure TACBrPosPrinter.GravarLogoArquivo(ArquivoBMP: String; AKC1: Integer;
+  AKC2: Integer);
+begin
+  GravarLog('GravarLogo( '+ArquivoBMP+', '+IntToStr(AKC1)+', '+IntToStr(AKC2)+' )');
+  VerificarParametrosLogo(AKC2, AKC1);
+  ImprimirCmd(FPosPrinterClass.ComandoGravarLogoArquivo(ArquivoBMP))
+end;
+
+procedure TACBrPosPrinter.ApagarLogo(AKC1: Integer; AKC2: Integer);
+begin
+  GravarLog('ApagarLogo( '+IntToStr(AKC1)+', '+IntToStr(AKC2)+' )');
+  VerificarParametrosLogo(AKC2, AKC1);
+  ImprimirCmd(FPosPrinterClass.ComandoApagarLogo)
 end;
 
 function TACBrPosPrinter.CalcularAlturaTexto(ALinhas: Integer): Integer;

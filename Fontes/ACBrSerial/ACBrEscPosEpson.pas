@@ -52,6 +52,9 @@ type
   { TACBrEscPosEpson }
 
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
+  private
+    procedure VerificarKeyCodes;
+
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
@@ -62,12 +65,19 @@ type
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
-    function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
     function ComandoConfiguraModoPagina: AnsiString; override;
 
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
     function LerInfo: String; override;
+
+    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; override;
+
+    function ComandoLogo: AnsiString; override;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; override;
+    function ComandoApagarLogo: AnsiString; override;
   end;
 
   function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
@@ -75,12 +85,11 @@ type
   function ComandoCodBarrasEscPosNo128ABC(const ATag: String; const ACodigo: AnsiString;
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
 
-
 implementation
 
 uses
   strutils, math,
-  ACBrConsts, ACBrUtil;
+  ACBrUtil, ACBrConsts;
 
 function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
   const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
@@ -196,8 +205,21 @@ begin
   end;
 end;
 
-
 { TACBrEscPosEpson }
+
+procedure TACBrEscPosEpson.VerificarKeyCodes;
+  procedure VerificarKeyCode(AkeyCode: Integer; NomeKeyCode: String);
+  begin
+    if (AKeyCode < 32) or (AkeyCode > 126) then
+      raise EPosPrinterException.Create(NomeKeyCode+' deve estar entre 32 a 126');
+  end;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    VerificarKeyCode(KeyCode1, 'KeyCode1');
+    VerificarKeyCode(KeyCode2, 'KeyCode2');
+  end;
+end;
 
 constructor TACBrEscPosEpson.Create(AOwner: TACBrPosPrinter);
 begin
@@ -364,10 +386,44 @@ begin
     end
     else
     begin
+      VerificarKeyCodes;
+
       Result := GS + '(L' + #6 + #0 + #48 + #69 +
                 AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
                 AnsiChr(FatorX)   + AnsiChr(FatorY);
     end;
+  end;
+end;
+
+function TACBrEscPosEpson.ComandoGravarLogoRasterStr(
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+begin
+  VerificarKeyCodes;
+
+  with fpPosPrinter.ConfigLogo do
+  begin
+    // Comando para gravar Raster Img na memória
+    Result := #48 + #67 + #48 +   // m + fn + a
+              AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
+              #1 +                // b - 1 Cor, Mono
+              IntToLEStr(AWidth)  +
+              IntToLEStr(AHeight) +
+              '1' +               // Inicio cor 1
+              RasterStr +
+              #1;                 // Fim, cor 1
+
+    Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
+  end;
+end;
+
+function TACBrEscPosEpson.ComandoApagarLogo: AnsiString;
+begin
+  VerificarKeyCodes;
+
+  with fpPosPrinter.ConfigLogo do
+  begin
+    Result := GS + '(L' + #4 + #0 + #48 + #66 +
+            AnsiChr(KeyCode1) + AnsiChr(KeyCode2);
   end;
 end;
 
@@ -497,49 +553,26 @@ begin
   Result := Info;
 end;
 
-(*
-procedure TACBrEscPosEpson.ProgramarLogo(ALogoFileBMP: String);
-var
-  AFileStream: TFileStream;
-  ABitMap: TBitmap;
-  Col, Row, W, H, P: Integer;
-  ACmd: AnsiString;
+function TACBrEscPosEpson.ComandoImprimirImagemRasterStr(
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
-  // Inspiração: http://stackoverflow.com/questions/13715950/writing-a-bitmap-to-epson-tm88iv-through-esc-p-commands-write-to-nvram
+  // Comando para gravar Raster Img na memória
+  Result := #48 + #112 + #48 +  // m + fn + a
+            #01 + #01 +         // bx + by
+            '1' +               // c - 1 Cor, Mono
+            IntToLEStr(AWidth)  +
+            IntToLEStr(AHeight) +
+            RasterStr;
 
-  ABitMap := TBitmap.Create;
-  AFileStream := TFileStream.Create(ALogoFileBMP, fmOpenRead);
-  try
-    AFileStream.Position := 0;
-    ABitMap.LoadFromStream(AFileStream);
+  Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
 
-    W := ABitMap.Width;
-    H := ABitMap.Height;
+  // Comando para imprimir Raster image na impressora
+  Result := Result + GS  + '(L' + #2 + #0 + #48 +#50;
 
-    ACmd := #48 + #67 + #48 + 'AC' + #01 +
-            IntToLEStr(W) +
-            IntToLEStr(H) +
-            #49;  // 1 Cor, Mono
-
-    For Col := 0 to W do
-      For Row := 0 to H do
-      begin
-        P := ABitMap.Canvas.Pixels[Col, Row];
-        ACmd := ACmd + AnsiChr( P );
-      end;
-
-    ACmd := GS + 'L(' + IntToLEStr(Length(ACmd)) + ACmd;
-
-    fpPosPrinter.ImprimirCmd( ACmd ) ;
-
-    fpPosPrinter.ImprimirCmd( GS  + '(L' + #6 + #0 + #48 + #69 + 'AC' + #01 + #01 );
-
-  finally
-    AFileStream.Free;
-    ABitMap.Free;
-  end;
+  //DEBUG
+  //WriteToFile('c:\temp\Raster.txt', Result);
 end;
-*)
+
 end.
 
 

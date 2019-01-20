@@ -39,6 +39,50 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/01/2019
+-- ACBrPosPrinter --
+[+] Classe TACBrPosPrinterClass, adicionado os métodos Públicos
+    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; virtual;
+    function ComandoImprimirImagemArquivo(ArquivoBMP: String): AnsiString;
+    function ComandoImprimirImagemStream(ABMPStream: TStream): AnsiString;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; virtual;
+    function ComandoGravarLogoArquivo(ArquivoBMP: String): AnsiString;
+    function ComandoGravarLogoStream(ABMPStream: TStream): AnsiString;
+    function ComandoApagarLogo: AnsiString; virtual;
+    procedure ArquivoImagemToRasterStr(ArquivoImagem: String; out AWidth: Integer;
+      out AHeight: Integer; out ARasterStr: AnsiString);
+[+] Classe, TACBrPosPrinter
+    - Adicionada a propriedade de apenas leitura: "PosPrinter: TACBrPosPrinterClass".
+      permitindo acessar a Classe instânciada internamente, da forma:
+      "ACBrPosPrinter1.PosPrinter"
+    - Adicionado os métodos Públicos:
+      procedure ImprimirImagemStream(ABMPStream: TStream);
+      procedure ImprimirImagemArquivo(ArquivoBMP: String);
+      procedure ImprimirImagemRasterStr(const ARasterStr: AnsiString; AWidth, AHeight: Integer);
+      procedure ImprimirLogo(AKC1: Integer = -1; AKC2: Integer = -1;
+        AFatorX: Integer = -1; AFatorY: Integer = -1);
+      procedure GravarLogoStream(ABMPStream: TStream; AKC1: Integer = -1;
+        AKC2: Integer = -1);
+      procedure GravarLogoArquivo(ArquivoBMP: String; AKC1: Integer = -1;
+        AKC2: Integer = -1);
+      procedure ApagarLogo(AKC1: Integer = -1; AKC2: Integer = -1);
+    - Adicionado suporte a Tag de Bloco
+      <bmp> - Imprime Imagem BMP monocromática. Conteúdo pode ser: Path da Imagem,
+              Stream em Base64 ou AscII Art (0 e 1)
+[+] Demo PosPrinterTeste, em Delphi e Lazarus, modificados para demonstrar o
+    suporte a Impressão de Imagens e Gravação de Logos.
+
+-- ACBrEscPosEpson --
+[+] Implementado suporte aos métodos:
+    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString;
+    function ComandoLogo: AnsiString;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString;
+    function ComandoApagarLogo: AnsiString;
+
 12/01/2019
 -- ACBrETQClass, ACBrETQEpl2, ACBrETQPpla, ACBrETQZplII --
 [+] Adicionado métodos para detecção de Imagens BMP e PCX, monocromáticas

@@ -78,7 +78,6 @@ type
     constructor Create(const AtagGrupoMsg: String);
     destructor Destroy; override;
     function LerXML: Boolean;
-  published
     property Leitor: TLeitor             read FLeitor   write FLeitor;
     property versao: String              read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente     read FtpAmb    write FtpAmb;
@@ -114,7 +113,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FXMLprotDFe: String;
-  published
+  public
     property Id: String              read FId         write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
     property verAplic: String        read FverAplic   write FverAplic;

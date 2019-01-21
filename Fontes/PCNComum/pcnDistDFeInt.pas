@@ -77,7 +77,6 @@ type
     destructor Destroy; override;
     function GerarXML: boolean;
     function ObterNomeArquivo: string;
-  published
     property Gerador: TGerador       read FGerador  write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
     property cUFAutor: Integer       read FcUFAutor write FcUFAutor;

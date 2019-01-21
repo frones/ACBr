@@ -72,7 +72,6 @@ type
     constructor Create(const AtagGrupoMsg: String);
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor         read FLeitor    write FLeitor;
     property versao: String          read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;

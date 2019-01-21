@@ -1731,7 +1731,7 @@ begin
 
     with FNFe.Transp do
     begin
-      FieldByName('ModFrete').AsString := modFreteToDesStr( modFrete, StrToVersaoDF(ok, FNFe.infNFe.VersaoStr));
+      FieldByName('ModFrete').AsString := modFreteToDesStr( modFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao));
       with Transporta do
       begin
         FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);

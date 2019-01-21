@@ -1206,7 +1206,7 @@ var
 begin
   with fpNFe.Transp do
   begin
-    rllTransModFrete.Caption := modFreteToDesStr(modFrete, StrToVersaoDF(ok, fpNFe.infNFe.VersaoStr));
+    rllTransModFrete.Caption := modFreteToDesStr(modFrete, DblToVersaoDF(ok, fpNFe.infNFe.Versao));
     with Transporta do
     begin
       if NaoEstaVazio(Trim(CNPJCPF)) then

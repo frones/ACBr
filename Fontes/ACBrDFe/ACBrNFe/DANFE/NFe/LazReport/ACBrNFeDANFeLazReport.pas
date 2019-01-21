@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
 {  Biblioteca multiplataforma de componentes Delphi para emissão de Nota Fiscal}
 { eletrônica - NFe - http://www.nfe.fazenda.gov.br                             }
@@ -2299,7 +2299,7 @@ begin
 
     with FNFe.Transp do
     begin
-      FieldByName('ModFrete').AsString := modFreteToDesStr( modFrete, StrToVersaoDF(ok, FNFe.infNFe.VersaoStr));
+      FieldByName('ModFrete').AsString := modFreteToDesStr( modFrete, DblToVersaoDF(ok, FNFe.infNFe.Versao));
       with Transporta do
       begin
         FieldByName('CNPJCPF').AsString := FormatarCNPJouCPF(CNPJCPF);

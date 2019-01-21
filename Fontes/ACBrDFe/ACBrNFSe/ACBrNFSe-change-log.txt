@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2019
+-- pnfsNFSeW_Equiplano --
+[*] Imposta uma condição para que seja gerado ou não o grupo Tomador do Serviço
+   Por: Italo Jurisato Junior
+
 14/01/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/48710-valor-iss-retido-provedor-tecnos-flores-da-cunha-rs/

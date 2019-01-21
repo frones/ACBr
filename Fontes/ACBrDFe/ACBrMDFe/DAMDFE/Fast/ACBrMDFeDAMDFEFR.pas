@@ -755,7 +755,7 @@ begin
       frxPDFExport.Subject    := TITULO_PDF;
       frxPDFExport.Keywords   := TITULO_PDF;
       OldShowDialog := frxPDFExport.ShowDialog;
-	    try
+      try
         frxPDFExport.ShowDialog := False;
         frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + TITULO_PDF + '-mdfe.pdf';
 
@@ -765,6 +765,7 @@ begin
         frxReport.Export(frxPDFExport);
       finally
         frxPDFExport.ShowDialog := OldShowDialog;
+        FPArquivoPDF := frxPDFExport.FileName;
       end;
     end;
   end;
@@ -808,6 +809,7 @@ begin
       frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
+      FPArquivoPDF := frxPDFExport.FileName;
     end;
   end;
 end;

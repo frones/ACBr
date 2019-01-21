@@ -1302,6 +1302,7 @@ begin
       frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
+      FPArquivoPDF := frxPDFExport.FileName;
     end;
   end;
 end;
@@ -1344,6 +1345,7 @@ begin
       frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
+      FPArquivoPDF := frxPDFExport.FileName;
     end;
   end;
 end;
@@ -1386,6 +1388,7 @@ begin
       frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
+      FPArquivoPDF := frxPDFExport.FileName;
     end;
   end;
 end;

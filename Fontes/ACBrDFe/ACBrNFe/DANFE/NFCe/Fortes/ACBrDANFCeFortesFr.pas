@@ -987,7 +987,7 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
     DescPagto := ACBrStr(FormaPagamentoToDescricao(tPag));
-    if (tPag in [fpCartaoCredito, fpCartaoDebito]) then
+    if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) then
       DescBandeira := BandeiraCartaoToDescStr(tBand)
     else
       DescBandeira := '';

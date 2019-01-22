@@ -192,12 +192,12 @@ begin
   inicio := pos('<' + Tag + '>', UpperCase(FGrupo));
 
   if Trim(TAGparada) <> '' then
-   begin
+  begin
     inicioTAGparada := pos('<' + UpperCase(Trim(TAGparada)) + '>', UpperCase(FGrupo));
     if inicioTAGparada = 0 then
       inicioTAGparada := inicio;
-   end
-   else
+  end
+  else
     inicioTAGparada := inicio;
 
   if (inicio = 0) or (InicioTAGparada < inicio) then
@@ -208,102 +208,122 @@ begin
     fim := pos('</' + Tag + '>', UpperCase(FGrupo)) - inicio;
     ConteudoTag := trim(copy(FGrupo, inicio, fim));
   end;
+
   case Tipo of
-    tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
-    tcDat     : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
-                  else
-                    result:=0;
-                  end;
-    tcDatVcto : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
-                  else
-                    Result:= 0;
-                end;
-    tcDatCFe  : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))
-                  else
-                    result:=0;
-                end;
-    tcDatHor  : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
-                      EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
-                  else
-                    result:=0;
-                end;
-    tcHor     : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
-                  else
-                    result:=0;
-                end;
-    tcHorCFe  : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
-                  else
-                    result:=0;
-                end;
-    tcDatHorCFe : begin
-                  if length(ConteudoTag)>0 then
-                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))+
-                      EncodeTime(StrToInt(copy(ConteudoTag, 09, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
-                  else
-                    result:=0;
-                end;
-    tcDe2,
-    tcDe3,
-    tcDe4,
-    tcDe6,
-    tcDe10    : begin
-                  if length(ConteudoTag)>0 then
-                    result := StringToFloatDef(ConteudoTag, 0)
-                  else
-                    result := 0;
-                end;
-    tcEsp     : result := ConteudoTag;
-    tcInt     : begin
-                  if length(ConteudoTag)>0 then
-                    result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)),0)
-                  else
-                    result := 0;
-                end;
-    else
-      raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
+    tcStr:
+      result := ReverterFiltroTextoXML(ConteudoTag);
+
+    tcDat:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
+        else
+          result := 0;
+      end;
+
+    tcDatVcto:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 07, 4)), StrToInt(copy(ConteudoTag, 04, 2)), StrToInt(copy(ConteudoTag, 01, 2)))
+        else
+          Result := 0;
+      end;
+
+    tcDatCFe:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))
+        else
+          result := 0;
+      end;
+
+    tcDatHor:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
+                    EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
+        else
+          result := 0;
+      end;
+
+    tcHor:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
+        else
+          result := 0;
+      end;
+
+    tcHorCFe:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 3, 2)), StrToInt(copy(ConteudoTag, 5, 2)), 0)
+        else
+          result := 0;
+      end;
+
+    tcDatHorCFe:
+      begin
+        if length(ConteudoTag)>0 then
+          result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))+
+                    EncodeTime(StrToInt(copy(ConteudoTag, 09, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
+        else
+          result := 0;
+      end;
+
+    tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
+      begin
+        if length(ConteudoTag)>0 then
+          result := StringToFloatDef(ConteudoTag, 0)
+        else
+          result := 0;
+      end;
+
+    tcEsp:
+      result := ConteudoTag;
+
+    tcInt:
+      begin
+        if length(ConteudoTag)>0 then
+          result := StrToIntDef(Trim(OnlyNumber(ConteudoTag)),0)
+        else
+          result := 0;
+      end;
+
+  else
+    raise Exception.Create('Tag <' + Tag + '> com conteúdo inválido. '+ConteudoTag);
   end;
 end;
 
 function TLeitor.rAtributo(Atributo: string; Tag: String): variant;
 var
-  ConteudoTag ,
-  Aspas       : String;
+  ConteudoTag, Aspas: String;
+  inicioAtr, inicioTag, fimAtr, iPos1, iPos2: Integer;
 
-  inicio      ,
-  inicioTag   ,
-  fim         ,
-  iPos1       ,
-  iPos2       : Integer;
+  function PosAtributo(Atributo, Grupo: String; Inicio: Integer): Integer;
+  begin
+    Result := PosEx(Atributo+'=', Grupo, Inicio);
+    if (Result = 0) then
+      Result := PosEx(Atributo+' ', Grupo, Inicio);
+  end;
 
 begin
   Result := '';
   Atributo := Trim(Atributo);
   Tag := Trim(Tag);
   inicioTag := pos(Tag, FGrupo);
-  inicio := pos(Atributo, FGrupo);
+  inicioAtr := PosAtributo(Atributo, FGrupo, 1);
 
   // se inicioTag > 0 significa que o parâmetro Tag foi informado.
-  // se inicioTag > inicio significa que o atributo encontrado não é da Tag informada
+  // se inicioTag > inicioAtr significa que o atributo encontrado não é da Tag informada
   // logo devemos bustar a proxima ocorrecia a partir da posição da Tag.
-  if (inicioTag > 0) and (inicioTag > inicio)  then
-    inicio := PosEx(Atributo, FGrupo, inicioTag);
+  if (inicioTag > 0) and (inicioTag > inicioAtr)  then
+    inicioAtr := PosAtributo(Atributo, FGrupo, inicioTag);
 
-  if inicio > 0 then
+  if inicioAtr > 0 then
   begin
-    inicio := inicio + Length(Atributo);
-    ConteudoTag := trim(copy(FGrupo, inicio, maxInt));
+    inicioAtr := inicioAtr + Length(Atributo);
+    ConteudoTag := trim(copy(FGrupo, inicioAtr, maxInt));
 
     iPos1 := Pos('"' , ConteudoTag);
     iPos2 := Pos('''', ConteudoTag);
@@ -314,14 +334,14 @@ begin
     if (iPos2 <> 0) and ((iPos1 = 0) or (iPos2 < iPos1)) then
       Aspas := '''';
 
-    inicio := pos(Aspas, ConteudoTag) + 1;
-    if inicio > 0 then
+    inicioAtr := pos(Aspas, ConteudoTag) + 1;
+    if inicioAtr > 0 then
     begin
-      ConteudoTag := trim(copy(ConteudoTag, inicio, maxInt));
-      fim := pos(Aspas, ConteudoTag) - 1;
-      if fim > 0 then
+      ConteudoTag := trim(copy(ConteudoTag, inicioAtr, maxInt));
+      fimAtr := pos(Aspas, ConteudoTag) - 1;
+      if fimAtr > 0 then
       begin
-        ConteudoTag := copy(ConteudoTag, 1, fim);
+        ConteudoTag := copy(ConteudoTag, 1, fimAtr);
         result := ReverterFiltroTextoXML(ConteudoTag)
       end
     end ;

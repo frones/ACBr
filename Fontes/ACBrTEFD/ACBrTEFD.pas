@@ -50,19 +50,26 @@ uses
   ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
   ACBrTEFDConvCard
-  {$IFNDEF NOGUI}
-    {$IFDEF FPC}
+  {$IfNDef NOGUI}
+    {$IfDef FPC}
       ,LResources
-    {$ENDIF}
-    {$IFDEF MSWINDOWS}
+    {$EndIf}
+    {$IfDef MSWINDOWS}
       ,Windows, Messages
-    {$ENDIF}
-    {$IFDEF VisualCLX}
-      ,QForms, QControls, Qt
-    {$ELSE}
-       {$IFDEF FMX} ,System.UITypes, FMX.Platform.Win {$ENDIF} ,Forms, Controls
-    {$ENDIF}
-  {$ENDIF};
+      {$IFDEF FMX}
+        ,FMX.Platform.Win
+      {$ENDIF}
+    {$EndIf}
+    {$If DEFINED(VisualCLX)}
+      ,Qt, QControls, QForms
+    {$ElseIf DEFINED(FMX)}
+      ,System.UITypes, FMX.Forms, FMX.Controls
+    {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
+      ,System.UITypes, Vcl.Forms, Vcl.Controls
+    {$Else}
+      ,Controls, Forms
+    {$IfEnd}
+  {$EndIf};
 
 type
 

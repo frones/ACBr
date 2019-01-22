@@ -46,9 +46,18 @@ interface
 
 uses
   Classes, SysUtils, ACBrTEFDClass
-  {$IFNDEF NOGUI}
-  {$IFDEF VisualCLX} ,QControls {$ELSE} {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Controls {$ENDIF}
-  {$ENDIF};
+  {$IfNDef NOGUI}
+    {$If DEFINED(VisualCLX)}
+      ,QControls
+    {$ElseIf DEFINED(FMX)}
+      ,System.UITypes
+    {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
+      ,System.UITypes
+    {$Else}
+      ,Controls
+    {$IfEnd}
+  {$EndIf};
+
 
 Const
    CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante = False ;

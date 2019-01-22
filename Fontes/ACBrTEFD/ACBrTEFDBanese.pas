@@ -52,13 +52,17 @@ uses
   Windows,
   {$ENDIF}
   Classes, SysUtils, ACBrTEFDClass
-  {$IFNDEF NOGUI}
-   {$IFDEF VisualCLX}
-      ,QForms, QControls
-   {$ELSE}
-     {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Forms, Controls
-   {$ENDIF}
-  {$ENDIF};
+  {$IfNDef NOGUI}
+    {$If DEFINED(VisualCLX)}
+      ,QControls, QForms
+    {$ElseIf DEFINED(FMX)}
+      ,System.UITypes, FMX.Forms
+    {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
+      ,System.UITypes, Vcl.Forms
+    {$Else}
+      ,Controls, Forms
+    {$IfEnd}
+  {$EndIf};
 
 
 Const

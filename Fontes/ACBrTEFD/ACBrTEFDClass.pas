@@ -45,17 +45,22 @@ unit ACBrTEFDClass ;
 interface
 
 uses
-  {$IFDEF MSWINDOWS}
-  Windows,
-  {$ENDIF}
-  Classes, SysUtils, Contnrs, ACBrBase
+  Classes, Contnrs, ACBrBase
   {$IFNDEF NOGUI}
-    {$IFDEF VisualCLX}
-       ,QForms, QDialogs, QControls
-    {$ELSE}
-       {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Forms, Dialogs, Controls
-    {$ENDIF}
-  {$ENDIF} ;
+    {$IfDef MSWINDOWS}
+      ,Windows, Messages
+    {$EndIf}
+    {$If DEFINED(VisualCLX)}
+      ,Qt, QControls, QForms
+    {$ElseIf DEFINED(FMX)}
+      ,System.UITypes, FMX.Forms, FMX.Controls
+    {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
+      ,System.UITypes, Vcl.Forms, Vcl.Controls
+    {$Else}
+      ,Controls, Forms
+    {$IfEnd}
+  {$ENDIF},
+  sysutils;
 
 {$IFDEF NOGUI}
 type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mrAbort = 3, mrRetry = 4, mrIgnore = 5, mrAll = 8, mrNoToAll = 9, mrYesToAll = 10);
@@ -830,7 +835,8 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 
 implementation
 
-Uses dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
+Uses
+  dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
   ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;

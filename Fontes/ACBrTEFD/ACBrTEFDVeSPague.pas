@@ -45,15 +45,18 @@ unit ACBrTEFDVeSPague;
 interface
 
 uses
-  Classes, SysUtils, ACBrTEFDClass
-  {$IFNDEF NOGUI}
-  {$IFDEF VisualCLX}
-     ,QControls, QForms, QDialogs
-  {$ELSE}
-    {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Controls, Forms, Dialogs
-  {$ENDIF}
-  {$ENDIF}
-  ,blcksock ;
+  Classes, SysUtils, ACBrTEFDClass, blcksock
+  {$IfNDef NOGUI}
+    {$If DEFINED(VisualCLX)}
+      ,QControls, QForms
+    {$ElseIf DEFINED(FMX)}
+      ,System.UITypes, FMX.Forms
+    {$ElseIf DEFINED(DELPHICOMPILER16_UP)}
+      ,System.UITypes
+    {$Else}
+      ,Controls, Forms
+    {$IfEnd}
+  {$EndIf};
 
 
 Const

@@ -88,12 +88,16 @@ type
     Label9: TLabel;
     CBImprimirUndQtVlComercial: TComboBox;
     rbImprimirDadosDocReferenciados: TCheckBox;
+    ACBrNFeDANFCEFR1: TACBrNFeDANFCEFR;
+    rgModelo: TRadioGroup;
     ckImprimeCodigoEan: TCheckBox;
+    ckImprimeItens: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btncarregarinutilizacaoClick(Sender: TObject);
     procedure btnCarregarEventoClick(Sender: TObject);
+    procedure rgModeloClick(Sender: TObject);
   private
     procedure Configuracao;
     procedure Initializao;
@@ -127,7 +131,11 @@ begin
     if ACBrNFe1.NotasFiscais.Count = 0 then
       raise Exception.Create('Não foi carregado nenhum xml para impressão');
 
-    ACBrNFeDANFEFR1.FastFile := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    case rgModelo.ItemIndex of
+      0: ACBrNFeDANFEFR1.FastFile := lstbxFR3.Items[lstbxFR3.ItemIndex];
+      1: ACBrNFeDANFCEFR1.FastFile := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    end;
+
     ACBrNFe1.NotasFiscais.Imprimir;
   end
   else if Pos('evento', LowerCase(lstbxFR3.Items[lstbxFR3.ItemIndex])) > 0 then
@@ -135,7 +143,11 @@ begin
     if ACBrNFe1.EventoNFe.Evento.Count = 0 then
       raise Exception.Create('Não tem nenhum evento para imprimir');
 
-    ACBrNFeDANFEFR1.FastFileEvento := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    case rgModelo.ItemIndex of
+      0: ACBrNFeDANFEFR1.FastFileEvento := lstbxFR3.Items[lstbxFR3.ItemIndex];
+      1: ACBrNFeDANFCEFR1.FastFileEvento := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    end;
+
     ACBrNFe1.ImprimirEvento;
   end
   else if Pos('inuti', LowerCase(lstbxFR3.Items[lstbxFR3.ItemIndex])) > 0 then
@@ -143,7 +155,11 @@ begin
     if ACBrNFe1.InutNFe.RetInutNFe.nProt = EmptyStr then
       raise Exception.Create('Não foi carregado nenhuma inutilização');
 
-    ACBrNFeDANFEFR1.FastFileInutilizacao := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    case rgModelo.ItemIndex of
+      0: ACBrNFeDANFEFR1.FastFileInutilizacao := lstbxFR3.Items[lstbxFR3.ItemIndex];
+      1: ACBrNFeDANFCEFR1.FastFileInutilizacao := lstbxFR3.Items[lstbxFR3.ItemIndex];
+    end;
+
     ACBrNFe1.ImprimirInutilizacao;
   end;
 
@@ -178,16 +194,19 @@ end;
 
 procedure TfrmPrincipal.Configuracao;
 begin
-  With ACBrNFeDANFEFR1 do
+
+  case rgModelo.ItemIndex of
+    0: ACBrNFe1.DANFE := ACBrNFeDANFEFR1;
+    1: ACBrNFe1.DANFE := ACBrNFeDANFCEFR1;
+  end;
+
+  // --- Configurações para NFe e NFCe ---
+  With ACBrNFe1.DANFE do
   begin
     // Imprime codigo cEan
     ImprimeCodigoEan := ckImprimeCodigoEan.Checked;
 
-    // Mostra a posicao do canhoto
-    PosCanhoto := TPosRecibo(RbCanhoto.ItemIndex);
-
     // Mostra  a Tarja NFe CANCELADA
-
     Cancelada := rbTarjaNfeCancelada.Checked;
 
     { Ajustar a propriedade ProtocoloNFe conforme a sua necessidade }
@@ -206,18 +225,30 @@ begin
     CasasDecimais.MaskqCom := cbtdetMascara_qtd.Items[cbtdetMascara_qtd.ItemIndex];
     CasasDecimais.MaskvUnCom := cbtdetMascara_Vrl.Items[cbtdetMascara_Vrl.ItemIndex];
 
-    // ImprimirUndQtVlComercial
-    ImprimeValor := TImprimirUnidQtdeValor(CBImprimirUndQtVlComercial.ItemIndex);
-
-    // Mostra dados referenciados
-    ExibeDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
-
   end;
+
+  // --- Configurações específicas para NFe ---
+
+  // Mostra a posicao do canhoto
+  ACBrNFeDANFEFR1.PosCanhoto := TPosRecibo(RbCanhoto.ItemIndex);
+
+  // ImprimirUndQtVlComercial
+  ACBrNFeDANFEFR1.ImprimeValor := TImprimirUnidQtdeValor(CBImprimirUndQtVlComercial.ItemIndex);
+
+  // Mostra dados referenciados
+  ACBrNFeDANFEFR1.ExibeDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
+
+  // --- Configurações específicas para NFCe ---
+
+  // Mostra itens na NFCe, caso False emite a NFCe resumida
+  ACBrNFeDANFCEFR1.ImprimeItens := ckImprimeItens.Checked;
+
 end;
 
 procedure TfrmPrincipal.Initializao;
 begin
   PageControl1.ActivePage := TabArquivos;
+  rgModelo.ItemIndex := 0;
 
   With ACBrNFeDANFEFR1 do
   begin
@@ -245,11 +276,23 @@ begin
 
   end;
 
+  ckImprimeItens.Checked := ACBrNFeDANFCEFR1.ImprimeItens;
+
   With frxReport1 do
   begin
     ShowProgress := False;
     StoreInDFM := False;
   end;
+
+end;
+
+procedure TfrmPrincipal.rgModeloClick(Sender: TObject);
+begin
+  RbCanhoto.Enabled := rgModelo.ItemIndex = 0;
+  rbImprimirDadosDocReferenciados.Enabled := rgModelo.ItemIndex = 0;
+  CBImprimirUndQtVlComercial.Enabled := rgModelo.ItemIndex = 0;
+
+  ckImprimeItens.Enabled := rgModelo.ItemIndex = 1;
 
 end;
 

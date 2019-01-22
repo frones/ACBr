@@ -53,11 +53,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-22/01/2010
+22/01/2018
 -- DemoDANFeFR --- 
 [+] Teste de ImprimirCodigoEan 
      Demostra a impressão do código do produto (cProd ) ou código de Barras (cEan ) 
       Por : Henrique Leonardo
+
+[*] Ajustes para demonstrar o uso do novo componente ACBrNFeDANFCEFR para NFCe.
+  Por: BigWings
 
 31/12/2018
 -- DemoDANFeFR --- 
@@ -65,7 +68,6 @@ Símbolo : Significado
      Demostra a utilização a apresentação do canhoto a esquerda 
 	na danfe paisagem
       Por : Henrique Leonardo
-
 
 12/06/2017
 -- DemoDANFeFR --- 

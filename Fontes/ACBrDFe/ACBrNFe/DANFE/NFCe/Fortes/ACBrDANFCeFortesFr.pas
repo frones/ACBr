@@ -1293,7 +1293,9 @@ begin
         RLLayout := rlVenda;
 
       Resumido := DanfeResumido;
-      RLPrinter.Copies := NumCopias ;
+
+      if NumCopias > 1 then
+        RLPrinter.Copies := NumCopias;
 
       if not EstaVazio(Impressora) then
         RLPrinter.PrinterName := Impressora;

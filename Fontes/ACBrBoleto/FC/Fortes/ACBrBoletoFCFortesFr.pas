@@ -925,7 +925,9 @@ begin
            RLLayout:= LayoutBoleto;
         end;
 
-        RLPrinter.Copies      := NumCopias ;
+       if NumCopias > 1 then
+         RLPrinter.Copies := NumCopias ;
+
         RLLayout.PrintDialog  := MostrarSetup;
         RLLayout.ShowProgress := MostrarProgresso;
         RLLayout.Title        := TituloRelatorio;

@@ -84,8 +84,14 @@ uses
      QPrinters,
   {$ELSEIF DEFINED(FMX)}
      FMX.Printer,
+     {$IfDef MSWINDOWS}
+        Winapi.WinSpool,
+     {$EndIf}
   {$ELSEIF DEFINED(FPC)}
-     Printers, {$IFNDEF NOGUI} OSPrinters, {$ENDIF}
+     Printers,
+     {$IFNDEF NOGUI}
+      OSPrinters,
+     {$ENDIF}
   {$ELSE}
      Printers, WinSpool,
   {$IFEND}
@@ -313,6 +319,10 @@ TACBrDevice = class( TComponent )
     {$IFDEF ThreadEnviaLPT}
     procedure EnviaStringThread( AString : AnsiString ) ;
     {$ENDIF}
+
+    {$If DEFINED(FMX)}
+    function GetLabelPrinterIndex(APrinterName: String): Integer;
+    {$IfEnd}
 
     procedure SetBaud(const Value: Integer);
     procedure SetData(const Value: Integer);
@@ -1146,6 +1156,19 @@ begin
   fsDeviceType := DeduzirTipoPorta(fsPorta);
 end;
 
+{$IfDef FMX}
+function TACBrDevice.GetLabelPrinterIndex(APrinterName: String): Integer;
+var
+  i: Integer;
+begin
+  for i := 0 to Printer.Count - 1 do
+    if AnsiContainsText(Printer.Printers[i].Title, APrinterName) then
+      Exit(i);
+
+  Result := -1;
+end;
+{$EndIf}
+
 function TACBrDevice.DeduzirTipoPorta(const APorta: String): TACBrDeviceType;
 var
   UPorta: String;
@@ -1169,7 +1192,11 @@ begin
     Result := dtSerial
   else if (pos(copy(UPorta,1,3),'USB|DLL') > 0) then
     Result := dtHook
+  {$IfDef FMX}
+  else if (GetLabelPrinterIndex(Aporta) > 0) then
+  {$Else}
   else if (Printer.Printers.IndexOf(APorta) >= 0) then
+  {$EndIf}
     Result := dtRawPrinter
   else
   begin
@@ -1455,14 +1482,18 @@ var
     I: Integer;
     VName: String;
   begin
+    {$IfDef FMX}
+    Result := GetLabelPrinterIndex(PrnName);
+    {$Else}
     Result := Printer.Printers.IndexOf(PrnName);
+    {$EndIf}
 
     {$IFDEF MSWINDOWS}
     if Result < 0 then
     begin
-      for I := 0 to Pred(Printer.Printers.Count) do
+      for I := 0 to Pred(Printer{$IfNDef FMX}.Printers{$EndIf}.Count) do
       begin
-        VName := Printer.Printers[I];
+        VName := Printer.Printers[I]{$IfDef FMX}.Title{$EndIf};
         if pos('\\', Copy(VName, 1, 2)) > 0 then
         begin
           if SameText(PrnName, RetornaNome(VName)) then
@@ -1485,6 +1516,20 @@ begin
 
   if (PrnName = '*') then
   begin
+    {$IfDef FMX}
+    if Assigned(Printer.ActivePrinter) then
+    begin
+      PrnName := Printer.ActivePrinter.Title;
+      PrnIndex := RetornaPorta;
+    end
+    else
+    begin
+     if (Printer.Count > 0) then
+       PrnIndex := 0
+     else
+       DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
+    end;
+    {$Else}
     PrnIndex := Printer.PrinterIndex;
     if (PrnIndex < 0) then
     begin
@@ -1493,6 +1538,7 @@ begin
       else
         DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
     end;
+    {$EndIf}
   end
   else
   begin
@@ -1827,51 +1873,69 @@ procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
 var
   PrnIndex: Integer;
   {$IfNDef FPC}
-  PrnName: String;
-  HandlePrn: THandle;
-  N: DWORD;
-  DocInfo1: TDocInfo1;
-  DocName: String;
+   PrnName: String;
+   HandlePrn: THandle;
+   N: DWORD;
+   DocName: String;
+   {$IfDef MSWINDOWS}
+    DocInfo1: TDocInfo1;
+//   {$Else}
+    F: TextFile;
+   {$EndIf}
   {$Else}
-  Written: integer;
-  OldRawMode: Boolean;
+   Written: integer;
+   OldRawMode: Boolean;
   {$EndIf}
 begin
   GravaLog('EnviaStringRaw('+AString+')', True);
   PrnIndex := GetPrinterRawIndex;
 
   {$IfDef FPC}
-  Printer.PrinterIndex := PrnIndex;
-  Printer.Title := NomeDocumento;
+   Printer.PrinterIndex := PrnIndex;
+   Printer.Title := NomeDocumento;
 
-  OldRawMode := Printer.RawMode;
-  Printer.RawMode := True;
-  try
-    Printer.BeginDoc;
-    Written := 0;
-    Printer.Write(AString[1], Length(AString), Written);
-    Printer.EndDoc;
-  finally
-    Printer.RawMode := OldRawMode;
-  end;
+   OldRawMode := Printer.RawMode;
+   Printer.RawMode := True;
+   try
+     Printer.BeginDoc;
+     Written := 0;
+     Printer.Write(AString[1], Length(AString), Written);
+     Printer.EndDoc;
+   finally
+     Printer.RawMode := OldRawMode;
+   end;
   {$Else}
-  PrnName := Printer.Printers[PrnIndex];
-  if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
-    DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
+   {$IfDef MSWINDOWS}
+    PrnName := Printer.Printers[PrnIndex]{$IfDef FMX}.Title{$EndIf};
+    if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
+      DoException( Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]));
 
-  with DocInfo1 do
-  begin
-    DocName  := NomeDocumento;
-    pDocName := PChar(DocName);
-    pOutputFile := nil;
-    pDataType := 'RAW';
-  end;
+    with DocInfo1 do
+    begin
+      DocName  := NomeDocumento;
+      pDocName := PChar(DocName);
+      pOutputFile := nil;
+      pDataType := 'RAW';
+    end;
 
-  StartDocPrinter(HandlePrn, 1, @DocInfo1);
-  WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
-  EndPagePrinter(HandlePrn);
-  EndDocPrinter(HandlePrn);
-  ClosePrinter(HandlePrn);
+    StartDocPrinter(HandlePrn, 1, @DocInfo1);
+    WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
+    EndPagePrinter(HandlePrn);
+    EndDocPrinter(HandlePrn);
+    ClosePrinter(HandlePrn);
+   {$Else}
+    {$IfDef FMX}
+     if (PrnIndex < Printer.Count) then
+      SetPrinter(Printer.Printers[PrnIndex]);
+    {$EndIf}
+    AssignPrn(F);
+    try
+      ReWrite(F);
+      Write(F,AString);
+    finally
+      CloseFile(F);
+    end;
+   {$EndIf}
   {$EndIf}
 end;
 

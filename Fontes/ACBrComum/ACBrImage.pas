@@ -48,7 +48,11 @@ uses
    {$Else}
     ,windows
    {$EndIf}
-   ,Graphics
+   {$IfDef FMX}
+    ,FMX.Graphics, System.UITypes, FMX.Types
+   {$Else}
+    ,Graphics
+   {$EndIf}
   {$EndIf};
 
 const
@@ -286,7 +290,7 @@ begin
   LenPixArrIn := Length(ARasterStr);
   AHeight := Trunc(LenPixArrIn / BytesPerRowIn);
 
-  // O BMP deve estar blocos de DWORD(32bits), calculando a Largura multiplo de 32
+  // O BMP deve estar em blocos de DWORD(32bits), calculando a Largura multiplo de 32
   BytesPerRowOut := ceil(AWidth / 32) * 4;
   LenPixArrOut := BytesPerRowOut * AHeight;
   SetLength(PixArr,LenPixArrOut);
@@ -381,14 +385,19 @@ var
   MS: TMemoryStream;
   Row, Col: Integer;
   cRed, cGreen, cBlue: Byte;
-  APixel: TColor;
   Luminosity: Int64;
   ByteStr: String;
   Bit: Boolean;
+  {$IfDef FMX}
+   BitMapData: TBitmapData;
+   APixel: TAlphaColor;
+  {$Else}
+   APixel: TColor;
+  {$EndIf}
 begin
   AWidth := 0; AHeight := 0; ARasterStr := '';
 
-  if (ABmpSrc.PixelFormat = pf1bit) then  // Já é Mono ?
+  if (ABmpSrc.PixelFormat = {$IfDef FMX}TPixelFormat.RGB{$Else}pf1bit{$EndIf}) then  // Já é Mono ?
   begin
     MS := TMemoryStream.Create;
     try
@@ -407,23 +416,36 @@ begin
   begin
     ByteStr := '';
 
-    for Col := 0 to AWidth - 1 do
-    begin
-      APixel := ABmpSrc.Canvas.Pixels[Col, Row];
-      cRed := 0; cGreen := 0; cBlue := 0;
-      RedGreenBlue(APixel, cRed, cGreen, cBlue);
-      Luminosity := Trunc( ( cRed * 0.3 ) + ( cGreen  * 0.59 ) + ( cBlue * 0.11 ) );
-      Bit := ( Luminosity > LuminosityThreshold );
-      if InvertImg then
-        Bit := not Bit;
-
-      ByteStr := ByteStr + ifthen(Bit,'1','0');
-      if (Length(ByteStr) = 8) then
+    {$IfDef FMX}
+    if ABmpSrc.Map(TMapAccess.Read, BitMapData) then
+    try
+    {$EndIf}
+      for Col := 0 to AWidth - 1 do
       begin
-        ARasterStr := ARasterStr + chr(BinToInt(ByteStr));
-        ByteStr := '';
+        {$IfDef FMX}
+        APixel := BitMapData.GetPixel(Col, Row);
+        {$Else}
+        APixel := ABmpSrc.Canvas.Pixels[Col, Row];
+        {$EndIf}
+        cRed := 0; cGreen := 0; cBlue := 0;
+        RedGreenBlue(APixel, cRed, cGreen, cBlue);
+        Luminosity := Trunc( ( cRed * 0.3 ) + ( cGreen  * 0.59 ) + ( cBlue * 0.11 ) );
+        Bit := ( Luminosity > LuminosityThreshold );
+        if InvertImg then
+          Bit := not Bit;
+
+        ByteStr := ByteStr + ifthen(Bit,'1','0');
+        if (Length(ByteStr) = 8) then
+        begin
+          ARasterStr := ARasterStr + chr(BinToInt(ByteStr));
+          ByteStr := '';
+        end;
       end;
+    {$IfDef FMX}
+    finally
+      ABmpSrc.Unmap(BitMapData);
     end;
+    {$EndIf}
 
     if (Length(ByteStr) > 0) then
       ARasterStr := ARasterStr + chr(BinToInt(PadRight(ByteStr, 8, '0')));

@@ -463,7 +463,14 @@ type
 implementation
 
 uses
-  strutils, Math, typinfo, {$IfNDef NOGUI}Graphics,{$EndIf}
+  strutils, Math, typinfo,
+  {$IfNDef NOGUI}
+    {$IfDef FMX}
+      FMX.Graphics,
+    {$Else}
+      Graphics,
+    {$EndIf}
+  {$EndIf}
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold, ACBrEscEpsonP2;
@@ -752,7 +759,7 @@ procedure TACBrPosPrinterClass.ArquivoImagemToRasterStr(ArquivoImagem: String; o
   AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString);
 var
   {$IfNDef NOGUI}
-   APicture: TPicture;
+   ABitMap: TBitmap;
   {$Else}
    MS: TMemoryStream;
   {$EndIf}
@@ -765,12 +772,12 @@ begin
     raise EPosPrinterException.Create(ACBrStr(Format(cACBrArquivoNaoEncontrado,[ArquivoImagem])));
 
   {$IfNDef NOGUI}
-   APicture := TPicture.Create;
+   ABitMap := TBitmap.Create;
    try
-     APicture.LoadFromFile(ArquivoImagem);
-     BitmapToRasterStr(APicture.Bitmap, True, AWidth, AHeight, ARasterStr);
+     ABitMap.LoadFromFile(ArquivoImagem);
+     BitmapToRasterStr(ABitMap, True, AWidth, AHeight, ARasterStr);
    finally
-     APicture.Free;
+     ABitMap.Free;
    end;
   {$Else}
    MS := TMemoryStream.Create;

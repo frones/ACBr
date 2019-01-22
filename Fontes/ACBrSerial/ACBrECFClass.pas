@@ -4862,7 +4862,7 @@ end;
          Application.ProcessMessages; //Se não adicionar essa linha, o firemonkey não faz a pintura o texto.
          fsFormMsg.Canvas.BeginScene; //Todo canvas no firemonkey é necessário este bloco de proteção.
          try
-            fsFormMsg.Canvas.StrokeThickness := 1; //Espessura do pincel.
+            fsFormMsg.Canvas.Stroke.Thickness := 1; //Espessura do pincel.
             fsFormMsg.Canvas.FillText(TRectF.Create(0, 0, fsFormMsg.Width, fsFormMsg.Height), Texto, True, 100, [], TTextAlign.Center, TTextAlign.Center);
          finally
            fsFormMsg.Canvas.EndScene;

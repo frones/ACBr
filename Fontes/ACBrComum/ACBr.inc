@@ -85,6 +85,16 @@
 // Para Remover Warnings de CAST causados por WideString/String/AnsiString, descomente a linha abaixo. (Apenas Delphi)
 {.$DEFINE REMOVE_CAST_WARN}
 
+// Para usar CLX no Windows / Delphi descomente essa linha
+//------------------------------------------------------------------------------
+//{$DEFINE CLX}
+
+// Para usar VCL no Windows / Delphi descomente essa linha
+{$DEFINE VCL}
+
+// Para usar FMX (Firemonkey) Windows / Delphi descomente essa linha
+//{$DEFINE FMX}
+
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
@@ -99,6 +109,7 @@
   {$DEFINE HAS_STRICTDELIMITER}
   {$H+}
 
+  {$UnDef FMX}
   {$UnDef FPC3}
   {$UnDef FPC2}
   {$IFDEF VER2}
@@ -160,16 +171,6 @@
 {$IFNDEF FPC}
  {$DEFINE USE_libeay32}
 {$ENDIF}
-
-// Para usar CLX no Windows / Delphi descomente essa linha
-//------------------------------------------------------------------------------
-//{$DEFINE CLX}
-
-// Para usar VCL no Windows / Delphi descomente essa linha
-{$DEFINE VCL}
-
-// Para usar FMX (Firemonkey) Windows / Delphi descomente essa linha
-//{$DEFINE FMX}
 
 // Definições multi-plataforma
 //------------------------------------------------------------------------------
@@ -267,7 +268,7 @@
 
 // Ative a diretiva abaixo, para usar a Libxml2, libxslt, libxmlsec compilada
 // com MinGw ftp://ftp.zlatkovic.com/libxml/64bit/
-{.$DEFINE USE_MINGW}
+//{$DEFINE USE_MINGW}
 {$IfNDef MSWINDOWS}
   {$DEFINE USE_MINGW}
 {$EndIf}

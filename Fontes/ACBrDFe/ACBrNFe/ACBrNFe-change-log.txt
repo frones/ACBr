@@ -50,7 +50,7 @@ Símbolo : Significado
 
 22/01/2019
 -- ACBrDFeDANFeReport --
-[*] Ajustes de processamento no Método "ImprimeCodigoEan"
+[*] Ajustes de processamento no Método "ManterCodigo"
    Por: Henrique Leonardo
 
 17/01/2019

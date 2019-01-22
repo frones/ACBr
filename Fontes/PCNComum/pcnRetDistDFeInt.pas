@@ -442,7 +442,7 @@ begin
       begin
         FdocZip.Add;
         FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
-        FdocZip.Items[i].schema := StrToSchemaDFe(ok, Leitor.rAtributo('schema', 'docZip'));
+        FdocZip.Items[i].schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'docZip'));
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         FdocZip.Items[i].FInfZip := StrAux;

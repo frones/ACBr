@@ -374,7 +374,7 @@ function tpNFToStr(const t: TpcnTipoNFe): String;
 function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 
 function SchemaDFeToStr(const t: TSchemaDFe): String;
-function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;
+function StrToSchemaDFe(const s: String): TSchemaDFe;
 
 implementation
 
@@ -1560,10 +1560,11 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaDFe(out ok: Boolean; const s: String): TSchemaDFe;
+function StrToSchemaDFe(const s: String): TSchemaDFe;
 var
   P: Integer;
   SchemaStr: String;
+  CodSchema: Integer;
 begin
   P := pos('_',s);
   if p > 0 then
@@ -1574,7 +1575,14 @@ begin
   if LeftStr(SchemaStr,3) <> 'sch' then
     SchemaStr := 'sch' + SchemaStr;
 
-  Result := TSchemaDFe( GetEnumValue(TypeInfo(TSchemaDFe), SchemaStr ) );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaDFe), SchemaStr );
+
+  if CodSchema = -1 then
+  begin
+    raise Exception.Create(Format('"%s" não é um valor TSchemaDFe válido.',[SchemaStr]));
+  end;
+
+  Result := TSchemaDFe( CodSchema );
 end;
 
 end.

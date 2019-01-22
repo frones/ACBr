@@ -92,7 +92,7 @@ function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 function LayOutToSchema(const t: TLayOut): TSchemaNFe;
 
 function SchemaNFeToStr(const t: TSchemaNFe): String;
-function StrToSchemaNFe(out ok: Boolean; const s: String): TSchemaNFe;
+function StrToSchemaNFe(const s: String): TSchemaNFe;
 
 function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
 function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
@@ -206,10 +206,11 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaNFe(out ok: Boolean; const s: String): TSchemaNFe;
+function StrToSchemaNFe(const s: String): TSchemaNFe;
 var
   P: Integer;
   SchemaStr: String;
+  CodSchema: Integer;
 begin
   P := pos('_',s);
   if p > 0 then
@@ -220,7 +221,14 @@ begin
   if LeftStr(SchemaStr,3) <> 'sch' then
     SchemaStr := 'sch'+SchemaStr;
 
-  Result := TSchemaNFe( GetEnumValue(TypeInfo(TSchemaNFe), SchemaStr ) );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaNFe), SchemaStr );
+
+  if CodSchema = -1 then
+  begin
+    raise Exception.Create(Format('"%s" não é um valor TSchemaNFe válido.',[SchemaStr]));
+  end;
+
+  Result := TSchemaNFe( CodSchema );
 end;
 
 // B25 - Finalidade de emissão da NF-e *****************************************

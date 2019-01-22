@@ -302,10 +302,14 @@ end;
 
 function TACBrDFeDANFeReport.ManterCodigo(const scEAN, scProd: String): String;
 begin
-  if (Length(Trim(scEAN)) > 0) and (Trim(scEAN) <> 'SEM GTIN') and (ImprimeCodigoEan) then
-    Result := Trim(scEAN)
-  else
-    Result := Trim(scProd);
+
+  Result := Trim(scEAN);
+
+  if not  ( ( fImprimeCodigoEan )    and
+            ( Result <> 'SEM GTIN' ) and
+            ( Result <>  '' )
+          ) then
+      Result := Trim(scProd);
 end;
 
 function TACBrDFeDANFeReport.ManterNomeImpresso(const sXNome, sXFant: String): String;
@@ -370,9 +374,9 @@ var
 begin
   Result := '';
 
-  if (ExibeInforAdicProduto = infNenhum) or 
-     (inItem < 0) or 
-     (inItem >= aNFE.Det.Count) then 
+  if (ExibeInforAdicProduto = infNenhum) or
+     (inItem < 0) or
+     (inItem >= aNFE.Det.Count) then
     Exit;
 
   if (ExibeInforAdicProduto = infDescricao)  then

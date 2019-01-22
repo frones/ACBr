@@ -47,10 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+22/01/2019
+-- ACBrDFeDANFeReport --
+[*] Ajustes de processamento no Método "ImprimeCodigoEan"
+   Por: Henrique Leonardo
+
 17/01/2019
 -- pcnNFeR --
 [-] Correção na leitura da tag "cPais" dos grupos "Entrega" e "Retirada".
     https://www.projetoacbr.com.br/forum/topic/48801-erro-acbrnfe1notasfiscaisloadfromstring/?do=findComment&comment=322472
+
+https://www.projetoacbr.com.br/forum/topic/48887-refatora%C3%A7%C3%A3o-mantercodigoean/?tab=comments#comment-323010
+
 
 16/01/2019
 -- Diversos --

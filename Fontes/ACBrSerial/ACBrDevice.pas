@@ -1524,9 +1524,8 @@ begin
     end
     else
     begin
-     if (Printer.Count > 0) then
-       PrnIndex := 0
-     else
+     PrnIndex := 0;
+     if (Printer.Count = 0) then
        DoException( Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao)));
     end;
     {$Else}

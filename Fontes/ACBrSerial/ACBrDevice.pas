@@ -1879,7 +1879,7 @@ var
    DocName: String;
    {$IfDef MSWINDOWS}
     DocInfo1: TDocInfo1;
-//   {$Else}
+   {$Else}
     F: TextFile;
    {$EndIf}
   {$Else}

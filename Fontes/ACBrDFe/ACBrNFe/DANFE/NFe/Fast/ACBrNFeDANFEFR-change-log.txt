@@ -45,6 +45,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2019
+-- ACBrNFeDANFEFRDM --
+[-] Correção para máscara quando emitente CPF.
+    https://www.projetoacbr.com.br/forum/topic/48893-danfe-mascara-do-emitente-apenas-para-cnpj/?do=findComment&comment=323056
+  Por: jobson ribeiro
+
+[*] Ajuste para exibição dos itens do documento ficar a cargo do componente
+    em uso e valor da propriedade "ImprimeItens" independentemente do modelo do
+    XML carregado.
+  Por: BigWings
 
 07/01/2018   
 -- ACBrNFeDANFEFRDM --

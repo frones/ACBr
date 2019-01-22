@@ -40,9 +40,18 @@ unit ACBrDFeWebService;
 
 interface
 
-uses Classes, SysUtils, strutils,
+uses
+  Classes, SysUtils,
   {$IFNDEF NOGUI}
-   {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
+   {$IFDEF CLX}
+     QDialogs,
+   {$ELSE}
+     {$IFDEF FMX}
+       FMX.Dialogs,
+     {$ELSE}
+       Dialogs,
+     {$ENDIF}
+   {$ENDIF}
   {$ENDIF}
   ACBrDFeConfiguracoes, ACBrIntegrador, ACBrDFe, pcnGerador;
 
@@ -136,6 +145,7 @@ type
 implementation
 
 uses
+  strutils,
   ACBrDFeUtil, ACBrDFeException, ACBrUtil,
   pcnAuxiliar, synacode;
 

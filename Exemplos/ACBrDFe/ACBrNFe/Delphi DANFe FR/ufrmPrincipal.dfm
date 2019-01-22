@@ -80,7 +80,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 110
     Width = 358
     Height = 211
-    ActivePage = TabArquivos
+    ActivePage = TabCustomizacao
     Align = alClient
     TabOrder = 1
     object TabArquivos: TTabSheet
@@ -99,11 +99,11 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Customiza'#231#227'o'
       ImageIndex = 1
       object Label9: TLabel
-        Left = 15
-        Top = 138
-        Width = 123
+        Left = 137
+        Top = 130
+        Width = 62
         Height = 13
-        Caption = 'ImprimirUndQtVlComercial'
+        Caption = 'ImprimeValor'
       end
       object RbCanhoto: TRadioGroup
         Left = 0
@@ -123,80 +123,84 @@ object frmPrincipal: TfrmPrincipal
       object GroupBox1: TGroupBox
         Left = 0
         Top = 46
-        Width = 350
-        Height = 59
-        Align = alTop
+        Width = 105
+        Height = 137
+        Align = alLeft
         Caption = 'Margem'
         TabOrder = 1
         object Label1: TLabel
-          Left = 15
-          Top = 13
+          AlignWithMargins = True
+          Left = 10
+          Top = 26
           Width = 40
           Height = 13
           Caption = 'Superior'
         end
         object Label2: TLabel
-          Left = 75
-          Top = 13
+          AlignWithMargins = True
+          Left = 14
+          Top = 51
           Width = 36
           Height = 13
           Caption = 'Inferior'
         end
         object Label3: TLabel
-          Left = 254
-          Top = 13
+          AlignWithMargins = True
+          Left = 19
+          Top = 105
           Width = 31
           Height = 13
           Caption = 'Direita'
         end
         object Label4: TLabel
-          Left = 194
-          Top = 13
+          AlignWithMargins = True
+          Left = 5
+          Top = 78
           Width = 45
           Height = 13
           Caption = 'Esquerda'
         end
         object EditMargemEsquerda: TEdit
-          Left = 194
-          Top = 31
+          Left = 57
+          Top = 74
           Width = 33
           Height = 21
           TabOrder = 0
         end
         object EditMargemSuperior: TEdit
-          Left = 15
-          Top = 31
-          Width = 30
+          Left = 57
+          Top = 20
+          Width = 33
           Height = 21
           TabOrder = 1
         end
         object EditMargemDireita: TEdit
-          Left = 254
-          Top = 31
+          Left = 57
+          Top = 102
           Width = 33
           Height = 21
           TabOrder = 2
         end
         object EditMargemInferior: TEdit
-          Left = 75
-          Top = 31
+          Left = 57
+          Top = 47
           Width = 33
           Height = 21
           TabOrder = 3
         end
       end
       object rbTarjaNfeCancelada: TCheckBox
-        Left = 15
-        Top = 111
-        Width = 169
+        Left = 137
+        Top = 105
+        Width = 164
         Height = 17
-        Caption = ' Mostra a Tarja de Cancelada'
+        Caption = 'Mostra a Tarja de Cancelada'
         TabOrder = 2
       end
       object CBImprimirUndQtVlComercial: TComboBox
         AlignWithMargins = True
-        Left = 144
-        Top = 134
+        Left = 137
+        Top = 149
         Width = 141
         Height = 21
         AutoCloseUp = True
@@ -208,21 +212,25 @@ object frmPrincipal: TfrmPrincipal
           'iuComercialETributavel')
       end
       object rbImprimirDadosDocReferenciados: TCheckBox
-        Left = 15
-        Top = 161
-        Width = 202
+        Left = 137
+        Top = 82
+        Width = 190
         Height = 17
-        Caption = ' Imprimir documentos referenciados'
+        Caption = 'Imprimir documentos referenciados'
         TabOrder = 4
+      end
+      object ckImprimeCodigoEan: TCheckBox
+        Left = 137
+        Top = 59
+        Width = 190
+        Height = 17
+        Caption = 'ImprimeCodigoEan'
+        TabOrder = 5
       end
     end
     object Decimais: TTabSheet
       Caption = 'Decimais'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RgTipodedecimais: TRadioGroup
         Left = 0
         Top = 0
@@ -247,10 +255,6 @@ object frmPrincipal: TfrmPrincipal
         object TabtdetInteger: TTabSheet
           Caption = 'tdetInteger'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label5: TLabel
             Left = 16
             Top = 24
@@ -309,10 +313,6 @@ object frmPrincipal: TfrmPrincipal
         object TabtdetMascara: TTabSheet
           Caption = 'tdetMascara'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label7: TLabel
             Left = 5
             Top = 5
@@ -384,6 +384,7 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFEFR1
     Left = 221
     Top = 30
@@ -401,7 +402,6 @@ object frmPrincipal: TfrmPrincipal
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrNFe = ACBrNFe1
     TipoDANFE = tiSemGeracao
-    ExibeInforAdicProduto = True
     EspessuraBorda = 1
     ExpandirDadosAdicionaisAuto = False
     IncorporarBackgroundPdf = True

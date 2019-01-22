@@ -53,6 +53,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2010
+-- DemoDANFeFR --- 
+[+] Teste de ImprimirCodigoEan 
+     Demostra a impressão do código do produto (cProd ) ou código de Barras (cEan ) 
+      Por : Henrique Leonardo
+
 31/12/2018
 -- DemoDANFeFR --- 
 [+] Teste de Canhoto a esquerda

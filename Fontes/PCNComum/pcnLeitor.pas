@@ -302,14 +302,22 @@ var
 
   function PosAtributo(Atributo, Grupo: String; Inicio: Integer): Integer;
   begin
-    Result := PosEx(Atributo+'=', Grupo, Inicio);
-    if (Result = 0) then
-      Result := PosEx(Atributo+' ', Grupo, Inicio);
+    if RightStr(Atributo,1) = '=' then
+      Result := PosEx(Atributo, Grupo, Inicio)
+    else
+    begin
+      Result := PosEx(Atributo+'=', Grupo, Inicio);
+      if (Result = 0) then
+        Result := PosEx(Atributo+' ', Grupo, Inicio);
+    end;
   end;
 
 begin
   Result := '';
   Atributo := Trim(Atributo);
+  if (Atributo = '') then
+    Exit;
+
   Tag := Trim(Tag);
   inicioTag := pos(Tag, FGrupo);
   inicioAtr := PosAtributo(Atributo, FGrupo, 1);

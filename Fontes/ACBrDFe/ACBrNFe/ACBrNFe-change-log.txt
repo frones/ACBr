@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2019
+-- ACBrNFeServicos --
+[*] https://www.projetoacbr.com.br/forum/topic/48903-webservice-nfc-e-mg-incorreto/
+   Por: Tulio Padua
 
 22/01/2019
 -- ACBrDFeDANFeReport --

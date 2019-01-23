@@ -1039,7 +1039,7 @@ begin
         begin
           tpTrib := tptPrevidenciaria;
           nrProcJud := '95135703320156150258';
-          codSusp := 1;
+          codSusp := '123456789';
         end;
       end;
 
@@ -1194,7 +1194,7 @@ begin
         begin
           tpTrib := tptPrevidenciaria;
           nrProcJud := '95135703320156150258';
-          codSusp := 1;
+          codSusp := '123456789';
         end;
       end;
 
@@ -3764,7 +3764,7 @@ begin
           begin
             tpTrib := tptIRRF;
             nrProcJud := '0123654789';
-            codSusp := 1235;
+            codSusp := '1235';
           end;
 
           with infoMV do
@@ -4184,7 +4184,7 @@ begin
           begin
             tpTrib := tpTpTributo(0);
             nrProcJud := '123456789';
-            codSusp := 123456;
+            codSusp := '123456';
           end;
 
           with infoMV do

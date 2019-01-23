@@ -73,7 +73,7 @@ procedure AscIIToRasterStr(AscIIArtLines: TStrings; out AWidth: Integer;
 
 procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out AWidth: Integer;
   out AHeight: Integer; out ARasterStr: AnsiString);
-procedure RasterStrToBMPMono(ARasterStr: AnsiString; AWidth: Integer;
+procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
   InvertImg: Boolean; ABMPStream: TStream);
 
 {$IfNDef NOGUI}
@@ -276,7 +276,7 @@ begin
   end;
 end;
 
-procedure RasterStrToBMPMono(ARasterStr: AnsiString; AWidth: Integer;
+procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
   InvertImg: Boolean; ABMPStream: TStream);
 var
   AByte: Byte;

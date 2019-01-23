@@ -53,8 +53,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2019
+--- DANFeNFCe.fr3 --- 
+[-] Ajuste para apresentar valor comercial ( VUnCom )
+      Por : Henrique Leonardo
+
 30/12/2018
--- DanfePaisagem_2019.fr3 ( Refatoração da DanfePaisagem_2018.fr3 ) 
+--- DanfePaisagem_2019.fr3 ( Refatoração da DanfePaisagem_2018.fr3 ) 
 [+] Nova fonte padrão Times New roman ( antiga Arial )
 [-] Ajuste na apresentação do logo
 [-] Ajuste no alinhamento nos nomes/linhas dos quadros
@@ -65,18 +70,18 @@ Símbolo : Significado
       Por : Henrique Leonardo
 
 30/12/2018
--- DanfeRetrato_2019.fr3 ( Refatoração da DanfePaisagem_2018.fr3 )
+--- DanfeRetrato_2019.fr3 --- ( Refatoração da DanfePaisagem_2018.fr3 )
 [*] Ajuste para apresentar canhoto no rodapé
       Por : Henrique Leonardo
 
 30/01/2018
--- DANFeNFCe3_50 DANFeNFCe4_10 DANFeNFCeImagemElgin DANFeNFCeA4 DANFeNFCe4_20
+--- DANFeNFCe3_50 DANFeNFCe4_10 DANFeNFCeImagemElgin DANFeNFCeA4 DANFeNFCe4_20
    DANFeNFCe[Reduzida] DANFeNFCe --- 
 [-] Alterados para apresentar o campo Valor comercial
       Por : Henrique Leonardo
 
 
 30/01/2018
--- DANFeFR --- 
+--- DANFeFR --- 
 [+] Adicionado Arquivo de Log ao projeto : DANFeFR-change-log.Txt
       Por : Henrique Leonardo

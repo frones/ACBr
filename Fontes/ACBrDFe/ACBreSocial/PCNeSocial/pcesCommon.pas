@@ -1449,12 +1449,12 @@ type
   private
     FTpTrib: tpTpTributo;
     FNrProcJud: string;
-    FCodSusp: integer;
+    FCodSusp: String;
   published
     constructor create; reintroduce;
     property tpTrib: tpTpTributo read FTpTrib write FTpTrib;
     property nrProcJud: string read FNrProcJud write FNrProcJud;
-    property codSusp: Integer read FCodSusp write FCodSusp;
+    property codSusp: String read FCodSusp write FCodSusp;
   end;
 
   TinfoEstagiario = class(TPersistent)

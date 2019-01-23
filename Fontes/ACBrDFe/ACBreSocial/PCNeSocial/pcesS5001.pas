@@ -665,7 +665,7 @@ begin
         sSecao := 'procJudTrab' + IntToStrZero(I, 2);
 
         AIni.WriteString(sSecao, 'nrProcJud', IdeTrabalhador.procJudTrab.Items[i].nrProcJud);
-        AIni.WriteInteger(sSecao, 'codSusp',  IdeTrabalhador.procJudTrab.Items[i].codSusp);
+        AIni.WriteString(sSecao, 'codSusp',  IdeTrabalhador.procJudTrab.Items[i].codSusp);
       end;
 
       for i := 0 to infoCpCalc.Count -1 do

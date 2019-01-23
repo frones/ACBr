@@ -1285,7 +1285,7 @@ begin
         begin
           tpTrib    := eSStrToTpTributo(Ok, sFim);
           nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-          codSusp   := INIRec.ReadInteger(sSecao, 'codSusp', 0);
+          codSusp   := INIRec.ReadString(sSecao, 'codSusp', '');
         end;
 
         Inc(I);

@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2019
+-- Diversos --
+[*] A tag codSusp pode conter um numero inteiro com mais de 10 digitos, sendo 
+    assim o melhor foi mudar o tipo de Integer para String.
+   Por: Italo Jurisato Junior
+
 17/01/2019
 -- pcesS5013 --
 [*] Correção no nome de uma tag que estava com a grafria errada.

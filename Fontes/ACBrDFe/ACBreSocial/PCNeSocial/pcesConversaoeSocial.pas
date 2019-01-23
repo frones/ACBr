@@ -109,7 +109,7 @@ type
 
   tpIndSegmento           = (isNormal );
 
-  tpTpInsc                = (tiCNPJ, tiCPF, tiCAEPF, tiCNO);
+  tpTpInsc                = (tiCNPJ, tiCPF, tiCAEPF, tiCNO, tiCGC);
 
   TpTpInscProp            = (tpCNPJ, tpCPF );
 
@@ -1100,12 +1100,12 @@ end;
 
 function eSTpInscricaoToStr(const t:tpTpInsc ): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_4 );
+  result := EnumeradoToStr2(t, TGenericosString1_5 );
 end;
 
 function eSStrToTpInscricao(var ok: boolean; const s: string): tpTpInsc;
 begin
-  result := tpTpInsc( StrToEnumerado2(ok , s, TGenericosString1_4 ) );
+  result := tpTpInsc( StrToEnumerado2(ok , s, TGenericosString1_5 ) );
 end;
 
 function eStpOpcConsultToStr(const t: tpOpcConsult): string;

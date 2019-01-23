@@ -242,12 +242,14 @@ begin
         begin
           if ((COD_DOC_OS <> '') or (DT_FIN_OS > 0)) and (DT_INI_OS <= 0) then
             raise Exception.Create('O campo DT_INI_OS será obrigatório conforme informação do campo COD_DOC_OS ou DT_FIN_OS');
-          if (DT_INI_OS > RegK100.DT_FIN) or (DT_FIN_OS > RegK100.DT_INI) then
-           raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
-          if DT_INI_OS > DT_FIN_OS then
-            raise Exception.Create('O campo DT_INI_OS não pode ser maior do que o campo DT_FIN_OS');
           if ((DT_INI_OS > 0) or (DT_FIN_OS > 0)) and (COD_DOC_OS = '') then
             raise Exception.Create('O campo COD_DOC_OS será obrigatório conforme informação do campo DT_INI_OS ou DT_FIN_OS');
+          if (DT_INI_OS < RegK100.DT_INI) or (DT_INI_OS > RegK100.DT_FIN) then
+           raise Exception.Create('A data inicial deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+          if (DT_FIN_OS < RegK100.DT_INI) or (DT_FIN_OS > RegK100.DT_FIN) then
+           raise Exception.Create('A data final deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+          if DT_INI_OS > DT_FIN_OS then
+            raise Exception.Create('O campo DT_INI_OS não pode ser maior do que o campo DT_FIN_OS');
 
           Add( LFill('K210') +
                LFill( DT_INI_OS ) +

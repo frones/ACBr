@@ -52,6 +52,13 @@ Símbolo : Significado
 [*] https://www.projetoacbr.com.br/forum/topic/48903-webservice-nfc-e-mg-incorreto/
    Por: Tulio Padua
 
+-- ACBrDANFCeFortesFr --
+[+] Adicionada a propriedade "FonteLinhaItem: TFont", para permitir definir
+    qual Fonte, Tamanho e estilo que deve ser apresentadas as Linhas de Itens
+[*] Ajuste para melhor espacejamento da Legenda do Item
+[*] Ajustes para melhor alinhamento a Direita dos Valores de Totais
+    (por: DSA)
+
 22/01/2019
 -- ACBrDFeDANFeReport --
 [*] Ajustes de processamento no Método "ManterCodigo"
@@ -61,9 +68,7 @@ Símbolo : Significado
 -- pcnNFeR --
 [-] Correção na leitura da tag "cPais" dos grupos "Entrega" e "Retirada".
     https://www.projetoacbr.com.br/forum/topic/48801-erro-acbrnfe1notasfiscaisloadfromstring/?do=findComment&comment=322472
-
-https://www.projetoacbr.com.br/forum/topic/48887-refatora%C3%A7%C3%A3o-mantercodigoean/?tab=comments#comment-323010
-
+    https://www.projetoacbr.com.br/forum/topic/48887-refatora%C3%A7%C3%A3o-mantercodigoean/?tab=comments#comment-323010
 
 16/01/2019
 -- Diversos --

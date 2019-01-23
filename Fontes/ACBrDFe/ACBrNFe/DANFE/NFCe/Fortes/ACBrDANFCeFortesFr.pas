@@ -48,7 +48,7 @@ uses Classes, SysUtils,
        LResources,
      {$ENDIF}
      Forms, Graphics,
-     ACBrNFeDANFEClass, ACBrUtil,
+     ACBrNFeDANFEClass,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
      RLFilters, RLPrinters, RLTypes, Controls;
@@ -65,17 +65,18 @@ type
   {$ENDIF RTL230_UP}	
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFCEClass )
   private
+    FFonteLinhaItem: TFont;
     FTamanhoLogoHeight: Integer;
     FTamanhoLogoWidth: Integer;
-
-    function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
-    procedure DiminuirFonteSeNecessario( ARLMemo: TRLMemo; TamanhoMinimo: Integer = 1);
 
     procedure ImprimirInterno(const Cancelado: Boolean;
       const DanfeResumido : Boolean = False;
       const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum);
   protected
     FpNFe: TNFe;
+
+    procedure DiminuirFonteSeNecessario( ARLMemo: TRLMemo; TamanhoMinimo: Integer = 1);
+    function EspacejarTextoGrafico( const AText: String; AWidth: Integer; AFonte: TFont): String;
 
     procedure AtribuirNFe(NFE: TNFe = Nil);
     procedure Imprimir(const DanfeResumido : Boolean = False; const AFiltro : TACBrNFeDANFCeFiltro = fiNenhum);
@@ -94,7 +95,7 @@ type
   published
     property TamanhoLogoHeight: Integer read FTamanhoLogoHeight write FTamanhoLogoHeight default 50;
     property TamanhoLogoWidth: Integer read FTamanhoLogoWidth write FTamanhoLogoWidth default 77;
-
+    property FonteLinhaItem: TFont read FFonteLinhaItem write FFonteLinhaItem;
   end ;
 
   { TACBrNFeDANFCeFortesFr }
@@ -108,6 +109,8 @@ type
     lContingencia: TRLMemo;
     lDataAutorizacao: TRLLabel;
     lDataAutorizacao1: TRLMemo;
+    lDesconto: TRLLabel;
+    lDescValLiq: TRLLabel;
     lEnderecoConsumidor: TRLMemo;
     lEnderecoConsumidor1: TRLMemo;
     lMensagemFiscal: TRLMemo;
@@ -120,23 +123,34 @@ type
     lNumeroSerie1: TRLMemo;
     lContingencia1: TRLMemo;
     lObservacoes: TRLMemo;
+    lOutro: TRLLabel;
+    lOutroValLiq: TRLLabel;
     lProtocolo: TRLLabel;
     lProtocolo1: TRLMemo;
+    lQtdItens: TRLLabel;
+    lQtdTotalItensVal: TRLLabel;
     lSistema: TRLLabel;
     lNomeFantasia: TRLMemo;
     lNomeFantasiaCanc: TRLMemo;
     lRazaoSocial: TRLMemo;
     lRazaoSocialCanc: TRLMemo;
+    lTitAcrescimo: TRLLabel;
+    lTitDesconto: TRLLabel;
+    lTitDescValLiq: TRLLabel;
     lTitFormaPagto: TRLLabel;
     lTitLei12741: TRLMemo;
+    lTitOutroValLiq: TRLLabel;
+    lTitTotal: TRLLabel;
     lTitTotalAcrescimo: TRLLabel;
     lTitTotalAPagar: TRLLabel;
     lTitTotalDesconto: TRLLabel;
     lTitValorPago: TRLLabel;
+    lTotal: TRLLabel;
     lTotalAcrescimo: TRLLabel;
     lTotalAPagar: TRLLabel;
     lTotalDesconto: TRLLabel;
     lURLConsulta: TRLMemo;
+    mLinhaTotalItem: TRLMemo;
     pGap6: TRLPanel;
     pGapEspacofinalVenda: TRLPanel;
     rlbConsumidor: TRLBand;
@@ -149,6 +163,12 @@ type
     rlbTotalAPagar: TRLBand;
     rlbTotalDesconto: TRLBand;
     pLogo: TRLPanel;
+    rlpAcresItemVal: TRLPanel;
+    rlpAcresItemTit: TRLPanel;
+    rlpTotTit: TRLPanel;
+    rlpTotalVal: TRLPanel;
+    rlpDescItemTit: TRLPanel;
+    rlpDescItemVal: TRLPanel;
     rlpDadosQRCodeLateral: TRLPanel;
     rlpImgQRCodeLateral: TRLPanel;
     rlVenda: TRLReport;
@@ -158,15 +178,7 @@ type
     rlbDetItem: TRLBand;
     mLinhaItem: TRLMemo;
     rlbDescItem: TRLBand;
-    lTitDesconto: TRLLabel;
-    lTitDescValLiq: TRLLabel;
-    lDesconto: TRLLabel;
-    lDescValLiq: TRLLabel;
     rlbOutroItem: TRLBand;
-    lTitAcrescimo: TRLLabel;
-    lTitOutroValLiq: TRLLabel;
-    lOutro: TRLLabel;
-    lOutroValLiq: TRLLabel;
     rlbGap: TRLBand;
     rlsbPagamentos: TRLSubDetail;
     rlbPagamento: TRLBand;
@@ -176,10 +188,6 @@ type
     lTitTroco: TRLLabel;
     lTroco: TRLLabel;
     rlbTotal: TRLBand;
-    lTitTotal: TRLLabel;
-    lTotal: TRLLabel;
-    lQtdItens: TRLLabel;
-    lQtdTotalItensVal: TRLLabel;
     rlbsCabecalho: TRLSubDetail;
     rlbMsgDANFe: TRLBand;
     rlbDadosCliche: TRLBand;
@@ -275,12 +283,11 @@ type
       var PrintIt: Boolean);
   private
     fACBrNFeDANFCeFortes: TACBrNFeDANFCeFortes;
-    fNumItem : Integer;
+    fNumItem: Integer;
     fNumPagto: Integer;
-    fTotalPagto : Currency;
-    fNumObs  : Integer;
+    fTotalPagto: Currency;
+    fNumObs: Integer;
     fObsFisco: TStringList;
-    fHeightDetItem: Integer;
     fResumido: Boolean;
     fFiltro: TACBrNFeDANFCeFiltro;
 
@@ -301,7 +308,7 @@ implementation
 uses
   StrUtils, math,
   ACBrDelphiZXingQRCode, ACBrNFe,
-  ACBrValidador, ACBrDFeDANFeReport, ACBrDFeReportFortes;
+  ACBrValidador, ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrUtil;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -318,12 +325,11 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.FormCreate(Sender: TObject);
 begin
-  fNumItem  := 0 ;
+  fNumItem := 0 ;
   fNumPagto := 0 ;
   fTotalPagto := 0;
-  fNumObs   := 0 ;
+  fNumObs := 0 ;
   fObsFisco := TStringList.Create ;
-  fHeightDetItem := rlbDetItem.Height;
 
   fACBrNFeDANFCeFortes := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 end;
@@ -692,10 +698,21 @@ begin
   fNumItem  := 0;
   fNumPagto := 0;
   fTotalPagto := 0;
-  fNumObs   := 0;
+  fNumObs := 0;
   fObsFisco.Clear;
 
   pGapEspacofinalVenda.Height := ACBrNFeDANFCeFortes.EspacoFinal;
+  rlbDetItem.Font.Assign(ACBrNFeDANFCeFortes.FonteLinhaItem);
+  rlbDescItem.Font.Assign(ACBrNFeDANFCeFortes.FonteLinhaItem);
+  rlbOutroItem.Font.Assign(ACBrNFeDANFCeFortes.FonteLinhaItem);
+
+  mLinhaItem.Width := rlbDetItem.Width;
+  mLinhaTotalItem.Width := rlbDetItem.Width;
+  mLinhaTotalItem.Visible := not ACBrNFeDANFCeFortes.ImprimeEmUmaLinha;
+  if ACBrNFeDANFCeFortes.ImprimeEmUmaLinha then
+     mLinhaItem.Alignment := taRightJustify
+  else
+    mLinhaItem.Alignment := taLeftJustify;
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -916,64 +933,65 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  LinhaItem, infoAdProd, LinhaTotal, sDescricao : string;
-  nTamDescricao, maxCaracter: Integer;
-  {$IFNDEF FPC}
-    BMP : TBitmap;
-  {$ENDIF}
+  LinhaItem, infoAdProd, LinhaTotal, sDescricao, LinhaTemp: string;
+  TamanhoDescricao, TamanhoLinha: Integer;
+  ABMP: TBitmap;
 begin
   PrintIt := not Resumido;
   if not PrintIt then exit;
 
   mLinhaItem.Lines.Clear ;
-  {$IFNDEF FPC}
-    BMP:=TBitMap.Create;
-    try
-      BMP.Canvas.Font.Assign(mLinhaItem.Font);
-      maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( BMP.Canvas, mLinhaItem.Width);
-    finally
-      BMP.Free;
-    end;
-  {$ELSE}
-    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( mLinhaItem.Canvas, mLinhaItem.Width);
-  {$ENDIF}
+
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
     if ACBrNFeDANFCeFortes.ImprimeEmUmaLinha then
     begin
-      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' + ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) +
-                   ' ' + '[DesProd] ' + ACBrNFeDANFCeFortes.FormatarQuantidade( Prod.QCom, False ) + ' ' +
-                   Trim( Prod.uCom) + ' X ' +  ACBrNFeDANFCeFortes.FormatarValorUnitario( Prod.VUnCom ) + ' ' +
+      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +
+                   ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
+                   '[DesProd] ' +
+                   ACBrNFeDANFCeFortes.FormatarQuantidade( Prod.QCom, False ) + ' ' +
+                   Trim( Prod.uCom) + ' X ' +
+                   ACBrNFeDANFCeFortes.FormatarValorUnitario( Prod.VUnCom ) + ' ' +
                    FormatFloatBr( Prod.vProd );
 
       // acerta tamanho da descrição
-      nTamDescricao := (maxCaracter - Length(LinhaItem)) + 5;
-      sDescricao := PadRight(Copy(Trim(Prod.xProd), 1, nTamDescricao), nTamDescricao);
+      ABMP := TBitmap.Create;
+      try
+        ABMP.Canvas.Font.Assign(mLinhaItem.Font);
+        TamanhoDescricao := 9;
+        TamanhoLinha := 0;
+        while TamanhoLinha < mLinhaItem.Width-10 do
+        begin
+          Inc(TamanhoDescricao);
+          sDescricao := PadRight(Trim(Prod.xProd), TamanhoDescricao);
+          LinhaTemp := StringReplace(LinhaItem, '[DesProd]', sDescricao, [rfReplaceAll]);
+          TamanhoLinha := ABMP.Canvas.TextWidth(LinhaTemp);
+        end;
+      finally
+        ABMP.Free;
+      end;
 
-      LinhaItem := StringReplace(LinhaItem, '[DesProd]', sDescricao, [rfReplaceAll]);
-
-      mLinhaItem.Lines.Add(LinhaItem);
+      mLinhaItem.Lines.Add(LinhaTemp);
     end
     else
     begin
-      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +
-                               ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
-                               Trim(Prod.xProd);
+      LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +  // DEBUG {IntToStr(mLinhaItem.Width) + ','+}
+                   ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
+                   Trim(Prod.xProd);
 
       infoAdProd := ACBrNFeDANFCeFortes.ManterinfAdProd(ACBrNFeDANFCeFortes.FpNFe, fNumItem);
       if Trim(infoAdProd) <> '' then
-        LinhaItem := LinhaItem + '-'+ infoAdProd;
+        LinhaItem := LinhaItem + infoAdProd;
 
-      mLinhaItem.Lines.Add(LinhaItem);
+      mLinhaItem.Lines.Text := LinhaItem;
 
-      //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
       LinhaTotal  := '|'+ACBrNFeDANFCeFortes.FormatarQuantidade(Prod.qCom, False) +'|'+
                      Trim(Prod.uCom) + ' X ' +
                      ACBrNFeDANFCeFortes.FormatarValorUnitario(Prod.vUnCom) +'|'+
                      FormatFloatBr(Prod.vProd) ;
-      LinhaTotal  := PadSpace( ACBrStr(LinhaTotal), maxCaracter-9, '|') ;
+      LinhaTotal  := ACBrNFeDANFCeFortes.EspacejarTextoGrafico(LinhaTotal, mLinhaTotalItem.Width-10, mLinhaTotalItem.Font) ;
 
-      mLinhaItem.Lines.Add(LinhaTotal);
+      mLinhaTotalItem.Lines.Text := LinhaTotal;
     end;
   end;
 end;
@@ -1036,27 +1054,10 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbLegendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
-var
-  maxCaracter : Integer;
-  {$IFNDEF FPC}
-    BMP : TBitmap;
-  {$ENDIF}
 begin
   PrintIt := not Resumido;
-
-  {$IFNDEF FPC}
-    BMP:=TBitMap.Create;
-    try
-      BMP.Canvas.Font.Assign(mLinhaItem.Font);
-    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(BMP.Canvas, lLegendaItens.Width);
-    finally
-      BMP.Free;
-    end;
-  {$ELSE}
-    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(lLegendaItens.Canvas, lLegendaItens.Width);
-  {$ENDIF}
-
-  lLegendaItens.Caption := PadSpace(ACBrStr('#|Código|Descrição|Qtde|Un|Valor unit.|Valor total'),maxCaracter, '|');
+  lLegendaItens.Caption := ACBrNFeDANFCeFortes.EspacejarTextoGrafico(
+    '#|Cód|Descrição|Qtd|Un|Vl Unit.|Vl Total', lLegendaItens.Width-10, lLegendaItens.Font);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.FormDestroy(Sender: TObject);
@@ -1214,10 +1215,14 @@ begin
 
   FTamanhoLogoHeight := 50;
   FTamanhoLogoWidth := 77;
+  FFonteLinhaItem := TFont.Create;
+  FFonteLinhaItem.Name := 'Lucida Console';
+  FFonteLinhaItem.Size := 7;
 end;
 
 destructor TACBrNFeDANFCeFortes.Destroy;
 begin
+  FFonteLinhaItem.Free;
   inherited Destroy ;
 end;
 
@@ -1370,24 +1375,6 @@ begin
     FpNFe := NFE;
 end;
 
-function TACBrNFeDANFCeFortes.CalcularCaractesWidth(Canvas : TCanvas; WidthTotal: Integer
-  ): Integer;
-var
-  maxCaracter : Integer;
-  LinhaAjustada : String;
-begin
-  maxCaracter := 1;
-  LinhaAjustada := '*';
-
-  while (Canvas.TextWidth(LinhaAjustada) < WidthTotal) do
-  begin
-    LinhaAjustada := LinhaAjustada + '*';
-    maxCaracter := maxCaracter + 1;
-  end;
-
-  Result := maxCaracter-2;
-end;
-
 procedure TACBrNFeDANFCeFortes.DiminuirFonteSeNecessario(ARLMemo: TRLMemo;
   TamanhoMinimo: Integer);
 var
@@ -1408,6 +1395,31 @@ begin
   finally
     ARLMemo.Font.Size := ABmp.Canvas.Font.Size;
     ABmp.Free;
+  end;
+end;
+
+function TACBrNFeDANFCeFortes.EspacejarTextoGrafico(const AText: String; AWidth: Integer;
+  AFonte: TFont): String;
+var
+  ABMP: TBitmap;
+  LenText, TextWidth: Integer;
+  TextSpaced: String;
+begin
+  ABMP := TBitmap.Create;
+  try
+    ABMP.Canvas.Font.Assign(AFonte);
+    LenText := Length(AText);
+    TextWidth := 0;
+    while (TextWidth < AWidth) do
+    begin
+      Inc(LenText);
+      TextSpaced := ACBrStr(PadSpace(AText, LenText, '|'));
+      TextWidth := ABMP.Canvas.TextWidth(TextSpaced);
+    end;
+
+    Result := ACBrStr(PadSpace(AText, LenText-1, '|'));
+  finally
+    ABMP.Free;
   end;
 end;
 

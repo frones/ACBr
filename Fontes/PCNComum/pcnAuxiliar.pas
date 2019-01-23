@@ -93,6 +93,7 @@ function ValidarCodigoPais(const iPais: integer): smallint;
 function ValidarCodigoUF(const Codigo: integer): boolean;
 function ValidarCNPJ(const numero: string): boolean;
 function ValidarCPF(const numero: string): boolean;
+function ValidarCNPJouCPF(const numero: string): boolean;
 function ValidarMod(const modelo: integer; versao : Real): boolean;
 function ValidarMunicipio(const Municipio: integer): boolean;
 function ValidarNumeros(const s: string): boolean;
@@ -442,6 +443,11 @@ end;
 function ValidarPrefixoGTIN(const numero: string): boolean;
 begin
   result := (ACBrValidador.ValidarPrefixoGTIN(numero) = '');
+end;
+
+function ValidarCNPJouCPF(const numero: string): boolean;
+begin
+  result := (ACBrValidador.ValidarCNPJouCPF(numero) = '');
 end;
 
 function ValidarMod(const modelo: integer; versao : Real): boolean;

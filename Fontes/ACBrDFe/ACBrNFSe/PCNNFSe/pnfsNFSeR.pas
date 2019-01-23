@@ -3031,6 +3031,7 @@ begin
     if( Leitor.rExtrai( 2, 'nf' ) <> '' )then
     begin
       NFSe.Numero := Leitor.rCampo( tcStr, 'numero');
+      NFSe.CodigoVerificacao := Leitor.rCampo( tcStr, 'codigo_autenticidade');
 
       // campos presentes ao baixar do site da prefeitura
       if (NFSe.Numero = '') then 

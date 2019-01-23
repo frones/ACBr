@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2019
+-- pnfsNFSeR --
+[*] Leitura do Código de Verificação
+   Por: Claudenes
+
 21/01/2019
 -- pnfsNFSeW_Equiplano --
 [*] Imposta uma condição para que seja gerado ou não o grupo Tomador do Serviço

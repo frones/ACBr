@@ -1702,7 +1702,7 @@ var
 
 // Utility function to make sure procedure entry points are not null
 
-procedure CheckForNil(ptr: Pointer; name:string);
+procedure CheckForNil(ptr: Pointer; const name:string);
 begin
   if not Assigned(ptr) then
     raise Exception.Create('"' + name + '" could not be loaded from the dynamic library ' + LIBXMLSEC_SO);

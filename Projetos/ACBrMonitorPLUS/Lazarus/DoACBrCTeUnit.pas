@@ -2296,8 +2296,8 @@ begin
         Infevento.CNPJ := copy(OnlyNumber(ACBrCTe.WebServices.Consulta.CTeChave), 7, 14)
       else
       begin
-        if not ValidarCNPJ(ACNPJ) then
-          raise Exception.Create('CNPJ ' + ACNPJ + ' inválido.');
+        if not ValidarCNPJouCPF(ACNPJ) then
+          raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
       end;
 
       Infevento.cOrgao := StrToIntDef(
@@ -2594,8 +2594,8 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorChaveCTe(AUF, ACNPJ, AChave);
 
@@ -2634,8 +2634,8 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
 
@@ -2674,8 +2674,8 @@ begin
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, ANSU);
 

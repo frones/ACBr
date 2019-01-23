@@ -1010,8 +1010,8 @@ begin
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrMDFe.DistribuicaoDFePorChaveMDFe(ACNPJ, AChave);
 
@@ -1049,8 +1049,8 @@ begin
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJ, AUltNSU);
 
@@ -1087,8 +1087,8 @@ begin
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ '+ACNPJ+' inválido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJ, ANSU);
 
@@ -1771,8 +1771,8 @@ begin
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
-    if not ValidarCNPJ(ACNPJ) then
-      raise Exception.Create('CNPJ ' + ACNPJ + ' invalido.');
+    if not ValidarCNPJouCPF(ACNPJ) then
+      raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' invalido.');
 
     ACBrMDFe.WebServices.ConsultaMDFeNaoEnc(ACNPJ);
     RespostaMDFeNaoEnc;
@@ -1826,8 +1826,8 @@ begin
           infEvento.CNPJCPF := copy(chave, 7, 14)
         else
         begin
-          if not ValidarCNPJ(ACNPJ) then
-            raise Exception.Create('CNPJ ' + ACNPJ + ' inválido.');
+          if not ValidarCNPJouCPF(ACNPJ) then
+            raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
         end;
 
         infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(chave), 1, 2), 0);
@@ -2491,8 +2491,8 @@ begin
         infEvento.CNPJCPF := copy(OnlyNumber(ACBrMDFe.WebServices.Consulta.MDFeChave), 7, 14)
       else
       begin
-        if not ValidarCNPJ(ACNPJ) then
-          raise Exception.Create('CNPJ ' + ACNPJ + ' inválido.');
+        if not ValidarCNPJouCPF(ACNPJ) then
+          raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
       end;
 
       infEvento.cOrgao := StrToIntDef(

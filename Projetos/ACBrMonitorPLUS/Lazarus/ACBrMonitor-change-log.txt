@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2019
+[*] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, pcnAuxiliar
+Alterado metodos que realizam validação do CNPJ, para validar também se for CPF.
+
 18/01/2019
 [+] DoACBrMDFeUnit, ACBrMonitorConsts
 Adicionado Metodos DistribuicaoDFe para o MDFe no ACBrMonitor.

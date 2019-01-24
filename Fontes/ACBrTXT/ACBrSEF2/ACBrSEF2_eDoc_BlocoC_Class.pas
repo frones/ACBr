@@ -608,7 +608,7 @@ end;
 
 function TBloco_C.RegistroC020New: TRegistroSEFC020;
 begin
-   Result := FRegistroC001.RegistrosC020.New(FRegistroC001);
+   Result := FRegistroC001.RegistrosC020.New();
 end;
 
 function TBloco_C.RegistroC040New: TRegistroSEFC040;
@@ -624,7 +624,7 @@ end;
 
 function TBloco_C.RegistroC600New: TRegistroSEFC600;
 begin
-   Result := FRegistroC001.RegistrosC600.New(FRegistroC001);
+   Result := FRegistroC001.RegistrosC600.New();
 end;
 
 function TBloco_C.RegistroC605New: TRegistroSEFC605;
@@ -670,7 +670,7 @@ begin
    with FRegistroC001.RegistrosC020 do
      C020 := TRegistroSEFC020(Items[ AchaUltimoPai('C020', 'C300') ]);
 
-   Result := C020.RegistrosC300.New(C020);
+   Result := C020.RegistrosC300.New();
 end;
 
 function TBloco_C.RegistroC310New: TRegistroSEFC310;
@@ -690,7 +690,7 @@ end;
 
 function TBloco_C.RegistroC550New: TRegistroSEFC550;
 begin
-   Result := FRegistroC001.RegistrosC550.New(FRegistroC001);
+   Result := FRegistroC001.RegistrosC550.New();
 end;
 
 function TBloco_C.RegistroC560New: TRegistroSEFC560;

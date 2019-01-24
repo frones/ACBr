@@ -374,17 +374,17 @@ end;
 
 function TBloco_F.RegistroF200New : TRegistroSEFF200;
 begin
-  Result :=  FRegistroF001.RegistroF200.New(FRegistroF001);
+  Result :=  FRegistroF001.RegistroF200.New();
 end;
 
 function TBloco_F.RegistroF205New: TRegistroSEFF205;
 begin
-  Result := FRegistroF001.RegistroF205.New(FRegistroF001);
+  Result := FRegistroF001.RegistroF205.New();
 end;
 
 function TBloco_F.RegistroF210New: TRegistroSEFF210;
 begin
-  Result := FRegistroF001.RegistroF210.New(FRegistroF001);
+  Result := FRegistroF001.RegistroF210.New();
 end;
 
 function TBloco_F.RegistroF215New: TRegistroSEFF215;
@@ -394,7 +394,7 @@ begin
    with FRegistroF001.RegistroF210 do
      F210 := TRegistroSEFF210(Items[ AchaUltimoPai('F210', 'F215') ]);
 
-   Result := F210.RegistroF215.New(F210);
+   Result := F210.RegistroF215.New();
 end;
 
 function TBloco_F.RegistroF220New: TRegistroSEFF220;
@@ -404,7 +404,7 @@ begin
    with FRegistroF001.RegistroF215 do
      F215 := TRegistroSEFF215(Items[ AchaUltimoPai('F215', 'F220') ]);
 
-   Result := F215.RegistroF220.New(F215);
+   Result := F215.RegistroF220.New();
 end;
 
 function TBloco_F.RegistroF225New: TRegistroSEFF225;
@@ -418,7 +418,7 @@ begin
    with F215.RegistroF220 do
      F220 := TRegistroSEFF220(Items[ AchaUltimoPai('F220', 'F225') ]);
 
-   Result := F220.RegistroF225.New(F220);
+   Result := F220.RegistroF225.New();
 end;
 
 function TBloco_F.RegistroF230New: TRegistroSEFF230;
@@ -428,7 +428,7 @@ begin
    with FRegistroF001.RegistroF215 do
      F215 := TRegistroSEFF215(Items[ AchaUltimoPai('F215', 'F230') ]);
 
-   Result := F215.RegistroF230.New(F215);
+   Result := F215.RegistroF230.New();
 end;
 
 end.

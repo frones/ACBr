@@ -207,7 +207,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFE020;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFE020);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE020;
+    function New(): TRegistroSEFE020;
     property Itens[Index: Integer]: TRegistroSEFE020 read GetItem write SetItem;
   end;
 
@@ -308,7 +308,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFE050;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFE050);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE050;
+    function New(): TRegistroSEFE050;
     property Itens[Index: Integer]: TRegistroSEFE050 read GetItem write SetItem;
   end;
 
@@ -342,7 +342,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFE055;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFE055);
   public
-    function New(AOwner: TRegistroSEFE050): TRegistroSEFE055;
+    function New(): TRegistroSEFE055;
     property Itens[Index: Integer]: TRegistroSEFE055 read GetItem write SetItem;
   end;
 
@@ -407,7 +407,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE060;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE060);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE060;
+    function New(): TRegistroSEFE060;
     property notas[Index: Integer]: TRegistroSEFE060 read Getnotas write SetNotas;
   end;
 
@@ -432,7 +432,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE065;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE065);
   public
-    function New(AOwner: TRegistroSEFE060): TRegistroSEFE065;
+    function New(): TRegistroSEFE065;
     property notas[Index: Integer]: TRegistroSEFE065 read Getnotas write SetNotas;
   end;
 
@@ -486,7 +486,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE080;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE080);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE080;
+    function New(): TRegistroSEFE080;
     property notas[Index: Integer]: TRegistroSEFE080 read Getnotas write SetNotas;
   end;
 
@@ -518,7 +518,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE085;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE085);
   public
-    function New(AOwner: TRegistroSEFE080): TRegistroSEFE085;
+    function New(): TRegistroSEFE085;
     property notas[Index: Integer]: TRegistroSEFE085 read Getnotas write SetNotas;
   end;
 
@@ -587,7 +587,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFE100;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFE100);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE100;
+    function New(): TRegistroSEFE100;
     property Itens[Index: Integer]: TRegistroSEFE100 read GetItem write SetItem;
   end;
 
@@ -621,7 +621,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFE105;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFE105);
   public
-    function New(AOwner: TRegistroSEFE100): TRegistroSEFE105;
+    function New(): TRegistroSEFE105;
     property Itens[Index: Integer]: TRegistroSEFE105 read GetItem write SetItem;
   end;
 
@@ -724,7 +724,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE300;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE300);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE300;
+    function New(): TRegistroSEFE300;
     property notas[Index: Integer]: TRegistroSEFE300 read Getnotas write SetNotas;
   end;
 
@@ -783,7 +783,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE305;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE305);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE305;
+    function New(): TRegistroSEFE305;
     property notas[Index: Integer]: TRegistroSEFE305 read Getnotas write SetNotas;
   end;
 
@@ -818,7 +818,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE310;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE310);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE310;
+    function New(): TRegistroSEFE310;
     property notas[Index: Integer]: TRegistroSEFE310 read Getnotas write SetNotas;
   end;
 
@@ -861,7 +861,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE330;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE330);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE330;
+    function New(): TRegistroSEFE330;
     property notas[Index: Integer]: TRegistroSEFE330 read Getnotas write SetNotas;
   end;
 
@@ -925,7 +925,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE340;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE340);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE340;
+    function New(): TRegistroSEFE340;
     property notas[Index: Integer]: TRegistroSEFE340 read Getnotas write SetNotas;
   end;
 
@@ -960,7 +960,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE350;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE350);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE350;
+    function New(): TRegistroSEFE350;
     property notas[Index: Integer]: TRegistroSEFE350 read Getnotas write SetNotas;
   end;
 
@@ -998,7 +998,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE360;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE360);
   public
-    function New(AOwner: TRegistroSEFE300): TRegistroSEFE360;
+    function New(): TRegistroSEFE360;
     property notas[Index: Integer]: TRegistroSEFE360 read Getnotas write SetNotas;
   end;
 
@@ -1029,7 +1029,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE500;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE500);
   public
-    function New(AOwner: TRegistroSEFE001): TRegistroSEFE500;
+    function New(): TRegistroSEFE500;
     property notas[Index: Integer]: TRegistroSEFE500 read Getnotas write SetNotas;
   end;
 
@@ -1056,7 +1056,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE520;
     procedure SetNotas(Index: Integer; const Value: TRegistroSEFE520);
   public
-    function New(AOwner: TRegistroSEFE500): TRegistroSEFE520;
+    function New(): TRegistroSEFE520;
     property notas[Index: Integer]: TRegistroSEFE520 read Getnotas write SetNotas;
   end;
 
@@ -1084,7 +1084,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE525;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE525);
   public
-    function New(AOwner: TRegistroSEFE500): TRegistroSEFE525;
+    function New(): TRegistroSEFE525;
     property notas[Index: Integer]: TRegistroSEFE525 read Getnotas write SetNotas;
   end;
 
@@ -1131,7 +1131,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE540;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE540);
   public
-    function New(AOwner: TRegistroSEFE500): TRegistroSEFE540;
+    function New(): TRegistroSEFE540;
     property notas[Index: Integer]: TRegistroSEFE540 read Getnotas write SetNotas;
   end;
 
@@ -1159,7 +1159,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE550;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE550);
   public
-    function New(AOwner: TRegistroSEFE500): TRegistroSEFE550;
+    function New(): TRegistroSEFE550;
     property notas[Index: Integer]: TRegistroSEFE550 read Getnotas write SetNotas;
   end;
 
@@ -1193,7 +1193,7 @@ type
     function GetNotas(Index: Integer): TRegistroSEFE560;
     procedure SetNotas(Index: Integer;  const Value: TRegistroSEFE560);
   public
-    function New(AOwner: TRegistroSEFE500): TRegistroSEFE560;
+    function New(): TRegistroSEFE560;
     property notas[Index: Integer]: TRegistroSEFE560 read Getnotas write SetNotas;
   end;
 
@@ -1224,7 +1224,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroSEFE340List.New(AOwner: TRegistroSEFE300): TRegistroSEFE340;
+function TRegistroSEFE340List.New(): TRegistroSEFE340;
 begin
   if Self.Count <> 0 then
      raise Exception.Create('Já existe o registro E340 para o periodo!' );
@@ -1363,7 +1363,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroSEFE520List.New(AOwner: TRegistroSEFE500): TRegistroSEFE520;
+function TRegistroSEFE520List.New(): TRegistroSEFE520;
 begin
    Result := TRegistroSEFE520.Create;
    Add(Result);
@@ -1380,7 +1380,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroSEFE525List.New(AOwner: TRegistroSEFE500): TRegistroSEFE525;
+function TRegistroSEFE525List.New(): TRegistroSEFE525;
 begin
    Result := TRegistroSEFE525.Create;
    Add(Result);
@@ -1397,7 +1397,7 @@ begin
   Put(Index, Value);
 end;
 
-function TRegistroSEFE540List.New(AOwner: TRegistroSEFE500): TRegistroSEFE540;
+function TRegistroSEFE540List.New(): TRegistroSEFE540;
 begin
   if Self.Count <> 0 then
      raise Exception.Create('Já existe o registro E540 para o periodo!' );
@@ -1506,7 +1506,7 @@ begin
    Add(Result);
 end;
 
-function TRegistroSEFE020List.New(AOwner: TRegistroSEFE001): TRegistroSEFE020;
+function TRegistroSEFE020List.New(): TRegistroSEFE020;
 begin
    Result := TRegistroSEFE020.Create();
    Add(Result);
@@ -1523,31 +1523,31 @@ begin
    Put(Index, Value);
 end;
 
-function TRegistroSEFE050List.New(AOwner: TRegistroSEFE001): TRegistroSEFE050;
+function TRegistroSEFE050List.New(): TRegistroSEFE050;
 begin
    Result := TRegistroSEFE050.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE055List.New(AOwner: TRegistroSEFE050): TRegistroSEFE055;
+function TRegistroSEFE055List.New(): TRegistroSEFE055;
 begin
    Result := TRegistroSEFE055.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE060List.New(AOwner: TRegistroSEFE001): TRegistroSEFE060;
+function TRegistroSEFE060List.New(): TRegistroSEFE060;
 begin
    Result := TRegistroSEFE060.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE080List.New(AOwner: TRegistroSEFE001): TRegistroSEFE080;
+function TRegistroSEFE080List.New(): TRegistroSEFE080;
 begin
    Result := TRegistroSEFE080.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE085List.New(AOwner: TRegistroSEFE080): TRegistroSEFE085;
+function TRegistroSEFE085List.New(): TRegistroSEFE085;
 begin
    Result := TRegistroSEFE085.Create;
    Add(Result);
@@ -1561,49 +1561,49 @@ begin
 end;
 
 
-function TRegistroSEFE300List.New(AOwner: TRegistroSEFE001): TRegistroSEFE300;
+function TRegistroSEFE300List.New(): TRegistroSEFE300;
 begin
    Result := TRegistroSEFE300.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE305List.New(AOwner: TRegistroSEFE300): TRegistroSEFE305;
+function TRegistroSEFE305List.New(): TRegistroSEFE305;
 begin
    Result := TRegistroSEFE305.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE310List.New(AOwner: TRegistroSEFE300): TRegistroSEFE310;
+function TRegistroSEFE310List.New(): TRegistroSEFE310;
 begin
    Result := TRegistroSEFE310.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE330List.New(AOwner: TRegistroSEFE300): TRegistroSEFE330;
+function TRegistroSEFE330List.New(): TRegistroSEFE330;
 begin
    Result := TRegistroSEFE330.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE350List.New(AOwner: TRegistroSEFE300): TRegistroSEFE350;
+function TRegistroSEFE350List.New(): TRegistroSEFE350;
 begin
    Result := TRegistroSEFE350.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE360List.New(AOwner: TRegistroSEFE300): TRegistroSEFE360;
+function TRegistroSEFE360List.New(): TRegistroSEFE360;
 begin
    Result := TRegistroSEFE360.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE500List.New(AOwner: TRegistroSEFE001): TRegistroSEFE500;
+function TRegistroSEFE500List.New(): TRegistroSEFE500;
 begin
    Result := TRegistroSEFE500.Create;
    Add(Result);
 end;
 
-function TRegistroSEFE560List.New(AOwner: TRegistroSEFE500): TRegistroSEFE560;
+function TRegistroSEFE560List.New(): TRegistroSEFE560;
 begin
    Result := TRegistroSEFE560.Create;
    Add(Result);
@@ -1673,7 +1673,7 @@ begin
    inherited Destroy;
 end;
 
-function TRegistroSEFE065List.New(AOwner: TRegistroSEFE060): TRegistroSEFE065;
+function TRegistroSEFE065List.New(): TRegistroSEFE065;
 begin
    Result := TRegistroSEFE065.Create;
    Add(Result);
@@ -1771,7 +1771,7 @@ begin
    Result := TRegistroSEFE100(Get(Index));
 end;
 
-function TRegistroSEFE100List.New(AOwner: TRegistroSEFE001): TRegistroSEFE100;
+function TRegistroSEFE100List.New(): TRegistroSEFE100;
 begin
    Result := TRegistroSEFE100.Create();
    Add(Result);
@@ -1789,7 +1789,7 @@ begin
   Result := TRegistroSEFE105(Get(Index));
 end;
 
-function TRegistroSEFE105List.New(AOwner: TRegistroSEFE100): TRegistroSEFE105;
+function TRegistroSEFE105List.New(): TRegistroSEFE105;
 begin
    Result := TRegistroSEFE105.Create;
    Add(Result);
@@ -1807,7 +1807,7 @@ begin
   Result := TRegistroSEFE550(Get(Index));
 end;
 
-function TRegistroSEFE550List.New(AOwner: TRegistroSEFE500): TRegistroSEFE550;
+function TRegistroSEFE550List.New(): TRegistroSEFE550;
 begin
    Result := TRegistroSEFE550.Create;
    Add(Result);

@@ -1116,13 +1116,13 @@ end;
 
 function TBloco_E.RegistroE020New: TRegistroSEFE020;
 begin
-   Result := FRegistroE001.RegistroE020.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE020.New();
 end;
 
  
 function TBloco_E.RegistroE100New: TRegistroSEFE100;
 begin
-   Result := FRegistroE001.RegistroE100.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE100.New();
 end;
 
 function TBloco_E.RegistroE105New: TRegistroSEFE105;
@@ -1130,7 +1130,7 @@ var E100: TRegistroSEFE100;
 begin
    with FRegistroE001.RegistroE100 do
       E100 := TRegistroSEFE100(Items[AchaUltimoPai('E100', 'E105') ]);
-   Result := E100.RegistroE105.New(E100);
+   Result := E100.RegistroE105.New();
 end;
 
 function TBloco_E.RegistroE120New: TRegistroSEFE120;
@@ -1159,7 +1159,7 @@ end;
 
 function TBloco_E.RegistroE050New: TRegistroSEFE050;
 begin
-   Result := FRegistroE001.RegistroE050.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE050.New();
 end;
 
 function TBloco_E.RegistroE055New: TRegistroSEFE055;
@@ -1169,12 +1169,12 @@ begin
    with FRegistroE001.RegistroE050 do
       E050 := TRegistroSEFE050(Items[ AchaUltimoPai('E050', 'E055') ]);
 
-   Result := E050.RegistroE055.New(E050);
+   Result := E050.RegistroE055.New();
 end;
 
 function TBloco_E.RegistroE060New: TRegistroSEFE060;
 begin
-   Result := FRegistroE001.RegistroE060.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE060.New();
 end;
 
 function TBloco_E.RegistroE065New: TRegistroSEFE065;
@@ -1184,12 +1184,12 @@ begin
    with FRegistroE001.RegistroE060 do
       E060 := TRegistroSEFE060(Items[ AchaUltimoPai('E060', 'E065') ]);
 
-   Result := E060.RegistroE065.New(E060);
+   Result := E060.RegistroE065.New();
 end;
 
 function TBloco_E.RegistroE080New: TRegistroSEFE080;
 begin
-   Result := FRegistroE001.RegistroE080.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE080.New();
 end;
 
 function TBloco_E.RegistroE085New: TRegistroSEFE085;
@@ -1199,12 +1199,12 @@ begin
    with FRegistroE001.RegistroE080 do
       E080 := TRegistroSEFE080(Items[ AchaUltimoPai('E080', 'E085') ]);
 
-   Result := E080.RegistroE085.New(E080);
+   Result := E080.RegistroE085.New();
 end;
 
 function TBloco_E.RegistroE300New: TRegistroSEFE300;
 begin
-   Result := FRegistroE001.RegistroE300.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE300.New();
 end;
 
 function TBloco_E.RegistroE305New: TRegistroSEFE305;
@@ -1214,7 +1214,7 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E305') ]);
 
-   Result := E300.RegistroE305.New(E300);
+   Result := E300.RegistroE305.New();
 end;
 
 function TBloco_E.RegistroE310New: TRegistroSEFE310;
@@ -1224,7 +1224,7 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E310') ]);
 
-   Result := E300.RegistroE310.New(E300);
+   Result := E300.RegistroE310.New();
 end;
 
 function TBloco_E.RegistroE330New: TRegistroSEFE330;
@@ -1234,7 +1234,7 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E330') ]);
 
-   Result := E300.RegistroE330.New(E300);
+   Result := E300.RegistroE330.New();
 end;
 
 function TBloco_E.RegistroE340New: TRegistroSEFE340;
@@ -1244,7 +1244,7 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E340') ]);
 
-   Result := E300.RegistroE340.New(E300);
+   Result := E300.RegistroE340.New();
 end;
 
 function TBloco_E.RegistroE350New: TRegistroSEFE350;
@@ -1254,7 +1254,7 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E350') ]);
 
-   Result := E300.RegistroE350.New(E300);
+   Result := E300.RegistroE350.New();
 end;
 
 function TBloco_E.RegistroE360New: TRegistroSEFE360;
@@ -1264,12 +1264,12 @@ begin
    with FRegistroE001.RegistroE300 do
       E300 := TRegistroSEFE300(Items[ AchaUltimoPai('E300', 'E360') ]);
 
-   Result := E300.RegistroE360.New(E300);
+   Result := E300.RegistroE360.New();
 end;
 
 function TBloco_E.RegistroE500New: TRegistroSEFE500;
 begin
-   Result := FRegistroE001.RegistroE500.New(FRegistroE001);
+   Result := FRegistroE001.RegistroE500.New();
 end;
 
 function TBloco_E.RegistroE520New: TRegistroSEFE520;
@@ -1279,7 +1279,7 @@ begin
    with FRegistroE001.RegistroE500 do
       E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E520') ]);
 
-   Result := E500.RegistroE520.New(E500);
+   Result := E500.RegistroE520.New();
 end;
 
 function TBloco_E.RegistroE525New: TRegistroSEFE525;
@@ -1289,7 +1289,7 @@ begin
    with FRegistroE001.RegistroE500 do
       E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E525') ]);
 
-   Result := E500.RegistroE525.New(E500);
+   Result := E500.RegistroE525.New();
 end;
 
 function TBloco_E.RegistroE540New: TRegistroSEFE540;
@@ -1299,7 +1299,7 @@ begin
    with FRegistroE001.RegistroE500 do
       E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E540') ]);
 
-   Result := E500.RegistroE540.New(E500);
+   Result := E500.RegistroE540.New();
 end;
 
 function TBloco_E.RegistroE550New: TRegistroSEFE550;
@@ -1309,7 +1309,7 @@ begin
    with FRegistroE001.RegistroE500 do
       E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E550') ]);
 
-   Result := E500.RegistroE550.New(E500);
+   Result := E500.RegistroE550.New();
 
 end;
 
@@ -1320,7 +1320,7 @@ begin
    with FRegistroE001.RegistroE500 do
       E500 := TRegistroSEFE500(Items[ AchaUltimoPai('E500', 'E560') ]);
 
-   Result := E500.RegistroE560.New(E500);
+   Result := E500.RegistroE560.New();
 end;
 
 

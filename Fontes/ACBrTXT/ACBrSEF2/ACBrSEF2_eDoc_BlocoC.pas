@@ -160,7 +160,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFC020;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFC020);
   public
-    function New(AOwner: TRegistroSEFC001): TRegistroSEFC020;
+    function New(): TRegistroSEFC020;
     property Itens[Index: Integer]: TRegistroSEFC020 read GetItem write SetItem;
   end;
 
@@ -234,7 +234,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFC300;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFC300);
   public
-    function New(AOwner: TRegistroSEFC020): TRegistroSEFC300;
+    function New(): TRegistroSEFC300;
     property Itens[Index: Integer]: TRegistroSEFC300 read GetItem write SetItem;
   end;
 
@@ -292,7 +292,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFC550;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFC550);
   public
-    function New(AOwner: TRegistroSEFC001): TRegistroSEFC550;
+    function New(): TRegistroSEFC550;
     property Itens[Index: Integer]: TRegistroSEFC550 read GetItem write SetItem;
   end;
 
@@ -429,7 +429,7 @@ type
     function GetItem(Index: Integer): TRegistroSEFC600;
     procedure SetItem(Index: Integer; const Value: TRegistroSEFC600);
   public
-    function New(AOwner: TRegistroSEFC001): TRegistroSEFC600;
+    function New(): TRegistroSEFC600;
     property Itens[Index: Integer]: TRegistroSEFC600 read GetItem write SetItem;
   end;
 
@@ -550,7 +550,7 @@ begin
    Put(Index, Value);
 end;
 
-function TRegistroSEFC550List.New(AOwner: TRegistroSEFC001): TRegistroSEFC550;
+function TRegistroSEFC550List.New(): TRegistroSEFC550;
 begin
    Result := TRegistroSEFC550.Create();
    Add(Result);
@@ -610,7 +610,7 @@ begin
   Result := TRegistroSEFC300(Get(Index));
 end;
 
-function TRegistroSEFC300List.New(AOwner: TRegistroSEFC020): TRegistroSEFC300;
+function TRegistroSEFC300List.New(): TRegistroSEFC300;
 begin
   Result := TRegistroSEFC300.Create();
   Add(Result);
@@ -645,7 +645,7 @@ begin
   Result := TRegistroSEFC020(Get(Index));
 end;
 
-function TRegistroSEFC020List.New(AOwner: TRegistroSEFC001): TRegistroSEFC020;
+function TRegistroSEFC020List.New(): TRegistroSEFC020;
 begin
   Result := TRegistroSEFC020.Create();
   Add(Result);
@@ -664,7 +664,7 @@ begin
   Result := TRegistroSEFC600(Get(Index));
 end;
 
-function TRegistroSEFC600List.New(AOwner: TRegistroSEFC001): TRegistroSEFC600;
+function TRegistroSEFC600List.New(): TRegistroSEFC600;
 begin
   Result := TRegistroSEFC600.Create();
   Add(Result);

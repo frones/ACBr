@@ -326,27 +326,27 @@ end;
 
 function TBloco_H.RegistroH020New : TRegistroSEFH020;
 begin
-  Result :=  FRegistroH001.RegistroH020.New(FRegistroH001);
+  Result :=  FRegistroH001.RegistroH020.New();
 end;
 
 function TBloco_H.RegistroH030New: TRegistroSEFH030;
 begin
-  Result := FRegistroH001.RegistroH030.New(FRegistroH001);
+  Result := FRegistroH001.RegistroH030.New();
 end;
 
 function TBloco_H.RegistroH040New: TRegistroSEFH040;
 begin
-  Result := FRegistroH001.RegistroH040.New(FRegistroH001);
+  Result := FRegistroH001.RegistroH040.New();
 end;
 
 function TBloco_H.RegistroH050New: TRegistroSEFH050;
 begin
-  Result := FRegistroH001.RegistroH050.New(FRegistroH001);
+  Result := FRegistroH001.RegistroH050.New();
 end;
 
 function TBloco_H.RegistroH060New: TRegistroSEFH060;
 begin
-  Result := FRegistroH001.RegistroH060.New(FRegistroH001);
+  Result := FRegistroH001.RegistroH060.New();
 end;
 
 

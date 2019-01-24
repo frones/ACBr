@@ -287,7 +287,7 @@ type
     function GetItem(Index: Integer): TRegistroSEF0200;
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0200);
   public
-    function New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
+    function New(): TRegistroSEF0200;
     function LocalizaRegistro(const pCOD_ITEM: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0200 read GetItem write SetItem;
   end;
@@ -383,7 +383,7 @@ type
     function GetItem(Index: Integer): TRegistroSEF0400;
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0400);
   public
-    function New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
+    function New(): TRegistroSEF0400;
     function LocalizaRegistro(const pCOD_NAT: String): boolean;
     property Items[Index: Integer]: TRegistroSEF0400 read GetItem write SetItem;
   end;
@@ -411,7 +411,7 @@ type
     function GetItem(Index: Integer): TRegistroSEF0450;
     procedure SetItem(Index: Integer; const Value: TRegistroSEF0450);
   public
-    function New(AOwner: TRegistroSEF0001): TRegistroSEF0450;
+    function New(): TRegistroSEF0450;
     property Items[Index: Integer]: TRegistroSEF0450 read GetItem write SetItem;
   end;
 
@@ -691,7 +691,7 @@ begin
    end;
 end;
 
-function TRegistroSEF0400List.New(AOwner: TRegistroSEF0001): TRegistroSEF0400;
+function TRegistroSEF0400List.New(): TRegistroSEF0400;
 begin
   Result := TRegistroSEF0400.Create();
   Add(Result);
@@ -710,7 +710,7 @@ begin
   Result := TRegistroSEF0450(Get(Index));
 end;
 
-function TRegistroSEF0450List.New(AOwner: TRegistroSEF0001): TRegistroSEF0450;
+function TRegistroSEF0450List.New(): TRegistroSEF0450;
 begin
   Result := TRegistroSEF0450.Create();
   Add(Result);
@@ -822,7 +822,7 @@ begin
    end;
 end;
 
-function TRegistroSEF0200List.New(AOwner: TRegistroSEF0001): TRegistroSEF0200;
+function TRegistroSEF0200List.New(): TRegistroSEF0200;
 begin
   Result := TRegistroSEF0200.Create();
   Add(Result);

@@ -38,7 +38,7 @@ unit ACBrBALToledo2090;
 interface
 
 uses
-  ACBrBALClass, Classes, Dialogs;
+  ACBrBALClass, Classes;
 
 type
 
@@ -56,8 +56,13 @@ type
 implementation
 
 uses
-  ACBrConsts, SysUtils, Math,
-  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF};
+  SysUtils, Math,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALToledo }
 

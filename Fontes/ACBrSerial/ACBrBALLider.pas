@@ -88,11 +88,12 @@ implementation
 // {$DEFINE DEBUG}
 
 uses
-  ACBrConsts, math, SysUtils,
+  math, SysUtils,
+  ACBrConsts, ACBrUtil,
   {$IFDEF COMPILER6_UP}
-    DateUtils, StrUtils
+   DateUtils, StrUtils
   {$ELSE}
-    ACBrD5, Windows
+   ACBrD5, Windows
   {$ENDIF};
 
 

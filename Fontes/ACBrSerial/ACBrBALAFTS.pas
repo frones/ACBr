@@ -47,7 +47,7 @@ unit ACBrBALAFTS;
 interface
 
 uses
-  ACBrBALClass, ACBrConsts, Classes;
+  ACBrBALClass, Classes;
 
 type
           
@@ -64,10 +64,11 @@ implementation
 
 Uses
   SysUtils, Math,
+  ACBrConsts, ACBrUtil,
   {$IFDEF COMPILER6_UP}
-  DateUtils, StrUtils
+   DateUtils, StrUtils
   {$ELSE}
-  ACBrD5, Windows
+   ACBrD5, Windows
   {$ENDIF};
 
 { TACBrBALAFTS }
@@ -107,7 +108,7 @@ begin
     Result := StrToFloat(wResposta);
 
   except
-    case wResposta[1] of
+    case  PadLeft(Trim(wResposta),1)[1] of
       'I' : Result := -1;   { Instavel }
       'N' : Result := -2;   { Peso Negativo }
       'S' : Result := -10;  { Sobrecarga de Peso }

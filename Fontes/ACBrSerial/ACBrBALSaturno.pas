@@ -65,7 +65,12 @@ implementation
 
 uses
   SysUtils,
-  {$IFDEF COMPILER6_UP} DateUtils {$ELSE} synaser, Windows{$ENDIF};
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALSaturno }
 
@@ -119,7 +124,7 @@ begin
     try
       Result := StrToFloat(wResposta);
     except
-      case wResposta[1] of
+      case PadLeft(Trim(wResposta),1)[1] of
         'I': Result := -1;   { Instavel }
         'N': Result := -2;   { Peso Negativo }
         'S': Result := -10;  { Sobrecarga de Peso }

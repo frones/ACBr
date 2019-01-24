@@ -44,8 +44,8 @@ unit ACBrBALToledo9091_8530_8540;
 
 interface
 
-uses ACBrBALClass,
-     Classes;
+uses
+  ACBrBALClass, Classes;
 
 type
   TACBrBALToledo9091_8530_8540 = class( TACBrBALClass )
@@ -57,9 +57,14 @@ type
 
 implementation
 
-Uses ACBrUtil, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, synaser, Windows{$ENDIF},
-     SysUtils, Math ;
+Uses
+  SysUtils, Math,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALToledo9091_8530_8540 }
 

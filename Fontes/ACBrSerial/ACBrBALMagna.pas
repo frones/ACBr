@@ -64,8 +64,13 @@ type
 implementation
 
 uses
-  ACBrConsts, SysUtils,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
+  SysUtils,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALGertecSerial }
 
@@ -106,7 +111,7 @@ begin
     else
       Result := (StrToInt(wResposta) / wDecimais);
   except
-    case Trim(wResposta)[1] of
+    case PadLeft(Trim(wResposta),1)[1] of
     //'I' : Result := -1  ;  { Instavel }
     //'S' : Result := -10 ;  { Sobrecarga de Peso }
       'N' :                  { Peso Negativo }

@@ -67,11 +67,12 @@ type
 implementation
 
 uses
-  ACBrConsts, SysUtils, Math,
+  SysUtils, Math,
+  ACBrConsts, ACBrUtil,
   {$IFDEF COMPILER6_UP}
-  DateUtils, StrUtils
+   DateUtils, StrUtils
   {$ELSE}
-  ACBrD5, synaser, synaser, Windows
+   ACBrD5, Windows
   {$ENDIF};
 
 { TACBrBALToledo2180 }

@@ -46,7 +46,7 @@ unit ACBrBALMuller;
 interface
 
 uses
-  ACBrBALClass, Dialogs, Classes;
+  ACBrBALClass, Classes;
 
 type
 
@@ -63,8 +63,14 @@ type
 
 implementation
 
-uses ACBrConsts, ACBrUtil, SysUtils,
-     {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
+uses
+  SysUtils,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF Delphi6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALGertecSerial }
 
@@ -107,7 +113,7 @@ begin
   try
     Result := StrToFloat(wResposta);
   except
-    case Trim(wResposta)[1] of
+    case  PadLeft(Trim(wResposta),1)[1] of
       'I' : Result := -1;   { Instavel }
       'N' : Result := -2;   { Peso Negativo }
       'S' : Result := -10;  { Sobrecarga de Peso }

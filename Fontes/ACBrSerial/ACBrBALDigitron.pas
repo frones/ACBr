@@ -39,7 +39,7 @@ unit ACBrBALDigitron;
 interface
 
 uses
-  ACBrBALClass, ACBrConsts, Classes;
+  ACBrBALClass, Classes;
 
 type
 
@@ -56,6 +56,7 @@ implementation
 
 uses
   SysUtils, Math,
+  ACBrConsts, ACBrUtil,
   {$IFDEF COMPILER6_UP}
     DateUtils, StrUtils
   {$ELSE}
@@ -106,7 +107,7 @@ begin
     else
       Result := (StrToInt(wResposta) / wDecimais);
   except
-    case wResposta[1] of
+    case PadLeft(Trim(wResposta),1)[1] of
       'I': Result := -1;   { Instavel }
       'N': Result := -2;   { Peso Negativo }
       'S': Result := -10;  { Sobrecarga de Peso }

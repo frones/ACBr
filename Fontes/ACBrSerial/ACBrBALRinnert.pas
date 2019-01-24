@@ -66,8 +66,13 @@ type
 implementation
 
 uses
-  ACBrConsts, SysUtils,
-  {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
+  SysUtils,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF Delphi6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALGertecSerial }
 
@@ -108,7 +113,7 @@ begin
   try
     Result := StrToFloat(wResposta)
   except
-    case Trim(wResposta)[1] of
+    case  PadLeft(Trim(wResposta),1)[1] of
       'I': Result := -1;   { Instavel }
       'N': Result := -2;   { Peso Negativo }
       'S': Result := -10;  { Sobrecarga de Peso }

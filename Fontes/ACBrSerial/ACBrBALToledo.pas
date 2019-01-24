@@ -73,8 +73,13 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrConsts, SysUtils,
-  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF};
+  SysUtils,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALToledo }
 
@@ -281,7 +286,7 @@ begin
     else
       Result := (StrToInt(wResposta) / fpDecimais);
   except
-    case wResposta[1] of
+    case PadLeft(Trim(wResposta),1)[1] of
       'I': Result := -1;   { Instavel }
       'N': Result := -2;   { Peso Negativo }
       'S': Result := -10;  { Sobrecarga de Peso }

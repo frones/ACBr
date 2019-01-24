@@ -47,8 +47,8 @@ unit ACBrBALLibratek;
 
 interface
 
-uses ACBrBALClass, ACBrConsts,
-  Classes;
+uses
+  ACBrBALClass, Classes;
 
 type
 
@@ -62,8 +62,13 @@ type
 implementation
 
 Uses
-{$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  SysUtils, Math;
+  SysUtils, Math,
+  ACBrConsts, ACBrUtil,
+  {$IFDEF COMPILER6_UP}
+   DateUtils, StrUtils
+  {$ELSE}
+   ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALLibratek }
 

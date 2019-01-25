@@ -1153,6 +1153,7 @@ type
     procedure SetCodigoGeracao (const AValue: String);
     procedure SetDataProtesto(AValue: TDateTime);
     procedure SetVencimento(AValue: TDateTime);
+    procedure setValorDocumento(const AValue: Currency);
     procedure AtualizaDadosProtesto();
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
@@ -1177,7 +1178,7 @@ type
      property CodigoNegativacao : TACBrCodigoNegativacao read fCodigoNegativacao write fCodigoNegativacao default cnNaoProtestar;
      
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
-     property ValorDocumento    : Currency    read fValorDocumento    write fValorDocumento;
+     property ValorDocumento    : Currency    read fValorDocumento    write setValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
      property Informativo       : TStrings    read fInformativo       write fInformativo;
      property Instrucao1        : String      read fInstrucao1        write fInstrucao1;
@@ -1870,6 +1871,14 @@ begin
      if (FMAIL <> nil) and (AComponent is TACBrMail) then
        FMAIL := nil;
    end;
+end;
+
+procedure TACBrTitulo.setValorDocumento(const AValue: Currency);
+begin
+  // O arredondamento é com objetivo de remover as diferenças em arredondamentos posteriores,
+  //    que causa uma diferença entre o valor do documento e a linha digitável.
+  // Veja: https://www.projetoacbr.com.br/forum/topic/48941-erro-ao-gerar-boleto-linha-digitavél-diferente-do-valor-do-boleto-sicoob
+  fValorDocumento := RoundTo(AValue, -2);
 end;
 
 { TACBrBoleto }

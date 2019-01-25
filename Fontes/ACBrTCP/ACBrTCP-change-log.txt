@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2019
+-- ACBrSedex --
+[*] Ajuste na função LerArqIni. Remoção de variável não utilizada.
+    (por: José M S Junior)
+
 15/01/2019
 -- ACBrMail --
 [*] Ajuste no envio de e-mail por thread, validação na assinatuda da classe TMailAttachment, preenchimento da propriedade Disposition.

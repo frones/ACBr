@@ -512,18 +512,16 @@ function TACBrSedex.LerArqIni(const AIniSedex: String): Boolean;
 var
   IniSedex: TMemIniFile;
   Sessao: String;
-  MemFormatada: String;
 begin
   Result   := False;
 
   IniSedex := TMemIniFile.Create('');
   try
+
     LerIniArquivoOuString(AIniSedex, IniSedex);
     with Self do
     begin
       Sessao := 'SEDEX';
-      MemFormatada     := IniSedex.ReadString(Sessao,'Mensagem','') ;
-      MemFormatada     := StringReplace( MemFormatada,'|',sLineBreak, [rfReplaceAll] );
 
       CepOrigem        := OnlyNumber(IniSedex.ReadString(Sessao,'CepOrigem',''));
       CepDestino       := OnlyNumber(IniSedex.ReadString(Sessao,'CepDestino',''));

@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2019
+[*] ACBrMonitor1, DoSedexUnit, ACBrSedex
+Ajustes para consulta e Rastreio Sedex via WebService
+
+24/01/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado configurações para informar Responsável Técnico nos XML DFe
+
 23/01/2019
 [*] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, pcnAuxiliar
 Alterado metodos que realizam validação do CNPJ, para validar também se for CPF.

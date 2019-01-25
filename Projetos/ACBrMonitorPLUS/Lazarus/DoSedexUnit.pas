@@ -113,12 +113,15 @@ begin
       Ametodo.Free;
     end;
   end;
+
 end;
 
 procedure TACBrObjetoSedex.LerIniSedex(aStr: String);
 begin
   if not ( ACBrSedex.LerArqIni( aStr ) ) then
-      raise exception.Create('Erro ao ler arquivo de entrada.');
+      raise exception.Create('Erro ao ler arquivo de entrada ou '+
+         'parâmetro incorreto.');
+
 end;
 
 procedure TACBrObjetoSedex.RespostaConsulta;

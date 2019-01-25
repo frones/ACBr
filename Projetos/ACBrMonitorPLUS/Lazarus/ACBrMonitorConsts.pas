@@ -810,6 +810,10 @@ const
   CKeyIdContribuinte =               'IdContribuinte';
   CKeyTipoContribuinte =             'TipoContribuinte';
 
+  CSecRespTecnico =                  'RespTecnico';
+  CKeyCSRT =                         'CSRT';
+  CKeyidCSRT =                       'idCSRT';
+
   CSecProxy =                        'Proxy';
   CKeyProxyHost =                    'Host';
   CKeyProxyPorta =                   'Porta';

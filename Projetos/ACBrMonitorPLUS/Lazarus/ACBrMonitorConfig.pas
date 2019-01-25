@@ -326,6 +326,11 @@ type
     AssuntoMDFe       : String;
   end;
 
+  TDFeRespTecnico = record
+    CSRT        : String;
+    idCSRT      : String;
+  end;
+
   TDFeImpressao = record
     Geral       : TDFeGeral;
     DANFE       : TDANFE;
@@ -367,6 +372,7 @@ type
     Diretorios         : TDFeDiretorios;
     ESocial            : TeSocial;
     Reinf              : TReinf;
+    RespTecnico        : TDFeRespTecnico;
   end;
 
   TSATExtrato = record
@@ -897,6 +903,12 @@ begin
       Ini.WriteInteger( CSecWebService, CKeyTimeZoneMode , TimeZoneMode );
       Ini.WriteString( CSecWebService, CKeyTimeZoneStr, TimeZoneStr );
       Ini.WriteBool( CSecWebService, CKeyCamposFatObrig, CamposFatObrig );
+    end;
+
+    with DFe.RespTecnico do
+    begin
+      Ini.WriteString( CSecRespTecnico, CKeyCSRT, CSRT );
+      Ini.WriteString( CSecRespTecnico, CKeyidCSRT, idCSRT );
     end;
 
     with DFe.ESocial do
@@ -1634,6 +1646,12 @@ begin
       PathArqTXT                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathArqTXT,                  PathArqTXT                  );
     end;
 
+    with DFe.RespTecnico do
+    begin
+      CSRT                       := Ini.ReadString( CSecRespTecnico,    CKeyCSRT,  CSRT  );
+      idCSRT                     := Ini.ReadString( CSecRespTecnico,    CKeyidCSRT,  idCSRT  );
+    end;
+
     with DFe.ESocial do
     begin
       IdEmpregador               := Ini.ReadString( CSecESocial,    CKeyIdEmpregador,  IdEmpregador  );
@@ -2228,6 +2246,12 @@ begin
     PathDPEC                   :=  AcertaPath('Arqs');
     PathEvento                 :=  AcertaPath('Arqs');
     PathArqTXT                 :=  AcertaPath('TXT');
+  end;
+
+  with DFe.RespTecnico do
+  begin
+    CSRT                       := '';
+    idCSRT                     := '';
   end;
 
   with DFe.ESocial do

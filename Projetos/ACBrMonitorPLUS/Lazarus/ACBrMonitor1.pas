@@ -139,6 +139,7 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     btnBoletoRelatorioRetorno: TPanel;
+    btnDFeRespTecnico: TPanel;
     btnIntegrador: TPanel;
     btnGerarAssinaturaSAT: TButton;
     bvCadastro: TBevel;
@@ -396,6 +397,7 @@ type
     deUSUDataCadastro: TDateEdit;
     eAvanco: TEdit;
     eCopias: TEdit;
+    edtIdCSRT: TEdit;
     edNomeArquivo: TEdit;
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
@@ -407,6 +409,7 @@ type
     edtBOLEmailMensagem: TMemo;
     edtBOLLocalPagamento: TEdit;
     edtBOLLogoEmpresa: TEdit;
+    edtCSRT: TEdit;
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
@@ -488,6 +491,9 @@ type
     Label224: TLabel;
     Label225: TLabel;
     Label226: TLabel;
+    Label228: TLabel;
+    lblIDCSRT: TLabel;
+    lblCSRT: TLabel;
     Label4: TLabel;
     Label60: TLabel;
     Label61: TLabel;
@@ -594,6 +600,7 @@ type
     TabSheet1: TTabSheet;
     gbxWSeSocial: TTabSheet;
     gbxWSReinf: TTabSheet;
+    tsRespTecnico: TTabSheet;
     tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
     tsImpCTe: TTabSheet;
@@ -1216,6 +1223,7 @@ type
     procedure btnDFeEmailClick(Sender: TObject);
     procedure btnDFeGeralClick(Sender: TObject);
     procedure btnDFePrintClick(Sender: TObject);
+    procedure btnDFeRespTecnicoClick(Sender: TObject);
     procedure btnDFeTesteClick(Sender: TObject);
     procedure btnDFeWebServicesClick(Sender: TObject);
     procedure btnDisplayClick(Sender: TObject);
@@ -2477,20 +2485,38 @@ begin
     if ACBrEAD1.GerarXMLeECFc(NomeSH, SelectDirectoryDialog1.FileName) then
       MessageDlg('Arquivo: ' + ArqXML + ' criado', mtInformation, [mbOK], 0);
   end;
+
 end;
 
 procedure TFrmACBrMonitor.bSedexRastrearClick(Sender: TObject);
 var
-  CodRastreio: string;
+  CodRastreio, AMsg: string;
+  I: Integer;
 begin
   CodRastreio := '';
+  AMsg := '';
 
-  if not InputQuery('Código de Rastreio', 'Entre com o Código de Rastreio',
-    CodRastreio) then
+  if not InputQuery('Código de Rastreio', 'Entre com o Código de Rastreio',CodRastreio) then
     exit;
+  try
+    ACBrSedex1.Rastrear(CodRastreio);
+  except
+    on E: Exception do
+    begin
+      raise Exception.Create('Falha na conexão para Rastreio' + sLineBreak + E.Message);
+      exit;
+    end;
+  end;
 
-  ACBrSedex1.Rastrear(CodRastreio);
-  AddLinesLog(FDoSedex.ProcessarRespostaRastreio);
+  for I := 0 to ACBrSedex1.retRastreio.Count - 1 do
+    AMsg := AMsg + 'Data Hora: '+ DateTimeToStr(ACBrSedex1.retRastreio[I].DataHora) + sLineBreak
+               + 'Local: '+ ACBrSedex1.retRastreio[I].Local + sLineBreak
+               + 'Situação: '+ ACBrSedex1.retRastreio[I].Situacao + sLineBreak
+               + 'Obs: '+ ACBrSedex1.retRastreio[I].Observacao + sLineBreak;
+
+
+  AddLinesLog(AMsg);
+
 end;
 
 procedure TFrmACBrMonitor.bSedexTestarClick(Sender: TObject);
@@ -2516,13 +2542,33 @@ begin
     Diametro := StrToFloatDef(edtSedexDiametro.Text, 0);
     ValorDeclarado := StrToFloatDef(edtSedexValorDeclarado.Text, 0);
 
-    if ACBrSedex1.Consultar then
-      AMsg := FDoSedex.ProcessarRespostaSedex
-    else
-      AMsg := 'Erro na consulta';
+    try
+      if not( ACBrSedex1.Consultar) then
+      begin
+        AMsg := 'Não Foi Possivel Fazer a Consulta: '+sLineBreak
+          +IntToStr(ACBrSedex1.retErro)+' - '+ACBrSedex1.retMsgErro;
+      end
+      else
+      begin
+        AMsg :=  'CodigoServico: '+ retCodigoServico + sLineBreak +
+              'Valor: '+ FloatToString(retValor) + sLineBreak +
+              'PrazoEntrega: '+ IntToStr(retPrazoEntrega) + sLineBreak +
+              'ValorSemAdicionais: '+ FloatToString(retValorSemAdicionais) + sLineBreak +
+              'ValorMaoPropria: '+ FloatToString(retValorMaoPropria) + sLineBreak +
+              'ValorAvisoRecebimento: '+ FloatToString(retValorAvisoRecebimento) + sLineBreak +
+              'ValorValorDeclarado: '+ FloatToString(retValorValorDeclarado) + sLineBreak +
+              'EntregaDomiciliar: '+retEntregaDomiciliar + sLineBreak +
+              'EntregaSabado: '+retEntregaSabado + sLineBreak +
+              'Erro: '+ IntToStr(retErro) + sLineBreak +
+              'MsgErro: '+retMsgErro;
+
+      end;
+    finally
+      AddLinesLog(AMsg);
+    end;
+
   end;
 
-  AddLinesLog(AMsg);
 end;
 
 procedure TFrmACBrMonitor.btAtivarsatClick(Sender: TObject);
@@ -2825,6 +2871,12 @@ procedure TFrmACBrMonitor.btnDFePrintClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
   pgDFe.ActivePage := tsImpressaoDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeRespTecnicoClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsRespTecnico;
 end;
 
 procedure TFrmACBrMonitor.btnDFeTesteClick(Sender: TObject);
@@ -4476,8 +4528,14 @@ begin
       edtToken.Text                      := Token;
       ckNFCeUsarIntegrador.Checked       := UsarIntegrador;
 
-       ACBrNFe1.Configuracoes.Geral.IdCSC := IdToken;;
+       ACBrNFe1.Configuracoes.Geral.IdCSC := IdToken;
        ACBrNFe1.Configuracoes.Geral.CSC   := Token;
+    end;
+
+    with RespTecnico do
+    begin
+      edtCSRT.Text                       := CSRT;
+      edtIdCSRT.Text                     := idCSRT;
     end;
 
     with Email do
@@ -5572,6 +5630,12 @@ begin
       with WebService.NFe do
       begin
         CNPJContador             := edtCNPJContador.Text;
+      end;
+
+      with RespTecnico do
+      begin
+        CSRT                     := edtCSRT.Text ;
+        idCSRT                   := edtIdCSRT.Text;
       end;
 
       with Email do
@@ -8958,6 +9022,13 @@ begin
       AdicionarLiteral := cbxAdicionaLiteral.Checked;
       SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
       SepararPorModelo := cbxSepararporModelo.Checked;
+    end;
+
+    with RespTec do
+    begin
+      CSRT := edtCSRT.Text;
+      if NaoEstaVazio(edtIdCSRT.Text) then
+        IdCSRT := StrToIntDef(edtIdCSRT.Text,0);
     end;
   end;
 

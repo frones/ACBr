@@ -564,10 +564,12 @@ begin
 
   if (eSTpContrToStr(pDuracao.TpContr) = '2') then
   begin
-
     if pTipo in  [1,2] then
       Gerador.wCampo(tcStr, '', 'clauAssec',  1,  1, 0, eSSimNaoToStr(pDuracao.clauAssec));
-  end;
+  end
+  else
+  if (eSTpContrToStr(pDuracao.TpContr) = '3') then
+    Gerador.wCampo(tcStr, '', 'objDet', 1, 255, 1, pDuracao.objDet);
 
   Gerador.wGrupo('/duracao');
 end;

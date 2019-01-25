@@ -479,6 +479,7 @@ begin
       vinculo.infoContrato.duracao.TpContr   := eSStrToTpContr(Ok, INIRec.ReadString(sSecao, 'tpContr', '1'));
       vinculo.infoContrato.duracao.dtTerm    := StringToDateTime(INIRec.ReadString(sSecao, 'dtTerm', '0'));
       vinculo.infoContrato.duracao.clauAssec := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'clauAssec', 'S'));
+      vinculo.infoContrato.duracao.objDet    := INIRec.ReadString(sSecao, 'objDet', '');
 
       sSecao := 'localTrabGeral';
       if INIRec.ReadString(sSecao, 'tpInsc', '') <> '' then

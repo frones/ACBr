@@ -342,7 +342,7 @@ type
 
   tpUndSalFixo            = (sfPorHora, sfPorDia, sfPorSemana, sfPorQuinzena, sfPorMes, sfPorTarefa, sfNaoaplicavel);
 
-  tpTpContr               = (PrazoIndeterminado, PrazoDeterminado);
+  tpTpContr               = (PrazoIndeterminado, PrazoDeterminado, PrazoDeterminadoVincOcDeUmFato);
 
   tpTpJornada             = (tjJornadaComHorarioDiarioFolgaFixos, tjJornada12x36, tjJornadaComHorarioDiarioFixoFolgaVariavel, tjDemaisTiposJornada);
 
@@ -1270,12 +1270,12 @@ end;
 
 function eSTpContrToStr(const t: tpTpContr ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_2 );
+  result := EnumeradoToStr2(t,TGenericosString1_3 );
 end;
 
 function eSStrToTpContr(var ok: boolean; const s: string): tpTpContr;
 begin
-  result := tpTpContr( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
+  result := tpTpContr( StrToEnumerado2(ok , s, TGenericosString1_3 ) );
 end;
 
 function eSTpJornadaToStr(const t: tpTpJornada ): string;

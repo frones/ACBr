@@ -420,10 +420,12 @@ type
     FTpContr: tpTpContr;
     FdtTerm: TDateTime;
     FclauAssec: tpSimNao;
+    FobjDet: string;
   public
     property TpContr: tpTpContr read FTpContr write FTpContr;
     property dtTerm: TDateTime read FdtTerm write FdtTerm;
     property clauAssec: tpSimNao read FclauAssec write FclauAssec;
+    property objDet: string read FobjDet write FobjDet;
   end;
 
   TEndereco = class

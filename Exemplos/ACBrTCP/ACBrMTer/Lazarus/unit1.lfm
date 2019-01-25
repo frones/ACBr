@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 351
+  Left = 600
   Height = 387
-  Top = 159
+  Top = 340
   Width = 743
   Caption = 'Form1'
   ClientHeight = 387
   ClientWidth = 743
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '2.0.0.3'
   object pnConectados: TPanel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = pnConfig
@@ -221,7 +221,7 @@ object Form1: TForm1
           Height = 23
           Top = 190
           Width = 71
-          MaxValue = 2
+          MaxValue = 10
           TabOrder = 9
           Value = 1
         end
@@ -230,7 +230,7 @@ object Form1: TForm1
           Height = 23
           Top = 190
           Width = 71
-          MaxValue = 40
+          MaxValue = 300
           TabOrder = 10
           Value = 1
         end
@@ -272,8 +272,8 @@ object Form1: TForm1
           Height = 23
           Top = 233
           Width = 71
-          MaxValue = 2
-          MinValue = -1
+          MaxValue = 10
+          MinValue = 1
           TabOrder = 11
           Value = 1
         end
@@ -282,6 +282,7 @@ object Form1: TForm1
           Height = 23
           Top = 276
           Width = 71
+          MaxValue = 300
           MinValue = -20
           TabOrder = 12
           Value = 1
@@ -313,7 +314,7 @@ object Form1: TForm1
           Height = 23
           Top = 319
           Width = 71
-          MaxValue = 2
+          MaxValue = 10
           MinValue = 1
           TabOrder = 13
           Value = 1
@@ -388,32 +389,32 @@ object Form1: TForm1
       end
       object tsFluxoVendas: TTabSheet
         Caption = 'Fluxo de Vendas'
-        ClientHeight = 359
-        ClientWidth = 399
+        ClientHeight = 357
+        ClientWidth = 389
         object pnComandas: TPanel
           Left = 220
-          Height = 359
+          Height = 357
           Top = 0
-          Width = 179
+          Width = 169
           Align = alClient
-          ClientHeight = 359
-          ClientWidth = 179
+          ClientHeight = 357
+          ClientWidth = 169
           TabOrder = 0
           object gbComandas: TGroupBox
             Left = 1
-            Height = 357
+            Height = 355
             Top = 1
-            Width = 177
+            Width = 167
             Align = alClient
             Caption = 'Comandas:'
-            ClientHeight = 337
-            ClientWidth = 173
+            ClientHeight = 335
+            ClientWidth = 163
             TabOrder = 0
             object dbgComandas: TDBGrid
               Left = 0
-              Height = 337
+              Height = 335
               Top = 0
-              Width = 173
+              Width = 163
               Align = alClient
               Color = clWindow
               Columns = <              
@@ -439,24 +440,24 @@ object Form1: TForm1
         end
         object pnTerminais: TPanel
           Left = 0
-          Height = 359
+          Height = 357
           Top = 0
           Width = 220
           Align = alLeft
-          ClientHeight = 359
+          ClientHeight = 357
           ClientWidth = 220
           TabOrder = 1
           object pnLegenda: TPanel
             Left = 1
             Height = 50
-            Top = 308
+            Top = 306
             Width = 218
             Align = alBottom
             TabOrder = 0
           end
           object dbgTerminais: TDBGrid
             Left = 1
-            Height = 243
+            Height = 241
             Top = 65
             Width = 218
             Align = alClient
@@ -576,16 +577,8 @@ object Form1: TForm1
           Top = 18
           Width = 104
           ItemHeight = 15
-          ItemIndex = 1
-          Items.Strings = (
-            'mtrNenhum'
-            'mtrVT100'
-            'mtrSTX/ETX'
-            'mtrPMTG'
-          )
           Style = csDropDownList
           TabOrder = 3
-          Text = 'mtrVT100'
         end
         object lbModelo: TLabel
           AnchorSideLeft.Control = cbModelo
@@ -611,7 +604,7 @@ object Form1: TForm1
           Left = 16
           Height = 15
           Top = 93
-          Width = 65
+          Width = 64
           Anchors = [akLeft, akBottom]
           Caption = 'Terminador:'
           ParentColor = False
@@ -650,16 +643,9 @@ object Form1: TForm1
           Top = 64
           Width = 104
           ItemHeight = 15
-          ItemIndex = 0
-          Items.Strings = (
-            'mdeNormal'
-            'mdeNone'
-            'mdePassword'
-          )
           OnChange = cbEchoModeChange
           Style = csDropDownList
           TabOrder = 7
-          Text = 'mdeNormal'
         end
         object lbEchoMode: TLabel
           AnchorSideLeft.Control = cbEchoMode

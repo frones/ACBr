@@ -1,8 +1,8 @@
 object Form1: TForm1
-  Left = 813
+  Left = 691
   Top = 218
-  Width = 770
-  Height = 474
+  Width = 931
+  Height = 421
   Caption = 'Form1'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,56 +16,24 @@ object Form1: TForm1
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object pnConectados: TPanel
-    Left = 0
-    Top = 136
-    Width = 324
-    Height = 307
-    Align = alCustom
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 0
-    object Splitter1: TSplitter
-      Left = 180
-      Top = 1
-      Width = 5
-      Height = 305
-      Align = alRight
-    end
-    object clbConectados: TCheckListBox
-      Left = 185
-      Top = 1
-      Width = 138
-      Height = 305
-      Align = alRight
-      ItemHeight = 13
-      TabOrder = 0
-    end
-    object mOutput: TMemo
-      Left = 1
-      Top = 1
-      Width = 179
-      Height = 305
-      Align = alClient
-      Lines.Strings = (
-        'Output:'
-        '')
-      ReadOnly = True
-      TabOrder = 1
-    end
-  end
   object pnComandos: TPanel
-    Left = 320
+    Left = 480
     Top = 0
-    Width = 434
-    Height = 435
+    Width = 435
+    Height = 382
     Align = alRight
     Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 1
-    object PageControl2: TPageControl
+    TabOrder = 0
+    object Splitter2: TSplitter
       Left = 1
       Top = 1
-      Width = 432
-      Height = 433
+      Height = 380
+    end
+    object PageControl2: TPageControl
+      Left = 4
+      Top = 1
+      Width = 430
+      Height = 380
       ActivePage = tsComandos
       Align = alClient
       TabOrder = 0
@@ -73,64 +41,59 @@ object Form1: TForm1
       object tsComandos: TTabSheet
         Caption = 'Comandos'
         DesignSize = (
-          424
-          405)
+          422
+          352)
         object lbPosLinha: TLabel
           Left = 166
-          Top = 229
+          Top = 176
           Width = 29
           Height = 13
-          Anchors = [akLeft, akBottom]
           Caption = 'Linha:'
           Color = clBtnFace
           ParentColor = False
         end
         object lbPosColuna: TLabel
           Left = 254
-          Top = 229
+          Top = 176
           Width = 37
           Height = 13
-          Anchors = [akLeft, akBottom]
           Caption = 'Coluna:'
           Color = clBtnFace
           ParentColor = False
         end
         object lbDesLinha: TLabel
           Left = 166
-          Top = 272
+          Top = 219
           Width = 29
           Height = 13
-          Anchors = [akLeft, akBottom]
           Caption = 'Linha:'
           Color = clBtnFace
           ParentColor = False
         end
         object lbQtdPosicoes: TLabel
           Left = 165
-          Top = 315
+          Top = 262
           Width = 73
           Height = 13
-          Anchors = [akLeft, akBottom]
           Caption = 'Qtd. Posic'#195#181'es'
           Color = clBtnFace
           ParentColor = False
         end
         object lbLimparLinha: TLabel
           Left = 166
-          Top = 358
+          Top = 305
           Width = 29
           Height = 13
-          Anchors = [akLeft, akBottom]
           Caption = 'Linha:'
           Color = clBtnFace
           ParentColor = False
         end
         object lbSerial: TLabel
-          Left = 359
-          Top = 184
+          Left = 356
+          Top = 131
           Width = 30
           Height = 13
-          Anchors = [akLeft, akBottom]
+          Anchors = [akTop, akRight]
           Caption = 'Serial:'
           Color = clBtnFace
           ParentColor = False
@@ -174,7 +137,7 @@ object Form1: TForm1
         object edEnviarTexto: TEdit
           Left = 166
           Top = 59
-          Width = 236
+          Width = 234
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 4
@@ -221,7 +184,7 @@ object Form1: TForm1
           Top = 190
           Width = 71
           Height = 22
-          MaxValue = 2
+          MaxValue = 10
           MinValue = 0
           TabOrder = 9
           Value = 1
@@ -231,7 +194,7 @@ object Form1: TForm1
           Top = 190
           Width = 71
           Height = 22
-          MaxValue = 40
+          MaxValue = 300
           MinValue = 0
           TabOrder = 10
           Value = 1
@@ -241,7 +204,7 @@ object Form1: TForm1
           Top = 233
           Width = 71
           Height = 22
-          MaxValue = 2
+          MaxValue = 10
           MinValue = -1
           TabOrder = 11
           Value = 1
@@ -251,7 +214,7 @@ object Form1: TForm1
           Top = 276
           Width = 71
           Height = 22
-          MaxValue = 0
+          MaxValue = 300
           MinValue = -20
           TabOrder = 12
           Value = 0
@@ -261,7 +224,7 @@ object Form1: TForm1
           Top = 319
           Width = 71
           Height = 22
-          MaxValue = 2
+          MaxValue = 10
           MinValue = 1
           TabOrder = 13
           Value = 1
@@ -278,14 +241,14 @@ object Form1: TForm1
         object edEnviarSerial: TEdit
           Left = 166
           Top = 145
-          Width = 178
+          Width = 176
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 15
           Text = 'Texto para Serial'
         end
         object edSerial: TSpinEdit
-          Left = 355
+          Left = 353
           Top = 145
           Width = 47
           Height = 22
@@ -307,7 +270,7 @@ object Form1: TForm1
         object edEnviarParalela: TEdit
           Left = 166
           Top = 102
-          Width = 236
+          Width = 234
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 18
@@ -328,23 +291,23 @@ object Form1: TForm1
         object pnComandas: TPanel
           Left = 220
           Top = 0
-          Width = 204
-          Height = 405
+          Width = 202
+          Height = 352
           Align = alClient
           TabOrder = 0
           object gbComandas: TGroupBox
             Left = 1
             Top = 1
-            Width = 202
-            Height = 403
+            Width = 200
+            Height = 350
             Align = alClient
             Caption = 'Comandas:'
             TabOrder = 0
             object dbgComandas: TDBGrid
               Left = 2
               Top = 15
-              Width = 198
-              Height = 386
+              Width = 196
+              Height = 333
               Align = alClient
               DataSource = dsComandas
               TabOrder = 0
@@ -377,12 +340,12 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 220
-          Height = 405
+          Height = 352
           Align = alLeft
           TabOrder = 1
           object pnLegenda: TPanel
             Left = 1
-            Top = 354
+            Top = 301
             Width = 218
             Height = 50
             Align = alBottom
@@ -392,7 +355,7 @@ object Form1: TForm1
             Left = 1
             Top = 64
             Width = 218
-            Height = 290
+            Height = 237
             Align = alClient
             DataSource = dsTerminais
             TabOrder = 1
@@ -441,203 +404,251 @@ object Form1: TForm1
       end
     end
   end
-  object pgConfigs: TPageControl
+  object pLeft: TPanel
     Left = 0
     Top = 0
-    Width = 320
-    Height = 137
-    ActivePage = tsConfig
-    TabOrder = 2
-    object tsConfig: TTabSheet
-      Caption = 'Configura'#231#227'o'
-      DesignSize = (
-        312
-        109)
-      object lbPorta: TLabel
-        Left = 136
-        Top = -26
-        Width = 30
-        Height = 13
-        Anchors = [akLeft, akBottom]
-        Caption = 'Porta:'
-        Color = clBtnFace
-        ParentColor = False
+    Width = 480
+    Height = 382
+    Align = alClient
+    BevelOuter = bvSpace
+    TabOrder = 1
+    object pnConectados: TPanel
+      Left = 1
+      Top = 138
+      Width = 478
+      Height = 243
+      Align = alClient
+      TabOrder = 0
+      object Splitter1: TSplitter
+        Left = 285
+        Top = 1
+        Width = 5
+        Height = 241
+        Align = alRight
       end
-      object lbModelo: TLabel
-        Left = 16
-        Top = -26
-        Width = 38
-        Height = 13
-        Anchors = [akLeft, akBottom]
-        Caption = 'Modelo:'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object lbTerminador: TLabel
-        Left = 16
-        Top = 64
-        Width = 58
-        Height = 13
-        Anchors = [akLeft, akBottom]
-        Caption = 'Terminador:'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object Label1: TLabel
-        Left = 136
-        Top = 20
-        Width = 42
-        Height = 13
-        Anchors = [akLeft, akBottom]
-        Caption = 'Timeout:'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object lbEchoMode: TLabel
-        Left = 16
-        Top = 20
-        Width = 53
-        Height = 13
-        Anchors = [akLeft, akBottom]
-        Caption = 'EchoMode:'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object btAtivar: TButton
-        Left = 232
-        Top = 10
-        Width = 75
-        Height = 25
-        Caption = 'Ativar'
+      object clbConectados: TCheckListBox
+        Left = 290
+        Top = 1
+        Width = 187
+        Height = 241
+        Align = alRight
+        ItemHeight = 13
         TabOrder = 0
-        OnClick = btAtivarClick
       end
-      object btDesativar: TButton
-        Left = 232
-        Top = 42
-        Width = 75
-        Height = 25
-        Caption = 'Desativar'
+      object mOutput: TMemo
+        Left = 1
+        Top = 1
+        Width = 284
+        Height = 241
+        Align = alClient
+        Lines.Strings = (
+          'Output:'
+          '')
+        ReadOnly = True
         TabOrder = 1
-        OnClick = btDesativarClick
-      end
-      object edPorta: TEdit
-        Left = 136
-        Top = 18
-        Width = 81
-        Height = 21
-        TabOrder = 2
-        Text = '6550'
-      end
-      object cbModelo: TComboBox
-        Left = 16
-        Top = 18
-        Width = 104
-        Height = 21
-        Style = csDropDownList
-        ItemHeight = 13
-        ItemIndex = 1
-        TabOrder = 3
-        Text = 'mtrVT100'
-        Items.Strings = (
-          'mtrNenhum'
-          'mtrVT100'
-          'mtrSTX/ETX'
-          'mtrPMTG')
-      end
-      object edTerminador: TEdit
-        Left = 16
-        Top = 108
-        Width = 104
-        Height = 21
-        TabOrder = 4
-      end
-      object edTimeout: TEdit
-        Left = 136
-        Top = 64
-        Width = 81
-        Height = 21
-        TabOrder = 5
-        Text = '5000'
-      end
-      object btAtualizar: TButton
-        Left = 232
-        Top = 74
-        Width = 75
-        Height = 25
-        Caption = 'Atualizar'
-        TabOrder = 6
-        OnClick = btAtualizarClick
-      end
-      object cbEchoMode: TComboBox
-        Left = 16
-        Top = 64
-        Width = 104
-        Height = 21
-        Style = csDropDownList
-        ItemHeight = 13
-        ItemIndex = 0
-        TabOrder = 7
-        Text = 'mdeNormal'
-        OnChange = cbEchoModeChange
-        Items.Strings = (
-          'mdeNormal'
-          'mdeNone'
-          'mdePassword')
       end
     end
-    object tsBalanca: TTabSheet
-      Caption = 'Balan'#231'a'
-      DesignSize = (
-        312
-        109)
-      object Label2: TLabel
-        Left = 16
-        Top = 16
-        Width = 34
-        Height = 13
-        Caption = 'Modelo'
-        Color = clBtnFace
-        ParentColor = False
+    object pgConfigs: TPageControl
+      Left = 1
+      Top = 1
+      Width = 478
+      Height = 137
+      ActivePage = tsBalanca
+      Align = alTop
+      TabOrder = 1
+      object tsConfig: TTabSheet
+        Caption = 'Configura'#231#227'o'
+        DesignSize = (
+          470
+          109)
+        object lbPorta: TLabel
+          Left = 136
+          Top = -26
+          Width = 30
+          Height = 13
+          Anchors = [akLeft, akBottom]
+          Caption = 'Porta:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object lbModelo: TLabel
+          Left = 16
+          Top = -26
+          Width = 38
+          Height = 13
+          Anchors = [akLeft, akBottom]
+          Caption = 'Modelo:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object lbTerminador: TLabel
+          Left = 16
+          Top = 64
+          Width = 58
+          Height = 13
+          Anchors = [akLeft, akBottom]
+          Caption = 'Terminador:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object Label1: TLabel
+          Left = 136
+          Top = 20
+          Width = 42
+          Height = 13
+          Anchors = [akLeft, akBottom]
+          Caption = 'Timeout:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object lbEchoMode: TLabel
+          Left = 16
+          Top = 20
+          Width = 53
+          Height = 13
+          Anchors = [akLeft, akBottom]
+          Caption = 'EchoMode:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object btAtivar: TButton
+          Left = 232
+          Top = 10
+          Width = 75
+          Height = 25
+          Caption = 'Ativar'
+          TabOrder = 0
+          OnClick = btAtivarClick
+        end
+        object btDesativar: TButton
+          Left = 232
+          Top = 42
+          Width = 75
+          Height = 25
+          Caption = 'Desativar'
+          TabOrder = 1
+          OnClick = btDesativarClick
+        end
+        object edPorta: TEdit
+          Left = 136
+          Top = 18
+          Width = 81
+          Height = 21
+          TabOrder = 2
+          Text = '6550'
+        end
+        object cbModelo: TComboBox
+          Left = 16
+          Top = 18
+          Width = 104
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 1
+          TabOrder = 3
+          Text = 'mtrVT100'
+          Items.Strings = (
+            'mtrNenhum'
+            'mtrVT100'
+            'mtrSTX/ETX'
+            'mtrPMTG')
+        end
+        object edTerminador: TEdit
+          Left = 16
+          Top = 108
+          Width = 104
+          Height = 21
+          TabOrder = 4
+        end
+        object edTimeout: TEdit
+          Left = 136
+          Top = 64
+          Width = 81
+          Height = 21
+          TabOrder = 5
+          Text = '5000'
+        end
+        object btAtualizar: TButton
+          Left = 232
+          Top = 74
+          Width = 75
+          Height = 25
+          Caption = 'Atualizar'
+          TabOrder = 6
+          OnClick = btAtualizarClick
+        end
+        object cbEchoMode: TComboBox
+          Left = 16
+          Top = 64
+          Width = 104
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 7
+          Text = 'mdeNormal'
+          OnChange = cbEchoModeChange
+          Items.Strings = (
+            'mdeNormal'
+            'mdeNone'
+            'mdePassword')
+        end
       end
-      object Label4: TLabel
-        Left = 232
-        Top = 16
-        Width = 55
-        Height = 13
-        Caption = 'Porta Serial'
-        Color = clBtnFace
-        ParentColor = False
-      end
-      object cbBalanca: TComboBox
-        Left = 16
-        Top = 32
-        Width = 202
-        Height = 21
-        Style = csDropDownList
-        ItemHeight = 13
-        TabOrder = 0
-      end
-      object edSerialPeso: TSpinEdit
-        Left = 230
-        Top = 29
-        Width = 59
-        Height = 22
-        Anchors = []
-        MaxValue = 4
-        MinValue = 0
-        TabOrder = 1
-        Value = 0
-      end
-      object btSolicitarPeso: TButton
-        Left = 109
-        Top = 62
-        Width = 96
-        Height = 32
-        Anchors = []
-        Caption = 'Solicitar Peso'
-        TabOrder = 2
-        OnClick = btSolicitarPesoClick
+      object tsBalanca: TTabSheet
+        Caption = 'Balan'#231'a'
+        DesignSize = (
+          470
+          109)
+        object Label2: TLabel
+          Left = 16
+          Top = 16
+          Width = 34
+          Height = 13
+          Caption = 'Modelo'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object Label4: TLabel
+          Left = 360
+          Top = 18
+          Width = 55
+          Height = 13
+          Anchors = [akTop, akRight]
+          Caption = 'Porta Serial'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object cbBalanca: TComboBox
+          Left = 16
+          Top = 32
+          Width = 313
+          Height = 21
+          Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
+          ItemHeight = 13
+          TabOrder = 0
+        end
+        object edSerialPeso: TSpinEdit
+          Left = 361
+          Top = 31
+          Width = 59
+          Height = 22
+          Anchors = []
+          MaxValue = 4
+          MinValue = 0
+          TabOrder = 1
+          Value = 0
+        end
+        object btSolicitarPeso: TButton
+          Left = 189
+          Top = 62
+          Width = 96
+          Height = 32
+          Anchors = []
+          Caption = 'Solicitar Peso'
+          TabOrder = 2
+          OnClick = btSolicitarPesoClick
+        end
       end
     end
   end
@@ -648,10 +659,10 @@ object Form1: TForm1
     IP = '0.0.0.0'
     PasswordChar = '*'
     Port = '6550'
-    TimeOut = 5000
     OnConecta = ACBrMTer1Conecta
     OnDesconecta = ACBrMTer1Desconecta
     OnRecebeDados = ACBrMTer1RecebeDados
+    OnRecebePeso = ACBrMTer1RecebePeso
     Left = 40
     Top = 224
   end

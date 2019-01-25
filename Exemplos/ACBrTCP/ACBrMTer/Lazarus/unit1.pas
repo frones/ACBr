@@ -378,11 +378,29 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var
   I: TACBrBALModelo;
+  J: TACBrMTerModelo;
+  K: TACBrMTerEchoMode;
 begin
   cbBalanca.Items.Clear;
   // Preenchendo ComboBox de Modelos de Balança
   for I := Low(TACBrBALModelo) to High(TACBrBALModelo) do
     cbBalanca.Items.Add(GetEnumName(TypeInfo(TACBrBALModelo), Integer(I)));
+
+  cbModelo.Items.Clear;
+  // Preenchendo ComboBox de Modelos de Balança
+  for J := Low(TACBrMTerModelo) to High(TACBrMTerModelo) do
+    cbModelo.Items.Add(GetEnumName(TypeInfo(TACBrMTerModelo), Integer(J)));
+
+  cbEchoMode.Items.Clear;
+  // Preenchendo ComboBox de Modelos de Balança
+  for K := Low(TACBrMTerEchoMode) to High(TACBrMTerEchoMode) do
+    cbEchoMode.Items.Add(GetEnumName(TypeInfo(TACBrMTerEchoMode), Integer(K)));
+
+  cbModelo.ItemIndex := 0;
+  cbEchoMode.ItemIndex := 0;
+
+  pgConfigs.ActivePageIndex := 0;
+  PageControl2.ActivePageIndex := 0;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

@@ -52,7 +52,6 @@ uses
   ACBrDFeUtil, ACBrUtil;
 
 const
-  ACBRCTE_VERSAO = '2.0.0a';
   ACBRCTE_NAMESPACE = 'http://www.portalfiscal.inf.br/cte';
   ACBRCTE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
      'configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -83,7 +82,6 @@ type
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -234,11 +232,6 @@ begin
   if (Operation = opRemove) and (FDACTE <> nil) and
      (AComponent is TACBrCTeDACTEClass) then
     FDACTE := nil;
-end;
-
-function TACBrCTe.GetAbout: String;
-begin
-  Result := 'ACBrCTe Ver: ' + ACBRCTE_VERSAO;
 end;
 
 function TACBrCTe.GetNomeModeloDFe: String;

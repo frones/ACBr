@@ -56,7 +56,6 @@ uses Classes, Graphics, Contnrs, IniFiles,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.1.0';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
   CCedente = 'CEDENTE';
@@ -1284,8 +1283,6 @@ type
     fLeCedenteRetorno: boolean;
     fHomologacao: Boolean;
     fRemoveAcentosArqRemessa: Boolean;
-    function GetAbout: String;
-    procedure SetAbout(const AValue: String);
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
     procedure SetMAIL(AValue: TACBrMail);
   protected
@@ -1319,7 +1316,6 @@ type
     procedure GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
 
   published
-    property About : String read GetAbout write SetAbout stored False ;
     property MAIL  : TACBrMail read FMAIL write SetMAIL;
 
     property Homologacao    : Boolean            read fHomologacao            write fHomologacao default False;
@@ -1361,16 +1357,13 @@ type
     fOnObterLogo : TACBrBoletoFCOnObterLogo ;
     fSoftwareHouse  : String;
     function ComponentStateDesigning: Boolean;
-    function GetAbout: String;
     function GetArqLogo: String;
     function GetDirLogo: String;
     function GetNomeArquivo: String;
-    procedure SetAbout(const AValue: String);
     procedure SetACBrBoleto(const Value: TACBrBoleto);
     procedure SetDirLogo(const AValue: String);
     procedure SetNomeArquivo(const AValue: String);
   protected
-    fpAbout : String ;
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -1388,8 +1381,6 @@ type
 
     property ArquivoLogo : String read GetArqLogo;
   published
-    property About : String read GetAbout write SetAbout stored False ;
-
     property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
     property ACBrBoleto      : TACBrBoleto     read fACBrBoleto       write SetACBrBoleto stored False;
     property LayOut          : TACBrBolLayOut  read fLayOut           write fLayOut           default lPadrao;
@@ -1846,16 +1837,6 @@ begin
     if AValue <> nil then
       AValue.FreeNotification(self);
   end;
-end;
-
-function TACBrBoleto.GetAbout: String;
-begin
-  Result := 'ACBrBoleto Ver: '+CACBrBoleto_Versao;
-end;
-
-procedure TACBrBoleto.SetAbout(const AValue: String);
-begin
-  {}
 end;
 
 procedure TACBrBoleto.Notification ( AComponent: TComponent;
@@ -3261,7 +3242,6 @@ constructor TACBrBoletoFCClass.Create ( AOwner: TComponent ) ;
 begin
    inherited Create ( AOwner ) ;
 
-   fpAbout           := 'ACBrBoletoFCClass' ;
    fACBrBoleto       := nil;
    fLayOut           := lPadrao;
    fNumCopias        := 1;
@@ -3341,11 +3321,6 @@ begin
    Result := PathWithDelim(DirLogo) + IntToStrZero( ACBrBoleto.Banco.Numero, 3)+'.bmp';
 end;
 
-function TACBrBoletoFCClass.GetAbout: String;
-begin
-  Result := fpAbout ;
-end;
-
 function TACBrBoletoFCClass.ComponentStateDesigning: Boolean;
 begin
   Result := (csDesigning in Self.ComponentState);
@@ -3387,11 +3362,6 @@ begin
 
     Result := fPathNomeArquivo;
   end;
-end;
-
-procedure TACBrBoletoFCClass.SetAbout(const AValue: String);
-begin
-  {}
 end;
 
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;

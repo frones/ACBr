@@ -49,9 +49,6 @@ uses
   ACBrFContBloco_0_Class, ACBrFContBloco_9_Class, ACBrFContBloco_I_Class,
   ACBrFContBloco_J_Class, ACBrFContBloco_M_Class;
 
-const
-   CACBrSpedFCont_Versao = '0.01a' ;
-
 type
   /// ACBrSpedFCont -  Controle Fiscal Contábil de Transição
 
@@ -78,13 +75,11 @@ type
     FBloco_J: TBloco_J;
     FBloco_M: TBloco_M;    
 
-    function GetAbout: String;
     function GetDelimitador: String;
     function GetTrimString: boolean;
     function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
-    procedure SetAbout(const Value: String);
     procedure SetDelimitador(const Value: String);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: String);
@@ -141,7 +136,6 @@ type
     property Bloco_J: TBloco_J read FBloco_J write FBloco_J;
     property Bloco_M: TBloco_M read FBloco_M write FBloco_M;
   published
-    property About: String read GetAbout write SetAbout stored False ;
     property Path: String read FPath write FPath;
     ///
     property Delimitador: String read GetDelimitador write SetDelimitador;
@@ -735,17 +729,6 @@ begin
                                                                   Bloco_9.Registro9990.QTD_LIN_9;
    Result := Bloco_9.WriteRegistro9999;
 end;
-
-function TACBrSPEDFCont.GetAbout: String;
-begin
-   Result := 'ACBrSpedFCont Ver: ' + CACBrSpedFCont_Versao;
-end;
-
-procedure TACBrSPEDFCont.SetAbout(const Value: String);
-begin
- {}
-end;
-
 
 {$ifdef FPC}
 

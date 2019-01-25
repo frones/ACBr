@@ -60,9 +60,6 @@ uses
   ACBrEFDBloco_K_Class, ACBrEFDBloco_0_Events, ACBrEFDBloco_B_Events,
   ACBrEFDBloco_C_Events,ACBrEFDBloco_D_Events, ACBrEFDBloco_E_Events;
 
-const
-  CACBrSpedFiscal_Versao = '1.02';
-
 type
   /// ACBrSpedFiscal - Sitema Publico de Escrituração Digital Fiscal
 
@@ -105,7 +102,6 @@ type
     FBloco_H: TBloco_H;
     FBloco_K: TBloco_K;
 
-    function GetAbout: String;
     function GetConteudo: TStringList;
     function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
@@ -196,7 +192,6 @@ type
     property Bloco_H: TBloco_H read FBloco_H write FBloco_H;
     property Bloco_K: TBloco_K read FBloco_K write FBloco_K;
   published
-    property About: String read GetAbout stored False;
     property Path: String read FPath write SetPath;
     property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer default 1000 ;
@@ -342,11 +337,6 @@ begin
   FBloco_H.LimpaRegistros;
   FBloco_K.LimpaRegistros;
   FBloco_9.LimpaRegistros;
-end;
-
-function TACBrSPEDFiscal.GetAbout: String;
-begin
-   Result := 'ACBrSpedFiscal Ver: ' + CACBrSpedFiscal_Versao;
 end;
 
 function TACBrSPEDFiscal.GetConteudo: TStringList;

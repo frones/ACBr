@@ -51,7 +51,6 @@ uses
   ACBrUtil;
 
 const
-  ACBRNFSE_VERSAO = '2.0.0a';
   ACBRNFSE_NAMESPACE = 'NameSpace.varia.conforme.provedor';
 
 type
@@ -76,7 +75,6 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -202,11 +200,6 @@ begin
   if (Operation = opRemove) and (FDANFSE <> nil) and
     (AComponent is TACBrNFSeDANFSEClass) then
     FDANFSE := nil;
-end;
-
-function TACBrNFSe.GetAbout: String;
-begin
-  Result := 'ACBrNFSe Ver: ' + ACBRNFSE_VERSAO;
 end;
 
 function TACBrNFSe.CreateConfiguracoes: TConfiguracoes;

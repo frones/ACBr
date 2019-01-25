@@ -58,9 +58,6 @@ uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrECFVirtual, ACBrPAFClass, ACBrRFD,
 {$IFDEF FRAMEWORK}
 {$UNDEF NOGUI}
 {$ENDIF}
-const
-   CACBrECF_Versao = '1.0.0' ;
-
 type
 
 { Modelos de ECF Suportados pelo Componente TACBrECF atualmente
@@ -422,8 +419,6 @@ TACBrECF = class( TACBrComponent )
     procedure SetAAC(const AValue: TACBrAAC);
     procedure SetEAD(const AValue: TACBrEAD);
     Function RFDAtivo : Boolean ;
-    function GetAbout: String;
-    procedure SetAbout(const AValue: String);
     function GetParamDescontoISSQNClass: Boolean;
     function GetMFAdicional: String;
     function GetInfoRodapeCupom: TACBrECFRodape;
@@ -971,7 +966,6 @@ TACBrECF = class( TACBrComponent )
 
   published
      property QuebraLinhaRodape : Boolean read FQuebraLinhaRodape write FQuebraLinhaRodape;
-     property About : String read GetAbout write SetAbout stored False ;
      property Modelo : TACBrECFModelo read fsModelo write SetModelo
                  default ecfNenhum ;
      property Porta : String read GetPorta write SetPorta ;
@@ -6400,16 +6394,6 @@ begin
     Pot := Power(10, ADecimais) ;
     Result := TruncFix(TotalItem * Pot) / Pot;
   end;
-end;
-
-function TACBrECF.GetAbout: String;
-begin
-   Result := 'ACBrECF Ver: '+CACBrECF_Versao;
-end;
-
-procedure TACBrECF.SetAbout(const AValue: String);
-begin
-   {}
 end;
 
 //*** Opcoes do menu fiscal do paf-ecf

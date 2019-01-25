@@ -57,7 +57,6 @@ uses
   ACBrDFeUtil, ACBrUtil;
 
 const
-  ACBRGNRE_VERSAO = '1.0.0a';
   ACBRGNRE_NAMESPACE = 'http://www.gnre.pe.gov.br';
   ACBRGNRE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do ' +
                'configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -85,7 +84,6 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -181,11 +179,6 @@ begin
   if (Operation = opRemove) and (FGNREGuia <> nil) and
     (AComponent is TACBrGNREGuiaClass) then
     FGNREGuia := nil;
-end;
-
-function TACBrGNRE.GetAbout: String;
-begin
-  Result := 'ACBrGNRE Ver: ' + ACBRGNRE_VERSAO;
 end;
 
 function TACBrGNRE.CreateConfiguracoes: TConfiguracoes;

@@ -46,7 +46,6 @@ uses
   pcnConversao;
 
 const
-  ACBRDFE_VERSAO = '0.1.0a';
   CSCHEMA_EXT = '.xsd';
   CSCHEMA_SeparadorVersao = '_v';
 
@@ -73,7 +72,6 @@ type
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
-    procedure SetAbout(const AValue: String);
     procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
     procedure SetIntegrador(AValue: TACBrIntegrador);
@@ -83,7 +81,6 @@ type
     FPIniParamsCarregado: Boolean;
     FPSeparadorVersaoSchema: String;
 
-    function GetAbout: String; virtual;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
     function CreateConfiguracoes: TConfiguracoes; virtual;
@@ -139,7 +136,6 @@ type
     property OnTransmitError : TACBrDFeOnTransmitError read FOnTransmitError
        write FOnTransmitError;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
-    property About: String read GetAbout write SetAbout stored False;
 
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
     property OnAntesDeAssinar: TDFeSSLAntesDeAssinar read GetOnAntesDeAssinar
@@ -225,16 +221,6 @@ end;
 function TACBrDFe.GetNameSpaceURI: String;
 begin
   Result := '';
-end;
-
-function TACBrDFe.GetAbout: String;
-begin
-  Result := 'ACBrDFe Ver: ' + ACBRDFE_VERSAO;
-end;
-
-procedure TACBrDFe.SetAbout(const AValue: String);
-begin
-  {nada aqui}
 end;
 
 function TACBrDFe.GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;

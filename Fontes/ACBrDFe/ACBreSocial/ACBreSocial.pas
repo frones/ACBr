@@ -60,7 +60,6 @@ resourcestring
   ACBRESOCIAL_CErroCryptLib = 'Necessário DigestMethod Algorithm SHA256. use cryOpenSSL ou cryWinCrypt na propriedade SSLCryptLib.';
 
 const
-  ACBRESOCIAL_VERSAO = '2.4.1';
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
   ACBRESOCIAL_NAMESPACE_CON = 'http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0';
   ACBRESOCIAL_NAMESPACE_URI = 'http://www.esocial.gov.br/schema/evt/';
@@ -88,7 +87,6 @@ type
     procedure SetConfiguracoes(AValue: TConfiguracoeseSocial);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
     function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
@@ -164,11 +162,6 @@ end;
 function TACBreSocial.CreateConfiguracoes: TConfiguracoes;
 begin
   Result := TConfiguracoeseSocial.Create(Self);
-end;
-
-function TACBreSocial.GetAbout: String;
-begin
-  Result := 'ACBreSocial Ver: ' + ACBRESOCIAL_VERSAO;
 end;
 
 function TACBreSocial.Enviar(AGrupo: TeSocialGrupo): boolean;

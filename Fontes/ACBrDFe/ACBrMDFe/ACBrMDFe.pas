@@ -50,7 +50,6 @@ uses
   ACBrUtil;
 
 const
-  ACBRMDFe_VERSAO = '2.0.0a';
   ACBRMDFE_NAMESPACE = 'http://www.portalfiscal.inf.br/mdfe';
   ACBRMDFE_CErroAmbDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
      'configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -78,7 +77,6 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
   public
     constructor Create(AOwner: TComponent); override;
@@ -192,11 +190,6 @@ begin
   if (Operation = opRemove) and (FDAMDFe <> nil) and
      (AComponent is TACBrMDFeDAMDFeClass) then
     FDAMDFe := nil;
-end;
-
-function TACBrMDFe.GetAbout: String;
-begin
-  Result := 'ACBrMDFe Ver: ' + ACBRMDFE_VERSAO;
 end;
 
 function TACBrMDFe.CreateConfiguracoes: TConfiguracoes;

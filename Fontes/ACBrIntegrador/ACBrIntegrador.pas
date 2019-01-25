@@ -49,9 +49,6 @@ uses
   pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW,
   ACBrBase, ACBrIntegradorResposta;
 
-const
-  cACBrIntgerador_Versao = '0.1.0' ;
-
 type
   EComandoIntegradorException = class( Exception );
   EIntegradorException = class( Exception );
@@ -124,12 +121,10 @@ type
 
   private
     function GerarArquivo: String;
-    function GetAbout: String;
     function GetErroResposta: String;
     function GetNumeroSessao: Integer;
     function GetUltimaResposta: String;
     procedure GravaLog(const AString : AnsiString ) ;
-    procedure SetAbout(const AValue: String);
     procedure DoException( const AMessage: String );
 
   public
@@ -160,7 +155,6 @@ type
     function ConsultarNumeroSessaoIntegrador(ANumeroSessao: Integer) : String;
 
   published
-    property About : String read GetAbout write SetAbout stored False ;
     property ArqLOG : String read FArqLOG write FArqLOG ;
     property OnGravarLog : TACBrGravarLog read FOnGravarLog write FOnGravarLog;
 
@@ -547,23 +541,12 @@ begin
   Result := FGerador.ArquivoFormatoXML;
 end;
 
-function TACBrIntegrador.GetAbout: String;
-begin
-  Result := 'ACBrIntegrador Ver: '+cACBrIntgerador_Versao;
-end;
-
-
 procedure TACBrIntegrador.GravaLog(const AString: AnsiString);
 begin
   if (ArqLOG = '') then
     Exit;
 
   WriteLog( ArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now) + ' - ' + AString );
-end;
-
-procedure TACBrIntegrador.SetAbout(const AValue: String);
-begin
-  {}
 end;
 
 procedure TACBrIntegrador.DoException(const AMessage: String);

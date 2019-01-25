@@ -58,9 +58,6 @@ uses
   ACBrECFBloco_Q_Class, ACBrECFBloco_T_Class, ACBrECFBloco_U_Class,
   ACBrECFBloco_X_Class, ACBrECFBloco_Y_Class, ACBrECFBloco_9_Class ;
 
-const
-  CACBrSpedECF_Versao = '0.01';
-
 type
   /// ACBrSpedECF - Sitema Publico de Escrituração Contábil Fiscal
 
@@ -97,7 +94,6 @@ type
     FBloco_Y: TBloco_Y;
     FBloco_9: TBloco_9;
 
-    function GetAbout: String;
     function GetConteudo: TStringList;
     function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
@@ -214,7 +210,6 @@ type
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
 
   published
-    property About: String read GetAbout stored False;
     property Path: String read FPath write SetPath;
     property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer default 1000 ;
@@ -338,11 +333,6 @@ begin
   FBloco_X.LimpaRegistros;
   FBloco_Y.LimpaRegistros;
   FBloco_9.LimpaRegistros;
-end;
-
-function TACBrSPEDECF.GetAbout: String;
-begin
-  Result := Format('ACBrSpedECF Ver: %s ', [CACBrSpedECF_Versao]);
 end;
 
 function TACBrSPEDECF.GetConteudo: TStringList;

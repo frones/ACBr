@@ -53,9 +53,6 @@ uses
   ACBrEPCBloco_F_Class, ACBrEPCBloco_M_Class, ACBrEPCBloco_P_Class,
   ACBrEPCBloco_C_Events, ACBrEPCBloco_I_Class;
 
-const
-  CACBrSpedPisCofins_Versao = '1.02';
-
 type
   { TACBrSPEDPisCofins }
 	{$IFDEF RTL230_UP}
@@ -90,7 +87,6 @@ type
     FBloco_M: TBloco_M;
     FBloco_P: TBloco_P;
 
-    function GetAbout: String;
     function GetConteudo: TStringList;
     function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
@@ -183,7 +179,6 @@ type
     property Bloco_M: TBloco_M read FBloco_M write FBloco_M;
     property Bloco_P: TBloco_P read FBloco_P write FBloco_P;
   published
-    property About: String read GetAbout stored False;
     property Path: String read FPath write SetPath;
     property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
@@ -296,11 +291,6 @@ begin
 
   // Define valores iniciais as propriedades no create e após limpar os registros.
   IniciaDados;
-end;
-
-function TACBrSPEDPisCofins.GetAbout: String;
-begin
-   Result := 'ACBrSpedFiscal Ver: ' + CACBrSpedPisCofins_Versao;
 end;
 
 function TACBrSPEDPisCofins.GetConteudo: TStringList;

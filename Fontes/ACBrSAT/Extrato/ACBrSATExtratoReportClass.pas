@@ -52,9 +52,6 @@ uses
   ACBrSATExtratoClass,
   pcnConversao;
 
-const
-  CACBrSATExtratoReportClass_Versao = '0.2.0' ;
-
 type
 
   { TACBrSATExtratoReportClass }
@@ -105,7 +102,6 @@ begin
   MargemSuperior := 2;
   MargemEsquerda := 2;
   MargemDireita := 2;
-  FAbout        := 'ACBrSATExtratoReportClass ver: ' + CACBrSATExtratoReportClass_Versao  ;
 end;
 
 destructor TACBrSATExtratoReportClass.Destroy;

@@ -67,7 +67,6 @@ type TModalResult = (mrNone = 0, mrYes = 6, mrNo = 7, mrOK = 1, mrCancel = 2, mr
 {$ENDIF}
 
 const
-   CACBrTEFD_Versao      = '4.3.9' ;
    CACBrTEFD_EsperaSTS   = 7 ;
    CACBrTEFD_EsperaMinimaMensagemFinal = 5 ;
    CACBrTEFD_EsperaSleep = 250 ;

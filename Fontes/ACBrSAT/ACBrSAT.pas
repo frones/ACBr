@@ -102,11 +102,9 @@ type
      function CodificarPaginaDeCodigoSAT(const ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(const ATexto: AnsiString): String;
 
-     function GetAbout : String;
      function GetcodigoDeAtivacao : AnsiString ;
      function GetModeloStrClass : String ;
      function GetsignAC : AnsiString ;
-     procedure SetAbout(const Value: String);{%h-}
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
      procedure SetNomeDLL(const AValue : string) ;
@@ -222,7 +220,6 @@ type
      property NumeroTentativasValidarSessao: Integer read fsNumeroTentativasValidarSessao
        write fsNumeroTentativasValidarSessao default CMAX_ERROS_SESSAO;
 
-     property About : String read GetAbout write SetAbout stored False ;
      property ArqLOG : String read fsArqLOG write fsArqLOG ;
      property OnGravarLog : TACBrGravarLog read fsOnGravarLog write fsOnGravarLog;
 
@@ -1442,11 +1439,6 @@ begin
   Result := SSL.Validar(dadosVenda, fsConfig.ArqSchema, msgErro);
 end;
 
-function TACBrSAT.GetAbout : String ;
-begin
-  Result := 'ACBrSAT Ver: '+CACBrSAT_Versao;
-end ;
-
 function TACBrSAT.GetcodigoDeAtivacao : AnsiString ;
 var
   AcodigoDeAtivacao : AnsiString ;
@@ -1480,11 +1472,6 @@ begin
 
   Result := AsignAC;
 end;
-
-procedure TACBrSAT.SetAbout(const Value : String) ;
-begin
-  {}
-end ;
 
 procedure TACBrSAT.SetInicializado(AValue : Boolean) ;
 begin

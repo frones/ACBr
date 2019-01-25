@@ -64,9 +64,6 @@ uses
   ACBrLFDBloco_K_Events, ACBrLFDBloco_L_Events, ACBrLFDBloco_Z_Events, ACBrLFDBloco_8_Events,
   ACBrLFDBloco_9_Events;
 
-const
-  CACBrLFD_Versao = '1.00';
-
 type
 
   { TACBrLFD }
@@ -118,7 +115,6 @@ type
     FBloco_8: TBloco_8;
     FBloco_9: TBloco_9;
 
-    function GetAbout: ansistring;
     function GetConteudo: TStringList;
     function GetDelimitador: ansistring;
     function GetLinhasBuffer: Integer;
@@ -228,7 +224,6 @@ type
     property Bloco_8: TBloco_8 read FBloco_8 write FBloco_8;
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
   published
-    property About: ansistring read GetAbout stored False;
     property Path: ansistring read FPath write SetPath;
     property Arquivo: ansistring read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
@@ -399,11 +394,6 @@ begin
   FBloco_Z.LimpaRegistros;
   FBloco_8.LimpaRegistros;
   FBloco_9.LimpaRegistros;
-end;
-
-function TACBrLFD.GetAbout: ansistring;
-begin
-   Result := 'ACBrLFD Ver: ' + CACBrLFD_Versao;
 end;
 
 function TACBrLFD.GetConteudo: TStringList;

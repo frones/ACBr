@@ -48,9 +48,6 @@ uses
   ACBrBoleto, LR_Class, LR_DSet, LR_BarC, LR_Shape, LR_RRect, LR_E_HTM,
   lr_e_pdf, PrintersDlgs, Printers, strutils, LResources, PReport ;
 
-const
-  CACBrBoletoFCLazReport_Versao = '0.1.16a';
-
 type
 
   { TdmACbrBoletoFCLazReport }
@@ -113,7 +110,6 @@ end;
 constructor TACBrBoletoFCLazReport.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  fpAbout := 'ACBRBoletoFCLazReport ver: ' + CACBrBoletoFCLazReport_Versao;
 end;
 
 procedure TACBrBoletoFCLazReport.Imprimir;

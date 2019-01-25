@@ -220,7 +220,6 @@ end;
 constructor TACBrGNREGuiaLazReport.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  //fpAbout := 'ACBrGNREGuiaLazReport ver: ' + CACBrGNREGuiaLazReport_Versao;
 end;
 
 procedure TACBrGNREGuiaLazReport.ImprimirGuia(GNRE: TGNRERetorno);

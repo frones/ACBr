@@ -55,7 +55,6 @@ resourcestring
   ACBRREINF_CErroCryptLib = 'Necessário DigestMethod Algorithm SHA256. use cryOpenSSL ou cryWinCrypt na propriedade SSLCryptLib.';
 
 const
-  ACBRREINF_VERSAO = '1.3';
   ACBRREINF_NAMESPACE_ENV = 'http://sped.fazenda.gov.br/RecepcaoLoteReinf';
   ACBRREINF_NAMESPACE_CON = 'http://sped.fazenda.gov.br/ConsultasReinf';
 
@@ -84,7 +83,6 @@ type
     procedure SetConfiguracoes(AValue: TConfiguracoesReinf);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     function VersaoSchemaDoubleToString(AVersao: Double): String; override;
     function VersaoSchemaStringToDouble(const AVersao: String): Double; override;
@@ -161,11 +159,6 @@ end;
 function TACBrReinf.CreateConfiguracoes: TConfiguracoes;
 begin
   Result := TConfiguracoesReinf.Create(Self);
-end;
-
-function TACBrReinf.GetAbout: String;
-begin
-  Result := 'ACBrReinf Ver: ' + ACBRREINF_VERSAO;
 end;
 
 function TACBrReinf.Enviar: boolean;

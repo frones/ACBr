@@ -47,7 +47,6 @@ uses
   pcnConversao, pcaANe, pcaConversao;
 
 const
-  ACBRANe_VERSAO = '1.0.0a';
   ACBRANe_NAMESPACE = 'ATMWenSvr';
   ACBRANe_CErroAmbienteDiferente = 'Ambiente do XML (tpAmb) é diferente do '+
                'configurado no Componente (Configuracoes.WebServices.Ambiente)';
@@ -71,7 +70,6 @@ type
     function CreateConfiguracoes: TConfiguracoes; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
 
-    function GetAbout: String; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
 
   public
@@ -169,11 +167,6 @@ begin
      (AComponent is TACBrANeDAANeClass) then
     FDAANe := nil;
  }
-end;
-
-function TACBrANe.GetAbout: String;
-begin
-  Result := 'ACBrANe Ver: ' + ACBRANe_VERSAO;
 end;
 
 function TACBrANe.CreateConfiguracoes: TConfiguracoes;

@@ -57,9 +57,6 @@ uses
   ACBrPonto_AFDT, ACBrPonto_AFDT_Class,
   ACBrPonto_ACJEF, ACBrPonto_ACJEF_Class;
 
-const
-  CACBrPonto_Versao = '0.01';
-
 type
 
   // DECLARANDO O COMPONENTE:
@@ -81,7 +78,6 @@ type
     FPonto_AFDT: TPonto_AFDT;
     FPonto_ACJEF: TPonto_ACJEF;
 
-    function GetAbout: String;
     function GetDelimitador: String;
     function GetTrimString: boolean;
     function GetCurMascara: String;
@@ -109,7 +105,6 @@ type
     property Ponto_ACJEF: TPonto_ACJEF read FPonto_ACJEF write FPonto_ACJEF;
 
   published
-    property About: String read GetAbout stored False;
     property Path: String read FPath write FPath;
 
     property Delimitador: String read GetDelimitador write SetDelimitador;
@@ -161,11 +156,6 @@ begin
   FPonto_ACJEF.Free;
 
   inherited;
-end;
-
-function TACBrPonto.GetAbout: String;
-begin
-  Result := 'ACBrPonto Ver: ' + CACBrPonto_Versao;
 end;
 
 function TACBrPonto.GetDelimitador: String;

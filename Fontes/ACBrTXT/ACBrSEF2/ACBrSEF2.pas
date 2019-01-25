@@ -59,9 +59,6 @@ uses
   ACBrTXTClass, ACBrSEF2_Bloco0_1, ACBrSEF2_BlocoE_1, ACBrSEF2_Bloco9,
   ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2_BlocoH_1, ACBrSEF2Conversao, ACBrSEF2_BlocoF_1;
 
-const
-  CACBrSEF2_Versao = '0.21';
-
 type
   TACBrSEF2Arquivo = (aSEF, aEDOC);
 	{$IFDEF RTL230_UP}
@@ -89,7 +86,6 @@ type
     fBloco_F: TBloco_F;
     fBloco_9: TBloco_9;
 
-    function GetAbout: ansistring;
     function GetConteudo: TStringList;
     function GetDelimitador: ansistring;
     function GetLinhasBuffer: integer;
@@ -164,7 +160,6 @@ type
     property Bloco_F: TBloco_F read fBloco_F write fBloco_F;
     property Bloco_9: TBloco_9 read fBloco_9 write fBloco_9;
   published
-    property About: ansistring read GetAbout stored False;
     property TipoArquivo: TACBrSEF2Arquivo read fTipoArquivo write fTipoArquivo default aSEF;
     property Path: ansistring read fPath write SetPath;
     property Arquivo: ansistring read FArquivo write SetArquivo;
@@ -230,11 +225,6 @@ begin
   fBloco_9.Free;
 
   inherited;
-end;
-
-function TACBrSEF2.GetAbout: ansistring;
-begin
-  Result := 'ACBrSEFII Ver: ' + CACBrSEF2_Versao;
 end;
 
 function TACBrSEF2.GetConteudo: TStringList;

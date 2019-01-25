@@ -36,9 +36,6 @@ uses
   ACBrDFe, ACBrDFeConfiguracoes, ACBrSATWS_WebServices,
   ACBrUtil;
 
-const
-  ACBRSATWS_VERSAO = '0.1';
-
 type
 
   { TConfiguracoesSATWS }
@@ -62,7 +59,6 @@ type
     procedure SetConfiguracoes(const Value: TConfiguracoesSATWS);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
-    function GetAbout: String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -101,11 +97,6 @@ end;
 function TACBrSATWS.CreateConfiguracoes: TConfiguracoes;
 begin
   Result := TConfiguracoesSATWS.Create(Self);
-end;
-
-function TACBrSATWS.GetAbout: String;
-begin
-  Result := 'ACBrSATWS Ver: ' + ACBRSATWS_VERSAO;
 end;
 
 function TACBrSATWS.GetConfiguracoes: TConfiguracoesSATWS;

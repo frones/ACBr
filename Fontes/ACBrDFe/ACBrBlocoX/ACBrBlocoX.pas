@@ -37,9 +37,6 @@ uses
   ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum,
   ACBrUtil;
 
-const
-  ACBRBLOCOX_VERSAO = '1.1.0a';
-
 type
   { TConfiguracoesBlocoX }
 
@@ -119,7 +116,6 @@ type
     procedure SetConfiguracoes(const Value: TConfiguracoesBlocoX);
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
-    function GetAbout: String; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -174,11 +170,6 @@ end;
 function TACBrBlocoX.CreateConfiguracoes: TConfiguracoes;
 begin
   Result := TConfiguracoesBlocoX.Create(Self);
-end;
-
-function TACBrBlocoX.GetAbout: String;
-begin
-  Result := 'ACBrBlocoX Ver: ' + ACBRBLOCOX_VERSAO;
 end;
 
 function TACBrBlocoX.GetConfiguracoes: TConfiguracoesBlocoX;

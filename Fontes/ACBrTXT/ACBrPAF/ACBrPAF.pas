@@ -82,9 +82,6 @@ uses
    ACBrPAF_V_Class,
    ACBrPAF_Z_Class;
 
-const
-   CACBrPAF_Versao = '1.0' ;
-
 type
 
   // DECLARANDO O COMPONENTE - PAF-ECF:
@@ -130,7 +127,6 @@ type
     fsOnPAFCalcEAD: TACBrEADCalc;
     fsOnPAFGetKeyRSA : TACBrEADGetChave ;
 
-    function GetAbout: String;
     function GetPath: String;
     function GetTrimString: boolean;
     procedure SetLinesBuffer(AValue: Integer);
@@ -183,7 +179,6 @@ type
     Function GetACBrEAD : TACBrEAD ;
     function AssinaArquivoComEAD(const Arquivo: String): Boolean;
   published
-    property About        : String   read GetAbout stored False ;
     property LinesBuffer  : Integer  read FLinesBuffer write SetLinesBuffer ;
     property Path         : String   read GetPath write SetPath ;
     property EAD          : TACBrEAD read fsEAD write SetEAD ;
@@ -283,11 +278,6 @@ begin
      FreeAndNil( fsEADInterno );
 
   inherited;
-end;
-
-function TACBrPAF.GetAbout: String;
-begin
-  Result := 'ACBrPAF Ver: ' + CACBrPAF_Versao;
 end;
 
 function TACBrPAF.GetPath: String;

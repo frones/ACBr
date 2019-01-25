@@ -55,9 +55,6 @@ uses
   ACBrECDBloco_0_Class, ACBrECDBloco_9_Class, ACBrECDBloco_I_Class,
   ACBrECDBloco_J_Class, ACBrECDBloco_K_Class;
 
-const
-   CACBrSpedContabil_Versao = '0.04a' ;
-
 type
 
   /// ACBrSpedContabil - Sitema Publico de Escrituração Digital Contabil
@@ -87,13 +84,11 @@ type
     FBloco_J: TBloco_J;
     FBloco_K: TBloco_K;
 
-    function GetAbout: String;
     function GetDelimitador: String;
     function GetTrimString: boolean;
     function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
-    procedure SetAbout(const Value: String);
     procedure SetDelimitador(const Value: String);
     procedure SetTrimString(const Value: boolean);
     procedure SetCurMascara(const Value: String);
@@ -184,7 +179,6 @@ type
     property Bloco_J: TBloco_J read FBloco_J write FBloco_J;
     property Bloco_K: TBloco_K read FBloco_K write FBloco_K;
   published
-    property About: String read GetAbout write SetAbout stored False ;
     property Path: String read FPath write FPath;
     ///
     property Delimitador: String read GetDelimitador write SetDelimitador;
@@ -1092,16 +1086,6 @@ begin
                                                                   Bloco_K.RegistroK990.QTD_LIN_K +
                                                                   Bloco_9.Registro9990.QTD_LIN_9;
    Bloco_9.WriteRegistro9999;
-end;
-
-function TACBrSPEDContabil.GetAbout: String;
-begin
-   Result := 'ACBrSpedContabil Ver: ' + CACBrSpedContabil_Versao;
-end;
-
-procedure TACBrSPEDContabil.SetAbout(const Value: String);
-begin
- {}
 end;
 
 function TACBrSPEDContabil.GetLinhasBuffer: Integer;

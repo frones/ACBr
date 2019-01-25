@@ -46,9 +46,6 @@ interface
 uses 
   Classes, SysUtils, ACBrSATExtratoClass, pcnConversao;
 
-const
-  CACBrSATExtratoFast_Versao = '1.0' ;
-
 type
 
   { TACBrSATExtratoFortesClass }
@@ -70,9 +67,6 @@ implementation
 constructor TACBrSATExtratoFortesClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
-
-  
-  fAbout := 'ACBrSATExtratoFast ver: ' + CACBrSATExtratoFast_Versao  ;
 end;
 
 destructor TACBrSATExtratoFortesClass.Destroy;

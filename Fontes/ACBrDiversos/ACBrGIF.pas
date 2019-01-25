@@ -66,7 +66,6 @@ type
   {$ENDIF RTL230_UP}
   TACBrGIF = class ( TGraphicControl )
   private
-//  fsAbout: TACBrAboutInfo;
     fsGIF  : TGIFImage ;
     fsTimer  : TTimer ;
     fsActive : Boolean;
@@ -148,9 +147,6 @@ type
     property OnLoop  : TNotifyEvent read fsOnLoop  write fsOnLoop  ;
     property OnChangeFrame : TNotifyEvent read fsOnChangeFrame
        write fsOnChangeFrame  ;
-
-//  property AboutACBr : TACBrAboutInfo read fsAbout write fsAbout
-//                         stored false ;
 
     property Active : Boolean read fsActive write SetActive default False ;
     property StartFrame : Integer read GetStartFrame write SetStartFrame default 1 ;

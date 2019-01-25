@@ -58,9 +58,6 @@ uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils,
   frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
 
-const
-  CACBrBoletoFCFR_Versao = '0.0.15';
-
 type
   EACBrBoletoFCFR = class(Exception);
 
@@ -279,7 +276,6 @@ end;
 constructor TACBrBoletoFCFR.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  fpAbout := 'ACBRBoletoFCFR ver: ' + CACBrBoletoFCFR_Versao;
   fFastReportFile := '';
   FImpressora := '';
   fIndice := 0;

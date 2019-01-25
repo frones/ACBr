@@ -50,7 +50,6 @@ uses
    ACBrUtil, {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
 
 const
-   CACBrEAD_Versao = '0.3.0' ;
    CBufferSize = 32768;
    cRFDRSAKey = '-----BEGIN RSA PRIVATE KEY-----' + sLineBreak +
                 'MIICXQIBAAKBgQCtpPqcoOX4rwgdoKi6zJwPX9PA2iX2KxgvyxjE+daI5ZmYxcg0'+ sLineBreak +
@@ -112,7 +111,6 @@ type
 
     function BioToStr( ABio : pBIO) : String ;
 
-    function GetAbout: String;
     procedure SetBufferSize(AValue: Integer);
 
     function GetDigestName(ADigest: TACBrEADDgst): String;
@@ -207,7 +205,6 @@ type
     function MD5FromString(const AString: String): String;
 
   published
-    property About: String read GetAbout stored False;
     property BufferSize: Integer read fsBufferSize write SetBufferSize default CBufferSize;
 
     property OnGetChavePrivada: TACBrEADGetChave read fsOnGetChavePrivada
@@ -349,11 +346,6 @@ begin
 end;
 
 { ------------------------------ TACBrEAD ------------------------------ }
-
-function TACBrEAD.GetAbout: String;
-begin
-   Result := 'ACBrEAD Ver: ' + CACBrEAD_Versao;
-end;
 
 procedure TACBrEAD.SetBufferSize(AValue: Integer);
 begin

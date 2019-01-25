@@ -53,9 +53,6 @@ uses
   DateUtils, ACBRDeSTDA4715, ACBrTXTClass, ACBrDeSTDABloco_0_Class, 
   ACBrDeSTDABloco_G_Class, ACBrDeSTDABloco_9_Class;
 
-const
-  CACBrDeSTDA_Versao = '1.00';
-
 type
   { TACBrDeSTDA }
 	{$IFDEF RTL230_UP}
@@ -84,7 +81,6 @@ type
     FBloco_G: TBloco_G;
     FBloco_9: TBloco_9;
 
-    function GetAbout: ansistring;
     function GetConteudo: TStringList;
     function GetDelimitador: ansistring;
     function GetLinhasBuffer: Integer;
@@ -140,7 +136,6 @@ type
     property Bloco_G: TBloco_G read FBloco_G write FBloco_G;
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
   published
-    property About: ansistring read GetAbout stored False;
     property Path: ansistring read FPath write SetPath;
     property Arquivo: ansistring read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
@@ -215,11 +210,6 @@ begin
   FBloco_9.Free;
 
   inherited;
-end;
-
-function TACBrDeSTDA.GetAbout: ansistring;
-begin
-   Result := 'ACBrDeSTDA Ver: ' + CACBrDeSTDA_Versao;
 end;
 
 function TACBrDeSTDA.GetConteudo: TStringList;

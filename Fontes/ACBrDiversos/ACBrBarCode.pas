@@ -59,7 +59,6 @@ type
   {$ENDIF RTL230_UP}
   TACBrBarCode = class ( TGraphicControl )
   private
-//  fsAbout: TACBrAboutInfo;
     fsBarCode  : TAsBarcode ;
     fsTransparent: Boolean;
 
@@ -153,9 +152,6 @@ type
     property OnMouseMove;
     property OnMouseUp;
     property OnStartDrag;
-
-//  property AboutACBr : TACBrAboutInfo read fsAbout write fsAbout
-//                         stored false ;
   end;
 
 

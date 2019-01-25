@@ -94,8 +94,6 @@ type
 
 
     procedure ErroAbstract(const NomeProcedure : String) ;
-    function GetAbout: String;
-    procedure SetAbout(const AValue: String);
     {$IFNDEF NOGUI}
      procedure SetPictureLogo(AValue: {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF});
     {$ENDIF}
@@ -104,7 +102,6 @@ type
     procedure SetInternalCFeCanc(ACFeCanc: TCFeCanc);
     procedure VerificaExisteACBrSAT;
   protected
-    FAbout : String ;
     FLayOut: TACBrSATExtratoLayOut;
 
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -126,7 +123,6 @@ type
       Valor: Double; const CNPJCPF: String; const assinaturaQRCODE: String): String;
   published
     property ACBrSAT  : TComponent  read FACBrSAT write SetSAT ;
-    property About  : String read GetAbout write SetAbout stored False ;
     property ImprimeQRCode  : Boolean  read FImprimeQRCode  write FImprimeQRCode  default True ;
     property ImprimeMsgOlhoNoImposto : Boolean read FImprimeMsgOlhoNoImposto write FImprimeMsgOlhoNoImposto default True;
     property ImprimeCPFNaoInformado : Boolean read FImprimeCPFNaoInformado write FImprimeCPFNaoInformado default True;
@@ -152,7 +148,6 @@ constructor TACBrSATExtratoClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
-  FAbout  := 'ACBrSATExtratoClass' ;
   FLayOut := lCompleto;
 
   FACBrSAT := nil;
@@ -230,19 +225,9 @@ begin
                                      [NomeProcedure, ClassName] )) ;
 end ;
 
-function TACBrSATExtratoClass.GetAbout: String;
-begin
-  Result := FAbout ;
-end;
-
 function TACBrSATExtratoClass.GetSeparadorPathPDF(const aInitialPath: String): String;
 begin
    Result := PathWithDelim(aInitialPath) + 'SAT';
-end;
-
-procedure TACBrSATExtratoClass.SetAbout(const AValue: String);
-begin
-  {}
 end;
 
 {$IFNDEF NOGUI}

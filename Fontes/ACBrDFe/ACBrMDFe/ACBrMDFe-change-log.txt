@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2019
+-- ACBrMDFeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/48977-distribuicaodfe-rejei%C3%A7%C3%A3o-usar-somente-o-namespace-padr%C3%A3o-do-mdf-e/
+  por: Allan Wolski
+
 16/01/2019
 -- Diversos --
 [*] Remoção das units que foram Generalizadas em PCNComum e os ajustes necessários.

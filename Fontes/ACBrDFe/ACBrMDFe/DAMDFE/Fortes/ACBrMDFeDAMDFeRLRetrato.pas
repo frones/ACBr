@@ -173,6 +173,16 @@ type
     RLDraw15: TRLDraw;
     RLLabel27: TRLLabel;
     rllValorMercadoria: TRLLabel;
+    RLLabel28: TRLLabel;
+    RLLabel29: TRLLabel;
+    rlmRespSeguradora: TRLMemo;
+    RLLabel30: TRLLabel;
+    rlmRespApolice: TRLMemo;
+    RLDraw16: TRLDraw;
+    RLDraw17: TRLDraw;
+    RLLabel32: TRLLabel;
+    rlmRespAverbacao: TRLMemo;
+    rlmRespSeguro: TRLLabel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -192,7 +202,6 @@ type
     FTotalPages: integer;
 
   end;
-
 
 implementation
 
@@ -221,9 +230,9 @@ begin
   inherited;
   if  (RLMDFe.PageNumber <> 1) then
   begin
-    rlb_2_Rodo.Visible        := False;
-    RLBand2.Visible           := False;
-    RLBand1.Visible           := False;
+    rlb_2_Rodo.Visible := False;
+    RLBand2.Visible    := False;
+    RLBand1.Visible    := False;
   end;
 
   {$IFNDEF BORLAND}
@@ -232,7 +241,6 @@ begin
   {$ENDIF}
 
   CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDAMDFe.Logo);
-
 
   if fpDAMDFe.ExpandeLogoMarca then
   begin
@@ -276,8 +284,8 @@ begin
     end;
   end;
 
-  RLBarcode1.Caption  := Copy ( fpMDFe.InfMDFe.Id, 5, 44 );
-  rllChave.Caption    := FormatarChaveAcesso(Copy(fpMDFe.InfMDFe.Id, 5, 44));
+  RLBarcode1.Caption := Copy ( fpMDFe.InfMDFe.Id, 5, 44 );
+  rllChave.Caption   := FormatarChaveAcesso(Copy(fpMDFe.InfMDFe.Id, 5, 44));
 
   if fpMDFe.ide.tpEmis = teNormal then
   begin
@@ -326,7 +334,6 @@ begin
 
   rllPesoTotal.Caption := FormatFloatBr(fpMDFe.tot.qCarga, ',#0.0000');
   rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
-
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -391,12 +398,25 @@ begin
       rlmNumComprovante.Lines.Add(fpMDFe.rodo.infANTT.valePed.disp.Items[i].nCompra);
     end;
   end;
+
+  rlmRespSeguradora.Lines.Clear;
+  rlmRespApolice.Lines.Clear;
+  rlmRespAverbacao.Lines.Clear;
+
+  rlmRespSeguro.Caption:= '';
+  rlmRespSeguro.Caption := RspSeguroMDFeToStrText(fpMDFe.seg.Items[0].respSeg);
+
+  for i := 0 to fpMDFe.seg.Count - 1 do
+  begin
+    rlmRespSeguradora.Lines.Add(fpMDFe.seg.Items[i].xSeg);
+    rlmRespApolice.Lines.Add(fpMDFe.seg.Items[i].nApol);
+  end;
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-   rlb_3_Aereo.Enabled := (fpMDFe.Ide.modal = moAereo);
+  rlb_3_Aereo.Enabled := (fpMDFe.Ide.modal = moAereo);
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_4_AquavBeforePrint(Sender: TObject; var PrintIt: Boolean);

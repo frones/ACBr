@@ -2294,7 +2294,7 @@ var
   DistDFeInt: TDistDFeInt;
 begin
   DistDFeInt := TDistDFeInt.Create(FPVersaoServico, NAME_SPACE_MDFE,
-                                 'mdfeDadosMsg', 'consChMDFe', 'chMDFe', False);
+                                   '', 'consChMDFe', 'chMDFe', False);
   try
     DistDFeInt.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     DistDFeInt.CNPJCPF := FCNPJCPF;

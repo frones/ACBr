@@ -412,6 +412,8 @@ begin
         FieldDefs.Add('vISSQN'    , ftString, 18);
         FieldDefs.Add('vBcISSQN'  , ftString, 18);
         FieldDefs.Add('vBcST'     , ftString, 18);
+        FieldDefs.Add('pMVAST'    , ftString, 18);
+        FieldDefs.Add('pICMSST'   , ftString, 18);
         FieldDefs.Add('vICMSST'   , ftString, 18);
         FieldDefs.Add('nLote'     , ftString, 20);
         FieldDefs.Add('qLote'     , ftFloat);
@@ -1062,6 +1064,8 @@ begin
         FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,'###,###,##0.00');
         FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,'###,###,##0.00');
         FieldByName('VBCST').AsString             := FormatFloatBr( Imposto.ICMS.vBcST      ,'###,###,##0.00');
+        FieldByName('pMVAST').AsString            := FormatFloatBr( Imposto.ICMS.pMVAST     ,'###,###,##0.00');
+        FieldByName('pICMSST').AsString           := FormatFloatBr( Imposto.ICMS.pICMSST    ,'###,###,##0.00');
         FieldByName('VICMSST').AsString           := FormatFloatBr( Imposto.ICMS.vICMSST    ,'###,###,##0.00');
         FieldByName('VIPI').AsString              := FormatFloatBr( Imposto.IPI.VIPI        ,'###,###,##0.00');
         FieldByName('PIPI').AsString              := FormatFloatBr( Imposto.IPI.PIPI        ,'###,###,##0.00');

@@ -68,7 +68,8 @@ type
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
                             no70, no71, no72, no78, no79, no101, no102, no103, no104, no105,
-                            no107, no108, no110, no111, no121, no201, no301, no501, no511,
+                            no107, no108, no110, no111, no112, no113, no115,
+                            no121, no201, no301, no501, no511,
                             no512, no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,no712,
                             no901, no902, no911, no912, no921, no931, no951, no952, no971,
@@ -214,6 +215,9 @@ function StrToEmpreitadaGlobal(out ok: boolean; const s: String): TnfseTEmpreita
 function CondicaoToStr(const t: TnfseCondicaoPagamento): String;
 function StrToCondicao(out ok: boolean; const s: String): TnfseCondicaoPagamento;
 
+function CondicaoToStrPublica(const t: TnfseCondicaoPagamento): String;
+function StrPublicaToCondicao(out ok: boolean; const s: String): TnfseCondicaoPagamento;
+
 function ObterDescricaoServico(cCodigo: String): String;
 function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
                      ASerie:Integer; ANumero, ACodigo: Integer;
@@ -312,8 +316,8 @@ begin
                             '9', '10', '11', '12', '13', '14', '15',
                             '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
                             '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
-                            '70', '71', '72', '78', '79', '101', '102', '105', '107',
-                            '110', '111', '121', '201', '301', '501', '511', '512',
+                            '70', '71', '72', '78', '79', '101', '102', '105', '107', '108',
+                            '110', '111', '112', '113', '115', '121', '201', '301', '501', '511', '512',
                             '515', '521', '522', '539', '541', '549', '551', '601',
                             '611', '612', '613', '615', '621', '622', '701', '711',
                             '712', '901', '902', '911', '912', '921', '931', '951',
@@ -323,8 +327,8 @@ begin
                             no9, no10, no11, no12, no13, no14, no15,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
-                            no70, no71, no72, no78, no79, no101, no102, no105, no107,
-                            no110, no111, no121, no201, no301, no501, no511, no512,
+                            no70, no71, no72, no78, no79, no101, no102, no105, no107, no108,
+                            no110, no111, no112, no113, no115, no121, no201, no301, no501, no511, no512,
                             no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,
                             no712, no901, no902, no911, no912, no921, no931,
@@ -339,8 +343,8 @@ begin
                             '9', '10', '11', '12', '13', '14', '15',
                             '50', '51', '52', '53', '54', '55', '56', '57', '58', '59',
                             '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
-                            '70', '71', '72', '78', '79', '101', '102', '105', '107',
-                            '110', '111', '121', '201', '301', '501', '511', '512',
+                            '70', '71', '72', '78', '79', '101', '102', '105', '107', '108',
+                            '110', '111', '112', '113', '115', '121', '201', '301', '501', '511', '512',
                             '515', '521', '522', '539', '541', '549', '551', '601',
                             '611', '612', '613', '615', '621', '622', '701', '711',
                             '712', '901', '902', '911', '912', '921', '931', '951',
@@ -350,8 +354,8 @@ begin
                             no9, no10, no11, no12, no13, no14, no15,
                             no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
                             no60, no61, no62, no63, no64, no65, no66, no67, no68, no69,
-                            no70, no71, no72, no78, no79, no101, no102, no105, no107,
-                            no110, no111, no121, no201, no301, no501, no511, no512,
+                            no70, no71, no72, no78, no79, no101, no102, no105, no107, no108,
+                            no110, no111, no112, no113, no115, no121, no201, no301, no501, no511, no512,
                             no515, no521, no522, no539, no541, no549, no551, no601,
                             no611, no612, no613, no615, no621, no622, no701, no711,
                             no712, no901, no902, no911, no912, no921, no931,
@@ -580,6 +584,19 @@ begin
                            [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito])
 end;
 
+function CondicaoToStrPublica(const t: TnfseCondicaoPagamento): String;
+begin
+  Result := EnumeradoToStr(t,
+                           ['1', '2', '3', '4', '5'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito]);
+end;
+
+function StrPublicaToCondicao(out ok: boolean; const s: String): TnfseCondicaoPagamento;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['1', '2', '3', '4', '5'],
+                           [cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoDebito,cpCartaoCredito])
+end;
 
 // Descrição do Serviço ********************************************************
 

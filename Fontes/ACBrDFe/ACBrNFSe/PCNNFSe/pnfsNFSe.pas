@@ -616,10 +616,12 @@ type
 
   TParcelasCollectionItem = class(TCollectionItem)
   private
+    FCondicao: TnfseCondicaoPagamento;
     FParcela: Integer;
     FDataVencimento: TDateTime;
     FValor: Currency;
   published
+    property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property Parcela: Integer read FParcela write FParcela;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property Valor: Currency read FValor write FValor;

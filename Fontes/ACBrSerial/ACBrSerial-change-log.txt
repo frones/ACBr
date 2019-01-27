@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/01/2019
+-- ACBrEscPosEpson --
+[*] Ajuste nos métodos "ComandoGravarLogoRasterStr" e "ComandoApagarLogo", para
+    permitir o uso de comandos legados, que são utilizados em algumas impressoras.
+      Nota: O Comando novo da Epson "GS + '8L'", não é compatível em alguns
+      Equipamentos (não Epson), mas que usam EscPosEpson...
+      Nesse caso, vamos usar o comando "FS + 'q'", para tal, informe:
+      KeyCode1 := 1; KeyCode2 := 0
+    (por: DSA)
+
 19/01/2019
 -- ACBrPosPrinter --
 [+] Classe TACBrPosPrinterClass, adicionado os métodos Públicos

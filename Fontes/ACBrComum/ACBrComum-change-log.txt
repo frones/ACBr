@@ -38,6 +38,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 27/01/2019
+-- ACBrImage --
+[+] Adicionado novos métodos, para permitir o uso de Bitmaps em comandos legados
+    de Esc/Pos, que apenas operam po NV Bitmap (definição de imagem por coluna)
+   procedure RasterStrToColumnStr(const ARasterStr: AnsiString; AWidth: Integer;
+     ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+   procedure AscIIToColumnStr(AscIIArtLines: TStrings; out AWidth: Integer;
+     out AHeight: Integer; ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+[-] Ajuste no método "BMPMonoToRasterStr", para evitar erros quando o BitMap não
+    possui a informação de tamanho do "Pixel Array"
+   (por: DSA)
+
 Data: 19/01/2019
 -- ACBrImage --
 [*] Método "BMPToRasterStr" renomeado para "BMPMonoToRasterStr"

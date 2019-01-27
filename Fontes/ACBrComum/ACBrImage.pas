@@ -71,6 +71,11 @@ procedure RasterStrToAscII(const ARasterStr: AnsiString; AWidth: Integer;
 procedure AscIIToRasterStr(AscIIArtLines: TStrings; out AWidth: Integer;
   out AHeight: Integer; out ARasterStr: AnsiString);
 
+procedure RasterStrToColumnStr(const ARasterStr: AnsiString; AWidth: Integer;
+  ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+procedure AscIIToColumnStr(AscIIArtLines: TStrings; out AWidth: Integer;
+  out AHeight: Integer; ColumnSliceLines: TStrings; BytesPerSlice: Integer = 3);
+
 procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out AWidth: Integer;
   out AHeight: Integer; out ARasterStr: AnsiString);
 procedure RasterStrToBMPMono(const ARasterStr: AnsiString; AWidth: Integer;
@@ -176,16 +181,22 @@ begin
   AHeight := bHeight;
   //AWidth := bWidth;
   ARasterStr := '';
+  if (AHeight < 1) then
+    raise EACBrImage.Create(ACBrStr(Format('Altura do Bitmap [%d] inválida',[AHeight])));
 
   // BMP é organizado da Esquerda para a Direita e de Baixo para cima.. serializando..
   BytesPerRow := ceil(bWidth / 8);
   HasPadBits := (BytesPerRow > (trunc(bWidth/8)));
   BytesPerRow := ceil(bWidth / 8);
   AWidth := BytesPerRow*8;
+
+  if (bSizePixelArr <= 0) then
+    bSizePixelArr := ABMPStream.Size-bPixelOffset;
+
   RealWidth := trunc((bSizePixelArr*8)/bHeight);
+  StreamLastPos := bPixelOffset + bSizePixelArr - 1;
   BytesPerWidth := ceil(RealWidth / 8);
 
-  StreamLastPos := bPixelOffset + bSizePixelArr - 1; // ABMPStream.Size-1;
   while (StreamLastPos >= bPixelOffset) do
   begin
     RowStart := StreamLastPos - (BytesPerWidth - 1);
@@ -273,6 +284,82 @@ begin
       ARasterStr := ARasterStr + chr(BinToInt(BinaryByte));
       inc(j,8);
     end;
+  end;
+end;
+
+procedure RasterStrToColumnStr(const ARasterStr: AnsiString; AWidth: Integer;
+  ColumnSliceLines: TStrings; BytesPerSlice: Integer);
+var
+  SL: TStringList;
+  AHeight: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    RasterStrToAscII(ARasterStr, AWidth, False, SL);
+    AscIIToColumnStr(SL, AWidth, AHeight, ColumnSliceLines, BytesPerSlice);
+  finally
+    SL.Free;
+  end;
+end;
+
+//https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
+procedure AscIIToColumnStr(AscIIArtLines: TStrings; out AWidth: Integer; out
+  AHeight: Integer; ColumnSliceLines: TStrings; BytesPerSlice: Integer);
+var
+  SliceStart, Col, Row, RealHeight, RealWidth, BitsPerSlice: Integer;
+  ByteStr: String;
+  AColumn: AnsiString;
+
+  function GetBit(Row, Col: Integer): Char;
+  var
+    ALine: String;
+  begin
+    Result := '0';
+    if Row <= AscIIArtLines.Count then
+    begin
+      ALine := AscIIArtLines[Row-1];
+      if (Col <= Length(ALine)) then
+        Result := ALine[Col];
+    end;
+  end;
+
+begin
+  AWidth := 0;
+  ColumnSliceLines.Clear;
+  AHeight := AscIIArtLines.Count;
+  if AHeight < 1 then
+    Exit;
+
+  AWidth := Length(AscIIArtLines[0]);
+  RealWidth := ceil(AWidth / 8) * 8;
+
+  if (BytesPerSlice = 0) or (BytesPerSlice > AHeight) then
+    BytesPerSlice := ceil(AHeight / 8);
+
+  BitsPerSlice := BytesPerSlice * 8;
+  RealHeight := ceil(AHeight/BitsPerSlice)*BitsPerSlice;
+
+  SliceStart := 0;
+  while SliceStart < RealHeight do
+  begin
+    AColumn := '';
+    ByteStr := '';
+
+    for Col := 1 to RealWidth do
+    begin
+      for Row := 1 to BitsPerSlice do
+      begin
+        ByteStr := ByteStr + GetBit(SliceStart+Row, Col);
+        if ((Row mod 8) = 0) then
+        begin
+          AColumn := AColumn + chr(BinToInt(ByteStr));
+          ByteStr := '';
+        end;
+      end;
+    end;
+
+    ColumnSliceLines.Add(AColumn);
+    Inc(SliceStart, BitsPerSlice);
   end;
 end;
 

@@ -561,10 +561,13 @@ procedure TfrlDANFeRLPaisagem.InicializarDados;
 var
   i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
   vAutoSizeAux: Boolean;
-  CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
-  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+
+  if not TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo) then
+  begin
+    //TODO: implementar algum tratamento para logo vazio? Ex.: Veja: TfrlDANFeRLRetrato.InicializarDados
+  end;
 
   if NaoEstaVazio(fpDANFe.MarcaDagua) and FileExists(fpDANFe.MarcaDagua) then
     rliMarcaDagua1.Picture.LoadFromFile(fpDANFe.MarcaDagua);

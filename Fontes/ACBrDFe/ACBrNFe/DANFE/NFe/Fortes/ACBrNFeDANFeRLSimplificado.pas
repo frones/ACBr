@@ -157,8 +157,6 @@ begin
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  CarregouLogo: Boolean;
 begin
   inherited;
 
@@ -172,7 +170,10 @@ begin
     rlmEmitente.Enabled := False;
   end;
 
-  CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
+  if not TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo) then
+  begin
+    //TODO: implementar algum tratamento para logo vazio? Ex.: Veja: TfrlDANFeRLRetrato.InicializarDados
+  end;
 
   if not fpDANFe.ExpandeLogoMarca then
   begin

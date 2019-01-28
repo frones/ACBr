@@ -50,11 +50,10 @@ unit pcnRetConsReciDFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor;
 
 type
 
-  TRetConsReciDFe        = class;
   TProtDFeCollection     = class;
   TProtDFeCollectionItem = class;
 
@@ -91,17 +90,16 @@ type
     property ProtDFe: TProtDFeCollection read FProtDFe  write SetProtDFe;
   end;
 
-  TProtDFeCollection = class(TCollection)
+  TProtDFeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TProtDFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TProtDFeCollectionItem);
   public
-    constructor Create(AOwner: TRetConsReciDFe); reintroduce;
-    function Add: TProtDFeCollectionItem;
+    function New: TProtDFeCollectionItem;
     property Items[Index: Integer]: TProtDFeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TProtDFeCollectionItem = class(TCollectionItem)
+  TProtDFeCollectionItem = class(TObject)
   private
     FId: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -135,7 +133,7 @@ begin
   inherited Create;
 
   FLeitor  := TLeitor.Create;
-  FProtDFe := TProtDFeCollection.Create(self);
+  FProtDFe := TProtDFeCollection.Create();
 
   FtagGrupoMsg := AtagGrupoMsg;
 end;
@@ -154,16 +152,6 @@ begin
 end;
 
 { TProtDFeCollection }
-
-constructor TProtDFeCollection.Create(AOwner: TRetConsReciDFe);
-begin
-  inherited Create(TProtDFeCollectionItem);
-end;
-
-function TProtDFeCollection.Add: TProtDFeCollectionItem;
-begin
-  Result := TProtDFeCollectionItem(inherited Add);
-end;
 
 function TProtDFeCollection.GetItem(Index: Integer): TProtDFeCollectionItem;
 begin
@@ -199,7 +187,7 @@ begin
       i := 0;
       while (FcStat = 104) and (Leitor.rExtrai(1, 'prot' + FtagGrupoMsg, '', i + 1) <> '') do
       begin
-        ProtDFe.Add;
+        ProtDFe.New;
 
         // A propriedade XMLprotDFe contem o XML que traz o resultado do
         // processamento da NF-e.
@@ -225,6 +213,12 @@ begin
   except
     result := False;
   end;
+end;
+
+function TProtDFeCollection.New: TProtDFeCollectionItem;
+begin
+  Result := TProtDFeCollectionItem.Create;
+  Add(Result);
 end;
 
 end.

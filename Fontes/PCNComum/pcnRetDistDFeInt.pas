@@ -50,7 +50,7 @@ unit pcnRetDistDFeInt;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, {pcnConversaoNFe, }pcnLeitor, synacode;
 
 type
@@ -98,7 +98,7 @@ type
     FCTe: TDetEventoCTe;
     Femit: TDetEventoEmit;
   public
-    constructor Create(AOwner: TprocEvento);
+    constructor Create;
     destructor Destroy; override;
 
     property versao: String     read FVersao     write FVersao;
@@ -234,17 +234,16 @@ type
     property RetinfEvento: TprocEvento_RetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
-  TdocZipCollection = class(TCollection)
+  TdocZipCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TdocZipCollectionItem;
     procedure SetItem(Index: Integer; Value: TdocZipCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TdocZipCollectionItem;
+    function New: TdocZipCollectionItem;
     property Items[Index: Integer]: TdocZipCollectionItem read GetItem write SetItem; default;
   end;
 
-  TdocZipCollectionItem = class(TCollectionItem)
+  TdocZipCollectionItem = class(TObject)
   private
     // Atributos do resumo do DFe ou Evento
     FNSU: String;
@@ -263,9 +262,9 @@ type
     FXML: String;
 
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property NSU: String             read FNSU        write FNSU;
     property schema: TSchemaDFe      read Fschema     write Fschema;
     property InfZip: String          read FInfZip     write FInfZip;
@@ -276,7 +275,9 @@ type
     property XML: String             read FXML        write FXML;
   end;
 
-  TRetDistDFeInt = class(TPersistent)
+
+
+  TRetDistDFeInt = class
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -297,7 +298,6 @@ type
     destructor Destroy; override;
     function LerXml: boolean;
     function LerXMLFromFile(Const CaminhoArquivo: String): Boolean;
-  published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente   read FtpAmb    write FtpAmb;
@@ -319,8 +319,9 @@ uses
 
 { TprocEvento_DetEvento }
 
-constructor TprocEvento_DetEvento.Create(AOwner: TprocEvento);
+constructor TprocEvento_DetEvento.Create;
 begin
+  inherited Create;
   CTe  := TDetEventoCTe.Create;
   emit := TDetEventoEmit.Create;
 end;
@@ -337,7 +338,8 @@ end;
 
 constructor TprocEvento.Create;
 begin
-  FdetEvento    := TprocEvento_detEvento.Create(Self);
+  inherited Create;
+  FdetEvento    := TprocEvento_detEvento.Create;
   FRetInfEvento := TprocEvento_RetInfEvento.Create;
 end;
 
@@ -351,17 +353,6 @@ end;
 
 { TdocZipCollection }
 
-function TdocZipCollection.Add: TdocZipCollectionItem;
-begin
-  Result := TdocZipCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TdocZipCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TdocZipCollectionItem);
-end;
-
 function TdocZipCollection.GetItem(Index: Integer): TdocZipCollectionItem;
 begin
   Result := TdocZipCollectionItem(inherited GetItem(Index));
@@ -373,10 +364,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TdocZipCollection.New: TdocZipCollectionItem;
+begin
+  Result := TdocZipCollectionItem.Create;
+  Add(Result);
+end;
+
 { TdocZipCollectionItem }
 
 constructor TdocZipCollectionItem.Create;
 begin
+  inherited Create;
   FresDFe     := TresDFe.Create;
   FresEvento  := TresEvento.Create;
   FprocEvento := TprocEvento.Create;
@@ -395,8 +393,9 @@ end;
 
 constructor TRetDistDFeInt.Create(Const AtpDFe: String);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
-  FdocZip := TdocZipCollection.Create(Self);
+  FdocZip := TdocZipCollection.Create();
 
   FtpDFe := AtpDFe;
 end;
@@ -440,7 +439,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'docZip', '', i + 1) <> '' do
       begin
-        FdocZip.Add;
+        FdocZip.New;
         FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
         FdocZip.Items[i].schema := StrToSchemaDFe(Leitor.rAtributo('schema', 'docZip'));
 

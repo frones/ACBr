@@ -50,15 +50,14 @@ unit pcnRetConsCad;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor;
 
 type
 
-  TRetConsCad           = class;
   TInfCadCollection     = class;
   TInfCadCollectionItem = class;
 
-  TRetConsCad = class(TPersistent)
+  TRetConsCad = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -78,7 +77,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXML: Boolean;
-  published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
     property versao: String            read Fversao   write Fversao;
     property verAplic: String          read FverAplic write FverAplic;
@@ -93,17 +91,16 @@ type
     property InfCad: TInfCadCollection read FInfCad   write SetInfCad;
   end;
 
-  TInfCadCollection = class(TCollection)
+  TInfCadCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfCadCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfCadCollectionItem);
   public
-    constructor Create(AOwner: TRetConsCad); reintroduce;
-    function Add: TInfCadCollectionItem;
+    function New: TInfCadCollectionItem;
     property Items[Index: Integer]: TInfCadCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfCadCollectionItem = class(TCollectionItem)
+  TInfCadCollectionItem = class(TObject)
   private
     FIE: String;
     FCNPJ: String;
@@ -128,7 +125,7 @@ type
     FcMun: Integer;
     FxMun: String;
     FCep: Integer;
-  published
+  public
     property IE: String          read FIE         write FIE;
     property CNPJ: String        read FCNPJ       write FCNPJ;
     property CPF: String         read FCPF        write FCPF;
@@ -166,7 +163,7 @@ begin
   inherited Create;
 
   FLeitor := TLeitor.Create;
-  FInfCad := TInfCadCollection.Create(Self);
+  FInfCad := TInfCadCollection.Create();
 end;
 
 destructor TRetConsCad.Destroy;
@@ -183,16 +180,6 @@ begin
 end;
 
 { TInfCadCollection }
-
-constructor TInfCadCollection.Create(AOwner: TRetConsCad);
-begin
-  inherited Create(TInfCadCollectionItem);
-end;
-
-function TInfCadCollection.Add: TInfCadCollectionItem;
-begin
-  Result := TInfCadCollectionItem(inherited Add);
-end;
 
 function TInfCadCollection.GetItem(Index: Integer): TInfCadCollectionItem;
 begin
@@ -239,7 +226,7 @@ begin
 
       while Leitor.rExtrai(2, 'infCad', '', i + 1) <> '' do
       begin
-        InfCad.Add;
+        InfCad.New;
 
         // tratamento para quando o webservice não retorna os zeros a esquerda
         // na consulta
@@ -279,12 +266,18 @@ begin
         inc(i);
       end;
       if i = 0 then
-        InfCad.Add;
+        InfCad.New;
       Result := True;
     end;
   except
     Result := False;
   end;
 end;
+function TInfCadCollection.New: TInfCadCollectionItem;
+begin
+  Result := TInfCadCollectionItem.Create;
+  Add(Result);
+end;
+
 end.
 

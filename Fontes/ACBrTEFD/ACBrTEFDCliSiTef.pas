@@ -1258,7 +1258,7 @@ begin
                                 SL.Free;
                              end;
                           end ;
-                        133, 952:
+                        1, 133, 952:
                         begin
                           fArqBackUp := CopiarResposta;
                         end;

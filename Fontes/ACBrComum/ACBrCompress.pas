@@ -50,7 +50,10 @@ uses
   {$IfDef FPC}
    zstream, zipper
   {$Else}
-   Windows, ZLib
+   {$IfDef MSWINDOWS}
+    Windows,
+   {$EndIf}
+   ZLib
    {$IfDef DELPHIXE2_UP}
     ,System.Zip
    {$EndIf}

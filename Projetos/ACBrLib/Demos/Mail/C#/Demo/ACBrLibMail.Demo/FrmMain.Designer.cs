@@ -62,7 +62,7 @@
             this.btnEnviar.Location = new System.Drawing.Point(713, 415);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(75, 23);
-            this.btnEnviar.TabIndex = 1;
+            this.btnEnviar.TabIndex = 14;
             this.btnEnviar.Text = "Enviar";
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
@@ -81,7 +81,7 @@
             this.txtDestinatario.Location = new System.Drawing.Point(384, 28);
             this.txtDestinatario.Name = "txtDestinatario";
             this.txtDestinatario.Size = new System.Drawing.Size(404, 20);
-            this.txtDestinatario.TabIndex = 3;
+            this.txtDestinatario.TabIndex = 10;
             // 
             // label2
             // 
@@ -98,7 +98,7 @@
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
             this.txtBody.Size = new System.Drawing.Size(404, 139);
-            this.txtBody.TabIndex = 5;
+            this.txtBody.TabIndex = 12;
             // 
             // txtAltBody
             // 
@@ -106,7 +106,7 @@
             this.txtAltBody.Multiline = true;
             this.txtAltBody.Name = "txtAltBody";
             this.txtAltBody.Size = new System.Drawing.Size(404, 145);
-            this.txtAltBody.TabIndex = 7;
+            this.txtAltBody.TabIndex = 13;
             // 
             // label3
             // 
@@ -137,7 +137,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(366, 426);
-            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configuração";
             // 
@@ -146,7 +146,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(285, 397);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
-            this.btnSalvar.TabIndex = 18;
+            this.btnSalvar.TabIndex = 9;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -156,7 +156,7 @@
             this.txtEmail.Location = new System.Drawing.Point(6, 71);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(165, 20);
-            this.txtEmail.TabIndex = 17;
+            this.txtEmail.TabIndex = 3;
             // 
             // label9
             // 
@@ -173,7 +173,7 @@
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
             this.txtSenha.Size = new System.Drawing.Size(183, 20);
-            this.txtSenha.TabIndex = 15;
+            this.txtSenha.TabIndex = 4;
             // 
             // label8
             // 
@@ -189,7 +189,7 @@
             this.txtUsuario.Location = new System.Drawing.Point(177, 32);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(183, 20);
-            this.txtUsuario.TabIndex = 13;
+            this.txtUsuario.TabIndex = 2;
             // 
             // label7
             // 
@@ -205,7 +205,7 @@
             this.txtNome.Location = new System.Drawing.Point(6, 32);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(165, 20);
-            this.txtNome.TabIndex = 11;
+            this.txtNome.TabIndex = 1;
             // 
             // label6
             // 
@@ -222,7 +222,7 @@
             this.ckbTLS.Location = new System.Drawing.Point(58, 136);
             this.ckbTLS.Name = "ckbTLS";
             this.ckbTLS.Size = new System.Drawing.Size(46, 17);
-            this.ckbTLS.TabIndex = 9;
+            this.ckbTLS.TabIndex = 8;
             this.ckbTLS.Text = "TLS";
             this.ckbTLS.UseVisualStyleBackColor = true;
             // 
@@ -232,7 +232,7 @@
             this.ckbSSL.Location = new System.Drawing.Point(6, 136);
             this.ckbSSL.Name = "ckbSSL";
             this.ckbSSL.Size = new System.Drawing.Size(46, 17);
-            this.ckbSSL.TabIndex = 8;
+            this.ckbSSL.TabIndex = 7;
             this.ckbSSL.Text = "SSL";
             this.ckbSSL.UseVisualStyleBackColor = true;
             // 
@@ -248,6 +248,11 @@
             // nudPorta
             // 
             this.nudPorta.Location = new System.Drawing.Point(299, 110);
+            this.nudPorta.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
             this.nudPorta.Name = "nudPorta";
             this.nudPorta.Size = new System.Drawing.Size(61, 20);
             this.nudPorta.TabIndex = 6;
@@ -273,7 +278,7 @@
             this.txtAssunto.Location = new System.Drawing.Point(384, 67);
             this.txtAssunto.Name = "txtAssunto";
             this.txtAssunto.Size = new System.Drawing.Size(404, 20);
-            this.txtAssunto.TabIndex = 10;
+            this.txtAssunto.TabIndex = 11;
             // 
             // label10
             // 

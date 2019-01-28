@@ -717,15 +717,17 @@ begin
   if FLayoutArquivoTXT.Count = 0 then
     exit;
   List := TStringList.Create;
-  List.Text := FArquivoFormatoTXT;
-  //
-  for i := 0 to List.count - 1 do
-    if pos('<' + FIDNivel + '>', List.Strings[i]) > 0 then
-      if pos('|' + UpperCase(Tag) + '¨', UpperCase(List.Strings[i])) > 0 then
-        List[i] := StringReplace(List[i], '|' + UpperCase(Trim(TAG)) + '¨', '|' + conteudoProcessado, []);
-  //
-  FArquivoFormatoTXT := List.Text;
-  List.Free;
+  try
+    List.Text := FArquivoFormatoTXT;
+    for i := 0 to List.count - 1 do
+      if pos('<' + FIDNivel + '>', List.Strings[i]) > 0 then
+        if pos('|' + UpperCase(Tag) + '¨', UpperCase(List.Strings[i])) > 0 then
+          List[i] := StringReplace(List[i], '|' + UpperCase(Trim(TAG)) + '¨', '|' + conteudoProcessado, []);
+    
+    FArquivoFormatoTXT := List.Text;
+  finally
+    List.Free;
+  end;
 end;
 
 procedure TGerador.gtAjustarRegistros(const ID: string);
@@ -741,55 +743,64 @@ begin
   ListTAGs := TStringList.Create;
   ListArquivo := TStringList.Create;
   ListCorrigido := TStringList.Create;
-  // Elimina registros não utilizados
-  ListArquivo.Text := FArquivoFormatoTXT;
-  for i := 0 to ListArquivo.Count - 1 do
-  begin
-    k := 0;
-    for j := 0 to FLayoutArquivoTXT.count - 1 do
-      if listArquivo[i] = FLayoutArquivoTXT[j] then
-        if pos('¨', listArquivo[i]) > 0 then
-          k := 1;
-    if k = 0 then
-      ListCorrigido.Add(ListArquivo[i]);
-  end;
-  // Insere dados da chave da Nfe
-  for i := 0 to ListCorrigido.Count - 1 do
-    if pos('^ID^', ListCorrigido[i]) > 1 then
-      ListCorrigido[i] := StringReplace(ListCorrigido[i], '^ID^', ID, []);
-  // Elimina Nome de TAG sem informação
-  for j := 0 to FLayoutArquivoTXT.Count - 1 do
-  begin
-    s := FLayoutArquivoTXT[j];
-    while (pos('|', s) > 0) and (pos('¨', s) > 0) do
+  try
+    // Elimina registros não utilizados
+    ListArquivo.Text := FArquivoFormatoTXT;
+    for i := 0 to ListArquivo.Count - 1 do
     begin
-      s := Copy(s, pos('|', s), MaxInt);
-      ListTAGs.Add(Copy(s, 1, pos('¨', s)));
-      s := Copy(s, pos('¨', s) + 1, MaxInt);
-    end;
-  end;
-  for i := 0 to ListCorrigido.Count - 1 do
-    for j := 0 to ListTAGs.Count - 1 do
-      ListCorrigido[i] := StringReplace(ListCorrigido[i], ListTAGs[j], '|', []);
-  // Elimina Bloco <ID>
-  for i := 0 to ListCorrigido.Count - 1 do
-    if pos('>', ListCorrigido[i]) > 0 then
-     begin
-      ListCorrigido[i] := Trim(copy(ListCorrigido[i], pos('>', ListCorrigido[i]) + 1, maxInt));
-      idLocal := copy(ListCorrigido[i],1,pos('|',ListCorrigido[i])-1);
+      k := 0;
+      for j := 0 to FLayoutArquivoTXT.count - 1 do
+        if listArquivo[i] = FLayoutArquivoTXT[j] then
+          if pos('¨', listArquivo[i]) > 0 then
+            k := 1;
 
-      if (length(idLocal) > 2) and (UpperCase(idLocal) <> 'NOTA FISCAL') and
-         (copy(idLocal,length(idLocal),1) <> OnlyNumber(copy(idLocal,length(idLocal),1))) then
-       begin
-         idLocal := copy(idLocal,1,length(idLocal)-1)+LowerCase(copy(idLocal,length(idLocal),1));
-         ListCorrigido[i] := StringReplace(ListCorrigido[i],idLocal,idLocal,[rfIgnoreCase]);
-       end;
-     end;
-  FArquivoFormatoTXT := ListCorrigido.Text;
-  //
-  ListTAGs.Free;
-  ListArquivo.Free;
-  ListCorrigido.Free;
+      if k = 0 then
+        ListCorrigido.Add(ListArquivo[i]);
+    end;
+
+    // Insere dados da chave da Nfe
+    for i := 0 to ListCorrigido.Count - 1 do
+      if pos('^ID^', ListCorrigido[i]) > 1 then
+        ListCorrigido[i] := StringReplace(ListCorrigido[i], '^ID^', ID, []);
+
+    // Elimina Nome de TAG sem informação
+    for j := 0 to FLayoutArquivoTXT.Count - 1 do
+    begin
+      s := FLayoutArquivoTXT[j];
+      while (pos('|', s) > 0) and (pos('¨', s) > 0) do
+      begin
+        s := Copy(s, pos('|', s), MaxInt);
+        ListTAGs.Add(Copy(s, 1, pos('¨', s)));
+        s := Copy(s, pos('¨', s) + 1, MaxInt);
+      end;
+    end;
+
+    for i := 0 to ListCorrigido.Count - 1 do
+      for j := 0 to ListTAGs.Count - 1 do
+        ListCorrigido[i] := StringReplace(ListCorrigido[i], ListTAGs[j], '|', []);
+
+    // Elimina Bloco <ID>
+    for i := 0 to ListCorrigido.Count - 1 do
+      if pos('>', ListCorrigido[i]) > 0 then
+      begin
+        ListCorrigido[i] := Trim(copy(ListCorrigido[i], pos('>', ListCorrigido[i]) + 1, maxInt));
+        idLocal := copy(ListCorrigido[i],1,pos('|',ListCorrigido[i])-1);
+
+        if (length(idLocal) > 2) and (UpperCase(idLocal) <> 'NOTA FISCAL') and
+           (copy(idLocal,length(idLocal),1) <> OnlyNumber(copy(idLocal,length(idLocal),1))) then
+        begin
+          idLocal := copy(idLocal,1,length(idLocal)-1)+LowerCase(copy(idLocal,length(idLocal),1));
+          ListCorrigido[i] := StringReplace(ListCorrigido[i],idLocal,idLocal,[rfIgnoreCase]);
+        end;
+      end;
+
+    FArquivoFormatoTXT := ListCorrigido.Text;
+    //
+  finally
+    ListTAGs.Free;
+    ListArquivo.Free;
+    ListCorrigido.Free;
+  end;
 end;
 
 procedure TGerador.wCampoNFSe(const Tipo: TpcnTipoCampo; const ID, TAG: string;

@@ -570,15 +570,18 @@ begin
   Texto := Texto + '<';
   Texto := stringreplace(Texto, #$D#$A, '', [rfReplaceAll]);
   Xml := TStringList.create;
-  Result := '';
-  while length(texto) > 1 do
-  begin
-    i := pos('><', Texto);
-    Xml.Add(copy(Texto, 1, i));
-    Texto := copy(Texto, i + 1, maxInt);
+  try
+    Result := '';
+    while length(texto) > 1 do
+    begin
+      i := pos('><', Texto);
+      Xml.Add(copy(Texto, 1, i));
+      Texto := copy(Texto, i + 1, maxInt);
+    end;
+    Result := Xml.Text;
+  finally
+    Xml.Free;
   end;
-  Result := Xml.Text;
-  Xml.Free;
 end;
 
 function RetornarPosEx(const SubStr, S: String; Offset: Cardinal = 1): Integer;

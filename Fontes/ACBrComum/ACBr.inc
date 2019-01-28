@@ -68,7 +68,7 @@
 // Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML(recomendado)
 {.$DEFINE DFE_SEM_MSXML}
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
-{$DEFINE DFE_SEM_INDY}
+{.$DEFINE DFE_SEM_INDY}
 
 {$IfDef DFE_SEM_OPENSSL}
   {$Define DFE_SEM_XMLSEC}
@@ -83,7 +83,7 @@
 {.$DEFINE USE_ZLibExGZ}
 
 // Para Remover Warnings de CAST causados por WideString/String/AnsiString, descomente a linha abaixo. (Apenas Delphi)
-{$DEFINE REMOVE_CAST_WARN}
+{.$DEFINE REMOVE_CAST_WARN}
 
 // Para usar CLX no Windows / Delphi descomente essa linha
 //------------------------------------------------------------------------------

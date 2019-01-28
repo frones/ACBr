@@ -21,7 +21,7 @@ const
     LIBXMLSEC_SO = 'libxmlsec.dll';
   {$ENDIF}
 {$ELSE}
-  LIBXMLSEC_SO = 'libxmlsec.so';
+  LIBXMLSEC_SO = {$IFNDEF MSWINDOWS}'libxmlsec1'{$ELSE}'libxmlsec.so'{$ENDIF};
 {$ENDIF}
 
   xmlSecKeyDataTypeUnknown = $0000;

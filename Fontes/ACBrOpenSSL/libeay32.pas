@@ -1289,7 +1289,14 @@ function SMIME_read_PKCS7(bp: pBIO; var bcont: pBIO): pPKCS7; cdecl;
 implementation
 
 uses
-  {$IFDEF FPC} dynlibs, {$ELSE} Windows, {$ENDIF} SysUtils;
+  {$IFDEF FPC} 
+   dynlibs, 
+  {$ELSE} 
+   {$IFDEF MSWINDOWS}
+    Windows, 
+   {$ENDIF}
+  {$ENDIF}
+  SysUtils;
 
 const
   {$IFDEF MSWINDOWS}

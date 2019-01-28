@@ -404,7 +404,9 @@ begin
   rlmRespAverbacao.Lines.Clear;
 
   rlmRespSeguro.Caption:= '';
-  rlmRespSeguro.Caption := RspSeguroMDFeToStrText(fpMDFe.seg.Items[0].respSeg);
+
+  if fpMDFe.seg.Count > 0 then
+    rlmRespSeguro.Caption := RspSeguroMDFeToStrText(fpMDFe.seg.Items[0].respSeg);
 
   for i := 0 to fpMDFe.seg.Count - 1 do
   begin

@@ -16,8 +16,8 @@
     <Description Value="ACBrMTER - Componente Servidor de Micro Terminais TCP/IP
 http://www.projectoacbr.com.br/"/>
     <License Value="LGPL"/>
-    <Version Minor="1"/>
-    <Files Count="6">
+    <Version Minor="2"/>
+    <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTer.pas"/>
         <UnitName Value="ACBrMTer"/>
@@ -43,6 +43,10 @@ http://www.projectoacbr.com.br/"/>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas"/>
         <UnitName Value="ACBrMTerVT100"/>
       </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerSB100.pas"/>
+        <UnitName Value="ACBrMTerSB100"/>
+      </Item7>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

@@ -4,11 +4,12 @@
 
 unit ACBr_MTER;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
   ACBrMTer, ACBrMTERReg, ACBrMTerClass, ACBrMTerPMTG, ACBrMTerStxEtx, 
-  ACBrMTerVT100, LazarusPackageIntf;
+  ACBrMTerVT100, ACBrMTerSB100, LazarusPackageIntf;
 
 implementation
 

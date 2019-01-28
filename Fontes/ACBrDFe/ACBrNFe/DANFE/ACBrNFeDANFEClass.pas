@@ -636,6 +636,9 @@ var
   descBandeira, codigoAutorizacao: String;
 begin
   Result := '';
+  descBandeira := '';
+  codigoAutorizacao := '';
+
   if (aPagto.Collection.Count = 0) then
     Exit;
 

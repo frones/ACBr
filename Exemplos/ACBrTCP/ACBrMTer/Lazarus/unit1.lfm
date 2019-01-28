@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 600
-  Height = 387
-  Top = 340
+  Height = 408
+  Top = 319
   Width = 743
   Caption = 'Form1'
-  ClientHeight = 387
+  ClientHeight = 408
   ClientWidth = 743
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -17,17 +17,17 @@ object Form1: TForm1
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
-    Height = 219
+    Height = 240
     Top = 168
     Width = 344
     Align = alCustom
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 219
+    ClientHeight = 240
     ClientWidth = 344
     TabOrder = 0
     object clbConectados: TCheckListBox
       Left = 195
-      Height = 217
+      Height = 238
       Top = 1
       Width = 148
       Align = alRight
@@ -36,7 +36,7 @@ object Form1: TForm1
     end
     object mOutput: TMemo
       Left = 1
-      Height = 217
+      Height = 238
       Top = 1
       Width = 189
       Align = alClient
@@ -49,7 +49,7 @@ object Form1: TForm1
     end
     object Splitter1: TSplitter
       Left = 190
-      Height = 217
+      Height = 238
       Top = 1
       Width = 5
       Align = alRight
@@ -108,17 +108,17 @@ object Form1: TForm1
   end
   object pnComandos: TPanel
     Left = 344
-    Height = 387
+    Height = 408
     Top = 0
     Width = 399
     Align = alRight
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 387
+    ClientHeight = 408
     ClientWidth = 399
     TabOrder = 1
     object PageControl2: TPageControl
       Left = 1
-      Height = 385
+      Height = 406
       Top = 1
       Width = 397
       ActivePage = tsComandos
@@ -128,7 +128,7 @@ object Form1: TForm1
       OnChange = PageControl2Change
       object tsComandos: TTabSheet
         Caption = 'Comandos'
-        ClientHeight = 357
+        ClientHeight = 378
         ClientWidth = 389
         object btBackSpace: TButton
           AnchorSideLeft.Side = asrBottom
@@ -537,7 +537,7 @@ object Form1: TForm1
         object btAtivar: TButton
           Left = 248
           Height = 25
-          Top = 18
+          Top = 16
           Width = 75
           Caption = 'Ativar'
           OnClick = btAtivarClick
@@ -546,7 +546,7 @@ object Form1: TForm1
         object btDesativar: TButton
           Left = 248
           Height = 25
-          Top = 50
+          Top = 62
           Width = 75
           Caption = 'Desativar'
           OnClick = btDesativarClick
@@ -559,7 +559,6 @@ object Form1: TForm1
           Height = 15
           Top = 3
           Width = 31
-          Anchors = [akLeft, akBottom]
           Caption = 'Porta:'
           ParentColor = False
         end
@@ -587,25 +586,14 @@ object Form1: TForm1
           Height = 15
           Top = 3
           Width = 44
-          Anchors = [akLeft, akBottom]
           Caption = 'Modelo:'
           ParentColor = False
         end
-        object edTerminador: TEdit
-          Left = 16
-          Height = 23
-          Top = 108
-          Width = 104
-          TabOrder = 4
-        end
         object lbTerminador: TLabel
-          AnchorSideLeft.Control = edTerminador
-          AnchorSideBottom.Control = edTerminador
           Left = 16
           Height = 15
           Top = 93
           Width = 64
-          Anchors = [akLeft, akBottom]
           Caption = 'Terminador:'
           ParentColor = False
         end
@@ -614,7 +602,7 @@ object Form1: TForm1
           Height = 23
           Top = 64
           Width = 96
-          TabOrder = 5
+          TabOrder = 4
           Text = '5000'
         end
         object Label1: TLabel
@@ -624,18 +612,8 @@ object Form1: TForm1
           Height = 15
           Top = 49
           Width = 48
-          Anchors = [akLeft, akBottom]
           Caption = 'Timeout:'
           ParentColor = False
-        end
-        object btAtualizar: TButton
-          Left = 248
-          Height = 25
-          Top = 82
-          Width = 75
-          Caption = 'Atualizar'
-          OnClick = btAtualizarClick
-          TabOrder = 6
         end
         object cbEchoMode: TComboBox
           Left = 16
@@ -645,7 +623,7 @@ object Form1: TForm1
           ItemHeight = 15
           OnChange = cbEchoModeChange
           Style = csDropDownList
-          TabOrder = 7
+          TabOrder = 5
         end
         object lbEchoMode: TLabel
           AnchorSideLeft.Control = cbEchoMode
@@ -654,9 +632,34 @@ object Form1: TForm1
           Height = 15
           Top = 49
           Width = 60
-          Anchors = [akLeft, akBottom]
           Caption = 'EchoMode:'
           ParentColor = False
+        end
+        object lbTerminador1: TLabel
+          Left = 176
+          Height = 15
+          Top = 93
+          Width = 108
+          Caption = 'Terminador Balança:'
+          ParentColor = False
+        end
+        object edTerminador: TComboBox
+          Left = 16
+          Height = 23
+          Top = 108
+          Width = 144
+          ItemHeight = 15
+          OnChange = edTerminadorChange
+          TabOrder = 6
+        end
+        object edTerminadorBalanca: TComboBox
+          Left = 176
+          Height = 23
+          Top = 108
+          Width = 147
+          ItemHeight = 15
+          OnChange = edTerminadorBalancaChange
+          TabOrder = 7
         end
       end
       object tsBalanca: TTabSheet
@@ -721,7 +724,7 @@ object Form1: TForm1
     IP = '0.0.0.0'
     PasswordChar = #0
     Port = '6550'
-    TimeOut = 5000
+    TerminadorBalanca = '#3'
     OnConecta = ACBrMTer1Conecta
     OnDesconecta = ACBrMTer1Desconecta
     OnRecebeDados = ACBrMTer1RecebeDados

@@ -17,7 +17,6 @@ type
     ACBrMTer1: TACBrMTer;
     BitBtn1: TBitBtn;
     btAtivar: TButton;
-    btAtualizar: TButton;
     btBackSpace: TButton;
     btBeep: TButton;
     btDesativar: TButton;
@@ -51,7 +50,8 @@ type
     edQtdPosicao: TSpinEdit;
     edSerial: TSpinEdit;
     edSerialPeso: TSpinEdit;
-    edTerminador: TEdit;
+    edTerminador: TComboBox;
+    edTerminadorBalanca: TComboBox;
     edTimeout: TEdit;
     gbComandas: TGroupBox;
     Label1: TLabel;
@@ -67,6 +67,7 @@ type
     lbQtdPosicoes: TLabel;
     lbSerial: TLabel;
     lbTerminador: TLabel;
+    lbTerminador1: TLabel;
     memComandas: TMemDataset;
     memTerminais: TMemDataset;
     mOutput: TMemo;
@@ -93,7 +94,6 @@ type
       const PesoRecebido: Double);
     procedure BitBtn1Click(Sender: TObject);
     procedure btAtivarClick(Sender: TObject);
-    procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
     procedure btBeepClick(Sender: TObject);
     procedure btDesativarClick(Sender: TObject);
@@ -110,6 +110,8 @@ type
     procedure Button1Click(Sender: TObject);
     procedure btSolicitarPesoClick(Sender: TObject);
     procedure cbEchoModeChange(Sender: TObject);
+    procedure edTerminadorBalancaChange(Sender: TObject);
+    procedure edTerminadorChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PageControl2Change(Sender: TObject);
@@ -148,6 +150,7 @@ begin
     Port       := edPorta.Text;
     EchoMode   := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
     Terminador := edTerminador.Text;
+    TerminadorBalanca := edTerminadorBalanca.Text;
     TimeOut    := StrToInt(edTimeout.Text);
     Ativar;
   end;
@@ -189,11 +192,6 @@ begin
 end;
 
 procedure TForm1.BitBtn1Click(Sender: TObject);
-begin
-  AtualizarConexoes;
-end;
-
-procedure TForm1.btAtualizarClick(Sender: TObject);
 begin
   AtualizarConexoes;
 end;
@@ -375,6 +373,16 @@ begin
   ACBrMTer1.EchoMode := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
 end;
 
+procedure TForm1.edTerminadorBalancaChange(Sender: TObject);
+begin
+  ACBrMTer1.TerminadorBalanca := edTerminadorBalanca.Text;
+end;
+
+procedure TForm1.edTerminadorChange(Sender: TObject);
+begin
+  ACBrMTer1.Terminador := edTerminador.Text;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 var
   I: TACBrBALModelo;
@@ -395,6 +403,16 @@ begin
   // Preenchendo ComboBox de Modelos de Balança
   for K := Low(TACBrMTerEchoMode) to High(TACBrMTerEchoMode) do
     cbEchoMode.Items.Add(GetEnumName(TypeInfo(TACBrMTerEchoMode), Integer(K)));
+
+  edTerminador.Items.Clear;
+  edTerminador.Items.Add('');
+  edTerminador.Items.Add('#13 | CR');
+  edTerminador.Items.Add('#10 | LF');
+  edTerminador.Items.Add('#13,#10 | CR+LF');
+  edTerminador.Items.Add('#3 | ETX');
+
+  edTerminadorBalanca.Items.Assign(edTerminador.Items);
+  edTerminadorBalanca.ItemIndex := 4;
 
   cbModelo.ItemIndex := 0;
   cbEchoMode.ItemIndex := 0;

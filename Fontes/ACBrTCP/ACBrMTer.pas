@@ -432,7 +432,7 @@ begin
   if (Length(fUltimoDadoRecebido) < 1) then
     fUltimoPesoLido := -9      // -9 = TimeOut em ACBrBAL
   else
-    fUltimoPesoLido := BALConexao.InterpretarRepostaPeso(fUltimoDadoRecebido);
+    fUltimoPesoLido := BALConexao.InterpretarRepostaPeso(Trim(fUltimoDadoRecebido));
 
   fConexoes.ACBrMTer.DoRecebePeso(fIP, fUltimoPesoLido);
 end;

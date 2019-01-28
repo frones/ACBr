@@ -50,6 +50,16 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+28/01/2019
+-- ACBrBoleto --
+[*] Incluídas novas ocorrências de remessa e retorno relacionadas a negativação
+
+-- ACBrBancoSicredi --
+[*] Alteradas rotinas de remessa/retorno para enviar/receber ocorrências relacionadas
+a negativação.
+https://www.projetoacbr.com.br/forum/topic/48890-negativa%C3%A7%C3%A3o-serasa-sicredi/  
+
+
 18/01/2019
 -- ACBrBancoBancoob --
 [-] Correção na geração da remessa CNAB240 (ajuste na posição 127 do Arq. )

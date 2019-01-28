@@ -224,6 +224,9 @@ begin
          toRemessaCancelarInstrucaoProtestoBaixa : Ocorrencia := '18'; {Sustar protesto e baixar}
          toRemessaCancelarInstrucaoProtesto      : Ocorrencia := '19'; {Sustar protesto e manter na carteira}
          toRemessaOutrasOcorrencias              : Ocorrencia := '31'; {Alteração de Outros Dados}
+         toRemessaNegativacaoSerasa              : Ocorrencia := '45'; {Negativar Serasa}
+         toRemessaExcluirNegativacaoSerasa       : Ocorrencia := '75'; {Excluir Negativação Serasa}
+         toRemessaExcluirNegativacaoSerasaBaixar : Ocorrencia := '76'; {Excluir Negativação Serasa e Baixar}
       else
          Ocorrencia := '01';                                          {Remessa}
       end;
@@ -1233,6 +1236,31 @@ begin
               Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
             end;
           end;
+        toRetornoEntradaNegativacaoRejeitada,
+        toRetornoExclusaoNegativacaoRejeitada: //81 e 83
+           if CodMotivo = 'S1' then
+              Result:= 'S1 – Rejeitado pela empresa de negativação parceira.'
+           else
+              Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
+
+        toRetornoExcusaoNegativacaoOutrosMotivos://84;
+           case AnsiIndexStr(CodMotivo, ['N1', 'N2', 'N3','N4','N5']) of
+             0 : Result:= 'N1-Decurso de Prazo';
+             1 : Result:= 'N2-Determinação Judicial';
+             2 : Result:= 'N3-Solicitação de Empresa Conveniada';
+             3 : Result:= 'N4-Devolução de Comunicado pelos Correios';
+             4 : Result:= 'N5-Diversos';
+           else
+             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+           end;
+        toRetornoOcorrenciaInfOutrosMotivos: //85'
+          case AnsiIndexStr(CodMotivo, ['N4','N5']) of
+             0 : Result:= 'N4-Devolução de Comunicado pelos Correios';
+             1 : Result:= 'N5-Diversos';
+           else
+             Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+           end;
+
       else
         Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
       end; //---- Fim Anderson
@@ -1366,6 +1394,14 @@ begin
     23: Result := '23-Entrada de Título em Cartório';
     28: Result := '28-Débito de Tarifas Custas';
     30: Result := '30-Alteração Rejeitada';
+    78: Result := '78-Confirmação de Recebimento de Pedido de Negativação';
+    79: Result := '79-Confirmação de Recebimento de Pedido Exclusão de Negativação';
+    80: Result := '80-Confirmação de Entrada de Negativação';
+    81: Result := '81-Entrada de Negativação Rejeitada';
+    82: Result := '82-Confirmação de Exclusão de Negativação';
+    83: Result := '83-Exclusão de Negativação Rejeitada';
+    84: Result := '84-Exclusão de Negativação por Outros Motivos';
+    85: Result := '85-Ocorrência Informacional por Outros Motivos';
   end;
 end;
 
@@ -1421,6 +1457,14 @@ begin
     23: Result := toRetornoEntradaEmCartorio;
     28: Result := toRetornoDebitoTarifas;
     30: Result := toRetornoAlteracaoDadosRejeitados;
+    78: Result := toRetornoConfRecPedidoNegativacao;
+    79: Result := toRetornoConfRecPedidoExclusaoNegativacao;
+    80: Result := toRetornoConfEntradaNegativacao;
+    81: Result := toRetornoEntradaNegativacaoRejeitada;
+    82: Result := toRetornoConfExclusaoNegativacao;
+    83: Result := toRetornoExclusaoNegativacaoRejeitada;
+    84: Result := toRetornoExcusaoNegativacaoOutrosMotivos;
+    85: Result := toRetornoOcorrenciaInfOutrosMotivos;
   else
     Result := toRetornoOutrasOcorrencias;
   end;
@@ -1493,6 +1537,14 @@ begin
     toRetornoEntradaEmCartorio                                 : Result := '23';
     toRetornoDebitoTarifas                                     : Result := '28';
     toRetornoAlteracaoDadosRejeitados                          : Result := '30';
+    toRetornoConfRecPedidoNegativacao                          : Result := '78';
+    toRetornoConfRecPedidoExclusaoNegativacao                  : Result := '79';
+    toRetornoConfEntradaNegativacao                            : Result := '80';
+    toRetornoEntradaNegativacaoRejeitada                       : Result := '81';
+    toRetornoConfExclusaoNegativacao                           : Result := '82';
+    toRetornoExclusaoNegativacaoRejeitada                      : Result := '83';
+    toRetornoExcusaoNegativacaoOutrosMotivos                   : Result := '84';
+    toRetornoOcorrenciaInfOutrosMotivos                        : Result := '85';
   else
     Result := '02';
   end;
@@ -1639,6 +1691,10 @@ begin
       toRemessaAlterarDesconto                : Ocorrencia := '16'; {Alteração do valor de desconto }
       toRemessaNaoConcederDesconto            : Ocorrencia := '17'; {Não conceder desconto }
       toRemessaOutrasOcorrencias              : Ocorrencia := '31'; {Alteração de Outros Dados}
+      toRemessaNegativacaoSerasa              : Ocorrencia := '45'; {Negativar Serasa}
+      toRemessaExcluirNegativacaoSerasa       : Ocorrencia := '75'; {Excluir Negativação Serasa}
+      toRemessaExcluirNegativacaoSerasaBaixar : Ocorrencia := '76'; {Excluir Negativação Serasa e Baixar}
+
     else
        Ocorrencia := '01';{Entrada de títulos}
     end;

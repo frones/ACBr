@@ -63,7 +63,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..281] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..290] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -134,6 +134,7 @@ const
     'Remessa Baixa Título Negativado Sem Protesto',
     'Remessa Alterar Valor Mínimo', 
     'Remessa Alterar Valor Máximo',
+    'Remessa Excluir Negativacao Serasa e Baixar',
     'Retorno Abatimento Cancelado',
     'Retorno Abatimento Concedido',
     'Retorno Acerto Controle Participante',
@@ -345,7 +346,15 @@ const
     'Retorno Estorno Liquidacao OnLine',
     'Retorno Confirmacao Alteracao Valor Nominal',
     'Retorno Confirmacao Alteracao Valor Percentual Minimo Maximo',
-    'Tipo Ocorrencia Nenhum'
+    'Tipo Ocorrencia Nenhum',
+    'Retorno Confirmação de Recebimento de Pedido de Negativação',
+    'Retorno Confirmação de Recebimento de Pedido de Exclusão de Negativação',
+    'Retorno Confirmação de Entrada de Negativação',
+    'Retorno Entrada de Negativação Rejeitada',
+    'Retorno Confirmação de Exclusão de Negativação',
+    'Retorno Exlusão de Negativação Rejeitada',
+    'Retorno Exclusão e Negativação por Outros Motivos',
+    'Retorno Ocorrência Informacional por Outros Motivos'
 );
 
 type
@@ -472,6 +481,7 @@ type
     toRemessaBaixaTituloNegativadoSemProtesto,
     toRemessaAlterarValorMinimo,
     toRemessaAlterarValorMaximo,
+    toRemessaExcluirNegativacaoSerasaBaixar,
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
     toRetornoAbatimentoConcedido,
@@ -684,7 +694,15 @@ type
     toRetornoEstornoLiquidacaoOnLine,
     toRetornoConfirmacaoAlteracaoValorNominal,
     toRetornoConfirmacaoAlteracaoValorpercentualMinimoMaximo,
-    toTipoOcorrenciaNenhum
+    toTipoOcorrenciaNenhum,
+    toRetornoConfRecPedidoNegativacao,
+    toRetornoConfRecPedidoExclusaoNegativacao,
+    toRetornoConfEntradaNegativacao,
+    toRetornoEntradaNegativacaoRejeitada,
+    toRetornoConfExclusaoNegativacao,
+    toRetornoExclusaoNegativacaoRejeitada,
+    toRetornoExcusaoNegativacaoOutrosMotivos,
+    toRetornoOcorrenciaInfOutrosMotivos
   );
 
   {TACBrOcorrencia}
@@ -2899,9 +2917,9 @@ end;
 function TACBrBoleto.GetOcorrenciasRemessa(): TACBrOcorrenciasRemessa;
 var I: Integer;
 begin
-  SetLength(Result, 47);
+  SetLength(Result, 48);
 
-  for I:= 1 to 47 do
+  for I:= 1 to 48 do
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
     Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];

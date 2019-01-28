@@ -62,7 +62,7 @@ type
 
     function ComandoBackSpace: AnsiString; override;
     function ComandoBoasVindas: AnsiString; override;
-    function ComandoBeep: AnsiString; override;
+    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
     function ComandoEco(const aValue: AnsiString): AnsiString; override;
@@ -106,7 +106,7 @@ begin
   Result := PrepararCmd(3);
 end;
 
-function TACBrMTerPMTG.ComandoBeep: AnsiString;
+function TACBrMTerPMTG.ComandoBeep(aTempo: Integer): AnsiString;
 begin
   // Liga Beep
   Result := PrepararCmd(93, IntToLEStr(1, 4));

@@ -61,7 +61,7 @@ type
     constructor Create(aOwner: TComponent);
 
     function ComandoBackSpace: AnsiString; override;
-    function ComandoBeep: AnsiString; override;
+    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
     function ComandoBoasVindas: AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
@@ -91,7 +91,7 @@ begin
   Result := BS;
 end;
 
-function TACBrMTerVT100.ComandoBeep: AnsiString;
+function TACBrMTerVT100.ComandoBeep(aTempo: Integer): AnsiString;
 begin
   Result := ESC + '[TB';
 end;
@@ -143,8 +143,8 @@ end;
 
 function TACBrMTerVT100.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
 begin
-  if (aSerial = 1) then
-    Result := ESC + '[?24r'   // Seleciona porta serial 1
+  if (aSerial = 2) then
+    Result := ESC + '[?24r'   // Seleciona porta serial 2
   else
     Result := ESC + '[?24h';  // Seleciona porta serial padrão(0)
 
@@ -163,16 +163,10 @@ begin
   Result := ComandoPosicionarCursor(aLinha, 1) + ESC + '[K';
 end;
 
-function TACBrMTerVT100.ComandoPosicionarCursor(aLinha, aColuna: Integer
-  ): AnsiString;
+function TACBrMTerVT100.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
 var
-  wL, wC: String;
+  wL, wC: AnsiString;
 begin
-  if (aLinha < 1) or (aLinha > 2) then
-    raise Exception.Create(ACBrStr('Valores válidos para Linhas: 1 ou 2'));
-  if (aColuna < 1) or (aColuna > 40) then
-    raise Exception.Create(ACBrStr('Valores válidos para Colunas: 1 ao 40'));
-
   wL := IntToStrZero(aLinha, 2);
   wC := IntToStrZero(aColuna, 2);
 

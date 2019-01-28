@@ -37,6 +37,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2019
+-- ACBrMTer, ACBrMTerClass, ACBrMTerSB100 --
+[+] Ajustes recebidos de Elias, e novo modelo sb100 (Bematech Fit)
+    https://www.projetoacbr.com.br/forum/topic/38899-testes-microterminal-bematech-fit-b%C3%A1sico/
+[*] Remoção de uso densnecessário de AnsiString, de vários eventos e métodos
+[+] Adicionada a propriedade "TerminadorBalanca: AnsiString", para permitir ao
+    componente compreender quando a Balança terminou de enviar seus dados
+[+] Adicionada a propriedade "TimeOutBalanca: Integer default 1000" que permite
+    Definir o tempo que o componente deve aguardar o envio de dados da Balança
+    Se nada for retornado no periodo, será retornado peso -9 = Timeout
+[+] Adicionada as propriedades:
+    DisplayLinhas : Integer default 4;
+    DisplayColunas: Integer default 20;
+    (por: DSA e Elias)
+
 25/01/2019
 -- ACBrSedex --
 [*] Ajuste na função LerArqIni. Remoção de variável não utilizada.

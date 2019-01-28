@@ -61,19 +61,16 @@ type
     constructor Create(aOwner: TComponent);
 
     function ComandoBackSpace: AnsiString; override;
-    function ComandoBeep: AnsiString; override;
+    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
     function ComandoBoasVindas: AnsiString; override;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
     function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
     function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
     function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
-    function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
     function ComandoOnline: AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
-
-    function InterpretarResposta(const aRecebido: AnsiString): AnsiString; override;
   end;
 
 implementation
@@ -97,7 +94,7 @@ begin
   Result := PrepararCmd('D', BS);
 end;
 
-function TACBrMTerStxEtx.ComandoBeep: AnsiString;
+function TACBrMTerStxEtx.ComandoBeep(aTempo: Integer): AnsiString;
 begin
   //Result := STX + #90 + '9' + ETX;
   //Result := STX + 'D' + BELL + ETX;
@@ -141,8 +138,8 @@ var
 begin
   Result := '';
 
-  if (aSerial = 1) then
-    wPorta := 'R'        // Seleciona porta serial 1
+  if (aSerial = 2) then
+    wPorta := 'R'        // Seleciona porta serial 2
   else
     wPorta := 'S';       // Seleciona porta serial padrão(0)
 
@@ -153,11 +150,6 @@ end;
 function TACBrMTerStxEtx.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
 begin
   Result := PrepararCmd('D', aTexto);
-end;
-
-function TACBrMTerStxEtx.ComandoLimparLinha(aLinha: Integer): AnsiString;
-begin
-  Result := '';
 end;
 
 function TACBrMTerStxEtx.ComandoOnline: AnsiString;
@@ -177,14 +169,6 @@ end;
 function TACBrMTerStxEtx.ComandoLimparDisplay: AnsiString;
 begin
   Result := PrepararCmd('L');
-end;
-
-function TACBrMTerStxEtx.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
-begin
-  if (aRecebido[1] = STX) and (aRecebido[Length(aRecebido)] = ETX) then
-    Exit;
-
-  Result := aRecebido;
 end;
 
 end.

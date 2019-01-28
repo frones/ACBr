@@ -64,12 +64,13 @@ type
 
   protected
     fpModeloStr: String;
+    fpOwner: TComponent;
 
   public
     constructor Create(aOwner: TComponent);
 
     function ComandoBackSpace: AnsiString; virtual;
-    function ComandoBeep: AnsiString; virtual;
+    function ComandoBeep(aTempo: Integer = 0): AnsiString; virtual;
     function ComandoBoasVindas: AnsiString; virtual;
     function ComandoDeslocarCursor(aValue: Integer): AnsiString; virtual;
     function ComandoDeslocarLinha(aValue: Integer): AnsiString; virtual;
@@ -92,7 +93,7 @@ type
 implementation
 
 uses
-  ACBrMTer, ACBrUtil;
+  ACBrMTer, ACBrConsts, ACBrUtil;
 
 { TACBrMTerClass }
 
@@ -106,6 +107,7 @@ begin
   if not (aOwner is TACBrMTer) then
     raise Exception.Create(ACBrStr('Essa Classe deve ser instanciada por TACBrMTer'));
 
+  fpOwner := aOwner;
   fpModeloStr := 'Não Definido';
 end;
 
@@ -115,7 +117,7 @@ begin
   DisparaErroNaoImplementado('ComandoBackSpace');
 end;
 
-function TACBrMTerClass.ComandoBeep: AnsiString;
+function TACBrMTerClass.ComandoBeep(aTempo: Integer): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoBeep');
@@ -182,13 +184,33 @@ end;
 
 function TACBrMTerClass.ComandoLimparLinha(aLinha: Integer): AnsiString;
 begin
-  Result := '';
-  DisparaErroNaoImplementado('ComandoLimparLinha');
+  Result := ComandoPosicionarCursor( aLinha, 0) +
+            ComandoEnviarTexto( Space(TACBrMTer(fpOwner).DisplayColunas) ) +
+            ComandoPosicionarCursor( aLinha, 0);
 end;
 
 function TACBrMTerClass.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
+var
+  ALen: Integer;
 begin
+  Result := '';
+  ALen := Length(aRecebido);
+  if (ALen < 1) then
+    Exit;
+
+  if CharInSet(aRecebido[1], [ACK,NAK]) then
+    Exit;
+
   Result := aRecebido;
+
+  if (aRecebido[1] = STX) then
+  begin
+    Result := copy(aRecebido, 2, ALen);
+    Dec(ALen);
+  end;
+
+  if (ALen > 0) and (aRecebido[ALen] = ETX) then
+    Result := copy(aRecebido, 1, ALen-1);
 end;
 
 function TACBrMTerClass.LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;

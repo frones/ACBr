@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/01/2019
+-- ACBrNFeDANFEClass, ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS --
+[+] Adicionado propriedade DescricaoPagamentos, para definir o tipo de descrição a
+    ser emitido sendo: Tipo, Bandeira, Autorização
+	(por: José M. S. Junior)
+
 22/01/2019
 -- ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS --
 [*] Ajuste na validação da Bandeira de Cartão, impresso no tipo de pagamento

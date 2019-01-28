@@ -64,10 +64,12 @@ type
   TDetArmamento = (da_tpArma, da_nSerie, da_nCano, da_descr);
   TDetCombustivel = (dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE,
     dc_qBCProd, dc_vAliqProd, dc_vCIDE);
+  TDescricaoPagamento = (icaTipo, icaBandeira, icaAutorizacao);
   TDetVeiculos = set of TDetVeiculo;
   TDetMedicamentos = set of TDetMedicamento;
   TDetArmamentos = set of TDetArmamento;
   TDetCombustiveis = set of TDetCombustivel;
+  TDescricaoPagamentos = set of TDescricaoPagamento;
 
 
   { TACBrNFeDANFEClass }
@@ -147,9 +149,12 @@ type
     FvTroco: currency;
     FImprimeQRCodeLateral: Boolean;
     FImprimeLogoLateral: Boolean;
+    FDescricaoPagamentos: TDescricaoPagamentos;
 
   public
     constructor Create(AOwner: TComponent); override;
+
+    function ManterDescricaoPagamentos(aPagto: TpagCollectionItem): String; virtual;
 
     property vTroco: currency read FvTroco write FvTroco;
     property ViaConsumidor: Boolean read FViaConsumidor write FViaConsumidor;
@@ -160,6 +165,7 @@ type
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default False;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default False;
     property EspacoFinal: Integer read FEspacoFinal write FEspacoFinal default 38;
+    property DescricaoPagamentos: TDescricaoPagamentos read FDescricaoPagamentos write FDescricaoPagamentos default [icaTipo, icaBandeira];
   end;
 
 implementation
@@ -621,5 +627,35 @@ begin
   FImprimeQRCodeLateral := False;
   FImprimeLogoLateral := False;
   FEspacoFinal := 38;
+  FDescricaoPagamentos := [icaTipo, icaBandeira];
 end;
+
+function TACBrNFeDANFCEClass.ManterDescricaoPagamentos(aPagto: TpagCollectionItem
+  ): String;
+var
+  descBandeira, codigoAutorizacao: String;
+begin
+  Result := '';
+  if (aPagto.Collection.Count = 0) then
+    Exit;
+
+  with aPagto do
+  begin
+    if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) then
+    begin
+      descBandeira:= BandeiraCartaoToDescStr(tBand);
+      CodigoAutorizacao := '- Aut: ' + cAut;
+    end;
+
+    if (icaTipo in FDescricaoPagamentos) then
+      Result:= ACBrStr(FormaPagamentoToDescricao(tPag)) + Space(1);
+    if (icaBandeira in FDescricaoPagamentos) then
+      Result := Result + descBandeira + Space(1);
+    if (icaAutorizacao in FDescricaoPagamentos) then
+      Result := Result + CodigoAutorizacao;
+
+  end;
+
+end;
+
 end.

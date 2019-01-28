@@ -383,7 +383,6 @@ procedure TACBrNFeDANFeESCPOS.GerarPagamentos;
 var
   i: Integer;
   Troco: Real;
-  DescPagto, DescBandeira: String;
 begin
   //Total := 0;
   FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | VALOR PAGO R$',
@@ -393,14 +392,7 @@ begin
   begin
     with FpNFe.pag.Items[i] do
     begin
-      DescPagto := ACBrStr(FormaPagamentoToDescricao(tPag));
-      if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) then
-        DescBandeira := BandeiraCartaoToDescStr(tBand)
-      else
-        DescBandeira := '';
-
-      FPosPrinter.Buffer.Add('<c>' + PadSpace(
-         DescPagto + ' ' + DescBandeira + '|' +
+      FPosPrinter.Buffer.Add('<c>' + PadSpace(ManterDescricaoPagamentos(FpNFe.pag.Items[i]) + '|' +
          FormatFloatBr(vPag),
          FPosPrinter.ColunasFonteCondensada, '|'));
     end;

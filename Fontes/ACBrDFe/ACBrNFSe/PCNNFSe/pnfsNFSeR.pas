@@ -1488,7 +1488,7 @@ begin
     NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
     NFSe.Servico.Descricao                 := '';
     if FProvedor = proISSNet then
-      NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio')
+      NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'MunicipioPrestacaoServico')
     else
       NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 

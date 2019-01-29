@@ -3032,55 +3032,45 @@ begin
       IdeVinculo.NisTrab := '12345678901';
       IdeVinculo.Matricula := '5000';
 
-      with Aso do
+      with exMedOcup do
       begin
-        DtAso := date;
-        tpAso := tpTpAso(1);
-        ResAso := tpResAso(1);
-
-        Exame.Clear;
-
-        with Exame.Add do
+        tpExameOcup := tpTpExameOcup(1);
+        with Aso do
         begin
-          DtExm := date;
-          procRealizado := 123;
-          obsProc := 'observação do procedimento realizado';
-          interprExm := tpInterprExm(0);
-          ordExame := tpOrdExame(0);
-          dtIniMonit := Now;
-          dtFimMonit := Now;
-          indResult := tpIndResult(1);
+          DtAso := date;
+          ResAso := tpResAso(1);
 
-          RespMonit.NisResp := '12345678901';
-          RespMonit.NrConsClasse := '7893';
-          RespMonit.UfConsClasse := tpuf(ufPR);
+          Exame.Clear;
+
+          with Exame.Add do
+          begin
+            DtExm := date;
+            procRealizado := 123;
+            obsProc := 'observação do procedimento realizado';
+            ordExame := tpOrdExame(0);
+            indResult := tpIndResult(1);
+          end;
+
+          with Exame.Add do
+          begin
+            DtExm := date + 1;
+            procRealizado := 456;
+            obsProc := 'observação do procedimento realizado';
+            ordExame := tpOrdExame(0);
+            indResult := tpIndResult(1);
+          end;
+
+          Medico.cpfMed := '12345678909';
+          Medico.nisMed := '12345612345';
+          Medico.NmMed  := 'TESTE DE MEDICO EXAMINADOR';
+          Medico.nrCRM  := '6655666';
+          Medico.ufCRM := tpuf.ufSP;
         end;
 
-        with Exame.Add do
-        begin
-          DtExm := date + 1;
-          procRealizado := 456;
-          obsProc := 'observação do procedimento realizado';
-          ordExame := tpOrdExame(0);
-          dtIniMonit := Now;
-          dtFimMonit := Now;
-          indResult := tpIndResult(1);
-
-          RespMonit.NisResp := '12345678901';
-          RespMonit.NrConsClasse := '7893';
-          RespMonit.UfConsClasse := tpuf(ufPR);
-        end;
-
-        with IdeServSaude do
-        begin
-          codCNES := '9876541';
-          FrmCtt := 'Telefone: 32200000';
-          email := 'teste@teste.com';
-
-          Medico.NmMed := 'MEDICO TESTE';
-          Medico.CRM.NrCRM := '88888888';
-          Medico.CRM.UfCRM := tpuf(ufPR);
-        end;
+        RespMonit.cpfResp := '12345678901';
+        RespMonit.nmResp := 'NOME DO RESPONSAVEL';
+        RespMonit.nrCRM := '666566';
+        RespMonit.ufCRM := tpuf(ufPR);
       end;
     end;
   end;

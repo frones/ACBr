@@ -210,7 +210,7 @@ type
 implementation
 
 uses
-  Math, StrUtils,
+  StrUtils,
   ACBrValidador, ACBrUtil, ACBrConsts;
 
 function TabelaToString(const ATabela: TACBrIBPTaxTabela): String;

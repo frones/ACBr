@@ -47,7 +47,7 @@ unit ACBrSocket;
 
 interface
 
-uses SysUtils, Classes, Types, syncobjs,
+uses SysUtils, Classes, syncobjs,
      blcksock, synsock, httpsend, ssl_openssl,  {Units da Synapse}
      {$IFDEF MSWINDOWS} windows, wininet, {$ENDIF}  { Units para a auto-detecção de Proxy }
      ACBrBase ;

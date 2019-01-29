@@ -138,7 +138,7 @@ type
       property Enderecos : TACBrCEPEnderecos  read fEnderecos ;
 
       function BuscarPorCEP( ACEP : String ) : Integer ;
-      function BuscarPorLogradouro( ACidade, ATipo_Logradouro, ALogradouro, AUF,
+      function BuscarPorLogradouro( const ACidade, ATipo_Logradouro, ALogradouro, AUF,
          ABairro : String ) : Integer ;
 
     published
@@ -169,8 +169,8 @@ type
     public
       constructor Create( AOwner : TACBrCEP ) ; virtual ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; virtual ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+      Procedure BuscarPorCEP( const ACEP : String ) ; virtual ;
+      Procedure BuscarPorLogradouro( const AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; virtual ;
 
       property URL : String read fpURL ;
@@ -184,8 +184,8 @@ type
     public
       constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
   end ;
 
@@ -197,8 +197,8 @@ type
     public
       constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro(const  AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
   end ;
 
@@ -211,19 +211,18 @@ type
     public
       constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
   end ;
 
   TACBrWSBases4you = class(TACBrCEPWSClass)
     private
-      procedure ProcessaResposta ;
     public
       constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
   end ;
 
@@ -232,8 +231,8 @@ type
     procedure ProcessaResposta;
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
        AUF, ABairro : String ) ; override ;
   end;
 
@@ -244,8 +243,8 @@ type
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
 
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
        AUF, ABairro : String ) ; override ;
   end ;
 
@@ -261,8 +260,8 @@ type
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
 
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
        AUF, ABairro : String ) ; override ;
   end ;
 
@@ -276,8 +275,8 @@ type
     constructor Create( AOwner: TACBrCEP ); override ;
     destructor Destroy; override;
 
-    procedure BuscarPorCEP( ACEP: String ); override ;
-    procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
+    procedure BuscarPorCEP(const ACEP: String ); override ;
+    procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro, ALogradouro,
          AUF, ABairro : String ) ; override ;
   end;
 
@@ -291,8 +290,8 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     public
       constructor Create( AOwner : TACBrCEP ) ; override ;
 
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
-      Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,
+      Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+      Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
           ALogradouro, AUF, ABairro : String ) ; override ;
   end ;
 
@@ -304,8 +303,8 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
   public
     constructor Create( AOwner : TACBrCEP ); override;
 
-    Procedure BuscarPorCEP( ACEP : String ); override;
-    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+    Procedure BuscarPorCEP(const ACEP : String ); override;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end;
 
   { TACBrWSCorreiosSIGEP }
@@ -317,7 +316,7 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
     destructor Destroy; override;
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
   end;
 
   { TACBrWSCEPAberto }
@@ -327,8 +326,8 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     procedure ProcessaResposta ;
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
-    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end ;
 
   { TACBrWSWSCEP } // WSCep é o nome do servico
@@ -338,7 +337,7 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     procedure ProcessaResposta ;
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
-    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+    Procedure BuscarPorCEP(const ACEP : String ) ; override ;
   end ;
 
 implementation
@@ -461,7 +460,7 @@ begin
   Result := fEnderecos.Count;
 end ;
 
-function TACBrCEP.BuscarPorLogradouro(ACidade, ATipo_Logradouro, ALogradouro,
+function TACBrCEP.BuscarPorLogradouro(const ACidade, ATipo_Logradouro, ALogradouro,
   AUF, ABairro : String ) : Integer ;
 begin
   fEnderecos.Clear;
@@ -499,12 +498,12 @@ begin
   fpURL  := '';
 end ;
 
-Procedure TACBrCEPWSClass.BuscarPorCEP(ACEP : String) ;
+Procedure TACBrCEPWSClass.BuscarPorCEP(const ACEP : String) ;
 begin
   ErrorAbstract ;
 end ;
 
-Procedure TACBrCEPWSClass.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
+Procedure TACBrCEPWSClass.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
    ALogradouro, AUF, ABairro : String ) ;
 begin
   ErrorAbstract ;
@@ -519,7 +518,7 @@ begin
   fpURL := 'http://www.buscarcep.com.br/' ;
 end ;
 
-Procedure TACBrWSBuscarCEP.BuscarPorCEP( ACEP : String ) ;
+Procedure TACBrWSBuscarCEP.BuscarPorCEP(const ACEP : String ) ;
 begin
   TestarChave;
 
@@ -527,27 +526,28 @@ begin
   ProcessaResposta ;
 end ;
 
-Procedure  TACBrWSBuscarCEP.BuscarPorLogradouro(AMunicipio,  ATipo_Logradouro,
-  ALogradouro, AUF, ABairro : String) ;
+procedure TACBrWSBuscarCEP.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 Var
-   Params : String ;
+  Params : String ;
+  Municipio,  Tipo_Logradouro, Logradouro, UF: string;
 begin
   TestarChave;
 
-  AMunicipio       := fOwner.AjustaParam( AMunicipio ) ;
-  ATipo_Logradouro := fOwner.AjustaParam( ATipo_Logradouro );
-  ALogradouro      := fOwner.AjustaParam( ALogradouro ) ;
-  AUF              := fOwner.AjustaParam( AUF );
+  Municipio       := fOwner.AjustaParam( AMunicipio ) ;
+  Tipo_Logradouro := fOwner.AjustaParam( ATipo_Logradouro );
+  Logradouro      := fOwner.AjustaParam( ALogradouro ) ;
+  UF              := fOwner.AjustaParam( AUF );
 
-  if (AMunicipio = '') or (ALogradouro = '') or (AUF = '') then
+  if (Municipio = '') or (Logradouro = '') or (UF = '') then
      raise EACBrCEPException.Create('UF, Cidade e Logradouro devem ser informados');
 
-  Params := '?logradouro=' + ALogradouro+
-            '&cidade='     + AMunicipio+
-            '&uf='         + AUF ;
+  Params := '?logradouro=' + Logradouro+
+            '&cidade='     + Municipio+
+            '&uf='         + UF ;
 
-  if ATipo_Logradouro <> '' then
-    Params := Params + '&tipo_logradouro=' + ATipo_Logradouro ;
+  if Tipo_Logradouro <> '' then
+    Params := Params + '&tipo_logradouro=' + Tipo_Logradouro ;
 
   if ABairro <> '' then
     Params := Params + '&bairro=' + ABairro ;
@@ -620,27 +620,31 @@ begin
   fpURL := 'http://ceplivre.com.br/consultar/' ;
 end ;
 
-Procedure TACBrWSCEPLivre.BuscarPorCEP(ACEP : String) ;
+procedure TACBrWSCEPLivre.BuscarPorCEP(const ACEP : String);
+var
+  CEP: string;
 begin
   TestarChave;
 
   // CEPLivre exige CEP formatado //
-  ACEP := Copy(ACEP,1,5)+'-'+Copy(ACEP,6,3);
+  CEP := Copy(ACEP,1,5)+'-'+Copy(ACEP,6,3);
 
-  fOwner.HTTPGet( fpURL + 'cep/' + Trim(fOwner.ChaveAcesso) + '/' + ACEP + '/csv') ;
+  fOwner.HTTPGet( fpURL + 'cep/' + Trim(fOwner.ChaveAcesso) + '/' + CEP + '/csv') ;
   ProcessaResposta ;
 end ;
 
-Procedure TACBrWSCEPLivre.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
+Procedure TACBrWSCEPLivre.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
   ALogradouro, AUF, ABairro : String) ;
+var
+  Logradouro: string;
 begin
   TestarChave;
 
-  ALogradouro := fOwner.AjustaParam( ALogradouro ) ;
-  if (ALogradouro = '') then
+  Logradouro := fOwner.AjustaParam( ALogradouro ) ;
+  if (Logradouro = '') then
      raise EACBrCEPException.Create('Cidade e Logradouro devem ser informados');
 
-  fOwner.HTTPGet( fpURL + 'logradouro/' + Trim( fOwner.ChaveAcesso ) + '/' + Alogradouro + '/csv' ) ;
+  fOwner.HTTPGet( fpURL + 'logradouro/' + Trim( fOwner.ChaveAcesso ) + '/' + Logradouro + '/csv' ) ;
   ProcessaResposta ;
 end ;
 
@@ -709,16 +713,18 @@ begin
   fpURL := 'http://cep.republicavirtual.com.br/' ;
 end;
 
-procedure TACBrWSRepublicaVirtual.BuscarPorCEP(ACEP: String);
+procedure TACBrWSRepublicaVirtual.BuscarPorCEP(const ACEP : String);
+var
+  CEP: string;
 begin
   FCepBusca := ACep; // republica virtual nao devolve o cep na resposta
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
-  fOwner.HTTPGet( fpURL + 'web_cep.php?cep='+ACEP+'&formato=xml' ) ;
+  fOwner.HTTPGet( fpURL + 'web_cep.php?cep='+CEP+'&formato=xml' ) ;
   ProcessaResposta ;
 end;
 
-procedure TACBrWSRepublicaVirtual.BuscarPorLogradouro(AMunicipio,
+procedure TACBrWSRepublicaVirtual.BuscarPorLogradouro(const AMunicipio,
   ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
 begin
   raise EACBrCEPException.Create(ACBrStr('Busca por Logradouro não disponível no site Republica Virtual.'));
@@ -761,7 +767,7 @@ begin
   fpURL := 'http://www.bases4you.com/wscep.php';
 end;
 
-procedure TACBrWSBases4you.BuscarPorCEP(ACEP: String);
+procedure TACBrWSBases4you.BuscarPorCEP(const ACEP: String);
 var
   Acao: TStringList;
   Stream: TMemoryStream;
@@ -797,7 +803,7 @@ begin
       fOwner.HTTPSend.Headers.Add( 'SoapAction: "urn:cepwsdl#ConsultaCEP"' );
       fOwner.HTTPPost(fpURL);
 
-      ProcessaResposta;
+//      ProcessaResposta;
     except
       on E: Exception do
       begin
@@ -813,15 +819,10 @@ begin
   end;
 end;
 
-procedure TACBrWSBases4you.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
+procedure TACBrWSBases4you.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
   ALogradouro, AUF, ABairro: String);
 begin
   inherited;
-
-end;
-
-procedure TACBrWSBases4you.ProcessaResposta;
-begin
 
 end;
 
@@ -834,7 +835,7 @@ begin
   fpURL := 'http://www.rnsolucoes.com/wsRN.php?type=xml';
 end;
 
-procedure TACBrWSRNSolucoes.BuscarPorCEP(ACEP: String);
+procedure TACBrWSRNSolucoes.BuscarPorCEP(const ACEP: String);
 begin
   try
     fOwner.HTTPSend.Clear;
@@ -856,8 +857,8 @@ begin
   end;
 end;
 
-procedure TACBrWSRNSolucoes.BuscarPorLogradouro(AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+procedure TACBrWSRNSolucoes.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 begin
   try
     fOwner.HTTPSend.Clear;
@@ -939,20 +940,22 @@ begin
   fpURL := 'http://webservice.kinghost.net/' ;
 end;
 
-procedure TACBrWSKingHost.BuscarPorCEP(ACEP: String);
+procedure TACBrWSKingHost.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
   FCepBusca := ACep;
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
   fOwner.HTTPGet( fpURL + 'web_cep.php?'+
                           'auth='+ Trim(fOwner.ChaveAcesso) +
                           '&formato=xml'+
-                          '&cep='+ACEP ) ;
+                          '&cep='+CEP ) ;
   ProcessaResposta ;
 end;
 
-procedure TACBrWSKingHost.BuscarPorLogradouro(AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+procedure TACBrWSKingHost.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 begin
   raise EACBrCEPException.Create(ACBrStr('Busca por Logradouro não disponível no site kingHost.'));
 end;
@@ -991,35 +994,37 @@ begin
   fpURL := 'http://www.byjg.com.br/site/webservice.php/ws/cep' ;
 end;
 
-procedure TACBrWSByJG.BuscarPorCEP(ACEP: String);
+procedure TACBrWSByJG.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
   TestarUsuario;
   FCepBusca := ACEP;
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
   FTipoBusca := 1;
-  fOwner.HTTPGet( fpURL + '?httpmethod=obterlogradouroauth&cep='+ACEP+
+  fOwner.HTTPGet( fpURL + '?httpmethod=obterlogradouroauth&cep='+CEP+
   '&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
   ProcessaResposta ;
 end;
 
-procedure TACBrWSByJG.BuscarPorLogradouro(AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+procedure TACBrWSByJG.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
+    ALogradouro, AUF, ABairro : String);
 var
-  Endereco : String;
+  Endereco, Municipio, UF : String;
 begin
   TestarUsuario;
 
-  AMunicipio       := fOwner.AjustaParam( AMunicipio ) ;
-  Endereco         := fOwner.AjustaParam(ATipo_Logradouro+' '+ALogradouro);
-  AUF              := fOwner.AjustaParam( AUF );
+  Municipio       := fOwner.AjustaParam( AMunicipio ) ;
+  Endereco        := fOwner.AjustaParam(ATipo_Logradouro+' '+ALogradouro);
+  UF              := fOwner.AjustaParam( AUF );
 
-  if (AMunicipio = '') or (Endereco = '') or (AUF = '') then
+  if (Municipio = '') or (Endereco = '') or (UF = '') then
      raise EACBrCEPException.Create('UF, Cidade e Logradouro devem ser informados');
 
   FTipoBusca := 2;
 
   fOwner.HTTPGet( fpURL+'?httpmethod=obterCEPAuth&logradouro='+Endereco+
- '&localidade='+AMunicipio+'&UF='+AUF+'&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
+ '&localidade='+Municipio+'&UF='+UF+'&usuario='+Trim(fOwner.Usuario)+'&senha='+Trim(fOwner.Senha)) ;
   ProcessaResposta ;
 end;
 
@@ -1172,18 +1177,19 @@ begin
   inherited Destroy ;
 end ;
 
-procedure TACBrWSCorreios.BuscarPorCEP(ACEP: String);
+procedure TACBrWSCorreios.BuscarPorCEP(const ACEP: String);
 var
+  CEP: string;
   sParams: string;
 begin
-  ACEP := OnlyNumber( ACEP );
-  sParams := 'relaxation='+ACEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
+  CEP := OnlyNumber( ACEP );
+  sParams := 'relaxation='+CEP+'&TipoCep=ALL&cfm=1&Metodo=listaLogradouro&TipoConsulta=relaxation&StartRow=1&EndRow=100';
   fOwner.HTTPGet(fpURL + sParams);
   ProcessaResposta;
 end;
 
-procedure TACBrWSCorreios.BuscarPorLogradouro( AMunicipio, ATipo_Logradouro, ALogradouro,
-         AUF, ABairro : String ) ;
+procedure TACBrWSCorreios.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 var
   sParams: string;
   sEndereco: String;
@@ -1333,19 +1339,21 @@ begin
   fpURL := 'http://www.devmedia.com.br/api/cep/service/';
 end;
 
-procedure TACBrWSDevMedia.BuscarPorCEP(ACEP: String);
+procedure TACBrWSDevMedia.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
   TestarChave;
 
   FCepBusca := ACep;
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
-  fOwner.HTTPGet( fpURL + '?cep=' + ACEP + '&chave=' + Trim(fOwner.ChaveAcesso) + '&formato=xml' ) ;
+  fOwner.HTTPGet( fpURL + '?cep=' + CEP + '&chave=' + Trim(fOwner.ChaveAcesso) + '&formato=xml' ) ;
   ProcessaResposta;
 end;
 
-procedure TACBrWSDevMedia.BuscarPorLogradouro(AMunicipio,
-  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
+procedure TACBrWSDevMedia.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 begin
   raise EACBrCEPException.Create(ACBrStr('Busca por Logradouro não disponível no site DevMedia.'));
 end;
@@ -1395,19 +1403,24 @@ begin
   fpURL := 'http://viacep.com.br/ws/';
 end;
 
-procedure TACBrWSViaCEP.BuscarPorCEP(ACEP: String);
+procedure TACBrWSViaCEP.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
   FCepBusca := ACep;
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
   if ACEP = '' then
      raise EACBrCEPException.Create('CEP deve ser informado');
 
-  fOwner.HTTPGet( fpURL + ACEP + '/xml' ) ;
+  fOwner.HTTPGet( fpURL + CEP + '/xml' ) ;
   ProcessaResposta();
 end;
 
-procedure TACBrWSViaCEP.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro: String);
+procedure TACBrWSViaCEP.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
+    ALogradouro, AUF, ABairro : String);
+var
+  Municipio, Logradouro, UF: string;
 begin
   if AMunicipio = '' then
      raise EACBrCEPException.Create('Munícipio deve ser informado.');
@@ -1418,11 +1431,11 @@ begin
   if AUF = '' then
      raise EACBrCEPException.Create('UF deve ser informado.');
 
-  AUF         := TiraAcentos(AUF);
-  AMunicipio  := TiraAcentos(AMunicipio);
-  ALogradouro := TiraAcentos(ALogradouro);
+  UF         := TiraAcentos(AUF);
+  Municipio  := TiraAcentos(AMunicipio);
+  Logradouro := TiraAcentos(ALogradouro);
 
-  fOwner.HTTPGet( fpURL + AUF + '/' + AMunicipio + '/' + ALogradouro + '/xml' );
+  fOwner.HTTPGet( fpURL + UF + '/' + Municipio + '/' + Logradouro + '/xml' );
   ProcessaResposta();
 end;
 
@@ -1489,7 +1502,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(ACEP: String);
+procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(const ACEP: String);
 var
   Acao: TStringList;
   Stream: TMemoryStream;
@@ -1608,10 +1621,11 @@ begin
     fOwner.OnBuscaEfetuada(Self);
 end;
 
-procedure TACBrWSCEPAberto.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
-  ALogradouro, AUF, ABairro: String);
+procedure TACBrWSCEPAberto.BuscarPorLogradouro(const AMunicipio,
+    ATipo_Logradouro, ALogradouro, AUF, ABairro : String);
 var
   Parametros: String;
+  Municipio, Logradouro, UF, Bairro : String;
 begin
   if(Trim(fOwner.ChaveAcesso) = '')then
     raise EACBrCEPException.Create('O WebService CepAberto necessita de uma Chave de Acesso.'#13+
@@ -1623,20 +1637,20 @@ begin
   if AMunicipio = '' then
      raise EACBrCEPException.Create('Munícipio deve ser informado.');
 
-  AUF         := fOwner.AjustaParam(AUF);
-  AMunicipio  := fOwner.AjustaParam(AMunicipio);
-  ALogradouro := fOwner.AjustaParam(ALogradouro);
-  ABairro     := fOwner.AjustaParam(ABairro);
+  UF         := fOwner.AjustaParam(AUF);
+  Municipio  := fOwner.AjustaParam(AMunicipio);
+  Logradouro := fOwner.AjustaParam(ALogradouro);
+  Bairro     := fOwner.AjustaParam(ABairro);
 
   // estado e cidade são obrigatórios
-  Parametros := 'estado=' + AUF +
-                '&cidade=' + AMunicipio;
+  Parametros := 'estado=' + UF +
+                '&cidade=' + Municipio;
 
-  if(Trim(ABairro) <> '')then
-    Parametros := Parametros + '&bairro=' + ABairro;
+  if(Trim(Bairro) <> '')then
+    Parametros := Parametros + '&bairro=' + Bairro;
 
-  if(Trim(ALogradouro) <> '')then
-    Parametros := Parametros + '&logradouro=' + ALogradouro;
+  if(Trim(Logradouro) <> '')then
+    Parametros := Parametros + '&logradouro=' + Logradouro;
 
   fOwner.HTTPSend.Clear;
   fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
@@ -1653,11 +1667,13 @@ begin
   fpURL := 'http://www.cepaberto.com/api/v3/';
 end;
 
-procedure TACBrWSCEPAberto.BuscarPorCEP(ACEP: String);
+procedure TACBrWSCEPAberto.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
-  if ACEP = '' then
+  if CEP = '' then
     raise EACBrCEPException.Create('CEP deve ser informado');
 
   if(Trim(fOwner.ChaveAcesso) = '')then
@@ -1665,7 +1681,7 @@ begin
 
   fOwner.HTTPSend.Clear;
   fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
-  fOwner.HTTPMethod('GET', fpURL+'cep?cep=' + ACEP);
+  fOwner.HTTPMethod('GET', fpURL+'cep?cep=' + CEP);
 
   ProcessaResposta;
 end;
@@ -1745,18 +1761,21 @@ end;
 
 { TACBrWSWSCEP }
 
-procedure TACBrWSWSCEP.BuscarPorCEP(ACEP: String);
+procedure TACBrWSWSCEP.BuscarPorCEP(const ACEP: String);
+var
+  CEP: string;
 begin
-  ACEP := OnlyNumber( ACEP );
+  CEP := OnlyNumber( ACEP );
 
-  if ACEP = '' then
+  if CEP = '' then
     raise EACBrCEPException.Create('CEP deve ser informado');
 
   if(Trim(fOwner.ChaveAcesso) = '')then
-    raise EACBrCEPException.Create('O WebService WSCep necessita de uma Chave de Acesso.'+#13+'Acesse o site, crie uma conta e pegue sua Chave de Acesso! Use a chave "free" para ter acesso ate 30 consultas por dia');
+    raise EACBrCEPException.Create('O WebService WSCep necessita de uma Chave de Acesso.'+#13+
+                                   'Acesse o site, crie uma conta e pegue sua Chave de Acesso! Use a chave "free" para ter acesso ate 30 consultas por dia');
 
   fOwner.HTTPSend.Clear;
-  fOwner.HTTPMethod('GET', Format(fpURL, [fOwner.ChaveAcesso, ACEP]));
+  fOwner.HTTPMethod('GET', Format(fpURL, [fOwner.ChaveAcesso, CEP]));
 
   ProcessaResposta;
 end;

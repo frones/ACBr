@@ -198,6 +198,7 @@ function TACBrCotacao.Procurar(const ACodigoMoeda: Double): TACBrCotacaoItem;
 var
   I: Integer;
 begin
+  Result := nil;
   for I := 0 to Tabela.Count - 1 do
   begin
     if Tabela[I].CodigoMoeda = ACodigoMoeda then
@@ -212,6 +213,7 @@ function TACBrCotacao.Procurar(const ASimbolo: String): TACBrCotacaoItem;
 var
   I: Integer;
 begin
+  Result := nil;
   for I := 0 to Tabela.Count - 1 do
   begin
     if Tabela[I].Moeda = ASimbolo then

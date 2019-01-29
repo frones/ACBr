@@ -56,6 +56,9 @@ type
     function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
     procedure VerificarKeyCodes;
 
+    function ComandoImprimirImagemColumnStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString;
+
     function ComandoGravarLogoColumnStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer; KeyCode: Byte): AnsiString;
   public
@@ -230,6 +233,35 @@ begin
     VerificarKeyCode(KeyCode1, 'KeyCode1');
     VerificarKeyCode(KeyCode2, 'KeyCode2');
   end;
+end;
+
+//https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
+function TACBrEscPosEpson.ComandoImprimirImagemColumnStr(
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+var
+  Slices: TStrings;
+  i: Integer;
+begin
+  Result := ComandoEspacoEntreLinhas(24);  // 24 dots
+
+  Slices := TStringList.Create;
+  try
+    RasterStrToColumnStr(RasterStr, AWidth, Slices, 3);
+
+    For i := 0 to Slices.Count-1 do
+    begin
+        Result := Result + ESC +
+                           '*' + // Bit image mode
+                           #33 + // 24-dot double density
+                           IntToLEStr(AWidth) +
+                           Slices[i] +
+                           LF;
+    end;
+  finally
+    Slices.Free;
+  end;
+
+  Result := Result + ComandoEspacoEntreLinhas( fpPosPrinter.EspacoEntreLinhas );
 end;
 
 function TACBrEscPosEpson.ComandoGravarLogoColumnStr(
@@ -636,21 +668,38 @@ end;
 function TACBrEscPosEpson.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
-  // Comando para gravar Raster Img na memória
-  Result := #48 + #112 + #48 +  // m + fn + a
-            #01 + #01 +         // bx + by
-            '1' +               // c - 1 Cor, Mono
-            IntToLEStr(AWidth)  +
-            IntToLEStr(AHeight) +
-            RasterStr;
+  with fpPosPrinter.ConfigLogo do
+  begin
+    {
+      Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
 
-  Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
+      Nota: O Comando novo da Epson "GS + '8L'", não é compatível em alguns
+      Equipamentos (não Epson), mas que usam EscPosEpson...
+      Nesse caso, vamos usar o comando "GS + '*'", para tal, informe:
+      KeyCode1 := 1; KeyCode2 := 0
+    }
 
-  // Comando para imprimir Raster image na impressora
-  Result := Result + GS  + '(L' + #2 + #0 + #48 +#50;
+    if (KeyCode2 = 0) then
+      Result := ComandoImprimirImagemColumnStr(RasterStr, AWidth, AHeight)
+    else
+    begin
+      // Comando para gravar Raster Img na memória
+      Result := #48 + #112 + #48 +  // m + fn + a
+                #01 + #01 +         // bx + by
+                '1' +               // c - 1 Cor, Mono
+                IntToLEStr(AWidth)  +
+                IntToLEStr(AHeight) +
+                RasterStr;
 
-  //DEBUG
-  //WriteToFile('c:\temp\Raster.txt', Result);
+      Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
+
+      // Comando para imprimir Raster image na impressora
+      Result := Result + GS  + '(L' + #2 + #0 + #48 +#50;
+
+      //DEBUG
+      //WriteToFile('c:\temp\Raster.txt', Result);
+    end;
+  end;
 end;
 
 end.

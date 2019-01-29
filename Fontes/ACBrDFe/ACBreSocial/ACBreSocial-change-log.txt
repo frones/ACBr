@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/47582-comit%C3%AA-gestor-aprova-a-vers%C3%A3o-25-do-leiaute-do-esocial/?do=findComment&comment=323868
+   Por: Angelo Sobreira
+
 25/01/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/48956-ajuste-campo-tpcontr-do-s-2200/

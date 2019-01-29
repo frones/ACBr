@@ -57,13 +57,12 @@ type
   TS2220Collection = class;
   TS2220CollectionItem = class;
   TevtMonit = class;
+  TexMedOcup = class;
   TAso = class;
   TExameColecaoItem = class;
   TExameColecao = class;
   TRespMonit = class;
   TMedico = class;
-  TCrm = class;
-  TIdeServSaude = class;
   
   TS2220Collection = class(TOwnedCollection)
   private
@@ -93,15 +92,14 @@ type
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
-    FAso: TAso;
     FACBreSocial: TObject;
+    FexMedOcup: TexMedOcup;
 
     procedure GerarExame;
     procedure GerarMedico;
-    procedure GerarCRM;
+    procedure GerarExMedOcup;
     procedure GerarAso;
-    procedure GerarIdeServSaude;
-    procedure GerarRespMonit(pRespMonit: TRespMonit);
+    procedure GerarRespMonit;
   public
     constructor Create(AACBreSocial: TObject); overload;
     destructor Destroy; override;
@@ -112,25 +110,37 @@ type
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property Aso: TAso read FAso write FAso;
+    property exMedOcup : TexMedOcup read FexMedOcup write FexMedOcup;
+  end;
+
+  TexMedOcup = class(TPersistent)
+  private
+    FtpExameOcup: tpTpExameOcup;
+    FAso: TAso;
+    FRespMonit : TRespMonit;
+  public
+    property tpExameOcup: tpTpExameOcup read FtpExameOcup write FtpExameOcup;
+    property Aso : TAso read FAso write FAso;
+    property RespMonit : TRespMonit read FRespMonit write FRespMonit;
+
+    constructor create;
+    destructor destroy;override;
   end;
 
   TAso = class(TPersistent)
   private
     FDtAso: TDateTime;
-    FtpAso: tpTpAso;
     FResAso: tpResAso;
     FExame: TExameColecao;
-    FIdeServSaude: TIdeServSaude;
+    FMedico: TMedico;
   public
     constructor create;
     destructor destroy; override;
 
     property DtAso: TDateTime read FDtAso write FDtAso;
-    property tpAso: tpTpAso read FtpAso write FtpAso;
     property ResAso: tpResAso read FResAso write FResAso;
     property Exame: TExameColecao read FExame write FExame;
-    property IdeServSaude: TIdeServSaude read FIdeServSaude write FIdeServSaude;
+    property Medico: TMedico read FMedico write FMedico;
   end;
 
   TExameColecaoItem = class(TCollectionItem)
@@ -138,25 +148,15 @@ type
     FDtExm: TDateTime;
     FProcRealizado: integer;
     FObsProc: string;
-    FInterprExm: tpInterprExm;
     FOrdExame: tpOrdExame;
-    FDtIniMonit: TDateTime;
-    FDtFimMonit: TDateTime;
     FIndResult: tpIndResult;
-    FRespMonit: TRespMonit;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-
+    
     property DtExm: TDateTime read FDtExm write FDtExm;
     property ProcRealizado: integer read FProcRealizado write FProcRealizado;
     property obsProc: string read FObsProc write FObsProc;
-    property interprExm: tpInterprExm read FInterprExm write FInterprExm;
     property ordExame: tpOrdExame read FOrdExame write FOrdExame;
-    property dtIniMonit: TDateTime read FDtIniMonit write FDtIniMonit;
-    property dtFimMonit: TDateTime read FDtFimMonit write FDtFimMonit;
     property indResult: tpIndResult read FIndResult write FIndResult;
-    property respMonit: TRespMonit read FRespMonit write FRespMonit;
   end;
 
   TExameColecao = class(TCollection)
@@ -171,50 +171,30 @@ type
 
   TRespMonit = class
   private
-    FNisResp: string;
-    FNrConsClasse: string;
-    FUfConsClasse: tpuf;
+    FCPFResp: String;
+    FNMResp: String;
+    FNRCRM: String;
+    FUFCRM: tpuf;
   public
-    property NisResp: string read FNisResp write FNisResp;
-    property NrConsClasse: string read FNrConsClasse write FNrConsClasse;
-    property UfConsClasse: tpuf read FUfConsClasse write FUfConsClasse;
-  end;
-
-  TIdeServSaude = class
-  private
-    FCodCNES: string;
-    FFrmCtt: string;
-    FEmail: string;
-    FMedico: TMedico;
-  public
-    constructor create;
-    destructor destroy; override;
-  published
-    property CodCNES: string read FCodCNES write FCodCNES;
-    property FrmCtt: string read FFrmCtt write FFrmCtt;
-    property Email: string read FEmail write FEmail;
-    property Medico: TMedico read FMedico write FMedico;
-  end;
-
-  TCrm = class
-  private
-    FNrCRM: string;
-    FUfCRM: tpuf;
-  published
-    property NrCRM: string read FNrCRM write FNrCRM;
-    property UfCRM: tpuf read FUfCRM write FUfCRM;
+    property cpfResp: String read FCPFResp write FCPFResp;
+    property nmResp: String read FNMResp write FNMResp;
+    property nrCRM: String read FNRCRM write FNRCRM;
+    property ufCRM: tpuf read FUFCRM write FUFCRM;
   end;
 
   TMedico = class
   private
     FNmMed: string;
-    FCRM: TCRM;
+    FCPFMed : String;
+    FNISMed : String;
+    FnrCRM: String;
+    FufCRM: tpuf;
   public
-    constructor create;
-    destructor destroy; override;
-  public
-    property NmMed: string read FNmMed write FNmMed;
-    property CRM: TCRM read FCRM write FCRM;
+    property cpfMed: String read FCPFMed write FCPFMed;
+    property nisMed: String read FNISMed write FNISMed;
+    property NmMed: String read FNmMed write FNmMed;
+    property nrCRM: String read FnrCRM write FnrCRM;
+    property ufCRM: tpuf read FufCRM write FufCRM;
   end;
 
 implementation
@@ -267,16 +247,14 @@ end;
 constructor TAso.create;
 begin
   inherited;
-
   FExame := TExameColecao.Create(self);
-  FIdeServSaude := TIdeServSaude.create;
+  FMedico := TMedico.Create;
 end;
 
 destructor TAso.destroy;
 begin
   FExame.Free;
-  FIdeServSaude.Free;
-
+  FMedico.Free;
   inherited;
 end;
 
@@ -285,7 +263,7 @@ end;
 function TExameColecao.Add: TExameColecaoItem;
 begin
   Result := TExameColecaoItem(inherited Add);
-  Result.Create;
+  Result.Create(self);
 end;
 
 constructor TExameColecao.Create(AOwner: TPersistent);
@@ -304,48 +282,6 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TExameColecaoItem }
-
-constructor TExameColecaoItem.Create;
-begin
-  FRespMonit := TRespMonit.Create;
-end;
-
-destructor TExameColecaoItem.Destroy;
-begin
-  FRespMonit.Free;
-
-  inherited;
-end;
-
-{ TMedico }
-
-constructor TMedico.create;
-begin
-  FCRM := TCRM.Create;
-end;
-
-destructor TMedico.destroy;
-begin
-  FCRM.Free;
-
-  inherited;
-end;
-
-{ TIdeServSaude }
-
-constructor TIdeServSaude.create;
-begin
-  FMedico := TMedico.create;
-end;
-
-destructor TIdeServSaude.destroy;
-begin
-  FMedico.Free;
-
-  inherited;
-end;
-
 { TevtMonit }
 
 constructor TevtMonit.Create(AACBreSocial: TObject);
@@ -356,7 +292,7 @@ begin
   FIdeEvento := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo := TIdeVinculo.Create;
-  FAso := TAso.Create;
+  FexMedOcup := TexMedOcup.Create;
 end;
 
 destructor TevtMonit.destroy;
@@ -364,7 +300,7 @@ begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FIdeVinculo.Free;
-  FAso.Free;
+  FexMedOcup.Free;
 
   inherited;
 end;
@@ -373,85 +309,83 @@ procedure TevtMonit.GerarAso;
 begin
   Gerador.wGrupo('aso');
 
-  Gerador.wCampo(tcDat, '', 'dtAso',  10, 10, 1, self.Aso.DtAso);
-  Gerador.wCampo(tcStr, '', 'tpAso',   1,  1, 1, eSTpAsoToStr(self.Aso.tpAso));
-  Gerador.wCampo(tcStr, '', 'resAso',  1,  1, 1, eSResAsoToStr(self.Aso.ResAso));
+  Gerador.wCampo(tcDat, '', 'dtAso',  10, 10, 1, self.exMedOcup.Aso.DtAso);
+  Gerador.wCampo(tcStr, '', 'resAso',  1,  1, 1, eSResAsoToStr(self.exMedOcup.Aso.ResAso));
 
   GerarExame;
-  GerarIdeServSaude;
-
-  Gerador.wGrupo('/aso');
-end;
-
-procedure TevtMonit.GerarCRM;
-begin
-  Gerador.wGrupo('crm');
-
-  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.Aso.IdeServSaude.Medico.CRM.NrCRM);
-  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, eSufToStr(self.Aso.IdeServSaude.Medico.CRM.UfCRM));
-
-  Gerador.wGrupo('/crm');
-end;
-
-procedure TevtMonit.GerarExame;
-var
-  i: integer;
-begin
-  for i:= 0 to self.Aso.Exame.Count-1 do
-  begin
-    Gerador.wGrupo('exame');
-
-    Gerador.wCampo(tcDat, '', 'dtExm',         10,  10, 1, self.Aso.Exame.Items[i].dtExm);
-    Gerador.wCampo(tcStr, '', 'procRealizado',  1,   8, 0, self.Aso.Exame.Items[i].procRealizado);
-    Gerador.wCampo(tcStr, '', 'obsProc',        1, 200, 0, self.Aso.Exame.Items[i].obsProc);
-    Gerador.wCampo(tcInt, '', 'interprExm',     1,   1, 1, eSInterprExmToStr(self.Aso.Exame.Items[i].interprExm));
-    Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.Aso.Exame.Items[i].ordExame));
-    Gerador.wCampo(tcDat, '', 'dtIniMonit',    10,  10, 1, self.Aso.Exame.Items[i].dtIniMonit);
-    Gerador.wCampo(tcDat, '', 'dtFimMonit',    10,  10, 0, self.Aso.Exame.Items[i].dtFimMonit);
-    Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.Aso.Exame.Items[i].indResult));
-
-    GerarRespMonit(self.Aso.Exame.Items[i].respMonit);
-
-    Gerador.wGrupo('/exame');
-  end;
-
-  if self.Aso.Exame.Count > 99 then
-    Gerador.wAlerta('', 'exame', 'Lista de Exames', ERR_MSG_MAIOR_MAXIMO + '99');
-end;
-
-procedure TevtMonit.GerarIdeServSaude;
-begin
-  Gerador.wGrupo('ideServSaude');
-
-  Gerador.wCampo(tcStr, '', 'codCNES', 1,   7, 0, self.Aso.IdeServSaude.CodCNES);
-  Gerador.wCampo(tcStr, '', 'frmCtt',  1, 100, 1, self.Aso.IdeServSaude.FrmCtt);
-  Gerador.wCampo(tcStr, '', 'email',   1,  60, 0, self.Aso.IdeServSaude.Email);
-
   GerarMedico;
 
-  Gerador.wGrupo('/ideServSaude');
+  Gerador.wGrupo('/aso');
 end;
 
 procedure TevtMonit.GerarMedico;
 begin
   Gerador.wGrupo('medico');
 
-  Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.Aso.IdeServSaude.Medico.NmMed);
+  if Trim(self.exMedOcup.Aso.Medico.cpfMed) <> '' then
+  begin
+    Gerador.wCampo(tcStr, '', 'cpfMed', 11, 11, 0, self.exMedOcup.Aso.Medico.cpfMed);
+  end;
 
-  GerarCRM;
+  if Trim(self.exMedOcup.Aso.Medico.nisMed) <> '' then
+  begin
+    Gerador.wCampo(tcStr, '', 'nisMed', 1, 11, 0, self.exMedOcup.Aso.Medico.nisMed);
+  end;
+
+  Gerador.wCampo(tcStr, '', 'nmMed', 1, 70, 1, self.exMedOcup.Aso.Medico.NmMed);
+
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.Aso.Medico.nrCRM);
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, eSufToStr(self.exMedOcup.Aso.Medico.ufCRM));
 
   Gerador.wGrupo('/medico');
 end;
 
-procedure TevtMonit.GerarRespMonit(pRespMonit: TRespMonit);
+procedure TevtMonit.GerarExame;
+var
+  i: integer;
+begin
+  for i:= 0 to self.exMedOcup.Aso.Exame.Count-1 do
+  begin
+    Gerador.wGrupo('exame');
+
+    Gerador.wCampo(tcDat, '', 'dtExm',         10,  10, 1, self.exMedOcup.Aso.Exame.Items[i].dtExm);
+    Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 0, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
+    Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
+    Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
+    Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
+    Gerador.wGrupo('/exame');
+  end;
+
+  if self.exMedOcup.Aso.Exame.Count > 99 then
+    Gerador.wAlerta('', 'exame', 'Lista de Exames', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TevtMonit.GerarExMedOcup;
+begin
+  Gerador.wGrupo('exMedOcup');
+
+  Gerador.wCampo(tcStr, '', 'tpExameOcup',   1,  1, 1, eSTpExameOcupToStr(self.exMedOcup.FtpExameOcup));
+
+  GerarASO;
+  GerarRespMonit;
+
+  Gerador.wGrupo('/exMedOcup');
+
+end;
+
+procedure TevtMonit.GerarRespMonit;
 begin
   Gerador.wGrupo('respMonit');
 
-  Gerador.wCampo(tcStr, '', 'nisResp',      1, 11, 1, pRespMonit.nisResp);
-  Gerador.wCampo(tcStr, '', 'nrConsClasse', 1,  8, 1, pRespMonit.NrConsClasse);
+  if Trim(self.exMedOcup.RespMonit.cpfResp) <> '' then
+  begin
+    Gerador.wCampo(tcStr, '', 'cpfResp', 11, 11, 0, self.exMedOcup.RespMonit.cpfResp);
+  end;
 
-  if (eSufToStr(pRespMonit.UfConsClasse) <> '') then
-    Gerador.wCampo(tcStr, '', 'ufConsClasse', 2, 2, 0, eSufToStr(pRespMonit.UfConsClasse));
+  Gerador.wCampo(tcStr, '', 'nmResp', 1, 70, 1, self.exMedOcup.RespMonit.nmResp);
+
+  Gerador.wCampo(tcStr, '', 'nrCRM', 1, 8, 1, self.exMedOcup.RespMonit.nrCRM);
+  Gerador.wCampo(tcStr, '', 'ufCRM', 2, 2, 1, eSufToStr(self.exMedOcup.RespMonit.ufCRM));
 
   Gerador.wGrupo('/respMonit');
 end;
@@ -460,7 +394,7 @@ function TevtMonit.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtMonit');
@@ -469,7 +403,7 @@ begin
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
     GerarIdeVinculo(self.IdeVinculo);
-    GerarAso;
+    GerarExMedOcup;
 
     Gerador.wGrupo('/evtMonit');
 
@@ -522,9 +456,9 @@ begin
       ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
 
       sSecao := 'aso';
-      aso.DtAso  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAso', '0'));
-      aso.tpAso  := eSStrToTpAso(Ok, INIRec.ReadString(sSecao, 'tpAso', '0'));
-      aso.ResAso := eSStrToResAso(Ok, INIRec.ReadString(sSecao, 'resAso', '1'));
+      exMedOcup.aso.DtAso  := StringToDateTime(INIRec.ReadString(sSecao, 'dtAso', '0'));
+      exMedOcup.tpExameOcup  := eSStrToTpExameOcup(Ok, INIRec.ReadString(sSecao, 'tpAso', '0'));
+      exMedOcup.aso.ResAso := eSStrToResAso(Ok, INIRec.ReadString(sSecao, 'resAso', '1'));
 
       I := 1;
       while true do
@@ -536,35 +470,24 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with aso.exame.Add do
+        with exMedOcup.aso.exame.Add do
         begin
           dtExm         := StringToDateTime(sFim);
           ProcRealizado := INIRec.ReadInteger(sSecao, 'procRealizado', 0);
           obsProc       := INIRec.ReadString(sSecao, 'obsProc', EmptyStr);
-          interprExm    := eSStrToInterprExm(Ok, INIRec.ReadString(sSecao, 'interprExm', '1'));
           ordExame      := eSStrToOrdExame(Ok, INIRec.ReadString(sSecao, 'ordExame', '1'));
-          dtIniMonit    := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniMonit', '0'));
-          dtFimMonit    := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimMonit', '0'));
           indResult     := eSStrToIndResult(Ok, INIRec.ReadString(sSecao, 'indResult', '1'));
 
           sSecao := 'respMonit' + IntToStrZero(I, 2);
-          respMonit.NisResp      := INIRec.ReadString(sSecao, 'nisResp', EmptyStr);
-          respMonit.NrConsClasse := INIRec.ReadString(sSecao, 'nrConsClasse', EmptyStr);
-          respMonit.UfConsClasse := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufConsClasse', 'SP'));
         end;
 
         Inc(I);
       end;
 
-      sSecao := 'ideServSaude';
-      Aso.ideServSaude.CodCNES := INIRec.ReadString(sSecao, 'codCNES', EmptyStr);
-      Aso.ideServSaude.FrmCtt  := INIRec.ReadString(sSecao, 'frmCtt', EmptyStr);
-      Aso.ideServSaude.Email   := INIRec.ReadString(sSecao, 'email', EmptyStr);
-
       sSecao := 'medico';
-      Aso.ideServSaude.medico.NmMed     := INIRec.ReadString(sSecao, 'nmMed', EmptyStr);
-      Aso.ideServSaude.medico.CRM.NrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
-      Aso.ideServSaude.medico.CRM.UfCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));
+      exMedOcup.Aso.medico.NmMed := INIRec.ReadString(sSecao, 'nmMed', EmptyStr);
+      exMedOcup.Aso.medico.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
+      exMedOcup.Aso.medico.ufCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));
     end;
 
     GerarXML;
@@ -573,6 +496,21 @@ begin
   finally
      INIRec.Free;
   end;
+end;
+
+{ TexMedOcup }
+
+constructor TexMedOcup.create;
+begin
+  FAso := TAso.create;
+  FRespMonit := TRespMonit.Create;
+end;
+
+destructor TexMedOcup.destroy;
+begin
+  FAso.Free;
+  FRespMonit.Free;
+  inherited;
 end;
 
 end.

@@ -348,7 +348,7 @@ type
 
   tpTpDia                 = (diSegundaFeira, diTercaFeira, diQuartaFeira, diQuintaFeira, diSextaFeira, diSabado, diDomingo, diDiaVariavel);
 
-  tpTpAso                 = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
+  tpTpExameOcup           = (taAdmissional, taPeriodico, taRetornoAoTrabalho, taMudancaDeFuncao, taMonitoracaoPontual, taDemissional);
 
   tpResAso                = (raApto, raInapto);
 
@@ -734,8 +734,8 @@ function eSStrToTpJornada(var ok: boolean; const s: string): tpTpJornada;
 function eSTpDiaToStr(const t: tpTpDia ): string;
 function eSStrToTpDia(var ok: boolean; const s: string): tpTpDia;
 
-function eSTpAsoToStr(const t: tpTpAso ): string;
-function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
+function eSTpExameOcupToStr(const t: tpTpExameOcup ): string;
+function eSStrToTpExameOcup(var ok: boolean; const s: string): tpTpExameOcup;
 
 function eSResAsoToStr(const t: tpResAso ): string;
 function eSStrToResAso(var ok: boolean; const s: string): tpResAso;
@@ -1298,14 +1298,14 @@ begin
   result := tpTpDia( StrToEnumerado2(ok , s, TGenericosString1_8 ) );
 end;
 
-function eSTpAsoToStr(const t: tpTpAso ): string;
+function eSTpExameOcupToStr(const t: tpTpExameOcup ): string;
 begin
   result := EnumeradoToStr2(t,[ '0', '1', '2', '3', '4', '8' ] );
 end;
 
-function eSStrToTpAso(var ok: boolean; const s: string): tpTpAso;
+function eSStrToTpExameOcup(var ok: boolean; const s: string): tpTpExameOcup;
 begin
-  result := tpTpAso( StrToEnumerado2(ok , s, [ '0', '1', '2', '3', '4', '8' ] ) );
+  result := tpTpExameOcup( StrToEnumerado2(ok , s, [ '0', '1', '2', '3', '4', '8' ] ) );
 end;
 
 function eSResAsoToStr(const t: tpResAso ): string;

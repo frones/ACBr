@@ -96,7 +96,8 @@ uses
 
 procedure TNFSeW_IPM.GerarIdentificacaoHomologacao;
 begin
-  if Homologacao then
+  if NFSe.Producao = snNao then  // cleyton 25/01/2019
+  //if Homologacao then          // cleyton 25/01/2019
     Gerador.wCampoNFSe(tcStr, '', 'nfse_teste', 1, 1, 1, 1, '1');
 end;
 
@@ -209,7 +210,8 @@ begin
       Gerador.wCampoNFSe(tcDe2, '', 'aliquota_item_lista_servico', 1, 15, 1, NFSe.Servico.ItemServico[I].Aliquota, '');
 
 //    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, AnsiIndexStr( SituacaoTributariaToStr( NFSe.Servico.Valores.IssRetido ), [ '2', '1', '3' ] ), '');
-    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, RegimeEspecialTributacaoToStr( NFSe.RegimeEspecialTributacao), '');
+//    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, RegimeEspecialTributacaoToStr( NFSe.RegimeEspecialTributacao), ''); // cleyton 25/01/2019
+    Gerador.wCampoNFSe(tcStr, '', 'situacao_tributaria', 1, 4, 1, NaturezaOperacaoToStr( NFSe.NaturezaOperacao), '');    // cleyton 25/01/2019
 
     Gerador.wCampoNFSe(tcDe2, '', 'valor_tributavel', 1, 15, 1, NFSe.Servico.ItemServico[I].ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'valor_deducao', 1, 15, 0, NFSe.Servico.ItemServico[I].ValorDeducoes, '');

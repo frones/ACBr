@@ -215,12 +215,12 @@ TACBrHTTP = class( TACBrComponent )
     constructor Create( AOwner : TComponent ) ; override ;
     destructor Destroy ; override ;
 
-    function AjustaParam(AParam : String) : String ;
-    procedure HTTPGet( AURL : String) ; virtual ;
-    Procedure HTTPPost( AURL : String ) ; overload; virtual ;
-    Procedure HTTPPost( AURL : String; APostData : AnsiString  ) ; overload; virtual ;
-    procedure HTTPPut(AURL: String);
-    procedure HTTPMethod( Method, AURL : String ); virtual ;
+    function AjustaParam(const AParam : String) : String ;
+    procedure HTTPGet( const AURL : String) ; virtual ;
+    Procedure HTTPPost( const AURL : String ) ; overload; virtual ;
+    Procedure HTTPPost( const AURL : String; const APostData : AnsiString  ) ; overload; virtual ;
+    procedure HTTPPut(const AURL: String);
+    procedure HTTPMethod( const Method, AURL : String ); virtual ;
 
     function GetHeaderValue( const AValue : String ) : String ;
 
@@ -821,7 +821,7 @@ begin
   inherited Destroy;
 end ;
 
-function TACBrHTTP.AjustaParam(AParam: String): String;
+function TACBrHTTP.AjustaParam(const AParam: String): String;
 begin
   Result := Trim( AParam ) ;
 
@@ -832,30 +832,30 @@ begin
   end ;
 end ;
 
-procedure TACBrHTTP.HTTPGet(AURL: String);
+procedure TACBrHTTP.HTTPGet(const AURL: String);
 begin
   HTTPSend.Clear;
   HTTPMethod( 'GET', AURL );
 end ;
 
-procedure TACBrHTTP.HTTPPost(AURL : String) ;
+procedure TACBrHTTP.HTTPPost(const AURL : String) ;
 begin
   HTTPMethod( 'POST', AURL ) ;
 end ;
 
-procedure TACBrHTTP.HTTPPut(AURL : String) ;
+procedure TACBrHTTP.HTTPPut(const AURL : String) ;
 begin
   HTTPMethod( 'PUT', AURL ) ;
 end ;
 
-procedure TACBrHTTP.HTTPPost(AURL : String ; APostData : AnsiString) ;
+procedure TACBrHTTP.HTTPPost(const AURL : String ; const APostData : AnsiString) ;
 begin
   HTTPSend.Clear;
   HTTPSend.Document.Write(Pointer(APostData)^,Length(APostData));
   HTTPPost( AURL ) ;
 end ;
 
-procedure TACBrHTTP.HTTPMethod(Method, AURL: String);
+procedure TACBrHTTP.HTTPMethod(const Method, AURL: String);
 var
   OK : Boolean ;
   {$IFNDEF NOGUI}
@@ -884,7 +884,7 @@ begin
       HTTPSend.Headers.Add('Accept-Charset: utf-8;q=*;q=0.7') ;
 
     if Assigned( OnAntesAbrirHTTP ) then
-       OnAntesAbrirHTTP( AURL ) ;
+       OnAntesAbrirHTTP( fURL ) ;
 
     // DEBUG //
     //HTTPSend.Document.SaveToFile( 'c:\temp\HttpSend.txt' );
@@ -902,7 +902,7 @@ begin
       end;
     end;
 
-    HTTPSend.HTTPMethod(Method, AURL);
+    HTTPSend.HTTPMethod(Method, fURL);
 
     while ContaRedirecionamentos <= 10 do
     begin
@@ -919,10 +919,10 @@ begin
           //Location pode ser relativa ou absoluta http://stackoverflow.com/a/25643550/460775
           if IsAbsoluteURL(Location) then
           begin
-            AURL := Location;
+            fURL := Location;
           end
           else
-            AURL := GetURLBasePath( AURL ) + Location;
+            fURL := GetURLBasePath( fURL ) + Location;
 
           HTTPSend.Clear;
 
@@ -933,11 +933,11 @@ begin
           if (HttpSend.ResultCode = 303) or
              (((HttpSend.ResultCode = 301) or (HttpSend.ResultCode = 302)) and (Method = 'POST')) then
           begin
-            HTTPSend.HTTPMethod('GET', AURL ) ;
+            HTTPSend.HTTPMethod('GET', fURL ) ;
           end
           else
           begin
-            HTTPSend.HTTPMethod(Method, AURL ) ;
+            HTTPSend.HTTPMethod(Method, fURL ) ;
           end;
         end;
       else
@@ -947,7 +947,6 @@ begin
 
     OK := HTTPSend.ResultCode = 200;
     RespHTTP.LoadFromStream( HTTPSend.Document ) ;
-    fURL := AURL;
 
     // DEBUG //
     //RespHTTP.SaveToFile('c:\temp\HttpResp.txt');

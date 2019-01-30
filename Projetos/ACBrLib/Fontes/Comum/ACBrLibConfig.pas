@@ -687,6 +687,9 @@ procedure TLogConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FNivel := TNivelLog(AIni.ReadInteger(CSessaoPrincipal, CChaveLogNivel, Integer(FNivel)));
   FPath := AIni.ReadString(CSessaoPrincipal, CChaveLogPath, FPath);
+
+  if ( not DirectoryExists(FPath) ) then
+    FPath := ApplicationPath;
 end;
 
 procedure TLogConfig.GravarIni(const AIni: TCustomIniFile);
@@ -820,7 +823,7 @@ var
 begin
   Travar;
   try
-    ArquivoInformado := (FNomeArquivo <> '');
+    ArquivoInformado := (FNomeArquivo <> '') and FileExists(FNomeArquivo);
     VerificarNomeEPath(not ArquivoInformado);
     TACBrLib(FOwner).GravarLog(ClassName + '.Ler: ' + FNomeArquivo, logCompleto);
 
@@ -843,6 +846,7 @@ end;
 
 procedure TLibConfig.INIParaClasse;
 begin
+
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);

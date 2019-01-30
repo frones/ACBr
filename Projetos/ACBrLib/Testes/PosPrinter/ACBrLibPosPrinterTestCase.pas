@@ -13,6 +13,7 @@ type
 
   TTestACBrPosPrinterLib = class(TTestCase)
   published
+    procedure Test_POS_Inicializar_Com_DiretorioValido;
     procedure Test_POS_Inicializar_Com_DiretorioInvalido;
     procedure Test_POS_Inicializar;
     procedure Test_POS_Inicializar_Ja_Inicializado;
@@ -35,6 +36,20 @@ implementation
 
 uses
   ACBrLibPosPrinterStaticImport, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrUtil;
+
+procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioValido;
+var
+  fileName: String;
+begin
+  fileName := PathWithDelim(ApplicationPath)+'ACBrLib.ini';
+  try
+    AssertEquals(ErrOK, POS_Inicializar( PChar(fileName),''));
+    AssertTrue(FileExists(fileName));
+    AssertEquals(ErrOK, POS_Finalizar);
+  finally
+    DeleteFile(fileName);
+  end;
+end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioInvalido;
 begin

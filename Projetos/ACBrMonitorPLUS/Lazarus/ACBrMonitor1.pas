@@ -142,6 +142,7 @@ type
     btnDFeRespTecnico: TPanel;
     btnIntegrador: TPanel;
     btnGerarAssinaturaSAT: TButton;
+    btnFonteItens: TButton;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -311,6 +312,7 @@ type
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     cbxNormatizarMunicipios: TCheckBox;
+    chgDescricaoPagamento: TCheckGroup;
     chkRemoveAcentos: TCheckBox;
     ckIBGEUTF8: TCheckBox;
     ckIBGEAcentos: TCheckBox;
@@ -423,6 +425,7 @@ type
     eMargemEsquerda: TEdit;
     eTemperatura: TEdit;
     eVelocidade: TEdit;
+    FontDialog1: TFontDialog;
     fspeLarguraNFCe: TSpinEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
@@ -492,6 +495,7 @@ type
     Label225: TLabel;
     Label226: TLabel;
     Label228: TLabel;
+    Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
     Label4: TLabel;
@@ -1236,6 +1240,7 @@ type
     procedure btnEnviarEmailMDFeClick(Sender: TObject);
     procedure btnEnviarMDFeClick(Sender: TObject);
     procedure btnEtiquetaClick(Sender: TObject);
+    procedure btnFonteItensClick(Sender: TObject);
     procedure btnGavetaClick(Sender: TObject);
     procedure btnGerarAssinaturaSATClick(Sender: TObject);
     procedure btnImpChequeClick(Sender: TObject);
@@ -3104,6 +3109,16 @@ begin
   pgConfig.ActivePage := tsETQ;
 end;
 
+procedure TFrmACBrMonitor.btnFonteItensClick(Sender: TObject);
+begin
+  if FontDialog1.Execute then
+  begin
+    ACBrNFeDANFCeFortes1.FonteLinhaItem.Name:= FontDialog1.Font.Name;
+    ACBrNFeDANFCeFortes1.FonteLinhaItem.Size:= FontDialog1.Font.Size;
+    ACBrNFeDANFCeFortes1.FonteLinhaItem.Style:= FontDialog1.Font.Style;
+  end;
+end;
+
 procedure TFrmACBrMonitor.btnGavetaClick(Sender: TObject);
 begin
   SetColorButtons(Sender);
@@ -4574,6 +4589,21 @@ begin
       fspeLarguraNFCe.Value               := LarguraBobina;
     end;
 
+    with Impressao.NFCe.Emissao.DANFCeTipoPagto do
+    begin
+      chgDescricaoPagamento.Checked[0]   := tipo;
+      chgDescricaoPagamento.Checked[1]   := Bandeira;
+      chgDescricaoPagamento.Checked[2]   := Autorizacao;
+    end;
+
+    with FMonitorConfig.FonteLinha do
+    begin
+      FontDialog1.Font.Name  := Name;
+      FontDialog1.Font.Size  := Size;
+      FontDialog1.Font.Color := Color;
+      FontDialog1.Font.Style := Style;
+    end;
+
     with Impressao.DANFE do
     begin
       rgModeloDanfe.ItemIndex             := Modelo;
@@ -5667,6 +5697,21 @@ begin
         MargemDir                  := fspeNFCeMargemDir.Value;
         MargemEsq                  := fspeNFCeMargemEsq.Value;
         LarguraBobina              := fspeLarguraNFCe.Value;
+      end;
+
+      with Impressao.NFCe.Emissao.DANFCeTipoPagto do
+      begin
+        tipo                       := chgDescricaoPagamento.Checked[0];
+        Bandeira                   := chgDescricaoPagamento.Checked[1];
+        Autorizacao                := chgDescricaoPagamento.Checked[2];
+      end;
+
+      with FMonitorConfig.FonteLinha do
+      begin
+        Name                       := FontDialog1.Font.Name;
+        Size                       := FontDialog1.Font.Size;
+        Color                      := FontDialog1.Font.Color;
+        Style                      := FontDialog1.Font.Style;
       end;
 
       with Impressao.DANFE do
@@ -8407,6 +8452,7 @@ end;
 procedure TFrmACBrMonitor.ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview: String);
 var
   OK: boolean;
+  tDescPagto: TDescricaoPagamento;
 begin
   if ACBrNFe1.NotasFiscais.Count > 0 then
   begin
@@ -8496,6 +8542,16 @@ begin
       ACBrNFeDANFCeFortes1.ImprimeCodigoEan      := cbxImprimirCodigoEANNFCe.Checked;
       ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
 
+      ACBrNFeDANFCeFortes1.DescricaoPagamentos   := [];
+      for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
+        if chgDescricaoPagamento.Checked[ Integer(tDescPagto) ] then
+          ACBrNFeDANFCeFortes1.DescricaoPagamentos := ACBrNFeDANFCeFortes1.DescricaoPagamentos
+                                                   + [tDescPagto];
+
+      ACBrNFeDANFCeFortes1.FonteLinhaItem.Name     := FontDialog1.Font.Name ;
+      ACBrNFeDANFCeFortes1.FonteLinhaItem.Size     := FontDialog1.Font.Size;
+      ACBrNFeDANFCeFortes1.FonteLinhaItem.Style    := FontDialog1.Font.Style;
+
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text
       else
@@ -8509,6 +8565,12 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral  := cbxImprimirQRCodeLateralNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+
+      ACBrNFeDANFeESCPOS1.DescricaoPagamentos   := [];
+      for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
+        if chgDescricaoPagamento.Checked[ Integer(tDescPagto) ] then
+          ACBrNFeDANFeESCPOS1.DescricaoPagamentos := ACBrNFeDANFeESCPOS1.DescricaoPagamentos
+                                                   + [tDescPagto];
 
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
         ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text

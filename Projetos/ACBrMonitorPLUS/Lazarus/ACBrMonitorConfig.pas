@@ -5,7 +5,7 @@ unit ACBrMonitorConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, ACBrMonitorConsts, ACBrUtil;
+  Classes, SysUtils, IniFiles, ACBrMonitorConsts, ACBrUtil, Graphics;
 
 type
 
@@ -197,6 +197,12 @@ type
     LarguraBobina     : Double;
   end;
 
+  TDANFCeTipoPagto = record
+    tipo              : Boolean;
+    Bandeira          : Boolean;
+    Autorizacao       : Boolean;
+  end;
+
   TNFCeImpressao = record
     Modelo            : Integer;
     ModoImpressaoEvento: Integer;
@@ -207,12 +213,12 @@ type
     ImprimeNomeFantasia: Boolean;
     QRCodeLateral     : Boolean;
     DANFCe            : TDANFCe;
+    DANFCeTipoPagto   : TDANFCeTipoPagto;
   end;
 
   TNFCe = record
     WebService        : TNFCeWebService;
     Emissao           : TNFCeImpressao;
-
   end;
 
   TNFe = record
@@ -607,6 +613,7 @@ type
     FIntegradorFiscal : TIntegradorFiscal;
     FPosPrinter : TPosPrinter;
     FBoleto : TBOLETO;
+    FFonteLinha: TFont;
 
     FOnGravarConfig: TACBrOnGravarConfig;
     procedure DefinirValoresPadrao;
@@ -645,6 +652,7 @@ type
     property IntegradorFiscal : TIntegradorFiscal  read FIntegradorFiscal;
     property PosPrinter : TPosPrinter        read FPosPrinter;
     property BOLETO : TBOLETO                read FBoleto;
+    property FonteLinha: TFont               read FFonteLinha;
 
     property OnGravarConfig: TACBrOnGravarConfig read FOnGravarConfig write FOnGravarConfig;
   end;
@@ -660,10 +668,12 @@ constructor TMonitorConfig.Create(ANomeArquivo: String);
 begin
   FNomeArquivo:= ANomeArquivo;
   FOnGravarConfig := Nil;
+  FFonteLinha := TFont.Create;
 end;
 
 destructor TMonitorConfig.Destroy;
 begin
+  FFonteLinha.Free;
   inherited;
 end;
 
@@ -975,6 +985,24 @@ begin
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemDir      , MargemDir );
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeMargemEsq      , MargemEsq );
       Ini.WriteFloat( CSecDANFCe,   CKeyDANFCeLarguraBobina  , LarguraBobina );
+    end;
+
+    with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
+    begin
+      Ini.WriteBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoTipo      , Tipo );
+      Ini.WriteBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoBandeira  , Bandeira );
+      Ini.WriteBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoAutorizacao, Autorizacao );
+    end;
+
+    with FonteLinha do
+    begin
+      Ini.WriteString( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemName   , name );
+      Ini.WriteInteger( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemColor , Color );
+      Ini.WriteInteger( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemSize  , Size );
+      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleBold , fsBold in Style );
+      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleItalic , fsItalic in Style );
+      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleUnderline , fsUnderline in Style );
+      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleStrckout , fsStrikeOut in Style );
     end;
 
     with DFE.Impressao.DANFE do
@@ -1580,6 +1608,29 @@ begin
       LarguraBobina             :=  Ini.ReadFloat( CSecDANFCe,   CKeyDANFCeLarguraBobina, LarguraBobina );
     end;
 
+    with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
+    begin
+      tipo                 :=  Ini.ReadBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoTipo,     Tipo     );
+      Bandeira             :=  Ini.ReadBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoBandeira, Bandeira );
+      Autorizacao          :=  Ini.ReadBool( CSecDANFCeTipoPagto,   CKeyDANFCeTipoPagtoAutorizacao, Autorizacao );
+    end;
+
+    with FonteLinha do
+    begin
+      Name    :=  Ini.ReadString( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemName, FFonteLinha.Name );
+      Color   :=  TColor(Ini.ReadInteger( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemColor, FFonteLinha.Color ));
+      Size    :=  Ini.ReadInteger( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemSize, FFonteLinha.Size );
+      Style := [];
+      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleBold , False ) then
+        Style := Style + [fsBold];
+      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleItalic , False ) then
+        Style := Style + [fsItalic];
+      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleUnderline , False ) then
+        Style := Style + [fsUnderline];
+      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleStrckout , False ) then
+        Style := Style + [fsStrikeOut];
+    end;
+
     with DFE.Impressao.DANFE do
     begin
       Modelo                    :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEModelo                         , Modelo );
@@ -2180,6 +2231,21 @@ begin
     MargemDir                 :=  0.51;
     MargemEsq                 :=  0.6;
     LarguraBobina             :=  302;
+  end;
+
+  with DFE.Impressao.NFCe.Emissao.DANFCeTipoPagto do
+  begin
+    tipo                      := True;
+    Bandeira                  := True;
+    Autorizacao               := False;
+  end;
+
+  with FonteLinha do
+  begin
+    Name                 := 'Lucida Console';
+    Size                 := 7;
+    Color                := 536870912;
+    Style                := [];
   end;
 
   with DFE.Impressao.DANFE do

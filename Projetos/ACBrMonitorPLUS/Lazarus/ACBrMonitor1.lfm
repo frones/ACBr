@@ -6937,14 +6937,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 862
-                ActivePage = gbxWSReinf
+                ActivePage = tsWSNFe
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
                   ClientHeight = 267
-                  ClientWidth = 807
+                  ClientWidth = 854
                   object gbxWSNFe: TGroupBox
                     Left = 3
                     Height = 161
@@ -7441,7 +7441,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsWSNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 267
-                  ClientWidth = 807
+                  ClientWidth = 854
                   ImageIndex = 2
                   object Label131: TLabel
                     Left = 0
@@ -7513,7 +7513,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbxWSeSocial: TTabSheet
                   Caption = 'e-Social'
                   ClientHeight = 267
-                  ClientWidth = 807
+                  ClientWidth = 854
                   object cbVersaoWSeSocial: TComboBox
                     Left = 20
                     Height = 25
@@ -7898,14 +7898,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 862
-                ActivePage = tsImpNFCe
+                ActivePage = tsImpGeralDFe
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
                   ClientHeight = 267
-                  ClientWidth = 807
+                  ClientWidth = 854
                   object Label139: TLabel
                     Left = 2
                     Height = 17
@@ -8702,10 +8702,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 216
                     Height = 145
                     Top = 0
-                    Width = 384
+                    Width = 622
+                    Anchors = [akRight, akBottom]
                     Caption = 'Impressão dos Itens'
                     ClientHeight = 123
-                    ClientWidth = 380
+                    ClientWidth = 618
                     TabOrder = 2
                     object cbxImprimirItem1LinhaNFCe: TCheckBox
                       Left = 8
@@ -8746,6 +8747,61 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Width = 160
                       Caption = 'Imprimir Nome Fantasia'
                       TabOrder = 4
+                    end
+                    object chgDescricaoPagamento: TCheckGroup
+                      Left = 262
+                      Height = 80
+                      Top = -1
+                      Width = 336
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoFill = True
+                      Caption = 'Descrição de Pagamentos'
+                      ChildSizing.LeftRightSpacing = 6
+                      ChildSizing.TopBottomSpacing = 6
+                      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                      ChildSizing.ShrinkHorizontal = crsScaleChilds
+                      ChildSizing.ShrinkVertical = crsScaleChilds
+                      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                      ChildSizing.ControlsPerLine = 3
+                      ClientHeight = 58
+                      ClientWidth = 332
+                      Columns = 3
+                      Items.Strings = (
+                        'Tipo Pagamento'
+                        'Bandeira'
+                        'Autorização'
+                      )
+                      ParentShowHint = False
+                      TabOrder = 5
+                      Data = {
+                        03000000020202
+                      }
+                    end
+                    object btnFonteItens: TButton
+                      Left = 568
+                      Height = 25
+                      Top = 89
+                      Width = 30
+                      Anchors = []
+                      Caption = '...'
+                      Color = clWhite
+                      OnClick = btnFonteItensClick
+                      TabOrder = 6
+                    end
+                    object Label26: TLabel
+                      AnchorSideLeft.Control = btnFonteItens
+                      AnchorSideTop.Control = btnFonteItens
+                      AnchorSideRight.Control = btnFonteItens
+                      AnchorSideBottom.Control = btnFonteItens
+                      Left = 410
+                      Height = 17
+                      Top = 89
+                      Width = 158
+                      Alignment = taRightJustify
+                      Anchors = [akTop, akRight]
+                      Caption = 'Alterar Fonte Itens (Fortes) '
+                      ParentColor = False
                     end
                   end
                   object cbxImpressoraNFCe: TComboBox
@@ -8874,7 +8930,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsImpCTe: TTabSheet
                   Caption = 'CT-e'
                   ClientHeight = 267
-                  ClientWidth = 807
+                  ClientWidth = 854
                   object rgTamanhoPapelDacte: TRadioGroup
                     Left = 6
                     Height = 44
@@ -13815,6 +13871,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13917,6 +13974,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     TipoDANFE = tiSemGeracao
+    DescricaoPagamentos = [icaTipo, icaBandeira, icaAutorizacao]
     PosPrinter = ACBrPosPrinter1
     left = 619
     top = 448
@@ -13934,6 +13992,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     CasasDecimais.MaskqCom = '###,###,###,##0.00'
     CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
     TipoDANFE = tiSemGeracao
+    DescricaoPagamentos = [icaTipo, icaBandeira, icaAutorizacao]
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
     left = 648
     top = 448
   end
@@ -15149,5 +15210,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     left = 752
     top = 556
+  end
+  object FontDialog1: TFontDialog
+    MinFontSize = 0
+    MaxFontSize = 0
+    left = 804
+    top = 557
   end
 end

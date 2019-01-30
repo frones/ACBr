@@ -902,6 +902,20 @@ const
   CKeyDANFCeMargemEsq =                'MargemEsq';
   CKeyDANFCeLarguraBobina =            'LarguraBobina';
 
+  CSecDANFCeTipoPagto =                'DANFCeTipoPagto';
+  CKeyDANFCeTipoPagtoTipo =            'Tipo';
+  CKeyDANFCeTipoPagtoBandeira =        'Bandeira';
+  CKeyDANFCeTipoPagtoAutorizacao =     'Autorizacao';
+
+  CSecDANFCeFonteLinhaItem =           'FonteLinhaItem';
+  CKeyDANFCeFonteLinhaItemName =       'Name';
+  CKeyDANFCeFonteLinhaItemColor =      'Color';
+  CKeyDANFCeFonteLinhaItemSize =       'Size';
+  CKeyDANFCeFonteLinhaItemStyleBold =  'Bold';
+  CKeyDANFCeFonteLinhaItemStyleItalic =  'Italic';
+  CKeyDANFCeFonteLinhaItemStyleUnderline =  'Underline';
+  CKeyDANFCeFonteLinhaItemStyleStrckout =  'Strckout';
+
   CSecDACTE =                          'DACTE';
   CKeyDACTETamanhoPapel =              'TamanhoPapel';
 

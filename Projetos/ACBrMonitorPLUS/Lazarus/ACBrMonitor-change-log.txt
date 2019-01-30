@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade "FonteLinhaItem" para impressão NFCe
+(permite definir tipo de Fonte, tamanho e estilo para os itens na NFCe)
+
+28/01/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade "DescricaoPagamentos" para impressão NFCe
+(permite a seleção para impressão do tipo de impressão pagamento: Tipo, Bandeira, Autorizacao)
+
 24/01/2019
 [*] ACBrMonitor1, DoSedexUnit, ACBrSedex
 Ajustes para consulta e Rastreio Sedex via WebService

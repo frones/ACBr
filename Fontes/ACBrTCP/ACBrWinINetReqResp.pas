@@ -65,7 +65,7 @@ type
   public
     constructor Create;
     procedure Execute(Resp: TStream); override;
-    procedure Abort; override;
+    procedure Abortar; override;
   end;
 
 implementation
@@ -351,7 +351,7 @@ begin
  end;
 end;
 
-procedure TACBrWinINetReqResp.Abort;
+procedure TACBrWinINetReqResp.Abortar;
 begin
  CloseConnection;
 end;

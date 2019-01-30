@@ -131,7 +131,7 @@ end;
 
 procedure TDFeHttpWinHttp.Abortar;
 begin
-  FWinHTTPReqResp.Abort;
+  FWinHTTPReqResp.Abortar;
 end;
 
 procedure TDFeHttpWinHttp.ConfigurarHTTP(const AURL, ASoapAction: String;

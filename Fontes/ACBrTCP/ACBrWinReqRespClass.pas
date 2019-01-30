@@ -103,7 +103,7 @@ type
     procedure Execute(Resp: TStream); overload; virtual;
     procedure Execute(const DataMsg: String; Resp: TStream); overload;
 
-    procedure Abort; virtual;
+    procedure Abortar; virtual;
   end;
 
 implementation
@@ -136,7 +136,7 @@ end;
 
 destructor TACBrWinReqResp.Destroy;
 begin
-  Abort;
+  Abortar;
   inherited Destroy;
 end;
 
@@ -206,7 +206,7 @@ begin
   Execute(Resp);
 end;
 
-procedure TACBrWinReqResp.Abort;
+procedure TACBrWinReqResp.Abortar;
 begin
   {}
 end;

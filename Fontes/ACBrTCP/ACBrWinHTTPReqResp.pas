@@ -56,7 +56,7 @@ type
     procedure CloseConnection;
   public
     procedure Execute(Resp: TStream); override;
-    procedure Abort; override;
+    procedure Abortar; override;
   end;
 
 implementation
@@ -64,7 +64,7 @@ implementation
 uses
   {$IfDef DEBUG_WINHTTP}
    ACBrUtil,
-  {$EndIf} 
+  {$EndIf}
   synautil;
 
 { TACBrWinHTTPReqResp }
@@ -393,7 +393,7 @@ begin
   end;
 end;
 
-procedure TACBrWinHTTPReqResp.Abort;
+procedure TACBrWinHTTPReqResp.Abortar;
 begin
   CloseConnection;
 end;

@@ -1,24 +1,23 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 145
-  Top = 104
-  Width = 959
-  Height = 913
+  Left = 146
+  Top = 55
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
+  Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 30
-    Top = 0
-    Font.Height = -8
-    Font.Name = 'Courier New'
+    Top = -200
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    Font.Height = -8
+    Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
     object rlb_2_Rodo: TRLBand
@@ -577,11 +576,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_3_Aereo: TRLBand
       Left = 26
-      Top = 523
+      Top = 491
       Width = 742
       Height = 54
       AutoExpand = False
-      BandType = btColumnHeader
+      BandType = btHeader
       Color = clWhite
       ParentColor = False
       Visible = False
@@ -589,10 +588,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_4_Aquav: TRLBand
       Left = 26
-      Top = 577
+      Top = 545
       Width = 742
       Height = 121
-      BandType = btColumnHeader
+      BandType = btHeader
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = True
@@ -869,10 +868,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand
       Left = 26
-      Top = 698
+      Top = 666
       Width = 742
       Height = 60
-      BandType = btColumnHeader
+      BandType = btHeader
       Color = clWhite
       ParentColor = False
       Visible = False
@@ -979,7 +978,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_7_Documentos_Titulos: TRLBand
       Left = 26
-      Top = 491
+      Top = 726
       Width = 742
       Height = 32
       AutoExpand = False
@@ -1945,11 +1944,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Top = 21
             Width = 357
             Height = 57
+            Margins.LeftMargin = 1.000000000000000000
+            Margins.RightMargin = 1.000000000000000000
             Alignment = taCenter
             AutoSize = False
             BarcodeType = bcCode128C
-            Margins.LeftMargin = 1.000000000000000000
-            Margins.RightMargin = 1.000000000000000000
           end
           object rlLabel74: TRLLabel
             Left = 113

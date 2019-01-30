@@ -50,7 +50,7 @@ uses
 
 type
   EACBrCargaBal = class(Exception);
-  TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13);
+  TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13, tpvEAN13Und);
   TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modToledoMGV6, modUranoURF32, modRamuza);
   TACBrCargaBalProgresso = procedure(Mensagem: String; ProgressoAtual, ProgressoTotal: Integer) of object;
   TACBrCargaBalTipoValidade = (tpvDias, tpvMeses);
@@ -473,9 +473,10 @@ end;
 function TACBrCargaBal.GetTipoProdutoToledo(Tipo: TACBrCargaBalTipoVenda): String;
 begin
   case Tipo of
-    tpvPeso    : Result := '0';
-    tpvUnidade : Result := '1';
-    tpvEAN13   : Result := '2';
+    tpvPeso     : Result := '0';
+    tpvUnidade  : Result := '1';
+    tpvEAN13    : Result := '2';
+    tpvEAN13Und : Result := '5';
   end;
 end;
 

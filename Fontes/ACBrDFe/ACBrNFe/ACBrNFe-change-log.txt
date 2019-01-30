@@ -49,7 +49,12 @@ Símbolo : Significado
 
 30/01/2019
 -- pcnNFe / pcnNFeW --
-[*] Definido um valor inicial para os campos: xPais e cPais refernete a Retirada e
+[*] Removido o valor inicial para os campos: xPais e cPais referente a Retirada e
+    Entrega e alterada a condição que valida o código do Pais.
+   Por: Italo Jurisato Junior
+
+-- pcnNFe / pcnNFeW --
+[*] Definido um valor inicial para os campos: xPais e cPais referente a Retirada e
     Entrega e incluido um condição para determinar se o cPais será validado ou não.
    Por: Italo Jurisato Junior
 

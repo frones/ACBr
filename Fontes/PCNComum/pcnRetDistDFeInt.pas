@@ -523,8 +523,16 @@ begin
 
             FdocZip.Items[i].FresDFe.FtpNF := StrToTpNF(ok, oLeitorInfZip.rCampo(tcStr, 'tpNF'));
 
+            // Leitura do valor da nota fiscal - NF-e
             oLeitorInfZip.rExtrai(1, 'total');
             FdocZip.Items[i].FresDFe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vNF');
+
+            // Leitura do valor total da prestação - CT-e
+            if FdocZip.Items[i].FresDFe.FvNF = 0 then
+            begin
+              oLeitorInfZip.rExtrai(1, 'vPrest');
+              FdocZip.Items[i].FresDFe.FvNF := oLeitorInfZip.rCampo(tcDe2, 'vTPrest');
+            end;
 
             oLeitorInfZip.rExtrai(1, 'infProt');
             FdocZip.Items[i].FresDFe.digVal    := oLeitorInfZip.rCampo(tcStr, 'digVal');

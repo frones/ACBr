@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2019
+[*] pcnRetDistDFeInt
+    Incluido a linha para a leitura do valor total da Prestação <vTPrest>
+    se tratando de CT-e
+	Por: Italo Jurisato Junior
+
 23/01/2019
 [+] pcnAuxiliar
     Adicionado função ValidarCNPJouCPF seguindo padrão das funções ja existente que fazem uso do ACBrValidador  

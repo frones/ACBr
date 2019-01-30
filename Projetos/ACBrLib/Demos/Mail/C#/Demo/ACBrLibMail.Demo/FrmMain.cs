@@ -87,15 +87,22 @@ namespace ACBrLibMail.Demo
                 ret = ACBrMail.MAIL_AddAltBody(txtAltBody.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
+                foreach (String anexo in lstAnexos.Items)
+                {
+                    ret = ACBrMail.MAIL_AddAttachment(anexo, anexo, 0);
+                    ACBrMail.CheckResult(ret);
+                }
+                
                 ret = ACBrMail.MAIL_Send();
                 ACBrMail.CheckResult(ret);
-
+                
                 MessageBox.Show("Email enviado com sucesso!", "ACBrMail - Demo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao enviar email: " + ex.Message.ToString(), "ACBrMail - Demo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
         private void loadConfig()
@@ -157,5 +164,57 @@ namespace ACBrLibMail.Demo
         }
 
         #endregion Methods
+
+        private void lstAnexos_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string f in files)
+            {
+                lstAnexos.Items.Add(f);
+            }
+        }
+
+        private void lstAnexos_DragEnter(object sender, DragEventArgs e)
+        {
+            if ( e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.All;
+            }
+        }
+
+        private void lstAnexos_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ( e.KeyCode == Keys.Delete )
+            {
+                if ( lstAnexos.SelectedIndex >= 0 )
+                {
+                    lstAnexos.Items.Remove(lstAnexos.Items[lstAnexos.SelectedIndex]);
+                }
+            }
+        }
+
+        private void FrmMain_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
+        }
+
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if ( this.openFileDialog1.ShowDialog() == DialogResult.OK )
+            {
+                foreach (string arquivo in openFileDialog1.FileNames)
+                {
+                    lstAnexos.Items.Add(arquivo);
+                }
+                {
+
+                }
+            }
+        }
     }
 }

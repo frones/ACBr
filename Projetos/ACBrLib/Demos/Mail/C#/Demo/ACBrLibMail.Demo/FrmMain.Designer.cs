@@ -53,6 +53,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtAssunto = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.lstAnexos = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
             this.SuspendLayout();
@@ -62,7 +66,7 @@
             this.btnEnviar.Location = new System.Drawing.Point(713, 415);
             this.btnEnviar.Name = "btnEnviar";
             this.btnEnviar.Size = new System.Drawing.Size(75, 23);
-            this.btnEnviar.TabIndex = 14;
+            this.btnEnviar.TabIndex = 16;
             this.btnEnviar.Text = "Enviar";
             this.btnEnviar.UseVisualStyleBackColor = true;
             this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
@@ -97,21 +101,21 @@
             this.txtBody.Location = new System.Drawing.Point(384, 106);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
-            this.txtBody.Size = new System.Drawing.Size(404, 139);
+            this.txtBody.Size = new System.Drawing.Size(404, 85);
             this.txtBody.TabIndex = 12;
             // 
             // txtAltBody
             // 
-            this.txtAltBody.Location = new System.Drawing.Point(384, 264);
+            this.txtAltBody.Location = new System.Drawing.Point(384, 210);
             this.txtAltBody.Multiline = true;
             this.txtAltBody.Name = "txtAltBody";
-            this.txtAltBody.Size = new System.Drawing.Size(404, 145);
+            this.txtAltBody.Size = new System.Drawing.Size(404, 85);
             this.txtAltBody.TabIndex = 13;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(381, 248);
+            this.label3.Location = new System.Drawing.Point(381, 194);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 13);
             this.label3.TabIndex = 6;
@@ -289,11 +293,50 @@
             this.label10.TabIndex = 9;
             this.label10.Text = "Assunto";
             // 
+            // lstAnexos
+            // 
+            this.lstAnexos.AllowDrop = true;
+            this.lstAnexos.FormattingEnabled = true;
+            this.lstAnexos.Location = new System.Drawing.Point(384, 327);
+            this.lstAnexos.Name = "lstAnexos";
+            this.lstAnexos.Size = new System.Drawing.Size(404, 82);
+            this.lstAnexos.TabIndex = 15;
+            this.lstAnexos.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstAnexos_DragDrop);
+            this.lstAnexos.DragEnter += new System.Windows.Forms.DragEventHandler(this.lstAnexos_DragEnter);
+            this.lstAnexos.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstAnexos_KeyDown);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(384, 301);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(109, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Anexar Arquivo";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(499, 306);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(218, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "( Ou arraste os arquivos abaixo para anexar )";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lstAnexos);
             this.Controls.Add(this.txtAssunto);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.groupBox1);
@@ -305,8 +348,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEnviar);
             this.Name = "FrmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ACBrLibMail";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FrmMain_DragEnter);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).EndInit();
@@ -341,6 +386,10 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.TextBox txtAssunto;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ListBox lstAnexos;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

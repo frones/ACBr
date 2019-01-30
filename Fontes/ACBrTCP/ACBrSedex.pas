@@ -513,8 +513,6 @@ var
   IniSedex: TMemIniFile;
   Sessao: String;
 begin
-  Result   := False;
-
   IniSedex := TMemIniFile.Create('');
   try
 

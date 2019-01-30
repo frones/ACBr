@@ -151,7 +151,6 @@ type
     fDisplayLinhas: Integer;
     fEchoMode: TACBrMTerEchoMode;
     fTimeOutBalanca: Integer;
-    fModeloStr: String;
     fMTer: TACBrMTerClass;
     fModelo: TACBrMTerModelo;
     fOnConecta: TACBrMTerConecta;
@@ -167,6 +166,7 @@ type
     fTerminadorBalancaAsc: AnsiString;
     function GetAtivo: Boolean;
     function GetIP: String;
+    function GetModeloStr: String;
     function GetPort: String;
     function GetTimeOut: Integer;
     procedure SetAtivo(AValue: Boolean);
@@ -234,7 +234,7 @@ type
     property CmdEnviado: AnsiString        read fCmdEnviado;
     property Conexoes  : TACBrMTerConexoes read fConexoes;
     property MTer      : TACBrMTerClass    read fMTer;
-    property ModeloStr : String            read fModeloStr;
+    property ModeloStr : String            read GetModeloStr;
     property TCPServer : TACBrTCPServer    read fTCPServer;
   published
     property ArqLog        : String            read fArqLog         write fArqLog;
@@ -784,6 +784,11 @@ end;
 function TACBrMTer.GetIP: String;
 begin
   Result := fTCPServer.IP;
+end;
+
+function TACBrMTer.GetModeloStr: String;
+begin
+  Result := fMTer.ModeloStr;
 end;
 
 function TACBrMTer.GetPort: String;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2019
+-- pcnNFe / pcnNFeW --
+[*] Definido um valor inicial para os campos: xPais e cPais refernete a Retirada e
+    Entrega e incluido um condição para determinar se o cPais será validado ou não.
+   Por: Italo Jurisato Junior
+
 23/01/2019
 -- ACBrNFeServicos --
 [*] https://www.projetoacbr.com.br/forum/topic/48903-webservice-nfc-e-mg-incorreto/

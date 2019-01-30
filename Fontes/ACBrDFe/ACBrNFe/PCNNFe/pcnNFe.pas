@@ -2117,6 +2117,12 @@ begin
 
   FDest.EnderDest.xPais := 'BRASIL';
   FDest.EnderDest.cPais := 1058;
+
+  Retirada.xPais := 'BRASIL';
+  Retirada.cPais := 1058;
+
+  Entrega.xPais := 'BRASIL';
+  Entrega.cPais := 1058;
 end;
 
 destructor TNFe.Destroy;

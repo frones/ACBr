@@ -156,6 +156,8 @@ type
     procedure GerarTrabTemporario(pTrabTemporario: TTrabTemporario);
     procedure GerarInfoASO(pInfoASO: TInfoASO);
     procedure GerarMudancaCPF(pMudancaCPF: TmudancaCPF);
+    procedure GerarMudancaCPF2(pMudancaCPF: TmudancaCPF2);
+    procedure GerarMudancaCPF3(pMudancaCPF: TmudancaCPF3);
     procedure GerarAfastamento(pAfastamento: TAfastamento);
     procedure GerarDesligamento(pDesligamento: TDesligamento);
     procedure GerarVinculo(pVinculo: TVinculo; pTipo: integer = 1);
@@ -562,12 +564,12 @@ begin
   if pDuracao.dtTerm <> 0 then
     Gerador.wCampo(tcDat, '', 'dtTerm',    10, 10, 0, pDuracao.dtTerm);
 
-  if (eSTpContrToStr(pDuracao.TpContr) = '2') then
+  if (eSTpContrToStr(pDuracao.TpContr) = '2') or (eSTpContrToStr(pDuracao.TpContr) = '3') then
   begin
     if pTipo in  [1,2] then
       Gerador.wCampo(tcStr, '', 'clauAssec',  1,  1, 0, eSSimNaoToStr(pDuracao.clauAssec));
-  end
-  else
+  end;
+
   if (eSTpContrToStr(pDuracao.TpContr) = '3') then
     Gerador.wCampo(tcStr, '', 'objDet', 1, 255, 1, pDuracao.objDet);
 
@@ -917,6 +919,34 @@ begin
       Gerador.wCampo(tcStr, '', 'matricAnt',  1,  11, 1, pMudancaCPF.matricAnt);
       Gerador.wCampo(tcDat, '', 'dtAltCPF',  10, 10, 1, pMudancaCPF.dtAltCPF);
       Gerador.wCampo(tcStr, '', 'observacao',  1,  11, 0, pMudancaCPF.observacao);
+      Gerador.wGrupo('/mudancaCPF');
+    end;
+  end;
+end;
+
+procedure TeSocialEvento.GerarMudancaCPF2(pMudancaCPF: TmudancaCPF2);
+begin
+  if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= ve02_05_00) then
+  begin
+    if pMudancaCPF.cpfAnt <> '' then
+    begin
+      Gerador.wGrupo('mudancaCPF');
+      Gerador.wCampo(tcStr, '', 'cpfAnt',  11,  11, 1, pMudancaCPF.cpfAnt);
+      Gerador.wCampo(tcDat, '', 'dtAltCPF',  10, 10, 1, pMudancaCPF.dtAltCPF);
+      Gerador.wCampo(tcStr, '', 'observacao',  1,  11, 0, pMudancaCPF.observacao);
+      Gerador.wGrupo('/mudancaCPF');
+    end;
+  end;
+end;
+
+procedure TeSocialEvento.GerarMudancaCPF3(pMudancaCPF: TmudancaCPF3);
+begin
+  if (TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF >= ve02_05_00) then
+  begin
+    if pMudancaCPF.novoCPF <> '' then
+    begin
+      Gerador.wGrupo('mudancaCPF');
+      Gerador.wCampo(tcStr, '', 'novoCPF',  11,  11, 1, pMudancaCPF.novoCPF);
       Gerador.wGrupo('/mudancaCPF');
     end;
   end;
@@ -1598,6 +1628,7 @@ var
 begin
   for i := 0 to objDetPlanoCollection.Count - 1 do
   begin
+
     Gerador.wGrupo('detPlano');
 
     Gerador.wCampo(tcStr, '', 'tpDep',     1,  2, 1, eStpDepToStr(objDetPlanoCollection.Items[i].tpDep));
@@ -1619,7 +1650,10 @@ var
 begin
   for i := 0 to pNfs.Count - 1 do
   begin
-    Gerador.wGrupo('nfs');
+    if VersaoDF < ve02_05_00 then
+      begin
+      Gerador.wGrupo('nfs');
+
       Gerador.wCampo(tcStr, '', 'serie',        1,  5, 0, pNfs.Items[i].serie);
       Gerador.wCampo(tcStr, '', 'nrDocto',      1, 20, 1, pNfs.Items[i].nrDocto);
       Gerador.wCampo(tcDat, '', 'dtEmisNF',    10, 10, 1, pNfs.Items[i].dtEmisNF);
@@ -1627,6 +1661,20 @@ begin
       Gerador.wCampo(tcDe2, '', 'vrCPDescPR',   1, 14, 1, pNfs.Items[i].vrCPDescPR);
       Gerador.wCampo(tcDe2, '', 'vrRatDescPR',  1, 14, 1, pNfs.Items[i].vrRatDescPR);
       Gerador.wCampo(tcDe2, '', 'vrSenarDesc',  1, 14, 1, pNfs.Items[i].vrSenarDesc);
+    end;
+
+    if VersaoDF >= ve02_05_00 then
+      begin
+
+      Gerador.wGrupo('nfs serie="' + pNfs.Items[i].serie + '"' +
+                        ' nrDocto="' + pNfs.Items[i].nrDocto + '"' +
+                        ' dtEmisNF="' + DateToStr(pNfs.Items[i].dtEmisNF) + '"' +
+                        ' vlrBruto="' + FloatToString(pNfs.Items[i].vlrBruto, '.', FloatMask(2, False)) + '"' +
+                        ' vrCPDescPR="' + FloatToString(pNfs.Items[i].vrCPDescPR, '.', FloatMask(2, False)) + '"' +
+                        ' vrRatDescPR="' + FloatToString(pNfs.Items[i].vrRatDescPR, '.', FloatMask(2, False)) + '"' +
+                        ' vrSenarDesc="' + FloatToString(pNfs.Items[i].vrSenarDesc, '.', FloatMask(2, False)) + '"');
+    end;
+
     Gerador.wGrupo('/nfs');
   end;
 

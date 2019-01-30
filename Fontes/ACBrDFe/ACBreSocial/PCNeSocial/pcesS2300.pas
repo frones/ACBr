@@ -129,6 +129,7 @@ type
     FinfoComplementares : TinfoComplementares;
     Fafastamento: TAfastamento;
     Ftermino: TTermino;
+    FMudancaCPF: TMudancaCPF2;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -138,6 +139,7 @@ type
     property dtInicio : TDateTime read FdtInicio write FdtInicio;
     property natAtividade : tpNatAtividade read FnatAtividade write FnatAtividade;
     property infoComplementares : TinfoComplementares read FinfoComplementares write FinfoComplementares;
+    property mudancaCPF: TMudancaCPF2 read FMudancaCPF write FMudancaCPF;
     property afastamento: TAfastamento read Fafastamento write Fafastamento;
     property termino: TTermino read Ftermino write Ftermino;
   end;
@@ -200,7 +202,7 @@ type
   public
     property dtTerm: TDateTime read FdtTerm write FdtTerm;
   end;
-  
+
 implementation
 
 uses
@@ -253,6 +255,7 @@ begin
 
   FinfoComplementares := TinfoComplementares.Create;
   Fafastamento := TAfastamento.Create;
+  FMudancaCPF := TMudancaCPF2.Create;
   Ftermino := TTermino.Create;
 end;
 
@@ -260,6 +263,7 @@ destructor TinfoTSVInicio.Destroy;
 begin
   FinfoComplementares.Free;
   Fafastamento.Free;
+  FMudancaCPF.Free;
   Ftermino.Free;
 
   inherited;
@@ -455,6 +459,9 @@ begin
     Gerador.wCampo(tcStr, '', 'natAtividade',  1,  1, 0, eSNatAtividadeToStr(obj.natAtividade));
 
   GerarInfoComplementares(obj.InfoComplementares);
+
+  if (obj.cadIni <> tpSimNao.tpSim) then
+    GerarMudancaCPF2(obj.mudancaCPF);
 
   GerarAfastamento(obj.afastamento);
   GerarTermino(obj.termino);

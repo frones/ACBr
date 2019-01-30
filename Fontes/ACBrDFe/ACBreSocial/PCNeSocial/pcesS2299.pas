@@ -72,7 +72,6 @@ type
   TConsigFGTSCollection = class;
   TConsigFGTSItem = class;
   TtransfTit = class;
-  TMudancaCPF= class;
   TInfoTrabIntermCollection = class;
   TInfoTrabIntermItem = class;
   TProcCS = class;
@@ -109,7 +108,7 @@ type
     FACBreSocial: TObject;
 
     procedure GerarInfoDeslig(obj: TInfoDeslig);
-    procedure GerarSucessaoVinc(obj: TSucessaoVinc);
+    procedure GerarSucessaoVinc(obj: TSucessaoVinc2);
     procedure GerarVerbasResc(obj: TVerbasRescS2299);
     procedure GerarProcCS(obj: TProcCS);
     procedure GerarDmDev(pDmDev: TDmDevCollection);
@@ -119,7 +118,6 @@ type
     procedure GerarIdePeriodo(pIdePeriodo: TIdePeriodoCollection);
     procedure GerarconsigFGTS(obj: TConsigFGTSCollection);
     procedure GerarTransfTit(obj: TtransfTit);
-    procedure GerarMudancaCPF(obj: TMudancaCPF);
     procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
   public
     constructor Create(AACBreSocial: TObject);overload;
@@ -148,14 +146,14 @@ type
     FIndCumprParc: tpCumprParcialAviso;
     FObservacao : String; // Descontinuado na versão 2.4.02
     Fobservacoes: TobservacoesCollection;
-    FSucessaoVinc : TSucessaoVinc;
+    FSucessaoVinc : TSucessaoVinc2;
     FVerbasResc : TVerbasRescS2299;
     FQuarentena: TQuarentena;
     FconsigFGTS: TConsigFGTSCollection;
     FInfoASO: TInfoASO;
     FtransfTit: TtransfTit;
     FQtdDiasInterm: Integer;
-    FMudancaCPF: TMudancaCPF;
+    FMudancaCPF: TMudancaCPF3;
     function getVerbasResc: TVerbasRescS2299;
   public
     constructor Create;
@@ -175,13 +173,13 @@ type
     property indCumprParc: tpCumprParcialAviso read FIndCumprParc write FIndCumprParc;
     property Observacao : String read FObservacao write FObservacao;
     property observacoes: TobservacoesCollection read Fobservacoes write Fobservacoes;
-    property SucessaoVinc : TSucessaoVinc read FSucessaoVinc write FSucessaoVinc;
+    property SucessaoVinc : TSucessaoVinc2 read FSucessaoVinc write FSucessaoVinc;
     property VerbasResc : TVerbasRescS2299 read getVerbasResc write FVerbasResc;
     property Quarentena: TQuarentena read FQuarentena write FQuarentena;
     property consigFGTS: TConsigFGTSCollection read FconsigFGTS write FconsigFGTS;
     property InfoASO : TInfoASO read FInfoASO write FInfoASO;
     property transfTit: TtransfTit read FtransfTit write FtransfTit;
-    property mudancaCPF:TMudancaCPF read FMudancaCPF write FMudancaCPF;
+    property mudancaCPF: TMudancaCPF3 read FMudancaCPF write FMudancaCPF;
     property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
   end;
 
@@ -333,13 +331,6 @@ type
     property dtNascto: TDateTime read FdtNascto write FdtNascto;
   end;
 
-  TMudancaCPF = class(TPersistent)
-  private
-      FnovoCPF: string;
-  public
-    property novoCPF: string read FnovoCPF write FnovoCPF;
-  end;
-
   TInfoTrabIntermCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TInfoTrabIntermItem;
@@ -393,12 +384,12 @@ end;
 constructor TInfoDeslig.Create;
 begin
   inherited;
-  FSucessaoVinc := TSucessaoVinc.Create;
+  FSucessaoVinc := TSucessaoVinc2.Create;
   FVerbasResc   := nil;
   FQuarentena   := TQuarentena.Create;
   FInfoASO      := TInfoASO.Create;
   FtransfTit    := TtransfTit.Create;
-  FMudancaCPF   := TMudancaCPF.Create;
+  FMudancaCPF   := TMudancaCPF3.Create;
   Fobservacoes  := TobservacoesCollection.Create;
   FconsigFGTS   := TConsigFGTSCollection.Create;
 end;
@@ -733,8 +724,8 @@ begin
   if (obj.transfTit.cpfSubstituto <> '') And (obj.mtvDeslig='34') then
     GerarTransfTit(obj.transfTit);
 
-  if (VersaoDF >= ve02_05_00) and (obj.mudancaCPF.novoCPF<> '') then
-    GerarMudancaCPF(obj.mudancaCPF);
+  if (VersaoDF >= ve02_05_00) and (obj.mtvDeslig = '36') then
+    GerarMudancaCPF3(obj.mudancaCPF);
 
   if (obj.verbasRescInst) and  (obj.mtvDeslig <> '11') and (obj.mtvDeslig <>'12') and
      (obj.mtvDeslig <>'13') and (obj.mtvDeslig <> '25') and (obj.mtvDeslig <> '28') and
@@ -748,13 +739,14 @@ begin
   Gerador.wGrupo('/infoDeslig');
 end;
 
-procedure TEvtDeslig.GerarSucessaoVinc(obj: TSucessaoVinc);
+procedure TEvtDeslig.GerarSucessaoVinc(obj: TSucessaoVinc2);
 begin
-  if obj.CnpjEmpSucessora <> EmptyStr then
+  if obj.cnpjSucessora <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
 
-    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.CnpjEmpSucessora);
+    Gerador.wCampo(tcStr, '', 'tpInscSuc', 1, 1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
+    Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjSucessora);
 
     Gerador.wGrupo('/sucessaoVinc');
   end;
@@ -937,16 +929,6 @@ begin
   Gerador.wGrupo('/transfTit');
 end;
 
-procedure TEvtDeslig.GerarMudancaCPF(obj: TMudancaCPF);
-begin
-  Gerador.wGrupo('mudancaCPF');
-
-  Gerador.wCampo(tcStr, '', 'novoCPF', 11, 11, 1, obj.novoCPF);
-
-  Gerador.wGrupo('/mudancaCPF');
-
-end;
-
 procedure TEvtDeslig.GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
 var
   i: integer;
@@ -1026,8 +1008,11 @@ begin
       infoDeslig.Observacao   := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
 
       sSecao := 'sucessaoVinc';
+      if INIRec.ReadString(sSecao, 'tpInscSuc', '') <> '' then
+        infoDeslig.sucessaoVinc.tpInscSuc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInscSuc', EmptyStr));
+
       if INIRec.ReadString(sSecao, 'cnpjEmpSucessora', '') <> '' then
-        infoDeslig.sucessaoVinc.CnpjEmpSucessora := INIRec.ReadString(sSecao, 'cnpjEmpSucessora', EmptyStr);
+        infoDeslig.sucessaoVinc.cnpjSucessora := INIRec.ReadString(sSecao, 'cnpjSucessora', EmptyStr);
 
       sSecao := 'transfTit';
       if INIRec.ReadString(sSecao, 'cpfSubstituto', '') <> '' then

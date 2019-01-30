@@ -121,6 +121,7 @@ type
     FPensAlim: tpPensaoAlim;
     FpercAliment: Double;
     FVrAlim: Double;
+    FmudancaCPF: TMudancaCPF3;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -128,6 +129,7 @@ type
     property dtTerm : TDateTime read FdtTerm write FdtTerm;
     property mtvDesligTSV : string read FmtvDesligTSV write FmtvDesligTSV;
     property verbasResc : TVerbasRescS2399 read FverbasResc write FverbasResc;
+    property mudancaCPF: TMudancaCPF3 read FmudancaCPF write FmudancaCPF;
     property quarentena : TQuarentena read Fquarentena write Fquarentena;
     property percAliment : Double read FpercAliment write FpercAliment;
     property vrAlim: Double read FVrAlim write FVrAlim;
@@ -216,14 +218,15 @@ begin
   inherited;
 
   FverbasResc := TVerbasRescS2399.Create;
+  FmudancaCPF := TMudancaCPF3.Create;
   Fquarentena := TQuarentena.Create;
 end;
 
 destructor TinfoTSVTermino.Destroy;
 begin
   FverbasResc.Free;
+  FmudancaCPF.Free;
   Fquarentena.Free;
-
   inherited;
 end;
 
@@ -320,6 +323,7 @@ begin
   end;
 
   GerarVerbasResc(obj.verbasResc);
+  GerarMudancaCPF3(obj.mudancaCPF);
 //  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
   GerarQuarentena(obj.quarentena);
 

@@ -1882,12 +1882,12 @@ end;
 
 function eSTpAdmissaoToStr(const t: tpTpAdmissao ): string;
 begin
-  result := EnumeradoToStr2(t,TGenericosString1_5  );
+  result := EnumeradoToStr2(t,TGenericosString1_6  );
 end;
 
 function eSStrToTpAdmissao(var ok: boolean; const s: string): tpTpAdmissao;
 begin
-  result := tpTpAdmissao( StrToEnumerado2(ok , s,TGenericosString1_5 ));
+  result := tpTpAdmissao( StrToEnumerado2(ok , s,TGenericosString1_6 ));
 end;
 
 function eSTpAcordoToStr(const t:tpTpAcordo ): string;

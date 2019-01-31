@@ -1102,12 +1102,12 @@ begin
   Buffer := TStringList.Create;
   try
     ExtractStrings(['|'],[], PChar(fOwner.RespHTTP.Text), Buffer);
-    Qtd := StrToInt(Buffer[1]);
-    i := CompareText(Buffer[2], ACBrStr('Logradouro não encontrado'));
-    k := 2;
 
-    if i <> 0 then
+    if CompareText(Buffer[2], ACBrStr('Logradouro não encontrado')) <> 0 then
     begin
+      Qtd := StrToInt(Buffer[1]);
+      k := 2;
+
       Resp := TStringList.Create;
       TLog := TStringList.Create;
 

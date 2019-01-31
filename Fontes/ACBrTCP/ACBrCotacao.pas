@@ -233,7 +233,7 @@ var
   I: Integer;
   LinhaMoeda: String;
 
-  function GetLinhaMoeda(CodMoeda: String): String;
+  function GetLinhaMoeda(const CodMoeda: String): String;
   var
     I: Integer;
   begin

@@ -154,7 +154,11 @@ function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
 function ComparaValor(const ValorUm, ValorDois : Double; const Tolerancia : Double = 0 ): Integer;
 
-function TestBit(const Value: Integer; const Bit: Byte): Boolean;
+function TestBit(const AValue: Integer; const AIndex: Byte): Boolean;
+procedure ClearBit(var AValue: Integer; const AIndex: Byte);
+procedure SetBit(var AValue: Integer; const AIndex: Byte);
+procedure PutBit(var AValue: Integer; const AIndex: Byte; State: Boolean);
+
 function IntToBin (value: LongInt; digits: integer ): string;
 function BinToInt(Value: String): LongInt;
 
@@ -823,15 +827,42 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
- *** Adaptado de JclLogic.pas  - Project JEDI Code Library (JCL) ***
- Retorna True se o nBit está ativo (ligado) dentro do valor Value. Inicia em 0
+ http://wiki.freepascal.org/Bit_manipulation
+ Retorna True se o Bit em Index está ativo (ligado) dentro do valor Value. Inicia em 0
  ---------------------------------------------------------------------------- }
-function TestBit(const Value: Integer; const Bit: Byte): Boolean;
-Var Base : Byte ;
+function TestBit(const AValue: Integer; const AIndex: Byte): Boolean;
 begin
-  Base := (Trunc(Bit/8)+1) * 8 ;
-  Result := (Value and (1 shl (Bit mod Base))) <> 0;
+  Result := ((AValue shr AIndex) and 1) = 1;
 end;
+
+{-----------------------------------------------------------------------------
+ http://wiki.freepascal.org/Bit_manipulation
+ Desliga um Bit especificado em  "Index", em "Value" (passado por referencia)
+ ---------------------------------------------------------------------------- }
+procedure ClearBit(var AValue: Integer; const AIndex: Byte);
+begin
+  AValue := AValue and ((Integer(1) shl AIndex) xor High(Integer));
+end;
+
+{-----------------------------------------------------------------------------
+ http://wiki.freepascal.org/Bit_manipulation
+ Liga um Bit especificado em  "Index", em "Value" (passado por referencia)
+ ---------------------------------------------------------------------------- }
+procedure SetBit(var AValue: Integer; const AIndex: Byte);
+begin
+  AValue:=  AValue or (Integer(1) shl AIndex);
+end;
+
+{-----------------------------------------------------------------------------
+ http://wiki.freepascal.org/Bit_manipulation
+ Liga ou Desliga um Bit especificado em  "Index", em "Value", (passado por
+ referencia), e de acordo com o Boleano "State".
+ ---------------------------------------------------------------------------- }
+procedure PutBit(var AValue: Integer; const AIndex: Byte; State: Boolean);
+begin
+  AValue := (AValue and ((Integer(1) shl AIndex) xor High(Integer))) or (Integer(State) shl AIndex);
+end;
+
 
 {-----------------------------------------------------------------------------
  Extraido de  http://delphi.about.com/od/mathematics/a/baseconvert.htm (Zago)

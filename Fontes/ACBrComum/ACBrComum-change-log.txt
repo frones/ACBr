@@ -39,6 +39,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 31/01/2019
+-- ACBrUtil --
+[*] Otimização do método "TestBit"
+[+] Adicionados vários métodos para manipulação de Bits
+    procedure ClearBit(var AValue: Integer; const AIndex: Byte);
+    procedure SetBit(var AValue: Integer; const AIndex: Byte);
+    procedure PutBit(var AValue: Integer; const AIndex: Byte; State: Boolean);
+    http://wiki.freepascal.org/Bit_manipulation
+    (por: DSA)
+
 Data: 27/01/2019
 -- ACBrImage --
 [+] Adicionado novos métodos, para permitir o uso de Bitmaps em comandos legados

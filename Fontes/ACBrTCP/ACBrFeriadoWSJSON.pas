@@ -225,7 +225,7 @@ begin
 //   Veja algorítimo na Wikipédia, ou https://www.inf.ufrgs.br/~cabral/Pascoa.html
   if (ano < 1582) or (ano > 2299) then
   begin
-    raise EACBrFeriadoException.Create(Format('Ano (%d) fora de período permitido (1582 a 2299).', [ano]);
+    raise EACBrFeriadoException.Create(Format('Ano (%d) fora de período permitido (1582 a 2299).', [ano]));
   end;
 
   //faixa de anos 	X 	Y
@@ -284,7 +284,7 @@ begin
   begin
     x := 25;
     y := 7;
-  end
+  end;
 
   a := ano MOD 19;
   b := ano MOD 4;

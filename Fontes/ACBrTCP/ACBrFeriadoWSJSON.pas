@@ -50,6 +50,8 @@ uses
 
 type
   TACBrFeriadoWSJSON = class(TACBrFeriadoWSClass)
+  private
+    function ArquivoParaString: string;
   protected
     fEventosArquivo: TObjectList;
 
@@ -84,9 +86,21 @@ begin
   ProcessarResposta(AAno, AUF, ACidade);
 end;
 
-function TACBrFeriadoWSJSON.CarregarEventosArquivo(const AAno: Integer): TObjectList;
+function TACBrFeriadoWSJSON.ArquivoParaString: string;
 var
   MS: TMemoryStream;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.LoadFromFile(TACBrFeriado(fOwner).PathArquivo);
+    Result := UTF8ToNativeString(ReadStrFromStream(MS, MS.Size));
+  finally
+    MS.Free;
+  end;
+end;
+
+function TACBrFeriadoWSJSON.CarregarEventosArquivo(const AAno: Integer): TObjectList;
+var
   Arquivo: String;
 
   iPosFixos: Integer;
@@ -106,13 +120,8 @@ var
   dtCorpusChristi: TDateTime;
   dtSextaCorpusChristi: TDateTime;
 begin
-  MS := TMemoryStream.Create;
-  try
-    MS.LoadFromFile(TACBrFeriado(fOwner).PathArquivo);
-    Arquivo := UTF8ToNativeString(ReadStrFromStream(MS, MS.Size));
-  finally
-    MS.Free;
-  end;
+  Result  := nil;
+  Arquivo := ArquivoParaString;
 
   if (Arquivo = '') then
     Exit;
@@ -120,9 +129,9 @@ begin
   Arquivo := StringReplace(Arquivo, #9, '', [rfReplaceAll]);
   Arquivo := StringReplace(Arquivo, '": ', '":', [rfReplaceAll]);
 
-  iPosFixos := PosEx('"feriadosFixos":[', Arquivo) + 16;
+  iPosFixos  := PosEx('"feriadosFixos":[', Arquivo) + 16;
   iPosMoveis := PosEx('"feriadosMoveis":[', Arquivo) + 17;
-  iPosAtual := iPosFixos;
+  iPosAtual  := iPosFixos;
 
   while (iPosAtual < iPosMoveis - 25) do
   begin
@@ -146,13 +155,13 @@ begin
     iPosAtual := iPosFin + 1;
   end;
 
-  dtPascoa := GetDataDaPascoa(AAno);
-  dtSegundaCarnaval := dtPascoa - 48;
-  dtCarnaval := dtPascoa - 47;
-  dtQuartaCinzas := dtPascoa - 46;
-  dtQuintaSanta := dtPascoa - 3;
-  dtSextaSanta := dtPascoa - 2;
-  dtCorpusChristi := dtPascoa + 60;
+  dtPascoa             := GetDataDaPascoa(AAno);
+  dtSegundaCarnaval    := dtPascoa - 48;
+  dtCarnaval           := dtPascoa - 47;
+  dtQuartaCinzas       := dtPascoa - 46;
+  dtQuintaSanta        := dtPascoa - 3;
+  dtSextaSanta         := dtPascoa - 2;
+  dtCorpusChristi      := dtPascoa + 60;
   dtSextaCorpusChristi := dtPascoa + 61;
 
   while ((iPosAtual > 0) and
@@ -213,24 +222,90 @@ var
   x, y, a, b, c, d, e: integer;
   dia, mes: word;
 begin
-  x := 24;
-  y := 5;
+//   Veja algorítimo na Wikipédia, ou https://www.inf.ufrgs.br/~cabral/Pascoa.html
+  if (ano < 1582) or (ano > 2299) then
+  begin
+    raise EACBrFeriadoException.Create(Format('Ano (%d) fora de período permitido (1582 a 2299).', [ano]);
+  end;
+
+  //faixa de anos 	X 	Y
+  //1582 	1599 	22 	2
+  //1600 	1699 	22 	2
+  //1700 	1799 	23 	3
+  //1800 	1899 	24 	4
+  //1900 	2019 	24 	5
+  //2020 	2099 	24 	5
+  //2100 	2199 	24 	6
+  //2200 	2299 	25 	7
+
+//  if (ano <= 1599) then
+//  begin
+//    x := 22;
+//    y := 2;
+//  end
+//  else
+  if (ano <= 1699) then
+  begin
+    x := 22;
+    y := 2;
+  end
+  else
+  if (ano <= 1799) then
+  begin
+    x := 23;
+    y := 3;
+  end
+  else
+  if (ano <= 1899) then
+  begin
+    x := 24;
+    y := 4;
+  end
+  else
+//  if (ano <= 2019) then
+//  begin
+//    x := 24;
+//    y := 5;
+//  end
+//  else
+  if (ano <= 2099) then
+  begin
+    x := 24;
+    y := 5;
+  end
+  else
+  if (ano <= 2199) then
+  begin
+    x := 24;
+    y := 6;
+  end
+  else
+  if (ano <= 2299) then
+  begin
+    x := 25;
+    y := 7;
+  end
+
   a := ano MOD 19;
   b := ano MOD 4;
   c := ano MOD 7;
   d := (19 * a + x) MOD 30;
   e := (2 * b + 4 * c + 6 * d + y) MOD 7;
   if (d + e) > 9 then
-   begin
+  begin
     dia := (d + e - 9);
     mes := 4;
-   end
+  end
   else
-   begin
+  begin
     dia := (d + e + 22);
     mes := 3;
-   end;
-  result := EncodeDate(ano, mes, dia);
+  end;
+
+  if (mes = 4) and (dia = 26) then dia := 19;
+  if (mes = 4) and (dia = 25) and (d = 28) and (a > 10) then dia := 18;
+
+  Result := EncodeDate(ano, mes, dia);
 end;
 
 procedure TACBrFeriadoWSJSON.ProcessarResposta(const AAno: Integer; const AUF,

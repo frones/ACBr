@@ -719,17 +719,21 @@ begin
     if not pcnAuxiliar.ValidarUF(xUF) then
       Gerador.wAlerta('F09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcInt, 'F10', 'CEP   ', 08, 08, 0, nfe.Retirada.CEP, DSC_CEP);
-    Gerador.wCampo(tcInt, 'F11', 'cPais ', 02, 04, 0, nfe.Retirada.cPais, DSC_CPAIS);
+    Gerador.wCampo(tcInt, 'F10', 'CEP  ', 08, 08, 0, nfe.Retirada.CEP, DSC_CEP);
+    Gerador.wCampo(tcInt, 'F11', 'cPais', 02, 04, 0, nfe.Retirada.cPais, DSC_CPAIS);
 
     if nfe.Retirada.cPais > 0 then
       if ValidarCodigoPais(nfe.Retirada.cPais) <> 1 then
         Gerador.wAlerta('F11', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcStr, 'F12', 'xPais  ', 02, 60, 0, nfe.Retirada.xPais, DSC_XPAIS);
-    Gerador.wCampo(tcStr, 'F13', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Retirada.fone), DSC_FONE);
-    Gerador.wCampo(tcStr, 'F14', 'email  ', 01, 60, 0, nfe.Retirada.Email, DSC_EMAIL);
-    Gerador.wCampo(tcStr, 'F15', 'IE     ', 02, 14, 0, OnlyNumber(nfe.Retirada.IE), DSC_IE);
+    Gerador.wCampo(tcStr, 'F12', 'xPais', 02, 60, 0, nfe.Retirada.xPais, DSC_XPAIS);
+    Gerador.wCampo(tcStr, 'F13', 'fone ', 06, 14, 0, OnlyNumber(nfe.Retirada.fone), DSC_FONE);
+    Gerador.wCampo(tcStr, 'F14', 'email', 01, 60, 0, nfe.Retirada.Email, DSC_EMAIL);
+
+    if nfe.Retirada.IE = 'ISENTO' then
+      Gerador.wCampo(tcStr, 'F15', 'IE', 00, 14, 1, nfe.Retirada.IE, DSC_IE)
+    else
+      Gerador.wCampo(tcStr, 'F15', 'IE', 02, 14, 0, OnlyNumber(nfe.Retirada.IE), DSC_IE);
 
     Gerador.wGrupo('/retirada');
   end;
@@ -754,17 +758,21 @@ begin
     if not pcnAuxiliar.ValidarUF(nfe.Entrega.UF) then
       Gerador.wAlerta('G09', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcInt, 'G10', 'CEP   ', 08, 08, 0, nfe.Entrega.CEP, DSC_CEP);
-    Gerador.wCampo(tcInt, 'G11', 'cPais ', 02, 04, 0, nfe.Entrega.cPais, DSC_CPAIS);
+    Gerador.wCampo(tcInt, 'G10', 'CEP  ', 08, 08, 0, nfe.Entrega.CEP, DSC_CEP);
+    Gerador.wCampo(tcInt, 'G11', 'cPais', 02, 04, 0, nfe.Entrega.cPais, DSC_CPAIS);
 
     if nfe.Entrega.cPais > 0 then
       if ValidarCodigoPais(nfe.Entrega.cPais) <> 1 then
         Gerador.wAlerta('G11', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
 
-    Gerador.wCampo(tcStr, 'G12', 'xPais  ', 02, 60, 0, nfe.Entrega.xPais, DSC_XPAIS);
-    Gerador.wCampo(tcStr, 'G13', 'fone   ', 06, 14, 0, OnlyNumber(nfe.Entrega.fone), DSC_FONE);
-    Gerador.wCampo(tcStr, 'G14', 'email  ', 01, 60, 0, nfe.Entrega.Email, DSC_EMAIL);
-    Gerador.wCampo(tcStr, 'G15', 'IE     ', 02, 14, 0, OnlyNumber(nfe.Entrega.IE), DSC_IE);
+    Gerador.wCampo(tcStr, 'G12', 'xPais', 02, 60, 0, nfe.Entrega.xPais, DSC_XPAIS);
+    Gerador.wCampo(tcStr, 'G13', 'fone ', 06, 14, 0, OnlyNumber(nfe.Entrega.fone), DSC_FONE);
+    Gerador.wCampo(tcStr, 'G14', 'email', 01, 60, 0, nfe.Entrega.Email, DSC_EMAIL);
+
+    if nfe.Entrega.IE = 'ISENTO' then
+      Gerador.wCampo(tcStr, 'G15', 'IE', 00, 14, 1, nfe.Entrega.IE, DSC_IE)
+    else
+      Gerador.wCampo(tcStr, 'G15', 'IE', 02, 14, 0, OnlyNumber(nfe.Entrega.IE), DSC_IE);
 
     Gerador.wGrupo('/entrega');
   end;

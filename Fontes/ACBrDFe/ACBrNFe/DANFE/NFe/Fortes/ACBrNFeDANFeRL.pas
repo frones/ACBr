@@ -139,7 +139,10 @@ begin
     TDFeReportFortes.AjustarReport(Report, ADANFe);
 
     if ADANFe.MostraPreview then
-      Report.PreviewModal
+    begin
+      SelectedFilter := DANFeReport.RLPDFFilter1;
+      Report.PreviewModal;
+    end
     else
       Report.Print;
   finally
@@ -193,7 +196,7 @@ begin
   Self.Scaled := False;
   {$EndIf}
   fpCorDestaqueProdutos := StringToColor('$00E5E5E5');
-  SelectedFilter := RLPDFFilter1;
+
 end;
 
 procedure TfrlDANFeRL.ConfigurarVariavies(ATipoDANFE: TpcnTipoImpressao);

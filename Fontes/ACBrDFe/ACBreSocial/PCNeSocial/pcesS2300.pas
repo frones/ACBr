@@ -460,7 +460,7 @@ begin
 
   GerarInfoComplementares(obj.InfoComplementares);
 
-  if (obj.cadIni <> tpSimNao.tpSim) then
+  if (obj.cadIni <> tpSim) then
     GerarMudancaCPF2(obj.mudancaCPF);
 
   GerarAfastamento(obj.afastamento);

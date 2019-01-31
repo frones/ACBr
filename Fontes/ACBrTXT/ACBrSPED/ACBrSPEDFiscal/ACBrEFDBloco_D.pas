@@ -958,13 +958,13 @@ type
   private
     fCOD_MUN_ORIG: String;    /// Código do município de origem do serviço, conforme a tabela IBGE
     fVL_SERV: currency;       /// Valor total da prestação de serviço
-    fQTD_BILH: currency;      /// Quantidade de bilhetes emitidos
+    fQTD_BILH: integer;       /// Quantidade de bilhetes emitidos
     fVL_BC_ICMS: currency;    /// Valor total da base de cálculo do ICMS
     fVL_ICMS: currency;       /// Valor total do ICMS
   public
     property COD_MUN_ORIG: String read FCOD_MUN_ORIG write FCOD_MUN_ORIG;
     property VL_SERV: currency read FVL_SERV write FVL_SERV;
-    property QTD_BILH: currency read FQTD_BILH write FQTD_BILH;
+    property QTD_BILH: integer read FQTD_BILH write FQTD_BILH;
     property VL_BC_ICMS: currency read FVL_BC_ICMS write FVL_BC_ICMS;
     property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
   end;

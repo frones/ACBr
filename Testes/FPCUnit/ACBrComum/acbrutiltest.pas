@@ -373,6 +373,39 @@ type
     procedure TestarTodosBits;
   end;
 
+  { TesteSetBit }
+
+  TesteSetBit = class(TTestCase)
+  private
+    AByte: Integer;
+    procedure SetUp; override;
+  published
+    procedure LigaBitsDeZeroASete;
+    procedure LigaBitsPares;
+    procedure LigaBitsImpares;
+    procedure LigaTodosOsBitsDeUmByte;
+  end;
+
+  { TesteClearBit }
+
+  TesteClearBit = class(TTestCase)
+  private
+    AByte: Integer;
+    procedure SetUp; override;
+  published
+    procedure DesligaBitsDeZeroASete;
+    procedure DesligaBitsPares;
+    procedure DesligaBitsImpares;
+    procedure DesligaTodosOsBitsDeUmByte;
+  end;
+
+  { TestePutBit }
+
+  TestePutBit = class(TTestCase)
+  published
+    procedure LigaEDesligaBitsDeZeroASete;
+  end;
+
   { IntToBinTest }
 
   IntToBinTest = class(TTestCase)
@@ -1026,6 +1059,171 @@ uses
   Math, dateutils,
   synacode,
   ACBrUtil, ACBrCompress, ACBrConsts;
+
+{ TestePutBit }
+
+procedure TestePutBit.LigaEDesligaBitsDeZeroASete;
+var
+  AByte: Integer;
+begin
+  AByte := 0;
+  PutBit(AByte, 0, True);
+  CheckEquals(AByte, 1);     // 0000 0001
+  PutBit(AByte, 1, True);
+  CheckEquals(AByte, 3);     // 0000 0011
+  PutBit(AByte, 2, True);
+  CheckEquals(AByte, 7);     // 0000 0111
+  PutBit(AByte, 3, True);
+  CheckEquals(AByte, 15);    // 0000 1111
+  PutBit(AByte, 4, True);
+  CheckEquals(AByte, 31);    // 0001 1111
+  PutBit(AByte, 5, True);
+  CheckEquals(AByte, 63);    // 0011 1111
+  PutBit(AByte, 6, True);
+  CheckEquals(AByte, 127);   // 0111 1111
+  PutBit(AByte, 7, True);
+  CheckEquals(AByte, 255);   // 1111 1111
+  PutBit(AByte, 0, False);
+  CheckEquals(AByte, 254);   // 1111 1110
+  PutBit(AByte, 1, False);
+  CheckEquals(AByte, 252);   // 1111 1100
+  PutBit(AByte, 2, False);
+  CheckEquals(AByte, 248);   // 1111 1000
+  PutBit(AByte, 3, False);
+  CheckEquals(AByte, 240);   // 1111 0000
+  PutBit(AByte, 4, False);
+  CheckEquals(AByte, 224);   // 1110 0000
+  PutBit(AByte, 5, False);
+  CheckEquals(AByte, 192);   // 1100 0000
+  PutBit(AByte, 6, False);
+  CheckEquals(AByte, 128);   // 1000 0000
+  PutBit(AByte, 7, False);
+  CheckEquals(AByte, 0);     // 0000 0000
+end;
+
+{ TesteClearBit }
+
+procedure TesteClearBit.SetUp;
+begin
+  inherited SetUp;
+  AByte := 255;
+end;
+
+procedure TesteClearBit.DesligaBitsDeZeroASete;
+begin
+  ClearBit(AByte, 0);
+  CheckEquals(AByte, 254);   // 1111 1110
+  ClearBit(AByte, 1);
+  CheckEquals(AByte, 252);   // 1111 1100
+  ClearBit(AByte, 2);
+  CheckEquals(AByte, 248);   // 1111 1000
+  ClearBit(AByte, 3);
+  CheckEquals(AByte, 240);   // 1111 0000
+  ClearBit(AByte, 4);
+  CheckEquals(AByte, 224);   // 1110 0000
+  ClearBit(AByte, 5);
+  CheckEquals(AByte, 192);   // 1100 0000
+  ClearBit(AByte, 6);
+  CheckEquals(AByte, 128);   // 1000 0000
+  ClearBit(AByte, 7);
+  CheckEquals(AByte, 0);     // 0000 0000
+end;
+
+procedure TesteClearBit.DesligaBitsPares;
+begin
+  // 1010 1010
+  ClearBit(AByte, 0);
+  ClearBit(AByte, 2);
+  ClearBit(AByte, 4);
+  ClearBit(AByte, 6);
+  CheckEquals(AByte, 170);
+end;
+
+procedure TesteClearBit.DesligaBitsImpares;
+begin
+  // 0101 0101
+  ClearBit(AByte, 1);
+  ClearBit(AByte, 3);
+  ClearBit(AByte, 5);
+  ClearBit(AByte, 7);
+  CheckEquals(AByte, 85);
+end;
+
+procedure TesteClearBit.DesligaTodosOsBitsDeUmByte;
+begin
+  // 0000 0000
+  ClearBit(AByte, 0);
+  ClearBit(AByte, 1);
+  ClearBit(AByte, 2);
+  ClearBit(AByte, 3);
+  ClearBit(AByte, 4);
+  ClearBit(AByte, 5);
+  ClearBit(AByte, 6);
+  ClearBit(AByte, 7);
+  CheckEquals(AByte, 0);
+end;
+
+{ TesteSetBit }
+
+procedure TesteSetBit.SetUp;
+begin
+  inherited SetUp;
+  AByte := 0;
+end;
+
+procedure TesteSetBit.LigaBitsDeZeroASete;
+begin
+  SetBit(AByte, 0);
+  CheckEquals(AByte, 1);    // 0000 0001
+  SetBit(AByte, 1);
+  CheckEquals(AByte, 3);    // 0000 0011
+  SetBit(AByte, 2);
+  CheckEquals(AByte, 7);    // 0000 0111
+  SetBit(AByte, 3);
+  CheckEquals(AByte, 15);   // 0000 1111
+  SetBit(AByte, 4);
+  CheckEquals(AByte, 31);   // 0001 1111
+  SetBit(AByte, 5);
+  CheckEquals(AByte, 63);   // 0011 1111
+  SetBit(AByte, 6);
+  CheckEquals(AByte, 127);  // 0111 1111
+  SetBit(AByte, 7);
+  CheckEquals(AByte, 255);  // 1111 1111
+end;
+
+procedure TesteSetBit.LigaBitsPares;
+begin
+  // 0101 0101
+  SetBit(AByte, 0);
+  SetBit(AByte, 2);
+  SetBit(AByte, 4);
+  SetBit(AByte, 6);
+  CheckEquals(AByte, 85);
+end;
+
+procedure TesteSetBit.LigaBitsImpares;
+begin
+  // 1010 1010
+  SetBit(AByte, 1);
+  SetBit(AByte, 3);
+  SetBit(AByte, 5);
+  SetBit(AByte, 7);
+  CheckEquals(AByte, 170);
+end;
+
+procedure TesteSetBit.LigaTodosOsBitsDeUmByte;
+begin
+  // 1111 1111
+  SetBit(AByte, 0);
+  SetBit(AByte, 1);
+  SetBit(AByte, 2);
+  SetBit(AByte, 3);
+  SetBit(AByte, 4);
+  SetBit(AByte, 5);
+  SetBit(AByte, 6);
+  SetBit(AByte, 7);
+  CheckEquals(AByte, 255);
+end;
 
 { StrIsBase64Test }
 
@@ -4541,6 +4739,9 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TestBitTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TesteSetBit{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TesteClearBit{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TestePutBit{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', IntToBinTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', BinToIntTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', BcdToAscTest{$ifndef FPC}.Suite{$endif});

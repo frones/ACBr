@@ -238,18 +238,22 @@ begin
   //2100 	2199 	24 	6
   //2200 	2299 	25 	7
 
+  x := 22;
+  y := 2;
+
+  //Inicializado com esses valores.
 //  if (ano <= 1599) then
 //  begin
 //    x := 22;
 //    y := 2;
 //  end
 //  else
-  if (ano <= 1699) then
-  begin
-    x := 22;
-    y := 2;
-  end
-  else
+//  if (ano <= 1699) then
+//  begin
+//    x := 22;
+//    y := 2;
+//  end
+//  else
   if (ano <= 1799) then
   begin
     x := 23;

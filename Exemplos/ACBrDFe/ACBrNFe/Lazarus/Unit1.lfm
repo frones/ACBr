@@ -1732,15 +1732,6 @@ object Form1: TForm1
             OnClick = btnManifDestConfirmacaoClick
             TabOrder = 20
           end
-          object btnNfeDestinadas: TButton
-            Left = 375
-            Height = 25
-            Top = 211
-            Width = 178
-            Caption = 'Consulta NFe Destinadas'
-            OnClick = btnNfeDestinadasClick
-            TabOrder = 21
-          end
           object btnImprimirCCe: TButton
             Left = 8
             Height = 25
@@ -1748,7 +1739,7 @@ object Form1: TForm1
             Width = 177
             Caption = 'Imprimir Evento'
             OnClick = btnImprimirCCeClick
-            TabOrder = 22
+            TabOrder = 21
           end
           object btnEnviarEvento: TButton
             Left = 193
@@ -1757,7 +1748,7 @@ object Form1: TForm1
             Width = 177
             Caption = 'Enviar Evento Email'
             OnClick = btnEnviarEventoClick
-            TabOrder = 23
+            TabOrder = 22
           end
           object btnDistribuicaoDFe: TButton
             Left = 375
@@ -1766,7 +1757,7 @@ object Form1: TForm1
             Width = 178
             Caption = 'Distribuição Documentos Fiscais'
             OnClick = btnDistribuicaoDFeClick
-            TabOrder = 24
+            TabOrder = 23
           end
           object btnValidarRegrasNegocio: TButton
             Left = 376
@@ -1775,7 +1766,7 @@ object Form1: TForm1
             Width = 177
             Caption = 'Validar Regras de Negócio'
             OnClick = btnValidarRegrasNegocioClick
-            TabOrder = 25
+            TabOrder = 24
           end
           object btnInutilizarImprimir: TButton
             Left = 375
@@ -1784,7 +1775,7 @@ object Form1: TForm1
             Width = 177
             Caption = 'Inutilizar Imprimir'
             OnClick = btnInutilizarImprimirClick
-            TabOrder = 26
+            TabOrder = 25
           end
         end
         object tsNFCe: TTabSheet
@@ -2429,6 +2420,7 @@ object Form1: TForm1
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     Configuracoes.WebServices.TimeOut = 3000
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DANFE = ACBrNFeDANFeRL1
     left = 688
     top = 376
@@ -2459,6 +2451,7 @@ object Form1: TForm1
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
     NumCopias = 2
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.7
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
@@ -2504,6 +2497,7 @@ object Form1: TForm1
     top = 496
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
@@ -2517,6 +2511,8 @@ object Form1: TForm1
     LarguraBobina = 300
     TamanhoLogoHeight = 0
     TamanhoLogoWidth = 0
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
     left = 560
     top = 528
   end
@@ -2531,6 +2527,7 @@ object Form1: TForm1
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     left = 592
     top = 376
   end

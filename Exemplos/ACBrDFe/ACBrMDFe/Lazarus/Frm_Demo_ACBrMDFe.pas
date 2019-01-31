@@ -7,8 +7,8 @@ interface
 uses
   IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls,
-  ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase, ACBrDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrDFeSSL;
+  SynEdit, SynHighlighterXML, ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase,
+  ACBrDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeSSL;
 
 type
 

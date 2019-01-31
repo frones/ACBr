@@ -8,8 +8,8 @@
       <Unit0>
         <Filename Value="Demo_ACBrMDFe.lpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="21"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -19,9 +19,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="495"/>
-        <CursorPos X="17" Y="515"/>
+        <TopLine Value="56"/>
+        <CursorPos X="25" Y="38"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -37,19 +36,17 @@
       </Unit2>
       <Unit3>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="69"/>
         <CursorPos X="45" Y="79"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLClass.pas"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="34"/>
         <CursorPos X="27" Y="37"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeReport.pas"/>
@@ -73,22 +70,19 @@
         <ComponentName Value="frlDAMDFeRL"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="31" Y="73"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="Frm_Demo_ACBrMDFe.lfm"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit8>
     </Units>
-    <JumpHistory Count="26" HistoryIndex="24">
+    <JumpHistory Count="27" HistoryIndex="26">
       <Position1>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
         <Caret Line="10" Column="22"/>
@@ -174,25 +168,28 @@
         <Caret Line="1269"/>
       </Position21>
       <Position22>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas"/>
-        <Caret Line="68" Column="43" TopLine="43"/>
+        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
+        <Caret Line="515" Column="17" TopLine="495"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\ACBrMDFeDAMDFeClass.pas"/>
-        <Caret Line="79" Column="45" TopLine="69"/>
+        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
       </Position23>
       <Position24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRL.pas"/>
-        <Caret Line="73" Column="31" TopLine="57"/>
+        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
+        <Caret Line="37" Column="25" TopLine="8"/>
       </Position24>
       <Position25>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="515" Column="17" TopLine="495"/>
+        <Caret Line="38" Column="25" TopLine="5"/>
       </Position25>
       <Position26>
         <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="1091" Column="24" TopLine="1051"/>
+        <Caret Line="39" Column="25" TopLine="5"/>
       </Position26>
+      <Position27>
+        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
+        <Caret Line="38" Column="25" TopLine="5"/>
+      </Position27>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

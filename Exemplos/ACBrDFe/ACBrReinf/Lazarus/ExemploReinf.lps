@@ -8,7 +8,6 @@
       <Unit0>
         <Filename Value="ExemploReinf.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos Y="10"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -20,16 +19,16 @@
         <ComponentName Value="Form2"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="2"/>
-        <CursorPos X="69" Y="5"/>
+        <CursorPos X="58" Y="20"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="uExemploReinf.pas"/>
       </Position1>
@@ -48,6 +47,22 @@
         <Filename Value="ExemploReinf.lpr"/>
         <Caret Line="14" Column="25"/>
       </Position5>
+      <Position6>
+        <Filename Value="ExemploReinf.lpr"/>
+        <Caret Line="10"/>
+      </Position6>
+      <Position7>
+        <Filename Value="uExemploReinf.pas"/>
+        <Caret Line="53" Column="20" TopLine="35"/>
+      </Position7>
+      <Position8>
+        <Filename Value="uExemploReinf.pas"/>
+        <Caret Line="459" Column="37" TopLine="452"/>
+      </Position8>
+      <Position9>
+        <Filename Value="uExemploReinf.pas"/>
+        <Caret Line="53" Column="31" TopLine="35"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

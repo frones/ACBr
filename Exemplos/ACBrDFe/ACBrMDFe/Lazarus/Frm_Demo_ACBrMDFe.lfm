@@ -13,7 +13,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  Visible = False
+  LCLVersion = '1.8.4.0'
   object Panel1: TPanel
     Left = 0
     Height = 529
@@ -1251,7 +1251,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           ParentColor = False
           ParentFont = False
           TabOrder = 0
-          Gutter.Width = 57
+          Gutter.Width = 0
           Gutter.MouseActions = <>
           RightGutter.Width = 0
           RightGutter.MouseActions = <>
@@ -1699,6 +1699,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           MouseLinkColor.Foreground = clBlue
           LineHighlightColor.Background = clNone
           LineHighlightColor.Foreground = clNone
+          inline SynLeftGutterPartList1: TSynGutterPartList
+          end
         end
       end
       object TabSheet8: TTabSheet
@@ -1780,6 +1782,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
     left = 466
     top = 297
@@ -1796,14 +1799,22 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     top = 341
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
-    ACBrMDFe = ACBrMDFe1
-    TipoDAMDFe = tiSemGeracao
-    TamanhoPapel = tpA4
-    NumCopias = 1
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrMDFe = ACBrMDFe1
+    ImprimeHoraSaida = False
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    Cancelada = False
+    Encerrado = False
     PrintDialog = True
     left = 558
     top = 299

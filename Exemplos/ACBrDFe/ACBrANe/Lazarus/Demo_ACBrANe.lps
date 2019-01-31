@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="Demo_ACBrANe.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDemo_ACBrANe"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="503"/>
+        <CursorPos X="31" Y="519"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="ufrmStatus.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="unit2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="Unit2"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeConfiguracoes.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="51"/>
+        <CursorPos X="14" Y="67"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaConversao.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="18" Y="39"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="23" HistoryIndex="22">
+      <Position1>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="27" Column="84" TopLine="14"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="29" Column="17" TopLine="13"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="33" Column="17" TopLine="13"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="32" Column="17" TopLine="13"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="227" Column="60" TopLine="211"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="380" Column="70" TopLine="347"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="227" Column="38" TopLine="211"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="517" Column="25" TopLine="508"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="384" Column="80" TopLine="365"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="382" Column="28" TopLine="366"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="93" Column="15" TopLine="78"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="282" Column="54" TopLine="256"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="374" Column="17" TopLine="348"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="382" Column="80" TopLine="357"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="390" Column="52" TopLine="377"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="388" Column="36" TopLine="377"/>
+      </Position17>
+      <Position18>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="11" Column="32"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="386" Column="51" TopLine="370"/>
+      </Position19>
+      <Position20>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="431" Column="20" TopLine="416"/>
+      </Position20>
+      <Position21>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="10" Column="74"/>
+      </Position21>
+      <Position22>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="431" Column="13" TopLine="415"/>
+      </Position22>
+      <Position23>
+        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Caret Line="10" Column="84"/>
+      </Position23>
+    </JumpHistory>
+  </ProjectSession>
+  <SkipCheckLCLInterfaces Value="True"/>
+</CONFIG>

@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="76">
+    <Files Count="79">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -334,10 +334,18 @@
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
         <UnitName Value="ACBrSMSZTE"/>
       </Item76>
-      <Item76>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrBALToledo9091_8530_8540.pas"/>
-        <UnitName Value="ACBrBALToledo9091_8530_8540"/>
-      </Item76>
+      <Item77>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas"/>
+        <UnitName Value="ACBrEscPosHook"/>
+      </Item77>
+      <Item78>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas"/>
+        <UnitName Value="ACBrEscPosHookElginDLL"/>
+      </Item78>
+      <Item79>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas"/>
+        <UnitName Value="ACBrEscPosHookEpsonDLL"/>
+      </Item79>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>
@@ -355,7 +363,6 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
     <CustomOptions Items="ExternHelp" Version="2">
       <_ExternHelp Items="Count"/>

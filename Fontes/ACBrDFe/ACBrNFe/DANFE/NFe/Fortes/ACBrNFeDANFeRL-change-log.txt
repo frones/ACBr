@@ -49,6 +49,12 @@ Símbolo : Significado
 
 31/01/2019
 -- ACBrNFeDANFERL --
+[-] Ajuste na impressão das informações adicionais. 
+	https://www.projetoacbr.com.br/forum/topic/49110-danfe-fortes-com-documento-referenciado/?tab=comments#comment-324509
+	(por: Henrique Leonardo / BigWings )
+
+31/01/2019
+-- ACBrNFeDANFERL --
 [-] Ajuste na impressão, referente validação propriedade MostrarPreview para 
 	definir documento como padrão PDF.
 	(por: José M. S. Junior)

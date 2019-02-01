@@ -226,6 +226,7 @@ var
   sLinhaProvisoria, sLinha: String;
 begin
   iPosAtual := 1;
+  sTexto := StringReplace(sTexto, sLineBreak, ';', [rfReplaceAll]);
   iQuantCaracteres := Length(sTexto);
   if iQuantCaracteres <= fpLimiteLinhas then
     iTotalLinhas := 1

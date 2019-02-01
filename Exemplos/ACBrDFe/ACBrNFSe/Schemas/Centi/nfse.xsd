@@ -288,21 +288,21 @@
 	<!-- definition of complex elements -->
 	<xsd:complexType name="tcCpfCnpj">
 		<xsd:choice>
-			<xsd:element name="Cpf"  type="tsCpf"  minOccurs="1"	maxOccurs="1" />
-			<xsd:element name="Cnpj" type="tsCnpj" minOccurs="1"	maxOccurs="1" />
+			<xsd:element name="Cpf" type="tsCpf" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="Cnpj" type="tsCnpj" minOccurs="1" maxOccurs="1" />
 		</xsd:choice>
 	</xsd:complexType>
 
 	<xsd:complexType name="tcEndereco">
 		<xsd:sequence>
-			<xsd:element name="Endereco"        type="tsEndereco"             minOccurs="0"	maxOccurs="1" />
-			<xsd:element name="Numero"          type="tsNumeroEndereco"	  minOccurs="0" maxOccurs="1" />
-			<xsd:element name="Complemento"     type="tsComplementoEndereco"  minOccurs="0" maxOccurs="1" />
-			<xsd:element name="Bairro"          type="tsBairro"               minOccurs="0"	maxOccurs="1" />
-			<xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge"  minOccurs="0" maxOccurs="1" />
-			<xsd:element name="Uf"              type="tsUf"                   minOccurs="0"	maxOccurs="1" />
-			<xsd:element name="CodigoPais"      type="tsCodigoMunicipioIbge"  minOccurs="0" maxOccurs="1" />
-			<xsd:element name="Cep"             type="tsCep"                  minOccurs="0"	maxOccurs="1" />
+			<xsd:element name="Endereco" type="tsEndereco" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Numero" type="tsNumeroEndereco" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Complemento" type="tsComplementoEndereco" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Bairro" type="tsBairro" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="CodigoMunicipio" type="tsCodigoMunicipioIbge" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Uf" type="tsUf" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="CodigoPais" type="tsCodigoMunicipioIbge" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="Cep" type="tsCep" minOccurs="0" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -328,8 +328,8 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
- <!-- elemento tcIdentificacaoPrestador/tcCpfCnpj - OBRIGATÓRIO -->
- <!-- elemento tcIdentificacaoPrestador/tsInscricaoMunicipal - OBRIGATÓRIO -->
+ <!-- elemento tcIdentificacaoPrestador/tcCpfCnpj - OBRIGATORIO -->
+ <!-- elemento tcIdentificacaoPrestador/tsInscricaoMunicipal - OBRIGATORIO -->
 
  <xsd:complexType name="tcIdentificacaoPrestador">
 		<xsd:sequence>
@@ -375,8 +375,8 @@
   </xsd:sequence>
  </xsd:complexType>
 
- <!-- elemento tcValoresDeclaracaoServico/ValorIss - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcValoresDeclaracaoServico/DescontoCondicionado - NÃO DEVE SER ENVIADO -->
+ <!-- elemento tcValoresDeclaracaoServico/ValorIss - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcValoresDeclaracaoServico/DescontoCondicionado - NAO DEVE SER ENVIADO -->
 
  <xsd:complexType name="tcValoresDeclaracaoServico">
 		<xsd:sequence>
@@ -395,7 +395,7 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
- <!-- elemento tcValoresNfse/ValorLiquidoNfse (Layout alterado para minOccurs="0") - NÃO SERÁ RETORNADO -->
+ <!-- elemento tcValoresNfse/ValorLiquidoNfse (Layout alterado para minOccurs="0") - NAO SERA RETORNADO -->
 
  <xsd:complexType name="tcValoresNfse">
 		<xsd:sequence>
@@ -406,11 +406,11 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
- <!-- elemento tcDadosServico/IssRetido (Layout alterado para minOccurs="0") - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcDadosServico/ResponsavelRetencao - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcDadosServico/CodigoCnae - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcDadosServico/CodigoTributacaoMunicipio - OBRIGATÓRIO -->
- <!-- elemento tcDadosServico/ExigibilidadeISS (Layout alterado para minOccurs="0") - NÃO DEVE SER ENVIADO -->
+ <!-- elemento tcDadosServico/IssRetido (Layout alterado para minOccurs="0") - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcDadosServico/ResponsavelRetencao - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcDadosServico/CodigoCnae - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcDadosServico/CodigoTributacaoMunicipio - OBRIGATORIO -->
+ <!-- elemento tcDadosServico/ExigibilidadeISS (Layout alterado para minOccurs="0") - NAO DEVE SER ENVIADO -->
  <!-- elemento tcDadosServico/MunicipioIncidencia -->
 
  <xsd:complexType name="tcDadosServico">
@@ -457,9 +457,9 @@
 		<xsd:attribute name="Id" type="tsIdTag" />
 	</xsd:complexType>
 
- <!-- elemento tcInfDeclaracaoPrestacaoServico/Competencia (Layout alterado para minOccurs="0") - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcInfDeclaracaoPrestacaoServico/OptanteSimplesNacional (Layout alterado para minOccurs="0") - NÃO DEVE SER ENVIADO -->
- <!-- elemento tcInfDeclaracaoPrestacaoServico/IncentivoFiscal (Layout alterado para minOccurs="0") - NÃO DEVE SER ENVIADO -->
+ <!-- elemento tcInfDeclaracaoPrestacaoServico/Competencia (Layout alterado para minOccurs="0") - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcInfDeclaracaoPrestacaoServico/OptanteSimplesNacional (Layout alterado para minOccurs="0") - NAO DEVE SER ENVIADO -->
+ <!-- elemento tcInfDeclaracaoPrestacaoServico/IncentivoFiscal (Layout alterado para minOccurs="0") - NAO DEVE SER ENVIADO -->
 
  <xsd:complexType name="tcInfDeclaracaoPrestacaoServico">
 		<xsd:sequence>
@@ -492,9 +492,9 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
- <!-- elemento tcInfNfse/EnderecoPrestadorServico (Layout alterado para minOccurs="0") - NÃO SERÁ RETORNADO -->
- <!-- elemento tcInfNfse/OrgaoGerador (Layout alterado para minOccurs="0") - NÃO SERÁ RETORNADO -->
- <!-- elemento tcInfNfse/DeclaracaoPrestacaoServico (Layout alterado para minOccurs="0") - NÃO SERÁ RETORNADO -->
+ <!-- elemento tcInfNfse/EnderecoPrestadorServico (Layout alterado para minOccurs="0") - NAO SERA RETORNADO -->
+ <!-- elemento tcInfNfse/OrgaoGerador (Layout alterado para minOccurs="0") - NAO SERA RETORNADO -->
+ <!-- elemento tcInfNfse/DeclaracaoPrestacaoServico (Layout alterado para minOccurs="0") - NAO SERA RETORNADO -->
 
  <xsd:complexType name="tcInfNfse">
 		<xsd:sequence>
@@ -759,7 +759,7 @@
 						<xsd:attribute name="Id" type="tsIdTag" />
 					</xsd:complexType>
 				</xsd:element>
-				<xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
+                <xsd:element ref="dsig:Signature" minOccurs="0"	maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
@@ -833,11 +833,11 @@
 
 	<xsd:element name="ConsultarNfseRpsResposta">
 		<xsd:complexType>
-   <xsd:sequence>
-    <xsd:element ref="CompNfse"             minOccurs="1" maxOccurs="1" />
-    <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" />
-   </xsd:sequence>
-  </xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="CompNfse"             minOccurs="1" maxOccurs="1" />
+                <xsd:element ref="ListaMensagemRetorno" minOccurs="1" maxOccurs="1" /> 
+            </xsd:sequence>
+        </xsd:complexType>
 	</xsd:element>
 
 	<xsd:element name="ConsultarNfseServicoPrestadoEnvio">

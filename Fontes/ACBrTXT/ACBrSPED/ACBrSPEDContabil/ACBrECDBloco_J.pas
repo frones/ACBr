@@ -116,23 +116,33 @@ type
   TRegistroJ100 = class
   private
     fCOD_AGL: String;        /// Código de aglutinação das contas, atribuído pelo empresário ou sociedade empresária.
+    fIND_COD_AGL: String;    /// Indicador do tipo de código de aglutinação das linhas (leiaute 7: T - Totalizador; D - Detalhe)
     fNIVEL_AGL: String;      /// Nível do Código de aglutinação (mesmo conceito do plano de contas - Registro I050).
-    fIND_GRP_BAL: String;    /// Indicador de grupo do balanço: 1 - Ativo; 2 - Passivo e Patrimônio Líquido;
+    fCOD_AGL_SUP: String;    /// Código de aglutinação sintético/grupo de código de aglutinação de nível superior
+    fIND_GRP_BAL: String;    /// Indicador de grupo do balanço: 1 ou A - Ativo; 2 ou P - Passivo e Patrimônio Líquido;
     fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
     fVL_CTA: Currency;       /// Valor total do Código de aglutinação no Balanço Patrimonial no exercício informado, ou de período definido em norma específica.
     fIND_DC_BAL: String;     /// Indicador da situação do saldo informado no campo anterior: D - Devedor; C - Credor.
     fVL_CTA_INI: Currency;   /// Valor inicial do código de aglutinação no Balanço Patrimonial no exercício informado, ou de período definido em norma específica.
     fIND_DC_BAL_INI: string; /// Indicador da situação do saldo inicial informado no campo anterior: D - Devedor; C – Credor.
+    fIND_DC_CTA_INI: string; /// Indicador da situação do saldo inicial informado no campo anterior: D - Devedor; C – Credor.
+    fVL_CTA_FIN: Currency;   /// Valor final do código de aglutinação no Balanço patrimonial no ecercíxio informado, ou de período definido de forma específica.
+    fIND_DC_CTA_FIN: String; /// Indicador da situação do saldo final informado no campo anterior: D - Devedor; C - Credor;
     fNOTAS_EXP_REF: String;  /// Notas explicativas relativas às demonstrações contábeis.
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
+    property IND_COD_AGL: String read fIND_COD_AGL write fIND_COD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
+    property COD_AGL_SUP: String read fCOD_AGL_SUP write fCOD_AGL_SUP;
     property IND_GRP_BAL: String read fIND_GRP_BAL write fIND_GRP_BAL;
     property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_DC_BAL: String read fIND_DC_BAL write fIND_DC_BAL;
     property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
     property IND_DC_BAL_INI: String read fIND_DC_BAL_INI write fIND_DC_BAL_INI;
+    property IND_DC_CTA_INI: String read fIND_DC_CTA_INI write fIND_DC_CTA_INI;
+    property VL_CTA_FIN: Currency read fVL_CTA_FIN write fVL_CTA_FIN;
+    property IND_DC_CTA_FIN: String read fIND_DC_CTA_FIN write fIND_DC_CTA_FIN;
     property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
   end;
 
@@ -153,21 +163,29 @@ type
   TRegistroJ150 = class
   private
     fCOD_AGL: String;        /// Código de aglutinação das contas, atribuído pelo empresário ou sociedade empresária.
+    fIND_COD_AGL: string;     /// Indicador do tipo de código de aglutinação das linhas (leiaute 7: T - Totalizador; D - Detalhe)
     fNIVEL_AGL: String;      /// Nível do Código de aglutinação (mesmo conceito do plano de contas - Registro I050).
+    fCOD_AGL_SUP: String;    /// Código de aglutinação sintético/grupo de código de aglutinação de nível superior
     fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
     fVL_CTA: Currency;           /// Valor total do Código de aglutinação na Demonstração do Resultado do Exercício no período informado.
+    fIND_DC_CTA: String;         /// Indicador da situação do valor total do código de aglutinação: D - Devedor; C - Credor;
+    fIND_GRP_DRE: String;         /// Indicador de grupo da DRE: D ou R
     fIND_VL: String;             /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
     fVL_CTA_ULT_DRE: Currency;   /// Valor inicial total constante na Demonstração do Resultado do Exercício do último período informado.
     fIND_VL_ULT_DRE: String;     /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
     fNOTAS_EXP_REF: String;      /// Notas explicativas relativas às demonstrações contábeis.    
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
+    property IND_COD_AGL: String read fIND_COD_AGL write fIND_COD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
+    property COD_AGL_SUP: String read fCOD_AGL_SUP write fCOD_AGL_SUP;
     property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_VL: String read fIND_VL write fIND_VL;
     property VL_CTA_ULT_DRE: Currency read fVL_CTA_ULT_DRE write fVL_CTA_ULT_DRE;    
     property IND_VL_ULT_DRE: String read fIND_VL_ULT_DRE write fIND_VL_ULT_DRE;
+    property IND_DC_CTA: String read fIND_DC_CTA write fIND_DC_CTA;
+    property IND_GRP_DRE: String read fIND_GRP_DRE write fIND_GRP_DRE;
     property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
   end;
 
@@ -217,6 +235,8 @@ type
     fIND_DC_CTA: String;     /// Indicador da situação do saldo FINAL informado no campo anterior: D - Devedor; C - Credor.
     fVL_CTA_INI: Currency;   /// Saldo inicial do código de aglutinação na demonstração do período informado
     fIND_DC_CTA_INI: String; /// Indicador da situação do saldo inicial informado no campo anterior: D – Devedor C – Credor
+    fVL_CTA_FIN: Currency;   /// Saldo final do código de aglutinação na demonstração do período informado
+    fIND_DC_CTA_FIN: String; /// INdicador da situação do saldo final informado: D - Devedor; C - Credor
     fNOTAS_EXP_REF: String;  /// Notas explicativas relativas às demonstrações contábeis.    
     ///
     FRegistroJ215: TRegistroJ215List;  /// BLOCO J - Lista de RegistroJ215 (FILHO)
@@ -231,6 +251,8 @@ type
     property IND_DC_CTA: String read fIND_DC_CTA write fIND_DC_CTA;
     property VL_CTA_INI: Currency read fVL_CTA_INI write fVL_CTA_INI;
     property IND_DC_CTA_INI: String read fIND_DC_CTA_INI write fIND_DC_CTA_INI;
+    property VL_CTA_FIN: Currency read fVL_CTA_FIN write fVL_CTA_FIN;
+    property IND_DC_CTA_FIN: String read fIND_DC_CTA_FIN write fIND_DC_CTA_FIN;
     property NOTAS_EXP_REF: String read fNOTAS_EXP_REF write fNOTAS_EXP_REF;
     /// Registros FILHOS
     property RegistroJ215: TRegistroJ215List read FRegistroJ215 write FRegistroJ215;
@@ -252,11 +274,13 @@ type
   private
     fCOD_HIST_FAT: String;    /// Código do histórico do fato contábil.
     fVL_FAT_CONT: Currency;   /// Valor do fato contábil.
-    fIND_DC_FAT: String;     /// Indicador de situação do saldo informado no campo anterior
+    fIND_DC_FAT: String;      /// Indicador de situação do saldo informado no campo anterior
+    fDESC_FAT: String;         /// Descrição do fato contábil
   public
     property COD_HIST_FAT: String read fCOD_HIST_FAT write fCOD_HIST_FAT;
     property VL_FAT_CONT: Currency read fVL_FAT_CONT write fVL_FAT_CONT;
     property IND_DC_FAT: String read fIND_DC_FAT write fIND_DC_FAT;
+    property DESC_FAT: String read fDESC_FAT write fDESC_FAT;
   end;
 
   /// Registro J215 - Lista
@@ -302,11 +326,13 @@ type
   private
     fTIPO_DOC: String; // Tipo de documento
     fDESC_RTF: String; // Descrição do arquivo
+    fCOD_MOT_SUBS: String; /// Código do motivo da substituição
     fHASH_RTF: String; // Hash do arquivo
     fARQ_RTF: String;  // Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
   public
     property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
     property DESC_RTF: String read fDESC_RTF write fDESC_RTF;
+    property COD_MOT_SUBS: String read fCOD_MOT_SUBS write fCOD_MOT_SUBS;
     property HASH_RTF: String read fHASH_RTF write fHASH_RTF;
     property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
   end;
@@ -405,17 +431,58 @@ type
     property Items[Index: Integer]: TRegistroJ930 read GetItem write SetItem;
   end;
 
+  /// Rregistro J932 – SIGNATÁRIOS DO TERMO DE VERIFICAÇÃO PARA FINS DE SUSBTITUIÇÃO DA ECD
+
+  TRegistroJ932 = class
+  private
+    fIDENT_QUALIF_T: String;
+    fEMAIL_T: String;
+    fIND_CRC_T: String;
+    fCOD_ASSIN_T: String;
+    fUF_CRC_T: String;
+    fNUM_SEQ_CRC_T: String;
+    fIDENT_CPF_CNPJ_T: String;
+    fIDENT_NOM_T: String;
+    fFONE_T: String;
+    fDT_CRC_T: TDateTime;
+  public
+    property IDENT_NOM_T: String read fIDENT_NOM_T write fIDENT_NOM_T;
+    property IDENT_CPF_CNPJ_T: String read fIDENT_CPF_CNPJ_T write fIDENT_CPF_CNPJ_T;
+    property IDENT_QUALIF_T: String read fIDENT_QUALIF_T write fIDENT_QUALIF_T;
+    property COD_ASSIN_T: String read fCOD_ASSIN_T write fCOD_ASSIN_T;
+    property IND_CRC_T: String read fIND_CRC_T write fIND_CRC_T;
+    property EMAIL_T: String read fEMAIL_T write fEMAIL_T;
+    property FONE_T: String read fFONE_T write fFONE_T;
+    property UF_CRC_T: String read fUF_CRC_T write fUF_CRC_T;
+    property NUM_SEQ_CRC_T: String read fNUM_SEQ_CRC_T write fNUM_SEQ_CRC_T;
+    property DT_CRC_T: TDateTime read fDT_CRC_T write fDT_CRC_T;
+  end;
+
+  /// Registro J932 - Lista
+
+  TRegistroJ932List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ932;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ932);
+  public
+    function New: TRegistroJ932;
+    property Items[Index: Integer]: TRegistroJ932 read GetItem write SetItem;
+  end;
+
   /// Rregistro J935 – IDENTIFICAÇÃO DOS AUDITORES INDEPENDENTES
 
   TRegistroJ935 = class
   private
     FCOD_CVM_AUDITOR: String;
+    fNI_CPF_CNPJ: String;
     FNOME_AUDITOR: String;
     procedure SetCOD_CVM_AUDITOR(const Value: String);  // Nome do auditor independente.
     procedure SetNOME_AUDITOR(const Value: String);     // Registro do auditor independente na CVM.
+    procedure setfNI_CPF_CNPJ(const Value: String);     // CPF do auditor independente / CNPJ da pessoa jurídica de auditoria independente
 
   public
     property NOME_AUDITOR: String read FNOME_AUDITOR write SetNOME_AUDITOR;
+    property NI_CPF_CNPJ: String read fNI_CPF_CNPJ write setfNI_CPF_CNPJ;
     property COD_CVM_AUDITOR: String read FCOD_CVM_AUDITOR write SetCOD_CVM_AUDITOR;
   end;
 
@@ -723,6 +790,11 @@ begin
   FCOD_CVM_AUDITOR := Value;
 end;
 
+procedure TRegistroJ935.setfNI_CPF_CNPJ(const Value: String);
+begin
+  fNI_CPF_CNPJ := Value;
+end;
+
 procedure TRegistroJ935.SetNOME_AUDITOR(const Value: String);
 begin
   FNOME_AUDITOR := Value;
@@ -742,6 +814,25 @@ begin
 end;
 
 procedure TRegistroJ935List.SetItem(Index: Integer; const Value: TRegistroJ935);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroJ932List }
+
+function TRegistroJ932List.GetItem(Index: Integer): TRegistroJ932;
+begin
+  Result := TRegistroJ932(Inherited Items[Index]);
+end;
+
+function TRegistroJ932List.New: TRegistroJ932;
+begin
+  Result := TRegistroJ932.Create;
+  Add(Result);
+end;
+
+procedure TRegistroJ932List.SetItem(Index: Integer;
+  const Value: TRegistroJ932);
 begin
   Put(Index, Value);
 end;

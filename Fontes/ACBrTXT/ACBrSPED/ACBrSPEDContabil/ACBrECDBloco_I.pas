@@ -479,6 +479,7 @@ type
     fDT_LCTO: TDateTime;         // Data do lançamento
     fVL_LCTO: Currency;           // Valor do Lançamento
     fIND_LCTO: String;        // Indicador do tipo do lançamento
+    fDT_LCTO_EXT: TDateTime;         // Data do lançamento extemporaneo
 
     fRegistroI250: TRegistroI250List; /// BLOCO I - Lista de RegistroI250 (FILHO)
   public
@@ -489,6 +490,7 @@ type
     property DT_LCTO: TDateTime read fDT_LCTO write fDT_LCTO;
     property VL_LCTO: Currency read fVL_LCTO write fVL_LCTO;
     property IND_LCTO: String read fIND_LCTO write fIND_LCTO;
+    property DT_LCTO_EXT: TDateTime read fDT_LCTO_EXT write fDT_LCTO_EXT;
     property RegistroI250: TRegistroI250List read fRegistroI250 write fRegistroI250;
   end;
 

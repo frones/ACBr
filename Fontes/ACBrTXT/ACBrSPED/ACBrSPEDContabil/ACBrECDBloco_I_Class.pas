@@ -684,7 +684,8 @@ begin
                 LFill(NUM_LCTO) +
                 LFill(DT_LCTO) +
                 LFill(VL_LCTO, 19, 2) +
-                LFill(IND_LCTO) 
+                LFill(IND_LCTO) +
+                LFill('')
                 );
         end;
         // Registro Filho

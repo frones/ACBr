@@ -603,6 +603,10 @@ const
   CMetodoSetColunasFonteNormal  = 'setcolunasfontenormal';
   CMetodoCortaPapel             = 'cortapapel';
   CMetodoSetCortaPapel          = 'setcortapapel';
+  CMetodoImprimirImagemArquivo  = 'imprimirimagemarquivo';
+  CMetodoImprimirLogo           = 'imprimirlogo';
+  CMetodoGravarLogoArquivo      = 'gravarlogoarquivo';
+  CMetodoApagarLogo             = 'apagarlogo';
 
   CExtensaoXML =                     '.xml';
 
@@ -907,14 +911,14 @@ const
   CKeyDANFCeTipoPagtoBandeira =        'Bandeira';
   CKeyDANFCeTipoPagtoAutorizacao =     'Autorizacao';
 
-  CSecDANFCeFonteLinhaItem =           'FonteLinhaItem';
-  CKeyDANFCeFonteLinhaItemName =       'Name';
-  CKeyDANFCeFonteLinhaItemColor =      'Color';
-  CKeyDANFCeFonteLinhaItemSize =       'Size';
-  CKeyDANFCeFonteLinhaItemStyleBold =  'Bold';
-  CKeyDANFCeFonteLinhaItemStyleItalic =  'Italic';
-  CKeyDANFCeFonteLinhaItemStyleUnderline =  'Underline';
-  CKeyDANFCeFonteLinhaItemStyleStrckout =  'Strckout';
+  CSecFonte =                          'FonteLinhaItem';
+  CKeyFonteName =                      'Name';
+  CKeyFonteColor =                     'Color';
+  CKeyFonteSize =                      'Size';
+  CKeyFonteStyleBold =                 'Bold';
+  CKeyFonteStyleItalic =               'Italic';
+  CKeyFonteStyleUnderline =            'Underline';
+  CKeyFonteStyleStrckout =             'Strckout';
 
   CSecDACTE =                          'DACTE';
   CKeyDACTETamanhoPapel =              'TamanhoPapel';

@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2019
+[+] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit
+Adicionado parâmetro "ReplayTo" nos Métodos de Envio de e-mail de DFe
+
+30/01/2019
+[+] DoPosPrinterUnit
+Adicionado Métodos do componente PosPrinter para Impressão de Imagem BMP e
+Gravar Logo na memória da Impressora
+'imprimirimagemarquivo','imprimirlogo','gravarlogoarquivo','apagarlogo'
+
 29/01/2019
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado propriedade "FonteLinhaItem" para impressão NFCe

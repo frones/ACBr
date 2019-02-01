@@ -996,13 +996,13 @@ begin
 
     with FonteLinha do
     begin
-      Ini.WriteString( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemName   , name );
-      Ini.WriteInteger( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemColor , Color );
-      Ini.WriteInteger( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemSize  , Size );
-      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleBold , fsBold in Style );
-      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleItalic , fsItalic in Style );
-      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleUnderline , fsUnderline in Style );
-      Ini.WriteBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleStrckout , fsStrikeOut in Style );
+      Ini.WriteString( CSecFonte,   CKeyFonteName   , name );
+      Ini.WriteInteger( CSecFonte,  CKeyFonteColor , Color );
+      Ini.WriteInteger( CSecFonte,  CKeyFonteSize  , Size );
+      Ini.WriteBool( CSecFonte,   CKeyFonteStyleBold , fsBold in Style );
+      Ini.WriteBool( CSecFonte,   CKeyFonteStyleItalic , fsItalic in Style );
+      Ini.WriteBool( CSecFonte,   CKeyFonteStyleUnderline , fsUnderline in Style );
+      Ini.WriteBool( CSecFonte,   CKeyFonteStyleStrckout , fsStrikeOut in Style );
     end;
 
     with DFE.Impressao.DANFE do
@@ -1617,17 +1617,17 @@ begin
 
     with FonteLinha do
     begin
-      Name    :=  Ini.ReadString( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemName, FFonteLinha.Name );
-      Color   :=  TColor(Ini.ReadInteger( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemColor, FFonteLinha.Color ));
-      Size    :=  Ini.ReadInteger( CSecDANFCeFonteLinhaItem, CKeyDANFCeFonteLinhaItemSize, FFonteLinha.Size );
+      Name    :=  Ini.ReadString( CSecFonte, CKeyFonteName, FFonteLinha.Name );
+      Color   :=  TColor(Ini.ReadInteger( CSecFonte, CKeyFonteColor, FFonteLinha.Color ));
+      Size    :=  Ini.ReadInteger( CSecFonte, CKeyFonteSize, FFonteLinha.Size );
       Style := [];
-      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleBold , False ) then
+      if Ini.ReadBool( CSecFonte,   CKeyFonteStyleBold , False ) then
         Style := Style + [fsBold];
-      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleItalic , False ) then
+      if Ini.ReadBool( CSecFonte,   CKeyFonteStyleItalic , False ) then
         Style := Style + [fsItalic];
-      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleUnderline , False ) then
+      if Ini.ReadBool( CSecFonte,   CKeyFonteStyleUnderline , False ) then
         Style := Style + [fsUnderline];
-      if Ini.ReadBool( CSecDANFCeFonteLinhaItem,   CKeyDANFCeFonteLinhaItemStyleStrckout , False ) then
+      if Ini.ReadBool( CSecFonte,   CKeyFonteStyleStrckout , False ) then
         Style := Style + [fsStrikeOut];
     end;
 
@@ -2244,7 +2244,7 @@ begin
   begin
     Name                 := 'Lucida Console';
     Size                 := 7;
-    Color                := 536870912;
+    Color                := clBlack;
     Style                := [];
   end;
 

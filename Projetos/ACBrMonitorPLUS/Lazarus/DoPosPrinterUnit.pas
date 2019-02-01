@@ -221,6 +221,31 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoImprimirImagemArquivo}
+TMetodoImprimirImagemArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoImprimirLogo}
+TMetodoImprimirLogo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoGravarLogoArquivo}
+TMetodoGravarLogoArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoApagarLogo}
+TMetodoApagarLogo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+
 implementation
 
 { TACBrObjetoPosPrinter }
@@ -259,6 +284,11 @@ begin
   ListaDeMetodos.Add(CMetodoSetColunasFonteNormal);
   ListaDeMetodos.Add(CMetodoCortaPapel);
   ListaDeMetodos.Add(CMetodoSetCortaPapel);
+  ListaDeMetodos.Add(CMetodoImprimirImagemArquivo);
+  ListaDeMetodos.Add(CMetodoImprimirLogo);
+  ListaDeMetodos.Add(CMetodoGravarLogoArquivo);
+  ListaDeMetodos.Add(CMetodoApagarLogo);
+
 end;
 
 procedure TACBrObjetoPosPrinter.Executar(ACmd: TACBrCmd);
@@ -301,6 +331,10 @@ begin
    25  : AMetodoClass := TMetodoSetColunasFonteNormal;
    26  : AMetodoClass := TMetodoCortaPapel;
    27  : AMetodoClass := TMetodoSetCortaPapel;
+   28  : AMetodoClass := TMetodoImprimirImagemArquivo;
+   29  : AMetodoClass := TMetodoImprimirLogo;
+   30  : AMetodoClass := TMetodoGravarLogoArquivo;
+   31  : AMetodoClass := TMetodoApagarLogo;
   end;
 
   if Assigned(AMetodoClass) then
@@ -364,7 +398,7 @@ procedure TMetodoImprimirLinha.Executar;
 begin
   with TACBrObjetoPosPrinter(fpObjetoDono) do
   begin
-    ACBrPosPrinter.ImprimirLinha(fpcmd.Params(0))
+    ACBrPosPrinter.ImprimirLinha(fpcmd.Params(0));
   end;
 end;
 
@@ -376,7 +410,7 @@ procedure TMetodoImprimirCMD.Executar;
 begin
   with TACBrObjetoPosPrinter(fpObjetoDono) do
   begin
-    ACBrPosPrinter.ImprimirCmd(fpcmd.Params(0))
+    ACBrPosPrinter.ImprimirCmd(fpcmd.Params(0));
   end;
 end;
 
@@ -677,6 +711,91 @@ begin
 
     MonitorConfig.SalvarArquivo;
   end;
+end;
+
+{ TMetodoImprimirImagemArquivo }
+
+{ Params: 0 - String : Path da imagem
+}
+procedure TMetodoImprimirImagemArquivo.Executar;
+var
+  APath: String;
+begin
+  APath := fpCmd.Params(0);
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ImprimirImagemArquivo(APath);
+  end;
+
+end;
+
+{ TMetodoImprimirLogo }
+
+{ Params: 0 - AKC1 : Integer
+          1 - AKC2 : Integer
+          2 - FatorX: Integer
+          3 - FatorY: Integer
+}
+procedure TMetodoImprimirLogo.Executar;
+var
+  AAKC1: Integer;
+  AAKC2: Integer;
+  AFatorX: Integer;
+  AFatorY: Integer;
+begin
+  AAKC1:= StrToIntDef(fpCmd.Params(0),-1);
+  AAKC2:= StrToIntDef(fpCmd.Params(1),-1);
+  AFatorX:= StrToIntDef(fpCmd.Params(2),-1);
+  AFatorY:= StrToIntDef(fpCmd.Params(3),-1);
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ImprimirLogo(AAKC1,AAKC2,AFatorX,AFatorY);
+  end;
+
+end;
+
+{ TMetodoGravarLogoArquivo }
+
+{ Params: 0 - APathImg: String;
+          1 - AKC1 : Integer
+          2 - AKC2 : Integer
+}
+procedure TMetodoGravarLogoArquivo.Executar;
+var
+  APathImg: String;
+  AAKC1: Integer;
+  AAKC2: Integer;
+begin
+  APathImg:= fpCmd.Params(0);
+  AAKC1:= StrToIntDef(fpCmd.Params(1),-1);
+  AAKC2:= StrToIntDef(fpCmd.Params(2),-1);
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.GravarLogoArquivo(APathImg, AAKC1, AAKC2);
+  end;
+
+end;
+
+{ TMetodoApagarLogo }
+
+{ Params: 0 - AKC1 : Integer
+          1 - AKC2 : Integer
+}
+procedure TMetodoApagarLogo.Executar;
+var
+  AAKC1: Integer;
+  AAKC2: Integer;
+begin
+  AAKC1:= StrToIntDef(fpCmd.Params(0),-1);
+  AAKC2:= StrToIntDef(fpCmd.Params(1),-1);
+
+  with TACBrObjetoPosPrinter(fpObjetoDono) do
+  begin
+    ACBrPosPrinter.ApagarLogo(AAKC1, AAKC2);
+  end;
+
 end;
 
 end.

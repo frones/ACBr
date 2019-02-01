@@ -125,6 +125,8 @@ type
       fCodigoLoja : AnsiString;
       fEnderecoIP : AnsiString;
       fNumeroTerminal : AnsiString;
+      fCNPJEstabelecimento : AnsiString;
+      fCNPJSoftwareHouse : AnsiString;
       fOnExibeMenu : TACBrTEFDCliSiTefExibeMenu;
       fOnObtemCampo : TACBrTEFDCliSiTefObtemCampo;
       fOperacaoADM : Integer;
@@ -292,6 +294,8 @@ type
      property EnderecoIP: AnsiString                    read fEnderecoIP           write fEnderecoIP;
      property CodigoLoja: AnsiString                    read fCodigoLoja           write fCodigoLoja;
      property NumeroTerminal: AnsiString                read fNumeroTerminal       write fNumeroTerminal;
+     property CNPJEstabelecimento: AnsiString           read fCNPJEstabelecimento  write fCNPJEstabelecimento;
+     property CNPJSoftwareHouse: AnsiString             read fCNPJSoftwareHouse    write fCNPJSoftwareHouse;
      property Operador: AnsiString                      read fOperador             write fOperador;
      property PortaPinPad: Integer                      read fPortaPinPad          write fPortaPinPad default 0;
      property ParametrosAdicionais: TStringList         read fParametrosAdicionais write SetParametrosAdicionais;
@@ -568,6 +572,8 @@ begin
   fEnderecoIP     := '' ;
   fCodigoLoja     := '' ;
   fNumeroTerminal := '' ;
+  fCNPJEstabelecimento := '';
+  fCNPJSoftwareHouse   := '';
   fOperador       := '' ;
   fRestricoes     := '' ;
 
@@ -730,6 +736,9 @@ begin
   // acertar quebras de linhas e abertura e fechamento da lista de parametros
   ParamAdic := StringReplace(Trim(ParametrosAdicionais.Text), sLineBreak, ';', [rfReplaceAll]);
   ParamAdic := '['+ ParamAdic + ']';
+
+  if NaoEstaVazio(CNPJEstabelecimento) and NaoEstaVazio(CNPJSoftwareHouse) then
+     ParamAdic := ParamAdic + '[ParmsClient=1='+CNPJEstabelecimento+';2='+CNPJSoftwareHouse+']';
 
   GravaLog( '*** ConfiguraIntSiTefInterativoEx. EnderecoIP: '   +fEnderecoIP+
                                             ' CodigoLoja: '     +fCodigoLoja+

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/02/2019
+-- ACBrTEFDCliSitef --
+[+] Adicionada as propriedades "CNPJEstabelecimento" e "CNPJSoftwareHouse", para
+    facilitar o cumprimento de nova exigência de homologação da SoftwareExpress
+    (por: André F. Moraes)
+
 08/10/2018
 -- ACBrTEFDCliSitef
 [*] Transações com mais de três dias são finalizadas automaticamente pela SiTef

@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDevice, ACBrBase;
+  ACBrDevice, ACBrBase, ACBrEscPosHook;
 
 type
 
@@ -311,6 +311,7 @@ type
     FConfigModoPagina: TACBrConfigModoPagina;
     FControlePorta: Boolean;
     FDevice: TACBrDevice;
+    FAtivo: Boolean;
     FEspacoEntreLinhas: byte;
     FConfigGaveta: TACBrConfigGaveta;
     FModelo: TACBrPosPrinterModelo;
@@ -332,7 +333,6 @@ type
     FInicializada: Boolean;
     FVerificarImpressora: Boolean;
 
-    function GetAtivo: Boolean;
     function GetColunasFonteCondensada: Integer;
     function GetColunasFonteExpandida: Integer;
     function GetNumeroPaginaDeCodigo(APagCod: TACBrPosPaginaCodigo): word;
@@ -354,6 +354,8 @@ type
 
   protected
     FPosPrinterClass: TACBrPosPrinterClass;
+    FHook: TACBrPosPrinterHook;
+
     procedure EnviarStringDevice(AString: AnsiString);
     procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
@@ -361,15 +363,24 @@ type
 
     procedure AtivarPorta;
     procedure DesativarPorta;
+
+    procedure DetectarECriarHook;
+    procedure LiberarHook;
+    procedure PosPrinterHookAtivar(const APort: String; Params: String);
+    procedure PosPrinterHookDesativar(const APort: String);
+    procedure PosPrinterHookEnviaString(const cmd: AnsiString);
+    procedure PosPrinterHookLeString(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString);
+
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     property PosPrinter: TACBrPosPrinterClass read FPosPrinterClass;
+    property Hook: TACBrPosPrinterHook read FHook;
 
     procedure Ativar;
     procedure Desativar;
-    property Ativo: Boolean read GetAtivo write SetAtivo;
+    property Ativo: Boolean read FAtivo write SetAtivo;
 
     procedure Imprimir(const AString: AnsiString = ''; PulaLinha: Boolean = False;
       DecodificarTags: Boolean = True; CodificarPagina: Boolean = True;
@@ -473,7 +484,9 @@ uses
   {$EndIf}
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
-  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold, ACBrEscEpsonP2;
+  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold,
+  ACBrEscEpsonP2,
+  ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
 
 { TACBrConfigModoPagina }
 
@@ -829,6 +842,8 @@ begin
   {$ENDIF}
   FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   FModelo := ppTexto;
+  FHook := Nil;
+
   FTipoAlinhamento := alEsquerda;
   FFonteStatus := [ftNormal];
   FInicializada := False;
@@ -1029,6 +1044,7 @@ end;
 
 destructor TACBrPosPrinter.Destroy;
 begin
+  LiberarHook;
   FPosPrinterClass.Free;
   FBuffer.Free;
   FTagProcessor.Free;
@@ -1037,7 +1053,7 @@ begin
   FConfigLogo.Free;
   FConfigGaveta.Free;
   FConfigModoPagina.Free;
-  FDevice.Free;
+  FreeAndNil(FDevice);
 
   inherited Destroy;
 end;
@@ -1053,8 +1069,8 @@ procedure TACBrPosPrinter.Ativar;
 var
   DadosDevice: String;
 begin
-  if FDevice.Ativo then
-    exit;
+  if FAtivo then
+    Exit;
 
 {(*}
   if FDevice.IsTXTFilePort then
@@ -1075,19 +1091,26 @@ begin
             False, False);
   {*)}
 
+  DetectarECriarHook;
+
   FDevice.Ativar;
+  FAtivo := True;
   FPosPrinterClass.Configurar;
   FInicializada := False;
 end;
 
 procedure TACBrPosPrinter.Desativar;
 begin
+  if not FAtivo then
+    Exit;
+
   GravarLog(AnsiString(sLineBreak + StringOfChar('-', 80) + sLineBreak +
     'DESATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) +
     sLineBreak + StringOfChar('-', 80) + sLineBreak),
     False, False);
 
   FDevice.Desativar;
+  FAtivo := False;
   FInicializada := False;
 end;
 
@@ -1205,6 +1228,8 @@ end;
 procedure TACBrPosPrinter.TraduzirTag(const ATag: AnsiString;
   var TagTraduzida: AnsiString);
 begin
+  // GravarLog(AnsiString('TraduzirTag(' + ATag + ')'));   // DEBUG - permite medir de tradução de cada Tag
+
   TagTraduzida := '';
 
   if ATag = cTagLigaExpandido then
@@ -1639,6 +1664,114 @@ begin
   end;
 end;
 
+procedure TACBrPosPrinter.DetectarECriarHook;
+var
+  uPorta, uMarca: String;
+  P, i: Integer;
+  HookClass: TACBrPosPrinterHookClass;
+begin
+  if (FDevice.DeviceType <> dtHook) then
+  begin
+    LiberarHook;
+    Exit;
+  end;
+
+  HookClass := Nil;
+  uPorta := UpperCase(Porta);
+  uMarca := '';
+  P := pos(':',uPorta);
+  if (P > 0) then
+    uMarca := Trim(copy(uPorta, P+1, Length(uPorta)));
+
+  if (uMarca = '') then
+  begin
+    for i := 0 to Length(HookList)-1 do
+    begin
+      if HookList[i].CanInitilize then
+      begin
+        uMarca := HookList[i].Brand;
+        Break;
+      end;
+    end;
+
+    if (uMarca = '') then
+      raise EPosPrinterException.Create('Nenhuma biblioteca de modo USB encontrada');
+  end;
+
+  if Assigned(FHook) then
+  begin
+    if (uMarca <> FHook.Brand) then
+      LiberarHook
+    else
+      Exit;
+  end;
+
+  if not Assigned(FHook) then
+  begin
+    HookClass := Nil;
+
+    for i := 0 to Length(HookList)-1 do
+    begin
+      if (HookList[i].Brand = uMarca) then
+      begin
+        HookClass := HookList[i];
+        Break;
+      end;
+    end;
+
+    if Assigned(HookClass) then
+      FHook := HookClass.Create
+    else
+      raise EPosPrinterException.Create(ACBrStr('Marca '+uMarca+', não tem suporte em modo USB'));
+  end;
+
+  FHook.Init;
+  FDevice.HookAtivar := PosPrinterHookAtivar;
+  FDevice.HookDesativar := PosPrinterHookDesativar;
+  FDevice.HookEnviaString := PosPrinterHookEnviaString;
+  FDevice.HookLeString := PosPrinterHookLeString;
+end;
+
+procedure TACBrPosPrinter.LiberarHook;
+begin
+  if Assigned(FDevice) then
+  begin
+    FDevice.HookAtivar := Nil;
+    FDevice.HookDesativar :=  Nil;
+    FDevice.HookEnviaString := Nil;
+    FDevice.HookLeString := Nil;
+  end;
+
+  if Assigned(FHook) then
+    FreeAndNil(FHook);
+end;
+
+procedure TACBrPosPrinter.PosPrinterHookAtivar(const APort: String; Params: String);
+begin
+  if Assigned(FHook) then
+    FHook.Open(APort);
+end;
+
+procedure TACBrPosPrinter.PosPrinterHookDesativar(const APort: String);
+begin
+  if Assigned(FHook) then
+    FHook.Close;
+end;
+
+procedure TACBrPosPrinter.PosPrinterHookEnviaString(const cmd: AnsiString);
+begin
+  if Assigned(FHook) then
+    FHook.WriteData(cmd);
+end;
+
+procedure TACBrPosPrinter.PosPrinterHookLeString(const NumBytes, ATimeOut: Integer;
+  var Retorno: AnsiString);
+begin
+  Retorno := '';
+  if Assigned(FHook) then
+     Retorno := FHook.ReadData(NumBytes, ATimeOut);
+end;
+
 procedure TACBrPosPrinter.EnviarStringDevice(AString: AnsiString);
 var
   CmdInit: AnsiString;
@@ -1979,10 +2112,13 @@ end;
 
 procedure TACBrPosPrinter.SetAtivo(AValue: Boolean);
 begin
+  if (AValue = FAtivo) then
+    Exit;
+
   if AValue then
-    FDevice.Ativar
+    Ativar
   else
-    FDevice.Desativar;
+    Desativar;
 end;
 
 procedure TACBrPosPrinter.SetIgnorarTags(AValue: Boolean);
@@ -2009,7 +2145,7 @@ var
   MsgErro: String;
 begin
   try
-    if not (ControlePorta or FDevice.Ativo) then
+    if not (ControlePorta or Ativo) then
       raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
 
     if not Ativo then
@@ -2129,11 +2265,6 @@ begin
     else
       Result := 0;
   end;
-end;
-
-function TACBrPosPrinter.GetAtivo: Boolean;
-begin
-  Result := FDevice.Ativo;
 end;
 
 function TACBrPosPrinter.CodificarPaginaDeCodigo(const ATexto: AnsiString

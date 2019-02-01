@@ -39,6 +39,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/02/2019
+-- ACBrPosPrinter --
+[*] Melhorias na detecção de Porta Ativa e Controle de Porta
+[+] Adicionado novo suporte a Impressoras através da Porta USB. Agora o
+    ACBrPosPrinter aceita a sintaxe de portas como:  "USB:MARCA", onde
+    "MARCA" é o nome do Fabricante.
+    Com isso o ACBrPosPrinter usará a DLL do fabricante para acesso a Impressora,
+    pela porta USB.
+    https://www.projetoacbr.com.br/forum/topic/49160-acbrposprinter-com-suporte-a-usb/
+
+-- ACBrEscPosHook --
+[+] Implementado Classe genérica para criação de Hooks
+
+-- ACBrEscPosHookElginDLL --
+[+] Implementação de Hook com as DLLs da "ELGIN":  HprtPrinter.dll, hprtio.dll
+    Use em Porta := "USB:ELGIN", e mantenha as DLLs indicadas na mesma pasta do
+    seu Executável
+
+-- ACBrEscPosHookEpsonDLL --
+[+] Implementação de Hook com a DLL da "EPSON":  InterfaceEpsonNF.dll
+    Use em Porta := "USB:EPSON", e mantenha a DLL indicada na mesma pasta do
+    seu Executável
+    (por: DSA)
+
 Data: 29/01/2019
 -- ACBrEscPosEpson --
 [*] Ajuste no método "ComandoImprimirImagemRasterStr", para permitir o uso de

@@ -38,57 +38,6 @@
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 
-{*
-                 **** Como usar o ACBrDevice.Hook ? ****
-
-- Configure a porta com "USB" ou "DLL"  (sem aspas)
-
-- Você deve programas os eventos abaixo, na sua aplicação
-     ACBrDevice.HookAtivar,
-     ACBrDevice.HookDesativar,
-     ACBrDevice.HookEnviaString
-     ACBrDevice.HookLeString
-
-- Instancie a classe abaixo na sua aplicação e use a mesma, nos eventos de Hook...
-  Exemplos:
-
-procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
-begin
-  FElginUSB := TElginUSBPrinter.Create;
-end;
-
-procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
-begin
-  FElginUSB.Free;
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookAtivar(const APort: String;
-  Params: String);
-begin
-  FElginUSB.Open(APort);
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookDesativar(const APort: String);
-begin
-  FElginUSB.Close;
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookEnviaString(const cmd: AnsiString);
-begin
-  FElginUSB.WriteData(cmd);
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookLeString(const NumBytes,
-  ATimeOut: Integer; var Retorno: AnsiString);
-begin
-  Retorno := FElginUSB.ReadData;
-end;
-
-- Para acessar outras marcas/modelos por comunicação por DLL...
-  Crie uma classe semelhante a dessa Unit...
-
-*}
-
 unit ACBrEscPosHookElginDLL;
 
 {$I ACBr.inc}
@@ -96,20 +45,27 @@ unit ACBrEscPosHookElginDLL;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrEscPosHook;
 
 const
-  LIB_NAME = 'HprtPrinter.dll' ;
+  ELGIN_LIB_NAME = 'HprtPrinter.dll' ;
+  ELGIN_NAME = 'ELGIN';
   //Error Code
   E_SUCCESS = 0;
   E_BAD_HANDLE = -6;
+
+resourcestring
+  CERRO_OBJ_PRINT = 'Erro ao criar instância do Objeto da impressora ELGIN: %d';
 
 type
 
   { TElginUSBPrinter }
 
-  TElginUSBPrinter = class
+  TElginUSBPrinter = class(TACBrPosPrinterHook)
   private
+    FPrinter: Pointer;
+
     xPrtPrinterCreatorW : function (printer: PPointer; model: WideString): Integer; cdecl;
     xPrtPortOpenW : function (printer: Pointer; portSetting: WideString): Integer; cdecl;
     xPrtPortClose : function (printer:Pointer): Integer; cdecl;
@@ -118,22 +74,24 @@ type
                              readData:PByte; readNum:integer;
                              preadedNum:PInteger): Integer; cdecl;
 
-    procedure UnLoadDLLFunctions;
-  private
-    FPrinter: Pointer;
-    FPort: String;
+    procedure CreateElginPrinter;
+  protected
+    function GetInitialized: Boolean; override;
 
+    procedure LoadLibFunctions; override;
+    procedure UnLoadLibFunctions; override;
   public
-    procedure LoadDLLFunctions;
+    constructor Create; override;
+    procedure Init; override;
+    procedure Shutdown; override;
 
-    procedure Init;
-    procedure Shutdown;
+    procedure Open(const APort: String); override;
+    procedure Close; override;
+    procedure WriteData(const AData: AnsiString); override;
+    function ReadData(const NumBytes, ATimeOut: Integer): AnsiString; override;
 
-    procedure Open(APort: String);
-    procedure Close;
-    procedure WriteData(AData: AnsiString);
-    function ReadData: AnsiString;
-    function Connected: Boolean;
+    class function CanInitilize: Boolean; override;
+    class function Brand: String; override;
   end;
 
 implementation
@@ -141,107 +99,136 @@ implementation
 uses
   ACBrUtil;
 
-procedure FunctionDetectLib(FuncName : String ;
-  var LibPointer : Pointer) ;
-var
-  sLibName: String;
+constructor TElginUSBPrinter.Create;
 begin
-  if not FunctionDetect( LIB_NAME, FuncName, LibPointer) then
-  begin
-     LibPointer := NIL ;
-     raise Exception.Create( Format(ACBrStr('Erro ao carregar a função: %s na Biblioteca: %s'), [FuncName,sLibName]) ) ;
-  end ;
-end ;
+  inherited Create;
+
+  fpPrinterName := ELGIN_NAME;
+  fpLibName := ELGIN_LIB_NAME;
+end;
 
 procedure TElginUSBPrinter.Init;
+begin
+  if Initialized then
+    Exit;
+
+  inherited;
+
+  try
+    CreateElginPrinter;
+  except
+    fpInitialized := False;
+    raise;
+  end;
+end;
+
+procedure TElginUSBPrinter.CreateElginPrinter;
 var
   errorNo: Integer;
   ModelName: AnsiString;
 begin
-  if (FPrinter <> Nil) then
-    Exit;
-
-  LoadDLLFunctions;
-
   FPrinter := Nil;
-  FPort := '';
   ModelName := 'i7';
 
   errorNo := xPrtPrinterCreatorW(@FPrinter, WideString(ModelName));
   if (errorNo <> E_SUCCESS) then
-    raise Exception.Create('Erro ao criar a impressora Elgin: '+IntToStr(errorNo));
+    raise EACBrPosPrinterHook.CreateFmt(CERRO_OBJ_PRINT, [errorNo]);
 end;
 
 procedure TElginUSBPrinter.Shutdown;
 begin
-  UnLoadDLLFunctions;
+  inherited;
   FPrinter := Nil;
 end;
 
-procedure TElginUSBPrinter.Open(APort: String);
+procedure TElginUSBPrinter.Open(const APort: String);
 var
   errorNo: Integer;
 begin
-  Init;
+  if Connected then
+    Exit;
 
-  if (UpperCase(APort) = 'DLL') then
-    APort := 'USB';
+  inherited Open(APort);
 
-  FPort := APort;
-  errorNo := xPrtPortOpenW(FPrinter, WideString(FPort));
-  if (errorNo <> E_SUCCESS) then
-    raise Exception.Create('Erro ao Abrir a impressora Elgin em: '+FPort);
+  try
+    errorNo := xPrtPortOpenW(FPrinter, WideString(fpPort));
+    if (errorNo <> E_SUCCESS) then
+      raise Exception.CreateFmt(CERROR_OPEN, [fpPort, fpPrinterName]);
+  except
+    fpConnected := False;
+    fpPort := '';
+    raise;
+  end;
 end;
 
 procedure TElginUSBPrinter.Close;
 var
   errorNo: Integer;
 begin
-  if (FPrinter = Nil) then
+  if not Connected then
     Exit;
 
   errorNo := xPrtPortClose(FPrinter);
   if (errorNo <> E_SUCCESS) then
-    raise Exception.Create('Erro ao Fechar a Porta da impressora Elgin');
+    raise Exception.CreateFmt(CERROR_CLOSE, [fpPort, fpPrinterName]);
 
-  FPort := '';
+  inherited Close;
 end;
 
-procedure TElginUSBPrinter.WriteData(AData: AnsiString);
+procedure TElginUSBPrinter.WriteData(const AData: AnsiString);
 begin
+  CheckConnected;
   xPrtDirectIO(FPrinter, PByte(AData), Length(AData), Nil, 0, Nil);
 end;
 
-function TElginUSBPrinter.ReadData: AnsiString;
+function TElginUSBPrinter.ReadData(const NumBytes, ATimeOut: Integer): AnsiString;
 var
   ReadNum: Integer;
 begin
+  CheckConnected;
   Result := Space(1024);
   ReadNum := 0;
   xPrtDirectIO(FPrinter, Nil, 0, PByte(Result), 1024, @ReadNum);
   SetLength(Result, ReadNum);
 end;
 
-function TElginUSBPrinter.Connected: Boolean;
+class function TElginUSBPrinter.CanInitilize: Boolean;
+begin
+  Result := FileExists(ApplicationPath + ELGIN_LIB_NAME);
+end;
+
+class function TElginUSBPrinter.Brand: String;
+begin
+  Result := ELGIN_NAME;
+end;
+
+function TElginUSBPrinter.GetInitialized: Boolean;
 begin
   Result := (FPrinter <> Nil);
 end;
 
-procedure TElginUSBPrinter.LoadDLLFunctions;
+procedure TElginUSBPrinter.LoadLibFunctions;
 begin
+  if Initialized then
+    Exit;
+
   FunctionDetectLib( 'PrtPrinterCreatorW', @xPrtPrinterCreatorW );
   FunctionDetectLib( 'PrtPortOpenW', @xPrtPortOpenW );
   FunctionDetectLib( 'PrtPortClose', @xPrtPortClose );
   FunctionDetectLib( 'PrtDirectIO', @xPrtDirectIO );
 end;
 
-procedure TElginUSBPrinter.UnLoadDLLFunctions;
+procedure TElginUSBPrinter.UnLoadLibFunctions;
 begin
-  UnLoadLibrary( LIB_NAME );
-
+  inherited;
   xPrtPrinterCreatorW := Nil;
   xPrtPortOpenW := Nil;
+  xPrtPortClose := Nil;
+  xPrtDirectIO := Nil;
 end;
+
+initialization
+  RegisterHook(TElginUSBPrinter);
 
 end.
 

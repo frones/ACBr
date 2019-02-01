@@ -22,7 +22,7 @@ package ACBr_SPED;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
 
@@ -88,18 +88,6 @@ contains
   ACBrEPCBloco_P_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBloco_P_Class.pas',
   ACBrEPCBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrEPCBlocos.pas',
   ACBrSpedPisCofins in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins\ACBrSpedPisCofins.pas',
-  ACBrFContBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_0.pas',
-  ACBrFContBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_0_Class.pas',
-  ACBrFContBloco_9 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_9.pas',
-  ACBrFContBloco_9_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_9_Class.pas',
-  ACBrFContBloco_I in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_I.pas',
-  ACBrFContBloco_I_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_I_Class.pas',
-  ACBrFContBloco_J in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_J.pas',
-  ACBrFContBloco_J_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_J_Class.pas',
-  ACBrFContBloco_M in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_M.pas',
-  ACBrFContBloco_M_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBloco_M_Class.pas',
-  ACBrFContBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrFContBlocos.pas',
-  ACBrSpedFCont in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFCont\ACBrSpedFCont.pas',
   ACBrECFBloco_0 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_0.pas',
   ACBrECFBloco_0_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_0_Class.pas',
   ACBrECFBloco_9 in '..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF\ACBrECFBloco_9.pas',

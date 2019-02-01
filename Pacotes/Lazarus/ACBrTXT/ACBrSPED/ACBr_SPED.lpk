@@ -13,7 +13,7 @@
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrSPED\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Description Value="ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil e ECF - (http://www.projetoacbr.com.br/)"/>
+    <Description Value="ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil e ECF - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Release="1"/>
     <Files Count="7">

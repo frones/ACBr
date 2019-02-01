@@ -22,7 +22,7 @@ package ACBr_SPEDImportar;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 {$DEFINE DEBUG}
 

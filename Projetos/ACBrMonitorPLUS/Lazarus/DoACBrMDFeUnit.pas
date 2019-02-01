@@ -1669,11 +1669,12 @@ end;
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
           5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String com endereços replay (Separados ;)
 }
 procedure TMetodoEnviarEmail.Executar;
 var
-  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarMDFe;
   AEnviaPDF: Boolean;
 begin
@@ -1683,6 +1684,7 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -1691,6 +1693,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, APathXML);
       try
@@ -1706,6 +1709,9 @@ begin
         slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+        slReplay.DelimitedText := sLineBreak;
+        slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
+
         try
           ACBrMDFe.Manifestos.Items[0].EnviarEmail(ADestinatario,
             IfThen( NaoEstaVazio(AAssunto), AAssunto, sAssunto),
@@ -1714,8 +1720,10 @@ begin
             // Enviar PDF junto
             slCC,
             // Lista com emails que serão enviado cópias - TStrings
-            slAnexos);
-          // Lista de slAnexos - TStrings
+            slAnexos,
+            // Lista de slAnexos - TStrings
+            slReplay);
+            // Lista de slReplay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -1729,6 +1737,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;

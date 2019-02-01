@@ -1549,11 +1549,12 @@ end;
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
           5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String com endereços replay (Separados ;)
 }
 procedure TMetodoEnviarEmail.Executar;
 var
-  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarCTe;
   AEnviaPDF: Boolean;
 begin
@@ -1563,6 +1564,7 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
@@ -1571,6 +1573,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, APathXML);
       try
@@ -1588,6 +1591,9 @@ begin
         slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+        slReplay.DelimitedText := sLineBreak;
+        slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
+
         try
           ACBrCTe.Conhecimentos.Items[0].EnviarEmail(ADestinatario,
             IfThen( NaoEstaVazio(AAssunto), AAssunto, sAssunto),
@@ -1596,8 +1602,10 @@ begin
             // Enviar PDF junto
             slCC,
             // Lista com emails que serão enviado cópias - TStrings
-            slAnexos);
+            slAnexos,
             // Lista de slAnexos - TStrings
+            slReplay);
+            // Lista de slReplay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -1611,6 +1619,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;
@@ -2704,12 +2713,13 @@ end;
           4 - Assunto: String com Assunto do e-mail
           5 - Copia: String com e-mails copia (Separados ;)
           6 - Anexo: String com Path de Anexos (Separados ;)
+          7 - Replay: String com endereços replay (Separados ;)
 }
 procedure TMetodoEnviaremailEvento.Executar;
 var
   sAssunto, ADestinatario, APathXMLEvento, APathXML, AAssunto, AEmailCopias,
-  AAnexos, ArqPDF, ArqEvento: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  AAnexos, ArqPDF, ArqEvento, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFeEvento: TACBrCarregarCTeEvento;
   CargaDFe: TACBrCarregarCTe;
   AEnviaPDF: Boolean;
@@ -2722,6 +2732,7 @@ begin
   AAssunto := fpCmd.Params(4);
   AEmailCopias := fpCmd.Params(5);
   AAnexos := fpCmd.Params(6);
+  AReplay := fpCmd.Params(7);
   ArqEvento := '';
 
   with TACBrObjetoCTe(fpObjetoDono) do
@@ -2732,6 +2743,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFeEvento := TACBrCarregarCTeEvento.Create(ACBrCTe, APathXMLEvento);
       CargaDFe := TACBrCarregarCTe.Create(ACBrCTe, APathXML);
@@ -2762,6 +2774,9 @@ begin
         slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+        slReplay.DelimitedText := sLineBreak;
+        slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
+
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
         if ( ArqEvento = '' ) then
         begin
@@ -2780,7 +2795,10 @@ begin
             IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
-            slAnexos); // Lista de slAnexos - TStrings
+            slAnexos,  // Lista de slAnexos - TStrings
+            nil,
+            '',
+            slReplay); // Lista de slReplay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -2795,6 +2813,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;
@@ -2807,12 +2826,13 @@ end;
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
           5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String com endereços replay (Separados ;)
 }
 procedure TMetodoEnviaremailInutilizacao.Executar;
 var
   sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias,
-  AAnexos, ArqPDF, ArqInut: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  AAnexos, ArqPDF, ArqInut, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarCTeInut;
   AEnviaPDF: Boolean;
 begin
@@ -2822,6 +2842,7 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
   ArqInut := '';
 
   with TACBrObjetoCTe(fpObjetoDono) do
@@ -2829,6 +2850,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarCTeInut.Create(ACBrCTe, APathXML);
       try
@@ -2858,6 +2880,9 @@ begin
         slAnexos.DelimitedText := sLineBreak;
         slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+        slReplay.DelimitedText := sLineBreak;
+        slReplay.Text := StringReplace(AReplay, ';', sLineBreak, [rfReplaceAll]);
+
         // Se carregou Inutilizacao usando XML como parâmetro, salva XML para poder anexar
         if ( ArqInut = '' ) then
         begin
@@ -2875,7 +2900,10 @@ begin
             IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
-            slAnexos); // Lista de slAnexos - TStrings
+            slAnexos,  // Lista de slAnexos - TStrings
+            nil,
+            '',
+            slReplay); // Lista de slreplay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -2889,6 +2917,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;

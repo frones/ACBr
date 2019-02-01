@@ -1880,11 +1880,12 @@ end;
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
           5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String ReplayTo (Separados ;)
 }
 procedure TMetodoEnviarEmail.Executar;
 var
-  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias, AAnexos, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarNFe;
   AEnviaPDF: Boolean;
 begin
@@ -1894,6 +1895,7 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
@@ -1902,6 +1904,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarNFe.Create(ACBrNFe, APathXML);
       try
@@ -1915,8 +1918,8 @@ begin
         end;
 
         QuebrarLinha(AEmailCopias, slCC);
-
         QuebrarLinha(AAnexos, slAnexos);
+        QuebrarLinha(AReplay, slReplay);
 
         try
           ACBrNFe.NotasFiscais.Items[0].EnviarEmail(ADestinatario,
@@ -1926,8 +1929,10 @@ begin
             // Enviar PDF junto
             slCC,
             // Lista com emails que serão enviado cópias - TStrings
-            slAnexos);
+            slAnexos,
             // Lista de slAnexos - TStrings
+            slReplay);
+            // Lista de ReplayTo - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -1942,6 +1947,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
 
   end;
@@ -3291,12 +3297,13 @@ end;
           4 - Assunto: String com Assunto do e-mail
           5 - Copia: String com e-mails copia (Separados ;)
           6 - Anexo: String com Path de Anexos (Separados ;)
+          7 - Replay: String com Replay (Separados ;)
 }
 procedure TMetodoEnviaremailEvento.Executar;
 var
   sAssunto, ADestinatario, APathXMLEvento, APathXML, AAssunto, AEmailCopias,
-  AAnexos, ArqPDF, ArqEvento: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  AAnexos, ArqPDF, ArqEvento, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFeEvento: TACBrCarregarNFeEvento;
   CargaDFe: TACBrCarregarNFe;
   AEnviaPDF: Boolean;
@@ -3309,6 +3316,7 @@ begin
   AAssunto := fpCmd.Params(4);
   AEmailCopias := fpCmd.Params(5);
   AAnexos := fpCmd.Params(6);
+  AReplay := fpCmd.Params(7);
   ArqEvento := '';
 
   with TACBrObjetoNFe(fpObjetoDono) do
@@ -3319,6 +3327,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFeEvento := TACBrCarregarNFeEvento.Create(ACBrNFe, APathXMLEvento);
       if NaoEstaVazio(APathXML) then
@@ -3345,8 +3354,8 @@ begin
         end;
 
         QuebrarLinha(AEmailCopias, slCC);
-
         QuebrarLinha(AAnexos, slAnexos);
+        QuebrarLinha(AReplay, slReplay);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
         if  StringIsXML( APathXMLEvento ) then
@@ -3369,7 +3378,10 @@ begin
             DoSubstituirVariaveis( IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
-            slAnexos); // Lista de slAnexos - TStrings
+            slAnexos,  // Lista de slAnexos - TStrings
+            Nil,
+            '',
+            slReplay); // Lista com Endereços Replay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -3385,6 +3397,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;
@@ -3397,12 +3410,13 @@ end;
           3 - Assunto: String com Assunto do e-mail
           4 - Copia: String com e-mails copia (Separados ;)
           5 - Anexo: String com Path de Anexos (Separados ;)
+          6 - Replay: String com endereços de Replay (Separados ;)
 }
 procedure TMetodoEnviaremailInutilizacao.Executar;
 var
   sAssunto, ADestinatario, APathXML, AAssunto, AEmailCopias,
-  AAnexos, ArqPDF, ArqInut: string;
-  slMensagemEmail, slCC, slAnexos: TStringList;
+  AAnexos, ArqPDF, ArqInut, AReplay: string;
+  slMensagemEmail, slCC, slAnexos, slReplay: TStringList;
   CargaDFe: TACBrCarregarNFeInut;
   AEnviaPDF: Boolean;
 begin
@@ -3412,6 +3426,7 @@ begin
   AAssunto := fpCmd.Params(3);
   AEmailCopias := fpCmd.Params(4);
   AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
   ArqInut := '';
 
   with TACBrObjetoNFe(fpObjetoDono) do
@@ -3419,6 +3434,7 @@ begin
     slMensagemEmail := TStringList.Create;
     slCC := TStringList.Create;
     slAnexos := TStringList.Create;
+    slReplay := TStringList.Create;
     try
       CargaDFe := TACBrCarregarNFeInut.Create(ACBrNFe, APathXML);
       try
@@ -3443,8 +3459,8 @@ begin
         end;
 
         QuebrarLinha(AEmailCopias, slCC);
-
         QuebrarLinha(AAnexos, slAnexos);
+        QuebrarLinha(AReplay, slReplay);
 
         // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
         if  StringIsXML( APathXML ) then
@@ -3466,7 +3482,10 @@ begin
             DoSubstituirVariaveis( IfThen(NaoEstaVazio(AAssunto), AAssunto, sAssunto) ),
             slMensagemEmail,
             slCC,      // Lista com emails que serão enviado cópias - TStrings
-            slAnexos); // Lista de slAnexos - TStrings
+            slAnexos,  // Lista de slAnexos - TStrings
+            nil,
+            '',
+            slReplay); // Lista de slReplay - TStrings
 
           fpCmd.Resposta := 'Email enviado com sucesso';
         except
@@ -3480,6 +3499,7 @@ begin
       slCC.Free;
       slAnexos.Free;
       slMensagemEmail.Free;
+      slReplay.Free;
     end;
   end;
 end;

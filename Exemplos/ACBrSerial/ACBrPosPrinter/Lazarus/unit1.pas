@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   strutils, ExtCtrls, Buttons, Spin, ComCtrls, ExtDlgs, ACBrPosPrinter,
-  ACBrBase, ACBrEscPosHookElginDLL, ACBrDevice;
+  ACBrDevice;
 
 type
 
@@ -111,11 +111,6 @@ type
     tsImagens: TTabSheet;
     tsImprimir: TTabSheet;
     tsLog: TTabSheet;
-    procedure ACBrDeviceHookAtivar(const APort: String; Params: String);
-    procedure ACBrDeviceHookDesativar(const APort: String);
-    procedure ACBrDeviceHookEnviaString(const cmd: AnsiString);
-    procedure ACBrDeviceHookLeString(const NumBytes, ATimeOut: Integer;
-      var Retorno: AnsiString);
     procedure ACBrPosPrinter1GravarLog(const ALogLine: String;
       var Tratado: Boolean);
     procedure bApagarLogoClick(Sender: TObject);
@@ -152,7 +147,6 @@ type
     procedure cbxPagCodigoChange(Sender: TObject);
     procedure cbxPortaChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormDestroy(Sender: TObject);
     procedure SbArqLogClick(Sender: TObject);
     procedure seBarrasAlturaChange(Sender: TObject);
     procedure seGavetaTempoOFFChange(Sender: TObject);
@@ -174,8 +168,6 @@ type
     procedure LimparTexto;
   private
     { private declarations }
-    FElginUSB : TElginUSBPrinter;
-
     Procedure GravarINI ;
     procedure ImprimirBMP(AStream: TStream);
     Procedure LerINI ;
@@ -203,8 +195,6 @@ var
   J: TACBrPosPaginaCodigo;
   K: Integer;
 begin
-  FElginUSB := TElginUSBPrinter.Create;
-
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(I) ) ) ;
@@ -233,11 +223,6 @@ begin
   PageControl1.ActivePageIndex := 0;
 
   LerINI;
-end;
-
-procedure TFrPosPrinterTeste.FormDestroy(Sender: TObject);
-begin
-  FElginUSB.Free;
 end;
 
 procedure TFrPosPrinterTeste.FormClose(Sender: TObject;
@@ -312,18 +297,15 @@ end;
 
 procedure TFrPosPrinterTeste.bTagFormtacaoCaracterClick(Sender: TObject);
 begin
-  LimparTexto; 
+  LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
-  mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas' +
-                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
-                         ACBrPosPrinter1.ColunasFonteNormal));
-  mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas' +
-                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
-                         ACBrPosPrinter1.ColunasFonteExpandida));
-  mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas' +
-                 LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', +
-                         ACBrPosPrinter1.ColunasFonteCondensada));
+  mImp.Lines.Add('FONTE NORMAL: '+IntToStr(ACBrPosPrinter1.ColunasFonteNormal)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteNormal));
+  mImp.Lines.Add('<e>EXPANDIDO: '+IntToStr(ACBrPosPrinter1.ColunasFonteExpandida)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteExpandida));
+  mImp.Lines.Add('</e><c>CONDENSADO: '+IntToStr(ACBrPosPrinter1.ColunasFonteCondensada)+' Colunas');
+  mImp.Lines.Add(LeftStr('....+....1....+....2....+....3....+....4....+....5....+....6....+....7....+....8', ACBrPosPrinter1.ColunasFonteCondensada));
   mImp.Lines.Add('</c><n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<in>FONTE INVERTIDA</in>');
   mImp.Lines.Add('<S>FONTE SUBLINHADA</s>');
@@ -407,12 +389,19 @@ begin
 end;
 
 procedure TFrPosPrinterTeste.bTagsAlinhamentoClick(Sender: TObject);
+var
+  BmpMono: String;
 begin
+  BmpMono := ApplicationPath+'acbrmono.bmp';
+  if not FileExists(BmpMono) then
+    Image1.Picture.SaveToFile(BmpMono);
+
   LimparTexto;
   mImp.Lines.Add('</zera>');
   mImp.Lines.Add('</linha_dupla>');
   mImp.Lines.Add('TEXTO NORMAL');
   mImp.Lines.Add('</ae>ALINHADO A ESQUERDA');
+  mImp.Lines.Add('<bmp>'+BmpMono+'</bmp>');
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
@@ -423,6 +412,7 @@ begin
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
 
   mImp.Lines.Add('</fn></ce>ALINHADO NO CENTRO');
+  mImp.Lines.Add('<bmp>'+BmpMono+'</bmp>');
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
@@ -433,6 +423,7 @@ begin
   mImp.Lines.Add('<i>FONTE ITALICO</i>');
 
   mImp.Lines.Add('</fn></ad>ALINHADO A DIREITA');
+  mImp.Lines.Add('<bmp>'+BmpMono+'</bmp>');
   mImp.Lines.Add('1 2 3 TESTANDO');
   mImp.Lines.Add('<n>FONTE NEGRITO</N>');
   mImp.Lines.Add('<e>FONTE EXPANDIDA</e>');
@@ -921,6 +912,7 @@ var
   i: TACBrPosTipoStatus;
   AStr: String;
 begin
+
   Status := ACBrPosPrinter1.LerStatusImpressora;
 
   if Status = [] then
@@ -1048,28 +1040,6 @@ end;
 procedure TFrPosPrinterTeste.bApagarLogoClick(Sender: TObject);
 begin
   ACBrPosPrinter1.ApagarLogo(seLogoKC1.Value, seLogoKC2.Value);
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookAtivar(const APort: String;
-  Params: String);
-begin
-  FElginUSB.Open(APort);
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookDesativar(const APort: String);
-begin
-  FElginUSB.Close;
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookEnviaString(const cmd: AnsiString);
-begin
-  FElginUSB.WriteData(cmd);
-end;
-
-procedure TFrPosPrinterTeste.ACBrDeviceHookLeString(const NumBytes,
-  ATimeOut: Integer; var Retorno: AnsiString);
-begin
-  Retorno := FElginUSB.ReadData;
 end;
 
 end.

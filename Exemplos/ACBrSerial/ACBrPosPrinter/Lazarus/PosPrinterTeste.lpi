@@ -64,7 +64,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="3">
       <Unit0>
         <Filename Value="PosPrinterTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -84,10 +84,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="..\..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -98,7 +94,6 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrSerial"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
@@ -117,6 +112,7 @@
     <Linking>
       <Debugging>
         <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
       </Debugging>
       <Options>
         <Win32>
@@ -129,7 +125,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="7">
+    <Exceptions Count="8">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -151,6 +147,9 @@
       <Item7>
         <Name Value="EACBrImage"/>
       </Item7>
+      <Item8>
+        <Name Value="EPosPrinterException"/>
+      </Item8>
     </Exceptions>
   </Debugging>
 </CONFIG>

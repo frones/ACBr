@@ -9,7 +9,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   ClientWidth = 838
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   Position = poScreenCenter
   LCLVersion = '2.0.0.3'
   object Panel1: TPanel
@@ -268,10 +267,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       Height = 360
       Top = 1
       Width = 580
-      ActivePage = tsImagens
+      ActivePage = tsImprimir
       Align = alClient
       TabHeight = 40
-      TabIndex = 2
+      TabIndex = 0
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
@@ -1154,10 +1153,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
     Device.NomeDocumento = 'ACBrPorPrinterDemo'
-    Device.HookAtivar = ACBrDeviceHookAtivar
-    Device.HookDesativar = ACBrDeviceHookDesativar
-    Device.HookEnviaString = ACBrDeviceHookEnviaString
-    Device.HookLeString = ACBrDeviceHookLeString
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
@@ -1166,8 +1161,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    CortaPapel = False
-    VerificarImpressora = True
     OnGravarLog = ACBrPosPrinter1GravarLog
     left = 120
     top = 456

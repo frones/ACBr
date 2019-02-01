@@ -1,5 +1,5 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 543
+  Left = 536
   Top = 240
   Width = 854
   Height = 561
@@ -15,7 +15,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -1154,10 +1153,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
     Device.NomeDocumento = 'ACBrPorPrinterDemo'
-    Device.HookAtivar = ACBrDeviceHookAtivar
-    Device.HookDesativar = ACBrDeviceHookDesativar
-    Device.HookEnviaString = ACBrPosPrinter1ACBrDeviceHookEnviaString
-    Device.HookLeString = ACBrPosPrinter1ACBrDeviceHookLeString
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0

@@ -8,8 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   sysutils,
-  Forms, Unit1, ConfiguraSerial, ACBrEscPosHookElginDLL
-  { you can add units after this };
+  Forms, Unit1, ConfiguraSerial, ACBrEscPosHookElginDLL;
 
 {$R *.res}
 

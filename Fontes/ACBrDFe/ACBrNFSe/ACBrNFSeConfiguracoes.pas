@@ -292,7 +292,7 @@ type
 
   public
     Constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
     procedure Assign(Source: TPersistent); override;
   published
     property CNPJ: String         read FCNPJ         write FCNPJ;

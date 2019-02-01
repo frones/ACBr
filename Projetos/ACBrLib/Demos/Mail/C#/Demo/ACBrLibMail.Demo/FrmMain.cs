@@ -75,6 +75,9 @@ namespace ACBrLibMail.Demo
                 int ret = ACBrMail.MAIL_Clear();
                 ACBrMail.CheckResult(ret);
 
+                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "IsHTML", "1");
+                ACBrMail.CheckResult(ret);
+
                 ret = ACBrMail.MAIL_AddAddress(txtDestinatario.Text.ToUTF8(), txtDestinatario.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
@@ -86,6 +89,7 @@ namespace ACBrLibMail.Demo
 
                 ret = ACBrMail.MAIL_AddAltBody(txtAltBody.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
+
 
                 foreach (String anexo in lstAnexos.Items)
                 {

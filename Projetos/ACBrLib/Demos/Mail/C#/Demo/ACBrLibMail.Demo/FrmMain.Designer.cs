@@ -117,9 +117,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(381, 194);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 13);
+            this.label3.Size = new System.Drawing.Size(87, 13);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Mensagem HTML";
+            this.label3.Text = "Texto Alternativo";
             // 
             // groupBox1
             // 

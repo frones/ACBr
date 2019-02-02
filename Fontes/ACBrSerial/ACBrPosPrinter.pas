@@ -46,174 +46,9 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDevice, ACBrBase, ACBrEscPosHook;
+  ACBrDevice, ACBrBase, ACBrPosPrinterClass, ACBrEscPosHook;
 
 type
-
-  EPosPrinterException = class(Exception);
-
-  { TACBrPosComandos }
-
-  TACBrPosComandos = class
-  private
-    FBeep: AnsiString;
-    FAlinhadoCentro: AnsiString;
-    FAlinhadoDireita: AnsiString;
-    FAlinhadoEsquerda: AnsiString;
-    FCorteParcial: AnsiString;
-    FDesligaAlturaDupla: AnsiString;
-    FDesligaInvertido: AnsiString;
-    FDesligaModoPagina: AnsiString;
-    FEspacoEntreLinhasPadrao: AnsiString;
-    FImprimePagina: AnsiString;
-    FLigaAlturaDupla: AnsiString;
-    FLigaInvertido: AnsiString;
-    FFonteNormal: AnsiString;
-    FLigaCondensado: AnsiString;
-    FCorteTotal: AnsiString;
-    FEspacoEntreLinhas: AnsiString;
-    FLigaExpandido: AnsiString;
-    FDesligaCondensado: AnsiString;
-    FDesligaExpandido: AnsiString;
-    FDesligaItalico: AnsiString;
-    FDesligaNegrito: AnsiString;
-    FDesligaSublinhado: AnsiString;
-    FFonteA: AnsiString;
-    FFonteB: AnsiString;
-    FLigaItalico: AnsiString;
-    FLigaModoPagina: AnsiString;
-    FLigaNegrito: AnsiString;
-    FLigaSublinhado: AnsiString;
-    FPuloDeLinha: AnsiString;
-    FZera: AnsiString;
-  public
-    constructor Create;
-
-    property Zera: AnsiString read FZera write FZera;
-    property EspacoEntreLinhas: AnsiString read FEspacoEntreLinhas
-      write FEspacoEntreLinhas;
-    property EspacoEntreLinhasPadrao: AnsiString
-      read FEspacoEntreLinhasPadrao write FEspacoEntreLinhasPadrao;
-
-    property LigaNegrito: AnsiString read FLigaNegrito write FLigaNegrito;
-    property DesligaNegrito: AnsiString read FDesligaNegrito write FDesligaNegrito;
-    property LigaExpandido: AnsiString read FLigaExpandido write FLigaExpandido;
-    property DesligaExpandido: AnsiString read FDesligaExpandido write FDesligaExpandido;
-    property LigaAlturaDupla: AnsiString read FLigaAlturaDupla write FLigaAlturaDupla;
-    property DesligaAlturaDupla: AnsiString read FDesligaAlturaDupla write FDesligaAlturaDupla;
-    property LigaSublinhado: AnsiString read FLigaSublinhado write FLigaSublinhado;
-    property DesligaSublinhado: AnsiString read FDesligaSublinhado
-      write FDesligaSublinhado;
-    property LigaItalico: AnsiString read FLigaItalico write FLigaItalico;
-    property DesligaItalico: AnsiString read FDesligaItalico write FDesligaItalico;
-    property LigaCondensado: AnsiString read FLigaCondensado write FLigaCondensado;
-    property DesligaCondensado: AnsiString read FDesligaCondensado
-      write FDesligaCondensado;
-    property LigaInvertido: AnsiString read FLigaInvertido write FLigaInvertido;
-    property DesligaInvertido: AnsiString read FDesligaInvertido write FDesligaInvertido;
-
-    property FonteNormal: AnsiString read FFonteNormal write FFonteNormal;
-    property FonteA: AnsiString read FFonteA write FFonteA;
-    property FonteB: AnsiString read FFonteB write FFonteB;
-
-    property AlinhadoEsquerda: AnsiString read FAlinhadoEsquerda write FAlinhadoEsquerda;
-    property AlinhadoDireita: AnsiString read FAlinhadoDireita write FAlinhadoDireita;
-    property AlinhadoCentro: AnsiString read FAlinhadoCentro write FAlinhadoCentro;
-
-    property Beep: AnsiString read FBeep write FBeep;
-    property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
-    property CorteParcial: AnsiString read FCorteParcial write FCorteParcial;
-    property PuloDeLinha: AnsiString read FPuloDeLinha write FPuloDeLinha;
-
-    property LigaModoPagina: AnsiString read FLigaModoPagina write FLigaModoPagina;
-    property DesligaModoPagina: AnsiString read FDesligaModoPagina write FDesligaModoPagina;
-    property ImprimePagina: AnsiString read FImprimePagina write FImprimePagina;
-  end;
-
-  TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
-    ftSublinhado, ftInvertido, ftItalico, ftFonteB, ftAlturaDupla);
-  TACBrPosFonte = set of TACBrPosTipoFonte;
-
-  TACBrPosTipoAlinhamento = (alEsquerda, alCentro, alDireita);
-  TACBrPosPaginaCodigo = (pcNone, pc437, pc850, pc852, pc860, pcUTF8, pc1252);
-  TACBrPosDirecao = (dirEsquerdaParaDireita, dirTopoParaBaixo, dirDireitaParaEsquerda, dirBaixoParaTopo);
-
-  TACBrPosTipoStatus = (stErro, stNaoSerial, stPoucoPapel, stSemPapel,
-                        stGavetaAberta, stImprimindo, stOffLine, stTampaAberta,
-                        stErroLeitura);
-  TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
-
-  { TACBrPosRazaoColunaFonte }
-  {$M+}
-  TACBrPosRazaoColunaFonte = class
-  private
-    FCondensada: Double;
-    FExpandida: Double;
-  public
-    constructor Create;
-  published
-    property Condensada: Double read FCondensada write FCondensada;
-    property Expandida: Double read FExpandida write FExpandida;
-  end;
-  {$M-}
-
-  TACBrPosPrinter = class;
-
-  TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
-                           ppEscVox, ppEscDiebold, ppEscEpsonP2);
-
-  { TACBrPosPrinterClass }
-
-  TACBrPosPrinterClass = class
-  private
-    FCmd: TACBrPosComandos;
-    FRazaoColunaFonte: TACBrPosRazaoColunaFonte;
-    FTagsNaoSuportadas: TStringList;
-
-  protected
-    fpModeloStr: String;
-    fpPosPrinter: TACBrPosPrinter;
-
-  public
-    function TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString): AnsiString; virtual;
-    function ComandoCodBarras(const ATag: String; const ACodigo: AnsiString): AnsiString; virtual;
-    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; virtual;
-    function ComandoEspacoEntreLinhas(Espacos: byte): AnsiString; virtual;
-    function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString; virtual;
-    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; virtual;
-    function ComandoInicializa: AnsiString; virtual;
-    function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
-    function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString; virtual;
-    function ComandoConfiguraModoPagina: AnsiString; virtual;
-
-    procedure Configurar; virtual;
-    procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
-    function LerInfo: String; virtual;
-
-    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString; AWidth: Integer;
-      AHeight: Integer): AnsiString; virtual;
-    function ComandoImprimirImagemArquivo(ArquivoBMP: String): AnsiString;
-    function ComandoImprimirImagemStream(ABMPStream: TStream): AnsiString;
-
-    function ComandoLogo: AnsiString; virtual;
-    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
-      AHeight: Integer): AnsiString; virtual;
-    function ComandoGravarLogoArquivo(ArquivoBMP: String): AnsiString;
-    function ComandoGravarLogoStream(ABMPStream: TStream): AnsiString;
-    function ComandoApagarLogo: AnsiString; virtual;
-
-    procedure ArquivoImagemToRasterStr(ArquivoImagem: String; out AWidth: Integer;
-      out AHeight: Integer; out ARasterStr: AnsiString);
-
-    constructor Create(AOwner: TACBrPosPrinter);
-    destructor Destroy; override;
-
-    property RazaoColunaFonte: TACBrPosRazaoColunaFonte read FRazaoColunaFonte;
-    property Cmd: TACBrPosComandos read FCmd;
-    property ModeloStr: String read fpModeloStr;
-
-    property TagsNaoSuportadas: TStringList read FTagsNaoSuportadas;
-  end;
 
   { TACBrConfigQRCode }
 
@@ -272,8 +107,6 @@ type
       property TempoOFF: Byte read FTempoOFF write FTempoOFF default 200;
   end;
 
-  { TACBrConfigRegion }
-
   { TACBrConfigModoPagina }
 
   TACBrConfigModoPagina = class(TPersistent)
@@ -295,8 +128,6 @@ type
       property Direcao: TACBrPosDirecao read FDirecao write FDirecao default dirEsquerdaParaDireita;
       property EspacoEntreLinhas: Byte read FEspacoEntreLinhas write FEspacoEntreLinhas default 0;
   end;
-
-  TACBrPosTipoCorte = (ctTotal, ctParcial);
 
   { TACBrPosPrinter }
   {$IFDEF RTL230_UP}
@@ -475,13 +306,6 @@ implementation
 
 uses
   strutils, Math, typinfo,
-  {$IfNDef NOGUI}
-    {$IfDef FMX}
-      FMX.Graphics,
-    {$Else}
-      Graphics,
-    {$EndIf}
-  {$EndIf}
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
   ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold,
@@ -500,14 +324,6 @@ begin
   FTopo := 0;
   FDirecao := dirEsquerdaParaDireita;
   FEspacoEntreLinhas := 0;
-end;
-
-{ TACBrPosComandos }
-
-constructor TACBrPosComandos.Create;
-begin
-  inherited;
-  FPuloDeLinha := sLineBreak;
 end;
 
 { TACBrConfigGaveta }
@@ -556,266 +372,6 @@ end;
 procedure TACBrConfigQRCode.SetTipo(AValue: Integer);
 begin
   FTipo := max(min(AValue,2),1);
-end;
-
-{ TACBrPosRazaoColunaFonte }
-
-constructor TACBrPosRazaoColunaFonte.Create;
-begin
-  FCondensada := 0.75;
-  FExpandida := 2;
-end;
-
-{ TACBrPosPrinterClass }
-
-constructor TACBrPosPrinterClass.Create(AOwner: TACBrPosPrinter);
-begin
-  inherited Create;
-
-  fpModeloStr := 'Texto';
-  fpPosPrinter := AOwner;
-
-  FCmd := TACBrPosComandos.Create;
-  FRazaoColunaFonte := TACBrPosRazaoColunaFonte.Create;
-  FTagsNaoSuportadas := TStringList.Create;
-end;
-
-destructor TACBrPosPrinterClass.Destroy;
-begin
-  FCmd.Free;
-  FRazaoColunaFonte.Free;
-  FTagsNaoSuportadas.Free;
-
-  inherited;
-end;
-
-function TACBrPosPrinterClass.TraduzirTagBloco(
-  const ATag, ConteudoBloco: AnsiString): AnsiString;
-begin
-  Result := ConteudoBloco;
-end;
-
-function TACBrPosPrinterClass.ComandoCodBarras(const ATag: String;
-  const ACodigo: AnsiString): AnsiString;
-begin
-  Result := ACodigo;
-end;
-
-function TACBrPosPrinterClass.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoEspacoEntreLinhas(Espacos: byte): AnsiString;
-begin
-  if Espacos = 0 then
-    Result := Cmd.EspacoEntreLinhasPadrao
-  else
-  begin
-    if Length(Cmd.EspacoEntreLinhas) > 0 then
-      Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos)
-    else
-      Result := '';
-  end;
-end;
-
-function TACBrPosPrinterClass.ComandoPaginaCodigo(
-  APagCodigo: TACBrPosPaginaCodigo): AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoGaveta(NumGaveta: Integer): AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoInicializa: AnsiString;
-begin
-  Result := ComandoEspacoEntreLinhas(fpPosPrinter.EspacoEntreLinhas) +
-            ComandoPaginaCodigo(fpPosPrinter.PaginaDeCodigo);
-end;
-
-function TACBrPosPrinterClass.ComandoPuloLinhas(NLinhas: Integer): AnsiString;
-begin
-  Result := AnsiString( DupeString(' '+Cmd.PuloDeLinha,NLinhas) );
-end;
-
-function TACBrPosPrinterClass.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
-  Ligar: Boolean): AnsiString;
-begin
-  Result := '';
-
-  case TipoFonte of
-    ftExpandido:
-      if Ligar then
-        Result := Cmd.LigaExpandido
-      else
-        Result := Cmd.DesligaExpandido;
-
-    ftAlturaDupla:
-      if Ligar then
-        Result := Cmd.LigaAlturaDupla
-      else
-        Result := Cmd.DesligaAlturaDupla;
-
-    ftCondensado:
-      if Ligar then
-        Result := Cmd.LigaCondensado
-      else
-        Result :=  Cmd.DesligaCondensado;
-
-    ftNegrito:
-      if Ligar then
-        Result := Cmd.LigaNegrito
-      else
-        Result := Cmd.DesligaNegrito;
-
-    ftItalico:
-      if Ligar then
-        Result := Cmd.LigaItalico
-      else
-         Result := Cmd.DesligaItalico;
-
-    ftInvertido:
-       if Ligar then
-         Result := Cmd.LigaInvertido
-       else
-         Result := Cmd.DesligaInvertido;
-
-    ftSublinhado:
-       if Ligar then
-         Result := Cmd.LigaSublinhado
-       else
-         Result := Cmd.DesligaSublinhado;
-
-    ftFonteB:
-      if Ligar then
-        Result := Cmd.FonteB
-      else
-        Result := Cmd.FonteA;
-  end;
-end;
-
-function TACBrPosPrinterClass.ComandoConfiguraModoPagina: AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoImprimirImagemRasterStr(const RasterStr: AnsiString;
-  AWidth: Integer; AHeight: Integer): AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoImprimirImagemArquivo(ArquivoBMP: String): AnsiString;
-var
-  AWidth, AHeight: Integer;
-  ARasterStr: AnsiString;
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-  ArquivoImagemToRasterStr(ArquivoBMP, AWidth, AHeight, ARasterStr);
-  Result := ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight);
-end;
-
-function TACBrPosPrinterClass.ComandoImprimirImagemStream(ABMPStream: TStream
-  ): AnsiString;
-var
-  AWidth, AHeight: Integer;
-  ARasterStr: AnsiString;
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-  BMPMonoToRasterStr(ABMPStream, True, AWidth, AHeight, ARasterStr );
-
-  Result := ComandoImprimirImagemRasterStr(ARasterStr, AWidth, AHeight);
-end;
-
-function TACBrPosPrinterClass.ComandoLogo: AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoGravarLogoRasterStr(const RasterStr: AnsiString;
-  AWidth: Integer; AHeight: Integer): AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrPosPrinterClass.ComandoGravarLogoArquivo(ArquivoBMP: String): AnsiString;
-var
-  AWidth, AHeight: Integer;
-  ARasterStr: AnsiString;
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-  ArquivoImagemToRasterStr(ArquivoBMP, AWidth, AHeight, ARasterStr);
-  Result := ComandoGravarLogoRasterStr(ARasterStr, AWidth, AHeight);
-end;
-
-function TACBrPosPrinterClass.ComandoGravarLogoStream(ABMPStream: TStream
-  ): AnsiString;
-var
-  AWidth, AHeight: Integer;
-  ARasterStr: AnsiString;
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-  BMPMonoToRasterStr(ABMPStream, True, AWidth, AHeight, ARasterStr );
-
-  Result := ComandoGravarLogoRasterStr(ARasterStr, AWidth, AHeight);
-end;
-
-function TACBrPosPrinterClass.ComandoApagarLogo: AnsiString;
-begin
-  Result := '';
-end;
-
-procedure TACBrPosPrinterClass.ArquivoImagemToRasterStr(ArquivoImagem: String; out
-  AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString);
-var
-  {$IfNDef NOGUI}
-   ABitMap: TBitmap;
-  {$Else}
-   MS: TMemoryStream;
-  {$EndIf}
-begin
-  AWidth := 0; AHeight := 0; ARasterStr := '';
-  if (Trim(ArquivoImagem) = '') then
-    Exit;
-
-  if not FileExists(ArquivoImagem) then
-    raise EPosPrinterException.Create(ACBrStr(Format(cACBrArquivoNaoEncontrado,[ArquivoImagem])));
-
-  {$IfNDef NOGUI}
-   ABitMap := TBitmap.Create;
-   try
-     ABitMap.LoadFromFile(ArquivoImagem);
-     BitmapToRasterStr(ABitMap, True, AWidth, AHeight, ARasterStr);
-   finally
-     ABitMap.Free;
-   end;
-  {$Else}
-   MS := TMemoryStream.Create;
-   try
-     MS.LoadFromFile(ArquivoBMP);
-     BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr );
-   finally
-     MS.Free;
-   end;
-  {$EndIf}
-end;
-
-procedure TACBrPosPrinterClass.Configurar;
-begin
-  {nada aqui, método virtual}
-end;
-
-procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
-begin
-  {nada aqui, método virtual}
-end;
-
-function TACBrPosPrinterClass.LerInfo: String;
-begin
-  Result := '';
 end;
 
 { TACBrPosPrinter }
@@ -1723,6 +1279,8 @@ begin
     else
       raise EPosPrinterException.Create(ACBrStr('Marca '+uMarca+', não tem suporte em modo USB'));
   end;
+
+  Modelo := FHook.PosPrinterModel;
 
   FHook.Init;
   FDevice.HookAtivar := PosPrinterHookAtivar;

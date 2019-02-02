@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrConsts;
+  ACBrPosPrinter, ACBrPosPrinterClass, ACBrConsts;
 
 const
   ModoEscBema = GS + #249 + #32 + #0;
@@ -130,7 +130,7 @@ end;
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
   const ACodigo: AnsiString): AnsiString;
 begin
-  with fpPosPrinter.ConfigBarras do
+  with TACBrPosPrinter(fpOwner).ConfigBarras do
   begin
     Result := ComandoCodBarrasEscPosNo128ABC(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
   end ;
@@ -138,7 +138,7 @@ end;
 
 function TACBrEscBematech.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
-  with fpPosPrinter.ConfigQRCode do
+  with TACBrPosPrinter(fpOwner).ConfigQRCode do
   begin
     Result := GS  + 'kQ' + // Codigo QRCode
               AnsiChr(ErrorLevel) +         // N1 Error correction level 0 - L, 1 - M, 2 - Q, 3 - H
@@ -174,7 +174,7 @@ function TACBrEscBematech.ComandoLogo: AnsiString;
 var
   m, KeyCode: Integer;
 begin
-  with fpPosPrinter.ConfigLogo do
+  with TACBrPosPrinter(fpOwner).ConfigLogo do
   begin
     if (KeyCode2 = 0) then
     begin
@@ -200,7 +200,7 @@ function TACBrEscBematech.ComandoGaveta(NumGaveta: Integer): AnsiString;
 var
   Tempo: Integer;
 begin
-  with fpPosPrinter.ConfigGaveta do
+  with TACBrPosPrinter(fpOwner).ConfigGaveta do
   begin
     Tempo := max(TempoON, TempoOFF);
 
@@ -223,7 +223,7 @@ var
   Ret: AnsiString;
 begin
   try
-    Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
+    Ret := TACBrPosPrinter(fpOwner).TxRx( GS + #248 + '1', 5, 500 );
     B := Ord(Ret[1]);
 
     if TestBit(B, 2) then
@@ -265,20 +265,23 @@ var
 begin
   Info := '';
 
-  InfoCmd := GS + #249 + #39;
+  with TACBrPosPrinter(fpOwner) do
+  begin
+    InfoCmd := GS + #249 + #39;
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #0, 10, 500 );
-  AddInfo('Modelo', Ret);
+    Ret := TxRx( InfoCmd + #0, 10, 500 );
+    AddInfo('Modelo', Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #1, 0, 500 );
-  AddInfo('Serial', Ret);
+    Ret := TxRx( InfoCmd + #1, 0, 500 );
+    AddInfo('Serial', Ret);
 
-  Ret := fpPosPrinter.TxRx( InfoCmd + #3, 3, 500 );
-  AddInfo('Firmware', Ret);
+    Ret := TxRx( InfoCmd + #3, 3, 500 );
+    AddInfo('Firmware', Ret);
 
-  Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
-  B := Ord(Ret[3]);
-  Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
+    Ret := TxRx( GS + #248 + '1', 5, 500 );
+    B := Ord(Ret[3]);
+    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
+  end;
 
   Result := Info;
 end;

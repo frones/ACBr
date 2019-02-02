@@ -45,7 +45,7 @@ unit ACBrEscDaruma;
 interface
 
 uses
-  Classes, SysUtils, ACBrPosPrinter;
+  Classes, SysUtils, ACBrPosPrinter, ACBrPosPrinterClass;
 
 
 type
@@ -142,35 +142,36 @@ var
 begin
   FConfigurado := False;
 
-  { Lendo as informações da Impressora, para auto configuração das colunas }
-  if (fpPosPrinter.Device.IsSerialPort or
-      fpPosPrinter.Device.IsTCPPort or
-      fpPosPrinter.Device.IsDLLPort) then
+  with TACBrPosPrinter(fpOwner) do
   begin
-    SL := TStringList.Create;
-    try
-      SL.Text := LerInfo;
-      ColunasInfo := StrToIntDef( SL.Values['Colunas'], fpPosPrinter.ColunasFonteNormal);
-      ModeloInfo  := StrToIntDef( SL.Values['Modelo'], 0);
-    finally
-      SL.Free;
-    end;
-
-    fpPosPrinter.ColunasFonteNormal := ColunasInfo;
-
-    if ModeloInfo > 20000 then // 20001-DR800 L, 20002-DR800 H, 20003-DR800 ETH
+    { Lendo as informações da Impressora, para auto configuração das colunas }
+    if (Device.IsSerialPort or Device.IsTCPPort or Device.IsDLLPort) then
     begin
-      Byte30 := '0';  // '0' = 64 colunas em modo condensado
-      RazaoColunaFonte.Condensada := 0.75;    // 48 / 64
-    end
-    else
-    begin
-      Byte30 := '1';  // '1' = 57 colunas em modo condensado
-      RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
-    end;
+      SL := TStringList.Create;
+      try
+        SL.Text := LerInfo;
+        ColunasInfo := StrToIntDef( SL.Values['Colunas'], ColunasFonteNormal);
+        ModeloInfo  := StrToIntDef( SL.Values['Modelo'], 0);
+      finally
+        SL.Free;
+      end;
 
-    fpPosPrinter.Device.EnviaString( ComandoConfiguraDaruma(Byte30) );
-    FConfigurado := True;
+      ColunasFonteNormal := ColunasInfo;
+
+      if ModeloInfo > 20000 then // 20001-DR800 L, 20002-DR800 H, 20003-DR800 ETH
+      begin
+        Byte30 := '0';  // '0' = 64 colunas em modo condensado
+        RazaoColunaFonte.Condensada := 0.75;    // 48 / 64
+      end
+      else
+      begin
+        Byte30 := '1';  // '1' = 57 colunas em modo condensado
+        RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
+      end;
+
+      Device.EnviaString( ComandoConfiguraDaruma(Byte30) );
+      FConfigurado := True;
+    end;
   end;
 end;
 
@@ -222,7 +223,7 @@ begin
     Exit;
   end;
 
-  with fpPosPrinter.ConfigBarras do
+  with TACBrPosPrinter(fpOwner).ConfigBarras do
   begin
     L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,5),2) );
     A := IfThen( Altura = 0, 50, max(min(Altura,200),50) );
@@ -245,7 +246,7 @@ var
 begin
   LenQrCode := Length(ACodigo);
 
-  with fpPosPrinter.ConfigQRCode do
+  with TACBrPosPrinter(fpOwner).ConfigQRCode do
   begin
     L := IfThen( LarguraModulo = 0, 5, max(min(LarguraModulo,7),3) );
 
@@ -287,34 +288,37 @@ procedure TACBrEscDaruma.LerStatus(var AStatus: TACBrPosPrinterStatus);
 var
   B: Byte;
 begin
-  try
-    B := Ord(fpPosPrinter.TxRx( ENQ )[1]);
-    if TestBit(B, 0) then
-      AStatus := AStatus + [stImprimindo];
-    if TestBit(B, 3) then
-      AStatus := AStatus + [stErro];
-    if not TestBit(B, 4) then
-      AStatus := AStatus + [stOffLine];
-    if TestBit(B, 5) then
-      AStatus := AStatus + [stSemPapel];
-    if TestBit(B, 7) then
-      AStatus := AStatus + [stTampaAberta];
+  with TACBrPosPrinter(fpOwner) do
+  begin
+    try
+      B := Ord(TxRx( ENQ )[1]);
+      if TestBit(B, 0) then
+        AStatus := AStatus + [stImprimindo];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stErro];
+      if not TestBit(B, 4) then
+        AStatus := AStatus + [stOffLine];
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 7) then
+        AStatus := AStatus + [stTampaAberta];
 
-    B := Ord(fpPosPrinter.TxRx( GS + ENQ )[1]);
-    if TestBit(B, 0) then
-      AStatus := AStatus + [stPoucoPapel];
-    if TestBit(B, 1) then
-      AStatus := AStatus + [stSemPapel];
-    if TestBit(B, 3) then
-      AStatus := AStatus + [stOffLine];
-    if not TestBit(B, 4) then
-      AStatus := AStatus + [stTampaAberta];  // Sem papel sobre o sensor
-    if TestBit(B, 6) then
-      AStatus := AStatus + [stErro];  // Impressora em falha
-    if TestBit(B, 7) then
-      AStatus := AStatus + [stGavetaAberta];  // Impressora em falha
-  except
-    AStatus := AStatus + [stErroLeitura];
+      B := Ord(TxRx( GS + ENQ )[1]);
+      if TestBit(B, 0) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(B, 1) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stOffLine];
+      if not TestBit(B, 4) then
+        AStatus := AStatus + [stTampaAberta];  // Sem papel sobre o sensor
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stErro];  // Impressora em falha
+      if TestBit(B, 7) then
+        AStatus := AStatus + [stGavetaAberta];  // Impressora em falha
+    except
+      AStatus := AStatus + [stErroLeitura];
+    end;
   end;
 end;
 
@@ -331,23 +335,26 @@ var
 begin
   Info := '';
 
-  AddInfo('Fabricante', ':Daruma');
+  with TACBrPosPrinter(fpOwner) do
+  begin
+    AddInfo('Fabricante', ':Daruma');
 
-  Ret := fpPosPrinter.TxRx( ESC + #199, 13, 500, True );
-  AddInfo('Firmware', Ret);
+    Ret := TxRx( ESC + #199, 13, 500, True );
+    AddInfo('Firmware', Ret);
 
-  Ret := fpPosPrinter.TxRx( ESC + #195, 13, 500, True );
-  AddInfo('Modelo', Ret);
+    Ret := TxRx( ESC + #195, 13, 500, True );
+    AddInfo('Modelo', Ret);
 
-  //Ret := fpPosPrinter.TxRx( ESC + #199, 13, 500, True );  // Não encontrado
-  //AddInfo('Serial', ':');
+    //Ret := fpPosPrinter.TxRx( ESC + #199, 13, 500, True );  // Não encontrado
+    //AddInfo('Serial', ':');
 
-  Ret := fpPosPrinter.TxRx( ESC + #229, 13, 500, True );
-  Info := Info + 'Guilhotina='+Copy(Ret,9,1) + sLineBreak ;
-  B := Copy(Ret,12,1);
-  Info := Info + 'Colunas='+IntToStr(ifthen(B='2',34,ifthen(B='1',52,48))) + sLineBreak ;
-  B := Copy(Ret,40,1);
-  Info := Info + 'CodPage='+B + sLineBreak ;
+    Ret := TxRx( ESC + #229, 13, 500, True );
+    Info := Info + 'Guilhotina='+Copy(Ret,9,1) + sLineBreak ;
+    B := Copy(Ret,12,1);
+    Info := Info + 'Colunas='+IntToStr(ifthen(B='2',34,ifthen(B='1',52,48))) + sLineBreak ;
+    B := Copy(Ret,40,1);
+    Info := Info + 'CodPage='+B + sLineBreak ;
+  end;
 
   Result := Info;
 end;

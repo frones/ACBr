@@ -45,7 +45,8 @@ unit ACBrEscPosHook;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  ACBrPosPrinterClass;
 
 resourcestring
   CERROR_NOT_INIT = '%s não foi inicializada';
@@ -74,6 +75,7 @@ type
     fpPrinterName: String;
     fpLibName: String;
     fpPort: String;
+    fpPosPrinterModel: TACBrPosPrinterModelo;
 
     function GetInitialized: Boolean; virtual;
     function GetConnected: Boolean; virtual;
@@ -98,6 +100,7 @@ type
 
     property Initialized: Boolean read GetInitialized;
     property Connected: Boolean read GetConnected;
+    property PosPrinterModel: TACBrPosPrinterModelo read fpPosPrinterModel;
 
     class function CanInitilize: Boolean; virtual;
     class function Brand: String; virtual;
@@ -147,9 +150,10 @@ constructor TACBrPosPrinterHook.Create;
 begin
   inherited Create;
 
-  // Setar valores corretos no CReate dos filhos
+  // Setar valores corretos no Create dos filhos
   fpPrinterName := 'NONE';
   fpLibName := '';
+  fpPosPrinterModel := ppEscPosEpson;
 
   fpPort := '';
   fpInitialized := False;
@@ -241,6 +245,7 @@ end;
 
 function TACBrPosPrinterHook.ReadData(const NumBytes, ATimeOut: Integer): AnsiString;
 begin
+  Result := '';
   CheckConnected;
 end;
 

@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/02/2019
+-- ACBrPosPrinter, ACBrPosPrinterClass --
+[*] Divisão da Unit "ACBrPosPrinter" em duas, gerando a "ACBrPosPrinterClass"
+[*] Revisão de todas as Units que implementam TACBrPosPrinterClass
+[+] Adicionado o modelo de Protocolo em "TACBrPosPrinterHook"
+    property PosPrinterModel: TACBrPosPrinterModelo
+    Isso permite que o Modelo correto, seja automaticamente atribuido a
+    ACBrPosPrinter, quando usando a sintaxe de Hooks (USB:MARCA)
+
 Data: 01/02/2019
 -- ACBrPosPrinter --
 [*] Melhorias na detecção de Porta Ativa e Controle de Porta

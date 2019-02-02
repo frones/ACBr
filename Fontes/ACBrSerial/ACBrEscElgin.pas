@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrEscBematech, ACBrConsts;
+  ACBrPosPrinter, ACBrPosPrinterClass, ACBrEscBematech, ACBrConsts;
 
 type
 
@@ -81,26 +81,29 @@ var
   B: Byte;
   Ret: AnsiString;
 begin
-  try
-    Ret := fpPosPrinter.TxRx(ENQ, 1, 500);
-    B := Ord(Ret[1]);
+  with TACBrPosPrinter(fpOwner) do
+  begin
+    try
+      Ret := TxRx(ENQ, 1, 500);
+      B := Ord(Ret[1]);
 
-    if not TestBit(B, 0) then
-      AStatus := AStatus + [stOffLine];
+      if not TestBit(B, 0) then
+        AStatus := AStatus + [stOffLine];
 
-    if TestBit(B, 1) then
-      AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 1) then
+        AStatus := AStatus + [stSemPapel];
 
-    if TestBit(B, 2) then
-      AStatus := AStatus + [stGavetaAberta];
+      if TestBit(B, 2) then
+        AStatus := AStatus + [stGavetaAberta];
 
-    if not TestBit(B, 3) then
-      AStatus := AStatus + [stTampaAberta];
+      if not TestBit(B, 3) then
+        AStatus := AStatus + [stTampaAberta];
 
-    if TestBit(B, 4) then
-      AStatus := AStatus + [stPoucoPapel];
-  except
-    AStatus := AStatus + [stErroLeitura];
+      if TestBit(B, 4) then
+        AStatus := AStatus + [stPoucoPapel];
+    except
+      AStatus := AStatus + [stErroLeitura];
+    end;
   end;
 end;
 
@@ -108,7 +111,7 @@ function TACBrEscElgin.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 var
   Quality: AnsiChar;
 begin
-  with fpPosPrinter.ConfigQRCode do
+  with TACBrPosPrinter(fpOwner).ConfigQRCode do
   begin
     Result := GS + 'o' + #0 +             // Set parameters of QRCODE barcode
               AnsiChr(LarguraModulo) +    // Basic element width

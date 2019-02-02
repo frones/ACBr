@@ -45,7 +45,7 @@ unit ACBrEscDiebold;
 interface
 
 uses
-  Classes, SysUtils, ACBrPosPrinter, ACBrEscPosEpson;
+  Classes, SysUtils, ACBrPosPrinter, ACBrPosPrinterClass, ACBrEscPosEpson;
 
 type
 
@@ -94,7 +94,7 @@ end;
 function TACBrEscDiebold.ComandoCodBarras(const ATag: String;
   const ACodigo: AnsiString): AnsiString;
 begin
-  with fpPosPrinter.ConfigBarras do
+  with TACBrPosPrinter(fpOwner).ConfigBarras do
   begin
     Result := ComandoCodBarrasEscPosNo128ABC(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
   end ;
@@ -102,22 +102,25 @@ end;
 
 function TACBrEscDiebold.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
-  with fpPosPrinter.ConfigQRCode do
+  with TACBrPosPrinter(fpOwner) do
   begin
     Result := ESC + '(k' + #3 + #0 + '1B' +
-              ifthen(fpPosPrinter.Alinhamento = alEsquerda, '0', '1'); // 0 - A esquerda, 1 - Centralizar
+              ifthen(Alinhamento = alEsquerda, '0', '1'); // 0 - A esquerda, 1 - Centralizar
 
-    Result := Result +
-              ESC + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
-              ESC + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
-              ESC + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
-              ESC + '(k' + #3 + #0 +'1Q0';  // Imprime
+    with ConfigQRCode do
+    begin
+      Result := Result +
+                ESC + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
+                ESC + '(k' + #3 + #0 + '1E' + IntToStr(ErrorLevel) + // Error Level
+                ESC + '(k' + IntToLEStr(length(ACodigo)+3)+'1P0' + ACodigo +  // Codifica
+                ESC + '(k' + #3 + #0 +'1Q0';  // Imprime
+    end;
   end;
 end;
 
 function TACBrEscDiebold.ComandoLogo: AnsiString;
 begin
-  with fpPosPrinter.ConfigLogo do
+  with TACBrPosPrinter(fpOwner).ConfigLogo do
   begin
     Result := GS + '09' + AnsiChr( min(StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 0), 9));
   end;

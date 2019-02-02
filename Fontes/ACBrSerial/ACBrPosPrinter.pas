@@ -1676,7 +1676,6 @@ begin
     Exit;
   end;
 
-  HookClass := Nil;
   uPorta := UpperCase(Porta);
   uMarca := '';
   P := pos(':',uPorta);

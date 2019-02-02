@@ -128,7 +128,7 @@ begin
   inherited Open(APort);
 
   try
-    errorNo := xEpsonIniciaPorta(PAnsiChar(fpPort));
+    errorNo := xEpsonIniciaPorta(PAnsiChar(AnsiString(fpPort)));
     if (errorNo <> FUNC_SUCESSO) then
       raise Exception.CreateFmt(CERROR_OPEN, [fpPort, fpPrinterName]);
   except
@@ -179,7 +179,7 @@ function TEpsonUSBPrinter.ReadData(const NumBytes, ATimeOut: Integer
 var
   ret: Integer;
   AByte: Integer;
-  Buffer: String;
+  Buffer: AnsiString;
 begin
   CheckConnected;
   Result := '';  // TODO, achar método equivalente, na DLL, para LER dados da USB

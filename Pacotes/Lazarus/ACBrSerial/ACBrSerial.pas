@@ -24,9 +24,9 @@ uses
   ACBrGAVSerialMenno, ACBrLCB, ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, 
   ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, 
   ACBrECFVirtualNaoFiscal, ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, 
-  ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrSMS, 
-  ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, ACBrEscPosHook, 
-  ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL, LazarusPackageIntf;
+  ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, ACBrEscPosHook, 
+  ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL, ACBrSMS, ACBrSMSClass, 
+  ACBrSMSDaruma, ACBrSMSZTE, LazarusPackageIntf;
 
 implementation
 

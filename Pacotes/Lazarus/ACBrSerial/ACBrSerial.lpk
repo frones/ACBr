@@ -319,32 +319,32 @@
         <UnitName Value="ACBrEscEpsonP2"/>
       </Item72>
       <Item73>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
-        <UnitName Value="ACBrSMS"/>
-      </Item73>
-      <Item74>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
-        <UnitName Value="ACBrSMSClass"/>
-      </Item74>
-      <Item75>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
-        <UnitName Value="ACBrSMSDaruma"/>
-      </Item75>
-      <Item76>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
-        <UnitName Value="ACBrSMSZTE"/>
-      </Item76>
-      <Item77>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas"/>
         <UnitName Value="ACBrEscPosHook"/>
-      </Item77>
-      <Item78>
+      </Item73>
+      <Item74>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas"/>
         <UnitName Value="ACBrEscPosHookElginDLL"/>
-      </Item78>
-      <Item79>
+      </Item74>
+      <Item75>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas"/>
         <UnitName Value="ACBrEscPosHookEpsonDLL"/>
+      </Item75>
+      <Item76>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
+        <UnitName Value="ACBrSMS"/>
+      </Item76>
+      <Item77>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <UnitName Value="ACBrSMSClass"/>
+      </Item77>
+      <Item78>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
+        <UnitName Value="ACBrSMSDaruma"/>
+      </Item78>
+      <Item79>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
+        <UnitName Value="ACBrSMSZTE"/>
       </Item79>
     </Files>
     <RequiredPkgs Count="3">

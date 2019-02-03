@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrPosPrinterClass, ACBrConsts;
+  ACBrPosPrinter, ACBrConsts;
 
 type
 

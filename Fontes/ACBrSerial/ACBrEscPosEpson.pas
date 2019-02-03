@@ -45,7 +45,7 @@ unit ACBrEscPosEpson;
 interface
 
 uses
-  Classes, SysUtils, ACBrPosPrinter, ACBrPosPrinterClass;
+  Classes, SysUtils, ACBrPosPrinter;
 
 type
 
@@ -228,7 +228,7 @@ procedure TACBrEscPosEpson.VerificarKeyCodes;
       raise EPosPrinterException.Create(NomeKeyCode+' deve estar entre 32 a 126');
   end;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigLogo do
+  with fpPosPrinter.ConfigLogo do
   begin
     VerificarKeyCode(KeyCode1, 'KeyCode1');
     VerificarKeyCode(KeyCode2, 'KeyCode2');
@@ -261,7 +261,7 @@ begin
     Slices.Free;
   end;
 
-  Result := Result + ComandoEspacoEntreLinhas( TACBrPosPrinter(fpOwner).EspacoEntreLinhas );
+  Result := Result + ComandoEspacoEntreLinhas( fpPosPrinter.EspacoEntreLinhas );
 end;
 
 function TACBrEscPosEpson.ComandoGravarLogoColumnStr(
@@ -350,7 +350,7 @@ var
   AByte: Byte;
 begin
   Result := '';
-  NovoFonteStatus := TACBrPosPrinter(fpOwner).FonteStatus;
+  NovoFonteStatus := fpPosPrinter.FonteStatus;
   if Ligar then
     NovoFonteStatus := NovoFonteStatus + [TipoFonte]
   else
@@ -392,7 +392,7 @@ end;
 function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
   const ACodigo: AnsiString): AnsiString;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigBarras do
+  with fpPosPrinter.ConfigBarras do
   begin
     Result := ComandoCodBarrasEscPosEpson(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
   end ;
@@ -400,7 +400,7 @@ end;
 
 function TACBrEscPosEpson.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigQRCode do
+  with fpPosPrinter.ConfigQRCode do
   begin
      Result := GS + '(k' + #4 + #0 + '1A' + IntToStr(Tipo) + #0 +  // Tipo
                GS + '(k' + #3 + #0 + '1C' + AnsiChr(LarguraModulo) +   // Largura Modulo
@@ -435,7 +435,7 @@ function TACBrEscPosEpson.ComandoLogo: AnsiString;
 var
   m, KeyCode: Byte;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigLogo do
+  with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
@@ -474,7 +474,7 @@ function TACBrEscPosEpson.ComandoGravarLogoRasterStr(
 var
   KeyCode: Byte;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigLogo do
+  with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
@@ -513,7 +513,7 @@ function TACBrEscPosEpson.ComandoApagarLogo: AnsiString;
 var
   KeyCode: Byte;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigLogo do
+  with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
@@ -548,7 +548,7 @@ begin
   else
     CharGav := #0;
 
-  with TACBrPosPrinter(fpOwner).ConfigGaveta do
+  with fpPosPrinter.ConfigGaveta do
   begin
     Result := ESC + 'p' + CharGav + AnsiChar(TempoON) + AnsiChar(TempoOFF);
   end;
@@ -558,7 +558,7 @@ function TACBrEscPosEpson.ComandoConfiguraModoPagina: AnsiString;
 var
   CharDir: AnsiChar;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigModoPagina do
+  with fpPosPrinter.ConfigModoPagina do
   begin
     //https://stackoverflow.com/questions/42597358/esc-pos-set-page-size-esc-w-cmd
     case Direcao of
@@ -584,51 +584,48 @@ var
   B: Byte;
   C: String;
 begin
-  with TACBrPosPrinter(fpOwner) do
-  begin
-    try
-      Ativo := True;
+  try
+    fpPosPrinter.Ativo := True;
 
-      C := TxRx( DLE + EOT + #1 );
-      if (Length(C) > 0) then
-      begin
-        B := Ord(C[1]);
-        if not TestBit(B, 2) then
-          AStatus := AStatus + [stGavetaAberta];
-        if TestBit(B, 3) then
-          AStatus := AStatus + [stOffLine];
-        if TestBit(B, 5) then
-          AStatus := AStatus + [stErro];  // Waiting for online recovery
-        if TestBit(B, 6) then
-          AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-      end;
-
-      C := TxRx( DLE + EOT + #2 );
-      if (Length(C) > 0) then
-      begin
-        B := Ord(C[1]);
-        if TestBit(B, 2) then
-          AStatus := AStatus + [stTampaAberta];
-        if TestBit(B, 3) then
-          AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
-        if TestBit(B, 5) then
-          AStatus := AStatus + [stSemPapel];
-        if TestBit(B, 6) then
-          AStatus := AStatus + [stErro];
-      end;
-
-      C := TxRx( DLE + EOT + #4 );
-      if (Length(C) > 0) then
-      begin
-        B := Ord(C[1]);
-        if TestBit(B, 2) and TestBit(B, 3) then
-          AStatus := AStatus + [stPoucoPapel];
-        if TestBit(B, 5) and TestBit(B, 6) then
-          AStatus := AStatus + [stSemPapel];
-      end;
-    except
-      AStatus := AStatus + [stErroLeitura];
+    C := fpPosPrinter.TxRx( DLE + EOT + #1 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if not TestBit(B, 2) then
+        AStatus := AStatus + [stGavetaAberta];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stOffLine];
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stErro];  // Waiting for online recovery
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
     end;
+
+    C := fpPosPrinter.TxRx( DLE + EOT + #2 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if TestBit(B, 2) then
+        AStatus := AStatus + [stTampaAberta];
+      if TestBit(B, 3) then
+        AStatus := AStatus + [stImprimindo]; // Paper is being fed by the paper feed button
+      if TestBit(B, 5) then
+        AStatus := AStatus + [stSemPapel];
+      if TestBit(B, 6) then
+        AStatus := AStatus + [stErro];
+    end;
+
+    C := fpPosPrinter.TxRx( DLE + EOT + #4 );
+    if (Length(C) > 0) then
+    begin
+      B := Ord(C[1]);
+      if TestBit(B, 2) and TestBit(B, 3) then
+        AStatus := AStatus + [stPoucoPapel];
+      if TestBit(B, 5) and TestBit(B, 6) then
+        AStatus := AStatus + [stSemPapel];
+    end;
+  except
+    AStatus := AStatus + [stErroLeitura];
   end;
 end;
 
@@ -646,26 +643,23 @@ var
 begin
   Info := '';
 
-  with TACBrPosPrinter(fpOwner) do
+  Ret := fpPosPrinter.TxRx( GS + 'IB', 0, 500, True );
+  AddInfo('Fabricante', Ret);
+
+  Ret := fpPosPrinter.TxRx( GS + 'IA', 0, 500, True );
+  AddInfo('Firmware', Ret);
+
+  Ret := fpPosPrinter.TxRx( GS + 'IC', 0, 500, True );
+  AddInfo('Modelo', Ret);
+
+  Ret := fpPosPrinter.TxRx( GS + 'ID', 0, 500, True );
+  AddInfo('Serial', Ret);
+
+  Ret := fpPosPrinter.TxRx( GS + 'I2', 1, 500, False );
+  if Length(Ret) > 0 then
   begin
-    Ret := TxRx( GS + 'IB', 0, 500, True );
-    AddInfo('Fabricante', Ret);
-
-    Ret := TxRx( GS + 'IA', 0, 500, True );
-    AddInfo('Firmware', Ret);
-
-    Ret := TxRx( GS + 'IC', 0, 500, True );
-    AddInfo('Modelo', Ret);
-
-    Ret := TxRx( GS + 'ID', 0, 500, True );
-    AddInfo('Serial', Ret);
-
-    Ret := TxRx( GS + 'I2', 1, 500, False );
-    if Length(Ret) > 0 then
-    begin
-      B := Ord(Ret[1]);
-      Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
-    end;
+    B := Ord(Ret[1]);
+    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 1),'1','0') + sLineBreak ;
   end;
 
   Result := Info;
@@ -674,7 +668,7 @@ end;
 function TACBrEscPosEpson.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 begin
-  with TACBrPosPrinter(fpOwner).ConfigLogo do
+  with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.

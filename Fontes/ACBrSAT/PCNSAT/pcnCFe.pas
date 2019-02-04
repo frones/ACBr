@@ -41,7 +41,7 @@ unit pcnCFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnSignature, pcnAuxiliar;
 
 type
@@ -93,39 +93,38 @@ type
     FTotal: TTotal;
     fPagto: TMPCollection;
     FInfAdic: TInfAdic;
+    FobsFisco: TobsFiscoCollection;
     FSignature: TSignature;
     FXMLOriginal: AnsiString;
     FAjustarTagNro:Boolean;
 
     function GetAsXMLString: AnsiString;
-    procedure SetDet(Value: TDetCollection);
-    procedure SetPagto(Value: TMPCollection);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear ;
-    procedure ClearSessao ;
+    procedure Clear;
+    procedure ClearSessao;
 
     function LoadFromFile(const AFileName : String): boolean;
     function LoadFromIni(const IniArquivoOuString : String): boolean;
     function SaveToFile(const AFileName : String): boolean;
-    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
-    procedure SetXMLString(const AValue : AnsiString) ;
+    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString;
+    procedure SetXMLString(const AValue : AnsiString);
 
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
-    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
+    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString;
     property XMLOriginal: AnsiString read FXMLOriginal;
-  published
-    property infCFe: TinfCFe read FinfCFe write FinfCFe;
-    property ide: Tide read Fide write Fide;
-    property Emit: TEmit read FEmit write FEmit;
-    property Dest: TDest read FDest write FDest;
-    property Entrega: TEntrega read FEntrega write FEntrega;
-    property Det: TDetCollection read FDet write SetDet;
-    property Total: TTotal read FTotal write FTotal;
-    property Pagto: TMPCollection read fPagto write fPagto;
-    property InfAdic: TInfAdic read FInfAdic write FInfAdic;
-    property signature: Tsignature read Fsignature write Fsignature;
+    property infCFe: TinfCFe read FinfCFe;
+    property ide: Tide read Fide;
+    property Emit: TEmit read FEmit;
+    property Dest: TDest read FDest;
+    property Entrega: TEntrega read FEntrega;
+    property Det: TDetCollection read FDet;
+    property Total: TTotal read FTotal;
+    property Pagto: TMPCollection read fPagto;
+    property InfAdic: TInfAdic read FInfAdic;
+    property obsFisco: TobsFiscoCollection read FobsFisco;
+    property signature: Tsignature read Fsignature;
 
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos;
@@ -144,8 +143,8 @@ type
     FID: string;
   public
     constructor Create;
-    procedure Clear ;
-  published
+    procedure Clear;
+
     property versao: Real read Fversao write Fversao;
     property versaoDadosEnt: Real read FversaoDadosEnt write FversaoDadosEnt;
     property versaoSB: integer read FversaoSB write FversaoSB;
@@ -168,15 +167,15 @@ type
     FsignAC: string;
     FassinaturaQRCODE: string;
     FnumeroCaixa: integer;
-    function GetdEmi : TDateTime ;
-    function GethEmi : TDateTime ;
-    procedure SetdEmi(AValue : TDateTime) ;
-    procedure SethEmi(AValue : TDateTime) ;
+    function GetdEmi : TDateTime;
+    function GethEmi : TDateTime;
+    procedure SetdEmi(AValue : TDateTime);
+    procedure SethEmi(AValue : TDateTime);
   public
     constructor Create;
-    procedure Clear ;
-    procedure ClearSessao ;
-  published
+    procedure Clear;
+    procedure ClearSessao;
+
     property cUF: integer read FcUF write FcUF;
     property cNF: integer read FcNF write FcNF;
     property modelo: integer read Fmodelo write Fmodelo;
@@ -209,15 +208,15 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property CNPJ: string read FCNPJ write FCNPJ;
     property xNome: string read FxNome write FxNome;
     property xFant: string read FxFant write FxFant;
-    property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
-    property IE: string read FIE write FIE ;
-    property IM: string read FIM write FIM ;
-    property cRegTrib: TpcnRegTrib read FcRegTrib write FcRegTrib ;
-    property cRegTribISSQN: TpcnRegTribISSQN read FcRegTribISSQN write FcRegTribISSQN ;
+    property EnderEmit: TEnderEmit read FEnderEmit;
+    property IE: string read FIE write FIE;
+    property IM: string read FIM write FIM;
+    property cRegTrib: TpcnRegTrib read FcRegTrib write FcRegTrib;
+    property cRegTribISSQN: TpcnRegTribISSQN read FcRegTribISSQN write FcRegTribISSQN;
     property indRatISSQN: TpcnindRatISSQN read FindRatISSQN write FindRatISSQN;
   end;
 
@@ -234,7 +233,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property xLgr: string read FxLgr write FxLgr;
     property nro: string read Fnro write Fnro;
     property xCpl: string read FxCpl write FxCpl;
@@ -252,7 +251,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
     property xNome: string read FxNome write FxNome;
   end;
@@ -270,7 +269,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property xLgr: string read FxLgr write FxLgr;
     property nro: string read Fnro write Fnro;
     property xCpl: string read FxCpl write FxCpl;
@@ -279,32 +278,32 @@ type
     property UF: string read FUF write FUF;
   end;
 
-  TDetCollection = class(TCollection)
+  TDetCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TDetCollectionItem);
   public
-    constructor Create(AOwner: TCFe);
-    function Add: TDetCollectionItem;
+    function Add: TDetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDetCollectionItem;
     property Items[Index: Integer]: TDetCollectionItem read GetItem write SetItem; default;
   end;
 
   { TDetCollectionItem }
 
-  TDetCollectionItem = class(TCollectionItem)
+  TDetCollectionItem = class(TObject)
   private
     FnItem: integer;
     FProd: TProd;
     FImposto: TImposto;
     FinfAdProd: string;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property nItem: integer read FnItem write FnItem;
-    property Prod: TProd read FProd write FProd;
-    property Imposto: TImposto read FImposto write FImposto;
+    property Prod: TProd read FProd;
+    property Imposto: TImposto read FImposto;
     property infAdProd: string read FinfAdProd write FinfAdProd;
   end;
 
@@ -323,19 +322,18 @@ type
     FqCom: currency;
     FvUnCom: double;
     FvProd: currency;
-    FindRegra: TpcnindRegra ;
+    FindRegra: TpcnindRegra;
     FvDesc: currency;
     FvOutro: currency;
     FvItem: currency;
     FvRatDesc: currency;
     FvRatAcr: currency;
     FobsFiscoDet: TobsFiscoDetCollection;
-    procedure SetobsFiscoDet(Value: TobsFiscoDetCollection);
   public
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property cProd: string read FcProd write FcProd;
     property cEAN: string read FcEAN write FcEAN;
     property xProd: string read FxProd write FxProd;
@@ -353,25 +351,30 @@ type
     property vItem: currency read FvItem write FvItem;
     property vRatDesc: currency read FvRatDesc write FvRatDesc;
     property vRatAcr: currency read FvRatAcr write FvRatAcr;
-    property obsFiscoDet: TobsFiscoDetCollection read FobsFiscoDet write SetobsFiscoDet;
+    property obsFiscoDet: TobsFiscoDetCollection read FobsFiscoDet;
   end;
 
-  TobsFiscoDetCollection = class(TCollection)
+  { TobsFiscoDetCollection }
+
+  TobsFiscoDetCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoDetCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoDetCollectionItem);
   public
-    constructor Create(AOwner: TProd);
     destructor Destroy; override;
-    function Add: TobsFiscoDetCollectionItem;
+
+    function Add: TobsFiscoDetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobsFiscoDetCollectionItem;
     property Items[Index: Integer]: TobsFiscoDetCollectionItem read GetItem write SetItem; default;
   end;
 
-  TobsFiscoDetCollectionItem = class(TCollectionItem)
+  { TobsFiscoDetCollectionItem }
+
+  TobsFiscoDetCollectionItem = class(TObject)
   private
     FxCampoDet: string;
     FxTextoDet: string;
-  published
+  public
     property xCampoDet: string read FxCampoDet write FxCampoDet;
     property xTextoDet: string read FxTextoDet write FxTextoDet;
   end;
@@ -391,14 +394,14 @@ type
     constructor Create(AOwner: TDetcollectionItem);
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property vItem12741: currency read FvItem12741 write FvItem12741;
-    property ICMS: TICMS read FICMS write FICMS;
-    property PIS: TPIS read FPIS write FPIS;
-    property PISST: TPISST read FPISST write FPISST;
-    property COFINS: TCOFINS read FCOFINS write FCOFINS;
-    property COFINSST: TCOFINSST read FCOFINSST write FCOFINSST;
-    property ISSQN: TISSQN read FISSQN write FISSQN;
+    property ICMS: TICMS read FICMS;
+    property PIS: TPIS read FPIS;
+    property PISST: TPISST read FPISST;
+    property COFINS: TCOFINS read FCOFINS;
+    property COFINSST: TCOFINSST read FCOFINSST;
+    property ISSQN: TISSQN read FISSQN;
   end;
 
   { TICMS }
@@ -413,7 +416,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
     property CST: TpcnCSTIcms read FCST write FCST default cst00;
     property CSOSN: TpcnCSOSNIcms read FCSOSN write FCSOSN;
@@ -434,7 +437,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property CST: TpcnCstPis read FCST write FCST default pis01;
     property vBC: currency read FvBC write FvBC;
     property pPIS: currency read FpPIS write FpPIS;
@@ -455,7 +458,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vBc: currency read FvBc write FvBc;
     property pPis: currency read FpPis write FpPis;
     property qBCProd: currency read FqBCProd write FqBCProd;
@@ -476,7 +479,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property CST: TpcnCstCofins read FCST write FCST default cof01;
     property vBC: currency read FvBC write FvBC;
     property pCOFINS: currency read FpCOFINS write FpCOFINS;
@@ -497,7 +500,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vBC: currency read FvBC write FvBC;
     property pCOFINS: currency read FpCOFINS write FpCOFINS;
     property qBCProd: currency read FqBCProd write FqBCProd;
@@ -521,7 +524,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vDeducISSQN: currency read FvDeducISSQN write FvDeducISSQN;
     property vBC: currency read FvBC write FvBC;
     property vAliq: currency read FvAliq write FvAliq;
@@ -538,7 +541,7 @@ type
   TTotal = class
   private
     FICMSTot: TICMSTot;
-    FvCFe: Currency;    
+    FvCFe: Currency;
     FISSQNtot: TISSQNtot;
     FDescAcrEntr: TDescAcrEntr;
     FvCFeLei12741: Currency;
@@ -546,11 +549,11 @@ type
     constructor Create(AOwner: TCFe);
     destructor Destroy; override;
     procedure Clear;
-  published
-    property ICMSTot: TICMSTot read FICMSTot write FICMSTot;
-    property vCFe: Currency read FvCFe write FvCFe;    
-    property ISSQNtot: TISSQNtot read FISSQNtot write FISSQNtot;
-    property DescAcrEntr: TDescAcrEntr read FDescAcrEntr write FDescAcrEntr;
+
+    property ICMSTot: TICMSTot read FICMSTot;
+    property vCFe: Currency read FvCFe write FvCFe;
+    property ISSQNtot: TISSQNtot read FISSQNtot;
+    property DescAcrEntr: TDescAcrEntr read FDescAcrEntr;
     property vCFeLei12741: Currency read FvCFeLei12741 write FvCFeLei12741;
   end;
 
@@ -569,7 +572,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vICMS: Currency read FvICMS write FvICMS;
     property vProd: Currency read FvProd write FvProd;
     property vDesc: Currency read FvDesc write FvDesc;
@@ -593,7 +596,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vBC: Currency read FvBC write FvBC;
     property vISS: Currency read FvISS write FvISS;
     property vPIS: Currency read FvPIS write FvPIS;
@@ -611,32 +614,37 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property vDescSubtot: Currency read FvDescSubtot write FvDescSubtot;
     property vAcresSubtot: Currency read FvAcresSubtot write FvAcresSubtot;
   end;
 
-  TMPCollection = class(TCollection)
+  { TMPCollection }
+
+  TMPCollection = class(TObjectList)
   private
     FvTroco: currency;
     function GetItem(Index: Integer): TMPCollectionItem;
     procedure SetItem(Index: Integer; Value: TMPCollectionItem);
   public
-    constructor Create(AOwner: TCFe);
+    constructor Create();
     destructor Destroy; override;
-    procedure Clear;
-    function Add: TMPCollectionItem;
+
+    procedure Clear; override;
+    function Add: TMPCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMPCollectionItem;
     property Items[Index: Integer]: TMPCollectionItem read GetItem write SetItem; default;
-  published
     property vTroco: currency read FvTroco write FvTroco;
   end;
 
-  TMPCollectionItem = class(TCollectionItem)
+  { TMPCollectionItem }
+
+  TMPCollectionItem = class(TObject)
   private
     FcMP: TpcnCodigoMP;
     FvMP: currency;
     FcAdmC: integer;
-  published
+  public
     property cMP: TpcnCodigoMP read FcMP write FcMP;
     property vMP: currency read FvMP write FvMP;
     property cAdmC: integer read FcAdmC write FcAdmC;
@@ -648,65 +656,68 @@ type
   private
     FinfCpl: string;
     FobsFisco: TobsFiscoCollection;
-    procedure SetobsFisco(Value: TobsFiscoCollection);
   public
     constructor Create(AOwner: TCFe);
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property infCpl: string read FinfCpl write FinfCpl;
-    property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
+    property obsFisco: TobsFiscoCollection read FobsFisco;
   end;
 
-  TobsFiscoCollection = class(TCollection)
+  { TobsFiscoCollection }
+
+  TobsFiscoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoCollectionItem);
   public
-    constructor Create(AOwner: TinfAdic);
-    function Add: TobsFiscoCollectionItem;
+    function Add: TobsFiscoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobsFiscoCollectionItem;
     property Items[Index: Integer]: TobsFiscoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TobsFiscoCollectionItem = class(TCollectionItem)
+  { TobsFiscoCollectionItem }
+
+  TobsFiscoCollectionItem = class(TObject)
   private
     FxCampo: string;
     FxTexto: string;
-  published
+  public
     property xCampo: string read FxCampo write FxCampo;
     property xTexto: string read FxTexto write FxTexto;
   end;
 
-
 implementation
 
-Uses dateutils, IniFiles,
+uses
+  dateutils, IniFiles,
   pcnCFeR, pcnCFeW,
   ACBrUtil;
 
 { TDescAcrEntr }
 
-constructor TDescAcrEntr.Create ;
+constructor TDescAcrEntr.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TDescAcrEntr.Clear ;
+procedure TDescAcrEntr.Clear;
 begin
   FvDescSubtot  := 0;
   FvAcresSubtot := 0;
-end ;
+end;
 
 { TISSQNtot }
 
-constructor TISSQNtot.Create ;
+constructor TISSQNtot.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TISSQNtot.Clear ;
+procedure TISSQNtot.Clear;
 begin
   FvBC      := 0;
   FvISS     := 0;
@@ -714,34 +725,34 @@ begin
   FvCOFINS  := 0;
   FvPISST   := 0;
   FvCOFINSST:= 0;
-end ;
+end;
 
 { TICMS }
 
-constructor TICMS.Create ;
+constructor TICMS.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TICMS.Clear ;
+procedure TICMS.Clear;
 begin
   Forig   := oeNacional;
   FCST    := cst00;
   FCSOSN  := csosnVazio;
   FpICMS  := 0;
   FvICMS  := 0;
-end ;
+end;
 
 { TPIS }
 
-constructor TPIS.Create ;
+constructor TPIS.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TPIS.Clear ;
+procedure TPIS.Clear;
 begin
   FCST       := pis01;
   FvBC       := 0;
@@ -749,34 +760,34 @@ begin
   FvPIS      := 0;
   FqBCProd   := 0;
   FvAliqProd := 0;
-end ;
+end;
 
 { TPISST }
 
-constructor TPISST.Create ;
+constructor TPISST.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TPISST.Clear ;
+procedure TPISST.Clear;
 begin
   FvBc       := 0;
   FpPis      := 0;
   FqBCProd   := 0;
   FvAliqProd := 0;
   FvPIS      := 0;
-end ;
+end;
 
 { TCOFINS }
 
-constructor TCOFINS.Create ;
+constructor TCOFINS.Create;
 begin
   inherited create;
   Clear;
-end ;
+end;
 
-procedure TCOFINS.Clear ;
+procedure TCOFINS.Clear;
 begin
   FCST       := cof01;
   FvBC       := 0;
@@ -784,34 +795,34 @@ begin
   FvCOFINS   := 0;
   FvAliqProd := 0;
   FqBCProd   := 0;
-end ;
+end;
 
 { TCOFINSST }
 
-constructor TCOFINSST.Create ;
+constructor TCOFINSST.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TCOFINSST.Clear ;
+procedure TCOFINSST.Clear;
 begin
   FvBC      := 0;
   FpCOFINS  := 0;
   FqBCProd  := 0;
   FvAliqProd:= 0;
   FvCOFINS  := 0;
-end ;
+end;
 
 { TISSQN }
 
-constructor TISSQN.Create ;
+constructor TISSQN.Create;
 begin
   inherited create;
   Clear;
-end ;
+end;
 
-procedure TISSQN.Clear ;
+procedure TISSQN.Clear;
 begin
   FvDeducISSQN := 0;
   FvBC         := 0;
@@ -822,17 +833,17 @@ begin
   FcServTribMun:= '';
   FcNatOp      := 0;
   FindIncFisc  := iiNao;
-end ;
+end;
 
 { TICMSTot }
 
-constructor TICMSTot.Create ;
+constructor TICMSTot.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TICMSTot.Clear ;
+procedure TICMSTot.Clear;
 begin
   FvICMS     := 0;
   FvProd     := 0;
@@ -842,17 +853,17 @@ begin
   FvPISST    := 0;
   FvCOFINSST := 0;
   FvOutro    := 0;
-end ;
+end;
 
 { TEntrega }
 
-constructor TEntrega.Create ;
+constructor TEntrega.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TEntrega.Clear ;
+procedure TEntrega.Clear;
 begin
   FxLgr   := '';
   Fnro    := '';
@@ -860,116 +871,106 @@ begin
   FxBairro:= '';
   FxMun   := '';
   FUF     := '';
-end ;
+end;
 
 { TDest }
 
-constructor TDest.Create ;
+constructor TDest.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TDest.Clear ;
+procedure TDest.Clear;
 begin
-  FCNPJCPF := '' ;
-  FxNome   := '' ;
-end ;
+  FCNPJCPF := '';
+  FxNome   := '';
+end;
 
 { TenderEmit }
 
-constructor TenderEmit.Create ;
+constructor TenderEmit.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TenderEmit.Clear ;
+procedure TenderEmit.Clear;
 begin
   FxLgr   := '';
   Fnro    := '';
   fxCpl   := '';
   FxBairro:= '';
   FxMun   := '';
-  FCEP    := 0 ;
-end ;
+  FCEP    := 0;
+end;
 
 { Tide }
 
-function Tide.GetdEmi : TDateTime ;
+function Tide.GetdEmi : TDateTime;
 begin
   Result := DateOf( FdhEmi );
 end;
 
-function Tide.GethEmi : TDateTime ;
+function Tide.GethEmi : TDateTime;
 begin
   Result := TimeOf( FdhEmi );
 end;
 
-procedure Tide.SetdEmi(AValue : TDateTime) ;
+procedure Tide.SetdEmi(AValue : TDateTime);
 begin
  FdhEmi := DateOf(AValue) + hEmi;
 end;
 
-procedure Tide.SethEmi(AValue : TDateTime) ;
+procedure Tide.SethEmi(AValue : TDateTime);
 begin
   FdhEmi := dEmi + TimeOf(AValue);
 end;
 
-constructor Tide.Create ;
+constructor Tide.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure Tide.Clear ;
+procedure Tide.Clear;
 begin
   FcUF              := 0;
   Fmodelo           := 0;
-  FnserieSAT        := 0 ;
+  FnserieSAT        := 0;
   FtpAmb            := taHomologacao;
   FCNPJ             := '';
   FsignAC           := '';
-  FnumeroCaixa      := 0 ;
+  FnumeroCaixa      := 0;
   ClearSessao;
-end ;
+end;
 
-procedure Tide.ClearSessao ;
+procedure Tide.ClearSessao;
 begin
   FcNF              := 0;
   FnCFe             := 0;
   FdhEmi            := 0;
   FcDV              := 0;
   FassinaturaQRCODE := '';
-end ;
+end;
 
 { TinfCFe }
 
-constructor TinfCFe.Create ;
+constructor TinfCFe.Create;
 begin
-  inherited ;
+  inherited;
   Clear;
-end ;
+end;
 
-procedure TinfCFe.Clear ;
+procedure TinfCFe.Clear;
 begin
-  Fversao         := 0 ;
+  Fversao         := 0;
   FversaoDadosEnt := 0;
   FversaoSB       := 0;
   FID             := '';
-end ;
+end;
 
 { TobsFiscoCollection }
-
-function TobsFiscoCollection.Add: TobsFiscoCollectionItem;
-begin
-  Result := TobsFiscoCollectionItem(inherited Add);
-end;
-
-constructor TobsFiscoCollection.Create(AOwner: TinfAdic);
-begin
-  inherited Create(TobsFiscoCollectionItem);
-end;
 
 function TobsFiscoCollection.GetItem(
   Index: Integer): TobsFiscoCollectionItem;
@@ -983,12 +984,23 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TobsFiscoCollection.Add: TobsFiscoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TobsFiscoCollection.New: TobsFiscoCollectionItem;
+begin
+  Result := TobsFiscoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfAdic }
 
 constructor TInfAdic.Create(AOwner: TCFe);
 begin
   inherited Create;
-  FobsFisco := TobsFiscoCollection.Create(Self);
+  FobsFisco := TobsFiscoCollection.Create;
   Clear;
 end;
 
@@ -998,15 +1010,10 @@ begin
   inherited;
 end;
 
-procedure TInfAdic.Clear ;
+procedure TInfAdic.Clear;
 begin
   FinfCpl  := '';
   FobsFisco.Clear;
-end ;
-
-procedure TInfAdic.SetobsFisco(Value: TobsFiscoCollection);
-begin
-  FobsFisco.Assign(Value);
 end;
 
 { TTotal }
@@ -1015,7 +1022,7 @@ constructor TTotal.Create(AOwner: TCFe);
 begin
   inherited Create;
   FICMSTot := TICMSTot.Create;
-  FISSQNtot := TISSQNtot.create;
+  FISSQNtot := TISSQNtot.Create;
   FDescAcrEntr := TDescAcrEntr.create;
 end;
 
@@ -1027,7 +1034,7 @@ begin
   inherited;
 end;
 
-procedure TTotal.Clear ;
+procedure TTotal.Clear;
 begin
   FvCFe         := 0;
   FvCFeLei12741 := 0;
@@ -1035,7 +1042,7 @@ begin
   FICMSTot.Clear;
   FISSQNtot.Clear;
   FDescAcrEntr.Clear;
-end ;
+end;
 
 { TImposto }
 
@@ -1061,7 +1068,7 @@ begin
   inherited;
 end;
 
-procedure TImposto.Clear ;
+procedure TImposto.Clear;
 begin
   FvItem12741 := 0;
   FICMS.Clear;
@@ -1070,14 +1077,14 @@ begin
   FCOFINS.Clear;
   FCOFINSST.Clear;
   FISSQN.Clear;
-end ;
+end;
 
 { TProd }
 
 constructor TProd.Create(AOwner: TDetcollectionItem);
 begin
   inherited Create;
-  FobsFiscoDet := TobsFiscoDetCollection.Create(Self);
+  FobsFiscoDet := TobsFiscoDetCollection.Create;
   Clear;
 end;
 
@@ -1087,7 +1094,7 @@ begin
   inherited;
 end;
 
-procedure TProd.Clear ;
+procedure TProd.Clear;
 begin
   FcProd    := '';
   FcEAN     := '';
@@ -1099,7 +1106,7 @@ begin
   FqCom     := 0;
   FvUnCom   := 0;
   FvProd    := 0;
-  FindRegra := irArredondamento ;
+  FindRegra := irArredondamento;
   FvDesc    := 0;
   FvOutro   := 0;
   FvItem    := 0;
@@ -1107,24 +1114,9 @@ begin
   FvRatAcr  := 0;
   FobsFiscoDet.Clear;
   FEhCombustivel := False;
-end ;
-
-procedure TProd.SetobsFiscoDet(Value: TobsFiscoDetCollection);
-begin
-  FobsFiscoDet.Assign(Value);
 end;
 
 { TobsFiscoDetCollection }
-
-function TobsFiscoDetCollection.Add: TobsFiscoDetCollectionItem;
-begin
-  Result := TobsFiscoDetCollectionItem(inherited Add);
-end;
-
-constructor TobsFiscoDetCollection.Create(AOwner: TProd);
-begin
-  inherited Create(TobsFiscoDetCollectionItem);
-end;
 
 destructor TobsFiscoDetCollection.Destroy;
 begin
@@ -1143,17 +1135,23 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TDetCollection }
-
-function TDetCollection.Add: TDetCollectionItem;
+function TobsFiscoDetCollection.New: TobsFiscoDetCollectionItem;
 begin
-  Result := TDetCollectionItem(inherited Add);
-  Result.create;
+  Result := TobsFiscoDetCollectionItem.Create;
+  Self.Add(Result);
 end;
 
-constructor TDetCollection.Create(AOwner: TCFe);
+function TobsFiscoDetCollection.Add: TobsFiscoDetCollectionItem;
 begin
-  inherited Create(TDetCollectionItem);
+  Result := Self.New;
+end;
+
+{ TDetCollection }
+
+function TDetCollection.New: TDetCollectionItem;
+begin
+  Result := TDetCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 function TDetCollection.GetItem(Index: Integer): TDetCollectionItem;
@@ -1167,10 +1165,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDetCollection.Add: TDetCollectionItem;
+begin
+  Result := Self.New;
+end;
+
 { TDetCollectionItem }
 
 constructor TDetCollectionItem.Create;
 begin
+  inherited Create;
   FProd := TProd.Create(self);
   FImposto := TImposto.Create(self);
   Clear;
@@ -1184,14 +1188,14 @@ begin
   inherited;
 end;
 
-procedure TDetCollectionItem.Clear ;
+procedure TDetCollectionItem.Clear;
 begin
   FnItem     := 0;
   FinfAdProd := '';
 
   FProd.Clear;
   FImposto.Clear;
-end ;
+end;
 
 { TEmit }
 
@@ -1207,25 +1211,20 @@ begin
   inherited;
 end;
 
-procedure TEmit.Clear ;
+procedure TEmit.Clear;
 begin
   FCNPJ  := '';
   FxNome    := '';
   FxFant    := '';
-  FIE       := '' ;
-  FIM       := '' ;
+  FIE       := '';
+  FIM       := '';
   FenderEmit.Clear;
   FcRegTrib      := RTSimplesNacional;
   FcRegTribISSQN := RTISSNenhum;
   FindRatISSQN   := irSim;
-end ;
+end;
 
 { TMPCollection }
-
-function TMPCollection.Add: TMPCollectionItem;
-begin
-  Result := TMPCollectionItem(inherited Add);
-end;
 
 procedure TMPCollection.Clear;
 begin
@@ -1233,9 +1232,9 @@ begin
    FvTroco := 0;
 end;
 
-constructor TMPCollection.Create(AOwner: TCFe);
+constructor TMPCollection.Create();
 begin
-  inherited Create(TMPCollectionItem);
+  inherited Create();
   FvTroco := 0;
 end;
 
@@ -1255,6 +1254,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TMPCollection.New: TMPCollectionItem;
+begin
+  Result := TMPCollectionItem.Create();
+  Self.Add(Result);
+end;
+
+function TMPCollection.Add: TMPCollectionItem;
+begin
+  Result := Self.New;
+end;
+
 { TCFe }
 
 constructor TCFe.Create;
@@ -1264,11 +1274,12 @@ begin
   FEmit    := TEmit.Create;
   FDest    := TDest.Create;
   FEntrega := TEntrega.Create;
-  FDet     := TDetCollection.Create(Self);
+  FDet     := TDetCollection.Create();
   FTotal   := TTotal.Create(self);
-  fPagto   := TMPCollection.Create(self);
+  fPagto   := TMPCollection.Create;
   FinfAdic := TinfAdic.Create(self);
-  Fsignature := Tsignature.create;
+  FobsFisco := TobsFiscoCollection.Create;
+  Fsignature := Tsignature.Create;
 
   FRetirarAcentos := True;
   FRetirarEspacos := True;
@@ -1290,19 +1301,20 @@ begin
   FTotal.Free;
   fPagto.Free;
   FinfAdic.Free;
+  FobsFisco.Free;
   Fsignature.Free;
   inherited Destroy;
 end;
 
-procedure TCFe.Clear ;
+procedure TCFe.Clear;
 begin
   FinfCFe.Clear;
   Fide.Clear;
   FEmit.Clear;
   ClearSessao;
-end ;
+end;
 
-procedure TCFe.ClearSessao ;
+procedure TCFe.ClearSessao;
 begin
   FXMLOriginal := '';
   FNomeArquivo := '';
@@ -1314,14 +1326,16 @@ begin
   FTotal.Clear;
   fPagto.Clear;
   FInfAdic.Clear;
+  FobsFisco.Clear;
   FSignature.Clear;
-end ;
+end;
 
-function TCFe.LoadFromFile(const AFileName : String) : boolean ;
+function TCFe.LoadFromFile(const AFileName : String) : boolean;
 var
-  SL : TStringList;
+  SL: TStringList;
 begin
   Result := False;
+
   SL := TStringList.Create;
   try
     SL.LoadFromFile( AFileName );
@@ -1331,11 +1345,11 @@ begin
   finally
     SL.Free;
   end;
-end ;
+end;
 
 function TCFe.LoadFromIni(const IniArquivoOuString : String): boolean;
 var
-  INIRec : TMemIniFile ;
+  INIRec : TMemIniFile;
   OK     : Boolean;
   I, J   : Integer;
   sSecao, sFim, sCodPro : String;
@@ -1389,49 +1403,49 @@ begin
         Entrega.UF      := INIRec.ReadString(  'Entrega','UF','');
       end;
 
-      I := 1 ;
+      I := 1;
       while true do
       begin
-        sSecao    := 'Produto'+IntToStrZero(I,3) ;
-        sCodPro   := INIRec.ReadString(sSecao,'Codigo',INIRec.ReadString( sSecao,'cProd','FIM')) ;
-        if sCodPro = 'FIM' then break ;
+        sSecao  := 'Produto'+IntToStrZero(I,3);
+        sCodPro := INIRec.ReadString(sSecao,'Codigo',INIRec.ReadString( sSecao,'cProd','FIM'));
+        if sCodPro = 'FIM' then break;
 
-        with Det.Add do
+        with Det.New do
         begin
           nItem := I;
-          infAdProd      := INIRec.ReadString(sSecao,'infAdProd','');
+          infAdProd     := INIRec.ReadString(sSecao,'infAdProd','');
 
           Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
           Prod.cEAN     := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
           Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
           Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
-          Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
+          Prod.CEST     := INIRec.ReadString( sSecao,'CEST'     ,'');
           Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
           Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
           Prod.EhCombustivel := (INIRec.ReadInteger( sSecao,'Combustivel',0)=1);
-          Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;
-          Prod.vUnCom   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorUnitario',INIRec.ReadString(sSecao,'vUnCom','')) ,0) ;
-          Prod.vProd    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorTotal'   ,INIRec.ReadString(sSecao,'vProd' ,'')) ,0) ;
+          Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0);
+          Prod.vUnCom   := StringToFloatDef( INIRec.ReadString(sSecao,'ValorUnitario',INIRec.ReadString(sSecao,'vUnCom','')) ,0);
+          Prod.vProd    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorTotal'   ,INIRec.ReadString(sSecao,'vProd' ,'')) ,0);
           Prod.indRegra := StrToindRegra(ok, INIRec.ReadString(sSecao,'indRegra','A'));
-          Prod.vDesc    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDesconto',INIRec.ReadString(sSecao,'vDesc','')) ,0) ;
-          Prod.vOutro   := StringToFloatDef( INIRec.ReadString(sSecao,'vOutro','') ,0) ;
-          Prod.vItem    := StringToFloatDef( INIRec.ReadString(sSecao,'vItem','') ,0) ;
-          Prod.vRatDesc := StringToFloatDef( INIRec.ReadString(sSecao,'vRatDesc','') ,0) ;
-          Prod.vRatAcr  := StringToFloatDef( INIRec.ReadString(sSecao,'vRatAcr','') ,0) ;
+          Prod.vDesc    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDesconto',INIRec.ReadString(sSecao,'vDesc','')) ,0);
+          Prod.vOutro   := StringToFloatDef( INIRec.ReadString(sSecao,'vOutro','') ,0);
+          Prod.vItem    := StringToFloatDef( INIRec.ReadString(sSecao,'vItem','') ,0);
+          Prod.vRatDesc := StringToFloatDef( INIRec.ReadString(sSecao,'vRatDesc','') ,0);
+          Prod.vRatAcr  := StringToFloatDef( INIRec.ReadString(sSecao,'vRatAcr','') ,0);
 
-          Imposto.vItem12741 := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib',INIRec.ReadString(sSecao,'vItem12741','')) ,0) ;
+          Imposto.vItem12741 := StringToFloatDef( INIRec.ReadString(sSecao,'vTotTrib',INIRec.ReadString(sSecao,'vItem12741','')) ,0);
 
-          J := 1 ;
+          J := 1;
           while true do
           begin
-            sSecao  := 'OBSFISCODET'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-            sFim    := INIRec.ReadString(sSecao,'xCampoDet','') ;
+            sSecao := 'OBSFISCODET'+IntToStrZero(I,3)+IntToStrZero(J,3);
+            sFim   := INIRec.ReadString(sSecao,'xCampoDet','');
             if (sFim <> '') then
             begin
-              with Prod.obsFiscoDet.Add do
+              with Prod.obsFiscoDet.New do
               begin
                 xCampoDet := sFim;
-                xTextoDet := INIRec.ReadString(sSecao,'xTextoDet','') ; ;
+                xTextoDet := INIRec.ReadString(sSecao,'xTextoDet','');;
               end;
             end
             else
@@ -1441,22 +1455,22 @@ begin
 
           with Imposto do
           begin
-            sSecao := 'ICMS'+IntToStrZero(I,3) ;
-            sFim   := INIRec.ReadString( sSecao,'CST',INIRec.ReadString(sSecao,'CSOSN','FIM')) ;
+            sSecao := 'ICMS'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString( sSecao,'CST',INIRec.ReadString(sSecao,'CSOSN','FIM'));
             if (sFim <> 'FIM') then
             begin
               with ICMS do
               begin
-                ICMS.orig       := StrToOrig(     OK, INIRec.ReadString(sSecao,'Origem'    ,INIRec.ReadString(sSecao,'orig'    ,'0' ) ));
-                CST             := StrToCSTICMS(  OK, INIRec.ReadString(sSecao,'CST'       ,'00'));
-                CSOSN           := StrToCSOSNIcms(OK, INIRec.ReadString(sSecao,'CSOSN'     ,''  ));     //NFe2
-                ICMS.pICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
-                ICMS.vICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
+                ICMS.orig  := StrToOrig(     OK, INIRec.ReadString(sSecao,'Origem'    ,INIRec.ReadString(sSecao,'orig'    ,'0' ) ));
+                CST        := StrToCSTICMS(  OK, INIRec.ReadString(sSecao,'CST'       ,'00'));
+                CSOSN      := StrToCSOSNIcms(OK, INIRec.ReadString(sSecao,'CSOSN'     ,''  ));     //NFe2
+                ICMS.pICMS := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
+                ICMS.vICMS := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
               end;
             end;
 
-            sSecao    := 'PIS'+IntToStrZero(I,3) ;
-            sFim   := INIRec.ReadString( sSecao,'CST','FIM') ;
+            sSecao := 'PIS'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString( sSecao,'CST','FIM');
             if (sFim <> 'FIM') then
             begin
               with PIS do
@@ -1471,10 +1485,10 @@ begin
               end;
             end;
 
-            sSecao    := 'PISST'+IntToStrZero(I,3) ;
-            sFim   := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM') ;
+            sSecao := 'PISST'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM');
             if (sFim = 'FIM') then
-              sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+              sFim := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM');
 
             if (sFim <> 'FIM') then
             begin
@@ -1488,8 +1502,8 @@ begin
               end;
             end;
 
-            sSecao    := 'COFINS'+IntToStrZero(I,3) ;
-            sFim   := INIRec.ReadString( sSecao,'CST','FIM') ;
+            sSecao := 'COFINS'+IntToStrZero(I,3);
+            sFim   := INIRec.ReadString( sSecao,'CST','FIM');
             if (sFim <> 'FIM') then
             begin
               with COFINS do
@@ -1504,10 +1518,10 @@ begin
               end;
             end;
 
-            sSecao    := 'COFINSST'+IntToStrZero(I,3) ;
+            sSecao := 'COFINSST'+IntToStrZero(I,3);
             sFim   := INIRec.ReadString( sSecao,'ValorBase','F')+ INIRec.ReadString( sSecao,'Quantidade','IM');
             if (sFim = 'FIM') then
-              sFim   := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM') ;
+              sFim := INIRec.ReadString( sSecao,'vBC','F')+ INIRec.ReadString( sSecao,'qBCProd','IM');
 
             if (sFim <> 'FIM') then
             begin
@@ -1521,87 +1535,99 @@ begin
               end;
             end;
 
-            sSecao  := 'ISSQN'+IntToStrZero(I,3) ;
+            sSecao := 'ISSQN'+IntToStrZero(I,3);
             if INIRec.SectionExists(sSecao) then
             begin
               with ISSQN do
               begin
-                vDeducISSQN := StringToFloatDef( INIRec.ReadString(sSecao,'vDeducISSQN','') ,0) ;
-                vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
-                vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
-                vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
-                cMunFG    := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador', INIRec.ReadInteger(sSecao,'cMunFG',0));
-                cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
+                vDeducISSQN  := StringToFloatDef( INIRec.ReadString(sSecao,'vDeducISSQN','') ,0);
+                vBC          := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'   ,INIRec.ReadString(sSecao,'vBC'   ,'')) ,0);
+                vAliq        := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
+                vISSQN       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
+                cMunFG       := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador', INIRec.ReadInteger(sSecao,'cMunFG',0));
+                cListServ    := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
                 cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
-                cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);
-                indIncFisc:= StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
+                cNatOp       := INIRec.ReadInteger(sSecao,'cNatOp',0);
+                indIncFisc   := StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));
               end;
             end;
           end;
         end;
 
-        Inc( I ) ;
-      end ;
+        Inc(I);
+      end;
 
-      Total.ICMSTot.vICMS   := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0) ;
-      Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0) ;
-      Total.ICMSTot.vDesc   := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0) ;
-      Total.ICMSTot.vPIS    := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0) ;
-      Total.ICMSTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0) ;
-      Total.ICMSTot.vPISST  := StringToFloatDef( INIRec.ReadString('Total','ValorPISST'     ,INIRec.ReadString('Total','vPISST'   ,'')) ,0) ;
-      Total.ICMSTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINSST'  ,INIRec.ReadString('Total','vCOFINSST','')) ,0) ;
-      Total.ICMSTot.vOutro  := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0) ;
+      Total.ICMSTot.vICMS     := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0);
+      Total.ICMSTot.vProd     := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0);
+      Total.ICMSTot.vDesc     := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0);
+      Total.ICMSTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0);
+      Total.ICMSTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0);
+      Total.ICMSTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','ValorPISST'     ,INIRec.ReadString('Total','vPISST'   ,'')) ,0);
+      Total.ICMSTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINSST'  ,INIRec.ReadString('Total','vCOFINSST','')) ,0);
+      Total.ICMSTot.vOutro    := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0);
 
-      Total.vCFe         := StringToFloatDef( INIRec.ReadString('Total','ValorNota'    ,INIRec.ReadString('Total','vCFe'    ,'')) ,0) ;
-      Total.vCFeLei12741 := StringToFloatDef( INIRec.ReadString('Total','vTotTrib'     ,INIRec.ReadString('Total','vCFeLei12741'     ,'')),0) ;
+      Total.vCFe         := StringToFloatDef( INIRec.ReadString('Total','ValorNota'    ,INIRec.ReadString('Total','vCFe'    ,'')) ,0);
+      Total.vCFeLei12741 := StringToFloatDef( INIRec.ReadString('Total','vTotTrib'     ,INIRec.ReadString('Total','vCFeLei12741'     ,'')),0);
 
-      Total.ISSQNTot.vBC    := StringToFloatDef( INIRec.ReadString('Total','ValorBaseISS' ,INIRec.ReadString('ISSQNtot','vBC'  ,'')) ,0) ;
-      Total.ISSQNTot.vISS   := StringToFloatDef( INIRec.ReadString('Total','ValorISSQN'   ,INIRec.ReadString('ISSQNtot','vISS' ,'')) ,0) ;
-      Total.ISSQNTot.vPIS   := StringToFloatDef( INIRec.ReadString('Total','ValorPISISS'  ,INIRec.ReadString('ISSQNtot','vPIS' ,'')) ,0) ;
-      Total.ISSQNTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISS',INIRec.ReadString('ISSQNtot','vCOFINS','')) ,0) ;
-      Total.ISSQNTot.vPISST  := StringToFloatDef( INIRec.ReadString('Total','ValorPISISSST'  ,INIRec.ReadString('ISSQNtot','vPISST' ,'')) ,0) ;
-      Total.ISSQNTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISSST',INIRec.ReadString('ISSQNtot','vCOFINSST','')) ,0) ;
+      Total.ISSQNTot.vBC       := StringToFloatDef( INIRec.ReadString('Total','ValorBaseISS' ,INIRec.ReadString('ISSQNtot','vBC'  ,'')) ,0);
+      Total.ISSQNTot.vISS      := StringToFloatDef( INIRec.ReadString('Total','ValorISSQN'   ,INIRec.ReadString('ISSQNtot','vISS' ,'')) ,0);
+      Total.ISSQNTot.vPIS      := StringToFloatDef( INIRec.ReadString('Total','ValorPISISS'  ,INIRec.ReadString('ISSQNtot','vPIS' ,'')) ,0);
+      Total.ISSQNTot.vCOFINS   := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISS',INIRec.ReadString('ISSQNtot','vCOFINS','')) ,0);
+      Total.ISSQNTot.vPISST    := StringToFloatDef( INIRec.ReadString('Total','ValorPISISSST'  ,INIRec.ReadString('ISSQNtot','vPISST' ,'')) ,0);
+      Total.ISSQNTot.vCOFINSST := StringToFloatDef( INIRec.ReadString('Total','ValorCONFINSISSST',INIRec.ReadString('ISSQNtot','vCOFINSST','')) ,0);
 
-      Total.DescAcrEntr.vAcresSubtot := StringToFloatDef( INIRec.ReadString('Total','vAcresSubtot',INIRec.ReadString('DescAcrEntr','vAcresSubtot','')) ,0) ;
-      Total.DescAcrEntr.vDescSubtot  := StringToFloatDef( INIRec.ReadString('Total','vDescSubtot',INIRec.ReadString('DescAcrEntr','vDescSubtot','')) ,0) ;
+      Total.DescAcrEntr.vAcresSubtot := StringToFloatDef( INIRec.ReadString('Total','vAcresSubtot',INIRec.ReadString('DescAcrEntr','vAcresSubtot','')) ,0);
+      Total.DescAcrEntr.vDescSubtot  := StringToFloatDef( INIRec.ReadString('Total','vDescSubtot',INIRec.ReadString('DescAcrEntr','vDescSubtot','')) ,0);
 
-      Pagto.vTroco :=  StringToFloatDef( INIRec.ReadString('Total','vTroco','') ,0) ;
+      Pagto.vTroco :=  StringToFloatDef( INIRec.ReadString('Total','vTroco','') ,0);
 
-      I := 1 ;
+      I := 1;
       while true do
       begin
-        sSecao    := 'pag'+IntToStrZero(I,3) ;
-        sFim      := INIRec.ReadString(sSecao,'cMP','FIM');
+        sSecao := 'pag'+IntToStrZero(I,3);
+        sFim   := INIRec.ReadString(sSecao,'cMP','FIM');
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
         begin
-          sSecao    := 'Pagto'+IntToStrZero(I,3) ;
-          sFim      := INIRec.ReadString(sSecao,'cMP','FIM');
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then break ;
+          sSecao := 'Pagto'+IntToStrZero(I,3);
+          sFim   := INIRec.ReadString(sSecao,'cMP','FIM');
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then break;
         end;
 
-        with Pagto.Add do
+        with Pagto.New do
         begin
-          cMP  := StrToCodigoMP(OK,INIRec.ReadString(sSecao,'cMP',INIRec.ReadString(sSecao,'tpag','01')));
-          vMP  := StringToFloatDef( INIRec.ReadString(sSecao,'vMP',INIRec.ReadString(sSecao,'vPag','')) ,0) ;
-          cAdmC  := INIRec.ReadInteger(sSecao,'cAdmC',0);
+          cMP   := StrToCodigoMP(OK,INIRec.ReadString(sSecao,'cMP',INIRec.ReadString(sSecao,'tpag','01')));
+          vMP   := StringToFloatDef( INIRec.ReadString(sSecao,'vMP',INIRec.ReadString(sSecao,'vPag','')) ,0);
+          cAdmC := INIRec.ReadInteger(sSecao,'cAdmC',0);
         end;
         Inc(I);
       end;
 
-      InfAdic.infCpl     :=  INIRec.ReadString( 'DadosAdicionais','Complemento',INIRec.ReadString( 'DadosAdicionais','infCpl'    ,''));
+      InfAdic.infCpl :=  INIRec.ReadString( 'DadosAdicionais','Complemento',INIRec.ReadString( 'DadosAdicionais','infCpl'    ,''));
 
-      I := 1 ;
+      I := 1;
       while true do
       begin
-        sSecao := 'ObsFisco'+IntToStrZero(I,3) ;
-        sFim   := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM')) ;
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then break ;
+        sSecao := 'ObsFisco'+IntToStrZero(I,3);
+        sFim   := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM'));
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then break;
 
-        with InfAdic.obsFisco.Add do
+        if infCFe.versaoDadosEnt <= 0.07  then
         begin
-          xCampo := sFim;
-          xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
+          with InfAdic.obsFisco.New do
+          begin
+            xCampo := sFim;
+            xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
+          end;
+        end
+        else
+        begin
+          with obsFisco.New do
+          begin
+            xCampo := sFim;
+            xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
+          end;
         end;
+
         Inc(I);
       end;
 
@@ -1620,11 +1646,6 @@ begin
   WriteToTXT(AFileName, AsXMLString, False, False);
   FNomeArquivo := AFileName;
   Result := True;
-end ;
-
-procedure TCFe.SetDet(Value: TDetCollection);
-begin
-  FDet.Assign(Value);
 end;
 
 function TCFe.GetAsXMLString: AnsiString;
@@ -1637,7 +1658,7 @@ end;
 
 function TCFe.GerarXML(ApenasTagsAplicacao: Boolean): AnsiString;
 var
-  LocCFeW : TCFeW ;
+  LocCFeW: TCFeW;
 begin
   LocCFeW := TCFeW.Create(Self);
   try
@@ -1651,15 +1672,15 @@ begin
     FXMLOriginal := LocCFeW.Gerador.ArquivoFormatoXML;
   finally
     LocCFeW.Free;
-  end ;
+  end;
 
   FXMLOriginal := ConverteXMLtoUTF8(FXMLOriginal);
   Result := FXMLOriginal;
 end;
 
-procedure TCFe.SetXMLString(const AValue : AnsiString) ;
+procedure TCFe.SetXMLString(const AValue : AnsiString);
 var
-  LocCFeR : TCFeR;
+  LocCFeR: TCFeR;
   XMLStr: String;
 begin
   LocCFeR := TCFeR.Create(Self);
@@ -1676,10 +1697,5 @@ begin
   FXMLOriginal := AValue;
 end;
 
-procedure TCFe.SetPagto(Value: TMPCollection);
-begin
-  fPagto.Assign(Value);
-end;
-
 end.
- 
+

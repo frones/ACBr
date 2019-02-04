@@ -38,12 +38,15 @@
 
 unit pcnRedeR;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
   pcnConversao, pcnLeitor, pcnRede;
 
 type
+
+{ TCFeR }
 
   TRedeR = class(TPersistent)
   private
@@ -57,8 +60,6 @@ type
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Rede: TRede read FRede write FRede;
   end;
-
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
@@ -106,7 +107,7 @@ begin
     Rede.proxy_porta:= Leitor.rCampo(tcInt, 'proxy_porta');
     Rede.proxy_user := Leitor.rCampo(tcStr, 'proxy_user');
     Rede.proxy_senha:= Leitor.rCampo(tcStr, 'proxy_senha');
-  end ;
+  end;
 
   Result := True;
 end;

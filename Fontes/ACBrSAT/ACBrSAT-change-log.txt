@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2019
+-- pcnCFe, pcnCFeW, pcnCFeR --
+-- pcnCFeCanc, pcnCFeCancW, pcnCFeCancW --
+-- pcnRede, pcnRedeR, pcnRedeW --
+[+] Compatibilização com o Layout 0.08
+[*] Ampla revisão dos fontes, com otimizações como:
+    - Substituição de TCollection por TObjectList
+    - Remoção de Writes e Setters desnecessários
+    - Remoção de diretivas "published", desnecessárias
+    - Correção na endentação
+    (por: Italo, Elton e DSA)
+
 09/01/2019
 -- ACBrSATExtratoESCPOS --
 [*] Ajuste para correta impressão do Logotipo na lateral, na TM-T20

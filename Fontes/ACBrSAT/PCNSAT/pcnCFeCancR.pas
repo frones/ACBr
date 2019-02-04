@@ -46,6 +46,8 @@ uses
 
 type
 
+{ TCFeCancR }
+
   TCFeCancR = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -59,11 +61,10 @@ type
     property CFeCanc: TCFeCanc read FCFeCanc write FCFeCanc;
   end;
 
-  ////////////////////////////////////////////////////////////////////////////////
-
 implementation
 
-uses ACBrConsts, ACBrUtil;
+uses
+  ACBrConsts, ACBrUtil;
 
 { TCFeCancR }
 
@@ -124,11 +125,7 @@ begin
     (*C04*)CFeCanc.Emit.xFant := Leitor.rCampo(tcStr, 'xFant');
     (*C12*)CFeCanc.Emit.IE := Leitor.rCampo(tcStr, 'IE');
     (*C13*)CFeCanc.Emit.IM := Leitor.rCampo(tcStr, 'IM');
-  end;
 
-  (* Grupo da TAG <emit><EnderEmit> *)
-  if Leitor.rExtrai(1, 'emit') <> '' then
-  begin
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin
       (*C06*)CFeCanc.Emit.enderEmit.xLgr := Leitor.rCampo(tcStr, 'xLgr');
@@ -152,14 +149,13 @@ begin
     (*W11*)CFeCanc.Total.vCFe := Leitor.rCampo(tcDe2, 'vCFe');
   end;
 
-
   (* Grupo da TAG <InfAdic> ***************************************************)
   if Leitor.rExtrai(1, 'infAdic') <> '' then
   begin
     i := 0;
     while Leitor.rExtrai(2, 'obsFisco', '', i + 1) <> '' do
     begin
-      CFeCanc.InfAdic.obsFisco.Add;
+      CFeCanc.InfAdic.obsFisco.New;
       (*Z04*)CFeCanc.InfAdic.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
       (*Z05*)CFeCanc.InfAdic.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i)

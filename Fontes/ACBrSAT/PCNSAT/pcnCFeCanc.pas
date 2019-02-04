@@ -41,7 +41,7 @@ unit pcnCFeCanc;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnSignature;
 
 type
@@ -56,8 +56,6 @@ type
   TInfAdic = class;
   TobsFiscoCollection = class;
   TobsFiscoCollectionItem = class;
-
-  { TCFeTCFeCanc }
 
   { TCFeCanc }
 
@@ -77,29 +75,29 @@ type
     FSignature: TSignature;
     FXMLOriginal: AnsiString;
 
-    function GetAsXMLString : AnsiString ;
+    function GetAsXMLString : AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear ;
-    procedure ClearSessao ;
+    procedure Clear;
+    procedure ClearSessao;
 
     function LoadFromFile(const AFileName : String): boolean;
     function SaveToFile(const AFileName : String): boolean;
-    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString ;
-    procedure SetXMLString(const AValue : AnsiString) ;
+    function GerarXML( ApenasTagsAplicacao: Boolean = false) : AnsiString;
+    procedure SetXMLString(const AValue : AnsiString);
 
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
-    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString ;
+    property AsXMLString : AnsiString read GetAsXMLString write SetXMLString;
     property XMLOriginal: AnsiString read FXMLOriginal;
-  published
-    property infCFe: TinfCFe read FinfCFe write FinfCFe;
-    property ide: Tide read Fide write Fide;
-    property Emit: TEmit read FEmit write FEmit;
-    property Dest: TDest read FDest write FDest;
-    property Total: TTotal read FTotal write FTotal;
-    property InfAdic: TInfAdic read FInfAdic write FInfAdic;
-    property signature: Tsignature read Fsignature write Fsignature;
+
+    property infCFe: TinfCFe read FinfCFe;
+    property ide: Tide read Fide;
+    property Emit: TEmit read FEmit;
+    property Dest: TDest read FDest;
+    property Total: TTotal read FTotal;
+    property InfAdic: TInfAdic read FInfAdic;
+    property signature: Tsignature read Fsignature;
 
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos;
@@ -121,8 +119,8 @@ type
     procedure SethEmi(const Value: TDateTime);
   public
     constructor Create;
-    procedure Clear ;
-  published
+    procedure Clear;
+
     property versao: Real read Fversao write Fversao;
     property ID: string read FID write FID;
     property chCanc: string read FchCanc write FchCanc;
@@ -145,15 +143,15 @@ type
     FsignAC: string;
     FassinaturaQRCODE: string;
     FnumeroCaixa: integer;
-    function GetdEmi : TDateTime ;
-    function GethEmi : TDateTime ;
-    procedure SetdEmi(AValue : TDateTime) ;
-    procedure SethEmi(AValue : TDateTime) ;
+    function GetdEmi : TDateTime;
+    function GethEmi : TDateTime;
+    procedure SetdEmi(AValue : TDateTime);
+    procedure SethEmi(AValue : TDateTime);
   public
     constructor Create;
-    procedure Clear ;
-    procedure ClearSessao ;
-  published
+    procedure Clear;
+    procedure ClearSessao;
+
     property cUF: integer read FcUF write FcUF;
     property cNF: integer read FcNF write FcNF;
     property modelo: integer read Fmodelo write Fmodelo;
@@ -182,13 +180,13 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property CNPJ: string read FCNPJ write FCNPJ;
     property xNome: string read FxNome write FxNome;
     property xFant: string read FxFant write FxFant;
-    property EnderEmit: TEnderEmit read FEnderEmit write FEnderEmit;
-    property IE: string read FIE write FIE ;
-    property IM: string read FIM write FIM ;
+    property EnderEmit: TEnderEmit read FEnderEmit;
+    property IE: string read FIE write FIE;
+    property IM: string read FIM write FIM;
   end;
 
   { TenderEmit }
@@ -204,7 +202,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property xLgr: string read FxLgr write FxLgr;
     property nro: string read Fnro write Fnro;
     property xCpl: string read FxCpl write FxCpl;
@@ -221,7 +219,7 @@ type
   public
     constructor Create;
     procedure Clear;
-  published
+
     property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
   end;
 
@@ -234,7 +232,7 @@ type
     constructor Create(AOwner: TCFeCanc);
     destructor Destroy; override;
     procedure Clear;
-  published
+
     property vCFe: Currency read FvCFe write FvCFe;
   end;
 
@@ -243,134 +241,137 @@ type
   TInfAdic = class
   private
     FobsFisco: TobsFiscoCollection;
-    procedure SetobsFisco(Value: TobsFiscoCollection);
   public
     constructor Create(AOwner: TCFeCanc);
     destructor Destroy; override;
     procedure Clear;
-  published
-    property obsFisco: TobsFiscoCollection read FobsFisco write SetobsFisco;
+
+    property obsFisco: TobsFiscoCollection read FobsFisco;
   end;
 
-  TobsFiscoCollection = class(TCollection)
+  { TobsFiscoCollection }
+
+  TobsFiscoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TobsFiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TobsFiscoCollectionItem);
   public
-    constructor Create(AOwner: TinfAdic);
-    function Add: TobsFiscoCollectionItem;
+    function Add: TobsFiscoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TobsFiscoCollectionItem;
     property Items[Index: Integer]: TobsFiscoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TobsFiscoCollectionItem = class(TCollectionItem)
+  { TobsFiscoCollectionItem }
+
+  TobsFiscoCollectionItem = class(TObject)
   private
     FxCampo: string;
     FxTexto: string;
-  published
+  public
     property xCampo: string read FxCampo write FxCampo;
     property xTexto: string read FxTexto write FxTexto;
   end;
 
-
 implementation
 
-Uses dateutils,
+uses
+  dateutils,
   pcnCFeCancR, pcnCFeCancW,
   ACBrUtil;
 
 { TDest }
 
-constructor TDest.Create ;
+constructor TDest.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TDest.Clear ;
+procedure TDest.Clear;
 begin
-  FCNPJCPF := '' ;
-end ;
+  FCNPJCPF := '';
+end;
 
 { TenderEmit }
 
-constructor TenderEmit.Create ;
+constructor TenderEmit.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure TenderEmit.Clear ;
+procedure TenderEmit.Clear;
 begin
   FxLgr   := '';
   Fnro    := '';
   fxCpl   := '';
   FxBairro:= '';
   FxMun   := '';
-  FCEP    := 0 ;
-end ;
+  FCEP    := 0;
+end;
 
 { Tide }
 
-function Tide.GetdEmi : TDateTime ;
+function Tide.GetdEmi : TDateTime;
 begin
   Result := DateOf( FdhEmi );
 end;
 
-function Tide.GethEmi : TDateTime ;
+function Tide.GethEmi : TDateTime;
 begin
   Result := TimeOf( FdhEmi );
 end;
 
-procedure Tide.SetdEmi(AValue : TDateTime) ;
+procedure Tide.SetdEmi(AValue : TDateTime);
 begin
  FdhEmi := DateOf(AValue) + hEmi;
 end;
 
-procedure Tide.SethEmi(AValue : TDateTime) ;
+procedure Tide.SethEmi(AValue : TDateTime);
 begin
   FdhEmi := dEmi + TimeOf(AValue);
 end;
 
-constructor Tide.Create ;
+constructor Tide.Create;
 begin
   inherited Create;
   Clear;
-end ;
+end;
 
-procedure Tide.Clear ;
+procedure Tide.Clear;
 begin
   FcUF              := 0;
   Fmodelo           := 0;
-  FnserieSAT        := 0 ;
+  FnserieSAT        := 0;
   FCNPJ             := '';
   FsignAC           := '';
-  FnumeroCaixa      := 0 ;
+  FnumeroCaixa      := 0;
   ClearSessao;
-end ;
+end;
 
-procedure Tide.ClearSessao ;
+procedure Tide.ClearSessao;
 begin
   FcNF              := 0;
   FnCFe             := 0;
   FdhEmi            := 0;
   FcDV              := 0;
   FassinaturaQRCODE := '';
-end ;
+end;
 
 { TinfCFe }
 
-constructor TinfCFe.Create ;
+constructor TinfCFe.Create;
 begin
-  inherited ;
+  inherited;
   Clear;
-end ;
+end;
 
-procedure TinfCFe.Clear ;
+procedure TinfCFe.Clear;
 begin
-  Fversao         := 0 ;
+  Fversao         := 0;
   FID             := '';
   FchCanc         := '';
-end ;
+end;
 
 function TinfCFe.GetdEmi: TDateTime;
 begin
@@ -394,16 +395,6 @@ end;
 
 { TobsFiscoCollection }
 
-function TobsFiscoCollection.Add: TobsFiscoCollectionItem;
-begin
-  Result := TobsFiscoCollectionItem(inherited Add);
-end;
-
-constructor TobsFiscoCollection.Create(AOwner: TinfAdic);
-begin
-  inherited Create(TobsFiscoCollectionItem);
-end;
-
 function TobsFiscoCollection.GetItem(
   Index: Integer): TobsFiscoCollectionItem;
 begin
@@ -416,12 +407,23 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TobsFiscoCollection.New: TobsFiscoCollectionItem;
+begin
+  Result := TobsFiscoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+function TobsFiscoCollection.Add: TobsFiscoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
 { TInfAdic }
 
 constructor TInfAdic.Create(AOwner: TCFeCanc);
 begin
   inherited Create;
-  FobsFisco := TobsFiscoCollection.Create(Self);
+  FobsFisco := TobsFiscoCollection.Create();
   Clear;
 end;
 
@@ -431,14 +433,9 @@ begin
   inherited;
 end;
 
-procedure TInfAdic.Clear ;
+procedure TInfAdic.Clear;
 begin
   FobsFisco.Clear;
-end ;
-
-procedure TInfAdic.SetobsFisco(Value: TobsFiscoCollection);
-begin
-  FobsFisco.Assign(Value);
 end;
 
 { TTotal }
@@ -453,10 +450,10 @@ begin
   inherited;
 end;
 
-procedure TTotal.Clear ;
+procedure TTotal.Clear;
 begin
   FvCFe         := 0;
-end ;
+end;
 
 { TEmit }
 
@@ -472,17 +469,17 @@ begin
   inherited;
 end;
 
-procedure TEmit.Clear ;
+procedure TEmit.Clear;
 begin
   FCNPJ  := '';
   FxNome    := '';
   FxFant    := '';
-  FIE       := '' ;
-  FIM       := '' ;
+  FIE       := '';
+  FIM       := '';
   FenderEmit.Clear;
-end ;
+end;
 
-{ TCFeTCFeCanc }
+{ TCFeCanc }
 
 constructor TCFeCanc.Create;
 begin
@@ -514,16 +511,16 @@ begin
   inherited Destroy;
 end;
 
-procedure TCFeCanc.Clear ;
+procedure TCFeCanc.Clear;
 begin
   FinfCFe.Clear;
   Fide.Clear;
   FEmit.Clear;
 
   ClearSessao;
-end ;
+end;
 
-procedure TCFeCanc.ClearSessao ;
+procedure TCFeCanc.ClearSessao;
 begin
   FXMLOriginal := '';
   FNomeArquivo := '';
@@ -533,9 +530,9 @@ begin
   FTotal.Clear;
   FInfAdic.Clear;
   FSignature.Clear;
-end ;
+end;
 
-function TCFeCanc.GetAsXMLString : AnsiString ;
+function TCFeCanc.GetAsXMLString : AnsiString;
 begin
   if FXMLOriginal = '' then
     Result := GerarXML( false )
@@ -545,7 +542,7 @@ end;
 
 function TCFeCanc.GerarXML( ApenasTagsAplicacao: Boolean ): AnsiString;
 var
-  LocCFeCancW : TCFeCancW ;
+  LocCFeCancW : TCFeCancW;
 begin
   LocCFeCancW := TCFeCancW.Create(Self);
   try
@@ -558,13 +555,13 @@ begin
     FXMLOriginal := LocCFeCancW.Gerador.ArquivoFormatoXML;
   finally
     LocCFeCancW.Free;
-  end ;
+  end;
 
   Result := FXMLOriginal;
 end;
 
 
-procedure TCFeCanc.SetXMLString(const AValue : AnsiString) ;
+procedure TCFeCanc.SetXMLString(const AValue : AnsiString);
 var
  LocCFeCancR : TCFeCancR;
 begin
@@ -579,7 +576,7 @@ begin
   FXMLOriginal := AValue;
 end;
 
-function TCFeCanc.LoadFromFile(const AFileName : String) : boolean ;
+function TCFeCanc.LoadFromFile(const AFileName : String) : boolean;
 var
   SL : TStringList;
 begin
@@ -593,14 +590,14 @@ begin
   finally
     SL.Free;
   end;
-end ;
+end;
 
-function TCFeCanc.SaveToFile(const AFileName : String) : boolean ;
+function TCFeCanc.SaveToFile(const AFileName : String) : boolean;
 begin
   WriteToTXT(AFileName, AsXMLString, False, False);
   FNomeArquivo := AFileName;
   Result := True;
-end ;
+end;
 
 end.
  

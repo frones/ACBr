@@ -74,14 +74,14 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Clear ;
+    procedure Clear;
 
     function LoadFromFile(const AFileName : String): boolean;
     function SaveToFile(const AFileName : String; ApenasTagsAplicacao: Boolean = false): boolean;
     function GetXMLString: AnsiString;
-    procedure SetXMLString(const AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString);
 
-    property AsXMLString : AnsiString read GetXMLString write SetXMLString ;
+    property AsXMLString : AnsiString read GetXMLString write SetXMLString;
   published
     property tipoInter: TTipoInterface read FtipoInter write FtipoInter;
     property SSID: String read FSSID write FSSID;
@@ -103,22 +103,23 @@ type
   end;
 
 function TipoInterfaceToStr(const t: TTipoInterface ): string;
-function StrToTipoInterface(var ok: boolean; const s: string): TTipoInterface ;
+function StrToTipoInterface(var ok: boolean; const s: string): TTipoInterface;
 function SegSemFioToStr(const t: TSegSemFio ): string;
-function StrToSegSemFio(var ok: boolean; const s: string): TSegSemFio ;
+function StrToSegSemFio(var ok: boolean; const s: string): TSegSemFio;
 function TipoLanToStr(const t: TTipoLan ): string;
-function StrToTipoLan(var ok: boolean; const s: string): TTipoLan ;
+function StrToTipoLan(var ok: boolean; const s: string): TTipoLan;
 
 implementation
 
-Uses dateutils, pcnRedeW, pcnRedeR ;
+uses
+  dateutils, pcnRedeW, pcnRedeR;
 
 function TipoInterfaceToStr(const t: TTipoInterface ): string;
 begin
   result := EnumeradoToStr(t, ['ETHE', 'WIFI'], [infETHE, infWIFI]);
 end;
 
-function StrToTipoInterface(var ok: boolean; const s: string): TTipoInterface ;
+function StrToTipoInterface(var ok: boolean; const s: string): TTipoInterface;
 begin
   result := StrToEnumerado(ok, s, ['ETHE', 'WIFI'], [infETHE, infWIFI]);
 end;
@@ -129,7 +130,7 @@ begin
                               [segNONE, segWEP, segWPA, segWPA2, segWPA_PERSONAL, segWPA_ENTERPRISE]);
 end;
 
-function StrToSegSemFio(var ok: boolean; const s: string): TSegSemFio ;
+function StrToSegSemFio(var ok: boolean; const s: string): TSegSemFio;
 begin
   result := StrToEnumerado(ok, s, ['', 'WEP', 'WPA', 'WPA2', 'WPAPERSONAL', 'WPAENTERPRISE'],
                               [segNONE, segWEP, segWPA, segWPA2, segWPA_PERSONAL, segWPA_ENTERPRISE]);
@@ -140,11 +141,10 @@ begin
   result := EnumeradoToStr(t, ['DHCP', 'PPPoE', 'IPFIX'], [lanDHCP, lanPPPoE, lanIPFIX]);
 end;
 
-function StrToTipoLan(var ok: boolean; const s: string): TTipoLan ;
+function StrToTipoLan(var ok: boolean; const s: string): TTipoLan;
 begin
   result := StrToEnumerado(ok, s, ['DHCP', 'PPPoE', 'IPFIX'], [lanDHCP, lanPPPoE, lanIPFIX]);
 end;
-
 
 { TRede }
 
@@ -213,7 +213,7 @@ end;
 
 function TRede.GetXMLString(): AnsiString;
 var
-  LocRedeW : TRedeW ;
+  LocRedeW : TRedeW;
 begin
   Result  := '';
   LocRedeW := TRedeW.Create(Self);
@@ -225,7 +225,7 @@ begin
     Result := LocRedeW.Gerador.ArquivoFormatoXML;
   finally
     LocRedeW.Free;
-  end ;
+  end;
 end;
 
 procedure TRede.SetXMLString(const AValue: AnsiString);

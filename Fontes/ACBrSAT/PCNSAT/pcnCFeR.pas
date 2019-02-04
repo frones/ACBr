@@ -59,11 +59,10 @@ type
     property CFe: TCFe read FCFe write FCFe;
   end;
 
-  ////////////////////////////////////////////////////////////////////////////////
-
 implementation
 
-uses ACBrConsts, ACBrUtil;
+uses
+  ACBrConsts, ACBrUtil;
 
 { TCFeR }
 
@@ -153,11 +152,7 @@ begin
     ACampo := Leitor.rCampo(tcStr, 'indRatISSQN');
     if (ACampo <> '') then
       (*C16*)CFe.Emit.indRatISSQN := StrToindRatISSQN(ok, ACampo);
-  end;
 
-  (* Grupo da TAG <emit><EnderEmit> *)
-  if Leitor.rExtrai(1, 'emit') <> '' then
-  begin
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin
       (*C06*)CFe.Emit.enderEmit.xLgr := Leitor.rCampo(tcStr, 'xLgr');
@@ -187,7 +182,6 @@ begin
     (*G07*)CFe.Entrega.UF := Leitor.rCampo(tcStr, 'UF');
   end;
 
-//  ****** DET
   (* Grupo da TAG <det> *******************************************************)
   i := 0;
   Arquivo := Leitor.Arquivo;
@@ -215,7 +209,7 @@ begin
     ItensTemp := copy(Itens,Pos('<det nItem=',Itens),(Pos('</det>',Itens)+6)-Pos('<det nItem=',Itens));
 
     Leitor.rExtrai(1, 'det nItem=' + Aspas + NumItem + Aspas, 'det');
-    CFe.Det.Add;
+    CFe.Det.New;
     (*   *)CFe.Det[i].nItem := nItem;
     (*V01*)CFe.Det[i].infAdProd := Leitor.rCampo(tcStr, 'infAdProd');
 
@@ -245,7 +239,7 @@ begin
     j := 0;
     while Leitor.rExtrai(3, 'obsFiscoDet', '', j + 1) <> '' do
     begin
-      CFe.Det[i].Prod.obsFiscoDet.Add;
+      CFe.Det[i].Prod.obsFiscoDet.New;
       (*I18*)CFe.Det[i].Prod.obsFiscoDet[j].xCampoDet := Leitor.rAtributo('xCampoDet');
       (*I19*)CFe.Det[i].Prod.obsFiscoDet[j].xTextoDet := Leitor.rCampo(tcStr, 'xTextoDet');
       inc(j);
@@ -273,6 +267,7 @@ begin
       (*Q11*)CFe.Det[i].Imposto.PIS.qBCProd := Leitor.rCampo(tcDe4, 'qBCProd');
       (*Q12*)CFe.Det[i].Imposto.PIS.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
     end;
+
     if Leitor.rExtrai(3, 'PISST') <> '' then
     begin
       (*R02*)CFe.Det[i].Imposto.PISST.vBc := Leitor.rCampo(tcDe2, 'vBC');
@@ -281,6 +276,7 @@ begin
       (*R05*)CFe.Det[i].Imposto.PISST.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*R06*)CFe.Det[i].Imposto.PISST.vPIS := Leitor.rCampo(tcDe2, 'vPIS');
     end;
+
     if Leitor.rExtrai(3, 'COFINS') <> '' then
     begin
       (*S07*)CFe.Det[i].Imposto.COFINS.CST := StrToCSTCOFINS(ok, Leitor.rCampo(tcStr, 'CST'));
@@ -290,6 +286,7 @@ begin
       (*S12*)CFe.Det[i].Imposto.COFINS.vAliqProd := Leitor.rCampo(tcDe4, 'vAliqProd');
       (*S10*)CFe.Det[i].Imposto.COFINS.vCOFINS := Leitor.rCampo(tcDe2, 'vCOFINS');
     end;
+
     if Leitor.rExtrai(3, 'COFINSST') <> '' then
     begin
       (*T02*)CFe.Det[i].Imposto.COFINSST.vBC := Leitor.rCampo(tcDe2, 'vBC');
@@ -322,6 +319,7 @@ begin
   begin
     (*W11*)CFe.Total.vCFe := Leitor.rCampo(tcDe2, 'vCFe');
     (*W22*)CFe.Total.vCFeLei12741 := Leitor.rCampo(tcDe2, 'vCFeLei12741');    
+
     if Leitor.rExtrai(2, 'ICMSTot') <> '' then
     begin
       (*W03*)CFe.Total.ICMSTot.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
@@ -333,6 +331,7 @@ begin
       (*W09*)CFe.Total.ICMSTot.vCOFINSST := Leitor.rCampo(tcDe2, 'vCOFINSST');
       (*W10*)CFe.Total.ICMSTot.vOutro := Leitor.rCampo(tcDe2, 'vOutro');
     end;
+
     if Leitor.rExtrai(2, 'ISSQNtot') <> '' then
     begin
       (*W13*)CFe.Total.ISSQNtot.vBC := Leitor.rCampo(tcDe2, 'vBC');
@@ -342,6 +341,7 @@ begin
       (*W17*)CFe.Total.ISSQNtot.vPISST := Leitor.rCampo(tcDe2, 'vPISST');
       (*W18*)CFe.Total.ISSQNtot.vCOFINSST := Leitor.rCampo(tcDe2, 'vCOFINSST');
     end;
+
     if Leitor.rExtrai(2, 'DescAcrEntr') <> '' then
     begin
       (*W20*)CFe.Total.DescAcrEntr.vDescSubtot := Leitor.rCampo(tcDe2, 'vDescSubtot');
@@ -354,9 +354,10 @@ begin
   begin
     i := 0;
    (*WA06*)CFe.Pagto.vTroco := Leitor.rCampo(tcDe2, 'vTroco');
-    while Leitor.rExtrai(1, 'MP', '', i + 1) <> '' do
+
+    while Leitor.rExtrai(2, 'MP', '', i + 1) <> '' do
     begin
-      CFe.Pagto.Add;
+      CFe.Pagto.New;
       (*WA03*)CFe.Pagto[i].cMP := StrToCodigoMP(ok, Leitor.rCampo(tcStr, 'cMP'));
       (*WA04*)CFe.Pagto[i].vMP := Leitor.rCampo(tcDe2, 'vMP');
       (*WA05*)CFe.Pagto[i].cAdmC := Leitor.rCampo(tcInt, 'cAdmC');
@@ -368,12 +369,28 @@ begin
   if Leitor.rExtrai(1, 'infAdic') <> '' then
   begin
     (*Z02*)CFe.InfAdic.infCpl := Leitor.rCampo(tcStr, 'infCpl');
-    i := 0;
-    while Leitor.rExtrai(2, 'obsFisco', '', i + 1) <> '' do
+
+    if CFe.infCFe.versao <= 0.07 then
     begin
-      CFe.InfAdic.obsFisco.Add;
-      (*Z04*)CFe.InfAdic.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
-      (*Z05*)CFe.InfAdic.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+      i := 0;
+      while Leitor.rExtrai(2, 'obsFisco', '', i + 1) <> '' do
+      begin
+        CFe.InfAdic.obsFisco.New;
+        (*Z04*)CFe.InfAdic.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
+        (*Z05*)CFe.InfAdic.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+        inc(i)
+      end;
+    end;
+  end;
+
+  if CFe.infCFe.versao >= 0.08 then
+  begin
+    i := 0;
+    while Leitor.rExtrai(1, 'obsFisco', '', i + 1) <> '' do
+    begin
+      CFe.obsFisco.New;
+      (*ZA02*)CFe.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
+      (*ZA03*)CFe.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i)
     end;
   end;

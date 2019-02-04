@@ -140,22 +140,24 @@ end;
 procedure TCFeCancW.GerarIde;
 begin
   Gerador.wGrupo('ide', 'B01');
+
   if not FApenasTagsAplicacao then
   begin
-    Gerador.wCampo(tcInt, 'B02', 'cUF    ', 02, 02, 1, CFeCanc.ide.cUF, DSC_CUF);
+    Gerador.wCampo(tcInt, 'B02', 'cUF', 02, 02, 1, CFeCanc.ide.cUF, DSC_CUF);
     if not ValidarCodigoUF(CFeCanc.ide.cUF) then
-       Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcStr, 'B03', 'cNF    ', 06, 06, 1, IntToStrZero(CFeCanc.ide.cNF, 6), DSC_CNF);
-    Gerador.wCampo(tcInt, 'B04', 'mod    ', 02, 02, 1, CFeCanc.ide.modelo, DSC_MOD);
+      Gerador.wAlerta('B02', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
+
+    Gerador.wCampo(tcStr, 'B03', 'cNF      ', 06, 06, 1, IntToStrZero(CFeCanc.ide.cNF, 6), DSC_CNF);
+    Gerador.wCampo(tcInt, 'B04', 'mod      ', 02, 02, 1, CFeCanc.ide.modelo, DSC_MOD);
     Gerador.wCampo(tcInt, 'B05', 'nserieSAT', 09, 09, 1, CFeCanc.ide.nserieSAT, DSC_SERIE);
-    Gerador.wCampo(tcInt, 'B06', 'nCFe   ', 06, 06, 1, IntToStrZero(CFeCanc.ide.nCFe,6), DSC_NCFE);
-    Gerador.wCampo(tcDatCFe, 'B07', 'dEmi   ', 10, 10, 1, CFeCanc.ide.dEmi, DSC_DEMI);
-    Gerador.wCampo(tcHorCFe, 'B08', 'hEmi   ', 08, 08, 0, CFeCanc.ide.hEmi, DSC_HEMI);
-    Gerador.wCampo(tcInt, 'B09', 'cDV    ', 01, 01, 1, CFeCanc.Ide.cDV, DSC_CDV);
+    Gerador.wCampo(tcInt, 'B06', 'nCFe     ', 06, 06, 1, IntToStrZero(CFeCanc.ide.nCFe,6), DSC_NCFE);
+    Gerador.wCampo(tcDatCFe, 'B07', 'dEmi  ', 10, 10, 1, CFeCanc.ide.dEmi, DSC_DEMI);
+    Gerador.wCampo(tcHorCFe, 'B08', 'hEmi  ', 08, 08, 0, CFeCanc.ide.hEmi, DSC_HEMI);
+    Gerador.wCampo(tcInt, 'B09', 'cDV      ', 01, 01, 1, CFeCanc.Ide.cDV, DSC_CDV);
   end;
 
   Gerador.wCampoCNPJCPF('B10', 'B10', CFeCanc.Ide.CNPJ);
-  Gerador.wCampo(tcStr, 'B11', 'signAC ',344, 344, 1, CFeCanc.Ide.signAC, DSC_SIGNAC);
+  Gerador.wCampo(tcStr, 'B11', 'signAC',344, 344, 1, CFeCanc.Ide.signAC, DSC_SIGNAC);
 
   if not FApenasTagsAplicacao then
     Gerador.wCampo(tcStr, 'B12', 'assinaturaQRCODE', 441, 441, 1, CFeCanc.Ide.assinaturaQRCODE, DSC_QRCODE);
@@ -165,16 +167,27 @@ begin
 end;
 
 procedure TCFeCancW.GerarEmit;
+var
+  InscEst: String;
 begin
   Gerador.wGrupo('emit', 'C01');
+
   if not FApenasTagsAplicacao then
   begin
     Gerador.wCampoCNPJCPF('C02', 'C02', CFeCanc.Emit.CNPJ);
-    Gerador.wCampo(tcStr, 'C03', 'xNome  ', 01, 60, 1, CFeCanc.Emit.xNome, DSC_XNOME);
-    Gerador.wCampo(tcStr, 'C04', 'xFant  ', 01, 60, 0, CFeCanc.Emit.xFant, DSC_XNOME);
+    Gerador.wCampo(tcStr, 'C03', 'xNome', 01, 60, 1, CFeCanc.Emit.xNome, DSC_XNOME);
+    Gerador.wCampo(tcStr, 'C04', 'xFant', 01, 60, 0, CFeCanc.Emit.xFant, DSC_XNOME);
+
     (**)GerarEmitEnderEmit;
-    Gerador.wCampo(tcStr, 'C12', 'IE      ', 12, 12, 1, OnlyNumber(CFeCanc.Emit.IE), DSC_IE);
-    Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 0, CFeCanc.Emit.IM, DSC_IM);
+
+    InscEst := Trim(OnlyNumber(CFeCanc.Emit.IE));
+    //Caso a IE possua menos do que 12 dígitos, o AC deve preencher com espaços à direita. ER 2.21.08
+    if Length(InscEst) < 12 then
+      InscEst := PadRight(InscEst,12,' ');
+
+    Gerador.wCampo(tcStrOrig, 'C12', 'IE', 2, 14, 1, InscEst, DSC_IE);
+
+    Gerador.wCampo(tcStr, 'C13', 'IM', 01, 15, 0, CFeCanc.Emit.IM, DSC_IM);
   end;
 
   Gerador.wGrupo('/emit');
@@ -185,12 +198,12 @@ begin
   if not FApenasTagsAplicacao then
   begin
     Gerador.wGrupo('enderEmit', 'C05');
-    Gerador.wCampo(tcStr, 'C06', 'xLgr    ', 02, 60, 1, CFeCanc.Emit.EnderEmit.xLgr, DSC_XLGR);
-    Gerador.wCampo(tcStr, 'C07', 'nro     ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFeCanc.Emit.enderEmit.nro), DSC_NRO);
-    Gerador.wCampo(tcStr, 'C08', 'xCpl    ', 01, 60, 0, CFeCanc.Emit.enderEmit.xCpl, DSC_XCPL);
-    Gerador.wCampo(tcStr, 'C09', 'xBairro ', 02, 60, 1, CFeCanc.Emit.enderEmit.xBairro, DSC_XBAIRRO);
-    Gerador.wCampo(tcStr, 'C10', 'xMun    ', 02, 60, 1, CFeCanc.Emit.enderEmit.xMun, DSC_XMUN);
-    Gerador.wCampo(tcInt, 'C11', 'CEP     ', 08, 08, 1, CFeCanc.Emit.enderEmit.CEP, DSC_CEP);
+    Gerador.wCampo(tcStr, 'C06', 'xLgr   ', 02, 60, 1, CFeCanc.Emit.EnderEmit.xLgr, DSC_XLGR);
+    Gerador.wCampo(tcStr, 'C07', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, CFeCanc.Emit.enderEmit.nro), DSC_NRO);
+    Gerador.wCampo(tcStr, 'C08', 'xCpl   ', 01, 60, 0, CFeCanc.Emit.enderEmit.xCpl, DSC_XCPL);
+    Gerador.wCampo(tcStr, 'C09', 'xBairro', 02, 60, 1, CFeCanc.Emit.enderEmit.xBairro, DSC_XBAIRRO);
+    Gerador.wCampo(tcStr, 'C10', 'xMun   ', 02, 60, 1, CFeCanc.Emit.enderEmit.xMun, DSC_XMUN);
+    Gerador.wCampo(tcInt, 'C11', 'CEP    ', 08, 08, 1, CFeCanc.Emit.enderEmit.CEP, DSC_CEP);
     Gerador.wGrupo('/enderEmit');
   end;
 end;
@@ -208,8 +221,10 @@ end;
 procedure TCFeCancW.GerarTotal;
 begin
   Gerador.wGrupo('total', 'W01');
+
   if not FApenasTagsAplicacao then
     Gerador.wCampo(tcDe2, 'W11', 'vCFe', 01, 15, 1, CFeCanc.Total.vCFe, DSC_VCFE);
+
   Gerador.wGrupo('/total');
 end;
 
@@ -230,15 +245,19 @@ begin
   if not FApenasTagsAplicacao then
   begin
     if CFeCanc.InfAdic.obsFisco.Count > 10 then
-      Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA01','Z03'), 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
+      Gerador.wAlerta('Z03', 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
+
     for i := 0 to CFeCanc.InfAdic.obsFisco.Count - 1 do
     begin
       Gerador.wGrupo('obsFisco xCampo="' + trim(CFeCanc.InfAdic.obsFisco[i].xCampo) + '"', IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'));
+
       if length(trim(CFeCanc.InfAdic.obsFisco[i].xCampo)) > 20 then
-        Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+        Gerador.wAlerta('Z04', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+
       if length(trim(CFeCanc.InfAdic.obsFisco[i].xCampo)) = 0 then
-        Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-      Gerador.wCampo(tcStr, IIf(CFeCanc.infCFe.versao >= 0.08,'ZA03','Z05'), 'xTexto', 01, 60, 1, CFeCanc.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
+        Gerador.wAlerta('Z04', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+
+      Gerador.wCampo(tcStr, 'Z05', 'xTexto', 01, 60, 1, CFeCanc.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
       Gerador.wGrupo('/obsFisco');
     end;
   end;
@@ -253,9 +272,9 @@ begin
   Gerador.LayoutArquivoTXT.Clear;
 
   {$IFDEF UNICODE}
-   Gerador.ArquivoFormatoXML := '<'+ENCODING_UTF8+'>';
+   Gerador.ArquivoFormatoXML := '<' + ENCODING_UTF8 + '>';
    if Gerador.Opcoes.IdentarXML then
-     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10 ;
+     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10;
   {$ELSE}
    Gerador.ArquivoFormatoXML := '';
   {$ENDIF}
@@ -264,18 +283,21 @@ begin
 
   Gerador.wGrupo('CFeCanc');
   Grupo := 'infCFe';
+
   if not ApenasTagsAplicacao then
-    Grupo := Grupo + ' versao="'+ StringReplace(FormatFloat('0.00',CFeCanc.infCFe.versao),',','.',[rfReplaceAll])+'" ' +
+    Grupo := Grupo + ' versao="' + StringReplace(FormatFloat('0.00',CFeCanc.infCFe.versao),',','.',[rfReplaceAll])+'" ' +
                      ' Id="' + CFeCanc.infCFe.ID + '" ';
 
-  Grupo := Grupo + ' chCanc="'+ CFeCanc.infCFe.chCanc  + '"';
+  Grupo := Grupo + ' chCanc="' + CFeCanc.infCFe.chCanc  + '"';
 
   Gerador.wGrupo( Grupo );
+
   if not ApenasTagsAplicacao then
   begin
-    Gerador.wCampo(tcDatCFe, 'A07', 'dEmi   ', 10, 10, 0, CFeCanc.infCFe.dEmi, DSC_DEMI);
-    Gerador.wCampo(tcHorCFe, 'A08', 'hEmi   ', 08, 08, 0, CFeCanc.infCFe.hEmi, DSC_HEMI);
+    Gerador.wCampo(tcDatCFe, 'A07', 'dEmi', 10, 10, 0, CFeCanc.infCFe.dEmi, DSC_DEMI);
+    Gerador.wCampo(tcHorCFe, 'A08', 'hEmi', 08, 08, 0, CFeCanc.infCFe.hEmi, DSC_HEMI);
   end;
+
   (**)GerarInfCFe;
   Gerador.wGrupo('/infCFe');
   //

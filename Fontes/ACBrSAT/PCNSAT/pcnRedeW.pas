@@ -38,8 +38,9 @@
 
 unit pcnRedeW;
 
-interface uses
+interface
 
+uses
   SysUtils, Classes,
   pcnConversao, pcnGerador, pcnRede, ACBrUtil;
 
@@ -57,11 +58,10 @@ type
     destructor Destroy; override;
     function GerarXml: boolean;
   published
-    property Gerador: TGerador read FGerador ;
+    property Gerador: TGerador read FGerador;
     property Rede: TRede read FRede write FRede;
-    property Opcoes: TGeradorOpcoes read GetOpcoes ;
+    property Opcoes: TGeradorOpcoes read GetOpcoes;
   end;
-
 
 implementation
 
@@ -92,7 +92,7 @@ begin
   {$IFDEF UNICODE}
    Gerador.ArquivoFormatoXML := '<'+ENCODING_UTF8+'>';
    if Gerador.Opcoes.IdentarXML then
-     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10 ;
+     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10;
   {$ELSE}
    Gerador.ArquivoFormatoXML := '';
   {$ENDIF}
@@ -112,6 +112,7 @@ begin
   end;
 
   Gerador.wCampo(tcStr, 'C05', 'tipoLan', 1, 8, 1, TipoLanToStr(Rede.tipoLan), 'Tipo de Rede LAN utilizada');
+
   case Rede.tipoLan of
     lanIPFIX :
       begin
@@ -133,6 +134,7 @@ begin
 
   Gerador.wCampo(tcInt, 'C13', 'proxy', 1, 1, 1, Rede.proxy,
      '0= Não usa proxy, 1= Proxy com configuração, 2= Proxy transparente');
+
   if Rede.proxy > 0 then
   begin
     Gerador.wCampo(tcStr, 'C14', 'proxy_ip', 1, 15, 0, Rede.proxy_ip, 'Endereço IP do Servidor Proxy');
@@ -142,6 +144,7 @@ begin
     Gerador.wCampo(tcStr, 'C17', 'proxy_senha', 1, 64, 0, Rede.proxy_senha,
        'Se o proxy necessitar de senha para navegação');
   end;
+
   Gerador.wGrupo('/config');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

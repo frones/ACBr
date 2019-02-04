@@ -85,7 +85,6 @@ function TCFeCancR.LerXml: boolean;
 var
   i : integer;
 begin
-  Result := False;
   CFeCanc.Clear;
 
   (* Grupo da TAG <ide> *******************************************************)

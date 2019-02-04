@@ -84,7 +84,6 @@ function TRedeR.LerXml: boolean;
 var
   ok: boolean;
 begin
-  Result := False;
   Rede.Clear;
   ok := true;
 

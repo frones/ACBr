@@ -86,7 +86,6 @@ var
   Arquivo, Itens, ItensTemp, NumItem, ACampo: AnsiString;
   Aspas: String;
 begin
-  Result := False;
   if Pos('versao=''', Leitor.Arquivo) <> 0 then
     Aspas := ''''
    else

@@ -8703,7 +8703,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Height = 145
                     Top = 0
                     Width = 622
-                    Anchors = [akRight, akBottom]
+                    Anchors = [akTop, akLeft, akRight]
                     Caption = 'Impressão dos Itens'
                     ClientHeight = 123
                     ClientWidth = 618
@@ -13871,6 +13871,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

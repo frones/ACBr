@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2019
+-- Diversos --
+[*] Alterações visando resolver o problema de assinatura no cancelamento
+   Por: Italo Jurisato Junior
+
+01/02/2019
+-- pnfsNFSeW_IPM --
+[*] https://www.projetoacbr.com.br/forum/topic/48762-nfse-ipm-arauc%C3%A1ria-modo-teste/?do=findComment&comment=324604
+   Por: Cleyton Luiz Alberti
+
+31/01/2019
+-- pnfsNFSeW_IPM --
+[*] https://www.projetoacbr.com.br/forum/topic/49088-cancelamento-nfs-e-ipm/?do=findComment&comment=324259
+   Por: Léo
+
 25/01/2019
 -- pnfsConversao --
 [*] https://www.projetoacbr.com.br/forum/topic/48953-nfs-e-provedor-publica-munic%C3%ADpio-de-chapec%C3%B3/

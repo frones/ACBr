@@ -145,9 +145,15 @@ type
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
 
     procedure Assinar(Assina: Boolean);
+    // Usado para assinar o Lote de RPS
     function AssinarLote(XMLLote, docElemento, infElemento: String;
       Assina: Boolean; SignatureNode: String = ''; SelectionNamespaces: String = '';
       IdSignature: String = ''  ): String;
+    // Usado para assinar os XMLs de Consulta e Cancelamento
+    function AssinarXML(AXML, docElemento, infElemento: String;
+      Assina: Boolean; SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''  ): String;
+
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
     procedure ImprimirPDF;
@@ -291,28 +297,6 @@ begin
       FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento, '', '', '', IdAttr)
     else
       FXMLAssinado := XMLOriginal;
-
-    (*
-    Leitor := TLeitor.Create;
-    try
-      i := Pos('URI=""', FXMLAssinado);
-
-      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
-      // atributo URI ao realizar a assinatura.
-      if not (Configuracoes.Geral.Provedor in [proAbaco, proSMARAPD, proNotaBlu, proSP]) then
-        if (i > 0) and (NFSe.InfID.ID <> '') then
-          FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
-                          Copy(FXMLAssinado, i+5, length(FXMLAssinado));
-
-      leitor.Grupo := FXMLAssinado;
-      NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
-      NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      NFSe.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      NFSe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-    finally
-      Leitor.Free;
-    end;
-    *)
 
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasNFSeProcessadas)  then
@@ -703,6 +687,35 @@ begin
                             SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
       FXMLLoteAssinado := XMLAss;
       Result := FXMLLoteAssinado;
+    end;
+  end;
+end;
+
+function TNotasFiscais.AssinarXML(AXML, docElemento, infElemento: String;
+  Assina: Boolean; SignatureNode, SelectionNamespaces,
+  IdSignature: String): String;
+var
+  XMLAss, ArqXML, IdAttr: String;
+begin
+  if AXML = '' then
+    exit;
+
+  // AXML já deve estar em UTF8, para poder ser assinado //
+  ArqXML := ConverteXMLtoUTF8(AXML);
+  Result := ArqXML;
+
+  with TACBrNFSe(FACBrNFSe) do
+  begin
+    if Configuracoes.Geral.ConfigAssinar.URI then
+      IdAttr := Configuracoes.Geral.ConfigGeral.Identificador
+    else
+      IdAttr := '';
+
+    if Assina then
+    begin
+      XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
+                            SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
+      Result := XMLAss;
     end;
   end;
 end;

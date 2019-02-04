@@ -831,14 +831,17 @@ begin
 
     // Alterações no conteudo de DadosMsg especificas para alguns provedores
     case FProvedor of
-      proGinfes: begin
-                   if (FPLayout = LayNfseCancelaNfse) then
-                     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
-                 end;
+      proGinfes:
+        begin
+          if (FPLayout = LayNfseCancelaNfse) then
+            DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+        end;
 
-      proPronim:   DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+      proPronim:
+        DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
-      proPronimV2: DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+      proPronimV2:
+        DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
 
 //      proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
     end;
@@ -1500,86 +1503,106 @@ end;
 
 procedure TNFSeWebService.DefinirSignatureNode(TipoEnvio: String);
 var
-  EnviarLoteRps, xmlns, xPrefixo: String;
+  TagGrupo, xmlns, xPrefixo, Identificador: String;
   i, j: Integer;
 begin
-  if FPLayout = LayNFSeGerar then
-  begin
-    case FProvedor of
-      proIPM:         EnviarLoteRps := '';
-
-      proSimplISS:    EnviarLoteRps := 'GerarNovaNfseEnvio';
-
-      proEGoverneISS: EnviarLoteRps := 'request';
-
-      proSP, 
-      proNotaBlu:     EnviarLoteRps := 'PedidoEnvioRPS';
-    else
-      EnviarLoteRps := 'GerarNfseEnvio';
-    end;
-  end
-  else begin
-    case FProvedor of
-      proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
-
-      proInfisc,
-      proInfiscv11: EnviarLoteRps := 'envioLote';
-
-      proIssDsf,
-      proCTA:       EnviarLoteRps := 'ReqEnvioLoteRPS';
-
-      proSP, 
-      proNotaBlu:   EnviarLoteRps := 'PedidoEnvioLoteRPS';
-
-      proSMARAPD,
-      proIPM:       EnviarLoteRps := ''
-    else
-      EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
-    end;
-  end;
+  TagGrupo := RetirarPrefixos(TipoEnvio, FProvedor);
 
   FxSignatureNode := '';
   FxDSIGNSLote := '';
   FxIdSignature := '';
+  Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
 
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) or
-     ((FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar) and (FPLayout = LayNFSeGerar)) then
-  begin
-    if (URI <> '') then
-    begin
-      if not (FProvedor in [proAbaco, proBetha, proFISSLex, proIssCuritiba,
-                            proPublica, proRecife, proRJ]) then
+  case FPLayout of
+    LayNFSeGerar,
+    LayNfseRecepcaoLote,
+    LayNfseRecepcaoLoteSincrono:
       begin
-        FxSignatureNode := './/ds:Signature[@' +
-                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
-                   '="AssLote_' + URI + '"]';
-        FxIdSignature := ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +
-                   '="AssLote_' + URI;
+        if (FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS) or
+           (FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar) then
+        begin
+          if (URI <> '') then
+          begin
+            if not (FProvedor in [proAbaco, proBetha, proFISSLex, proIssCuritiba,
+                                  proPublica, proRecife, proRJ]) then
+            begin
+              FxSignatureNode := './/ds:Signature[@' + Identificador +
+                                 '="AssLote_' + URI + '"]';
+
+              FxIdSignature := ' ' + Identificador + '="AssLote_' + URI;
+            end;
+          end
+          else
+          begin
+            if FPrefixo3 = '' then
+            begin
+              xPrefixo := 'ds1:';
+              xmlns := ' xmlns="';
+            end
+            else begin
+              xPrefixo := FPrefixo3;
+              xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+            end;
+
+            FxSignatureNode := './/' + xPrefixo + TagGrupo + '/ds:Signature';
+
+            i := pos(TagGrupo + xmlns, FPDadosMsg);
+            i := i + Length(TagGrupo + xmlns) - 1;
+            j := Pos('">', FPDadosMsg) + 1;
+
+            FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
+                            Copy(FPDadosMsg, i, j - i);
+
+            if FProvedor = proSigep then
+              FxDSIGNSLote := 'xmlns:ds=';
+          end;
+        end;
       end;
-    end
-    else begin
-      if FPrefixo3 = '' then
+
+    LayNfseCancelaNfse:
       begin
-        xPrefixo := 'ds1:';
-        xmlns := ' xmlns="';
-      end
-      else begin
-        xPrefixo := FPrefixo3;
-        xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+        if FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar then
+        begin
+          if (URI <> '') then
+          begin
+            if not (FProvedor in [proGINFES {proAbaco, proBetha, proFISSLex, proIssCuritiba,
+                                  proRecife, proRJ}]) then
+            begin
+              if FProvedor = proPublica then
+                Identificador := 'Id';
+
+              FxSignatureNode := './/ds:Signature[@' + Identificador +
+                                 '="Ass_' + URI + '"]';
+
+              FxIdSignature := ' ' + Identificador + '="Ass_' + URI + '"';
+            end;
+          end
+          else
+          begin
+            if FPrefixo3 = '' then
+            begin
+              xPrefixo := 'ds1:';
+              xmlns := ' xmlns="';
+            end
+            else begin
+              xPrefixo := FPrefixo3;
+              xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
+            end;
+
+            FxSignatureNode := './/' + xPrefixo + TagGrupo + '/ds:Signature';
+
+            i := pos(TagGrupo + xmlns, FPDadosMsg);
+            i := i + Length(TagGrupo + xmlns) - 1;
+            j := Pos('">', FPDadosMsg) + 1;
+
+            FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
+                            Copy(FPDadosMsg, i, j - i);
+
+            if FProvedor = proSigep then
+              FxDSIGNSLote := 'xmlns:ds=';
+          end;
+        end;
       end;
-
-      FxSignatureNode := './/' + xPrefixo + EnviarLoteRps + '/ds:Signature';
-
-      i := pos(EnviarLoteRps + xmlns, FPDadosMsg);
-      i := i + Length(EnviarLoteRps + xmlns) - 1;
-      j := Pos('">', FPDadosMsg) + 1;
-
-      FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
-                       Copy(FPDadosMsg, i, j - i);
-
-      if FProvedor = proSigep then
-        FxDSIGNSLote := 'xmlns:ds=';
-    end;
   end;
 end;
 
@@ -1613,25 +1636,6 @@ begin
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
            end;
-
-        (*
-        proSystemPro,
-        proFreire: FvNotas := FvNotas +
-                              '<' + FPrefixo4 + 'Rps>' +
-                               '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id ="'+ FNotasFiscais.Items[I].NFSe.InfID.ID +'"' +
-                                 RetornarConteudoEntre(RPS,
-                                   '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                               '</Signature>'+
-                              '</' + FPrefixo4 + 'Rps>';
-
-    // RPS versão 1.10
-    ve110: FvNotas := FvNotas +
-                      '<' + FPrefixo4 + 'Rps ' +
-                        RetornarConteudoEntre(RPS,
-                          '<' + FPrefixo4 + 'Rps', '</Signature>') +
-                        '</Signature>'+
-                      '</' + Prefixo4 + 'Rps>';
-        *)
 
     // RPS versão 1.00
     else begin
@@ -1685,7 +1689,6 @@ begin
                       '<' + FPrefixo4 + 'credenciais>' +
                           RetornarConteudoEntre(RPS,
                          '<' + FPrefixo4 + 'credenciais>' , '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
-//                         '</' + FPrefixo4 + 'Rps>' +
                          '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                       '</' + FPrefixo4 + 'Rps>';
            else
@@ -2006,101 +2009,6 @@ begin
          if FProvedor in [proDBSeller] then
            FTagI := '<CancelarNfse>' + FTagI;
        end;
-    {
-    LayNfseCancelaNfse:
-       begin
-         case FProvedor of
-           proAbaco: begin
-                       // Manaus
-                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
-                         FTagI := '<'+FTagGrupo+'>'
-                       else // Outros
-                         FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                                     '<' + FPrefixo3 + 'Pedido>' +
-                                        '<' + FPrefixo4 + 'InfPedidoCancelamento' + ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' + FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
-                     end;
-
-           proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                               '<UnidadeGestora>' +
-                                 OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
-                               '</UnidadeGestora>' +
-                               '<' + FPrefixo3 + 'PedidoCancelamento>';
-
-           proAgiliv2: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                                 '<' + FPrefixo3 + 'PedidoCancelamento>';
-
-           proBetha: FTagI := '<Pedido>' +
-                               '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-                                 ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                 FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
-
-           proEquiplano: FTagI := '<' + FTagGrupo +
-                                    ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
-                                    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                                    'xsi:schemaLocation="http://www.equiplano.com.br/enfs esCancelarNfseEnvio_v01.xsd">';
-
-           proGinfes: FTagI := '<' + FTagGrupo +
-                                 ' xmlns="http://www.ginfes.com.br/servico_cancelar_nfse_envio"' +
-                                 ' xmlns:ns4="http://www.ginfes.com.br/tipos">';
-
-           proGoverna: FTagI := '';
-
-           proEGoverneISS,
-           proISSDSF,
-           proCTA: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
-
-           proCONAM,
-           proEL,
-           proInfisc,
-           proInfiscv11: FTagI := '<' + FTagGrupo + '>';
-
-           proSP,
-           proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                             ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
-
-           proISSCuritiba: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                                     '<' + FPrefixo3 + 'Pedido>';
-
-           proISSNet: FTagI := '<p1:' + FTagGrupo + ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd" ' +
-                                                    'xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" ' +
-                                                    'xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd">' +
-                                '<' + FPrefixo3 + 'Pedido>' +
-                                 '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-                                   ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
-
-           proTecnos: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                                '<' + FPrefixo3 + 'Pedido>' +
-                                 '<' + FPrefixo4 + 'InfPedidoCancelamento ' +
-                                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '" ' +
-                                   'xmlns="http://www.abrasf.org.br/nfse.xsd">';
-
-           proSimplISS: FTagI := '<' + FTagGrupo + '>' +
-                                  '<' + FPrefixo3 + 'Pedido' + FNameSpaceDad + '>' +
-                                   '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-                                     ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
-
-           proSpeedGov: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                                  '<Pedido>' +
-                                   '<' + FPrefixo4 + 'InfPedidoCancelamento ' +
-                                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '">';
-
-           proSMARAPD,
-           proIPM: FTagI := '';
-
-         else
-           FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
-                     '<' + FPrefixo3 + 'Pedido>' +
-                      '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-                        ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                        FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
-         end;
-
-         if FProvedor in [proDBSeller] then
-           FTagI := '<CancelarNfse>' + FTagI;
-       end;
-    }
 
     LayNfseGerar:
        begin
@@ -2230,56 +2138,6 @@ begin
          if FProvedor in [proDBSeller] then
            FTagF := FTagF + '</CancelarNfse>';
        end;
-    {
-    LayNfseCancelaNfse:
-       begin
-         case FProvedor of
-           proAbaco: begin
-                       // Manaus
-                       if (FPConfiguracoesNFSe.Geral.CodigoMunicipio = 1302603) then
-                         FTagF := '</' + FTagGrupo + '>'
-                       else // Outros
-                         FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
-                                  '</' + FTagGrupo + '>';
-                     end;
-
-           proAgili,
-           proAgiliv2: FTagF :=  '</' + FPrefixo3 + 'PedidoCancelamento>' +
-                                '</' + FTagGrupo + '>';
-
-           proBetha: FTagF := '</Pedido>';
-
-           proGoverna,
-           proIPM,
-           proSMARAPD: FTagF := '';
-
-           proEquiplano,
-           proGinfes,
-           proEGoverneISS,
-           proISSDSF,
-           proCONAM,
-           proEL,
-           proInfisc,
-           proInfiscv11,
-           proSP,
-           proNotaBlu,
-           proCTA: FTagF := '</' + FTagGrupo + '>';
-
-           proISSNet: FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
-                               '</p1:' + FTagGrupo + '>';
-
-           proSpeedGov: FTagF :=  '</Pedido>' +
-                                 '</' + FTagGrupo + '>';
-
-         else
-           FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
-                    '</' + FTagGrupo + '>';
-         end;
-
-         if FProvedor in [proDBSeller] then
-           FTagF := FTagF + '</CancelarNfse>';
-       end;
-    }
 
     LayNfseGerar:
        begin
@@ -2622,7 +2480,7 @@ begin
 
       proEquiplano: FTagGrupo := 'enviarLoteRpsEnvio';
 
-      proSP, 
+      proSP,
       proNotaBlu:   FTagGrupo := 'PedidoEnvioLoteRPS';
 
       proSMARAPD,
@@ -2793,7 +2651,7 @@ begin
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
-    DefinirSignatureNode('');
+    DefinirSignatureNode(FTagGrupo);
 
     FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
@@ -2828,14 +2686,6 @@ begin
     if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
       FPDadosMsg := StringReplace(FPDadosMsg, 'www.tinus', 'www2.tinus', [rfReplaceAll])
   end;
-
-  {
-  Teste
-  FPDadosMsg := StringReplace(FPDadosMsg, '></CanonicalizationMethod>', '/>', [rfReplaceAll]);
-  FPDadosMsg := StringReplace(FPDadosMsg, '></SignatureMethod>', '/>', [rfReplaceAll]);
-  FPDadosMsg := StringReplace(FPDadosMsg, '></Transform>', '/>', [rfReplaceAll]);
-  FPDadosMsg := StringReplace(FPDadosMsg, '></DigestMethod>', '/>', [rfReplaceAll]);
-  }
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -3102,7 +2952,7 @@ begin
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
-    DefinirSignatureNode('');
+    DefinirSignatureNode(FTagGrupo);
 
     FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
@@ -3262,6 +3112,30 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
+    case Provedor of
+      {
+      proCONAM:     FTagGrupo := 'ws_nfe.PROCESSARPS';
+
+      proInfisc,
+      proInfiscv11: FTagGrupo := 'envioLote';
+
+      proISSDSF,
+      proCTA:       FTagGrupo := 'ReqEnvioLoteRPS';
+
+      proSP,
+      proNotaBlu:   FTagGrupo := 'PedidoEnvioLoteRPS';
+
+      proSMARAPD,
+      proIPM:       FTagGrupo := '';
+      }
+
+      proEquiplano: FTagGrupo := 'enviarLoteRpsSincronoEnvio';
+    else
+      FTagGrupo := 'EnviarLoteRpsSincronoEnvio';
+    end;
+
+    FTagGrupo := FPrefixo3 + FTagGrupo;
+
     case FProvedor of
       proIssDSF: TagElemento := 'Lote';
     else
@@ -3305,10 +3179,10 @@ begin
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
-    DefinirSignatureNode('Sincrono');
+    DefinirSignatureNode(FTagGrupo);
 
     FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
-                                  FPrefixo3 + 'EnviarLoteRpsSincronoEnvio',
+                                  FTagGrupo,
                                   TagElemento,
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
@@ -3502,8 +3376,6 @@ begin
 
       proEGoverneISS: FTagGrupo := 'request';
 
-      //proPublica:     FTagGrupo := 'Rps></GerarNfseEnvio';
-
       proSP,
       proNotaBlu:     FTagGrupo := 'PedidoEnvioRPS';
 
@@ -3565,7 +3437,7 @@ begin
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
-    DefinirSignatureNode('');
+    DefinirSignatureNode(FTagGrupo);
 
     case FProvedor of
       proBethav2,
@@ -3798,18 +3670,6 @@ begin
   finally
     TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
   end;
-
-  {
-  if (FProvedor in [proEquiplano, proEL]) then
-    cSituacao := '2'  // Não Processado, lote com erro
-  else
-    cSituacao := '1'; // Lote Não Recebido
-
-  // Lote processado ?    Situaçao 5 usado para sucesso no provedor CONAM
-  if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') or
-     (FSituacao = '5') or (FSituacao = 'Erro') then
-    Result := TratarRespostaFinal;
-  }
 
   Result := TratarRespostaFinal;
 end;
@@ -4507,10 +4367,8 @@ procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i, iPos: Integer;
   Gerador: TGerador;
-  sAssinatura, idAttr: String;
+  sAssinatura: String;
 begin
-  idAttr := '';
-
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
@@ -4554,8 +4412,10 @@ begin
       proDBSeller: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
 
       proBHISS,
+//      proPublica,
       proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 
+      proGinfes,
       proISSDSF,
       proEquiplano,
       proInfisc,
@@ -4564,10 +4424,6 @@ begin
       proThema,
       proNotaBlu: FdocElemento := FTagGrupo;
 
-      proGinfes: FdocElemento := FTagGrupo;
-
-      ProTecnos,
-      proISSNET: FdocElemento := FPrefixo3 + 'Pedido';
 //      proISSNet: FdocElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
 
       proSMARAPD: FdocElemento := 'nfd';
@@ -4585,6 +4441,8 @@ begin
       proFiorilli,
       proMetropolisWeb,
       proRJ,
+      proPublica,
+      proDigifred,
       proTecnos: FinfElemento := 'InfPedidoCancelamento';
 
       proIssDSF: FinfElemento := 'Lote';
@@ -4605,7 +4463,8 @@ begin
     case FProvedor of
       proCONAM: FURI := 'Sdt_cancelanfe';
 
-      proDigifred: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
+      proDigifred,
+      proPublica: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
       proEquiplano,
       proISSCuritiba,
@@ -4626,12 +4485,6 @@ begin
       proABase,
       proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                   IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
-
-      proPublica:
-        begin
-          FURI := 'C' + TNFSeCancelarNfse(Self).FNumeroNFSe;
-          idAttr := 'id';
-        end;
 
       proRJ,
       proFriburgo: FURI := 'Cancelamento_NF' + TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4680,7 +4533,6 @@ begin
           with FNotasFiscais.Items[I] do
           begin
             Gerador.wCampoNFSe(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
-//            Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
             Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, TNFSeCancelarNfse(Self).FCodigoCancelamento, ''); {@/\@}
           end;
         end;
@@ -4767,32 +4619,24 @@ begin
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     case Fprovedor of
-      proGINFES,
-      proInfisc,
-      proInfiscv11,
-      proIssDSF,
-      proThema,
-      proSP,
-      proBHISS,
-      proSystemPro,
-      proNotaBlu:
-        FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
-
       proISSe,
-      ProTecnos: begin
-                   FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
-                   iPos := Pos('><InfPedido', FPDadosMsg);
-                   FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
-                                 Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
-                 end;
-      proISSNET: begin
-                   FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
-                   iPos := Pos('><tc:InfPedido', FPDadosMsg);
-                   FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
-                                 Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
-                 end;
+      ProTecnos:
+        begin
+          FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
+          iPos := Pos('><InfPedido', FPDadosMsg);
+          FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
+                        Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
+        end;
+
+      proISSNET:
+        begin
+          FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
+          iPos := Pos('><tc:InfPedido', FPDadosMsg);
+          FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
+                        Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
+        end;
     else
-      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgCancelarNFSe;
+      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
     end;
 
     FIDLote := GerarDadosMsg.IdLote;
@@ -4805,33 +4649,31 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
-               'Falha ao Assinar - Cancelar NFS-e: ', '', idAttr);
+
+  DefinirSignatureNode(FTagGrupo);
+
+  FPDadosMsg := FNotasFiscais.AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
+         FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar,
+         xSignatureNode, xDSIGNSLote, FxIdSignature);
+
+//  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+//    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento,
+//               'Falha ao Assinar - Cancelar NFS-e: ');
 
   case FProvedor of
-    proGINFES,
-    proInfisc,
-    proInfiscv11,
-    proIssDSF,
-    proThema,
-    proSP,
-    proBHISS,
-    proSystemPro,
-    proNotaBlu: FPDadosMsg := FPDadosMsg;
-
     proISSe,
     ProTecnos,
-    proISSNET: begin
-                 FPDadosMsg := StringReplace(FPDadosMsg, FNameSpaceCan, '', []);
-                 FPDadosMsg := FTagI + FPDadosMsg + FTagF;
-               end;
+    proISSNET:
+      begin
+        FPDadosMsg := StringReplace(FPDadosMsg, FNameSpaceCan, '', []);
+        FPDadosMsg := FTagI + FPDadosMsg + FTagF;
+      end;
 
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +
                             '</' + FTagGrupo + '>';
   else
-    FPDadosMsg := FTagI + FPDadosMsg + FTagF;
+    FPDadosMsg := FPDadosMsg;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados);
@@ -5031,7 +4873,8 @@ begin
       proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                             IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
 
-    else  FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+    else
+      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                       FPConfiguracoesNFSe.Geral.Emitente.InscMun +
                       TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;

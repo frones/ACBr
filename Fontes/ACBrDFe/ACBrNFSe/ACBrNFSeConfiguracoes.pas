@@ -289,6 +289,7 @@ type
     FWebFraseSecr: String;
     FWebChaveAcesso: String;
     FDadosSenhaParams: TDadosSenhaParamsCollection;
+    procedure SetDadosSenhaParams(const Value: TDadosSenhaParamsCollection);
 
   public
     Constructor Create;
@@ -302,7 +303,7 @@ type
     property WebSenha: String     read FWebSenha     write FWebSenha;
     property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
     property WebChaveAcesso: String read FWebChaveAcesso write FWebChaveAcesso;
-    property DadosSenhaParams: TDadosSenhaParamsCollection read FDadosSenhaParams write FDadosSenhaParams;
+    property DadosSenhaParams: TDadosSenhaParamsCollection read FDadosSenhaParams write SetDadosSenhaParams;
   end;
 
   { TGeralConfNFSe }
@@ -476,6 +477,12 @@ begin
   FDadosSenhaParams.Free;
 
   inherited;
+end;
+
+procedure TEmitenteConfNFSe.SetDadosSenhaParams(
+  const Value: TDadosSenhaParamsCollection);
+begin
+  FDadosSenhaParams := Value;
 end;
 
 { TConfiguracoesNFSe }

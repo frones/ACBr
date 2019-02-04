@@ -370,6 +370,8 @@ begin
   (* Grupo da TAG <det> *******************************************************)
   i := 0;
   Arquivo := Leitor.Arquivo;
+  if Pos('<det xmlns="http://www.portalfiscal.inf.br/nfe" nItem=', Arquivo) > 0 then
+    Arquivo := StringReplace(Arquivo, 'det xmlns="http://www.portalfiscal.inf.br/nfe"', 'det', [rfReplaceAll]);
 
   Itens := copy(
     Arquivo,

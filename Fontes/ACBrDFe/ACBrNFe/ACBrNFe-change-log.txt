@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2019
+-- pcnNFeR --
+[*] https://www.projetoacbr.com.br/forum/topic/48913-importa%C3%A7%C3%A3oleitura-do-xml-nf-e-n%C3%A3o-carrega-os-produtos/
+   Por: Lucas Martendal
+
 31/01/2019
 -- pcnNFeW --
 [*] Alterado a geração da tag IE do grupo de Retirada e Entrega com o objetivo

@@ -534,7 +534,7 @@ begin
 
       NossoNumero := Copy(Linha, 63, 8);
       OcorrenciaOriginal.Tipo :=
-        CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 103, 2), 0));
+        CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 109, 2), 0));
 
       Carteira := copy(Linha, 108, 1);
 

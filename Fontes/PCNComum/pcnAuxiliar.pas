@@ -859,7 +859,7 @@ function ExtrairTipoEmissaoChaveAcesso(aChave: String): Integer;
 begin
   AChave := OnlyNumber(AChave);
 
-  if (pos(ExtrairModeloChaveAcesso(AChave), '55,65') = 0) then
+  if ExtrairModeloChaveAcesso(AChave) = '59' then  //SAT
     Result := 0
   else
     Result := StrToIntDef(Copy(AChave, 35, 1), 0);

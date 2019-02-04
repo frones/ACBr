@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2019
+[*] pcnAuxiliar
+    https://www.projetoacbr.com.br/forum/topic/49182-extrair-tipo-de-emiss%C3%A3o-da-chave-de-acesso-do-ct-e/
+	Por: Allan Wolski
+
 30/01/2019
 [*] pcnRetDistDFeInt
     Incluido a linha para a leitura do valor total da Prestação <vTPrest>

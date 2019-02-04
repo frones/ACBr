@@ -205,20 +205,23 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
+
   cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('LPT2') ;
+  cbxPorta.Items.Add('USB:ELGIN') ;
+  cbxPorta.Items.Add('USB:EPSON') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
-  For K := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
-
-  cbxPorta.Items.Add('/dev/ttyS0') ;
-  cbxPorta.Items.Add('/dev/ttyS1') ;
-  cbxPorta.Items.Add('/dev/ttyUSB0') ;
-  cbxPorta.Items.Add('/dev/ttyUSB1') ;
-  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$IfNDef MSWINDOWS}
+   cbxPorta.Items.Add('/dev/ttyS0') ;
+   cbxPorta.Items.Add('/dev/ttyS1') ;
+   cbxPorta.Items.Add('/dev/ttyUSB0') ;
+   cbxPorta.Items.Add('/dev/ttyUSB1') ;
+   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   PageControl1.ActivePageIndex := 0;
 

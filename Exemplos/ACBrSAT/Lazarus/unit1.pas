@@ -10,7 +10,7 @@ uses
   SynGutterCodeFolding, PrintersDlgs, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ActnList, Menus, ExtCtrls, Buttons, ComCtrls, Spin, RLPDFFilter,
   ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, dateutils,
-  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL, ACBrIntegrador;
+  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter, ACBrDFeSSL, ACBrIntegrador, Types;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -39,6 +39,7 @@ type
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
     cbImprimir1Linha: TCheckBox;
+    cbLogotipo: TCheckBox;
     cbImprimirDescAcres: TCheckBox;
     cbLogoLateral: TCheckBox;
     cbImprimirChaveUmaLinha: TCheckBox;
@@ -95,6 +96,7 @@ type
     gbProxy: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
     Label18: TLabel;
     Label19: TLabel;
     Label20: TLabel;
@@ -112,9 +114,14 @@ type
     Label32: TLabel;
     Label33: TLabel;
     Label34: TLabel;
+    Label35: TLabel;
+    lbFatorY: TLabel;
+    lbKC1: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
+    lbKC2: TLabel;
+    lbFatorX: TLabel;
     lImpressora: TLabel;
     lSSID: TLabel;
     lSSID1: TLabel;
@@ -159,6 +166,9 @@ type
     sbSchemaVendaSAT: TSpeedButton;
     seColunas: TSpinEdit;
     seEspLinhas: TSpinEdit;
+    seFatorY: TSpinEdit;
+    seKC2: TSpinEdit;
+    seFatorX: TSpinEdit;
     seLargura: TSpinEdit;
     seLinhasPular: TSpinEdit;
     seMargemDireita: TSpinEdit;
@@ -226,6 +236,7 @@ type
     SbArqLog : TSpeedButton ;
     seItensVenda: TSpinEdit;
     seMFETimeout: TSpinEdit;
+    seKC1: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
     mVendaEnviar: TSynMemo;
@@ -258,6 +269,7 @@ type
     procedure btMFEVerificarStatusClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
+    procedure cbLogotipoChange(Sender: TObject);
     procedure cbUsarEscPosChange(Sender: TObject);
     procedure cbUsarFortesChange(Sender: TObject);
     procedure cbxFormatXMLChange(Sender: TObject);
@@ -289,6 +301,10 @@ type
     procedure sbNomeDLLClick(Sender: TObject);
     procedure sbSchemaVendaAPLClick(Sender: TObject);
     procedure sbSchemaVendaSATClick(Sender: TObject);
+    procedure seFatorXChange(Sender: TObject);
+    procedure seFatorYChange(Sender: TObject);
+    procedure seKC1Change(Sender: TObject);
+    procedure seKC2Change(Sender: TObject);
     procedure sfeVersaoEntChange(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure mAssociarAssinaturaClick(Sender : TObject) ;
@@ -344,7 +360,7 @@ var
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
   R: pcnRede.TSegSemFio;
-  P: TSSLXmlSignLib;
+  P: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
@@ -380,16 +396,23 @@ begin
 
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+  For P := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[P]);
+
   cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('LPT2') ;
-  cbxPorta.Items.Add('/dev/ttyS0') ;
-  cbxPorta.Items.Add('/dev/ttyS1') ;
-  cbxPorta.Items.Add('/dev/ttyUSB0') ;
-  cbxPorta.Items.Add('/dev/ttyUSB1') ;
+  cbxPorta.Items.Add('USB:ELGIN') ;
+  cbxPorta.Items.Add('USB:EPSON') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
-  cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
 
+  {$IfNDef MSWINDOWS}
+   cbxPorta.Items.Add('/dev/ttyS0') ;
+   cbxPorta.Items.Add('/dev/ttyS1') ;
+   cbxPorta.Items.Add('/dev/ttyUSB0') ;
+   cbxPorta.Items.Add('/dev/ttyUSB1') ;
+   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
 
   Application.OnException := @TrataErros ;
 
@@ -414,7 +437,10 @@ var
   Erro : String ;
 begin
   Erro := Trim(E.Message) ;
+  ACBrSAT1.DoLog( StringOfChar('*', 50) );
   ACBrSAT1.DoLog( E.ClassName+' - '+Erro);
+  ACBrSAT1.DoLog( StringOfChar('*', 50) );
+  PageControl1.ActivePageIndex := 0;
 end ;
 
 procedure TForm1.AjustaACBrSAT ;
@@ -544,6 +570,11 @@ begin
     seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
     seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
     seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasEntreCupons',ACBrPosPrinter1.LinhasEntreCupons);
+    cbLogotipo.Checked := INI.ReadBool('PosPrinter','Logotipo',True);
+    seKC1.Value := INI.ReadInteger('PosPrinter','KC1',32);
+    seKC2.Value := INI.ReadInteger('PosPrinter','KC2',32);
+    seFatorX.Value := INI.ReadInteger('PosPrinter','FatorX',1);
+    seFatorY.Value := INI.ReadInteger('PosPrinter','FatorY',1);
 
     edtEmitCNPJ.Text := INI.ReadString('Emit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('Emit','IE','');
@@ -567,8 +598,11 @@ begin
     lImpressora.Caption    := INI.ReadString('Printer','Name', '');
     if EstaVazio(lImpressora.Caption) then
     begin
-      Printer.PrinterIndex := -1;
-      lImpressora.Caption  := Printer.Printers[Printer.PrinterIndex];
+      if (Printer.Printers.Count > 0) then
+      begin
+        Printer.PrinterIndex := -1;   // Set Default Printer
+        lImpressora.Caption  := Printer.Printers[Printer.PrinterIndex];
+      end;
     end;
 
     cbImprimirChaveUmaLinha.Checked := INI.ReadBool('EscPos','ImprimirChaveUmaLinha',cbImprimirChaveUmaLinha.Checked);
@@ -777,6 +811,11 @@ begin
     INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
     INI.WriteInteger('PosPrinter','EspacoLinhas',seEspLinhas.Value);
     INI.WriteInteger('PosPrinter','LinhasEntreCupons',seLinhasPular.Value);
+    INI.WriteBool('PosPrinter','Logotipo',cbLogotipo.Checked);
+    INI.WriteInteger('PosPrinter','KC1',seKC1.Value);
+    INI.WriteInteger('PosPrinter','KC2',seKC2.Value);
+    INI.WriteInteger('PosPrinter','FatorX',seFatorX.Value);
+    INI.WriteInteger('PosPrinter','FatorY',seFatorY.Value);
 
     INI.WriteString('Emit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('Emit','IE',edtEmitIE.Text);
@@ -847,6 +886,18 @@ begin
   finally
      FreeAndNil( frConfiguraSerial ) ;
   end ;
+end;
+
+procedure TForm1.cbLogotipoChange(Sender: TObject);
+begin
+  //Só imprime o logotipo se o checkbox do logotipo estiver habilitado(checked).
+  ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbLogotipo.Checked;
+
+  //Habilita e desabilita os campos conforme o checkbox do logotipo
+  seKC1.Enabled := cbLogotipo.Checked;
+  seKC2.Enabled := cbLogotipo.Checked;
+  seFatorY.Enabled := cbLogotipo.Checked;
+  seFatorX.Enabled := cbLogotipo.Checked;
 end;
 
 procedure TForm1.cbUsarEscPosChange(Sender: TObject);
@@ -1158,6 +1209,26 @@ begin
   OpenDialog1.FileName := edSchemaVendaSAT.Text;
   if OpenDialog1.Execute then
     edSchemaVendaSAT.Text := OpenDialog1.FileName ;
+end;
+
+procedure TForm1.seFatorXChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.FatorX := seFatorX.Value;
+end;
+
+procedure TForm1.seFatorYChange(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.FatorY := seFatorY.Value;
+end;
+
+procedure TForm1.seKC1Change(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.KeyCode1 := seKC1.Value;
+end;
+
+procedure TForm1.seKC2Change(Sender: TObject);
+begin
+  ACBrPosPrinter1.ConfigLogo.KeyCode2 := seKC2.Value;
 end;
 
 procedure TForm1.sfeVersaoEntChange(Sender: TObject);
@@ -1650,7 +1721,14 @@ begin
     ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
     ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
-    if cbImprimirChaveUmaLinha.Checked then
+
+    ACBrPosPrinter1.ConfigLogo.IgnorarLogo := not cbLogotipo.Checked;
+    ACBrPosPrinter1.ConfigLogo.KeyCode1 := seKC1.Value;
+    ACBrPosPrinter1.ConfigLogo.KeyCode2 := seKC2.Value;
+    ACBrPosPrinter1.ConfigLogo.FatorX := seFatorY.Value;
+    ACBrPosPrinter1.ConfigLogo.FatorY := seFatorY.Value;
+
+     if cbImprimirChaveUmaLinha.Checked then
       ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rSim
     else
       ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rAuto;

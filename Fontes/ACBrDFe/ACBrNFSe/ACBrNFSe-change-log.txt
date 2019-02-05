@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2019
+-- ACBrNFSeWebServices --
+[*] Possível correção para o cancelamento - provedor Bethav2.
+   Por: Italo Jurisato Junior
+
 04/02/2019
 -- Diversos --
 [*] Alterações visando resolver o problema de assinatura no cancelamento

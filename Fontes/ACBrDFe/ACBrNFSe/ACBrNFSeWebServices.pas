@@ -932,8 +932,8 @@ begin
   FVersaoNFSe := StrToVersaoNFSe(Ok, FVersaoXML);
   FDefTipos   := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
 
-  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
-    FDefTipos := 'tipos_v02.xsd';
+//  if (FProvedor = proGinfes) and (FPLayout = LayNfseCancelaNfse) then
+//    FDefTipos := 'tipos_v02.xsd';
 
   FCabecalho := FPConfiguracoesNFSe.Geral.ConfigSchemas.Cabecalho;
   FPrefixo2  := FPConfiguracoesNFSe.Geral.ConfigGeral.Prefixo2;
@@ -1558,7 +1558,7 @@ begin
           end;
         end;
       end;
-
+     (*
     LayNfseCancelaNfse:
       begin
         if FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar then
@@ -1603,6 +1603,7 @@ begin
           end;
         end;
       end;
+      *)
   end;
 end;
 
@@ -4413,6 +4414,7 @@ begin
 
       proBHISS,
 //      proPublica,
+      proBethav2,
       proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 
       proGinfes,
@@ -4437,6 +4439,7 @@ begin
       proGINFES: FinfElemento := 'Prestador';
 
       proBetha,
+      proBethav2,
       proISSe,
       proFiorilli,
       proMetropolisWeb,

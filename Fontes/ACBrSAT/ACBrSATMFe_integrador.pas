@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -67,7 +67,7 @@ type
      constructor Create(AOwner: TComponent); override;
      destructor Destroy; override;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
+     function AssociarAssinatura(const CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; override;
      function AtivarSAT( subComando : Integer; CNPJ: AnsiString; cUF : Integer )
        : String ; override;
@@ -165,7 +165,7 @@ begin
   Result := StringReplace(Result, '> <', '><', [rfReplaceAll]);;
 end;
 
-function TACBrSATMFe_integrador_XML.AssociarAssinatura(CNPJvalue,
+function TACBrSATMFe_integrador_XML.AssociarAssinatura(const CNPJvalue,
   assinaturaCNPJs : AnsiString) : String ;
 begin
   FIntegrador.Clear;

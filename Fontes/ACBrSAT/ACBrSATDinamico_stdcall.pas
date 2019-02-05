@@ -85,7 +85,7 @@ type
    public
      constructor Create( AOwner : TComponent ) ; override;
 
-     function AssociarAssinatura( CNPJvalue, assinaturaCNPJs : AnsiString ):
+     function AssociarAssinatura(const CNPJvalue, assinaturaCNPJs : AnsiString ):
        String ; override;
      function AtivarSAT( subComando : Integer; CNPJ: AnsiString; cUF : Integer )
        : String ; override;
@@ -120,7 +120,7 @@ begin
   fpModeloStr := 'Emulador_SAT_Dinamico' ;
 end ;
 
-function TACBrSATDinamico_stdcall.AssociarAssinatura(CNPJvalue,
+function TACBrSATDinamico_stdcall.AssociarAssinatura(const CNPJvalue,
   assinaturaCNPJs : AnsiString) : String ;
 Var
   Resp : PAnsiChar;

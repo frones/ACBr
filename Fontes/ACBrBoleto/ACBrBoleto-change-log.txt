@@ -50,6 +50,22 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+05/02/2019
+-- ACBrBancoSicred, ACBrBoleto --
+[*] Ajustar validação do código de Retorno da ocorrencia "09"
+[+] Adicionado novas ocorrencias de Tarifa conforme Manual
+[*] Ajuste na validação de Codigo de Mora na Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/48820-novas-ocorr%C3%AAncias-de-tarifa-s4-e-s5-cnab-400-sicredi/
+https://www.projetoacbr.com.br/forum/topic/49113-sicredi-fun%C3%A7%C3%A3o-tipoocorrenciatocod-divergente-de-codocorrenciatotipo/
+https://www.projetoacbr.com.br/forum/topic/46361-altera%C3%A7%C3%A3o-necess%C3%A1ria/
+https://www.projetoacbr.com.br/forum/topic/38248-c%C3%B3digo-de-mora-sicredi-sugest%C3%A3o-de-altera%C3%A7%C3%A3o/
+https://www.projetoacbr.com.br/forum/topic/49193-erro-leitura-arquivo-retorno-de-baixa-titulo-sicredi-via-site/
+
+05/02/2019
+-- ACBrBancoNordeste --
+[*] Ajustar na validação da propriedade Multa Valor Fixo
+https://www.projetoacbr.com.br/forum/topic/48999-propriedade-multavalorfixo-no-boleto-banco-do-nordeste/
+
 04/02/2019
 -- ACBrBancoSafra --
 [-] Correção para leitura da ocorrência de retorno no CNAB400 de forma semelhante ao que ocorre nos demais

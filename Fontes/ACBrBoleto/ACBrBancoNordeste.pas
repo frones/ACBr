@@ -179,6 +179,7 @@ var
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   wLinha, wAceite, wDiasProtesto: String;
   WCarteira: Char;
+  aPercMulta: Double;
 begin
 
    with ACBrTitulo do
@@ -262,6 +263,14 @@ begin
       else
         wDiasProtesto := '99';
 
+      if MultaValorFixo then
+        if ValorDocumento > 0 then
+          aPercMulta := (PercentualMulta / ValorDocumento) * 100
+        else
+          aPercMulta := 0
+      else
+        aPercMulta := PercentualMulta;
+
       with ACBrBoleto do
       begin
          if Mensagem.Text<>'' then
@@ -269,21 +278,21 @@ begin
 
          wLinha:= '1'                                                     +  // ID Registro
                   Space(16)                                               +  // Filler - Brancos
-                  PadLeft( aAgencia, 4, '0')                                 +  // Cód. da Agência do cliente
+                  PadLeft( aAgencia, 4, '0')                              +  // Cód. da Agência do cliente
                   IntToStrZero(0, 2)                                      +  // Filler - Zeros
-                  PadLeft( aConta, 7, '0')                                   +  // Conta Corrente de Cobrança + Dígito da Conta Corrente
-                  PadLeft( Cedente.ContaDigito, 1, '0')                      +  // Dígito da conta corrente
-                  IntToStrZero( round( PercentualMulta), 2)               +  // Percentual de Multa por atraso
+                  PadLeft( aConta, 7, '0')                                +  // Conta Corrente de Cobrança + Dígito da Conta Corrente
+                  PadLeft( Cedente.ContaDigito, 1, '0')                   +  // Dígito da conta corrente
+                  IntToStrZero( round( aPercMulta * 100 ), 2)             +  // Percentual de Multa por atraso
                   Space(4)                                                +  // Filler - Brancos
-                  PadRight( SeuNumero,25,' ')                                 +  // Numero de Controle do Participante
+                  PadRight( SeuNumero,25,' ')                             +  // Numero de Controle do Participante
                   NossoNumero + DigitoNossoNumero                         +
-                  PadLeft( '0', 10, '0')                                     +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
-                  PadLeft( '0', 6, '0')                                      +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
+                  PadLeft( '0', 10, '0')                                  +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
+                  PadLeft( '0', 6, '0')                                   +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
                   IntToStrZero(round( ValorDesconto * 100), 13)           +
                   Space(8)                                                +  // Filler - Brancos
                   wCarteira                                               +  // Carteira a ser utilizada
                   Ocorrencia                                              +  // Ocorrência
-                  PadRight( NumeroDocumento,  10)                             +
+                  PadRight( NumeroDocumento,  10)                         +
                   FormatDateTime( 'ddmmyy', Vencimento)                   +
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)        +
                   StringOfChar('0', 7) + Space(1) + PadRight(aEspecie, 2) + wAceite +  // Zeros + Filler + Especie do documento + Idntificação(valor fixo N)
@@ -295,7 +304,7 @@ begin
                   IntToStrZero( round( ValorDesconto * 100 ), 13)         +
                   IntToStrZero( round( ValorIOF * 100 ), 13)              +
                   IntToStrZero( round( ValorAbatimento * 100 ), 13)       +
-                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')    +
+                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +
                   PadRight( Sacado.NomeSacado, 40, ' ')                       +
                   PadRight( Sacado.Logradouro + ' ' + Sacado.Numero, 40, ' ') +
                   PadRight( Sacado.Complemento, 12, ' ')                      +

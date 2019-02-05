@@ -93,7 +93,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 1;
-   fpCodigosMoraAceitos    := 'AB';
+   fpCodigosMoraAceitos    := 'AB012';
    fpCodigosGeracaoAceitos := '23456789';
    fpLayoutVersaoArquivo   := 81;
    fpLayoutVersaoLote      := 40;
@@ -643,8 +643,8 @@ begin
                                           Copy(Linha,329,4),0, 'DD/MM/YYYY' );
 
 
-      OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
-      CodOcorrencia := StrToIntDef(IfThen(copy(Linha,109,2) = '00','00',copy(Linha,109,2)),0);
+      CodOcorrencia := StrToIntDef(copy(Linha,109,2),0);
+      OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
       DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
                                              Copy(Linha,113,2)+'/'+
                                              Copy(Linha,115,2),0, 'DD/MM/YY' );
@@ -1112,13 +1112,15 @@ begin
           end;
 
         toRetornoDebitoTarifas: //28
-          case AnsiIndexStr(CodMotivo,['A9', 'B1', 'B2', 'B3', 'E1', 'F5']) of
+          case AnsiIndexStr(CodMotivo,['A9', 'B1', 'B2', 'B3', 'E1', 'F5', 'S4', 'S5']) of
             0: Result:= 'A9-Tarifa de manutenção de título vencido';
             1: Result:= 'B1-Tarifa de baixa da carteira';
             2: Result:= 'B2-Não implementado';
             3: Result:= 'B3-Tarifa de registro de entrada do título';
             4: Result:= 'E1-Não implementado';
             5: Result:= 'F5-Tarifa de entrada na rede SICREDI';
+            6: Result:= 'S4-Tarifa de inclusão negativação';
+            7: Result:= 'S5-Tarifa de exclusão negativação';
           else
             case StrToInt(CodMotivo) of
               03 : Result:= '03-Tarifa de sustação';
@@ -1528,6 +1530,8 @@ begin
     toRetornoRegistroRecusado                                  : Result := '03';
     toRetornoLiquidado                                         : Result := '06';
     toRetornoBaixado                                           : Result := '09';
+    toRetornoBaixadoViaArquivo                                 : Result := '09';
+
     toRetornoRecebimentoInstrucaoConcederAbatimento            : Result := '12';
     toRetornoRecebimentoInstrucaoCancelarAbatimento            : Result := '13';
     toRetornoRecebimentoInstrucaoAlterarVencimento             : Result := '14';
@@ -1738,7 +1742,6 @@ begin
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
 
-
     {SEGMENTO P}
     Result:= '748'                                                            + // 001 a 003 - Código do banco na compensação
              '0001'                                                           + // 004 a 007 - Lote de serviço = "0001"
@@ -1766,7 +1769,7 @@ begin
              PadLeft(Especie, 2, '0')                                         + // 107 a 108 - Espécie do título
              AceiteStr                                                        + // 109 a 109 - Identificação de título aceito/não aceito
              FormatDateTime('ddmmyyyy', DataDocumento)                        + // 110 a 117 - Data da emissão do título
-             IfThen(ValorMoraJuros = 0, '3', '1')                             + // 118 a 118 - Código do juro de mora
+             IfThen( (ValorMoraJuros > 0) and (CodigoMora= ''), '1', PadRight(CodigoMora, 1, '3') )   + // 118 a 118 - Código do juro de mora
              '00000000'                                                       + // 119 a 126 - Data do juro de mora
              IntToStrZero(Round(ValorMoraJuros * 100), 15)                    + // 127 a 141 - Juros de mora por dia/taxa
              TipoDescontoToString(ACBrTitulo.TipoDesconto)                    + // 142 a 142 - Código do desconto 1

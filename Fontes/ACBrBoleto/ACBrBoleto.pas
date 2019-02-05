@@ -2886,7 +2886,7 @@ begin
      if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno )
         and ( IntToStrZero(Banco.NumeroCorrespondente, 3) <> BancoRetorno )  then
        if LeCedenteRetorno then
-         Banco.TipoCobranca := GetTipoCobranca( StrToInt(BancoRetorno))
+         Banco.TipoCobranca := GetTipoCobranca( StrToIntDef(BancoRetorno, 0))
        else
          raise Exception.Create( ACBrStr( 'Arquivo de retorno de banco diferente do Cedente'));
 

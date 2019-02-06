@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2019
+-- pcnNFeR --
+[*] Alterado a posição da remoção do NameSpace para o inicio da rotina.
+    Mudado para fazer uma remoção total e não somente do grupo <det>.
+   Por: Italo Jurisato Junior
+
 04/02/2019
 -- pcnNFeR --
 [*] https://www.projetoacbr.com.br/forum/topic/48913-importa%C3%A7%C3%A3oleitura-do-xml-nf-e-n%C3%A3o-carrega-os-produtos/

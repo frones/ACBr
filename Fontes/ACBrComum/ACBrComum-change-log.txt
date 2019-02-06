@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/02/2019
+-- ACBrUtil --
+[*] Inclusão de parâmetro nos métodos "SeparaDados" e "SeparaDadoArray" para
+    permitir a leitura de chaves com qualquer prefixo.
+[*] Inclusão de parâmetro no método "PadSpace" para não remover os espaços
+    (Trim) do retorno final.
+    (por: BigWings)
 
 Data: 31/01/2019
 -- ACBrUtil --

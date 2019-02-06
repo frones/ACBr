@@ -114,8 +114,10 @@ function InserirDeclaracaoXMLSeNecessario(const AXML: String;
 
 function Split(const ADelimiter: Char; const AString: string): TSplitResult;
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
-function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
-function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
+function SeparaDados(const AString: String; const Chave: String; const MantemChave : Boolean = False;
+  const PermitePrefixo: Boolean = True) : String;
+function SeparaDadosArray(const AArray: Array of String; const AString: String; const MantemChave: Boolean = False;
+  const PermitePrefixo: Boolean = True) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
 procedure EncontrarInicioFinalTag(const aText, ATag: ansistring;
   var PosIni, PosFim: integer;const PosOffset: integer = 0);
@@ -183,7 +185,7 @@ function PadLeft(const AString : String; const nLen : Integer;
 function PadCenter(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
 function PadSpace(const AString : String; const nLen : Integer; Separador : String;
-   const Caracter : Char = ' ') : String ;
+   const Caracter : Char = ' '; const RemoverEspacos: Boolean = True) : String ;
 
 function RemoveString(const sSubStr, sString: String): String;
 function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
@@ -1170,7 +1172,7 @@ end ;
   substituindo <Separador> por n X <Caracter>  (Justificado)
  ---------------------------------------------------------------------------- }
 function PadSpace(const AString : String; const nLen : Integer;
-   Separador : String; const Caracter : Char = ' ') : String ;
+   Separador : String; const Caracter : Char = ' '; const RemoverEspacos : Boolean = True) : String ;
 var StuffStr : String ;
     nSep, nCharSep, nResto, nFeito, Ini : Integer ;
     D : Double ;
@@ -1190,7 +1192,9 @@ begin
      exit ;
   end ;
 
-  Result   := Trim( Result ) ;
+  if RemoverEspacos then
+    Result := Trim( Result ) ;
+
   D        := (nLen - (LenghtNativeString(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
   nResto   := nLen - ( (LenghtNativeString(Result)-nSep) + (nCharSep*nSep) ) ;
@@ -3933,60 +3937,61 @@ begin
     Result := AnsiToNativeString(ABinaryString);
 end;
 
-function SeparaDados(const AString: String; const Chave: String;
-  const MantemChave: Boolean): String;
+function SeparaDados(const AString: String; const Chave: String; const MantemChave: Boolean = False;
+  const PermitePrefixo: Boolean = True): String;
 var
-  PosIni, PosFim : Integer;
-  UTexto, UChave :String;
+  PosIni, PosFim: Integer;
+  UTexto, UChave: String;
+  Prefixo: String;
 begin
+  Result := '';
   UTexto := AnsiUpperCase(AString);
   UChave := AnsiUpperCase(Chave);
   PosFim := 0;
+  Prefixo := '';
 
   if MantemChave then
-   begin
-     PosIni := Pos('<' + UChave, UTexto);
-     if PosIni > 0 then
-       PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
-
-     if (PosFim = 0) then
-      begin
-        PosIni := Pos('NS2:' + UChave, UTexto) - 1;
-        if PosIni > 0 then
-          PosFim := Pos('/NS2:' + UChave, UTexto) + length(UChave) + 3;
-      end;
-   end
+  begin
+    PosIni := Pos('<' + UChave, UTexto);
+    if PosIni > 0 then
+      PosFim := Pos('/' + UChave, UTexto) + length(UChave) + 3;
+  end
   else
-   begin
-     PosIni := Pos('<' + UChave, UTexto) ;
-     if PosIni > 0 then
-     begin
-       PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
-       PosFim := Pos('/' + UChave, UTexto);
-     end;
+  begin
+    PosIni := Pos('<' + UChave, UTexto);
+    if PosIni > 0 then
+    begin
+      PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
+      PosFim := Pos('/' + UChave, UTexto);
+    end;
+  end;
 
-     if (PosFim = 0) then
+  if (PosFim = 0) and PermitePrefixo then
+  begin
+    PosIni := Pos(':' + Chave, AString);
+    if PosIni > 1 then
+    begin
+      while (PosIni > 1) and (AString[PosIni - 1] <> '<') do
       begin
-        PosIni := Pos('NS2:' + UChave, UTexto) ;
-        if PosIni > 0 then
-        begin
-          PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
-          PosFim := Pos('/NS2:' + UChave, UTexto);
-        end ;
+        Prefixo := AString[PosIni - 1] + Prefixo;
+        PosIni := PosIni - 1;
       end;
-   end;
+      Result := SeparaDados(AString, Prefixo + ':' + Chave, MantemChave, False);
+    end
+  end
+  else
+    Result := copy(AString, PosIni, PosFim - (PosIni + 1));
 
-  Result := copy(AString, PosIni, PosFim - (PosIni + 1));
 end;
 
-function SeparaDadosArray(const AArray: array of String; const AString: String;
-  const MantemChave: Boolean): String;
+function SeparaDadosArray(const AArray: array of String; const AString: String; const MantemChave: Boolean = False;
+  const PermitePrefixo: Boolean = True): String;
 var
   I : Integer;
 begin
  for I:=Low(AArray) to High(AArray) do
  begin
-   Result := Trim(SeparaDados(AString,AArray[I], MantemChave));
+   Result := Trim(SeparaDados(AString,AArray[I], MantemChave, PermitePrefixo));
    if Result <> '' then
       Exit;
  end;

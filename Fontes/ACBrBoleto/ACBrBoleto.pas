@@ -386,7 +386,8 @@ type
     cobBanese,
     cobCrediSIS,
     cobUnicredES,
-    cobBancoCresolSCRS
+    cobBancoCresolSCRS,
+    cobCitiBank
     );
 
   TACBrTitulo = class;
@@ -1425,7 +1426,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol;
+     ACBrBancoCresol, ACBrBancoCitiBank;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2322,6 +2323,7 @@ begin
      cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
      cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
      cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresol.create(Self);         {133 + 237}
+     cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
 
    else
      fBancoClass := TACBrBancoClass.create(Self);
@@ -2906,11 +2908,12 @@ begin
     Raise Exception.Create(ACBrStr('Nome do cedente não informado'));
   if Cedente.Conta = '' then
     Raise Exception.Create(ACBrStr('Conta não informada'));
-  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese])) then
+  if (Cedente.ContaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes,cobBanese, cobCitiBank])) then
     Raise Exception.Create(ACBrStr('Dígito da conta não informado'));
   if Cedente.Agencia = '' then
     Raise Exception.Create(ACBrStr('Agência não informada'));
-  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanese, cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob])) then
+  if (Cedente.AgenciaDigito = '') and (not (Banco.TipoCobranca in [cobBanestes, cobBanese,
+     cobBanrisul, cobItau, cobCaixaEconomica, cobCaixaSicob, cobCitiBank])) then
     Raise Exception.Create(ACBrStr('Dígito da agência não informado'));
 end;
 
@@ -2950,6 +2953,7 @@ begin
     422: Result := cobSafraBradesco;
     085: Result := cobBancoCECRED;
     047: Result := cobBanese;
+    745: Result := cobCitiBank;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));

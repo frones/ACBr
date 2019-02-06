@@ -50,6 +50,10 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+06/02/2019
+-- ACBrCitiBank, ACBrBoleto --
+[+] Adicionado Unit com layout do CitiBank
+
 05/02/2019
 -- ACBrBancoSicred, ACBrBoleto --
 [*] Ajustar validação do código de Retorno da ocorrencia "09"

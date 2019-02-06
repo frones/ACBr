@@ -383,7 +383,7 @@ begin
              if sCodPro = 'FIM' then
                 break ;
 
-             with Det.Add do
+             with Det.New do
               begin
                 nItem := I;
                 infAdProd      := INIRec.ReadString(sSecao,'infAdProd','');
@@ -415,7 +415,7 @@ begin
                    sFim    := INIRec.ReadString(sSecao,'xCampoDet','') ;
                    if (sFim <> '') then
                     begin
-                      with Prod.obsFiscoDet.Add do
+                      with Prod.obsFiscoDet.New do
                        begin
                          xCampoDet := sFim;
                          xTextoDet := INIRec.ReadString(sSecao,'xTextoDet','') ; ;
@@ -567,7 +567,7 @@ begin
                  break ;
               end;
 
-             with Pagto.Add do
+             with Pagto.New do
               begin
                 cMP  := StrToCodigoMP(OK,INIRec.ReadString(sSecao,'cMP',INIRec.ReadString(sSecao,'tpag','01')));
                 vMP  := StringToFloatDef( INIRec.ReadString(sSecao,'vMP',INIRec.ReadString(sSecao,'vPag','')) ,0) ;
@@ -586,7 +586,7 @@ begin
              if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break ;
 
-             with InfAdic.obsFisco.Add do
+             with InfAdic.obsFisco.New do
               begin
                 xCampo := sFim;
                 xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));

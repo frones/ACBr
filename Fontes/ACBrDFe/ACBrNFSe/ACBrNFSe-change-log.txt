@@ -49,6 +49,12 @@ Símbolo : Significado
 
 06/02/2019
 -- ACBrNFSeWebServices --
+[*] Alterações visando resolver o problema de assinatura no cancelamento,
+    provedor Digifred.
+   Por: Italo Jurisato Junior
+
+06/02/2019
+-- ACBrNFSeWebServices --
 [*] Corrigido a remoção de prefixo ao definir o nó da assinatura.
    Por: Italo Jurisato Junior
 

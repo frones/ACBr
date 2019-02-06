@@ -4416,6 +4416,7 @@ begin
       proBHISS,
 //      proPublica,
       proBethav2,
+      proDigifred,
       proISSJoinville,
       proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 

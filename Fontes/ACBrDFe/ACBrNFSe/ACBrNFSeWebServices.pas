@@ -1506,7 +1506,8 @@ var
   TagGrupo, xmlns, xPrefixo, Identificador: String;
   i, j: Integer;
 begin
-  TagGrupo := RetirarPrefixos(TipoEnvio, FProvedor);
+  TagGrupo := RetirarPrefixos('<' + TipoEnvio, FProvedor);
+  TagGrupo := Copy(TagGrupo, 2, Length(TagGrupo));
 
   FxSignatureNode := '';
   FxDSIGNSLote := '';
@@ -4415,6 +4416,7 @@ begin
       proBHISS,
 //      proPublica,
       proBethav2,
+      proISSJoinville,
       proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 
       proGinfes,

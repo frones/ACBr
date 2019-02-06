@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2019
+-- ACBrNFSeWebServices --
+[*] Corrigido a remoção de prefixo ao definir o nó da assinatura.
+   Por: Italo Jurisato Junior
+
 05/02/2019
 -- ACBrNFSeWebServices --
 [*] Possível correção para o cancelamento - provedor Bethav2.

@@ -181,6 +181,8 @@ type
     procedure ComVariasChaves;
     procedure SemFecharChave;
     procedure SemAbrirChave;
+    procedure ComPrefixo;
+    procedure MostrarChaveComPrefixo;
   end;
 
   { QuebrarLinhaTest }
@@ -294,6 +296,7 @@ type
    procedure TruncarString;
    procedure SubstituirSeparadorPorEspacos;
    procedure SubstituirSeparadorPorCaracter;
+   procedure NaoRemoverEspacos;
   end;
 
   { RemoverEspacosDuplosTest }
@@ -4258,6 +4261,11 @@ begin
   CheckEquals('   Teste   Unitario   ACBr    ', PadSpace('|Teste|Unitario|ACBr|', 30, '|'));
 end;
 
+procedure padSpaceTest.NaoRemoverEspacos;
+begin
+  CheckEquals('      190,25      KG', PadSpace('      190,25|KG', 20, '|', ' ', False));
+end;
+
 procedure padSpaceTest.SubstituirSeparadorPorCaracter;
 begin
   CheckEquals('ZTesteZUnitarioZACBrZ', PadSpace('|Teste|Unitario|ACBr|', 21, '|', 'Z'));
@@ -4363,6 +4371,22 @@ begin
   CheckEquals('<ACBr>TesteSimples</ACBr>', SeparaDados('<ACBr>TesteSimples</ACBr>', 'ACBr', true));
   CheckEquals('<b>ACBr Util</b>', SeparaDados('<ACBrUtil>Teste com texto longo <b>ACBr Util</b> feito por DJSystem', 'b', true));
   CheckEquals('<u>#ACBrUtil</u>', SeparaDados('<ACBrUtil>Teste com texto longo <u>#ACBrUtil</u> feito por DJSystem', 'u', true));
+end;
+
+procedure SepararDadosTest.MostrarChaveComPrefixo;
+const
+  TEXTO = '<ns0:ACBr>Teste<ns0:ACBrTeste>Projeto ACBr</ns0:ACBrTeste></ns0:ACBr>';
+begin
+  CheckEquals('<ns0:ACBrTeste>Projeto ACBr</ns0:ACBrTeste>', SeparaDados(TEXTO, 'ACBrTeste', True));
+  CheckEquals('', SeparaDados(TEXTO, 'ACBrTeste', False, False));
+end;
+
+procedure SepararDadosTest.ComPrefixo;
+const
+  TEXTO = '<ns0:ACBr>Teste<ns0:ACBrTeste>Projeto ACBr</ns0:ACBrTeste></ns0:ACBr>';
+begin
+  CheckEquals('Projeto ACBr', SeparaDados(TEXTO, 'ACBrTeste'));
+  CheckEquals('', SeparaDados(TEXTO, 'ACBrTeste', False, False));
 end;
 
 procedure SepararDadosTest.ComVariasChaves;

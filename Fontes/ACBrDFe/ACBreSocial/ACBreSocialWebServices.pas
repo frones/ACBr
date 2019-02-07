@@ -54,8 +54,8 @@ uses
   ACBrUtil, ACBrDFe, ACBrDFeWebService,
   pcnLeitor,
   ACBreSocialLoteEventos, ACBreSocialConfiguracoes,
-  pcesConversaoeSocial, pcesCommon, pcesRetEnvioLote, pcesRetConsultaLote{,
-  pcesS5001, pcesS5002, pcesS5011, pcesS5012};
+  pcesConversaoeSocial, pcesCommon, pcesRetEnvioLote, pcesRetConsultaLote,
+  pcesRetConsultaIdentEvt, pcesRetDownloadEvt;
 
 type
 
@@ -139,6 +139,66 @@ type
 
   end;
 
+  { TConsultaIdentEventos }
+
+  TConsultaIdentEventos = class(TeSocialWebService)
+  private
+    FCnpj : String;
+    FPerApur : TDateTime;
+    FEvento : TTipoEvento;
+    FRetConsultaIdentEvt: TRetConsultaIdentEvt;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
+
+    function TratarResposta: Boolean; override;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+
+    procedure Clear; override;
+    procedure BeforeDestruction; override;
+    property Cnpj: String read FCnpj write FCnpj;
+    property PerApur: TDateTime read FPerApur write FPerApur;
+    property Evento: TTipoEvento read FEvento write FEvento;
+    property RetConsultaIdentEvt: TRetConsultaIdentEvt read FRetConsultaIdentEvt;
+  end;
+
+  { TDownloadEventos }
+
+  TDownloadEventos = class(TeSocialWebService)
+  private
+    FTipoDownload: string;
+    FCnpj : String;
+    FPorID: String;
+    FPorNrRecibo: String;
+    FRetDownloadEvt: TRetDownloadEvt;
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    procedure DefinirEnvelopeSoap; override;
+
+    function TratarResposta: Boolean; override;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+
+  public
+    constructor Create(AOwner: TACBrDFe); override;
+
+    procedure Clear; override;
+    procedure BeforeDestruction; override;
+    property Cnpj: String read FCnpj write FCnpj;
+
+    property PorID: String read FPorID write FPorID;
+    property PorNrRecibo: String read FPorNrRecibo write FPorNrRecibo;
+    property RetDownloadEvt: TRetDownloadEvt read FRetDownloadEvt;
+  end;
+
   { TWebServices }
 
   TWebServices = class
@@ -146,16 +206,24 @@ type
     FACBreSocial: TACBrDFe;
     FEnvioLote: TEnvioLote;
     FConsultaLote: TConsultaLote;
+    FConsultaIdentEventos: TConsultaIdentEventos;
+    FDownloadEventos: TDownloadEventos;
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
     function Envia(AGrupo: TeSocialGrupo): Boolean;
     function Consultar(const AProtocolo: string): Boolean;
+    function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab : String;
+        tpEvt : TTipoEvento; PerApur : TDateTime): boolean;
+
+    function DownloadEvento(const ACnpjEmpr, APorID, APorNrRecibo: String): boolean;
 
     property ACBreSocial: TACBrDFe read FACBreSocial write FACBreSocial;
     property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
     property ConsultaLote: TConsultaLote read FConsultaLote write FConsultaLote;
+    property ConsultaIdentEventos: TConsultaIdentEventos read FConsultaIdentEventos write FConsultaIdentEventos;
+    property DownloadEventos: TDownloadEventos read FDownloadEventos write FDownloadEventos;
   end;
 
 implementation
@@ -537,6 +605,159 @@ begin
   Result := True;
 end;
 
+{ TConsultaIdentEventos }
+
+procedure TConsultaIdentEventos.BeforeDestruction;
+begin
+  inherited;
+  FRetConsultaIdentEvt.Free;
+end;
+
+procedure TConsultaIdentEventos.Clear;
+begin
+  inherited Clear;
+
+  FPLayout := LayConsultaIdentEventos;
+  FPStatus := stConsultaIdentEvt;
+  FPArqEnv := 'ped-con';
+  FPArqResp := 'con';
+
+  if Assigned(FRetConsultaIdentEvt) then
+    FRetConsultaIdentEvt.Free;
+
+  FRetConsultaIdentEvt := TRetConsultaIdentEvt.Create;
+end;
+
+constructor TConsultaIdentEventos.Create(AOwner: TACBrDFe);
+begin
+  Inherited Create(AOwner);
+end;
+
+procedure TConsultaIdentEventos.DefinirDadosMsg;
+var
+  TpInsc : tpTpInsc;
+begin
+
+  if Length(FCnpj) = 14 then
+    TpInsc := tiCNPJ
+  else
+    TpInsc := tiCPF;
+
+  FPDadosMsg :=
+         '<eSocial xmlns="' + ACBRESOCIAL_NAMESPACE_RETEVT + '">' +
+          '<consultaIdentificadoresEvts>' +
+           '<ideEmpregador>' +
+            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '<tpInsc>' +
+            '<nrInsc>' + FCnpj + '<nrInsc>' +
+           '</ideEmpregador>' +
+           '<consultaEvtsEmpregador>' +
+             '<tpEvt>' + TipoEventoToStr(FEvento) + '<tpEvt>' +
+             '<perApur>' + FormatDateTime('yyyy-mm', FPerApur) + '<perApur>' +
+           '</consultaEvtsEmpregador>' +
+          '</consultaIdentificadoresEvts>' +
+         '</eSocial>';
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioConsultaIdentEvt);
+end;
+
+procedure TConsultaIdentEventos.DefinirEnvelopeSoap;
+var
+  Texto: String;
+begin
+  { Sobrescrever apenas se necessário }
+
+{$IFDEF FPC}
+  Texto := '<' + ENCODING_UTF8 + '>'; // Envelope já está sendo montado em UTF8
+{$ELSE}
+  Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
+{$ENDIF}
+
+  Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
+    FPSoapEnvelopeAtributtes + '>';
+  Texto := Texto + '<' + FPSoapVersion + ':Body>';
+  Texto := Texto + '<' + 'v1:ConsultarIdentificadoresEventosEmpregador>';
+  Texto := Texto + '<' + 'v1:consultaEventosEmpregador>';
+  Texto := Texto + DadosMsg;
+  Texto := Texto + '<' + '/v1:consultaEventosEmpregador>';
+  Texto := Texto + '<' + '/v1:ConsultarIdentificadoresEventosEmpregador>';
+  Texto := Texto + '</' + FPSoapVersion + ':Body>';
+  Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
+
+  FPEnvelopeSoap := Texto;
+end;
+
+procedure TConsultaIdentEventos.DefinirServicoEAction;
+begin
+  FPServico :=
+    'http://www.esocial.gov.br/servicos/empregador/consulta/identificadores-eventos/v1_0_0/ServicoConsultarIdentificadoresEventos/ConsultarIdentificadoresEventosEmpregador';
+  FPSoapAction := Trim(FPServico);
+end;
+
+procedure TConsultaIdentEventos.DefinirURL;
+var
+  Versao: Double;
+begin
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  TACBreSocial(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
+function TConsultaIdentEventos.GerarMsgLog: String;
+var
+  aMsg: String;
+begin
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak +
+                         'Status Código: %s ' + LineBreak +
+                         'Status Descrição: %s ' + LineBreak),
+                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                  TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
+                  IntToStr(FRetConsultaIdentEvt.Status.cdResposta),
+                  FRetConsultaIdentEvt.Status.descResposta]);
+
+  Result := aMsg;
+end;
+
+function TConsultaIdentEventos.GerarPrefixoArquivo: String;
+begin
+  Result := TipoEventoToStr(FEvento) + '-' +
+            fCnpj + '-' + FormatDateTime('mm-yyyy', FPerApur) + '-' +
+            FormatDateTime('yyyymmddhhnnss', Now);
+end;
+
+function TConsultaIdentEventos.TratarResposta: Boolean;
+var
+  i: Integer;
+  AXML, NomeArq: String;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
+
+  FRetConsultaIdentEvt.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetConsultaIdentEvt.LerXml;
+
+  for i := 0 to FRetConsultaIdentEvt.RetIdentEvts.Count - 1 do
+  begin
+    AXML := FPRetWS;
+
+    if AXML <> '' then
+    begin
+      NomeArq := FRetConsultaIdentEvt.RetIdentEvts.Items[i].Id + '-' +
+                 TipoEventoToStr(FEvento) +  Cnpj + FormatDateTime('mm-yyyy', FPerApur) + '.xml';
+
+      if (FPConfiguracoeseSocial.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+        FPDFeOwner.Gravar(NomeArq, AXML);
+    end;
+  end;
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoConsultaIdentEvt);
+
+  Result := True;
+end;
+
 { TWebServices }
 
 constructor TWebServices.Create(AOwner: TACBrDFe);
@@ -545,12 +766,14 @@ begin
 
   FEnvioLote    := TEnvioLote.Create(FACBreSocial);
   FConsultaLote := TConsultaLote.Create(FACBreSocial);
+  FConsultaIdentEventos := TConsultaIdentEventos.Create(FACBreSocial);
 end;
 
 destructor TWebServices.Destroy;
 begin
   FEnvioLote.Free;
   FConsultaLote.Free;
+  FConsultaIdentEventos.Free;
 
   inherited Destroy;
 end;
@@ -581,6 +804,212 @@ begin
 
   if not FConsultaLote.Executar then
       FConsultaLote.GerarException(FConsultaLote.Msg);
+
+  Result := True;
+end;
+
+function TWebServices.ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
+  tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
+begin
+{$IFDEF FPC}
+  Result := False;
+{$ENDIF}
+
+  FConsultaIdentEventos.FCnpj := CnpjEstab;
+  FConsultaIdentEventos.FEvento := tpEvt;
+  FConsultaIdentEventos.FPerApur := PerApur;
+
+  if not FConsultaIdentEventos.Executar then
+      FConsultaIdentEventos.GerarException(FConsultaIdentEventos.Msg);
+
+  Result := True;
+end;
+
+function TWebServices.DownloadEvento(const ACnpjEmpr, APorID, APorNrRecibo: String): boolean;
+begin
+{$IFDEF FPC}
+  Result := False;
+{$ENDIF}
+  if APorID <> '' then
+    FDownloadEventos.FTipoDownload := 'PorId'
+  else
+    FDownloadEventos.FTipoDownload := 'PorNrRecibo';
+
+  FDownloadEventos.FCnpj := ACnpjEmpr;
+  FDownLoadEventos.FPorID := Trim(APorID);
+  FDownLoadEventos.FPorNrRecibo := Trim(APorNrRecibo);
+
+  if not FDownLoadEventos.Executar then
+      FDownLoadEventos.GerarException(FDownLoadEventos.Msg);
+
+  Result := True;
+end;
+
+{ TDownloadEventos }
+
+procedure TDownloadEventos.BeforeDestruction;
+begin
+  inherited;
+
+  FRetDownloadEvt.Free;
+end;
+
+procedure TDownloadEventos.Clear;
+begin
+  inherited Clear;
+
+  FPLayout := LayDownloadEventos;
+  FPStatus := stDownloadEvt;
+  FPArqEnv := 'ped-dow';
+  FPArqResp := 'dow';
+
+  if Assigned(FRetDownloadEvt) then
+    FRetDownloadEvt.Free;
+
+  FRetDownloadEvt := TRetDownloadEvt.Create;
+end;
+
+constructor TDownloadEventos.Create(AOwner: TACBrDFe);
+begin
+  Inherited Create(AOwner);
+end;
+
+procedure TDownloadEventos.DefinirDadosMsg;
+var
+  TpInsc: tpTpInsc;
+  NameSpace: string;
+begin
+
+  if Length(FCnpj) = 14 then
+    TpInsc := tiCNPJ
+  else
+    TpInsc := tiCPF;
+
+  if FPorID <> '' then
+    NameSpace := ACBRESOCIAL_NAMESPACE_DOWEVTID
+  else
+    NameSpace := ACBRESOCIAL_NAMESPACE_DOWEVTREC;
+
+  FPDadosMsg :=
+         '<eSocial xmlns="' + NameSpace + '">' +
+          '<download>' +
+           '<ideEmpregador>' +
+            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '<tpInsc>' +
+            '<nrInsc>' + FCnpj + '<nrInsc>' +
+           '</ideEmpregador>' +
+           '<solicDownloadEvts' + FTipoDownload + '>';
+
+  if FPorID <> '' then
+    FPDadosMsg := FPDadosMsg +
+               '<id>' + FPorID + '</id>'
+  else
+    FPDadosMsg := FPDadosMsg +
+               '<nrRec>' + FPorNrRecibo + '</nrRec>';
+
+  FPDadosMsg := FPDadosMsg +
+           '</solicDownloadEvts' + FTipoDownload + '>' +
+          '</download>' +
+         '</eSocial>';
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioDownloadEvt);
+end;
+
+procedure TDownloadEventos.DefinirEnvelopeSoap;
+var
+  Texto: String;
+begin
+  { Sobrescrever apenas se necessário }
+
+{$IFDEF FPC}
+  Texto := '<' + ENCODING_UTF8 + '>'; // Envelope já está sendo montado em UTF8
+{$ELSE}
+  Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
+{$ENDIF}
+
+  Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
+    FPSoapEnvelopeAtributtes + '>';
+  Texto := Texto + '<' + FPSoapVersion + ':Body>';
+  Texto := Texto + '<' + 'v1:SolicitarDownloadEventos' + FTipoDownload + '>';
+  Texto := Texto + '<' + 'v1:solicitacao>';
+  Texto := Texto + DadosMsg;
+  Texto := Texto + '<' + '/v1:solicitacao>';
+  Texto := Texto + '<' + '/v1:SolicitarDownloadEventos' + FTipoDownload + '>';
+  Texto := Texto + '</' + FPSoapVersion + ':Body>';
+  Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
+
+  FPEnvelopeSoap := Texto;
+end;
+
+procedure TDownloadEventos.DefinirServicoEAction;
+begin
+  FPServico :=
+     'http://www.esocial.gov.br/servicos/empregador/download/solicitacao/v1_0_0/ServicoSolicitarDownloadEventos/SolicitarDownloadEventos' + FTipoDownload;
+  FPSoapAction := Trim(FPServico);
+end;
+
+procedure TDownloadEventos.DefinirURL;
+var
+  Versao: Double;
+begin
+  Versao := 0;
+  FPVersaoServico := '';
+  FPURL := '';
+  TACBreSocial(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+end;
+
+function TDownloadEventos.GerarMsgLog: String;
+var
+  aMsg: String;
+begin
+  aMsg := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                         'Ambiente: %s ' + LineBreak +
+                         'Status Código: %s ' + LineBreak +
+                         'Status Descrição: %s ' + LineBreak),
+                 [VersaoeSocialToStr(TACBreSocial(FPDFeOwner).Configuracoes.Geral.VersaoDF),
+                  TpAmbToStr(TACBreSocial(FPDFeOwner).Configuracoes.WebServices.Ambiente),
+                  IntToStr(FRetDownloadEvt.Status.cdResposta),
+                  FRetDownloadEvt.Status.descResposta]);
+
+  Result := aMsg;
+end;
+
+function TDownloadEventos.GerarPrefixoArquivo: String;
+begin
+  Result := FormatDateTime('yyyymmddhhnnss', Now);
+end;
+
+function TDownloadEventos.TratarResposta: Boolean;
+var
+  i: Integer;
+  AXML, NomeArq: String;
+begin
+  FPRetWS := SeparaDados(FPRetornoWS, 'SolicitarDownloadEventos' +FTipoDownload + 'Result');
+
+  FRetDownloadEvt.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetDownloadEvt.LerXml;
+
+  for i := 0 to FRetDownloadEvt.Arquivo.Count - 1 do
+  begin
+    AXML := FRetDownloadEvt.Arquivo.Items[i].XML;
+
+    if AXML <> '' then
+    begin
+      if FRetDownloadEvt.Arquivo.Items[i].Id <> '' then
+        NomeArq := FRetDownloadEvt.Arquivo.Items[i].Id + '-down.xml';
+
+      if FRetDownloadEvt.Arquivo.Items[i].nrRec <> '' then
+        NomeArq := FRetDownloadEvt.Arquivo.Items[i].nrRec + '-down.xml';
+
+      if (FPConfiguracoeseSocial.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
+        FPDFeOwner.Gravar(NomeArq, AXML);
+    end;
+
+  end;
+
+  if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
+    TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPRetWS, eseRetornoDownloadEvt);
 
   Result := True;
 end;

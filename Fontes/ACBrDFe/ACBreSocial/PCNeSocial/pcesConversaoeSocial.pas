@@ -68,7 +68,10 @@ type
 
   TeSocialGrupo = (egIniciais = 1, egNaoPeriodicos = 2, egPeriodicos = 3);
 
-  TeSocialEventos =(eseEnvioLote, eseRetornoLote, eseEnvioConsulta, eseRetornoConsulta);
+  TeSocialEventos =(eseEnvioLote, eseRetornoLote, eseEnvioConsulta,
+                    eseRetornoConsulta, eseEnvioConsultaIdentEvt,
+                    eseRetornoConsultaIdentEvt, eseEnvioDownloadEvt,
+                    eseRetornoDownloadEvt);
 
   TModoLancamento         = (mlInclusao, mlAlteracao, mlExclusao);
 
@@ -87,11 +90,14 @@ type
                              schevtTabFuncao, schevtTabHorTur, schevtTabLotacao, schevtTabOperPort,
                              schevtTabProcesso, schevtTabRubrica, schevtTotConting, schevtTSVAltContr,
                              schevtTSVInicio, schevtTSVTermino, schRetornoEnvioLoteEventos,
-                             schRetornoEvento, schRetornoProcessamentoLote);
+                             schRetornoEvento, schRetornoProcessamentoLote,
+                             schConsultaIdentEventos, schDownloadEventos);
 
-  TLayOut                 = (LayEnvioLoteEventos, LayConsultaLoteEventos);
+  TLayOut                 = (LayEnvioLoteEventos, LayConsultaLoteEventos,
+                             LayConsultaIdentEventos, LayDownloadEventos);
 
-  TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stConsultaLote );
+  TStatusACBreSocial      = (stIdle, stEnvLoteEventos, stConsultaLote,
+                             stConsultaIdentEvt, stDownloadEvt);
 
   TTipoEvento             = (teS1000, teS1005, teS1010, teS1020, teS1030, teS1035, teS1040, teS1050,
                              teS1060, teS1070, teS1080, teS2100, teS1200, teS1202, teS1207, teS1210,
@@ -960,22 +966,28 @@ const
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
    Result := EnumeradoToStr(t,
-    ['EnviarLoteEventos', 'ConsultarLoteEventos'],
-    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
+    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultaIdentEventos',
+      'DownloadEventos'],
+    [LayEnvioLoteEventos, LayConsultaLoteEventos, LayConsultaIdentEventos,
+     LayDownloadEventos] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 begin
    Result := StrToEnumerado(ok, s,
-    ['EnviarLoteEventos', 'ConsultarLoteEventos'],
-    [ LayEnvioLoteEventos, LayConsultaLoteEventos ] );
+    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultaIdentEventos',
+      'DownloadEventos'],
+    [LayEnvioLoteEventos, LayConsultaLoteEventos, LayConsultaIdentEventos,
+    LayDownloadEventos] );
 end;
 
 function LayOutToSchema(const t: TLayOut): TeSocialSchema;
 begin
    case t of
-    LayEnvioLoteEventos:    Result := schEnvioLoteEventos;
-    LayConsultaLoteEventos: Result := schConsultaLoteEventos;
+    LayEnvioLoteEventos:     Result := schEnvioLoteEventos;
+    LayConsultaLoteEventos:  Result := schConsultaLoteEventos;
+    LayConsultaIdentEventos: Result := schConsultaIdentEventos;
+    LayDownloadEventos:      Result := schDownloadEventos;
   else
     Result := schErro;
   end;

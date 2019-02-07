@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2019
+-- diversos --
+[+] Implementação dos métodos ConsultaIdentificadoresEventosEmpregador e DownloadEventos.
+   Por: Alessandro Feelipe e Italo Jurisato Junior
+
 30/01/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/47582-comit%C3%AA-gestor-aprova-a-vers%C3%A3o-25-do-leiaute-do-esocial/?do=findComment&comment=324270

@@ -62,8 +62,10 @@ resourcestring
 const
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
   ACBRESOCIAL_NAMESPACE_CON = 'http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0';
+  ACBRESOCIAL_NAMESPACE_RETEVT = 'http://www.esocial.gov.br/schema/consulta/identificadoreseventos/empregador/v1_0_0';
+  ACBRESOCIAL_NAMESPACE_DOWEVTID = 'http://www.esocial.gov.br/schema/download/solicitacao/id/v1_0_0';
+  ACBRESOCIAL_NAMESPACE_DOWEVTREC = 'http://www.esocial.gov.br/schema/download/solicitacao/nrRecibo/v1_0_0';
   ACBRESOCIAL_NAMESPACE_URI = 'http://www.esocial.gov.br/schema/evt/';
-//  ACBRESOCIAL_VERSAO_URI = '/v02_04_01';
   ACBRESOCIAL_MODELODF = 'eSocial';
 
 type
@@ -104,6 +106,10 @@ type
 
     function Enviar(AGrupo: TeSocialGrupo): boolean;
     function Consultar(const AProtocolo: string): boolean;
+    function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
+        tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
+
+    function DownloadEventos(const CnpjEmpr, PorID, PorNrRecibo: String): boolean;
 
     property Eventos: TEventos read FEventos write FEventos;
     property Status: TStatusACBreSocial read FStatus;
@@ -174,6 +180,18 @@ end;
 function TACBreSocial.Consultar(const AProtocolo: string): boolean;
 begin
   Result := WebServices.Consultar(AProtocolo);
+end;
+
+function TACBreSocial.ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
+  tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
+begin
+  Result := WebServices.ConsultaIdentificadoresEventosEmpregador(CnpjEstab, tpEvt, PerApur);
+end;
+
+function TACBreSocial.DownloadEventos(const CnpjEmpr, PorID,
+  PorNrRecibo: String): boolean;
+begin
+  Result := WebServices.DownloadEvento(CnpjEmpr, PorID, PorNrRecibo);
 end;
 
 procedure TACBreSocial.AssinarEventos;

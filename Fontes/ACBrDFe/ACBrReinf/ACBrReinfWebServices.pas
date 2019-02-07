@@ -150,6 +150,7 @@ type
 
     function TratarResposta: Boolean; override;
     function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
@@ -709,6 +710,11 @@ begin
   Result := aMsg;
 end;
 
+function TConsultarReciboEvento.GerarPrefixoArquivo: String;
+begin
+  Result := tpEventoStr;
+end;
+
 procedure TConsultarReciboEvento.InicializarServico;
 begin
   FVersaoDF := FPConfiguracoesReinf.Geral.VersaoDF;
@@ -727,7 +733,7 @@ begin
   FRetConsulta.LerXml;
 
   AXML := FRetConsulta.XML;
-
+  {
   if AXML <> '' then
   begin
     NomeArq := FRetConsulta.evtTotalContrib.Id + '-ConsultaReciboEvento' + tpEventoStr + '.xml';
@@ -735,7 +741,7 @@ begin
     if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       FPDFeOwner.Gravar(NomeArq, AXML, '',False);
   end;
-
+  }
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPRetWS, erRetornoConsulta);
 

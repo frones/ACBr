@@ -59,6 +59,8 @@ type
   TRCPRBCollectionItem = class;
   TinfoCRTomCollection = class;
   TinfoCRTomCollectionItem = class;
+  TRetornoEventosCollection = class;
+  TRetornoEventosCollectionItem = class;
 
   TInfoRecEv = class
   private
@@ -280,6 +282,33 @@ type
     property vlrCRCPRBSusp: Double read FvlrCRCPRBSusp;
   end;
 
+  TRetornoEventosCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TRetornoEventosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRetornoEventosCollectionItem);
+  public
+    constructor create(AOwner: TEvtTotalContrib);
+    function Add: TRetornoEventosCollectionItem;
+    property Items[Index: Integer]: TRetornoEventosCollectionItem read GetItem write SetItem;
+  end;
+
+  TRetornoEventosCollectionItem = class(TCollectionItem)
+  private
+    FId: String;
+    FnrRecibo: String;
+    FdtHoraRecebimento: String;
+    FsituacaoEvento: String;
+    FaplicacaoRecepcao: String;
+    FiniValid: String;
+  public
+    property id: String read FId write FId;
+    property dtHoraRecebimento: String read FdtHoraRecebimento write FdtHoraRecebimento;
+    property nrRecibo: String read FnrRecibo write FnrRecibo;
+    property situacaoEvento: String read FsituacaoEvento write FsituacaoEvento;
+    property aplicacaoRecepcao: String read FaplicacaoRecepcao write FaplicacaoRecepcao;
+    property iniValid: String read FiniValid write FiniValid;
+  end;
+
   TEvtTotalContrib = class(TPersistent)
   private
     FId: String;
@@ -288,8 +317,8 @@ type
     FIdeContri: TIdeContrib;
     FIdeStatus: TIdeStatus;
     FInfoRecEv: TInfoRecEv;
-    FIdeStatusConsultaReciboEventos: TStatusConsultaReciboEventos;
     FInfoTotalContrib: TInfoTotalContrib;
+    FRetornoEventos: TRetornoEventosCollection;
   public
     constructor Create;
     destructor  Destroy; override;
@@ -298,9 +327,9 @@ type
     property IdeEvento: TIdeEvento1 read FIdeEvento write FIdeEvento;
     property IdeContri: TIdeContrib read FIdeContri write FIdeContri;
     property IdeStatus: TIdeStatus read FIdeStatus write FIdeStatus;
-    property ideStatusConsultaReciboEventos: TStatusConsultaReciboEventos read FIdeStatusConsultaReciboEventos write FIdeStatusConsultaReciboEventos;
     property InfoRecEv: TInfoRecEv read FInfoRecEv write FInfoRecEv;
     property InfoTotalContrib: TInfoTotalContrib read FInfoTotalContrib write FInfoTotalContrib;
+    property RetornoEventos: TRetornoEventosCollection read FRetornoEventos write FRetornoEventos;
   end;
 
   TRetConsulta = class(TPersistent)
@@ -543,9 +572,9 @@ begin
   FIdeEvento        := TIdeEvento1.Create;
   FIdeContri        := TIdeContrib.Create;
   FIdeStatus        := TIdeStatus.Create;
-  ideStatusConsultaReciboEventos := TStatusConsultaReciboEventos.Create;
   FInfoRecEv        := TInfoRecEv.Create;
   FInfoTotalContrib := TInfoTotalContrib.Create(Self);
+  FRetornoEventos   := TRetornoEventosCollection.create(Self);
 end;
 
 destructor TEvtTotalContrib.Destroy;
@@ -553,9 +582,9 @@ begin
   FIdeEvento.Free;
   FIdeContri.Free;
   FIdeStatus.Free;
-  ideStatusConsultaReciboEventos.Free;
   FInfoRecEv.Free;
   FInfoTotalContrib.Free;
+  FRetornoEventos.Free;
 
   inherited;
 end;
@@ -574,6 +603,28 @@ begin
   FevtTotalContrib.Free;
 
   inherited;
+end;
+
+{ TRetornoEventosCollection }
+
+function TRetornoEventosCollection.Add: TRetornoEventosCollectionItem;
+begin
+  Result := TRetornoEventosCollectionItem(inherited Add());
+end;
+
+constructor TRetornoEventosCollection.create(AOwner: TEvtTotalContrib);
+begin
+  inherited create(TRetornoEventosCollectionItem);
+end;
+
+function TRetornoEventosCollection.GetItem(Index: Integer): TRetornoEventosCollectionItem;
+begin
+  Result := TRetornoEventosCollectionItem(Inherited GetItem(Index));
+end;
+
+procedure TRetornoEventosCollection.SetItem(Index: Integer; Value: TRetornoEventosCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
 end;
 
 function TRetConsulta.LerXml: boolean;
@@ -747,8 +798,20 @@ begin
       begin
         if leitor.rExtrai(2, 'ideStatus') <> '' then
         begin
-          ideStatusConsultaReciboEventos.cdRetorno   := leitor.rCampo(tcStr, 'cdRetorno');
-          ideStatusConsultaReciboEventos.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
+          IdeStatus.cdRetorno   := leitor.rCampo(tcStr, 'cdRetorno');
+          IdeStatus.descRetorno := leitor.rCampo(tcStr, 'descRetorno');
+
+          i := 0;
+          while Leitor.rExtrai(3, 'regOcorrs', '', i + 1) <> '' do
+          begin
+            IdeStatus.regOcorrs.Add;
+            IdeStatus.regOcorrs.Items[i].tpOcorr        := leitor.rCampo(tcInt, 'tpOcorr');
+            IdeStatus.regOcorrs.Items[i].localErroAviso := leitor.rCampo(tcStr, 'localErroAviso');
+            IdeStatus.regOcorrs.Items[i].codResp        := leitor.rCampo(tcStr, 'codResp');
+            IdeStatus.regOcorrs.Items[i].dscResp        := leitor.rCampo(tcStr, 'dscResp');
+
+            inc(i);
+          end;
         end;
 
         if leitor.rExtrai(2, 'retornoEventos') <> '' then
@@ -756,14 +819,15 @@ begin
           i := 0;
           while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
           begin
-            with ideStatusConsultaReciboEventos.consultaReciboEventos.Add do
+            with RetornoEventos.Add do
             begin
-              id := Leitor.rAtributo('id=');
-              iniValid := leitor.rCampo(tcStr, 'iniValid');
+              id                := Leitor.rAtributo('id=');
+              iniValid          := leitor.rCampo(tcStr, 'iniValid');
               dtHoraRecebimento := leitor.rCampo(tcStr, 'dtHoraRecebimento');
-              nrRecibo := leitor.rCampo(tcStr, 'nrRecibo');
-              situacaoEvento := leitor.rCampo(tcStr, 'situacaoEvento');
+              nrRecibo          := leitor.rCampo(tcStr, 'nrRecibo');
+              situacaoEvento    := leitor.rCampo(tcStr, 'situacaoEvento');
               aplicacaoRecepcao := leitor.rCampo(tcStr, 'aplicacaoRecepcao');
+
               inc(i);
             end;
           end;

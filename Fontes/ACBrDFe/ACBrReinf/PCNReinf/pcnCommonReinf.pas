@@ -68,9 +68,6 @@ type
   TideStatus = class;
   TregOcorrsCollection = class;
   TregOcorrsCollectionItem = class;
-  TStatusConsultaReciboEventos = class;
-  TConsultaReciboEventosCollection = class;
-  TConsultaReciboEventosCollectionItem = class;
 
   IEventoReinf = Interface;
 
@@ -121,49 +118,6 @@ type
     property Tipo: Byte read FTipo write FTipo;
     property Localizacao: String read FLocalizacao write FLocalizacao;
   end;
-
-  //------------------------------------------------------------
-  { TStatusConsultaReciboEventos }
-  TStatusConsultaReciboEventos = class
-  private
-    FcdRetorno: Integer;
-    FdescRetorno: string;
-    FConsultaReciboEventos: TConsultaReciboEventosCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    property cdRetorno: Integer read FcdRetorno write FcdRetorno;
-    property descRetorno: string read FdescRetorno write FdescRetorno;
-    property consultaReciboEventos: TConsultaReciboEventosCollection read FConsultaReciboEventos write FConsultaReciboEventos;
-  end;
-
-  TConsultaReciboEventosCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TConsultaReciboEventosCollectionItem;
-    procedure SetItem(Index: Integer; Value: TConsultaReciboEventosCollectionItem);
-  public
-    constructor create(AOwner: TStatusConsultaReciboEventos);
-    function Add: TConsultaReciboEventosCollectionItem;
-    property Items[Index: Integer]: TConsultaReciboEventosCollectionItem read GetItem write SetItem;
-  end;
-
-  TConsultaReciboEventosCollectionItem = class(TCollectionItem)
-  private
-    FId: String;
-    FnrRecibo: String;
-    FdtHoraRecebimento: String;
-    FsituacaoEvento: String;
-    FaplicacaoRecepcao: String;
-    FiniValid: String;
-  public
-    property id: String read FId write FId;
-    property dtHoraRecebimento: String read FdtHoraRecebimento write FdtHoraRecebimento;
-    property nrRecibo: String read FnrRecibo write FnrRecibo;
-    property situacaoEvento: String read FsituacaoEvento write FsituacaoEvento;
-    property aplicacaoRecepcao: String read FaplicacaoRecepcao write FaplicacaoRecepcao;
-    property iniValid: String read FiniValid write FiniValid;
-  end;
-  //------------------------------------------------------------
 
   TIdeEvento = class(TPersistent)
   private
@@ -378,42 +332,6 @@ procedure TOcorrenciasCollection.SetItem(Index: Integer;
   Value: TOcorrenciasCollectionItem);
 begin
   Inherited SetItem(Index, Value);
-end;
-
-{ TConsultaReciboEventosCollection }
-
-function TConsultaReciboEventosCollection.Add: TConsultaReciboEventosCollectionItem;
-begin
-  Result := TConsultaReciboEventosCollectionItem(inherited Add());
-end;
-
-constructor TConsultaReciboEventosCollection.create(AOwner: TStatusConsultaReciboEventos);
-begin
-  inherited create(TConsultaReciboEventosCollectionItem);
-end;
-
-function TConsultaReciboEventosCollection.GetItem(Index: Integer): TConsultaReciboEventosCollectionItem;
-begin
-  Result := TConsultaReciboEventosCollectionItem(Inherited GetItem(Index));
-end;
-
-procedure TConsultaReciboEventosCollection.SetItem(Index: Integer; Value: TConsultaReciboEventosCollectionItem);
-begin
-  Inherited SetItem(Index, Value);
-end;
-
-{ TStatusConsultaReciboEventos }
-
-constructor TStatusConsultaReciboEventos.Create;
-begin
-  FConsultaReciboEventos := TConsultaReciboEventosCollection.create(Self);
-end;
-
-destructor TStatusConsultaReciboEventos.Destroy;
-begin
-  FConsultaReciboEventos.Free;
-
-  inherited;
 end;
 
 end.

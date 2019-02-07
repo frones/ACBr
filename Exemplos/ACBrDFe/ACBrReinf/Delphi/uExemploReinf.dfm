@@ -1621,8 +1621,8 @@ object Form2: TForm2
             TabOrder = 0
           end
           object edRecibo: TEdit
-            Left = 4
-            Top = 66
+            Left = 3
+            Top = 64
             Width = 247
             Height = 21
             TabOrder = 1
@@ -1804,6 +1804,15 @@ object Form2: TForm2
         Caption = 'Ler Arquivo XML'
         TabOrder = 6
         OnClick = btnLerArqXMLClick
+      end
+      object btnConsultarRecibo: TButton
+        Left = 438
+        Top = 40
+        Width = 137
+        Height = 24
+        Caption = 'Consultar Recibo'
+        TabOrder = 7
+        OnClick = btnConsultarReciboClick
       end
     end
   end

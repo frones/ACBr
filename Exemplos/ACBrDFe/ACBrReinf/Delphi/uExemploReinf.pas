@@ -204,6 +204,7 @@ type
     memoLog: TMemo;
     chk1000Limpar: TCheckBox;
     btnLerArqXML: TButton;
+    btnConsultarRecibo: TButton;
     procedure btnGerarClick(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
@@ -245,6 +246,7 @@ type
       ATipo: TEventosReinf);
     procedure rgTipoAmbClick(Sender: TObject);
     procedure btnLerArqXMLClick(Sender: TObject);
+    procedure btnConsultarReciboClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -367,13 +369,14 @@ begin
 
           if IdeStatus.regOcorrs.Count > 0 then
           begin
+            Add('');
             Add(' **Ocorrencias');
 
             for i := 0 to IdeStatus.regOcorrs.Count - 1 do
             begin
               with IdeStatus.regOcorrs.Items[i] do
               begin
-                Add('   Tipo............: ' + Inttostr(tpOcorr));
+                Add('   Tipo............: ' + IntToStr(tpOcorr));
                 Add('   Local Erro Aviso: ' + localErroAviso);
                 Add('   Código Resp.... : ' + codResp);
                 Add('   Descricao Resp..: ' + dscResp);
@@ -381,6 +384,7 @@ begin
             end;
           end;
 
+          Add('');
           Add(' **Informações de processamento dos eventos ');
 
           with InfoRecEv do
@@ -392,6 +396,84 @@ begin
             Add('   Hash do arquivo processado..........: ' + hash);
           end;
 
+        end;
+      end;
+    end;
+
+    PageControl1.ActivePageIndex := 1;
+  end;
+end;
+
+procedure TForm2.btnConsultarReciboClick(Sender: TObject);
+var
+  PerApur, TipoEvento, CNPJPrestadorTomador: string;
+  Ok: Boolean;
+  i: Integer;
+begin
+  PerApur := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Perido de Apuração (AAAA-MM):', PerApur)) then
+    Exit;
+
+  TipoEvento := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Tipo do Evento (R-xxxx):', TipoEvento)) then
+    Exit;
+
+  CNPJPrestadorTomador := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'CNPJ Prestador ou Tomador:', CNPJPrestadorTomador)) then
+    Exit;
+
+  if ACBrReinf1.ConsultaReciboEvento(PerApur, StrToTipoEvento(Ok, TipoEvento), CNPJPrestadorTomador) then
+  begin
+    mmoXMLRet.Clear;
+    mmoXMLRet.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;
+
+    with mmoDados.Lines do
+    begin
+      with ACBrReinf1.WebServices.ConsultarReciboEvento.RetConsulta do
+      begin
+        with evtTotalContrib do
+        begin
+          Add('');
+          Add(' **Status');
+          Add('   Cód Retorno..: ' + ideStatus.cdRetorno);
+          Add('   Descrição....: ' + ideStatus.descRetorno);
+
+          if IdeStatus.regOcorrs.Count > 0 then
+          begin
+            Add('');
+            Add(' **Ocorrencias');
+
+            for i := 0 to IdeStatus.regOcorrs.Count - 1 do
+            begin
+              with IdeStatus.regOcorrs.Items[i] do
+              begin
+                Add('   Tipo............: ' + IntToStr(tpOcorr));
+                Add('   Local Erro Aviso: ' + localErroAviso);
+                Add('   Código Resp.... : ' + codResp);
+                Add('   Descricao Resp..: ' + dscResp);
+              end;
+            end;
+          end;
+
+          if RetornoEventos.Count > 0 then
+          begin
+            Add('');
+            Add(' **Retorno Eventos');
+
+            for i := 0 to RetornoEventos.Count - 1 do
+            begin
+              with RetornoEventos.Items[i] do
+              begin
+                Add('   ID................: ' + Id);
+                Add('   Inicio da Validade: ' + iniValid);
+                Add('   Data/Hora Receb...: ' + dtHoraRecebimento);
+                Add('   Numero do Recibo..: ' + nrRecibo);
+                Add('   Situação do Evento: ' + situacaoEvento);
+                Add('   Aplicacao Recepção: ' + aplicacaoRecepcao);
+              end;
+            end;
+
+          end;
         end;
       end;
     end;
@@ -417,6 +499,7 @@ begin
         Add('cdStatus      : ' + IntToStr(Status.cdStatus));
         Add('descRetorno   : ' + Status.descRetorno);
 
+        Add('');
         Add(' **Ocorrencias');
 
         for i := 0 to Status.Ocorrencias.Count - 1 do
@@ -430,12 +513,14 @@ begin
           end;
         end;
 
+        Add('');
         Add('retornoEventos');
 
         for i:=0 to evento.Count - 1 do
         begin
           with evento.Items[i] do
           begin
+            Add('');
             Add('Evento Id: ' + Id);
 
             with evtTotal do
@@ -445,6 +530,7 @@ begin
               Add('   Descrição....: ' + IdeStatus.descRetorno);
               Add('   Nro Recibo...: ' + InfoTotal.nrRecArqBase);
 
+              Add('');
               Add(' **Ocorrencias');
 
               for j := 0 to IdeStatus.regOcorrs.Count - 1 do
@@ -458,6 +544,7 @@ begin
                 end;
               end;
 
+              Add('');
               Add(' **Informações de processamento dos eventos ');
 
               with InfoRecEv do

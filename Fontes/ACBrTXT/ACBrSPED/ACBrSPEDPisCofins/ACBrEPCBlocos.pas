@@ -1312,6 +1312,7 @@ function StrToIndicadorApropAjuste(const AValue: string): TACBrIndicadorApropAju
 
 
 implementation
+
 function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
 begin
   Result := TACBrIndDescCred(StrToIntDef(AValue, 0));
@@ -1733,7 +1734,9 @@ begin
       Result := '004'
    else
    if AValue = vlVersao310 then
-      Result := '005';
+      Result := '005'
+   else
+     raise Exception.Create('Valor informado inválido para ser convertido em TACBrCodVer');
 end;
 
 function StrToCodVer(const AValue: string): TACBrCodVer;
@@ -1899,14 +1902,16 @@ end;
 
 function CodSitFToStr(AValue: TACBrCodSitF): string;
 begin
-   if AValue = csffRegular then
-      Result := '00'
-   else
-   if AValue = csfCancelado then
-      Result := '02'
-   else
-   if AValue = csfOutros then
-      Result := '99';
+  if AValue = csffRegular then
+    Result := '00'
+  else
+  if AValue = csfCancelado then
+    Result := '02'
+  else
+  if AValue = csfOutros then
+    Result := '99'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrCodSitF');
 end;
 
 function StrToCodSitF(const AValue: string): TACBrCodSitF;
@@ -2081,7 +2086,9 @@ begin
   else if AValue = ccApuradaSCPCumulativa then
     Result := '72'
   else if AValue = ccPISPasepSalarios then
-    Result := '99';
+    Result := '99'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrCodCont');
 end;
 
 function IndTipCoopToStr(const AValue: TACBrIndTipCoop): string;
@@ -2099,7 +2106,9 @@ begin
   else if AValue = itcMedicos then
     Result := '06'
   else if AValue = itcOutras then
-    Result := '99';
+    Result := '99'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrIndTipCoop');
 end;
 
 function CodAjToStr(const AValue: TACBrCodAj): string;
@@ -2121,8 +2130,9 @@ begin
   else if AValue = codAjCPRBDiferValRecPer then
     Result := '08'
   else if AValue = codAjCPRBAdicValDifPerAnt then
-    Result := '09';
-
+    Result := '09'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrCodAj');
 end;
 
 function NatCredDescToStr(const AValue: TACBrNatCredDesc): string;
@@ -2134,10 +2144,10 @@ begin
   else if AValue = ncdAliqUnidProduto then
     Result := '03'
   else if AValue = ncdPresAgroindustria then
-    Result := '04';
+    Result := '04'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrNatCredDesc');
 end;
-
-
 
 function TabCodAjBaseCalcToStr(const AValue: TACBrTabCodAjBaseCalcContrib): string;
 begin
@@ -2150,7 +2160,9 @@ begin
   else if AValue = tcaOutrVlrsDecJudicial then
     Result := '41'
   else if AValue = tcaOutrVlrsSemDecJudicial then
-    Result := '42';
+    Result := '42'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrTabCodAjBaseCalcContrib');
 end;
 
 
@@ -2161,7 +2173,9 @@ begin
   else if AValue = iaaUnicaPISPasep then
     Result := '02'
   else if AValue = iaaRefUnicaCofins then
-    Result := '03';
+    Result := '03'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrIndicadorApropAjuste');
 end;
 
 

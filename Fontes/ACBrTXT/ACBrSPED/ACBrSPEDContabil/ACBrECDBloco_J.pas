@@ -478,11 +478,11 @@ type
     FNOME_AUDITOR: String;
     procedure SetCOD_CVM_AUDITOR(const Value: String);  // Nome do auditor independente.
     procedure SetNOME_AUDITOR(const Value: String);     // Registro do auditor independente na CVM.
-    procedure setfNI_CPF_CNPJ(const Value: String);     // CPF do auditor independente / CNPJ da pessoa jurídica de auditoria independente
+    procedure setNI_CPF_CNPJ(const Value: String);     // CPF do auditor independente / CNPJ da pessoa jurídica de auditoria independente
 
   public
     property NOME_AUDITOR: String read FNOME_AUDITOR write SetNOME_AUDITOR;
-    property NI_CPF_CNPJ: String read fNI_CPF_CNPJ write setfNI_CPF_CNPJ;
+    property NI_CPF_CNPJ: String read fNI_CPF_CNPJ write setNI_CPF_CNPJ;
     property COD_CVM_AUDITOR: String read FCOD_CVM_AUDITOR write SetCOD_CVM_AUDITOR;
   end;
 
@@ -790,7 +790,7 @@ begin
   FCOD_CVM_AUDITOR := Value;
 end;
 
-procedure TRegistroJ935.setfNI_CPF_CNPJ(const Value: String);
+procedure TRegistroJ935.setNI_CPF_CNPJ(const Value: String);
 begin
   fNI_CPF_CNPJ := Value;
 end;

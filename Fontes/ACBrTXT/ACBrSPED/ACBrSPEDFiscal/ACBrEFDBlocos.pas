@@ -1019,7 +1019,9 @@ begin
       Result := '04'
    else
    if AValue = miDeterminacaoFiscos then
-      Result := '05';
+      Result := '05'
+   else
+     raise Exception.Create('Valor informado inválido para ser convertido em TACBrMotInv');
 end;
 
 function IndPropToStr(AValue: TACBrIndProp): string;

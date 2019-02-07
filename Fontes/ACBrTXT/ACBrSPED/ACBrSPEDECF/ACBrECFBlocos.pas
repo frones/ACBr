@@ -884,6 +884,8 @@ begin
   else
   if AValue = ECFVersao400 then
     Result := '0004'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrECFCodVer');
 end;
 
 function IndOperToStr(AValue: TACBrIndOper): string;
@@ -1052,7 +1054,9 @@ begin
     Result := '04'
   else
   if AValue = miDeterminacaoFiscos then
-    Result := '05';
+    Result := '05'
+  else
+    raise Exception.Create('Valor informado inválido para ser convertido em TACBrMotInv');
 end;
 
 function IndPropToStr(AValue: TACBrIndProp): string;

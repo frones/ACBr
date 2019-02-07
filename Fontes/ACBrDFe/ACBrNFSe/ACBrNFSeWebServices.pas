@@ -4414,7 +4414,7 @@ begin
       proDBSeller: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
 
       proBHISS,
-//      proPublica,
+      proPublica,
       proBethav2,
       proDigifred,
       proISSJoinville,

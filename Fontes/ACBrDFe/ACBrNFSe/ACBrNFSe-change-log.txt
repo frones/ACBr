@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2019
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/48528-assinatura-do-hash-nao-confere-p%C3%BAblica/?do=findComment&comment=325273
+   Por: Henrique Sandri Zimermam
+
 06/02/2019
 -- ACBrNFSeWebServices --
 [*] Alterações visando resolver o problema de assinatura no cancelamento,

@@ -936,6 +936,7 @@ type
   published
     procedure Normal;
     procedure ComLetras;
+    procedure ComValoresInvalidos;
   end;
 
   { StrCryptTest }
@@ -2256,6 +2257,14 @@ var
 begin
   Resp := AscToString('#13,A,#10,1,#255,B,#65,9,A,C,B,r,#150');
   CheckEquals( #13+'A'+#10+'1'+#255+'BA'+'9ACBr'+#150,  Resp );
+end;
+
+procedure AscToStringTest.ComValoresInvalidos;
+var
+  Resp: String;
+begin
+  Resp := AscToString('#13,A,#10,1,#255,B,#65,9,A,C,B,r,#150,#DN');
+  CheckEquals( #13+'A'+#10+'1'+#255+'BA'+'9ACBr'+#150+'#DN',  Resp );
 end;
 
 { StringToAscTest }

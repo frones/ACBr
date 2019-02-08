@@ -2517,6 +2517,7 @@ begin
         try
            Token := AnsiChr(StrToInt(copy(String(Token),2,length(String(Token)))));
         except
+           // A função deve permitir uma Token do tipo '#DN' por exemplo.
         end ;
 
         Result := Result + Token ;
@@ -3491,6 +3492,7 @@ begin
   try
      WriteToTXT(ArqTXT, Buf, True, True);
   except
+     //Não parar o funcionamento de quem chamou WriteLog por erros causados por ela.
   end ;
 end;
 

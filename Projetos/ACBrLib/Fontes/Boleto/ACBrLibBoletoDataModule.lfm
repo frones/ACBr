@@ -1,8 +1,8 @@
 object LibBoletoDM: TLibBoletoDM
   OldCreateOrder = False
   Height = 150
-  HorizontalOffset = 803
-  VerticalOffset = 145
+  HorizontalOffset = 422
+  VerticalOffset = 298
   Width = 501
   PPI = 96
   object ACBrBoleto1: TACBrBoleto
@@ -10,16 +10,16 @@ object LibBoletoDM: TLibBoletoDM
     Banco.TipoCobranca = cobNenhum
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
     DataCreditoLanc = 0
+    ACBrBoletoFC = ACBrBoletoFCFortes1
     left = 39
     top = 36
   end
   object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    left = 148
-    top = 33
+    left = 147
+    top = 37
   end
 end

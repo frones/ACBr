@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrBoleto;
+  ACBrBoleto, ACBrLibConfig;
 
 type
 
@@ -226,12 +226,128 @@ type
 
   end;
 
+  { TLibBoletoConfig }
+
+  TLibBoletoConfig = class(TLibConfig)
+  private
+    FBoletoDiretorioConfig: TBoletoDiretorioConfig;
+    FBoletoBancoConfig: TBoletoBancoConfig;
+    FBoletoCedenteConfig: TBoletoCedenteConfig;
+    FBoletoFCFortesConfig: TBoletoFCFortesConfig;
+    FBoletoConfig: TBoletoConfig;
+
+  protected
+    function AtualizarArquivoConfiguracao: Boolean; override;
+
+    procedure INIParaClasse; override;
+    procedure ClasseParaINI; override;
+    procedure ClasseParaComponentes; override;
+
+    procedure Travar; override;
+    procedure Destravar; override;
+
+  public
+    constructor Create(AOwner: TObject; ANomeArquivo: string = ''; AChaveCrypt: ansistring = ''); override;
+    destructor Destroy; override;
+
+    property BoletoDiretorioConfig: TBoletoDiretorioConfig read FBoletoDiretorioConfig;
+    property BoletoBancoConfig: TBoletoBancoConfig read FBoletoBancoConfig;
+    property BoletoCedenteConfig: TBoletoCedenteConfig read FBoletoCedenteConfig;
+    property BoletoFCFortesConfig: TBoletoFCFortesConfig read FBoletoFCFortesConfig;
+    property BoletoConfig: TBoletoConfig read FBoletoConfig;
+
+  end;
+
 
 implementation
 
 uses
   ACBrLibBoletoConsts, ACBrLibComum,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrConsts, ACBrLibConsts, ACBrLibBoletoClass;
+
+{ TLibBoletoConfig }
+
+function TLibBoletoConfig.AtualizarArquivoConfiguracao: Boolean;
+var
+  Versao: String;
+begin
+  Versao := Ini.ReadString(CSessaoVersao, CLibBoletoNome, '0');
+  Result := (CompareVersions(CLibBoletoVersao, Versao) > 0) or
+            (inherited AtualizarArquivoConfiguracao);
+end;
+
+procedure TLibBoletoConfig.INIParaClasse;
+begin
+  inherited INIParaClasse;
+
+  FBoletoDiretorioConfig.LerIni(Ini);
+  FBoletoBancoConfig.LerIni(Ini);
+  FBoletoCedenteConfig.LerIni(Ini);
+  FBoletoFCFortesConfig.LerIni(Ini);
+  FBoletoConfig.LerIni(Ini);
+
+end;
+
+procedure TLibBoletoConfig.ClasseParaINI;
+begin
+  inherited ClasseParaINI;
+
+  Ini.WriteString(CSessaoVersao, CLibBoletoNome, CLibBoletoVersao);
+
+  FBoletoDiretorioConfig.GravarIni(Ini);
+  FBoletoBancoConfig.GravarIni(Ini);
+  FBoletoCedenteConfig.GravarIni(Ini);
+  FBoletoFCFortesConfig.GravarIni(Ini);
+  FBoletoConfig.GravarIni(Ini);
+
+end;
+
+procedure TLibBoletoConfig.ClasseParaComponentes;
+begin
+  if Assigned(Owner) then
+    TACBrLibBoleto(Owner).BoletoDM.AplicarConfiguracoes;
+end;
+
+procedure TLibBoletoConfig.Travar;
+begin
+  if Assigned(Owner) then
+  begin
+    with TACBrLibBoleto(Owner) do
+      BoletoDM.Travar;
+  end;
+end;
+
+procedure TLibBoletoConfig.Destravar;
+begin
+  if Assigned(Owner) then
+  begin
+    with TACBrLibBoleto(Owner) do
+      BoletoDM.Destravar;
+  end;
+end;
+
+constructor TLibBoletoConfig.Create(AOwner: TObject; ANomeArquivo: string;
+  AChaveCrypt: ansistring);
+begin
+  inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
+
+  FBoletoDiretorioConfig := TBoletoDiretorioConfig.Create;
+  FBoletoBancoConfig := TBoletoBancoConfig.Create;
+  FBoletoCedenteConfig := TBoletoCedenteConfig.Create;
+  FBoletoFCFortesConfig := TBoletoFCFortesConfig.Create;
+  FBoletoConfig := TBoletoConfig.Create;
+end;
+
+destructor TLibBoletoConfig.Destroy;
+begin
+  FBoletoDiretorioConfig.Free;
+  FBoletoBancoConfig.Free;
+  FBoletoCedenteConfig.Free;
+  FBoletoFCFortesConfig.Free;
+  FBoletoConfig.Free;
+
+  inherited Destroy;
+end;
 
 { TBoletoConfig }
 

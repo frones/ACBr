@@ -39,8 +39,7 @@ unit ACBrLibBoletoClass;
 interface
 
 uses
-  Classes, SysUtils, Forms, ACBrLibComum,
-   ACBrLibBoletoDataModule;
+  Classes, SysUtils, Forms, ACBrLibComum, ACBrLibBoletoDataModule;
 
 type
 
@@ -177,7 +176,7 @@ implementation
 
 uses
   ACBrLibConsts, ACBrLibBoletoConsts, ACBrLibConfig, ACBrUtil, strutils, typinfo,
-  ACBrBoleto;
+  ACBrBoleto, ACBrLibBoletoConfig, ACBrMail;
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
 
@@ -277,6 +276,7 @@ begin
      on E: Exception do
        Result := SetRetorno(ErrExecutandoMetodo, E.Message);
    end;
+
 end;
 
 function Boleto_IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PChar;
@@ -286,6 +286,7 @@ var
   Resposta : AnsiString;
   ArquivoIni : String;
   TpSaida : String;
+  Mensagem : TStringList;
 begin
   try
      VerificarLibInicializada;
@@ -312,21 +313,27 @@ begin
              BoletoDM.ACBrBoleto1.GerarPDF
            else if TpSaida = 'E' then
            begin
-             {with MonitorConfig.BOLETO.Email do
+             with TLibBoletoConfig(TACBrLibBoleto(pLib).Config).BoletoConfig do
              begin
                Mensagem := TStringList.Create;
                try
-                 Mensagem.Add(EmailMensagemBoleto);
-                     ACBrBoleto.EnviarEmail( ACBrBoleto.ListadeBoletos[0].Sacado.Email,
-                                  EmailAssuntoBoleto,
+                 Mensagem.Add(emailMensagemBoleto);
+                 if pLib.Config.Log.Nivel > logNormal then
+                   pLib.GravarLog('Boleto_EnviarEmail(' + BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email +
+                   ',' + emailAssuntoBoleto + ',' + Mensagem.Text, logCompleto, True)
+                 else
+                   pLib.GravarLog('Boleto_EnviarEmail', logNormal);
+
+                 BoletoDM.ACBrBoleto1.EnviarEmail( BoletoDM.ACBrBoleto1.ListadeBoletos[0].Sacado.Email,
+                                  emailAssuntoBoleto,
                                   Mensagem,
                                   True );
-                     fpCmd.Resposta := 'E-mail enviado com sucesso!'
+                 Result := SetRetorno(ErrOK);
 
                finally
                  Mensagem.Free;
                end;
-             end;}
+             end;
 
            end;
 
@@ -1102,7 +1109,7 @@ procedure TACBrLibBoleto.Inicializar;
 begin
   GravarLog('TACBrLibBoleto.Inicializar', logNormal);
 
-  //FBoletoDM.CriarACBrMail;
+  FBoletoDM.CriarACBrMail;
 
   GravarLog('TACBrLibBoleto.Inicializar - Feito', logParanoico);
 
@@ -1112,13 +1119,13 @@ end;
 procedure TACBrLibBoleto.CriarConfiguracao(ArqConfig: string;
   ChaveCrypt: ansistring);
 begin
-  //fpConfig := TLibBoletoConfig.Create(Self, ArqConfig, ChaveCrypt);
+  fpConfig := TLibBoletoConfig.Create(Self, ArqConfig, ChaveCrypt);
 end;
 
 procedure TACBrLibBoleto.Executar;
 begin
   inherited Executar;
-  //FBoletoDM.AplicarConfiguracoes;
+  FBoletoDM.AplicarConfiguracoes;
 end;
 
 constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);

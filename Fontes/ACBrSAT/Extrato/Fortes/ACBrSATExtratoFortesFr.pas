@@ -899,7 +899,7 @@ begin
     if PrintIt then
     begin
       Sinal := IfThen(TotalDescAcresItem < 0,'-','+');
-      lTotDescAcresItem.Caption := FormatFloatBr(TotalDescAcresItem, Sinal+',0.00');
+      lTotDescAcresItem.Caption := FormatFloatBr(Abs(TotalDescAcresItem), Sinal+',0.00');
     end;
   end;
 end;

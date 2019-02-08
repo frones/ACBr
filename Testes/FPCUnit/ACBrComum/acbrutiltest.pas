@@ -381,6 +381,7 @@ type
   TesteSetBit = class(TTestCase)
   private
     AByte: Integer;
+  protected
     procedure SetUp; override;
   published
     procedure LigaBitsDeZeroASete;
@@ -394,6 +395,7 @@ type
   TesteClearBit = class(TTestCase)
   private
     AByte: Integer;
+  protected
     procedure SetUp; override;
   published
     procedure DesligaBitsDeZeroASete;

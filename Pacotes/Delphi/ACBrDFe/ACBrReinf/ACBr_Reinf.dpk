@@ -41,8 +41,10 @@ contains
   ACBrReinfReg in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfReg.pas',
   ACBrReinfWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfWebServices.pas',
   pcnCommonReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnCommonReinf.pas',
+  pcnConversaoReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnConversaoReinf.pas',
   pcnEventosReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnEventosReinf.pas',
   pcnGeradorReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnGeradorReinf.pas',
+  pcnReinfConsulta in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfConsulta.pas',
   pcnReinfR1000 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR1000.pas',
   pcnReinfR1070 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR1070.pas',
   pcnReinfR2010 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR2010.pas',
@@ -59,7 +61,6 @@ contains
   pcnReinfR5011 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR5011.pas',
   pcnReinfR9000 in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR9000.pas',
   pcnReinfRetConsulta in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetConsulta.pas',
-  pcnReinfRetEventos in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetEventos.pas',
-  pcnConversaoReinf in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnConversaoReinf.pas';
+  pcnReinfRetEventos in '..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfRetEventos.pas';
 
 end.

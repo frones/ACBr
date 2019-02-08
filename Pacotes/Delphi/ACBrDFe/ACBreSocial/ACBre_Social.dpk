@@ -89,6 +89,11 @@ contains
   pcesIniciais in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesIniciais.pas',
   pcesNaoPeriodicos in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesNaoPeriodicos.pas',
   pcesPeriodicos in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesPeriodicos.pas',
+  pcesRetConsultaIdentEvt in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetConsultaIdentEvt.pas',
+  pcesRetConsultaLote in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetConsultaLote.pas',
+  pcesRetDownloadEvt in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetDownloadEvt.pas',
+  pcesRetEnvioLote in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetEnvioLote.pas',
+  pcesRetornoClass in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetornoClass.pas',
   pcesS1000 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS1000.pas',
   pcesS1005 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS1005.pas',
   pcesS1010 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS1010.pas',
@@ -122,6 +127,7 @@ contains
   pcesS2240 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2240.pas',
   pcesS2241 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2241.pas',
   pcesS2250 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2250.pas',
+  pcesS2260 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2260.pas',
   pcesS2298 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2298.pas',
   pcesS2299 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2299.pas',
   pcesS2300 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2300.pas',
@@ -130,8 +136,10 @@ contains
   pcesS2400 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2400.pas',
   pcesS3000 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS3000.pas',
   pcesS5001 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5001.pas',
+  pcesS5003 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5003.pas',
   pcesS5011 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5011.pas',
   pcesS5012 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5012.pas',
+  pcesS5013 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5013.pas',
   pcesTabelas in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesTabelas.pas';
 
 end.

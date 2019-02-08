@@ -90,7 +90,7 @@ type
     fConexoes: TACBrMTerConexoes;
     fUltimoDadoRecebido: AnsiString;
     fUltimoPesoLido: Double;
-    function GetBALCon: TACBrBAL;
+    function GetBALConexao: TACBrBAL;
     function GetLendoPeso: Boolean;
     function GetTimerLerPeso: TACBrThreadTimer;
 
@@ -101,12 +101,12 @@ type
     destructor Destroy; override;
     procedure Clear;
 
-    function AdicionarBuffer(ADados: AnsiString): Boolean;  // Retorna True, se Tem uma reposta completa
+    function AdicionarBuffer(const ADados: AnsiString): Boolean;  // Retorna True, se Tem uma reposta completa
     procedure SolicitarPeso(aSerial: Integer);
 
     property Conectado: Boolean read fConectado write fConectado;
     property IP: String read fIP;
-    property BALConexao: TACBrBAL read GetBALCon;
+    property BALConexao: TACBrBAL read GetBALConexao;
     property TimerLerPeso: TACBrThreadTimer read GetTimerLerPeso;
     property LendoPeso: Boolean read GetLendoPeso;
 
@@ -176,8 +176,8 @@ type
     procedure SetModelo(AValue: TACBrMTerModelo);
     procedure SetPasswordChar(AValue: Char);
     procedure SetPort(const AValue: String);
-    procedure SetTerminador(AValue: AnsiString);
-    procedure SetTerminadorBalanca(AValue: AnsiString);
+    procedure SetTerminador(const AValue: AnsiString);
+    procedure SetTerminadorBalanca(const AValue: AnsiString);
     procedure SetTimeOut(AValue: Integer);
 
     procedure DoConecta(const TCPBlockSocket: TTCPBlockSocket;
@@ -221,9 +221,9 @@ type
     procedure Beep(const aIP: String);
     procedure DeslocarCursor(const aIP: String; aValue: Integer);
     procedure DeslocarLinha(const aIP: String; aValue: Integer);
-    procedure EnviarParaParalela(const aIp: String; aDados: AnsiString);
-    procedure EnviarParaSerial(const aIP: String; aDados: AnsiString; aSerial: Integer);
-    procedure EnviarTexto(const aIP: String; aTexto: AnsiString);
+    procedure EnviarParaParalela(const aIp: String; const aDados: AnsiString);
+    procedure EnviarParaSerial(const aIP: String; const aDados: AnsiString; aSerial: Integer);
+    procedure EnviarTexto(const aIP: String; const aTexto: AnsiString);
     procedure LimparDisplay(const aIP: String);
     procedure LimparLinha(const aIP: String; aLinha: Integer);
     procedure PosicionarCursor(const aIP: String; aLinha, aColuna: Integer);
@@ -346,7 +346,7 @@ begin
   fUltimoPesoLido := 0;
 end;
 
-function TACBrMTerConexao.AdicionarBuffer(ADados: AnsiString): Boolean;
+function TACBrMTerConexao.AdicionarBuffer(const ADados: AnsiString): Boolean;
 var
   Terminador: AnsiString;
   P, LenTer: Integer;
@@ -379,7 +379,7 @@ begin
   end;
 end;
 
-function TACBrMTerConexao.GetBALCon: TACBrBAL;
+function TACBrMTerConexao.GetBALConexao: TACBrBAL;
 begin
   if (fBalanca = Nil) then
   begin
@@ -448,7 +448,7 @@ begin
   fTCPServer.Port := AValue;
 end;
 
-procedure TACBrMTer.SetTerminador(AValue: AnsiString);
+procedure TACBrMTer.SetTerminador(const AValue: AnsiString);
 begin
   if fTerminador = AValue then
     Exit;
@@ -463,7 +463,7 @@ begin
   end;
 end;
 
-procedure TACBrMTer.SetTerminadorBalanca(AValue: AnsiString);
+procedure TACBrMTer.SetTerminadorBalanca(const AValue: AnsiString);
 begin
   if fTerminadorBalanca = AValue then
     Exit;
@@ -618,16 +618,17 @@ function TACBrMTer.BuscarPorIP(const aIP: String): TTCPBlockSocket;
 var
   wIP: String;
   I: Integer;
+  aList: TList;
 begin
   // Procura IP nas conexões ativas.
   Result := Nil;
   wIP    := EmptyStr;
 
-  with fTCPServer.ThreadList.LockList do
+  aList  := fTCPServer.ThreadList.LockList;
   try
-    for I := 0 to (Count - 1) do
+    for I := 0 to (aList.Count - 1) do
     begin
-      with TACBrTCPServerThread(Items[I]) do
+      with TACBrTCPServerThread(aList.Items[I]) do
       begin
         wIP := TCPBlockSocket.GetRemoteSinIP;
 
@@ -914,20 +915,20 @@ begin
   EnviarComando(aIP, fMTer.ComandoDeslocarLinha(aValue));
 end;
 
-procedure TACBrMTer.EnviarParaParalela(const aIp: String; aDados: AnsiString);
+procedure TACBrMTer.EnviarParaParalela(const aIp: String; const aDados: AnsiString);
 begin
   // Envia String para Porta Paralela
   EnviarComando(aIP, fMTer.ComandoEnviarParaParalela(aDados));
 end;
 
-procedure TACBrMTer.EnviarParaSerial(const aIP: String; aDados: AnsiString;
+procedure TACBrMTer.EnviarParaSerial(const aIP: String; const aDados: AnsiString;
   aSerial: Integer);
 begin
   // Envia String para Porta Serial
   EnviarComando(aIP, fMTer.ComandoEnviarParaSerial(aDados, aSerial));
 end;
 
-procedure TACBrMTer.EnviarTexto(const aIP: String; aTexto: AnsiString);
+procedure TACBrMTer.EnviarTexto(const aIP: String; const aTexto: AnsiString);
 begin
   // Envia String para o Display
   EnviarComando(aIP, fMTer.ComandoEnviarTexto(aTexto));

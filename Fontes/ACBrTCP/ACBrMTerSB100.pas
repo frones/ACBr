@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -56,7 +56,7 @@ type
 
   TACBrMTerSB100 = class(TACBrMTerClass)
   private
-    function PrepararCmd(aCmd: Char; aParams: AnsiString = ''): AnsiString;
+    function PrepararCmd(const aCmd: Char; const aParams: AnsiString = ''): AnsiString;
   public
     constructor Create(aOwner: TComponent);
 
@@ -80,7 +80,7 @@ uses
 
 { TACBrMTerSB100 }
 
-function TACBrMTerSB100.PrepararCmd(aCmd: Char; aParams: AnsiString): AnsiString;
+function TACBrMTerSB100.PrepararCmd(const aCmd: Char; const aParams: AnsiString): AnsiString;
 begin
   Result := STX + aCmd + aParams + ETX;
 end;

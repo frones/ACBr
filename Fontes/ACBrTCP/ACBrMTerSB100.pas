@@ -1,43 +1,43 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2016 Elias C√©sar Vieira                     }
+{ Direitos Autorais Reservados (c) 2016 Elias CÈsar Vieira                     }
 {                                                                              }
-{ Colaboradores nesse arquivo: Daniel Sim√µes de Almeida                        }
+{ Colaboradores nesse arquivo: Daniel Simıes de Almeida                        }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 { Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
 {  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 17/05/2016: Elias C√©sar Vieira
+|* 17/05/2016: Elias CÈsar Vieira
 |*  - Primeira Versao ACBrMTerSB100
 ******************************************************************************}
 
@@ -101,7 +101,7 @@ function TACBrMTerSB100.ComandoBeep(aTempo: Integer): AnsiString;
 var
   wTempo: Integer;
 begin
-  // Ajustando tempo m√≠nimo/m√°ximo
+  // Ajustando tempo mÌnimo/m·ximo
   wTempo := aTempo;
   if (wTempo < 1) then
     wTempo := 1
@@ -131,7 +131,7 @@ function TACBrMTerSB100.ComandoDeslocarLinha(aValue: Integer): AnsiString;
 var
   wLinha: Integer;
 begin
-  // Validando valores m√°ximos/m√≠nimos
+  // Validando valores m·ximos/mÌnimos
   wLinha := (aValue - 1);
   if (wLinha < 0) then
     wLinha := 0
@@ -157,7 +157,7 @@ begin
   if (aSerial = 2) then
     wPorta := 'R'        // Seleciona porta serial 2
   else
-    wPorta := 'S';       // Seleciona porta serial padr√£o(0)
+    wPorta := 'S';       // Seleciona porta serial padr„o(0)
 
   for I := 1 to Length(aDados) do
     Result := Result + PrepararCmd(wPorta, aDados[I]);

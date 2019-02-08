@@ -333,6 +333,7 @@ begin
     proSIAPNet,
     proSaatri,
     proGiss,
+    proRLZ,
     proSalvador: IdLote := 'lote' + NumeroLote;
 
 

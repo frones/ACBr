@@ -49,6 +49,10 @@ Símbolo : Significado
 
 08/02/2019
 -- Diversos --
+[+] Implementação de um novo Provedor - RLZ
+   Por: Italo Jurisato Junior
+
+-- Diversos --
 [*] Possível correção na assinatura do Consultar Situação do Lote - Provedor Publica.
    Por: Italo Jurisato Junior
 

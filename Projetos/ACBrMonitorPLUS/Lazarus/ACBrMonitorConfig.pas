@@ -214,6 +214,8 @@ type
     QRCodeLateral     : Boolean;
     DANFCe            : TDANFCe;
     DANFCeTipoPagto   : TDANFCeTipoPagto;
+    ImprimeTributos   : Integer;
+    ExibeTotalTributosItem : Boolean;
   end;
 
   TNFCe = record
@@ -976,6 +978,8 @@ begin
       Ini.WriteBool( CSecNFCe, CKeyNFCeQRCodeLateral, QRCodeLateral);
       Ini.WriteBool( CSecNFCe, CKeyNFCeUsaCodigoEanImpressao, UsaCodigoEanImpressao);
       Ini.WriteBool( CSecNFCe, CKeyNFCeImprimeNomeFantasia, ImprimeNomeFantasia);
+      Ini.WriteInteger( CSecNFCe, CKeyNFCeImprimeTributos, ImprimeTributos);
+      Ini.WriteBool( CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCe do
@@ -1597,6 +1601,8 @@ begin
       QRCodeLateral             := Ini.ReadBool( CSecNFCe, CKeyNFCeQRCodeLateral, QRCodeLateral );
       UsaCodigoEanImpressao     := Ini.ReadBool( CSecNFCe, CKeyNFCeUsaCodigoEanImpressao, UsaCodigoEanImpressao );
       ImprimeNomeFantasia       := Ini.ReadBool( CSecNFCe, CKeyNFCeImprimeNomeFantasia, ImprimeNomeFantasia );
+      ImprimeTributos           := Ini.ReadInteger( CSecNFCe, CKeyNFCeImprimeTributos, ImprimeTributos );
+      ExibeTotalTributosItem    := Ini.ReadBool( CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
     end;
 
     with DFE.Impressao.NFCe.Emissao.DANFCe do
@@ -2222,6 +2228,8 @@ begin
     QRCodeLateral             := True;
     UsaCodigoEanImpressao     := False;
     ImprimeNomeFantasia       := False;
+    ImprimeTributos           := 1;
+    ExibeTotalTributosItem    := False;
   end;
 
   with DFE.Impressao.NFCe.Emissao.DANFCe do

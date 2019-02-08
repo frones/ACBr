@@ -253,6 +253,7 @@ type
     cbFormaEmissaoGNRe: TComboBox;
     cbGavetaSinalInvertido: TCheckBox;
     cbLog: TCheckBox;
+    cbxExibeTotalTributosItem: TCheckBox;
     cbxLogoLateral: TCheckBox;
     cbMonitorarPasta: TCheckBox;
     cbMostrarNaBarraDeTarefas: TCheckBox;
@@ -541,6 +542,7 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
+    rgImprimeTributos: TRadioGroup;
     rgInfAdicProduto: TRadioGroup;
     rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgTipoFonte: TRadioGroup;
@@ -4578,6 +4580,8 @@ begin
       cbxImprimirQRCodeLateralNFCe.Checked:= QRCodeLateral;
       cbxImprimirCodigoEANNFCe.Checked    := UsaCodigoEanImpressao;
       cbxImprimirNomeFantasiaNFCe.Checked := ImprimeNomeFantasia;
+      cbxExibeTotalTributosItem.Checked   := ExibeTotalTributosItem;
+      rgImprimeTributos.ItemIndex         := ImprimeTributos;
     end;
 
     with Impressao.NFCe.Emissao.DANFCe do
@@ -5688,6 +5692,8 @@ begin
         QRCodeLateral             := cbxImprimirQRCodeLateralNFCe.Checked;
         UsaCodigoEanImpressao     := cbxImprimirCodigoEANNFCe.Checked;
         ImprimeNomeFantasia       := cbxImprimirNomeFantasiaNFCe.Checked;
+        ExibeTotalTributosItem    := cbxExibeTotalTributosItem.Checked;
+        ImprimeTributos           := rgImprimeTributos.ItemIndex;
       end;
 
       with Impressao.NFCe.Emissao.DANFCe do
@@ -8541,6 +8547,9 @@ begin
       ACBrNFEDANFCeFortes1.ImprimeQRCodeLateral  := cbxImprimirQRCodeLateralNFCe.Checked;
       ACBrNFeDANFCeFortes1.ImprimeCodigoEan      := cbxImprimirCodigoEANNFCe.Checked;
       ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
+      ACBrNFeDANFCeFortes1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
+
 
       ACBrNFeDANFCeFortes1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
@@ -8565,6 +8574,8 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeQRCodeLateral  := cbxImprimirQRCodeLateralNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+      ACBrNFeDANFeESCPOS1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
+      ACBrNFeDANFeESCPOS1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
 
       ACBrNFeDANFeESCPOS1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do

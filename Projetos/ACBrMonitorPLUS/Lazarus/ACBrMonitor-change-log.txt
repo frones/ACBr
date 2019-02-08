@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado parâmetros "ExibeTotalTributosItem" e "ImprimeTributos" para impressão de NFCe
+
 30/01/2019
 [+] DoACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit
 Adicionado parâmetro "ReplayTo" nos Métodos de Envio de e-mail de DFe

@@ -8700,12 +8700,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object gbDANFeESCPOS: TGroupBox
                     Left = 216
-                    Height = 145
+                    Height = 188
                     Top = 0
                     Width = 622
                     Anchors = [akTop, akLeft, akRight]
                     Caption = 'Impressão dos Itens'
-                    ClientHeight = 123
+                    ClientHeight = 166
                     ClientWidth = 618
                     TabOrder = 2
                     object cbxImprimirItem1LinhaNFCe: TCheckBox
@@ -8750,7 +8750,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     end
                     object chgDescricaoPagamento: TCheckGroup
                       Left = 262
-                      Height = 80
+                      Height = 55
                       Top = -1
                       Width = 336
                       Anchors = [akTop, akLeft, akRight]
@@ -8764,7 +8764,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ChildSizing.ShrinkVertical = crsScaleChilds
                       ChildSizing.Layout = cclLeftToRightThenTopToBottom
                       ChildSizing.ControlsPerLine = 3
-                      ClientHeight = 58
+                      ClientHeight = 33
                       ClientWidth = 332
                       Columns = 3
                       Items.Strings = (
@@ -8781,7 +8781,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnFonteItens: TButton
                       Left = 568
                       Height = 25
-                      Top = 89
+                      Top = 139
                       Width = 30
                       Anchors = []
                       Caption = '...'
@@ -8796,18 +8796,52 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       AnchorSideBottom.Control = btnFonteItens
                       Left = 410
                       Height = 17
-                      Top = 89
+                      Top = 139
                       Width = 158
                       Alignment = taRightJustify
                       Anchors = [akTop, akRight]
                       Caption = 'Alterar Fonte Itens (Fortes) '
                       ParentColor = False
                     end
+                    object cbxExibeTotalTributosItem: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 125
+                      Width = 167
+                      Caption = 'Exibe Total Tributos Itens'
+                      TabOrder = 7
+                    end
+                    object rgImprimeTributos: TRadioGroup
+                      Left = 262
+                      Height = 52
+                      Top = 62
+                      Width = 338
+                      Anchors = [akTop, akLeft, akRight]
+                      AutoFill = True
+                      Caption = 'Imprime Tributos'
+                      ChildSizing.LeftRightSpacing = 6
+                      ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                      ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                      ChildSizing.ShrinkHorizontal = crsScaleChilds
+                      ChildSizing.ShrinkVertical = crsScaleChilds
+                      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                      ChildSizing.ControlsPerLine = 3
+                      ClientHeight = 30
+                      ClientWidth = 334
+                      Columns = 3
+                      ItemIndex = 1
+                      Items.Strings = (
+                        'Nenhum'
+                        'Normal'
+                        'Separadamente'
+                      )
+                      TabOrder = 8
+                    end
                   end
                   object cbxImpressoraNFCe: TComboBox
                     Left = 8
                     Height = 25
-                    Top = 120
+                    Top = 118
                     Width = 203
                     ItemHeight = 17
                     TabOrder = 3
@@ -8823,8 +8857,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object gbxMargem1: TGroupBox
                     Left = 6
                     Height = 72
-                    Top = 152
+                    Top = 191
                     Width = 299
+                    Anchors = [akLeft, akBottom]
                     Caption = 'Margens'
                     ClientHeight = 50
                     ClientWidth = 295
@@ -8909,8 +8944,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object GroupBox6: TGroupBox
                     Left = 312
                     Height = 72
-                    Top = 152
+                    Top = 191
                     Width = 82
+                    Anchors = [akLeft, akBottom]
                     Caption = 'Largura'
                     ClientHeight = 50
                     ClientWidth = 78
@@ -13871,7 +13907,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     )
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

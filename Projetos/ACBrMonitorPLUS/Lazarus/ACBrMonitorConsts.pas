@@ -859,6 +859,8 @@ const
   CKeyNFCeUsaCodigoEanImpressao =      'UsaCodigoEanImpressao';
   CKeyNFCeImprimeNomeFantasia =        'ImprimeNomeFantasia';
   CKeyNFCeUsarIntegrador =             'UsarIntegrador';
+  CKeyNFCEImprimeTributos =            'ImprimeTributos';
+  CKeyNFCeExibeTotalTributosItem =     'ExibeTotalTributosItem';
 
   CSecDANFE =                          'DANFE';
   CKeyDANFEModelo =                    'Modelo';

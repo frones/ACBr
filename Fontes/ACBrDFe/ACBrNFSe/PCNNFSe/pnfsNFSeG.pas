@@ -871,6 +871,8 @@ begin
 
                   Gerador.Prefixo := Prefixo3;
                   Gerador.wGrupoNFSe('/Prestador');
+
+                  Gerador.wCampoNFSe(tcStr, '#4', 'Protocolo', 01, 50, 1, Protocolo, '', True, aNameSpace);
                 end
   else
     begin

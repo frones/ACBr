@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/02/2019
+-- Diversos --
+[*] Possível correção na assinatura do Consultar Situação do Lote - Provedor Publica.
+   Por: Italo Jurisato Junior
+
 07/02/2019
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/48528-assinatura-do-hash-nao-confere-p%C3%BAblica/?do=findComment&comment=325273

@@ -7,6 +7,8 @@ namespace ACBrLibMail.Demo
     public partial class FrmMain : Form
     {
         private const int BUFFER_LEN = 256;
+        private string chaveEmail;
+        
         #region Constructors
 
         public FrmMain()
@@ -33,28 +35,29 @@ namespace ACBrLibMail.Demo
         {
             try
             {
-                int ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Nome".ToUTF8(), txtNome.Text.ToUTF8());
+                string eSessao = "Email".ToUTF8();
+                int ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Nome".ToUTF8(), txtNome.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Conta".ToUTF8(), txtEmail.Text.ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Conta".ToUTF8(), txtEmail.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Usuario".ToUTF8(), txtUsuario.Text.ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Usuario".ToUTF8(), txtUsuario.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Senha".ToUTF8(), txtSenha.Text.ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Senha".ToUTF8(), txtSenha.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Servidor".ToUTF8(), txtHost.Text.ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Servidor".ToUTF8(), txtHost.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "Porta".ToUTF8(), nudPorta.Text.ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "Porta".ToUTF8(), nudPorta.Text.ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "SSL".ToUTF8(), Convert.ToInt32(ckbSSL.Checked).ToString().ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "SSL".ToUTF8(), Convert.ToInt32(ckbSSL.Checked).ToString().ToUTF8());
                 ACBrMail.CheckResult(ret);
 
-                ret = ACBrMail.MAIL_ConfigGravarValor("Email".ToUTF8(), "TLS".ToUTF8(), Convert.ToInt32(ckbTLS.Checked).ToString().ToUTF8());
+                ret = ACBrMail.MAIL_ConfigGravarValor(eSessao, "TLS".ToUTF8(), Convert.ToInt32(ckbTLS.Checked).ToString().ToUTF8());
                 ACBrMail.CheckResult(ret);
 
                 ret = ACBrMail.MAIL_ConfigGravar("".ToUTF8());
@@ -109,55 +112,33 @@ namespace ACBrLibMail.Demo
             
         }
 
+        private string configToString(string chave)
+        {
+            var bufferLen = BUFFER_LEN;
+            var pValue = new StringBuilder(bufferLen);
+            int ret;
+            
+            ret = ACBrMail.MAIL_ConfigLerValor(chaveEmail, chave.ToUTF8(), pValue, ref bufferLen);
+            ACBrMail.CheckResult(ret);
+            return pValue.FromUTF8();
+        } 
+
         private void loadConfig()
         {
             try
             {
                 int ret = ACBrMail.MAIL_ConfigLer("".ToUTF8());
                 ACBrMail.CheckResult(ret);
+                chaveEmail = "Email".ToUTF8();
 
-                var bufferLen = BUFFER_LEN;
-                var pValue = new StringBuilder(bufferLen);
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Nome".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                txtNome.Text = pValue.FromUTF8();
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Conta".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                txtEmail.Text = pValue.FromUTF8();
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Usuario".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                txtUsuario.Text = pValue.FromUTF8();
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Senha".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                txtSenha.Text = pValue.FromUTF8();
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Servidor".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                txtHost.Text = pValue.FromUTF8();
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "Porta".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                nudPorta.Value = Convert.ToInt32(pValue.FromUTF8());
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "SSL".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                ckbSSL.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
-
-                ret = ACBrMail.MAIL_ConfigLerValor("Email".ToUTF8(), "TLS".ToUTF8(), pValue, ref bufferLen);
-                ACBrMail.CheckResult(ret);
-
-                ckbTLS.Checked = Convert.ToBoolean(Convert.ToInt32(pValue.FromUTF8()));
+                txtNome.Text = configToString("Nome");
+                txtEmail.Text = configToString("Conta");
+                txtUsuario.Text = configToString("Usuario");
+                txtSenha.Text = configToString("Senha");
+                txtHost.Text = configToString("Servidor");
+                nudPorta.Value = Convert.ToInt32(configToString("Porta"));
+                ckbSSL.Checked = Convert.ToBoolean(Convert.ToInt32( configToString("SSL") ));
+                ckbTLS.Checked = Convert.ToBoolean(Convert.ToInt32( configToString("TLS") ));
             }
             catch (Exception ex)
             {

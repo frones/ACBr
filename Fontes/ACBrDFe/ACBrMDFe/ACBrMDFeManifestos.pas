@@ -680,7 +680,7 @@ var
   versao, sSecao, sFim: String;
   OK, GerarGrupo: boolean;
   INIRec : TMemIniFile;
-  SL: TStringList;
+//  SL: TStringList;
 begin
   Result := False;
 

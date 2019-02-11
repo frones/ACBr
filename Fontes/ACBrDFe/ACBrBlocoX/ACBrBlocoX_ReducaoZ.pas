@@ -56,8 +56,8 @@ type
 
   TACBrBlocoX_Totalizadores = class(TOwnedCollection)
   private
-    FProdutos: TACBrBlocoX_Produtos;
-    FServicos: TACBrBlocoX_Servicos;
+    //FProdutos: TACBrBlocoX_Produtos;
+    //FServicos: TACBrBlocoX_Servicos;
     function GetItem(Index: integer): TACBrBlocoX_Totalizador;
     procedure SetItem(Index: integer; const Value: TACBrBlocoX_Totalizador);
   public

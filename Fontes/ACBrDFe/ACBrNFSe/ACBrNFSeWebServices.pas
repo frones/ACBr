@@ -3437,6 +3437,9 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar;
 
+  if (FProvedor = proCenti) and (FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao) then
+    FDadosEnvelope := StringReplace(FDadosEnvelope, 'GerarNfse' , 'GerarNfseHomologacao', [rfReplaceAll]);
+
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
     DefinirSignatureNode(FTagGrupo);

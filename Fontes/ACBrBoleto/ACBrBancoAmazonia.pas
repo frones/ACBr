@@ -95,7 +95,7 @@ type
           Procedure LerRetorno240(ARetorno: TStringList); override;
           procedure LerRetorno400(ARetorno: TStringList); override;
           function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
-          function CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero: String = ''; Convenio: String = ''): Integer; override;
+          function CalcularTamMaximoNossoNumero(const Carteira: String; const NossoNumero: String = ''; const Convenio: String = ''): Integer; override;
           function CalcularNomeArquivoRemessa : String; override;
      end;
 
@@ -217,7 +217,7 @@ begin
      Result := ADigitoNossoNumero;
 end;
 
-function TACBrBancoAmazonia.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero: String = ''; Convenio: String = ''): Integer;
+function TACBrBancoAmazonia.CalcularTamMaximoNossoNumero(const Carteira: String; const NossoNumero: String = ''; const Convenio: String = ''): Integer;
 var
      wTamConvenio: Integer;
 begin

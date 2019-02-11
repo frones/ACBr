@@ -79,7 +79,7 @@ type
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
@@ -124,7 +124,7 @@ begin
 end;
 
 function TACBrBancoCecred.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
+  const Carteira: String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 begin
    Result := 17;
 

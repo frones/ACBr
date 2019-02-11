@@ -767,14 +767,14 @@ type
     Property LayoutVersaoLote     : Integer read fpLayoutVersaoLote;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; virtual;
 
     function TipoDescontoToString(const AValue: TACBrTipoDesconto):string; virtual;
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; overload; virtual;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String; overload; virtual;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; overload; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
@@ -830,7 +830,7 @@ type
     procedure SetNome(const AValue: String);
     procedure SetTipoCobranca(const AValue: TACBrTipoCobranca);
     procedure SetNumero(const AValue: Integer);
-    procedure SetTamMaximoNossoNumero(Const Avalue:Integer);
+    procedure SetTamanhoMaximoNossoNum(Const Avalue:Integer);
     procedure SetOrientacoesBanco(Const Avalue: TStringList);
     procedure SetLocalPagamento(const AValue: String);
     procedure SetNumeroCorrespondente(const AValue: Integer);
@@ -856,7 +856,7 @@ type
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ): String;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 
     function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
@@ -881,7 +881,7 @@ type
     property Numero    : Integer        read GetNumero  write SetNumero default 0;
     property Digito    : Integer        read GetDigito  write SetDigito stored false;
     property Nome      : String         read GetNome    write SetNome   stored false;
-    property TamanhoMaximoNossoNum :Integer read GetTamanhoMaximoNossoNum  write SetTamMaximoNossoNumero;
+    property TamanhoMaximoNossoNum :Integer read GetTamanhoMaximoNossoNum  write SetTamanhoMaximoNossoNum;
     property TipoCobranca : TACBrTipoCobranca read fTipoCobranca   write SetTipoCobranca;
     property OrientacoesBanco : TStringList read GetOrientacoesBanco write SetOrientacoesBanco;
     property LocalPagamento : String read GetLocalPagamento write SetLocalPagamento;
@@ -1057,8 +1057,8 @@ type
     fCEP         : String;
     fEmail       : String;
     fFone        : String;
-    function GetNomeAvalista: String;
-    procedure SetNomeAvalista(const AValue: String);
+    function GetAvalista: String;
+    procedure SetAvalista(const AValue: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1066,7 +1066,7 @@ type
     property Pessoa         : TACBrPessoa         read fTipoPessoa     write fTipoPessoa;
     property SacadoAvalista : TACBrSacadoAvalista read fSacadoAvalista write fSacadoAvalista;
 
-    property Avalista    : String  read GetNomeAvalista write SetNomeAvalista;
+    property Avalista    : String  read GetAvalista write SetAvalista;
     property NomeSacado  : String  read fNomeSacado  write fNomeSacado;
     property CNPJCPF     : String  read fCNPJCPF     write fCNPJCPF;
     property Logradouro  : String  read fLogradouro  write fLogradouro;
@@ -1194,7 +1194,7 @@ type
      property CodigoMoraJuros   : TACBrCodigoJuros       read fCodigoMoraJuros   write fCodigoMoraJuros;
      property CodigoMulta       : TACBrCodigoMulta       read fCodigoMulta       write fCodigoMulta;
      property CodigoNegativacao : TACBrCodigoNegativacao read fCodigoNegativacao write fCodigoNegativacao default cnNaoProtestar;
-     
+
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
      property ValorDocumento    : Currency    read fValorDocumento    write setValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
@@ -1282,7 +1282,7 @@ type
   { TACBrBoleto }
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
+  {$ENDIF RTL230_UP}
  TACBrBoleto = class( TACBrComponent )
   private
     fBanco: TACBrBanco;
@@ -1376,7 +1376,7 @@ type
     fOnObterLogo : TACBrBoletoFCOnObterLogo ;
     fSoftwareHouse  : String;
     function ComponentStateDesigning: Boolean;
-    function GetArqLogo: String;
+    function GetArquivoLogo: String;
     function GetDirLogo: String;
     function GetNomeArquivo: String;
     procedure SetACBrBoleto(const Value: TACBrBoleto);
@@ -1398,7 +1398,7 @@ type
 
     procedure CarregaLogo( const PictureLogo : TPicture; const NumeroBanco: Integer ) ;
 
-    property ArquivoLogo : String read GetArqLogo;
+    property ArquivoLogo : String read GetArquivoLogo;
   published
     property OnObterLogo     : TACBrBoletoFCOnObterLogo read fOnObterLogo write fOnObterLogo ;
     property ACBrBoleto      : TACBrBoleto     read fACBrBoleto       write SetACBrBoleto stored False;
@@ -1560,12 +1560,12 @@ end;
 
 { TACBrSacado }
 
-function TACBrSacado.GetNomeAvalista: String;
+function TACBrSacado.GetAvalista: String;
 begin
   Result:= Self.SacadoAvalista.NomeAvalista;
 end;
 
-procedure TACBrSacado.SetNomeAvalista(const AValue: String);
+procedure TACBrSacado.SetAvalista(const AValue: String);
 begin
    if Self.SacadoAvalista.NomeAvalista = AValue then
      Exit;
@@ -1799,7 +1799,7 @@ begin
    fCodigoMora    := '';
    fCodigoGeracao := '2';
    fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
-   
+
    if ACBrBoleto.Cedente.ResponEmissao = tbCliEmite then
      fCarteiraEnvio := tceCedente
    else
@@ -2001,7 +2001,7 @@ begin
 
     FMAIL.AltBody.Text := (StripHTML(sMensagem.Text));
   end;
-  
+
   FMAIL.ClearAttachments;
   if (EnviaPDF) then
   begin
@@ -2100,7 +2100,7 @@ begin
                              ' de atraso'));
       end;
 
-      if PercentualMulta <> 0 then   
+      if PercentualMulta <> 0 then
       begin
         if DataMulta <> 0 then
           AStringList.Add(ACBrStr('Cobrar multa de ' + FormatCurr('R$ #,##0.00',
@@ -2274,7 +2274,7 @@ begin
   BancoClass.fpLayoutVersaoLote:= AValue;
 end;
 
-procedure TACBrBanco.SetTamMaximoNossoNumero(const Avalue: Integer);
+procedure TACBrBanco.SetTamanhoMaximoNossoNum(const Avalue: Integer);
 begin
   {Altera o tamanho maximo do Nosso Numero} 
   BancoClass.fpTamanhoMaximoNossoNum := AValue;
@@ -2371,7 +2371,7 @@ begin
    Result:=  BancoClass.CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
+function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 begin
   Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio);
 end;
@@ -2552,7 +2552,7 @@ begin
 end;
 
 function TACBrBancoClass.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
+  const Carteira: String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 begin
   Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;
@@ -2582,7 +2582,7 @@ begin
 end ;
 
 function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
-const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String;
+const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 begin
   Result := '';
 end;
@@ -2724,7 +2724,7 @@ begin
    Result:= ACBrTitulo.NossoNumero;
 end;
 
-function TACBrBancoClass.MontarLinhaDigitavel (const CodigoBarras: String;ACBrTitulo : TACBrTitulo): String;
+function TACBrBancoClass.MontarLinhaDigitavel (const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String;
 var
   Campo1, Campo2, Campo3, Campo4, Campo5: String;
 begin
@@ -3338,7 +3338,7 @@ begin
   fPathNomeArquivo := '';
 end;
 
-function TACBrBoletoFCClass.GetArqLogo: String;
+function TACBrBoletoFCClass.GetArquivoLogo: String;
 begin
    Result := PathWithDelim(DirLogo) + IntToStrZero( ACBrBoleto.Banco.Numero, 3)+'.bmp';
 end;

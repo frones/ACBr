@@ -81,7 +81,6 @@ end;
 function TACBrBancoCitiBank.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): String;
 begin
   Modulo.CalculoPadrao;
-  Modulo.MultiplicadorFinal := 2;
   Modulo.MultiplicadorFinal := 9;
   Modulo.Documento := ACBrTitulo.NossoNumero;
   Modulo.Calcular;

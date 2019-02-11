@@ -102,7 +102,7 @@ type
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
    end;
@@ -144,7 +144,7 @@ begin
 end;
 
 function TACBrBancoBrasil.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
+  const Carteira: String; const NossoNumero : String = ''; const Convenio: String = ''): Integer;
 var
   wCarteira   : String;
   wTamConvenio: Integer;
@@ -188,7 +188,7 @@ begin
     AConvenio    := ACBrBoleto.Cedente.Convenio;
     ANossoNumero := NossoNumero;
     wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira,ANossoNumero);
-      
+
     if ((ACBrTitulo.Carteira = '16') or (ACBrTitulo.Carteira = '18')) and
         (Length(AConvenio) = 6) and (wTamNossoNum = 17) then
       ANossoNumero := PadLeft(ANossoNumero, 17, '0')
@@ -524,9 +524,7 @@ begin
      else if EspecieDoc = 'ME' then
        EspecieDoc   := '21'
      else if EspecieDoc = 'PC' then
-       EspecieDoc   := '22'
-     else if EspecieDoc = 'DS' then
-       EspecieDoc   := '04';
+       EspecieDoc   := '22';
 
 
      { Pegando o Aceite do Titulo }

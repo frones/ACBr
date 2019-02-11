@@ -1,6 +1,7 @@
 package ACBr_Boleto;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,6 +23,8 @@ package ACBr_Boleto;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - Boleto - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
@@ -53,12 +56,14 @@ contains
   ACBrBancoSafra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas',
   ACBrBancoAmazonia in '..\..\..\Fontes\ACBrBoleto\ACBrBancoAmazonia.pas',
   ACBrBancoSafraBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas',
-  ACBrBancoBrasilSICOOB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas',
+  ACBrBancoBrasilSicoob in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas',
   ACBrBancoBanese in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanese.pas',
   ACBrBancoCredisis in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCredisis.pas',
   ACBrBancoCresol in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCresol.pas',
   ACBrBancoUnicredES in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredES.pas',
   ACBrBancoUnicredRS in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredRS.pas',
-  ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas';
+  ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas',
+  ACBrBancoCitiBank in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCitiBank.pas';
 
 end.
+

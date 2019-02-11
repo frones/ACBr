@@ -47,8 +47,7 @@ type
 
   TACBrBancoSantander = class(TACBrBancoClass)
   private
-  protected
-    vTotalTitulos : Double;
+    FvTotalTitulos : Double;
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
@@ -202,7 +201,7 @@ procedure TACBrBancoSantander.GerarRegistroHeader400(NumeroRemessa : Integer; aR
 var
   wLinha: String;
 begin
-   vTotalTitulos:= 0;
+   FvTotalTitulos:= 0;
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
       wLinha:= '0'                                        + // ID do Registro
@@ -644,7 +643,7 @@ begin
    else
       aAgencia:= '00000';
 
-   vTotalTitulos:= vTotalTitulos+ ACBrTitulo.ValorDocumento;
+   FvTotalTitulos:= FvTotalTitulos+ ACBrTitulo.ValorDocumento;
    with ACBrTitulo do
    begin
       DigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
@@ -804,7 +803,7 @@ begin
 
    wLinha:= '9'                                            +           // ID Registro
             IntToStrZero( vQtdeLinha + 1, 6 )              +           // Contador de Registros
-            IntToStrZero( round( vTotalTitulos* 100), 13)  +           // Valor Total dos Titulos
+            IntToStrZero( round( FvTotalTitulos* 100), 13)  +           // Valor Total dos Titulos
             StringOfChar( '0', 374)                        +
             IntToStrZero(ARemessa.Count + 1, 6);
 

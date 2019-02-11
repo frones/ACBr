@@ -48,7 +48,7 @@ type
   TACBrBanrisul=class(TACBrBancoClass)
   private
      
-    iQtdSegmentoR: integer;
+    FiQtdSegmentoR: integer;
   Protected
   Public
     constructor create(AOwner: TACBrBanco);
@@ -66,7 +66,7 @@ type
     procedure LerRetorno240(ARetorno: TStringList); override;
 
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String; override;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String; override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
@@ -100,7 +100,7 @@ begin
   fpOrientacoesBanco.Clear;
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
                                  'OUVIDORIA BANRISUL - 0800 644 2200'));
-  iQtdSegmentoR := 0;
+  FiQtdSegmentoR := 0;
 end;
 
 function Modulo11(const Valor: string; Base: Integer=9; Resto: boolean=false): string;
@@ -543,7 +543,7 @@ begin
       end;
    end;
    // Calcular o total de registro do Trailler de lote
-   iQtdRegistros := (ARemessa.Count * 2) + iQtdSegmentoR;
+   iQtdRegistros := (ARemessa.Count * 2) + FiQtdSegmentoR;
    // Adicionar linha do Trailler de lote
    Result := '04100015'+
              DupeString(' ', 9) +
@@ -553,7 +553,7 @@ begin
              DupeString('0', 77) +
              DupeString(' ', 117);
    // Calcular o total de registro do Trailler de arquivo
-   iQtdRegistros := ((ARemessa.Count + 1) * 2) + iQtdSegmentoR;
+   iQtdRegistros := ((ARemessa.Count + 1) * 2) + FiQtdSegmentoR;
    // Adicionar linha do Trailler de arquivo
    Result := Result + #13#10 +
              '04199999' +
@@ -563,7 +563,7 @@ begin
              DupeString('0', 6) +
              DupeString(' ', 205);
 
-   iQtdSegmentoR := 0;
+   FiQtdSegmentoR := 0;
 end;
 
 function TACBrBanrisul.GerarRegistroTransacao240(
@@ -712,7 +712,7 @@ begin
                    DupeString('0', 28) +
                    DupeString(' ', 33);
          // Atualizar o contador do Segmento R
-         Inc(iQtdSegmentoR);
+         Inc(FiQtdSegmentoR);
         end;
    end;
 end;
@@ -971,7 +971,7 @@ begin
 end;
 
 function TACBrBanrisul.CodMotivoRejeicaoToDescricao(
-  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String;
+  const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 begin
   case TipoOcorrencia of
 

@@ -2490,43 +2490,50 @@ end;
 {-----------------------------------------------------------------------------
   Traduz Strings do Tipo '#13,v,#10', substituindo #nn por chr(nn).
   Usar , para separar um campo do outro... No exemplo acima o resultado seria
-  chr(13)+'v'+chr(10) 
+  chr(13)+'v'+chr(10)
  ---------------------------------------------------------------------------- }
 function AscToString(const AString: String): AnsiString;
+
+   procedure ConverteToken(var AToken: AnsiString);
+   var
+     n: Integer;
+   begin
+     if AToken[1] = '#' then
+     begin
+       if TryStrToInt(copy(string(AToken), 2, Length(string(AToken))), n) then
+         AToken := AnsiChr(n);
+     end;
+   end;
+
 Var
-  A : Integer ;
+  posicao, tamanhoString : Integer ;
   Token : AnsiString ;
   VString : string;
   C : Char ;
 begin
-  VString := Trim( AString  );
-  Result  := '' ;
-  A       := 1  ;
-  Token   := '' ;
+  VString       := Trim( AString  );
+  Result        := '' ;
+  posicao       := 1  ;
+  Token         := '' ;
+  tamanhoString := Length( VString );
 
-  while A <= length( VString ) + 1 do
+  while posicao <= tamanhoString + 1 do
   begin
-     if A > length( VString ) then
-        C := ','
-     else
-        C := VString[A] ;
+    if posicao > tamanhoString then
+      C := ','
+    else
+      C := VString[posicao] ;
 
-     if (C = ',') and (Length( Token ) >= 1) then
-      begin
-        if Token[1] = '#' then
-        try
-           Token := AnsiChr(StrToInt(copy(String(Token),2,length(String(Token)))));
-        except
-           // A função deve permitir uma Token do tipo '#DN' por exemplo.
-        end ;
+    if (C = ',') and (Length( Token ) >= 1) then
+    begin
+      ConverteToken(Token);
+      Result := Result + Token;
+      Token  := '' ;
+    end
+    else
+      Token := Token + AnsiString(C) ;
 
-        Result := Result + Token ;
-        Token := '' ;
-      end
-     else
-        Token := Token + AnsiString(C) ;
-
-     A := A + 1 ;
+    posicao := posicao + 1 ;
   end ;
 end;
 
@@ -2682,8 +2689,12 @@ var Buffer : Pointer ;
 begin
 {$IFDEF MSWINDOWS}
   LoadInpOut;
-  if Assigned( xInp32 ) then
-     Result := xInp32(PortAddr)
+  if not Assigned( xInp32 ) then
+  begin
+    raise Exception.Create('Erro ao acessar a porta: '+IntToStr(PortAddr));
+  end;
+
+  Result := xInp32(PortAddr)
 {$ELSE}
   FDevice := '/dev/port' ;
   Buffer  := @Result ;
@@ -3991,6 +4002,7 @@ function SeparaDadosArray(const AArray: array of String; const AString: String; 
 var
   I : Integer;
 begin
+  Result := '';
  for I:=Low(AArray) to High(AArray) do
  begin
    Result := Trim(SeparaDados(AString,AArray[I], MantemChave, PermitePrefixo));

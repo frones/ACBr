@@ -1070,7 +1070,7 @@ end;
 function TEvtRemun.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
-  Ok: Boolean;
+  Ok, Existe: Boolean;
   sSecao, sFim: String;
   I, J, K, L, M, N: Integer;
 begin
@@ -1206,17 +1206,33 @@ begin
               K := 1;
               while true do
               begin
+                sSecao := 'itensRemun' + IntToStrZero(I, 2) +
+                            IntToStrZero(J, 3) + IntToStrZero(K, 1) +
+                            IntToStrZero(1, 3);
+
+                Existe := INIRec.SectionExists(sSecao);
+
+                sSecao := 'detOper' + IntToStrZero(I, 2) +
+                            IntToStrZero(J, 3) + IntToStrZero(K, 1) +
+                            IntToStrZero(1, 2);
+
+                Existe := Existe or INIRec.SectionExists(sSecao);
+
+                sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
+                            IntToStrZero(J, 3) + IntToStrZero(K, 1);
+
+                Existe := Existe or INIRec.SectionExists(sSecao);
+
+                if not Existe then
+                  break;
+
                 // de 1 até 8
                 sSecao := 'remunPerApur' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
                              IntToStrZero(K, 1);
-                sFim   := INIRec.ReadString(sSecao, 'matricula', 'FIM');
-
-                if (sFim = 'FIM') then
-                  break;
 
                 with remunPerApur.Add do
                 begin
-                  matricula  := sFim;
+                  matricula  := INIRec.ReadString(sSecao, 'matricula', 'FIM');
                   indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
 
                   L := 1;

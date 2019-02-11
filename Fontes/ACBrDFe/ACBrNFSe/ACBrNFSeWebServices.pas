@@ -3342,6 +3342,9 @@ begin
   FPServico :=  'NFSeGerarNFSe';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Gerar;
 
+  if (FProvedor = proCenti) and (FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao) then
+    FPSoapAction := StringReplace(FPSoapAction, 'GerarNfse' , 'GerarNfseHomologacao', [rfReplaceAll]);
+
   inherited DefinirServicoEAction;
 end;
 

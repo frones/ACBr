@@ -132,7 +132,7 @@ begin
         ImprimirTexto(orNormal, 2, 2, 2, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 2, 2, 1, 8, 3, 'CHOC BRANCO');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
-        ImprimirCaixa(13,32,56,17,1,1);
+        ImprimirCaixa(13,32,56,14,1,1);
         ImprimirTexto(orNormal, 3, 3, 2, 18, 35, 'R$');
         ImprimirTexto(orNormal, 3, 4, 4, 15, 50, '20,59');
       end
@@ -140,7 +140,7 @@ begin
       begin
         ImprimirCaixa(3,3,90,5,5,0);
         ImprimirTexto(orNormal, 'T', 10, 10, 3, 3, 'BISCOITO MARILAN RECH 335G', 0, True);
-        ImprimirTexto(or180, 'S', 10, 10, 8, 3, 'CHOC BRANCO');
+        ImprimirTexto(orNormal, 'S', 10, 10, 8, 3, 'CHOC BRANCO');
         ImprimirBarras(orNormal, barEAN13, 2, 2, 13, 5, '7896003701685', 10, becSIM);
         ImprimirCaixa(13,32,56,17,1,1);
         ImprimirTexto(orNormal, 'G', 40, 80, 18, 35, 'R$');

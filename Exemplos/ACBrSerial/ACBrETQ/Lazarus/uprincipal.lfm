@@ -14,7 +14,7 @@ object FPrincipal: TFPrincipal
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.8.4.0'
   object gbConfiguracao: TGroupBox
     Left = 10
     Height = 255

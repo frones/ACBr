@@ -635,7 +635,7 @@ begin
   else
     nfe.Dest.indIEDest := inContribuinte;
 
-  if nfe.Dest.indIEDest <> inIsento then
+  if nfe.Dest.indIEDest <> inNaoContribuinte then
    begin
      if (nfe.Dest.IE <> '') or (nfe.infNFe.Versao < 3) then
       begin

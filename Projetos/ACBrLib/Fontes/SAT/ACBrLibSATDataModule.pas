@@ -65,7 +65,7 @@ type
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
     procedure CarregarDadosVenda(XmlArquivoOuString: String; aNomePDF: String = '');
-    procedure CarregarDadosCancelamento(aStr: String);
+    procedure CarregarDadosCancelamento(aStr: String; aNomePDF: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -373,7 +373,7 @@ begin
       if NomeImpressora <> '' then
         ACBrSATExtratoFortes1.Impressora := NomeImpressora
       else
-        ACBrSATExtratoFortes1.Impressora := PrinterName;
+        ACBrSATExtratoFortes1.Impressora := Impressora;
 
       ACBrSATExtratoFortes1.LarguraBobina := LarguraBobina;
       ACBrSATExtratoFortes1.MargemSuperior := MargensTopo;
@@ -426,12 +426,12 @@ begin
 
   if FileExists(XmlArquivoOuString) then
   begin
-    GravarLog('Carregando arquivo xml', logParanoico);
+    GravarLog('Carregando arquivo xml' + XmlArquivoOuString, logParanoico);
     ACBrSAT1.CFe.LoadFromFile(XmlArquivoOuString);
   end
   else
   begin
-    GravarLog('Carregando xml string', logParanoico);
+    GravarLog('Carregando xml string' + XmlArquivoOuString, logParanoico);
     ACBrSAT1.CFe.AsXMLString := XmlArquivoOuString;
   end;
 
@@ -440,7 +440,7 @@ begin
         ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeVenda, ACBrSAT1.CFe.infCFe.ID,'','.pdf'));
 end;
 
-procedure TLibSatDM.CarregarDadosCancelamento(aStr: String);
+procedure TLibSatDM.CarregarDadosCancelamento(aStr: String; aNomePDF: String);
 begin
   if Trim(aStr) = '' then exit;
 
@@ -454,6 +454,10 @@ begin
     GravarLog('Carregando xml string de cancelamento', logParanoico);
     ACBrSAT1.CFeCanc.AsXMLString := aStr;
   end;
+
+  if Assigned(ACBrSAT1.Extrato) and (ACBrSAT1.Extrato.Filtro = fiPDF) then
+      ACBrSAT1.Extrato.NomeDocumento := IfThen(aNomePDF <> '', aNomePDF ,
+        ACBrSAT1.CalcCFeNomeArq(ACBrSAT1.ConfigArquivos.PastaCFeCancelamento, ACBrSAT1.CFeCanc.infCFe.ID,'','.pdf'));
 end;
 
 procedure TLibSatDM.Travar;

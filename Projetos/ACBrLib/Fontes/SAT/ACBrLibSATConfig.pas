@@ -107,7 +107,7 @@ type
     property LogoAutoSize: Boolean read FLogoAutoSize write FLogoAutoSize;
     property LogoCenter: Boolean read FLogoCenter write FLogoCenter;
     property LogoVisible: Boolean read FLogoVisible write FLogoVisible;
-    property PrinterName: String read FPrinterName write FPrinterName;
+    property Impressora: String read FPrinterName write FPrinterName;
     property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
       write FImprimeChaveEmUmaLinha default rAuto;
 

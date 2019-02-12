@@ -57,7 +57,7 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\..\NFe\ACBrLibNFeStaticImport.pas"/>
+        <Filename Value="..\..\Fontes\NFe\ACBrLibNFeStaticImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
     </Units>
@@ -69,8 +69,8 @@
       <Filename Value="bin\ACBrLibNFeTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);..\..\Comum"/>
-      <OtherUnitFiles Value="..\..\Comum;..\..\NFe"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\NFe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

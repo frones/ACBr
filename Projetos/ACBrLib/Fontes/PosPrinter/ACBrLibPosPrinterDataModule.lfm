@@ -3,7 +3,7 @@ object LibPosPrinterDM: TLibPosPrinterDM
   OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 314
-  HorizontalOffset = -964
+  HorizontalOffset = 0
   VerticalOffset = 513
   Width = 418
   PPI = 96

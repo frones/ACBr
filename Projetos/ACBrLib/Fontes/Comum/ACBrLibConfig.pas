@@ -198,6 +198,7 @@ type
     FLinhasBuffer: Integer;
     FControlePorta: Boolean;
     FVerificarImpressora: Boolean;
+    FTipoCorte: Integer;
 
   public
     constructor Create;
@@ -241,6 +242,7 @@ type
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer;
     property ControlePorta: Boolean read FControlePorta write FControlePorta;
     property VerificarImpressora: Boolean read FVerificarImpressora write FVerificarImpressora;
+    property TipoCorte: Integer read FTipoCorte write FTipoCorte;
   end;
 
   { TEmpresaConfig }
@@ -519,6 +521,7 @@ begin
   FLinhasBuffer := 0;
   FControlePorta := False;
   FVerificarImpressora := False;
+  FTipoCorte := 0;
 
 end;
 
@@ -544,6 +547,7 @@ begin
   FLinhasBuffer :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveLinhasBuffer, FLinhasBuffer);
   FControlePorta :=  AIni.ReadBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
   FVerificarImpressora :=  AIni.ReadBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
+  FTipoCorte := AIni.ReadInteger(CSessaoPosPrinter, CChaveTipoCorte, FTipoCorte);
 
   FBcMostrarCodigo :=  AIni.ReadBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FBcMostrarCodigo);
   FBcLarguraLinha :=  AIni.ReadInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FBcLarguraLinha);
@@ -589,6 +593,7 @@ begin
   AIni.WriteInteger(CSessaoPosPrinter, CChaveLinhasBuffer, FLinhasBuffer);
   AIni.WriteBool(CSessaoPosPrinter, CChaveControlePorta, FControlePorta);
   AIni.WriteBool(CSessaoPosPrinter, CChaveVerificarImpressora, FVerificarImpressora);
+  AIni.WriteInteger(CSessaoPosPrinter, CChaveTipoCorte, FTipoCorte);
 
   AIni.WriteBool(CSessaoPosPrinterBarras, CChaveCBMostrarCodigo, FBcMostrarCodigo);
   AIni.WriteInteger(CSessaoPosPrinterBarras, CChaveCBLarguraLinha, FBcLarguraLinha);
@@ -689,7 +694,7 @@ begin
   FPath := AIni.ReadString(CSessaoPrincipal, CChaveLogPath, FPath);
 
   if ( not DirectoryExists(FPath) ) then
-    FPath := ApplicationPath;
+    FPath := '';
 end;
 
 procedure TLogConfig.GravarIni(const AIni: TCustomIniFile);

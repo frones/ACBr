@@ -99,7 +99,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, NFE_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibNFeNome), Bufflen);
   AssertEquals(copy(CLibNFeNome,1,4), AStr);
 end;
 

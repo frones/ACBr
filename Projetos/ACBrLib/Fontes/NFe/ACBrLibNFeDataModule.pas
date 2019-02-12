@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, syncobjs,
   ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
-  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr, ACBrLibConfig,
-  ACBrLibMailImport, ACBrLibPosPrinterImport;
+  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrLibConfig,  ACBrLibMailImport, ACBrLibPosPrinterImport;
 
 type
 
@@ -36,6 +36,7 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -125,13 +126,6 @@ begin
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
   end;
 
-  //with FACBrPosPrinter do
-  //begin
-  //  Porta := 'C:\Temp\teste.txt';
-  //  Ativar;
-  //  Imprimir('Teste - DANIEL SIMOES');
-  //end;
-
   ACBrNFeDANFeESCPOS1.PosPrinter := FACBrPosPrinter;
 end;
 
@@ -149,8 +143,11 @@ end;
 
 procedure TLibNFeDM.AplicarConfigMail;
 begin
-  if Assigned(FLibMail) or (not Assigned(FACBrMail)) then
+  if Assigned(FLibMail) then
+  begin
+    FLibMail.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
+  end;
 
   with FACBrMail do
   begin
@@ -176,8 +173,11 @@ end;
 
 procedure TLibNFeDM.AplicarConfigPosPrinter;
 begin
-  if Assigned(FLibPosPrinter) or (not Assigned(FACBrPosPrinter)) then
+  if Assigned(FLibPosPrinter) then
+  begin
+    FLibPosPrinter.ConfigLer(pLib.Config.NomeArquivo);
     Exit;
+  end;
 
   with FACBrPosPrinter do
   begin
@@ -223,6 +223,51 @@ begin
     ConfigModoPagina.EspacoEntreLinhas := pLib.Config.PosPrinter.MpEspacoEntreLinhas;
 
     Device.ParamsString := pLib.Config.PosPrinter.DeviceParams;
+  end;
+end;
+
+procedure TLibNFeDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean);
+var
+  pLibConfig: TLibNFeConfig;
+begin
+  pLibConfig := TLibNFeConfig(pLib.Config);
+
+  if ACBrNFe1.NotasFiscais.Count > 0 then
+  begin
+    if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+    begin
+      if (pLibConfig.DANFeConfig.NFCeConfig.TipoRelatorioBobina = tpFortes) or GerarPDF then
+        ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+      else
+        ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
+    end
+    else
+    begin
+      ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+    end;
+
+    pLibConfig.DANFeConfig.Assign(ACBrNFe1.DANFE);
+
+    if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
+      ACBrNFe1.DANFE.Cancelada := True
+    else
+      ACBrNFe1.DANFE.Cancelada := False;
+
+    if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFeConfig.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.DANFeConfig.PathPDF));
+  end;
+
+  if NomeImpressora <> '' then
+    ACBrNFe1.DANFE.Impressora := NomeImpressora;
+
+  if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+  begin
+    if not ACBrNFeDANFeESCPOS1.PosPrinter.ControlePorta then
+    begin
+      ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
+      if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
+        ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
+    end;
   end;
 end;
 

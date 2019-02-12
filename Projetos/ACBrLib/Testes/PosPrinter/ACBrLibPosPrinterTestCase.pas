@@ -42,6 +42,9 @@ var
   fileName: String;
 begin
   fileName := PathWithDelim(ApplicationPath)+'ACBrLib.ini';
+  if FileExists(fileName) then
+    DeleteFile(fileName);
+
   try
     AssertEquals(ErrOK, POS_Inicializar( PChar(fileName),''));
     AssertTrue(FileExists(fileName));

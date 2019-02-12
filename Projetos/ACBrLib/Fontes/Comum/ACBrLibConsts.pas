@@ -98,23 +98,25 @@ const
 
   CChavePathLogo = 'PathLogo';
   CChavePathPDF = 'PathPDF';
+  CChaveUsaSeparadorPathPDF = 'UsaSeparadorPathPDF';
+  CChaveNomeDocumento = 'NomeDocumento';
   CChaveImpressora = 'Impressora';
   CChaveTipoRelatorioBobina = 'TipoRelatorioBobina';
-  CChaveImprimeNomeFantasia = 'ImprimeNomeFantasia';
   CChaveMostraPreview = 'MostraPreview';
   CChaveMostraStatus = 'MostraStatus';
+  CChaveMostraSetup = 'MostraSetup';
   CChaveCopias = 'Copias';
-  CChaveLarguraBobina = 'LarguraBobina';
   CChaveMargemInferior = 'MargemInferior';
   CChaveMargemSuperior = 'MargemSuperior';
   CChaveMargemEsquerda = 'MargemEsquerda';
   CChaveMargemDireita = 'MargemDireita';
-  CChaveDecimaisQtd = 'DecimaisQtd';
-  CChaveDecimaisValUnit = 'DecimaisValUnit';
-  CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
-  CChaveImprimeCodigoEAN = 'ImprimeCodigoEAN';
-  CChaveImprimeDescAcrescItem = 'ImprimeDescAcrescItem';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
+
+  CChaveCasasDecimaisFormato = 'CasasDecimais.Formato';
+  CChaveCasasDecimaisMaskqCom = 'CasasDecimais.MaskqCom';
+  CChaveCasasDecimaisMaskvUnCom = 'CasasDecimais.MaskvUnCom';
+  CChaveCasasDecimaisqCom = 'CasasDecimais.qCom';
+  CChaveCasasDecimaisvUnCom = 'CasasDecimais.vUnCom';
 
   CChaveArqLog = 'ArqLog';
   CChavePastaInput = 'PastaInput';
@@ -138,6 +140,7 @@ const
   CChaveLinhasBuffer = 'LinhasBuffer';
   CChaveControlePorta = 'ControlePorta';
   CChaveVerificarImpressora = 'VerificarImpressora';
+  CChaveTipoCorte = 'TipoCorte';
 
   CChaveCBMostrarCodigo = 'MostrarCodigo';
   CChaveCBLarguraLinha = 'LarguraLinha';

@@ -147,6 +147,8 @@ function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda, eNomeImpressora: PChar; const
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_GerarPDFExtratoVenda(eArqXMLVenda, eNomeArquivo: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function SAT_GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function SAT_EnviarEmail(eArqXMLVenda, sPara, sAssunto, eNomeArquivo, sMensagem,
   sCC, eAnexos: PChar): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
@@ -812,7 +814,7 @@ begin
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
-        SatDM.ACBrSAT1.ACBrSAT1.InicializaCFe;
+        SatDM.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
         SatDM.ACBrSAT1.CFe.GerarXML(True);
 
@@ -866,7 +868,7 @@ begin
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
-        SatDM.ACBrSAT1.ACBrSAT1.InicializaCFe;
+        SatDM.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
 
         Resp := TRetornoEnvio.Create(Config.TipoResposta);
@@ -1194,16 +1196,59 @@ begin
         Resposta := '';
         SatDM.ConfigurarImpressao('', True);
         SatDM.CarregarDadosVenda(ArqXMLVenda, NomeArquivo);
+
         SatDM.ACBrSAT1.ImprimirExtrato;
-        SatDM.ACBrSAT1.Extrato := nil;
 
         Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
         Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
         Resp.XML:= SatDM.ACBrSAT1.CFe.XMLOriginal;
         Resposta := Resp.Gerar;
 
+        SatDM.ACBrSAT1.Extrato := nil;
+
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
+      finally
+        SatDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function SAT_GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar; const sResposta: PChar;
+  var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArqXMLVenda, ArqXMLCancelamento, NomeArquivo: String;
+begin
+   try
+    VerificarLibInicializada;
+    ArqXMLVenda := String(eArqXMLVenda);
+    ArqXMLCancelamento := String(eArqXMLCancelamento);
+    NomeArquivo := String(eNomeArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('SAT_GerarPDFCancelamento(' + ArqXMLVenda + ',' + ArqXMLCancelamento +
+        ',' + NomeArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('SAT_GerarPDFCancelamento', logNormal);
+
+    with TACBrLibSAT(pLib) do
+    begin
+      SatDM.Travar;
+
+      try
+        SatDM.ConfigurarImpressao('', True);
+        SatDM.CarregarDadosVenda(ArqXMLVenda);
+        SatDM.CarregarDadosCancelamento(ArqXMLCancelamento, NomeArquivo);
+        SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
+        SatDM.ACBrSAT1.Extrato := nil;
+        Result := SetRetorno(ErrOK);
       finally
         SatDM.Destravar;
       end;

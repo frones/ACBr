@@ -10,40 +10,35 @@ object LibNFeDM: TLibNFeDM
   Width = 491
   PPI = 96
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     left = 224
     top = 104
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
-    TipoDANFE = tiRetrato
-    NumCopias = 1
-    ImprimeNomeFantasia = False
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.7
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
     MargemDireita = 0.7
     CasasDecimais.Formato = tdetInteger
-    FormularioContinuo = False
-    TamanhoLogoHeight = 0
-    TamanhoLogoWidth = 0
-    RecuoEndereco = 0
-    RecuoEmpresa = 0
-    LogoemCima = False
-    RecuoLogo = 0
-    LarguraCodProd = 54
-    QuebraLinhaEmDetalhamentoEspecifico = True
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     ExibeCampoFatura = False
+    TributosPercentualPersonalizado = 0
     left = 224
-    top = 43
+    top = 48
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone
@@ -60,14 +55,17 @@ object LibNFeDM: TLibNFeDM
     top = 43
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    TipoDANFE = tiSemGeracao
-    NumCopias = 1
-    ImprimeNomeFantasia = False
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDANFE = tiSemGeracao
     left = 224
     top = 163
   end

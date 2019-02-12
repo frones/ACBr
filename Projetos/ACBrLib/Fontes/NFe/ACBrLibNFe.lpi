@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="33"/>
+      <BuildNr Value="34"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrNFe - BIblioteca para emissão e impressão de nota fiscal eletrônica" InternalName="ACBrLibNFE" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrNFe " ProductVersion="0.0.0.1"/>
@@ -153,7 +153,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\Testes\NFe\bin\ACBrNFe32"/>
+            <Filename Value="..\..\Testes\NFe\bin\ACBrNFe32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -194,7 +194,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
+        <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\NFe\bin\ACBrLibNFeTest.exe"/>
       </local>
     </RunParams>
     <RequiredPackages Count="8">
@@ -223,7 +223,7 @@
         <PackageName Value="FCL"/>
       </Item8>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="14">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -275,6 +275,14 @@
         <Filename Value="..\PosPrinter\ACBrLibPosPrinterImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
+      <Unit12>
+        <Filename Value="..\Comum\DFeReportConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Comum\ACBrIntegradorConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

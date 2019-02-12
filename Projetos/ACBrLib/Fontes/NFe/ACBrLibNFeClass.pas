@@ -196,6 +196,7 @@ begin
   GravarLog('TACBrLibNFe.Inicializar', logNormal);
 
   FNFeDM.CriarACBrMail;
+  FNFeDM.CriarACBrPosPrinter;
 
   GravarLog('TACBrLibNFe.Inicializar - Feito', logParanoico);
 
@@ -587,9 +588,9 @@ begin
       Resp.NSU := retDistDFeInt.docZip.Items[ItemID].NSU;
       Resp.XML := retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(retDistDFeInt.docZip[ItemID].schema);
 
-      with retDistDFeInt.docZip.Items[ItemID].resNFe do
+      with retDistDFeInt.docZip.Items[ItemID].resDFe do
       begin
         Resp.chNFe := chNFe;
         Resp.CNPJCPF := CNPJCPF;
@@ -599,7 +600,7 @@ begin
         Resp.vNF := vNF;
         Resp.digVal := digVal;
         Resp.dhRecbto := dhRecbto;
-        Resp.cSitNFe := SituacaoDFeToStr(cSitNFe);
+        Resp.cSitNFe := SituacaoDFeToStr(cSitDFe);
         Resp.nProt := nProt;
 
         Result := Resp.Gerar;
@@ -618,11 +619,10 @@ begin
     'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
   try
     // Atualmente o DistribuicaoDFe do CT-e não retorna Resumo de Eventos.
-    {
-    with fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resEvento do
+    with TACBrLibNFe(pLib).NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resEvento do
     begin
-      Resp.NSU := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chNFe := chNFe;
+      Resp.NSU := TACBrLibNFe(pLib).NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
+      Resp.chNFe := chDFe;
       Resp.CNPJCPF := CNPJCPF;
       Resp.dhEvento := dhEvento;
       Resp.tpEvento := TpEventoToStr(tpEvento);
@@ -631,13 +631,12 @@ begin
       Resp.cOrgao := cOrgao;
       Resp.dhRecbto := dhRecbto;
       Resp.nProt := nProt;
-      Resp.XML := fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrNFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(fACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+      Resp.XML := TACBrLibNFe(pLib).NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
+      Resp.Arquivo := TACBrLibNFe(pLib).NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.listaArqs[ItemID];
+      Resp.schema := SchemaDFeToStr(TACBrLibNFe(pLib).NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
 
       Result := Resp.Gerar;
     end;
-    }
     Result := '';
   finally
     Resp.Free;
@@ -656,7 +655,7 @@ begin
       Resp.NSU := retDistDFeInt.docZip.Items[ItemID].NSU;
       Resp.XML := retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(retDistDFeInt.docZip[ItemID].schema);
 
       with retDistDFeInt.docZip.Items[ItemID].procEvento do
       begin
@@ -703,7 +702,7 @@ begin
     begin
       Resp.XML := retDistDFeInt.docZip.Items[ItemID].XML;
       Resp.Arquivo := listaArqs[ItemID];
-      Resp.schema := SchemaNFeToStr(retDistDFeInt.docZip[ItemID].schema);
+      Resp.schema := SchemaDFeToStr(retDistDFeInt.docZip[ItemID].schema);
 
       with retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
       begin

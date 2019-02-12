@@ -61,6 +61,7 @@ begin
     LinhasBuffer := pLib.Config.PosPrinter.LinhasBuffer;
     ControlePorta := pLib.Config.PosPrinter.ControlePorta;
     VerificarImpressora := pLib.Config.PosPrinter.VerificarImpressora;
+    TipoCorte := TACBrPosTipoCorte(pLib.Config.PosPrinter.TipoCorte);
 
     ConfigBarras.MostrarCodigo := pLib.Config.PosPrinter.BcMostrarCodigo;
     ConfigBarras.LarguraLinha := pLib.Config.PosPrinter.BcLarguraLinha;

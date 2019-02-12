@@ -44,7 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18/04/2018
+12/02/2019
+--- ACBrLibConfig ---
+[-] Modificado comportamento enviado anteriormente que gravava o arquivo de log no diretório
+	da DLL, evitando possíveis erros de escrita em diretórios do sistema do Windows.
+[+] Adicionada propriedade TipoCorte
+
+--- ACBrLibConsts ---
+[+] Adicionadas novas constantes.
+
+30/01/2019
 --- ACBrLibComum ---
 [+] Modificada inicialização da lib, informando um path válido, onde o arquivo de
 	configuração será automaticamente criado caso não exista.  Por: (Celso Marigo Junior)

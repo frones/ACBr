@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2019
+-- ACBrNFeDANFEFRDM -
+[+] adiçao de novos campos para exibição do novo layout de Local de entrega / retirada 
+    	por: Henrique Leonardo (hleorj)
+
 22/01/2019
 -- ACBrNFeDANFEFRDM --
 [-] Correção para máscara quando emitente CPF.

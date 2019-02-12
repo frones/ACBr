@@ -540,6 +540,10 @@ begin
         FieldDefs.Add('vTotPago'    , ftFloat);
         FieldDefs.Add('vTroco'      , ftFloat);
         FieldDefs.Add('ValorApagar' , ftFloat);
+        FieldDefs.Add('VFCP'        , ftFloat);
+        FieldDefs.Add('VFCPST'      , ftFloat);
+        FieldDefs.Add('VFCPSTRet'   , ftFloat);
+        FieldDefs.Add('VIPIDevol'   , ftFloat);
         CreateDataSet;
      end;
    end;
@@ -927,7 +931,10 @@ begin
       FieldByName('VNF').AsFloat          := VNF;
       FieldByName('VTotTrib').AsFloat     := VTotTrib;
       FieldByName('ValorApagar').AsFloat  := VProd - VDesc - vICMSDeson + VOutro;
-
+      FieldByName('VFCP').AsFloat         := VFCP;
+      FieldByName('VFCPST').AsFloat       := VFCPST;
+      FieldByName('VFCPSTRet').AsFloat    := vFCPSTRet;
+      FieldByName('VIPIDevol').AsFloat    := vIPIDevol;
       if (FDANFEClassOwner is TACBrNFeDANFEClass) then
         FieldByName('VTribPerc').AsFloat := TACBrNFeDANFEClass(FDANFEClassOwner).ManterVTribPerc(VTotTrib, VProd, VNF);
 

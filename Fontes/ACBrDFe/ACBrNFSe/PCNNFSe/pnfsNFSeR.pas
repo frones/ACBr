@@ -258,7 +258,7 @@ begin
   VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
   LayoutXML := ProvedorToLayoutXML(FProvedor);
 
-  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') or
+  if (Leitor.rExtrai(1, 'Rps') <> '') or (Leitor.rExtrai(1, 'RPS') <> '') or (Leitor.rExtrai(1, 'rps') <> '') or
      (Leitor.rExtrai(1, 'LoteRps') <> '') then
   begin
     case LayoutXML of

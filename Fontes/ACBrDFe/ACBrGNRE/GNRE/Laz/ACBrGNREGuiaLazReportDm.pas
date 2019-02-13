@@ -231,7 +231,7 @@ procedure TACBrGNREGuiaLazReport.ImprimirGuiaPDF(GNRE: TGNRERetorno);
 var
   frACBrGNREGuiaLazReport : TdmACBrGNREGuiaLazReport;
   RelGNRE, Dir : string;
-  PageIni, PageFim, PInd : Integer;
+  {PageIni, PageFim,} PInd : Integer;
   Res : TLResource ;
   MS  : TMemoryStream ;
 begin

@@ -90,7 +90,6 @@ type
     FVersao: String;
     FLote: TLoteEventos;
     FRetEnvioLote: TRetEnvioLote;
-
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -399,6 +398,10 @@ begin
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
 
+  FPSoapEnvelopeAtributtes :=
+    ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    ' xmlns:v1="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1"';
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
@@ -456,7 +459,7 @@ end;
 
 function TEnvioLote.GerarPrefixoArquivo: String;
 begin
-  Result := FormatDateTime('yyyymmddhhnnss', Now);
+  Result := FormatDateTime('yymmddhhnnss', Now);
 end;
 
 function TEnvioLote.GerarVersaoDadosSoap: String;
@@ -517,6 +520,10 @@ begin
 {$ELSE}
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
+
+  FPSoapEnvelopeAtributtes :=
+    ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    ' xmlns:v1="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1"';
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
@@ -636,6 +643,9 @@ end;
 procedure TConsultaIdentEventos.DefinirDadosMsg;
 var
   TpInsc : tpTpInsc;
+  DadosMsg: AnsiString;
+  Erro : string;
+  EhValido : Boolean;
 begin
 
   if Length(FCnpj) = 14 then
@@ -643,19 +653,33 @@ begin
   else
     TpInsc := tiCPF;
 
-  FPDadosMsg :=
+  DadosMsg :=
          '<eSocial xmlns="' + ACBRESOCIAL_NAMESPACE_RETEVT + '">' +
           '<consultaIdentificadoresEvts>' +
            '<ideEmpregador>' +
-            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '<tpInsc>' +
-            '<nrInsc>' + FCnpj + '<nrInsc>' +
+            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '</tpInsc>' +
+            '<nrInsc>' + FCnpj + '</nrInsc>' +
            '</ideEmpregador>' +
            '<consultaEvtsEmpregador>' +
-             '<tpEvt>' + TipoEventoToStr(FEvento) + '<tpEvt>' +
-             '<perApur>' + FormatDateTime('yyyy-mm', FPerApur) + '<perApur>' +
+             '<tpEvt>' + TipoEventoToStr(FEvento) + '</tpEvt>' +
+             '<perApur>' + FormatDateTime('yyyy-mm', FPerApur) + '</perApur>' +
            '</consultaEvtsEmpregador>' +
           '</consultaIdentificadoresEvts>' +
          '</eSocial>';
+
+                                                                                        //nome do evento
+  FPDadosMsg := AnsiToUtf8(DadosMsg);
+  FPDadosMsg := TACBreSocial(FPDFeOwner).SSL.Assinar(String(FPDadosMsg), 'eSocial', 'consultaIdentificadoresEvts', '', '', '', 'ID');
+
+  EhValido := TACBreSocial(FPDFeOwner).SSL.Validar(String(FPDadosMsg),
+                                        TACBreSocial(FPDFeOwner).Configuracoes.Arquivos.PathSchemas +
+                                        'ConsultaIdentificadoresEventosEmpregador-v1_0_0.xsd'
+                                        {SchemaeSocialToStr(schConsultaIdentEventos) + '-v1_0_0.xsd'}, Erro);
+
+  if not EhValido then
+  begin
+    raise EACBreSocialException.CreateDef(Erro);
+  end;
 
   if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
     TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioConsultaIdentEvt);
@@ -672,6 +696,10 @@ begin
 {$ELSE}
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
+
+  FPSoapEnvelopeAtributtes :=
+    ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    ' xmlns:v1="http://www.esocial.gov.br/schema/consulta/identificadores-eventos/empregador/v1_0_0"';
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
@@ -733,7 +761,7 @@ var
   i: Integer;
   AXML, NomeArq: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarLoteEventosResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarIdentificadoresEventosEmpregadorResult');
 
   FRetConsultaIdentEvt.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsultaIdentEvt.LerXml;
@@ -767,6 +795,8 @@ begin
   FEnvioLote    := TEnvioLote.Create(FACBreSocial);
   FConsultaLote := TConsultaLote.Create(FACBreSocial);
   FConsultaIdentEventos := TConsultaIdentEventos.Create(FACBreSocial);
+  FDownloadEventos := TDownloadEventos.Create(FACBreSocial);
+
 end;
 
 destructor TWebServices.Destroy;
@@ -774,6 +804,7 @@ begin
   FEnvioLote.Free;
   FConsultaLote.Free;
   FConsultaIdentEventos.Free;
+  FDownloadEventos.Free;
 
   inherited Destroy;
 end;
@@ -877,7 +908,8 @@ end;
 procedure TDownloadEventos.DefinirDadosMsg;
 var
   TpInsc: tpTpInsc;
-  NameSpace: string;
+  NameSpace, Erro: string;
+  EhValido : boolean;
 begin
 
   if Length(FCnpj) = 14 then
@@ -894,8 +926,8 @@ begin
          '<eSocial xmlns="' + NameSpace + '">' +
           '<download>' +
            '<ideEmpregador>' +
-            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '<tpInsc>' +
-            '<nrInsc>' + FCnpj + '<nrInsc>' +
+            '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '</tpInsc>' +
+            '<nrInsc>' + FCnpj + '</nrInsc>' +
            '</ideEmpregador>' +
            '<solicDownloadEvts' + FTipoDownload + '>';
 
@@ -910,6 +942,18 @@ begin
            '</solicDownloadEvts' + FTipoDownload + '>' +
           '</download>' +
          '</eSocial>';
+
+  FPDadosMsg := TACBreSocial(FPDFeOwner).SSL.Assinar(String(FPDadosMsg), 'eSocial', 'eSocial', '', '', '', 'ID');
+
+  EhValido := TACBreSocial(FPDFeOwner).SSL.Validar(String(FPDadosMsg),
+                                        TACBreSocial(FPDFeOwner).Configuracoes.Arquivos.PathSchemas +
+                                        'SolicitacaoDownloadEventosPorId-v1_0_0.xsd'
+                                        {SchemaeSocialToStr(schConsultaIdentEventos) + '-v1_0_0.xsd'}, Erro);
+
+  if not EhValido then
+  begin
+    raise EACBreSocialException.CreateDef(Erro);
+  end;
 
   if Assigned(TACBreSocial(FPDFeOwner).OnTransmissaoEventos) then
     TACBreSocial(FPDFeOwner).OnTransmissaoEventos(FPDadosMsg, eseEnvioDownloadEvt);
@@ -926,6 +970,15 @@ begin
 {$ELSE}
   Texto := ''; // Isso forçará a conversão para UTF8, antes do envio
 {$ENDIF}
+
+  FPSoapEnvelopeAtributtes :=
+    ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    ' xmlns:v1="';
+
+  if FTipoDownload = 'PorId' then
+    FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTID + '"'
+  else
+    FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTREC + '"';
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';

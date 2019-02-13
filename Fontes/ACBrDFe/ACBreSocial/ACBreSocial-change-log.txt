@@ -49,6 +49,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/02/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/46398-solicitardownloadeventos/?do=findComment&comment=326091
+   Por: Alessandro Feelipe
+
+13/02/2019
 -- pcesRetConsultaIdentEvt --
 [*] Simplificação na definição da classe de leitura do numero do recibo.
    Por: Italo Jurisato Junior

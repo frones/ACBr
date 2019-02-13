@@ -966,7 +966,7 @@ const
 function LayOuteSocialToServico(const t: TLayOut): String;
 begin
    Result := EnumeradoToStr(t,
-    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultaIdentEventos',
+    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultarIdentificadoresEventos',
       'DownloadEventos'],
     [LayEnvioLoteEventos, LayConsultaLoteEventos, LayConsultaIdentEventos,
      LayDownloadEventos] );
@@ -975,7 +975,7 @@ end;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
 begin
    Result := StrToEnumerado(ok, s,
-    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultaIdentEventos',
+    ['EnviarLoteEventos', 'ConsultarLoteEventos', 'ConsultarIdentificadoresEventos',
       'DownloadEventos'],
     [LayEnvioLoteEventos, LayConsultaLoteEventos, LayConsultaIdentEventos,
     LayDownloadEventos] );

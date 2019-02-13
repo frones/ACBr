@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2019
+-- pcesRetConsultaIdentEvt --
+[*] Simplificação na definição da classe de leitura do numero do recibo.
+   Por: Italo Jurisato Junior
+
 11/02/2019
 -- pcesS1200 --
 [*] Possível correção na leitura do arquivo INI do evento 1200.

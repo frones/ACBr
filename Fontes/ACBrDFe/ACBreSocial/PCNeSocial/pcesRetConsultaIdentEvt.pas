@@ -77,13 +77,10 @@ type
   TRetIdentEvtsCollectionItem = class(TCollectionItem)
   private
     FIDEvento: string;
-    FnrRec: TRecibo;
+    FnrRec: string;
   public
-    constructor create; reintroduce;
-    destructor Destroy; override;
-
     property Id: string read FIDEvento write FIDEvento;
-    property nrRec: TRecibo read FnrRec write FnrRec;
+    property nrRec: string read FnrRec write FnrRec;
   end;
 
   TRetConsultaIdentEvt = class(TPersistent)
@@ -111,7 +108,7 @@ implementation
 function TRetIdentEvtsCollection.Add: TRetIdentEvtsCollectionItem;
 begin
   Result := TRetIdentEvtsCollectionItem(inherited Add());
-  Result.create;
+//  Result.create;
 end;
 
 constructor TRetIdentEvtsCollection.create(AOwner: TRetConsultaIdentEvt);
@@ -128,20 +125,6 @@ procedure TRetIdentEvtsCollection.SetItem(Index: Integer;
   Value: TRetIdentEvtsCollectionItem);
 begin
   Inherited SetItem(Index, Value);
-end;
-
-{ TRetIdentEvtsCollectionItem }
-
-constructor TRetIdentEvtsCollectionItem.create;
-begin
-  FnrRec := TRecibo.create;
-end;
-
-destructor TRetIdentEvtsCollectionItem.Destroy;
-begin
-  FnrRec.Free;
-
-  inherited;
 end;
 
 { TRetConsultaIdentEvt }
@@ -194,7 +177,7 @@ begin
         begin
           RetIdentEvts.Add;
           RetIdentEvts.Items[i].Id := FLeitor.rCampo(tcStr, 'id');
-          RetIdentEvts.Items[i].nrRec.nrRecibo := Leitor.rCampo(tcStr, 'nrRec');
+          RetIdentEvts.Items[i].nrRec := Leitor.rCampo(tcStr, 'nrRec');
 
           inc(i);
         end;

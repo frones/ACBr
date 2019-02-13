@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais (www.projetoacbr.com.br)"/>
     <License Value="LGPL"/>
-    <Files Count="27">
+    <Files Count="28">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinf.pas"/>
         <AddToUsesPkgSection Value="False"/>
@@ -129,6 +129,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfLoteEventos.pas"/>
         <UnitName Value="ACBrReinfLoteEventos"/>
       </Item27>
+      <Item28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfConsulta.pas"/>
+        <UnitName Value="pcnReinfConsulta"/>
+      </Item28>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

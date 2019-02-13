@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr e-Social
 (www.projetoacbr.com.br)"/>
-    <Files Count="54">
+    <Files Count="65">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocial.pas"/>
         <AddToUsesPkgSection Value="False"/>
@@ -240,6 +240,50 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesTabelas.pas"/>
         <UnitName Value="pcesTabelas"/>
       </Item54>
+      <Item55>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetConsultaIdentEvt.pas"/>
+        <UnitName Value="pcesRetConsultaIdentEvt"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetConsultaLote.pas"/>
+        <UnitName Value="pcesRetConsultaLote"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetDownloadEvt.pas"/>
+        <UnitName Value="pcesRetDownloadEvt"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetEnvioLote.pas"/>
+        <UnitName Value="pcesRetEnvioLote"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesRetornoClass.pas"/>
+        <UnitName Value="pcesRetornoClass"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2260.pas"/>
+        <UnitName Value="pcesS2260"/>
+      </Item60>
+      <Item61>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5002.pas"/>
+        <UnitName Value="pcesS5002"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5003.pas"/>
+        <UnitName Value="pcesS5003"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5011.pas"/>
+        <UnitName Value="pcesS5011"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5012.pas"/>
+        <UnitName Value="pcesS5012"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5013.pas"/>
+        <UnitName Value="pcesS5013"/>
+      </Item65>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -72,7 +72,7 @@ type
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
     function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
-    procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
+    procedure SetOnAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
     procedure SetIntegrador(AValue: TACBrIntegrador);
   protected
@@ -139,7 +139,7 @@ type
 
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
     property OnAntesDeAssinar: TDFeSSLAntesDeAssinar read GetOnAntesDeAssinar
-       write SetAntesDeAssinar;
+       write SetOnAntesDeAssinar;
   end;
 
 implementation
@@ -228,7 +228,7 @@ begin
   Result := FSSL.AntesDeAssinar;
 end;
 
-procedure TACBrDFe.SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
+procedure TACBrDFe.SetOnAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
 begin
   FSSL.AntesDeAssinar := AValue;
 end;

@@ -510,6 +510,24 @@ object FExemploEsocial: TFExemploEsocial
           TabOrder = 5
           OnClick = btnGerarEnviarClick
         end
+        object btnConsIdeEveEmp: TButton
+          Left = 12
+          Top = 74
+          Width = 227
+          Height = 25
+          Caption = 'Consultar Identificadores Eventos Empregador'
+          TabOrder = 6
+          OnClick = btnConsIdeEveEmpClick
+        end
+        object btnDownloadEventos: TButton
+          Left = 250
+          Top = 74
+          Width = 109
+          Height = 25
+          Caption = 'Download Eventos'
+          TabOrder = 7
+          OnClick = btnDownloadEventosClick
+        end
       end
       object tsFormaEnvio: TTabSheet
         Caption = 'Forma de Envio'
@@ -1560,8 +1578,8 @@ object FExemploEsocial: TFExemploEsocial
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     OnTransmissaoEventos = ACBreSocial1TransmissaoEventos
-    Left = 336
-    Top = 368
+    Left = 664
+    Top = 304
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1569,7 +1587,7 @@ object FExemploEsocial: TFExemploEsocial
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 424
-    Top = 368
+    Left = 752
+    Top = 304
   end
 end

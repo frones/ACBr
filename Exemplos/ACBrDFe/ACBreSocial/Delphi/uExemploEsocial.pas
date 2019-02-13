@@ -225,6 +225,8 @@ type
     btnCarregarINI: TButton;
     btnGerarEnviar: TButton;
     cbs2260: TCheckBox;
+    btnConsIdeEveEmp: TButton;
+    btnDownloadEventos: TButton;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -268,6 +270,8 @@ type
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
     procedure btnGerarEnviarClick(Sender: TObject);
+    procedure btnConsIdeEveEmpClick(Sender: TObject);
+    procedure btnDownloadEventosClick(Sender: TObject);
   private
     { Private declarations }
     function GetTipoOperacao: TModoLancamento;
@@ -3651,7 +3655,8 @@ begin
         with observacoes.Add do
          observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
-        SucessaoVinc.cnpjEmpregAnt := '12345678912345';
+        SucessaoVinc.tpInscSuc := tiCNPJ;
+        SucessaoVinc.cnpjSucessora := '12345678912345';
 
         with VerbasResc do
         begin
@@ -4481,6 +4486,49 @@ begin
   end;
 end;
 
+procedure TFExemploEsocial.btnConsIdeEveEmpClick(Sender: TObject);
+var
+  TipoEvento, Periodo: string;
+  i: Integer;
+  Ok: Boolean;
+begin
+  TipoEvento := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
+    Exit;
+
+  Periodo := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Perido de apuracao no formato 01/MM/AAAA', Periodo)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosEmpregador(edtIdEmpregador.Text,
+                       StrToTipoEvento(Ok, TipoEvento), StrToDate(Periodo)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
@@ -4616,6 +4664,56 @@ begin
     end;
 
     pgWebservice.ActivePageIndex := 3;
+  end;
+end;
+
+procedure TFExemploEsocial.btnDownloadEventosClick(Sender: TObject);
+var
+  PorID, PorNrRecibo: string;
+  i: Integer;
+begin
+  PorID := '';
+  if not(InputQuery('WebServices: Download Eventos', 'Por ID', PorID)) then
+    Exit;
+
+  PorNrRecibo := '';
+  if not(InputQuery('WebServices: Download Eventos', 'Por Nr Recibo', PorNrRecibo)) then
+    Exit;
+
+  if PorID <> '' then
+    PorNrRecibo := '';
+
+  if PorNrRecibo <> '' then
+    PorID := '';
+
+  if ACBreSocial1.DownloadEventos(edtIdEmpregador.Text, PorID, PorNrRecibo) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.DownloadEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.DownloadEventos.RetDownloadEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+
+        for i := 0 to arquivo.Count - 1 do
+        begin
+          Add('Arquivo:');
+          Add('');
+          Add('Código Retorno: ' + IntToStr(arquivo.Items[i].Status.cdResposta));
+          Add('Mensagem: ' + arquivo.Items[i].Status.descResposta);
+          Add('');
+          Add(' - ID Evento: ' + arquivo.Items[i].Id);
+          Add(' - Nr Recibo: ' + arquivo.Items[i].nrRec);
+          Add('');
+          Add('** Na propriedade: arquivo.Items[i].XML contem o XML do evento retornado');
+          Add('** Esse XML também é salvo em disco.');
+        end;
+      end;
+    end;
   end;
 end;
 

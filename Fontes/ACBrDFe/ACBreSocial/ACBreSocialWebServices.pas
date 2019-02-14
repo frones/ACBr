@@ -670,12 +670,13 @@ begin
                                                                                         //nome do evento
   FPDadosMsg := AnsiToUtf8(DadosMsg);
   FPDadosMsg := TACBreSocial(FPDFeOwner).SSL.Assinar(String(FPDadosMsg), 'eSocial', 'consultaIdentificadoresEvts', '', '', '', 'ID');
-
+  EhValido := True;
+  (*
   EhValido := TACBreSocial(FPDFeOwner).SSL.Validar(String(FPDadosMsg),
                                         TACBreSocial(FPDFeOwner).Configuracoes.Arquivos.PathSchemas +
                                         'ConsultaIdentificadoresEventosEmpregador-v1_0_0.xsd'
                                         {SchemaeSocialToStr(schConsultaIdentEventos) + '-v1_0_0.xsd'}, Erro);
-
+  *)
   if not EhValido then
   begin
     raise EACBreSocialException.CreateDef(Erro);
@@ -699,7 +700,9 @@ begin
 
   FPSoapEnvelopeAtributtes :=
     ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
-    ' xmlns:v1="http://www.esocial.gov.br/schema/consulta/identificadores-eventos/empregador/v1_0_0"';
+    ' xmlns:v1="http://www.esocial.gov.br/servicos/empregador/consulta/identificadores-eventos/v1_0_0"';
+
+//    http://www.esocial.gov.br/schema/consulta/identificadores-eventos/empregador/v1_0_0"';
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
@@ -928,28 +931,32 @@ begin
            '<ideEmpregador>' +
             '<tpInsc>' + eSTpInscricaoToStr(TpInsc) + '</tpInsc>' +
             '<nrInsc>' + FCnpj + '</nrInsc>' +
-           '</ideEmpregador>' +
-           '<solicDownloadEvts' + FTipoDownload + '>';
+           '</ideEmpregador>';
 
   if FPorID <> '' then
     FPDadosMsg := FPDadosMsg +
-               '<id>' + FPorID + '</id>'
+                  '<solicDownloadEvtsPorId>' +
+                    '<id>' + FPorID + '</id>' +
+                  '</solicDownloadEvtsPorId>'
   else
     FPDadosMsg := FPDadosMsg +
-               '<nrRec>' + FPorNrRecibo + '</nrRec>';
+                  '<solicDownloadEventosPorNrRecibo>' +
+                    '<nrRec>' + FPorNrRecibo + '</nrRec>' +
+                  '</solicDownloadEventosPorNrRecibo>';
 
   FPDadosMsg := FPDadosMsg +
-           '</solicDownloadEvts' + FTipoDownload + '>' +
           '</download>' +
          '</eSocial>';
 
   FPDadosMsg := TACBreSocial(FPDFeOwner).SSL.Assinar(String(FPDadosMsg), 'eSocial', 'eSocial', '', '', '', 'ID');
 
+  EhValido := True;
+  (*
   EhValido := TACBreSocial(FPDFeOwner).SSL.Validar(String(FPDadosMsg),
                                         TACBreSocial(FPDFeOwner).Configuracoes.Arquivos.PathSchemas +
                                         'SolicitacaoDownloadEventosPorId-v1_0_0.xsd'
                                         {SchemaeSocialToStr(schConsultaIdentEventos) + '-v1_0_0.xsd'}, Erro);
-
+  *)
   if not EhValido then
   begin
     raise EACBreSocialException.CreateDef(Erro);
@@ -973,13 +980,13 @@ begin
 
   FPSoapEnvelopeAtributtes :=
     ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
-    ' xmlns:v1="';
-
+    ' xmlns:v1="http://www.esocial.gov.br/servicos/empregador/download/solicitacao/v1_0_0"';
+ {
   if FTipoDownload = 'PorId' then
     FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTID + '"'
   else
     FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTREC + '"';
-
+  }
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';

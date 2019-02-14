@@ -536,26 +536,6 @@ type
     rlbCancelada: TRLBand;
     RLLCancelada: TRLLabel;
     RLLabel2: TRLLabel;
-    rlbEntrega: TRLBand;
-    RLDraw25: TRLDraw;
-    RLLabel4: TRLLabel;
-    RLLabel9: TRLLabel;
-    rlbEntregaCnpjCpf: TRLLabel;
-    RLLabel10: TRLLabel;
-    RLDraw26: TRLDraw;
-    rlbEntregaEndereco: TRLLabel;
-    RLLabel6: TRLLabel;
-    RLDraw27: TRLDraw;
-    rlbRetirada: TRLBand;
-    RLDraw13: TRLDraw;
-    RLLabel5: TRLLabel;
-    RLLabel3: TRLLabel;
-    rlbRetiradaCnpjCpf: TRLLabel;
-    RLLabel8: TRLLabel;
-    RLDraw14: TRLDraw;
-    rlbRetiradaEndereco: TRLLabel;
-    RLLabel7: TRLLabel;
-    RLDraw28: TRLDraw;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
     LinhaCST: TRLDraw;
@@ -598,6 +578,59 @@ type
     RLDraw63: TRLDraw;
     RLMemoInfAd: TRLMemo;
     RLDraw2: TRLDraw;
+    rlbEntrega: TRLBand;
+    RLDraw37: TRLDraw;
+    RLLabel9: TRLLabel;
+    RLLabel11: TRLLabel;
+    RLDraw27: TRLDraw;
+    RLDraw31: TRLDraw;
+    RLDraw25: TRLDraw;
+    RLDraw32: TRLDraw;
+    RLLabel4: TRLLabel;
+    RLLabel13: TRLLabel;
+    RLLabel14: TRLLabel;
+    RLDraw26: TRLDraw;
+    RLLabel22: TRLLabel;
+    RLLabel27: TRLLabel;
+    RLLabel44: TRLLabel;
+    RLLabel45: TRLLabel;
+    RLDraw40: TRLDraw;
+    RLLquadroEntregaNome: TRLLabel;
+    RLLquadroEntregaDocumento: TRLLabel;
+    RLLquadroEntregaIE: TRLLabel;
+    RLLquadroEntregaEndereco: TRLLabel;
+    RLLquadroEntregaBairro: TRLLabel;
+    RLLquadroEntregaCep: TRLLabel;
+    RLLquadroEntregaMunicipio: TRLLabel;
+    RLLquadroEntregaUF: TRLLabel;
+    RLLquadroEntregaTelefone: TRLLabel;
+    rlbRetirada: TRLBand;
+    RLDraw13: TRLDraw;
+    RLLabel3: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLDraw14: TRLDraw;
+    RLDraw28: TRLDraw;
+    RLDraw36: TRLDraw;
+    RLDraw42: TRLDraw;
+    RLLabel7: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLLabel15: TRLLabel;
+    RLDraw43: TRLDraw;
+    RLLabel17: TRLLabel;
+    RLLabel46: TRLLabel;
+    RLLabel47: TRLLabel;
+    RLLabel57: TRLLabel;
+    RLDraw44: TRLDraw;
+    RLLquadroRetiradaNome: TRLLabel;
+    RLLquadroRetiradaDocumento: TRLLabel;
+    RLLquadroRetiradaIE: TRLLabel;
+    RLLquadroRetiradaEndereco: TRLLabel;
+    RLLquadroRetiradaBairro: TRLLabel;
+    RLLquadroRetiradaCEP: TRLLabel;
+    RLLquadroRetiradaMunicipio: TRLLabel;
+    RLLquadroRetiradaUF: TRLLabel;
+    RLLquadroRetiradaTelefone: TRLLabel;
 
     procedure rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -1871,15 +1904,21 @@ procedure TfrlDANFeRLRetrato.DefinirEntrega;
 begin
   with fpNFe.Entrega do
   begin
-    rlbEntrega.Visible := NaoEstaVazio(xLgr);
+    rlbEntrega.Visible := NaoEstaVazio(xNome);
 
     if rlbEntrega.Visible then
     begin
-      rlbEntregaCnpjCpf.Caption := FormatarCNPJouCPF(CNPJCPF);
-      rlbEntregaEndereco.Caption := XLgr +
-        IfThen(Nro = '0', '', ', ' + Nro) +
-        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl) + ' - ' +
-        xBairro + ' - ' + xMun + '-' + UF;
+      RLLquadroEntregaNome.Caption := xNome;
+      RLLquadroEntregaDocumento.Caption := FormatarCNPJouCPF(CNPJCPF);
+      RLLquadroEntregaIE.Caption := IE;
+      RLLquadroEntregaEndereco.Caption := XLgr +
+                                          IfThen(Nro = '0', '', ', ' + Nro) +
+                                          IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
+      RLLquadroEntregaBairro.Caption := xBairro;
+      RLLquadroEntregaCep.Caption := FormatarCEP(CEP);
+      RLLquadroEntregaMunicipio.Caption := xMun;
+      RLLquadroEntregaUF.Caption := UF;
+      RLLquadroEntregaTelefone.Caption := FormatarFone(Fone);
     end;
   end;
 end;
@@ -1888,15 +1927,21 @@ procedure TfrlDANFeRLRetrato.DefinirRetirada;
 begin
   with fpNFe.Retirada do
   begin
-    rlbRetirada.Visible := NaoEstaVazio(xLgr);
+    rlbRetirada.Visible := NaoEstaVazio(xNome);
 
     if rlbRetirada.Visible then
     begin
-      rlbRetiradaCnpjCpf.Caption := FormatarCNPJouCPF(CNPJCPF);
-      rlbRetiradaEndereco.Caption := XLgr +
-        IfThen(Nro = '0', '', ', ' + Nro) +
-        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl) + ' - ' +
-        xBairro + ' - ' + xMun + '-' + UF;
+      RLLquadroRetiradaNome.Caption := xNome;
+      RLLquadroRetiradaDocumento.Caption := FormatarCNPJouCPF(CNPJCPF);
+      RLLquadroRetiradaIE.Caption := IE;
+      RLLquadroRetiradaEndereco.Caption := XLgr +
+                                            IfThen(Nro = '0', '', ', ' + Nro) +
+                                            IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
+      RLLquadroRetiradaBairro.Caption := xBairro;
+      RLLquadroRetiradaCEP.Caption := FormatarCEP(CEP);
+      RLLquadroRetiradaMunicipio.Caption := xMun;
+      RLLquadroRetiradaUF.Caption := UF;
+      RLLquadroRetiradaTelefone.Caption := FormatarFone(Fone);
     end;
   end;
 end;

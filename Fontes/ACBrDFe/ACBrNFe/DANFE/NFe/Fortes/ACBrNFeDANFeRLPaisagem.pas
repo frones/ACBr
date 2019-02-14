@@ -55,7 +55,7 @@ uses
     jpeg,
    {$IFEND}
   {$ENDIF}
-  ACBrNFeDANFeRL;
+  ACBrNFeDANFeRL, RLFilters, RLPDFFilter;
 
 type
 
@@ -103,7 +103,7 @@ type
     RLDraw24: TRLDraw;
     RLDraw21: TRLDraw;
     RLDraw18: TRLDraw;
-    RLDraw15: TRLDraw;
+    quadroDestinatarioExterno: TRLDraw;
     rlbFatura: TRLBand;
     rllFatNum1: TRLLabel;
     rllFatNum6: TRLLabel;
@@ -481,6 +481,68 @@ type
     RLDraw31: TRLDraw;
     RLMemoInfAd: TRLMemo;
     RLDrawFinal: TRLDraw;
+    rlbQuandoRetirada: TRLBand;
+    QuandoRetiradaExterno: TRLDraw;
+    rlbQuandoRetiradaLinha1Memo1: TRLLabel;
+    QuandoRetiradaLinha: TRLDraw;
+    rlbQuandoRetiradaLinha1Memo2: TRLLabel;
+    rlbQuandoRetiradaLinha2Memo1: TRLLabel;
+    rlbQuandoRetiradaLinha2Memo2: TRLLabel;
+    rlbQuandoRetiradaLinha2Memo3: TRLLabel;
+    rlbQuandoRetiradaLinha2Memo4: TRLLabel;
+    RLLquadroRetiradaNome: TRLLabel;
+    RLLquadroRetiradaDocumento: TRLLabel;
+    RLLquadroRetiradaIE: TRLLabel;
+    RLLquadroRetiradaEndereco: TRLLabel;
+    RLLquadroRetiradaBairro: TRLLabel;
+    RLLquadroRetiradaCEP: TRLLabel;
+    RLLquadroRetiradaMunicipio: TRLLabel;
+    RLLquadroRetiradaUF: TRLLabel;
+    RLLquadroRetiradaTelefone: TRLLabel;
+    rlbQuandoRetiradaAngleLabel1: TRLAngleLabel;
+    rlbQuandoRetiradaAngleLabel2: TRLAngleLabel;
+    QuandoRetiradaColuna1: TRLDraw;
+    rlbQuandoRetiradaLinha2Coluna3: TRLDraw;
+    rlbQuandoRetiradaLinha2Coluna2: TRLDraw;
+    rlbQuandoRetiradaLinha2Coluna1: TRLDraw;
+    rlbQuandoRetiradaLinha1Coluna1: TRLDraw;
+    rlbQuandoEntrega: TRLBand;
+    QuandoEntregaExterno: TRLDraw;
+    rlbQuandoEntregaLinha1Coluna1: TRLDraw;
+    rlbQuandoEntregaLinha2Coluna2: TRLDraw;
+    QuandoEntregaLinha: TRLDraw;
+    rlbQuandoEntregaLinha1Memo2: TRLLabel;
+    rlbQuandoEntregaLinha2Memo1: TRLLabel;
+    rlbQuandoEntregaLinha2Memo2: TRLLabel;
+    rlbQuandoEntregaLinha2Coluna1: TRLDraw;
+    rlbQuandoEntregaLinha2Memo3: TRLLabel;
+    rlbQuandoEntregaLinha2Memo4: TRLLabel;
+    RLLquadroEntregaNome: TRLLabel;
+    RLLquadroEntregaDocumento: TRLLabel;
+    RLLquadroEntregaIE: TRLLabel;
+    RLLquadroEntregaEndereco: TRLLabel;
+    RLLquadroEntregaBairro: TRLLabel;
+    RLLquadroEntregaCep: TRLLabel;
+    RLLquadroEntregaMunicipio: TRLLabel;
+    RLLquadroEntregaUF: TRLLabel;
+    RLLquadroEntregaTelefone: TRLLabel;
+    rlbQuandoEntregaLinha1Memo1: TRLLabel;
+    rlbQuandoEntregaLinha2Coluna3: TRLDraw;
+    rlbQuandoEntregaAngleLabel1: TRLAngleLabel;
+    rlbQuandoEntregaAngleLabel2: TRLAngleLabel;
+    QuandoEntregaColuna1: TRLDraw;
+    rlbQuandoRetiradaLinha1Coluna2: TRLDraw;
+    rlbQuandoRetiradaLinha1Coluna3: TRLDraw;
+    rlbQuandoEntregaLinha1Coluna2: TRLDraw;
+    rlbQuandoEntregaLinha1Coluna3: TRLDraw;
+    rlbQuandoEntregaLinha2Coluna4: TRLDraw;
+    rlbQuandoRetiradaLinha2Coluna4: TRLDraw;
+    rlbQuandoRetiradaLinha1Memo3: TRLLabel;
+    rlbQuandoRetiradaLinha1Memo4: TRLLabel;
+    rlbQuandoEntregaLinha1Memo3: TRLLabel;
+    rlbQuandoEntregaLinha1Memo4: TRLLabel;
+    rlbQuandoEntregaLinha2Memo5: TRLLabel;
+    rlbQuandoRetiradaLinha2Memo5: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -500,8 +562,6 @@ type
     procedure DefinirCabecalho;
     procedure DefinirEmitente;
     procedure DefinirDestinatario;
-    function DefinirEnderecoRetirada: String;
-    function DefinirEnderecoEntrega: String;
     procedure DefinirImposto;
     procedure DefinirTransporte;
     procedure DefinirDadosAdicionais;
@@ -513,6 +573,10 @@ type
     procedure AplicarParametros;
     procedure DefinirCabecalhoItens;
     function ManterBandinfAdProd(sInforAdicProduto: String): String;
+    procedure AplicarParametrosEntrega;
+    procedure AplicarParametrosRetirada;
+    procedure DefinirEntrega;
+    procedure DefinirRetirada;
   end;
 
 implementation
@@ -925,6 +989,8 @@ begin
   DefinirCabecalho;
   DefinirEmitente;
   DefinirDestinatario;
+  DefinirRetirada;
+  DefinirEntrega;
   DefinirImposto;
   DefinirISSQN;
   DefinirTransporte;
@@ -1092,42 +1158,6 @@ begin
       rllDestUF.Caption := UF;
       rllDestCEP.Caption := FormatarCEP(CEP);
       rllDestFONE.Caption := FormatarFone(Fone);
-    end;
-  end;
-end;
-
-function TfrlDANFeRLPaisagem.DefinirEnderecoEntrega: String;
-begin
-  Result := '';
-  if NaoEstaVazio(fpNFe.Entrega.xLgr) then
-  begin
-    with fpNFe.Entrega do
-    begin
-      Result := XLgr +
-        IfThen(Nro = '0', '', ', ' + Nro) +
-        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
-
-      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
-        xBairro + ' - ' + xMun + '-' + UF +
-        fpDANFe.TrataDocumento(CNPJCPF);
-    end;
-  end;
-end;
-
-function TfrlDANFeRLPaisagem.DefinirEnderecoRetirada: String;
-begin
-  Result := '';
-  if NaoEstaVazio(fpNFe.Retirada.xLgr) then
-  begin
-    with fpNFe.Retirada do
-    begin
-      Result := XLgr +
-        IfThen(Nro = '0', '', ', ' + Nro) +
-        IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
-
-      Result := 'LOCAL DE RETIRADA: ' + Result + ' - ' +
-        xBairro + ' - ' + xMun + '-' + UF +
-        fpDANFe.TrataDocumento(CNPJCPF);
     end;
   end;
 end;
@@ -1350,9 +1380,6 @@ begin
     sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
     InserirLinhas(sSuframa, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
-
-  InserirLinhas(DefinirEnderecoRetirada, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-  InserirLinhas(DefinirEnderecoEntrega, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
   InserirLinhas(
     fpDANFe.ManterDocreferenciados(fpNFe) +
@@ -1640,8 +1667,8 @@ begin
   rlbEmitente.Height := rliNatOpe.Height + rliEmitente.Height + 2; //168 + (2*AltLinhaComun - 60);
 
   // ******** DefinirDestinatario ********
-  base := RLDraw15.Top;
-  RLDraw15.Height := 3 * AltLinhaComun + 1;
+  base := quadroDestinatarioExterno.Top;
+  quadroDestinatarioExterno.Height := 3 * AltLinhaComun + 1;
   RLDraw13.Height := 3 * AltLinhaComun + 1;
 
   RLDraw16.Top := base + AltLinhaComun;
@@ -1697,14 +1724,19 @@ begin
   rllDestIE.Top := base + 3 * AltLinhaComun - rllDestIE.Height;
   rllHoraSaida.Top := base + 3 * AltLinhaComun - rllHoraSaida.Height;
 
-  RLAngleLabel1.Top := RLDraw15.Top + 1;
-  RLAngleLabel1.Height := RLDraw15.Height - 3;
-  RLAngleLabel2.Top := RLDraw15.Top + 1;
-  RLAngleLabel2.Height := RLDraw15.Height - 3;
+  RLAngleLabel1.Top := quadroDestinatarioExterno.Top + 1;
+  RLAngleLabel1.Height := quadroDestinatarioExterno.Height - 3;
+  RLAngleLabel2.Top := quadroDestinatarioExterno.Top + 1;
+  RLAngleLabel2.Height := quadroDestinatarioExterno.Height - 3;
   RLAngleLabel1.AutoSize := False;//vai ajustar o tamanho da fonte se necessário.
   RLAngleLabel2.AutoSize := False;
   // Band DefinirDestinatario
-  rlbDestinatario.Height := RLDraw15.Height + 2;// 92 + (3*AltLinhaComun - 90);
+  rlbDestinatario.Height := quadroDestinatarioExterno.Height + 2;// 92 + (3*AltLinhaComun - 90);
+
+ // ******** Retirada ********
+  AplicarParametrosRetirada;
+  // ******** Entrega ********
+  AplicarParametrosEntrega;
 
   // ******** Fatura ********
   base := RLDrawFaturareal.Top;
@@ -2040,6 +2072,84 @@ begin
     lblValorTotal.Caption := 'DESCONTO';
     lblPercValorDesc1.Caption := ACBrStr('LÍQUIDO');
   end;
+end;
+
+procedure TfrlDANFeRLPaisagem.DefinirRetirada;
+begin
+  with fpNFe.Retirada do
+  begin
+    rlbQuandoRetirada.Visible := NaoEstaVazio(xNome);
+
+    if rlbQuandoRetirada.Visible then
+    begin
+      RLLquadroRetiradaNome.Caption := xNome;
+      RLLquadroRetiradaDocumento.Caption := FormatarCNPJouCPF(CNPJCPF);
+      RLLquadroRetiradaIE.Caption := IE;
+      RLLquadroRetiradaEndereco.Caption := XLgr +
+                                            IfThen(Nro = '0', '', ', ' + Nro) +
+                                            IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
+      RLLquadroRetiradaBairro.Caption := xBairro;
+      RLLquadroRetiradaCEP.Caption := FormatarCEP(CEP);
+      RLLquadroRetiradaMunicipio.Caption := xMun;
+      RLLquadroRetiradaUF.Caption := UF;
+      RLLquadroRetiradaTelefone.Caption := FormatarFone(Fone);
+    end;
+  end;
+end;
+
+procedure TfrlDANFeRLPaisagem.DefinirEntrega;
+begin
+  with fpNFe.Entrega do
+  begin
+    rlbQuandoEntrega.Visible := NaoEstaVazio(xNome);
+
+    if rlbQuandoEntrega.Visible then
+    begin
+      RLLquadroEntregaNome.Caption := xNome;
+      RLLquadroEntregaDocumento.Caption := FormatarCNPJouCPF(CNPJCPF);
+      RLLquadroEntregaIE.Caption := IE;
+      RLLquadroEntregaEndereco.Caption := XLgr +
+                                          IfThen(Nro = '0', '', ', ' + Nro) +
+                                          IfThen(EstaVazio(xCpl), '', ' - ' + xCpl);
+      RLLquadroEntregaBairro.Caption := xBairro;
+      RLLquadroEntregaCep.Caption := FormatarCEP(CEP);
+      RLLquadroEntregaMunicipio.Caption := xMun;
+      RLLquadroEntregaUF.Caption := UF;
+      RLLquadroEntregaTelefone.Caption := FormatarFone(Fone);
+    end;
+  end;
+end;
+
+procedure TfrlDANFeRLPaisagem.AplicarParametrosRetirada;
+begin
+  // Defime os padrão de Retirada
+
+  RLLquadroRetiradaNome.Font := rllDestNome.Font;
+
+  RLLquadroRetiradaDocumento.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaIE.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaEndereco.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaBairro.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaCEP.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaMunicipio.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaUF.Font := RLLquadroRetiradaNome.Font;
+  RLLquadroRetiradaTelefone.Font := RLLquadroRetiradaNome.Font;
+end;
+
+procedure TfrlDANFeRLPaisagem.AplicarParametrosEntrega;
+begin
+  // Defime os padrão de entrega
+
+  RLLquadroEntregaNome.Font := rllDestNome.Font;
+
+  RLLquadroEntregaDocumento.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaIE.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaEndereco.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaBairro.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaCep.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaMunicipio.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaUF.Font := RLLquadroEntregaNome.Font;
+  RLLquadroEntregaTelefone.Font := RLLquadroEntregaNome.Font;
 end;
 
 end.

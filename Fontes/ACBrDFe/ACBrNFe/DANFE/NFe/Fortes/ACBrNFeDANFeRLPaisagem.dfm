@@ -2,11 +2,12 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 204
   Top = 207
   Caption = 'frlDANFeRLPaisagem'
-  ClientWidth = 907
+  ClientWidth = 1116
+  ExplicitWidth = 1132
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = -232
+    Top = 0
     Width = 1123
     Height = 794
     Margins.LeftMargin = 7.000000000000000000
@@ -22,6 +23,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
+    ExplicitTop = 0
+    ExplicitWidth = 1123
+    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 450
       Top = 427
@@ -33,7 +37,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 99
-      Top = 743
+      Top = 874
       Width = 998
       Height = 35
       AutoSize = True
@@ -105,7 +109,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCabecalhoItens: TRLBand
       Left = 99
-      Top = 558
+      Top = 689
       Width = 998
       Height = 35
       AutoExpand = False
@@ -835,7 +839,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbDadosAdicionais: TRLBand
       Left = 99
-      Top = 807
+      Top = 938
       Width = 998
       Height = 124
       AlignToBottom = True
@@ -978,7 +982,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Width = 998
       Height = 80
       BandType = btTitle
-      object RLDraw15: TRLDraw
+      object quadroDestinatarioExterno: TRLDraw
         Left = 0
         Top = 0
         Width = 997
@@ -1413,9 +1417,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLAngleLabel1: TRLAngleLabel
         Left = 6
-        Top = 9
+        Top = 8
         Width = 10
-        Height = 61
+        Height = 62
         Angle = 90.000000000000000000
         Caption = 'DESTINAT'#193'RIO'
         Font.Charset = DEFAULT_CHARSET
@@ -1428,9 +1432,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
       object RLAngleLabel2: TRLAngleLabel
         Left = 19
-        Top = 12
+        Top = 11
         Width = 10
-        Height = 55
+        Height = 56
         Angle = 90.000000000000000000
         AngleBorders = True
         Caption = '/ REMETENTE'
@@ -1454,7 +1458,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbFatura: TRLBand
       Left = 99
-      Top = 308
+      Top = 439
       Width = 998
       Height = 54
       BandType = btTitle
@@ -2432,7 +2436,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbImposto: TRLBand
       Left = 99
-      Top = 362
+      Top = 493
       Width = 998
       Height = 58
       BandType = btTitle
@@ -2954,7 +2958,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbTransp: TRLBand
       Left = 99
-      Top = 420
+      Top = 551
       Width = 998
       Height = 80
       BandType = btTitle
@@ -3581,7 +3585,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbISSQN: TRLBand
       Left = 99
-      Top = 778
+      Top = 909
       Width = 998
       Height = 29
       BandType = btFooter
@@ -3765,7 +3769,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbAvisoContingencia: TRLBand
       Left = 99
-      Top = 530
+      Top = 661
       Width = 998
       Height = 28
       BandType = btColumnHeader
@@ -3975,7 +3979,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object RLBFaturaReal: TRLBand
       Left = 99
-      Top = 264
+      Top = 395
       Width = 998
       Height = 44
       BandType = btTitle
@@ -4186,7 +4190,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCancelada: TRLBand
       Left = 99
-      Top = 500
+      Top = 631
       Width = 998
       Height = 30
       BandType = btColumnHeader
@@ -4211,7 +4215,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object subItens: TRLSubDetail
       Left = 99
-      Top = 593
+      Top = 724
       Width = 998
       Height = 150
       Borders.Sides = sdCustom
@@ -5153,7 +5157,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 3
         Top = 107
-        Width = 95
+        Width = 94
         Height = 7
         Caption = 'NATUREZA DE OPERA'#199#195'O'
         Font.Charset = DEFAULT_CHARSET
@@ -5418,6 +5422,800 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Angle = 90.000000000000000000
         DrawKind = dkLine
         HoldStyle = hsVertically
+      end
+    end
+    object rlbQuandoRetirada: TRLBand
+      Left = 99
+      Top = 264
+      Width = 998
+      Height = 65
+      BandType = btTitle
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      Borders.Style = bsVertical
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -9
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      object QuandoRetiradaExterno: TRLDraw
+        Left = 0
+        Top = 1
+        Width = 998
+        Height = 63
+      end
+      object rlbQuandoRetiradaLinha1Memo1: TRLLabel
+        Tag = 10
+        Left = 34
+        Top = 3
+        Width = 82
+        Height = 7
+        Alignment = taCenter
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object QuandoRetiradaLinha: TRLDraw
+        Left = 34
+        Top = 30
+        Width = 996
+        Height = 1
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha1Memo2: TRLLabel
+        Tag = 10
+        Left = 722
+        Top = 3
+        Width = 42
+        Height = 7
+        Alignment = taCenter
+        Caption = 'CNPJ / CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha2Memo1: TRLLabel
+        Tag = 10
+        Left = 35
+        Top = 32
+        Width = 42
+        Height = 7
+        Alignment = taCenter
+        Caption = 'ENDERE'#199'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha2Memo2: TRLLabel
+        Tag = 10
+        Left = 482
+        Top = 32
+        Width = 68
+        Height = 7
+        Alignment = taCenter
+        Caption = 'BAIRRO / DISTRITO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha2Memo3: TRLLabel
+        Tag = 10
+        Left = 650
+        Top = 32
+        Width = 17
+        Height = 7
+        Caption = 'CEP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha2Memo4: TRLLabel
+        Tag = 10
+        Left = 716
+        Top = 32
+        Width = 40
+        Height = 7
+        Alignment = taCenter
+        Caption = 'MUNIC'#205'PIO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLquadroRetiradaNome: TRLLabel
+        Tag = 703
+        Left = 35
+        Top = 13
+        Width = 669
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaDocumento: TRLLabel
+        Tag = 703
+        Left = 722
+        Top = 13
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaIE: TRLLabel
+        Tag = 703
+        Left = 817
+        Top = 13
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaEndereco: TRLLabel
+        Tag = 703
+        Left = 35
+        Top = 45
+        Width = 436
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaBairro: TRLLabel
+        Tag = 703
+        Left = 486
+        Top = 45
+        Width = 155
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaCEP: TRLLabel
+        Tag = 703
+        Left = 650
+        Top = 45
+        Width = 60
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaMunicipio: TRLLabel
+        Tag = 703
+        Left = 717
+        Top = 45
+        Width = 244
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaUF: TRLLabel
+        Tag = 703
+        Left = 970
+        Top = 45
+        Width = 23
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroRetiradaTelefone: TRLLabel
+        Tag = 703
+        Left = 910
+        Top = 10
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaAngleLabel1: TRLAngleLabel
+        Left = 6
+        Top = 2
+        Width = 10
+        Height = 62
+        Angle = 90.000000000000000000
+        Caption = 'INFORMA'#199#213'ES'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaAngleLabel2: TRLAngleLabel
+        Left = 19
+        Top = 6
+        Width = 10
+        Height = 56
+        Angle = 90.000000000000000000
+        AngleBorders = True
+        Caption = 'DE RETIRADA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object QuandoRetiradaColuna1: TRLDraw
+        Left = 32
+        Top = 1
+        Width = 1
+        Height = 66
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha2Coluna3: TRLDraw
+        Left = 710
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha2Coluna2: TRLDraw
+        Left = 647
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha2Coluna1: TRLDraw
+        Left = 480
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha1Coluna1: TRLDraw
+        Left = 720
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha1Coluna2: TRLDraw
+        Left = 810
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha1Coluna3: TRLDraw
+        Left = 908
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha2Coluna4: TRLDraw
+        Left = 968
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoRetiradaLinha1Memo3: TRLLabel
+        Tag = 10
+        Left = 814
+        Top = 3
+        Width = 82
+        Height = 7
+        Alignment = taCenter
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha1Memo4: TRLLabel
+        Tag = 10
+        Left = 910
+        Top = 3
+        Width = 60
+        Height = 7
+        Alignment = taCenter
+        Caption = 'TELEFONE / FAX'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoRetiradaLinha2Memo5: TRLLabel
+        Tag = 10
+        Left = 972
+        Top = 32
+        Width = 11
+        Height = 7
+        Caption = 'UF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+    end
+    object rlbQuandoEntrega: TRLBand
+      Left = 99
+      Top = 329
+      Width = 998
+      Height = 66
+      BandType = btTitle
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      Borders.Style = bsVertical
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -9
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+      object QuandoEntregaExterno: TRLDraw
+        Left = 0
+        Top = 1
+        Width = 998
+        Height = 63
+      end
+      object rlbQuandoEntregaLinha1Coluna1: TRLDraw
+        Left = 720
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha2Coluna2: TRLDraw
+        Left = 647
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object QuandoEntregaLinha: TRLDraw
+        Left = 33
+        Top = 30
+        Width = 996
+        Height = 1
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha1Memo2: TRLLabel
+        Tag = 10
+        Left = 722
+        Top = 3
+        Width = 42
+        Height = 7
+        Alignment = taCenter
+        Caption = 'CNPJ / CPF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Memo1: TRLLabel
+        Tag = 10
+        Left = 35
+        Top = 32
+        Width = 42
+        Height = 7
+        Alignment = taCenter
+        Caption = 'ENDERE'#199'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Memo2: TRLLabel
+        Tag = 10
+        Left = 482
+        Top = 32
+        Width = 68
+        Height = 7
+        Alignment = taCenter
+        Caption = 'BAIRRO / DISTRITO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Coluna1: TRLDraw
+        Left = 480
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha2Memo3: TRLLabel
+        Tag = 10
+        Left = 650
+        Top = 32
+        Width = 17
+        Height = 7
+        Caption = 'CEP'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Memo4: TRLLabel
+        Tag = 10
+        Left = 716
+        Top = 32
+        Width = 40
+        Height = 7
+        Alignment = taCenter
+        Caption = 'MUNIC'#205'PIO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLquadroEntregaNome: TRLLabel
+        Tag = 703
+        Left = 35
+        Top = 13
+        Width = 669
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaDocumento: TRLLabel
+        Tag = 703
+        Left = 722
+        Top = 13
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaIE: TRLLabel
+        Tag = 703
+        Left = 814
+        Top = 13
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaEndereco: TRLLabel
+        Tag = 703
+        Left = 35
+        Top = 45
+        Width = 436
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaBairro: TRLLabel
+        Tag = 703
+        Left = 486
+        Top = 45
+        Width = 155
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaCep: TRLLabel
+        Tag = 703
+        Left = 650
+        Top = 45
+        Width = 60
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaMunicipio: TRLLabel
+        Tag = 703
+        Left = 717
+        Top = 45
+        Width = 244
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaUF: TRLLabel
+        Tag = 703
+        Left = 970
+        Top = 45
+        Width = 23
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLquadroEntregaTelefone: TRLLabel
+        Tag = 703
+        Left = 910
+        Top = 13
+        Width = 80
+        Height = 14
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha1Memo1: TRLLabel
+        Tag = 10
+        Left = 35
+        Top = 3
+        Width = 82
+        Height = 7
+        Alignment = taCenter
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Coluna3: TRLDraw
+        Left = 710
+        Top = 30
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaAngleLabel1: TRLAngleLabel
+        Left = 6
+        Top = 6
+        Width = 7
+        Height = 54
+        Angle = 90.000000000000000000
+        Caption = 'INFORMA'#199#213'ES'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object rlbQuandoEntregaAngleLabel2: TRLAngleLabel
+        Left = 19
+        Top = 6
+        Width = 10
+        Height = 54
+        Angle = 90.000000000000000000
+        AngleBorders = True
+        Caption = 'DE ENTREGA'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object QuandoEntregaColuna1: TRLDraw
+        Left = 32
+        Top = 1
+        Width = 1
+        Height = 66
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha1Coluna2: TRLDraw
+        Left = 810
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha1Coluna3: TRLDraw
+        Left = 908
+        Top = 1
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha2Coluna4: TRLDraw
+        Left = 968
+        Top = 31
+        Width = 1
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rlbQuandoEntregaLinha1Memo3: TRLLabel
+        Tag = 10
+        Left = 814
+        Top = 3
+        Width = 82
+        Height = 7
+        Alignment = taCenter
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha1Memo4: TRLLabel
+        Tag = 10
+        Left = 910
+        Top = 3
+        Width = 60
+        Height = 7
+        Alignment = taCenter
+        Caption = 'TELEFONE / FAX'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlbQuandoEntregaLinha2Memo5: TRLLabel
+        Tag = 10
+        Left = 970
+        Top = 32
+        Width = 11
+        Height = 7
+        Caption = 'UF'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        HoldStyle = hsRelatively
+        ParentFont = False
       end
     end
   end

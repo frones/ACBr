@@ -537,6 +537,21 @@ begin
             Carteira             := Copy(Linha,58,1);
             CodigoLiquidacao     := Copy(Linha,214,02);
             //CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
+            
+            if (Copy(Linha,133,1) = '1') then
+             begin 
+              Sacado.Pessoa  := pFisica;
+	      Sacado.CNPJCPF := Copy(Linha,138,11);
+             end
+            else if (Copy(Linha,133,1) = '2') then
+             begin 
+              Sacado.Pessoa := pJuridica;
+              Sacado.CNPJCPF := Copy(Linha,135,14);
+             end
+            else
+              Sacado.Pessoa := pOutras;
+
+            Sacado.NomeSacado := Trim(Copy(Linha,149,40));
 
             // DONE -oJacinto Junior: Implementar a leitura dos motivos das ocorrências.
             MotivoLinha := 214;

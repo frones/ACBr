@@ -103,16 +103,8 @@ var
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: AnsiString;
   Aspas, tagPag: String;
 begin
+
   Leitor.Grupo := Leitor.Arquivo;
-
-  {
-   ****** Remoção do NameSpace do XML ******
-
-   XML baixados dos sites de algumas SEFAZ constuma ter ocorrências do
-   NameSpace em grupos diversos não previstos no MOC.
-   Essas ocorrências acabam prejudicando a leitura correta do XML.
-  }
-  Leitor.Grupo := StringReplace(Leitor.Grupo, ' xmlns="http://www.portalfiscal.inf.br/nfe"', '', [rfReplaceAll]);
 
   if Pos('versao="', Leitor.Arquivo) <> 0 then
     Aspas := '"'

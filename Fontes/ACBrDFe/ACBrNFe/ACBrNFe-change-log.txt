@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2019
+-- ACBrNFeNotasFiscais / pcnNFeR --
+[*] Ajuste para remoção completa do namespace do XML para leitura correta pelo
+    método "LerXML"
+    https://www.projetoacbr.com.br/forum/topic/49420-xml-com-xmlnshttpwwwportalfiscalinfbrnfe/
+  Por: BigWings
+
 12/02/2019
 -- pcnNFeW --
 [*] Alterado a condição para não gerar a tag IE do destinatário quando o mesmo

@@ -1494,6 +1494,15 @@ begin
     Isso é necessário, para que as propriedades fiquem com a acentuação correta }
   XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
 
+  {
+   ****** Remoção do NameSpace do XML ******
+
+   XML baixados dos sites de algumas SEFAZ constuma ter ocorrências do
+   NameSpace em grupos diversos não previstos no MOC.
+   Essas ocorrências acabam prejudicando a leitura correta do XML.
+  }
+  XMLStr := StringReplace(XMLStr, ' xmlns="http://www.portalfiscal.inf.br/nfe"', '', [rfReplaceAll]);
+
   FNFeR.Leitor.Arquivo := XMLStr;
   FNFeR.LerXml;
 

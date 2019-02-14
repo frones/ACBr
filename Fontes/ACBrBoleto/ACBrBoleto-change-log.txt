@@ -49,6 +49,10 @@ Símbolo : Significado
 
 
 ver: 0.1.0
+14/02/2019
+-- ACBrBancoBradesco --
+[*] Inclusão do complemento do endereço do sacado na remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/49394-altera%C3%A7%C3%A3o-remessa-bradesco-cnab400/
 
 06/02/2019
 -- ACBrCitiBank, ACBrBoleto --

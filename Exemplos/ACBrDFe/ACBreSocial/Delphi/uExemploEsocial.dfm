@@ -344,16 +344,18 @@ object FExemploEsocial: TFExemploEsocial
           ParentCtl3D = False
           TabOrder = 7
         end
-        object cbS2241: TCheckBox
+        object cbS2245: TCheckBox
           Left = 12
           Top = 196
-          Width = 332
+          Width = 404
           Height = 17
-          Caption = 'S-2241 - Insalubridade, Periculosidade e Aposentadoria Especial'
+          Caption = 
+            'S-2245 - Treinamentos, Capacita'#231#245'es, Exerc'#237'cios Simulados '#13#10'e Ou' +
+            'tras Anota'#231#245'es'
           TabOrder = 8
         end
         object cbAviso: TComboBox
-          Left = 476
+          Left = 548
           Top = 12
           Width = 145
           Height = 21
@@ -366,90 +368,98 @@ object FExemploEsocial: TFExemploEsocial
             'Cancelamento')
         end
         object cbS2250: TCheckBox
-          Left = 350
+          Left = 422
           Top = 12
           Width = 120
           Height = 17
           Caption = 'S-2250 - Aviso Pr'#233'vio'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 10
+          TabOrder = 11
         end
         object cbS3000: TCheckBox
-          Left = 350
+          Left = 422
           Top = 196
           Width = 175
           Height = 17
           Caption = 'S-3000 - Exclus'#227'o de Eventos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 11
+          TabOrder = 12
         end
         object cbS2400: TCheckBox
-          Left = 350
+          Left = 422
           Top = 173
           Width = 321
           Height = 17
           Caption = 'S-2400 - Cadastro de Benef'#237'cios Previd'#234'nci'#225'rios - RPPS'
-          TabOrder = 12
+          TabOrder = 13
         end
         object cbS2399: TCheckBox
-          Left = 350
+          Left = 422
           Top = 150
           Width = 248
           Height = 17
           Caption = 'S-2399 - Trabalhador Sem V'#237'nculo - T'#233'rmino'
-          TabOrder = 13
+          TabOrder = 14
         end
         object cbS2306: TCheckBox
-          Left = 350
+          Left = 422
           Top = 127
           Width = 311
           Height = 17
           Caption = 'S-2306 - Trabalhador Sem V'#237'nculo - Altera'#231#227'o Contratual'
-          TabOrder = 14
+          TabOrder = 15
         end
         object cbS2300: TCheckBox
-          Left = 350
+          Left = 422
           Top = 104
           Width = 233
           Height = 17
           Caption = 'S-2300 - Trabalhador Sem V'#237'nculo - In'#237'cio'
-          TabOrder = 15
+          TabOrder = 16
         end
         object cbS2299: TCheckBox
-          Left = 350
+          Left = 422
           Top = 81
           Width = 135
           Height = 17
           Caption = 'S-2299 - Desligamento'
-          TabOrder = 16
+          TabOrder = 17
         end
         object cbS2298: TCheckBox
-          Left = 350
+          Left = 422
           Top = 58
           Width = 153
           Height = 17
           Caption = 'S-2298 - Reintegra'#231#227'o'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 17
+          TabOrder = 18
         end
         object cbs2260: TCheckBox
-          Left = 350
+          Left = 422
           Top = 39
           Width = 332
           Height = 17
           Caption = 'S-2260 Convoca'#231#227'o para Trabalho Intermitente'
-          TabOrder = 18
+          TabOrder = 19
+        end
+        object cbS2221: TCheckBox
+          Left = 12
+          Top = 219
+          Width = 404
+          Height = 17
+          Caption = 'S-2221 - Exame Toxicol'#243'gico do Motorista Profissional '
+          TabOrder = 10
         end
       end
     end
     object pgWebservice: TPageControl
       Left = 1
-      Top = 259
+      Top = 277
       Width = 738
-      Height = 343
+      Height = 325
       ActivePage = tsComandos
       Align = alBottom
       TabOrder = 1
@@ -511,9 +521,9 @@ object FExemploEsocial: TFExemploEsocial
           OnClick = btnGerarEnviarClick
         end
         object btnConsIdeEveEmp: TButton
-          Left = 12
+          Left = 10
           Top = 74
-          Width = 227
+          Width = 229
           Height = 25
           Caption = 'Consultar Identificadores Eventos Empregador'
           TabOrder = 6
@@ -527,6 +537,24 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'Download Eventos'
           TabOrder = 7
           OnClick = btnDownloadEventosClick
+        end
+        object btnConsIdeEveTab: TButton
+          Left = 10
+          Top = 105
+          Width = 229
+          Height = 25
+          Caption = 'Consultar Identificadores Eventos Tabela'
+          TabOrder = 8
+          OnClick = btnConsIdeEveTabClick
+        end
+        object btnConsIdeEveTrab: TButton
+          Left = 10
+          Top = 136
+          Width = 229
+          Height = 25
+          Caption = 'Consultar Identificadores Eventos Trabalhador'
+          TabOrder = 9
+          OnClick = btnConsIdeEveTrabClick
         end
       end
       object tsFormaEnvio: TTabSheet
@@ -590,7 +618,7 @@ object FExemploEsocial: TFExemploEsocial
           Left = 0
           Top = 0
           Width = 730
-          Height = 315
+          Height = 297
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -603,7 +631,7 @@ object FExemploEsocial: TFExemploEsocial
           Left = 0
           Top = 0
           Width = 730
-          Height = 315
+          Height = 297
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -616,7 +644,7 @@ object FExemploEsocial: TFExemploEsocial
           Left = 0
           Top = 0
           Width = 730
-          Height = 315
+          Height = 297
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -629,7 +657,7 @@ object FExemploEsocial: TFExemploEsocial
           Left = 0
           Top = 0
           Width = 730
-          Height = 315
+          Height = 297
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -642,7 +670,7 @@ object FExemploEsocial: TFExemploEsocial
           Left = 0
           Top = 0
           Width = 730
-          Height = 315
+          Height = 297
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1577,7 +1605,6 @@ object FExemploEsocial: TFExemploEsocial
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    OnTransmissaoEventos = ACBreSocial1TransmissaoEventos
     Left = 664
     Top = 304
   end

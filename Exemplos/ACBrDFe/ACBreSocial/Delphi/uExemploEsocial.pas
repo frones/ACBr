@@ -111,7 +111,7 @@ type
     cbS2220: TCheckBox;
     cbS2230: TCheckBox;
     cbS2240: TCheckBox;
-    cbS2241: TCheckBox;
+    cbS2245: TCheckBox;
     cbAviso: TComboBox;
     cbS2250: TCheckBox;
     cbS3000: TCheckBox;
@@ -227,6 +227,9 @@ type
     cbs2260: TCheckBox;
     btnConsIdeEveEmp: TButton;
     btnDownloadEventos: TButton;
+    cbS2221: TCheckBox;
+    btnConsIdeEveTab: TButton;
+    btnConsIdeEveTrab: TButton;
 
     procedure btnGerarClick(Sender: TObject);
 
@@ -272,6 +275,8 @@ type
     procedure btnGerarEnviarClick(Sender: TObject);
     procedure btnConsIdeEveEmpClick(Sender: TObject);
     procedure btnDownloadEventosClick(Sender: TObject);
+    procedure btnConsIdeEveTabClick(Sender: TObject);
+    procedure btnConsIdeEveTrabClick(Sender: TObject);
   private
     { Private declarations }
     function GetTipoOperacao: TModoLancamento;
@@ -310,9 +315,10 @@ type
     procedure GerareSocial2206;
     procedure GerareSocial2210;
     procedure GerareSocial2220;
+    procedure GerareSocial2221;
     procedure GerareSocial2230;
     procedure GerareSocial2240;
-    procedure GerareSocial2241;
+    procedure GerareSocial2245;
     procedure GerareSocial2250;
     procedure GerareSocial2260;
     procedure GerareSocial2298;
@@ -861,21 +867,12 @@ begin
 
         with dadosAmbiente do
         begin
-          dscAmb := 'DESCRICAO';
-          localAmb := tpLocalAmb(0);
-          TpInsc := tpTpInscAmbTab(0);
-          NrInsc := '123456789';
-
-          fatorRisco.Clear;
-
-          with fatorRisco.Add do
-            codFatRis := '1111';
-
-          with fatorRisco.Add do
-            codFatRis := '2222';
-
-          with fatorRisco.Add do
-            codFatRis := '3333';
+//          nmAmb      := 'AMBIENTE 01';
+          dscAmb     := 'DESCRICAO DO AMBIENTE';
+          localAmb   := tpLocalAmb(0);
+          TpInsc     := tpTpInscAmbTab(0);
+          NrInsc     := '123456789';
+          CodLotacao := '';
         end;
 
         NovaValidade.IniValid := '2015-06';
@@ -2914,15 +2911,12 @@ begin
         VerProc := '1.0';
       end;
 
-      IdeRegistrador.tpRegistrador := tpTpRegistrador(0);
-      IdeRegistrador.TpInsc := tpTpInsc(1);
-      IdeRegistrador.NrInsc := '12345678901234';
-
       IdeEmpregador.TpInsc := tiCNPJ;
       IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
-      ideTrabalhador.CpfTrab := '12345678901';
-      ideTrabalhador.NisTrab := '12345678901';
+      IdeVinculo.CpfTrab := '12345678901';
+      IdeVinculo.NisTrab := '96325874103';
+      IdeVinculo.Matricula := 'A1234';
 
       with Cat do
       begin
@@ -2936,19 +2930,25 @@ begin
         indComunPolicia := tpSim;
         codSitGeradora := 200004300;
         iniciatCAT := tpIniciatCAT(1);
-        observacao := 'Teste';
+        obsCAT := 'Teste';
 
         with LocalAcidente do
         begin
           tpLocal := tpTpLocal(1);
           dscLocal := 'Local Teste';
+          codAmb := '1';
+          tpLograd := 'R';
           DscLograd := 'Logradouro Teste';
           NrLograd := '111';
+          bairro := '111';
+          cep := '111';
           codMunic := 123;
           uf := tpuf(ufPR);
-          cnpjLocalAcid := '12345678901234';
           pais := '008';
           CodPostal := '6546';
+
+          ideLocalAcid.TpInsc := tiCNPJ;
+          ideLocalAcid.NrInsc := edtIdEmpregador.Text;
         end;
 
         ParteAtingida.Clear;
@@ -3005,8 +3005,7 @@ begin
           end;
         end;
 
-        CatOrigem.dtCatOrig := Now;
-        CatOrigem.nrCatOrig := '123456';
+        CatOrigem.nrRecCatOrig := '123456';
       end;
     end;
   end;
@@ -3068,13 +3067,51 @@ begin
           Medico.nisMed := '12345612345';
           Medico.NmMed  := 'TESTE DE MEDICO EXAMINADOR';
           Medico.nrCRM  := '6655666';
-          Medico.ufCRM := tpuf.ufSP;
+          Medico.ufCRM := tpuf(ufSP);
         end;
 
         RespMonit.cpfResp := '12345678901';
         RespMonit.nmResp := 'NOME DO RESPONSAVEL';
         RespMonit.nrCRM := '666566';
         RespMonit.ufCRM := tpuf(ufPR);
+      end;
+    end;
+  end;
+end;
+
+procedure TFExemploEsocial.GerareSocial2221;
+begin
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2221.Add do
+  begin
+    with evtToxic do
+    begin
+      Sequencial := 0;
+
+      with IdeEvento do
+      begin
+        indRetif := tpIndRetificacao(0);
+        NrRecibo := '65.5454.987798798798';
+        TpAmb    := TpTpAmb(1);
+        ProcEmi  := TpProcEmi(0);
+        VerProc  := '1.0';
+      end;
+
+      IdeEmpregador.TpInsc := tiCNPJ;
+      IdeEmpregador.NrInsc := edtIdEmpregador.Text;
+
+      IdeVinculo.CpfTrab := '12345678901';
+      IdeVinculo.NisTrab := '12345678901';
+      IdeVinculo.Matricula := '5000';
+
+      with toxicologico do
+      begin
+        dtExame     := Date;
+        cnpjLab     := '12548526587101';
+        codSeqExame := '999999999';
+        nmMed       := 'MEDICO TESTE';
+        nrCRM       := '54646548';
+        ufCRM       := 'SP';
+//        indRecusa   := tpNao;
       end;
     end;
   end;
@@ -3192,147 +3229,93 @@ begin
 
       IdeVinculo.CpfTrab := '12345678901';
       IdeVinculo.NisTrab := '12345678901';
-      IdeVinculo.Matricula := '564545';
+      IdeVinculo.Matricula := '564545';  
 
       with infoExpRisco do
       begin
-        with iniExpRisco do
+        dtIniCondicao := date;
+
+        InfoAmb.Clear;
+        with InfoAmb.Add do
         begin
-          dtCondicao := date;
-
-          InfoAmb.Clear;
-
-          with InfoAmb.Add do
-          begin
-            codAmb := '654';
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-            begin
-              codFatRis := '1234567890';
-              intConc := 'N/A';
-              tecMedicao := 'Técnica de medição';
-
-              with epcEpi do
-              begin
-                utilizEPC := uEPCUtilizado;
-                utilizEPI := uEPIUtilizado;
-
-                epc.Clear;
-
-                with epc.Add do
-                begin
-                  dscEpc := 'Descrição do EPC 1';
-                  eficEpc := tpSim;
-                end;
-
-                epi.Clear;
-
-                with epi.Add do
-                begin
-                  caEPI := '321654';
-                  eficEpi := tpSim;
-                  medProtecao := tpSim;
-                  condFuncto := tpSim;
-                  przValid := tpSim;
-                  periodicTroca := tpSim;
-                  higienizacao := tpSim;
-                end;
-              end;
-            end;
-          end;
+          codAmb := '654';
+        end;
+        with InfoAmb.Add do
+        begin
+          codAmb := '548';
         end;
 
-        // alteração das informações de condições de ambiente de trabalho, opcional
-        with altExpRisco do
+        infoAtiv.dscAtivDes := 'DESCRICAO ATIVIDADE';
+
+        infoAtiv.ativPericInsal.Clear;
+        with infoAtiv.ativPericInsal.Add do
         begin
-          dtCondicao := date;
-
-          with InfoAmb.Add do
-          begin
-            codAmb := '654';
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-            begin
-              codFatRis := '1234567890';
-              intConc := 'N/A';
-              tecMedicao := 'Técnica de medição';
-
-              with epcEpi do
-              begin
-                utilizEPC := uEPCUtilizado;
-                utilizEPI := uEPIUtilizado;
-
-                epc.Clear;
-
-                with epc.Add do
-                begin
-                  dscEpc := 'Descrição do EPC 2';
-                  eficEpc := tpSim;
-                end;
-
-                epi.Clear;
-
-                with epi.Add do
-                begin
-                  caEPI := '321654';
-                  eficEpi := tpSim;
-                  medProtecao := tpSim;
-                  condFuncto := tpSim;
-                  przValid := tpSim;
-                  periodicTroca := tpSim;
-                  higienizacao := tpSim;
-                end;
-              end;
-            end;
-          end;
+          codAtiv := '654';
+        end;
+        with infoAtiv.ativPericInsal.Add do
+        begin
+          codAtiv := '548';
         end;
 
-        // fimExpRisco - opcional, informar quando o trabalhador não se sujeitar mais as condições de ambiente informadas anteriormente
-        with fimExpRisco do
+        FatRisco.Clear;
+        with FatRisco.Add do
         begin
-          dtFimCondicao := date;
+          codFatRis      := '1234567890';
+          tpAval         := tpTpAval(1);
+          intConc        := 0.50;
+          limTol         := 0.50;
+          unMed          := 9;
+          tecMedicao     := 'Tecnica de medicao';
+          insalubridade  := tpNao;
+          periculosidade := tpNao;
+          aposentEsp     := tpNao;
 
-          infoAmb.Clear;
+          with epcEpi do
+          begin
+            utilizEPC := uEPCNaoAplica;
+            eficEpc   := tpNao;
+            utilizEPI := uEPIUtilizado;
 
-          with InfoAmb.Add do
-            codAmb := '897654987';
+            epi.Clear;
+            with epi.Add do
+            begin
+              caEPI         := '321654';
+              dscEPI        := 'CAPACETE';
+              eficEpi       := tpSim;
+              medProtecao   := tpSim;
+              condFuncto    := tpSim;
+              usoInint      := tpSim;
+              przValid      := tpSim;
+              periodicTroca := tpSim;
+              higienizacao  := tpSim;
+            end;
+          end;
         end;
 
         respReg.Clear;
-
         with respReg.Add do
         begin
-          dtIni := Now;
-          dtFim := Now;
+          cpfResp := '12345678901';
           NisResp := '12345678901';
-          NrOc := '51561561';
-          ufOC := ufSP;
+          nmResp  := 'RESPONSAVEL';
+          ideOC   := tpIdeOC(9);
+          dscOC   := 'ORGAO';
+          NrOc    := '51561561';
+          ufOC    := ufSP;
         end;
 
-        with respReg.Add do
-        begin
-          dtIni := Now;
-          dtFim := Now;
-          NisResp := '12345678901';
-          NrOc := '51561561';
-          ufOC := ufSP;
-        end;
+        obs.metErg   := 'METODOLOGIA';
+        obs.obsCompl := 'OBS COMPLEMENTAR';
       end;
     end;
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2241;
+procedure TFExemploEsocial.GerareSocial2245;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2241.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2245.Add do
   begin
-    with EvtInsApo do
+    with evtTreiCap do
     begin
       Sequencial := 0;
 
@@ -3340,132 +3323,42 @@ begin
       begin
         indRetif := ireOriginal;
         NrRecibo := '654654865656';
-        TpAmb := taProducaoRestrita;
-        ProcEmi := peAplicEmpregador;
-        VerProc := '1.0';
+        TpAmb    := taProducaoRestrita;
+        ProcEmi  := peAplicEmpregador;
+        VerProc  := '1.0';
       end;
 
       IdeEmpregador.TpInsc := tiCNPJ;
       IdeEmpregador.NrInsc := edtIdEmpregador.Text;
 
-      IdeVinculo.CpfTrab := '12345678901';
-      IdeVinculo.NisTrab := '12345678901';
+      IdeVinculo.CpfTrab   := '12345678901';
+      IdeVinculo.NisTrab   := '12345678901';
       IdeVinculo.Matricula := '564545';
 
-      // InsalPeric - Informações de insalubridade e periculosidade
-      with InsalPeric do
+      with treiCap do
       begin
-        with iniInsalPeric do
+        codTreiCap := '3203';
+        obsTreiCap := 'observação'; 
+
+        with infoComplem do
         begin
-          DtiniCondicao := date - 60;
+          dtTreiCap := date;
+          durTreiCap := 15.5;
+          modTreiCap := mtcPresencial;
+          tpTreiCap  := ttcInicial;
 
-          InfoAmb.Clear;
+          ideProfResp.Clear;
 
-          with InfoAmb.Add do
+          with ideProfResp.Add do
           begin
-            codAmb := '654';
-
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-              codFatRis := '1234567890';
+            cpfProf  := '12345678901';
+            nmProf   := 'PROFISSIONAL';
+            tpProf   := tpTpProf(1);
+            formProf := 'ENGENHEIRO';
+            codCBO   := '515661';
+            nacProf  := tpNacProf(1);
           end;
-        end;
-
-        // Opcional - usado para alterações nas condições de trabalho previamente informadas
-        // so sera enviado posteriormente quando for alterar um registro
-        with altInsalPeric do
-        begin
-          DtaltCondicao := Date;
-
-          InfoAmb.Clear;
-
-          with InfoAmb.Add do
-          begin
-            codAmb := '456';
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-            begin
-              codFatRis := '321';
-              intConc := 'N/A';
-              tecMedicao := 'Técnica de medição';
-            end;
-          end;
-        end;
-
-        // Opcional - usado quando cessarem as condições de trabalho previamente informadas
-        with fimInsalPeric do
-        begin
-          DtfimCondicao := Date;
-
-          InfoAmb.Clear;
-          with InfoAmb.Add do
-            codAmb := '123456';
-        end;
-      end;
-
-      // AposentEsp - Infomações de condições que ensejam aposentadoria especial
-      with AposentEsp do
-      begin
-        with iniAposentEsp do
-        begin
-          DtiniCondicao := date - 60;
-
-          InfoAmb.Clear;
-
-          with InfoAmb.Add do
-          begin
-            codAmb := '654';
-
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-              codFatRis := '1234567890';
-          end;
-        end;
-
-        // Opcional - usado para alterações nas condições de trabalho previamente informadas
-        // so sera enviado posteriormente quando for alterar um registro
-        with altAposentEsp do
-        begin
-          DtaltCondicao := Date;
-
-          InfoAmb.Clear;
-
-          with InfoAmb.Add do
-          begin
-            codAmb := '456';
-
-            InfoAtiv.dscAtivDes := 'dscAtivDes';
-
-            FatRisco.Clear;
-
-            with FatRisco.Add do
-            begin
-              codFatRis := '321';
-              intConc := 'N/A';
-              tecMedicao := 'Técnica de medição';
-            end;
-          end;
-        end;
-
-        // Opcional - usado quando cessarem as condições de trabalho previamente informadas
-        with fimAposentEsp do
-        begin
-          DtfimCondicao := Date;
-
-          InfoAmb.Clear;
-
-          with InfoAmb.Add do
-            codAmb := '654321';
-        end;
+        end; 
       end;
     end;
   end;
@@ -4529,6 +4422,104 @@ begin
   end;
 end;
 
+procedure TFExemploEsocial.btnConsIdeEveTabClick(Sender: TObject);
+var
+  TipoEvento, Chave, DataInicial, DataFinal: string;
+  i: Integer;
+  Ok: Boolean;
+begin
+  TipoEvento := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
+    Exit;
+
+  Chave := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Chave do Evento', Chave)) then
+    Exit;
+
+  DataInicial := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Inicial', DataInicial)) then
+    Exit;
+
+  DataFinal := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Final', DataFinal)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosTabela(edtIdEmpregador.Text,
+                       StrToTipoEvento(Ok, TipoEvento), Chave,
+                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TFExemploEsocial.btnConsIdeEveTrabClick(Sender: TObject);
+var
+  CPFTrab, DataInicial, DataFinal: string;
+  i: Integer;
+begin
+  CPFTrab := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'CPF Trabalhador', CPFTrab)) then
+    Exit;
+
+  DataInicial := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Inicial', DataInicial)) then
+    Exit;
+
+  DataFinal := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Final', DataFinal)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosTrabalhador(edtIdEmpregador.Text, CPFTrab,
+                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
@@ -5381,12 +5372,14 @@ begin
     GerareSocial2210;
   if (cbS2220.Checked) then
     GerareSocial2220;
+  if (cbS2221.Checked) then
+    GerareSocial2221;
   if (cbS2230.Checked) then
     GerareSocial2230;
   if (cbS2240.Checked) then
     GerareSocial2240;
-  if (cbS2241.Checked) then
-    GerareSocial2241;
+  if (cbS2245.Checked) then
+    GerareSocial2245;
   if (cbS2250.Checked) then
     GerareSocial2250;
   if (cbS2260.Checked) then

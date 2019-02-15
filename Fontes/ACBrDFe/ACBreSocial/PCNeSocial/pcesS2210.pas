@@ -60,12 +60,12 @@ type
   TCat = class;
   TCatOrigem = class;
   TAtestado = class;
-  TAgenteCausadorColecao = class;
+  TAgenteCausadorCollection = class;
   TAgenteCausadorItem = class;
-  TParteAtingidaColecao = class;
+  TParteAtingidaCollection = class;
   TParteAtingidaItem = class;
   TLocalAcidente = class;
-  TIdeRegistrador = class;
+  TideLocalAcid = class;
 
   TS2210Collection = class(TOwnedCollection)
   private
@@ -93,15 +93,14 @@ type
   TEvtCAT = class(TeSocialEvento)
   private
     FIdeEvento: TIdeEvento2;
-    FIdeRegistrador: TIdeRegistrador;
     FIdeEmpregador: TIdeEmpregador;
-    FIdeTrabalhador: TideTrabalhador2;
+    FIdeVinculo: TIdeVinculo;
     FCat: TCat;
     FACBreSocial: TObject;
 
-    procedure GerarIdeRegistrador;
     procedure GerarCAT;
     procedure GerarLocalAcidente;
+    procedure GerarIdeLocalAcid;
     procedure GerarParteAtingida;
     procedure GerarAgenteCausador;
     procedure GerarAtestado;
@@ -114,23 +113,11 @@ type
     function LerArqIni(const AIniString: String): Boolean;
 
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property IdeRegistrador: TIdeRegistrador read FIdeRegistrador write FIdeRegistrador;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
-    property IdeTrabalhador: TideTrabalhador2 read FIdeTrabalhador write FIdeTrabalhador;
+    property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
     property Cat: TCat read FCat write FCat;
   end;
-
-  TIdeRegistrador = class
-  private
-    FtpRegistrador: tpTpRegistrador;
-    FtpInsc: tpTpInsc;
-    FnrInsc: string;
-  public
-    property tpRegistrador: tpTpRegistrador read FtpRegistrador write FtpRegistrador;
-    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
-    property nrInsc: string read FnrInsc write FnrInsc;
-  end;
-
+          
   TCat = class(TPersistent)
   private
     FdtAcid: TDateTime;
@@ -143,10 +130,10 @@ type
     FindComunPolicia: tpSimNao;
     FcodSitGeradora: integer;
     FiniciatCAT: tpIniciatCAT;
-    Fobservacao: string;
+    FobsCAT: string;
     FLocalAcidente: TLocalAcidente;
-    FParteAtingida: TParteAtingidaColecao;
-    FAgenteCausador: TAgenteCausadorColecao;
+    FParteAtingida: TParteAtingidaCollection;
+    FAgenteCausador: TAgenteCausadorCollection;
     FAtestado: TAtestado;
     FCatOrigem: TCatOrigem;
   public
@@ -163,10 +150,10 @@ type
     property indComunPolicia: tpSimNao read FindComunPolicia write FindComunPolicia;
     property codSitGeradora: integer read FcodSitGeradora write FcodSitGeradora;
     property iniciatCAT: tpIniciatCAT read FiniciatCAT write FiniciatCAT;
-    property observacao: string read Fobservacao write Fobservacao;
+    property obsCAT: string read FobsCAT write FobsCAT;
     property LocalAcidente: TLocalAcidente read FLocalAcidente write FLocalAcidente;
-    property ParteAtingida: TParteAtingidaColecao read FParteAtingida write FParteAtingida;
-    property AgenteCausador: TAgenteCausadorColecao read FAgenteCausador write FAgenteCausador;
+    property ParteAtingida: TParteAtingidaCollection read FParteAtingida write FParteAtingida;
+    property AgenteCausador: TAgenteCausadorCollection read FAgenteCausador write FAgenteCausador;
     property Atestado: TAtestado read FAtestado write FAtestado;
     property CatOrigem: TCatOrigem read FCatOrigem write FCatOrigem;
   end;
@@ -205,11 +192,9 @@ type
 
   TCatOrigem = class
   private
-    FdtCatOrig: TDateTime;
-    FnrCatOrig: string;
+    FnrRecCatOrig: string;
   public
-    property dtCatOrig: TDateTime read FdtCatOrig write FdtCatOrig;
-    property nrCatOrig: string read FnrCatOrig write FnrCatOrig;
+    property nrRecCatOrig: string read FnrRecCatOrig write FnrRecCatOrig;
   end;
 
   TAgenteCausadorItem = class(TCollectionItem)
@@ -219,7 +204,7 @@ type
     property codAgntCausador: Integer read FcodAgntCausador write FcodAgntCausador;
   end;
 
-  TAgenteCausadorColecao = class(TCollection)
+  TAgenteCausadorCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TAgenteCausadorItem;
     procedure SetItem(Index: Integer; const Value: TAgenteCausadorItem);
@@ -238,7 +223,7 @@ type
     property lateralidade: tpLateralidade read Flateralidade write Flateralidade;
   end;
 
-  TParteAtingidaColecao = class(TCollection)
+  TParteAtingidaCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TParteAtingidaItem;
     procedure SetItem(Index: Integer; const Value: TParteAtingidaItem);
@@ -248,27 +233,49 @@ type
     property Items[Index: Integer]: TParteAtingidaItem read GetItem write SetItem;
   end;
 
+  TideLocalAcid = class(TPersistent)
+  private
+    FtpInsc: tpTpInsc;
+    FnrInsc: string;
+  public
+    property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
+    property nrInsc: String read FnrInsc write FnrInsc;
+  end;
+
   TLocalAcidente = class
   private
     FtpLocal: tpTpLocal;
-    FdscLocal: string;
-    FdscLograd: string;
-    FnrLograd: string;
+    FdscLocal: String;
+    FcodAmb: String;
+    FtpLograd: String;
+    FdscLograd: String;
+    FnrLograd: String;
+    Fcomplemento: String;
+    Fbairro: String;
+    Fcep: String;
     FcodMunic: Integer;
     Fuf: tpuf;
-    FcnpjLocalAcid: string;
-    FPais: string;
-    FCodPostal: string;
+    FPais: String;
+    FCodPostal: String;
+    FideLocalAcid: TideLocalAcid;
   public
+    constructor create;
+    destructor Destroy; override;
+
     property tpLocal: tpTpLocal read FtpLocal write FtpLocal;
     property dscLocal: string read FdscLocal write FdscLocal;
+    property codAmb: string read FcodAmb write FcodAmb;
+    property tpLograd: string read FtpLograd write FtpLograd;
     property dscLograd: string read FdscLograd write FdscLograd;
     property nrLograd: string read FnrLograd write FnrLograd;
+    property complemento: string read Fcomplemento write Fcomplemento;
+    property bairro: string read Fbairro write Fbairro;
+    property cep: string read Fcep write Fcep;
     property codMunic: Integer read FcodMunic write FcodMunic;
     property uf: tpuf read Fuf write Fuf;
-    property cnpjLocalAcid: string read FcnpjLocalAcid write FcnpjLocalAcid;
     property pais: string read FPais write FPais;
     property codPostal: string read FCodPostal write FCodPostal;
+    property ideLocalAcid: TideLocalAcid read FideLocalAcid write FideLocalAcid;
   end;
 
 implementation
@@ -332,47 +339,44 @@ end;
 
 { TAgenteCausadorColecao }
 
-function TAgenteCausadorColecao.Add: TAgenteCausadorItem;
+function TAgenteCausadorCollection.Add: TAgenteCausadorItem;
 begin
   Result := TAgenteCausadorItem(inherited Add);
 end;
 
-constructor TAgenteCausadorColecao.Create(AOwner: TPersistent);
+constructor TAgenteCausadorCollection.Create(AOwner: TPersistent);
 begin
   inherited Create(TAgenteCausadorItem);
 end;
 
-function TAgenteCausadorColecao.GetItem(
-  Index: Integer): TAgenteCausadorItem;
+function TAgenteCausadorCollection.GetItem(Index: Integer): TAgenteCausadorItem;
 begin
   Result := TAgenteCausadorItem(inherited GetItem(Index));
 end;
 
-procedure TAgenteCausadorColecao.SetItem(Index: Integer;
-  const Value: TAgenteCausadorItem);
+procedure TAgenteCausadorCollection.SetItem(Index: Integer; const Value: TAgenteCausadorItem);
 begin
   inherited SetItem(Index, Value);
 end;
 
 { TParteAtingidaColecao }
 
-function TParteAtingidaColecao.Add: TParteAtingidaItem;
+function TParteAtingidaCollection.Add: TParteAtingidaItem;
 begin
   Result := TParteAtingidaItem(inherited Add);
 end;
 
-constructor TParteAtingidaColecao.Create(AOwner: TPersistent);
+constructor TParteAtingidaCollection.Create(AOwner: TPersistent);
 begin
   inherited Create(TParteAtingidaItem);
 end;
 
-function TParteAtingidaColecao.GetItem(Index: Integer): TParteAtingidaItem;
+function TParteAtingidaCollection.GetItem(Index: Integer): TParteAtingidaItem;
 begin
   Result := TParteAtingidaItem(inherited GetItem(Index));
 end;
 
-procedure TParteAtingidaColecao.SetItem(Index: Integer;
-  const Value: TParteAtingidaItem);
+procedure TParteAtingidaCollection.SetItem(Index: Integer; const Value: TParteAtingidaItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -384,8 +388,8 @@ begin
   inherited;
 
   FLocalAcidente := TLocalAcidente.Create;
-  FParteAtingida := TParteAtingidaColecao.Create(self);
-  FAgenteCausador := TAgenteCausadorColecao.Create(self);
+  FParteAtingida := TParteAtingidaCollection.Create(Self);
+  FAgenteCausador := TAgenteCausadorCollection.Create(Self);
   FAtestado := TAtestado.Create;
   FCatOrigem := TCatOrigem.Create;
 end;
@@ -407,20 +411,18 @@ constructor TEvtCAT.Create(AACBreSocial: TObject);
 begin
   inherited;
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeRegistrador := TIdeRegistrador.Create;
+  FACBreSocial   := AACBreSocial;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeTrabalhador := TideTrabalhador2.Create;
-  FCat := TCat.Create;
+  FIdeVinculo    := TIdeVinculo.Create;
+  FCat           := TCat.Create;
 end;
 
 destructor TEvtCAT.destroy;
 begin
   FIdeEvento.Free;
-  FIdeRegistrador.Free;
   FIdeEmpregador.Free;
-  FIdeTrabalhador.Free;
+  FIdeVinculo.Free;
   FCat.Free;
 
   inherited;
@@ -430,38 +432,38 @@ procedure TEvtCAT.GerarAgenteCausador;
 var
   i: integer;
 begin
-  for i:= 0 to self.Cat.AgenteCausador.Count-1 do
+  for i:= 0 to Self.Cat.AgenteCausador.Count-1 do
   begin
     Gerador.wGrupo('agenteCausador');
 
-    Gerador.wCampo(tcStr, '', 'codAgntCausador', 1, 9, 1, self.Cat.AgenteCausador.Items[i].codAgntCausador);
+    Gerador.wCampo(tcStr, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
 
     Gerador.wGrupo('/agenteCausador');
   end;
 
-  if self.Cat.AgenteCausador.Count > 99 then
+  if Self.Cat.AgenteCausador.Count > 99 then
     Gerador.wAlerta('', 'agenteCausador', 'Lista de Agentes Causadores', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtCAT.GerarAtestado;
 begin
-  if self.Cat.Atestado.dtAtendimento > 0 then
+  if Self.Cat.Atestado.dtAtendimento > 0 then
   begin
     Gerador.wGrupo('atestado');
 
-    Gerador.wCampo(tcStr, '', 'codCNES',        1,   7, 0, self.Cat.Atestado.codCNES);
-    Gerador.wCampo(tcDat, '', 'dtAtendimento', 10,  10, 1, self.Cat.Atestado.dtAtendimento);
-    Gerador.wCampo(tcStr, '', 'hrAtendimento',  4,   4, 1, self.Cat.Atestado.hrAtendimento);
-    Gerador.wCampo(tcStr, '', 'indInternacao',  1,   1, 1, eSSimNaoToStr(self.Cat.Atestado.indInternacao));
-    Gerador.wCampo(tcStr, '', 'durTrat',        1,   4, 1, self.Cat.Atestado.durTrat);
-    Gerador.wCampo(tcStr, '', 'indAfast',       1,   1, 1, eSSimNaoToStr(self.Cat.Atestado.indAfast));
-    Gerador.wCampo(tcStr, '', 'dscLesao',       1,   9, 0, self.Cat.Atestado.dscLesao);
-    Gerador.wCampo(tcStr, '', 'dscCompLesao',   1, 200, 0, self.Cat.Atestado.dscCompLesao);
-    Gerador.wCampo(tcStr, '', 'diagProvavel',   1, 100, 0, self.Cat.Atestado.diagProvavel);
-    Gerador.wCampo(tcStr, '', 'codCID',         1,   4, 1, self.Cat.Atestado.codCID);
-    Gerador.wCampo(tcStr, '', 'observacao',     1, 255, 0, self.Cat.Atestado.observacao);
+    Gerador.wCampo(tcStr, '', 'codCNES',        1,   7, 0, Self.Cat.Atestado.codCNES);
+    Gerador.wCampo(tcDat, '', 'dtAtendimento', 10,  10, 1, Self.Cat.Atestado.dtAtendimento);
+    Gerador.wCampo(tcStr, '', 'hrAtendimento',  4,   4, 1, Self.Cat.Atestado.hrAtendimento);
+    Gerador.wCampo(tcStr, '', 'indInternacao',  1,   1, 1, eSSimNaoToStr(Self.Cat.Atestado.indInternacao));
+    Gerador.wCampo(tcStr, '', 'durTrat',        1,   4, 1, Self.Cat.Atestado.durTrat);
+    Gerador.wCampo(tcStr, '', 'indAfast',       1,   1, 1, eSSimNaoToStr(Self.Cat.Atestado.indAfast));
+    Gerador.wCampo(tcStr, '', 'dscLesao',       1,   9, 0, Self.Cat.Atestado.dscLesao);
+    Gerador.wCampo(tcStr, '', 'dscCompLesao',   1, 200, 0, Self.Cat.Atestado.dscCompLesao);
+    Gerador.wCampo(tcStr, '', 'diagProvavel',   1, 100, 0, Self.Cat.Atestado.diagProvavel);
+    Gerador.wCampo(tcStr, '', 'codCID',         1,   4, 1, Self.Cat.Atestado.codCID);
+    Gerador.wCampo(tcStr, '', 'observacao',     1, 255, 0, Self.Cat.Atestado.observacao);
 
-    GerarEmitente(self.Cat.Atestado.Emitente);
+    GerarEmitente(Self.Cat.Atestado.Emitente);
 
     Gerador.wGrupo('/atestado');
   end;
@@ -471,17 +473,17 @@ procedure TEvtCAT.GerarCAT;
 begin
   Gerador.wGrupo('cat');
 
-  Gerador.wCampo(tcDat, '', 'dtAcid',           10,  10, 1, self.Cat.dtAcid);
-  Gerador.wCampo(tcStr, '', 'tpAcid',            1,   6, 1, self.Cat.tpAcid);
-  Gerador.wCampo(tcStr, '', 'hrAcid',            4,   4, 1, self.Cat.hrAcid);
-  Gerador.wCampo(tcStr, '', 'hrsTrabAntesAcid',  4,   4, 1, self.Cat.hrsTrabAntesAcid);
-  Gerador.wCampo(tcStr, '', 'tpCat',             1,   1, 1, eSTpCatToStr(self.Cat.tpCat));
-  Gerador.wCampo(tcStr, '', 'indCatObito',       1,   1, 1, eSSimNaoToStr(self.Cat.indCatObito));
-  Gerador.wCampo(tcDat, '', 'dtObito',          10,  10, 0, self.Cat.dtOBito);
-  Gerador.wCampo(tcStr, '', 'indComunPolicia',   1,   1, 1, eSSimNaoToStr(self.Cat.indComunPolicia));
-  Gerador.wCampo(tcStr, '', 'codSitGeradora',    1,   9, 0, self.Cat.codSitGeradora);
-  Gerador.wCampo(tcStr, '', 'iniciatCAT',        1,   1, 1, eSIniciatCATToStr(self.Cat.iniciatCAT));
-  Gerador.wCampo(tcStr, '', 'observacao',        1, 255, 0, self.Cat.observacao);
+  Gerador.wCampo(tcDat, '', 'dtAcid',           10,  10, 1, Self.Cat.dtAcid);
+  Gerador.wCampo(tcStr, '', 'tpAcid',            1,   6, 1, Self.Cat.tpAcid);
+  Gerador.wCampo(tcStr, '', 'hrAcid',            4,   4, 1, Self.Cat.hrAcid);
+  Gerador.wCampo(tcStr, '', 'hrsTrabAntesAcid',  4,   4, 1, Self.Cat.hrsTrabAntesAcid);
+  Gerador.wCampo(tcStr, '', 'tpCat',             1,   1, 1, eSTpCatToStr(Self.Cat.tpCat));
+  Gerador.wCampo(tcStr, '', 'indCatObito',       1,   1, 1, eSSimNaoToStr(Self.Cat.indCatObito));
+  Gerador.wCampo(tcDat, '', 'dtObito',          10,  10, 0, Self.Cat.dtOBito);
+  Gerador.wCampo(tcStr, '', 'indComunPolicia',   1,   1, 1, eSSimNaoToStr(Self.Cat.indComunPolicia));
+  Gerador.wCampo(tcStr, '', 'codSitGeradora',    1,   9, 0, Self.Cat.codSitGeradora);
+  Gerador.wCampo(tcStr, '', 'iniciatCAT',        1,   1, 1, eSIniciatCATToStr(Self.Cat.iniciatCAT));
+  Gerador.wCampo(tcStr, '', 'obsCAT',            1, 255, 0, Self.Cat.obsCAT);
 
   GerarLocalAcidente;
   GerarParteAtingida;
@@ -494,41 +496,48 @@ end;
 
 procedure TEvtCAT.GerarCatOrigem;
 begin
-  if self.Cat.CatOrigem.dtCatOrig > 0 then
+  if Self.Cat.CatOrigem.nrRecCatOrig <> '' then
   begin
     Gerador.wGrupo('catOrigem');
 
-    Gerador.wCampo(tcDat, '', 'dtCatOrig', 10, 10, 1, self.Cat.CatOrigem.dtCatOrig);
-    Gerador.wCampo(tcStr, '', 'nrCatOrig',  1, 40, 0, self.Cat.CatOrigem.nrCatOrig);
+    Gerador.wCampo(tcStr, '', 'nrRecCatOrig',  1, 40, 1, Self.Cat.CatOrigem.nrRecCatOrig);
 
     Gerador.wGrupo('/catOrigem');
   end;
 end;
 
-procedure TEvtCAT.GerarIdeRegistrador;
+procedure TEvtCAT.GerarIdeLocalAcid;
 begin
-  Gerador.wGrupo('ideRegistrador');
+  if (Self.Cat.LocalAcidente.ideLocalAcid.nrInsc <> '') then
+  begin
+    Gerador.wGrupo('ideLocalAcid');
 
-  Gerador.wCampo(tcStr, '', 'tpRegistrador', 1,  2, 1, eSTpRegistradorToStr(self.ideRegistrador.tpRegistrador));
-  Gerador.wCampo(tcStr, '', 'tpInsc',        1,  1, 1, eSTpInscricaoToStr(self.ideRegistrador.tpInsc));
-  Gerador.wCampo(tcStr, '', 'nrInsc',        1, 15, 0, self.ideRegistrador.nrInsc);
+    Gerador.wCampo(tcStr, '', 'tpInsc', 1,  1, 1, eSTpInscricaoToStr(Self.Cat.LocalAcidente.ideLocalAcid.TpInsc));
+    Gerador.wCampo(tcStr, '', 'nrInsc', 1, 15, 1, Self.Cat.LocalAcidente.ideLocalAcid.nrInsc);
 
-  Gerador.wGrupo('/ideRegistrador');
+    Gerador.wGrupo('/ideLocalAcid');
+  end;
 end;
 
 procedure TEvtCAT.GerarLocalAcidente;
 begin
   Gerador.wGrupo('localAcidente');
 
-  Gerador.wCampo(tcStr, '', 'tpLocal',        1,  1, 1, eSTpLocalToStr(self.Cat.LocalAcidente.tpLocal));
-  Gerador.wCampo(tcStr, '', 'dscLocal',       1, 80, 0, self.Cat.LocalAcidente.dscLocal);
-  Gerador.wCampo(tcStr, '', 'dscLograd',      1, 80, 0, self.Cat.LocalAcidente.dscLograd);
-  Gerador.wCampo(tcStr, '', 'nrLograd',       1, 10, 0, self.Cat.LocalAcidente.nrLograd);
-  Gerador.wCampo(tcStr, '', 'codMunic',       7,  7, 0, self.Cat.LocalAcidente.codMunic);
-  Gerador.wCampo(tcStr, '', 'uf',             2,  2, 0, eSufToStr(self.Cat.LocalAcidente.uf));
-  Gerador.wCampo(tcStr, '', 'cnpjLocalAcid', 14, 14, 0, self.Cat.LocalAcidente.cnpjLocalAcid);
-  Gerador.wCampo(tcStr, '', 'pais',           1,  3, 0, self.Cat.LocalAcidente.pais);
-  Gerador.wCampo(tcStr, '', 'codPostal',      1, 12, 0, self.Cat.LocalAcidente.codPostal);
+  Gerador.wCampo(tcStr, '', 'tpLocal',     1,   1, 1, eSTpLocalToStr(Self.Cat.LocalAcidente.tpLocal));
+  Gerador.wCampo(tcStr, '', 'dscLocal',    1,  80, 0, Self.Cat.LocalAcidente.dscLocal);
+  Gerador.wCampo(tcStr, '', 'codAmb',      1,  30, 0, Self.Cat.LocalAcidente.codAmb);
+  Gerador.wCampo(tcStr, '', 'tpLograd',    1,   4, 0, Self.Cat.LocalAcidente.tpLograd);
+  Gerador.wCampo(tcStr, '', 'dscLograd',   1, 100, 0, Self.Cat.LocalAcidente.dscLograd);
+  Gerador.wCampo(tcStr, '', 'nrLograd',    1,  10, 0, Self.Cat.LocalAcidente.nrLograd);
+  Gerador.wCampo(tcStr, '', 'complemento', 1,  30, 0, Self.Cat.LocalAcidente.complemento);
+  Gerador.wCampo(tcStr, '', 'bairro',      1,  90, 0, Self.Cat.LocalAcidente.bairro);
+  Gerador.wCampo(tcStr, '', 'cep',         1,   8, 0, Self.Cat.LocalAcidente.cep);
+  Gerador.wCampo(tcStr, '', 'codMunic',    7,   7, 0, Self.Cat.LocalAcidente.codMunic);
+  Gerador.wCampo(tcStr, '', 'uf',          2,   2, 0, eSufToStr(Self.Cat.LocalAcidente.uf));
+  Gerador.wCampo(tcStr, '', 'pais',        1,   3, 0, Self.Cat.LocalAcidente.pais);
+  Gerador.wCampo(tcStr, '', 'codPostal',   1,  12, 0, Self.Cat.LocalAcidente.codPostal);
+
+  GerarIdeLocalAcid;
 
   Gerador.wGrupo('/localAcidente');
 end;
@@ -537,17 +546,17 @@ procedure TEvtCAT.GerarParteAtingida;
 var
   i: integer;
 begin
-  for i:= 0 to self.Cat.ParteAtingida.Count-1 do
+  for i:= 0 to Self.Cat.ParteAtingida.Count-1 do
   begin
     Gerador.wGrupo('parteAtingida');
 
-    Gerador.wCampo(tcStr, '', 'codParteAting', 1, 9, 1, self.Cat.ParteAtingida.Items[i].codParteAting);
-    Gerador.wCampo(tcStr, '', 'lateralidade',  1, 1, 1, eSLateralidadeToStr(self.Cat.ParteAtingida.Items[i].lateralidade));
+    Gerador.wCampo(tcStr, '', 'codParteAting', 1, 9, 1, Self.Cat.ParteAtingida.Items[i].codParteAting);
+    Gerador.wCampo(tcStr, '', 'lateralidade',  1, 1, 1, eSLateralidadeToStr(Self.Cat.ParteAtingida.Items[i].lateralidade));
 
     Gerador.wGrupo('/parteAtingida');
   end;
 
-  if self.Cat.ParteAtingida.Count > 99 then
+  if Self.Cat.ParteAtingida.Count > 99 then
     Gerador.wAlerta('', 'parteAtingida', 'Lista de Partes Atingidas', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
@@ -556,15 +565,13 @@ begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
      
-    Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
+    Self.Id := GerarChaveEsocial(now, Self.ideEmpregador.NrInsc, Self.Sequencial);
 
     GerarCabecalho('evtCAT');
     Gerador.wGrupo('evtCAT Id="' + Self.Id + '"');
 
-    GerarIdeEvento2(self.IdeEvento);
-    GerarIdeRegistrador;
-    GerarIdeEmpregador(self.IdeEmpregador);
-    GerarIdeTrabalhador2(self.IdeTrabalhador, True);
+    GerarIdeEvento2(Self.IdeEvento);
+    GerarIdeVinculo(Self.IdeVinculo);
     GerarCAT;
 
     Gerador.wGrupo('/evtCAT');
@@ -607,19 +614,16 @@ begin
       ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
-      sSecao := 'ideRegistrador';
-      ideRegistrador.tpRegistrador := eSStrToTpRegistrador(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      ideRegistrador.TpInsc        := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-      ideRegistrador.NrInsc        := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
-
       sSecao := 'ideEmpregador';
       ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
       ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
       ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
 
-      sSecao := 'ideTrabalhador';
-      ideTrabalhador.CpfTrab    := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
-      ideTrabalhador.NisTrab    := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      ideVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
 
       sSecao := 'cat';
       cat.dtAcid           := StringToDateTime(INIRec.ReadString(sSecao, 'dtAcid', '0'));
@@ -632,18 +636,28 @@ begin
       cat.indComunPolicia  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indComunPolicia', 'S'));
       cat.codSitGeradora   := INIRec.ReadInteger(sSecao, 'codSitGeradora', 0);
       cat.iniciatCAT       := eSStrToIniciatCAT(Ok, INIRec.ReadString(sSecao, 'iniciatCAT', '1'));
-      cat.observacao       := INIRec.ReadString(sSecao, 'observacao', EmptyStr);
+      cat.obsCAT           := INIRec.ReadString(sSecao, 'obsCAT', EmptyStr);
 
       sSecao := 'localAcidente';
-      cat.localAcidente.tpLocal       := eSStrToTpLocal(Ok, INIRec.ReadString(sSecao, 'tpLocal', '1'));
-      cat.localAcidente.dscLocal      := INIRec.ReadString(sSecao, 'dscLocal', EmptyStr);
-      cat.localAcidente.dscLograd     := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
-      cat.localAcidente.nrLograd      := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
-      cat.localAcidente.codMunic      := INIRec.ReadInteger(sSecao, 'codMunic', 0);
-      cat.localAcidente.uf            := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
-      cat.localAcidente.cnpjLocalAcid := INIRec.ReadString(sSecao, 'cnpjLocalAcid', EmptyStr);
-      cat.localAcidente.pais          := INIRec.ReadString(sSecao, 'pais', EmptyStr);
-      cat.localAcidente.codPostal     := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+      cat.localAcidente.tpLocal     := eSStrToTpLocal(Ok, INIRec.ReadString(sSecao, 'tpLocal', '1'));
+      cat.localAcidente.dscLocal    := INIRec.ReadString(sSecao, 'dscLocal', EmptyStr);
+      cat.localAcidente.codAmb      := INIRec.ReadString(sSecao, 'codAmb', EmptyStr);
+      cat.localAcidente.tpLograd    := INIRec.ReadString(sSecao, 'tpLograd', EmptyStr);
+      cat.localAcidente.dscLograd   := INIRec.ReadString(sSecao, 'dscLograd', EmptyStr);
+      cat.localAcidente.nrLograd    := INIRec.ReadString(sSecao, 'nrLograd', EmptyStr);
+      cat.localAcidente.complemento := INIRec.ReadString(sSecao, 'complemento', EmptyStr);
+      cat.localAcidente.bairro      := INIRec.ReadString(sSecao, 'bairro', EmptyStr);
+      cat.localAcidente.cep         := INIRec.ReadString(sSecao, 'cep', EmptyStr);
+      cat.localAcidente.codMunic    := INIRec.ReadInteger(sSecao, 'codMunic', 0);
+      cat.localAcidente.uf          := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'uf', 'SP'));
+      cat.localAcidente.pais        := INIRec.ReadString(sSecao, 'pais', EmptyStr);
+      cat.localAcidente.codPostal   := INIRec.ReadString(sSecao, 'codPostal', EmptyStr);
+
+      if INIRec.ReadString(sSecao, 'nrInsc', '') <> '' then
+      begin
+         cat.localAcidente.ideLocalAcid.TpInsc := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+         cat.localAcidente.ideLocalAcid.NrInsc := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+      end;      
 
       I := 1;
       while true do
@@ -705,10 +719,9 @@ begin
       end;
 
       sSecao := 'catOrigem';
-      if INIRec.ReadString(sSecao, 'dtCatOrig', '') <> '' then
+      if INIRec.ReadString(sSecao, 'nrRecCatOrig', '') <> '' then
       begin
-        cat.catOrigem.dtCatOrig := StringToDateTime(INIRec.ReadString(sSecao, 'dtCatOrig', '0'));
-        cat.catOrigem.nrCatOrig := INIRec.ReadString(sSecao, 'nrCatOrig', '');
+        cat.catOrigem.nrRecCatOrig := INIRec.ReadString(sSecao, 'nrRecCatOrig', '');
       end;
     end;
 
@@ -718,6 +731,22 @@ begin
   finally
      INIRec.Free;
   end;
+end;
+
+{ TLocalAcidente }
+
+constructor TLocalAcidente.create;
+begin
+  inherited;
+
+  FideLocalAcid := TideLocalAcid.Create;
+end;
+
+destructor TLocalAcidente.Destroy;
+begin
+  FideLocalAcid.Free;
+  
+  inherited;
 end;
 
 end.

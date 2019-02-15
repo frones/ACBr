@@ -58,12 +58,19 @@ type
   TS2240CollectionItem = class;
   TEvtExpRisco = class;
   TinfoExpRisco = class;
-  TiniExpRisco = class;
-  TaltExpRisco = class;
-  TfimExpRisco = class;
-  TExpRisco = class;
+  TInfoAmbCollection = class;
+  TInfoAmbCollectionItem = class;
+  TInfoAtiv = class;
+  TAtivPericInsalCollection = class;
+  TAtivPericInsalCollectionItem = class;
+  TFatRiscoCollection = class;
+  TFatRiscoCollectionItem = class;
+  TEpcEpi = class;
+  TEpiCollection = class;
+  TEpiCollectionItem = class;
   TRespRegCollection = class;
-  TRespRegItem = class;
+  TRespRegCollectionItem = class;
+  TObs = class;
 
   TS2240Collection = class(TOwnedCollection)
   private
@@ -95,16 +102,15 @@ type
     FinfoExpRisco: TinfoExpRisco;
     FACBreSocial: TObject;
 
+    { Geradores da classe }
     procedure GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
-    procedure GerariniExpRisco(objiniExpRisco: TiniExpRisco);
-    procedure GeraraltExpRisco(objaltExpRisco: TaltExpRisco);
-    procedure GerarfimExpRisco(objfimExpRisco: TfimExpRisco);
-    procedure GerarInfoAmb(objInfoAmb : TinfoAmbCollection);
+    procedure GerarInfoAmb(objInfoAmb: TinfoAmbCollection);
+    procedure GerarInfoAtiv(objInfoAtiv: TInfoAtiv);
     procedure GerarFatRisco(objFatRisco: TFatRiscoCollection);
     procedure GerarEpcEpi(pEpcEpi: TEpcEpi);
-    procedure GerarEpc(pEpc: TEpcCollection);
     procedure GerarEPI(objEPI: TEpiCollection);
     procedure GerarRespReg(pRespReg: TRespRegCollection);
+    procedure GerarObs(pObs: TObs);
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor  Destroy; override;
@@ -120,74 +126,198 @@ type
 
   TRespRegCollection = class(TCollection)
   private
-    function GetItem(Index: Integer): TRespRegItem;
-    procedure SetItem(Index: Integer; Value: TRespRegItem);
+    function GetItem(Index: Integer): TRespRegCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRespRegCollectionItem);
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
 
-    function Add: TRespRegItem;
-    property Items[Index: Integer]: TRespRegItem read GetItem write SetItem; default;
+    function Add: TRespRegCollectionItem;
+    property Items[Index: Integer]: TRespRegCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRespRegItem = class(TCollectionItem)
+  TRespRegCollectionItem = class(TCollectionItem)
   private
-    FDtIni: TDateTime;
-    FDtFim: TDateTime;
-    FNisResp: string;
-    FNrOc: string;
-    FUfOC: tpuf;
+    FcpfResp: String;
+    FNisResp: String;
+    FNmResp: String;
+    FIdeOC: tpIdeOC;
+    FdscOC: String;
+    FNrOc: String;
+    FUfOC: tpUf;
   public
-    property dtIni: TDateTime read FDtIni write FDtIni;
-    property dtFim: TDateTime read FDtFim write FDtFim;
+    property cpfResp: string read FcpfResp write FcpfResp;
     property nisResp: string read FNisResp write FNisResp;
-    property nrOc: string read FNrOc write FNrOc;
+    property nmResp: string read FNmResp write FNmResp;
+    property ideOC: tpIdeOC read FIdeOC write FIdeOC;
+    property dscOC: string read FdscOC write FdscOC;
+    property nrOC: string read FNrOc write FNrOc;
     property ufOC: tpuf read FUfOC write FUfOC;
   end;
 
-  TinfoExpRisco = class
+  TinfoExpRisco = class(TPersistent)
   private
-    FiniExpRisco : TiniExpRisco;
-    FaltExpRisco : TaltExpRisco;
-    FfimExpRisco : TfimExpRisco;
+    FdtIniCondicao: TDateTime;
+    FInfoAmb: TInfoAmbCollection;
+    FInfoAtiv: TInfoAtiv;
+    FFatRisco: TFatRiscoCollection;
     FRespReg: TRespRegCollection;
+    FObs: TObs;
   public
-    constructor Create;
-    destructor  Destroy; override;
+    constructor Create; reintroduce;
+    destructor Destroy; override;
 
-    property iniExpRisco: TiniExpRisco read FiniExpRisco write FiniExpRisco;
-    property altExpRisco: TaltExpRisco read FaltExpRisco write FaltExpRisco;
-    property fimExpRisco: TfimExpRisco read FfimExpRisco write FfimExpRisco;
+    property dtIniCondicao: TDateTime read FdtIniCondicao write FdtIniCondicao;
+    property InfoAmb: TInfoAmbCollection read FInfoAmb write FInfoAmb;
+    property infoAtiv: TInfoAtiv read FInfoAtiv write FInfoAtiv;
+    property fatRisco: TFatRiscoCollection read FFatRisco write FFatRisco;
     property respReg: TRespRegCollection read FRespReg write FRespReg;
+    property obs: TObs read FObs write FObs;
   end;
 
-  TExpRisco = class(TPersistent)
+  TInfoAmbCollection = class(TCollection)
   private
-    FdtCondicao : TDateTime;
-    FInfoAmb : TInfoAmbCollection;
-
-    procedure SetInfoAmb(const Value: TInfoAmbCollection);
+    function GetItem(Index: Integer): TInfoAmbCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
   public
-    constructor Create;
+    constructor Create; reintroduce;
+    function Add: TInfoAmbCollectionItem;
+    property Items[Index: Integer]: TInfoAmbCollectionItem read GetItem write SetItem;
+  end;
+
+  TInfoAmbCollectionItem = class(TCollectionItem)
+  private
+    FcodAmb: String;
+  public
+    property codAmb: String read FcodAmb write FcodAmb;
+  end;
+
+  TInfoAtiv = class(TPersistent)
+  private
+    FdscAtivDes: String;
+    FativPericInsal: TAtivPericInsalCollection;
+  public
+    constructor Create; reintroduce;
     destructor  Destroy; override;
 
-    property dtCondicao : TDateTime read FdtCondicao write FdtCondicao;
-    property InfoAmb : TInfoAmbCollection read FInfoAmb write SetInfoAmb;
+    property dscAtivDes: String read FdscAtivDes write FdscAtivDes;
+    property ativPericInsal: TAtivPericInsalCollection read FativPericInsal write FativPericInsal;
   end;
 
-  TiniExpRisco = class(TExpRisco);
-
-  TaltExpRisco = class(TExpRisco);
-
-  TfimExpRisco = class
+  TAtivPericInsalCollection = class(TCollection)
   private
-    FinfoAmb: TInfoAmbCollection;
-    FdtFimCondicao: TDateTime;
-    procedure SetinfoAmb(const Value: TInfoAmbCollection);
+    function GetItem(Index: Integer): TAtivPericInsalCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAtivPericInsalCollectionItem);
   public
-    constructor create;
-    destructor  destroy; override;
-    property dtFimCondicao : TDateTime read FdtFimCondicao write FdtFimCondicao;
-    property infoAmb : TInfoAmbCollection read FinfoAmb write SetinfoAmb;
+    constructor Create; reintroduce;
+    function Add: TAtivPericInsalCollectionItem;
+    property Items[Index: Integer]: TAtivPericInsalCollectionItem read GetItem write SetItem;
+  end;
+
+  TAtivPericInsalCollectionItem = class(TCollectionItem)
+  private
+    FcodAtiv: String;
+  public
+    property codAtiv: String read FcodAtiv write FcodAtiv;
+  end;
+
+  TFatRiscoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TFatRiscoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TFatRiscoCollectionItem);
+  public
+    constructor Create; reintroduce;
+
+    function Add: TFatRiscoCollectionItem;
+    property Items[Index: Integer]: TFatRiscoCollectionItem read GetItem write SetItem;
+  end;
+
+  TFatRiscoCollectionItem = class(TCollectionItem)
+  private
+    FcodFatRis: String;
+    FtpAval: tptpAval;
+    FintConc: Double;
+    FlimTol: Double;
+    FunMed: Integer;
+    FtecMedicao: String;
+    Finsalubridade: tpSimNao;
+    Fpericulosidade: tpSimNao;
+    FaposentEsp: tpSimNao;
+    FEpcEpi: TEpcEpi;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+
+    property codFatRis: String read FcodFatRis write FcodFatRis;
+    property tpAval: tptpAval read FtpAval write FtpAval;
+    property intConc: Double read FintConc write FintConc;
+    property limTol: Double read FlimTol write FlimTol;
+    property unMed: Integer read FunMed write FunMed;
+    property tecMedicao: String read FtecMedicao write FtecMedicao;
+    property insalubridade: tpSimNao read Finsalubridade write Finsalubridade;
+    property periculosidade: tpSimNao read Fpericulosidade write Fpericulosidade;
+    property aposentEsp: tpSimNao read FaposentEsp write FaposentEsp;
+    property epcEpi: TEpcEpi read FEpcEpi write FEpcEpi;
+  end;
+
+  TEpcEpi = class(TPersistent)
+  private
+    FUtilizEPC: tpUtilizEPC;
+    FEficEpc: tpSimNao;
+    FUtilizEPI: tpUtilizEPI;
+    FEpi: TEpiCollection;
+
+    function getEpi: TEpiCollection;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+    function epiInst: boolean;
+
+    property utilizEPC: tpUtilizEPC read FUtilizEPC write FUtilizEPC;
+    property eficEpc: tpSimNao read FEficEpc write FEficEpc;
+    property utilizEPI: tpUtilizEPI read FUtilizEPI write FUtilizEPI;
+    property epi: TEpiCollection read getEpi write FEpi;
+  end;
+
+  TEpiCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TEpiCollectionItem;
+    procedure SetItem(Index: Integer; Value: TEpiCollectionItem);
+  public
+    constructor Create; reintroduce;
+    function Add: TEpiCollectionItem;
+    property Items[Index: Integer]: TEpiCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TEpiCollectionItem = class(TCollectionItem)
+  private
+    FcaEPI: String;
+    FdscEPI: String;
+    FeficEpi: tpSimNao;
+    FperiodicTroca: tpSimNao;
+    FcondFuncto: tpSimNao;
+    FusoInint: tpSimNao;
+    Fhigienizacao: tpSimNao;
+    FmedProtecao: tpSimNao;
+    FprzValid: tpSimNao;
+  public
+    property caEPI: string read FcaEPI write FcaEPI;
+    property dscEPI: string read FdscEPI write FdscEPI;
+    property eficEpi : tpSimNao read FeficEpi write FeficEpi;
+    property medProtecao: tpSimNao read FmedProtecao write FmedProtecao;
+    property condFuncto: tpSimNao read FcondFuncto write FcondFuncto;
+    property usoInint: tpSimNao read FusoInint write FusoInint;
+    property przValid: tpSimNao read FprzValid write FprzValid;
+    property periodicTroca: tpSimNao read FperiodicTroca write FperiodicTroca;
+    property higienizacao: tpSimNao read Fhigienizacao write Fhigienizacao;
+  end;
+
+  TObs = class(TPersistent)
+  private
+    FmetErg: String;
+    FobsCompl: String;
+  public
+    property metErg: String read FmetErg write FmetErg;
+    property obsCompl: String read FobsCompl write FobsCompl;
   end;
 
 implementation
@@ -209,8 +339,7 @@ begin
   Result := TS2240CollectionItem(inherited GetItem(Index));
 end;
 
-procedure TS2240Collection.SetItem(Index: Integer;
-  Value: TS2240CollectionItem);
+procedure TS2240Collection.SetItem(Index: Integer; Value: TS2240CollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -219,7 +348,7 @@ end;
 
 constructor TS2240CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2240;
+  FTipoEvento  := teS2240;
   FEvtExpRisco := TEvtExpRisco.Create(AOwner);
 end;
 
@@ -258,17 +387,6 @@ begin
   inherited;
 end;
 
-procedure TEvtExpRisco.GeraraltExpRisco(objaltExpRisco: TaltExpRisco);
-begin
-  Gerador.wGrupo('altExpRisco');
-
-  Gerador.wCampo(tcDat, '', 'dtAltCondicao', 10, 10, 1, objAltExpRisco.dtCondicao);
-
-  GerarInfoAmb(objaltExpRisco.InfoAmb);
-
-  Gerador.wGrupo('/altExpRisco');
-end;
-
 procedure TEvtExpRisco.GerarEPI(objEPI: TEpiCollection);
 var
   i: integer;
@@ -277,13 +395,15 @@ begin
   begin
     Gerador.wGrupo('epi');
 
-    Gerador.wCampo(tcStr, '', 'caEPI',         1, 20, 0, objEPI[i].caEPI);
-    Gerador.wCampo(tcStr, '', 'eficEpi',       1,  1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
-    Gerador.wCampo(tcStr, '', 'medProtecao',   1,  1, 1, eSSimNaoToStr(objEPI[i].medProtecao));
-    Gerador.wCampo(tcStr, '', 'condFuncto',    1,  1, 1, eSSimNaoToStr(objEPI[i].condFuncto));
-    Gerador.wCampo(tcStr, '', 'przValid',      1,  1, 1, eSSimNaoToStr(objEPI[i].przValid));
-    Gerador.wCampo(tcStr, '', 'periodicTroca', 1,  1, 1, eSSimNaoToStr(objEPI[i].periodicTroca));
-    Gerador.wCampo(tcStr, '', 'higienizacao',  1,  1, 1, eSSimNaoToStr(objEPI[i].higienizacao));
+    Gerador.wCampo(tcStr, '', 'caEPI',         1,  20, 0, objEPI[i].caEPI);
+    Gerador.wCampo(tcStr, '', 'dscEPI',        1, 999, 0, objEPI[i].dscEPI);
+    Gerador.wCampo(tcStr, '', 'eficEpi',       1,   1, 1, eSSimNaoToStr(objEPI[i].eficEpi));
+    Gerador.wCampo(tcStr, '', 'medProtecao',   1,   1, 1, eSSimNaoToStr(objEPI[i].medProtecao));
+    Gerador.wCampo(tcStr, '', 'condFuncto',    1,   1, 1, eSSimNaoToStr(objEPI[i].condFuncto));
+    Gerador.wCampo(tcStr, '', 'usoInint',      1,   1, 1, eSSimNaoToStr(objEPI[i].usoInint));
+    Gerador.wCampo(tcStr, '', 'przValid',      1,   1, 1, eSSimNaoToStr(objEPI[i].przValid));
+    Gerador.wCampo(tcStr, '', 'periodicTroca', 1,   1, 1, eSSimNaoToStr(objEPI[i].periodicTroca));
+    Gerador.wCampo(tcStr, '', 'higienizacao',  1,   1, 1, eSSimNaoToStr(objEPI[i].higienizacao));
 
     Gerador.wGrupo('/epi');
   end;
@@ -292,33 +412,13 @@ begin
     Gerador.wAlerta('', 'epi', 'Lista de EPI', ERR_MSG_MAIOR_MAXIMO + '50');
 end;
 
-procedure TEvtExpRisco.GerarEpc(pEpc: TEpcCollection);
-var
-  i: integer;
-begin
-  for i := 0 to pEpc.Count - 1 do
-  begin
-    Gerador.wGrupo('epc');
-
-    Gerador.wCampo(tcStr, '', 'dscEpc',  1, 70, 1, pEpc[i].dscEpc);
-    Gerador.wCampo(tcStr, '', 'eficEpc', 1,  1, 0, eSSimNaoToStr(pEpc[i].eficEpc));
-
-    Gerador.wGrupo('/epc');
-  end;
-
-  if pEpc.Count > 50 then
-    Gerador.wAlerta('', 'epc', 'Lista de EPC', ERR_MSG_MAIOR_MAXIMO + '50');
-end;
-
 procedure TEvtExpRisco.GerarEpcEpi(pEpcEpi: TEpcEpi);
 begin
   Gerador.wGrupo('epcEpi');
 
   Gerador.wCampo(tcInt, '', 'utilizEPC', 1, 1, 1, eStpUtilizEPCToStr(pEpcEpi.utilizEPC));
+  Gerador.wCampo(tcStr, '', 'eficEpc',   1, 1, 1, eSSimNaoToStr(pEpcEpi.eficEpc));
   Gerador.wCampo(tcInt, '', 'utilizEPI', 1, 1, 1, eStpUtilizEPIToStr(pEpcEpi.utilizEPI));
-
-  if pEpcEpi.epcInst then
-    GerarEpc(pEpcEpi.epc);
 
   if pEpcEpi.epiInst then
     GerarEPI(pEpcEpi.epi);
@@ -334,9 +434,15 @@ begin
   begin
     Gerador.wGrupo('fatRisco');
 
-    Gerador.wCampo(tcStr, '', 'codFatRis',  1, 10, 1, objFatRisco.Items[i].codFatRis);
-    Gerador.wCampo(tcStr, '', 'intConc',    1, 15, 0, objFatRisco.Items[i].intConc);
-    Gerador.wCampo(tcStr, '', 'tecMedicao', 1, 40, 0, objFatRisco.Items[i].tecMedicao);
+    Gerador.wCampo(tcStr, '', 'codFatRis',      1, 10, 1, objFatRisco.Items[i].codFatRis);
+    Gerador.wCampo(tcStr, '', 'tpAval',         1,  1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
+    Gerador.wCampo(tcDe4, '', 'intConc',        1, 10, 0, objFatRisco.Items[i].intConc);
+    Gerador.wCampo(tcDe4, '', 'limTol',         1, 10, 0, objFatRisco.Items[i].limTol);
+    Gerador.wCampo(tcStr, '', 'unMed',          1,  2, 0, objFatRisco.Items[i].unMed);
+    Gerador.wCampo(tcStr, '', 'tecMedicao',     1, 40, 0, objFatRisco.Items[i].tecMedicao);
+    Gerador.wCampo(tcStr, '', 'insalubridade',  1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].insalubridade));
+    Gerador.wCampo(tcStr, '', 'periculosidade', 1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].periculosidade));
+    Gerador.wCampo(tcStr, '', 'aposentEsp',     1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].aposentEsp));
 
     GerarEpcEpi(objFatRisco.Items[i].epcEpi);
 
@@ -347,29 +453,6 @@ begin
     Gerador.wAlerta('', 'fatRisco', 'Lista de Fatores de Riscos', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
-procedure TEvtExpRisco.GerarfimExpRisco(objfimExpRisco: TfimExpRisco);
-var
-  i: Integer;
-begin
-  Gerador.wGrupo('fimExpRisco');
-
-  Gerador.wCampo(tcDat, '', 'dtFimCondicao', 10, 10, 1, objfimExpRisco.dtFimCondicao);
-
-  for i := 0 to objfimExpRisco.infoAmb.Count - 1 do
-  begin
-    Gerador.wGrupo('infoAmb');
-
-    Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 0, objfimExpRisco.InfoAmb.items[i].codAmb);
-
-    Gerador.wGrupo('/infoAmb');
-  end;
-
-  if objfimExpRisco.infoAmb.Count > 99 then
-    Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
-
-  Gerador.wGrupo('/fimExpRisco');
-end;
-
 procedure TEvtExpRisco.GerarInfoAmb(objInfoAmb: TinfoAmbCollection);
 var
   j: integer;
@@ -377,22 +460,33 @@ begin
   for j := 0 to objInfoAmb.Count - 1 do
   begin
     Gerador.wGrupo('infoAmb');
-
-    Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 1, objInfoAmb.items[j].codAmb);
-
-    Gerador.wGrupo('infoAtiv');
-
-    Gerador.wCampo(tcStr, '', 'dscAtivDes', 1, 999, 1, objInfoAmb.items[j].InfoAtiv.dscAtivDes);
-
-    Gerador.wGrupo('/infoAtiv');
-
-    GerarFatRisco(objInfoAmb.items[j].FatRisco);
-
+     Gerador.wCampo(tcStr, '', 'codAmb', 1, 30, 1, objInfoAmb.items[j].codAmb);
     Gerador.wGrupo('/infoAmb');
   end;
 
   if objInfoAmb.Count > 99 then
     Gerador.wAlerta('', 'infoAmb', 'Lista de Informações Ambientais', ERR_MSG_MAIOR_MAXIMO + '99');
+end;
+
+procedure TEvtExpRisco.GerarInfoAtiv(objInfoAtiv: TInfoAtiv);
+var
+  j: integer;
+begin
+  Gerador.wGrupo('infoAtiv');
+
+  Gerador.wCampo(tcStr, '', 'dscAtivDes', 1, 999, 1, objInfoAtiv.dscAtivDes);
+
+  for j := 0 to objInfoAtiv.ativPericInsal.Count - 1 do
+  begin
+    Gerador.wGrupo('ativPericInsal');
+     Gerador.wCampo(tcStr, '', 'codAtiv', 1, 6, 1, objInfoAtiv.ativPericInsal.Items[j].codAtiv);
+    Gerador.wGrupo('/ativPericInsal');
+  end;
+
+  Gerador.wGrupo('/infoAtiv');
+
+  if objInfoAtiv.ativPericInsal.Count > 99 then
+    Gerador.wAlerta('', 'ativPericInsal', 'Lista de Informação da(s) atividade(s) perigosa(s), insalubre(s) ou especial(is) desempenhada(s)', ERR_MSG_MAIOR_MAXIMO + '99');
 end;
 
 procedure TEvtExpRisco.GerarRespReg(pRespReg: TRespRegCollection);
@@ -403,11 +497,13 @@ begin
   begin
     Gerador.wGrupo('respReg');
 
-    Gerador.wCampo(tcDat, '', 'dtIni',   10, 10, 1, pRespReg[i].dtIni);
-    Gerador.wCampo(tcDat, '', 'dtFim',   10, 10, 0, pRespReg[i].dtFim);
-    Gerador.wCampo(tcStr, '', 'nisResp',  1, 11, 1, pRespReg[i].nisResp);
-    Gerador.wCampo(tcStr, '', 'nrOc',     1, 14, 1, pRespReg[i].nrOc);
-    Gerador.wCampo(tcStr, '', 'ufOC',     2,  2, 0, eSufToStr(pRespReg[i].ufOC));
+    Gerador.wCampo(tcStr, '', 'cpfResp', 1, 11, 1, pRespReg[i].cpfResp);
+    Gerador.wCampo(tcStr, '', 'nisResp', 1, 11, 1, pRespReg[i].nisResp);
+    Gerador.wCampo(tcStr, '', 'nmResp',  1, 70, 1, pRespReg[i].nmResp);
+    Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
+    Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
+    Gerador.wCampo(tcStr, '', 'nrOc',    1, 14, 1, pRespReg[i].nrOc);
+    Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, eSufToStr(pRespReg[i].ufOC));
 
     Gerador.wGrupo('/respReg');
   end;
@@ -420,29 +516,27 @@ procedure TEvtExpRisco.GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
 begin
   Gerador.wGrupo('infoExpRisco');
 
-  if (objInfoExpRisco.iniExpRisco.dtCondicao > 0) then
-    GerariniExpRisco(objInfoExpRisco.iniExpRisco);
-
-  if (objInfoExpRisco.altExpRisco.dtCondicao > 0) then
-    GeraraltExpRisco(objInfoExpRisco.altExpRisco);
-
-  if (objInfoExpRisco.fimExpRisco.dtFimCondicao > 0) then
-    GerarfimExpRisco(objInfoExpRisco.fimExpRisco);
-
+  Gerador.wCampo(tcDat, '', 'dtIniCondicao',   10, 10, 1, objInfoExpRisco.dtIniCondicao);
+  GerarInfoAmb(objInfoExpRisco.InfoAmb);
+  GerarInfoAtiv(objInfoExpRisco.infoAtiv);
+  GerarFatRisco(objInfoExpRisco.fatRisco);
   GerarRespReg(objInfoExpRisco.respReg);
+  GerarObs(objInfoExpRisco.obs);
 
   Gerador.wGrupo('/infoExpRisco');
 end;
 
-procedure TEvtExpRisco.GerariniExpRisco(objiniExpRisco: TiniExpRisco);
+procedure TEvtExpRisco.GerarObs(pObs: TObs);
 begin
-  Gerador.wGrupo('iniExpRisco');
-
-  Gerador.wCampo(tcDat, '', 'dtIniCondicao', 10, 10, 1, objiniExpRisco.dtCondicao);
-
-  GerarInfoAmb(objiniExpRisco.InfoAmb);
-
-  Gerador.wGrupo('/iniExpRisco');
+  if (pObs.metErg <> '') or (pObs.obsCompl <> '') then
+  begin
+     Gerador.wGrupo('obs');
+     if (pObs.metErg <> '') then
+       Gerador.wCampo(tcStr, '', 'metErg',   1, 999, 0, pObs.metErg);
+     if (pObs.obsCompl <> '') then
+       Gerador.wCampo(tcStr, '', 'obsCompl', 1, 999, 0, pObs.obsCompl);
+     Gerador.wGrupo('/obs');
+  end;
 end;
 
 function TEvtExpRisco.GerarXML: boolean;
@@ -474,66 +568,26 @@ begin
   Result := (Gerador.ArquivoFormatoXML <> '')
 end;
 
-{ TExpRisco }
-
-constructor TExpRisco.create;
-begin
-  inherited;
-
-  FInfoAmb := TInfoAmbCollection.Create;
-end;
-
-destructor TExpRisco.destroy;
-begin
-  FinfoAmb.Free;
-
-  inherited;
-end;
-
-procedure TExpRisco.SetInfoAmb(const Value: TInfoAmbCollection);
-begin
-  FInfoAmb.Assign(Value);
-end;
-
-{ TfimExpRisco }
-
-constructor TfimExpRisco.create;
-begin
-  inherited;
-
-  FinfoAmb := TInfoAmbCollection.Create;
-end;
-
-destructor TfimExpRisco.destroy;
-begin
-  FInfoAmb.Free;
-
-  inherited;
-end;
-
-procedure TfimExpRisco.SetinfoAmb(const Value: TInfoAmbCollection);
-begin
-  FinfoAmb := Value;
-end;
-
 { TinfoExpRisco }
 
-constructor TinfoExpRisco.create;
+constructor TinfoExpRisco.Create;
 begin
   inherited;
 
-  FiniExpRisco := TiniExpRisco.Create;
-  FaltExpRisco := TaltExpRisco.Create;
-  FfimExpRisco := TfimExpRisco.Create;
-  FRespReg := TRespRegCollection.Create;
+  FInfoAmb  := TInfoAmbCollection.Create;
+  FInfoAtiv := TInfoAtiv.Create;
+  FFatRisco := TFatRiscoCollection.Create;
+  FRespReg  := TRespRegCollection.Create;;
+  FObs      := TObs.Create;
 end;
 
 destructor TinfoExpRisco.destroy;
 begin
-  FiniExpRisco.Free;
-  FaltExpRisco.Free;
-  FfimExpRisco.Free;
+  FinfoAmb.Free;
+  FInfoAtiv.Free;
+  FFatRisco.Free;
   FRespReg.Free;
+  FObs.Free;
 
   inherited;
 end;
@@ -542,22 +596,21 @@ end;
 
 constructor TRespRegCollection.Create;
 begin
-  Inherited create(TRespRegItem);
+  Inherited Create(TRespRegCollectionItem);
 end;
 
-function TRespRegCollection.Add: TRespRegItem;
+function TRespRegCollection.Add: TRespRegCollectionItem;
 begin
-  Result := TRespRegItem(inherited Add);
+  Result := TRespRegCollectionItem(inherited Add);
 //  Result.Create;
 end;
 
-function TRespRegCollection.GetItem(Index: Integer): TRespRegItem;
+function TRespRegCollection.GetItem(Index: Integer): TRespRegCollectionItem;
 begin
-  Result := TRespRegItem(inherited GetItem(Index));
+  Result := TRespRegCollectionItem(inherited GetItem(Index));
 end;
 
-procedure TRespRegCollection.SetItem(Index: Integer;
-  Value: TRespRegItem);
+procedure TRespRegCollection.SetItem(Index: Integer; Value: TRespRegCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -566,8 +619,8 @@ function TEvtExpRisco.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
-  I, J, K: Integer;
+  sSecao{, sFim}: String;
+//  I, J, K: Integer;
 begin
   Result := False;
 
@@ -601,241 +654,120 @@ begin
       sSecao := 'iniExpRisco';
       if INIRec.ReadString(sSecao, 'dtIniCondicao', '') <> '' then
       begin
-        infoExpRisco.iniExpRisco.dtCondicao     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
-
-        I := 1;
-        while true do
-        begin
-          // de 01 até 99
-          sSecao := 'infoAmb' + IntToStrZero(I, 2);
-          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
-
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
-
-          with infoExpRisco.iniExpRisco.infoAmb.Add do
-          begin
-            codAmb := sFim;
-
-            sSecao := 'infoAtiv' + IntToStrZero(I, 2);
-            infoAtiv.dscAtivDes := INIRec.ReadString(sSecao, 'dscAtivDes', EmptyStr);
-
-            J := 1;
-            while true do
-            begin
-              // de 001 até 999
-              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
-
-              if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                break;
-
-              with fatRisco.Add do
-              begin
-                codFatRis  := sFim;
-                intConc    := INIRec.ReadString(sSecao, 'intConc', EmptyStr);
-                tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
-
-                epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
-                epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
-
-                K := 1;
-                while true do
-                begin
-                  // de 00 até 50
-                  sSecao := 'epc' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
-                               IntToStrZero(K, 2);
-                  sFim   := INIRec.ReadString(sSecao, 'dscEpc', 'FIM');
-
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                    break;
-
-                  with epcEpi.epc.Add do
-                  begin
-                    dscEpc  := sFim;
-                    eficEpc := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', 'S'));
-                  end;
-
-                  Inc(K);
-                end;
-
-                K := 1;
-                while true do
-                begin
-                  // de 00 até 50
-                  sSecao := 'epi' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
-                               IntToStrZero(K, 2);
-                  sFim   := INIRec.ReadString(sSecao, 'caEPI', 'FIM');
-
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                    break;
-
-                  with epcEpi.epi.Add do
-                  begin
-                    caEPI         := sFim;
-                    eficEpi       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
-                    medProtecao   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
-                    condFuncto    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
-                    przValid      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
-                    periodicTroca := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
-                    higienizacao  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
-                  end;
-
-                  Inc(K);
-                end;
-
-              end;
-
-              Inc(J);
-            end;
-
-          end;
-
-          Inc(I);
-        end;
-      end;
-
-      sSecao := 'altExpRisco';
-      if INIRec.ReadString(sSecao, 'dtAltCondicao', '') <> '' then
-      begin
-        infoExpRisco.altExpRisco.dtCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtAltCondicao', '0'));
-
-        I := 1;
-        while true do
-        begin
-          // de 01 até 99
-          sSecao := 'infoAmb' + IntToStrZero(I, 2);
-          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
-
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
-
-          with infoExpRisco.iniExpRisco.infoAmb.Add do
-          begin
-            codAmb := sFim;
-
-            sSecao := 'infoAtiv' + IntToStrZero(I, 2);
-            infoAtiv.dscAtivDes := INIRec.ReadString(sSecao, 'dscAtivDes', EmptyStr);
-
-            J := 1;
-            while true do
-            begin
-              // de 001 até 999
-              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
-              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
-
-              if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                break;
-
-              with fatRisco.Add do
-              begin
-                codFatRis  := sFim;
-                intConc    := INIRec.ReadString(sSecao, 'intConc', EmptyStr);
-                tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
-
-                epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
-                epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
-
-                K := 1;
-                while true do
-                begin
-                  // de 00 até 50
-                  sSecao := 'epc' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
-                               IntToStrZero(K, 2);
-                  sFim   := INIRec.ReadString(sSecao, 'dscEpc', 'FIM');
-
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                    break;
-
-                  with epcEpi.epc.Add do
-                  begin
-                    dscEpc  := sFim;
-                    eficEpc := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', 'S'));
-                  end;
-
-                  Inc(K);
-                end;
-
-                K := 1;
-                while true do
-                begin
-                  // de 00 até 50
-                  sSecao := 'epi' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
-                               IntToStrZero(K, 2);
-                  sFim   := INIRec.ReadString(sSecao, 'caEPI', 'FIM');
-
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                    break;
-
-                  with epcEpi.epi.Add do
-                  begin
-                    caEPI         := sFim;
-                    eficEpi       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
-                    medProtecao   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
-                    condFuncto    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
-                    przValid      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
-                    periodicTroca := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
-                    higienizacao  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
-                  end;
-
-                  Inc(K);
-                end;
-
-              end;
-
-              Inc(J);
-            end;
-
-          end;
-
-          Inc(I);
-        end;
-      end;
-
-      sSecao := 'fimExpRisco';
-      if INIRec.ReadString(sSecao, 'dtFimCondicao', '') <> '' then
-      begin
-        infoExpRisco.fimExpRisco.dtFimCondicao := StringToDateTime(INIRec.ReadString(sSecao, 'dtFimCondicao', '0'));
-
-        I := 1;
-        while true do
-        begin
-          // de 01 até 99
-          sSecao := 'infoAmb' + IntToStrZero(I, 2);
-          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
-
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
-
-          with infoExpRisco.fimExpRisco.infoAmb.Add do
-          begin
-            codAmb := sFim;
-          end;
-
-          Inc(I);
-        end;
-      end;
-
-      I := 1;
-      while true do
-      begin
-        // de 1 até 9
-        sSecao := 'respReg' + IntToStrZero(I, 1);
-        sFim   := INIRec.ReadString(sSecao, 'dtIni', 'FIM');
-
-        if (sFim = 'FIM') or (Length(sFim) <= 0) then
-          break;
-
-        with infoExpRisco.respReg.Add do
-        begin
-          dtIni   := StringToDateTime(sFim);
-          dtFim   := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
-          nisResp := INIRec.ReadString(sSecao, 'nisResp', EmptyStr);
-          nrOc    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
-          ufOC    := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
-        end;
-
-        Inc(I);
+//        infoExpRisco.iniExpRisco.dtCondicao     := StringToDateTime(INIRec.ReadString(sSecao, 'dtIniCondicao', '0'));
+//
+//        I := 1;
+//        while true do
+//        begin
+//          // de 01 até 99
+//          sSecao := 'infoAmb' + IntToStrZero(I, 2);
+//          sFim   := INIRec.ReadString(sSecao, 'codAmb', 'FIM');
+//
+//          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+//            break;
+//
+//          with infoExpRisco.iniExpRisco.infoAmb.Add do
+//          begin
+//            codAmb := sFim;
+//
+//            sSecao := 'infoAtiv' + IntToStrZero(I, 2);
+//            infoAtiv.dscAtivDes := INIRec.ReadString(sSecao, 'dscAtivDes', EmptyStr);
+//
+//            J := 1;
+//            while true do
+//            begin
+//              // de 001 até 999
+//              sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+//              sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
+//
+//              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+//                break;
+//
+//              with fatRisco.Add do
+//              begin
+//                codFatRis  := sFim;
+//                intConc    := INIRec.ReadString(sSecao, 'intConc', EmptyStr);
+//                tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
+//
+//                epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
+//                epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
+//
+//                K := 1;
+//                while true do
+//                begin
+//                  // de 00 até 50
+//                  sSecao := 'epc' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+//                               IntToStrZero(K, 2);
+//                  sFim   := INIRec.ReadString(sSecao, 'dscEpc', 'FIM');
+//
+//                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
+//                    break;
+//
+//                  with epcEpi.epc.Add do
+//                  begin
+//                    dscEpc  := sFim;
+//                    eficEpc := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', 'S'));
+//                  end;
+//
+//                  Inc(K);
+//                end;
+//
+//                K := 1;
+//                while true do
+//                begin
+//                  // de 00 até 50
+//                  sSecao := 'epi' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+//                               IntToStrZero(K, 2);
+//                  sFim   := INIRec.ReadString(sSecao, 'caEPI', 'FIM');
+//
+//                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
+//                    break;
+//
+//                  with epcEpi.epi.Add do
+//                  begin
+//                    caEPI         := sFim;
+//                    eficEpi       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
+//                    medProtecao   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
+//                    condFuncto    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
+//                    przValid      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
+//                    periodicTroca := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
+//                    higienizacao  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
+//                  end;
+//
+//                  Inc(K);
+//                end;
+//
+//              end;
+//
+//              Inc(J);
+//            end;
+//
+//          end;
+//
+//          Inc(I);
+//        end;
+//      end;
+//
+//      I := 1;
+//      while true do
+//      begin
+//        // de 1 até 9
+//        sSecao := 'respReg' + IntToStrZero(I, 1);
+//        sFim   := INIRec.ReadString(sSecao, 'dtIni', 'FIM');
+//
+//        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+//          break;
+//
+//        with infoExpRisco.respReg.Add do
+//        begin
+//          dtIni   := StringToDateTime(sFim);
+//          dtFim   := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
+//          nisResp := INIRec.ReadString(sSecao, 'nisResp', EmptyStr);
+//          nrOc    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
+//          ufOC    := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
+//        end;
+//
+//        Inc(I);
       end;
 
     end;
@@ -846,6 +778,151 @@ begin
   finally
      INIRec.Free;
   end;
+end;
+
+{ TInfoAmbCollection }
+
+function TInfoAmbCollection.Add: TInfoAmbCollectionItem;
+begin
+  Result := TInfoAmbCollectionItem(inherited Add);
+end;
+
+constructor TInfoAmbCollection.Create;
+begin
+  inherited Create(TInfoAmbCollectionItem);
+end;
+
+function TInfoAmbCollection.GetItem(Index: Integer): TInfoAmbCollectionItem;
+begin
+  Result := TInfoAmbCollectionItem(inherited GetItem(index));
+end;
+
+procedure TInfoAmbCollection.SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfoAtiv }
+
+constructor TInfoAtiv.Create;
+begin
+  inherited;
+
+  FativPericInsal := TAtivPericInsalCollection.Create;
+end;
+
+destructor TInfoAtiv.Destroy;
+begin
+  FativPericInsal.Free;
+  
+  inherited;
+end;
+
+{ TAtivPericInsalCollection }
+
+function TAtivPericInsalCollection.Add: TAtivPericInsalCollectionItem;
+begin
+  Result := TAtivPericInsalCollectionItem(inherited Add);
+end;
+
+constructor TAtivPericInsalCollection.Create;
+begin
+  inherited Create(TAtivPericInsalCollectionItem);
+end;
+
+function TAtivPericInsalCollection.GetItem(Index: Integer): TAtivPericInsalCollectionItem;
+begin
+  Result := TAtivPericInsalCollectionItem(inherited GetItem(index))
+end;
+
+procedure TAtivPericInsalCollection.SetItem(Index: Integer; Value: TAtivPericInsalCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TFatRiscoCollection }
+
+function TFatRiscoCollection.Add: TFatRiscoCollectionItem;
+begin
+  Result := TFatRiscoCollectionItem(inherited Add);
+end;
+
+constructor TFatRiscoCollection.Create;
+begin
+  inherited Create(TFatRiscoCollectionItem);
+end;
+
+function TFatRiscoCollection.GetItem(Index: Integer): TFatRiscoCollectionItem;
+begin
+  Result := TFatRiscoCollectionItem(inherited GetItem(index))
+end;
+
+procedure TFatRiscoCollection.SetItem(Index: Integer; Value: TFatRiscoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TFatRiscoCollectionItem }
+
+constructor TFatRiscoCollectionItem.Create;
+begin
+  FEpcEpi := TEpcEpi.Create;
+end;
+
+destructor TFatRiscoCollectionItem.Destroy;
+begin
+  FEpcEpi.Free;
+  
+  inherited;
+end;
+
+{ TEpcEpi }
+
+constructor TEpcEpi.Create;
+begin
+  inherited;
+
+  FEpi := nil;
+end;
+
+destructor TEpcEpi.Destroy;
+begin
+  FreeAndNil(FEpi);
+
+  inherited;
+end;
+
+function TEpcEpi.getEpi: TEpiCollection;
+begin
+  if not Assigned(FEpi) then
+    FEpi := TEpiCollection.Create;
+  result := FEpi;
+end;
+
+function TEpcEpi.epiInst: boolean;
+begin
+  result := Assigned(FEpi);
+end;
+
+{ TEpiCollection }
+function TEpiCollection.Add: TEpiCollectionItem;
+begin
+  Result := TEpiCollectionItem(inherited Add);
+end;
+
+constructor TEpiCollection.Create;
+begin
+  inherited Create(TEpiCollectionItem);
+end;
+
+function TEpiCollection.GetItem(Index: Integer): TEpiCollectionItem;
+begin
+  Result := TEpiCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TEpiCollection.SetItem(Index: Integer; Value: TEpiCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

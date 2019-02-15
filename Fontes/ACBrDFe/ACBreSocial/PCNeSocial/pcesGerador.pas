@@ -78,8 +78,11 @@ type
 
     FGerador: TGerador;
     FSchema: TeSocialSchema;
-    FXML: AnsiString;
-    procedure SetXML(const Value: AnsiString);
+//    FXML: AnsiString;
+    FXML: String;
+
+//    procedure SetXML(const Value: AnsiString);
+    procedure SetXML(const Value: String);
   public
     constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
     destructor Destroy; override;
@@ -117,7 +120,6 @@ type
     procedure GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName: string = 'brasil');
     procedure GerarEnderecoExterior(pEndereco: TExterior);
     procedure GerarEnderecoLocalTrabInterm(pEndereco: TBrasil);
-    procedure GerarEpi(pEpi: TEpiCollection);
     procedure GerarFGTS(pFgts: TFGTS);
     procedure GerarFiliacaoSindical(pFiliacaoSindical: TFiliacaoSindical);
     procedure GerarHorario(pHorario: THorarioCollection);
@@ -190,7 +192,8 @@ type
   published
     property Gerador: TGerador  read FGerador write FGerador;
     property schema: TeSocialSchema read Fschema write Fschema;
-    property XML: AnsiString read FXML write SetXML;
+//    property XML: AnsiString read FXML write SetXML;
+    property XML: String read FXML write SetXML;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -297,7 +300,8 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.SetXML(const Value: AnsiString);
+//procedure TeSocialEvento.SetXML(const Value: AnsiString);
+procedure TeSocialEvento.SetXML(const Value: String);
 var
   NomeEvento: String;
   Ok: Boolean;
@@ -632,18 +636,6 @@ begin
   Gerador.wCampo(tcStr, '', 'codPostal', 1, 12, 0, pEndExt.codPostal);
 
   Gerador.wGrupo('/endExt');
-end;
-
-procedure TeSocialEvento.GerarEpi(pEpi: TEpiCollection);
-var
-  i: integer;
-begin
-  for i := 0 to pEpi.Count - 1 do
-  begin
-    Gerador.wGrupo('epi');
-      Gerador.wCampo(tcStr, '', 'caEPI', 0, 0, 0,  pEpi.Items[i].caEPI);
-    Gerador.wGrupo('/epi');
-  end;
 end;
 
 procedure TeSocialEvento.GerarFGTS(pFgts: TFGTS);

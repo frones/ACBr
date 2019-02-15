@@ -52,9 +52,9 @@ uses
   SysUtils, Classes, synautil,
   ACBrUtil, pcesConversaoeSocial,
   pcesS2190, pcesS2200, pcesS2220, pcesS2230, pcesS2240,
-  pcesS2241, pcesS2205, pcesS2206, pcesS2210, pcesS2250,
+  pcesS2221, pcesS2205, pcesS2206, pcesS2210, pcesS2250,
   pcesS2260, pcesS2298, pcesS2299, pcesS2300, pcesS2306,
-  pcesS2399, pcesS2400, pcesS3000;
+  pcesS2399, pcesS2400, pcesS3000, pcesS2245;
 
 type
 
@@ -66,9 +66,10 @@ type
     FS2206: TS2206Collection;
     FS2210: TS2210Collection;
     FS2220: TS2220Collection;
+    FS2221: TS2221Collection;
     FS2230: TS2230Collection;
     FS2240: TS2240Collection;
-    FS2241: TS2241Collection;
+    FS2245: TS2245Collection;
     FS2250: TS2250Collection;
     FS2260: TS2260Collection;
     FS2298: TS2298Collection;
@@ -86,9 +87,10 @@ type
     procedure setS2206(const Value: TS2206Collection);
     procedure setS2210(const Value: TS2210Collection);
     procedure setS2220(const Value: TS2220Collection);
+    procedure setS2221(const Value: TS2221Collection);
     procedure setS2230(const Value: TS2230Collection);
     procedure setS2240(const Value: TS2240Collection);
-    procedure setS2241(const Value: TS2241Collection);
+    procedure setS2245(const Value: TS2245Collection);
     procedure setS2250(const Value: TS2250Collection);
     procedure setS2260(const Value: TS2260Collection);
     procedure setS2298(const Value: TS2298Collection);
@@ -117,9 +119,10 @@ type
     property S2206: TS2206Collection read FS2206 write setS2206;
     property S2210: TS2210Collection read FS2210 write setS2210;
     property S2220: TS2220Collection read FS2220 write setS2220;
+    property S2221: TS2221Collection read FS2221 write setS2221;
     property S2230: TS2230Collection read FS2230 write setS2230;
     property S2240: TS2240Collection read FS2240 write setS2240;
-    property S2241: TS2241Collection read FS2241 write setS2241;
+    property S2245: TS2245Collection read FS2245 write setS2245;
     property S2250: TS2250Collection read FS2250 write setS2250;
     property S2260: TS2260Collection read FS2260 write setS2260;
     property S2298: TS2298Collection read FS2298 write setS2298;
@@ -147,9 +150,10 @@ begin
   FS2206.Clear;
   FS2210.Clear;
   FS2220.Clear;
+  FS2221.Clear;
   FS2230.Clear;
   FS2240.Clear;
-  FS2241.Clear;
+  FS2245.Clear;
   FS2250.Clear;
   FS2260.Clear;
   FS2298.Clear;
@@ -171,9 +175,10 @@ begin
   FS2206 := TS2206Collection.Create(AOwner, TS2206CollectionItem);
   FS2210 := TS2210Collection.Create(AOwner, TS2210CollectionItem);
   FS2220 := TS2220Collection.Create(AOwner, TS2220CollectionItem);
+  FS2221 := TS2221Collection.Create(AOwner, TS2221CollectionItem);
   FS2230 := TS2230Collection.Create(AOwner, TS2230CollectionItem);
   FS2240 := TS2240Collection.Create(AOwner, TS2240CollectionItem);
-  FS2241 := TS2241Collection.Create(AOwner, TS2241CollectionItem);
+  FS2245 := TS2245Collection.Create(AOwner, TS2245CollectionItem);
   FS2250 := TS2250Collection.Create(AOwner, TS2250CollectionItem);
   FS2260 := TS2260Collection.Create(AOwner, TS2260CollectionItem);
   FS2298 := TS2298Collection.Create(AOwner, TS2298CollectionItem);
@@ -193,9 +198,10 @@ begin
   FS2206.Free;
   FS2210.Free;
   FS2220.Free;
+  FS2221.Free;
   FS2230.Free;
   FS2240.Free;
-  FS2241.Free;
+  FS2245.Free;
   FS2250.Free;
   FS2260.Free;
   FS2298.Free;
@@ -217,9 +223,10 @@ begin
             self.S2206.Count +
             self.S2210.Count +
             self.S2220.Count +
+            self.S2221.Count +
             self.S2230.Count +
             self.S2240.Count +
-            self.S2241.Count +
+            self.S2245.Count +
             self.S2250.Count +
             self.S2260.Count +
             self.S2298.Count +
@@ -253,14 +260,17 @@ begin
   for I := 0 to Self.S2220.Count - 1 do
     Self.S2220.Items[i].evtMonit.GerarXML;
 
+  for I := 0 to Self.S2221.Count - 1 do
+    Self.S2221.Items[i].evtToxic.GerarXML;
+
   for I := 0 to Self.S2230.Count - 1 do
     Self.S2230.Items[i].EvtAfastTemp.GerarXML;
 
   for I := 0 to Self.S2240.Count - 1 do
     Self.S2240.Items[i].EvtExpRisco.GerarXML;
 
-  for I := 0 to Self.S2241.Count - 1 do
-    Self.S2241.Items[i].EvtInsApo.GerarXML;
+  for I := 0 to Self.S2245.Count - 1 do
+    Self.S2245.Items[i].EvtTreiCap.GerarXML;
 
   for I := 0 to Self.S2250.Count - 1 do
     Self.S2250.Items[i].EvtAvPrevio.GerarXML;
@@ -394,6 +404,22 @@ begin
     end;
   end;
 
+  for I := 0 to Self.S2221.Count - 1 do
+  begin
+    PathName := Path + OnlyNumber(Self.S2221.Items[i].evtToxic.Id) + '-' +
+     TipoEventoToStr(Self.S2221.Items[i].TipoEvento) + '-' + IntToStr(i);
+
+    Self.S2221.Items[i].evtToxic.SaveToFile(PathName);
+
+    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    begin
+      TipoEvento := teS2221;
+      PathNome := PathName;
+      idEvento := OnlyNumber(Self.S2221.Items[i].evtToxic.Id);
+      XML := Self.S2221.Items[i].evtToxic.XML;
+    end;
+  end;
+
   for I := 0 to Self.S2230.Count - 1 do
   begin
     PathName := Path + OnlyNumber(Self.S2230.Items[i].EvtAfastTemp.Id) + '-' +
@@ -426,19 +452,19 @@ begin
     end;
   end;
 
-  for I := 0 to Self.S2241.Count - 1 do
+  for I := 0 to Self.S2245.Count - 1 do
   begin
-    PathName := Path + OnlyNumber(Self.S2241.Items[i].EvtInsApo.Id) + '-' +
-     TipoEventoToStr(Self.S2241.Items[i].TipoEvento) + '-' + IntToStr(i);
+    PathName := Path + OnlyNumber(Self.S2245.Items[i].EvtTreiCap.Id) + '-' +
+     TipoEventoToStr(Self.S2245.Items[i].TipoEvento) + '-' + IntToStr(i);
 
-    Self.S2241.Items[i].EvtInsApo.SaveToFile(PathName);
+    Self.S2245.Items[i].EvtTreiCap.SaveToFile(PathName);
 
     with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
     begin
-      TipoEvento := teS2241;
+      TipoEvento := teS2245;
       PathNome := PathName;
-      idEvento := OnlyNumber(Self.S2241.Items[i].EvtInsApo.Id);
-      XML := Self.S2241.Items[i].EvtInsApo.XML;
+      idEvento := OnlyNumber(Self.S2245.Items[i].EvtTreiCap.Id);
+      XML := Self.S2245.Items[i].EvtTreiCap.XML;
     end;
   end;
 
@@ -617,6 +643,11 @@ begin
   FS2220.Assign(Value);
 end;
 
+procedure TNaoPeriodicos.setS2221(const Value: TS2221Collection);
+begin
+  FS2221.Assign(Value);
+end;
+
 procedure TNaoPeriodicos.setS2230(const Value: TS2230Collection);
 begin
   FS2230.Assign(Value);
@@ -627,9 +658,9 @@ begin
   FS2240.Assign(Value);
 end;
 
-procedure TNaoPeriodicos.setS2241(const Value: TS2241Collection);
+procedure TNaoPeriodicos.setS2245(const Value: TS2245Collection);
 begin
-  FS2241.Assign(Value);
+  FS2245.Assign(Value);
 end;
 
 procedure TNaoPeriodicos.setS2250(const Value: TS2250Collection);
@@ -688,9 +719,10 @@ begin
     teS2206: Self.S2206.Add.EvtAltContratual.XML := AXMLString;
     teS2210: Self.S2210.Add.EvtCAT.XML := AXMLString;
     teS2220: Self.S2220.Add.evtMonit.XML := AXMLString;
+    teS2221: Self.S2221.Add.evtToxic.XML := AXMLString;
     teS2230: Self.S2230.Add.EvtAfastTemp.XML := AXMLString;
     teS2240: Self.S2240.Add.EvtExpRisco.XML := AXMLString;
-    teS2241: Self.S2241.Add.EvtInsApo.XML := AXMLString;
+    teS2245: Self.S2245.Add.EvtTreiCap.XML := AXMLString;
     teS2250: Self.S2250.Add.EvtAvPrevio.XML := AXMLString;
     teS2260: Self.S2260.Add.EvtConvInterm.XML := AXMLString;
     teS2298: Self.S2298.Add.EvtReintegr.XML := AXMLString;
@@ -716,9 +748,10 @@ begin
     teS2206: Self.S2206.Add.EvtAltContratual.LerArqIni(AIniString);
     teS2210: Self.S2210.Add.EvtCAT.LerArqIni(AIniString);
     teS2220: Self.S2220.Add.evtMonit.LerArqIni(AIniString);
+    teS2221: Self.S2221.Add.evtToxic.LerArqIni(AIniString);
     teS2230: Self.S2230.Add.EvtAfastTemp.LerArqIni(AIniString);
     teS2240: Self.S2240.Add.EvtExpRisco.LerArqIni(AIniString);
-    teS2241: Self.S2241.Add.EvtInsApo.LerArqIni(AIniString);
+    teS2245: Self.S2245.Add.EvtTreiCap.LerArqIni(AIniString);
     teS2250: Self.S2250.Add.EvtAvPrevio.LerArqIni(AIniString);
     teS2260: Self.S2260.Add.EvtConvInterm.LerArqIni(AIniString);
     teS2298: Self.S2298.Add.EvtReintegr.LerArqIni(AIniString);

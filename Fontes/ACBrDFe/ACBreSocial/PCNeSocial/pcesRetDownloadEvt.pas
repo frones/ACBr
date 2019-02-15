@@ -169,8 +169,8 @@ end;
 
 function TRetDownloadEvt.LerXml: boolean;
 var
-  ok: boolean;
-  i, j, k: Integer;
+//  ok: boolean;
+  i{, j, k}: Integer;
 begin
   Result := False;
   try

@@ -108,6 +108,10 @@ type
     function Consultar(const AProtocolo: string): boolean;
     function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
         tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
+    function ConsultaIdentificadoresEventosTabela(const CnpjEstab: String;
+        tpEvt: TTipoEvento; AchEvt: string; AdtIni, AdtFim: TDateTime): boolean;
+    function ConsultaIdentificadoresEventosTrabalhador(const CnpjEstab: String;
+        AcpfTrab: string; AdtIni, AdtFim: TDateTime): boolean;
 
     function DownloadEventos(const CnpjEmpr, PorID, PorNrRecibo: String): boolean;
 
@@ -186,6 +190,22 @@ function TACBreSocial.ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: 
   tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
 begin
   Result := WebServices.ConsultaIdentificadoresEventosEmpregador(CnpjEstab, tpEvt, PerApur);
+end;
+
+function TACBreSocial.ConsultaIdentificadoresEventosTabela(
+  const CnpjEstab: String; tpEvt: TTipoEvento; AchEvt: string; AdtIni,
+  AdtFim: TDateTime): boolean;
+begin
+  Result := WebServices.ConsultaIdentificadoresEventosTabela(CnpjEstab, tpEvt,
+                     AchEvt, AdtIni, AdtFim);
+end;
+
+function TACBreSocial.ConsultaIdentificadoresEventosTrabalhador(
+  const CnpjEstab: String; AcpfTrab: string; AdtIni,
+  AdtFim: TDateTime): boolean;
+begin
+  Result := WebServices.ConsultaIdentificadoresEventosTrabalhador(CnpjEstab,
+                     AcpfTrab, AdtIni, AdtFim);
 end;
 
 function TACBreSocial.DownloadEventos(const CnpjEmpr, PorID,

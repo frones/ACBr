@@ -274,7 +274,8 @@ end;
 
 function TEventos.LoadFromString(AXMLString: String): Boolean;
 var
-  AXML: AnsiString;
+//  AXML: AnsiString;
+  AXML: String;
   P: integer;
 
   function PoseSocial: integer;

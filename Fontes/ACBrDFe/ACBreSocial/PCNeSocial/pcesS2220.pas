@@ -59,8 +59,8 @@ type
   TevtMonit = class;
   TexMedOcup = class;
   TAso = class;
-  TExameColecaoItem = class;
-  TExameColecao = class;
+  TExameCollectionItem = class;
+  TExameCollection = class;
   TRespMonit = class;
   TMedico = class;
   
@@ -95,6 +95,7 @@ type
     FACBreSocial: TObject;
     FexMedOcup: TexMedOcup;
 
+    { Geradores da classe }
     procedure GerarExame;
     procedure GerarMedico;
     procedure GerarExMedOcup;
@@ -110,7 +111,7 @@ type
     property IdeEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeVinculo: TIdeVinculo read FIdeVinculo write FIdeVinculo;
-    property exMedOcup : TexMedOcup read FexMedOcup write FexMedOcup;
+    property exMedOcup: TexMedOcup read FexMedOcup write FexMedOcup;
   end;
 
   TexMedOcup = class(TPersistent)
@@ -131,7 +132,7 @@ type
   private
     FDtAso: TDateTime;
     FResAso: tpResAso;
-    FExame: TExameColecao;
+    FExame: TExameCollection;
     FMedico: TMedico;
   public
     constructor create;
@@ -139,34 +140,33 @@ type
 
     property DtAso: TDateTime read FDtAso write FDtAso;
     property ResAso: tpResAso read FResAso write FResAso;
-    property Exame: TExameColecao read FExame write FExame;
+    property Exame: TExameCollection read FExame write FExame;
     property Medico: TMedico read FMedico write FMedico;
   end;
 
-  TExameColecaoItem = class(TCollectionItem)
+  TExameCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TExameCollectionItem;
+    procedure SetItem(Index: Integer; const Value: TExameCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TExameCollectionItem;
+    property Items[Index: Integer]: TExameCollectionItem read GetItem write SetItem;
+  end;
+
+  TExameCollectionItem = class(TCollectionItem)
   private
     FDtExm: TDateTime;
     FProcRealizado: integer;
     FObsProc: string;
     FOrdExame: tpOrdExame;
     FIndResult: tpIndResult;
-  public
-    
+  public      
     property DtExm: TDateTime read FDtExm write FDtExm;
     property ProcRealizado: integer read FProcRealizado write FProcRealizado;
     property obsProc: string read FObsProc write FObsProc;
     property ordExame: tpOrdExame read FOrdExame write FOrdExame;
     property indResult: tpIndResult read FIndResult write FIndResult;
-  end;
-
-  TExameColecao = class(TCollection)
-  private
-    function GetItem(Index: Integer): TExameColecaoItem;
-    procedure SetItem(Index: Integer; const Value: TExameColecaoItem);
-  public
-    constructor Create(AOwner: TPersistent);
-    function Add: TExameColecaoItem;
-    property Items[Index: Integer]: TExameColecaoItem read GetItem write SetItem;
   end;
 
   TRespMonit = class
@@ -247,7 +247,7 @@ end;
 constructor TAso.create;
 begin
   inherited;
-  FExame := TExameColecao.Create(self);
+  FExame := TExameCollection.Create(self);
   FMedico := TMedico.Create;
 end;
 
@@ -260,24 +260,24 @@ end;
 
 { TExameColecao }
 
-function TExameColecao.Add: TExameColecaoItem;
+function TExameCollection.Add: TExameCollectionItem;
 begin
-  Result := TExameColecaoItem(inherited Add);
+  Result := TExameCollectionItem(inherited Add);
   Result.Create(self);
 end;
 
-constructor TExameColecao.Create(AOwner: TPersistent);
+constructor TExameCollection.Create(AOwner: TPersistent);
 begin
-  inherited Create(TExameColecaoItem);
+  inherited Create(TExameCollectionItem);
 end;
 
-function TExameColecao.GetItem(Index: Integer): TExameColecaoItem;
+function TExameCollection.GetItem(Index: Integer): TExameCollectionItem;
 begin
-  Result := TExameColecaoItem(inherited GetItem(Index));
+  Result := TExameCollectionItem(inherited GetItem(Index));
 end;
 
-procedure TExameColecao.SetItem(Index: Integer;
-  const Value: TExameColecaoItem);
+procedure TExameCollection.SetItem(Index: Integer;
+  const Value: TExameCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
@@ -349,7 +349,7 @@ begin
     Gerador.wGrupo('exame');
 
     Gerador.wCampo(tcDat, '', 'dtExm',         10,  10, 1, self.exMedOcup.Aso.Exame.Items[i].dtExm);
-    Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 0, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
+    Gerador.wCampo(tcStr, '', 'procRealizado',  1,   4, 1, self.exMedOcup.Aso.Exame.Items[i].procRealizado);
     Gerador.wCampo(tcStr, '', 'obsProc',        1, 999, 0, self.exMedOcup.Aso.Exame.Items[i].obsProc);
     Gerador.wCampo(tcInt, '', 'ordExame',       1,   1, 1, eSOrdExameToStr(self.exMedOcup.Aso.Exame.Items[i].ordExame));
     Gerador.wCampo(tcInt, '', 'indResult',      1,   1, 0, eSIndResultToStr(self.exMedOcup.Aso.Exame.Items[i].indResult));
@@ -370,7 +370,6 @@ begin
   GerarRespMonit;
 
   Gerador.wGrupo('/exMedOcup');
-
 end;
 
 procedure TevtMonit.GerarRespMonit;

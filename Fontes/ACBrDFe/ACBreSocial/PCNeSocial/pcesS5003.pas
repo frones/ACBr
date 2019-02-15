@@ -467,8 +467,8 @@ end;
 function TEvtBasesFGTS.SalvarINI: boolean;
 var
   AIni: TMemIniFile;
-  sSecao: String;
-  i, j, k: Integer;
+//  sSecao: String;
+//  i, j, k: Integer;
 begin
   Result := False;
 

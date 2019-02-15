@@ -57,8 +57,6 @@ type
   TS1060Collection = class;
   TS1060CollectionItem = class;
   TIdeAmbiente = class;
-  TFatorRiscoCollectionItem = class;
-  TFatorRiscoCollection = class;
   TDadosAmbiente = class;
   TInfoAmbiente = class;
   TEvtTabAmbiente = class;
@@ -95,7 +93,6 @@ type
     FACBreSocial: TObject;
 
     procedure GerarIdeAmbiente;
-    procedure GerarFatorRisco;
     procedure GerarDadosAmbiente;
   public
     constructor Create(AACBreSocial: TObject);overload;
@@ -121,32 +118,13 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TFatorRiscoCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TFatorRiscoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TFatorRiscoCollectionItem);
-  public
-    constructor create; reintroduce;
-    function add: TFatorRiscoCollectionItem;
-    property Items[Index: Integer]: TFatorRiscoCollectionItem read GetItem write SetItem;
-  end;
-
-  TFatorRiscoCollectionItem = class(TCollectionItem)
-  private
-    FCodFatRis: string;
-  public
-    constructor create; reintroduce;
-
-    property codFatRis: string read FCodFatRis write FCodFatRis;
-  end;
-
   TDadosAmbiente = class(TPersistent)
   private
-    FDscAmb: string;
+    FDscAmb: String;
     FLocalAmb: tpLocalAmb;
     FTpInsc: tpTpInscAmbTab;
-    FNrInsc: string;
-    FFatorRisco: TFatorRiscoCollection;
+    FNrInsc: String;
+    FCodLotacao: String;
   public
     constructor create;
     destructor destroy; override;
@@ -155,7 +133,7 @@ type
     property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
     property tpInsc: tpTpInscAmbTab read FTpInsc write FTpInsc;
     property nrInsc: string read FNrInsc write FNrInsc;
-    property fatorRisco: TFatorRiscoCollection read FFatorRisco write FFatorRisco;
+    property codLotacao: String read FCodLotacao write FCodLotacao;
   end;
 
   TInfoAmbiente = class(TPersistent)
@@ -222,48 +200,15 @@ begin
   FEvtTabAmbiente.Assign(Value);
 end;
 
-{ TFatorRiscoCollectionItem }
-
-constructor TFatorRiscoCollectionItem.create;
-begin
-
-end;
-
-{ TFatorRiscoCollection }
-
-function TFatorRiscoCollection.add: TFatorRiscoCollectionItem;
-begin
-  Result := TFatorRiscoCollectionItem(inherited add);
-  Result.create;
-end;
-
-constructor TFatorRiscoCollection.create;
-begin
-  inherited create(TFatorRiscoCollectionItem)
-end;
-            
-function TFatorRiscoCollection.GetItem(
-  Index: Integer): TFatorRiscoCollectionItem;
-begin
-  Result := TFatorRiscoCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TFatorRiscoCollection.SetItem(Index: Integer;
-  Value: TFatorRiscoCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
 { TDadosAmbiente }
 
 constructor TDadosAmbiente.create;
 begin
-  FFatorRisco := TFatorRiscoCollection.Create;
+
 end;
 
 destructor TDadosAmbiente.destroy;
 begin
-  FFatorRisco.Free;
 
   inherited;
 end;
@@ -335,34 +280,13 @@ procedure TEvtTabAmbiente.GerarDadosAmbiente;
 begin
   Gerador.wGrupo('dadosAmbiente');
 
-  Gerador.wCampo(tcStr, '', 'dscAmb',   1, 999, 1, infoAmbiente.dadosAmbiente.dscAmb);
-  Gerador.wCampo(tcStr, '', 'localAmb', 1,   1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
-  Gerador.wCampo(tcStr, '', 'tpInsc',   1,   1, 1, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
-  Gerador.wCampo(tcStr, '', 'nrInsc',   1,  15, 1, infoAmbiente.dadosAmbiente.nrInsc);
-
-  GerarFatorRisco;
+  Gerador.wCampo(tcStr, '', 'dscAmb',     1, 999, 1, infoAmbiente.dadosAmbiente.dscAmb);
+  Gerador.wCampo(tcStr, '', 'localAmb',   1,   1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
+  Gerador.wCampo(tcStr, '', 'tpInsc',     1,   1, 0, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
+  Gerador.wCampo(tcStr, '', 'nrInsc',     1,  15, 0, infoAmbiente.dadosAmbiente.nrInsc);
+  Gerador.wCampo(tcStr, '', 'codLotacao', 1,  30, 0, infoAmbiente.dadosAmbiente.codLotacao);
 
   Gerador.wGrupo('/dadosAmbiente');
-end;
-
-procedure TEvtTabAmbiente.GerarFatorRisco;
-var
-  i: Integer;
-  objFatorRisco: TFatorRiscoCollectionItem;
-begin
-  for i := 0 to infoAmbiente.dadosAmbiente.fatorRisco.Count - 1 do
-  begin
-    objFatorRisco := infoAmbiente.dadosAmbiente.fatorRisco.Items[i];
-
-    Gerador.wGrupo('fatorRisco');
-
-    Gerador.wCampo(tcStr, '', 'codFatRis', 1, 10, 1, objFatorRisco.codFatRis);
-
-    Gerador.wGrupo('/fatorRisco');
-  end;
-
-  if infoAmbiente.dadosAmbiente.fatorRisco.Count > 999 then
-    Gerador.wAlerta('', 'fatorRisco', 'Lista de Fator de Risco', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TEvtTabAmbiente.GerarIdeAmbiente;
@@ -424,8 +348,8 @@ function TEvtTabAmbiente.LerArqIni(const AIniString: String): Boolean;
 var
   INIRec: TMemIniFile;
   Ok: Boolean;
-  sSecao, sFim: String;
-  I: Integer;
+  sSecao{, sFim}: String;
+//  I: Integer;
 begin
   Result := False;
 
@@ -458,28 +382,11 @@ begin
       if (ModoLancamento <> mlExclusao) then
       begin
         sSecao := 'dadosAmbiente';
-        infoAmbiente.dadosAmbiente.dscAmb   := INIRec.ReadString(sSecao, 'dscAmb', EmptyStr);
-        infoAmbiente.dadosAmbiente.localAmb := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '1'));
-        infoAmbiente.dadosAmbiente.tpInsc   := eSStrTotpTpInscAmbTab(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
-        infoAmbiente.dadosAmbiente.nrInsc   := INIRec.ReadString(sSecao, 'nrInsc', '');
-
-        I := 1;
-        while true do
-        begin
-          // de 001 até 999
-          sSecao := 'fatorRisco' + IntToStrZero(I, 3);
-          sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
-
-          if (sFim = 'FIM') or (Length(sFim) <= 0) then
-            break;
-
-          with infoAmbiente.dadosAmbiente.fatorRisco.Add do
-          begin
-            codFatRis := sFim;
-          end;
-
-          Inc(I);
-        end;
+        infoAmbiente.dadosAmbiente.dscAmb     := INIRec.ReadString(sSecao, 'dscAmb', EmptyStr);
+        infoAmbiente.dadosAmbiente.localAmb   := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '1'));
+        infoAmbiente.dadosAmbiente.tpInsc     := eSStrTotpTpInscAmbTab(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        infoAmbiente.dadosAmbiente.nrInsc     := INIRec.ReadString(sSecao, 'nrInsc', '');
+        infoAmbiente.dadosAmbiente.codLotacao := INIRec.ReadString(sSecao, 'codLotacao', '');
 
         if ModoLancamento = mlAlteracao then
         begin

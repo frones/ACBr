@@ -224,15 +224,18 @@ begin
   {S2220}
   for i := 0 to FEventos.NaoPeriodicos.S2220.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2220[i].evtMonit.XML);
+  {S2221}
+  for i := 0 to FEventos.NaoPeriodicos.S2221.Count - 1 do
+    LoadFromString(FEventos.NaoPeriodicos.S2221[i].evtToxic.XML);
   {S2230}
   for i := 0 to FEventos.NaoPeriodicos.S2230.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2230[i].EvtAfastTemp.XML);
   {S2240}
   for i := 0 to FEventos.NaoPeriodicos.S2240.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2240[i].EvtExpRisco.XML);
-  {S2241}
-  for i := 0 to FEventos.NaoPeriodicos.S2241.Count - 1 do
-    LoadFromString(FEventos.NaoPeriodicos.S2241[i].EvtInsApo.XML);
+  {S2245}
+  for i := 0 to FEventos.NaoPeriodicos.S2245.Count - 1 do
+    LoadFromString(FEventos.NaoPeriodicos.S2245[i].EvtTreiCap.XML);
   {S2250}
   for i := 0 to FEventos.NaoPeriodicos.S2250.Count - 1 do
     LoadFromString(FEventos.NaoPeriodicos.S2250[i].EvtAvPrevio.XML);
@@ -293,7 +296,8 @@ end;
 procedure TLoteEventos.GerarXML(const AGrupo: TeSocialGrupo);
 var
   i: Integer;
-  Eventosxml: AnsiString;
+//  Eventosxml: AnsiString;
+  Eventosxml: String;
 begin
   CarregarXmlEventos;
 
@@ -373,7 +377,8 @@ end;
 
 function TLoteEventos.LoadFromString(AXMLString: String): Boolean;
 var
-  AXML: AnsiString;
+//  AXML: AnsiString;
+  AXML: String;
   P: integer;
 
   function PoseSocial: integer;

@@ -1,8 +1,10 @@
 object LibBoletoDM: TLibBoletoDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   Height = 150
-  HorizontalOffset = 422
-  VerticalOffset = 298
+  HorizontalOffset = 330
+  VerticalOffset = 249
   Width = 501
   PPI = 96
   object ACBrBoleto1: TACBrBoleto
@@ -10,10 +12,14 @@ object LibBoletoDM: TLibBoletoDM
     Banco.TipoCobranca = cobNenhum
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
+    DirArqRemessa = 'C:\Temp\'
+    DirArqRetorno = 'C:\Temp\'
     NumeroArquivo = 0
     DataArquivo = 0
     DataCreditoLanc = 0
+    LeCedenteRetorno = True
     ACBrBoletoFC = ACBrBoletoFCFortes1
     left = 39
     top = 36

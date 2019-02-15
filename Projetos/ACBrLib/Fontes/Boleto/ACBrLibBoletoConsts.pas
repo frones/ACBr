@@ -43,7 +43,7 @@ uses
 
 const
   CLibBoletoNome = 'ACBrLibBoleto';
-  CLibBoletoVersao = '0.0.1';
+  CLibBoletoVersao = '0.0.2';
 
   CSessaoBoletoDiretorioConfig = 'BoletoDiretorioConfig';
   CChaveDataArquivo = 'DataArquivo';

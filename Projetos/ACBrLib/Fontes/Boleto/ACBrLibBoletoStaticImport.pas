@@ -74,7 +74,7 @@ function Boleto_IncluirTitulos(eArquivoIni, eTpSaida: PChar; const sResposta: PC
 function Boleto_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TotalTitulosLista: longint;
+function Boleto_TotalTitulosLista(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_Imprimir(eNomeImpressora: PChar): longint;
@@ -111,7 +111,7 @@ function Boleto_ListaOcorrencias(const sResposta: PChar; var esTamanho: longint)
 function Boleto_ListaOcorrenciasEX(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
-function Boleto_TamNossoNumero(eCarteira: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+function Boleto_TamNossoNumero(eCarteira, enossoNumero, eConvenio: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrBoletoLIBName;
 
 function Boleto_CodigosMoraAceitos(const sResposta: PChar; var esTamanho: longint): longint;

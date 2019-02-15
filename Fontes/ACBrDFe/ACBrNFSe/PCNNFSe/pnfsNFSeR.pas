@@ -1706,21 +1706,20 @@ begin
   if FProvedor in [proBetha] then
     if Leitor.rExtrai(Nivel +1, 'CondicaoPagamento') <> '' then
     begin
-      NFSe.CondicaoPagamento.Condicao:= StrToCondicao(ok,Leitor.rCampo(tcStr,'Condicao'));
-      NFSe.CondicaoPagamento.QtdParcela:= Leitor.rCampo(tcInt,'Condicao');
-      for I := 0 to 9999 do
+      NFSe.CondicaoPagamento.Condicao   := StrToCondicao(ok,Leitor.rCampo(tcStr,'Condicao'));
+      NFSe.CondicaoPagamento.QtdParcela := Leitor.rCampo(tcInt, 'QtdParcela');
+
+      i := 0;
+      NFSe.CondicaoPagamento.Parcelas.Clear;
+      while Leitor.rExtrai(Nivel +2, 'Parcelas', '', i + 1) <> '' do
       begin
-        if (Leitor.rExtrai(Nivel +2, 'Parcelas', 'Parcelas', i) <> '') then
+        with NFSe.CondicaoPagamento.Parcelas.Add do
         begin
-          with NFSe.CondicaoPagamento.Parcelas.Add do
-          begin
-            Parcela        := Leitor.rCampo(tcInt, 'Parcela');
-            DataVencimento := Leitor.rCampo(tcDatHor, 'DataVencimento');
-            Valor          := Leitor.rCampo(tcDe2, 'Valor');
-          end;
-        end
-        else
-          Break;
+          Parcela        := Leitor.rCampo(tcInt, 'Parcela');
+          DataVencimento := Leitor.rCampo(tcDatHor, 'DataVencimento');
+          Valor          := Leitor.rCampo(tcDe2, 'Valor');
+        end;
+        inc(i);
       end;
     end;
 

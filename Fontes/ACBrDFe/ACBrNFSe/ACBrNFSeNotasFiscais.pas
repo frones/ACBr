@@ -933,7 +933,7 @@ var
         Result := Pos('</rps>', AXMLString);
 
       // Provedor Governa
-      if Result = 0 then
+      if ((Result = 0) and (AProvedor = proGoverna)) then
       begin
         Result := Pos('</LoteRps>', AXMLString);
         TamTAG := 9;

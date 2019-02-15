@@ -414,7 +414,8 @@ begin
 
       NFSe.Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
 
-      if Leitor.rExtrai(4, 'IdentificacaoTomador') <> '' then
+      if (Leitor.rExtrai(4, 'IdentificacaoTomador') <> '') or
+         (Leitor.rExtrai(3, 'IdentificacaoTomador') <> '') then
       begin
         NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
@@ -1714,7 +1715,7 @@ begin
           with NFSe.CondicaoPagamento.Parcelas.Add do
           begin
             Parcela        := Leitor.rCampo(tcInt, 'Parcela');
-            DataVencimento := Leitor.rCampo(tcDatVcto, 'DataVencimento');
+            DataVencimento := Leitor.rCampo(tcDatHor, 'DataVencimento');
             Valor          := Leitor.rCampo(tcDe2, 'Valor');
           end;
         end
@@ -1738,7 +1739,7 @@ begin
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
-    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2]) then
+    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2, proCenti]) then
     begin
       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');

@@ -1225,7 +1225,7 @@ begin
           (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))) then
       }
 
-      if FProvedor in [proNFSeBrasil, proEL] then
+      if FProvedor in [proNFSeBrasil, proEL, proEquiplano] then
         // Se o provedor for NFSeBrasil ou EL compara apenas o numero do RPS
         CondicaoNovoRetorno := (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))
       else
@@ -4447,6 +4447,7 @@ begin
       proBethav2,
       proDigifred,
       proISSJoinville,
+      proFiorilli,
       proSystemPro: FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
 
       proGinfes,

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2019
+-- ACBrNFSeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/49403-loadfromstring-retornando-registro-a-mais-e-em-branco-real-fantasma/
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/49397-issnet-lerrps_abrasf_v1-identificacaotomador/
+   Por: Balena
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/49058-problemas-com-provedor-centi/?do=findComment&comment=326171
+   Por: Marcio Lopes
+
 13/02/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/49364-equiplano/

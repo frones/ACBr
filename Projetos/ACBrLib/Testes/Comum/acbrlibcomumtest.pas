@@ -14,12 +14,12 @@ type
   TACbrLibRespostaDescendenteSimples = class(TACBrLibResposta)
   private
     FFonte: TFont;
-    FFs: TFontStyles;
+    FFs: TFontStyle;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
     destructor Destroy; override;
   published
-    property Fs: TFontStyles read FFs write FFs;
+    property Fs: TFontStyle read FFs write FFs;
     property Fonte: TFont read FFonte write FFonte;
 
   end;
@@ -54,8 +54,8 @@ begin
   acrds := TACbrLibRespostaDescendenteSimples.Create('Sessao', resINI);
   try
     acrds.Fonte.Name := 'Arial';
-    acrds.Fonte.Style := [fsBold];
-    acrds.Fs := [fsItalic, fsUnderline];
+    acrds.Fonte.Style := [fsItalic, fsUnderline];
+    acrds.Fs := fsStrikeOut;
     Resultado := acrds.Gerar;
   finally
     acrds.Free;

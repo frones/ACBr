@@ -482,9 +482,8 @@ uses
   {$EndIf}
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
-  ACBrEscPosEpson, ACBrEscBematech, ACBrEscDaruma, ACBrEscElgin, ACBrEscDiebold,
-  ACBrEscEpsonP2,
-  ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
+  ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
+  ACBrEscElgin, ACBrEscDiebold;
 
 { TACBrConfigModoPagina }
 
@@ -793,7 +792,7 @@ begin
   {$Else}
    MS := TMemoryStream.Create;
    try
-     MS.LoadFromFile(ArquivoBMP);
+     MS.LoadFromFile(ArquivoImagem);
      BMPMonoToRasterStr(MS, True, AWidth, AHeight, ARasterStr );
    finally
      MS.Free;

@@ -31,6 +31,8 @@ type
 
 implementation
 
+uses IniFiles;
+
 { TACbrLibRespostaDescendenteSimples }
 
 constructor TACbrLibRespostaDescendenteSimples.Create(const ASessao: String;
@@ -49,18 +51,39 @@ end;
 procedure TACBrLibResposta_Testes.GravarIni_TesteFonte;
 var
   acrds: TACbrLibRespostaDescendenteSimples;
-  Resultado: string;
+  Resultado, STeste: string;
+  ITeste: Int64;
+  AIni: TMemIniFile;
+  Astr: TStringStream;
 begin
   acrds := TACbrLibRespostaDescendenteSimples.Create('Sessao', resINI);
   try
     acrds.Fonte.Name := 'Arial';
-    acrds.Fonte.Style := [fsItalic, fsUnderline];
-    acrds.Fs := fsStrikeOut;
+    acrds.Fonte.Style := [fsStrikeOut, fsItalic];
+    acrds.Fs := fsUnderline;
     Resultado := acrds.Gerar;
   finally
     acrds.Free;
   end;
-  CheckEquals('ValorEsperado', Resultado, 'Erro?');
+  Astr := TStringStream.Create(Resultado);
+  try
+    AIni := TMemIniFile.Create(Astr);
+    try
+      STeste := AIni.ReadString('Fonte', 'Name', '');
+      CheckEquals('Arial', STeste, 'Falhou Fonte.Name!');
+
+      STeste := AIni.ReadString('Fonte', 'Style', '');
+      CheckEquals('[1,3]', STeste, 'Falhou Fonte.Style!');
+
+      ITeste := AIni.ReadInt64('Sessao', 'Fs', -1);
+      CheckEquals(2, ITeste, 'Falhou Fs (enumerado).');
+
+    finally
+      AIni.Free;
+    end;
+  finally
+    Astr.Free;
+  end;
 
 end;
 

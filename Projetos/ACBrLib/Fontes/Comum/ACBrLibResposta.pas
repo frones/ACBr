@@ -193,15 +193,18 @@ end;
 procedure TACBrLibResposta.GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean);
 var
   PropList: TPropInfoList;
-  i, j: Integer;
+  i, j, x: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
   SetValues: TSplitResult;
-  SetValue, Sessao: String;
-  SetOrdValue: Int64;
+  Sessao: String;
+  ValoresSet: String;
+  //SetOrdValue: Int64;
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
+  AOrdTypeInfo: PTypeInfo;
+  OrdTypeData: PTypeData;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
 
@@ -242,14 +245,24 @@ begin
           end;
         tkSet:
           begin
-            SetOrdValue := 0;
+            {Para gerar uma string, poderia ser alterado para
+            ValoresSet := GetSetProp(Target, PI, True);
+            AIni.WriteString(ASessao, PI^.Name, ValoresSet);
+            // Isso poderia ser lido depois usando o método SetSetProp.
+            }
+            //SetOrdValue := 0;
+            ValoresSet := '[';
             SetValues := Split(',', GetSetProp(Target, PI, false));
+            OrdTypeData:= GetTypeData(PT);
+            AOrdTypeInfo := OrdTypeData^.CompType;
             for j := 0 to Length(SetValues) - 1 do
             begin
-              SetOrdValue := SetOrdValue + (1 << GetEnumValue(PT, SetValue));
+              x := GetEnumValue(AOrdTypeInfo, SetValues[j]);
+              ValoresSet := ValoresSet +  IntToStr(x) + ',' ;
             end;
+            ValoresSet[Length(ValoresSet)] := ']';
 
-            AIni.WriteInt64(ASessao, PI^.Name, SetOrdValue);
+            AIni.WriteString(ASessao, PI^.Name, ValoresSet);
           end;
         tkBool,
         tkEnumeration,

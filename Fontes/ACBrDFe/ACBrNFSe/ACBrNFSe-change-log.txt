@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2019
+-- Diversos --
+[*] Simplificação do código
+   Por: Italo Jurisato Junior
+
 14/02/2019
 -- ACBrNFSeNotasFiscais --
 [*] https://www.projetoacbr.com.br/forum/topic/49403-loadfromstring-retornando-registro-a-mais-e-em-branco-real-fantasma/

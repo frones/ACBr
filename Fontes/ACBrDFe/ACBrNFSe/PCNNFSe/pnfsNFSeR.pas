@@ -363,10 +363,13 @@ begin
         begin
           with NFSe.Servico.ItemServico.Add do
           begin
-            Descricao := Leitor.rCampo(tcStr, 'Descricao');
-//            Quantidade := Leitor.rCampo(tcInt, 'Quantidade');
-            Quantidade := Leitor.rCampo(tcDe2, 'Quantidade');
+            Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+            Quantidade    := Leitor.rCampo(tcDe2, 'Quantidade');
             ValorUnitario := Leitor.rCampo(tcDe2, 'ValorUnitario');
+            ValorTotal    := Leitor.rCampo(tcDe2, 'ValorTotal');
+
+            if ValorTotal = 0 then
+              ValorTotal := Quantidade * ValorUnitario;
           end;
           inc(i);
         end;

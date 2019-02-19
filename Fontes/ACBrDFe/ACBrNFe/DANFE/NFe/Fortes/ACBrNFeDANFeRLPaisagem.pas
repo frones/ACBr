@@ -572,7 +572,7 @@ type
     function ManterDuplicatas: Integer;
     procedure AplicarParametros;
     procedure DefinirCabecalhoItens;
-    function ManterBandinfAdProd(sInforAdicProduto: String): String;
+    function ManterBandinfAdProd(const sInforAdicProduto: String): String;
     procedure AplicarParametrosEntrega;
     procedure AplicarParametrosRetirada;
     procedure DefinirEntrega;
@@ -2021,7 +2021,7 @@ begin
   end;
 end;
 
-function TfrlDANFeRLPaisagem.ManterBandinfAdProd(sInforAdicProduto: String): String;
+function TfrlDANFeRLPaisagem.ManterBandinfAdProd(const sInforAdicProduto: String): String;
 begin
   Result := Trim(sInforAdicProduto);
   Result := StringReplace(Result, ';', sLineBreak, [rfReplaceAll]);

@@ -662,7 +662,7 @@ type
     procedure DefinirEntrega;
     procedure DefinirRetirada;
     procedure DefinirCabecalhoItens;
-    function ManterBandinfAdProd(sInforAdicProduto: String): String;
+    function ManterBandinfAdProd(const sInforAdicProduto: String): String;
   end;
 
 implementation
@@ -2064,7 +2064,7 @@ begin
   end;
 end;
 
-function TfrlDANFeRLRetrato.ManterBandinfAdProd(sInforAdicProduto: String): String;
+function TfrlDANFeRLRetrato.ManterBandinfAdProd(const sInforAdicProduto: String): String;
 begin
   Result := Trim(sInforAdicProduto);
   Result := StringReplace(Result, ';', slineBreak, [rfReplaceAll]);

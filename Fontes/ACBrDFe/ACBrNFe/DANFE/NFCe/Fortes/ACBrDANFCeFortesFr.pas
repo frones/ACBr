@@ -717,8 +717,8 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     lNomeFantasia.Visible := ACBrNFeDANFCeFortes.ImprimeNomeFantasia;
-    if lNomeFantasia.Visible then;
-      lNomeFantasia.Lines.Text:= Emit.xFant ;
+    if lNomeFantasia.Visible then
+      lNomeFantasia.Lines.Text := Emit.xFant ;
 
     lRazaoSocial.Lines.Text := 'CNPJ: '+FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;

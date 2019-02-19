@@ -120,6 +120,7 @@ type
 
   TDadosAmbiente = class(TPersistent)
   private
+    FNmAmb: String;
     FDscAmb: String;
     FLocalAmb: tpLocalAmb;
     FTpInsc: tpTpInscAmbTab;
@@ -129,6 +130,7 @@ type
     constructor create;
     destructor destroy; override;
 
+    property nmAmb: string read FNmAmb write FNmAmb;
     property dscAmb: string read FDscAmb write FDscAmb;
     property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
     property tpInsc: tpTpInscAmbTab read FTpInsc write FTpInsc;
@@ -280,11 +282,12 @@ procedure TEvtTabAmbiente.GerarDadosAmbiente;
 begin
   Gerador.wGrupo('dadosAmbiente');
 
-  Gerador.wCampo(tcStr, '', 'dscAmb',     1, 999, 1, infoAmbiente.dadosAmbiente.dscAmb);
-  Gerador.wCampo(tcStr, '', 'localAmb',   1,   1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
-  Gerador.wCampo(tcStr, '', 'tpInsc',     1,   1, 0, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
-  Gerador.wCampo(tcStr, '', 'nrInsc',     1,  15, 0, infoAmbiente.dadosAmbiente.nrInsc);
-  Gerador.wCampo(tcStr, '', 'codLotacao', 1,  30, 0, infoAmbiente.dadosAmbiente.codLotacao);
+  Gerador.wCampo(tcStr, '', 'nmAmb',     1,   100, 1, infoAmbiente.dadosAmbiente.nmAmb);
+  Gerador.wCampo(tcStr, '', 'dscAmb',     1, 8000, 1, infoAmbiente.dadosAmbiente.dscAmb);
+  Gerador.wCampo(tcStr, '', 'localAmb',   1,    1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
+  Gerador.wCampo(tcStr, '', 'tpInsc',     1,    1, 0, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
+  Gerador.wCampo(tcStr, '', 'nrInsc',     1,   15, 0, infoAmbiente.dadosAmbiente.nrInsc);
+  Gerador.wCampo(tcStr, '', 'codLotacao', 1,   30, 0, infoAmbiente.dadosAmbiente.codLotacao);
 
   Gerador.wGrupo('/dadosAmbiente');
 end;
@@ -382,6 +385,7 @@ begin
       if (ModoLancamento <> mlExclusao) then
       begin
         sSecao := 'dadosAmbiente';
+        infoAmbiente.dadosAmbiente.nmAmb      := INIRec.ReadString(sSecao, 'nmAmb', EmptyStr);
         infoAmbiente.dadosAmbiente.dscAmb     := INIRec.ReadString(sSecao, 'dscAmb', EmptyStr);
         infoAmbiente.dadosAmbiente.localAmb   := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '1'));
         infoAmbiente.dadosAmbiente.tpInsc     := eSStrTotpTpInscAmbTab(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));

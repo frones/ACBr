@@ -162,6 +162,7 @@ type
     FFatRisco: TFatRiscoCollection;
     FRespReg: TRespRegCollection;
     FObs: TObs;
+    function getRespReg: TRespRegCollection;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -170,7 +171,7 @@ type
     property InfoAmb: TInfoAmbCollection read FInfoAmb write FInfoAmb;
     property infoAtiv: TInfoAtiv read FInfoAtiv write FInfoAtiv;
     property fatRisco: TFatRiscoCollection read FFatRisco write FFatRisco;
-    property respReg: TRespRegCollection read FRespReg write FRespReg;
+    property respReg: TRespRegCollection read getRespReg write FRespReg;
     property obs: TObs read FObs write FObs;
   end;
 
@@ -243,6 +244,7 @@ type
     Fpericulosidade: tpSimNao;
     FaposentEsp: tpSimNao;
     FEpcEpi: TEpcEpi;
+    function getEpcEpi: TEpcEpi;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -256,7 +258,7 @@ type
     property insalubridade: tpSimNao read Finsalubridade write Finsalubridade;
     property periculosidade: tpSimNao read Fpericulosidade write Fpericulosidade;
     property aposentEsp: tpSimNao read FaposentEsp write FaposentEsp;
-    property epcEpi: TEpcEpi read FEpcEpi write FEpcEpi;
+    property epcEpi: TEpcEpi read getEpcEpi write FEpcEpi;
   end;
 
   TEpcEpi = class(TPersistent)
@@ -502,7 +504,7 @@ begin
     Gerador.wCampo(tcStr, '', 'nmResp',  1, 70, 1, pRespReg[i].nmResp);
     Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
     Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
-    Gerador.wCampo(tcStr, '', 'nrOc',    1, 14, 1, pRespReg[i].nrOc);
+    Gerador.wCampo(tcStr, '', 'nrOC',    1, 14, 1, pRespReg[i].nrOc);
     Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, eSufToStr(pRespReg[i].ufOC));
 
     Gerador.wGrupo('/respReg');
@@ -590,6 +592,13 @@ begin
   FObs.Free;
 
   inherited;
+end;
+
+function TinfoExpRisco.getRespReg: TRespRegCollection;
+begin
+  if not Assigned(FRespReg) then
+    FRespReg := TRespRegCollection.Create;
+  Result := FRespReg;
 end;
 
 { TRespRegCollection }
@@ -874,6 +883,13 @@ begin
   FEpcEpi.Free;
   
   inherited;
+end;
+
+function TFatRiscoCollectionItem.getEpcEpi: TEpcEpi;
+begin
+  if not Assigned(FEpcEpi) then
+    FEpcEpi := TEpcEpi.Create;
+  result := FEpcEpi;
 end;
 
 { TEpcEpi }

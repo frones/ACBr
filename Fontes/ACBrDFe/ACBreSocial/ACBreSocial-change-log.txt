@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2019
+-- pcesS2245 --
+[*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=326660
+   Por: gtvosouza
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=326693
+   Por: Arce
+
 14/02/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/

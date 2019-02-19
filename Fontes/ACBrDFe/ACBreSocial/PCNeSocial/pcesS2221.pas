@@ -88,7 +88,7 @@ type
     FufCRM: String;
     FcodSeqExame: String;
     FcnpjLab: String;
-    FinfRecusa: tpSimNao;
+    FindRecusa: tpSimNao;
     FnrCRM: String;
   public
      property dtExame: TDateTime read FdtExame write FdtExame;
@@ -97,7 +97,7 @@ type
      property nmMed: String read FnmMed write FnmMed;
      property nrCRM: String read FnrCRM write FnrCRM;
      property ufCRM: String read FufCRM write FufCRM;
-     property infRecusa: tpSimNao read FinfRecusa write FinfRecusa;
+     property indRecusa: tpSimNao read FindRecusa write FindRecusa;
   end;
 
   TEvtToxic = class(TeSocialEvento)
@@ -198,7 +198,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmMed',       1, 70, 0, objToxicologico.nmMed);
   Gerador.wCampo(tcStr, '', 'nrCRM',       1,  8, 0, objToxicologico.nrCRM);
   Gerador.wCampo(tcStr, '', 'ufCRM',       1,  2, 0, objToxicologico.ufCRM);
-  Gerador.wCampo(tcStr, '', 'indRecusa',   1,  1, 1, eSSimNaoToStr(objToxicologico.infRecusa));
+  Gerador.wCampo(tcStr, '', 'indRecusa',   1,  1, 1, eSSimNaoToStr(objToxicologico.indRecusa));
 
   Gerador.wGrupo('/toxicologico');
 end;

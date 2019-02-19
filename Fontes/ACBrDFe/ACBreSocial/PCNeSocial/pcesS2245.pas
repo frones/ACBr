@@ -296,6 +296,8 @@ begin
     Gerador.wGrupo('evtTreiCap Id="' + Self.Id + '"');
 
     GerarIdeEvento2(Self.IdeEvento);
+    GerarIdeEmpregador(self.IdeEmpregador);
+    GerarIdeVinculo(self.IdeVinculo);
     GerarTreiCap(Self.treiCap);
 
     Gerador.wGrupo('/evtTreiCap');

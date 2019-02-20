@@ -2773,7 +2773,7 @@ begin
 
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.idLote := StrToInt(idLote);
-    with ACBrNFe1.EventoNFe.Evento.Add do
+    with ACBrNFe1.EventoNFe.Evento.New do
     begin
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;

@@ -322,6 +322,7 @@ begin
       if PreparaRelatorio then
       begin
         frxReport.PrintOptions.ShowDialog := (MostrarSetup) and (not FModoThread);
+        frxReport.PrintOptions.Copies := NumCopias;
 
         if Length(Impressora) > 0 then
           frxReport.PrintOptions.Printer := Impressora;

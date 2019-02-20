@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/02/2019
+ACBrBoletoFCFR
+[*] Ajuste para implementar a configuração de número de cópias a imprimir.
+		por: BigWings
+
 02/10/2018
 ACBrBoletoFCFR
 [+] Possibilidade de acrescentar alterar o nome do arquivo.

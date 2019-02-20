@@ -62,7 +62,7 @@ uses
 
 type
 
-  TRetInutNFe = class(TPersistent)
+  TRetInutNFe = class(TObject)
   private
     Fversao: String;
     FId: String;
@@ -85,7 +85,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
+
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property versao: String          read Fversao   write Fversao;
     property Id: String              read FId       write FId;

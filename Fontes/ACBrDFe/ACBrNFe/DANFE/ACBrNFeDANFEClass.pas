@@ -639,9 +639,6 @@ begin
   descBandeira := '';
   codigoAutorizacao := '';
 
-  if (aPagto.Collection.Count = 0) then
-    Exit;
-
   with aPagto do
   begin
     if ((tPag in [fpCartaoCredito, fpCartaoDebito]) and (tpIntegra = tiPagIntegrado)) then

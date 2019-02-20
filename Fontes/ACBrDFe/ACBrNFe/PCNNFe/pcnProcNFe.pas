@@ -56,7 +56,7 @@ type
 
 //  TPcnPadraoNomeProcNFe = (tpnPublico, tpnPrivado);
 
-  TProcNFe = class(TPersistent)
+  TProcNFe = class(TObject)
   private
     FGerador: TGerador;
     FPathNFe: String;
@@ -80,10 +80,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TProcNFe);
     function GerarXML: Boolean;
 //    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcNFe = tpnPrivado): String;
-  published
+
     property Gerador: TGerador          read FGerador;
     property PathNFe: String            read FPathNFe            write FPathNFe;
     property PathRetConsReciNFe: String read FPathRetConsReciNFe write FPathRetConsReciNFe;
@@ -308,31 +308,26 @@ begin
   end;
 end;
 
-procedure TProcNFe.Assign(Source: TPersistent);
+procedure TProcNFe.Assign(Source: TProcNFe);
 begin
-  if Source is TProcNFe then
-  begin
-//    Gerador.Assign(TprocNFe(Source).Gerador);
-    PathNFe := TprocNFe(Source).PathNFe;
-    PathRetConsReciNFe := TprocNFe(Source).PathRetConsReciNFe;
-    PathRetConsSitNFe := TprocNFe(Source).PathRetConsSitNFe;
-    tpAmb := TprocNFe(Source).tpAmb;
-    verAplic := TprocNFe(Source).verAplic;
-    chNFe := TprocNFe(Source).chNFe;
-    dhRecbto := TprocNFe(Source).dhRecbto;
-    nProt := TprocNFe(Source).nProt;
-    digVal := TprocNFe(Source).digVal;
-    cStat := TprocNFe(Source).cStat;
-    xMotivo := TprocNFe(Source).xMotivo;
-    Versao := TprocNFe(Source).Versao;
-    cMsg := TprocNFe(Source).cMsg;
-    xMsg := TprocNFe(Source).xMsg;
+//  Gerador.Assign(Source.Gerador);
+  PathNFe            := Source.PathNFe;
+  PathRetConsReciNFe := Source.PathRetConsReciNFe;
+  PathRetConsSitNFe  := Source.PathRetConsSitNFe;
+  tpAmb              := Source.tpAmb;
+  verAplic           := Source.verAplic;
+  chNFe              := Source.chNFe;
+  dhRecbto           := Source.dhRecbto;
+  nProt              := Source.nProt;
+  digVal             := Source.digVal;
+  cStat              := Source.cStat;
+  xMotivo            := Source.xMotivo;
+  Versao             := Source.Versao;
+  cMsg               := Source.cMsg;
+  xMsg               := Source.xMsg;
 
-    XML_NFe := TprocNFe(Source).XML_NFe;
-    XML_prot := TprocNFe(Source).XML_prot;
-  end
-  else
-    inherited;
+  XML_NFe            := Source.XML_NFe;
+  XML_prot           := Source.XML_prot;
 end;
 
 end.

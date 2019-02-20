@@ -50,21 +50,14 @@ unit pcnEventoNFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnConversaoNFe;
 
 type
-  TRetchNFePendCollection     = class;
-  TRetchNFePendCollectionItem = class;
-
-  TInfEvento      = class;
-  TDestinatario   = class;
-  TDetEvento      = class;
-  TRetInfEvento   = class;
   EventoException = class(Exception);
 
-  TitemPedidoCollection  = class;
-  TitemPedidoCollectionItem = class;
+  TRetchNFePendCollectionItem = class;
+  TDetEvento      = class;
 
   TInfEvento = class
   private
@@ -103,7 +96,7 @@ type
     property TipoEvento: String      read getTipoEvento;
   end;
 
-  TDestinatario = class(TPersistent)
+  TDestinatario = class(TObject)
   private
     FUF: String;
     FCNPJCPF: String;
@@ -116,25 +109,22 @@ type
     property IE: String            read FIE            write FIE;
   end;
 
-  TitemPedidoCollectionItem = class(TCollectionItem)
+  TitemPedidoCollectionItem = class
   private
     FqtdeItem: Currency;
     FnumItem: Integer;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property numItem: Integer   read FnumItem  write FnumItem;
     property qtdeItem: Currency read FqtdeItem write FqtdeItem;
   end;
 
-  TitemPedidoCollection = class(TCollection)
+  TitemPedidoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TitemPedidoCollectionItem;
     procedure SetItem(Index: Integer; Value: TitemPedidoCollectionItem);
   public
-    constructor Create(AOwner: TDetEvento);
-    function Add: TitemPedidoCollectionItem;
+    function Add: TitemPedidoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TitemPedidoCollectionItem;
     property Items[Index: Integer]: TitemPedidoCollectionItem read GetItem write SetItem; default;
   end;
 
@@ -160,16 +150,16 @@ type
     FidPedidoCancelado: String;
     FchNFeRef: String;
 
-    procedure setCondUso(const Value: String);
+    procedure setxCondUso(const Value: String);
     procedure SetitemPedido(const Value: TitemPedidoCollection);
   public
-    constructor Create(AOwner: TInfEvento);
+    constructor Create;
     destructor Destroy; override;
 
     property versao: String         read FVersao      write FVersao;
     property descEvento: String     read FDescEvento  write FDescEvento;
     property xCorrecao: String      read FCorrecao    write FCorrecao;
-    property xCondUso: String       read FCondUso     write setCondUso;
+    property xCondUso: String       read FCondUso     write setxCondUso;
     property nProt: String          read FnProt       write FnProt;
     property xJust: String          read FxJust       write FxJust;
     property cOrgaoAutor: Integer   read FcOrgaoAutor write FcOrgaoAutor;
@@ -187,26 +177,26 @@ type
     property idPedidoCancelado: String read FidPedidoCancelado write FidPedidoCancelado;
   end;
 
-  TRetchNFePendCollection = class(TCollection)
+  TRetchNFePendCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetchNFePendCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetchNFePendCollectionItem);
   public
-    constructor Create(AOwner: TRetInfEvento);
-    function Add: TRetchNFePendCollectionItem;
+    function Add: TRetchNFePendCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetchNFePendCollectionItem;
     property Items[Index: Integer]: TRetchNFePendCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetchNFePendCollectionItem = class(TCollectionItem)
+  TRetchNFePendCollectionItem = class
   private
     FChavePend: String;
-  published
+  public
     property ChavePend: String read FChavePend write FChavePend;
   end;
 
   { TRetInfEvento }
 
-  TRetInfEvento = class(TPersistent)
+  TRetInfEvento = class(TObject)
   private
     FId: String;
     FNomeArquivo: String;
@@ -229,7 +219,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Id: String                         read FId          write FId;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb       write FtpAmb;
     property verAplic: String                   read FverAplic    write FverAplic;
@@ -257,7 +247,7 @@ implementation
 constructor TInfEvento.Create;
 begin
   inherited Create;
-  FDetEvento := TDetEvento.Create(Self);
+  FDetEvento := TDetEvento.Create();
 end;
 
 destructor TInfEvento.Destroy;
@@ -376,11 +366,11 @@ end;
 
 { TDetEvento }
 
-constructor TDetEvento.Create(AOwner: TInfEvento);
+constructor TDetEvento.Create();
 begin
   inherited Create;
   Fdest := TDestinatario.Create;
-  FitemPedido := TitemPedidoCollection.Create(Self);
+  FitemPedido := TitemPedidoCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
@@ -390,7 +380,7 @@ begin
   inherited;
 end;
 
-procedure TDetEvento.setCondUso(const Value: String);
+procedure TDetEvento.setxCondUso(const Value: String);
 begin
   FCondUso := Value;
 
@@ -416,13 +406,7 @@ end;
 
 function TRetchNFePendCollection.Add: TRetchNFePendCollectionItem;
 begin
-  Result := TRetchNFePendCollectionItem(inherited Add);
-//  Result.create;
-end;
-
-constructor TRetchNFePendCollection.Create(AOwner: TRetInfEvento);
-begin
-  inherited Create(TRetchNFePendCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetchNFePendCollection.GetItem(
@@ -437,12 +421,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TRetchNFePendCollection.New: TRetchNFePendCollectionItem;
+begin
+  Result := TRetchNFePendCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetInfEvento }
 
 constructor TRetInfEvento.Create;
 begin
   inherited Create;
-  FchNFePend := TRetchNFePendCollection.Create(Self);
+  FchNFePend := TRetchNFePendCollection.Create();
 end;
 
 destructor TRetInfEvento.Destroy;
@@ -451,30 +441,11 @@ begin
   inherited;
 end;
 
-{ TitemPedidoCollectionItem }
-
-constructor TitemPedidoCollectionItem.Create;
-begin
-
-end;
-
-destructor TitemPedidoCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
 { TitemPedidoCollection }
 
 function TitemPedidoCollection.Add: TitemPedidoCollectionItem;
 begin
-  Result := TitemPedidoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TitemPedidoCollection.Create(AOwner: TDetEvento);
-begin
-  inherited Create(TitemPedidoCollectionItem);
+  Result := Self.New;
 end;
 
 function TitemPedidoCollection.GetItem(
@@ -487,6 +458,12 @@ procedure TitemPedidoCollection.SetItem(Index: Integer;
   Value: TitemPedidoCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TitemPedidoCollection.New: TitemPedidoCollectionItem;
+begin
+  Result := TitemPedidoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

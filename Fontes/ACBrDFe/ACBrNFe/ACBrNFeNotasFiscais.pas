@@ -3682,7 +3682,7 @@ begin
   if not (AOwner is TACBrNFe) then
     raise EACBrNFeException.Create('AOwner deve ser do tipo TACBrNFe');
 
-  inherited;
+  inherited Create(AOwner, ItemClass);
 
   FACBrNFe := TACBrNFe(AOwner);
   FConfiguracoes := TACBrNFe(FACBrNFe).Configuracoes;

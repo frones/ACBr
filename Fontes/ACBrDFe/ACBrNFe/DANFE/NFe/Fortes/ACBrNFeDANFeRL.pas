@@ -78,7 +78,7 @@ type
 
   public
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
-    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AFile: String);
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; const AFile: String);
   end;
 
 implementation
@@ -119,21 +119,15 @@ begin
     end;
 
     Report := ReportArray[0].RLNFe;
+    //Associa cada Report com o próximo;
     for i := 1 to High(ReportArray) do
     begin
-      if (Report.NextReport = nil) then
-        Report.NextReport := ReportArray[i].RLNFe
-      else
+      ReportNext := Report;
+      while (ReportNext.NextReport <> nil) do
       begin
-        ReportNext := Report.NextReport;
-
-        repeat
-          if (ReportNext.NextReport <> nil) then
-            ReportNext := ReportNext.NextReport;
-        until (ReportNext.NextReport = nil);
-
-        ReportNext.NextReport := ReportArray[i].RLNFe;
+        ReportNext := ReportNext.NextReport;
       end;
+      ReportNext.NextReport := ReportArray[i].RLNFe;
     end;
 
     TDFeReportFortes.AjustarReport(Report, ADANFe);
@@ -158,7 +152,7 @@ begin
   end;
 end;
 
-class procedure TfrlDANFeRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; AFile: String);
+class procedure TfrlDANFeRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; ANFe: TNFe; const AFile: String);
 var
   DANFeReport: TfrlDANFeRL;
 begin

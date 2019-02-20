@@ -71,7 +71,7 @@ type
     FImprimeEmUmaLinha: Boolean;
     FTipoDANFE: TpcnTipoImpressao;
 
-    procedure SetNFE(const AValue: TComponent);
+    procedure SetACBrNFE(const AValue: TComponent);
     procedure ErroAbstract(const NomeProcedure: String);
 
   protected
@@ -121,7 +121,7 @@ type
     property ChaveTributos: String read FChaveTributos write FChaveTributos;
 
   published
-    property ACBrNFe: TComponent read FACBrNFe write SetNFE;
+    property ACBrNFe: TComponent read FACBrNFe write SetACBrNFE;
     property TipoDANFE: TpcnTipoImpressao read FTipoDANFE write SetTipoDANFE default tiRetrato;
     property QuebraLinhaEmDetalhamentos: Boolean read FQuebraLinhaEmDetalhamentos write FQuebraLinhaEmDetalhamentos default True;
     property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido default True;
@@ -172,7 +172,7 @@ begin
     FACBrNFe := nil;
 end;
 
-procedure TACBrDFeDANFeReport.SetNFE(const AValue: TComponent);
+procedure TACBrDFeDANFeReport.SetACBrNFE(const AValue: TComponent);
 var
   OldValue: TACBrNFe;
 begin
@@ -413,7 +413,7 @@ begin
         Result := Result +
           obsCont.Items[i].xCampo + ': ' +
           obsCont.Items[i].xTexto +
-          ifthen((obsCont.Items[i].Index = (obsCont.Count - 1)), '', ';');
+          IfThen((i = (obsCont.Count - 1)), '', ';');
       end;
 
       Result := Result + '; ';
@@ -435,8 +435,7 @@ begin
       begin
         Result := Result +
           obsFisco.Items[i].xCampo + ': ' +
-          obsFisco.Items[i].xTexto + ifthen(
-          (obsFisco.Items[i].Index = (obsFisco.Count - 1)), '', ';');
+          obsFisco.Items[i].xTexto + IfThen((i = (obsFisco.Count - 1)), '', ';');
       end;
 
       Result := Result + '; ';
@@ -456,12 +455,12 @@ begin
     begin
       for i := 0 to (procRef.Count - 1) do
       begin
-        if procRef.Items[i].Index = (procRef.Count - 1) then
+        if (i = (procRef.Count - 1)) then
           Result := Result +
             ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
             procRef.Items[i].nProc + ' - ORIGEM: ' +
             indProcToDescrStr(procRef.Items[i].indProc) +
-            ifthen((procRef.Items[i].Index = (procRef.Count - 1)), '', ';');
+            ifthen((i = (procRef.Count - 1)), '', ';');
       end;
 
       Result := Result + '; ';

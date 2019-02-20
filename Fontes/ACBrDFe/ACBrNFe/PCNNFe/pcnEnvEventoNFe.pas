@@ -50,34 +50,34 @@ unit pcnEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, pcnEventoNFe, pcnConsts, pcnNFeConsts, pcnSignature;
 
 type
-  TInfEventoCollection     = class;
-  TInfEventoCollectionItem = class;
-  TEventoNFe               = class;
   EventoException          = class(Exception);
 
-  TInfEventoCollection = class(TCollection)
+  TInfEventoCollectionItem = class;
+  TEventoNFe               = class;
+
+  TInfEventoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfEventoCollectionItem;
+    function Add: TInfEventoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New.'{$EndIf};
+    function New: TInfEventoCollectionItem;
     property Items[Index: Integer]: TInfEventoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfEventoCollectionItem = class(TCollectionItem)
+  TInfEventoCollectionItem = class(TObject)
   private
     FInfEvento: TInfEvento;
     Fsignature: Tsignature;
     FRetInfEvento: TRetInfEvento;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
@@ -85,7 +85,7 @@ type
 
   { TEventoNFe }
 
-  TEventoNFe = class(TPersistent)
+  TEventoNFe = class(TObject)
   private
     FGerador: TGerador;
     FidLote: Integer;
@@ -103,7 +103,7 @@ type
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
     function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
-  published
+
     property Gerador: TGerador            read FGerador write FGerador;
     property idLote: Integer              read FidLote  write FidLote;
     property Evento: TInfEventoCollection read FEvento  write SetEvento;
@@ -123,7 +123,7 @@ constructor TEventoNFe.Create;
 begin
   inherited Create;
   FGerador := TGerador.Create;
-  FEvento  := TInfEventoCollection.Create(Self);
+  FEvento  := TInfEventoCollection.Create();
 end;
 
 destructor TEventoNFe.Destroy;
@@ -533,13 +533,7 @@ end;
 
 function TInfEventoCollection.Add: TInfEventoCollectionItem;
 begin
-  Result := TInfEventoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfEventoCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfEventoCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfEventoCollection.GetItem(
@@ -554,10 +548,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfEventoCollection.New: TInfEventoCollectionItem;
+begin
+  Result := TInfEventoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfEventoCollectionItem }
 
 constructor TInfEventoCollectionItem.Create;
 begin
+  inherited Create;
   FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;

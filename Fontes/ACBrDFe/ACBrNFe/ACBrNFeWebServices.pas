@@ -1988,7 +1988,7 @@ begin
 
   FprotNFe := TProcNFe.Create;
   FretCancNFe := TRetCancNFe.Create;
-  FprocEventoNFe := TRetEventoNFeCollection.Create(FOwner);
+  FprocEventoNFe := TRetEventoNFeCollection.Create;
 end;
 
 procedure TNFeConsulta.SetNFeChave(const AValue: String);

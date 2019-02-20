@@ -65,7 +65,7 @@ type
     property tMed: Integer       read FtMed     write FtMed;
   end;
 
-  TretEnvNFe = class(TPersistent)
+  TretEnvNFe = class(TObject)
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -79,7 +79,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
+
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property versao: String          read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;

@@ -50,35 +50,33 @@ unit pcnRetEnvEventoNFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
    pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature;
 
 type
-  TRetInfEventoCollection     = class;
   TRetInfEventoCollectionItem = class;
   TRetEventoNFe               = class;
 
-  TRetInfEventoCollection = class(TCollection)
+  TRetInfEventoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetInfEventoCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetInfEventoCollectionItem;
+    function Add: TRetInfEventoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetInfEventoCollectionItem;
     property Items[Index: Integer]: TRetInfEventoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetInfEventoCollectionItem = class(TCollectionItem)
+  TRetInfEventoCollectionItem = class(TObject)
   private
     FRetInfEvento: TRetInfEvento;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
-  TRetEventoNFe = class(TPersistent)
+  TRetEventoNFe = class(TObject)
   private
     FidLote: Integer;
     Fversao: String;
@@ -96,7 +94,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
+
     property idLote: Integer                    read FidLote    write FidLote;
     property Leitor: TLeitor                    read FLeitor    write FLeitor;
     property versao: String                     read Fversao    write Fversao;
@@ -120,17 +118,10 @@ Uses pcnConversaoNFe;
 
 function TRetInfEventoCollection.Add: TRetInfEventoCollectionItem;
 begin
-  Result := TRetInfEventoCollectionItem(inherited Add);
-  Result.create;
+  Result := Self.New;
 end;
 
-constructor TRetInfEventoCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetInfEventoCollectionItem);
-end;
-
-function TRetInfEventoCollection.GetItem(
-  Index: Integer): TRetInfEventoCollectionItem;
+function TRetInfEventoCollection.GetItem(Index: Integer): TRetInfEventoCollectionItem;
 begin
   Result := TRetInfEventoCollectionItem(inherited GetItem(Index));
 end;
@@ -141,10 +132,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TRetInfEventoCollection.New: TRetInfEventoCollectionItem;
+begin
+  Result := TRetInfEventoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetInfEventoCollectionItem }
 
 constructor TRetInfEventoCollectionItem.Create;
 begin
+  inherited Create;
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
@@ -160,7 +158,7 @@ constructor TRetEventoNFe.Create;
 begin
   inherited Create;
   FLeitor := TLeitor.Create;
-  FretEvento := TRetInfEventoCollection.Create(Self);
+  FretEvento := TRetInfEventoCollection.Create;
   FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
 end;

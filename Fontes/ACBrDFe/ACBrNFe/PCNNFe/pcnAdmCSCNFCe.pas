@@ -54,7 +54,7 @@ uses
 
 type
 
-  TAdmCSCNFCe = class(TPersistent)
+  TAdmCSCNFCe = class(TObject)
   private
     FGerador: TGerador;
     FVersao: String;
@@ -68,7 +68,6 @@ type
     destructor Destroy; override;
     function GerarXML: boolean;
     function ObterNomeArquivo: String;
-  published
     property Gerador: TGerador       read FGerador   write FGerador;
     property Versao: String          read FVersao    write FVersao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb     write FtpAmb;

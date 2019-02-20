@@ -69,7 +69,7 @@ type
     fpDANFe: TACBrNFeDANFeRL;
   public
     class procedure Imprimir(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; ANFe: TNFe = nil);
-    class procedure SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; AFile: String = ''; ANFe: TNFe = nil);
+    class procedure SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; const AFile: String = ''; ANFe: TNFe = nil);
   end;
 
 implementation
@@ -102,7 +102,7 @@ begin
   end;
 end;
 
-class procedure TfrmNFeDAInutRL.SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; AFile: String = ''; ANFe: TNFe = nil);
+class procedure TfrmNFeDAInutRL.SalvarPDF(aDANFe: TACBrNFeDANFeRL; AInutNFe: TInutNFe; const AFile: String = ''; ANFe: TNFe = nil);
 var
    i :integer;
    DANFeReport: TfrmNFeDAInutRL;

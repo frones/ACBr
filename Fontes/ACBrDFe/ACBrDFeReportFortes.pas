@@ -48,7 +48,7 @@ type
   public
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
-    class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String);
+    class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; const AFile: String);
     class function CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
   end;
 
@@ -79,28 +79,26 @@ begin
   end;
 end;
 
-class procedure TDFeReportFortes.AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; AFile: String);
+class procedure TDFeReportFortes.AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; const AFile: String);
 Var
   ADir: String;
+  NomeArquivoFinal: String;
 begin
-  AFile := Trim(AFile);
-  if EstaVazio(AFile) then
+  NomeArquivoFinal := Trim(AFile);
+  if EstaVazio(NomeArquivoFinal) then
     raise Exception.Create('Erro ao gerar PDF. Arquivo não informado');
 
-  ADir := ExtractFilePath(AFile);
+  ADir := ExtractFilePath(NomeArquivoFinal);
   if EstaVazio(ADir) then
-    AFile := ApplicationPath + ExtractFileName(AFile)
+    NomeArquivoFinal := ApplicationPath + ExtractFileName(NomeArquivoFinal)
   else
   begin
-    if not DirectoryExists(ADir) then
-      ForceDirectories(ADir);
+    if ForceDirectories(ADir) then
+      raise Exception.Create('Erro ao gerar PDF. Diretório: ' + ADir + ' não pode ser criado');
   end;
 
-  if not DirectoryExists(ADir) then
-    raise Exception.Create('Erro ao gerar PDF. Diretório: ' + ADir + ' não pode ser criado');
-
   PDFFilter.ShowProgress := AConfig.MostraStatus;
-  PDFFilter.FileName := AFile;
+  PDFFilter.FileName := NomeArquivoFinal;
 end;
 
 class function TDFeReportFortes.CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;

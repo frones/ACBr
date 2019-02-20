@@ -72,7 +72,7 @@ type
   public
     { Public declarations }
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; ANFe: TNFe = nil);
-    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; AFile: String; ANFe: TNFe = nil);
+    class procedure SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; const AFile: String; ANFe: TNFe = nil);
   end;
 
 implementation
@@ -109,7 +109,7 @@ begin
   end;
 end;
 
-class procedure TfrlDANFeEventoRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; AFile: String; ANFe: TNFe = nil);
+class procedure TfrlDANFeEventoRL.SalvarPDF(ADANFe: TACBrNFeDANFeRL; FEventoNFe: TInfEventoCollectionItem; const AFile: String; ANFe: TNFe = nil);
 var
   DANFeReport: TfrlDANFeEventoRL;
 begin

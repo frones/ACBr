@@ -1248,7 +1248,7 @@ begin
     //Campos preenchidos em tela
     if (NotasFiscais.Count > 0) and
        ( NaoEstaVazio(MonitorConfig.DFE.WebService.NFe.CNPJContador) ) then
-      with NotasFiscais.Items[0].NFe.autXML.Add do
+      with NotasFiscais.Items[0].NFe.autXML.New do
         CNPJCPF := MonitorConfig.DFE.WebService.NFe.CNPJContador;
 
   end;
@@ -1364,7 +1364,7 @@ begin
   try
     with fACBrNFe.WebServices.Consulta.procEventoNFe.Items[ItemID].RetEventoNFe.InfEvento do
     begin
-      Resp.ID := fACBrNFe.WebServices.Consulta.procEventoNFe.Items[ItemID].ID;
+      Resp.ID := ItemID;
       Resp.cOrgao := IntToStr(cOrgao);
       Resp.tpAmb := TpAmbToStr(tpAmb);
       Resp.CNPJ := CNPJ;
@@ -1446,7 +1446,7 @@ begin
   try
     with fACBrNFe.WebServices.Consulta.procEventoNFe.Items[ItemId].RetEventoNFe.retEvento.Items[ItemRet].RetInfEvento do
     begin
-      Resp.Id := IntToStr(fACBrNFe.WebServices.Consulta.procEventoNFe.Items[ItemID].RetEventoNFe.retEvento.Items[ItemRet].ID);
+      Resp.Id := IntToStr(ItemRet);
       Resp.NomeArquivo := NomeArquivo;
       Resp.tpAmb := TpAmbToStr(tpAmb);
       Resp.verAplic := verAplic;
@@ -2763,7 +2763,7 @@ begin
     ACBrNFe.WebServices.Consulta.Executar;
 
     ACBrNFe.EventoNFe.Evento.Clear;
-    with ACBrNFe.EventoNFe.Evento.Add do
+    with ACBrNFe.EventoNFe.Evento.New do
     begin
       infEvento.CNPJ := ACNPJ;
       if Trim(infEvento.CNPJ) = '' then

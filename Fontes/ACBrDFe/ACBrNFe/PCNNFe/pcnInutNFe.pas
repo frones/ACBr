@@ -65,7 +65,7 @@ type
 
   { TinutNFe }
 
-  TinutNFe = class(TPersistent)
+  TinutNFe = class(TObject)
   private
     FGerador: TGerador;
     FLeitor: TLeitor;
@@ -89,7 +89,7 @@ type
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo: String;
-  published
+
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property Gerador: TGerador       read FGerador    write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;

@@ -50,37 +50,33 @@ unit pcnRetAdmCSCNFCe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor;
 
 type
 
-  TRetdadosCscCollection     = class;
   TRetdadosCscCollectionItem = class;
   TRetAdmCSCNFCe             = class;
 
-  TRetdadosCscCollection = class(TCollection)
+  TRetdadosCscCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetdadosCscCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetdadosCscCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetdadosCscCollectionItem;
+    function Add: TRetdadosCscCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetdadosCscCollectionItem;
     property Items[Index: Integer]: TRetdadosCscCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetdadosCscCollectionItem = class(TCollectionItem)
+  TRetdadosCscCollectionItem = class(TObject)
   private
     FidCsc: Integer;
     FcodigoCsc: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property idCsc: Integer    read FidCsc     write FidCsc;
     property codigoCsc: String read FcodigoCsc write FcodigoCsc;
   end;
 
-  TRetAdmCSCNFCe = class(TPersistent)
+  TRetAdmCSCNFCe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -93,7 +89,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-  published
+
     property Leitor: TLeitor                  read FLeitor   write FLeitor;
     property versao: String                   read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente          read FtpAmb    write FtpAmb;
@@ -109,13 +105,7 @@ implementation
 
 function TRetdadosCscCollection.Add: TRetdadosCscCollectionItem;
 begin
-  Result := TRetdadosCscCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TRetdadosCscCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetdadosCscCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetdadosCscCollection.GetItem(
@@ -130,17 +120,10 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TRetdadosCscCollectionItem }
-
-constructor TRetdadosCscCollectionItem.Create;
+function TRetdadosCscCollection.New: TRetdadosCscCollectionItem;
 begin
-
-end;
-
-destructor TRetdadosCscCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TRetdadosCscCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TRetAdmCSCNFCe }
@@ -149,7 +132,7 @@ constructor TRetAdmCSCNFCe.Create;
 begin
   inherited Create;
   FLeitor   := TLeitor.Create;
-  FdadosCsc := TRetdadosCscCollection.Create(Self);
+  FdadosCsc := TRetdadosCscCollection.Create;
 end;
 
 destructor TRetAdmCSCNFCe.Destroy;

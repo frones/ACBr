@@ -4,6 +4,7 @@
 
 unit ACBr_Reinf;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -12,7 +13,8 @@ uses
   ACBrReinfReg, pcnReinfRetEventos, pcnConversaoReinf, pcnCommonReinf, 
   pcnEventosReinf, pcnGeradorReinf, pcnReinfR2030, pcnReinfR2040, 
   pcnReinfR2050, pcnReinfR2070, pcnReinfR3010, pcnReinfR5001, pcnReinfR5011, 
-  pcnReinfRetConsulta, ACBrReinfLoteEventos, LazarusPackageIntf;
+  pcnReinfRetConsulta, ACBrReinfLoteEventos, pcnReinfConsulta, 
+  LazarusPackageIntf;
 
 implementation
 

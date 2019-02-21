@@ -417,7 +417,7 @@ begin
 
   if (CFe.Total.DescAcrEntr.vAcresSubtot > 0) then
     FPosPrinter.Buffer.Add(PadSpace(ACBrStr('Acréscimo sobre subtotal|')+
-       FormatFloatBr(CFe.Total.DescAcrEntr.vAcresSubtot, '-,0.00'),
+       FormatFloatBr(CFe.Total.DescAcrEntr.vAcresSubtot, '+,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|'));
 
   FPosPrinter.Buffer.Add('</ae></fn><e>'+PadSpace('TOTAL R$|'+

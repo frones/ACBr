@@ -129,11 +129,13 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoServico'   , 1, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), '');
 
   if NFSe.Servico.Valores.Aliquota > 0 then
-    begin
-      aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100);
-      aliquota := StringReplace(aliquota, ',', '.', [rfReplaceAll]);
-    end
-  else aliquota := '0';
+  begin
+    aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100);
+    aliquota := StringReplace(aliquota, ',', '.', [rfReplaceAll]);
+  end
+  else
+    aliquota := '0';
+
   Gerador.wCampoNFSe(tcStr, '', 'AliquotaServicos', 1, 6, 1, aliquota, '');
 
   ISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
@@ -216,7 +218,6 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoCEI', 1, 12, 0, NFSe.ConstrucaoCivil.nCei, '');
   Gerador.wCampoNFSe(tcStr, '', 'MatriculaObra', 1, 12, 0, NFSe.ConstrucaoCivil.nMatri, '');
   Gerador.wCampoNFSe(tcStr, '', 'NumeroEncapsulamento', 1, 12, 0, NFSe.ConstrucaoCivil.nNumeroEncapsulamento, '');
-  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
 end;
 
 procedure TNFSeW_SP.GerarCondicaoPagamento;
@@ -248,6 +249,9 @@ begin
   GerarIntermediarioServico;
   GerarListaServicos;
   GerarConstrucaoCivil;
+  // 21/02/2019 - Por: Italo
+  if NFSe.TipoTributacaoRPS  <> ttTribnoMun then
+    Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.CodigoMunicipio, '');
 
   Gerador.wGrupoNFSe('/RPS');
 end;

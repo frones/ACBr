@@ -49,6 +49,11 @@ Símbolo : Significado
 
 
 ver: 0.1.0
+-- ACBrBancoBradesco --
+[-] Retorno CNAB240: Correção na leitura do Nosso Numero. (Juliana Tamizou)
+https://www.projetoacbr.com.br/forum/topic/49512-nosso-numero-bradesco-240-continua-errado-na-leitura/
+
+
 14/02/2019
 -- ACBrBancoBradesco --
 [*] Inclusão do complemento do endereço do sacado na remessa CNAB400

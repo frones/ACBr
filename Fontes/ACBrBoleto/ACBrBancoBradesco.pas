@@ -1710,7 +1710,7 @@ begin
 
             ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
 
-            NossoNumero := copy(Linha, 38, 11);
+            NossoNumero := copy(Linha, 46, 11);
             ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
 
             OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));

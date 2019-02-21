@@ -104,6 +104,7 @@ begin
   for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
     if Pos('.fr3', LowerCase(fsFiles)) > 0 then
       lstbxFR3.AddItem(fsFiles, nil);
+  ACBrNFSe1.Configuracoes.Geral.PathIniCidades := '..\ArqINI';
 end;
 
 procedure TfrmPrincipal.Configuracao;

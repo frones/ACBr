@@ -52,10 +52,9 @@ type
   { TACBrEscPosEpson }
 
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
-  private
+  protected
+    procedure VerificarKeyCodes; virtual;
     function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
-    procedure VerificarKeyCodes;
-
     function ComandoImprimirImagemColumnStr(const RasterStr: AnsiString; AWidth: Integer;
       AHeight: Integer): AnsiString;
 
@@ -347,7 +346,7 @@ function TACBrEscPosEpson.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
   Ligar: Boolean): AnsiString;
 var
   NovoFonteStatus: TACBrPosFonte;
-  AByte: Byte;
+  AByte: Integer;
 begin
   Result := '';
   NovoFonteStatus := fpPosPrinter.FonteStatus;
@@ -361,21 +360,21 @@ begin
     AByte := 0;
 
     if ftCondensado in NovoFonteStatus then
-      AByte := AByte + 1;
+      SetBit(AByte, 0);
 
     if ftNegrito in NovoFonteStatus then
-      AByte := AByte + 8;
+      SetBit(AByte, 3);
 
     if ftAlturaDupla in NovoFonteStatus then
-      AByte := AByte + 16;
+      SetBit(AByte, 4);
 
     if ftExpandido in NovoFonteStatus then
-      AByte := AByte + 32;
+      SetBit(AByte, 5);
 
     if ftSublinhado in NovoFonteStatus then
-      AByte := AByte + 128;
+      SetBit(AByte, 7);
 
-    Result := ESC + '!' + AnsiChr(AByte);
+    Result := ESC + '!' + AnsiChr(Byte(AByte));
 
     // ESC ! desliga Invertido, enviando o comando novamente
     if ftInvertido in NovoFonteStatus then

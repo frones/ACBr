@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/02/2019
+-- ACBrPosPrinter, ACBrEscCustomPos ---
+[+] Adicionado novo modelo "ppCustomPos", para permitir a compatibilização com as
+    impressoras da Custom http://www.nitere.com.br/produto-impressoras-q3x
+    (por: DSA)
+
 Data: 03/02/2019
 -- ACBrPosPrinter, ACBrEscPosHook --
 [+] Adicionado o modelo de Protocolo em "TACBrPosPrinterHook"

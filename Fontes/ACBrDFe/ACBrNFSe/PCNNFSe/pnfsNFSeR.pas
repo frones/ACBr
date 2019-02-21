@@ -1163,12 +1163,26 @@ begin
   NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'nrRps');
   NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'nrEmissorRps');
 
-  NFSe.DataEmissao      := Leitor.rCampo(tcDatHor, 'dtEmissaoRps');
-  NFSe.DataEmissaoRps   := Leitor.rCampo(tcDat, 'DataEmissao');
+  NFSe.DataEmissao      := Leitor.rCampo(tcDatHor, 'dtEmissaoNfs');
+  NFSe.DataEmissaoRps   := Leitor.rCampo(tcDat, 'dtEmissaoRps');
   NFSe.NaturezaOperacao := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
 
   NFSe.Servico.Valores.IssRetido        := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'isIssRetido'));
   NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'vlLiquidoRps');
+
+  if (Leitor.rExtrai(2, 'prestadorServico') <> '') then
+  begin
+    NFSe.PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'nmPrestador');
+    NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'nrDocumento');
+    NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'nrInscricaoMunicipal');
+    NFSe.PrestadorServico.Endereco.Endereco := Leitor.rCampo(tcStr, 'dsEndereco');
+    NFSe.PrestadorServico.Endereco.Numero := Leitor.rCampo(tcStr, 'nrEndereco');
+    NFSe.PrestadorServico.Endereco.xPais := Leitor.rCampo(tcStr, 'nmPais');
+    NFSe.PrestadorServico.Endereco.xMunicipio := Leitor.rCampo(tcStr, 'nmCidade');
+    NFSe.PrestadorServico.Endereco.Bairro := Leitor.rCampo(tcStr, 'nmBairro');
+    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'nmUf');
+    NFSe.PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'nrCep');
+  end;
 
   if (Leitor.rExtrai(2, 'tomador') <> '') then
   begin

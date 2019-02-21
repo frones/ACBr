@@ -93,7 +93,7 @@ begin
     NomeArquivoFinal := ApplicationPath + ExtractFileName(NomeArquivoFinal)
   else
   begin
-    if ForceDirectories(ADir) then
+    if not ForceDirectories(ADir) then
       raise Exception.Create('Erro ao gerar PDF. Diretório: ' + ADir + ' não pode ser criado');
   end;
 

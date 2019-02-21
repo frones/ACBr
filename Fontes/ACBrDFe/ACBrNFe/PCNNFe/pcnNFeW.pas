@@ -2148,12 +2148,12 @@ begin
   // Alterado para ficar em conformidade com o novo Schema
   Gerador.wCampo(tcDe2, 'NA09', 'pICMSInter ', 01, 05, 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInter, DSC_PICMSINTER);
   Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'NA11', 'pICMSInterPart', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMSUFDest.pICMSInterPart, DSC_PICMSINTERPART);
-  if (NFe.infNFe.Versao >= 4) then
-    // tag marcada novamente como obrigatória por algumas SEFAZ ainda não terem implantado os schemas da NT 2016.002 v. 1.50
-    // Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 0, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST)
-    Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST)
-  else
-    Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST);
+// tag vFCPUFDest marcada novamente como obrigatória por algumas SEFAZ ainda não terem implantado os schemas da NT 2016.002 v. 1.50
+//  if (NFe.infNFe.Versao >= 4) then
+//     Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 0, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST)
+//  else
+//    Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST);
+  Gerador.wCampo(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST)
   Gerador.wCampo(tcDe2, 'NA15', 'vICMSUFDest ', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFDest, DSC_VICMSUFDEST);
   Gerador.wCampo(tcDe2, 'NA17', 'vICMSUFRemet', 01, 15, 1, nfe.Det[i].Imposto.ICMSUFDest.vICMSUFRemet, DSC_VICMSUFREMET);
   Gerador.wGrupo('/ICMSUFDest');

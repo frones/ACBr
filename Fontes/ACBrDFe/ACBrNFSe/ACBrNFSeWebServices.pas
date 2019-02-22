@@ -1562,8 +1562,12 @@ begin
 
             j := Pos('">', FPDadosMsg) + 1;
 
-            FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
-                            Copy(FPDadosMsg, i, j - i);
+            if FProvedor = proIssDSF then
+              FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
+                            '"' + Trim(FNameSpace) + '"'
+            else
+              FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
+                              Copy(FPDadosMsg, i, j - i);
 
             if FProvedor = proSigep then
               FxDSIGNSLote := 'xmlns:ds=';

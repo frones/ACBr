@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2019
+-- ACBrNFSeWebServices --
+[*] Corrigido o namespace para assinatura - Provedor ISSDSF
+   Por: Italo Jurisato Junior
+
 19/02/2019
 -- Diversos --
 [*] Simplificação do código

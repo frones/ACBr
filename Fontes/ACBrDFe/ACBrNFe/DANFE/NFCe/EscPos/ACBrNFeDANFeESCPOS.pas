@@ -92,7 +92,7 @@ type
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
     procedure GerarMensagemFiscal;
-    function GerarInformacoesQRCode(DadosQRCode: String; Cancelamento: Boolean = False;
+    function GerarInformacoesQRCode(const DadosQRCode: String; Cancelamento: Boolean = False;
       Lateral: Boolean = False): String;
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
@@ -602,7 +602,7 @@ begin
   end;
 end;
 
-function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(DadosQRCode: String;
+function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(const DadosQRCode: String;
   Cancelamento: Boolean; Lateral: Boolean): String;
 var
   InfoQrCode: TStringList;

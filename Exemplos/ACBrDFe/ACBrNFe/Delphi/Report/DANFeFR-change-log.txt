@@ -53,6 +53,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2018
+--- DanfePaisagem_2019.fr3 - DanfeRetrato_2019.fr3
+[+] Novo layout de Retirada
+[+] Novo layout de Entrega
+      Por : Henrique Leonardo ( HLeorj )
+
 23/01/2019
 --- DANFeNFCe.fr3 --- 
 [-] Ajuste para apresentar valor comercial ( VUnCom )

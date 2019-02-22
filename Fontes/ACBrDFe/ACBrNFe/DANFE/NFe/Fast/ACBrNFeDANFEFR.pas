@@ -131,8 +131,6 @@ type
   private
     FdmDanfe: TACBrNFeFRClass;
 
-    FDescricaoViaEstabelec: string;
-
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
     function GetPreparedReportInutilizacao: TfrxReport;

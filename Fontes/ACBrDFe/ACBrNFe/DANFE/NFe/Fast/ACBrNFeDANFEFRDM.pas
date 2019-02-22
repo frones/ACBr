@@ -156,7 +156,7 @@ type
     procedure CarregaPagamento;
     procedure CarregaInformacoesAdicionais;
 
-    function CollateBr(Str: String): String;
+    function CollateBr(const Str: String): String;
 
   public
     constructor Create(AOwner: TComponent);
@@ -173,7 +173,7 @@ type
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
     procedure CarregaDadosInutilizacao;
-    procedure PintarQRCode(QRCodeData: String; APict: TPicture);
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
     property FastFile: String read FFastFile write FFastFile;
     property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
@@ -879,7 +879,7 @@ begin
   frxReport.EnabledDataSets.Add(FfrxInutilizacao);
 end;
 
-function TACBrNFeFRClass.CollateBr(Str: String): String;
+function TACBrNFeFRClass.CollateBr(const Str: String): String;
 var
   Resultado,Temp: string;
   vChar: Char;
@@ -1900,7 +1900,7 @@ begin
           CondicoesUso := StringReplace(CondicoesUso, 'com: I', 'com:'+#13+' I', [rfReplaceAll]);
           CondicoesUso := StringReplace(CondicoesUso, ';', ';' + #13, [rfReplaceAll]);
 
-          Correcao := InfEvento.detEvento.xCorrecao;
+//          Correcao := InfEvento.detEvento.xCorrecao;
           Correcao := StringReplace(InfEvento.detEvento.xCorrecao, ';', #13, [rfReplaceAll]);
 
           FieldByName('xCondUso').AsString  := CondicoesUso;
@@ -1968,7 +1968,7 @@ begin
    end;
 end;
 
-procedure TACBrNFeFRClass.PintarQRCode(QRCodeData: String; APict: TPicture);
+procedure TACBrNFeFRClass.PintarQRCode(const QRCodeData: String; APict: TPicture);
 var
   QRCode: TDelphiZXingQRCode;
   QRCodeBitmap: TBitmap;

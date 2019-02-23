@@ -1,43 +1,43 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
-{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
+{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2016 Elias CÈsar Vieira                     }
+{ Direitos Autorais Reservados (c) 2016 Elias C√©sar Vieira                     }
 {                                                                              }
-{ Colaboradores nesse arquivo: Daniel Simıes de Almeida                        }
+{ Colaboradores nesse arquivo: Daniel Sim√µes de Almeida                        }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 { Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
 {  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 17/05/2016: Elias CÈsar Vieira
+|* 17/05/2016: Elias C√©sar Vieira
 |*  - Primeira Versao ACBrMTerSB100
 ******************************************************************************}
 
@@ -49,152 +49,94 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrMTerClass;
+  ACBrMTerClass, ACBrMTerStxEtx;
 
 type
   { TACBrMTerSB100 }
 
-  TACBrMTerSB100 = class(TACBrMTerClass)
-  private
-    function PrepararCmd(const aCmd: Char; const aParams: AnsiString = ''): AnsiString;
+  TACBrMTerSB100 = class(TACBrMTerStxEtx)
   public
     constructor Create(aOwner: TComponent);
 
-    function ComandoBackSpace: AnsiString; override;
-    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
-    function ComandoBoasVindas: AnsiString; override;
-    function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
-    function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
-    function ComandoOnline: AnsiString; override;
-    function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
-    function ComandoLimparDisplay: AnsiString; override;
+    procedure ComandoBeep(Comandos: TACBrMTerComandos; const aTempo: Integer = 0);
+      override;
+    procedure ComandoDeslocarLinha(Comandos: TACBrMTerComandos; aValue: Integer);
+      override;
+    procedure ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString); override;
+    procedure ComandoEnviarTexto(Comandos: TACBrMTerComandos; const aTexto: AnsiString);
+      override;
+    procedure ComandoOnline(Comandos: TACBrMTerComandos); override;
+    procedure ComandoPosicionarCursor(Comandos: TACBrMTerComandos; const aLinha,
+      aColuna: Integer); override;
+    procedure ComandoLimparDisplay(Comandos: TACBrMTerComandos); override;
   end;
 
 implementation
 
 uses
+  math,
   ACBrConsts, ACBrUtil;
 
 { TACBrMTerSB100 }
-
-function TACBrMTerSB100.PrepararCmd(const aCmd: Char; const aParams: AnsiString): AnsiString;
-begin
-  Result := STX + aCmd + aParams + ETX;
-end;
 
 constructor TACBrMTerSB100.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
 
   fpModeloStr := 'SB100';
+  fpRetornaACK := True;
 end;
 
-function TACBrMTerSB100.ComandoBackSpace: AnsiString;
-begin
-  Result := ComandoEnviarTexto(BS);
-end;
-
-function TACBrMTerSB100.ComandoBeep(aTempo: Integer): AnsiString;
+procedure TACBrMTerSB100.ComandoBeep(Comandos: TACBrMTerComandos;
+  const aTempo: Integer);
 var
   wTempo: Integer;
 begin
-  // Ajustando tempo mÌnimo/m·ximo
-  wTempo := aTempo;
-  if (wTempo < 1) then
-    wTempo := 1
-  else if (wTempo > 9) then
-    wTempo := 9;
-
-  Result := PrepararCmd('Z', IntToStr(wTempo));
+  // Ajustando tempo m√≠nimo/m√°ximo
+  wTempo := min(max(ceil(aTempo/1000),1),9);
+  Comandos.New( PrepararCmd('Z', IntToStr(wTempo)), TimeOut );
 end;
 
-function TACBrMTerSB100.ComandoBoasVindas: AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrMTerSB100.ComandoDeslocarCursor(aValue: Integer): AnsiString;
-begin
-  Result := '';
-
-  while (aValue > 0) do
-  begin
-    Result := Result + PrepararCmd('O', DC4);
-    aValue := aValue - 1;
-  end;
-end;
-
-function TACBrMTerSB100.ComandoDeslocarLinha(aValue: Integer): AnsiString;
+procedure TACBrMTerSB100.ComandoDeslocarLinha(Comandos: TACBrMTerComandos;
+  aValue: Integer);
 var
   wLinha: Integer;
 begin
-  // Validando valores m·ximos/mÌnimos
-  wLinha := (aValue - 1);
-  if (wLinha < 0) then
-    wLinha := 0
-  else if (wLinha > 3) then
-    wLinha := 3;
-
-  Result := PrepararCmd('P', IntToStr(wLinha) + '00');
+  wLinha := min(max(aValue - 1, 0), 3);
+  Comandos.New( PrepararCmd('P', IntToStr(wLinha) + '00'), TimeOut );
 end;
 
-function TACBrMTerSB100.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
+procedure TACBrMTerSB100.ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString);
 begin
-  Result := '';
+  DisparaErroNaoImplementado('ComandoEnviarParaParalela');
 end;
 
-function TACBrMTerSB100.ComandoEnviarParaSerial(const aDados: AnsiString;
-  aSerial: Byte): AnsiString;
-var
-  wPorta: Char;
-  I: Integer;
+procedure TACBrMTerSB100.ComandoEnviarTexto(Comandos: TACBrMTerComandos;
+  const aTexto: AnsiString);
 begin
-  Result := '';
-
-  if (aSerial = 2) then
-    wPorta := 'R'        // Seleciona porta serial 2
-  else
-    wPorta := 'S';       // Seleciona porta serial padr„o(0)
-
-  for I := 1 to Length(aDados) do
-    Result := Result + PrepararCmd(wPorta, aDados[I]);
+  Comandos.New( PrepararCmd('Y', 'n' + aTexto), TimeOut );
 end;
 
-function TACBrMTerSB100.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
+procedure TACBrMTerSB100.ComandoOnline(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd('Y', 'n' + aTexto);
+  Comandos.New( PrepararCmd('V'), TimeOut );
 end;
 
-function TACBrMTerSB100.ComandoOnline: AnsiString;
-begin
-  Result := PrepararCmd('V');
-end;
-
-function TACBrMTerSB100.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
+procedure TACBrMTerSB100.ComandoPosicionarCursor(Comandos: TACBrMTerComandos;
+  const aLinha, aColuna: Integer);
 var
   wCol, wLinha: Integer;
 begin
-  wLinha := (aLinha - 1);
-  if (wLinha < 0) then
-    wLinha := 0
-  else if (wLinha > 3) then
-    wLinha := 3;
-
-  wCol := (aColuna - 1);
-  if (wCol < 0) then
-    wCol := 0
-  else if (wCol > 40) then
-    wCol := 40;
-
-  Result := PrepararCmd('P', IntToStr(wLinha) + IntToStrZero(wCol, 2));
+  wLinha := min(max(aLinha - 1, 0), 3);
+  wCol := min(max(aColuna - 1, 0), 39);
+  Comandos.New( PrepararCmd('P', IntToStr(wLinha) + IntToStrZero(wCol, 2)), TimeOut );
 end;
 
-function TACBrMTerSB100.ComandoLimparDisplay: AnsiString;
+procedure TACBrMTerSB100.ComandoLimparDisplay(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd('C');
+  Comandos.New( PrepararCmd('C'), TimeOut );
 end;
 
 end.

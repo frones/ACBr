@@ -56,28 +56,44 @@ type
 
   TACBrMTerPMTG = class(TACBrMTerClass)
   private
-    function PrepararCmd(aCmd: Integer; const aParams: AnsiString = ''): AnsiString;
+    function PrepararCmd(aCmd: Integer; const aParams: AnsiString = ''): AnsiString; overload;
+    function PrepararCmd(aCmd: Integer; const aParams: Integer): AnsiString; overload;
+    function PrepararCmd(aCmd: Integer; const aParams: Boolean): AnsiString; overload;
+
   public
     constructor Create(aOwner: TComponent);
 
-    function ComandoBackSpace: AnsiString; override;
-    function ComandoBoasVindas: AnsiString; override;
-    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
-    function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
-    function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEco(const aValue: AnsiString): AnsiString; override;
-    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
-    function ComandoLimparDisplay: AnsiString; override;
-    function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
-    function ComandoOnline: AnsiString; override;
-    function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
+    procedure ComandoBackSpace(Comandos: TACBrMTerComandos); override;
+    procedure ComandoBoasVindas(Comandos: TACBrMTerComandos); override;
+    procedure ComandoBeep(Comandos: TACBrMTerComandos; const aTempo: Integer = 0);
+      override;
+    procedure ComandoDeslocarCursor(Comandos: TACBrMTerComandos; const aValue: Integer);
+      override;
+    procedure ComandoDeslocarLinha(Comandos: TACBrMTerComandos; aValue: Integer);
+      override;
+    procedure ComandoEco(Comandos: TACBrMTerComandos; const aValue: AnsiString); override;
+    procedure ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString); override;
+    procedure ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString; aSerial: Byte = 0); override;
+    procedure ComandoEnviarTexto(Comandos: TACBrMTerComandos; const aTexto: AnsiString);
+      override;
+    procedure ComandoLimparDisplay(Comandos: TACBrMTerComandos); override;
+    procedure ComandoLimparLinha(Comandos: TACBrMTerComandos; const aLinha: Integer);
+      override;
+    procedure ComandoOnline(Comandos: TACBrMTerComandos); override;
+    procedure ComandoPosicionarCursor(Comandos: TACBrMTerComandos; const aLinha,
+      aColuna: Integer); override;
 
+    function ExtrairResposta(var ABuffer: Ansistring; LendoPeso: Boolean = False
+      ): AnsiString; override;
     function InterpretarResposta(const aRecebido: AnsiString): AnsiString; override;
   end;
 
 implementation
+
+uses
+  math;
 
 { TACBrMTerPMTG }
 
@@ -89,6 +105,18 @@ begin
   Result     := IntToLEStr(aCmd) + IntToLEStr(wTamParams) + aParams;
 end;
 
+function TACBrMTerPMTG.PrepararCmd(aCmd: Integer; const aParams: Integer
+  ): AnsiString;
+begin
+  Result := PrepararCmd( aCmd, IntToLEStr(aParams, 4));
+end;
+
+function TACBrMTerPMTG.PrepararCmd(aCmd: Integer; const aParams: Boolean
+  ): AnsiString;
+begin
+   Result := PrepararCmd(aCmd, ifthen(aParams, 1, 0));
+end;
+
 constructor TACBrMTerPMTG.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
@@ -96,104 +124,149 @@ begin
   fpModeloStr := 'PMTG';
 end;
 
-function TACBrMTerPMTG.ComandoBackSpace: AnsiString;
+procedure TACBrMTerPMTG.ComandoBackSpace(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd(33);
+  Comandos.New( PrepararCmd(33), TimeOut );     // 0021h - vBackSpace
 end;
 
-function TACBrMTerPMTG.ComandoBoasVindas: AnsiString;
+procedure TACBrMTerPMTG.ComandoBoasVindas(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd(3);
+  Comandos.New( PrepararCmd(3), TimeOut );      // 0003h - wGetIdentify
 end;
 
-function TACBrMTerPMTG.ComandoBeep(aTempo: Integer): AnsiString;
+procedure TACBrMTerPMTG.ComandoBeep(Comandos: TACBrMTerComandos;
+  const aTempo: Integer);
 begin
-  // Liga Beep
-  Result := PrepararCmd(93, IntToLEStr(1, 4));
-
-  // Desliga Beep
-  Result := Result + ComandoOnline + PrepararCmd(93, IntToLEStr(0, 4));
+  Comandos.New( PrepararCmd(93, True), aTempo*-1);   //  005Dh - vSetBeep - On
+  Comandos.New( PrepararCmd(93, False), TimeOut);    //  005Dh - vSetBeep - Off
 end;
 
-function TACBrMTerPMTG.ComandoDeslocarCursor(aValue: Integer): AnsiString;
+procedure TACBrMTerPMTG.ComandoDeslocarCursor(Comandos: TACBrMTerComandos;
+  const aValue: Integer);
 begin
-  Result := PrepararCmd(43, NUL + IntToLEStr(aValue));
+  Comandos.New( PrepararCmd(43, NUL + AnsiChr(aValue)), TimeOut );   // 002Bh - vGoToXYRef  - Byte 1, Linha; Byte 2 Coluna
 end;
 
-function TACBrMTerPMTG.ComandoDeslocarLinha(aValue: Integer): AnsiString;
+procedure TACBrMTerPMTG.ComandoDeslocarLinha(Comandos: TACBrMTerComandos;
+  aValue: Integer);
 begin
-  Result := PrepararCmd(43, PadRight(IntToLEStr(aValue, 1), 3, NUL));
+  Comandos.New( PrepararCmd(43, AnsiChr(aValue) + NUL), TimeOut );   // 002Bh - vGoToXYRef  - Byte 1, Linha; Byte 2 Coluna
 end;
 
-function TACBrMTerPMTG.ComandoEco(const aValue: AnsiString): AnsiString;
+procedure TACBrMTerPMTG.ComandoEco(Comandos: TACBrMTerComandos;
+  const aValue: AnsiString);
 var
-  I: Integer;
-  C: AnsiChar;
+  P: Integer;
   S: AnsiString;
 begin
-  Result := '';
-  S := LimparConteudoParaEnviar(aValue);
-
-  for I := 1 to Length(S) do
+  S := LimparConteudoParaEnviar(aValue);   // DEBUG S := 'DANIEL'+BS+'SIMOES'+BS+'DE'+BS+BS+'ALMEIDA';
+  while (S <> EmptyStr) do
   begin
-    C := S[I];
-    case C of
-      BS: Result := Result + ComandoBackSpace; // É backspace ?
-    else
-      Result := Result + ComandoEnviarTexto(C);
-    end;
+    P := pos(BS, S+BS);
+    ComandoEnviarTexto(Comandos, copy(S,1,P-1));
+    if P <= Length(S) then
+      ComandoBackSpace(Comandos);
+
+    S := copy(S, P+1, Length(S));
   end;
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
+procedure TACBrMTerPMTG.ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString);
+var
+  P, LenBloco: Integer;
+  wBloco, ArgStrByte: String;
 begin
   { Apenas GE750 possui porta Paralela }
-  Result := PrepararCmd(73, aDados);
+  P := 1;
+  while (P <= Length(aDados)) do
+  begin
+    wBloco := copy(aDados, P, 256);
+    LenBloco := Length(wBloco);
+    wBloco := wBloco + StringOfChar( NUL, 256-LenBloco );
+    ArgStrByte := wBloco + chr(LenBloco);
+    Comandos.New( PrepararCmd(73, ArgStrByte), TimeOut );      // 0049h - cSendPrn
+    Inc(P, 256);
+  end;
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
+procedure TACBrMTerPMTG.ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString; aSerial: Byte);
+var
+  ArgComBinByte, wBloco: AnsiString;
+  P, LenBloco: Integer;
 begin
   { Portas COM disponíveis:
     - GE750: 1 e 2;
     - GE760: 1;
     - MT740: 1, 2, 3 e 4;
     - MT720: 1, 2 e 3 }
-  Result := PrepararCmd(63, AnsiChr(aSerial-1) + aDados);
+
+  Comandos.New( PrepararCmd(57, AnsiChr(aSerial-1) + IntToLEStr(1,4) ), TimeOut );  // 0039h - vSetEnableSerial - On
+
+  P := 1;
+  while (P <= Length(aDados)) do
+  begin
+    wBloco := copy(aDados, P, 256);
+    LenBloco := Length(wBloco);
+    wBloco := wBloco + StringOfChar( NUL, 256-LenBloco );
+    ArgComBinByte := AnsiChr(aSerial-1) + wBloco + chr(LenBloco);
+    Comandos.New( PrepararCmd(63, ArgComBinByte), TimeOut );             // 003Fh - SendBinSerial
+    Inc(P, 256);
+  end;
 end;
 
-function TACBrMTerPMTG.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
+procedure TACBrMTerPMTG.ComandoEnviarTexto(Comandos: TACBrMTerComandos;
+  const aTexto: AnsiString);
 begin
-  Result := PrepararCmd(51, PadRight(aTexto, 29, NUL));
+  Comandos.New( PrepararCmd(51, aTexto + NUL), TimeOut );
 end;
 
-function TACBrMTerPMTG.ComandoLimparDisplay: AnsiString;
+procedure TACBrMTerPMTG.ComandoLimparDisplay(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd(39);
+  Comandos.New( PrepararCmd(39), TimeOut );    // 0027h - vFormFeed
 end;
 
-function TACBrMTerPMTG.ComandoLimparLinha(aLinha: Integer): AnsiString;
+procedure TACBrMTerPMTG.ComandoLimparLinha(Comandos: TACBrMTerComandos;
+  const aLinha: Integer);
 begin
-  Result := PrepararCmd(55, IntToLEStr(aLinha));
+  Comandos.New( PrepararCmd(55, AnsiChr(aLinha)), TimeOut );   // 0037h - vDispClrLn
 end;
 
-function TACBrMTerPMTG.ComandoOnline: AnsiString;
+procedure TACBrMTerPMTG.ComandoOnline(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd(1);
+  Comandos.New( PrepararCmd(1), TimeOut );     // 0001h - vLive
 end;
 
-function TACBrMTerPMTG.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
+procedure TACBrMTerPMTG.ComandoPosicionarCursor(Comandos: TACBrMTerComandos;
+  const aLinha, aColuna: Integer);
+begin
+  // 0029h - vGoToXY - Byte 1, Linha; Byte 2 Coluna
+  Comandos.New( PrepararCmd(41, AnsiChr(aLinha) + AnsiChr(aColuna) ), TimeOut );
+end;
+
+function TACBrMTerPMTG.ExtrairResposta(var ABuffer: Ansistring;
+  LendoPeso: Boolean): AnsiString;
 var
-  wLinhaStr, wColunaStr: String;
+  wLen, wLenParams: Integer;
 begin
-  wLinhaStr  := IntToLEStr(aLinha, 1);
-  wColunaStr := IntToLEStr(aColuna);
+  Result := '';
+  wLen := Length(ABuffer);
+  if wLen < 4 then
+    Exit;
 
-  Result := PrepararCmd(41, wLinhaStr + wColunaStr);
+  wLenParams := LEStrToInt(Copy(ABuffer, 3, 2));
+  if wLen < (wLenParams+4) then
+    Exit;
+
+  Result := copy(ABuffer, 1, wLenParams+4);
+  ABuffer := copy(ABuffer, wLenParams+5, Length(ABuffer) );
 end;
 
 function TACBrMTerPMTG.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
 var
-  wCmd, wLenParams, wLen, wPosCmd: Integer;
+  wCmd, wLenParams, wLen, wPosCmd, wLenBuffer: Integer;
+  wParam: AnsiString;
 begin
   Result  := '';
   wLen    := Length(aRecebido);
@@ -203,9 +276,29 @@ begin
   begin
     wCmd       := LEStrToInt(Copy(aRecebido, wPosCmd, 2));
     wLenParams := LEStrToInt(Copy(aRecebido, wPosCmd + 2, 2));
+    wParam     := Copy(aRecebido, wPosCmd + 4, wLenParams);
 
-    if (wCmd = 29) then
-      Result := Result + Copy(aRecebido, wPosCmd + 4, wLenParams);
+    if (Length(wParam) > 0) then
+    begin
+      case wCmd of
+        29:   // 001Dh - vGetCharTerm
+          Result := Result + wParam;
+
+        61:   // 003Dh - vGetBinSerial
+        begin
+          //    1 Byte , Porta
+          //  256 Bytes, Buffer
+          //    1 Byte , Tamanho Buffer
+          wLenBuffer := ord(wParam[Length(wParam)]);
+          Result := Result + Copy(wParam, 2, wLenBuffer);
+        end;
+      end;
+    end
+
+    else if (wCmd = 2) then   // 0002h - vLive
+    begin
+      Result := Result + 'OnLine';
+    end;
 
     wPosCmd := wPosCmd + wLenParams + 4;
   end;

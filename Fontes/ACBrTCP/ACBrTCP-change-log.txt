@@ -37,6 +37,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2019
+-- ACBrMTER --
+[*] Amplo refactoring no componente, com o intuito de melhorar o uso de várias
+    conexões simultâneas e permitir o melhor controle de Protocolos que
+    emitem Respostas para os comandos enviados (Ex: PMTG)
+[+] Implementação de Fila de Comandos a serem processados, permitindo a verificação
+    do retorno de cada comando.
+[*] Assinatura do Evento "OnRecebeDados", modificada, removendo diretiva "VAR"
+[*] function "OnLine", removida e substituída pelo método: "VerificarOnLine"
+[+] Adicionado o Evento "OnRecebeOnLine", para trabalhar em conjunto com o
+    comando "VerificarOnLine"
+[-] Removida a propriedade "TimeOutBalanca", pois será usado o mesmo valor
+    definido em "TimeOut"
+[+] Adicionada a propriedade "WaitInterval: Integer default 200", que permite
+    causar uma espera de alguns milisegundos, após o inicio da recepção de algum
+    dado pela Serial. Isso pode prevenir recebimento de dados truncados ou
+    quebrados em várias segmentos. O Valor 0 desativa o atraso.
+
+-- ACBrMTerPMTG --
+[*] Revisão, e melhorias no Protocolo Gertec
+[-] Possível ajuste, para correção de erro na leitura da balança
+    (por: DSA)
+
 28/01/2019
 -- ACBrMTer, ACBrMTerClass, ACBrMTerSB100 --
 [+] Ajustes recebidos de Elias, e novo modelo sb100 (Bematech Fit)

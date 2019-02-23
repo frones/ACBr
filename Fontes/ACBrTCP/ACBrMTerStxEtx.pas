@@ -55,22 +55,30 @@ type
   { TACBrMTerStxEtx }
 
   TACBrMTerStxEtx = class(TACBrMTerClass)
-  private
+  protected
+    fpRetornaACK: Boolean;
+
     function PrepararCmd(aCmd: Char; const aParams: AnsiString = ''): AnsiString;
+    function TimeOutDef: Integer;
   public
     constructor Create(aOwner: TComponent);
 
-    function ComandoBackSpace: AnsiString; override;
-    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
-    function ComandoBoasVindas: AnsiString; override;
-    function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
-    function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
-    function ComandoOnline: AnsiString; override;
-    function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
-    function ComandoLimparDisplay: AnsiString; override;
+    procedure ComandoBeep(Comandos: TACBrMTerComandos; const aTempo: Integer = 0);
+      override;
+    procedure ComandoDeslocarCursor(Comandos: TACBrMTerComandos; const aValue: Integer);
+      override;
+    procedure ComandoDeslocarLinha(Comandos: TACBrMTerComandos; aValue: Integer);
+      override;
+    procedure ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString); override;
+    procedure ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString; aSerial: Byte = 0); override;
+    procedure ComandoEnviarTexto(Comandos: TACBrMTerComandos; const aTexto: AnsiString);
+      override;
+    procedure ComandoOnline(Comandos: TACBrMTerComandos); override;
+    procedure ComandoPosicionarCursor(Comandos: TACBrMTerComandos; const aLinha,
+      aColuna: Integer); override;
+    procedure ComandoLimparDisplay(Comandos: TACBrMTerComandos); override;
   end;
 
 implementation
@@ -82,93 +90,88 @@ begin
   Result := STX + aCmd + aParams + ETX;
 end;
 
+function TACBrMTerStxEtx.TimeOutDef: Integer;
+begin
+  if fpRetornaACK then
+    Result := TimeOut
+  else
+    Result := 0;
+end;
+
 constructor TACBrMTerStxEtx.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
 
   fpModeloStr := 'STX-ETX';
+  fpRetornaACK := False;
 end;
 
-function TACBrMTerStxEtx.ComandoBackSpace: AnsiString;
+procedure TACBrMTerStxEtx.ComandoBeep(Comandos: TACBrMTerComandos;
+  const aTempo: Integer);
 begin
-  Result := PrepararCmd('D', BS);
-end;
-
-function TACBrMTerStxEtx.ComandoBeep(aTempo: Integer): AnsiString;
-begin
+  //TODO::
   //Result := STX + #90 + '9' + ETX;
   //Result := STX + 'D' + BELL + ETX;
-  Result := '';  //TODO:
 end;
 
-function TACBrMTerStxEtx.ComandoBoasVindas: AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrMTerStxEtx.ComandoDeslocarCursor(aValue: Integer): AnsiString;
-begin
-  Result := '';
-
-  while (aValue > 0) do
-  begin
-    Result := Result + PrepararCmd('O', DC4);
-    aValue := aValue - 1;
-  end;
-end;
-
-function TACBrMTerStxEtx.ComandoDeslocarLinha(aValue: Integer): AnsiString;
-begin
-  Result := PrepararCmd('C', '100');
-  end;
-
-function TACBrMTerStxEtx.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
+procedure TACBrMTerStxEtx.ComandoDeslocarCursor(Comandos: TACBrMTerComandos;
+  const aValue: Integer);
 var
-  I: Integer;
+  wValor: Integer;
 begin
-  Result := '';
-  for I := 1 to Length(aDados) do
-    Result := Result + PrepararCmd('P', aDados[I]);
+  wValor := aValue;
+  while (wValor > 0) do
+  begin
+    Comandos.New( PrepararCmd('O', DC4), TimeOutDef );
+    Dec( wValor );
+  end;
 end;
 
-function TACBrMTerStxEtx.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
+procedure TACBrMTerStxEtx.ComandoDeslocarLinha(Comandos: TACBrMTerComandos;
+  aValue: Integer);
+begin
+  Comandos.New( PrepararCmd('C', '100'), TimeOutDef );       // TODO::
+end;
+
+procedure TACBrMTerStxEtx.ComandoEnviarParaParalela(
+  Comandos: TACBrMTerComandos; const aDados: AnsiString);
+begin
+  Comandos.New( PrepararCmd('P', aDados), TimeOutDef );
+end;
+
+procedure TACBrMTerStxEtx.ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString; aSerial: Byte);
 var
   wPorta: Char;
-  I: Integer;
 begin
-  Result := '';
-
   if (aSerial = 2) then
     wPorta := 'R'        // Seleciona porta serial 2
   else
     wPorta := 'S';       // Seleciona porta serial padrão(0)
 
-  for I := 1 to Length(aDados) do
-    Result := Result + PrepararCmd(wPorta, aDados[I]);
+  Comandos.New( PrepararCmd(wPorta, aDados), TimeOutDef );
 end;
 
-function TACBrMTerStxEtx.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
+procedure TACBrMTerStxEtx.ComandoEnviarTexto(Comandos: TACBrMTerComandos;
+  const aTexto: AnsiString);
 begin
-  Result := PrepararCmd('D', aTexto);
+  Comandos.New( PrepararCmd('D', aTexto), TimeOutDef );
 end;
 
-function TACBrMTerStxEtx.ComandoOnline: AnsiString;
+procedure TACBrMTerStxEtx.ComandoOnline(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd('T');
+  Comandos.New( PrepararCmd('T'), TimeOut );
 end;
 
-function TACBrMTerStxEtx.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
-var
-  wCol, wLinha: Integer;
+procedure TACBrMTerStxEtx.ComandoPosicionarCursor(Comandos: TACBrMTerComandos;
+  const aLinha, aColuna: Integer);
 begin
-  wLinha := (aLinha - 1);
-  wCol   := (aColuna - 1);
-  Result := PrepararCmd('C', IntToStr(wLinha) + IntToStrZero(wCol, 2));
+  Comandos.New( PrepararCmd('C', IntToStr(aLinha-1) + IntToStrZero(aColuna-1, 2)), TimeOutDef );
 end;
 
-function TACBrMTerStxEtx.ComandoLimparDisplay: AnsiString;
+procedure TACBrMTerStxEtx.ComandoLimparDisplay(Comandos: TACBrMTerComandos);
 begin
-  Result := PrepararCmd('L');
+  Comandos.New( PrepararCmd('L'), TimeOutDef );
 end;
 
 end.

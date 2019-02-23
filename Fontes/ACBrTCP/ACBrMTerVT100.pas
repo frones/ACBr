@@ -60,22 +60,30 @@ type
   public
     constructor Create(aOwner: TComponent);
 
-    function ComandoBackSpace: AnsiString; override;
-    function ComandoBeep(aTempo: Integer = 0): AnsiString; override;
-    function ComandoBoasVindas: AnsiString; override;
-    function ComandoDeslocarCursor(aValue: Integer): AnsiString; override;
-    function ComandoDeslocarLinha(aValue: Integer): AnsiString; override;
-    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; override;
-    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
-    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; override;
-    function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
-    function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
-    function ComandoLimparDisplay: AnsiString; override;
+    procedure ComandoBackSpace(Comandos: TACBrMTerComandos); override;
+    procedure ComandoBeep(Comandos: TACBrMTerComandos; const aTempo: Integer = 0);
+      override;
+    procedure ComandoDeslocarCursor(Comandos: TACBrMTerComandos; const aValue: Integer);
+      override;
+    procedure ComandoDeslocarLinha(Comandos: TACBrMTerComandos; aValue: Integer);
+      override;
+    procedure ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString); override;
+    procedure ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+      const aDados: AnsiString; aSerial: Byte = 0); override;
+    procedure ComandoEnviarTexto(Comandos: TACBrMTerComandos; const aTexto: AnsiString);
+      override;
+    procedure ComandoLimparLinha(Comandos: TACBrMTerComandos; const aLinha: Integer);
+      override;
+    procedure ComandoPosicionarCursor(Comandos: TACBrMTerComandos; const aLinha,
+      aColuna: Integer); override;
+    procedure ComandoLimparDisplay(Comandos: TACBrMTerComandos); override;
   end;
 
 implementation
 
-uses ACBrUtil;
+uses
+  ACBrUtil;
 
 { TACBrMTerVT100 }
 
@@ -86,41 +94,36 @@ begin
   fpModeloStr := 'VT100';
 end;
 
-function TACBrMTerVT100.ComandoBackSpace: AnsiString;
+procedure TACBrMTerVT100.ComandoBackSpace(Comandos: TACBrMTerComandos);
 begin
-  Result := BS;
+  Comandos.New( BS );
 end;
 
-function TACBrMTerVT100.ComandoBeep(aTempo: Integer): AnsiString;
+procedure TACBrMTerVT100.ComandoBeep(Comandos: TACBrMTerComandos;
+  const aTempo: Integer);
 begin
-  Result := ESC + '[TB';
+  Comandos.New( ESC + '[TB' );
 end;
 
-function TACBrMTerVT100.ComandoBoasVindas: AnsiString;
-begin
-  Result := '';
-end;
-
-function TACBrMTerVT100.ComandoDeslocarCursor(aValue: Integer): AnsiString;
+procedure TACBrMTerVT100.ComandoDeslocarCursor(Comandos: TACBrMTerComandos;
+  const aValue: Integer);
 var
-  I: Integer;
+  wValor: Integer;
 begin
-  Result := '';
-
-  if (aValue < 0) then
-    raise Exception.Create(ACBrStr('Válidos apenas números positivos'));
-
-  for I := 1 to aValue do
-    Result := Result + ESC + '[C';
+  wValor := aValue;
+  while (wValor > 0) do
+  begin
+    Comandos.New( ESC + '[C' );
+    Dec( wValor );
+  end;
 end;
 
-function TACBrMTerVT100.ComandoDeslocarLinha(aValue: Integer): AnsiString;
+procedure TACBrMTerVT100.ComandoDeslocarLinha(Comandos: TACBrMTerComandos;
+  aValue: Integer);
 var
   wCmd: String;
   I: Integer;
 begin
-  Result := '';
-
   if (aValue > 0) then
     wCmd := LF           // Comando coloca cursor na linha de baixo
   else if (aValue < 0) then
@@ -129,53 +132,58 @@ begin
     Exit;
 
   for I := 1 to abs(aValue) do
-    Result := Result + wCmd;
+    Comandos.New( wCmd );
 end;
 
-function TACBrMTerVT100.ComandoEnviarParaParalela(const aDados: AnsiString ): AnsiString;
+procedure TACBrMTerVT100.ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString);
 begin
-  Result := ESC + '[?24l';  // Seleciona porta paralela
-
-  Result := Result + ESC + '[5i';  // Habilita serviço de impressão
-  Result := Result + aDados;       // Envia Dados
-  Result := Result + ESC + '[4i';  // Desabilita serviço de impressão
+  Comandos.New( ESC + '[?24l' );  // Seleciona porta paralela
+  Comandos.New( ESC + '[5i' );  // Habilita serviço de impressão
+  Comandos.New( aDados );       // Envia Dados
+  Comandos.New( ESC + '[4i' );  // Desabilita serviço de impressão
 end;
 
-function TACBrMTerVT100.ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte): AnsiString;
+procedure TACBrMTerVT100.ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString; aSerial: Byte);
 begin
   if (aSerial = 2) then
-    Result := ESC + '[?24r'   // Seleciona porta serial 2
+    Comandos.New( ESC + '[?24r' )   // Seleciona porta serial 2
   else
-    Result := ESC + '[?24h';  // Seleciona porta serial padrão(0)
+    Comandos.New( ESC + '[?24h' );  // Seleciona porta serial padrão(0)
 
-  Result := Result + ESC + '[5i';  // Habilita serviço de impressão
-  Result := Result + aDados;       // Envia Dados
-  Result := Result + ESC + '[4i';  // Desabilita serviço de impressão
+  Comandos.New( ESC + '[5i' +   // Habilita serviço de impressão
+                aDados      +   // Envia Dados
+                ESC + '[4i' );  // Desabilita serviço de impressão
 end;
 
-function TACBrMTerVT100.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
+procedure TACBrMTerVT100.ComandoEnviarTexto(Comandos: TACBrMTerComandos;
+  const aTexto: AnsiString);
 begin
-  Result := aTexto;
+  Comandos.New(aTexto);
 end;
 
-function TACBrMTerVT100.ComandoLimparLinha(aLinha: Integer): AnsiString;
+procedure TACBrMTerVT100.ComandoLimparLinha(Comandos: TACBrMTerComandos;
+  const aLinha: Integer);
 begin
-  Result := ComandoPosicionarCursor(aLinha, 1) + ESC + '[K';
+  ComandoPosicionarCursor(Comandos, aLinha, 1);
+  Comandos.New(ESC + '[K');
 end;
 
-function TACBrMTerVT100.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
+procedure TACBrMTerVT100.ComandoPosicionarCursor(Comandos: TACBrMTerComandos;
+  const aLinha, aColuna: Integer);
 var
   wL, wC: AnsiString;
 begin
   wL := IntToStrZero(aLinha, 2);
   wC := IntToStrZero(aColuna, 2);
 
-  Result := ESC + '[' + wL + ';' + wC + 'H';
+  Comandos.New( ESC + '[' + wL + ';' + wC + 'H' );
 end;
 
-function TACBrMTerVT100.ComandoLimparDisplay: AnsiString;
+procedure TACBrMTerVT100.ComandoLimparDisplay(Comandos: TACBrMTerComandos);
 begin
-  Result := ESC + '[H' + ESC + '[J';
+  Comandos.New( ESC + '[H' + ESC + '[J' );
 end;
 
 end.

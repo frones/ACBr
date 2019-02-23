@@ -48,9 +48,38 @@ unit ACBrMTerClass;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, contnrs;
 
 type
+  { TACBrMTerComando }
+
+  TACBrMTerComando = class
+  private
+    FComando: AnsiString;
+    FTag: Integer;
+    FTimeOut: Integer;
+  public
+    constructor Create(const AComando: AnsiString; ATimeOut: Integer = 0);
+
+    property Comando: AnsiString read FComando;
+    property TimeOut: Integer read FTimeOut write FTimeOut;  // Valores negativos, forçam a Pausa
+    property Tag: Integer read FTag write FTag;
+  end;
+
+  { TACBrMTerComandos }
+
+  TACBrMTerComandos = class(TObjectList)
+  private
+    function GetObject(aIndex: Integer): TACBrMTerComando;
+    procedure SetObject(aIndex: Integer; aItem: TACBrMTerComando);
+  public
+    function New(const AComando: AnsiString; ATimeOut: Integer = 0): Integer;
+    function Add(aObj: TACBrMTerComando): Integer;
+    procedure Insert(aIndex: Integer; aObj: TACBrMTerComando);
+
+    property Objects[aIndex: Integer]: TACBrMTerComando read GetObject
+      write SetObject; default;
+  end;
 
   { Classe generica de MicroTerminal, nao implementa nenhum modelo especifico,
   apenas declara a Classe. NAO DEVE SER INSTANCIADA. Usada apenas como base para
@@ -59,32 +88,33 @@ type
   { TACBrMTerClass }
 
   TACBrMTerClass = class
-  private
-    procedure DisparaErroNaoImplementado( const NomeMetodo: String );
-
   protected
     fpModeloStr: String;
     fpOwner: TComponent;
 
+    procedure DisparaErroNaoImplementado( const NomeMetodo: String );
+    function TimeOut: Integer;
+
   public
     constructor Create(aOwner: TComponent);
 
-    function ComandoBackSpace: AnsiString; virtual;
-    function ComandoBeep(aTempo: Integer = 0): AnsiString; virtual;
-    function ComandoBoasVindas: AnsiString; virtual;
-    function ComandoDeslocarCursor(aValue: Integer): AnsiString; virtual;
-    function ComandoDeslocarLinha(aValue: Integer): AnsiString; virtual;
-    function ComandoEco(const aValue: AnsiString): AnsiString; virtual;
-    function ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString; virtual;
-    function ComandoEnviarParaSerial(const aDados: AnsiString; aSerial: Byte = 0): AnsiString; virtual;
-    function ComandoEnviarTexto(const aTexto: AnsiString): AnsiString; virtual;
-    function ComandoOnline: AnsiString; virtual;
-    function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; virtual;
-    function ComandoLimparDisplay: AnsiString; virtual;
-    function ComandoLimparLinha(aLinha: Integer): AnsiString; virtual;
+    procedure ComandoBackSpace(Comandos: TACBrMTerComandos); virtual;
+    procedure ComandoBeep(Comandos: TACBrMTerComandos; const aTempo: Integer = 0); virtual;
+    procedure ComandoBoasVindas(Comandos: TACBrMTerComandos); virtual;
+    procedure ComandoDeslocarCursor(Comandos: TACBrMTerComandos; const aValue: Integer); virtual;
+    procedure ComandoDeslocarLinha(Comandos: TACBrMTerComandos; aValue: Integer); virtual;
+    procedure ComandoEco(Comandos: TACBrMTerComandos; const aValue: AnsiString); virtual;
+    procedure ComandoEnviarParaParalela(Comandos: TACBrMTerComandos; const aDados: AnsiString); virtual;
+    procedure ComandoEnviarParaSerial(Comandos: TACBrMTerComandos; const aDados: AnsiString; aSerial: Byte = 0); virtual;
+    procedure ComandoEnviarTexto(Comandos: TACBrMTerComandos; const aTexto: AnsiString); virtual;
+    procedure ComandoOnline(Comandos: TACBrMTerComandos); virtual;
+    procedure ComandoPosicionarCursor(Comandos: TACBrMTerComandos; const aLinha, aColuna: Integer); virtual;
+    procedure ComandoLimparDisplay(Comandos: TACBrMTerComandos); virtual;
+    procedure ComandoLimparLinha(Comandos: TACBrMTerComandos; const aLinha: Integer); virtual;
 
     function InterpretarResposta(const aRecebido: AnsiString): AnsiString; virtual;
     function LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;
+    function ExtrairResposta( var ABuffer: Ansistring; LendoPeso: Boolean = False ): AnsiString; virtual;
 
     property ModeloStr: String read fpModeloStr;
   end;
@@ -93,13 +123,60 @@ type
 implementation
 
 uses
+  strutils,
   ACBrMTer, ACBrConsts, ACBrUtil;
+
+{ TACBrMTerComando }
+
+constructor TACBrMTerComando.Create(const AComando: AnsiString;
+  ATimeOut: Integer);
+begin
+  inherited Create;
+
+  FComando := AComando;
+  FTimeOut := ATimeOut;
+  FTag := 0;
+end;
+
+
+{ TACBrMTerComandos }
+
+function TACBrMTerComandos.GetObject(aIndex: Integer): TACBrMTerComando;
+begin
+  Result := inherited GetItem(aIndex) as TACBrMTerComando;
+end;
+
+procedure TACBrMTerComandos.SetObject(aIndex: Integer; aItem: TACBrMTerComando);
+begin
+  inherited SetItem(aIndex, aItem);
+end;
+
+function TACBrMTerComandos.New(const AComando: AnsiString; ATimeOut: Integer
+  ): Integer;
+begin
+  Result := Add( TACBrMTerComando.Create(AComando, ATimeOut) );
+end;
+
+function TACBrMTerComandos.Add(aObj: TACBrMTerComando): Integer;
+begin
+  Result := inherited Add(aObj);
+end;
+
+procedure TACBrMTerComandos.Insert(aIndex: Integer; aObj: TACBrMTerComando);
+begin
+  inherited Insert(aIndex, aObj);
+end;
 
 { TACBrMTerClass }
 
 procedure TACBrMTerClass.DisparaErroNaoImplementado(const NomeMetodo: String);
 begin
   raise Exception.Create(ACBrStr('Metodo: '+NomeMetodo+', não implementada em: '+ModeloStr));
+end;
+
+function TACBrMTerClass.TimeOut: Integer;
+begin
+  Result := TACBrMTer(fpOwner).TimeOut;
 end;
 
 constructor TACBrMTerClass.Create(aOwner: TComponent);
@@ -111,82 +188,80 @@ begin
   fpModeloStr := 'Não Definido';
 end;
 
-function TACBrMTerClass.ComandoBackSpace: AnsiString;
+procedure TACBrMTerClass.ComandoBackSpace(Comandos: TACBrMTerComandos);
 begin
-  Result := '';
-  DisparaErroNaoImplementado('ComandoBackSpace');
+  ComandoEnviarTexto(Comandos, BS);
 end;
 
-function TACBrMTerClass.ComandoBeep(aTempo: Integer): AnsiString;
+procedure TACBrMTerClass.ComandoBeep(Comandos: TACBrMTerComandos;
+  const aTempo: Integer);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoBeep');
 end;
 
-function TACBrMTerClass.ComandoBoasVindas: AnsiString;
+procedure TACBrMTerClass.ComandoBoasVindas(Comandos: TACBrMTerComandos);
 begin
-  Result := '';
-  DisparaErroNaoImplementado('ComandoBoasVindas');
+  { Sobreescrever apenas se necessário }
 end;
 
-function TACBrMTerClass.ComandoDeslocarCursor(aValue: Integer): AnsiString;
+procedure TACBrMTerClass.ComandoDeslocarCursor(Comandos: TACBrMTerComandos;
+  const aValue: Integer);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoDeslocarCursor');
 end;
 
-function TACBrMTerClass.ComandoDeslocarLinha(aValue: Integer): AnsiString;
+procedure TACBrMTerClass.ComandoDeslocarLinha(Comandos: TACBrMTerComandos;
+  aValue: Integer);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoDeslocarCursor');
 end;
 
-function TACBrMTerClass.ComandoEco(const aValue: AnsiString): AnsiString;
+procedure TACBrMTerClass.ComandoEco(Comandos: TACBrMTerComandos;
+  const aValue: AnsiString);
 begin
-  Result := ComandoEnviarTexto(LimparConteudoParaEnviar(aValue));
+  ComandoEnviarTexto(Comandos, LimparConteudoParaEnviar(aValue));
 end;
 
-function TACBrMTerClass.ComandoEnviarParaParalela(const aDados: AnsiString): AnsiString;
+procedure TACBrMTerClass.ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaParalela');
 end;
 
-function TACBrMTerClass.ComandoEnviarParaSerial(const aDados: AnsiString;
-  aSerial: Byte): AnsiString;
+procedure TACBrMTerClass.ComandoEnviarParaSerial(Comandos: TACBrMTerComandos;
+  const aDados: AnsiString; aSerial: Byte);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaSerial');
 end;
 
-function TACBrMTerClass.ComandoEnviarTexto(const aTexto: AnsiString): AnsiString;
+procedure TACBrMTerClass.ComandoEnviarTexto(Comandos: TACBrMTerComandos;
+  const aTexto: AnsiString);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoEnviarTexto');
 end;
 
-function TACBrMTerClass.ComandoOnline: AnsiString;
+procedure TACBrMTerClass.ComandoOnline(Comandos: TACBrMTerComandos);
 begin
-  Result := '';
+  {}
 end;
 
-function TACBrMTerClass.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
+procedure TACBrMTerClass.ComandoPosicionarCursor(Comandos: TACBrMTerComandos;
+  const aLinha, aColuna: Integer);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoPosicionarCursor');
 end;
 
-function TACBrMTerClass.ComandoLimparDisplay: AnsiString;
+procedure TACBrMTerClass.ComandoLimparDisplay(Comandos: TACBrMTerComandos);
 begin
-  Result := '';
   DisparaErroNaoImplementado('ComandoLimparDisplay');
 end;
 
-function TACBrMTerClass.ComandoLimparLinha(aLinha: Integer): AnsiString;
+procedure TACBrMTerClass.ComandoLimparLinha(Comandos: TACBrMTerComandos;
+  const aLinha: Integer);
 begin
-  Result := ComandoPosicionarCursor( aLinha, 0) +
-            ComandoEnviarTexto( Space(TACBrMTer(fpOwner).DisplayColunas) ) +
-            ComandoPosicionarCursor( aLinha, 0);
+  ComandoPosicionarCursor(Comandos, aLinha, 0);
+  ComandoEnviarTexto(Comandos, Space(TACBrMTer(fpOwner).DisplayColunas) );
+  ComandoPosicionarCursor(Comandos, aLinha, 0);
 end;
 
 function TACBrMTerClass.InterpretarResposta(const aRecebido: AnsiString): AnsiString;
@@ -228,14 +303,40 @@ begin
   for I := 1 to Length(aString) do
   begin
     aChar := aString[I];
-
     { Mantem apenas Letras/Numeros/Pontos/Sinais }
     if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
       Continue;
 
     Result := Result + aChar;
   end;
+end;
 
+function TACBrMTerClass.ExtrairResposta(var ABuffer: Ansistring;
+  LendoPeso: Boolean): AnsiString;
+var
+  P, LenTer, LenResp: Integer;
+  TerminadorResposta: AnsiString;
+begin
+  Result := '';
+
+  if LendoPeso then
+    TerminadorResposta := TACBrMTer(fpOwner).TerminadorBalancaAsc
+  else
+    TerminadorResposta := TACBrMTer(fpOwner).TerminadorAsc;
+
+  LenTer := Length(TerminadorResposta);
+  if (LenTer > 0) then     // Com Terminador, pegue inicio do Buffer até o Terminador
+  begin
+    P := pos(TerminadorResposta, ABuffer);
+    if (P > 0) then
+      Result := copy(ABuffer, 1, P+(LenTer-1));;
+  end
+  else
+     Result := ABuffer;    // Sem Terminador, Pegue tudo disponível...
+
+  LenResp := Length(Result);
+  if (LenResp > 0) then
+    Delete(ABuffer, 1, LenResp);
 end;
 
 end.

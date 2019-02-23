@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 637
   Top = 218
   Width = 985
-  Height = 496
+  Height = 445
   Caption = 'Form1'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,20 +20,20 @@ object Form1: TForm1
     Left = 480
     Top = 0
     Width = 489
-    Height = 457
+    Height = 406
     Align = alRight
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object Splitter2: TSplitter
       Left = 1
       Top = 1
-      Height = 455
+      Height = 404
     end
     object PageControl2: TPageControl
       Left = 4
       Top = 1
       Width = 484
-      Height = 455
+      Height = 404
       ActivePage = tsComandos
       Align = alClient
       TabOrder = 0
@@ -42,7 +42,7 @@ object Form1: TForm1
         Caption = 'Comandos'
         DesignSize = (
           476
-          427)
+          376)
         object lbPosLinha: TLabel
           Left = 166
           Top = 176
@@ -291,23 +291,23 @@ object Form1: TForm1
         object pnComandas: TPanel
           Left = 220
           Top = 0
-          Width = 202
-          Height = 352
+          Width = 256
+          Height = 376
           Align = alClient
           TabOrder = 0
           object gbComandas: TGroupBox
             Left = 1
             Top = 1
-            Width = 200
-            Height = 350
+            Width = 254
+            Height = 374
             Align = alClient
             Caption = 'Comandas:'
             TabOrder = 0
             object dbgComandas: TDBGrid
               Left = 2
               Top = 15
-              Width = 196
-              Height = 333
+              Width = 250
+              Height = 357
               Align = alClient
               DataSource = dsComandas
               TabOrder = 0
@@ -340,12 +340,12 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 220
-          Height = 352
+          Height = 376
           Align = alLeft
           TabOrder = 1
           object pnLegenda: TPanel
             Left = 1
-            Top = 301
+            Top = 325
             Width = 218
             Height = 50
             Align = alBottom
@@ -355,7 +355,7 @@ object Form1: TForm1
             Left = 1
             Top = 64
             Width = 218
-            Height = 237
+            Height = 261
             Align = alClient
             DataSource = dsTerminais
             TabOrder = 1
@@ -408,7 +408,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 480
-    Height = 457
+    Height = 406
     Align = alClient
     BevelOuter = bvSpace
     TabOrder = 1
@@ -416,21 +416,21 @@ object Form1: TForm1
       Left = 1
       Top = 169
       Width = 478
-      Height = 287
+      Height = 236
       Align = alClient
       TabOrder = 0
       object Splitter1: TSplitter
         Left = 285
         Top = 1
         Width = 5
-        Height = 285
+        Height = 234
         Align = alRight
       end
       object clbConectados: TCheckListBox
         Left = 290
         Top = 1
         Width = 187
-        Height = 285
+        Height = 234
         Align = alRight
         ItemHeight = 13
         TabOrder = 0
@@ -439,7 +439,7 @@ object Form1: TForm1
         Left = 1
         Top = 1
         Width = 284
-        Height = 285
+        Height = 234
         Align = alClient
         Lines.Strings = (
           'Output:'
@@ -512,30 +512,30 @@ object Form1: TForm1
           Color = clBtnFace
           ParentColor = False
         end
-        object btAtivar: TButton
+        object Label3: TLabel
+          Left = 264
+          Top = 49
+          Width = 22
+          Height = 13
+          Caption = 'Wait'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object btAtivarDesativar: TButton
           Left = 384
-          Top = 10
+          Top = 24
           Width = 75
-          Height = 25
+          Height = 59
           Caption = 'Ativar'
           TabOrder = 0
-          OnClick = btAtivarClick
-        end
-        object btDesativar: TButton
-          Left = 384
-          Top = 42
-          Width = 75
-          Height = 25
-          Caption = 'Desativar'
-          TabOrder = 1
-          OnClick = btDesativarClick
+          OnClick = btAtivarDesativarClick
         end
         object edPorta: TEdit
           Left = 185
           Top = 20
           Width = 147
           Height = 21
-          TabOrder = 2
+          TabOrder = 1
           Text = '6550'
         end
         object cbModelo: TComboBox
@@ -546,7 +546,7 @@ object Form1: TForm1
           Style = csDropDownList
           ItemHeight = 13
           ItemIndex = 1
-          TabOrder = 3
+          TabOrder = 2
           Text = 'mtrVT100'
           Items.Strings = (
             'mtrNenhum'
@@ -554,21 +554,13 @@ object Form1: TForm1
             'mtrSTX/ETX'
             'mtrPMTG')
         end
-        object edTimeout: TEdit
-          Left = 185
-          Top = 64
-          Width = 147
-          Height = 21
-          TabOrder = 4
-          Text = '5000'
-        end
         object btAtualizar: TButton
           Left = 384
-          Top = 74
+          Top = 106
           Width = 75
           Height = 25
           Caption = 'Atualizar'
-          TabOrder = 5
+          TabOrder = 3
           OnClick = btAtualizarClick
         end
         object cbEchoMode: TComboBox
@@ -579,7 +571,7 @@ object Form1: TForm1
           Style = csDropDownList
           ItemHeight = 13
           ItemIndex = 0
-          TabOrder = 6
+          TabOrder = 4
           Text = 'mdeNormal'
           OnChange = cbEchoModeChange
           Items.Strings = (
@@ -593,7 +585,7 @@ object Form1: TForm1
           Width = 144
           Height = 21
           ItemHeight = 13
-          TabOrder = 7
+          TabOrder = 5
           OnChange = edTerminadorChange
         end
         object edTerminadorBalanca: TComboBox
@@ -602,8 +594,31 @@ object Form1: TForm1
           Width = 147
           Height = 21
           ItemHeight = 13
-          TabOrder = 8
+          TabOrder = 6
           OnChange = edTerminadorBalancaChange
+        end
+        object seTimeout: TSpinEdit
+          Left = 184
+          Top = 64
+          Width = 64
+          Height = 23
+          Increment = 10
+          MaxValue = 10000
+          MinValue = 1
+          TabOrder = 7
+          Value = 1000
+        end
+        object seWait: TSpinEdit
+          Left = 264
+          Top = 64
+          Width = 57
+          Height = 23
+          Increment = 10
+          MaxValue = 5000
+          MinValue = 0
+          TabOrder = 8
+          Value = 200
+          OnChange = seWaitChange
         end
       end
       object tsBalanca: TTabSheet
@@ -637,7 +652,7 @@ object Form1: TForm1
           Height = 21
           Style = csDropDownList
           Anchors = [akLeft, akTop, akRight]
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
         end
         object edSerialPeso: TSpinEdit
@@ -676,6 +691,7 @@ object Form1: TForm1
     OnDesconecta = ACBrMTer1Desconecta
     OnRecebeDados = ACBrMTer1RecebeDados
     OnRecebePeso = ACBrMTer1RecebePeso
+    OnRecebeOnLine = ACBrMTer1RecebeOnLine
     Left = 40
     Top = 224
   end

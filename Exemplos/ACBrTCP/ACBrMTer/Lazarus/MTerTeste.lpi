@@ -9,6 +9,7 @@
       <Title Value="MTerTeste"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -72,7 +73,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="MTerTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -85,14 +86,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="configuraserial.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frConfiguraSerial"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ConfiguraSerial"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

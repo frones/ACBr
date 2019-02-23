@@ -67,11 +67,9 @@ type
     lbModelo: TLabel;
     Label1: TLabel;
     lbEchoMode: TLabel;
-    btAtivar: TButton;
-    btDesativar: TButton;
+    btAtivarDesativar: TButton;
     edPorta: TEdit;
     cbModelo: TComboBox;
-    edTimeout: TEdit;
     btAtualizar: TButton;
     cbEchoMode: TComboBox;
     tsBalanca: TTabSheet;
@@ -85,16 +83,16 @@ type
     edTerminador: TComboBox;
     lbTerminador1: TLabel;
     edTerminadorBalanca: TComboBox;
+    seTimeout: TSpinEdit;
+    Label3: TLabel;
+    seWait: TSpinEdit;
     procedure ACBrMTer1Conecta(const IP: String);
     procedure ACBrMTer1Desconecta(const IP: String; Erro: Integer;
       ErroDesc: String);
-    procedure ACBrMTer1RecebeDados(const IP: String;
-      var Recebido: String; var EchoMode: TACBrMTerEchoMode);
-    procedure btAtivarClick(Sender: TObject);
     procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
     procedure btBeepClick(Sender: TObject);
-    procedure btDesativarClick(Sender: TObject);
+    procedure btAtivarDesativarClick(Sender: TObject);
     procedure btDeslocarCursorClick(Sender: TObject);
     procedure btDeslocarLinhaClick(Sender: TObject);
     procedure btEnviarParalelaClick(Sender: TObject);
@@ -115,6 +113,11 @@ type
       const PesoRecebido: Double);
     procedure edTerminadorChange(Sender: TObject);
     procedure edTerminadorBalancaChange(Sender: TObject);
+    procedure seWaitChange(Sender: TObject);
+    procedure ACBrMTer1RecebeOnLine(const IP: String;
+      const Conectado: Boolean; const RepostaOnLine: String);
+    procedure ACBrMTer1RecebeDados(const IP, Recebido: String;
+      var EchoMode: TACBrMTerEchoMode);
   private
     procedure AtualizarConexoes;
     procedure VerificaSelecionado;
@@ -123,7 +126,7 @@ type
     procedure IniciarFluxoVendas;
     function AlterarEstadoTerminal(aIP: String; aEstado: Integer): Boolean;
 
-    procedure AvaliarRespostaTerminal(aIP: AnsiString; var aString: AnsiString);
+    procedure AvaliarRespostaTerminal(aIP: AnsiString; aResposta: AnsiString);
     procedure IncluirComanda(aComanda: String);
     procedure AdicionaItem(aComanda: String);
   public
@@ -136,26 +139,12 @@ var
 implementation
 
 uses
-  strutils, typinfo;
+  strutils, typinfo,
+  ACBrUtil;
 
 {$R *.dfm}
 
 { TForm1 }
-
-procedure TForm1.btAtivarClick(Sender: TObject);
-begin
-  with ACBrMTer1 do
-  begin
-    Modelo     := TACBrMTerModelo(cbModelo.ItemIndex);
-    Port       := edPorta.Text;
-    EchoMode   := TACBrMterEchoMode(cbEchoMode.ItemIndex);
-    Terminador := edTerminador.Text;
-    TerminadorBalanca := edTerminadorBalanca.Text;
-    TimeOut    := StrToInt(edTimeout.Text);
-    Ativar;
-  end;
-  mOutput.Lines.Add('Escutando porta: ' + edPorta.Text);
-end;
 
 procedure TForm1.ACBrMTer1Conecta(const IP: String);
 begin
@@ -174,15 +163,6 @@ begin
   mOutput.Lines.Add('  - Erro: ' + IntToStr(Erro) + ' - ' + ErroDesc);
 
   AtualizarConexoes;
-end;
-
-procedure TForm1.ACBrMTer1RecebeDados(const IP: String;
-  var Recebido: String; var EchoMode: TACBrMTerEchoMode);
-begin
-  mOutput.Lines.Add('IP: ' + IP + ' - Recebido :' + Recebido);
-
-  if (PageControl2.ActivePageIndex = 1) then
-    AvaliarRespostaTerminal(IP, Recebido);
 end;
 
 procedure TForm1.btAtualizarClick(Sender: TObject);
@@ -212,10 +192,30 @@ begin
       ACBrMTer1.Beep(clbConectados.Items[I]);
 end;
 
-procedure TForm1.btDesativarClick(Sender: TObject);
+procedure TForm1.btAtivarDesativarClick(Sender: TObject);
 begin
-  ACBrMTer1.Desativar;
-  mOutput.Lines.Add('Desativada porta: ' + edPorta.Text);
+  if btAtivarDesativar.Caption = 'Ativar' then
+  begin
+    btAtivarDesativar.Caption := 'Desativar';
+    with ACBrMTer1 do
+    begin
+      Modelo     := TACBrMTerModelo(cbModelo.ItemIndex);
+      Port       := edPorta.Text;
+      EchoMode   := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
+      Terminador := edTerminador.Text;
+      TerminadorBalanca := edTerminadorBalanca.Text;
+      TimeOut    := seTimeout.Value;
+      WaitInterval := seWait.Value;
+      Ativar;
+    end;
+    mOutput.Lines.Add('Escutando porta: ' + edPorta.Text);
+  end
+  else
+  begin
+    btAtivarDesativar.Caption := 'Ativar';
+    ACBrMTer1.Desativar;
+    mOutput.Lines.Add('Desativada porta: ' + edPorta.Text);
+  end;
 end;
 
 procedure TForm1.btDeslocarCursorClick(Sender: TObject);
@@ -286,17 +286,13 @@ end;
 
 procedure TForm1.btLimparLinha1Click(Sender: TObject);
 var
-  IsOnLine: Boolean;
   I: Integer;
 begin
   VerificaSelecionado;
 
   for I := 0 to clbConectados.Count - 1 do
     if clbConectados.Checked[I] then
-    begin
-      IsOnLine := ACBrMTer1.Online(clbConectados.Items[I]);
-      mOutput.Lines.Add('Terminal: '+clbConectados.Items[I]+' - '+IfThen(IsOnLine,'On Line','Off Line') );
-    end;
+      ACBrMTer1.VerificarOnline(clbConectados.Items[I]);
 end;
 
 procedure TForm1.btLimparLinhaClick(Sender: TObject);
@@ -412,7 +408,8 @@ begin
       wSel := True;
 
   if (not wSel) then
-    ShowMessage('Selecione um Terminal');
+    if (clbConectados.Count > 0) then
+      clbConectados.Checked[0] := True;
 end;
 
 procedure TForm1.CarregarTerminais;
@@ -491,8 +488,11 @@ begin
   end;
 end;
 
-procedure TForm1.AvaliarRespostaTerminal(aIP: AnsiString; var aString: AnsiString);
+procedure TForm1.AvaliarRespostaTerminal(aIP: AnsiString; aResposta: AnsiString);
+var
+  aString: String;
 begin
+  aString := aResposta;
   with memTerminais do
   begin
     DisableControls;
@@ -651,6 +651,27 @@ end;
 procedure TForm1.edTerminadorBalancaChange(Sender: TObject);
 begin
   ACBrMTer1.TerminadorBalanca := edTerminadorBalanca.Text;
+end;
+
+procedure TForm1.seWaitChange(Sender: TObject);
+begin
+  ACBrMTer1.WaitInterval := seWait.Value
+end;
+
+procedure TForm1.ACBrMTer1RecebeOnLine(const IP: String;
+  const Conectado: Boolean; const RepostaOnLine: String);
+begin
+  mOutput.Lines.Add('Terminal: '+IP+' - '+IfThen(Conectado,'On Line','Off Line') );
+  mOutput.Lines.Add('Resposta: '+RepostaOnLine);
+end;
+
+procedure TForm1.ACBrMTer1RecebeDados(const IP, Recebido: String;
+  var EchoMode: TACBrMTerEchoMode);
+begin
+  mOutput.Lines.Add('IP: ' + IP + ' - Recebido: ' + TranslateUnprintable( Recebido ) );
+
+  if (PageControl2.ActivePageIndex = 1) then
+    AvaliarRespostaTerminal(IP, Recebido);
 end;
 
 end.

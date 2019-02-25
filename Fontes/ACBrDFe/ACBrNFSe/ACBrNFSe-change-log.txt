@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2019
+-- pnfsNFSeR --
+[*] Correção na leitura correta do XML da NFS-e.
+   Por: Luiz Henrique Pratto
+
 22/02/2019
 -- ACBrNFSeWebServices --
 [*] Corrigido o namespace para assinatura - Provedor ISSDSF

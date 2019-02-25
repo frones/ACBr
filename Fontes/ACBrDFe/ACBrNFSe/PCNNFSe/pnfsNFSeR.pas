@@ -3114,20 +3114,27 @@ begin
         with NFSe.Servico.ItemServico.Add do
         begin
           NFSe.NaturezaOperacao               := StrToNaturezaOperacao( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'tributa_municipio_prestador' ), [ '1', '0' ] ) + 1 ) );
+
           NFSe.Servico.CodigoMunicipio        := Leitor.rCampo( tcStr, 'codigo_local_prestacao_servico' );
+          NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'situacao_tributaria');
+          NFSe.Servico.ItemListaServico       := PadLeft( Leitor.rCampo( tcStr, 'codigo_item_lista_servico' ), 4, '0' );
+
           Quantidade                          := Leitor.rCampo( tcDe3, 'unidade_quantidade' );
           ValorUnitario                       := Leitor.rCampo( tcDe2, 'unidade_valor_unitario' );
-          NFSe.Servico.ItemListaServico       := PadLeft( Leitor.rCampo( tcStr, 'codigo_item_lista_servico' ), 4, '0' );
+
           Descricao                           := Leitor.rCampo( tcStr, 'descritivo' );
           Aliquota                            := Leitor.rCampo( tcDe2, 'aliquota_item_lista_servico');
-          NFSe.Servico.Valores.IssRetido      := StrToSituacaoTributaria( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'situacao_tributaria' ), [ '1', '0', '2' ] ) + 1 ) );
+
           ValorServicos                       := Leitor.rCampo( tcDe2, 'valor_tributavel');
           ValorDeducoes                       := Leitor.rCampo( tcDe2, 'valor_deducao');
           BaseCalculo                         := Leitor.rCampo( tcDe2, 'valor_tributavel');
           ValorIss                            := BaseCalculo * Aliquota / 100;
+
           NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIssRetido + Leitor.rCampo( tcDe2, 'valor_issrf');
           NFSe.Servico.Valores.BaseCalculo    := NFSe.Servico.Valores.BaseCalculo + BaseCalculo;
           NFSe.Servico.Valores.ValorIss       := NFSe.Servico.Valores.ValorIss + ValorIss;
+
+          NFSe.Servico.Valores.IssRetido      := StrToSituacaoTributaria( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'situacao_tributaria' ), [ '1', '0', '2' ] ) + 1 ) );
         end;
         Inc( I );
       end;

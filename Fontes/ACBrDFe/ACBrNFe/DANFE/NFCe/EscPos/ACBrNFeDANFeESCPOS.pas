@@ -92,8 +92,7 @@ type
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
     procedure GerarMensagemFiscal;
-    function GerarInformacoesQRCode(const DadosQRCode: String; Cancelamento: Boolean = False;
-      Lateral: Boolean = False): String;
+    function GerarInformacoesQRCode(const DadosQRCode: String; Cancelamento: Boolean = False): String;
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
@@ -603,7 +602,7 @@ begin
 end;
 
 function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(const DadosQRCode: String;
-  Cancelamento: Boolean; Lateral: Boolean): String;
+  Cancelamento: Boolean): String;
 var
   InfoQrCode: TStringList;
 begin
@@ -699,7 +698,7 @@ begin
                               FPosPrinter.ConfigurarRegiaoModoPagina(
                                 EsquerdaQRCode, 0, AlturaMax,
                                 (CLarguraRegiaoEsquerda-EsquerdaQRCode) ) +
-                              GerarInformacoesQRCode(DadosQRCode, False, True));
+                              GerarInformacoesQRCode(DadosQRCode, False));
       FPosPrinter.Buffer.Add( FPosPrinter.ConfigurarRegiaoModoPagina(
                                 CLarguraRegiaoEsquerda, 0, AlturaMax, 325) +
                               TextoLateral.Text + '</mp>');
@@ -717,7 +716,7 @@ begin
     if NaoEstaVazio(Trim(MsgContingencia)) then
       FPosPrinter.Buffer.Add(MsgContingencia);
 
-    FPosPrinter.Buffer.Add(GerarInformacoesQRCode(DadosQRCode, False, False));
+    FPosPrinter.Buffer.Add(GerarInformacoesQRCode(DadosQRCode, False));
   end;
 
   GerarMensagemInteresseContribuinte;
@@ -862,7 +861,7 @@ begin
   GerarDadosEvento;
   FPosPrinter.Buffer.Add(GerarInformacoesConsumidor);
   GerarObservacoesEvento;
-  FPosPrinter.Buffer.Add(GerarInformacoesQRCode(CalcularDadosQRCode, True, False));
+  FPosPrinter.Buffer.Add(GerarInformacoesQRCode(CalcularDadosQRCode, True));
   GerarRodape;
 
   FPosPrinter.Imprimir('',False,True,True,NumCopias);

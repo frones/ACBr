@@ -282,7 +282,7 @@ type
     FprotCTe: TProcCTe;
     FretCancCTe: TRetCancCTe;
     FprocEventoCTe: TRetEventoCTeCollection;
-    procedure SetCTeChave(AValue: String);
+    procedure SetCTeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -338,7 +338,7 @@ type
 
     FXML_ProcInutCTe: String;
 
-    procedure SetJustificativa(AValue: String);
+    procedure SetJustificativa(const AValue: String);
     function GerarPathPorCNPJ: String;
   protected
     procedure DefinirURL; override;
@@ -552,10 +552,10 @@ type
     destructor Destroy; override;
 
     function Envia(ALote: Integer): Boolean; overload;
-    function Envia(ALote: String): Boolean; overload;
+    function Envia(const ALote: String): Boolean; overload;
     function EnviaOS(ALote: Integer): Boolean; overload;
-    function EnviaOS(ALote: String): Boolean; overload;
-    procedure Inutiliza(CNPJ, AJustificativa: String;
+    function EnviaOS(const ALote: String): Boolean; overload;
+    procedure Inutiliza(const CNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
 
     property ACBrCTe: TACBrDFe read FACBrCTe write FACBrCTe;
@@ -1715,7 +1715,7 @@ begin
   FprocEventoCTe := TRetEventoCTeCollection.Create(FOwner);
 end;
 
-procedure TCTeConsulta.SetCTeChave(AValue: String);
+procedure TCTeConsulta.SetCTeChave(const AValue: String);
 var
   NumChave: String;
 begin
@@ -2158,7 +2158,7 @@ begin
   end
 end;
 
-procedure TCTeInutilizacao.SetJustificativa(AValue: String);
+procedure TCTeInutilizacao.SetJustificativa(const AValue: String);
 var
   TrimValue: String;
 begin
@@ -2177,33 +2177,33 @@ end;
 
 function TCTeInutilizacao.GerarPathPorCNPJ(): String;
 var
-  CNPJ: String;
+  tempCNPJ: String;
 begin
   if FPConfiguracoesCTe.Arquivos.SepararPorCNPJ then
-    CNPJ := FCNPJ
+    tempCNPJ := FCNPJ
   else
-    CNPJ := '';
+    tempCNPJ := '';
 
-  Result := FPConfiguracoesCTe.Arquivos.GetPathInu(Now, CNPJ);
+  Result := FPConfiguracoesCTe.Arquivos.GetPathInu(Now, tempCNPJ);
 end;
 
 procedure TCTeInutilizacao.DefinirURL;
 var
   ok: Boolean;
   VerServ: Double;
-  Modelo: String;
+  ModeloTemp: String;
 begin
   FPVersaoServico := '';
   FPURL  := '';
 
-  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, IntToStr(FModelo) ));
+  ModeloTemp := ModeloCTeToPrefixo( StrToModeloCTe(ok, IntToStr(FModelo) ));
   if not ok then
     raise EACBrCTeException.Create( 'Modelo Inválido: '+IntToStr(FModelo) );
 
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
+    ModeloTemp,
     FPConfiguracoesCTe.WebServices.UF,
     FPConfiguracoesCTe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
@@ -2424,11 +2424,11 @@ end;
 
 procedure TCTeConsultaCadastro.DefinirURL;
 var
-  Versao: Double;
+  VersaoTemp: Double;
 begin
   FPVersaoServico := '';
   FPURL := '';
-  Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
+  VersaoTemp := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
 
   if EstaVazio(FUF) then
     FUF := FPConfiguracoesCTe.WebServices.UF;
@@ -2438,11 +2438,11 @@ begin
     FUF,
     FPConfiguracoesCTe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
-    Versao,
+    VersaoTemp,
     FPURL
   );
 
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
+  FPVersaoServico := FloatToString(VersaoTemp, '.', '0.00');
 end;
 
 procedure TCTeConsultaCadastro.DefinirDadosMsg;
@@ -3327,7 +3327,7 @@ begin
   Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String): Boolean;
+function TWebServices.Envia(const ALote: String): Boolean;
 begin
   FEnviar.Clear;
   FRetorno.Clear;
@@ -3350,7 +3350,7 @@ begin
   Result := EnviaOS(IntToStr(ALote));
 end;
 
-function TWebServices.EnviaOS(ALote: String): Boolean;
+function TWebServices.EnviaOS(const ALote: String): Boolean;
 begin
   FEnviar.Clear;
   FRetorno.Clear;
@@ -3363,20 +3363,22 @@ begin
   Result := True;
 end;
 
-procedure TWebServices.Inutiliza(CNPJ, AJustificativa: String;
+procedure TWebServices.Inutiliza(const CNPJ, AJustificativa: String;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
+var
+  CNPJ_temp: string;
 begin
-  CNPJ := OnlyNumber(CNPJ);
+  CNPJ_temp := OnlyNumber(CNPJ);
 
-  if not ValidarCNPJ(CNPJ) then
-    raise EACBrCTeException.Create('CNPJ: ' + CNPJ + ', inválido.');
+  if not ValidarCNPJ(CNPJ_temp) then
+    raise EACBrCTeException.Create('CNPJ: ' + CNPJ_temp + ', inválido.');
 
-  FInutilizacao.CNPJ := CNPJ;
-  FInutilizacao.Modelo := Modelo;
-  FInutilizacao.Serie := Serie;
-  FInutilizacao.Ano := Ano;
+  FInutilizacao.CNPJ          := CNPJ_temp;
+  FInutilizacao.Modelo        := Modelo;
+  FInutilizacao.Serie         := Serie;
+  FInutilizacao.Ano           := Ano;
   FInutilizacao.NumeroInicial := NumeroInicial;
-  FInutilizacao.NumeroFinal := NumeroFinal;
+  FInutilizacao.NumeroFinal   := NumeroFinal;
   FInutilizacao.Justificativa := AJustificativa;
 
   if not FInutilizacao.Executar then

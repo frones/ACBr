@@ -299,7 +299,6 @@ type
     FXML: AnsiString;
     FNomeArquivo: String;
   public
-  published
     property Id: String              read FId          write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb       write FtpAmb;
     property verAplic: String        read FverAplic    write FverAplic;

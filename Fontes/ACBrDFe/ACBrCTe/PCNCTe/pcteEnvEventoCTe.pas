@@ -121,7 +121,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function LerXML(CaminhoArquivo: string): boolean;
+    function LerXML(const CaminhoArquivo: string): boolean;
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
@@ -406,7 +406,7 @@ begin
   FEvento.Assign(Value);
 end;
 
-function TEventoCTe.LerXML(CaminhoArquivo: String): boolean;
+function TEventoCTe.LerXML(const CaminhoArquivo: String): boolean;
 var
   ArqEvento: TStringList;
 begin
@@ -547,7 +547,7 @@ var
   INIRec: TMemIniFile;
   ok: Boolean;
 begin
-  Result := False;
+//  Result := False;
   Self.Evento.Clear;
 
   INIRec := TMemIniFile.Create('');

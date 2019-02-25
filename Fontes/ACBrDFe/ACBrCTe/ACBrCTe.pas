@@ -73,7 +73,7 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesCTe;
-    function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+    function Distribuicao(AcUFAutor: integer; const ACNPJCPF, AultNSU, ANSU,
       AchCTe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
@@ -111,24 +111,24 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrCTe);
 
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
+    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean;  overload;
 
-    function Consultar( AChave: String = ''): Boolean;
-    function Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
+    function Consultar( const AChave: String = ''): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
-    function Inutilizar(ACNPJ, AJustificativa: String;
+    function Inutilizar(const ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
-      ACNPJCPF, AultNSU: String): Boolean;
+      const ACNPJCPF, AultNSU: String): Boolean;
     function DistribuicaoDFePorNSU(AcUFAutor: integer;
-      ACNPJCPF, ANSU: String): Boolean;
+      const ACNPJCPF, ANSU: String): Boolean;
     function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
-      ACNPJCPF, AchCTe: String): Boolean;
+      const ACNPJCPF, AchCTe: String): Boolean;
     procedure EnviarEmail(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamCTe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    procedure EnviarEmailEvento(sPara, sAssunto: String;
+    procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -642,7 +642,7 @@ begin
   Result := Enviar(IntToStr(ALote), Imprimir);
 end;
 
-function TACBrCTe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
+function TACBrCTe.Enviar(const ALote: String; Imprimir: Boolean): Boolean;
 var
   i: Integer;
 begin
@@ -676,7 +676,7 @@ begin
   end;
 end;
 
-function TACBrCTe.Consultar(AChave: String): Boolean;
+function TACBrCTe.Consultar(const AChave: String): Boolean;
 var
   i: Integer;
 begin
@@ -701,7 +701,7 @@ begin
   Result := True;
 end;
 
-function TACBrCTe.Cancelamento(AJustificativa: String; ALote: Integer): Boolean;
+function TACBrCTe.Cancelamento(const AJustificativa: String; ALote: Integer): Boolean;
 var
   i: Integer;
 begin
@@ -810,7 +810,7 @@ begin
     GerarException( WebServices.EnvEvento.Msg );
 end;
 
-function TACBrCTe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
+function TACBrCTe.Inutilizar(const ACNPJ, AJustificativa: String; AAno, ASerie,
   ANumInicial, ANumFinal: Integer): Boolean;
 begin
   Result := True;
@@ -819,7 +819,7 @@ begin
                         ASerie, ANumInicial, ANumFinal);
 end;
 
-function TACBrCTe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+function TACBrCTe.Distribuicao(AcUFAutor: integer; const ACNPJCPF, AultNSU, ANSU,
   AchCTe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
@@ -834,19 +834,19 @@ begin
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
 
-function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; const ACNPJCPF,
   AultNSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
 end;
 
-function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; const ACNPJCPF,
   ANSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
 end;
 
-function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; ACNPJCPF,
+function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; const ACNPJCPF,
   AchCTe: String): Boolean;
 begin
   // Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.
@@ -870,7 +870,7 @@ begin
   end;
 end;
 
-procedure TACBrCTe.EnviarEmailEvento(sPara, sAssunto: String;
+procedure TACBrCTe.EnviarEmailEvento(const sPara, sAssunto: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq: String;

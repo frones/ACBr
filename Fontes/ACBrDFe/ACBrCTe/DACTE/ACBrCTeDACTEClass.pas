@@ -62,7 +62,7 @@ type
   TACBrCTeDACTEClass = class(TACBrDFeReport)
   private
     procedure SetCTE(const Value: TComponent);
-    procedure ErroAbstract(NomeProcedure: string);
+    procedure ErroAbstract(const NomeProcedure: string);
 
   protected
     FACBrCTE: TComponent;
@@ -164,7 +164,7 @@ begin
   end;
 end;
 
-procedure TACBrCTeDACTEClass.ErroAbstract(NomeProcedure: string);
+procedure TACBrCTeDACTEClass.ErroAbstract(const NomeProcedure: string);
 begin
   raise Exception.Create(NomeProcedure);
 end;

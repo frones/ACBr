@@ -74,8 +74,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -91,16 +91,16 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: String): Boolean;
+    function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
     function GerarCTeIni: String;
 
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -160,13 +160,13 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarCTe que determina se após carregar os dados do CTe
     // para o componente, será gerado ou não novamente o XML do CTe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = False): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarCTe: Boolean = False): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarCTe: Boolean = False): Boolean;
-    function LoadFromString(AXMLString: String; AGerarCTe: Boolean = False): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String; AGerarCTe: Boolean = False): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
     function GerarIni: String;
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property ACBrCTe: TComponent read FACBrCTe;
   end;
@@ -495,7 +495,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Conhecimento.LerXML(AXML: String): Boolean;
+function Conhecimento.LerXML(const AXML: String): Boolean;
 var
   XMLStr: String;
 begin
@@ -511,7 +511,7 @@ begin
   Result := True;
 end;
 
-function Conhecimento.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function Conhecimento.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -531,10 +531,10 @@ begin
   Result := True;
 end;
 
-procedure Conhecimento.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure Conhecimento.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq: String;
+  NomeArqTemp: String;
   AnexosEmail: TStrings;
   StreamCTe: TMemoryStream;
 begin
@@ -557,8 +557,8 @@ begin
         if Assigned(DACTE) then
         begin
           DACTE.ImprimirDACTEPDF(CTe);
-          NomeArq := PathWithDelim(DACTE.PathPDF) + NumID + '-cte.pdf';
-          AnexosEmail.Add(NomeArq);
+          NomeArqTemp := PathWithDelim(DACTE.PathPDF) + NumID + '-cte.pdf';
+          AnexosEmail.Add(NomeArqTemp);
         end;
       end;
 
@@ -1091,12 +1091,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Conhecimento.SetXML(AValue: String);
+procedure Conhecimento.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Conhecimento.SetXMLOriginal(AValue: String);
+procedure Conhecimento.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -1128,11 +1128,10 @@ begin
     with FCTe do
     begin
       infCTe.versao := StringToFloatDef( INIRec.ReadString('infCTe','versao', VersaoCTeToStr(FConfiguracoes.Geral.VersaoDF)),0) ;
-      versao        := FloatToString(infCTe.versao, '.', '#0.00');
-
-      versao := infCTe.VersaoStr;
-      versao := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
-      versao := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
+//      versao        := FloatToString(infCTe.versao, '.', '#0.00');
+      versao        := infCTe.VersaoStr;
+      versao        := StringReplace(versao,'versao="','',[rfReplaceAll,rfIgnoreCase]);
+      versao        := StringReplace(versao,'"','',[rfReplaceAll,rfIgnoreCase]);
 
       Ide.cCT    := INIRec.ReadInteger('ide','cCT', 0);
       Ide.cUF    := INIRec.ReadInteger('ide','cUF', 0);
@@ -2928,7 +2927,7 @@ begin
   end;
 end;
 
-function TConhecimentos.LoadFromFile(CaminhoArquivo: String;
+function TConhecimentos.LoadFromFile(const CaminhoArquivo: String;
   AGerarCTe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -2965,7 +2964,7 @@ begin
   Result := Self.LoadFromString(String(AXML), AGerarCTe);
 end;
 
-function TConhecimentos.LoadFromString(AXMLString: String;
+function TConhecimentos.LoadFromString(const AXMLString: String;
   AGerarCTe: Boolean): Boolean;
 var
   ACTeXML, XMLStr: AnsiString;
@@ -3043,7 +3042,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TConhecimentos.LoadFromIni(AIniString: String): Boolean;
+function TConhecimentos.LoadFromIni(const AIniString: String): Boolean;
 begin
   with Self.Add do
     LerArqIni(AIniString);
@@ -3051,7 +3050,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TConhecimentos.GravarXML(PathNomeArquivo: String): Boolean;
+function TConhecimentos.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;

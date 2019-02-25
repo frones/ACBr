@@ -83,7 +83,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-    function LerXML(CaminhoArquivo: String): boolean;
+    function LerXML(const CaminhoArquivo: String): boolean;
     function LerXMLFromString(const AXML: String): boolean;
   published
     property Leitor: TLeitor         read FLeitor     write FLeitor;
@@ -168,7 +168,7 @@ begin
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
-function TinutCTe.LerXML(CaminhoArquivo: String): boolean;
+function TinutCTe.LerXML(const CaminhoArquivo: String): boolean;
 var
   ArqInut: TStringList;
 begin

@@ -102,10 +102,10 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
-    function GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
+    function GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
@@ -267,7 +267,7 @@ begin
   inherited;
 end;
 
-function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin
@@ -288,13 +288,13 @@ begin
   Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
 end;
 
-function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
 function TArquivosConfCTe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  CNPJ: String = ''; Data: TDateTime = 0): String;
+  const CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
 begin
@@ -309,7 +309,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfCTe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+function TArquivosConfCTe.GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
 var
   rPathDown: String;
 begin
@@ -370,6 +370,7 @@ end;
 
 constructor TDownloadConfCTe.Create;
 begin
+  inherited Create;
   FPathDownload := '';
   FSepararPorNome := False;
 end;

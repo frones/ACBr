@@ -55,6 +55,7 @@ type
     procedure Reg1001;
     procedure Reg1010;
     procedure Reg1020;
+    procedure Reg1050;
     procedure Reg1100;
     procedure Reg1101;
     procedure Reg1102;
@@ -92,6 +93,8 @@ begin
     Reg1010
   else if (vHead = '1020') then
     Reg1020
+  else if (vHead = '1050') then
+    Reg1050
   else if (vHead = '1100') then
     Reg1100
   else if (vHead = '1101') then
@@ -157,6 +160,31 @@ begin
     IND_NAT_ACAO := ValorI;
     DT_DEC_ADM := ValorD;
   end;
+end;
+
+procedure TACBrSpedPCImportar_Bloco1.Reg1050;
+begin
+  with ACBrSpedPisCofins.Bloco_1.Registro1050New do
+  begin
+    DT_REF := ValorD;
+    IND_AJ_BC := StrToCodAjBaseCalcContrib(Valor);
+    CNPJ := Valor;
+    VL_AJ_TOT := ValorF;
+    VL_AJ_CST01 := ValorF;
+    VL_AJ_CST02 := ValorF;
+    VL_AJ_CST03 := ValorF;
+    VL_AJ_CST04 := ValorF;
+    VL_AJ_CST05 := ValorF;
+    VL_AJ_CST06 := ValorF;
+    VL_AJ_CST07 := ValorF;
+    VL_AJ_CST08 := ValorF;
+    VL_AJ_CST09 := ValorF;
+    VL_AJ_CST49 := ValorF;
+    VL_AJ_CST99 := ValorF;
+    IND_APROP := StrToIndicadorApropAjuste(Valor);
+    NUM_REC := Valor;
+    INFO_COMPL := Valor;
+   end;
 end;
 
 procedure TACBrSpedPCImportar_Bloco1.Reg1100;

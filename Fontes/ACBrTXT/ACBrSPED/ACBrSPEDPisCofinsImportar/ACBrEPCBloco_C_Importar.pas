@@ -885,9 +885,10 @@ procedure TACBrSpedPCImportar_BlocoC.RegC870;
 begin
   with ACBrSpedPisCofins.Bloco_C.RegistroC870New do
   begin
+    COD_ITEM := Valor;
     CFOP := Valor;
     VL_ITEM := ValorF;
-    COD_ITEM := Valor;
+    VL_DESC := ValorF;
     CST_PIS := StrToCstPis(Valor);
     VL_BC_PIS := ValorFV;
     ALIQ_PIS := ValorFV;

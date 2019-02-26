@@ -61,6 +61,7 @@ type
     procedure RegM205;
     procedure RegM210;
     procedure RegM211;
+    procedure RegM215;
     procedure RegM220;
     procedure RegM225;
     procedure RegM230;
@@ -76,6 +77,7 @@ type
     procedure RegM605;
     procedure RegM610;
     procedure RegM611;
+    procedure RegM615;
     procedure RegM620;
     procedure RegM625;
     procedure RegM630;
@@ -114,6 +116,8 @@ begin
     RegM210
   else if (vHead = 'M211') then
     RegM211
+  else if (vHead = 'M215') then
+    RegM215
   else if (vHead = 'M220') then
     RegM220
   else if (vHead = 'M225') then
@@ -144,6 +148,8 @@ begin
     RegM610
   else if (vHead = 'M611') then
     RegM611
+  else if (vHead = 'M615') then
+    RegM615
   else if (vHead = 'M620') then
     RegM620
   else if (vHead = 'M625') then
@@ -267,6 +273,12 @@ begin
     COD_CONT := StrToCodCont(Valor);
     VL_REC_BRT := ValorF;
     VL_BC_CONT := ValorF;
+    if (ACBrSpedPisCofins.Bloco_0.Registro0000.COD_VER >= vlVersao310) then
+    begin
+       VL_AJUS_ACRES_BC_PIS := ValorF;
+       VL_AJUS_REDUC_BC_PIS := ValorF;
+       VL_BC_CONT_AJUS := ValorF;
+    end;
     ALIQ_PIS := ValorFV;
     QUANT_BC_PIS := ValorFV;
     ALIQ_PIS_QUANT := ValorFV;
@@ -288,6 +300,22 @@ begin
     VL_EXC_COOP_GER := ValorF;
     VL_EXC_ESP_COOP := ValorF;
     VL_BC_CONT := ValorF;
+  end;
+end;
+
+procedure TACBrSpedPCImportar_BlocoM.RegM215;
+begin
+  with ACBrSpedPisCofins.Bloco_M.RegistroM215New do
+  begin
+    IND_AJ_BC := StrToIndAJ(Valor);
+    VL_AJ_BC := ValorF;
+    COD_AJ_BC := StrToCodAjBaseCalcContrib(Valor);
+    NUM_DOC := Valor;
+    DESCR_AJ_BC := Valor;
+    DT_REF := ValorD;
+    COD_CTA := Valor;
+    CNPJ := Valor;
+    INFO_COMPL := Valor;
   end;
 end;
 
@@ -481,6 +509,12 @@ begin
     COD_CONT := StrToCodCont(Valor);
     VL_REC_BRT := ValorF;
     VL_BC_CONT := ValorF;
+    if (ACBrSpedPisCofins.Bloco_0.Registro0000.COD_VER >= vlVersao310) then
+    begin
+       VL_AJUS_ACRES_BC_COFINS := ValorF;
+       VL_AJUS_REDUC_BC_COFINS := ValorF;
+       VL_BC_CONT_AJUS := ValorF;
+    end;
     ALIQ_COFINS := ValorFV;
     QUANT_BC_COFINS := ValorFV;
     ALIQ_COFINS_QUANT := ValorFV;
@@ -502,6 +536,22 @@ begin
     VL_EXC_COOP_GER := ValorF;
     VL_EXC_ESP_COOP := ValorF;
     VL_BC_CONT := ValorF;
+  end;
+end;
+
+procedure TACBrSpedPCImportar_BlocoM.RegM615;
+begin
+  with ACBrSpedPisCofins.Bloco_M.RegistroM615New do
+  begin
+    IND_AJ_BC := StrToIndAJ(Valor);
+    VL_AJ_BC := ValorF;
+    COD_AJ_BC := StrToCodAjBaseCalcContrib(Valor);
+    NUM_DOC := Valor;
+    DESCR_AJ_BC := Valor;
+    DT_REF := ValorD;
+    COD_CTA := Valor;
+    CNPJ := Valor;
+    INFO_COMPL := Valor;
   end;
 end;
 

@@ -186,7 +186,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'infPercurso', '', i01 + 1) <> '' do
     begin
-      CTe.Ide.infPercurso.Add;
+      CTe.Ide.infPercurso.New;
       CTe.Ide.infPercurso[i01].UFPer := Leitor.rCampo(tcStr, 'UFPer');
       inc(i01);
     end;
@@ -250,7 +250,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'pass', '', i01 + 1) <> '' do
       begin
-        CTe.Compl.fluxo.pass.Add;
+        CTe.Compl.fluxo.pass.New;
         CTe.Compl.fluxo.pass[i01].xPass := Leitor.rCampo(tcStr, 'xPass');
         inc(i01);
       end;
@@ -310,7 +310,7 @@ begin
     begin
       I := RetornarPosEx('ObsCont xCampo=', Leitor.Arquivo, I + 1);
       J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 16);
-      CTe.Compl.ObsCont.Add;
+      CTe.Compl.ObsCont.New;
       CTe.Compl.ObsCont[i01].xCampo := copy(Leitor.Arquivo, I + 16, J - (I + 16));
       CTe.Compl.ObsCont[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
       inc(i01);
@@ -322,7 +322,7 @@ begin
     begin
       I := RetornarPosEx('ObsFisco xCampo=', Leitor.Arquivo, I + 1);
       J := RetornarPosEx(Aspas, Leitor.Arquivo, I + 17);
-      CTe.Compl.ObsFisco.Add;
+      CTe.Compl.ObsFisco.New;
       CTe.Compl.ObsFisco[i01].xCampo := copy(Leitor.Arquivo, I + 17, J - (I + 17));
       CTe.Compl.ObsFisco[i01].xTexto := Leitor.rCampo(tcstr,'xTexto');
       inc(i01);
@@ -421,7 +421,7 @@ begin
     begin
       while Leitor.rExtrai(2, 'infNFe', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.InfNFE.Add;
+        CTe.infCTeNorm.infDoc.InfNFE.New;
         CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
         CTe.infCTeNorm.infDoc.InfNFE[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
         inc(i01);
@@ -429,7 +429,7 @@ begin
 
       while Leitor.rExtrai(2, 'infNF', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.infNF.Add;
+        CTe.infCTeNorm.infDoc.infNF.New;
         CTe.infCTeNorm.infDoc.InfNF[i01].nRoma  := Leitor.rCampo(tcStr, 'nRoma');
         CTe.infCTeNorm.infDoc.InfNF[i01].nPed   := Leitor.rCampo(tcStr, 'nPed');
         CTe.infCTeNorm.infDoc.InfNF[i01].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
@@ -450,7 +450,7 @@ begin
 
       while Leitor.rExtrai(2, 'infOutros', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.InfOutros.Add;
+        CTe.infCTeNorm.infDoc.InfOutros.New;
         CTe.infCTeNorm.infDoc.InfOutros[i01].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
         CTe.infCTeNorm.infDoc.InfOutros[i01].descOutros := Leitor.rCampo(tcStr, 'descOutros');
         CTe.infCTeNorm.infDoc.InfOutros[i01].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
@@ -556,7 +556,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'Comp', '', i01 + 1) <> '' do
     begin
-      CTe.vPrest.Comp.Add;
+      CTe.vPrest.Comp.New;
       CTe.vPrest.Comp[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
       CTe.vPrest.Comp[i01].vComp := Leitor.rCampo(tcDe2, 'vComp');
       inc(i01);
@@ -694,7 +694,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'infDocRef', '', i01 + 1) <> '' do
     begin
-      CTe.infCTeNorm.infDocRef.Add;
+      CTe.infCTeNorm.infDocRef.New;
       CTe.infCTeNorm.infDocRef[i01].nDoc     := Leitor.rCampo(tcEsp, 'nDoc');
       CTe.infCTeNorm.infDocRef[i01].serie    := Leitor.rCampo(tcStr, 'serie');
       CTe.infCTeNorm.infDocRef[i01].subserie := Leitor.rCampo(tcStr, 'subserie');
@@ -713,7 +713,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'infQ', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.InfCarga.infQ.Add;
+        CTe.infCTeNorm.InfCarga.infQ.New;
         CTe.infCTeNorm.InfCarga.infQ[i01].cUnid  := Leitor.rCampo(tcStr, 'cUnid');
         CTe.infCTeNorm.InfCarga.infQ[i01].tpMed  := Leitor.rCampo(tcStr, 'tpMed');
         CTe.infCTeNorm.InfCarga.infQ[i01].qCarga := Leitor.rCampo(tcDe4, 'qCarga');
@@ -726,7 +726,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'infNF', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.infNF.Add;
+        CTe.infCTeNorm.infDoc.infNF.New;
         CTe.infCTeNorm.infDoc.InfNF[i01].nRoma := Leitor.rCampo(tcStr, 'nRoma');
         CTe.infCTeNorm.infDoc.InfNF[i01].nPed  := Leitor.rCampo(tcStr, 'nPed');
         CTe.infCTeNorm.infDoc.InfNF[i01].Modelo := StrToModeloNF(Ok, Leitor.rCampo(tcStr, 'mod'));
@@ -747,7 +747,7 @@ begin
         i02 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
         begin
-          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp.Add;
+          CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp.New;
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
 
@@ -775,7 +775,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].lacUnidTransp.Add;
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].lacUnidTransp.New;
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
             inc(i03);
           end;
@@ -783,7 +783,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -791,7 +791,7 @@ begin
             i04 := 0;
             while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i04);
             end;
@@ -806,7 +806,7 @@ begin
         begin
           while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -814,7 +814,7 @@ begin
             i03 := 0;
             while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.infNF[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i03);
             end;
@@ -829,7 +829,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'infNFe', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.InfNFE.Add;
+        CTe.infCTeNorm.infDoc.InfNFE.New;
         CTe.infCTeNorm.infDoc.InfNFE[i01].chave := Leitor.rCampo(tcStr, 'chave');
         CTe.infCTeNorm.infDoc.InfNFE[i01].PIN   := Leitor.rCampo(tcStr, 'PIN');
         CTe.infCTeNorm.infDoc.InfNFE[i01].dPrev := Leitor.rCampo(tcDat, 'dPrev');
@@ -837,7 +837,7 @@ begin
         i02 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
         begin
-          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp.Add;
+          CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp.New;
           CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
 
@@ -865,7 +865,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].lacUnidTransp.Add;
+            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].lacUnidTransp.New;
             CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
             inc(i03);
           end;
@@ -873,7 +873,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -881,7 +881,7 @@ begin
             i04 := 0;
             while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.InfNFE[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i04);
             end;
@@ -896,7 +896,7 @@ begin
         begin
           while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -904,7 +904,7 @@ begin
             i03 := 0;
             while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.infNFE[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i03);
             end;
@@ -919,7 +919,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'infOutros', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infDoc.InfOutros.Add;
+        CTe.infCTeNorm.infDoc.InfOutros.New;
         CTe.infCTeNorm.infDoc.InfOutros[i01].tpDoc      := StrToTpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
         CTe.infCTeNorm.infDoc.InfOutros[i01].descOutros := Leitor.rCampo(tcStr, 'descOutros');
         CTe.infCTeNorm.infDoc.InfOutros[i01].nDoc       := Leitor.rCampo(tcStr, 'nDoc');
@@ -930,7 +930,7 @@ begin
         i02 := 0;
         while Leitor.rExtrai(4, 'infUnidTransp', '', i02 + 1) <> '' do
         begin
-          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp.Add;
+          CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp.New;
           CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].tpUnidTransp := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTransp'));
           CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].idUnidTransp := Leitor.rCampo(tcStr, 'idUnidTransp');
 
@@ -958,7 +958,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'lacUnidTransp', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].lacUnidTransp.Add;
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].lacUnidTransp.New;
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].lacUnidTransp[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
             inc(i03);
           end;
@@ -966,7 +966,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'infUnidCarga', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -974,7 +974,7 @@ begin
             i04 := 0;
             while Leitor.rExtrai(6, 'lacUnidCarga', '', i04 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidTransp[i02].infUnidCarga[i03].lacUnidCarga[i04].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i04);
             end;
@@ -989,7 +989,7 @@ begin
         begin
           while Leitor.rExtrai(4, 'infUnidCarga', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga.Add;
+            CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga.New;
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].tpUnidCarga := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCarga'));
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].idUnidCarga := Leitor.rCampo(tcStr, 'idUnidCarga');
             CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].qtdRat      := Leitor.rCampo(tcDe2, 'qtdRat');
@@ -997,7 +997,7 @@ begin
             i03 := 0;
             while Leitor.rExtrai(5, 'lacUnidCarga', '', i03 + 1) <> '' do
             begin
-              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga.Add;
+              CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga.New;
               CTe.infCTeNorm.infDoc.InfOutros[i01].infUnidCarga[i02].lacUnidCarga[i03].nLacre := Leitor.rCampo(tcStr, 'nLacre');
               inc(i03);
             end;
@@ -1015,7 +1015,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'emiDocAnt', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.docAnt.emiDocAnt.Add;
+        CTe.infCTeNorm.docAnt.emiDocAnt.New;
         CTe.infCTeNorm.docAnt.emiDocAnt[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
         CTe.infCTeNorm.docAnt.emiDocAnt[i01].IE      := Leitor.rCampo(tcStr, 'IE');
         CTe.infCTeNorm.docAnt.emiDocAnt[i01].UF      := Leitor.rCampo(tcStr, 'UF');
@@ -1024,12 +1024,12 @@ begin
         i02 := 0;
         while Leitor.rExtrai(4, 'idDocAnt', '', i02 + 1) <> '' do
         begin
-          CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt.Add;
+          CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt.New;
 
           i03 := 0;
           while Leitor.rExtrai(5, 'idDocAntPap', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap.Add;
+            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap.New;
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].tpDoc  := StrToTpDocumentoAnterior(ok, Leitor.rCampo(tcStr, 'tpDoc'));
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].serie  := Leitor.rCampo(tcStr, 'serie');
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntPap[i03].subser := Leitor.rCampo(tcStr, 'subser');
@@ -1041,7 +1041,7 @@ begin
           i03 := 0;
           while Leitor.rExtrai(5, 'idDocAntEle', '', i03 + 1) <> '' do
           begin
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle.Add;
+            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle.New;
             if (CTe.infCTe.versao >= 3) then
               CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chCTe := Leitor.rCampo(tcStr, 'chCTe')
             else
@@ -1057,7 +1057,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'seg', '', i01 + 1) <> '' do
     begin
-      CTe.infCTeNorm.seg.Add;
+      CTe.infCTeNorm.seg.New;
       CTe.infCTeNorm.seg[i01].respSeg := StrToTpRspSeguro(ok, Leitor.rCampo(tcStr, 'respSeg'));
       CTe.infCTeNorm.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
       CTe.infCTeNorm.seg[i01].nApol   := Leitor.rCampo(tcStr, 'nApol');
@@ -1092,7 +1092,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'occ', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.rodo.occ.Add;
+        CTe.infCTeNorm.rodo.occ.New;
         CTe.infCTeNorm.rodo.occ[i01].serie := Leitor.rCampo(tcStr, 'serie');
         CTe.infCTeNorm.rodo.occ[i01].nOcc  := Leitor.rCampo(tcInt, 'nOcc');
         CTe.infCTeNorm.rodo.occ[i01].dEmi  := Leitor.rCampo(tcDat, 'dEmi');
@@ -1111,7 +1111,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'valePed', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.rodo.valePed.Add;
+        CTe.infCTeNorm.rodo.valePed.New;
         CTe.infCTeNorm.rodo.valePed[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
         CTe.infCTeNorm.rodo.valePed[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
         CTe.infCTeNorm.rodo.valePed[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
@@ -1122,7 +1122,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'veic', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.rodo.veic.Add;
+        CTe.infCTeNorm.rodo.veic.New;
         CTe.infCTeNorm.rodo.veic[i01].cInt    := Leitor.rCampo(tcStr, 'cInt');
         CTe.infCTeNorm.rodo.veic[i01].RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
         CTe.infCTeNorm.rodo.veic[i01].placa   := Leitor.rCampo(tcStr, 'placa');
@@ -1150,7 +1150,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'lacRodo', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.rodo.lacRodo.Add;
+        CTe.infCTeNorm.rodo.lacRodo.New;
         CTe.infCTeNorm.rodo.lacRodo[i01].nLacre := Leitor.rCampo(tcStr, 'nLacre');
         inc(i01);
       end;
@@ -1158,7 +1158,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'moto', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.Rodo.moto.Add;
+        CTe.infCTeNorm.Rodo.moto.New;
         CTe.infCTeNorm.Rodo.moto[i01].xNome := Leitor.rCampo(tcStr, 'xNome');
         CTe.infCTeNorm.Rodo.moto[i01].CPF   := Leitor.rCampo(tcStr, 'CPF');
         inc(i01);
@@ -1220,7 +1220,7 @@ begin
          CTe.infCTeNorm.aereo.natCarga.cinfManu.Clear;
          while Leitor.rExtrai(4, 'cInfManu', '', i01 + 1) <> '' do
          begin
-           CTe.infCTeNorm.aereo.natCarga.cinfManu.Add;
+           CTe.infCTeNorm.aereo.natCarga.cinfManu.New;
            if CTe.infCTe.versao >= 3 then
              CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'))
            else
@@ -1249,7 +1249,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'balsa', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.aquav.balsa.Add;
+        CTe.infCTeNorm.aquav.balsa.New;
         CTe.infCTeNorm.aquav.balsa[i01].xBalsa := Leitor.rCampo(tcStr, 'xBalsa');
         inc(i01);
       end;
@@ -1257,13 +1257,13 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'detCont', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.aquav.detCont.Add;
+        CTe.infCTeNorm.aquav.detCont.New;
         CTe.infCTeNorm.aquav.detCont[i01].nCont := Leitor.rCampo(tcStr, 'nCont');
 
         i02 := 0;
         while Leitor.rExtrai(4, 'Lacre', '', i02 + 1) <> '' do
         begin
-          CTe.infCTeNorm.aquav.detCont[i01].Lacre.Add;
+          CTe.infCTeNorm.aquav.detCont[i01].Lacre.New;
           CTe.infCTeNorm.aquav.detCont[i01].Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');
           inc(i02);
         end;
@@ -1273,7 +1273,7 @@ begin
           i02 := 0;
           while Leitor.rExtrai(5, 'infNF', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF.Add;
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF.New;
             CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].serie   := Leitor.rCampo(tcStr, 'Serie');
             CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].nDoc    := Leitor.rCampo(tcStr, 'nDoc');
             CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNF[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
@@ -1282,7 +1282,7 @@ begin
           i02 := 0;
           while Leitor.rExtrai(5, 'infNFe', '', i02 + 1) <> '' do
           begin
-            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe.Add;
+            CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe.New;
             CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].chave   := Leitor.rCampo(tcStr, 'chave');
             CTe.infCTeNorm.aquav.detCont[i01].infDoc.infNFe[i02].unidRat := Leitor.rCampo(tcDe2, 'unidRat');
             inc(i02);
@@ -1308,7 +1308,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'ferroEnv', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.ferrov.ferroEnv.Add;
+        CTe.infCTeNorm.ferrov.ferroEnv.New;
         CTe.infCTeNorm.ferrov.ferroEnv[i01].CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
         CTe.infCTeNorm.ferrov.ferroEnv[i01].cInt  := Leitor.rCampo(tcStr,'cInt');
         CTe.infCTeNorm.ferrov.ferroEnv[i01].IE    := Leitor.rCampo(tcStr,'IE');
@@ -1331,7 +1331,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'detVag', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.ferrov.detVag.Add;
+        CTe.infCTeNorm.ferrov.detVag.New;
         CTe.infCTeNorm.ferrov.detVag[i01].nVag   := Leitor.rCampo(tcInt, 'nVag');
         CTe.infCTeNorm.ferrov.detVag[i01].cap    := Leitor.rCampo(tcDe2, 'cap');
         CTe.infCTeNorm.ferrov.detVag[i01].tpVag  := Leitor.rCampo(tcStr, 'tpVag');
@@ -1362,7 +1362,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'peri', '', i01 + 1) <> '' do
     begin
-      CTe.infCTeNorm.peri.Add;
+      CTe.infCTeNorm.peri.New;
       CTe.infCTeNorm.peri[i01].nONU        := Leitor.rCampo(tcStr, 'nONU');
       CTe.infCTeNorm.peri[i01].xNomeAE     := Leitor.rCampo(tcStr, 'xNomeAE');
       CTe.infCTeNorm.peri[i01].xClaRisco   := Leitor.rCampo(tcStr, 'xClaRisco');
@@ -1378,7 +1378,7 @@ begin
     i01 := 0;
     while Leitor.rExtrai(2, 'veicNovos', '', i01 + 1) <> '' do
     begin
-      CTe.infCTeNorm.veicNovos.Add;
+      CTe.infCTeNorm.veicNovos.New;
       CTe.infCTeNorm.veicNovos[i01].chassi := Leitor.rCampo(tcStr, 'chassi');
       CTe.infCTeNorm.veicNovos[i01].cCor   := Leitor.rCampo(tcStr, 'cCor');
       CTe.infCTeNorm.veicNovos[i01].xCor   := Leitor.rCampo(tcStr, 'xCor');
@@ -1398,7 +1398,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'dup', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.cobr.dup.Add;
+        CTe.infCTeNorm.cobr.dup.New;
         CTe.infCTeNorm.cobr.dup[i01].nDup  := Leitor.rCampo(tcStr, 'nDup');
         CTe.infCTeNorm.cobr.dup[i01].dVenc := Leitor.rCampo(tcDat, 'dVenc');
         CTe.infCTeNorm.cobr.dup[i01].vDup  := Leitor.rCampo(tcDe2, 'vDup');
@@ -1444,7 +1444,7 @@ begin
       i01 := 0;
       while Leitor.rExtrai(3, 'infCTeMultimodal', '', i01 + 1) <> '' do
       begin
-        CTe.infCTeNorm.infServVinc.infCTeMultimodal.Add;
+        CTe.infCTeNorm.infServVinc.infCTeMultimodal.New;
         CTe.infCTeNorm.infServVinc.infCTeMultimodal[i01].chCTeMultimodal := Leitor.rCampo(tcStr, 'chCTeMultimodal');
         inc(i01);
       end;
@@ -1471,7 +1471,7 @@ begin
   i01 := 0;
   while Leitor.rExtrai(1, 'autXML', '', i01 + 1) <> '' do
   begin
-    CTe.autXML.Add;
+    CTe.autXML.New;
     CTe.autXML[i01].CNPJCPF := Leitor.rCampoCNPJCPF;;
     inc(i01);
   end;

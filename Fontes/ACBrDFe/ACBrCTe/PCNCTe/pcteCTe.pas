@@ -3443,7 +3443,7 @@ end;
 
 function TInfOutrosCollection.Add: TInfOutrosCollectionItem;
 begin
-  Result := Self.Add;
+  Result := Self.New;
 end;
 
 function TInfOutrosCollection.GetItem(

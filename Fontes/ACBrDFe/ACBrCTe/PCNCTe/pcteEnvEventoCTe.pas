@@ -423,7 +423,7 @@ begin
   try
      RetEventoCTe.Leitor.Arquivo := AXML;
      Result := RetEventoCTe.LerXml;
-     with FEvento.Add do
+     with FEvento.New do
       begin
         infEvento.Id         := RetEventoCTe.InfEvento.Id;
         InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
@@ -458,7 +458,7 @@ begin
 
         for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
         begin
-          infEvento.detEvento.infCorrecao.Add;
+          infEvento.detEvento.infCorrecao.New;
           infEvento.detEvento.infCorrecao[i].grupoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
           infEvento.detEvento.infCorrecao[i].campoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
           infEvento.detEvento.infCorrecao[i].valorAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
@@ -467,7 +467,7 @@ begin
 
         for i := 0 to RetEventoCTe.InfEvento.detEvento.infGTV.Count -1 do
         begin
-          infEvento.detEvento.infGTV.Add;
+          infEvento.detEvento.infGTV.New;
           infEvento.detEvento.infGTV[i].nDoc     := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDoc;
           infEvento.detEvento.infGTV[i].id       := RetEventoCTe.InfEvento.detEvento.infGTV[i].id;
           infEvento.detEvento.infGTV[i].serie    := RetEventoCTe.InfEvento.detEvento.infGTV[i].serie;
@@ -478,7 +478,7 @@ begin
 
           for j := 0 to RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie.Count -1 do
           begin
-            infEvento.detEvento.infGTV[i].infEspecie.Add;
+            infEvento.detEvento.infGTV[i].infEspecie.New;
             infEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie;
             infEvento.detEvento.infGTV[i].infEspecie[j].vEspecie  := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].vEspecie;
           end;
@@ -557,7 +557,7 @@ begin
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break;
 
-      with Self.Evento.Add do
+      with Self.Evento.New do
       begin
         infEvento.chCTe              := INIRec.ReadString(sSecao, 'chCTe', '');
         infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
@@ -598,7 +598,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.Add do
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infCorrecao.New do
                 begin
                   grupoAlterado   := INIRec.ReadString(sSecao, 'grupoAlterado', '');
                   campoAlterado   := INIRec.ReadString(sSecao, 'campoAlterado', '');
@@ -632,7 +632,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Add do
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.New do
                 begin
                   nDoc     := sFim;
                   id       := INIRec.ReadString(sSecao, 'id', '');
@@ -656,7 +656,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].infEspecie.Add do
+                  with Self.Evento.Items[I-1].InfEvento.detEvento.infGTV.Items[J].infEspecie.New do
                   begin
                     tpEspecie := StrToTEspecie(Ok, sFim);
                     vEspecie  := StringToFloatDef(INIRec.ReadString(sSecao, 'vEspecie', ''), 0);

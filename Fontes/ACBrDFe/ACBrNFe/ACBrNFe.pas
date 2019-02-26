@@ -628,7 +628,7 @@ begin
       GerarException(WebServices.Consulta.Msg);
 
     EventoNFe.Evento.Clear;
-    with EventoNFe.Evento.Add do
+    with EventoNFe.Evento.New do
     begin
       infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.NFeChave), 7, 14);
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.NFeChave), 1, 2), 0);
@@ -721,7 +721,7 @@ begin
 
   for i := 0 to CartaCorrecao.CCe.Evento.Count - 1 do
   begin
-    with EventoNFe.Evento.Add do
+    with EventoNFe.Evento.New do
     begin
       infEvento.id := CartaCorrecao.CCe.Evento[i].InfEvento.id;
       infEvento.cOrgao := CartaCorrecao.CCe.Evento[i].InfEvento.cOrgao;

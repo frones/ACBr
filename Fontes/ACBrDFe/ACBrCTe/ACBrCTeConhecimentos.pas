@@ -1184,7 +1184,7 @@ begin
         sFim   := INIRec.ReadString(sSecao,'UFPer','FIM');
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
-        with Ide.infPercurso.Add do
+        with Ide.infPercurso.New do
         begin
           UFPer := sFim;
         end;
@@ -1232,7 +1232,7 @@ begin
         sFim   := INIRec.ReadString(sSecao,'xPass','FIM');
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
-        with compl.fluxo.pass.Add do
+        with compl.fluxo.pass.New do
         begin
           xPass := INIRec.ReadString(sSecao,'xPass','');
         end;
@@ -1289,7 +1289,7 @@ begin
         if (sCampoAdic = 'FIM') or (Length(sCampoAdic) <= 0) then
           break;
 
-        with Compl.ObsCont.Add do
+        with Compl.ObsCont.New do
         begin
           xCampo := sCampoAdic;
           xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
@@ -1305,7 +1305,7 @@ begin
         if (sCampoAdic = 'FIM') or (Length(sCampoAdic) <= 0) then
           break;
 
-        with Compl.ObsFisco.Add do
+        with Compl.ObsFisco.New do
         begin
           xCampo := sCampoAdic;
           xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
@@ -1391,7 +1391,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.infDoc.infNF.Add do
+        with infCTeNorm.infDoc.infNF.New do
         {$ELSE}
         with Rem.InfNF.Add do
         {$ENDIF}
@@ -1435,7 +1435,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with infUnidTransp.Add do
+            with infUnidTransp.New do
             begin
               tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
               idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
@@ -1450,7 +1450,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with lacUnidTransp.Add do
+                with lacUnidTransp.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1467,7 +1467,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with infUnidCarga.Add do
+                with infUnidCarga.New do
                 begin
                   tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                   idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1482,7 +1482,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with lacUnidCarga.Add do
+                    with lacUnidCarga.New do
                     begin
                       nLacre := INIRec.ReadString(sSecao,'nLacre','');
                     end;
@@ -1505,7 +1505,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with infUnidCarga.Add do
+            with infUnidCarga.New do
             begin
               tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
               idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1520,7 +1520,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with lacUnidCarga.Add do
+                with lacUnidCarga.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1545,7 +1545,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.infDoc.infNFe.Add do
+        with infCTeNorm.infDoc.infNFe.New do
         {$ELSE}
         with Rem.InfNFe.Add do
         {$ENDIF}
@@ -1562,7 +1562,7 @@ begin
             sFim   := INIRec.ReadString(sSecao,'idUnidTransp','FIM');
             if sFim = 'FIM' then
               break;
-            with infUnidTransp.Add do
+            with infUnidTransp.New do
             begin
               tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
               idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
@@ -1575,7 +1575,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                 if sFim = 'FIM' then
                   break;
-                with lacUnidTransp.Add do
+                with lacUnidTransp.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1589,7 +1589,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
                 if sFim = 'FIM' then
                   break;
-                with infUnidCarga.Add do
+                with infUnidCarga.New do
                 begin
                   tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                   idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1602,7 +1602,7 @@ begin
                     sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                     if sFim = 'FIM' then
                       break;
-                    with lacUnidCarga.Add do
+                    with lacUnidCarga.New do
                     begin
                       nLacre := INIRec.ReadString(sSecao,'nLacre','');
                     end;
@@ -1622,7 +1622,7 @@ begin
             sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
             if sFim = 'FIM' then
               break;
-            with infUnidCarga.Add do
+            with infUnidCarga.New do
             begin
               tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
               idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1635,7 +1635,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                 if sFim = 'FIM' then
                   break;
-                with lacUnidCarga.Add do
+                with lacUnidCarga.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1659,7 +1659,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.infDoc.infOutros.Add do
+        with infCTeNorm.infDoc.infOutros.New do
         {$ELSE}
         with Rem.InfOutros.Add do
         {$ENDIF}
@@ -1679,7 +1679,7 @@ begin
             sFim   := INIRec.ReadString(sSecao,'idUnidTransp','FIM');
             if sFim = 'FIM' then
               break;
-            with infUnidTransp.Add do
+            with infUnidTransp.New do
             begin
               tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
               idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
@@ -1692,7 +1692,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                 if sFim = 'FIM' then
                   break;
-                with lacUnidTransp.Add do
+                with lacUnidTransp.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1706,7 +1706,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
                 if sFim = 'FIM' then
                   break;
-                with infUnidCarga.Add do
+                with infUnidCarga.New do
                 begin
                   tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                   idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1719,7 +1719,7 @@ begin
                     sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                     if sFim = 'FIM' then
                       break;
-                    with lacUnidCarga.Add do
+                    with lacUnidCarga.New do
                     begin
                       nLacre := INIRec.ReadString(sSecao,'nLacre','');
                     end;
@@ -1739,7 +1739,7 @@ begin
             sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
             if sFim = 'FIM' then
               break;
-            with infUnidCarga.Add do
+            with infUnidCarga.New do
             begin
               tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
               idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
@@ -1752,7 +1752,7 @@ begin
                 sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
                 if sFim = 'FIM' then
                   break;
-                with lacUnidCarga.Add do
+                with lacUnidCarga.New do
                 begin
                   nLacre := INIRec.ReadString(sSecao,'nLacre','');
                 end;
@@ -1838,7 +1838,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with vPrest.comp.Add do
+        with vPrest.comp.New do
         begin
           xNome := INIRec.ReadString(sSecao,'xNome','');
           vComp := StringToFloatDef( INIRec.ReadString(sSecao,'vComp','') ,0);
@@ -1943,7 +1943,7 @@ begin
         sFim   := INIRec.ReadString(sSecao,'nDoc','FIM');
         if sFim = 'FIM' then
           break;
-        with infCTeNorm.infDocRef.Add do
+        with infCTeNorm.infDocRef.New do
         begin
           nDoc     := sFim;
           serie    := INIRec.ReadString(sSecao,'serie','');
@@ -1962,7 +1962,7 @@ begin
         sFim   := INIRec.ReadString(sSecao,'respSeg','FIM');
         if sFim = 'FIM' then
           break;
-        with infCTeNorm.seg.Add do
+        with infCTeNorm.seg.New do
         begin
           respSeg := StrToTpRspSeguro(OK, sFim);
           xSeg    := INIRec.ReadString(sSecao,'xSeg','');
@@ -1984,7 +1984,7 @@ begin
         sFim   := INIRec.ReadString(sSecao,'cUnid','FIM');
         if sFim = 'FIM' then
           break;
-        with infCTeNorm.infCarga.infQ.Add do
+        with infCTeNorm.infCarga.infQ.New do
         begin
           cUnid  := StrToUnidMed(OK, sFim);
           tpMed  := INIRec.ReadString(sSecao,'tpMed','');
@@ -2056,7 +2056,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.docAnt.emiDocAnt.Add do
+        with infCTeNorm.docAnt.emiDocAnt.New do
         {$ELSE}
         with infCTeNorm.emiDocAnt.Add do
         {$ENDIF}
@@ -2073,7 +2073,7 @@ begin
 
           if sFim <> 'FIM' then
           begin
-            with idDocAnt.Add do
+            with idDocAnt.New do
             begin
               J := 1;
               while true do
@@ -2085,7 +2085,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with idDocAntPap.Add do
+                with idDocAntPap.New do
                 begin
                   tpDoc  := StrToTpDocumentoAnterior(OK, INIRec.ReadString(sSecao,'tpDoc',''));
                   serie  := INIRec.ReadString(sSecao,'serie','');
@@ -2103,7 +2103,7 @@ begin
 
           if sFim <> 'FIM' then
           begin
-            with idDocAnt.Add do
+            with idDocAnt.New do
             begin
               J := 1;
               while true do
@@ -2113,7 +2113,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                idDocAntEle.Add.chCTe := sFim;
+                idDocAntEle.New.chCTe := sFim;
 
                 Inc(J);
               end;
@@ -2133,7 +2133,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.seg.Add do
+        with infCTeNorm.seg.New do
         {$ELSE}
         with infseg.Add do
         {$ENDIF}
@@ -2170,7 +2170,7 @@ begin
             break;
 
           {$IFDEF PL_200}
-          with infCTeNorm.Rodo.Occ.Add do
+          with infCTeNorm.Rodo.Occ.New do
           {$ELSE}
           with Rodo.Occ.Add do
           {$ENDIF}
@@ -2197,7 +2197,7 @@ begin
             break;
 
           {$IFDEF PL_200}
-          with infCTeNorm.Rodo.valePed.Add do
+          with infCTeNorm.Rodo.valePed.New do
           {$ELSE}
           with Rodo.valePed.Add do
           {$ENDIF}
@@ -2218,7 +2218,7 @@ begin
             break;
 
           {$IFDEF PL_200}
-          with infCTeNorm.Rodo.veic.Add do
+          with infCTeNorm.Rodo.veic.New do
           {$ELSE}
           with Rodo.veic.Add do
           {$ENDIF}
@@ -2254,7 +2254,7 @@ begin
             break;
 
           {$IFDEF PL_200}
-          with infCTeNorm.Rodo.lacRodo.Add do
+          with infCTeNorm.Rodo.lacRodo.New do
           {$ELSE}
           with Rodo.Lacres.Add do
           {$ENDIF}
@@ -2273,7 +2273,7 @@ begin
             break;
 
           {$IFDEF PL_200}
-          with infCTeNorm.Rodo.moto.Add do
+          with infCTeNorm.Rodo.moto.New do
           {$ELSE}
           with Rodo.moto.Add do
           {$ENDIF}
@@ -2362,7 +2362,7 @@ begin
              if sFim = 'FIM' then
                break;
 
-             with Aereo.natCarga.cinfManu.Add do
+             with Aereo.natCarga.cinfManu.New do
                nInfManu := StrToTpInfManu(Ok, sFim);
 
              Inc(I);
@@ -2401,7 +2401,7 @@ begin
             sFim   := INIRec.ReadString(sSecao,'xBalsa','FIM');
             if sFim = 'FIM' then
               break;
-            with Aquav.balsa.Add do
+            with Aquav.balsa.New do
             begin
               xBalsa := sFim;
             end;
@@ -2497,7 +2497,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with Ferrov.ferroEnv.Add do
+            with Ferrov.ferroEnv.New do
             begin
               CNPJ  := sFim;
               IE    := INIRec.ReadString(sSecao,'IE','');
@@ -2539,7 +2539,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with Ferrov.detVag.Add do
+            with Ferrov.detVag.New do
             begin
               nVag   := StrToInt(sFim);
               cap    := StringToFloatDef( INIRec.ReadString(sSecao,'cap','') ,0);
@@ -2641,7 +2641,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.peri.Add do
+        with infCTeNorm.peri.New do
         {$ELSE}
         with peri.Add do
         {$ENDIF}
@@ -2666,7 +2666,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.veicNovos.Add do
+        with infCTeNorm.veicNovos.New do
         {$ELSE}
         with veicNovos.Add do
         {$ENDIF}
@@ -2702,7 +2702,7 @@ begin
           break;
 
         {$IFDEF PL_200}
-        with infCTeNorm.Cobr.Dup.Add do
+        with infCTeNorm.Cobr.Dup.New do
         {$ELSE}
         with Cobr.Dup.Add do
         {$ENDIF}
@@ -2769,7 +2769,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with autXML.Add do
+        with autXML.New do
         begin
           CNPJCPF := sFim;
         end;

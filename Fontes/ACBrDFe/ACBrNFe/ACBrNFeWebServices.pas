@@ -2183,7 +2183,7 @@ begin
       FprocEventoNFe.Clear;
       for I := 0 to NFeRetorno.procEventoNFe.Count - 1 do
       begin
-        with FprocEventoNFe.Add.RetEventoNFe do
+        with FprocEventoNFe.New.RetEventoNFe do
         begin
           idLote := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.idLote;
           tpAmb := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.tpAmb;
@@ -2209,7 +2209,7 @@ begin
           retEvento.Clear;
           for J := 0 to NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Count-1 do
           begin
-            with retEvento.Add.RetInfEvento do
+            with retEvento.New.RetInfEvento do
             begin
               Id := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[J].RetInfEvento.Id;
               tpAmb := NFeRetorno.procEventoNFe.Items[I].RetEventoNFe.retEvento.Items[J].RetInfEvento.tpAmb;
@@ -3043,7 +3043,7 @@ begin
     {(*}
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
-      with EventoNFe.Evento.Add do
+      with EventoNFe.Evento.New do
       begin
         infEvento.tpAmb := FTpAmb;
         infEvento.CNPJ := FEvento.Evento[I].InfEvento.CNPJ;
@@ -3106,7 +3106,7 @@ begin
 
             for j := 0 to FEvento.Evento.Items[I].InfEvento.detEvento.itemPedido.count - 1 do
             begin
-              with infEvento.detEvento.itemPedido.Add do
+              with infEvento.detEvento.itemPedido.New do
               begin
                 numItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].numItem;
                 qtdeItem := FEvento.Evento[I].InfEvento.detEvento.itemPedido.Items[J].qtdeItem;

@@ -1580,7 +1580,7 @@ begin
             break ;
         end;
 
-        with Ide.NFref.Add do
+        with Ide.NFref.New do
         begin
           if sType = 'NFE' then
             refNFe :=  INIRec.ReadString(sSecao,'refNFe','')
@@ -1737,7 +1737,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;
 
-        with autXML.Add do
+        with autXML.New do
           CNPJCPF := sFim;
 
         Inc(I);
@@ -1752,7 +1752,7 @@ begin
         if sProdID = 'FIM' then
           break ;
 
-        with Det.Add do
+        with Det.New do
         begin
           Prod.nItem := I;
           infAdProd  := INIRec.ReadString(sSecao,'infAdProd','');
@@ -1801,7 +1801,7 @@ begin
             sSecao := 'NVE'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
             sNVE     := INIRec.ReadString(sSecao,'NVE','') ;
             if (sNVE <> '') then
-              Prod.NVE.Add.NVE := sNVE
+              Prod.NVE.New.NVE := sNVE
             else
               Break;
 
@@ -1814,7 +1814,7 @@ begin
             sSecao  := 'rastro'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
             sFim    := INIRec.ReadString(sSecao,'nLote','') ;
             if (sFim <> '') then
-               with Prod.rastro.Add do
+               with Prod.rastro.New do
                begin
                  nLote    := sFim;
                  qLote    := StringToFloatDef( INIRec.ReadString( sSecao,'qLote',''), 0 );
@@ -1835,7 +1835,7 @@ begin
 
             if sDINumber <> '' then
             begin
-              with Prod.DI.Add do
+              with Prod.DI.New do
               begin
                 nDi         := sDINumber;
                 dDi         := StringToDateTime(INIRec.ReadString(sSecao,'DataRegistroDI'  ,INIRec.ReadString(sSecao,'dDi'  ,'0')));
@@ -1860,7 +1860,7 @@ begin
                   if (sADINumber = 'FIM') or (Length(sADINumber) <= 0) then
                     break;
 
-                  with adi.Add do
+                  with adi.New do
                   begin
                     nAdicao     := StrToInt(sADINumber);
                     nSeqAdi     := INIRec.ReadInteger( sSecao,'nSeqAdi',K);
@@ -1891,7 +1891,7 @@ begin
                 break ;
             end;
 
-            with Prod.detExport.Add do
+            with Prod.detExport.New do
             begin
               nDraw   := INIRec.ReadString( sSecao,'nDraw','');
               nRE     := INIRec.ReadString( sSecao,'nRE','');
@@ -1954,7 +1954,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with Prod.med.Add do
+            with Prod.med.New do
             begin
               nLote := INIRec.ReadString(sSecao,'nLote','') ;
               cProdANVISA:=  sFim;
@@ -1976,7 +1976,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with Prod.arma.Add do
+            with Prod.arma.New do
             begin
               tpArma := StrTotpArma(OK,INIRec.ReadString( sSecao,'tpArma','0')) ;
               nSerie := sFim;
@@ -2337,7 +2337,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with Transp.Reboque.Add do
+        with Transp.Reboque.New do
         begin
           placa := sFim;
           UF    := INIRec.ReadString( sSecao,'UF'  ,'') ;
@@ -2356,7 +2356,7 @@ begin
         if (sQtdVol = 'FIM') or (Length(sQtdVol) <= 0)  then
           break ;
 
-        with Transp.Vol.Add do
+        with Transp.Vol.New do
         begin
           qVol  := StrToInt(sQtdVol);
           esp   := INIRec.ReadString( sSecao,'Especie'  ,INIRec.ReadString( sSecao,'esp'  ,''));
@@ -2374,7 +2374,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0)  then
               break ;
 
-            Lacres.Add.nLacre := sFim;
+            Lacres.New.nLacre := sFim;
 
             Inc(J);
           end;
@@ -2398,7 +2398,7 @@ begin
         if (sDupNumber = 'FIM') or (Length(sDupNumber) <= 0) then
           break ;
 
-        with Cobr.Dup.Add do
+        with Cobr.Dup.New do
         begin
           nDup  := sDupNumber;
           dVenc := StringToDateTime(INIRec.ReadString( sSecao,'DataVencimento',INIRec.ReadString( sSecao,'dVenc','0')));
@@ -2416,7 +2416,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;
 
-        with pag.Add do
+        with pag.New do
         begin
           tPag  := StrToFormaPagamento(OK,sFim);
           vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0) ;
@@ -2445,7 +2445,7 @@ begin
         if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
           break ;
 
-        with InfAdic.obsCont.Add do
+        with InfAdic.obsCont.New do
         begin
           xCampo := sAdittionalField;
           xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
@@ -2462,7 +2462,7 @@ begin
         if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
           break ;
 
-        with InfAdic.obsFisco.Add do
+        with InfAdic.obsFisco.New do
         begin
           xCampo := sAdittionalField;
           xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
@@ -2479,7 +2479,7 @@ begin
         if (sAdittionalField = 'FIM') or (Length(sAdittionalField) <= 0) then
           break ;
 
-        with InfAdic.procRef.Add do
+        with InfAdic.procRef.New do
         begin
           nProc := sAdittionalField;
           indProc := StrToindProc(OK,INIRec.ReadString( sSecao,'indProc','0'));
@@ -2524,7 +2524,7 @@ begin
         if (sDay = 'FIM') or (Length(sDay) <= 0) then
           break ;
 
-        with cana.fordia.Add do
+        with cana.fordia.New do
         begin
           dia  := StrToInt(sDay);
           qtde := StringToFloatDef( INIRec.ReadString(sSecao,'qtde'   ,'') ,0) ;
@@ -2541,7 +2541,7 @@ begin
         if (sDeduc = 'FIM') or (Length(sDeduc) <= 0) then
           break ;
 
-        with cana.deduc.Add do
+        with cana.deduc.New do
         begin
           xDed := sDeduc;
           vDed := StringToFloatDef( INIRec.ReadString(sSecao,'vDed'   ,'') ,0) ;

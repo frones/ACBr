@@ -231,7 +231,7 @@ begin
       i := 0;
       while Leitor.rExtrai(1, 'procEventoCTe', '', i + 1) <> '' do
       begin
-        procEventoCTe.Add;
+        procEventoCTe.New;
         procEventoCTe.Items[i].RetEventoCTe.Leitor.Arquivo := Leitor.Grupo;
         procEventoCTe.Items[i].RetEventoCTe.XML := Leitor.Grupo;
         procEventoCTe.Items[i].RetEventoCTe.LerXml;

@@ -252,7 +252,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
-         FretEvento.Add;
+         FretEvento.New;
 
          // Incluido por Italo em 07/05/2014
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
@@ -280,7 +280,7 @@ begin
          j := 0;
          while  Leitor.rExtrai(3, 'chNFePend', '', j + 1) <> '' do
           begin
-            FretEvento.Items[i].FRetInfEvento.chNFePend.Add;
+            FretEvento.Items[i].FRetInfEvento.chNFePend.New;
 
             FretEvento.Items[i].FRetInfEvento.chNFePend[j].ChavePend := Leitor.rCampo(tcStr, 'chNFePend');
 

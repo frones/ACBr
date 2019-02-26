@@ -287,14 +287,14 @@ begin
   (* Grupo da TAG <ide><NFref><refNFe> ****************************************)
   if (ID = 'B13') {or (ID = 'BA')} or (ID = 'BA02') then
   begin
-    NFe.Ide.NFref.Add;
+    NFe.Ide.NFref.New;
     i := NFe.ide.NFref.Count - 1;
     (*B13*)NFe.ide.NFref[i].refNFe := LerCampo(tcEsp, 'refNFe');
   end;
 
   if (ID = 'B14') or (ID = 'BA03') then (* Grupo da TAG <ide><NFref><RefNF> **********************)
   begin
-    NFe.Ide.NFref.Add;
+    NFe.Ide.NFref.New;
     i := NFe.ide.NFref.Count - 1;
     (*B15*)NFe.Ide.NFref[i].RefNF.cUF := LerCampo(tcInt, 'cUF');
     (*B16*)NFe.Ide.NFref[i].RefNF.AAMM := LerCampo(tcEsp, 'AAMM');
@@ -306,7 +306,7 @@ begin
 
   if (ID = 'B20A') or (ID = 'BA10') then (* Grupo da TAG <ide><NFref><refNFP> **********************)
   begin
-    NFe.Ide.NFref.Add;
+    NFe.Ide.NFref.New;
     i := NFe.ide.NFref.Count - 1;
     (*B20b*)NFe.Ide.NFref[i].refNFP.cUF := LerCampo(tcInt, 'cUF');
     (*B20c*)NFe.Ide.NFref[i].refNFP.AAMM := LerCampo(tcEsp, 'AAMM');
@@ -333,14 +333,14 @@ begin
   (* Grupo da TAG <ide><NFref><refCTe> ****************************************)
   if ID = 'B20I' then
   begin
-    NFe.Ide.NFref.Add;
+    NFe.Ide.NFref.New;
     i := NFe.ide.NFref.Count - 1;
     (*B13*)NFe.ide.NFref[i].refCTe := LerCampo(tcEsp, 'refCTe');
   end;
 
   if (ID = 'B20J') or (ID = 'BA20') then (* Grupo da TAG <ide><NFref><refECF> **********************)
   begin
-    NFe.Ide.NFref.Add;
+    NFe.Ide.NFref.New;
     i := NFe.ide.NFref.Count - 1;
     (*B20k*)NFe.Ide.NFref[i].RefECF.modelo := StrToECFModRef(ok, LerCampo(tcStr, 'mod'));
     (*B20i*)NFe.Ide.NFref[i].RefECF.nECF := LerCampo(tcStr, 'nECF');
@@ -470,13 +470,13 @@ begin
     (*G02a*)NFe.Entrega.CNPJCPF := LerCampo(tcStr, 'CPF');
 
   if ID = 'GA02' then
-     NFe.autXML.Add.CNPJCPF := LerCampo(tcStr, 'CNPJ');
+     NFe.autXML.New.CNPJCPF := LerCampo(tcStr, 'CNPJ');
   if ID = 'GA03' then
-     NFe.autXML.Add.CNPJCPF := LerCampo(tcStr, 'CPF');
+     NFe.autXML.New.CNPJCPF := LerCampo(tcStr, 'CPF');
 
   if ID = 'H' then (* Grupo da TAG <det> **************************************)
   begin
-    NFe.Det.Add;
+    NFe.Det.New;
     i := NFe.Det.Count - 1;
     (*   *)NFe.Det[i].prod.nItem := i + 1;
     (*V01*)NFe.Det[i].infAdProd := LerCampo(tcStr, 'infAdProd');
@@ -520,7 +520,7 @@ begin
   if ID = 'I05A' then
   begin
     i := NFe.Det.Count - 1;
-    NFe.Det[i].Prod.NVE.Add;
+    NFe.Det[i].Prod.NVE.New;
     j := NFe.Det[i].Prod.NVE.Count - 1;
     (*I05a*)NFe.Det[i].Prod.NVE[j].NVE := LerCampo(tcStr, 'NVE');
   end;
@@ -539,7 +539,7 @@ begin
   if ID = 'I18' then (* Grupo da TAG <det><prod><DI> **************************)
   begin
     i := NFe.Det.Count - 1;
-    NFe.Det[i].Prod.DI.Add;
+    NFe.Det[i].Prod.DI.New;
     j := NFe.Det[i].Prod.DI.Count - 1;
     (*I19*)NFe.Det[i].Prod.DI[j].nDI := LerCampo(tcStr, 'nDI');
     (*I20*)NFe.Det[i].Prod.DI[j].dDI := LerCampo(tcDat, 'dDI');
@@ -561,7 +561,7 @@ begin
   begin
     i := NFe.Det.Count - 1;
     j := NFe.Det[i].Prod.DI.Count - 1;
-    NFe.Det[i].Prod.DI[j].adi.Add;
+    NFe.Det[i].Prod.DI[j].adi.New;
     k := NFe.Det[i].Prod.DI[j].adi.Count - 1;
     (*I26*)NFe.Det[i].Prod.DI[j].adi[k].nAdicao := LerCampo(tcInt, 'nAdicao');
     (*I27*)NFe.Det[i].Prod.DI[j].adi[k].nSeqAdi := LerCampo(tcInt, 'nSeqAdic');
@@ -573,7 +573,7 @@ begin
   if ID = 'I50' then (* Grupo da TAG <det><prod><detExport> **************************)
   begin
     i := NFe.Det.Count - 1;
-    NFe.Det[i].Prod.detExport.Add;
+    NFe.Det[i].Prod.detExport.New;
     j := NFe.Det[i].Prod.detExport.Count - 1;
     (*I50*)NFe.Det[i].Prod.detExport[j].nDraw := LerCampo(tcStr, 'nDraw');
  end;
@@ -632,7 +632,7 @@ begin
   if ID = 'K' then (* Grupo da TAG <det><prod><med> ***************************)
   begin
     i := NFe.Det.Count - 1;
-    NFe.Det[i].Prod.med.Add;
+    NFe.Det[i].Prod.med.New;
     j := NFe.Det[i].Prod.med.Count - 1;
     if (NFe.infNFe.Versao >= 4.00) then
     begin
@@ -652,7 +652,7 @@ begin
   if ID = 'L' then (* Grupo da TAG <det><prod><arma> **************************)
   begin
     i := NFe.Det.Count - 1;
-    NFe.Det[i].Prod.arma.add;
+    NFe.Det[i].Prod.arma.New;
     j := NFe.Det[i].Prod.arma.count - 1;
     (*L02*)NFe.Det[i].Prod.arma[j].tpArma := StrToTpArma(ok, LerCampo(tcStr, 'tpArma'));
     (*L03*)NFe.Det[i].Prod.arma[j].nSerie := LerCampo(tcInt, 'nSerie');
@@ -1138,7 +1138,7 @@ begin
 
   if ID = 'X22' then (* Grupo da TAG <transp><reboque> ************************)
   begin
-    NFe.Transp.Reboque.add;
+    NFe.Transp.Reboque.New;
     i := NFe.Transp.Reboque.Count - 1;
     (*X23*)NFe.Transp.Reboque[i].placa := LerCampo(tcStr, 'placa');
     (*X24*)NFe.Transp.Reboque[i].UF := LerCampo(tcStr, 'UF');
@@ -1149,7 +1149,7 @@ begin
 
   if ID = 'X26' then (* Grupo da TAG <transp><vol> ****************************)
   begin
-    NFe.Transp.Vol.add;
+    NFe.Transp.Vol.New;
     i := NFe.Transp.Vol.Count - 1;
     (*X27*)NFe.Transp.Vol[i].qVol := LerCampo(tcInt, 'qVol');
     (*X28*)NFe.Transp.vol[i].esp := LerCampo(tcStr, 'esp');
@@ -1162,7 +1162,7 @@ begin
   if ID = 'X33' then (* Grupo da TAG <transp><vol><lacres> ********************)
   begin
     i := NFe.Transp.Vol.Count - 1;
-    NFe.transp.Vol[i].lacres.add;
+    NFe.transp.Vol[i].lacres.New;
     j := NFe.transp.Vol[i].lacres.Count - 1;
     (*X34*)NFe.transp.Vol[i].lacres[j].nLacre := LerCampo(tcStr, 'nLacre');
   end;
@@ -1177,7 +1177,7 @@ begin
 
   if ID = 'Y07' then (* Grupo da TAG <cobr><dup> ******************************)
   begin
-    NFe.Cobr.Dup.Add;
+    NFe.Cobr.Dup.New;
     i := NFe.Cobr.Dup.Count - 1;
     (*Y08*)NFe.Cobr.Dup[i].nDup := LerCampo(tcStr, 'nDup');
     (*Y09*)NFe.Cobr.Dup[i].dVenc := LerCampo(tcDat, 'dVenc');
@@ -1186,7 +1186,7 @@ begin
 
   if ID = 'YA' then
   begin
-    NFe.pag.Add;
+    NFe.pag.New;
     i := NFe.pag.Count - 1;
     if (NFe.infNFe.Versao >= 4.00) then
       (*YA01b*)NFe.pag[i].indPag :=  StrToIndpag(ok, LerCampo(tcStr, 'indPag'));
@@ -1209,7 +1209,7 @@ begin
 
   if ID = 'Z04' then (* Grupo da TAG <infAdic><obsCont> ***********************)
   begin
-    NFe.InfAdic.obsCont.Add;
+    NFe.InfAdic.obsCont.New;
     i := NFe.InfAdic.obsCont.Count - 1;
     (*Z05*)NFe.InfAdic.obsCont[i].xCampo := LerCampo(tcStr, 'xCampo');
     (*Z06*)NFe.InfAdic.obsCont[i].xTexto := LerCampo(tcStr, 'xTexto');
@@ -1217,7 +1217,7 @@ begin
 
   if ID = 'Z07' then (* Grupo da TAG <infAdic><obsFisco> **********************)
   begin
-    NFe.InfAdic.obsFisco.Add;
+    NFe.InfAdic.obsFisco.New;
     i := NFe.InfAdic.obsFisco.Count - 1;
     (*Z08*)NFe.InfAdic.obsFisco[i].xCampo := LerCampo(tcStr, 'xCampo');
     (*Z09*)NFe.InfAdic.obsFisco[i].xTexto := LerCampo(tcStr, 'xTexto');
@@ -1225,7 +1225,7 @@ begin
 
   if ID = 'Z10' then (* Grupo da TAG <infAdic><procRef> ***********************)
   begin
-    NFe.InfAdic.procRef.Add;
+    NFe.InfAdic.procRef.New;
     i := NFe.InfAdic.procRef.Count - 1;
     (*Z11*)NFe.InfAdic.procRef[i].nProc := LerCampo(tcStr, 'nProc');
     (*Z12*)NFe.InfAdic.procRef[i].indProc := StrToindProc(ok, LerCampo(tcStr, 'indProc'));
@@ -1261,7 +1261,7 @@ begin
 
   if ID = 'ZC04' then
   begin
-    nfe.cana.fordia.Add;
+    nfe.cana.fordia.New;
     i := nfe.cana.fordia.Count - 1;
     NFe.cana.fordia[i].dia  := LerCampo(tcInt, 'dia');
     NFe.cana.fordia[i].qtde := LerCampo(tcDe10, 'qtde');
@@ -1269,7 +1269,7 @@ begin
 
   if ID = 'ZC10' then
   begin
-    nfe.cana.deduc.Add;
+    nfe.cana.deduc.New;
     i := nfe.cana.deduc.Count - 1;
     NFe.cana.deduc[i].xDed := LerCampo(tcStr, 'xDed');
     NFe.cana.deduc[i].vDed := LerCampo(tcDe2, 'vDed');

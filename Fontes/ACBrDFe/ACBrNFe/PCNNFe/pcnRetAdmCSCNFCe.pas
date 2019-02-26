@@ -163,7 +163,7 @@ begin
 
       while Leitor.rExtrai(2, 'dadosCsc', '', i + 1) <> '' do
        begin
-         FdadosCsc.Add;
+         FdadosCsc.New;
          FdadosCsc.Items[i].FidCsc     := Leitor.rCampo(tcInt, 'idCsc');
          FdadosCsc.Items[i].FcodigoCsc := Leitor.rCampo(tcStr, 'codigoCsc');
          inc(i);
@@ -171,7 +171,7 @@ begin
 
       if i = 0 then
       begin
-        FdadosCsc.Add;
+        FdadosCsc.New;
         FdadosCsc.Items[i].FidCsc     := 0;
         FdadosCsc.Items[i].FcodigoCsc := '';
       end;

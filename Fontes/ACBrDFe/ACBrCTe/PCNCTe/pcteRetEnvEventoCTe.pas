@@ -216,7 +216,7 @@ begin
            i := 0;
            while Leitor.rExtrai(4, 'infCorrecao', '', i + 1) <> '' do
            begin
-             with infEvento.detEvento.infCorrecao.Add do
+             with infEvento.detEvento.infCorrecao.New do
              begin
                grupoAlterado   := Leitor.rCampo(tcStr, 'grupoAlterado');
                campoAlterado   := Leitor.rCampo(tcStr, 'campoAlterado');
@@ -230,7 +230,7 @@ begin
            i := 0;
            while Leitor.rExtrai(4, 'infGTV', '', i + 1) <> '' do
            begin
-             with infEvento.detEvento.infGTV.Add do
+             with infEvento.detEvento.infGTV.New do
              begin
                nDoc     := Leitor.rCampo(tcStr, 'nDoc');
                id       := Leitor.rCampo(tcStr, 'id');
@@ -247,7 +247,7 @@ begin
                j := 0;
                while Leitor.rExtrai(5, 'infEspecie', '', j + 1) <> '' do
                begin
-                 with infEvento.detEvento.infGTV.Items[i].infEspecie.Add do
+                 with infEvento.detEvento.infGTV.Items[i].infEspecie.New do
                  begin
                    tpEspecie := StrToTEspecie(Ok, Leitor.rCampo(tcStr, 'tpEspecie'));
                    vEspecie  := Leitor.rCampo(tcDe2, 'vEspecie');
@@ -298,7 +298,7 @@ begin
 
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
-         FretEvento.Add;
+         FretEvento.New;
 
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
@@ -325,7 +325,7 @@ begin
        end;
 
       if i = 0 then
-        FretEvento.Add;
+        FretEvento.New;
 
       Result := True;
     end;

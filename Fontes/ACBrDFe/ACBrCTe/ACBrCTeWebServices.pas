@@ -1870,7 +1870,7 @@ begin
       FprocEventoCTe.Clear;
       for I := 0 to CTeRetorno.procEventoCTe.Count - 1 do
       begin
-        with FprocEventoCTe.Add.RetEventoCTe do
+        with FprocEventoCTe.New.RetEventoCTe do
         begin
           idLote := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.idLote;
           tpAmb := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.tpAmb;
@@ -1895,7 +1895,7 @@ begin
           InfEvento.DetEvento.infCorrecao.Clear;
           for k := 0 to CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
           begin
-            InfEvento.DetEvento.infCorrecao.Add;
+            InfEvento.DetEvento.infCorrecao.New;
             InfEvento.DetEvento.infCorrecao.Items[k].grupoAlterado   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].grupoAlterado;
             InfEvento.DetEvento.infCorrecao.Items[k].campoAlterado   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].campoAlterado;
             InfEvento.DetEvento.infCorrecao.Items[k].valorAlterado   := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.InfEvento.DetEvento.infCorrecao.Items[k].valorAlterado;
@@ -1905,7 +1905,7 @@ begin
           retEvento.Clear;
           for J := 0 to CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.retEvento.Count-1 do
           begin
-            with retEvento.Add.RetInfEvento do
+            with retEvento.New.RetInfEvento do
             begin
               Id := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.retEvento.Items[J].RetInfEvento.Id;
               tpAmb := CTeRetorno.procEventoCTe.Items[I].RetEventoCTe.retEvento.Items[J].RetInfEvento.tpAmb;
@@ -2652,7 +2652,7 @@ begin
 
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
-      with EventoCTe.Evento.Add do
+      with EventoCTe.Evento.New do
       begin
         infEvento.tpAmb := FTpAmb;
         infEvento.CNPJ := FEvento.Evento[I].InfEvento.CNPJ;
@@ -2672,7 +2672,7 @@ begin
 
             for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infCorrecao.Count - 1 do
              begin
-               with EventoCTe.Evento[i].InfEvento.detEvento.infCorrecao.Add do
+               with EventoCTe.Evento[i].InfEvento.detEvento.infCorrecao.New do
                 begin
                  grupoAlterado   := FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].grupoAlterado;
                  campoAlterado   := FEvento.Evento[i].InfEvento.detEvento.infCorrecao[j].campoAlterado;
@@ -2725,7 +2725,7 @@ begin
             SchemaEventoCTe := schevGTV;
             for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Count - 1 do
             begin
-              with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Add do
+              with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.New do
               begin
                 nDoc     := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].nDoc;
                 id       := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].id;
@@ -2737,7 +2737,7 @@ begin
 
                 for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Count - 1 do
                 begin
-                  with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Add do
+                  with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.New do
                   begin
                     tpEspecie := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].tpEspecie;
                     vEspecie  := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].vEspecie;

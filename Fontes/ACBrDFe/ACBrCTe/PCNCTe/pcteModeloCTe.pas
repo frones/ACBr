@@ -202,7 +202,7 @@ begin
 
   if Opcao1 then
   begin
-    with CTe.compl.fluxo.pass.Add do
+    with CTe.compl.fluxo.pass.New do
     begin
       xPass := '';
     end;
@@ -248,7 +248,7 @@ begin
 
   if Opcao1 then
   begin
-    with CTe.compl.ObsCont.Add do
+    with CTe.compl.ObsCont.New do
     begin
       xCampo := '';
       xTexto := '';
@@ -389,7 +389,7 @@ begin
   //
   for i := 0 to 1 do
   begin
-    with CTe.vPrest.comp.Add do
+    with CTe.vPrest.comp.New do
     begin
       xNome := '';
       vComp := 0.0;
@@ -453,7 +453,7 @@ begin
   // Obs do Contribuinte
   if (CTe.imp.vTotTrib <> 0.0) then
   begin
-    with CTe.compl.ObsCont.Add do
+    with CTe.compl.ObsCont.New do
     begin
       xCampo := 'Lei da Transparencia';
       xTexto := 'O valor aproximado de tributos incidentes sobre o preço deste servico e de R$ ' +
@@ -471,14 +471,14 @@ begin
                     CTe.infCTeNorm.infCarga.proPred := '';
                     CTe.infCTeNorm.infCarga.xOutCat := '';
                     // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
-                    with CTe.infCTeNorm.infCarga.InfQ.Add do
+                    with CTe.infCTeNorm.infCarga.InfQ.New do
                     begin
                       cUnid  := uKg;
                       tpMed  := 'Kg';
                       qCarga := 0.0;
                     end;
                     //  Informações da Seguradora
-                    with CTe.infCTeNorm.seg.Add do
+                    with CTe.infCTeNorm.seg.New do
                     begin
                       respSeg := rsRemetente;
                       //respSeg := rsExpedidor;
@@ -508,7 +508,7 @@ begin
 
   for i := 0 to 1 do
   begin
-    with CTe.autXML.Add do
+    with CTe.autXML.New do
     begin
       CNPJCPF := '';
     end;

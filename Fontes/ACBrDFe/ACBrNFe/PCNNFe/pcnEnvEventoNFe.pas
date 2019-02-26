@@ -388,7 +388,7 @@ begin
   try
      RetEventoNFe.Leitor.Arquivo := AXML;
      Result := RetEventoNFe.LerXml;
-     with FEvento.Add do
+     with FEvento.New do
       begin
         infEvento.ID            := RetEventoNFe.InfEvento.id;
         infEvento.cOrgao        := RetEventoNFe.InfEvento.cOrgao;
@@ -477,7 +477,7 @@ begin
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break ;
 
-      with Self.Evento.Add do
+      with Self.Evento.New do
       begin
         infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
         infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');

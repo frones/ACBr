@@ -175,7 +175,7 @@ begin
     NFe.Ide.NFref.Clear;
     while Leitor.rExtrai(2, 'NFref', '', i + 1) <> '' do
     begin
-      NFe.Ide.NFref.Add;
+      NFe.Ide.NFref.New;
       (*B13*) NFe.ide.NFref[i].refNFe := Leitor.rCampo(tcEsp, 'refNFe');
 
       if Length(Trim(Leitor.rCampo(tcEsp,'refNF'))) > 0 then // Verificação adicionada
@@ -363,7 +363,7 @@ begin
   NFe.autXML.Clear;
   while Leitor.rExtrai(1, 'autXML', '', i + 1) <> '' do
   begin
-    NFe.autXML.Add;
+    NFe.autXML.New;
     NFe.autXML[i].CNPJCPF := Leitor.rCampoCNPJCPF;;
     inc(i);
   end;
@@ -396,7 +396,7 @@ begin
     ItensTemp := copy(Itens,Pos('<det nItem=',Itens),(Pos('</det>',Itens)+6)-Pos('<det nItem=',Itens));
 
     Leitor.rExtrai(1, 'det nItem=' + Aspas + IntToStr(nItem) + Aspas, 'det');
-    NFe.Det.Add;
+    NFe.Det.New;
     (*   *)NFe.Det[i].prod.nItem := i + 1;
     (*V01*)NFe.Det[i].infAdProd  := Leitor.rCampo(tcStr, 'infAdProd');
 
@@ -438,7 +438,7 @@ begin
     NFe.Det[i].Prod.NVE.Clear;
     while Leitor.rExtrai(3, 'NVE', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.NVE.Add;
+      NFe.Det[i].Prod.NVE.New;
       (*I05a*) NFe.Det[i].Prod.NVE[j].NVE := Leitor.rCampo(tcStr, 'NVE');
 
       inc(j);
@@ -450,7 +450,7 @@ begin
     NFe.Det[i].Prod.DI.Clear;
     while Leitor.rExtrai(3, 'DI', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.DI.Add;
+      NFe.Det[i].Prod.DI.New;
       (*I19*)NFe.Det[i].Prod.DI[j].nDI        := Leitor.rCampo(tcStr, 'nDI');
       (*I20*)NFe.Det[i].Prod.DI[j].dDI        := Leitor.rCampo(tcDat, 'dDI');
       (*I21*)NFe.Det[i].Prod.DI[j].xLocDesemb := Leitor.rCampo(tcStr, 'xLocDesemb');
@@ -470,7 +470,7 @@ begin
       NFe.Det[i].Prod.DI[j].adi.Clear;
       while Leitor.rExtrai(4, 'adi', '', k + 1) <> '' do
       begin
-        NFe.Det[i].Prod.DI[j].adi.Add;
+        NFe.Det[i].Prod.DI[j].adi.New;
         (*I26*)NFe.Det[i].Prod.DI[j].adi[k].nAdicao     := Leitor.rCampo(tcInt, 'nAdicao');
         (*I27*)NFe.Det[i].Prod.DI[j].adi[k].nSeqAdi     := Leitor.rCampo(tcInt, 'nSeqAdic');
         (*I28*)NFe.Det[i].Prod.DI[j].adi[k].cFabricante := Leitor.rCampo(tcStr, 'cFabricante');
@@ -488,7 +488,7 @@ begin
     NFe.Det[i].Prod.detExport.Clear;
     while Leitor.rExtrai(3, 'detExport', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.detExport.Add;
+      NFe.Det[i].Prod.detExport.New;
       (*I51*)NFe.Det[i].Prod.detExport[j].nDraw := Leitor.rCampo(tcStr, 'nDraw');
 
       Leitor.rExtrai(4, 'exportInd');
@@ -504,7 +504,7 @@ begin
     NFe.Det[i].Prod.rastro.Clear;
     while Leitor.rExtrai(3, 'rastro', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.rastro.Add;
+      NFe.Det[i].Prod.rastro.New;
       (*I81*)NFe.Det[i].Prod.rastro[j].nLote  := Leitor.rCampo(tcStr, 'nLote');
       (*I82*)NFe.Det[i].Prod.rastro[j].qLote  := Leitor.rCampo(tcDe3, 'qLote');
       (*I83*)NFe.Det[i].Prod.rastro[j].dFab   := Leitor.rCampo(tcDat, 'dFab ');
@@ -548,7 +548,7 @@ begin
     NFe.Det[i].Prod.med.Clear;
     while Leitor.rExtrai(3, 'med', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.med.Add;
+      NFe.Det[i].Prod.med.New;
       (*K01a*)NFe.Det[i].Prod.med[j].cProdANVISA := Leitor.rCampo(tcStr, 'cProdANVISA');
       (*K01b*)NFe.Det[i].Prod.med[j].xMotivoIsencao := Leitor.rCampo(tcStr, 'xMotivoIsencao');
       (*K02*)NFe.Det[i].Prod.med[j].nLote := Leitor.rCampo(tcStr, 'nLote');
@@ -564,7 +564,7 @@ begin
     NFe.Det[i].Prod.arma.Clear;
     while Leitor.rExtrai(3, 'arma', '', j + 1) <> '' do
     begin
-      NFe.Det[i].Prod.arma.add;
+      NFe.Det[i].Prod.arma.New;
       (*L02*)NFe.Det[i].Prod.arma[j].tpArma := StrToTpArma(ok, Leitor.rCampo(tcStr, 'tpArma'));
       (*L03*)NFe.Det[i].Prod.arma[j].nSerie := Leitor.rCampo(tcStr, 'nSerie');
       (*L04*)NFe.Det[i].Prod.arma[j].nCano  := Leitor.rCampo(tcStr, 'nCano');
@@ -906,7 +906,7 @@ begin
     NFe.Transp.Reboque.Clear;
     while Leitor.rExtrai(2, 'reboque', '', i + 1) <> '' do
     begin
-      NFe.Transp.Reboque.add;
+      NFe.Transp.Reboque.New;
       (*X23*) NFe.Transp.Reboque[i].placa := Leitor.rCampo(tcStr, 'placa');
       (*X24*) NFe.Transp.Reboque[i].UF    := Leitor.rCampo(tcStr, 'UF');
       (*X25*) NFe.Transp.Reboque[i].RNTC  := Leitor.rCampo(tcStr, 'RNTC');
@@ -917,7 +917,7 @@ begin
     NFe.Transp.Vol.Clear;
     while Leitor.rExtrai(2, 'vol', '', i + 1) <> '' do
     begin
-      NFe.Transp.Vol.add;
+      NFe.Transp.Vol.New;
       (*X27*)NFe.Transp.Vol[i].qVol  := Leitor.rCampo(tcInt, 'qVol');
       (*X28*)NFe.Transp.vol[i].esp   := Leitor.rCampo(tcStr, 'esp');
       (*X29*)NFe.Transp.Vol[i].marca := Leitor.rCampo(tcStr, 'marca');
@@ -928,7 +928,7 @@ begin
       NFe.transp.Vol[i].lacres.Clear;
       while Leitor.rExtrai(3, 'lacres', '', j + 1) <> '' do
       begin
-        NFe.transp.Vol[i].lacres.add;
+        NFe.transp.Vol[i].lacres.New;
         (*X34*)NFe.transp.Vol[i].lacres[j].nLacre := Leitor.rCampo(tcStr, 'nLacre');
         inc(j);
       end;
@@ -951,7 +951,7 @@ begin
     NFe.Cobr.Dup.Clear;
     while Leitor.rExtrai(1, 'dup', '', i + 1) <> '' do
     begin
-      NFe.Cobr.Dup.Add;
+      NFe.Cobr.Dup.New;
       (*Y08*)NFe.Cobr.Dup[i].nDup  := Leitor.rCampo(tcStr, 'nDup');
       (*Y09*)NFe.Cobr.Dup[i].dVenc := Leitor.rCampo(tcDat, 'dVenc');
       (*Y10*)NFe.Cobr.Dup[i].vDup  := Leitor.rCampo(tcDe2, 'vDup');
@@ -975,7 +975,7 @@ begin
 
     while Leitor.rExtrai(1, tagPag, '', i + 1) <> '' do
      begin
-       NFe.pag.Add;
+       NFe.pag.New;
       (*YA01b*)NFe.pag[i].indPag := StrToIndpag(Ok, Leitor.rCampo(tcStr, 'indPag'));
       (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
       (*YA03*)NFe.pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
@@ -1000,7 +1000,7 @@ begin
     NFe.InfAdic.obsCont.Clear;
     while Leitor.rExtrai(2, 'obsCont', '', i + 1) <> '' do
     begin
-      NFe.InfAdic.obsCont.Add;
+      NFe.InfAdic.obsCont.New;
       (*Z05*)NFe.InfAdic.obsCont[i].xCampo := Leitor.rAtributo('xCampo');
       (*Z06*)NFe.InfAdic.obsCont[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i);
@@ -1009,7 +1009,7 @@ begin
     NFe.InfAdic.obsFisco.Clear;
     while Leitor.rExtrai(2, 'obsFisco', '', i + 1) <> '' do
     begin
-      NFe.InfAdic.obsFisco.Add;
+      NFe.InfAdic.obsFisco.New;
       (*Z08*)NFe.InfAdic.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
       (*Z09*)NFe.InfAdic.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
       inc(i)
@@ -1018,7 +1018,7 @@ begin
     NFe.InfAdic.procRef.Clear;
     while Leitor.rExtrai(2, 'procRef', '', i + 1) <> '' do
     begin
-      NFe.InfAdic.procRef.Add;
+      NFe.InfAdic.procRef.New;
       (*Z11*)NFe.InfAdic.procRef[i].nProc   := Leitor.rCampo(tcStr, 'nProc');
       (*Z12*)NFe.InfAdic.procRef[i].indProc := StrToIndProc(ok, Leitor.rCampo(tcStr, 'indProc'));
       inc(i);
@@ -1061,7 +1061,7 @@ begin
     NFe.cana.fordia.Clear;
     while Leitor.rExtrai(2, 'forDia', '', i + 1) <> '' do
     begin
-      NFe.cana.fordia.Add;
+      NFe.cana.fordia.New;
       (*ZC05*) NFe.cana.fordia[i].dia  := Leitor.rAtributo('dia');
       (*ZC06*) NFe.cana.fordia[i].qtde := Leitor.rCampo(tcDe10, 'qtde');
       inc(i);
@@ -1071,7 +1071,7 @@ begin
     NFe.cana.deduc.Clear;
     while Leitor.rExtrai(2, 'deduc', '', i + 1) <> '' do
     begin
-      NFe.cana.deduc.Add;
+      NFe.cana.deduc.New;
       (*ZC11*) NFe.cana.deduc[i].xDed := Leitor.rCampo(tcStr, 'xDed');
       (*ZC12*) NFe.cana.deduc[i].vDed := Leitor.rCampo(tcDe2, 'vDed');
       inc(i);

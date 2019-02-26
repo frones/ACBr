@@ -61,7 +61,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrCTeDACTEClass = class(TACBrDFeReport)
   private
-    procedure SetCTE(const Value: TComponent);
+    procedure SetACBrCTE(const Value: TComponent);
     procedure ErroAbstract(const NomeProcedure: string);
 
   protected
@@ -90,7 +90,7 @@ type
     procedure ImprimirINUTILIZACAO(CTE: TCTe = nil); virtual;
     procedure ImprimirINUTILIZACAOPDF(CTE: TCTe = nil); virtual;
   published
-    property ACBrCTE: TComponent read FACBrCTE write SetCTE;
+    property ACBrCTE: TComponent read FACBrCTE write SetACBrCTE;
     property ImprimirHoraSaida: boolean read FImprimirHoraSaida write FImprimirHoraSaida;
     property ImprimirHoraSaida_Hora: string read FImprimirHoraSaida_Hora write FImprimirHoraSaida_Hora;
     property TipoDACTE: TpcnTipoImpressao read FTipoDACTE write FTipoDACTE;
@@ -136,7 +136,7 @@ begin
     FACBrCTE := nil;
 end;
 
-procedure TACBrCTeDACTEClass.SetCTE(const Value: TComponent);
+procedure TACBrCTeDACTEClass.SetACBrCTE(const Value: TComponent);
 var
   OldValue: TACBrCTE;
 begin

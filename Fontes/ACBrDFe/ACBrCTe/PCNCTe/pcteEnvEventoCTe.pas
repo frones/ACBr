@@ -50,44 +50,38 @@ unit pcteEnvEventoCTe;
 interface
 
 uses
-  SysUtils, Classes,
-//{$IFNDEF VER130}
-//  Variants,
-//{$ENDIF}
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, pcnConsts, //pcnLeitor,
   pcteConversaoCTe, pcteEventoCTe, pcteConsts, pcnSignature;
 
 type
-  TInfEventoCollection     = class;
-  TInfEventoCollectionItem = class;
-  TEventoCTe               = class;
   EventoCTeException       = class(Exception);
+  TInfEventoCollectionItem = class;
 
-  TInfEventoCollection = class(TCollection)
+  TInfEventoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfEventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfEventoCollectionItem;
+    function Add: TInfEventoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfEventoCollectionItem;
     property Items[Index: Integer]: TInfEventoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfEventoCollectionItem = class(TCollectionItem)
+  TInfEventoCollectionItem = class(TObject)
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
     Fsignature: Tsignature;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
-  TGeradorOpcoes = class(TPersistent)
+  TGeradorOpcoes = class(TObject)
   private
     FAjustarTagNro: Boolean;
     FNormatizarMunicipios: Boolean;
@@ -95,7 +89,7 @@ type
     FPathArquivoMunicipios: String;
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
-  published
+  public
     property AjustarTagNro: Boolean                read FAjustarTagNro         write FAjustarTagNro;
     property NormatizarMunicipios: Boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
@@ -106,7 +100,7 @@ type
 
   { TEventoCTe }
 
-  TEventoCTe = class(TPersistent)
+  TEventoCTe = class(TObject)
   private
     FGerador: TGerador;
     FOpcoes: TGeradorOpcoes;
@@ -125,7 +119,6 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
-  published
     property Gerador: TGerador            read FGerador  write FGerador;
     property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
     property idLote: Integer              read FidLote   write FidLote;
@@ -146,6 +139,7 @@ uses
 
 constructor TEventoCTe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
   FOpcoes  := TGeradorOpcoes.Create;
   FOpcoes.FAjustarTagNro := True;
@@ -153,7 +147,7 @@ begin
   FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
   FOpcoes.FValidarInscricoes := False;
   FOpcoes.FValidarListaServicos := False;
-  FEvento  := TInfEventoCollection.Create(Self);
+  FEvento  := TInfEventoCollection.Create;
 end;
 
 destructor TEventoCTe.Destroy;
@@ -539,8 +533,7 @@ begin
  end;
 end;
 
-function TEventoCTe.LerFromIni(const AIniString: String;
-  CCe: Boolean): Boolean;
+function TEventoCTe.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
 var
   I, J, K: Integer;
   sSecao, sFim: String;
@@ -715,13 +708,7 @@ end;
 
 function TInfEventoCollection.Add: TInfEventoCollectionItem;
 begin
-  Result := TInfEventoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfEventoCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfEventoCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfEventoCollection.GetItem(
@@ -736,10 +723,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfEventoCollection.New: TInfEventoCollectionItem;
+begin
+  Result := TInfEventoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfEventoCollectionItem }
 
 constructor TInfEventoCollectionItem.Create;
 begin
+  inherited Create;
   FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;

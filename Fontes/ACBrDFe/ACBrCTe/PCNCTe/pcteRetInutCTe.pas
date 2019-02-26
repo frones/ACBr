@@ -54,7 +54,7 @@ uses
 
 type
 
-  TRetInutCTe = class(TPersistent)
+  TRetInutCTe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -77,7 +77,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-  published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property versao: String          read Fversao   write Fversao;
     property Id: String              read FId       write FId;
@@ -103,6 +102,7 @@ implementation
 
 constructor TRetInutCTe.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
 end;
 

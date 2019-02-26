@@ -1710,9 +1710,9 @@ begin
   if Assigned(FprocEventoCTe) then
     FprocEventoCTe.Free;
 
-  FprotCTe := TProcCTe.Create;
-  FretCancCTe := TRetCancCTe.Create;
-  FprocEventoCTe := TRetEventoCTeCollection.Create(FOwner);
+  FprotCTe       := TProcCTe.Create;
+  FretCancCTe    := TRetCancCTe.Create;
+  FprocEventoCTe := TRetEventoCTeCollection.Create;
 end;
 
 procedure TCTeConsulta.SetCTeChave(const AValue: String);

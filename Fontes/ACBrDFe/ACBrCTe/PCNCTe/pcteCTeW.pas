@@ -66,7 +66,7 @@ type
     FCTe: TCTe;
     FOpcoes: TGeradorOpcoes;
     FVersaoDF: TVersaoCTe;
-    ChaveCTe: string;
+    FChaveCTe: string;
     FIdCSRT: Integer;
     FCSRT: String;
 
@@ -166,7 +166,7 @@ type
     procedure GerarautXML;     // Nivel 1
     procedure GerarinfRespTec; // Nivel 1
 
-    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 
   public
     constructor Create(AOwner: TCTe);
@@ -181,7 +181,7 @@ type
     property CSRT: String           read FCSRT     write FCSRT;
   end;
 
-  TGeradorOpcoes = class(TPersistent)
+  TGeradorOpcoes = class(TObject)
   private
     FAjustarTagNro: Boolean;
     FNormatizarMunicipios: Boolean;
@@ -189,7 +189,7 @@ type
     FPathArquivoMunicipios: String;
     FValidarInscricoes: Boolean;
     FValidarListaServicos: Boolean;
-  published
+  public
     property AjustarTagNro: Boolean                read FAjustarTagNro         write FAjustarTagNro;
     property NormatizarMunicipios: Boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
     property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
@@ -204,6 +204,7 @@ implementation
 
 constructor TCTeW.Create(AOwner: TCTe);
 begin
+  inherited Create;
   FCTe := AOwner;
   FGerador := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|CTe xmlns|infCTe versao|obsCont|obsFisco|';
@@ -237,10 +238,10 @@ begin
 
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
 
-  ChaveCTe := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
+  FChaveCTe := GerarChaveAcesso(CTe.ide.cUF, CTe.ide.dhEmi, CTe.emit.CNPJ, CTe.ide.serie,
                             CTe.ide.nCT, StrToInt(TpEmisToStr(CTe.ide.tpEmis)),
                             CTe.ide.cCT, CTe.ide.modelo);
-  CTe.infCTe.Id := 'CTe' + ChaveCTe;
+  CTe.infCTe.Id := 'CTe' + FChaveCTe;
 
   CTe.ide.cDV := ExtrairDigitoChaveAcesso(CTe.infCTe.ID);
   CTe.Ide.cCT := ExtrairCodigoChaveAcesso(CTe.infCTe.ID);
@@ -2696,7 +2697,7 @@ begin
     if (idCSRT <> 0) and (CSRT <> '') then
     begin
       Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 03, 03, 1, idCSRT, DSC_IDCSRT);
-      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, ChaveCTe), DSC_HASHCSRT);
+      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, FChaveCTe), DSC_HASHCSRT);
     end;
 
     Gerador.wGrupo('/infRespTec');
@@ -2719,7 +2720,7 @@ begin
 end;
 
 procedure TCTeW.AjustarMunicipioUF(var xUF, xMun: String;
-  var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+  var cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 var
   PaisBrasil: Boolean;
 begin

@@ -50,17 +50,16 @@ unit pcteEventoCTe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcteConversaoCTe;
 
 type
-  TInfEvento      = class;
-  TDetEvento      = class;
-  TRetInfEvento   = class;
   EventoException = class(Exception);
+
+  TDetEvento      = class;
 
   TInfCorrecaoCollection  = class;
   TInfCorrecaoCollectionItem = class;
@@ -107,7 +106,7 @@ type
     property TipoEvento: String      read getTipoEvento;
   end;
 
-  TDetEvento = class(TPersistent)
+  TDetEvento = class(TObject)
   private
     FdescEvento: String;
     FnProt: String;
@@ -136,9 +135,8 @@ type
      // GTV
     FinfGTV: TInfGTVCollection;
 
-    procedure SetCorrecao(const Value: TInfCorrecaoCollection);
-    procedure setCondUso(const Value: String);
-    procedure SetGTV(const Value: TInfGTVCollection);
+    procedure SetinfCorrecao(const Value: TInfCorrecaoCollection);
+    procedure SetxCondUso(const Value: String);
   public
     constructor Create;
     destructor Destroy; override;
@@ -165,49 +163,46 @@ type
     property xRegistro: String  read FxRegistro  write FxRegistro;
     property nDoc: String       read FnDoc       write FnDoc;
 
-    property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetCorrecao;
-    property xCondUso: String                    read FCondUso     write setCondUso;
+    property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetinfCorrecao;
+    property xCondUso: String                    read FCondUso     write SetxCondUso;
 
-    property infGTV: TInfGTVCollection read FinfGTV write SetGTV;
+    property infGTV: TInfGTVCollection read FinfGTV write FinfGTV;
   end;
 
-  TInfCorrecaoCollection = class(TCollection)
+  TInfCorrecaoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfCorrecaoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfCorrecaoCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfCorrecaoCollectionItem;
+    function Add: TInfCorrecaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfCorrecaoCollectionItem;
     property Items[Index: Integer]: TInfCorrecaoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfCorrecaoCollectionItem = class(TCollectionItem)
+  TInfCorrecaoCollectionItem = class(TObject)
   private
     FgrupoAlterado: String;
     FcampoAlterado: String;
     FvalorAlterado: String;
     FnroItemAlterado: Integer;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property grupoAlterado: String    read FgrupoAlterado   write FgrupoAlterado;
     property campoAlterado: String    read FcampoAlterado   write FcampoAlterado;
     property valorAlterado: String    read FvalorAlterado   write FvalorAlterado;
     property nroItemAlterado: Integer read FnroItemAlterado write FnroItemAlterado;
   end;
 
-  TInfGTVCollection = class(TCollection)
+  TInfGTVCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfGTVCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfGTVCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfGTVCollectionItem;
+    function Add: TInfGTVCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfGTVCollectionItem;
     property Items[Index: Integer]: TInfGTVCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfGTVCollectionItem = class(TCollectionItem)
+  TInfGTVCollectionItem = class(TObject)
   private
     FnDoc: String;
     Fid: String;
@@ -223,11 +218,9 @@ type
     FUF: String;
     FRNTRC: String;
 
-    procedure SetEspecie(const Value: TInfEspecieCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
     property nDoc: String     read FnDoc     write FnDoc;
     property id: String       read Fid       write Fid;
     property serie: String    read Fserie    write Fserie;
@@ -235,7 +228,7 @@ type
     property dEmi: TDateTime  read FdEmi     write FdEmi;
     property nDV: Integer     read FnDV      write FnDV;
     property qCarga: Currency read FqCarga   write FqCarga;
-    property infEspecie: TInfEspecieCollection read FinfEspecie write SetEspecie;
+    property infEspecie: TInfEspecieCollection read FinfEspecie write FinfEspecie;
     property rem: TInfRemDest  read Frem      write Frem;
     property dest: TInfRemDest read Fdest     write Fdest;
     property placa: String     read Fplaca    write Fplaca;
@@ -243,35 +236,32 @@ type
     property RNTRC: String     read FRNTRC    write FRNTRC;
   end;
 
-  TInfEspecieCollection = class(TCollection)
+  TInfEspecieCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfEspecieCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfEspecieCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfEspecieCollectionItem;
+    function Add: TInfEspecieCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfEspecieCollectionItem;
     property Items[Index: Integer]: TInfEspecieCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfEspecieCollectionItem = class(TCollectionItem)
+  TInfEspecieCollectionItem = class(TObject)
   private
     FtpEspecie: TEspecie;
     FvEspecie: Currency;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property tpEspecie: TEspecie read FtpEspecie write FtpEspecie;
     property vEspecie: Currency  read FvEspecie  write FvEspecie;
   end;
 
-  TInfRemDest = class(TPersistent)
+  TInfRemDest = class(TObject)
   private
     FCNPJCPF: String;
     FIE: String;
     FUF: String;
     FxNome: String;
-  published
+  public
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property IE: String      read FIE      write FIE;
     property UF: String      read FUF      write FUF;
@@ -492,13 +482,7 @@ end;
 
 function TInfCorrecaoCollection.Add: TInfCorrecaoCollectionItem;
 begin
-  Result := TInfCorrecaoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfCorrecaoCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfCorrecaoCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfCorrecaoCollection.GetItem(
@@ -513,25 +497,19 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TInfCorrecaoCollectionItem }
-
-constructor TInfCorrecaoCollectionItem.Create;
+function TInfCorrecaoCollection.New: TInfCorrecaoCollectionItem;
 begin
-
-end;
-
-destructor TInfCorrecaoCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TInfCorrecaoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TDetEvento }
 
 constructor TDetEvento.Create;
 begin
-  FinfCorrecao := TInfCorrecaoCollection.Create(Self);
-  FinfGTV      := TInfGTVCollection.Create(Self);
+  inherited Create;
+  FinfCorrecao := TInfCorrecaoCollection.Create;
+  FinfGTV      := TInfGTVCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
@@ -541,7 +519,7 @@ begin
   inherited;
 end;
 
-procedure TDetEvento.setCondUso(const Value: String);
+procedure TDetEvento.SetxCondUso(const Value: String);
 begin
   FCondUso := 'A Carta de Correcao e disciplinada pelo Art. 58-B do CONVENIO/' +
               'SINIEF 06/89: Fica permitida a utilizacao de carta de correcao,' +
@@ -555,27 +533,16 @@ begin
               'de emissao ou de saida.';
 end;
 
-procedure TDetEvento.SetCorrecao(const Value: TInfCorrecaoCollection);
+procedure TDetEvento.SetinfCorrecao(const Value: TInfCorrecaoCollection);
 begin
   FInfCorrecao.Assign(Value);
-end;
-
-procedure TDetEvento.SetGTV(const Value: TInfGTVCollection);
-begin
-  FinfGTV := Value;
 end;
 
 { TInfGTVCollection }
 
 function TInfGTVCollection.Add: TInfGTVCollectionItem;
 begin
-  Result := TInfGTVCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfGTVCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfGTVCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfGTVCollection.GetItem(Index: Integer): TInfGTVCollectionItem;
@@ -589,11 +556,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfGTVCollection.New: TInfGTVCollectionItem;
+begin
+  Result := TInfGTVCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfGTVCollectionItem }
 
 constructor TInfGTVCollectionItem.Create;
 begin
-  FinfEspecie := TInfEspecieCollection.Create(Self);
+  inherited Create;
+  FinfEspecie := TInfEspecieCollection.Create;
   Frem := TInfRemDest.Create;
   Fdest := TInfRemDest.Create;
 end;
@@ -606,23 +580,11 @@ begin
   inherited;
 end;
 
-procedure TInfGTVCollectionItem.SetEspecie(
-  const Value: TInfEspecieCollection);
-begin
-  FinfEspecie := Value;
-end;
-
 { TInfEspecieCollection }
 
 function TInfEspecieCollection.Add: TInfEspecieCollectionItem;
 begin
-  Result := TInfEspecieCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfEspecieCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfEspecieCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfEspecieCollection.GetItem(
@@ -637,17 +599,10 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TInfEspecieCollectionItem }
-
-constructor TInfEspecieCollectionItem.Create;
+function TInfEspecieCollection.New: TInfEspecieCollectionItem;
 begin
-
-end;
-
-destructor TInfEspecieCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TInfEspecieCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

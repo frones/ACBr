@@ -57,7 +57,7 @@ type
 
 //  TPcnPadraoNomeProcCTe = (tpnPublico, tpnPrivado);
 
-  TProcCTe = class(TPersistent)
+  TProcCTe = class(TObject)
   private
     FGerador: TGerador;
     FPathCTe: String;
@@ -80,7 +80,6 @@ type
     destructor Destroy; override;
     function GerarXML: boolean;
 //    function ObterNomeArquivo(const PadraoNome: TPcnPadraoNomeProcCTe = tpnPrivado): String;
-  published
     property Gerador: TGerador          read FGerador            write FGerador;
     property PathCTe: String            read FPathCTe            write FPathCTe;
     property PathRetConsReciCTe: String read FPathRetConsReciCTe write FPathRetConsReciCTe;
@@ -109,6 +108,7 @@ uses
 
 constructor TProcCTe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

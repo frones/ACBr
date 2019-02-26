@@ -78,6 +78,7 @@ uses
 
 constructor TCTeR.Create(AOwner: TCTe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FCTe := AOwner;
 end;

@@ -2806,7 +2806,7 @@ begin
   if not (AOwner is TACBrCTe) then
      raise EACBrCTeException.Create('AOwner deve ser do tipo TACBrCTe');
 
-  inherited;
+  inherited Create(AOwner, ItemClass);
 
   FACBrCTe := TACBrCTe(AOwner);
   FConfiguracoes := TACBrCTe(FACBrCTe).Configuracoes;

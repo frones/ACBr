@@ -65,7 +65,7 @@ type
     property tMed: Integer       read FtMed     write FtMed;
   end;
 
-  TretEnvCTe = class(TPersistent)
+  TretEnvCTe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -79,7 +79,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-  published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property versao: String          read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
@@ -96,6 +95,7 @@ implementation
 
 constructor TretEnvCTe.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FinfRec := TInfREC.Create
 end;

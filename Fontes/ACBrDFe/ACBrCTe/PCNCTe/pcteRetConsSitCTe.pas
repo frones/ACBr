@@ -50,17 +50,16 @@ unit pcteRetConsSitCTe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor, pcteProcCTe,
   {pcteRetCancCTe,} pcteRetEnvEventoCTe;
 
 type
 
-  TRetEventoCTeCollection = class;
   TRetEventoCTeCollectionItem = class;
   TRetConsSitCTe = class;
 
-  TRetCancCTe = class(TPersistent)
+  TRetCancCTe = class(TObject)
   private
     Fversao: String;
     FId: String;
@@ -72,7 +71,7 @@ type
     FchCTe: String;
     FdhRecbto: TDateTime;
     FnProt: String;
-  published
+  public
     property versao: String          read Fversao   write Fversao;
     property Id: String              read FId       write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
@@ -85,27 +84,26 @@ type
     property nProt: String           read FnProt    write FnProt;
   end;
 
-  TRetEventoCTeCollection = class(TCollection)
+  TRetEventoCTeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetEventoCTeCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventoCTeCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetEventoCTeCollectionItem;
+    function Add: TRetEventoCTeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetEventoCTeCollectionItem;
     property Items[Index: Integer]: TRetEventoCTeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetEventoCTeCollectionItem = class(TCollectionItem)
+  TRetEventoCTeCollectionItem = class(TObject)
   private
     FRetEventoCTe: TRetEventoCTe;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
     property RetEventoCTe: TRetEventoCTe read FRetEventoCTe write FRetEventoCTe;
   end;
 
-  TRetConsSitCTe = class(TPersistent)
+  TRetConsSitCTe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -123,7 +121,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-  published
     property Leitor: TLeitor                        read FLeitor        write FLeitor;
     property versao: String                         read Fversao        write Fversao;
     property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
@@ -144,6 +141,7 @@ implementation
 
 constructor TRetConsSitCTe.Create;
 begin
+  inherited Create;
   FLeitor     := TLeitor.Create;
   FprotCTe    := TProcCTe.create;
   FretCancCTe := TRetCancCTe.create;
@@ -229,7 +227,7 @@ begin
       if Assigned(procEventoCTe) then
         procEventoCTe.Free;
 
-      procEventoCTe := TRetEventoCTeCollection.Create(Self);
+      procEventoCTe := TRetEventoCTeCollection.Create;
       i := 0;
       while Leitor.rExtrai(1, 'procEventoCTe', '', i + 1) <> '' do
       begin
@@ -251,13 +249,7 @@ end;
 
 function TRetEventoCTeCollection.Add: TRetEventoCTeCollectionItem;
 begin
-  Result := TRetEventoCTeCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TRetEventoCTeCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetEventoCTeCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetEventoCTeCollection.GetItem(Index: Integer): TRetEventoCTeCollectionItem;
@@ -270,10 +262,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TRetEventoCTeCollection.New: TRetEventoCTeCollectionItem;
+begin
+  Result := TRetEventoCTeCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetEventoCTeCollectionItem }
 
 constructor TRetEventoCTeCollectionItem.Create;
 begin
+  inherited Create;
   FRetEventoCTe := TRetEventoCTe.Create;
 end;
 

@@ -84,11 +84,6 @@ type
   TComHora   = class;
   TNoInter   = class;
 
-  TObsContCollection      = class;
-  TObsContCollectionItem  = class;
-  TObsFiscoCollection     = class;
-  TObsFiscoCollectionItem = class;
-
   TEmit      = class;
   TEnderEmit = class;
 
@@ -105,8 +100,6 @@ type
   TLocEnt = class;
 
   TVPrest             = class;
-  TCompCollection     = class;
-  TCompCollectionItem = class;
 
   TImp         = class;
   TICMS        = class;
@@ -138,24 +131,14 @@ type
   TInfNFCollection           = class;
   TInfNFCollectionItem       = class;
   TinfUnidTranspNFCollection = class;
-  TinfUnidCargaNFCollection  = class;
 
   TinfUnidTranspCollectionItem = class;
-  TlacUnidTranspCollection     = class;
-  TlacUnidTranspCollectionItem = class;
-  TinfUnidCargaCollection      = class;
-  TinfUnidCargaCollectionItem  = class;
-  TlacUnidCargaCollection      = class;
-  TlacUnidCargaCollectionItem  = class;
 
   TInfNFeCollection           = class;
-  TInfNFeCollectionItem       = class;
-  TinfUnidTranspNFeCollection = class;
 
   TInfOutrosCollection           = class;
   TInfOutrosCollectionItem       = class;
   TinfUnidTranspOutrosCollection = class;
-  TinfUnidCargaOutrosCollection  = class;
 
   TDocAnt                    = class;
   TEmiDocAntCollection       = class;
@@ -188,8 +171,6 @@ type
   TVeicCollection        = class;
   TVeicCollectionItem    = class;
   TProp                  = class;
-  TLacRodoCollection     = class;
-  TLacRodoCollectionItem = class;
   TMotoCollection        = class;
   TMotoCollectionItem    = class;
 
@@ -211,8 +192,6 @@ type
   TBalsaCollectionItem   = class;
   TdetContCollection     = class;
   TdetContCollectionItem = class;
-  TLacreCollection       = class;
-  TLacreCollectionItem   = class;
 
   TInfDocAquav = class;
 
@@ -260,8 +239,6 @@ type
 ////////////////////////////////////////////////////////////////////////////////
   TInfCteComp             = class;
   TVPresComp              = class;
-  TCompCompCollection     = class;
-  TCompCompCollectionItem = class;
   TImpComp                = class;
   TICMSComp               = class;
 
@@ -525,6 +502,27 @@ type
     property xPais: String   read FxPais   write FxPais;
   end;
 
+  TObsContCollectionItem = class(TObject)
+  private
+    FxCampo : String;
+    FxTexto : String;
+  public
+    property xCampo: String read FxCampo write FxCampo;
+    property xTexto: String read FxTexto write FxTexto;
+  end;
+
+  TObsContCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TObsContCollectionItem;
+    procedure SetItem(Index: Integer; Value: TObsContCollectionItem);
+  public
+    function Add: TObsContCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TObsContCollectionItem;
+    property Items[Index: Integer]: TObsContCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TObsFiscoCollection = TObsContCollection;
+
   TCompl = class(TObject)
   private
     FxCaracAd  : String;
@@ -668,44 +666,6 @@ type
     property tpHor: TpcteTipoHorarioIntervalo read FtpHor write FtpHor;
     property hIni: TDateTime                  read FhIni  write FhIni;
     property hFim: TDateTime                  read FhFim  write FhFim;
-  end;
-
-  TObsContCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TObsContCollectionItem;
-    procedure SetItem(Index: Integer; Value: TObsContCollectionItem);
-  public
-    function Add: TObsContCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TObsContCollectionItem;
-    property Items[Index: Integer]: TObsContCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TObsContCollectionItem = class(TObject)
-  private
-    FxCampo : String;
-    FxTexto : String;
-  public
-    property xCampo: String read FxCampo write FxCampo;
-    property xTexto: String read FxTexto write FxTexto;
-  end;
-
-  TObsFiscoCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TObsFiscoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TObsFiscoCollectionItem);
-  public
-    function Add: TObsFiscoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TObsFiscoCollectionItem;
-    property Items[Index: Integer]: TObsFiscoCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TObsFiscoCollectionItem = class(TObject)
-  private
-    FxCampo : String;
-    FxTexto : String;
-  public
-    property xCampo: String read FxCampo write FxCampo;
-    property xTexto: String read FxTexto write FxTexto;
   end;
 
   TEmit = class(TObject)
@@ -880,18 +840,13 @@ type
     property UF: String      read FUF      write FUF;
   end;
 
-  TVPrest = class(TObject)
+  TCompCollectionItem = class(TObject)
   private
-    FvTPrest : Currency;
-    FvRec    : Currency;
-    FComp    : TCompCollection;
-    procedure SetComp(const Value: TCompCollection);
+    FxNome : String;
+    FvComp : Currency;
   public
-    constructor Create;
-    destructor Destroy; override;
-    property vTPrest: Currency     read FvTPrest write FvTPrest;
-    property vRec: Currency        read FvRec    write FvRec;
-    property Comp: TCompCollection read FComp    write SetComp;
+    property xNome: String   read FxNome write FxNome;
+    property vComp: Currency read FvComp write FvComp;
   end;
 
   TCompCollection = class(TObjectList)
@@ -904,13 +859,20 @@ type
     property Items[Index: Integer]: TCompCollectionItem read GetItem write SetItem; default;
   end;
 
-  TCompCollectionItem = class(TObject)
+  TCompCompCollection = TCompCollection;
+
+  TVPrest = class(TObject)
   private
-    FxNome : String;
-    FvComp : Currency;
+    FvTPrest : Currency;
+    FvRec    : Currency;
+    FComp    : TCompCollection;
+    procedure SetComp(const Value: TCompCollection);
   public
-    property xNome: String   read FxNome write FxNome;
-    property vComp: Currency read FvComp write FvComp;
+    constructor Create;
+    destructor Destroy; override;
+    property vTPrest: Currency     read FvTPrest write FvTPrest;
+    property vRec: Currency        read FvRec    write FvRec;
+    property Comp: TCompCollection read FComp    write SetComp;
   end;
 
   TImp = class(TObject)
@@ -1266,6 +1228,57 @@ type
 
 ////////////////////////////////////////////////////////////////////////////////
 
+  TLacreCollectionItem = class(TObject)
+  private
+    FnLacre : String;
+  public
+    property nLacre: String read FnLacre write FnLacre;
+  end;
+
+  TLacreCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TLacreCollectionItem;
+    procedure SetItem(Index: Integer; Value: TLacreCollectionItem);
+  public
+    function Add: TLacreCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TLacreCollectionItem;
+    property Items[Index: Integer]: TLacreCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TlacUnidTranspCollection = TLacreCollection;
+  TlacUnidCargaCollection  = TLacreCollection;
+  TLacRodoCollection       = TLacreCollection;
+
+  TinfUnidCargaCollectionItem = class(TObject)
+  private
+    FtpUnidCarga  : TpcnUnidCarga;
+    FidUnidCarga  : String;
+    FlacUnidCarga : TlacUnidCargaCollection;
+    FqtdRat       : Double;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpUnidCarga: TpcnUnidCarga            read FtpUnidCarga  write FtpUnidCarga;
+    property idUnidCarga: String                   read FidUnidCarga  write FidUnidCarga;
+    property lacUnidCarga: TlacUnidCargaCollection read FlacUnidCarga write FlacUnidCarga;
+    property qtdRat: Double                        read FqtdRat       write FqtdRat;
+  end;
+
+  TinfUnidCargaCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
+  public
+    function Add: TinfUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfUnidCargaCollectionItem;
+    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfUnidCargaNFeCollection    = TinfUnidCargaCollection;
+  TinfUnidCargaOutrosCollection = TinfUnidCargaCollection;
+  TinfUnidCargaNFCollection     = TinfUnidCargaCollection;
+
   TInfNFCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfNFCollectionItem;
@@ -1320,28 +1333,6 @@ type
     property infUnidCarga: TinfUnidCargaNFCollection   read FinfUnidCarga  write FinfUnidCarga;
   end;
 
-  TinfUnidTranspNFCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
-  public
-    function Add: TinfUnidTranspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfUnidTranspCollectionItem;
-    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfUnidCargaNFCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
-  public
-    function Add: TinfUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfUnidCargaCollectionItem;
-    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
-  end;
-
-////////////////////////////////////////////////////////////////////////////////
-
   TinfUnidTranspCollectionItem = class(TObject)
   private
     FtpUnidTransp  : TpcnUnidTransp;
@@ -1359,79 +1350,19 @@ type
     property qtdRat: Double                          read FqtdRat        write FqtdRat;
   end;
 
-  TlacUnidTranspCollection = class(TObjectList)
+  TinfUnidTranspNFCollection = class(TObjectList)
   private
-    function GetItem(Index: Integer): TlacUnidTranspCollectionItem;
-    procedure SetItem(Index: Integer; Value: TlacUnidTranspCollectionItem);
+    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
   public
-    function Add: TlacUnidTranspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TlacUnidTranspCollectionItem;
-    property Items[Index: Integer]: TlacUnidTranspCollectionItem read GetItem write SetItem; default;
+    function Add: TinfUnidTranspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfUnidTranspCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
   end;
 
-  TlacUnidTranspCollectionItem = class(TObject)
-  private
-    FnLacre : String;
-  public
-    property nLacre: String read FnLacre write FnLacre;
-  end;
-
-  TinfUnidCargaCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
-  public
-    function Add: TinfUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfUnidCargaCollectionItem;
-    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfUnidCargaCollectionItem = class(TObject)
-  private
-    FtpUnidCarga  : TpcnUnidCarga;
-    FidUnidCarga  : String;
-    FlacUnidCarga : TlacUnidCargaCollection;
-    FqtdRat       : Double;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property tpUnidCarga: TpcnUnidCarga            read FtpUnidCarga  write FtpUnidCarga;
-    property idUnidCarga: String                   read FidUnidCarga  write FidUnidCarga;
-    property lacUnidCarga: TlacUnidCargaCollection read FlacUnidCarga write FlacUnidCarga;
-    property qtdRat: Double                        read FqtdRat       write FqtdRat;
-  end;
-
-  TlacUnidCargaCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TlacUnidCargaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TlacUnidCargaCollectionItem);
-  public
-    function Add: TlacUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TlacUnidCargaCollectionItem;
-    property Items[Index: Integer]: TlacUnidCargaCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TlacUnidCargaCollectionItem = class(TObject)
-  private
-    FnLacre : String;
-  public
-    property nLacre: String read FnLacre write FnLacre;
-  end;
+  TinfUnidTranspNFeCollection = TinfUnidTranspNFCollection;
 
 ////////////////////////////////////////////////////////////////////////////////
-
-  TInfNFeCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TInfNFeCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfNFeCollectionItem);
-  public
-    function Add: TInfNFeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TInfNFeCollectionItem;
-    property Items[Index: Integer]: TInfNFeCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfUnidCargaNFeCollection = TinfUnidCargaCollection;
 
   TInfNFeCollectionItem = class(TObject)
   private
@@ -1451,25 +1382,15 @@ type
     property infUnidCarga: TinfUnidCargaNFeCollection   read FinfUnidCarga  write FinfUnidCarga;
   end;
 
-  TinfUnidTranspNFeCollection = class(TObjectList)
+  TInfNFeCollection = class(TObjectList)
   private
-    function GetItem(Index: Integer): TinfUnidTranspCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfUnidTranspCollectionItem);
+    function GetItem(Index: Integer): TInfNFeCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfNFeCollectionItem);
   public
-    function Add: TinfUnidTranspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfUnidTranspCollectionItem;
-    property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
+    function Add: TInfNFeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfNFeCollectionItem;
+    property Items[Index: Integer]: TInfNFeCollectionItem read GetItem write SetItem; default;
   end;
-
-//  TinfUnidCargaNFeCollection = class(TObjectList)
-//  private
-//    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
-//    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
-//  public
-//    function Add: TinfUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-//    function New: TinfUnidCargaCollectionItem;
-//    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
-//  end;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1514,16 +1435,6 @@ type
     function Add: TinfUnidTranspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
     function New: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TinfUnidCargaOutrosCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TinfUnidCargaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfUnidCargaCollectionItem);
-  public
-    function Add: TinfUnidCargaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TinfUnidCargaCollectionItem;
-    property Items[Index: Integer]: TinfUnidCargaCollectionItem read GetItem write SetItem; default;
   end;
 
   TDocAnt = class(TObject)
@@ -1819,23 +1730,6 @@ type
     property tpProp: TpcteProp read FtpProp  write FtpProp;
   end;
 
-  TLacRodoCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TLacRodoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TLacRodoCollectionItem);
-  public
-    function Add: TLacRodoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TLacRodoCollectionItem;
-    property Items[Index: Integer]: TLacRodoCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TLacRodoCollectionItem = class(TObject)
-  private
-    FnLacre : String;
-  public
-    property nLacre: String read FnLacre write FnLacre;
-  end;
-
   TMotoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMotoCollectionItem;
@@ -2067,23 +1961,6 @@ type
     property nCont: String           read FnCont  write FnCont;
     property Lacre: TLacreCollection read FLacre  write FLacre;
     property infDoc: TinfDocAquav    read FinfDoc write FinfDoc;
-  end;
-
-  TLacreCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TLacreCollectionItem;
-    procedure SetItem(Index: Integer; Value: TLacreCollectionItem);
-  public
-    function Add: TLacreCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TLacreCollectionItem;
-    property Items[Index: Integer]: TLacreCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TLacreCollectionItem = class(TObject)
-  private
-    FnLacre : String;
-  public
-    property nLacre: String read FnLacre write FnLacre;
   end;
 
   TInfDocAquav = class(TObject)
@@ -2471,25 +2348,6 @@ type
     property compComp: TCompCompCollection read FcompComp write SetCompComp;
   end;
 
-  TCompCompCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TCompCompCollectionItem;
-    procedure SetItem(Index: Integer; Value: TCompCompCollectionItem);
-  public
-    function Add: TCompCompCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TCompCompCollectionItem;
-    property Items[Index: Integer]: TCompCompCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TCompCompCollectionItem = class(TObject)
-  private
-    FxNome : String;
-    FvComp : Currency;
-  public
-    property xNome: String   read FxNome write FxNome;
-    property vComp: Currency read FvComp write FvComp;
-  end;
-
   TImpComp = class(TObject)
   private
     FICMSComp   : TICMSComp;
@@ -2838,31 +2696,6 @@ end;
 function TObsContCollection.New: TObsContCollectionItem;
 begin
   Result := TObsContCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-{ TObsFiscoCollection }
-
-function TObsFiscoCollection.Add: TObsFiscoCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TObsFiscoCollection.GetItem(
-  Index: Integer): TObsFiscoCollectionItem;
-begin
-  Result := TObsFiscoCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TObsFiscoCollection.SetItem(Index: Integer;
-  Value: TObsFiscoCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TObsFiscoCollection.New: TObsFiscoCollectionItem;
-begin
-  Result := TObsFiscoCollectionItem.Create;
   Self.Add(Result);
 end;
 
@@ -3260,31 +3093,6 @@ begin
   inherited;
 end;
 
-{ TlacUnidTranspCollection }
-
-function TlacUnidTranspCollection.Add: TlacUnidTranspCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TlacUnidTranspCollection.GetItem(
-  Index: Integer): TlacUnidTranspCollectionItem;
-begin
-  Result := TlacUnidTranspCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TlacUnidTranspCollection.SetItem(Index: Integer;
-  Value: TlacUnidTranspCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TlacUnidTranspCollection.New: TlacUnidTranspCollectionItem;
-begin
-  Result := TlacUnidTranspCollectionItem.Create;
-  Self.Add(Result);
-end;
-
 { TinfUnidCargaCollection }
 
 function TinfUnidCargaCollection.Add: TinfUnidCargaCollectionItem;
@@ -3322,56 +3130,6 @@ destructor TinfUnidCargaCollectionItem.Destroy;
 begin
   FlacUnidCarga.Free;
   inherited;
-end;
-
-{ TlacUnidCargaCollection }
-
-function TlacUnidCargaCollection.Add: TlacUnidCargaCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TlacUnidCargaCollection.GetItem(
-  Index: Integer): TlacUnidCargaCollectionItem;
-begin
-  Result := TlacUnidCargaCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TlacUnidCargaCollection.SetItem(Index: Integer;
-  Value: TlacUnidCargaCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TlacUnidCargaCollection.New: TlacUnidCargaCollectionItem;
-begin
-  Result := TlacUnidCargaCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-{ TinfUnidCargaNFCollection }
-
-function TinfUnidCargaNFCollection.Add: TinfUnidCargaCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TinfUnidCargaNFCollection.GetItem(
-  Index: Integer): TinfUnidCargaCollectionItem;
-begin
-  Result := TinfUnidCargaCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TinfUnidCargaNFCollection.SetItem(Index: Integer;
-  Value: TinfUnidCargaCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TinfUnidCargaNFCollection.New: TinfUnidCargaCollectionItem;
-begin
-  Result := TinfUnidCargaCollectionItem.Create;
-  Self.Add(Result);
 end;
 
 { TInfNFeCollection }
@@ -3412,31 +3170,6 @@ begin
   FinfUnidTransp.Free;
   FinfUnidCarga.Free;
   inherited;
-end;
-
-{ TinfUnidTranspNFeCollection }
-
-function TinfUnidTranspNFeCollection.Add: TinfUnidTranspCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TinfUnidTranspNFeCollection.GetItem(
-  Index: Integer): TinfUnidTranspCollectionItem;
-begin
-  Result := TinfUnidTranspCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TinfUnidTranspNFeCollection.SetItem(Index: Integer;
-  Value: TinfUnidTranspCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TinfUnidTranspNFeCollection.New: TinfUnidTranspCollectionItem;
-begin
-  Result := TinfUnidTranspCollectionItem.Create;
-  Self.Add(Result);
 end;
 
 { TInfOutrosCollection }
@@ -3502,31 +3235,6 @@ end;
 function TinfUnidTranspOutrosCollection.New: TinfUnidTranspCollectionItem;
 begin
   Result := TinfUnidTranspCollectionItem.Create;
-  Self.Add(Result);
-end;
-
-{ TinfUnidCargaOutrosCollection }
-
-function TinfUnidCargaOutrosCollection.Add: TinfUnidCargaCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TinfUnidCargaOutrosCollection.GetItem(
-  Index: Integer): TinfUnidCargaCollectionItem;
-begin
-  Result := TinfUnidCargaCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TinfUnidCargaOutrosCollection.SetItem(Index: Integer;
-  Value: TinfUnidCargaCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TinfUnidCargaOutrosCollection.New: TinfUnidCargaCollectionItem;
-begin
-  Result := TinfUnidCargaCollectionItem.Create;
   Self.Add(Result);
 end;
 
@@ -3867,31 +3575,6 @@ destructor TVeicCollectionItem.Destroy;
 begin
   Fprop.Free;
   inherited;
-end;
-
-{ TLacRodoCollection }
-
-function TLacRodoCollection.Add: TLacRodoCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TLacRodoCollection.GetItem(
-  Index: Integer): TLacRodoCollectionItem;
-begin
-  Result := TLacRodoCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TLacRodoCollection.SetItem(Index: Integer;
-  Value: TLacRodoCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TLacRodoCollection.New: TLacRodoCollectionItem;
-begin
-  Result := TLacRodoCollectionItem.Create;
-  Self.Add(Result);
 end;
 
 { TMotoCollection }
@@ -4391,31 +4074,6 @@ begin
   FcompComp.Assign(Value);
 end;
 
-{ TCompCompCollection }
-
-function TCompCompCollection.Add: TCompCompCollectionItem;
-begin
-  Result := Self.New;
-end;
-
-function TCompCompCollection.GetItem(
-  Index: Integer): TCompCompCollectionItem;
-begin
-  Result := TCompCompCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TCompCompCollection.SetItem(Index: Integer;
-  Value: TCompCompCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-function TCompCompCollection.New: TCompCompCollectionItem;
-begin
-  Result := TCompCompCollectionItem.Create;
-  Self.Add(Result);
-end;
-
 { TImpComp }
 
 constructor TImpComp.Create;
@@ -4591,4 +4249,3 @@ begin
 end;
 
 end.
-

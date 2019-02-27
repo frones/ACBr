@@ -322,6 +322,7 @@ begin
   try
     z.Entries.AddFileEntry(inStream, AFileName);
     z.SaveToStream(outStream);
+    Result := True;
   finally
     z.Free;
   end;

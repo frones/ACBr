@@ -1168,21 +1168,23 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrCTeDACTEFR1: TACBrCTeDACTEFR
     ACBrCTE = ACBrCTe1
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
     ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
     TipoDACTE = tiSemGeracao
     TamanhoPapel = tpA4
-    NumCopias = 1
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    ExpandirLogoMarca = True
-    CTeCancelada = False
-    ExibirResumoCanhoto = False
+    Cancelada = False
+    ExibeResumoCanhoto = False
     EPECEnviado = False
-    ImprimirDescPorc = False
+    ImprimeDescPorc = False
     EspessuraBorda = 1
     Left = 225
     Top = 123

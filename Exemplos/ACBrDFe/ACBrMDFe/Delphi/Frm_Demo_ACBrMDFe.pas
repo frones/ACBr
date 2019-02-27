@@ -1281,10 +1281,12 @@ begin
   OpenDialog1.Title := 'Selecione o modelo';
   OpenDialog1.DefaultExt := '*.fr3';
   OpenDialog1.Filter := 'Arquivos FR3 (*.fr3)|*.fr3|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName)+'\Report\';
 
 //  if OpenDialog1.Execute then
+//  begin
 //    ACBrMDFeDAMDFEFR1.FastFile := OpenDialog1.FileName;
+//  end;
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnGerarPDFEventoClick(Sender: TObject);

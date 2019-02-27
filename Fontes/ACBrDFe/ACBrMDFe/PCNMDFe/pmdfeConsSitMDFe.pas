@@ -57,7 +57,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-  published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property chMDFe: String          read FchMDFe  write FchMDFe;

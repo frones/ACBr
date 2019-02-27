@@ -52,7 +52,7 @@ type
   TACBrMDFeDAMDFeClass = class(TACBrDFeReport)
    private
     procedure SetMDFe(const Value: TComponent);
-    procedure ErroAbstract(NomeProcedure: String);
+    procedure ErroAbstract(const NomeProcedure: String);
 
   protected
     FACBrMDFe: TComponent;
@@ -145,7 +145,7 @@ begin
   end;
 end;
 
-procedure TACBrMDFeDAMDFeClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrMDFeDAMDFeClass.ErroAbstract(const NomeProcedure: String);
 begin
   raise Exception.Create(NomeProcedure);
 end;

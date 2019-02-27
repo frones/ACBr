@@ -470,8 +470,8 @@ type
     destructor Destroy; override;
 
     function Envia(ALote: Integer): Boolean; overload;
-    function Envia(ALote: String): Boolean; overload;
-    function ConsultaMDFeNaoEnc(ACNPJCPF: String): Boolean;
+    function Envia(const ALote: String): Boolean; overload;
+    function ConsultaMDFeNaoEnc(const ACNPJCPF: String): Boolean;
 
     property ACBrMDFe: TACBrDFe read FACBrMDFe write FACBrMDFe;
     property StatusServico: TMDFeStatusServico read FStatusServico write FStatusServico;
@@ -2556,7 +2556,7 @@ begin
   Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String): Boolean;
+function TWebServices.Envia(const ALote: String): Boolean;
 begin
   FEnviar.Clear;
   FRetorno.Clear;
@@ -2573,7 +2573,7 @@ begin
   Result := True;
 end;
 
-function TWebServices.ConsultaMDFeNaoEnc(ACNPJCPF: String): Boolean;
+function TWebServices.ConsultaMDFeNaoEnc(const ACNPJCPF: String): Boolean;
 begin
   FConsMDFeNaoEnc.FCNPJCPF := ACNPJCPF;
 

@@ -68,7 +68,7 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesMDFe;
-    function Distribuicao(ACNPJCPF, AultNSU, ANSU,
+    function Distribuicao(const ACNPJCPF, AultNSU, ANSU,
       AchMDFe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesMDFe);
@@ -87,7 +87,7 @@ type
       StreamMDFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -96,9 +96,9 @@ type
     function cStatProcessado(AValue: integer): Boolean;
     function cStatCancelado(AValue: integer): Boolean;
 
-    function Consultar( AChave: String = ''): Boolean;
-    function ConsultarMDFeNaoEnc(ACNPJCPF: String): Boolean;
-    function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
+    function Consultar( const AChave: String = ''): Boolean;
+    function ConsultarMDFeNaoEnc(const ACNPJCPF: String): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutMDFe; var Versao: Double;
@@ -123,9 +123,9 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
-    function DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
-    function DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
-    function DistribuicaoDFePorChaveMDFe(ACNPJCPF, AchMDFe: String): Boolean;
+    function DistribuicaoDFePorUltNSU(const ACNPJCPF, AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(const ACNPJCPF, ANSU: String): Boolean;
+    function DistribuicaoDFePorChaveMDFe(const ACNPJCPF, AchMDFe: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesMDFe
@@ -447,7 +447,7 @@ begin
   end;
 end;
 
-function TACBrMDFe.Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
+function TACBrMDFe.Cancelamento(const AJustificativa: String; ALote: integer = 0): Boolean;
 var
   i: integer;
 begin
@@ -483,7 +483,7 @@ begin
   Result := True;
 end;
 
-function TACBrMDFe.Consultar(AChave: String): Boolean;
+function TACBrMDFe.Consultar(const AChave: String): Boolean;
 var
  i: Integer;
 begin
@@ -508,7 +508,7 @@ begin
   Result := True;
 end;
 
-function TACBrMDFe.ConsultarMDFeNaoEnc(ACNPJCPF: String): Boolean;
+function TACBrMDFe.ConsultarMDFeNaoEnc(const ACNPJCPF: String): Boolean;
 begin
   Result := WebServices.ConsultaMDFeNaoEnc(ACNPJCPF);
 end;
@@ -518,7 +518,7 @@ begin
   Result := Enviar(IntToStr(ALote), Imprimir);
 end;
 
-function TACBrMDFe.Enviar(ALote: String; Imprimir:Boolean = True): Boolean;
+function TACBrMDFe.Enviar(const ALote: String; Imprimir:Boolean = True): Boolean;
 var
  i: Integer;
 begin
@@ -638,13 +638,13 @@ begin
      DAMDFE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrMDFe.Distribuicao(ACNPJCPF, AultNSU, ANSU,
+function TACBrMDFe.Distribuicao(const ACNPJCPF, AultNSU, ANSU,
       AchMDFe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
-  WebServices.DistribuicaoDFe.ultNSU := AultNSU;
-  WebServices.DistribuicaoDFe.NSU := ANSU;
-  WebServices.DistribuicaoDFe.chMDFe := AchMDFe;
+  WebServices.DistribuicaoDFe.ultNSU  := AultNSU;
+  WebServices.DistribuicaoDFe.NSU     := ANSU;
+  WebServices.DistribuicaoDFe.chMDFe  := AchMDFe;
 
   Result := WebServices.DistribuicaoDFe.Executar;
 
@@ -652,17 +652,17 @@ begin
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
 
-function TACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
+function TACBrMDFe.DistribuicaoDFePorUltNSU(const ACNPJCPF, AultNSU: String): Boolean;
 begin
   Result := Distribuicao(ACNPJCPF, AultNSU, '', '');
 end;
 
-function TACBrMDFe.DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
+function TACBrMDFe.DistribuicaoDFePorNSU(const ACNPJCPF, ANSU: String): Boolean;
 begin
   Result := Distribuicao(ACNPJCPF, '', ANSU, '');
 end;
 
-function TACBrMDFe.DistribuicaoDFePorChaveMDFe(ACNPJCPF,
+function TACBrMDFe.DistribuicaoDFePorChaveMDFe(const ACNPJCPF,
   AchMDFe: String): Boolean;
 begin
   // Aguardando a SEFAZ implementar esse recurso já existente para a NF-e.

@@ -71,8 +71,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
@@ -88,15 +88,15 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: String): Boolean;
+    function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -157,12 +157,12 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarMDFe que determina se após carregar os dados do MDFe
     // para o componente, será gerado ou não novamente o XML do MDFe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarMDFe: Boolean = False): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarMDFe: Boolean = False): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarMDFe: Boolean = False): Boolean;
-    function LoadFromString(AXMLString: String; AGerarMDFe: Boolean = False): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String; AGerarMDFe: Boolean = False): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property ACBrMDFe: TComponent read FACBrMDFe;
   end;
@@ -436,7 +436,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Manifesto.LerXML(AXML: String): Boolean;
+function Manifesto.LerXML(const AXML: String): Boolean;
 var
   XMLStr: String;
 begin
@@ -452,7 +452,7 @@ begin
   Result := True;
 end;
 
-function Manifesto.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function Manifesto.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -472,10 +472,10 @@ begin
   Result := True;
 end;
 
-procedure Manifesto.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure Manifesto.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq : String;
+  NomeArqTemp : String;
   AnexosEmail:TStrings;
   StreamMDFe : TMemoryStream;
 begin
@@ -498,8 +498,8 @@ begin
         if Assigned(DAMDFE) then
         begin
           DAMDFE.ImprimirDAMDFEPDF(FMDFe);
-          NomeArq := PathWithDelim(DAMDFE.PathPDF) + NumID + '-mdfe.pdf';
-          AnexosEmail.Add(NomeArq);
+          NomeArqTemp := PathWithDelim(DAMDFE.PathPDF) + NumID + '-mdfe.pdf';
+          AnexosEmail.Add(NomeArqTemp);
         end;
       end;
 
@@ -653,12 +653,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Manifesto.SetXML(AValue: String);
+procedure Manifesto.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Manifesto.SetXMLOriginal(AValue: String);
+procedure Manifesto.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -1739,7 +1739,7 @@ begin
   end;
 end;
 
-function TManifestos.LoadFromFile(CaminhoArquivo: String;
+function TManifestos.LoadFromFile(const CaminhoArquivo: String;
   AGerarMDFe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -1776,7 +1776,7 @@ begin
   Result := Self.LoadFromString(String(AXML), AGerarMDFe);
 end;
 
-function TManifestos.LoadFromString(AXMLString: String;
+function TManifestos.LoadFromString(const AXMLString: String;
   AGerarMDFe: Boolean): Boolean;
 var
   AMDFeXML, XMLStr: AnsiString;
@@ -1824,7 +1824,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TManifestos.LoadFromIni(AIniString: String): Boolean;
+function TManifestos.LoadFromIni(const AIniString: String): Boolean;
 begin
   with Self.Add do
     LerArqIni(AIniString);
@@ -1832,7 +1832,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TManifestos.GravarXML(PathNomeArquivo: String): Boolean;
+function TManifestos.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;

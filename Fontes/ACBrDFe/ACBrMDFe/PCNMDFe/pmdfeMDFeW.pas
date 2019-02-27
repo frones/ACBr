@@ -88,7 +88,7 @@ type
     procedure GerarInfAdic;       // Nivel 1
     procedure GerarinfRespTec;    // Nivel 1
 
-    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    procedure AjustarMunicipioUF(var xUF: String; var xMun: String; var cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 
   public
     constructor Create(AOwner: TMDFe);
@@ -1233,7 +1233,7 @@ begin
 end;
 
 procedure TMDFeW.AjustarMunicipioUF(var xUF, xMun: String;
-  var cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+  var cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 var
   PaisBrasil: boolean;
 begin

@@ -1,4 +1,4 @@
-unit Unit5; 
+﻿unit Unit5; 
 
 {$IFDEF FPC}
  {$mode objfpc}{$H+}
@@ -60,7 +60,7 @@ begin
    if Key in [#13,#8] then exit ;  { Enter e BackSpace, OK }
 
    if Operacao in [tcDouble, tcCMC7] then
-      if not (Key in ['0'..'9', DecimalSeparator]) then    { Apenas números }
+      if not (Key in ['0'..'9', ',']) then    { Apenas números }
          Key := #0 ;
 
    if (TamanhoMaximo > 0) and (Length( Edit1.Text ) >= TamanhoMaximo) then

@@ -4415,7 +4415,7 @@ begin
     with Email do
     begin
       edtBOLEmailAssunto.Text          := EmailAssuntoBoleto;
-      edtBOLEmailMensagem.Text         := EmailMensagemBoleto;
+      edtBOLEmailMensagem.Text         := StringToBinaryString(EmailMensagemBoleto);
     end;
 
   end;

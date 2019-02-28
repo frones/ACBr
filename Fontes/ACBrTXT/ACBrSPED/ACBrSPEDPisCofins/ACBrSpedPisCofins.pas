@@ -695,8 +695,8 @@ begin
    if not Bloco_M.Gravado then
       WriteBloco_M;
 
-   if (Bloco_P.Gravado) or (Bloco_0.Registro0145Count = 0) then exit ;
-
+   if ((Bloco_P.Gravado) or (Bloco_0.Registro0145Count = 0)) and
+      (Bloco_P.RegistroP001.IND_MOV <> imSemDados) then exit ;    { <= Quando sem movimentação }
    /// BLOCO P
    WriteRegistroP001;
    WriteRegistroP990;

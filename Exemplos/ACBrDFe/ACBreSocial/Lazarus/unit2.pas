@@ -1,5 +1,7 @@
 unit Unit2;
 
+{$MODE Delphi}
+
 interface
 
 uses

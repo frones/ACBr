@@ -1,21 +1,19 @@
 program ExemploEsocial;
 
-{$mode objfpc}{$H+}
+{$MODE Delphi}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
-  Interfaces, // this includes the LCL widgetset
-  Forms, uExemploEsocial
-  { you can add units after this };
+  Forms, Interfaces,
+  uExemploEsocial in 'uExemploEsocial.pas' {FExemploEsocial},
+  unit2 in 'unit2.pas' {frSelecionarCertificado},
+  ufrmStatus in 'ufrmStatus.pas' {frmStatus};
 
 {$R *.res}
 
 begin
-  RequireDerivedFormResource:=True;
   Application.Initialize;
   Application.CreateForm(TFExemploEsocial, FExemploEsocial);
+  Application.CreateForm(TfrSelecionarCertificado, frSelecionarCertificado);
+  Application.CreateForm(TfrmStatus, frmStatus);
   Application.Run;
 end.
-

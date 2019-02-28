@@ -1,8 +1,8 @@
 object frSelecionarCertificado: TfrSelecionarCertificado
   Left = 355
   Top = 229
-  Width = 674
-  Height = 276
+  Width = 676
+  Height = 265
   ActiveControl = StringGrid1
   Caption = 'frSelecionarCertificado'
   Color = clBtnFace
@@ -11,34 +11,38 @@ object frSelecionarCertificado: TfrSelecionarCertificado
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   Position = poOwnerFormCenter
   PixelsPerInch = 96
-  TextHeight = 13
   object StringGrid1: TStringGrid
     Left = 0
     Top = 0
-    Width = 666
-    Height = 200
+    Width = 660
+    Height = 182
     Align = alClient
     FixedCols = 0
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing]
     TabOrder = 0
+    ColWidths = (
+      64
+      64
+      64
+      64
+      64)
+    RowHeights = (
+      24
+      24)
   end
   object Panel1: TPanel
     Left = 0
-    Top = 200
-    Width = 666
+    Top = 182
+    Width = 660
     Height = 45
     Align = alBottom
     TabOrder = 1
-    DesignSize = (
-      666
-      45)
     object BitBtn1: TBitBtn
-      Left = 444
-      Top = 5
+      Left = 436
+      Top = 3
       Width = 88
       Height = 30
       Anchors = [akTop, akRight]
@@ -46,8 +50,8 @@ object frSelecionarCertificado: TfrSelecionarCertificado
       Kind = bkCancel
     end
     object BitBtn2: TBitBtn
-      Left = 556
-      Top = 5
+      Left = 548
+      Top = 3
       Width = 88
       Height = 30
       Anchors = [akTop, akRight]

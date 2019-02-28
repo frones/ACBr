@@ -672,6 +672,8 @@ begin
       (*N36*)NFe.Det[i].Imposto.ICMS.pICMSEfet   := Leitor.rCampo(tcDe4, 'pICMSEfet');
       (*N37*)NFe.Det[i].Imposto.ICMS.vICMSEfet   := Leitor.rCampo(tcDe2, 'vICMSEfet');
 
+      (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := Leitor.rCampo(tcDe2, 'vICMSSubstituto');
+
       if Leitor.rExtrai(4, 'ICMSPart') <> '' then
       begin
         case NFe.Det[i].Imposto.ICMS.CST of

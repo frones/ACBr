@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/02/2019
+-- Diversos --
+[*] Alterações visando atender a NT 2018/005 versão 1.10
+  Por: Italo Jurisato Junior
+
 14/02/2019
 -- ACBrNFeNotasFiscais / pcnNFeR --
 [*] Ajuste para remoção completa do namespace do XML para leitura correta pelo

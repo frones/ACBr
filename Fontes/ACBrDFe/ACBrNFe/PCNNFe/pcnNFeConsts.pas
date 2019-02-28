@@ -246,6 +246,7 @@ const
   DSC_VBCEFET = 'Valor da base de cálculo efetiva';
   DSC_PICMSEFET = 'Alíquota do ICMS efetiva';
   DSC_VICMSEFET = 'Valor do ICMS efetivo';
+  DSC_VICMSSUBSTITUTO = 'Valor do ICMS Substituto';
   //DSC_VPART = 'Valor';
   DSC_INDESCALA = 'Indicador de Escala de Produção';
   DSC_CNPJFAB = 'CNPJ do Fabricante da Mercadoria';

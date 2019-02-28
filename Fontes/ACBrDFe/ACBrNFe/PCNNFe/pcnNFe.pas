@@ -1132,6 +1132,7 @@ type
     FvBCEfet: Currency;
     FpICMSEfet: Currency;
     FvICMSEfet: Currency;
+    FvICMSSubstituto: Currency;
   public
     procedure Assign(Source: TICMS);
     property orig: TpcnOrigemMercadoria read Forig write Forig default oeNacional;
@@ -1175,6 +1176,7 @@ type
     property vBCEfet: Currency read FvBCEfet write FvBCEfet;
     property pICMSEfet: Currency read FpICMSEfet write FpICMSEfet;
     property vICMSEfet: Currency read FvICMSEfet write FvICMSEfet;
+    property vICMSSubstituto: Currency read FvICMSSubstituto write FvICMSSubstituto;
   end;
 
   TIPI = class(TObject)

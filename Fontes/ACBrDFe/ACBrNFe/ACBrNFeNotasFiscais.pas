@@ -2097,6 +2097,8 @@ begin
                 ICMS.vBCEfet    := StringToFloatDef( INIRec.ReadString(sSecao,'vBCEfet','') ,0);
                 ICMS.pICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSEfet','') ,0);
                 ICMS.vICMSEfet  := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSEfet','') ,0);
+
+                ICMS.vICMSSubstituto := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSubstituto','') ,0);
               end;
             end;
 
@@ -2912,10 +2914,20 @@ begin
             sSecao := 'Medicamento' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
             with Prod.med.Items[J] do
             begin
-              INIRec.WriteString(sSecao, 'cProdANVISA', cProdANVISA);
-              INIRec.WriteFloat(sSecao, 'qLote', qLote);
-              INIRec.WriteString(sSecao, 'dFab', DateToStr(dFab));
-              INIRec.WriteString(sSecao, 'dVal', DateToStr(dVal));
+              if NFe.infNFe.Versao >= 4 then
+              begin
+                INIRec.WriteString(sSecao, 'cProdANVISA', cProdANVISA);
+                INIRec.WriteString(sSecao, 'xMotivoIsencao', xMotivoIsencao);
+              end;
+
+              if NFe.infNFe.Versao < 4 then
+              begin
+                INIRec.WriteString(sSecao, 'nLote', nLote);
+                INIRec.WriteFloat(sSecao, 'qLote', qLote);
+                INIRec.WriteString(sSecao, 'dFab', DateToStr(dFab));
+                INIRec.WriteString(sSecao, 'dVal', DateToStr(dVal));
+              end;
+
               INIRec.WriteFloat(sSecao, 'vPMC', vPMC);
             end;
           end;
@@ -3023,6 +3035,8 @@ begin
               INIRec.WriteFloat(sSecao, 'vBCEfet', ICMS.vBCEfet);
               INIRec.WriteFloat(sSecao, 'pICMSEfet', ICMS.pICMSEfet);
               INIRec.WriteFloat(sSecao, 'vICMSEfet', ICMS.vICMSEfet);
+
+              INIRec.WriteFloat(sSecao, 'vICMSSubstituto', ICMS.vICMSSubstituto);
             end;
             sSecao := 'ICMSUFDEST' + IntToStrZero(I + 1, 3);
             with ICMSUFDest do

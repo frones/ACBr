@@ -3511,6 +3511,7 @@ begin
   vBCEfet     := Source.vBCEfet;
   pICMSEfet   := Source.pICMSEfet;
   vICMSEfet   := Source.vICMSEfet;
+  vICMSSubstituto := Source.vICMSSubstituto;
 end;
 
 { TIPI }

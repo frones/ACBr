@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2019
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[*] Melhoria na condição para apresentar o layout de local retirada / entrega.
+	(por: Henrique Leonardo - Hleorj )
+
 13/02/2019
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [+] Implantação do novo layout de local retirada / entrega

@@ -2078,7 +2078,7 @@ procedure TfrlDANFeRLPaisagem.DefinirRetirada;
 begin
   with fpNFe.Retirada do
   begin
-    rlbQuandoRetirada.Visible := NaoEstaVazio(xNome);
+    rlbQuandoRetirada.Visible := NaoEstaVazio(xNome) or NaoEstaVazio(CNPJCPF);
 
     if rlbQuandoRetirada.Visible then
     begin
@@ -2101,7 +2101,7 @@ procedure TfrlDANFeRLPaisagem.DefinirEntrega;
 begin
   with fpNFe.Entrega do
   begin
-    rlbQuandoEntrega.Visible := NaoEstaVazio(xNome);
+    rlbQuandoEntrega.Visible := NaoEstaVazio(xNome) or NaoEstaVazio(CNPJCPF);
 
     if rlbQuandoEntrega.Visible then
     begin

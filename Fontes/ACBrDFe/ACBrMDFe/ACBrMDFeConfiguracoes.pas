@@ -315,6 +315,7 @@ end;
 
 constructor TDownloadConfMDFe.Create;
 begin
+  inherited Create;
   FPathDownload := '';
   FSepararPorNome := False;
 end;

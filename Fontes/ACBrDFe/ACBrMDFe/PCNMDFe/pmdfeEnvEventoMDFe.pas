@@ -41,7 +41,7 @@ unit pmdfeEnvEventoMDFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
 //{$IFNDEF VER130}
 //  Variants,
 //{$ENDIF}
@@ -49,38 +49,34 @@ uses
   pmdfeEventoMDFe, pcnSignature;
 
 type
-  TInfEventoCollection     = class;
-  TInfEventoCollectionItem = class;
-  TEventoMDFe              = class;
   EventoException          = class(Exception);
 
-  TInfEventoCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TInfEventoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
-  public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfEventoCollectionItem;
-    property Items[Index: Integer]: TInfEventoCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TInfEventoCollectionItem = class(TCollectionItem)
+  TInfEventoCollectionItem = class(TObject)
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
     Fsignature: Tsignature;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
+  TInfEventoCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TInfEventoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfEventoCollectionItem);
+  public
+    function Add: TInfEventoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfEventoCollectionItem;
+    property Items[Index: Integer]: TInfEventoCollectionItem read GetItem write SetItem; default;
+  end;
+
   { TEventoMDFe }
 
-  TEventoMDFe = class(TPersistent)
+  TEventoMDFe = class(TObject)
   private
     FGerador: TGerador;
     FidLote: Integer;
@@ -96,7 +92,6 @@ type
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
     function LerFromIni(const AIniString: String): Boolean;
-  published
     property Gerador: TGerador             read FGerador write FGerador;
     property idLote: Integer               read FidLote  write FidLote;
     property Evento: TInfEventoCollection  read FEvento  write SetEvento;
@@ -114,8 +109,9 @@ uses
 
 constructor TEventoMDFe.Create;
 begin
+  inherited Create;
   FGerador   := TGerador.Create;
-  FEvento    := TInfEventoCollection.Create(Self);
+  FEvento    := TInfEventoCollection.Create;
 end;
 
 destructor TEventoMDFe.Destroy;
@@ -311,7 +307,6 @@ var
   INIRec: TMemIniFile;
   Ok: Boolean;
 begin
-  Result := False;
   Self.Evento.Clear;
 
   INIRec := TMemIniFile.Create('');
@@ -349,23 +344,17 @@ begin
       Inc(I);
     end;
 
-    Result := True;
   finally
     INIRec.Free;
   end;
+  Result := True;
 end;
 
 { TInfEventoCollection }
 
 function TInfEventoCollection.Add: TInfEventoCollectionItem;
 begin
-  Result := TInfEventoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfEventoCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfEventoCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfEventoCollection.GetItem(
@@ -380,10 +369,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfEventoCollection.New: TInfEventoCollectionItem;
+begin
+  Result := TInfEventoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfEventoCollectionItem }
 
 constructor TInfEventoCollectionItem.Create;
 begin
+  inherited Create;
   FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;

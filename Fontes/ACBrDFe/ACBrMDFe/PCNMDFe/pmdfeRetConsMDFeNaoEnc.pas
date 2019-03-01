@@ -41,38 +41,33 @@ unit pmdfeRetConsMDFeNaoEnc;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
 
-  TRetInfMDFeCollection     = class;
   TRetInfMDFeCollectionItem = class;
-  TRetConsMDFeNaoEnc        = class;
 
-  TRetInfMDFeCollection = class(TCollection)
+  TRetInfMDFeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetInfMDFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetInfMDFeCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetInfMDFeCollectionItem;
+    function Add: TRetInfMDFeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetInfMDFeCollectionItem;
     property Items[Index: Integer]: TRetInfMDFeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetInfMDFeCollectionItem = class(TCollectionItem)
+  TRetInfMDFeCollectionItem = class(TObject)
   private
     FchMDFe: String;
     FnProt: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property chMDFe: String read FchMDFe write FchMDFe;
     property nProt: String  read FnProt  write FnProt;
   end;
 
-  TRetConsMDFeNaoEnc = class(TPersistent)
+  TRetConsMDFeNaoEnc = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -86,7 +81,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor                read FLeitor   write FLeitor;
     property versao: String                 read Fversao   write Fversao;
     property tpAmb: TpcnTipoAmbiente        read FtpAmb    write FtpAmb;
@@ -103,6 +97,7 @@ implementation
 
 constructor TRetConsMDFeNaoEnc.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
 end;
 
@@ -135,7 +130,7 @@ begin
       if Assigned(InfMDFe) then
         InfMDFe.Free;
 
-      InfMDFe := TRetInfMDFeCollection.Create(Self);
+      InfMDFe := TRetInfMDFeCollection.Create;
       i := 0;
       while Leitor.rExtrai(1, 'infMDFe', '', i + 1) <> '' do
       begin
@@ -157,13 +152,7 @@ end;
 
 function TRetInfMDFeCollection.Add: TRetInfMDFeCollectionItem;
 begin
-  Result := TRetInfMDFeCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TRetInfMDFeCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetInfMDFeCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetInfMDFeCollection.GetItem(Index: Integer): TRetInfMDFeCollectionItem;
@@ -177,17 +166,10 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TRetInfMDFeCollectionItem }
-
-constructor TRetInfMDFeCollectionItem.Create;
+function TRetInfMDFeCollection.New: TRetInfMDFeCollectionItem;
 begin
-
-end;
-
-destructor TRetInfMDFeCollectionItem.Destroy;
-begin
-  
-  inherited;
+  Result := TRetInfMDFeCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

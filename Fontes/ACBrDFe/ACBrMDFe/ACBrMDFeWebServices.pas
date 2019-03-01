@@ -1401,8 +1401,8 @@ begin
   if Assigned(FprocEventoMDFe) then
     FprocEventoMDFe.Free;
 
-  FprotMDFe := TProcMDFe.Create;
-  FprocEventoMDFe := TRetEventoMDFeCollection.Create(FOwner);
+  FprotMDFe       := TProcMDFe.Create;
+  FprocEventoMDFe := TRetEventoMDFeCollection.Create;
 end;
 
 procedure TMDFeConsulta.SetMDFeChave(const AValue: String);
@@ -1510,18 +1510,17 @@ begin
 
     // <protMDFe> - Retorno dos dados do ENVIO da NF-e
     // Considerá-los apenas se não existir nenhum evento de cancelamento (110111)
-    FprotMDFe.PathMDFe := MDFeRetorno.protMDFe.PathMDFe;
+    FprotMDFe.PathMDFe            := MDFeRetorno.protMDFe.PathMDFe;
     FprotMDFe.PathRetConsReciMDFe := MDFeRetorno.protMDFe.PathRetConsReciMDFe;
-    FprotMDFe.PathRetConsSitMDFe := MDFeRetorno.protMDFe.PathRetConsSitMDFe;
-    FprotMDFe.PathRetConsSitMDFe := MDFeRetorno.protMDFe.PathRetConsSitMDFe;
-    FprotMDFe.tpAmb := MDFeRetorno.protMDFe.tpAmb;
-    FprotMDFe.verAplic := MDFeRetorno.protMDFe.verAplic;
-    FprotMDFe.chMDFe := MDFeRetorno.protMDFe.chMDFe;
-    FprotMDFe.dhRecbto := MDFeRetorno.protMDFe.dhRecbto;
-    FprotMDFe.nProt := MDFeRetorno.protMDFe.nProt;
-    FprotMDFe.digVal := MDFeRetorno.protMDFe.digVal;
-    FprotMDFe.cStat := MDFeRetorno.protMDFe.cStat;
-    FprotMDFe.xMotivo := MDFeRetorno.protMDFe.xMotivo;
+    FprotMDFe.PathRetConsSitMDFe  := MDFeRetorno.protMDFe.PathRetConsSitMDFe;
+    FprotMDFe.tpAmb               := MDFeRetorno.protMDFe.tpAmb;
+    FprotMDFe.verAplic            := MDFeRetorno.protMDFe.verAplic;
+    FprotMDFe.chMDFe              := MDFeRetorno.protMDFe.chMDFe;
+    FprotMDFe.dhRecbto            := MDFeRetorno.protMDFe.dhRecbto;
+    FprotMDFe.nProt               := MDFeRetorno.protMDFe.nProt;
+    FprotMDFe.digVal              := MDFeRetorno.protMDFe.digVal;
+    FprotMDFe.cStat               := MDFeRetorno.protMDFe.cStat;
+    FprotMDFe.xMotivo             := MDFeRetorno.protMDFe.xMotivo;
 
     if Assigned(MDFeRetorno.procEventoMDFe) and (MDFeRetorno.procEventoMDFe.Count > 0) then
     begin
@@ -2155,7 +2154,7 @@ begin
   if Assigned(FRetConsMDFeNaoEnc) then
     FRetConsMDFeNaoEnc.Free;
 
-  FInfMDFe := TRetInfMDFeCollection.Create(FOwner);
+  FInfMDFe := TRetInfMDFeCollection.Create;
   FRetConsMDFeNaoEnc := TRetConsMDFeNaoEnc.Create;
 end;
 

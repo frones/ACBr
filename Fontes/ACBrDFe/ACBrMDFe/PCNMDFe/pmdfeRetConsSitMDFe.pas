@@ -41,37 +41,32 @@ unit pmdfeRetConsSitMDFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor,
   pmdfeProcMDFe, pmdfeRetEnvEventoMDFe;
 
 type
 
-  TRetEventoMDFeCollection     = class;
-  TRetEventoMDFeCollectionItem = class;
-  TRetConsSitMDFe              = class;
+  TRetEventoMDFeCollectionItem = class(TObject)
+  private
+    FRetEventoMDFe: TRetEventoMDFe;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property RetEventoMDFe: TRetEventoMDFe read FRetEventoMDFe write FRetEventoMDFe;
+  end;
 
-  TRetEventoMDFeCollection = class(TCollection)
+  TRetEventoMDFeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetEventoMDFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventoMDFeCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetEventoMDFeCollectionItem;
+    function Add: TRetEventoMDFeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetEventoMDFeCollectionItem;
     property Items[Index: Integer]: TRetEventoMDFeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetEventoMDFeCollectionItem = class(TCollectionItem)
-  private
-    FRetEventoMDFe: TRetEventoMDFe;
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
-    property RetEventoMDFe: TRetEventoMDFe read FRetEventoMDFe write FRetEventoMDFe;
-  end;
-
-  TRetConsSitMDFe = class(TPersistent)
+  TRetConsSitMDFe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -88,7 +83,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor                          read FLeitor         write FLeitor;
     property versao: String                           read Fversao         write Fversao;
     property tpAmb: TpcnTipoAmbiente                  read FtpAmb          write FtpAmb;
@@ -108,6 +102,7 @@ implementation
 
 constructor TRetConsSitMDFe.Create;
 begin
+  inherited Create;
   FLeitor   := TLeitor.Create;
   FprotMDFe := TProcMDFe.create;
 end;
@@ -163,7 +158,7 @@ begin
 
       if Assigned(procEventoMDFe) then
         procEventoMDFe.Free;
-      procEventoMDFe := TRetEventoMDFeCollection.Create(Self);
+      procEventoMDFe := TRetEventoMDFeCollection.Create;
       i := 0;
       while Leitor.rExtrai(1, 'procEventoMDFe', '', i + 1) <> '' do
       begin
@@ -182,17 +177,11 @@ begin
   end;
 end;
 
-{ TRetEventoCollection }
+{ TRetEventoMDFeCollection }
 
 function TRetEventoMDFeCollection.Add: TRetEventoMDFeCollectionItem;
 begin
-  Result := TRetEventoMDFeCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TRetEventoMDFeCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetEventoMDFeCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetEventoMDFeCollection.GetItem(Index: Integer): TRetEventoMDFeCollectionItem;
@@ -206,10 +195,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TRetEventoCollectionItem }
+function TRetEventoMDFeCollection.New: TRetEventoMDFeCollectionItem;
+begin
+  Result := TRetEventoMDFeCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TRetEventoMDFeCollectionItem }
 
 constructor TRetEventoMDFeCollectionItem.Create;
 begin
+  inherited Create;
   FRetEventoMDFe := TRetEventoMDFe.Create;
 end;
 

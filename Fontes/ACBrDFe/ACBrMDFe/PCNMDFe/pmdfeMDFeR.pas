@@ -69,6 +69,7 @@ implementation
 
 constructor TMDFeR.Create(AOwner: TMDFe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FMDFe := AOwner;
 end;

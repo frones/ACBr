@@ -47,7 +47,7 @@ uses
 
 type
 
-  TConsMDFeNaoEnc = class(TPersistent)
+  TConsMDFeNaoEnc = class(TObject)
   private
     FGerador: TGerador;
     FtpAmb: TpcnTipoAmbiente;
@@ -57,7 +57,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-  published
     property Gerador: TGerador       read FGerador write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb   write FtpAmb;
     property CNPJCPF: String         read FCNPJCPF write FCNPJCPF;
@@ -70,6 +69,7 @@ implementation
 
 constructor TConsMDFeNaoEnc.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

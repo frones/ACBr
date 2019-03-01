@@ -46,7 +46,7 @@ uses
 
 type
 
-  TProcMDFe = class(TPersistent)
+  TProcMDFe = class(TObject)
   private
     FGerador: TGerador;
     FPathMDFe: String;
@@ -67,7 +67,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: boolean;
-  published
     property Gerador: TGerador           read FGerador             write FGerador;
     property PathMDFe: String            read FPathMDFe            write FPathMDFe;
     property PathRetConsReciMDFe: String read FPathRetConsReciMDFe write FPathRetConsReciMDFe;
@@ -95,6 +94,7 @@ uses
 
 constructor TProcMDFe.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

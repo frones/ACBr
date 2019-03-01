@@ -1625,7 +1625,7 @@ begin
   if not (AOwner is TACBrMDFe) then
     raise EACBrMDFeException.Create('AOwner deve ser do tipo TACBrMDFe');
 
-  inherited;
+  inherited Create(AOwner, ItemClass);
 
   FACBrMDFe := TACBrMDFe(AOwner);
   FConfiguracoes := TACBrMDFe(FACBrMDFe).Configuracoes;

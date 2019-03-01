@@ -162,7 +162,7 @@ begin
       i := 0;
       while Leitor.rExtrai(1, 'procEventoMDFe', '', i + 1) <> '' do
       begin
-        procEventoMDFe.Add;
+        procEventoMDFe.New;
         procEventoMDFe.Items[i].RetEventoMDFe.Leitor.Arquivo := Leitor.Grupo;
         procEventoMDFe.Items[i].RetEventoMDFe.XML := Leitor.Grupo;
         procEventoMDFe.Items[i].RetEventoMDFe.LerXml;

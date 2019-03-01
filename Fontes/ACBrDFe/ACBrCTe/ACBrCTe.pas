@@ -716,7 +716,7 @@ begin
       raise Exception.Create(WebServices.Consulta.Msg);
 
     EventoCTe.Evento.Clear;
-    with EventoCTe.Evento.Add do
+    with EventoCTe.Evento.New do
     begin
       infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.CTeChave), 7, 14);
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.CTeChave), 1, 2), 0);

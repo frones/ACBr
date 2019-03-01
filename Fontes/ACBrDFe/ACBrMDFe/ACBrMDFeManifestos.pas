@@ -721,7 +721,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with Ide.infMunCarrega.Add do
+        with Ide.infMunCarrega.New do
         begin
           cMunCarrega := INIRec.ReadInteger(sSecao, 'cMunCarrega', 0);
           xMunCarrega := sFim;
@@ -739,7 +739,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with Ide.infPercurso.Add do
+        with Ide.infPercurso.New do
         begin
           UFPer := sFim;
         end;
@@ -797,7 +797,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with rodo.infANTT.infCIOT.Add do
+          with rodo.infANTT.infCIOT.New do
           begin
             CIOT    := INIRec.ReadString(sSecao, 'CIOT', '');
             CNPJCPF := sFim;
@@ -817,7 +817,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with rodo.infANTT.valePed.disp.Add do
+          with rodo.infANTT.valePed.disp.New do
           begin
             CNPJForn := sFim;
             CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
@@ -839,7 +839,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with rodo.infANTT.infContratante.Add do
+          with rodo.infANTT.infContratante.New do
           begin
             CNPJCPF := sFim;
           end;
@@ -886,7 +886,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with rodo.veicTracao.condutor.Add do
+        with rodo.veicTracao.condutor.New do
         begin
           xNome := sFim;
           CPF   := INIRec.ReadString(sSecao, 'CPF', '');
@@ -906,7 +906,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with rodo.veicReboque.Add do
+        with rodo.veicReboque.New do
         begin
           cInt    := INIRec.ReadString(sSecao, 'cInt', '');
           placa   := sFim;
@@ -945,7 +945,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with rodo.valePed.disp.Add do
+        with rodo.valePed.disp.New do
         begin
           CNPJForn := sFim;
           CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
@@ -966,7 +966,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with rodo.lacRodo.Add do
+        with rodo.lacRodo.New do
         begin
           nLacre := sFim;
         end;
@@ -1021,7 +1021,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Aquav.infTermCarreg.Add do
+          with Aquav.infTermCarreg.New do
           begin
             cTermCarreg := sFim;
             xTermCarreg := INIRec.ReadString(sSecao, 'xTermCarreg', '');
@@ -1039,7 +1039,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Aquav.infTermDescarreg.Add do
+          with Aquav.infTermDescarreg.New do
           begin
             cTermDescarreg := sFim;
             xTermDescarreg := INIRec.ReadString(sSecao, 'xTermDescarreg', '');
@@ -1057,7 +1057,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Aquav.infEmbComb.Add do
+          with Aquav.infEmbComb.New do
           begin
             cEmbComb := sFim;
             xBalsa   :=  INIRec.ReadString(sSecao, 'xBalsa', '');
@@ -1075,7 +1075,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Aquav.infUnidCargaVazia.Add do
+          with Aquav.infUnidCargaVazia.New do
           begin
             idUnidCargaVazia := sFim;
             tpUnidCargaVazia := StrToUnidCarga(OK, INIRec.ReadString(sSecao, 'tpUnidCargaVazia', '1'));
@@ -1093,7 +1093,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Aquav.infUnidTranspVazia.Add do
+          with Aquav.infUnidTranspVazia.New do
           begin
             idUnidTranspVazia := sFim;
             tpUnidTranspVazia := StrToUnidTransp (OK, INIRec.ReadString(sSecao, 'tpUnidTranspVazia', '1'));
@@ -1126,7 +1126,7 @@ begin
           if sFim = 'FIM' then
             break;
 
-          with Ferrov.vag.Add do
+          with Ferrov.vag.New do
           begin
             serie := sFim;
             nVag  := INIRec.ReadInteger(sSecao, 'nVag', 0);
@@ -1152,7 +1152,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infDoc.infMunDescarga.Add do
+        with infDoc.infMunDescarga.New do
         begin
           cMunDescarga := INIRec.ReadInteger(sSecao, 'cMunDescarga', 0);
           xMunDescarga := sFim;
@@ -1166,7 +1166,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with infCTe.Add do
+            with infCTe.New do
             begin
               chCTe       := sFim;
               SegCodBarra := INIRec.ReadString(sSecao, 'SegCodBarra', '');
@@ -1181,7 +1181,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with peri.Add do
+                with peri.New do
                 begin
                   nONU      := sFim;
                   xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
@@ -1211,7 +1211,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with infUnidTransp.Add do
+                with infUnidTransp.New do
                 begin
                   tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
                   idUnidTransp := sFim;
@@ -1226,7 +1226,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with lacUnidTransp.Add do
+                    with lacUnidTransp.New do
                     begin
                       nLacre := sFim;
                     end;
@@ -1243,7 +1243,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with infUnidCarga.Add do
+                    with infUnidCarga.New do
                     begin
                       tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                       idUnidCarga := sFim;
@@ -1258,7 +1258,7 @@ begin
                         if sFim = 'FIM' then
                           break;
 
-                        with lacUnidCarga.Add do
+                        with lacUnidCarga.New do
                         begin
                           nLacre := sFim;
                         end;
@@ -1287,7 +1287,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with infNFe.Add do
+            with infNFe.New do
             begin
               chNFe        := sFim;
               SegCodBarra  := INIRec.ReadString(sSecao, 'SegCodBarra', '');
@@ -1302,7 +1302,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with peri.Add do
+                with peri.New do
                 begin
                   nONU      := sFim;
                   xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
@@ -1324,7 +1324,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with infUnidTransp.Add do
+                with infUnidTransp.New do
                 begin
                   tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
                   idUnidTransp := sFim;
@@ -1339,7 +1339,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with lacUnidTransp.Add do
+                    with lacUnidTransp.New do
                     begin
                       nLacre := sFim;
                     end;
@@ -1356,7 +1356,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with infUnidCarga.Add do
+                    with infUnidCarga.New do
                     begin
                       tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                       idUnidCarga := sFim;
@@ -1371,7 +1371,7 @@ begin
                         if sFim = 'FIM' then
                           break;
 
-                        with lacUnidCarga.Add do
+                        with lacUnidCarga.New do
                         begin
                           nLacre := sFim;
                         end;
@@ -1400,7 +1400,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with infMDFeTransp.Add do
+            with infMDFeTransp.New do
             begin
               chMDFe := sFim;
               indReentrega:= INIRec.ReadString(sSecao, 'indReentrega', '');
@@ -1414,7 +1414,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with peri.Add do
+                with peri.New do
                 begin
                   nONU      := sFim;
                   xNomeAE   := INIRec.ReadString(sSecao,'xNomeAE','');
@@ -1436,7 +1436,7 @@ begin
                 if sFim = 'FIM' then
                   break;
 
-                with infUnidTransp.Add do
+                with infUnidTransp.New do
                 begin
                   tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
                   idUnidTransp := sFim;
@@ -1451,7 +1451,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with lacUnidTransp.Add do
+                    with lacUnidTransp.New do
                     begin
                       nLacre := sFim;
                     end;
@@ -1468,7 +1468,7 @@ begin
                     if sFim = 'FIM' then
                       break;
 
-                    with infUnidCarga.Add do
+                    with infUnidCarga.New do
                     begin
                       tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                       idUnidCarga := sFim;
@@ -1483,7 +1483,7 @@ begin
                         if sFim = 'FIM' then
                           break;
 
-                        with lacUnidCarga.Add do
+                        with lacUnidCarga.New do
                         begin
                           nLacre := sFim;
                         end;
@@ -1521,7 +1521,7 @@ begin
 //        if sFim = 'FIM' then
 //          break;
 
-        with seg.Add do
+        with seg.New do
         begin
           respSeg :=  StrToRspSeguroMDFe(OK, INIRec.ReadString(sSecao, 'respSeg', '1'));
           CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
@@ -1538,7 +1538,7 @@ begin
             if sFim = 'FIM' then
               break;
 
-            with aver.Add do
+            with aver.New do
             begin
               nAver := sFim;
             end;
@@ -1569,7 +1569,7 @@ begin
         if sFim = 'FIM' then
           break;
 
-        with lacres.Add do
+        with lacres.New do
         begin
           nLacre := sFim;
         end;
@@ -1586,7 +1586,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with autXML.Add do
+        with autXML.New do
         begin
           CNPJCPF := sFim;
         end;

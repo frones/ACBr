@@ -1533,7 +1533,7 @@ begin
       FprocEventoMDFe.Clear;
       for I := 0 to MDFeRetorno.procEventoMDFe.Count - 1 do
       begin
-        with FprocEventoMDFe.Add.RetEventoMDFe do
+        with FprocEventoMDFe.New.RetEventoMDFe do
         begin
           idLote := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.idLote;
           tpAmb := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.tpAmb;
@@ -1562,7 +1562,7 @@ begin
           retEvento.Clear;
           for J := 0 to MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Count-1 do
           begin
-            with retEvento.Add.RetInfEvento do
+            with retEvento.New.RetInfEvento do
             begin
               Id          := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.Id;
               tpAmb       := MDFeRetorno.procEventoMDFe.Items[I].RetEventoMDFe.retEvento.Items[j].RetInfEvento.tpAmb;
@@ -1879,7 +1879,7 @@ begin
     
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
-      with EventoMDFe.Evento.Add do
+      with EventoMDFe.Evento.New do
       begin
         infEvento.tpAmb      := FTpAmb;
         infEvento.CNPJCPF    := FEvento.Evento[i].InfEvento.CNPJCPF;
@@ -2215,7 +2215,7 @@ begin
 
   for i := 0 to FRetConsMDFeNaoEnc.InfMDFe.Count -1 do
   begin
-    FinfMDFe.Add;
+    FinfMDFe.New;
     FinfMDFe.Items[i].chMDFe := FRetConsMDFeNaoEnc.InfMDFe.Items[i].chMDFe;
     FinfMDFe.Items[i].nProt  := FRetConsMDFeNaoEnc.InfMDFe.Items[i].nProt;
   end;

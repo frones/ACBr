@@ -462,7 +462,7 @@ begin
       raise Exception.Create(WebServices.Consulta.Msg);
 
     EventoMDFe.Evento.Clear;
-    with EventoMDFe.Evento.Add do
+    with EventoMDFe.Evento.New do
     begin
       infEvento.CNPJCPF  := copy(OnlyNumber(WebServices.Consulta.MDFeChave), 7, 14);
       infEvento.cOrgao   := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.MDFeChave), 1, 2), 0);

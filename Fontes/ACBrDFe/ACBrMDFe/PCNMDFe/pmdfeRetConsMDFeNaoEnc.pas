@@ -134,7 +134,7 @@ begin
       i := 0;
       while Leitor.rExtrai(1, 'infMDFe', '', i + 1) <> '' do
       begin
-        InfMDFe.Add;
+        InfMDFe.New;
         InfMDFe.Items[i].FchMDFe := leitor.rCampo(tcStr, 'chMDFe');
         InfMDFe.Items[i].FnProt  := leitor.rCampo(tcStr, 'nProt');
         inc(i);

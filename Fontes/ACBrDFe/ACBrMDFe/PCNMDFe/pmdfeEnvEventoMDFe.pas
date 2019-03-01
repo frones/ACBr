@@ -239,7 +239,7 @@ begin
   try
      RetEventoMDFe.Leitor.Arquivo := AXML;
      Result := RetEventoMDFe.LerXml;
-     with FEvento.Add do
+     with FEvento.New do
       begin
         infEvento.Id         := RetEventoMDFe.InfEvento.Id;
         InfEvento.cOrgao     := RetEventoMDFe.InfEvento.cOrgao;
@@ -323,7 +323,7 @@ begin
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break;
 
-      with Self.Evento.Add do
+      with Self.Evento.New do
       begin
         infEvento.chMDFe     := INIRec.ReadString(sSecao, 'chMDFe', '');
         infEvento.cOrgao     := INIRec.ReadInteger(sSecao, 'cOrgao', 0);

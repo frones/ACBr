@@ -217,7 +217,7 @@ begin
 
       while Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' do
        begin
-         FretEvento.Add;
+         FretEvento.New;
 
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
@@ -244,7 +244,7 @@ begin
        end;
 
       if i = 0 then
-        FretEvento.Add;
+        FretEvento.New;
 
       Result := True;
     end;

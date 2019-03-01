@@ -2732,7 +2732,7 @@ begin
     if not(InputQuery('WebServices Cancelamento', 'Justificativa', vAux))
       then exit;
 
-    with ACBrMDFe1.EventoMDFe.Evento.Add do
+    with ACBrMDFe1.EventoMDFe.Evento.New do
     begin
       infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
       infEvento.CNPJCPF  := ACBrMDFe1.Manifestos.Items[0].MDFe.emit.CNPJCPF;

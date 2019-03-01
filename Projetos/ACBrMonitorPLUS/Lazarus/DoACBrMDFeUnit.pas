@@ -1828,7 +1828,7 @@ begin
         Chave := OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID);
 
       ACBrMDFe.EventoMDFe.Evento.Clear;
-      with ACBrMDFe.EventoMDFe.Evento.Add do
+      with ACBrMDFe.EventoMDFe.Evento.New do
       begin
         infEvento.CNPJCPF := ACNPJ;
         if Trim(infEvento.CNPJCPF) = '' then
@@ -2493,7 +2493,7 @@ begin
     ACBrMDFe.WebServices.Consulta.Executar;
 
     ACBrMDFe.EventoMDFe.Evento.Clear;
-    with ACBrMDFe.EventoMDFe.Evento.Add do
+    with ACBrMDFe.EventoMDFe.Evento.New do
     begin
       infEvento.CNPJCPF := ACNPJ;
       if Trim(infEvento.CNPJCPF) = '' then

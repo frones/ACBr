@@ -140,8 +140,7 @@ begin
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
 
-      if FNumCopias > 1 then
-        RLPrinter.Copies := FNumCopias;
+      RLPrinter.Copies := FNumCopias;
 
       RLGNRe.PrintDialog := APrintDialog;
       if APreview = True then

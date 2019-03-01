@@ -1233,8 +1233,7 @@ begin
         Resumido := (LayOut = lResumido);
       end;
 
-      if NumCopias > 1 then
-        RLPrinter.Copies := NumCopias ;
+      RLPrinter.Copies := NumCopias ;
 
       RLLayout.PrintDialog := MostraSetup;
       RLLayout.ShowProgress:= False ;

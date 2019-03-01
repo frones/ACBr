@@ -63,8 +63,7 @@ begin
   if NaoEstaVazio(AConfig.Impressora) then
       RLPrinter.PrinterName := AConfig.Impressora;
 
-  if AConfig.NumCopias > 1 then
-    RLPrinter.Copies := AConfig.NumCopias;
+  RLPrinter.Copies := AConfig.NumCopias;
 end;
 
 class procedure TDFeReportFortes.AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);

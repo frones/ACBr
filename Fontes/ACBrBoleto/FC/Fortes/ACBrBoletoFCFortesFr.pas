@@ -920,8 +920,7 @@ begin
            RLLayout:= LayoutBoleto;
         end;
 
-       if NumCopias > 1 then
-         RLPrinter.Copies := NumCopias ;
+        RLPrinter.Copies := NumCopias ;
 
         RLLayout.PrintDialog  := MostrarSetup;
         RLLayout.ShowProgress := MostrarProgresso;

@@ -63,9 +63,9 @@ begin
   if NaoEstaVazio(AConfig.Impressora) then
       RLPrinter.PrinterName := AConfig.Impressora;
 
-  if RLPrinter.Copies <> NumCopias then
+  if RLPrinter.Copies <> AConfig.NumCopias then
   begin
-    RLPrinter.Copies := NumCopias;
+    RLPrinter.Copies := AConfig.NumCopias;
   end;
 end;
 

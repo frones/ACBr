@@ -1291,7 +1291,10 @@ begin
 
       Resumido := DanfeResumido;
 
-      RLPrinter.Copies := NumCopias;
+      if RLPrinter.Copies <> NumCopias then
+      begin
+        RLPrinter.Copies := NumCopias;
+      end;
 
       if not EstaVazio(Impressora) then
         RLPrinter.PrinterName := Impressora;

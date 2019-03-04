@@ -66,8 +66,8 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -80,10 +80,10 @@ type
 
     function LerXML(const AXML: AnsiString): Boolean;
     function GerarXML: String;
-    function GravarXML(const NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -127,10 +127,10 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarANe que determina se após carregar os dados do ANe
     // para o componente, será gerado ou não novamente o XML do ANe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarANe: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarANe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarANe: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarANe: Boolean = True): Boolean;
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property ACBrANe: TComponent read FACBrANe;
   end;
@@ -216,7 +216,7 @@ begin
   Result := True;
 end;
 
-function Documento.GravarXML(const NomeArquivo: String; PathArquivo: String): Boolean;
+function Documento.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -236,7 +236,7 @@ begin
   Result := True;
 end;
 
-procedure Documento.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure Documento.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
 //  NomeArq : String;
@@ -375,12 +375,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Documento.SetXML(AValue: String);
+procedure Documento.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Documento.SetXMLOriginal(AValue: String);
+procedure Documento.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -403,7 +403,7 @@ begin
   if not (AOwner is TACBrANe) then
     raise EACBrANeException.Create('AOwner deve ser do tipo TACBrANe');
 
-  inherited;
+  inherited Create(AOwner, ItemClass);
 
   FACBrANe := TACBrANe(AOwner);
   FConfiguracoes := TACBrANe(FACBrANe).Configuracoes;
@@ -450,7 +450,7 @@ begin
   Items[Index].Assign(Value);
 end;
 
-function TDocumentos.LoadFromFile(CaminhoArquivo: String;
+function TDocumentos.LoadFromFile(const CaminhoArquivo: String;
   AGerarANe: Boolean = True): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -519,7 +519,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TDocumentos.GravarXML(PathNomeArquivo: String): Boolean;
+function TDocumentos.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;

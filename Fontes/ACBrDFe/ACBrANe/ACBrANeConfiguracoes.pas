@@ -82,7 +82,7 @@ type
     destructor Destroy; override;
     procedure Assign(DeArquivosConfANe: TArquivosConfANe); reintroduce;
 
-    function GetPathANe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
   published
     property EmissaoPathANe: boolean read FEmissaoPathANe
       write FEmissaoPathANe default False;
@@ -202,7 +202,7 @@ begin
   inherited;
 end;
 
-function TArquivosConfANe.GetPathANe(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfANe.GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathANe, 'ANe', CNPJ, Data);
 end;

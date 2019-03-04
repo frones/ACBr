@@ -40,7 +40,7 @@ unit pcaRetEnvANe;
 
 interface
  uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor;
 
 type
@@ -49,45 +49,40 @@ type
   TErros = class;
   TInfos = class;
 
-  TErroCollectionItem = class(TCollectionItem)
+  TErroCollectionItem = class(TObject)
   private
     FCodigo: String;
     FDescricao: String;
     FValorEsperado: String;
     FValorInformado: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Codigo: String         read FCodigo         write FCodigo;
     property Descricao: String      read FDescricao      write FDescricao;
     property ValorEsperado: String  read FValorEsperado  write FValorEsperado;
     property ValorInformado: String read FValorInformado write FValorInformado;
   end;
 
-  TErroCollection = class(TCollection)
+  TErroCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TErroCollectionItem;
     procedure SetItem(Index: Integer; Value: TErroCollectionItem);
   public
-    constructor Create(AOwner: TErros); reintroduce;
-    function Add: TErroCollectionItem;
+    function Add: TErroCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TErroCollectionItem;
     property Items[Index: Integer]: TErroCollectionItem read GetItem write SetItem; default;
   end;
 
-  TErros = class(TPersistent)
+  TErros = class(TObject)
   private
     FErro: TErroCollection;
-
-    procedure SetErro(const Value: TErroCollection);
   public
-    constructor Create(AOwner: TRetEnvANe);
+    constructor Create;
     destructor Destroy; override;
 
-    property Erro: TErroCollection read FErro   write SetErro;
+    property Erro: TErroCollection read FErro   write FErro;
   end;
 
-  TDadosSeguroCollectionItem = class(TCollectionItem)
+  TDadosSeguroCollectionItem = class(TObject)
   private
     FNumeroAverbacao: String;
     FCNPJSeguradora: String;
@@ -98,9 +93,6 @@ type
     FValorAverbado: Double;
     FRamoAverbado: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property NumeroAverbacao: String read FNumeroAverbacao write FNumeroAverbacao;
     property CNPJSeguradora: String  read FCNPJSeguradora  write FCNPJSeguradora;
     property NomeSeguradora: String  read FNomeSeguradora  write FNomeSeguradora;
@@ -111,79 +103,70 @@ type
     property RamoAverbado: String    read FRamoAverbado    write FRamoAverbado;
   end;
 
-  TDadosSeguroCollection = class(TCollection)
+  TDadosSeguroCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDadosSeguroCollectionItem;
     procedure SetItem(Index: Integer; Value: TDadosSeguroCollectionItem);
   public
-    constructor Create(AOwner: TAverbado); reintroduce;
-    function Add: TDadosSeguroCollectionItem;
+    function Add: TDadosSeguroCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDadosSeguroCollectionItem;
     property Items[Index: Integer]: TDadosSeguroCollectionItem read GetItem write SetItem; default;
   end;
 
-  TAverbado = class(TPersistent)
+  TAverbado = class(TObject)
   private
     FdhAverbacao: TDateTime;
     FProtocolo: String;
     FDadosSeguro: TDadosSeguroCollection;
-    procedure SetDadosSeguro(const Value: TDadosSeguroCollection);
   public
-    constructor Create(AOwner: TRetEnvANe);
+    constructor Create;
     destructor Destroy; override;
 
     property dhAverbacao: TDateTime read FdhAverbacao write FdhAverbacao;
     property Protocolo: String      read FProtocolo   write FProtocolo;
 
-    property DadosSeguro: TDadosSeguroCollection read FDadosSeguro write SetDadosSeguro;
+    property DadosSeguro: TDadosSeguroCollection read FDadosSeguro write FDadosSeguro;
   end;
 
-  TInfoCollectionItem = class(TCollectionItem)
+  TInfoCollectionItem = class(TObject)
   private
     FCodigo: String;
     FDescricao: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Codigo: String    read FCodigo    write FCodigo;
     property Descricao: String read FDescricao write FDescricao;
   end;
 
-  TInfoCollection = class(TCollection)
+  TInfoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoCollectionItem);
   public
-    constructor Create(AOwner: TInfos); reintroduce;
-    function Add: TInfoCollectionItem;
+    function Add: TInfoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoCollectionItem;
     property Items[Index: Integer]: TInfoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfos = class(TPersistent)
+  TInfos = class(TObject)
   private
     FInfo: TInfoCollection;
-
-    procedure SetInfo(const Value: TInfoCollection);
   public
     constructor Create(AOwner: TRetEnvANe);
     destructor Destroy; override;
 
-    property Info: TInfoCollection read FInfo write SetInfo;
+    property Info: TInfoCollection read FInfo write FInfo;
   end;
 
-  TDeclarado = class(TPersistent)
+  TDeclarado = class(TObject)
   private
     FdhChancela: TDateTime;
     FProtocolo: String;
   public
-    constructor Create(AOwner: TRetEnvANe);
-    destructor Destroy; override;
-
     property dhChancela: TDateTime read FdhChancela write FdhChancela;
     property Protocolo: String     read FProtocolo  write FProtocolo;
   end;
 
-  TRetEnvANe = class(TPersistent)
+  TRetEnvANe = class(TObject)
   private
     FLeitor: TLeitor;
 
@@ -203,8 +186,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     function LerXml: boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
 
     property XML: String read FXML write FXML;
@@ -224,29 +207,11 @@ type
 
 implementation
 
-{ TErroCollectionItem }
-
-constructor TErroCollectionItem.Create;
-begin
-
-end;
-
-destructor TErroCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
 { TErroCollection }
-
-constructor TErroCollection.Create(AOwner: TErros);
-begin
-  inherited Create(TErroCollectionItem);
-end;
 
 function TErroCollection.Add: TErroCollectionItem;
 begin
-  Result := TErroCollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TErroCollection.GetItem(Index: Integer): TErroCollectionItem;
@@ -262,10 +227,10 @@ end;
 
 { TErro }
 
-constructor TErros.Create(AOwner: TRetEnvANe);
+constructor TErros.Create;
 begin
   inherited Create;
-  FErro := TErroCollection.Create(Self);
+  FErro := TErroCollection.Create;
 end;
 
 destructor TErros.Destroy;
@@ -275,34 +240,17 @@ begin
   inherited;
 end;
 
-procedure TErros.SetErro(const Value: TErroCollection);
+function TErroCollection.New: TErroCollectionItem;
 begin
-  FErro := Value;
-end;
-
-{ TDadosSeguroCollectionItem }
-
-constructor TDadosSeguroCollectionItem.Create;
-begin
-
-end;
-
-destructor TDadosSeguroCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TErroCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TDadosSeguroCollection }
 
 function TDadosSeguroCollection.Add: TDadosSeguroCollectionItem;
 begin
-  Result := TDadosSeguroCollectionItem(inherited Add);
-end;
-
-constructor TDadosSeguroCollection.Create(AOwner: TAverbado);
-begin
-  inherited Create(TDadosSeguroCollectionItem);
+  Result := Self.New;
 end;
 
 function TDadosSeguroCollection.GetItem(
@@ -317,12 +265,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDadosSeguroCollection.New: TDadosSeguroCollectionItem;
+begin
+  Result := TDadosSeguroCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TAverbado }
 
-constructor TAverbado.Create(AOwner: TRetEnvANe);
+constructor TAverbado.Create;
 begin
   inherited Create;
-  FDadosSeguro := TDadosSeguroCollection.Create(Self);
+  FDadosSeguro := TDadosSeguroCollection.Create;
 end;
 
 destructor TAverbado.Destroy;
@@ -332,34 +286,11 @@ begin
   inherited;
 end;
 
-procedure TAverbado.SetDadosSeguro(const Value: TDadosSeguroCollection);
-begin
-  FDadosSeguro := Value;
-end;
-
-{ TInfoCollectionItem }
-
-constructor TInfoCollectionItem.Create;
-begin
-
-end;
-
-destructor TInfoCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
 { TInfoCollection }
 
 function TInfoCollection.Add: TInfoCollectionItem;
 begin
-  Result := TInfoCollectionItem(inherited Add);
-end;
-
-constructor TInfoCollection.Create(AOwner: TInfos);
-begin
-  inherited Create(TInfoCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoCollection.GetItem(Index: Integer): TInfoCollectionItem;
@@ -373,26 +304,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TDeclarado }
-
-constructor TDeclarado.Create(AOwner: TRetEnvANe);
+function TInfoCollection.New: TInfoCollectionItem;
 begin
-  inherited Create;
-
-end;
-
-destructor TDeclarado.Destroy;
-begin
-
-  inherited;
+  Result := TInfoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfos }
 
-constructor TInfos.Create(AOwner: TRetEnvANe);
+constructor TInfos.Create;
 begin
   inherited Create;
-  FInfo := TInfoCollection.Create(Self);
+  FInfo := TInfoCollection.Create;
 end;
 
 destructor TInfos.Destroy;
@@ -402,21 +325,16 @@ begin
   inherited;
 end;
 
-procedure TInfos.SetInfo(const Value: TInfoCollection);
-begin
-  FInfo := Value;
-end;
-
 { TRetEnvANe }
 
 constructor TRetEnvANe.Create;
 begin
   inherited Create;
   FLeitor    := TLeitor.Create;
-  FErros     := TErros.Create( Self );
-  FAverbado  := TAverbado.Create( Self );
+  FErros     := TErros.Create;
+  FAverbado  := TAverbado.Create;
   FInfos     := TInfos.Create( Self );
-  FDeclarado := TDeclarado.Create( Self );
+  FDeclarado := TDeclarado.Create;
 end;
 
 destructor TRetEnvANe.Destroy;

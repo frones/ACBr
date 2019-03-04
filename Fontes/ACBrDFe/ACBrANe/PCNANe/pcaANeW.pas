@@ -47,7 +47,7 @@ uses
 
 type
 
-  TANeW = class(TPersistent)
+  TANeW = class(TObject)
   private
     FGerador: TGerador;
     FANe: TANe;
@@ -57,7 +57,6 @@ type
     constructor Create(AOwner: TANe);
     destructor Destroy; override;
     function GerarXml: Boolean;
-  published
     property Gerador: TGerador read FGerador write FGerador;
     property ANe: TANe         read FANe     write FANe;
     property TipoDoc: TTipoDoc read FTipoDoc write FTipoDoc;
@@ -81,6 +80,7 @@ implementation
 
 constructor TANeW.Create(AOwner: TANe);
 begin
+  inherited Create;
   FANe     := AOwner;
   FGerador := TGerador.Create;
 end;

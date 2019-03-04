@@ -49,7 +49,7 @@ uses
 
 type
 
-  TANeR = class(TPersistent)
+  TANeR = class(TObject)
   private
     FLeitor: TLeitor;
     FANe: TANe;
@@ -57,7 +57,6 @@ type
     constructor Create(AOwner: TANe);
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property ANe: TANe       read FANe    write FANe;
   end;

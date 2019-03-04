@@ -49,7 +49,7 @@ uses
 
 type
 
-  TANe = class(TPersistent)
+  TANe = class(TObject)
   private
     Fusuario: String;
     Fsenha: String;
@@ -66,9 +66,6 @@ type
     Fchaveresp: String;
 
   public
-    constructor Create;
-    destructor Destroy; override;
-  published
     property usuario: String  read Fusuario  write Fusuario;
     property senha: String    read Fsenha    write Fsenha;
     property codatm: String   read Fcodatm   write Fcodatm;
@@ -87,19 +84,6 @@ type
   end;
 
 implementation
-
-{ TANe }
-
-constructor TANe.Create;
-begin
-  inherited Create;
-end;
-
-destructor TANe.Destroy;
-begin
-
-  inherited;
-end;
 
 end.
 

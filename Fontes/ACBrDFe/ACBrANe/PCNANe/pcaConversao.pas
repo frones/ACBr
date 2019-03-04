@@ -64,7 +64,7 @@ function LayOutToServico(const t: TLayOutANe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutANe;
 
 function SchemaANeToStr(const t: TSchemaANe): String;
-function StrToSchemaANe(out ok: Boolean; const s: String): TSchemaANe;
+function StrToSchemaANe(const s: String): TSchemaANe;
 
 function StrToVersaoANe(out ok: Boolean; const s: String): TVersaoANe;
 function VersaoANeToStr(const t: TVersaoANe): String;
@@ -107,10 +107,11 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaANe(out ok: Boolean; const s: String): TSchemaANe;
+function StrToSchemaANe(const s: String): TSchemaANe;
 var
   P: Integer;
   SchemaStr: String;
+  CodSchema: Integer;
 begin
   P := pos('_', s);
   if P > 0 then
@@ -121,7 +122,14 @@ begin
   if LeftStr(SchemaStr, 3) <> 'sch' then
     SchemaStr := 'sch' + SchemaStr;
 
-  Result := TSchemaANe( GetEnumValue(TypeInfo(TSchemaANe), SchemaStr ) );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaANe), SchemaStr );
+
+  if CodSchema = -1 then
+  begin
+    raise Exception.Create(Format('"%s" não é um valor TSchemaANe válido.',[SchemaStr]));
+  end;
+
+  Result := TSchemaANe( CodSchema );
 end;
 
 function StrToVersaoANe(out ok: Boolean; const s: String): TVersaoANe;

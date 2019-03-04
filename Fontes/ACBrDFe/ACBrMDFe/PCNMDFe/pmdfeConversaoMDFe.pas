@@ -90,7 +90,7 @@ function LayOutToServico(const t: TLayOutMDFe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
 
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;
-function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
+function StrToSchemaMDFe(const s: String): TSchemaMDFe;
 
 function StrToVersaoMDFe(out ok: Boolean; const s: String): TVersaoMDFe;
 function VersaoMDFeToStr(const t: TVersaoMDFe): String;
@@ -236,10 +236,11 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaMDFe(out ok: Boolean; const s: String): TSchemaMDFe;
+function StrToSchemaMDFe(const s: String): TSchemaMDFe;
 var
   P: Integer;
   SchemaStr: String;
+  CodSchema: Integer;
 begin
   P := pos('_', s);
   if P > 0 then
@@ -250,7 +251,14 @@ begin
   if LeftStr(SchemaStr, 3) <> 'sch' then
     SchemaStr := 'sch' + SchemaStr;
 
-  Result := TSchemaMDFe( GetEnumValue(TypeInfo(TSchemaMDFe), SchemaStr ) );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaMDFe), SchemaStr );
+
+  if CodSchema = -1 then
+  begin
+    raise Exception.Create(Format('"%s" não é um valor TSchemaMDFe válido.',[SchemaStr]));
+  end;
+
+  Result := TSchemaMDFe( CodSchema );
 end;
 
 function StrToVersaoMDFe(out ok: Boolean; const s: String): TVersaoMDFe;

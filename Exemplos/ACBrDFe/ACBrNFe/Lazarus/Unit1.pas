@@ -1065,7 +1065,7 @@ begin
        exit;
     ACBrNFe1.EventoNFe.Evento.Clear;
     ACBrNFe1.EventoNFe.idLote := StrToInt(idLote) ;
-    with ACBrNFe1.EventoNFe.Evento.Add do
+    with ACBrNFe1.EventoNFe.Evento.New do
     begin
      infEvento.dhEvento := now;
      infEvento.tpEvento := teCancelamento;
@@ -1134,7 +1134,7 @@ begin
      exit;
 
   ACBrNFe1.EventoNFe.Evento.Clear;
-  with ACBrNFe1.EventoNFe.Evento.Add do
+  with ACBrNFe1.EventoNFe.Evento.New do
    begin
      InfEvento.cOrgao   := 91;
      infEvento.chNFe    := Chave;
@@ -2400,7 +2400,7 @@ begin
       Entrega.UF      := '';}
 
 //Adicionando Produtos
-      with Det.Add do
+      with Det.New do
        begin
          Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
          Prod.cProd    := '123456';
@@ -2711,7 +2711,7 @@ begin
          RNTC  := '';
        end;}
 
-      with Transp.Vol.Add do
+      with Transp.Vol.New do
        begin
          qVol  := 1;
          esp   := 'Especie';
@@ -2729,21 +2729,21 @@ begin
       Cobr.Fat.vDesc := 0 ;
       Cobr.Fat.vLiq  := 100 ;
 
-      with Cobr.Dup.Add do
+      with Cobr.Dup.New do
        begin
          nDup  := '001';
          dVenc := now+10;
          vDup  := 50;
        end;
 
-      with Cobr.Dup.Add do
+      with Cobr.Dup.New do
        begin
          nDup  := '002';
          dVenc := now+10;
          vDup  := 50;
        end;
 
-      with pag.Add do
+      with pag.New do
        begin
          tPag := fpDinheiro;
          vPag := 100;
@@ -2753,13 +2753,13 @@ begin
       InfAdic.infCpl     :=  '';
       InfAdic.infAdFisco :=  '';
 
-      with InfAdic.obsCont.Add do
+      with InfAdic.obsCont.New do
        begin
          xCampo := 'ObsCont';
          xTexto := 'Texto';
        end;
 
-      with InfAdic.obsFisco.Add do
+      with InfAdic.obsFisco.New do
        begin
          xCampo := 'ObsFisco';
          xTexto := 'Texto';
@@ -2872,7 +2872,7 @@ begin
       Entrega.UF      := '';}
 
 //Adicionando Produtos
-      with Det.Add do
+      with Det.New do
        begin
          Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
          Prod.cProd    := '123456';
@@ -3064,7 +3064,7 @@ begin
        end;
  }
 
-      with pag.Add do //PAGAMENTOS apenas para NFC-e
+      with pag.New do //PAGAMENTOS apenas para NFC-e
        begin
          tPag := fpDinheiro;
          vPag := 100;
@@ -3126,7 +3126,7 @@ begin
 
   ACBrNFe1.EventoNFe.Evento.Clear;
 //  ACBrNFe1.EvnvEvento.EnvEventoNFe.idLote := StrToInt(idLote) ;
-  with ACBrNFe1.EventoNFe.Evento.Add do
+  with ACBrNFe1.EventoNFe.Evento.New do
    begin
      infEvento.chNFe := Chave;
      infEvento.CNPJ   := CNPJ;
@@ -3254,7 +3254,7 @@ begin
      exit;
   ACBrNFe1.EventoNFe.Evento.Clear;
 //  ACBrNFe1.EnvEvento.EnvEventoNFe..idLote := StrToInt(idLote) ;
-  with ACBrNFe1.EventoNFe.Evento.Add do
+  with ACBrNFe1.EventoNFe.Evento.New do
    begin
      infEvento.chNFe := Chave;
      infEvento.CNPJ   := CNPJ;

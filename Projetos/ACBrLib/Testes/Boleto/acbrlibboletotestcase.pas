@@ -47,6 +47,7 @@ type
     procedure Test_Boleto_MontarNossoNumero;
     procedure Test_Boleto_RetornaLinhaDigitavel;
     procedure Test_Boleto_RetornaCodigoBarras;
+    procedure Test_Boleto_EnviarEmail;
   end;
 
 implementation
@@ -519,6 +520,31 @@ begin
   Bufflen := 255;
   AStr := Space(Bufflen);
   AssertEquals('Erro ao tentar Retornar Codigo Barras', ErrOK, Boleto_RetornaCodigoBarras(0,PChar(AStr), Bufflen));
+
+  AssertEquals(ErrOK, Boleto_Finalizar());
+end;
+
+procedure TACBrLibBoletoTest.Test_Boleto_EnviarEmail;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, Boleto_Inicializar('',''));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoBoletoCedenteConfig, CChaveConvenio, '123456'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveNome, 'Jose'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveServidor, 'smtp.djsystem.com.br'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveUsuario, 'josemaria@djsystem.com.br'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveSenha, 'teste'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveEmailConta, 'josemaria@djsystem.com.br'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChavePorta, '587'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveEmailSSL, '0'));
+  AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoEmail, CChaveEmailTLS, '1'));
+
+  AssertEquals(ErrOK, Boleto_ConfigGravar(''));
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+  //AssertEquals('Erro ao tentar Incluir Titulo', ErrOK, Boleto_IncluirTitulos('..\Titulo.ini','', PChar(AStr), Bufflen));
+  //AssertEquals('Erro ao tentar Enviar e-mail', ErrOK, Boleto_EnviarEmail('josemaria@djsystem.com.br','Teste','Mensagem',''));
 
   AssertEquals(ErrOK, Boleto_Finalizar());
 end;

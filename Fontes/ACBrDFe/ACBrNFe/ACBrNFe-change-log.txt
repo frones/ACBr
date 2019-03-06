@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2019
+-- pcnNFeW --
+[*] Desfeita a alteração na condição para não gerar a tag IE do destinatário 
+    quando o mesmo não for contribuinte do ICMS
+   Por: Italo Jurisato Junior
+
 28/02/2019
 -- Diversos --
 [*] Alterações visando atender a NT 2018/005 versão 1.10

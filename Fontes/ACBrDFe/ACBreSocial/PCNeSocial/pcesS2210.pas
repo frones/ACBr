@@ -571,6 +571,7 @@ begin
     Gerador.wGrupo('evtCAT Id="' + Self.Id + '"');
 
     GerarIdeEvento2(Self.IdeEvento);
+    GerarIdeEmpregador(Self.IdeEmpregador);
     GerarIdeVinculo(Self.IdeVinculo);
     GerarCAT;
 

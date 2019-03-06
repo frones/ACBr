@@ -123,7 +123,7 @@ type
     FNmAmb: String;
     FDscAmb: String;
     FLocalAmb: tpLocalAmb;
-    FTpInsc: tpTpInscAmbTab;
+    FTpInsc: tpTpInsc;
     FNrInsc: String;
     FCodLotacao: String;
   public
@@ -133,7 +133,7 @@ type
     property nmAmb: string read FNmAmb write FNmAmb;
     property dscAmb: string read FDscAmb write FDscAmb;
     property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
-    property tpInsc: tpTpInscAmbTab read FTpInsc write FTpInsc;
+    property tpInsc: tpTpInsc read FTpInsc write FTpInsc;
     property nrInsc: string read FNrInsc write FNrInsc;
     property codLotacao: String read FCodLotacao write FCodLotacao;
   end;
@@ -285,7 +285,7 @@ begin
   Gerador.wCampo(tcStr, '', 'nmAmb',     1,   100, 1, infoAmbiente.dadosAmbiente.nmAmb);
   Gerador.wCampo(tcStr, '', 'dscAmb',     1, 8000, 1, infoAmbiente.dadosAmbiente.dscAmb);
   Gerador.wCampo(tcStr, '', 'localAmb',   1,    1, 1, eSLocalAmbToStr(infoAmbiente.dadosAmbiente.localAmb));
-  Gerador.wCampo(tcStr, '', 'tpInsc',     1,    1, 0, eStpTpInscAmbTabToStr(infoAmbiente.dadosAmbiente.tpInsc));
+  Gerador.wCampo(tcStr, '', 'tpInsc',     1,    1, 0, eSTpInscricaoToStr(infoAmbiente.dadosAmbiente.tpInsc));
   Gerador.wCampo(tcStr, '', 'nrInsc',     1,   15, 0, infoAmbiente.dadosAmbiente.nrInsc);
   Gerador.wCampo(tcStr, '', 'codLotacao', 1,   30, 0, infoAmbiente.dadosAmbiente.codLotacao);
 
@@ -388,7 +388,7 @@ begin
         infoAmbiente.dadosAmbiente.nmAmb      := INIRec.ReadString(sSecao, 'nmAmb', EmptyStr);
         infoAmbiente.dadosAmbiente.dscAmb     := INIRec.ReadString(sSecao, 'dscAmb', EmptyStr);
         infoAmbiente.dadosAmbiente.localAmb   := eSStrToLocalAmb(Ok, INIRec.ReadString(sSecao, 'localAmb', '1'));
-        infoAmbiente.dadosAmbiente.tpInsc     := eSStrTotpTpInscAmbTab(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+        infoAmbiente.dadosAmbiente.tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
         infoAmbiente.dadosAmbiente.nrInsc     := INIRec.ReadString(sSecao, 'nrInsc', '');
         infoAmbiente.dadosAmbiente.codLotacao := INIRec.ReadString(sSecao, 'codLotacao', '');
 

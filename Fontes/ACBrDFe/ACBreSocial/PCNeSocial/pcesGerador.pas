@@ -1578,7 +1578,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'nmEmit', 1, 70, 1, pEmitente.nmEmit);
   Gerador.wCampo(tcStr, '', 'ideOC',  1,  1, 1, eSIdeOCToStr(pEmitente.ideOC));
-  Gerador.wCampo(tcStr, '', 'nrOc',   1, 14, 1, pEmitente.nrOc);
+  Gerador.wCampo(tcStr, '', 'nrOC',   1, 14, 1, pEmitente.nrOc);
   Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, pEmitente.ufOC);//eSufToStr(pEmitente.ufOC));
 
   Gerador.wGrupo('/emitente');

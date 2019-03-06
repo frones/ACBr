@@ -48,6 +48,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/03/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/49707-gera%C3%A7%C3%A3o-do-evento-s-2210/
+   Por: edf
+-- pcesS1060 --
+[*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=327963
+   Por: Arce
+-- pcesS2299 --
+[*] https://www.projetoacbr.com.br/forum/topic/49672-transfer%C3%AAncia-de-funcion%C3%A1rios-evento-2299/
+   Por: Agricio Comper
+
 18/02/2019
 -- pcesS2245 --
 [*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=326660

@@ -744,8 +744,8 @@ begin
   if obj.cnpjSucessora <> EmptyStr then
   begin
     Gerador.wGrupo('sucessaoVinc');
-
-    Gerador.wCampo(tcStr, '', 'tpInscSuc', 1, 1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
+    if VersaoDF >= ve02_05_00 then
+        Gerador.wCampo(tcStr, '', 'tpInscSuc', 1, 1, 1, eSTpInscricaoToStr(obj.tpInscSuc));
     Gerador.wCampo(tcStr, '', 'cnpjSucessora', 14, 14, 1, obj.cnpjSucessora);
 
     Gerador.wGrupo('/sucessaoVinc');

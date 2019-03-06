@@ -2257,6 +2257,7 @@ end;
 function TinfContratanteCollection.New: TinfContratanteCollectionItem;
 begin
   Result := TinfContratanteCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TAverCollection }

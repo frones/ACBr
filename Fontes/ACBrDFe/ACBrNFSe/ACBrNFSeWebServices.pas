@@ -5455,7 +5455,8 @@ begin
               // quando no retorno constar que o lote ainda se encontra em processamento
               // não sabemos se vai funcionar como o esperado.
               //****************************************************************
-              if ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve200 then
+              if (ProvedorToVersaoNFSe(Configuracoes.Geral.Provedor) = ve200) or
+                 (Configuracoes.Geral.Provedor in [proIssDSF]) then
               begin
                 try
                   Tentativas := 0;

@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2019
+-- pnfsNFSeW_IPM --
+[*] https://www.projetoacbr.com.br/forum/topic/48762-nfse-ipm-arauc%C3%A1ria-modo-teste/?do=findComment&comment=328803
+   Por: Cleyton Luis
+
 -- Diversos --
 [*] Acrescentado o parâmetro Sincrono no método GerarLote.
     function GerarLote(ALote: Integer; AqMaxRps: Integer = 50; ASincrono: Boolean = False): Boolean; 

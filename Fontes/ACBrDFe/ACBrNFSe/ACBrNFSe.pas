@@ -84,8 +84,10 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFSe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function GerarLote(ALote: Integer; AqMaxRps: Integer = 50): Boolean; overload;
-    function GerarLote(ALote: String; AqMaxRps: Integer = 50): Boolean; overload;
+    function GerarLote(ALote: Integer; AqMaxRps: Integer = 50;
+      ASincrono: Boolean = False): Boolean; overload;
+    function GerarLote(ALote: String; AqMaxRps: Integer = 50;
+      ASincrono: Boolean = False): Boolean; overload;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
@@ -398,12 +400,14 @@ begin
   end;
 end;
 
-function TACBrNFSe.GerarLote(ALote: Integer; AqMaxRps: Integer): Boolean;
+function TACBrNFSe.GerarLote(ALote: Integer; AqMaxRps: Integer;
+  ASincrono: Boolean): Boolean;
 begin
-  Result := GerarLote(IntToStr(ALote), AqMaxRps);
+  Result := GerarLote(IntToStr(ALote), AqMaxRps, ASincrono);
 end;
 
-function TACBrNFSe.GerarLote(ALote: String; AqMaxRps: Integer): Boolean;
+function TACBrNFSe.GerarLote(ALote: String; AqMaxRps: Integer;
+  ASincrono: Boolean): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -415,7 +419,7 @@ begin
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
-  Result := WebServices.GeraLote(ALote, AqMaxRps);
+  Result := WebServices.GeraLote(ALote, AqMaxRps, ASincrono);
 end;
 
 function TACBrNFSe.Enviar(ALote: integer; Imprimir: Boolean): Boolean;

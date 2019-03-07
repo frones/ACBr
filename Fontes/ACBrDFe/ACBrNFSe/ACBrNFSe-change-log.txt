@@ -48,6 +48,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/03/2019
+-- Diversos --
+[*] Acrescentado o parâmetro Sincrono no método GerarLote.
+    function GerarLote(ALote: Integer; AqMaxRps: Integer = 50; ASincrono: Boolean = False): Boolean; 
+    Desta forma em vez do XML de envio do lote ser gerado com a tag EnviarLoteRpsEnvio, será gerado
+    com a tag EnviarLoteRpsSincronoEnvio.
+
+    Lembrando que esse método só gera o XML e não envia para o webservice.
+   Por: Italo Jurisato Junior
+
+07/03/2019
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/48051-cancelamento-issdsf-n%C3%A3o-encontrei-final-do-elemento/?do=findComment&comment=328653
    Por: Douglas

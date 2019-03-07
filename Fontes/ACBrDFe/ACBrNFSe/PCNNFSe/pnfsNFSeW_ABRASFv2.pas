@@ -151,7 +151,10 @@ begin
     else
       Gerador.wGrupoNFSe('Tomador');
 
-    if NFSe.Tomador.Endereco.UF <> 'EX' then
+    if (NFSe.Tomador.Endereco.UF <> 'EX') or
+       (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '') then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') then
@@ -174,39 +177,42 @@ begin
 
     Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, DSC_XNOME);
 
+    if NFSe.Tomador.Endereco.Endereco <> '' then
+    begin
     Gerador.wGrupoNFSe('Endereco');
 
-    if FProvedor = proSigep then
-    begin
-      Gerador.wCampoNFSe(tcStr, '#39', 'TipoLogradouro', 001, 50, 0, NFSe.Tomador.Endereco.TipoLogradouro, DSC_XLGR);
-      Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
-    end
-    else
-      Gerador.wCampoNFSe(tcStr, '#39', 'Endereco', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
+      if FProvedor = proSigep then
+      begin
+        Gerador.wCampoNFSe(tcStr, '#39', 'TipoLogradouro', 001, 50, 0, NFSe.Tomador.Endereco.TipoLogradouro, DSC_XLGR);
+        Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
+      end
+      else
+        Gerador.wCampoNFSe(tcStr, '#39', 'Endereco', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
 
-    Gerador.wCampoNFSe(tcStr, '#40', 'Numero  ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, DSC_NRO);
+      Gerador.wCampoNFSe(tcStr, '#40', 'Numero  ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, DSC_NRO);
 
-    if FProvedor <> proNFSeBrasil then
-      Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, DSC_XCPL)
-    else
-      Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, DSC_XCPL);
+      if FProvedor <> proNFSeBrasil then
+        Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, DSC_XCPL)
+      else
+        Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, DSC_XCPL);
 
-    Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
+      Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
 
-    Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
-    Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
+      Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
+      Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-    if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
-                          proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep]) or
-       ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
-      Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
+      if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
+                            proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep]) or
+         ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
+        Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
-    if FProvedor = proELv2 then
-      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP)
-    else
-      Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+      if FProvedor = proELv2 then
+        Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP)
+      else
+        Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
 
-    Gerador.wGrupoNFSe('/Endereco');
+      Gerador.wGrupoNFSe('/Endereco');
+    end;
 
     case FProvedor of
       proNFSeBrasil:
@@ -240,7 +246,7 @@ begin
   end
   else
   begin
-    if not (FProvedor in [proGiss, proSystemPro]) then
+    if not (FProvedor in [proGiss]) then
     begin
       // Gera a TAG vazia quando nenhum dado do tomador for informado.
       if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF] then

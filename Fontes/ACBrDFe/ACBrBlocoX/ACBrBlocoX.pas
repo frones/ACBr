@@ -43,7 +43,7 @@ type
   TConfiguracoesBlocoX = class(TConfiguracoes)
   public
     FVersaoER: TVersaoER;
-    procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); overload;
+    procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); reintroduce; overload;
   published
     property VersaoER: TVersaoER read FVersaoER write FVersaoER;
     property Geral;

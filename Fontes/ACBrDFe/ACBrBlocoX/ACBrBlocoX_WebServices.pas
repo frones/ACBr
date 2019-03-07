@@ -66,7 +66,7 @@ const
     fBlocoXRetorno: TRetEnvBlocoX;
     FXMLZipado: AnsiString;
 
-    procedure SetXML(AValue: AnsiString);
+    procedure SetXML(const AValue: AnsiString);
     function GetXMLZipado: AnsiString;
 
   protected
@@ -204,7 +204,7 @@ begin
   fBlocoXRetorno := TRetEnvBlocoX.Create;
 end;
 
-procedure TEnviarBlocoX.SetXML(AValue: AnsiString);
+procedure TEnviarBlocoX.SetXML(const AValue: AnsiString);
 begin
   if FXML = AValue then Exit;
   FXML := AValue;

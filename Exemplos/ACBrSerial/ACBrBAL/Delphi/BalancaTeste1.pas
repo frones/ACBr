@@ -50,7 +50,7 @@ type
     procedure chbMonitorarClick(Sender: TObject);
     procedure FormCreate(Sender : TObject) ;
     procedure SbArqLogClick(Sender: TObject);
-    procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
   private
     { private declarations }
     Function Converte( cmd : String) : String;
@@ -84,7 +84,7 @@ begin
   end ;
 end;
 
-procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: String);
+procedure TForm1.ACBrBAL1LePeso(Peso: Double; Resposta: AnsiString);
 var valid : integer;
 begin
    sttPeso.Caption     := formatFloat('##0.000', Peso );

@@ -43,7 +43,6 @@ type
   TConfiguracoesBlocoX = class(TConfiguracoes)
   public
     FVersaoER: TVersaoER;
-    procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); reintroduce; overload;
   published
     property VersaoER: TVersaoER read FVersaoER write FVersaoER;
     property Geral;
@@ -131,15 +130,6 @@ type
   end;
 
 implementation
-
-{ TConfiguracoesBlocoX }
-
-procedure TConfiguracoesBlocoX.Assign(
-  DeConfiguracoesBlocoX: TConfiguracoesBlocoX);
-begin
-  WebServices.Assign(DeConfiguracoesBlocoX.WebServices);
-  Certificados.Assign(DeConfiguracoesBlocoX.Certificados);
-end;
 
 { TACBrBlocoX }
 

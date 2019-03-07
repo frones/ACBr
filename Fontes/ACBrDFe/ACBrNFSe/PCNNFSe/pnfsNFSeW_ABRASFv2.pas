@@ -240,7 +240,7 @@ begin
   end
   else
   begin
-    if FProvedor <> proGiss then
+    if not (FProvedor in [proGiss, proSystemPro]) then
     begin
       // Gera a TAG vazia quando nenhum dado do tomador for informado.
       if FProvedor in [proActcon, proVersaTecnologia, proSmarAPDABRASF] then

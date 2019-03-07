@@ -4264,11 +4264,12 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
-   if (FTagGrupo <> '') and (FProvedor <> proGinfes) then
-     FTagGrupo := FPrefixo3 + FTagGrupo;
+    if (FTagGrupo <> '') and (FProvedor <> proGinfes) then
+      FTagGrupo := FPrefixo3 + FTagGrupo;
 
-    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes, proISSDSF,
-       proEquiplano]) then
+    // Removido o provedor proISSDSF para que será incluido o profixo em
+    // FdocElemento
+    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes, proEquiplano]) then
       FdocElemento := FPrefixo3 + FdocElemento;
 
     if FNotasFiscais.Count > 0 then

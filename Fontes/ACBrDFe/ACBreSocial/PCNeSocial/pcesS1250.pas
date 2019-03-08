@@ -119,7 +119,7 @@ type
     FIdeEstabAdquir: TIdeEstabAdquir;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property IdeEstabAdquir: TIdeEstabAdquir read FIdeEstabAdquir write FIdeEstabAdquir;
   end;
@@ -131,7 +131,7 @@ type
     FTpAquis: TTpAquisColecao;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property tpInscAdq: tpTpInsc read FtpInscAdq write FtpInscAdq;
     property nrInscAdq: string read FnrInscAdq write FnrInscAdq;
@@ -156,7 +156,7 @@ type
     FInfoProcJ: TInfoProcJCollection;
   public
     constructor create; reintroduce;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property indAquis: tpIdAquis read FindAquis write FindAquis;
     property vlrTotAquis: double read FvlrTotAquis write FvlrTotAquis;
@@ -188,7 +188,7 @@ type
     FInfoProcJud: TInfoProcJudCollection;
   public
     constructor create; reintroduce;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property tpInscProd: tpTpInsc read FtpInscProd write FtpInscProd;
     property nrInscProd: string read FnrInscProd write FnrInscProd;
@@ -552,7 +552,7 @@ var
   sSecao, sFim: String;
   I, J, K: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -678,8 +678,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

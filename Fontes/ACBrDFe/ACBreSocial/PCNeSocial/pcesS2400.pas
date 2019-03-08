@@ -458,7 +458,7 @@ var
   Ok: Boolean;
   sSecao: String;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -566,8 +566,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

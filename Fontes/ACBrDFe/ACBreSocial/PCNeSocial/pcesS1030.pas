@@ -131,7 +131,7 @@ type
     function getCargoPublico: TCargoPublico;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function cargoPublicInst(): Boolean;
 
@@ -150,7 +150,7 @@ type
     function getNovaValidade: TidePeriodo;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function dadosCargoInst(): Boolean;
     function novaValidadeInst(): Boolean;
@@ -179,7 +179,7 @@ type
     FLeiCargo: TLeiCargo;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property acumCargo: tpAcumCargo read FAcumCargo write FAcumCargo;
     property contagemEsp: tpContagemEsp read FContagemEsp write FContagemEsp;
@@ -394,7 +394,7 @@ var
   Ok: Boolean;
   sSecao: String;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -451,8 +451,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

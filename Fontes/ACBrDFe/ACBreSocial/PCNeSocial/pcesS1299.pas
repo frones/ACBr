@@ -116,7 +116,7 @@ type
     FcompSemMovto : string;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property evtRemun: TpSimNao read FevtRemun write FevtRemun;
     property evtPgtos: TpSimNao read FevtPgtos write FevtPgtos;
@@ -261,7 +261,7 @@ var
   Ok: Boolean;
   sSecao: String;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -305,8 +305,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

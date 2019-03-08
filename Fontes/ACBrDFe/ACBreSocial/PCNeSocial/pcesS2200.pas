@@ -91,7 +91,7 @@ type
 
   public
     constructor Create(AACBreSocial: TObject);overload;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
@@ -204,7 +204,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -601,8 +601,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

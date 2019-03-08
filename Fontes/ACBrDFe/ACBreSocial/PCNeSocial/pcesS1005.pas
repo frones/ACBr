@@ -178,8 +178,8 @@ type
     function getInfoObra: TInfoObra;
     function getinfoCaepf : TInfoCaepf;
   public
-    constructor create;
-    destructor destroy; override;
+    constructor Create;
+    destructor Destroy; override;
 
     function infoObraInst(): Boolean;
     function infoCaepfInst(): Boolean;
@@ -574,7 +574,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -680,8 +680,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

@@ -128,7 +128,7 @@ type
     FfimAfastamento : TfimAfastamento;
   public
     constructor create;
-    destructor  destroy; override;
+    destructor  Destroy; override;
 
     property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
     property altAfastamento: TaltAfastamento read FaltAfastamento write FaltAfastamento;
@@ -148,7 +148,7 @@ type
     function getInfoAtestado: TinfoAtestado;
   public
     constructor create;
-    destructor  destroy; override;
+    destructor  Destroy; override;
 
     function infoAtestadoInst: boolean;
 
@@ -179,7 +179,7 @@ type
     function getEmitente: TEmitente;
   public
     constructor create; reintroduce;
-    destructor  destroy; override;
+    destructor  Destroy; override;
 
     function emitenteInst: boolean;
 
@@ -663,7 +663,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -757,8 +757,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

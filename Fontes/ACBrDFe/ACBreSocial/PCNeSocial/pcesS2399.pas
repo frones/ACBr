@@ -401,7 +401,7 @@ var
   sSecao, sFim: String;
   I, J, K, L, M: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -620,8 +620,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

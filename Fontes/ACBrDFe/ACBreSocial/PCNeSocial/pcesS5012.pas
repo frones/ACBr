@@ -76,8 +76,6 @@ type
     destructor Destroy; override;
 
     function GetEvento : TObject;
-
-  published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtIrrf: TEvtIrrf read FEvtIrrf write setEvtIrrf;
@@ -309,12 +307,10 @@ var
   sSecao: String;
   i: Integer;
 begin
-  Result := False;
+  Result := True;
 
   AIni := TMemIniFile.Create('');
   try
-    Result := True;
-
     with Self do
     begin
       sSecao := 'evtIrrf';

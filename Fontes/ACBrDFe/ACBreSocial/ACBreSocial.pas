@@ -90,8 +90,8 @@ type
   protected
     function CreateConfiguracoes: TConfiguracoes; override;
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
-    function VersaoSchemaDoubleToString(AVersao: Double): String; virtual;
-    function VersaoSchemaStringToDouble(AVersao: String): Double; virtual;
+    function VersaoSchemaDoubleToString(AVersao: Double): String; override;
+    function VersaoSchemaStringToDouble(const AVersao: String): Double; override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -247,7 +247,7 @@ begin
   end;
 end;
 
-function TACBreSocial.VersaoSchemaStringToDouble(AVersao: String): Double;
+function TACBreSocial.VersaoSchemaStringToDouble(const AVersao: String): Double;
 var
   StrVer: String;
 begin

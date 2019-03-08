@@ -103,7 +103,7 @@ type
     function  GetAltContratual : TAltContratual;
   public
     constructor Create(AACBreSocial: TObject);overload;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
@@ -144,7 +144,7 @@ type
     FinfoContrato   : TInfoContratoS2206;
   public
     constructor Create;
-    destructor  destroy; override;
+    destructor  Destroy; override;
   published
     property dtALteracao : TDateTime read FdtAlteracao write FdtAlteracao;
     property dtEf: TDateTime read FDtEf write FDtEf;
@@ -415,7 +415,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -587,8 +587,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

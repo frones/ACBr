@@ -137,7 +137,7 @@ type
     function getNovaValidade: TIdePeriodo;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function dadosFuncaoInst(): Boolean;
     function novaValidadeInst(): Boolean;
@@ -326,7 +326,7 @@ var
   Ok: Boolean;
   sSecao: String;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -370,8 +370,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

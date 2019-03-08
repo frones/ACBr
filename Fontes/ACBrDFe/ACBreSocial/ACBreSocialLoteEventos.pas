@@ -345,8 +345,8 @@ var
   XMLOriginal: AnsiString;
   i: integer;
 begin
-  Result := False;
-  
+  Result := True;
+
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
@@ -358,8 +358,6 @@ begin
 
     for i := 0 to Self.Count - 1 do
       Self.Items[i].NomeArq := CaminhoArquivo;
-
-    Result := True;
   finally
     ArquivoXML.Free;
   end;

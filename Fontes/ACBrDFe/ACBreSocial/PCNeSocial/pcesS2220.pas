@@ -125,7 +125,7 @@ type
     property RespMonit : TRespMonit read FRespMonit write FRespMonit;
 
     constructor create;
-    destructor destroy;override;
+    destructor Destroy; override;
   end;
 
   TAso = class(TPersistent)
@@ -136,7 +136,7 @@ type
     FMedico: TMedico;
   public
     constructor create;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property DtAso: TDateTime read FDtAso write FDtAso;
     property ResAso: tpResAso read FResAso write FResAso;
@@ -425,7 +425,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -499,8 +499,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

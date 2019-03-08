@@ -78,8 +78,6 @@ type
     destructor Destroy; override;
 
     function GetEvento : TObject;
-
-  published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtFGTS: TEvtFGTS read FEvtFGTS write SetEvtFGTS;
@@ -137,7 +135,7 @@ type
   TInfoBaseFGTS = class(TPersistent)
   private
     FBasePerApur: TBasePerApurCollection;
-    FInfoDpsFGTS: TDpsPerApurCollection;
+//    FInfoDpsFGTS: TDpsPerApurCollection;
 
     procedure SetBasePerApur(const Value: TBasePerApurCollection);
   public
@@ -347,20 +345,20 @@ begin
 end;
 
 function TEvtFGTS.SalvarINI: boolean;
-var
-  AIni: TMemIniFile;
+//var
+//  AIni: TMemIniFile;
 //  sSecao: String;
 //  i: Integer;
 begin
-  Result := False;
+  Result := True;
 
-  AIni := TMemIniFile.Create('');
-  try
-    Result := True;
-
-  finally
-    AIni.Free;
-  end;
+//  AIni := TMemIniFile.Create('');
+//  try
+//    Result := True;
+//
+//  finally
+//    AIni.Free;
+//  end;
 end;
 
 { TInfoBaseFGTS }

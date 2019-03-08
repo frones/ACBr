@@ -242,24 +242,21 @@ var
   XML: String;
   XMLOriginal: AnsiString;
 begin
-  Result := False;
-  
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
     XMLOriginal := ArquivoXML.Text;
-
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-
-    if ArqXML then
-      Result := LoadFromString(XML)
-    else
-      Result := LoadFromStringINI(XML);
-
   finally
     ArquivoXML.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XML := DecodeToString(XMLOriginal, True);
+
+  if ArqXML then
+    Result := LoadFromString(XML)
+  else
+    Result := LoadFromStringINI(XML);
 end;
 
 function TEventos.LoadFromStream(AStream: TStringStream): Boolean;

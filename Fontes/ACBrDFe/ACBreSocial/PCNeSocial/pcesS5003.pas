@@ -76,8 +76,6 @@ type
     destructor Destroy; override;
 
     function GetEvento : TObject;
-
-  published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtBasesFGTS: TEvtBasesFGTS read FEvtBasesFGTS write setEvtBasesFGTS;
@@ -465,26 +463,24 @@ begin
 end;
 
 function TEvtBasesFGTS.SalvarINI: boolean;
-var
-  AIni: TMemIniFile;
+//var
+//  AIni: TMemIniFile;
 //  sSecao: String;
 //  i, j, k: Integer;
 begin
-  Result := False;
+  Result := True;
 
-  AIni := TMemIniFile.Create('');
-  try
-    Result := True;
-
-    with Self do
-    begin
-
-
-
-    end;
-  finally
-    AIni.Free;
-  end;
+//  AIni := TMemIniFile.Create('');
+//  try
+//    with Self do
+//    begin
+//
+//
+//
+//    end;
+//  finally
+//    AIni.Free;
+//  end;
 end;
 
 { TideEstabLotCollection }

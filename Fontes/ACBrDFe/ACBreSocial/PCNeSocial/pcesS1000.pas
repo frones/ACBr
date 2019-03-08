@@ -205,7 +205,7 @@ type
     function getSituacaoPJ(): TSituacaoPJ;
     function getSituacaoPF(): TSituacaoPF;
   public
-    destructor destroy; override;
+    destructor Destroy; override;
 
     function situacaoPFInst(): Boolean;
     function situacaoPJInst(): Boolean;
@@ -629,7 +629,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -757,8 +757,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

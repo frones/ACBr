@@ -294,7 +294,7 @@ type
     FhorarioIntervalo: THorarioIntervaloCollection;
   public
     constructor create; reintroduce;
-    destructor destroy; overload;
+    destructor Destroy; override;
 
     property dia: tpTpDia read Fdia write Fdia;
     property codHorContrat: string read FcodHorContrat write FcodHorContrat;

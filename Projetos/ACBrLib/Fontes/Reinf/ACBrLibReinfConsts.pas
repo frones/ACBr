@@ -61,6 +61,7 @@ const
   CSessaoRetornoideStatus = 'ideStatus';
   CSessaoRetornoregOcorrs = 'regOcorrs';
   CSessaoRetornoinfoRecEv = 'infoRecEv';
+  CSessaoRetornoEventoRecibo= 'ideEventoRecibo';
 
   CSessaoRetornoRTom = 'RTom';
   CSessaoRetornoinfoCRTom = 'infoCRTom';

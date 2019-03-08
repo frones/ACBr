@@ -388,7 +388,36 @@ type
     property Id: String read FId write FId;
   end;
 
+  { TRespostaEventoRecibo }
+  TRespostaEventoRecibo = class(TPadraoReinfResposta)
+  private
+    FId: String;
+    FInicioValidade: String;
+    FDataHoraReceb: String;
+    FNrRecibo: String;
+    FSituacaoEvento: String;
+    FAplicacaoRecepcao: String;
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Id: String read FId write FId;
+    property InicioValidade: String read FInicioValidade write FInicioValidade;
+    property DataHoraReceb: String read FDataHoraReceb write FDataHoraReceb;
+    property NrRecibo: String read FNrRecibo write FNrRecibo;
+    property SituacaoEvento: String read FSituacaoEvento write FSituacaoEvento;
+    property AplicacaoRecepcao: String read FAplicacaoRecepcao write FAplicacaoRecepcao;
+  end;
+
 implementation
+
+{ TRespostaEventoRecibo }
+
+constructor TRespostaEventoRecibo.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
 
 { TEnvioRespostaRRecEspetDesp }
 

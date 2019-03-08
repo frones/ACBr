@@ -86,7 +86,7 @@ type
 
   TEnvioLote = class(TeSocialWebService)
   private
-    AGrupo: TeSocialGrupo;
+    FGrupo: TeSocialGrupo;
     FVersao: String;
     FLote: TLoteEventos;
     FRetEnvioLote: TRetEnvioLote;
@@ -107,7 +107,7 @@ type
     procedure Clear; override;
     procedure BeforeDestruction; override;
 
-    property Grupo: TeSocialGrupo read AGrupo write AGrupo;
+    property Grupo: TeSocialGrupo read FGrupo write FGrupo;
     property RetEnvioLote: TRetEnvioLote read FRetEnvioLote;
   end;
 
@@ -394,7 +394,7 @@ begin
     NrInsc := TACBreSocial(FPDFeOwner).Configuracoes.Geral.IdTransmissor;
   end;
 
-  FLote.GerarXML(AGrupo);
+  FLote.GerarXML(FGrupo);
 
   FPDadosMsg := FLote.Xml;
 

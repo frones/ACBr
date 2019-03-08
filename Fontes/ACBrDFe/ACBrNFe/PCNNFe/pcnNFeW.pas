@@ -1509,7 +1509,7 @@ begin
                           begin
                             Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
 
-                            if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > StrToDateTime('29/04/2019')) then
+                            if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > EncodeDate(2019, 04, 29)) then
                               Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                           end;
 
@@ -1641,7 +1641,7 @@ begin
                      begin
                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
 
-                       if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > StrToDateTime('29/04/2019')) then
+                       if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > EncodeDate(2019, 04, 29)) then
                          Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                      end;
 
@@ -1740,7 +1740,7 @@ begin
                       begin
                         Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
 
-                        if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > StrToDateTime('29/04/2019')) then
+                        if (NFe.Ide.tpAmb = taHomologacao) or (NFe.Ide.dEmi > EncodeDate(2019, 04, 29)) then
                           Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                       end;
 

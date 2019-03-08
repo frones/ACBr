@@ -740,8 +740,8 @@ begin
 
     case tipoConsulta of
       tcEmpregador: ArqXSD := 'ConsultaIdentificadoresEventosEmpregador-v1_0_0.xsd';
-      tcTabela: ArqXSD := 'ConsultaIdentificadoresEventosTabela-v1_0_0';
-      tcTrabalhador: ArqXSD := 'ConsultaIdentificadoresEventosTrabalhador-v1_0_0';
+      tcTabela: ArqXSD := 'ConsultaIdentificadoresEventosTabela-v1_0_0.xsd';
+      tcTrabalhador: ArqXSD := 'ConsultaIdentificadoresEventosTrabalhador-v1_0_0.xsd';
     end;
 
     EhValido := SSL.Validar(String(FPDadosMsg),

@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2019
+-- pcesS2220 --
+[*] https://www.projetoacbr.com.br/forum/topic/49804-esocial-s-2220-erro-ao-validar/?do=findComment&comment=328838
+   Por: Sandro Herbst
+-- ACBreSocialWebServices --
+[*] Incluido a extensão ".xsd" que ficou faltando para as demais consultas.
+   Por: Italo Jurisato Junior
+
 06/03/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/49707-gera%C3%A7%C3%A3o-do-evento-s-2210/

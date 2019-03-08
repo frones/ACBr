@@ -476,14 +476,23 @@ begin
           obsProc       := INIRec.ReadString(sSecao, 'obsProc', EmptyStr);
           ordExame      := eSStrToOrdExame(Ok, INIRec.ReadString(sSecao, 'ordExame', '1'));
           indResult     := eSStrToIndResult(Ok, INIRec.ReadString(sSecao, 'indResult', '1'));
-
-          sSecao := 'respMonit' + IntToStrZero(I, 2);
         end;
 
         Inc(I);
       end;
 
+
+      // I vai vir com o o valor do último exame + 1
+      sSecao := 'respMonit' + IntToStrZero(I-1, 2);
+      exMedOcup.RespMonit.cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
+      exMedOcup.RespMonit.nmResp := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
+      exMedOcup.RespMonit.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
+      exMedOcup.RespMonit.ufCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));
+
+
       sSecao := 'medico';
+      exMedOcup.Aso.medico.cpfMed := INIRec.ReadString(sSecao, 'cpfMed', EmptyStr);
+      exMedOcup.Aso.medico.nisMed := INIRec.ReadString(sSecao, 'nisMed', EmptyStr);
       exMedOcup.Aso.medico.NmMed := INIRec.ReadString(sSecao, 'nmMed', EmptyStr);
       exMedOcup.Aso.medico.nrCRM := INIRec.ReadString(sSecao, 'nrCRM', EmptyStr);
       exMedOcup.Aso.medico.ufCRM := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufCRM', 'SP'));

@@ -39,6 +39,7 @@ ResourceString
   SMsgReinfLimparLista = 'Lista de Eventos Limpas com Sucesso';
   SErroReinfNenhumEvento = 'Erro: Nenhum evento na lista';
   SErroIDContribuinteTransmissor = 'ID do Contribuinte/Transmissor Inválido.';
+  SErroReinfConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
 
 
 const
@@ -423,6 +424,7 @@ const
   CMetodoCarregarXMLEventoReinf =    'carregarxmleventoreinf';
   CMetodoSetIDContribuinteReinf =    'setidcontribuinte';
   CMetodoSetIDTransmissorReinf =     'setidtransmissor';
+  CMetodoConsultarReciboReinf =      'consultarreciboreinf';
 
   CMetodoConfigurarDados =           'configurardados';
   CMetodoLimparLista =               'limparlista';

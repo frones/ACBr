@@ -88,6 +88,10 @@ public
   procedure RespostaConsultaRComl(ACont: Integer);
   procedure RespostaConsultaRCPRB(ACont: Integer);
 
+  procedure RespostaConsultaReciboStatus;
+  procedure RespostaConsultaReciboOcorrs(ACont: Integer);
+  procedure RespostaEventoRecibo(ACont: Integer);
+
   property ACBrReinf: TACBrReinf read fACBrReinf;
 end;
 
@@ -159,10 +163,54 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoConsultarReciboReinf}
+
+TMetodoConsultarReciboReinf = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 implementation
 
 uses
   DoACBrUnit, Forms;
+
+{ TMetodoConsultarReciboReinf }
+
+procedure TMetodoConsultarReciboReinf.Executar;
+var
+  APerApur: String;
+  ATipoEvento: Integer;
+  ACnpjPrestadorTomador: String;
+  i: Integer;
+begin
+  APerApur := fpCmd.Params(0);
+  ATipoEvento := StrToIntDef(fpCmd.Params(1),0);
+  ACnpjPrestadorTomador := fpCmd.Params(2);
+
+  with TACBrObjetoReinf(fpObjetoDono) do
+  begin
+    if (EstaVazio(APerApur)) or (EstaVazio(ACnpjPrestadorTomador)) then
+      raise Exception.Create(ACBrStr(SErroReinfConsulta));
+
+    ACBrReinf.Eventos.Clear;
+    if ACBrReinf.ConsultaReciboEvento(APerApur, TTipoEvento(ATipoEvento), ACnpjPrestadorTomador) then
+    begin
+      with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
+      begin
+        RespostaConsultaReciboStatus;
+
+        for i := 0 to evtTotalContrib.IdeStatus.regOcorrs.Count -1 do
+         RespostaConsultaReciboOcorrs(i);
+
+        for i := 0 to evtTotalContrib.RetornoEventos.Count -1 do
+          RespostaEventoRecibo(i);
+
+      end;
+    end;
+  end;
+
+end;
 
 { TACBrCarregarReinf }
 
@@ -475,6 +523,7 @@ begin
   ListaDeMetodos.Add(CMetodoCarregarXMLEventoReinf);
   ListaDeMetodos.Add(CMetodoSetIDContribuinteReinf);
   ListaDeMetodos.Add(CMetodoSetIDTransmissorReinf);
+  ListaDeMetodos.Add(CMetodoConsultarReciboReinf);
 end;
 
 procedure TACBrObjetoReinf.Executar(ACmd: TACBrCmd);
@@ -503,7 +552,8 @@ begin
     5  : AMetodoClass := TMetodoCarregarXMLEventoReinf;
     6  : AMetodoClass := TMetodoSetIDContribuinte;
     7  : AMetodoClass := TMetodoSetIDTransmissor;
-    8..22 : DoACbr(ACmd);
+    8  : AMetodoClass := TMetodoConsultarReciboReinf;
+    9..23 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -1217,6 +1267,67 @@ begin
       resp.CRCPRB         := InfoTotalContrib.RCPRB.Items[ACont].CRCPRB;
       resp.vlrCRCPRB      := InfoTotalContrib.RCPRB.Items[ACont].vlrCRCPRB;
       resp.vlrCRCPRBSusp  := InfoTotalContrib.RCPRB.Items[ACont].vlrCRCPRBSusp;
+    end;
+
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoReinf.RespostaConsultaReciboStatus;
+var
+  Resp: TRespostaideStatus;
+begin
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, resINI);
+  try
+    with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
+    begin
+      resp.cdRetorno   := evtTotalContrib.IdeStatus.cdRetorno;
+      resp.descRetorno := evtTotalContrib.IdeStatus.descRetorno;
+    end;
+
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoReinf.RespostaConsultaReciboOcorrs(ACont: Integer);
+var
+  Resp: TRespostaregOcorrs;
+begin
+  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), resINI);
+  try
+    with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta.evtTotalContrib do
+    begin
+      resp.tpOcorr        := IdeStatus.regOcorrs.Items[ACont].tpOcorr;
+      resp.localErroAviso := IdeStatus.regOcorrs.Items[ACont].localErroAviso;
+      resp.codResp        := IdeStatus.regOcorrs.Items[ACont].codResp;
+      resp.dscResp        := IdeStatus.regOcorrs.Items[ACont].dscResp;
+    end;
+
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+
+end;
+
+procedure TACBrObjetoReinf.RespostaEventoRecibo(ACont: Integer);
+var
+  Resp: TRespostaEventoRecibo;
+begin
+  Resp := TRespostaEventoRecibo.Create(CSessaoRetornoEventoRecibo + IntToStrZero(ACont+1, 3), resINI);
+  try
+    with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta.evtTotalContrib do
+    begin
+      resp.id              := RetornoEventos.Items[ACont].id;
+      resp.InicioValidade  := RetornoEventos.Items[ACont].iniValid;
+      resp.DataHoraReceb   := RetornoEventos.Items[ACont].dtHoraRecebimento;
+      resp.NrRecibo        := RetornoEventos.Items[ACont].nrRecibo;
+      resp.SituacaoEvento  := RetornoEventos.Items[ACont].situacaoEvento;
+      resp.AplicacaoRecepcao:= RetornoEventos.Items[ACont].aplicacaoRecepcao;
     end;
 
     fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;

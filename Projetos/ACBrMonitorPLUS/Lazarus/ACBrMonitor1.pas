@@ -43,20 +43,19 @@ uses
   ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
-  ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs, IpHtml,
-  pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT,
-  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
+  ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
+  ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo,
+  PrintersDlgs, IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe,
+  ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
   ACBrDFeConfiguracoes, ACBrReinf, ACBreSocial, ACBrIntegrador, LazHelpCHM,
   pmdfeConversaoMDFe, pcesConversaoeSocial, pcnConversaoReinf,
-  ACBrMonitorConfig, ACBrMonitorConsts,
-  DOACBrNFeUnit, DoACBrCTeUnit, DoACBrMDFeUnit, DoBoletoUnit,
-  DoACBrReinfUnit, DoBALUnit, DoEmailUnit, DoCEPUnit, DoCHQUnit, DoGAVUnit,
-  DoIBGEUnit, DoNcmUnit, DoLCBUnit, DoDISUnit, DoSedexUnit, DoETQUnit,
-  DoACBrGNReUnit, DoPosPrinterUnit, DoECFUnit, DoECFObserver, DoECFBemafi32,
-  DoSATUnit, DoACBreSocialUnit;
+  ACBrMonitorConfig, ACBrMonitorConsts, DOACBrNFeUnit, DoACBrCTeUnit,
+  DoACBrMDFeUnit, DoBoletoUnit, DoACBrReinfUnit, DoBALUnit, DoEmailUnit,
+  DoCEPUnit, DoCHQUnit, DoGAVUnit, DoIBGEUnit, DoNcmUnit, DoLCBUnit, DoDISUnit,
+  DoSedexUnit, DoETQUnit, DoACBrGNReUnit, DoPosPrinterUnit, DoECFUnit,
+  DoECFObserver, DoECFBemafi32, DoSATUnit, DoACBreSocialUnit;
 
 const
   //{$I versao.txt}
@@ -111,6 +110,7 @@ type
     ACBrNCMs1: TACBrNCMs;
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFCeFortesA4_1: TACBrNFeDANFCeFortesA4;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
@@ -8465,7 +8465,12 @@ begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
       if (rgModeloDANFeNFCE.ItemIndex = 0) or GerarPDF then
-        ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+      begin
+        if (rgModoImpressaoEvento.ItemIndex = 0) then
+          ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA4_1
+        else
+          ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1;
+      end
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
 
@@ -8533,6 +8538,25 @@ begin
       ACBrNFeDANFeRL1.ExibeDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
       ACBrNFeDANFeRL1.ExibeInforAdicProduto := TinfAdcProd(rgInfAdicProduto.ItemIndex);
       ACBrNFeDANFeRL1.LogoemCima := cbxExibirLogoEmCima.Checked;
+    end
+    else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then
+    begin
+      ACBrNFeDANFCeFortesA4_1.ExibeInforAdicProduto := TinfAdcProd(rgInfAdicProduto.ItemIndex);
+      ACBrNFeDANFCeFortesA4_1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortesA4_1.ImprimeTotalLiquido   := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortesA4_1.MargemInferior        := fspeNFCeMargemInf.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemSuperior        := fspeNFCeMargemSup.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemDireita         := fspeNFCeMargemDir.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortesA4_1.ImprimeCodigoEan      := cbxImprimirCodigoEANNFCe.Checked;
+      ACBrNFeDANFCeFortesA4_1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
+      ACBrNFeDANFCeFortesA4_1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
+      ACBrNFeDANFCeFortesA4_1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
+      if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
+        ACBrNFeDANFCeFortesA4_1.Logo                := edtLogoMarcaNFCeSAT.Text
+      else
+        ACBrNFeDANFCeFortesA4_1.Logo                := '';
+
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin

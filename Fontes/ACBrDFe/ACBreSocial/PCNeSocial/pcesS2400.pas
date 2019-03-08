@@ -95,7 +95,7 @@ type
     procedure GerarIdeBenef(pIdeBenef: TIdeBenef);
     procedure GerarDadosBenef(pDadosBenef: TDadosBenef);
     procedure GerarInfoBeneficio(pInfoBeneficio: TInfoBeneficio);
-    procedure GerarBeneficio(pBeneficio: TBeneficio; pGroupName: String);
+    procedure GerarBeneficio(pBeneficio: TBeneficio; const pGroupName: String);
     procedure GerarInfoPenMorte(pInfoPenMorte: TInfoPenMorte);
     procedure GerarFimBeneficio(pFimBeneficio: TFimBeneficio);
   public
@@ -378,7 +378,7 @@ begin
   Gerador.wGrupo('/infoPenMorte');
 end;
 
-procedure TEvtCdBenPrRP.GerarBeneficio(pBeneficio: TBeneficio; pGroupName: String);
+procedure TEvtCdBenPrRP.GerarBeneficio(pBeneficio: TBeneficio; const pGroupName: String);
 begin
   Gerador.wGrupo(pGroupName);
 

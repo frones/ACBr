@@ -91,14 +91,14 @@ type
     procedure CarregarXmlEventos;
 
   protected
-    procedure GerarCabecalho(Namespace: string);
+    procedure GerarCabecalho(const Namespace: string);
     procedure GerarRodape;
     function Validar: Boolean;
   public
     constructor Create(AOwner: TComponent); reintroduce;
 
     function Add : TItemLoteEventos;
-    function LoadFromFile(CaminhoArquivo: String): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(AXMLString: String): Boolean;
     procedure GerarXML(const AGrupo: TeSocialGrupo);
@@ -146,7 +146,7 @@ begin
   FACBreSocial    := AOwner;
 end;
 
-procedure TLoteEventos.GerarCabecalho(Namespace: String);
+procedure TLoteEventos.GerarCabecalho(const Namespace: String);
 begin
 
 end;
@@ -302,7 +302,7 @@ begin
   CarregarXmlEventos;
 
   Eventosxml := EmptyStr;
-  FXML := EmptyStr;
+//  FXML := EmptyStr;
 
   FXML :=
   '<eSocial xmlns="http://www.esocial.gov.br/schema/lote/eventos/envio/v1_1_1">'+
@@ -338,10 +338,10 @@ begin
   Result := TItemLoteEventos(inherited GetItem(Index));
 end;
 
-function TLoteEventos.LoadFromFile(CaminhoArquivo: String): Boolean;
+function TLoteEventos.LoadFromFile(const CaminhoArquivo: String): Boolean;
 var
   ArquivoXML: TStringList;
-  XML: String;
+  XMLTemp: String;
   XMLOriginal: AnsiString;
   i: integer;
 begin
@@ -353,8 +353,8 @@ begin
     XMLOriginal := ArquivoXML.Text;
 
     // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-    LoadFromString(XML);
+    XMLTemp := DecodeToString(XMLOriginal, True);
+    LoadFromString(XMLTemp);
 
     for i := 0 to Self.Count - 1 do
       Self.Items[i].NomeArq := CaminhoArquivo;

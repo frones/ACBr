@@ -71,8 +71,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
-    function LoadFromString(AXMLString: String): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -178,7 +178,7 @@ begin
   FS1005.Assign(Value);
 end;
 
-function TIniciais.LoadFromString(AXMLString: String): Boolean;
+function TIniciais.LoadFromString(const AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
@@ -190,7 +190,7 @@ begin
   Result := (GetCount > 0);
 end;
 
-function TIniciais.LoadFromIni(AIniString: String): Boolean;
+function TIniciais.LoadFromIni(const AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin

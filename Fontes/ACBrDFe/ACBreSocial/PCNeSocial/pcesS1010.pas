@@ -110,7 +110,7 @@ type
     procedure GerarIdeRubrica;
     procedure GerarDadosRubrica;
     procedure GerarIdeProcessoCP;
-    procedure GerarProcessos(pChave: string; pProcessoCollection: TProcessoCollection);
+    procedure GerarProcessos(const pChave: string; pProcessoCollection: TProcessoCollection);
   public
     constructor Create(AACBreSocial: TObject);overload;
     destructor Destroy; override;
@@ -319,7 +319,7 @@ begin
   Gerador.wGrupo('/dadosRubrica');
 end;
 
-procedure TEvtTabRubrica.GerarProcessos(pChave: String; pProcessoCollection: TProcessoCollection);
+procedure TEvtTabRubrica.GerarProcessos(const pChave: String; pProcessoCollection: TProcessoCollection);
 var
   i: Integer;
 begin

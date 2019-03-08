@@ -92,7 +92,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPatheSocial(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPatheSocial(Data: TDateTime = 0; const CNPJ: String = ''): String;
 
   published
     property EmissaoPatheSocial: Boolean read FEmissaoPatheSocial write FEmissaoPatheSocial default False;
@@ -239,7 +239,7 @@ begin
 end;
 
 function TArquivosConfeSocial.GetPatheSocial(Data: TDateTime;
-  CNPJ: String): String;
+  const CNPJ: String): String;
 begin
   Result := GetPath(PatheSocial, ACBRESOCIAL_MODELODF, CNPJ, Data, ACBRESOCIAL_MODELODF);
 end;

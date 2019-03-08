@@ -109,9 +109,9 @@ type
     function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
         tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
     function ConsultaIdentificadoresEventosTabela(const CnpjEstab: String;
-        tpEvt: TTipoEvento; AchEvt: string; AdtIni, AdtFim: TDateTime): boolean;
+        tpEvt: TTipoEvento; const AchEvt: string; AdtIni, AdtFim: TDateTime): boolean;
     function ConsultaIdentificadoresEventosTrabalhador(const CnpjEstab: String;
-        AcpfTrab: string; AdtIni, AdtFim: TDateTime): boolean;
+        const AcpfTrab: string; AdtIni, AdtFim: TDateTime): boolean;
 
     function DownloadEventos(const CnpjEmpr, PorID, PorNrRecibo: String): boolean;
 
@@ -193,7 +193,7 @@ begin
 end;
 
 function TACBreSocial.ConsultaIdentificadoresEventosTabela(
-  const CnpjEstab: String; tpEvt: TTipoEvento; AchEvt: string; AdtIni,
+  const CnpjEstab: String; tpEvt: TTipoEvento; const AchEvt: string; AdtIni,
   AdtFim: TDateTime): boolean;
 begin
   Result := WebServices.ConsultaIdentificadoresEventosTabela(CnpjEstab, tpEvt,
@@ -201,7 +201,7 @@ begin
 end;
 
 function TACBreSocial.ConsultaIdentificadoresEventosTrabalhador(
-  const CnpjEstab: String; AcpfTrab: string; AdtIni,
+  const CnpjEstab: String; const AcpfTrab: string; AdtIni,
   AdtFim: TDateTime): boolean;
 begin
   Result := WebServices.ConsultaIdentificadoresEventosTrabalhador(CnpjEstab,

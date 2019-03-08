@@ -137,9 +137,9 @@ type
 
     {Geradores específicos desta classe}
     procedure GerarIdeEstab(objIdeEstab: TIdeEstabCollection;
-      nomeRemunPer: string = 'remunPerApur');
+      const nomeRemunPer: string = 'remunPerApur');
     procedure GerarRemunPer(objRemunPer: TRemunPer1202Collection;
-      nomeRemunPer: string = 'remunPerApur');
+      const nomeRemunPer: string = 'remunPerApur');
     procedure GerarIdePeriodo(objIdePeriodo: TIdePeriodoCollection);
     procedure GerarIdeADC(objIdeADC: TideADCCollection);
 
@@ -585,7 +585,7 @@ begin
 end;
 
 procedure TEvtRemunRPPS.GerarIdeEstab(objIdeEstab: TIdeEstabCollection;
-  nomeRemunPer: string = 'remunPerApur');
+  const nomeRemunPer: string = 'remunPerApur');
 var
   i: integer;
 begin
@@ -682,7 +682,7 @@ begin
 end;
 
 procedure TEvtRemunRPPS.GerarRemunPer(objRemunPer: TRemunPer1202Collection;
-  nomeRemunPer: string = 'remunPerApur');
+  const nomeRemunPer: string = 'remunPerApur');
 var
   i: integer;
 begin

@@ -229,9 +229,9 @@ type
     function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
         tpEvt : TTipoEvento; PerApur : TDateTime): boolean;
     function ConsultaIdentificadoresEventosTabela(const CnpjEstab: String;
-        tpEvt: TTipoEvento; AchEvt: string; AdtIni, AdtFim: TDateTime): boolean;
+        tpEvt: TTipoEvento; const AchEvt: string; AdtIni, AdtFim: TDateTime): boolean;
     function ConsultaIdentificadoresEventosTrabalhador(const CnpjEstab: String;
-        AcpfTrab: string; AdtIni, AdtFim: TDateTime): boolean;
+        const AcpfTrab: string; AdtIni, AdtFim: TDateTime): boolean;
     function DownloadEvento(const ACnpjEmpr, APorID, APorNrRecibo: String): boolean;
 
     property ACBreSocial: TACBrDFe read FACBreSocial write FACBreSocial;
@@ -932,7 +932,7 @@ begin
 end;
 
 function TWebServices.ConsultaIdentificadoresEventosTabela(
-  const CnpjEstab: String; tpEvt: TTipoEvento; AchEvt: string; AdtIni,
+  const CnpjEstab: String; tpEvt: TTipoEvento; const AchEvt: string; AdtIni,
   AdtFim: TDateTime): boolean;
 begin
   FConsultaIdentEventos.Clear;
@@ -955,7 +955,7 @@ begin
 end;
 
 function TWebServices.ConsultaIdentificadoresEventosTrabalhador(
-  const CnpjEstab: String; AcpfTrab: string; AdtIni,
+  const CnpjEstab: String; const AcpfTrab: string; AdtIni,
   AdtFim: TDateTime): boolean;
 begin
   FConsultaIdentEventos.Clear;

@@ -104,11 +104,11 @@ type
     procedure SaveToFiles;
     procedure Clear;
 
-    function LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(AXMLString: String): Boolean;
-    function LoadFromStringINI(AINIString: String): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromStringINI(const AINIString: String): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
     property Count:          Integer        read GetCount;
     property Iniciais:       TIniciais      read FIniciais       write SetIniciais;
@@ -236,7 +236,7 @@ begin
   FPeriodicos.Assign(Value);
 end;
 
-function TEventos.LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
+function TEventos.LoadFromFile(const CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
 var
   ArquivoXML: TStringList;
   XML: String;
@@ -300,7 +300,7 @@ begin
   end;
 end;
 
-function TEventos.LoadFromStringINI(AINIString: String): Boolean;
+function TEventos.LoadFromStringINI(const AINIString: String): Boolean;
 begin
   Result := Self.Iniciais.LoadFromIni(AIniString);
   Result := Self.Tabelas.LoadFromIni(AIniString) or Result;
@@ -310,7 +310,7 @@ begin
   SaveToFiles;
 end;
 
-function TEventos.LoadFromIni(AIniString: String): Boolean;
+function TEventos.LoadFromIni(const AIniString: String): Boolean;
 begin
   // O valor False no segundo parâmetro indica que o conteudo do arquivo não é
   // um XML.

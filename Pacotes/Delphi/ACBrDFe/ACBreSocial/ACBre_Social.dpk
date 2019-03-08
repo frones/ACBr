@@ -138,6 +138,7 @@ contains
   pcesS2400 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS2400.pas',
   pcesS3000 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS3000.pas',
   pcesS5001 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5001.pas',
+  pcesS5002 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5002.pas',
   pcesS5003 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5003.pas',
   pcesS5011 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5011.pas',
   pcesS5012 in '..\..\..\..\Fontes\ACBrDFe\ACBreSocial\PCNeSocial\pcesS5012.pas',

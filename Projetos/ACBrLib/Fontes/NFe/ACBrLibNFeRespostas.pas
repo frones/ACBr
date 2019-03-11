@@ -46,6 +46,17 @@ type
   TLibNFeResposta = class(TACBrLibResposta)
   private
     FMsg: string;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Msg: string read FMsg write FMsg;
+
+  end;
+
+  TLibNFeServiceResposta = class(TLibNFeResposta)
+  private
     Fversao: string;
     FtpAmb: string;
     FverAplic: string;
@@ -57,7 +68,6 @@ type
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
-    property Msg: string read FMsg write FMsg;
     property Versao: string read Fversao write Fversao;
     property tpAmb: string read FtpAmb write FtpAmb;
     property VerAplic: string read FverAplic write FverAplic;
@@ -68,7 +78,7 @@ type
   end;
 
   { TStatusServicoResposta }
-  TStatusServicoResposta = class(TLibNFeResposta)
+  TStatusServicoResposta = class(TLibNFeServiceResposta)
   private
     FTMed: integer;
     FdhRetorno: TDateTime;
@@ -83,7 +93,7 @@ type
   end;
 
   { TInutilizarNFeResposta }
-  TInutilizarNFeResposta = class(TLibNFeResposta)
+  TInutilizarNFeResposta = class(TLibNFeServiceResposta)
   private
     FNomeArquivo: String;
     FXml: String;
@@ -98,7 +108,7 @@ type
   end;
 
   { TConsultaNFeResposta }
-  TConsultaNFeResposta = class(TLibNFeResposta)
+  TConsultaNFeResposta = class(TLibNFeServiceResposta)
   private
     FChNFe: String;
     FNProt: String;
@@ -114,7 +124,7 @@ type
 
   { TEnvioResposta }
 
-  TEnvioResposta = class(TLibNFeResposta)
+  TEnvioResposta = class(TLibNFeServiceResposta)
   private
     FtMed: integer;
     FnRec: string;
@@ -128,7 +138,7 @@ type
 
   { TRetornoResposta }
 
-  TRetornoResposta = class(TLibNFeResposta)
+  TRetornoResposta = class(TLibNFeServiceResposta)
   private
     FnRec: string;
   public
@@ -140,7 +150,7 @@ type
 
   { TRetornoItemResposta }
 
-  TRetornoItemResposta = class(TLibNFeResposta)
+  TRetornoItemResposta = class(TLibNFeServiceResposta)
   private
     FchNFe: string;
     FnProt: string;
@@ -158,7 +168,7 @@ type
 
   { TCancelamentoResposta }
 
-  TCancelamentoResposta = class(TLibNFeResposta)
+  TCancelamentoResposta = class(TLibNFeServiceResposta)
   private
     FchNFe: string;
     FnProt: string;
@@ -186,7 +196,7 @@ type
 
   { TConsultaCadastroResposta }
 
-  TConsultaCadastroResposta = class(TLibNFeResposta)
+  TConsultaCadastroResposta = class(TLibNFeServiceResposta)
   private
     FIE: string;
     FCNPJ: string;
@@ -206,7 +216,7 @@ type
 
   { TConsultaCadastroItemResposta }
 
-  TConsultaCadastroItemResposta = class(TLibNFeResposta)
+  TConsultaCadastroItemResposta = class(TLibNFeServiceResposta)
   private
     Farquivo: string;
     FCEP: Integer;
@@ -260,7 +270,7 @@ type
 
   { TEventoResposta }
 
-  TEventoResposta = class(TLibNFeResposta)
+  TEventoResposta = class(TLibNFeServiceResposta)
   private
     FidLote: Integer;
     FcOrgao: Integer;
@@ -274,7 +284,7 @@ type
 
   { TEventoItemResposta }
 
-  TEventoItemResposta = class(TLibNFeResposta)
+  TEventoItemResposta = class(TLibNFeServiceResposta)
   private
     Farquivo: String;
     FchNFe: string;
@@ -310,7 +320,7 @@ type
 
   { TDistribuicaoDFeResposta }
 
-  TDistribuicaoDFeResposta = class(TLibNFeResposta)
+  TDistribuicaoDFeResposta = class(TLibNFeServiceResposta)
   private
     Farquivo: string;
     FdhResp: TDateTime;
@@ -330,7 +340,7 @@ type
 
   { TDistribuicaoDFeItemResposta }
 
-  TDistribuicaoDFeItemResposta = class(TLibNFeResposta)
+  TDistribuicaoDFeItemResposta = class(TLibNFeServiceResposta)
   private
     Farquivo: String;
     FCNPJ: string;
@@ -410,10 +420,11 @@ type
     property cOrgaoAutor: integer read FcOrgaoAutor write FcOrgaoAutor;
     property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
     property emailDest: string read FemailDest write FemailDest;
+
   end;
 
   { TConsultaNFeInfCanResposta }
-  TConsultaNFeInfCanResposta  = class(TLibNFeResposta)
+  TConsultaNFeInfCanResposta  = class(TLibNFeServiceResposta)
   private
     FChNFe: String;
     FNProt: String;
@@ -426,7 +437,7 @@ type
   end;
 
   { TConsultaNFeProcEventoResposta }
-  TConsultaNFeProcEventoResposta  = class(TLibNFeResposta)
+  TConsultaNFeProcEventoResposta  = class(TLibNFeServiceResposta)
   private
     FID: Integer;
     FcOrgao: String;
@@ -453,7 +464,7 @@ type
   end;
 
   { TConsultaNFeDetEventoResposta }
-  TConsultaNFeDetEventoResposta  = class(TLibNFeResposta)
+  TConsultaNFeDetEventoResposta  = class(TLibNFeServiceResposta)
   private
     FdescEvento : String;
     FxCorrecao : String;
@@ -500,7 +511,7 @@ type
   end;
 
   { TConsultaNFeItemPedidoResposta }
-  TConsultaNFeItemPedidoResposta  = class(TLibNFeResposta)
+  TConsultaNFeItemPedidoResposta  = class(TLibNFeServiceResposta)
   private
     FnumItem: Integer;
     FqtdeItem: Double;
@@ -514,7 +525,7 @@ type
   end;
 
   { TConsultaNFeRetEventoResposta }
-  TConsultaNFeRetEventoResposta  = class(TLibNFeResposta)
+  TConsultaNFeRetEventoResposta  = class(TLibNFeServiceResposta)
   private
     FId: String;
     FNomeArquivo: String;
@@ -551,7 +562,7 @@ type
   end;
 
   { TConsultaNFeChNFePendResposta }
-  TConsultaNFeChNFePendResposta  = class(TLibNFeResposta)
+  TConsultaNFeChNFePendResposta  = class(TLibNFeServiceResposta)
   private
     FchNFePend : String;
   public
@@ -618,6 +629,14 @@ end;
 { TLibNFeResposta }
 
 constructor TLibNFeResposta.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TLibNFeServiceResposta }
+
+constructor TLibNFeServiceResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(ASessao, ATipo);

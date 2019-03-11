@@ -24,23 +24,25 @@ object LibCTeDM: TLibCTeDM
     top = 32
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
-    ACBrCTE = ACBrCTe1
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDACTE = tiSemGeracao
-    TamanhoPapel = tpA4
-    NumCopias = 1
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
-    CTeCancelada = False
-    ExibirResumoCanhoto = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrCTE = ACBrCTe1
+    ImprimirHoraSaida = False
+    TipoDACTE = tiSemGeracao
+    TamanhoPapel = tpA4
+    Cancelada = False
+    ExibeResumoCanhoto = False
     EPECEnviado = False
-    ImprimirDescPorc = False
+    ImprimeDescPorc = False
     PrintDialog = False
-    left = 202
+    left = 200
     top = 32
   end
 end

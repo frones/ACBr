@@ -947,7 +947,7 @@ begin
             Result := SetRetorno(ErrOK, StrPas(sResposta));
           end
           else
-          Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
+            Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
         end;
       finally
         Resposta.Free;
@@ -1137,7 +1137,7 @@ begin
 
       NFeDM.ACBrNFe1.EventoNFe.Evento.Clear;
 
-      with NFeDM.ACBrNFe1.EventoNFe.Evento.Add do
+      with NFeDM.ACBrNFe1.EventoNFe.Evento.New do
       begin
         Infevento.CNPJ := ACNPJ;
         if Trim(Infevento.CNPJ) = '' then
@@ -1446,6 +1446,7 @@ var
   APara, AChaveNFe, AAssunto, ACC, AAnexos, AMensagem: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1506,7 +1507,9 @@ begin
                   slCC,      // Lista com emails que serão enviado cópias - TStrings
                   slAnexos); // Lista de slAnexos - TStrings
 
-                Result := SetRetorno(ErrOK, 'Email enviado com sucesso');
+                Resposta := TLibNFeResposta.Create('EnviaEmail', resINI);
+                Resposta.Msg := 'Email enviado com sucesso';
+                Result := SetRetorno(ErrOK, Resposta.Gerar);
               except
                 on E: Exception do
                   raise EACBrLibException.Create(ErrRetorno, 'Erro ao enviar email' + sLineBreak + E.Message);
@@ -1539,6 +1542,7 @@ var
   ArqPDF: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1628,7 +1632,9 @@ begin
                   slCC,      // Lista com emails que serão enviado cópias - TStrings
                   slAnexos); // Lista de slAnexos - TStrings
 
-                Result := SetRetorno(ErrOK, 'Email enviado com sucesso');
+                Resposta := TLibNFeResposta.Create('EnviaEmail', resINI);
+                Resposta.Msg := 'Email enviado com sucesso';
+                Result := SetRetorno(ErrOK, Resposta.Gerar);
               except
                 on E: Exception do
                   raise EACBrLibException.Create(ErrRetorno, 'Erro ao enviar email' + sLineBreak + E.Message);
@@ -1655,6 +1661,8 @@ end;
 
 function NFE_Imprimir: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1664,8 +1672,11 @@ begin
     begin
       NFeDM.Travar;
       try
+        NFeDM.ConfigurarImpressao();
         NFeDM.ACBrNFe1.NotasFiscais.Imprimir;
-        Result := SetRetornoNFeCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
+        Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+        Resposta.Msg := 'Danfe Impresso com sucesso';
+        Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
         NFeDM.Destravar;
       end;
@@ -1681,6 +1692,8 @@ end;
 
 function NFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1690,8 +1703,12 @@ begin
     begin
       NFeDM.Travar;
       try
+        NFeDM.ConfigurarImpressao('', true);
         NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;
-        Result := SetRetornoNFeCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
+
+        Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+        Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
+        Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
         NFeDM.Destravar;
       end;
@@ -1711,6 +1728,7 @@ var
   EhArquivo: boolean;
   AChaveNFe: string;
   AChaveEvento: string;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1743,9 +1761,12 @@ begin
       if EhArquivo then
         NFeDM.ACBrNFe1.EventoNFe.LerXML(AChaveEvento);
 
+      NFeDM.ConfigurarImpressao();
       NFeDM.ACBrNFe1.ImprimirEvento;
 
-      Result := SetRetorno(ErrOK);
+      Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+      Resposta.Msg := 'Danfe Impresso com sucesso';
+      Result := SetRetorno(ErrOK, Resposta.Gerar);
     end;
   except
     on E: EACBrLibException do
@@ -1762,6 +1783,7 @@ var
   EhArquivo: boolean;
   AChaveNFe: string;
   AChaveEvento: string;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1794,9 +1816,12 @@ begin
       if EhArquivo then
         NFeDM.ACBrNFe1.EventoNFe.LerXML(AChaveEvento);
 
+      NFeDM.ConfigurarImpressao('', false);
       NFeDM.ACBrNFe1.ImprimirEventoPDF;
 
-      Result := SetRetorno(ErrOK);
+      Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+      Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
+      Result := SetRetorno(ErrOK, Resposta.Gerar);
     end;
   except
     on E: EACBrLibException do
@@ -1812,6 +1837,7 @@ function NFE_ImprimirInutilizacao(const eChave: PChar): longint;
 var
   EhArquivo: boolean;
   AChave: string;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1835,9 +1861,12 @@ begin
       if EhArquivo then
         NFeDM.ACBrNFe1.InutNFe.LerXML(AChave);
 
+      NFeDM.ConfigurarImpressao();
       NFeDM.ACBrNFe1.ImprimirInutilizacao;
 
-      Result := SetRetorno(ErrOK);
+      Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+      Resposta.Msg := 'Danfe Impresso com sucesso';
+      Result := SetRetorno(ErrOK, Resposta.Gerar);
     end;
   except
     on E: EACBrLibException do
@@ -1853,6 +1882,7 @@ function NFE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
 var
   EhArquivo: boolean;
   AChave: string;
+  Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1876,9 +1906,12 @@ begin
       if EhArquivo then
         NFeDM.ACBrNFe1.InutNFe.LerXML(AChave);
 
+      NFeDM.ConfigurarImpressao('', false);
       NFeDM.ACBrNFe1.ImprimirInutilizacaoPDF;
 
-      Result := SetRetorno(ErrOK);
+      Resposta := TLibNFeResposta.Create('Imprimir', resINI);
+      Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
+      Result := SetRetorno(ErrOK, Resposta.Gerar);
     end;
   except
     on E: EACBrLibException do

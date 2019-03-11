@@ -48,6 +48,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/49858-corre%C3%A7%C3%A3o-evento-2230-tagnroc-esta-gerando-incorreto/
+   Por: Edmar Frazao
+
 11/03/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/46398-solicitardownloadeventos/?do=findComment&comment=328935

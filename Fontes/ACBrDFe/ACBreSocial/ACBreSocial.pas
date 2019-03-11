@@ -63,8 +63,14 @@ const
   ACBRESOCIAL_NAMESPACE = ' http://www.esocial.gov.br/servicos/empregador/lote/eventos/envio/v1_1_0';
   ACBRESOCIAL_NAMESPACE_CON = 'http://www.esocial.gov.br/schema/lote/eventos/envio/consulta/retornoProcessamento/v1_0_0';
   ACBRESOCIAL_NAMESPACE_RETEVT = 'http://www.esocial.gov.br/schema/consulta/identificadores-eventos/empregador/v1_0_0';
+
+  ACBRESOCIAL_NAMESPACE_CONS_EMP = 'http://www.esocial.gov.br/schema/consulta/identificadores-eventos/empregador/v1_0_0';
+  ACBRESOCIAL_NAMESPACE_CONS_TAB = 'http://www.esocial.gov.br/schema/consulta/identificadores-eventos/tabela/v1_0_0';
+  ACBRESOCIAL_NAMESPACE_CONS_TRA = 'http://www.esocial.gov.br/schema/consulta/identificadores-eventos/trabalhador/v1_0_0';
+
   ACBRESOCIAL_NAMESPACE_DOWEVTID = 'http://www.esocial.gov.br/schema/download/solicitacao/id/v1_0_0';
   ACBRESOCIAL_NAMESPACE_DOWEVTREC = 'http://www.esocial.gov.br/schema/download/solicitacao/nrRecibo/v1_0_0';
+
   ACBRESOCIAL_NAMESPACE_URI = 'http://www.esocial.gov.br/schema/evt/';
   ACBRESOCIAL_MODELODF = 'eSocial';
 

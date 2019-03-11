@@ -80,7 +80,7 @@ namespace ACBrLibSat
         public static extern int SAT_ExtrairLogs(string eArquivo);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SAT_TesteFimAFim(string eArquivoXmlVenda);
+        public static extern int SAT_TesteFimAFim(string eArquivoXmlVenda, StringBuilder buffer, ref int bufferSize);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SAT_GerarAssinaturaSAT(string CNPJSHW, string CNPJEmitente, StringBuilder buffer, ref int bufferSize);
@@ -107,7 +107,7 @@ namespace ACBrLibSat
         public static extern int SAT_GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SAT_GerarImpressaoFiscalMFe(string eArquivoXml, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
+        public static extern int SAT_GerarImpressaoFiscalMFe(string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SAT_EnviarEmail(string eArquivoXml, string ePara, string eAssunto, string eNomeArquivo,

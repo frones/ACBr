@@ -98,7 +98,9 @@ Public Declare Function SAT_ExtrairLogs _
                 Lib "ACBrSAT32.dll" (ByVal eArquivo As String) As Long
                 
 Public Declare Function SAT_TesteFimAFim _
-                Lib "ACBrSAT32.dll" (ByVal eArquivoXmlVenda As String) As Long
+                Lib "ACBrSAT32.dll" (ByVal eArquivoXmlVenda As String, _
+				                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
                 
 Public Declare Function SAT_CriarCFe _
                 Lib "ACBrSAT32.dll" (ByVal eArquivoIni As String, _
@@ -136,7 +138,6 @@ Public Declare Function SAT_GerarPDFExtratoVenda _
                                      
 Public Declare Function SAT_GerarImpressaoFiscalMFe _
                 Lib "ACBrSAT32.dll" (ByVal eArquivoXml As String, _
-                                     ByVal eNomeArquivo As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
                                      

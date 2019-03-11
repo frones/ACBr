@@ -75,7 +75,7 @@ public interface ACBrSat extends Library {
 
     int SAT_ExtrairLogs(String eArquivo);
 
-    int SAT_TesteFimAFim(String eArquivoXmlVenda);
+    int SAT_TesteFimAFim(String eArquivoXmlVenda, ByteBuffer buffer, IntByReference bufferSize);
 
     int SAT_CriarCFe(String eArquivoIni, ByteBuffer buffer, IntByReference bufferSize);
 
@@ -89,7 +89,7 @@ public interface ACBrSat extends Library {
 
     int SAT_ImprimirExtratoResumido(String eArquivoXml, String eNomeImpressora);
 
-    int SAT_GerarPDFExtratoVenda(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
+    int SAT_GerarPDFExtratoVenda(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
 
     int SAT_GerarImpressaoFiscalMFe(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
 

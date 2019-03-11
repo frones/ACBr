@@ -151,7 +151,7 @@ begin
     else
       Gerador.wGrupoNFSe('Tomador');
 
-    if (NFSe.Tomador.Endereco.UF <> 'EX') or
+    if ((NFSe.Tomador.Endereco.UF <> 'EX') and (NFSe.Tomador.Endereco.UF <> '')) or
        (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '') then

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2019
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido uma condição para não gerar o grupo <IdentificadorTomador> quando nenhuma informação
+    do mesmo não for informada - provedor SystemPro.
+   Por: Italo Jurisato Junior
+
 07/03/2019
 -- pnfsNFSeW_IPM --
 [*] https://www.projetoacbr.com.br/forum/topic/48762-nfse-ipm-arauc%C3%A1ria-modo-teste/?do=findComment&comment=328803

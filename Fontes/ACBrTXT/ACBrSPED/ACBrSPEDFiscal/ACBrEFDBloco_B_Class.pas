@@ -253,15 +253,15 @@ begin
              LFill( CHV_NFE  ) +
              LFill( DT_DOC, 'ddmmyyyy' ) +
              LFill( COD_MUN_SERV ) +
-             LFill( VL_CONT,0,2, True ) +
-             LFill( VL_MAT_TERC,0,2, True ) +
-             LFill( VL_SUB,0,2, True ) +
-             LFill( VL_ISNT_ISS,0,2, True ) +
-             LFill( VL_DED_BC,0,2, True ) +
-             LFill( VL_BC_ISS,0,2, true ) +
-             LFill( VL_BC_ISS_RT,0,2, true ) +
-             LFill( VL_ISS_RT,0,2, true ) +
-             LFill( VL_ISS ,0,2, true ) +
+             LFill( VL_CONT,0,2 ) +
+             LFill( VL_MAT_TERC,0,2 ) +
+             LFill( VL_SUB,0,2 ) +
+             LFill( VL_ISNT_ISS,0,2 ) +
+             LFill( VL_DED_BC,0,2 ) +
+             LFill( VL_BC_ISS,0,2 ) +
+             LFill( VL_BC_ISS_RT,0,2 ) +
+             LFill( VL_ISS_RT,0,2 ) +
+             LFill( VL_ISS ,0,2 ) +
              LFill( COD_INF_OBS)) ;
       end;
       /// Registro FILHO
@@ -423,7 +423,7 @@ begin
       with RegB001.RegistroB440.Items[intFor] do
       begin
         Add( LFill('B440') +
-             LFill( IndOperToStr(IND_OPER),2) +
+             LFill( IndOperToStr(IND_OPER), 0) +
              LFill( COD_PART) +
              LFill( VL_CONT_RT, 0, 2 ) +
              LFill( VL_BC_ISS_RT, 0, 2 ) +
@@ -476,6 +476,7 @@ begin
              LFill( VL_CONT,0,2) +
              LFill( VL_MAT_TERC,0,2) +
              LFill( VL_MAT_PROP,0,2) +
+             LFill( VL_SUB,0,2) +
              LFill( VL_ISNT,0,2) +
              LFill( VL_DED_BC,0,2) +
              LFill( VL_BC_ISS,0,2) +

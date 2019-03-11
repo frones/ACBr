@@ -138,6 +138,7 @@ type
     FtpEventoStr: String;
     FperApur: String;
     FcnpjPrestadorTomador: string;
+    FnroInscricaoEstabPrestadorTomador: string;
 
     FRetConsulta: TRetConsulta;
     FVersaoDF: TVersaoReinf;
@@ -160,6 +161,7 @@ type
     property tpEventoStr: String read FtpEventoStr write FtpEventoStr;
     property perApur: string read FperApur write FperApur;
     property cnpjPrestadorTomador: string read FcnpjPrestadorTomador write FcnpjPrestadorTomador;
+    property nroInscricaoEstabPrestadorTomador: string read FnroInscricaoEstabPrestadorTomador write FnroInscricaoEstabPrestadorTomador;
     property RetConsulta: TRetConsulta read FRetConsulta;
   end;
 
@@ -177,7 +179,7 @@ type
 
     function Envia: Boolean;
     function Consulta(const AProtocolo: string): Boolean;
-    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
+    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''; AInscricaoEstabPrestadorTomador : string = ''): Boolean;
 
     property ACBrReinf: TACBrDFe read FACBrReinf write FACBrReinf;
     property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
@@ -622,21 +624,21 @@ begin
     tpInsc := '2';
   end;
 
-  if Length(FcnpjPrestadorTomador) = 14 then
+  if Length(FnroInscricaoEstabPrestadorTomador) = 14 then
     tpInsc2 := '1'
   else
     tpInsc2 := '4';
 
   Consulta := TReinfConsulta.Create;
   try
-    Consulta.SoapEnvelope := FPSoapEnvelopeAtributtes;
-    Consulta.tpInsc := tpInsc;
-    Consulta.nrInsc := nrInsc;
-    Consulta.nrInscEstab := nrInscEstab;
-    Consulta.tpInscTomador := tpInsc2;
+    Consulta.SoapEnvelope   := FPSoapEnvelopeAtributtes;
+    Consulta.tpInsc         := tpInsc;
+    Consulta.nrInsc         := nrInsc;
+    Consulta.nrInscEstab    := FnroInscricaoEstabPrestadorTomador;
+    Consulta.tpInscTomador  := tpInsc2;
     Consulta.cnpjPrestadorTomador := cnpjPrestadorTomador;
-    Consulta.TipoEvento := TipoEvento;
-    Consulta.perApur := perApur;
+    Consulta.TipoEvento     := TipoEvento;
+    Consulta.perApur        := perApur;
 
     AjustarOpcoes( Consulta.Gerador.Opcoes );
     Consulta.GerarXML;
@@ -797,7 +799,7 @@ begin
 end;
 
 function TWebServices.ConsultaReciboEvento(const APerApur: string;
-   ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''): Boolean;
+   ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''; AInscricaoEstabPrestadorTomador : string = ''): Boolean;
 begin
 {$IFDEF FPC}
   Result := False;
@@ -806,6 +808,8 @@ begin
   FConsultarReciboEvento.FperApur := APerApur;
   FConsultarReciboEvento.FtipoEvento := ATipoEvento;
   FConsultarReciboEvento.tpEventoStr := Copy(TipoEventoToStr(ATipoEvento), 3, 4);
+  FConsultarReciboEvento.nroInscricaoEstabPrestadorTomador := AInscricaoEstabPrestadorTomador;
+
 
   FConsultarReciboEvento.FcnpjPrestadorTomador := ACnpjPrestadorTomador;
 

@@ -53,7 +53,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-07/02/2018
+11/03/2019
+--- DanfePaisagem_2019.fr3 ---
+[*] Ajuste no canhoto a esquerda
+https://www.projetoacbr.com.br/forum/topic/49889-corre%C3%A7%C3%A3o-erro-impress%C3%A3o-modelo-paisagem-fast/?tab=comments#comment-329087
+      Por : Pedro Braga	
+
+
+
+07/02/2019
 --- DanfePaisagem_2019.fr3 - DanfeRetrato_2019.fr3
 [+] Novo layout de Retirada
 [+] Novo layout de Entrega

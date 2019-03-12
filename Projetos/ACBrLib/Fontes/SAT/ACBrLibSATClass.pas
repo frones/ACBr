@@ -727,12 +727,11 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta);
       try
         Resposta := '';
         Resultado := SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
 
-        Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta);
         with SatDM.ACBrSAT1 do
         begin
           Resp.Resultado := Resultado;
@@ -746,6 +745,7 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        Resp.Free;
         SatDM.Destravar;
       end;
     end;
@@ -828,7 +828,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TRetornoCriarCFe.Create(Config.TipoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -841,7 +841,6 @@ begin
                           IntToStrZero(SatDM.ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
 
         SatDM.ACBrSAT1.CFe.SaveToFile(ArqCFe);
-        Resp := TRetornoCriarCFe.Create(Config.TipoResposta);
         Resp.nCFe := IntToStr(SatDM.ACBrSAT1.CFe.ide.nCFe);
         Resp.XML  := SatDM.ACBrSAT1.CFe.AsXMLString;
         Resp.Arquivo:= ArqCFe;
@@ -850,8 +849,8 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
-        SatDM.Destravar;
         Resp.Free;
+        SatDM.Destravar;
       end;
     end;
   except
@@ -882,14 +881,12 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TRetornoEnvio.Create(Config.TipoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
         SatDM.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
-
-        Resp := TRetornoEnvio.Create(Config.TipoResposta);
 
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
 
@@ -905,8 +902,8 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
-        SatDM.Destravar;
         Resp.Free;
+        SatDM.Destravar;
       end;
     end;
   except
@@ -937,13 +934,12 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TRetornoEnvio.Create(Config.TipoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
         SatDM.CarregarDadosVenda(ArquivoXml);
 
-        Resp := TRetornoEnvio.Create(Config.TipoResposta);
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
         Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
         Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
@@ -957,8 +953,8 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
-        SatDM.Destravar;
         Resp.Free;
+        SatDM.Destravar;
       end;
     end;
   except
@@ -989,7 +985,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TRetornoCancelarCFe.Create(Config.TipoResposta);
       try
         Resposta := '';
         if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
@@ -997,8 +993,6 @@ begin
           SatDM.ACBrSAT1.CFe.Clear;
           SatDM.CarregarDadosVenda(ArquivoXml);
         end;
-
-        Resp := TRetornoCancelarCFe.Create(Config.TipoResposta);
 
         Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
 
@@ -1014,8 +1008,8 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
-        SatDM.Destravar;
         Resp.Free;
+        SatDM.Destravar;
       end;
     end;
   except
@@ -1155,7 +1149,7 @@ begin
    try
     VerificarLibInicializada;
     ArquivoXml := String(eArqXMLVenda);
-    NomeImpressora := String(eNomeImpressora);
+    //NomeImpressora := String(eNomeImpressora);
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
@@ -1209,7 +1203,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
       try
         Resposta := '';
         SatDM.ConfigurarImpressao('', True);
@@ -1217,7 +1211,6 @@ begin
 
         SatDM.ACBrSAT1.ImprimirExtrato;
 
-        Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
         Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
         Resp.XML:= SatDM.ACBrSAT1.CFe.XMLOriginal;
         Resposta := Resp.Gerar;
@@ -1227,6 +1220,7 @@ begin
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        Resp.Free;
         SatDM.Destravar;
       end;
     end;
@@ -1306,14 +1300,12 @@ begin
     begin
       SatDM.Travar;
 
+      slMensagem := TStringList.Create;
+      slCC := TStringList.Create;
+      slAnexos := TStringList.Create;
       try
-        slMensagem := TStringList.Create;
         slMensagem.Text := Mensagem;
-
-        slCC := TStringList.Create;
         slCC.Text := CC;
-
-        slAnexos := TStringList.Create;
         slAnexos.Text := Anexos;
 
         SatDM.ConfigurarImpressao;

@@ -196,7 +196,6 @@ type
 //    Constructor Create;
 //    destructor Destroy; override;
 //    procedure Assign(Source: TPersistent); override;
-  published
 
     property Envelope: String             read FEnvelope            write FEnvelope;
     property IncluiEncodingCab: Boolean   read FIncluiEncodingCab   write FIncluiEncodingCab;
@@ -231,7 +230,7 @@ type
     Constructor Create;
     destructor Destroy; override;
 //    procedure Assign(Source: TPersistent); override;
-  published
+
     property CabecalhoMsg: String read FCabecalhoMsg write FCabecalhoMsg;
     property Recepcionar: TParamEnvelope read FRecepcionar write FRecepcionar;
     property Teste: TParamEnvelope read FTeste write FTeste;

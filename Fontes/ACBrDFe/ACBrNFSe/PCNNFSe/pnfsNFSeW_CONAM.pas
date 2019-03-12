@@ -62,7 +62,7 @@ type
     constructor Create(ANFSeW: TNFSeW); override;
     function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
-  published
+
     property QtdReg30: Integer read FQtdReg30 write FQtdReg30;
     property ValReg30: Real read FValReg30 write FValReg30;
   end;

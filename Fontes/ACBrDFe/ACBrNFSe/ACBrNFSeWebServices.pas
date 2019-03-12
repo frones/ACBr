@@ -1551,7 +1551,7 @@ begin
               xmlns := ' xmlns:' + StringReplace(FPrefixo3, ':', '', []) + '="';
             end;
 
-            if FProvedor = proInfiscv11 then
+            if FProvedor in [proInfisc, proInfiscv11] then
             begin
               FxSignatureNode := './/' + 'ds:Signature';
               i := pos(TagGrupo, FPDadosMsg);

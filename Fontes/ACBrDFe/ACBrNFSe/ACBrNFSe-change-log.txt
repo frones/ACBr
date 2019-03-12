@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/03/2019
+-- Diversos --
+[*] Pequenas alterações visando a melhoria no código.
+   Por: Italo Jurisato Junior
+
+11/03/2019
 -- pnfsNFSeW_ABRASFv2 --
 [*] Incluido uma condição para não gerar o grupo <IdentificadorTomador> quando nenhuma informação
     do mesmo não for informada - provedor SystemPro.

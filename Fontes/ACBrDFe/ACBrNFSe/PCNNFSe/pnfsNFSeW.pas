@@ -111,7 +111,6 @@ type
 
     function GerarXml: Boolean;
 
-  published
     property LayOutXML: TLayOutXML   read FLayOutXML   write SetLayOutXML;
     property NFSeWClass: TNFSeWClass read FNFSeWClass;
     property NFSe: TNFSe             read FNFSe        write FNFSe;

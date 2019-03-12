@@ -1009,7 +1009,7 @@ begin
     sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
     NFSe.TipoRecolhimento := AnsiUpperCase(Leitor.rCampo(tcStr, 'TipoRecolhimento')); 
 
-    if sOperacao[1] in ['A', 'B'] then
+    if (sOperacao = 'A') or (sOperacao = 'B') then
     begin
       if (sOperacao = 'A') and (sTributacao = 'N') then
         NFSe.NaturezaOperacao := no7
@@ -2607,7 +2607,7 @@ begin
 
     if (sOperacao <> '') then
     begin
-      if sOperacao[1] in ['A', 'B'] then
+      if (sOperacao = 'A') or (sOperacao = 'B') then
       begin
         if NFSe.Servico.CodigoMunicipio = NFSe.PrestadorServico.Endereco.CodigoMunicipio then
           NFSe.NaturezaOperacao := no1
@@ -2870,7 +2870,7 @@ end;
 function TNFSeR.LerNFSe_SP: Boolean;
 var
   bOk :Boolean;
-  valorIssRetido: Double;
+//  valorIssRetido: Double;
 begin
   Result := False;
 
@@ -2926,12 +2926,12 @@ begin
     if (Leitor.rCampo(tcStr, 'ISSRetido') = 'false') then
     begin
       NFSe.Servico.Valores.IssRetido := stNormal;
-      valorIssRetido := 0.00;
+//      valorIssRetido := 0.00;
     end
     else
     begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
-      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
+//      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
     end;
 
     // Como o valor líquido não esta no layout deve refazer o cálculo
@@ -4114,15 +4114,16 @@ begin
   end;
 
   Nfse.Servico.MunicipioIncidencia := 0;
+
   // Detalhes dos serviços
   Item := 0;
   while (Leitor.rExtrai(1, 'det', '', Item + 1) <> '') do
   begin
-
     if Leitor.rExtrai(2, 'serv') <> '' then
     begin
       if Nfse.Servico.MunicipioIncidencia = 0 then
-         Nfse.Servico.MunicipioIncidencia := Leitor.rCampo(tcStr, 'localTributacao');
+        Nfse.Servico.MunicipioIncidencia := Leitor.rCampo(tcStr, 'localTributacao');
+
       Nfse.Servico.ItemServico.Add;
       Nfse.Servico.ItemServico[Item].codServ       := Leitor.rCampo(tcStr, 'cServ');
       Nfse.Servico.ItemServico[Item].CodLCServ     := Leitor.rCampo(tcStr, 'cLCServ');
@@ -4154,13 +4155,14 @@ begin
   end;
 
   Item := 0;
-  if (Leitor.rExtrai(1, 'despesas') <> '') then
+  while (Leitor.rExtrai(1, 'despesas', '', Item + 1) <> '') do
   begin
     NFSe.Despesa.Add;
     NFSe.Despesa.Items[Item].nItemDesp := Leitor.rCampo(tcStr, 'nItemDesp');
     NFSe.Despesa.Items[Item].xDesp := Leitor.rCampo(tcStr, 'xDesp');
     NFSe.Despesa.Items[Item].dDesp := Leitor.rCampo(tcDat, 'dDesp');
     NFSe.Despesa.Items[Item].vDesp := Leitor.rCampo(tcDe2, 'vDesp');
+
     inc(Item);
   end;
 

@@ -1511,7 +1511,7 @@ begin
       Resp.NumeroSessao  := Resposta.numeroSessao;
       Resp.CodigoDeRetorno := Resposta.codigoDeRetorno;
       Resp.RetornoStr := Resposta.RetornoStr;
-      Resp.XML := CFeCanc.AsXMLString;
+      Resp.XML := CFe.AsXMLString;
 
       fpCmd.Resposta := sLineBreak + Resp.Gerar;
       RespostaIntegrador;

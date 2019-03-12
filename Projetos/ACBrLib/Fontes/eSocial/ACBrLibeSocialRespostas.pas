@@ -145,7 +145,56 @@ type
 
   end;
 
+  { TConsultaTotEventos}
+
+  TConsultaTotEventos = class(TPadraoeSocialResposta)
+  private
+    FQtdeTotal : Integer;
+    FDhUltimoEvento : TDateTime;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property QtdeTotal: Integer read FQtdeTotal write FQtdeTotal;
+    property DhUltimoEvento: TDateTime read FDhUltimoEvento write FDhUltimoEvento;
+
+  end;
+
+  { TConsultaIdentEvento}
+
+  TConsultaIdentEvento = class(TPadraoeSocialResposta)
+  private
+    FIdEvento : String;
+    FNRecibo : String;
+    FXML : String;
+
+  public
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property IdEvento: String read FIdEvento write FIdEvento;
+    property NRecibo: String read FNRecibo write FNRecibo;
+    property XML: String read FXML write FXML;
+
+  end;
+
 implementation
+
+{ TConsultaIdentEvento }
+
+constructor TConsultaIdentEvento.Create(const ASessao: String;
+  const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
+
+{ TConsultaTotEventos }
+
+constructor TConsultaTotEventos.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(ASessao, ATipo);
+end;
 
 { TConsultaTotResposta }
 

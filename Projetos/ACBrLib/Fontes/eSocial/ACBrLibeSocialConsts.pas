@@ -48,6 +48,8 @@ const
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespOcorrencia = 'Ocorrencia';
   CSessaoRespConsultaTot = 'Tot';
+  CSessaoRespConsultaIdentEventos = 'ConsultaIdentEventos';
+  CSessaoRespConsultaIdentEventosRecibo = 'ConsultaIdentEventoRecibo';
 
   CSessaoeSocial = 'eSocial';
 

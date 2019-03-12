@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2018
+--- ACBrLibeSocialRespostas, ACBrLibeSocialConsts ---
+[+] Adicionado metodos de Respostas para Métodos de Consulta Eventos e Downloads
+   Por: José M S Junior
+
 05/09/2018
 --- ACBrLibeSocial ---
 [+] Inicio do projeto.

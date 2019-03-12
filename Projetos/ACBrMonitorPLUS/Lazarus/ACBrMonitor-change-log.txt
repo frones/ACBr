@@ -43,6 +43,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2019
+[+] DoACBreSocialfUnit, ACBrLibeSocialConsts, ACBrLibeSocialRespostas
+Adicionado no ACBrMonitor os métodos "ConsultaIdentificadoresEventosEmpregador",
+"ConsultaIdentificadoresEventosTabela", "ConsultaIdentificadoresEventosTrabalhador",
+"DownloadEventos" ao componente e-social.
+
+12/03/2019
+[+] DoACBrReinfUnit
+Adicionado novo parâmetro (InscricaoEstabPrestadorTomador) no método Reinf.ConsultarReciboReinf
+
+11/03/2019
+[*] DoSATUnit
+Ajuste no retorno de Resposta de Envio de Cupom
+
 08/03/2019
 [+] DoACBrReinfUnit, ACBrLibReinfConsts, ACBrLibReinfRespostas
 Adicionado no ACBrMonitor o método "ConsultarReciboReinf" ao componente ReInf

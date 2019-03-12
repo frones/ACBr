@@ -182,11 +182,13 @@ var
   APerApur: String;
   ATipoEvento: Integer;
   ACnpjPrestadorTomador: String;
+  AInscricaoEstabPrestadorTomador: String;
   i: Integer;
 begin
   APerApur := fpCmd.Params(0);
   ATipoEvento := StrToIntDef(fpCmd.Params(1),0);
   ACnpjPrestadorTomador := fpCmd.Params(2);
+  AInscricaoEstabPrestadorTomador := fpCmd.Params(3);
 
   with TACBrObjetoReinf(fpObjetoDono) do
   begin
@@ -194,7 +196,8 @@ begin
       raise Exception.Create(ACBrStr(SErroReinfConsulta));
 
     ACBrReinf.Eventos.Clear;
-    if ACBrReinf.ConsultaReciboEvento(APerApur, TTipoEvento(ATipoEvento), ACnpjPrestadorTomador) then
+    if ACBrReinf.ConsultaReciboEvento(APerApur, TTipoEvento(ATipoEvento),
+        ACnpjPrestadorTomador, AInscricaoEstabPrestadorTomador) then
     begin
       with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
       begin

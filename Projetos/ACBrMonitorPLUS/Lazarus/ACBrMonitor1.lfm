@@ -10092,10 +10092,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   SelectedColor.UnderlinePriority = 50
                   SelectedColor.StrikeOutPriority = 50
                   inline SynLeftGutterPartList1: TSynGutterPartList
-                    object SynGutterMarks1: TSynGutterMarks
-                      Width = 23
-                      MouseActions = <>
-                    end
                     object SynGutterLineNumber1: TSynGutterLineNumber
                       Width = 17
                       MouseActions = <>

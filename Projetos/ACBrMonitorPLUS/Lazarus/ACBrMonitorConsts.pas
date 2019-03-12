@@ -32,6 +32,7 @@ ResourceString
   SMsgeSocialLimparLista = 'Lista de Eventos Limpas com Sucesso';
   SErroeSocialNenhumEvento = 'Erro: Nenhum evento na lista';
   SErroIDEmpregadorTransmissor = 'ID do Empregador/Transmissor Inválido.';
+  SErroeSocialConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
 
   SErroReinfCarregar = 'Erro ao carregar Reinf';
   SErroReinfAbrir = 'Erro ao abrir o arquivo do Reinf: %s';
@@ -415,6 +416,10 @@ const
   CMetodoCarregarXMLEventoeSocial =    'carregarxmleventoesocial';
   CMetodoSetIDEmpregadoreSocial =      'setidempregador';
   CMetodoSetIDTransmissoresocial =     'setidtransmissor';
+  CMetodoConsultaIdentEventosEmpreg =  'ConsultaIdentificadoresEventosEmpregador';
+  CMetodoConsultaIdentEventosTabela =  'ConsultaIdentificadoresEventosTabela';
+  CMetodoConsultaIdentEventosTrab =    'ConsultaIdentificadoresEventosTrabalhador';
+  CMetodoDownloadEventos =             'DownloadEventos';
 
   CMetodoCriarEventoReinf =          'criareventoreinf';
   CMetodoCriarEnviarReinf =          'criarenviarreinf';

@@ -58,6 +58,10 @@ public
   procedure RespostaOcorrencia(ACont, ACont2: Integer);overload;
   procedure RespostaConsulta(ACont: Integer);
   procedure RespostaTot(ACont, ACont2: Integer);
+  procedure RespostaConsultaIdentEventosQtd;
+  procedure RespostaConsultaIdentEventosRecibo(ACont: Integer);
+  procedure RespostaDownload(ACount: Integer);
+  procedure RespostaPadrao;
 
   property ACBreSocial: TACBreSocial read fACBreSocial;
 end;
@@ -130,11 +134,193 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoConsultaIdentificadoresEventosEmpregador }
+
+TMetodoConsultaIdentificadoresEventosEmpregador = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultaIdentificadoresEventosTabela }
+
+TMetodoConsultaIdentificadoresEventosTabela = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultaIdentificadoresEventosTrabalhador }
+
+TMetodoConsultaIdentificadoresEventosTrabalhador = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDownloadEventos }
+
+TMetodoDownloadEventos = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 
 implementation
 
 uses
   DoACBrUnit, Forms;
+
+{ TMetodoDownloadEventos }
+
+procedure TMetodoDownloadEventos.Executar;
+var
+  AIdEmpregador: String;
+  AId: String;
+  ANrRecibo: String;
+  i: Integer;
+begin
+  AIdEmpregador := fpCmd.Params(0);
+  AId := fpCmd.Params(1);
+  ANrRecibo := fpCmd.Params(2);
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    if ( (EstaVazio(AIdEmpregador)) ) then
+      raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+
+    ACBreSocial.Eventos.Clear;
+    if ACBreSocial.DownloadEventos(AIdEmpregador,
+                       AID, ANrRecibo) then
+    begin
+      with ACBreSocial.WebServices.DownloadEventos.RetDownloadEvt  do
+      begin
+        RespostaPadrao;
+
+        for i := 0 to arquivo.Count - 1 do
+        begin
+          RespostaDownload(i);
+        end;
+
+      end;
+    end;
+
+  end;
+end;
+
+{ TMetodoConsultaIdentificadoresEventosTrabalhador }
+
+procedure TMetodoConsultaIdentificadoresEventosTrabalhador.Executar;
+var
+  AIdEmpregador: String;
+  ACPFTrabalhador: String;
+  ADataInicial, ADataFinal: TDateTime;
+  i: Integer;
+begin
+  AIdEmpregador := fpCmd.Params(0);
+  ACPFTrabalhador := fpCmd.Params(1);
+  ADataInicial := StrToDate(fpCmd.Params(2));
+  ADataFinal := StrToDate(fpCmd.Params(3));
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    if ( (EstaVazio(AIdEmpregador)) or ( EstaVazio(ACPFTrabalhador))
+       or ( ADataInicial <= 0 )  or ( ADataFinal <= 0 ) ) then
+      raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+
+    ACBreSocial.Eventos.Clear;
+    if ACBreSocial.ConsultaIdentificadoresEventosTrabalhador(AIdEmpregador,
+                       ACPFTrabalhador, ADataInicial, ADataFinal) then
+    begin
+      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
+      begin
+        RespostaConsultaIdentEventosQtd;
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          RespostaConsultaIdentEventosRecibo(i);
+        end;
+
+      end;
+    end;
+
+  end;
+end;
+
+{ TMetodoConsultaIdentificadoresEventosTabela }
+
+procedure TMetodoConsultaIdentificadoresEventosTabela.Executar;
+var
+  AIdEmpregador: String;
+  ATpEvento: Integer;
+  AChave: String;
+  ADataInicial, ADataFinal: TDateTime;
+  i: Integer;
+begin
+  AIdEmpregador := fpCmd.Params(0);
+  ATpEvento := StrToIntDef(fpCmd.Params(1),0);
+  AChave :=  fpCmd.Params(2);
+  ADataInicial := StrToDateTime(fpCmd.Params(3));
+  ADataFinal := StrToDate(fpCmd.Params(4));
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    if ( (EstaVazio(AIdEmpregador)) or ( EstaVazio(AChave))
+       or ( ADataInicial <= 0 )  or ( ADataFinal <= 0 ) ) then
+      raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+
+    ACBreSocial.Eventos.Clear;
+    if ACBreSocial.ConsultaIdentificadoresEventosTabela(AIdEmpregador,
+                       TTipoEvento(ATpEvento), AChave, ADataInicial, ADataFinal) then
+    begin
+      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
+      begin
+        RespostaConsultaIdentEventosQtd;
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          RespostaConsultaIdentEventosRecibo(i);
+        end;
+
+      end;
+    end;
+
+  end;
+end;
+
+{ TMetodoConsultaIdentificadoresEventosEmpregador }
+
+procedure TMetodoConsultaIdentificadoresEventosEmpregador.Executar;
+var
+  AIdEmpregador: String;
+  APerApur: TDateTime;
+  ATpEvento: Integer;
+  i: Integer;
+begin
+  AIdEmpregador := fpCmd.Params(0);
+  ATpEvento := StrToIntDef(fpCmd.Params(1),0);
+  APerApur := StrToDate( fpCmd.Params(2));
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    if ((APerApur <= 0) or (EstaVazio(AIdEmpregador))) then
+      raise Exception.Create(ACBrStr(SErroeSocialConsulta));
+
+    ACBreSocial.Eventos.Clear;
+    if ACBreSocial.ConsultaIdentificadoresEventosEmpregador(AIdEmpregador,
+                       TTipoEvento(ATpEvento), APerApur) then
+    begin
+      with ACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt  do
+      begin
+        RespostaConsultaIdentEventosQtd;
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          RespostaConsultaIdentEventosRecibo(i);
+        end;
+
+      end;
+    end;
+
+  end;
+end;
 
 { TACBrCarregareSocial }
 
@@ -470,6 +656,10 @@ begin
   ListaDeMetodos.Add(CMetodoCarregarXMLEventoeSocial);
   ListaDeMetodos.Add(CMetodoSetIDEmpregadoreSocial);
   ListaDeMetodos.Add(CMetodoSetIDTransmissoresocial);
+  ListaDeMetodos.Add(CMetodoConsultaIdentEventosEmpreg);
+  ListaDeMetodos.Add(CMetodoConsultaIdentEventosTabela);
+  ListaDeMetodos.Add(CMetodoConsultaIdentEventosTrab);
+  ListaDeMetodos.Add(CMetodoDownloadEventos);
 
 end;
 
@@ -499,7 +689,11 @@ begin
     5  : AMetodoClass := TMetodoCarregarXMLEventoeSocial;
     6  : AMetodoClass := TMetodoSetIDEmpregador;
     7  : AMetodoClass := TMetodoSetIDTransmissor;
-    8..22 : DoACbr(ACmd);
+    8  : AMetodoClass := TMetodoConsultaIdentificadoresEventosEmpregador;
+    9  : AMetodoClass := TMetodoConsultaIdentificadoresEventosTabela;
+    10 : AMetodoClass := TMetodoConsultaIdentificadoresEventosTrabalhador;
+    11 : AMetodoClass := TMetodoDownloadEventos;
+    12..25 : DoACbr(ACmd);
 
   end;
 
@@ -711,6 +905,94 @@ begin
 
   end;
 
+end;
+
+procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosQtd;
+var
+  Resp : TConsultaTotEventos;
+begin
+  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,resINI);
+  try
+    with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+    begin
+      resp.Codigo:= Status.cdResposta;
+      resp.Mensagem:= Status.descResposta;
+      resp.QtdeTotal:= RetIdentEvts.qtdeTotEvtsConsulta;
+      resp.DhUltimoEvento:= RetIdentEvts.dhUltimoEvtRetornado;
+
+    end;
+    fpCmd.Resposta       := Resp.Gerar;
+
+  finally
+    Resp.Free;
+
+  end;
+
+end;
+
+procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosRecibo(ACont: Integer);
+var
+  Resp : TConsultaIdentEvento;
+begin
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),resINI);
+  try
+    with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt.RetIdentEvts.Items[ACont] do
+    begin
+      resp.IdEvento:= Id;
+      resp.NRecibo:= nrRec;
+
+    end;
+    fpCmd.Resposta       := Resp.Gerar;
+
+  finally
+    Resp.Free;
+
+  end;
+
+end;
+
+procedure TACBrObjetoeSocial.RespostaDownload(ACount: Integer);
+var
+  Resp : TConsultaIdentEvento;
+begin
+
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,resINI);
+  try
+    with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
+    begin
+      resp.Codigo:= arquivo.Items[ACount].Status.cdResposta;
+      resp.Mensagem:= arquivo.Items[ACount].Status.descResposta;
+      resp.IdEvento:= arquivo.Items[ACount].Id;
+      resp.NRecibo:= arquivo.Items[ACount].nrRec;
+      resp.XML:= arquivo.Items[ACount].XML;
+
+    end;
+    fpCmd.Resposta       := Resp.Gerar;
+
+  finally
+    Resp.Free;
+
+  end;
+end;
+
+procedure TACBrObjetoeSocial.RespostaPadrao;
+var
+  Resp : TPadraoeSocialResposta;
+begin
+  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,resINI);
+  try
+    with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
+    begin
+      resp.Codigo:= Status.cdResposta;
+      resp.Mensagem:= Status.descResposta;
+
+    end;
+    fpCmd.Resposta       := Resp.Gerar;
+
+  finally
+    Resp.Free;
+
+  end;
 end;
 
 end.

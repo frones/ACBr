@@ -254,7 +254,6 @@ type
     procedure AtualizaSSLLibsCombo;
 
     procedure PreencherXMLEventos;
-    procedure LimparDocsPasta;
     function GetTipoOperacao: TTipoOperacao;
     {Eventos}
     procedure GerarReinf1000;
@@ -651,23 +650,6 @@ procedure TForm2.DepoisDeEnviar(const Axml: string);
 begin
   mmoXMLRet.Clear;
   mmoXMLRet.Lines.Text := Axml;
-end;
-
-procedure TForm2.LimparDocsPasta;
-var
-  path: string;
-  FileOp: TSHFileOpStruct;
-begin
-  try
-    path := edtPathReinf.Text;
-    FillChar(FileOp, SizeOf(FileOp), 0);
-    FileOp.wFunc := FO_DELETE;
-    FileOp.pFrom := PChar(path+#0);//double zero-terminated
-    FileOp.fFlags := FOF_SILENT or FOF_NOERRORUI or FOF_NOCONFIRMATION;
-    SHFileOperation(FileOp);
-    ForceDirectories(path);
-  except
-  end;
 end;
 
 procedure TForm2.PreencherXMLEventos;

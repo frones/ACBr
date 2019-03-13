@@ -48,14 +48,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
--- pcesGerador --
-[*] https://www.projetoacbr.com.br/forum/topic/49858-corre%C3%A7%C3%A3o-evento-2230-tagnroc-esta-gerando-incorreto/
-   Por: Edmar Frazao
+13/03/2019
+-- pcesS2240 --
+[*] Efetuada correções no bloco comentado que se encontra no método LerArqIni.
+   Por: Italo Jurisato Junior
 
 11/03/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/46398-solicitardownloadeventos/?do=findComment&comment=328935
    Por: Adelio
+-- pcesGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/49858-corre%C3%A7%C3%A3o-evento-2230-tagnroc-esta-gerando-incorreto/
+   Por: Edmar Frazao
 
 08/03/2019
 -- pcesS2220 --

@@ -62,7 +62,10 @@ begin
 
   if NaoEstaVazio(AConfig.Impressora) then
       RLPrinter.PrinterName := AConfig.Impressora;
-
+	  
+  if RLPrinter.SupportsDuplex Then
+     RLPrinter.Duplex := false;
+	 
   if RLPrinter.Copies <> AConfig.NumCopias then
   begin
     RLPrinter.Copies := AConfig.NumCopias;

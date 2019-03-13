@@ -1622,7 +1622,7 @@ object Form2: TForm2
           end
           object edRecibo: TEdit
             Left = 3
-            Top = 64
+            Top = 66
             Width = 247
             Height = 21
             TabOrder = 1

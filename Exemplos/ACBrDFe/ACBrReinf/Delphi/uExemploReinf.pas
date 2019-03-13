@@ -405,23 +405,40 @@ end;
 
 procedure TForm2.btnConsultarReciboClick(Sender: TObject);
 var
-  PerApur, TipoEvento, CNPJPrestadorTomador: string;
+  PerApur, TipoEvento, nrInscEstab, cnpjPrestador, nrInscTomador, DataApur: string;
   Ok: Boolean;
   i: Integer;
+  dtApur: TDateTime;
 begin
   PerApur := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'Perido de Apuração (AAAA-MM):', PerApur)) then
+  if not (InputQuery('WebServices: Consulta Recibo', 'Período de Apuração (AAAA-MM):', PerApur)) then
     Exit;
 
   TipoEvento := '';
   if not (InputQuery('WebServices: Consulta Recibo', 'Tipo do Evento (R-xxxx):', TipoEvento)) then
     Exit;
 
-  CNPJPrestadorTomador := '';
-  if not (InputQuery('WebServices: Consulta Recibo', 'CNPJ Prestador ou Tomador:', CNPJPrestadorTomador)) then
+  nrInscEstab := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. Inscrição do Estabelecimento:', nrInscEstab)) then
     Exit;
 
-  if ACBrReinf1.ConsultaReciboEvento(PerApur, StrToTipoEvento(Ok, TipoEvento), CNPJPrestadorTomador) then
+  cnpjPrestador := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. CNPJ do Prestador de Serviço:', cnpjPrestador)) then
+    Exit;
+
+  nrInscTomador := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Nr. Inscrição do Tomador:', nrInscTomador)) then
+    Exit;
+
+  DataApur := '';
+  if not (InputQuery('WebServices: Consulta Recibo', 'Data de Apuração (DD/MM/AAAA):', DataApur)) then
+    Exit;
+
+  dtApur := StrToDateDef(DataApur, 0);
+
+  if ACBrReinf1.ConsultaReciboEvento(PerApur, StrToTipoEvento(Ok, TipoEvento),
+                                     nrInscEstab, cnpjPrestador,
+                                     nrInscTomador, dtApur) then
   begin
     mmoXMLRet.Clear;
     mmoXMLRet.Lines.Text := ACBrReinf1.WebServices.Consultar.RetWS;

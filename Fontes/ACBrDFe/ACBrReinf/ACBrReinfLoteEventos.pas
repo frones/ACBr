@@ -55,20 +55,20 @@ type
 
   TItemLoteEventos = class(TCollectionItem)
   private
-    FACBrReinf : TComponent;
-    FTipoEvento : TTipoEvento;
-    FXML : AnsiString;
-    FNomeArq : string;
-    FLeitor : TLeitor;
+    FACBrReinf: TComponent;
+    FTipoEvento: TTipoEvento;
+    FXML: String;
+    FNomeArq: string;
+    FLeitor: TLeitor;
 
-    procedure SetXML(const Value: AnsiString);
+    procedure SetXML(const Value: String);
     function GetIDEvento: string;
   public
     constructor Create(AOwner: TComponent); reintroduce; //overload;
 
     property IDEvento: string read GetIDEvento;
-    property XML : AnsiString read FXML write SetXML;
-    property Leitor : TLeitor read FLeitor write FLeitor;
+    property XML: String read FXML write SetXML;
+    property Leitor: TLeitor read FLeitor write FLeitor;
     property TipoEvento: TTipoEvento read FTipoEvento write FTipoEvento;
     property NomeArq: string read FNomeArq write FNomeArq;
   end;
@@ -85,16 +85,16 @@ type
     procedure SetItem(Index: integer; const Value: TItemLoteEventos);
     procedure CarregarXmlEventos;
   protected
-    procedure GerarCabecalho(Namespace: string);
+    procedure GerarCabecalho(const Namespace: string);
     procedure GerarRodape;
     function Validar: Boolean;
   public
     constructor Create(AOwner: TComponent); reintroduce;
 
     function Add : TItemLoteEventos;
-    function LoadFromFile(CaminhoArquivo: String): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
-    function LoadFromString(AXMLString: String): Boolean;
+    function LoadFromString(const AXMLString: String): Boolean;
     procedure GerarXML;
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
@@ -142,7 +142,7 @@ begin
   FACBrReinf := AOwner;
 end;
 
-procedure TLoteEventos.GerarCabecalho(Namespace: String);
+procedure TLoteEventos.GerarCabecalho(const Namespace: String);
 begin
 
 end;
@@ -250,36 +250,34 @@ begin
   Result := TItemLoteEventos(inherited GetItem(Index));
 end;
 
-function TLoteEventos.LoadFromFile(CaminhoArquivo: String): Boolean;
+function TLoteEventos.LoadFromFile(const CaminhoArquivo: String): Boolean;
 var
   ArquivoXML: TStringList;
   XML: String;
-  XMLOriginal: AnsiString;
+  XMLOriginal: String;
   i: integer;
 begin
-  Result := False;
-  
+  Result := True;
+
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
     XMLOriginal := ArquivoXML.Text;
-
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-    LoadFromString(XML);
-
-    for i := 0 to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo;
-
-    Result := True;
   finally
     ArquivoXML.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XML := DecodeToString(XMLOriginal, True);
+  LoadFromString(XML);
+
+  for i := 0 to Self.Count - 1 do
+    Self.Items[i].NomeArq := CaminhoArquivo;
 end;
 
 function TLoteEventos.LoadFromStream(AStream: TStringStream): Boolean;
 var
-  XMLOriginal: AnsiString;
+  XMLOriginal: String;
 begin
   AStream.Position := 0;
   XMLOriginal := ReadStrFromStream(AStream, AStream.Size);
@@ -287,23 +285,24 @@ begin
   Result := Self.LoadFromString(String(XMLOriginal));
 end;
 
-function TLoteEventos.LoadFromString(AXMLString: String): Boolean;
+function TLoteEventos.LoadFromString(const AXMLString: String): Boolean;
 var
-  AXML: AnsiString;
+  AXML, AXMLStr: String;
   P: integer;
 
   function PosReinf: integer;
   begin
-    Result := pos('</Reinf>', AXMLString);
+    Result := pos('</Reinf>', AXMLStr);
   end;
 
 begin
   P := PosReinf;
+  AXMLStr := AXMLString;
 
   while P > 0 do
   begin
-    AXML := copy(AXMLString, 1, P + 7);
-    AXMLString := Trim(copy(AXMLString, P + 8, length(AXMLString)));
+    AXML := copy(AXMLStr, 1, P + 7);
+    AXMLStr := Trim(copy(AXMLStr, P + 8, length(AXMLStr)));
 
     Self.Add.FXML := AXML;
 
@@ -356,7 +355,7 @@ begin
     Result := 'ID' + OnlyNumber(Copy(XML, Ini + 4, 38));
 end;
 
-procedure TItemLoteEventos.SetXML(const Value: AnsiString);
+procedure TItemLoteEventos.SetXML(const Value: String);
 var
   Stream: TStringStream;
 begin

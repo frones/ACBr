@@ -109,7 +109,7 @@ type
     property infoContribuinte: TinfoContribuinte read FinfoContribuinte write FinfoContribuinte;
   end;
 
-  TinfoContribuinte = class(TPersistent)
+  TinfoContribuinte = class(TObject)
   private
     FidePeriodo: TIdePeriodo;
     FinfoCadastro: TInfoCadastro;
@@ -129,7 +129,7 @@ type
     property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TInfoCadastro = class
+  TInfoCadastro = class(TObject)
    private
     FClassTrib: TpClassTrib;
     FindEscrituracao: TindEscrituracao;
@@ -153,7 +153,7 @@ type
     property infoEFR: TinfoEFR read FinfoEFR write FinfoEFR;
   end;
 
-  TContato = class(TPersistent)
+  TContato = class(TObject)
   private
     FNmCtt: string;
     FCpfCtt: string;
@@ -193,7 +193,7 @@ type
     property email: String read Femail write Femail;
   end;
 
-  TInfoEFR = class(TPersistent)
+  TInfoEFR = class(TObject)
   private
      FideEFR: TtpSimNao;
      FcnpjEFR: String;
@@ -468,7 +468,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -550,10 +550,8 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

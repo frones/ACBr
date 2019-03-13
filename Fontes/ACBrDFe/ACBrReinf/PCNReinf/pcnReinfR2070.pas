@@ -145,7 +145,7 @@ type
   end;
 
   { TideBenef }
-  TideBenef = class(TPersistent)
+  TideBenef = class(TObject)
   private
     FcodPgto: String;
     FtpInscBenef: TtpInsc;
@@ -168,7 +168,7 @@ type
   end;
 
   { TinfoResidExt }
-  TinfoResidExt = class(TPersistent)
+  TinfoResidExt = class(TObject)
   private
     FinfoEnder: TinfoEnder;
     FinfoFiscal: TinfoFiscal;
@@ -181,7 +181,7 @@ type
   end;
 
   { TinfoEnder }
-  TinfoEnder = class(TPersistent)
+  TinfoEnder = class(TObject)
   private
     FpaisResid: String;
     FdscLograd: String;
@@ -201,7 +201,7 @@ type
   end;
 
   { TinfoFiscal }
-  TinfoFiscal = class(TPersistent)
+  TinfoFiscal = class(TObject)
   private
     FindNIF: TindNIF;
     FnifBenef: String;
@@ -213,7 +213,7 @@ type
   end;
 
   { TinfoMolestia }
-  TinfoMolestia = class(TPersistent)
+  TinfoMolestia = class(TObject)
   private
     FdtLaudo: TDateTime;
   public
@@ -352,7 +352,7 @@ type
   end;
 
   { TcompJud }
-  TcompJud = class(TPersistent)
+  TcompJud = class(TObject)
   private
     FvlrCompAnoCalend: double;
     FvlrCompAnoAnt: double;
@@ -390,7 +390,7 @@ type
   end;
 
   { TdespProcJud }
-  TdespProcJud = class(TPersistent)
+  TdespProcJud = class(TObject)
   private
     FvlrDespCustas: double;
     FvlrDespAdvogados: double;
@@ -454,7 +454,7 @@ type
   end;
 
   { TorigemRecursos }
-  TorigemRecursos = class(TPersistent)
+  TorigemRecursos = class(TObject)
   private
     FcnpjOrigemRecursos: String;
   public
@@ -462,7 +462,7 @@ type
   end;
 
   { TdepJudicial }
-  TdepJudicial = class(TPersistent)
+  TdepJudicial = class(TObject)
   private
     FvlrDepJudicial: double;
   public
@@ -496,7 +496,7 @@ type
   end;
 
   { TpgtoResidExt }
-  TpgtoResidExt = class(TPersistent)
+  TpgtoResidExt = class(TObject)
   private
     FdtPagto: TDateTime;
     FtpRendimento: String;
@@ -1338,7 +1338,7 @@ var
   sSecao, sFim: String;
   I, J, K, L: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -1706,10 +1706,8 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

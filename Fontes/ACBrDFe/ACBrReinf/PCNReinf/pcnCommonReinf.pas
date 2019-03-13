@@ -81,7 +81,7 @@ type
   end;
 
   { TStatus }
-  TStatus = class
+  TStatus = class(TObject)
   private
     FcdStatus: Integer;
     FdescRetorno: string;
@@ -119,7 +119,7 @@ type
     property Localizacao: String read FLocalizacao write FLocalizacao;
   end;
 
-  TIdeEvento = class(TPersistent)
+  TIdeEvento = class(TObject)
   private
     FTpAmb: TtpAmb;
     FProcEmi: TProcEmi;
@@ -131,7 +131,7 @@ type
   end;
 
   { TIdeEvento1 }
-  TIdeEvento1 = class(TPersistent)
+  TIdeEvento1 = class(TObject)
   private
     FperApur: string;
   public
@@ -160,7 +160,7 @@ type
     property dtApuracao: TDateTime read FdtApuracao write FdtApuracao;
   end;
 
-  TInscricao = class(TPersistent)
+  TInscricao = class(TObject)
   protected
     FTpInsc: TtpInsc;
     FNrInsc: string;
@@ -188,7 +188,7 @@ type
     property IdTransmissor: string read FIdTransmissor write FIdTransmissor;
   end;
 
-  TIdePeriodo = class(TPersistent)
+  TIdePeriodo = class(TObject)
   private
     FIniValid: string;
     FFimValid: string;
@@ -198,7 +198,7 @@ type
   end;
 
   { TideStatus }
-  TideStatus = class(TPersistent)
+  TideStatus = class(TObject)
   private
     FcdRetorno: String;
     FdescRetorno: string;

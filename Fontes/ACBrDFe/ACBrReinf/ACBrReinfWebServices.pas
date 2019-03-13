@@ -726,7 +726,7 @@ end;
 
 function TConsultarReciboEvento.TratarResposta: Boolean;
 var
-  AXML, NomeArq: String;
+  AXML: String;
 begin
   //aqui nao esta pronto
   FPRetWS := SeparaDados(FPRetornoWS, 'ConsultaReciboEvento' + tpEventoStr + 'Result');
@@ -735,15 +735,7 @@ begin
   FRetConsulta.LerXml;
 
   AXML := FRetConsulta.XML;
-  {
-  if AXML <> '' then
-  begin
-    NomeArq := FRetConsulta.evtTotalContrib.Id + '-ConsultaReciboEvento' + tpEventoStr + '.xml';
 
-    if (FPConfiguracoesReinf.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-      FPDFeOwner.Gravar(NomeArq, AXML, '',False);
-  end;
-  }
   if Assigned(TACBrReinf(FPDFeOwner).OnTransmissaoEventos) then
     TACBrReinf(FPDFeOwner).OnTransmissaoEventos(FPRetWS, erRetornoConsulta);
 

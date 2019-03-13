@@ -107,7 +107,7 @@ type
   end;
 
   { TinfoComProd }
-  TinfoComProd = class(TPersistent)
+  TinfoComProd = class(TObject)
   private
     FideEstab: TideEstab;
   public
@@ -118,7 +118,7 @@ type
   end;
 
   { TideEstab }
-  TideEstab = class(TPersistent)
+  TideEstab = class(TObject)
   private
     FtpInscEstab: TtpInsc;
     FnrInscEstab: string;
@@ -460,7 +460,7 @@ var
   sSecao, sFim: String;
   I, J: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -543,10 +543,8 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

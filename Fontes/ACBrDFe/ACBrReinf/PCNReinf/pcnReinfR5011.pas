@@ -79,7 +79,7 @@ type
     destructor Destroy; override;
 
     function GetEvento: TObject;
-  published
+//  published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtTotalContrib: TEvtTotalContrib read FEvtTotalContrib write setEvtTotalContrib;
@@ -114,7 +114,7 @@ type
     property XML: String     read FXML;
   end;
 
-  TInfoRecEv = class
+  TInfoRecEv = class(TObject)
   private
     FnrProtEntr: String;
     FdhProcess: TDateTime;
@@ -139,10 +139,10 @@ type
     FRComl: TRComlCollection;
     FRCPRB: TRCPRBCollection;
 
-    procedure SetRTom(const Value: TRTomCollection);
-    procedure SetRPrest(const Value: TRPrestCollection);
-    procedure SetRRecRepAD(const Value: TRRecRepADCollection);
-    procedure SetRCPRB(const Value: TRCPRBCollection);
+//    procedure SetRTom(const Value: TRTomCollection);
+//    procedure SetRPrest(const Value: TRPrestCollection);
+//    procedure SetRRecRepAD(const Value: TRRecRepADCollection);
+//    procedure SetRCPRB(const Value: TRCPRBCollection);
     procedure SetRComl(const Value: TRComlCollection);
   public
     constructor Create(AOwner: TEvtTotalContrib);
@@ -202,7 +202,7 @@ type
     procedure SetinfoCRTom(const Value: TinfoCRTomCollection);
   public
     constructor create; reintroduce;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     //constructor Create(AOwner: TInfoTotalContrib);
     //destructor Destroy; override;
@@ -410,7 +410,7 @@ procedure TInfoTotalContrib.SetRComl(const Value: TRComlCollection);
 begin
   FRComl := Value;
 end;
-
+{
 procedure TInfoTotalContrib.SetRCPRB(
   const Value: TRCPRBCollection);
 begin
@@ -434,7 +434,7 @@ procedure TInfoTotalContrib.SetRTom(
 begin
   FRTom := Value;
 end;
-
+}
 { TinfoCRTomCollection }
 
 function TinfoCRTomCollection.Add: TinfoCRTomCollectionItem;
@@ -630,7 +630,7 @@ var
   ok: Boolean;
   i, j: Integer;
 begin
-  Result := False;
+  Result := True;
   try
     FXML := Leitor.Arquivo;
 
@@ -785,8 +785,6 @@ begin
           end;
         end;
       end;
-
-      Result := True;
     end;
   except
     Result := False;
@@ -799,12 +797,10 @@ var
   sSecao: String;
   i: Integer;
 begin
-  Result := False;
+  Result := True;
 
   AIni := TMemIniFile.Create('');
   try
-    Result := True;
-
     with Self do
     begin
       sSecao := 'evtTotal';

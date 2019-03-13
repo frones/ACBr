@@ -92,16 +92,16 @@ type
     procedure SaveToFiles;
     procedure Clear;
 
-    function LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
-    function LoadFromString(AXMLString: String): Boolean;
-    function LoadFromStringINI(AINIString: String): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String): Boolean;
+    function LoadFromStringINI(const AINIString: String): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
     property Count:        Integer           read GetCount;
     property ReinfEventos: TReinfEventos     read FReinfEventos     write SetReinfEventos;
     property TipoContribuinte: TContribuinte read FTipoContribuinte write FTipoContribuinte;
-    property Gerados: TGeradosCollection    read FGerados        write SetGerados;
+    property Gerados: TGeradosCollection     read FGerados          write SetGerados;
   end;
 
 implementation
@@ -187,30 +187,27 @@ begin
   FReinfEventos.Assign(Value);
 end;
 
-function TEventos.LoadFromFile(CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
+function TEventos.LoadFromFile(const CaminhoArquivo: String; ArqXML: Boolean = True): Boolean;
 var
   ArquivoXML: TStringList;
   XML: String;
   XMLOriginal: AnsiString;
 begin
-  Result := False;
-  
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);
     XMLOriginal := ArquivoXML.Text;
-
-    // Converte de UTF8 para a String nativa da IDE //
-    XML := DecodeToString(XMLOriginal, True);
-
-    if ArqXML then
-      Result := LoadFromString(XML)
-    else
-      Result := LoadFromStringINI(XML);
-
   finally
     ArquivoXML.Free;
   end;
+
+  // Converte de UTF8 para a String nativa da IDE //
+  XML := DecodeToString(XMLOriginal, True);
+
+  if ArqXML then
+    Result := LoadFromString(XML)
+  else
+    Result := LoadFromStringINI(XML);
 end;
 
 function TEventos.LoadFromStream(AStream: TStringStream): Boolean;
@@ -223,9 +220,9 @@ begin
   Result := Self.LoadFromString(String(XMLOriginal));
 end;
 
-function TEventos.LoadFromString(AXMLString: String): Boolean;
+function TEventos.LoadFromString(const AXMLString: String): Boolean;
 var
-  AXML: String;
+  AXML, AXMLStr: String;
   P: integer;
 
   function PosReinf: integer;
@@ -236,11 +233,12 @@ var
 begin
   Result := False;
   P := PosReinf;
+  AXMLStr := AXMLString;
 
   while P > 0 do
   begin
-    AXML := copy(AXMLString, 1, P + 7);
-    AXMLString := Trim(copy(AXMLString, P + 8, length(AXMLString)));
+    AXML := copy(AXMLStr, 1, P + 7);
+    AXMLStr := Trim(copy(AXMLStr, P + 8, length(AXMLStr)));
 
     Result := Self.ReinfEventos.LoadFromString(AXML);
     SaveToFiles;
@@ -249,13 +247,13 @@ begin
   end;
 end;
 
-function TEventos.LoadFromStringINI(AINIString: String): Boolean;
+function TEventos.LoadFromStringINI(const AINIString: String): Boolean;
 begin
   Result := Self.ReinfEventos.LoadFromIni(AIniString);
   SaveToFiles;
 end;
 
-function TEventos.LoadFromIni(AIniString: String): Boolean;
+function TEventos.LoadFromIni(const AIniString: String): Boolean;
 begin
   // O valor False no segundo parâmetro indica que o conteudo do arquivo não é
   // um XML.

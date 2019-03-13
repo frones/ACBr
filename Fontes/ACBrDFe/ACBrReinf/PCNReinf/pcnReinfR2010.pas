@@ -115,7 +115,7 @@ type
   end;
 
   { TinfoServTom }
-  TinfoServTom = class(TPersistent)
+  TinfoServTom = class(TObject)
   private
     FideEstabObra: TideEstabObra;
   public
@@ -126,7 +126,7 @@ type
   end;
 
   { TideEstabObra }
-  TideEstabObra = class(TPersistent)
+  TideEstabObra = class(TObject)
   private
     FtpInscEstab: TtpInsc;
     FnrInscEstab: string;
@@ -143,7 +143,7 @@ type
   end;
 
   { TidePrestServ }
-  TidePrestServ = class(TPersistent)
+  TidePrestServ = class(TObject)
   private
     FcnpjPrestador: string;
     FvlrTotalBruto: Double;
@@ -685,7 +685,7 @@ var
   sSecao, sFim: String;
   I, J: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -821,10 +821,8 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

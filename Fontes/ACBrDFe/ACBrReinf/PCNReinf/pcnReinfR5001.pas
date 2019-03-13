@@ -61,7 +61,7 @@ type
   TRComlCollection = class;
   TRComlCollectionItem = class;
 
-  TInfoRecEv = class(TPersistent)
+  TInfoRecEv = class(TObject)
   private
     FnrProtEntr: String;
     FdhProcess: TDateTime;
@@ -76,7 +76,7 @@ type
     property hash: String read Fhash;
   end;
 
-  TRTom = class(TPersistent)
+  TRTom = class(TObject)
   private
     FcnpjPrestador: String;
     FvlrTotalBaseRet: Double;
@@ -100,7 +100,7 @@ type
     property infoCRTom: TinfoCRTomCollection read FinfoCRTom write SetinfoCRTom;
   end;
 
-  TRPrest = class(TPersistent)
+  TRPrest = class(TObject)
   private
     FtpInscTomador: TtpInsc;
     FnrInscTomador: String;
@@ -152,7 +152,7 @@ type
     property vlrCRComlSusp: Double read FvlrCRComlSusp;
   end;
 
-  TRRecEspetDesp = class(TPersistent)
+  TRRecEspetDesp = class(TObject)
   private
     FvlrReceitaTotal: Double;
     FvlrCPApurTotal: Double;
@@ -169,7 +169,7 @@ type
     property vlrCRRecEspetDespSusp: Double read FvlrCRRecEspetDespSusp;
   end;
 
-  TInfoTotal = class(TPersistent)
+  TInfoTotal = class(TObject)
   private
     FnrRecArqBase: String;
     FRTom: TRTom;
@@ -209,7 +209,7 @@ type
     destructor Destroy; override;
 
     function GetEvento: TObject;
-  published
+//  published
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
     property EvtTotal: TEvtTotal read FEvtTotal write setEvtTotal;
@@ -557,7 +557,7 @@ var
   ok: Boolean;
   i: Integer;
 begin
-  Result := False;
+  Result := True;
   try
     FXML := Leitor.Arquivo;
 
@@ -704,8 +704,6 @@ begin
           infoTotal.RRecEspetDesp.FvlrCRRecEspetDespSusp := leitor.rCampo(tcDe2, 'vlrCRRecEspetDespSusp');
         end;
       end;
-
-      Result := True;
     end;
   except
     Result := False;
@@ -718,12 +716,10 @@ var
   sSecao: String;
   i: Integer;
 begin
-  Result := False;
+  Result := True;
 
   AIni := TMemIniFile.Create('');
   try
-    Result := True;
-
     with Self do
     begin
       sSecao := 'evtTotal';

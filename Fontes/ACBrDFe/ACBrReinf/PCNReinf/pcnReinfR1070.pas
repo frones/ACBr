@@ -107,7 +107,7 @@ type
     property infoProcesso: TinfoProcesso read FinfoProcesso write FinfoProcesso;
   end;
 
-  TinfoProcesso = class(TPersistent)
+  TinfoProcesso = class(TObject)
   private
     FideProcesso: TIdeProcesso;
     FNovaValidade: TidePeriodo;
@@ -123,7 +123,7 @@ type
     property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TideProcesso = class(TPersistent)
+  TideProcesso = class(TObject)
   private
     FTpProc: TtpProc;
     FNrProc: string;
@@ -168,7 +168,7 @@ type
     property indDeposito: TtpSimNao read FIndDeposito write FIndDeposito;
   end;
 
-  TdadosProcJud = class(TPersistent)
+  TdadosProcJud = class(TObject)
    private
     FUfVara: string;
     FCodMunic: integer;
@@ -422,7 +422,7 @@ var
   sSecao, sFim: String;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -493,10 +493,8 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

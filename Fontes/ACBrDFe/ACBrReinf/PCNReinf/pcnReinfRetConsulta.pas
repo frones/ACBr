@@ -62,7 +62,7 @@ type
   TRetornoEventosCollection = class;
   TRetornoEventosCollectionItem = class;
 
-  TInfoRecEv = class
+  TInfoRecEv = class(TObject)
   private
     FnrProtEntr: String;
     FdhProcess: TDateTime;
@@ -87,10 +87,10 @@ type
     FRComl: TRComlCollection;
     FRCPRB: TRCPRBCollection;
 
-    procedure SetRTom(const Value: TRTomCollection);
-    procedure SetRPrest(const Value: TRPrestCollection);
-    procedure SetRRecRepAD(const Value: TRRecRepADCollection);
-    procedure SetRCPRB(const Value: TRCPRBCollection);
+//    procedure SetRTom(const Value: TRTomCollection);
+//    procedure SetRPrest(const Value: TRPrestCollection);
+//    procedure SetRRecRepAD(const Value: TRRecRepADCollection);
+//    procedure SetRCPRB(const Value: TRCPRBCollection);
     procedure SetRComl(const Value: TRComlCollection);
   public
     constructor Create(AOwner: TEvtTotalContrib);
@@ -151,7 +151,7 @@ type
     procedure SetinfoCRTom(const Value: TinfoCRTomCollection);
   public
     constructor create; reintroduce;
-    destructor destroy; override;
+    destructor Destroy; override;
 //    constructor Create(AOwner: TInfoTotalContrib);
 //    destructor Destroy; override;
 
@@ -332,7 +332,7 @@ type
     property RetornoEventos: TRetornoEventosCollection read FRetornoEventos write FRetornoEventos;
   end;
 
-  TRetConsulta = class(TPersistent)
+  TRetConsulta = class(TObject)
   private
     FLeitor: TLeitor;
     FevtTotalContrib: TEvtTotalContrib;
@@ -343,7 +343,7 @@ type
 
     function LerXml: boolean;
     function SalvarINI: boolean;
-  published
+
     property Leitor: TLeitor read FLeitor write FLeitor;
     property evtTotalContrib: TEvtTotalContrib read FevtTotalContrib write FevtTotalContrib;
     property XML: String read FXML;
@@ -544,7 +544,7 @@ procedure TInfoTotalContrib.SetRComl(const Value: TRComlCollection);
 begin
   FRComl := Value;
 end;
-
+{
 procedure TInfoTotalContrib.SetRCPRB(const Value: TRCPRBCollection);
 begin
   FRCPRB := Value;
@@ -564,7 +564,7 @@ procedure TInfoTotalContrib.SetRTom(const Value: TRTomCollection);
 begin
   FRTom := Value;
 end;
-
+}
 { TEvtTotalContrib }
 
 constructor TEvtTotalContrib.Create;
@@ -632,7 +632,7 @@ var
   i, j: Integer;
   Ok: Boolean;
 begin
-  Result := False;
+  Result := True;
   try
     Leitor.Grupo := Leitor.Arquivo;
 
@@ -834,8 +834,6 @@ begin
         end;
       end;
     end;
-
-    Result := True;
   except
     Result := False;
   end;
@@ -847,12 +845,10 @@ var
   sSecao: String;
   i, j: Integer;
 begin
-  Result := False;
+  Result := True;
 
   AIni := TMemIniFile.Create('');
   try
-    Result := True;
-
     with Self do
     begin
       with evtTotalContrib do

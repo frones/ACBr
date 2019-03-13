@@ -57,7 +57,7 @@ type
   TRComlCollection = class;
   TRComlCollectionItem = class;
 
-  TInfoRecEv = class(TPersistent)
+  TInfoRecEv = class(TObject)
   private
     FnrProtEntr: String;
     FdhProcess: TDateTime;
@@ -72,7 +72,7 @@ type
     property hash: String read Fhash;
   end;
 
-  TRTom = class(TPersistent)
+  TRTom = class(TObject)
   private
     FcnpjPrestador: String;
     FvlrTotalBaseRet: Double;
@@ -96,7 +96,7 @@ type
     property infoCRTom: TinfoCRTomCollection read FinfoCRTom write SetinfoCRTom;
   end;
 
-  TRPrest = class(TPersistent)
+  TRPrest = class(TObject)
   private
     FtpInscTomador: TtpInsc;
     FnrInscTomador: String;
@@ -148,7 +148,7 @@ type
     property vlrCRComlSusp: Double read FvlrCRComlSusp;
   end;
 
-  TRRecEspetDesp = class(TPersistent)
+  TRRecEspetDesp = class(TObject)
   private
     FvlrReceitaTotal: Double;
     FvlrCPApurTotal: Double;
@@ -165,7 +165,7 @@ type
     property vlrCRRecEspetDespSusp: Double read FvlrCRRecEspetDespSusp;
   end;
 
-  TInfoTotal = class(TPersistent)
+  TInfoTotal = class(TObject)
   private
     FnrRecArqBase: String;
     FRTom: TRTom;
@@ -268,7 +268,7 @@ type
     property VlrCRTomSusp: Double read FVlrCRTomSusp;
   end;
 
-  TEvtTotal = class(TPersistent)
+  TEvtTotal = class(TObject)
   private
     FId: String;
     FXML: String;
@@ -287,7 +287,7 @@ type
     property IdeStatus: TIdeStatus read FIdeStatus write FIdeStatus;
     property InfoRecEv: TInfoRecEv read FInfoRecEv write FInfoRecEv;
     property InfoTotal: TInfoTotal read FInfoTotal write FInfoTotal;
-  published
+
     property Id: String  read FId;
     property XML: String read FXML;
   end;
@@ -311,7 +311,7 @@ type
     FevtTotal: TEvtTotal;
   public
     constructor create; reintroduce;
-    destructor destroy; override;
+    destructor Destroy; override;
 
     property Id: string read FId write FId;
     property ArquivoReinf: string read FArquivoReinf write FArquivoReinf;
@@ -594,7 +594,7 @@ var
   i, j: Integer;
   Ok: Boolean;
 begin
-  Result := False;
+  Result := True;
 
   try
     Leitor.Grupo := Leitor.Arquivo;
@@ -789,8 +789,6 @@ begin
           inc(i);
         end;
       end;
-
-      Result := True;
     end;
   except
     Result := False;
@@ -803,12 +801,10 @@ var
   sSecao: String;
   i: Integer;
 begin
-  Result := False;
+  Result := True;
 
   AIni := TMemIniFile.Create('');
   try
-    Result := True;
-
     with Self do
     begin
       with evento.Items[nCont].evtTotal do

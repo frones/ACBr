@@ -100,7 +100,7 @@ type
     property XML: AnsiString read FXML write SetXML;
   end;
 
-  TGeradorOpcoes = class(TPersistent)
+  TGeradorOpcoes = class(TObject)
   private
     FAjustarTagNro: boolean;
     FGerarTagIPIparaNaoTributado: boolean;
@@ -110,7 +110,7 @@ type
     FPathArquivoMunicipios: string;
     FValidarInscricoes: boolean;
     FValidarListaServicos: boolean;
-  published
+  public
     property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
     property GerarTagIPIparaNaoTributado: boolean read FGerarTagIPIparaNaoTributado write FGerarTagIPIparaNaoTributado;
     property GerarTXTSimultaneamente: boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;

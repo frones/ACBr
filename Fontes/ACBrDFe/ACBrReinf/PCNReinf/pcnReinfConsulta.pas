@@ -46,27 +46,32 @@ type
   private
     FGerador: TGerador;
     FSoapEnvelope: String;
-    FtpInsc: String;
-    FnrInsc: String;
-    FnrInscEstab: String;
+
     FTipoEvento: TTipoEvento;
+    FtpInscContrib: String;
+    FnrInscContrib: String;
+    FtpInscEstab: String;
+    FnrInscEstab: String;
     FperApur: String;
+    FcnpjPrestador: String;
     FtpInscTomador: String;
-    FcnpjPrestadorTomador: String;
+    FnrInscTomador: String;
+    FdtApur: TDateTime;
   public
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
 
-    property Gerador: TGerador            read FGerador              write FGerador;
-    property SoapEnvelope: String         read FSoapEnvelope         write FSoapEnvelope;
-    property tpInsc: String               read FtpInsc               write FtpInsc;
-    property nrInsc: String               read FnrInsc               write FnrInsc;
-    property nrInscEstab: String          read FnrInscEstab          write FnrInscEstab;
-    property TipoEvento: TTipoEvento      read FTipoEvento           write FTipoEvento;
-    property perApur: String              read FperApur              write FperApur;
-    property tpInscTomador: String        read FtpInscTomador        write FtpInscTomador;
-    property cnpjPrestadorTomador: String read FcnpjPrestadorTomador write FcnpjPrestadorTomador;
+    property Gerador: TGerador       read FGerador       write FGerador;
+    property SoapEnvelope: String    read FSoapEnvelope  write FSoapEnvelope;
+
+    property TipoEvento: TTipoEvento read FTipoEvento    write FTipoEvento;
+    property nrInscContrib: String   read FnrInscContrib write FnrInscContrib;
+    property nrInscEstab: String     read FnrInscEstab   write FnrInscEstab;
+    property perApur: String         read FperApur       write FperApur;
+    property cnpjPrestador: String   read FcnpjPrestador write FcnpjPrestador;
+    property nrInscTomador: String   read FnrInscTomador write FnrInscTomador;
+    property dtApur: TDateTime       read FdtApur        write FdtApur;
   end;
 
 implementation
@@ -95,50 +100,91 @@ begin
   Gerador.Prefixo           := 'v1:';
   tpEvento := Copy(TipoEventoToStr(TipoEvento), 3, 4);
 
+  if Length(nrInscContrib) = 14 then
+  begin
+    nrInscContrib := Copy( nrInscContrib, 1, 8 );
+    FtpInscContrib := '1';
+  end
+  else
+    FtpInscContrib := '2';
+
+  if Length(nrInscEstab) = 14 then
+  begin
+    nrInscEstab := Copy( nrInscEstab, 1, 8 );
+    FtpInscEstab := '1';
+  end
+  else
+    FtpInscEstab := '2';
+
+  if Length(nrInscTomador) = 14 then
+  begin
+    nrInscTomador := Copy( nrInscTomador, 1, 8 );
+    FtpInscTomador := '1';
+  end
+  else
+    FtpInscTomador := '2';
+
   Gerador.wGrupo('consultar ' + SoapEnvelope);
   {
   Esta sendo usado o wCampoNFSe pois as tags devem ser geradas com prefixo.
   }
+  // Os 3 campos abaixos atende os Eventos: R-1000, R-1070
+
   Gerador.wCampoNFSe(tcStr, 'C02', 'tipoEvento', 04, 04, 1, tpEvento, 'XXX');
-  Gerador.wCampoNFSe(tcInt, 'C03', 'tpInsc    ', 01, 01, 1, tpInsc, 'XXX');
-  Gerador.wCampoNFSe(tcStr, 'C05', 'nrInsc    ', 11, 14, 1, nrInsc, 'XXX');
+  // tpInsc e nrInsc é do Contribuinte
+  Gerador.wCampoNFSe(tcInt, 'C03', 'tpInsc    ', 01, 01, 1, FtpInscContrib, 'XXX');
+  Gerador.wCampoNFSe(tcStr, 'C05', 'nrInsc    ', 11, 14, 1, nrInscContrib, 'XXX');
 
   case TipoEvento of
-//    teR1000:
-//    teR1070:
     teR2010:
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur      ', 07, 07, 1, perApur, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, tpInscTomador, 'XXX');
+        // tpInscEstab e nrInscEstab é do Estabelecimento
+        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, FtpInscEstab, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInscEstab, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C09', 'cnpjPrestador', 11, 14, 1, cnpjPrestadorTomador, 'XXX');
+        // cnpjPrestador é do Prestador de Serviço
+        Gerador.wCampoNFSe(tcStr, 'C09', 'cnpjPrestador', 11, 14, 1, cnpjPrestador, 'XXX');
       end;
+
     teR2020:
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur         ', 07, 07, 1, perApur, 'XXX');
+        // nrInscEstabPrest é do Estabelecimento
         Gerador.wCampoNFSe(tcStr, 'C07', 'nrInscEstabPrest', 11, 14, 1, nrInscEstab, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscTomador   ', 01, 01, 1, tpInscTomador, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C09', 'nrInscTomador   ', 11, 14, 1, cnpjPrestadorTomador, 'XXX');
+        // tpInscTomador e nrInscTomador é do Tomador
+        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscTomador   ', 01, 01, 1, FtpInscTomador, 'XXX');
+        Gerador.wCampoNFSe(tcStr, 'C09', 'nrInscTomador   ', 11, 14, 1, nrInscTomador, 'XXX');
       end;
-//    teR2030:
-//    teR2040:
-//    teR2050:
+
+    teR2030,
+    teR2040,
+    teR2050:
+      begin
+        Gerador.wCampoNFSe(tcStr, 'C06', 'perApur    ', 07, 07, 1, perApur, 'XXX');
+        // nrInscEstabPrest é do Estabelecimento
+        Gerador.wCampoNFSe(tcStr, 'C07', 'nrInscEstab', 11, 14, 1, nrInscEstab, 'XXX');
+      end;
+
     teR2060:
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur      ', 07, 07, 1, perApur, 'XXX');
-        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, tpInsc, 'XXX');
+        // tpInscEstab e nrInscEstab é do Estabelecimento
+        Gerador.wCampoNFSe(tcStr, 'C07', 'tpInscEstab  ', 01, 01, 1, FtpInscEstab, 'XXX');
         Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab  ', 11, 14, 1, nrInscEstab, 'XXX');
       end;
-//    teR2070:
+
     teR2098,
     teR2099:
       begin
         Gerador.wCampoNFSe(tcStr, 'C06', 'perApur', 07, 07, 1, perApur, 'XXX');
       end;
-//    teR3010:
-//    teR5001:
-//    teR5011:
-//    teR9000:
+
+    teR3010:
+      begin
+        Gerador.wCampoNFSe(tcDat, 'C06', 'dtApur     ', 10, 10, 1, dtApur, 'XXX');
+        // nrInscEstab é do Estabelecimento
+        Gerador.wCampoNFSe(tcStr, 'C08', 'nrInscEstab', 11, 14, 1, nrInscEstab, 'XXX');
+      end;
   end;
 
   Gerador.wGrupo('/consultar');

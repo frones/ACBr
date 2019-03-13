@@ -52,6 +52,9 @@ Símbolo : Significado
 
 13/03/2019
 -- Diversos -- 
+[*] Correções no método ConsultaReciboEvento.
+   Por: Italo Jurisato Junior
+-- Diversos -- 
 [*] Remoção de Hints e Warnings de diversas Units.
    Por: Italo Jurisato Junior
 

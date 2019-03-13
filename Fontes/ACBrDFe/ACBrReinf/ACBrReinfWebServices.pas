@@ -137,8 +137,10 @@ type
     FtipoEvento: TTipoEvento;
     FtpEventoStr: String;
     FperApur: String;
-    FcnpjPrestadorTomador: string;
-    FnroInscricaoEstabPrestadorTomador: string;
+    FnrInscEstab: string;
+    FcnpjPrestador: string;
+    FnrInscTomador: string;
+    FdtApur: TDateTime;
 
     FRetConsulta: TRetConsulta;
     FVersaoDF: TVersaoReinf;
@@ -157,11 +159,14 @@ type
     procedure Clear; override;
     procedure BeforeDestruction; override;
 
-    property tipoEvento: TTipoEvento read FtipoEvento write FtipoEvento;
-    property tpEventoStr: String read FtpEventoStr write FtpEventoStr;
-    property perApur: string read FperApur write FperApur;
-    property cnpjPrestadorTomador: string read FcnpjPrestadorTomador write FcnpjPrestadorTomador;
-    property nroInscricaoEstabPrestadorTomador: string read FnroInscricaoEstabPrestadorTomador write FnroInscricaoEstabPrestadorTomador;
+    property tipoEvento: TTipoEvento read FtipoEvento    write FtipoEvento;
+    property tpEventoStr: String     read FtpEventoStr   write FtpEventoStr;
+    property perApur: string         read FperApur       write FperApur;
+    property nrInscEstab: string     read FnrInscEstab   write FnrInscEstab;
+    property cnpjPrestador: string   read FcnpjPrestador write FcnpjPrestador;
+    property nrInscTomador: string   read FnrInscTomador write FnrInscTomador;
+    property dtApur: TDateTime       read FdtApur        write FdtApur;
+
     property RetConsulta: TRetConsulta read FRetConsulta;
   end;
 
@@ -179,7 +184,12 @@ type
 
     function Envia: Boolean;
     function Consulta(const AProtocolo: string): Boolean;
-    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''; AInscricaoEstabPrestadorTomador : string = ''): Boolean;
+    function ConsultaReciboEvento(const APerApur: String;
+                                  ATipoEvento: TTipoEvento;
+                                  const AnrInscEstab: String = '';
+                                  const AcnpjPrestador: string = '';
+                                  const AnrInscTomador: string = '';
+                                  AdtApur: TDateTime = 0): Boolean;
 
     property ACBrReinf: TACBrDFe read FACBrReinf write FACBrReinf;
     property EnvioLote: TEnvioLote read FEnvioLote write FEnvioLote;
@@ -603,42 +613,26 @@ begin
   FtipoEvento := teR1000;
   tpEventoStr := '1000';
   FperApur := '';
-  FcnpjPrestadorTomador := '';
+  FnrInscEstab := '';
+  FcnpjPrestador := '';
+  FnrInscTomador := '';
+  FdtApur := 0;
 end;
 
 procedure TConsultarReciboEvento.DefinirDadosMsg;
 var
   Consulta: TReinfConsulta;
-  tpInsc, tpInsc2, nrInsc, nrInscEstab: String;
 begin
-  nrInscEstab := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
-
-  if Length(nrInscEstab) = 14 then
-  begin
-    nrInsc := Copy( nrInscEstab, 1, 8 );
-    tpInsc := '1';
-  end
-  else
-  begin
-    nrInsc := nrInscEstab;
-    tpInsc := '2';
-  end;
-
-  if Length(FnroInscricaoEstabPrestadorTomador) = 14 then
-    tpInsc2 := '1'
-  else
-    tpInsc2 := '4';
-
   Consulta := TReinfConsulta.Create;
   try
-    Consulta.SoapEnvelope   := FPSoapEnvelopeAtributtes;
-    Consulta.tpInsc         := tpInsc;
-    Consulta.nrInsc         := nrInsc;
-    Consulta.nrInscEstab    := FnroInscricaoEstabPrestadorTomador;
-    Consulta.tpInscTomador  := tpInsc2;
-    Consulta.cnpjPrestadorTomador := cnpjPrestadorTomador;
-    Consulta.TipoEvento     := TipoEvento;
-    Consulta.perApur        := perApur;
+    Consulta.SoapEnvelope  := FPSoapEnvelopeAtributtes;
+    Consulta.TipoEvento    := TipoEvento;
+    Consulta.nrInscContrib := TACBrReinf(FPDFeOwner).Configuracoes.Geral.IdContribuinte;
+    Consulta.nrInscEstab   := nrInscEstab;
+    Consulta.perApur       := perApur;
+    Consulta.cnpjPrestador := cnpjPrestador;
+    Consulta.nrInscTomador := nrInscTomador;
+    Consulta.dtApur        := dtApur;
 
     AjustarOpcoes( Consulta.Gerador.Opcoes );
     Consulta.GerarXML;
@@ -790,20 +784,24 @@ begin
   Result := True;
 end;
 
-function TWebServices.ConsultaReciboEvento(const APerApur: string;
-   ATipoEvento: TTipoEvento; ACnpjPrestadorTomador:String=''; AInscricaoEstabPrestadorTomador : string = ''): Boolean;
+function TWebServices.ConsultaReciboEvento(const APerApur: String;
+                                  ATipoEvento: TTipoEvento;
+                                  const AnrInscEstab: String;
+                                  const AcnpjPrestador: string;
+                                  const AnrInscTomador: string;
+                                  AdtApur: TDateTime): Boolean;
 begin
 {$IFDEF FPC}
   Result := False;
 {$ENDIF}
 
-  FConsultarReciboEvento.FperApur := APerApur;
-  FConsultarReciboEvento.FtipoEvento := ATipoEvento;
-  FConsultarReciboEvento.tpEventoStr := Copy(TipoEventoToStr(ATipoEvento), 3, 4);
-  FConsultarReciboEvento.nroInscricaoEstabPrestadorTomador := AInscricaoEstabPrestadorTomador;
-
-
-  FConsultarReciboEvento.FcnpjPrestadorTomador := ACnpjPrestadorTomador;
+  FConsultarReciboEvento.FperApur      := APerApur;
+  FConsultarReciboEvento.FtipoEvento   := ATipoEvento;
+  FConsultarReciboEvento.tpEventoStr   := Copy(TipoEventoToStr(ATipoEvento), 3, 4);
+  FConsultarReciboEvento.nrInscEstab   := AnrInscEstab;
+  FConsultarReciboEvento.cnpjPrestador := AcnpjPrestador;
+  FConsultarReciboEvento.nrInscTomador := AnrInscTomador;
+  FConsultarReciboEvento.dtApur        := AdtApur;
 
   if not FConsultarReciboEvento.Executar then
     FConsultarReciboEvento.GerarException(FConsultarReciboEvento.Msg);

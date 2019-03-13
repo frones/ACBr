@@ -100,7 +100,12 @@ type
 
     function Enviar: boolean;
     function Consultar(const AProtocolo: string): boolean;
-    function ConsultaReciboEvento(const APerApur: String; ATipoEvento: TTipoEvento; ACnpjPrestadorTomador: String = ''; AInscricaoEstabPrestadorTomador: String = ''): Boolean;
+    function ConsultaReciboEvento(const APerApur: String;
+                                  ATipoEvento: TTipoEvento;
+                                  const AnrInscEstab: String = '';
+                                  const AcnpjPrestador: String = '';
+                                  const AnrInscTomador: string = '';
+                                  AdtApur: TDateTime = 0): Boolean;
 
     property Eventos: TEventos read FEventos write FEventos;
     property Status: TStatusReinf read FStatus;
@@ -174,11 +179,15 @@ begin
 end;
 
 function TACBrReinf.ConsultaReciboEvento(const APerApur: String;
-  ATipoEvento: TTipoEvento; ACnpjPrestadorTomador: String = '';
-  AInscricaoEstabPrestadorTomador: String = ''): Boolean;
+  ATipoEvento: TTipoEvento; const AnrInscEstab: String;
+  const AcnpjPrestador: String; const AnrInscTomador: string; AdtApur: TDateTime): Boolean;
 begin
-  Result := WebServices.ConsultaReciboEvento(APerApur, ATipoEvento,
-                        ACnpjPrestadorTomador, AInscricaoEstabPrestadorTomador);
+  Result := WebServices.ConsultaReciboEvento(APerApur,
+                                             ATipoEvento,
+                                             AnrInscEstab,
+                                             AcnpjPrestador,
+                                             AnrInscTomador,
+                                             AdtApur);
 end;
 
 procedure TACBrReinf.AssinarEventos;

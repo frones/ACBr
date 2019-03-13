@@ -5569,36 +5569,46 @@ begin
   if not (Result) then
     FCancNfse.GerarException( FCancNfse.Msg );
 
-  if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet, proSMARAPD, proIPM]) then
+  with TACBrNFSe(FACBrNFSe) do
   begin
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSystemPro] then
+    if not (Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet,
+                                             proSMARAPD, proIPM]) then
     begin
-      FConsNfse.FNumeroNFSe := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.Numero;
+      if Configuracoes.Geral.Provedor in [proSystemPro] then
+      begin
+        Sleep(Configuracoes.WebServices.AguardarConsultaRet);
 
-      // Utilizado por alguns provedores para realizar a consulta de uma NFS-e
-      FConsNfse.FPagina := 1;
+        FConsNfse.FNumeroNFSe := NotasFiscais.Items[0].NFSe.Numero;
+        // Utilizado por alguns provedores para realizar a consulta de uma NFS-e
+        FConsNfse.FPagina     := 1;
 
-      Result := FConsNfse.Executar;
+        Result := FConsNfse.Executar;
 
-      if not (Result) then
-        FConsNfse.GerarException( FConsNfse.Msg );
-    end
-    else begin
-      FConsNfseRps.FNumeroRps := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-      FConsNfseRps.FSerie     := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
-      FConsNfseRps.FTipo      := TipoRPSToStr(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
-
-      case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
-        proInfisc,
-        proInfiscv11,
-        proSafeWeb,
-        proTiplanv2 : Result := True
+        if not (Result) then
+          FConsNfse.GerarException( FConsNfse.Msg );
+      end
       else
-        Result := FConsNfseRps.Executar;
-      end;
+      begin
+        case Configuracoes.Geral.Provedor of
+          proInfisc,
+          proInfiscv11,
+          proSafeWeb,
+          proTiplanv2 : Result := True
+        else
+          begin
+            Sleep(Configuracoes.WebServices.AguardarConsultaRet);
 
-      if not (Result) then
-        FConsNfseRps.GerarException( FConsNfseRps.Msg );
+            FConsNfseRps.FNumeroRps := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+            FConsNfseRps.FSerie     := NotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+            FConsNfseRps.FTipo      := TipoRPSToStr(NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
+
+            Result := FConsNfseRps.Executar;
+          end;
+        end;
+
+        if not (Result) then
+          FConsNfseRps.GerarException( FConsNfseRps.Msg );
+      end;
     end;
   end;
 end;

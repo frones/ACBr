@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2019
+-- ACBrNFSeWebServices --
+[*] Adicionado um Sleep entre o cancelamento e a consulta automatica, alguns provedores
+    exigem um tempo minimo entre as duas requisições.
+    Esse tempo (milisegundos) deve ser definido na propriedade: AguardarConsultaRet 
+   Por: Italo Jurisato Junior
+
 11/03/2019
 -- Diversos --
 [*] Pequenas alterações visando a melhoria no código.

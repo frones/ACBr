@@ -140,9 +140,9 @@ constructor TPeriodicos.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FS1200 := TS1200Collection.Create(AOwner, TS1200CollectionItem);
-  FS1202 := TS1202Collection.Create(AOwner, TS1202CollectionItem);
-  FS1207 := TS1207Collection.Create(AOwner, TS1207CollectionItem);
+  FS1200 := TS1200Collection.Create(AOwner);
+  FS1202 := TS1202Collection.Create(AOwner);
+  FS1207 := TS1207Collection.Create(AOwner);
   FS1210 := TS1210Collection.Create(AOwner, TS1210CollectionItem);
   FS1250 := TS1250Collection.Create(AOwner, TS1250CollectionItem);
   FS1260 := TS1260Collection.Create(AOwner, TS1260CollectionItem);

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2019
+[-] DoACBrMDFe
+Correção na chamada do método MDFe.LerIni
+
 12/03/2019
 [+] DoACBreSocialfUnit, ACBrLibeSocialConsts, ACBrLibeSocialRespostas
 Adicionado no ACBrMonitor os métodos "ConsultaIdentificadoresEventosEmpregador",

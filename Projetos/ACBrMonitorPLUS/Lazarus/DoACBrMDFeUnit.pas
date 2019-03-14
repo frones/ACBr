@@ -367,15 +367,15 @@ begin
   ListaDeMetodos.Add(CMetodoGerarchave);
   ListaDeMetodos.Add(CMetodoVersao);
   ListaDeMetodos.Add(CMetodoSetTipoImpressao);
+  ListaDeMetodos.Add(CMetodoEnviarEvento);
+  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporChaveMDFe);
+  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporUltNSU);
+  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporNSU);
+
   ListaDeMetodos.Add(CMetodoSavetofile);
   ListaDeMetodos.Add(CMetodoLoadfromfile);
   ListaDeMetodos.Add(CMetodoLerini);
   ListaDeMetodos.Add(CMetodoSetcertificado);
-  ListaDeMetodos.Add(CMetodoEnviarEvento);
-  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporChaveMDFe);
-  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporNSU);
-  ListaDeMetodos.Add(CMetodoDistribuicaoDFeporUltNSU);
-
   ListaDeMetodos.Add(CMetodoRestaurar);
   ListaDeMetodos.Add(CMetodoOcultar);
   ListaDeMetodos.Add(CMetodoEncerrarmonitor);
@@ -437,7 +437,7 @@ begin
     33 : AMetodoClass := TMetodoDistribuicaoDFeporUltNSU;
     34 : AMetodoClass := TMetodoDistribuicaoDFeporNSU;
 
-    35..49 : DoACbr(ACmd);
+    35..50 : DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

@@ -8544,10 +8544,10 @@ begin
       ACBrNFeDANFCeFortesA4_1.ExibeInforAdicProduto := TinfAdcProd(rgInfAdicProduto.ItemIndex);
       ACBrNFeDANFCeFortesA4_1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
       ACBrNFeDANFCeFortesA4_1.ImprimeTotalLiquido   := cbxImprimirDescAcresItemNFCe.Checked;
-      ACBrNFeDANFCeFortesA4_1.MargemInferior        := fspeNFCeMargemInf.Value;
-      ACBrNFeDANFCeFortesA4_1.MargemSuperior        := fspeNFCeMargemSup.Value;
-      ACBrNFeDANFCeFortesA4_1.MargemDireita         := fspeNFCeMargemDir.Value;
-      ACBrNFeDANFCeFortesA4_1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemInferior        := fspeMargemInf.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemSuperior        := fspeMargemSup.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemDireita         := fspeMargemDir.Value;
+      ACBrNFeDANFCeFortesA4_1.MargemEsquerda        := fspeMargemEsq.Value;
       ACBrNFeDANFCeFortesA4_1.ImprimeCodigoEan      := cbxImprimirCodigoEANNFCe.Checked;
       ACBrNFeDANFCeFortesA4_1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
       ACBrNFeDANFCeFortesA4_1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;

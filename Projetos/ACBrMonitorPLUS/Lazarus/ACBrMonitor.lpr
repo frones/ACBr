@@ -18,10 +18,10 @@ uses
   DoACBrCTeUnit, DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit,
   ACBrBoletoRelatorioRetorno, DoPosPrinterUnit, SelecionarCertificado,
   DoACBrDFeUnit, ACBrMonitorConsts, ACBrMonitorConfig, DoACBrReinfUnit,
-  DoACBreSocialUnit, ACBrLibeSocialConsts, ACBrLibeSocialRespostas,
-  ACBrLibMDFeConsts, ACBrLibMDFeRespostas, ACBrLibReinfConsts,
-  ACBrLibReinfRespostas, ACBrLibNFeRespostas, ACBrLibNFeConsts,
-  ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas;
+  DoACBreSocialUnit, lazreportpdfexport, ACBrLibeSocialConsts,
+  ACBrLibeSocialRespostas, ACBrLibMDFeConsts, ACBrLibMDFeRespostas,
+  ACBrLibReinfConsts, ACBrLibReinfRespostas, ACBrLibNFeRespostas,
+  ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas;
 
 {$R *.res}
 var

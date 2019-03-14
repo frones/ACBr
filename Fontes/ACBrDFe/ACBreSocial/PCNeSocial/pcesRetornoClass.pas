@@ -50,7 +50,7 @@ unit pcesRetornoClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesConversaoeSocial;
 
@@ -76,18 +76,17 @@ type
   TContrato = class;
   TRecibo = class;
 
-  TOcorrenciasCollection = class(TCollection)
+  TOcorrenciasCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TOcorrenciasCollectionItem;
     procedure SetItem(Index: Integer; Value: TOcorrenciasCollectionItem);
   public
-    constructor create(AOwner: TStatus);
-
-    function Add: TOcorrenciasCollectionItem;
+    function Add: TOcorrenciasCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TOcorrenciasCollectionItem;
     property Items[Index: Integer]: TOcorrenciasCollectionItem read GetItem write SetItem;
   end;
 
-  TOcorrenciasCollectionItem = class(TCollectionItem)
+  TOcorrenciasCollectionItem = class(TObject)
   private
     FCodigo: Integer;
     FDescricao: String;
@@ -147,18 +146,17 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
   end;
 
-  TOcorrenciasProcCollection = class(TCollection)
+  TOcorrenciasProcCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TOcorrenciasProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TOcorrenciasProcCollectionItem);
   public
-    constructor create(AOwner: TProcessamento);
-
-    function Add: TOcorrenciasProcCollectionItem;
+    function Add: TOcorrenciasProcCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TOcorrenciasProcCollectionItem;
     property Items[Index: Integer]: TOcorrenciasProcCollectionItem read GetItem write SetItem;
   end;
 
-  TOcorrenciasProcCollectionItem = class(TCollectionItem)
+  TOcorrenciasProcCollectionItem = class(TObject)
   private
     FCodigo: Integer;
     FDescricao: String;
@@ -283,7 +281,7 @@ type
     property Cnae: string read FCnae write FCnae;
   end;
 
-  THorarioConsultaCollectionItem = class(TCollectionItem)
+  THorarioConsultaCollectionItem = class(TObject)
   private
     Fdia: tpTpDia;
     FcodHorContrat: string;
@@ -293,7 +291,7 @@ type
     FperHorFlexivel: string;
     FhorarioIntervalo: THorarioIntervaloCollection;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dia: tpTpDia read Fdia write Fdia;
@@ -305,17 +303,17 @@ type
     property horarioIntervalo: THorarioIntervaloCollection read FhorarioIntervalo;
   end;
 
-  THorarioConsultaCollection = class(TCollection)
+  THorarioConsultaCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): THorarioConsultaCollectionItem;
     procedure SetItem(Index: Integer; Value: THorarioConsultaCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: THorarioConsultaCollectionItem;
+    function Add: THorarioConsultaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: THorarioConsultaCollectionItem;
     property Items[Index: Integer]: THorarioConsultaCollectionItem read GetItem write SetItem; default;
   end;
 
-  THorContratualConsulta = class(TPersistent)
+  THorContratualConsulta = class(TObject)
   private
     FQtdHrsSem: integer;
     FTpJornada: tpTpJornada;
@@ -405,12 +403,7 @@ implementation
 
 function TOcorrenciasCollection.Add: TOcorrenciasCollectionItem;
 begin
-  Result := TOcorrenciasCollectionItem(inherited Add());
-end;
-
-constructor TOcorrenciasCollection.create(AOwner: TStatus);
-begin
-  inherited create(TOcorrenciasCollectionItem);
+  Result := Self.New;
 end;
 
 function TOcorrenciasCollection.GetItem(
@@ -425,11 +418,17 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TOcorrenciasCollection.New: TOcorrenciasCollectionItem;
+begin
+  Result := TOcorrenciasCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TStatus }
 
 constructor TStatus.Create;
 begin
-  FOcorrencias := TOcorrenciasCollection.create(Self);
+  FOcorrencias := TOcorrenciasCollection.Create;
 end;
 
 destructor TStatus.Destroy;
@@ -443,12 +442,7 @@ end;
 
 function TOcorrenciasProcCollection.Add: TOcorrenciasProcCollectionItem;
 begin
-  Result := TOcorrenciasProcCollectionItem(inherited Add());
-end;
-
-constructor TOcorrenciasProcCollection.create(AOwner: TProcessamento);
-begin
-  inherited create(TOcorrenciasProcCollectionItem);
+  Result := Self.New;
 end;
 
 function TOcorrenciasProcCollection.GetItem(
@@ -463,11 +457,18 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TOcorrenciasProcCollection.New: TOcorrenciasProcCollectionItem;
+begin
+  Result := TOcorrenciasProcCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TProcessamento }
 
 constructor TProcessamento.Create;
 begin
-  FOcorrencias := TOcorrenciasProcCollection.create(Self);
+  inherited Create;
+  FOcorrencias := TOcorrenciasProcCollection.create;
 end;
 
 destructor TProcessamento.Destroy;
@@ -497,14 +498,14 @@ end;
 
 { THorarioConsultaCollectionItem }
 
-constructor THorarioConsultaCollectionItem.create;
+constructor THorarioConsultaCollectionItem.Create;
 begin
-//  inherited;
+  inherited Create;
 
   FhorarioIntervalo := THorarioIntervaloCollection.Create;
 end;
 
-destructor THorarioConsultaCollectionItem.destroy;
+destructor THorarioConsultaCollectionItem.Destroy;
 begin
   FreeAndNil(FhorarioIntervalo);
 
@@ -514,13 +515,7 @@ end;
 { THorarioConsultaCollection }
 function THorarioConsultaCollection.Add: THorarioConsultaCollectionItem;
 begin
-  Result := THorarioConsultaCollectionItem(inherited Add);
-  Result.Create;
-end;
-
-constructor THorarioConsultaCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(THorarioConsultaCollectionItem);
+  Result := Self.New;
 end;
 
 function THorarioConsultaCollection.GetItem(Index: Integer): THorarioConsultaCollectionItem;
@@ -534,12 +529,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function THorarioConsultaCollection.New: THorarioConsultaCollectionItem;
+begin
+  Result := THorarioConsultaCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { THorContratualConsulta }
 constructor THorContratualConsulta.Create;
 begin
   inherited;
 
-  FHorario := THorarioConsultaCollection.Create(self);
+  FHorario := THorarioConsultaCollection.Create;
 end;
 
 destructor THorContratualConsulta.Destroy;

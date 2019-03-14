@@ -80,14 +80,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtCAT: TEvtCAT;
-
-    procedure setEvtCAT(const Value: TEvtCAT);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtCAT: TEvtCAT read FEvtCAT write setEvtCAT;
+    property EvtCAT: TEvtCAT read FEvtCAT write FEvtCAT;
   end;
 
   TEvtCAT = class(TeSocialEvento)
@@ -96,7 +94,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FCat: TCat;
-    FACBreSocial: TObject;
 
     procedure GerarCAT;
     procedure GerarLocalAcidente;
@@ -106,7 +103,7 @@ type
     procedure GerarAtestado;
     procedure GerarCatOrigem;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -318,11 +315,6 @@ begin
   inherited;
 end;
 
-procedure TS2210CollectionItem.setEvtCAT(const Value: TEvtCAT);
-begin
-  FEvtCAT.Assign(Value);
-end;
-
 { TAtestado }
 
 constructor TAtestado.create;
@@ -409,9 +401,8 @@ end;
 
 constructor TEvtCAT.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial   := AACBreSocial;
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo    := TIdeVinculo.Create;

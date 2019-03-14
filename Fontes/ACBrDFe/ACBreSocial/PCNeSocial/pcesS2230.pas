@@ -81,14 +81,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAfastTemp: TEvtAfastTemp;
-
-    procedure setEvtAfastTemp(const Value: TEvtAfastTemp);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAfastTemp: TEvtAfastTemp read FEvtAfastTemp write setEvtAfastTemp;
+    property EvtAfastTemp: TEvtAfastTemp read FEvtAfastTemp write FEvtAfastTemp;
   end;
 
   TEvtAfastTemp = class(TeSocialEvento)
@@ -97,7 +95,6 @@ type
     FIdeEmpregador : TIdeEmpregador;
     FIdeVinculo : TIdeVinculo;
     FinfoAfastamento : TinfoAfastamento;
-    FACBreSocial: TObject;
 
     procedure GerarInfoAfastamento(objInfoAfast: TinfoAfastamento);
     procedure GerarInfoAtestado(objInfoAtestado: TinfoAtestado);
@@ -108,7 +105,7 @@ type
     procedure GerarInfoRetif(objInfoRetif: TInfoRetif);
     procedure GerarFimAfast(objFimAfast: TfimAfastamento);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -308,11 +305,6 @@ begin
   inherited;
 end;
 
-procedure TS2230CollectionItem.setEvtAfastTemp(const Value: TEvtAfastTemp);
-begin
-  FEvtAfastTemp.Assign(Value);
-end;
-
 { TinfoAfastamento }
 
 constructor TinfoAfastamento.create;
@@ -450,12 +442,11 @@ end;
 
 constructor TEvtAfastTemp.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
+  FIdeEvento       := TIdeEvento2.Create;
+  FIdeEmpregador   := TIdeEmpregador.Create;
+  FIdeVinculo      := TIdeVinculo.Create;
   FinfoAfastamento := TinfoAfastamento.Create;
 end;
 

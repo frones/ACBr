@@ -73,14 +73,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtContratAvNP: TEvtContratAvNP;
-
-    procedure setEvtContratAvNP(const Value: TEvtContratAvNP);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtContratAvNP: TEvtContratAvNP read FEvtContratAvNP write setEvtContratAvNP;
+    property EvtContratAvNP: TEvtContratAvNP read FEvtContratAvNP write FEvtContratAvNP;
   end;
 
   TEvtContratAvNP = class(TESocialEvento)
@@ -88,12 +86,11 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FRemunAvNp: TRemunAvNPColecao;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarRemunAvNP(pRemunAvNPColecao: TRemunAvNPColecao);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -178,11 +175,6 @@ begin
   inherited;
 end;
 
-procedure TS1270CollectionItem.setEvtContratAvNP(const Value: TEvtContratAvNP);
-begin
-  FEvtContratAvNP.Assign(Value);
-end;
-
 { TRemunAvNPColecao }
 function TRemunAvNPColecao.Add: TRemunAvNPItem;
 begin
@@ -208,9 +200,8 @@ end;
 { TEvtContratAvNP }
 constructor TEvtContratAvNP.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FRemunAvNp     := TRemunAvNPColecao.Create(FRemunAvNp);

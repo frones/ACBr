@@ -75,13 +75,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTreiCap: TEvtTreiCap;
-    procedure setEvtTreiCap(const Value: TEvtTreiCap);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTreiCap: TEvtTreiCap read FEvtTreiCap write setEvtTreiCap;
+    property EvtTreiCap: TEvtTreiCap read FEvtTreiCap write FEvtTreiCap;
   end;
 
   TEvtTreiCap = class(TeSocialEvento)
@@ -90,14 +89,13 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FTreiCap: TTreiCap;
-    FACBreSocial: TObject;
 
     { Geradores da classe }
     procedure GerarTreiCap(objTreiCap: TTreiCap);
     procedure GerarInfoComplem(objInfoComplem: TInfoComplem);
     procedure GerarIdeProfResp(objIdeProfResp: TIdeProfRespCollection);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -190,11 +188,6 @@ begin
   inherited;
 end;
 
-procedure TS2245CollectionItem.setEvtTreiCap(const Value: TEvtTreiCap);
-begin
-  FEvtTreiCap.Assign(Value);
-end;
-
 { TS2245Collection }
 
 function TS2245Collection.Add: TS2245CollectionItem;
@@ -215,13 +208,12 @@ end;
 
 constructor TEvtTreiCap.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial   := AACBreSocial;
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo    := TIdeVinculo.Create;
-  FTreiCap  := TTreiCap.Create;
+  FTreiCap       := TTreiCap.Create;
 end;
 
 destructor TEvtTreiCap.destroy;

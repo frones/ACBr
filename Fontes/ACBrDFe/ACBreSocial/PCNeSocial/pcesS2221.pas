@@ -72,13 +72,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtToxic: TEvtToxic;
-    procedure setEvtToxic(const Value: TEvtToxic);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtToxic: TEvtToxic read FEvtToxic write setEvtToxic;
+    property EvtToxic: TEvtToxic read FEvtToxic write FEvtToxic;
   end;
 
   TToxicologico = class(TPersistent)
@@ -106,12 +105,11 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FToxicologico: TToxicologico;
-    FACBreSocial: TObject;
 
     { Geradores da classe }
     procedure GerarToxicologico(objToxicologico: TToxicologico);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -144,11 +142,6 @@ begin
   inherited;
 end;
 
-procedure TS2221CollectionItem.setEvtToxic(const Value: TEvtToxic);
-begin
-  FEvtToxic.Assign(Value);
-end;
-
 { TS2221Collection }
 
 function TS2221Collection.Add: TS2221CollectionItem;
@@ -169,16 +162,15 @@ end;
 
 constructor TEvtToxic.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial   := AACBreSocial;
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo    := TIdeVinculo.Create;
   FToxicologico  := TToxicologico.Create;
 end;
 
-destructor TEvtToxic.destroy;
+destructor TEvtToxic.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

@@ -49,30 +49,26 @@ unit pcesRetConsultaLote;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012, pcesS5003, pcesS5013;
 
 type
-  TtotCollection = class;
   TtotCollectionItem = class;
-  TRetEventosCollection = class;
   TRetEventosCollectionItem = class;
-  TRetConsultaLote = class;
 
-  TtotCollection = class(TCollection)
+  TtotCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TtotCollectionItem;
     procedure SetItem(Index: Integer; Value: TtotCollectionItem);
   public
-    constructor create(AOwner: TRetEventosCollectionItem);
-
-    function Add: TtotCollectionItem;
+    function Add: TtotCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TtotCollectionItem;
     property Items[Index: Integer]: TtotCollectionItem read GetItem write SetItem; default;
   end;
 
-  TtotCollectionItem = class(TCollectionItem)
+  TtotCollectionItem = class(TObject)
   private
     Ftipo: String;
     FXML: AnsiString;
@@ -85,19 +81,18 @@ type
 
   end;
 
-  TRetEventosCollection = class(TCollection)
+  TRetEventosCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetEventosCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventosCollectionItem);
   public
-    constructor create(AOwner: TRetConsultaLote);
-
-    function Add: TRetEventosCollectionItem;
+    function Add: TRetEventosCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetEventosCollectionItem;
     property Items[Index: Integer]: TRetEventosCollectionItem read GetItem
       write SetItem; default;
   end;
 
-  TRetEventosCollectionItem = class(TCollectionItem)
+  TRetEventosCollectionItem = class(TObject)
   private
     FIDEvento: string;
     FevtDupl: boolean;
@@ -109,7 +104,7 @@ type
 
     procedure Settot(const Value: TtotCollection);
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Id: string read FIDEvento write FIDEvento;
@@ -121,7 +116,7 @@ type
     property tot: TtotCollection read Ftot write Settot;
   end;
 
-  TRetConsultaLote = class(TPersistent)
+  TRetConsultaLote = class(TObject)
   private
     FLeitor: TLeitor;
     FIdeEmpregador: TInscricao;
@@ -130,22 +125,18 @@ type
     FDadosRecLote: TDadosRecepcaoLote;
     FDadosProcLote: TDadosProcLote;
     FRetEventos: TRetEventosCollection;
-
-    procedure SetEventos(const Value: TRetEventosCollection);
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function LerXml: boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
-
     property IdeEmpregador: TInscricao read FIdeEmpregador write FIdeEmpregador;
     property IdeTransmissor: TInscricao read FIdeTransmissor write FIdeTransmissor;
     property Status: TStatus read FStatus write FStatus;
     property DadosRecLote: TDadosRecepcaoLote read FDadosRecLote write FDadosRecLote;
     property DadosProcLote: TDadosProcLote read FDadosProcLote write FDadosProcLote;
-    property RetEventos: TRetEventosCollection read FRetEventos write SetEventos;
+    property RetEventos: TRetEventosCollection read FRetEventos write FRetEventos;
   end;
 
 implementation
@@ -154,13 +145,7 @@ implementation
 
 function TtotCollection.Add: TtotCollectionItem;
 begin
-  Result := TtotCollectionItem(inherited Add());
-//  Result.create;
-end;
-
-constructor TtotCollection.create(AOwner: TRetEventosCollectionItem);
-begin
-  inherited create(TtotCollectionItem);
+  Result := Self.New;
 end;
 
 function TtotCollection.GetItem(Index: Integer): TtotCollectionItem;
@@ -174,17 +159,17 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TtotCollection.New: TtotCollectionItem;
+begin
+  Result := TtotCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetEventosCollection }
 
 function TRetEventosCollection.Add: TRetEventosCollectionItem;
 begin
-  Result := TRetEventosCollectionItem(inherited Add());
-  Result.create;
-end;
-
-constructor TRetEventosCollection.create(AOwner: TRetConsultaLote);
-begin
-  inherited create(TRetEventosCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetEventosCollection.GetItem(Index: Integer)
@@ -199,15 +184,22 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TRetEventosCollection.New: TRetEventosCollectionItem;
+begin
+  Result := TRetEventosCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetEventosCollectionItem }
 
-constructor TRetEventosCollectionItem.create;
+constructor TRetEventosCollectionItem.Create;
 begin
+  inherited Create;
   FIdeEmpregador := TInscricao.Create;
-  FRecepcao := TRecepcao.create;
-  FProcessamento := TProcessamento.create;
-  FRecibo := TRecibo.create;
-  Ftot := TtotCollection.create(Self);
+  FRecepcao      := TRecepcao.Create;
+  FProcessamento := TProcessamento.Create;
+  FRecibo        := TRecibo.Create;
+  Ftot           := TtotCollection.Create;
 end;
 
 destructor TRetEventosCollectionItem.Destroy;
@@ -228,16 +220,16 @@ end;
 
 { TRetConsultaLote }
 
-constructor TRetConsultaLote.create;
+constructor TRetConsultaLote.Create;
 begin
-  FLeitor := TLeitor.create;
-
-  FIdeEmpregador := TInscricao.create;
-  FIdeTransmissor := TInscricao.create;
-  FStatus := TStatus.create;
-  FDadosRecLote := TDadosRecepcaoLote.create;
-  FDadosProcLote := TDadosProcLote.create;
-  FRetEventos := TRetEventosCollection.create(Self);
+  inherited Create;
+  FLeitor         := TLeitor.Create;
+  FIdeEmpregador  := TInscricao.Create;
+  FIdeTransmissor := TInscricao.Create;
+  FStatus         := TStatus.Create;
+  FDadosRecLote   := TDadosRecepcaoLote.Create;
+  FDadosProcLote  := TDadosProcLote.Create;
+  FRetEventos     := TRetEventosCollection.Create;
 end;
 
 destructor TRetConsultaLote.Destroy;
@@ -251,11 +243,6 @@ begin
   FRetEventos.Free;
 
   inherited;
-end;
-
-procedure TRetConsultaLote.SetEventos(const Value: TRetEventosCollection);
-begin
-  FRetEventos := Value;
 end;
 
 function TRetConsultaLote.LerXml: boolean;

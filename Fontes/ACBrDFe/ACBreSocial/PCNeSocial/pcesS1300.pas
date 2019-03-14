@@ -73,14 +73,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtContrSindPatr: TEvtContrSindPatr;
-
-    procedure setEvtContrSindPatr(const Value: TEvtContrSindPatr);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtContrSindPatr: TEvtContrSindPatr read FEvtContrSindPatr write setEvtContrSindPatr;
+    property EvtContrSindPatr: TEvtContrSindPatr read FEvtContrSindPatr write FEvtContrSindPatr;
   end;
 
   TEvtContrSindPatr = class(TESocialEvento)
@@ -88,12 +86,11 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FContribSind: TContribSindColecao;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarContribSind();
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -164,20 +161,14 @@ begin
   inherited;
 end;
 
-procedure TS1300CollectionItem.setEvtContrSindPatr(const Value: TEvtContrSindPatr);
-begin
-  FEvtContrSindPatr.Assign(Value);
-end;
-
 { TEvtSolicTotal }
 constructor TEvtContrSindPatr.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
+  FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FContribSind := TContribSindColecao.Create;
+  FContribSind   := TContribSindColecao.Create;
 end;
 
 destructor TEvtContrSindPatr.destroy;

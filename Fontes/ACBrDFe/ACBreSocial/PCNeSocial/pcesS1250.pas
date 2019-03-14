@@ -79,13 +79,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAqProd: TEvtAqProd;
-    procedure setEvtAqProd(const Value: TEvtAqProd);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAqProd: TEvtAqProd read FEvtAqProd write setEvtAqProd;
+    property EvtAqProd: TEvtAqProd read FEvtAqProd write FEvtAqProd;
   end;
 
   TEvtAqProd = class(TESocialEvento)
@@ -93,7 +92,6 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FInfoAquisProd: TInfoAquisProd;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoAquisProd;
@@ -103,7 +101,7 @@ type
     procedure GerarInfoProcJud(pInfoProcJud: TInfoProcJudCollection);
     procedure GerarInfoProcJ(pInfoProcJ: TInfoProcJCollection);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -155,7 +153,7 @@ type
     FIdeProdutor: TIdeProdutorColecao;
     FInfoProcJ: TInfoProcJCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property indAquis: tpIdAquis read FindAquis write FindAquis;
@@ -187,7 +185,7 @@ type
     FNfs: TNfsColecao;
     FInfoProcJud: TInfoProcJudCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property tpInscProd: tpTpInsc read FtpInscProd write FtpInscProd;
@@ -241,17 +239,11 @@ begin
   inherited;
 end;
 
-procedure TS1250CollectionItem.setEvtAqProd(const Value: TEvtAqProd);
-begin
-  FEvtAqProd.Assign(Value);
-end;
-
 { TEvtContratAvNP }
 constructor TEvtAqProd.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoAquisProd := TInfoAquisProd.create;
@@ -478,10 +470,10 @@ begin
 end;
 
 { TTpAquisItem }
-constructor TTpAquisItem.create;
+constructor TTpAquisItem.Create;
 begin
   FIdeProdutor := TIdeProdutorColecao.Create(self);
-  FInfoProcJ := TInfoProcJCollection.Create(self);
+  FInfoProcJ := TInfoProcJCollection.Create;
 end;
 
 destructor TTpAquisItem.destroy;
@@ -531,10 +523,10 @@ begin
 end;
 
 { TIdeProdutorItem }
-constructor TIdeProdutorItem.create;
+constructor TIdeProdutorItem.Create;
 begin
-  FNfs := TNfsColecao.Create(self);
-  FInfoProcJud := TInfoProcJudCollection.Create(Self);
+  FNfs := TNfsColecao.Create;
+  FInfoProcJud := TInfoProcJudCollection.Create;
 end;
 
 destructor TIdeProdutorItem.destroy;

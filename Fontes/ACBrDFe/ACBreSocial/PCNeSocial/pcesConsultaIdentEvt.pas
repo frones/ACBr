@@ -45,7 +45,7 @@ uses
 
 type
 
-  TConsultaIdentEvt = class(TPersistent)
+  TConsultaIdentEvt = class(TObject)
   private
     FGerador: TGerador;
     FSoapEnvelope: String;
@@ -64,7 +64,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function GerarXML: Boolean;
-  published
     property Gerador: TGerador        read FGerador      write FGerador;
     property SoapEnvelope: String     read FSoapEnvelope write FSoapEnvelope;
     property tipoConsulta: tpConsulta read FtipoConsulta write FtipoConsulta;
@@ -88,6 +87,7 @@ uses
 
 constructor TConsultaIdentEvt.Create;
 begin
+  inherited Create;
   FGerador := TGerador.Create;
 end;
 

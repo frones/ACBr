@@ -78,14 +78,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtBenPrRP: TEvtBenPrRP;
-
-    procedure seTEvtBenPrRP(const Value: TEvtBenPrRP);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtBenPrRP: TEvtBenPrRP read FEvtBenPrRP write seTEvtBenPrRP;
+    property evtBenPrRP: TEvtBenPrRP read FEvtBenPrRP write FEvtBenPrRP;
   end;
 
   TDMDevCollection = class(TCollection)
@@ -148,14 +146,13 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeBenef: TIdeBenef;
     FDMDev: TDMDevCollection;
-    FACBreSocial: TObject;
 
     {Geradores específicos desta classe}
     procedure GerarIdeBenef;
     procedure GerarDmDev;
     procedure GerarItens(pItens: TItensCollection);
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -255,13 +252,12 @@ end;
 { TEvtBenPrRP }
 constructor TEvtBenPrRP.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
+  FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeBenef := TIdeBenef.Create;
-  FDMDev := TDMDevCollection.Create;
+  FIdeBenef      := TIdeBenef.Create;
+  FDMDev         := TDMDevCollection.Create;
 end;
 
 destructor TEvtBenPrRP.Destroy;
@@ -450,11 +446,6 @@ begin
   FEvtBenPrRP.Free;
 
   inherited;
-end;
-
-procedure TS1207CollectionItem.seTEvtBenPrRP(const Value: TEvtBenPrRP);
-begin
-  FEvtBenPrRP.Assign(Value);
 end;
 
 { TS1207Collection }

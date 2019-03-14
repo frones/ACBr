@@ -78,13 +78,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTSVTermino : TEvtTSVTermino;
-    procedure setEvtTSVTermino(const Value: TEvtTSVTermino);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTSVTermino: TEvtTSVTermino read FEvtTSVTermino write setEvtTSVTermino;
+    property EvtTSVTermino: TEvtTSVTermino read FEvtTSVTermino write FEvtTSVTermino;
   end;
 
   TEvtTSVTermino = class(TeSocialEvento)
@@ -93,14 +92,13 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabSemVInc : TideTrabSemVinc;
     FInfoTSVTermino: TInfoTSVTermino;
-    FACBreSocial: TObject;
 
     procedure GerarInfoTSVTermino(obj: TInfoTSVTermino);
     procedure GerarVerbasResc(obj: TVerbasRescS2399);
     procedure GerarIdeTrabSemVinc(obj: TIdeTrabSemVinc);
     procedure GerarDmDev(pDmDev: TDmDevCollection);
    public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -206,11 +204,6 @@ begin
   inherited;
 end;
 
-procedure TS2399CollectionItem.setEvtTSVTermino(const Value: TEvtTSVTermino);
-begin
-  FEvtTSVTermino.Assign(Value);
-end;
-
 { TinfoTSVTermino }
 
 constructor TinfoTSVTermino.Create;
@@ -274,11 +267,10 @@ end;
 
 constructor TEvtTSVTermino.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
+  FIdeEvento      := TIdeEvento2.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabSemVInc := TideTrabSemVinc.Create;
   FInfoTSVTermino := TInfoTSVTermino.Create;
 end;

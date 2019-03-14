@@ -71,25 +71,22 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtReabreEvPer: TEvtReabreEvPer;
-
-    procedure setEvtReabreEvPer(const Value: TEvtReabreEvPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write setEvtReabreEvPer;
+    property EvtReabreEvPer: TEvtReabreEvPer read FEvtReabreEvPer write FEvtReabreEvPer;
   end;
 
   TEvtReabreEvPer = class(TESocialEvento)
   private
     FIdeEvento: TIdeEvento4;
     FIdeEmpregador: TIdeEmpregador;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -137,22 +134,16 @@ begin
   inherited;
 end;
 
-procedure TS1298CollectionItem.setEvtReabreEvPer(const Value: TEvtReabreEvPer);
-begin
-  FEvtReabreEvPer.Assign(Value);
-end;
-
 { TEvtSolicTotal }
 constructor TEvtReabreEvPer.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento4.Create;
+  FIdeEvento     := TIdeEvento4.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
 end;
 
-destructor TEvtReabreEvPer.destroy;
+destructor TEvtReabreEvPer.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

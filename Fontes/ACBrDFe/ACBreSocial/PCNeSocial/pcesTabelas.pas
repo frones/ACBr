@@ -124,15 +124,15 @@ end;
 constructor TTabelas.Create(AOwner: TComponent);
 begin
   inherited;
-  FS1010 := TS1010Collection.Create(AOwner, TS1010CollectionItem);
-  FS1020 := TS1020Collection.Create(AOwner, TS1020CollectionItem);
-  FS1030 := TS1030Collection.Create(AOwner, TS1030CollectionItem);
-  FS1035 := TS1035Collection.Create(AOwner, TS1035CollectionItem);
-  FS1040 := TS1040Collection.Create(AOwner, TS1040CollectionItem);
-  FS1050 := TS1050Collection.Create(AOwner, TS1050CollectionItem);
-  FS1060 := TS1060Collection.Create(AOwner, TS1060CollectionItem);
-  FS1070 := TS1070Collection.Create(AOwner, TS1070CollectionItem);
-  FS1080 := TS1080Collection.Create(AOwner, TS1080CollectionItem);
+  FS1010 := TS1010Collection.Create(AOwner);
+  FS1020 := TS1020Collection.Create(AOwner);
+  FS1030 := TS1030Collection.Create(AOwner);
+  FS1035 := TS1035Collection.Create(AOwner);
+  FS1040 := TS1040Collection.Create(AOwner);
+  FS1050 := TS1050Collection.Create(AOwner);
+  FS1060 := TS1060Collection.Create(AOwner);
+  FS1070 := TS1070Collection.Create(AOwner);
+  FS1080 := TS1080Collection.Create(AOwner);
 end;
 
 destructor TTabelas.Destroy;

@@ -49,7 +49,7 @@ unit pcesS1200;
 interface
 
 uses
-  SysUtils, Classes, Dialogs, Controls,
+  SysUtils, Classes, Dialogs, Controls, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -91,13 +91,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtRemun: TEvtRemun;
-    procedure setEvtRemun(const Value: TEvtRemun);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtRemun: TEvtRemun read FEvtRemun write setEvtRemun;
+    property evtRemun: TEvtRemun read FEvtRemun write FEvtRemun;
   end;
 
   TDMDevCollection = class(TCollection)
@@ -146,7 +145,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeTrabalhador: TeS1200IdeTrabalhador;
     FDMDev: TDMDevCollection;
-    FACBreSocial: TObject;
 
     { Geradores específicos desta classe }
     procedure GerarIdeEstabLot(objIdeEstabLot: TIdeEstabLotCollection; const nomeRemunPer: string = 'remunPerApur');
@@ -165,7 +163,7 @@ type
     procedure GerarInfoInterm;
     procedure GerarInfoComplCont(pInfoComplCont: TInfoComplCont);
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -177,14 +175,14 @@ type
     property dmDev: TDMDevCollection read FDMDev write FDMDev;
   end;
 
-  TRemunPer1200Collection = class(TCollection)
+  TRemunPer1200Collection = class(TObjectList)
   private
     FNomeGrupoXML: string;
     function GetItem(Index: integer): TRemunPer1200CollectionItem;
     procedure SetItem(Index: integer; Value: TRemunPer1200CollectionItem);
   public
-    constructor Create(); reintroduce;
-    function Add: TRemunPer1200CollectionItem;
+    function Add: TRemunPer1200CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRemunPer1200CollectionItem;
     property Items[Index: integer]: TRemunPer1200CollectionItem read GetItem write SetItem;
     property grupoXML: string read FNomeGrupoXML;
   end;
@@ -415,10 +413,9 @@ uses
 
 constructor TRemunPer1200CollectionItem.Create;
 begin
-  FInfoAgNocivo := nil;
+  inherited Create;
+  FInfoAgNocivo   := nil;
   FinfoTrabInterm := TinfoTrabIntermCollection.Create;
-
-  inherited
 end;
 
 destructor TRemunPer1200CollectionItem.Destroy;
@@ -444,13 +441,7 @@ end;
 { TRemunPer1200Collection }
 function TRemunPer1200Collection.Add: TRemunPer1200CollectionItem;
 begin
-  Result := TRemunPer1200CollectionItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TRemunPer1200Collection.Create();
-begin
-  inherited Create(TRemunPer1200CollectionItem);
+  Result := Self.New;
 end;
 
 function TRemunPer1200Collection.GetItem(Index: integer): TRemunPer1200CollectionItem;
@@ -461,6 +452,12 @@ end;
 procedure TRemunPer1200Collection.SetItem(Index: integer; Value: TRemunPer1200CollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TRemunPer1200Collection.New: TRemunPer1200CollectionItem;
+begin
+  Result := TRemunPer1200CollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TIdeEstabLotCollectionItem }
@@ -775,13 +772,12 @@ end;
 { TEvtRemun }
 constructor TEvtRemun.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
+  FIdeEvento      := TIdeEvento3.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabalhador := TeS1200IdeTrabalhador.Create;
-  FDMDev := TDMDevCollection.Create;
+  FDMDev          := TDMDevCollection.Create;
 end;
 
 destructor TEvtRemun.Destroy;
@@ -1505,11 +1501,6 @@ begin
   FEvtRemun.Free;
 
   inherited;
-end;
-
-procedure TS1200CollectionItem.setEvtRemun(const Value: TEvtRemun);
-begin
-  FEvtRemun.Assign(Value);
 end;
 
 { TS1200Collection }

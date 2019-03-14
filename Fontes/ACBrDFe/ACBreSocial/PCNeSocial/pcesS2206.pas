@@ -74,14 +74,12 @@ type
   private
     FTipoEvento : TTipoEvento;
     FEvtAltContratual: TEvtAltContratual;
-
-    procedure setEvtAltContratual(const Value: TEvtAltContratual);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento : TTipoEvento read FTipoEvento;
-    property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write setEvtAltContratual;
+    property EvtAltContratual : TEvtAltContratual read FEvtAltContratual write FEvtAltContratual;
   end;
 
   TEvtAltContratual = class(TeSocialEvento)
@@ -90,7 +88,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo : TIdeVinculo;
     FAltContratual: TAltContratual;
-    FACBreSocial: TObject;
 
     {Geradores da Classe - Necessários pois os geradores de ACBreSocialGerador
      possuem campos excedentes que não se aplicam ao S2206}
@@ -102,7 +99,7 @@ type
     procedure GerarServPubl(pServPubl: TServPubl);
     function  GetAltContratual : TAltContratual;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -193,11 +190,6 @@ begin
   inherited;
 end;
 
-procedure TS2206CollectionItem.setEvtAltContratual(const Value: TEvtAltContratual);
-begin
-  FEvtAltContratual.Assign(Value)
-end;
-
 { TAltContratual }
 
 constructor TAltContratual.Create;
@@ -250,12 +242,11 @@ end;
 
 constructor TEvtAltContratual.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
+  FIdeVinculo    := TIdeVinculo.Create;
   FAltContratual := TAltContratual.Create;
 end;
 

@@ -40,38 +40,35 @@ unit pcesS1035;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls, ACBrUtil,
+  SysUtils, Classes, DateUtils, Controls, Contnrs,
+  ACBrUtil,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1035Collection = class;
   TS1035CollectionItem = class;
   TEvtTabCarreira = class;
-  TIdeCarreira = class;
   TInfoCarreira = class;
-  TDadosCarreira = class;
 
-  TS1035Collection = class(TOwnedCollection)
+  TS1035Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1035CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1035CollectionItem);
   public
-    function Add: TS1035CollectionItem;
+    function Add: TS1035CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1035CollectionItem;
     property Items[Index: Integer]: TS1035CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1035CollectionItem = class(TCollectionItem)
+  TS1035CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabCarreira: TEvtTabCarreira;
-    procedure setEvtTabCarreira(const Value: TEvtTabCarreira);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtTabCarreira: TEvtTabCarreira read FEvtTabCarreira write setEvtTabCarreira;
+    property evtTabCarreira: TEvtTabCarreira read FEvtTabCarreira write FEvtTabCarreira;
   end;
 
   TEvtTabCarreira = class(TeSocialEvento)
@@ -80,10 +77,9 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoCarreira: TInfoCarreira;
-    FACBreSocial: TObject;
 
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -98,7 +94,7 @@ type
     property InfoCarreira: TInfoCarreira read FInfoCarreira write FInfoCarreira;
   end;
 
-  TDadosCarreira = class(TPersistent)
+  TDadosCarreira = class(TObject)
   private
     FDSCCarreira: string;
     FLeiCarr: string;
@@ -111,7 +107,7 @@ type
     property sitCarr: tpSitCarr read FSitCarr write FSitCarr;
   end;
 
-  TIdeCarreira = class(TPersistent)
+  TIdeCarreira = class(TObject)
   private
     FCodCarreira: string;
     FIniValid : string;
@@ -122,7 +118,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TInfoCarreira = class(TPersistent)
+  TInfoCarreira = class(TObject)
   private
     FIdeCarreira: TIdeCarreira;
     FDadosCarreira: TDadosCarreira;
@@ -130,7 +126,7 @@ type
 
     function getNovaValidade: TidePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function novaValidadeInst(): Boolean;
@@ -150,8 +146,7 @@ uses
 
 function TS1035Collection.Add: TS1035CollectionItem;
 begin
-  Result := TS1035CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1035Collection.GetItem(Index: Integer): TS1035CollectionItem;
@@ -165,11 +160,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1035Collection.New: TS1035CollectionItem;
+begin
+  Result := TS1035CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1035CollectionItem }
 
 constructor TS1035CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1035;
+  inherited Create;
+  FTipoEvento     := teS1035;
   FEvtTabCarreira := TEvtTabCarreira.Create(AOwner);
 end;
 
@@ -180,18 +182,14 @@ begin
   inherited;
 end;
 
-procedure TS1035CollectionItem.setEvtTabCarreira(const Value: TEvtTabCarreira);
-begin
-  FEvtTabCarreira.Assign(Value);
-end;
-
 { TInfoCarreira }
 
-constructor TInfoCarreira.create;
+constructor TInfoCarreira.Create;
 begin
-  FIdeCarreira := TIdeCarreira.Create;
+  inherited Create;
+  FIdeCarreira   := TIdeCarreira.Create;
   FDadosCarreira := TDadosCarreira.Create;
-  FNovaValidade := nil;
+  FNovaValidade  := nil;
 end;
 
 
@@ -220,12 +218,11 @@ end;
 
 constructor TEvtTabCarreira.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  fIdeEvento := TIdeEvento.Create;
+  fIdeEvento     := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
-  FInfoCarreira := TInfoCarreira.Create;
+  FInfoCarreira  := TInfoCarreira.Create;
 end;
 
 destructor TEvtTabCarreira.Destroy;

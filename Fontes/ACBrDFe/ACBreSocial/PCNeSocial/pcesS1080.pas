@@ -54,33 +54,29 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1080Collection = class;
   TS1080CollectionItem = class;
   TEvtTabOperPort = class;
-  TDadosOperPortuario = class;
   TInfoOperPortuario = class;
-  TIdeOperPortuario = class;
 
-  TS1080Collection = class(TOwnedCollection)
+  TS1080Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1080CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1080CollectionItem);
   public
-    function Add: TS1080CollectionItem;
+    function Add: TS1080CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1080CollectionItem;
     property Items[Index: Integer]: TS1080CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1080CollectionItem = class(TCollectionItem)
+  TS1080CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabOperPortuario: TEvtTabOperPort;
-    procedure setEvtTabOperPortuario(const Value: TEvtTabOperPort);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabOperPortuario: TEvtTabOperPort read FEvtTabOperPortuario write setEvtTabOperPortuario;
+    property EvtTabOperPortuario: TEvtTabOperPort read FEvtTabOperPortuario write FEvtTabOperPortuario;
   end;
 
   TEvtTabOperPort = class(TESocialEvento)
@@ -89,13 +85,12 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoOperPortuario: TInfoOperPortuario;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeOperPortuario;
     procedure GerarDadosOperPortuario;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -107,7 +102,7 @@ type
     property InfoOperPortuario: TInfoOperPortuario read fInfoOperPortuario write fInfoOperPortuario;
   end;
 
-  TDadosOperPortuario = class(TPersistent)
+  TDadosOperPortuario = class(TObject)
   private
     FAliqRat: tpAliqRat;
     FFap: Double;
@@ -118,7 +113,7 @@ type
     property aliqRatAjust: Double read FAliqRatAjust write FAliqRatAjust;
   end;
 
-  TIdeOperPortuario = class(TPersistent)
+  TIdeOperPortuario = class(TObject)
   private
     FCnpjOpPortuario: string;
     FIniValid: string;
@@ -129,7 +124,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TInfoOperPortuario = class(TPersistent)
+  TInfoOperPortuario = class(TObject)
   private
     FIdeOperPortuario: TIdeOperPortuario;
     FDadosOperPortuario: TDadosOperPortuario;
@@ -138,7 +133,7 @@ type
     function getDadosOperPortuario: TDadosOperPortuario;
     function getNovaValidade: TIdePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
     
     function dadosOperPortuarioInst(): Boolean;
@@ -159,8 +154,7 @@ uses
 
 function TS1080Collection.Add: TS1080CollectionItem;
 begin
-  Result := TS1080CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1080Collection.GetItem(Index: Integer): TS1080CollectionItem;
@@ -174,11 +168,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1080Collection.New: TS1080CollectionItem;
+begin
+  Result := TS1080CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1080CollectionItem }
 
 constructor TS1080CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1080;
+  inherited Create;
+  FTipoEvento          := teS1080;
   FEvtTabOperPortuario := TEvtTabOperPort.Create(AOwner);
 end;
 
@@ -189,19 +190,14 @@ begin
   inherited;
 end;
 
-procedure TS1080CollectionItem.setEvtTabOperPortuario(
-  const Value: TEvtTabOperPort);
-begin
-  FEvtTabOperPortuario.Assign(Value);
-end;
-
 { TInfoOperPortuario }
 
-constructor TInfoOperPortuario.create;
+constructor TInfoOperPortuario.Create;
 begin
-  FIdeOperPortuario := TIdeOperPortuario.Create;
+  inherited Create;
+  FIdeOperPortuario   := TIdeOperPortuario.Create;
   FDadosOperPortuario := nil;
-  FNovaValidade := nil;
+  FNovaValidade       := nil;
 end;
 
 function TInfoOperPortuario.dadosOperPortuarioInst: Boolean;
@@ -209,7 +205,7 @@ begin
   Result := Assigned(FDadosOperPortuario);
 end;
 
-destructor TInfoOperPortuario.destroy;
+destructor TInfoOperPortuario.Destroy;
 begin
   FIdeOperPortuario.Free;
   FreeAndNil(FDadosOperPortuario);
@@ -241,11 +237,10 @@ end;
 
 constructor TEvtTabOperPort.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  fIdeEvento := TIdeEvento.Create;
-  fIdeEmpregador := TIdeEmpregador.Create;
+  fIdeEvento         := TIdeEvento.Create;
+  fIdeEmpregador     := TIdeEmpregador.Create;
   fInfoOperPortuario := TInfoOperPortuario.Create;
 end;
 

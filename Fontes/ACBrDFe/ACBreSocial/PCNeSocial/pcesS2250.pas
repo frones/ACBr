@@ -74,14 +74,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAvPrevio: TEvtAvPrevio;
-
-    procedure setEvtAvPrevio(const Value: TEvtAvPrevio);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAvPrevio: TEvtAvPrevio read FEvtAvPrevio write setEvtAvPrevio;
+    property EvtAvPrevio: TEvtAvPrevio read FEvtAvPrevio write FEvtAvPrevio;
   end;
 
   TEvtAvPrevio = class(TeSocialEvento)
@@ -90,13 +88,12 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoAvPrevio: TInfoAvPrevio;
-    FACBreSocial: TObject;
 
     procedure GerarInfoAvPrevio;
     procedure GerarDetAvPrevio;
     procedure GerarCancAvPrevio;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -184,12 +181,6 @@ begin
   inherited;
 end;
 
-procedure TS2250CollectionItem.setEvtAvPrevio(
-  const Value: TEvtAvPrevio);
-begin
-  FEvtAvPrevio.Assign(Value);
-end;
-
 { TInfoAvPrevio }
 
 constructor TInfoAvPrevio.create;
@@ -210,13 +201,12 @@ end;
 
 constructor TEvtAvPrevio.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
-  FInfoAvPrevio := TInfoAvPrevio.Create;
+  FIdeVinculo    := TIdeVinculo.Create;
+  FInfoAvPrevio  := TInfoAvPrevio.Create;
 end;
 
 

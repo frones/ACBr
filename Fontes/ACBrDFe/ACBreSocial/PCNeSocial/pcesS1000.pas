@@ -49,12 +49,11 @@ unit pcesS1000;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1000Collection = class;
   TS1000CollectionItem = class;
   TevtInfoEmpregador = class;
 
@@ -72,26 +71,25 @@ type
   TInfoEFR = class;
   TInfoEnte = class;
 
-  TS1000Collection = class(TOwnedCollection)
+  TS1000Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1000CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1000CollectionItem);
   public
-    function Add: TS1000CollectionItem;
+    function Add: TS1000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1000CollectionItem;
     property Items[Index: Integer]: TS1000CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1000CollectionItem = class(TCollectionItem)
+  TS1000CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtInfoEmpregador: TevtInfoEmpregador;
-    procedure setevtInfoEmpregador(const Value: TevtInfoEmpregador);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtInfoEmpregador: TevtInfoEmpregador read FevtInfoEmpregador write setevtInfoEmpregador;
+    property evtInfoEmpregador: TevtInfoEmpregador read FevtInfoEmpregador write FevtInfoEmpregador;
   end;
 
   TevtInfoEmpregador = class(TeSocialEvento) //Classe do elemento principal do XML do evento!
@@ -100,7 +98,6 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoEmpregador: TInfoEmpregador;
-    FACBreSocial: TObject;
 
     {Geradores específicos desta classe}
     procedure GerarInfoCadastro;
@@ -115,7 +112,7 @@ type
     procedure GerarSituacaoPF;
     procedure GerarInfoComplementares;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -127,7 +124,7 @@ type
     property infoEmpregador: TInfoEmpregador read FInfoEmpregador write FInfoEmpregador;
   end;
 
-  TInfoEmpregador = class(TPersistent)
+  TInfoEmpregador = class(TObject)
   private
     FidePeriodo: TIdePeriodo;
     FinfoCadastro: TInfoCadastro;
@@ -147,7 +144,7 @@ type
     property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TInfoCadastro = class(TPersistent)
+  TInfoCadastro = class(TObject)
   private
     FNmRazao: String;
     FClassTrib: TpClassTrib;
@@ -167,7 +164,6 @@ type
     FSoftwareHouse: TSoftwareHouseCollection;
     FInfoComplementares: TInfoComplementares;
 
-    function getInfoOp(): TInfoOp;
     function getDadosIsencao(): TDadosIsencao;
     function getInfoOrgInternacional(): TInfoOrgInternacional;
   public
@@ -191,13 +187,13 @@ type
     property nrRegEtt: String read FNrRegEtt write FNrRegEtt;
     property DadosIsencao: TDadosIsencao read getDadosIsencao write FDadosIsencao;
     property Contato: TContato read FContato write FContato;
-    property InfoOp: TInfoOp read getInfoOp write FInfoOp;
+    property InfoOp: TInfoOp read FInfoOp write FInfoOp;
     property InfoOrgInternacional: TInfoOrgInternacional read getInfoOrgInternacional write FInfoOrgInternacional;
     property SoftwareHouse: TSoftwareHouseCollection read FSoftwareHouse write FSoftwareHouse;
     property InfoComplementares: TInfoComplementares read FInfoComplementares write FInfoComplementares;
   end;
 
-  TInfoComplementares = class(TPersistent)
+  TInfoComplementares = class(TObject)
   private
     FSituacaoPJ: TSituacaoPJ;
     FSituacaoPF: TSituacaoPF;
@@ -205,6 +201,7 @@ type
     function getSituacaoPJ(): TSituacaoPJ;
     function getSituacaoPF(): TSituacaoPF;
   public
+    constructor Create;
     destructor Destroy; override;
 
     function situacaoPFInst(): Boolean;
@@ -214,21 +211,21 @@ type
     property SituacaoPF: TSituacaoPF read getSituacaoPF write FSituacaoPF;
   end;
 
-  TSituacaoPJ = class(TPersistent)
+  TSituacaoPJ = class(TObject)
   private
     FIndSitPJ: tpIndSitPJ;
   public
     property IndSitPJ: tpIndSitPJ read FIndSitPJ write FIndSitPJ;
   end;
 
-  TSituacaoPF = class(TPersistent)
+  TSituacaoPF = class(TObject)
   private
     FIndSitPF: tpIndSitPF;
   public
     property IndSitPF: tpIndSitPF read FIndSitPF write FIndSitPF;
   end;
 
-  TDadosIsencao = class(TPersistent)
+  TDadosIsencao = class(TObject)
   private
     FIdeMinLei: String;
     FNrCertif: String;
@@ -249,24 +246,24 @@ type
     property PagDou: String read FPagDou write FPagDou;
   end;
 
-  TInfoOrgInternacional = class(TPersistent)
+  TInfoOrgInternacional = class(TObject)
   private
     FIndAcordoIsenMulta: tpIndAcordoIsencaoMulta;
   public
     property IndAcordoIsenMulta: tpIndAcordoIsencaoMulta read FIndAcordoIsenMulta write FIndAcordoIsenMulta;
   end;
 
-  TSoftwareHouseCollection = class(TCollection)
+  TSoftwareHouseCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TSoftwareHouseCollectionItem;
     procedure SetItem(Index: Integer; Value: TSoftwareHouseCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TSoftwareHouseCollectionItem;
+    function Add: TSoftwareHouseCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TSoftwareHouseCollectionItem;
     property Items[Index: Integer]: TSoftwareHouseCollectionItem read GetItem write SetItem; default;
   end;
 
-  TSoftwareHouseCollectionItem = class(TCollectionItem)
+  TSoftwareHouseCollectionItem = class(TObject)
   private
     FCnpjSoftHouse: String;
     FNmRazao: String;
@@ -274,8 +271,6 @@ type
     FTelefone: String;
     Femail: String;
   public
-    constructor create; reintroduce;
-
     property CnpjSoftHouse: String read FCnpjSoftHouse write FCnpjSoftHouse;
     property NmRazao: String read FNmRazao write FNmRazao;
     property NmCont: String read FNmCont write FNmCont;
@@ -283,7 +278,7 @@ type
     property email: String read Femail write Femail;
   end;
 
-  TInfoEFR = class(TPersistent)
+  TInfoEFR = class(TObject)
   private
      FideEFR: tpSimNao;
      FcnpjEFR: String;
@@ -292,7 +287,7 @@ type
     property cnpjEFR: String read FcnpjEFR write FcnpjEFR;
   end;
 
-  TInfoEnte = class(TPersistent)
+  TInfoEnte = class(TObject)
   private
     FNmEnte: String;
     FUf: tpuf;
@@ -309,24 +304,20 @@ type
     property vrSubteto: Double read FVrSubTeto write FVrSubTeto;
   end;
 
-  TInfoOp = class(TPersistent)
+  TInfoOp = class(TObject)
   private
      FNrSiafi: String;
      FInfoEFR: TInfoEFR;
      FInfoEnte: TInfoEnte;
-
-     function getInfoEFR(): TInfoEFR;
-     function getInfoEnte(): TInfoEnte;
   public
     constructor Create;
     destructor Destroy; override;
     
     function InfoEFRInst(): Boolean;
     function InfoEnteInst(): Boolean;
-
     property nrSiafi: String read FNrSiafi write FNrSiafi;
-    property infoEFR: TInfoEFR read getInfoEFR write FInfoEFR;
-    property infoEnte: TInfoEnte read getInfoEnte write FInfoEnte;
+    property infoEFR: TInfoEFR read FInfoEFR write FInfoEFR;
+    property infoEnte: TInfoEnte read FInfoEnte write FInfoEnte;
   end;
 
 implementation
@@ -339,7 +330,7 @@ uses
 
 function TS1000Collection.Add: TS1000CollectionItem;
 begin
-  Result := TS1000CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TS1000Collection.GetItem(Index: Integer): TS1000CollectionItem;
@@ -352,35 +343,35 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1000Collection.New: TS1000CollectionItem;
+begin
+  Result := TS1000CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1000CollectionItem }
 
-procedure TS1000CollectionItem.AfterConstruction;
+constructor TS1000CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teS1000;
-  FevtInfoEmpregador := TevtInfoEmpregador.Create(Collection.Owner);
+  inherited Create;
+  FTipoEvento        := teS1000;
+  FevtInfoEmpregador := TevtInfoEmpregador.Create(AOwner);
 end;
 
-procedure TS1000CollectionItem.BeforeDestruction;
+destructor TS1000CollectionItem.Destroy;
 begin
-  inherited;
   FevtInfoEmpregador.Free;
-end;
-
-procedure TS1000CollectionItem.setevtInfoEmpregador(const Value: TevtInfoEmpregador);
-begin
-  FevtInfoEmpregador.Assign(Value);
+  inherited;
 end;
 
 { TevtInfoEmpregador }
 
 constructor TevtInfoEmpregador.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEmpregador:= TIdeEmpregador.create;
-  FIdeEvento:= TIdeEvento.create;
+  FIdeEmpregador  := TIdeEmpregador.create;
+  FIdeEvento      := TIdeEvento.create;
   FInfoEmpregador := TInfoEmpregador.Create;
 end;
 
@@ -810,12 +801,13 @@ end;
 
 constructor TInfoCadastro.Create;
 begin
-  FDadosIsencao:= nil;
-  FContato := TContato.Create;
+  inherited Create;
+  FDadosIsencao         := nil;
+  FContato              := TContato.Create;
   FInfoOrgInternacional := nil;
-  FSoftwareHouse := TSoftwareHouseCollection.Create;
-  FInfoComplementares := TInfoComplementares.Create;
-  FInfoOp := TInfoOp.Create;
+  FSoftwareHouse        := TSoftwareHouseCollection.Create;
+  FInfoComplementares   := TInfoComplementares.Create;
+  FInfoOp               := TInfoOp.Create;
 end;
 
 function TInfoCadastro.dadosIsencaoInst: Boolean;
@@ -830,16 +822,9 @@ begin
   FreeAndNil(FInfoOrgInternacional);
   FSoftwareHouse.Free;
   FInfoComplementares.Free;
-  FreeAndNil(FInfoOp);
+  FInfoOp.Free;
 
   inherited;
-end;
-
-function TInfoCadastro.getInfoOp: TInfoOp;
-begin
-  if Not(Assigned(FInfoOp)) then
-    FInfoOp := TInfoOp.Create;
-  Result := FInfoOp;
 end;
 
 function TInfoCadastro.infoOpInst: Boolean;
@@ -870,28 +855,16 @@ end;
 
 constructor TInfoOp.Create;
 begin
-  FInfoEFR := TInfoEFR.Create;
+  inherited Create;
+  FInfoEFR  := TInfoEFR.Create;
   FInfoEnte := TInfoEnte.Create;
 end;
 
 destructor TInfoOp.Destroy;
 begin
-  FreeAndNil(FInfoEFR);
-  FreeAndNil(FInfoEnte);
-end;
-
-function TInfoOp.getInfoEFR: TInfoEFR;
-begin
-  if Not(Assigned(FInfoEFR)) then
-    FInfoEFR := TInfoEFR.Create;
-  Result := FInfoEFR;
-end;
-
-function TInfoOp.getInfoEnte: TInfoEnte;
-begin
-  if Not(Assigned(FInfoEnte)) then
-     FInfoEnte := TInfoEnte.Create;
-  result := FInfoEnte;
+  FInfoEFR.Free;
+  FInfoEnte.Free;
+  inherited;
 end;
 
 function TInfoOp.InfoEFRInst: Boolean;
@@ -938,17 +911,18 @@ begin
   Result := Assigned(FSituacaoPJ);
 end;
 
+constructor TInfoComplementares.Create;
+begin
+  inherited Create;
+  FSituacaoPJ := nil;
+  FSituacaoPF := nil;
+end;
+
 { TSoftwareHouseCollection }
 
 function TSoftwareHouseCollection.Add: TSoftwareHouseCollectionItem;
 begin
-  Result := TSoftwareHouseCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TSoftwareHouseCollection.create;
-begin
-  Inherited create(TSoftwareHouseCollectionItem);
+  Result := Self.New;
 end;
 
 function TSoftwareHouseCollection.GetItem(
@@ -963,11 +937,10 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TSoftwareHouseCollectionItem }
-
-constructor TSoftwareHouseCollectionItem.create;
+function TSoftwareHouseCollection.New: TSoftwareHouseCollectionItem;
 begin
-
+  Result := TSoftwareHouseCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

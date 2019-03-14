@@ -49,7 +49,8 @@ unit pcesS1020;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes, Contnrs,
+  ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -66,46 +67,44 @@ type
   TProcJudTerceiroCollection = class;
   TInfoProcJudTerceiros = class;
 
-  TS1020Collection = class(TOwnedCollection)
+  TS1020Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1020CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1020CollectionItem);
   public
-    function Add: TS1020CollectionItem;
+    function Add: TS1020CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1020CollectionItem;
     property Items[Index: Integer]: TS1020CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1020CollectionItem = class(TCollectionItem)
+  TS1020CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabLotacao: TevtTabLotacao;
-    procedure setevtTabLotacao(const Value: TevtTabLotacao);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabLotacao: TevtTabLotacao read FEvtTabLotacao write setevtTabLotacao;
+    property EvtTabLotacao: TevtTabLotacao read FEvtTabLotacao write FEvtTabLotacao;
   end;
 
-  TInfoProcJudTerceiros = class(TPersistent)
+  TInfoProcJudTerceiros = class(TObject)
   private
     FProcJudTerceiro: TProcJudTerceiroCollection;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property procJudTerceiro: TProcJudTerceiroCollection read FProcJudTerceiro write FProcJudTerceiro;
   end;
 
-  TProcJudTerceiroCollection = class(TCollection)
+  TProcJudTerceiroCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TProcJudTerceiroCollectionItem;
     procedure SetItem(Index: Integer; Value: TProcJudTerceiroCollectionItem);
   public
-    constructor create(); reintroduce;
-
-    function Add: TProcJudTerceiroCollectionItem;
+    function Add: TProcJudTerceiroCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TProcJudTerceiroCollectionItem;
     property Items[Index: Integer]: TProcJudTerceiroCollectionItem read GetItem write SetItem;
   end;
 
@@ -113,8 +112,6 @@ type
   private
     FCodTerc: string;
   public
-    constructor create; reintroduce;
-
     property codTerc: string read FCodTerc write FCodTerc;
     property nrProcJud: string read FNrProc write FNrProc;
   end;
@@ -125,7 +122,6 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoLotacao: TInfoLotacao;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeLotacao;
@@ -134,7 +130,7 @@ type
     procedure GerarFPasLotacao;
     procedure GerarDadosLotacao;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -146,7 +142,7 @@ type
     property infoLotacao: TInfoLotacao read fInfoLotacao write fInfoLotacao;
   end;
 
-  TIdeLotacao = class(TPersistent)
+  TIdeLotacao = class(TObject)
   private
     FCodLotacao: string;
     FIniValid: string;
@@ -157,7 +153,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TFPasLotacao = class(TPersistent)
+  TFPasLotacao = class(TObject)
   private
     fFpas: string;
     FCodTercs: string;
@@ -166,7 +162,7 @@ type
 
     function getInfoProcJudTerceiros(): TInfoProcJudTerceiros;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function infoProcJudTerceirosInst(): Boolean;
@@ -177,7 +173,7 @@ type
     property infoProcJudTerceiros: TInfoProcJudTerceiros read getInfoProcJudTerceiros write FInfoProcJudTerceiros;
   end;
 
-  TInfoEmprParcial = class(TPersistent)
+  TInfoEmprParcial = class(TObject)
   private
     FTpInscContrat: TptpInscContratante;
     FNrInscContrat: string;
@@ -190,7 +186,7 @@ type
     property nrInscProp: string read FNrInscProp write FNrInscProp;
   end;
 
-  TDadosLotacao = class(TPersistent)
+  TDadosLotacao = class(TObject)
   private
     FTpLotacao: string;
     FTpInsc: tpTpInsc;
@@ -198,7 +194,7 @@ type
     fFPasLotacao: TFPasLotacao;
     fInfoEmprParcial: TinfoEmprParcial;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property tpLotacao: string read FTpLotacao write FTpLotacao;
@@ -208,7 +204,7 @@ type
     property infoEmprParcial: TInfoEmprParcial read fInfoEmprParcial write fInfoEmprParcial;
   end;
 
-  TInfoLotacao = class(TPersistent)
+  TInfoLotacao = class(TObject)
   private
     fIdeLotacao: TIdeLotacao;
     fDadosLotacao: TDadosLotacao;
@@ -217,7 +213,7 @@ type
     function getDadosLotacao(): TDadosLotacao;
     function getNovaValidade(): TIdePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
     
     function ideLotacaoInst(): Boolean;
@@ -239,8 +235,7 @@ uses
 
 function TS1020Collection.Add: TS1020CollectionItem;
 begin
-  Result := TS1020CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1020Collection.GetItem(Index: Integer): TS1020CollectionItem;
@@ -254,10 +249,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1020Collection.New: TS1020CollectionItem;
+begin
+  Result := TS1020CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1020CollectionItem }
 
 constructor TS1020CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS1020;
   FEvtTabLotacao := TevtTabLotacao.Create(AOwner);
 end;
@@ -268,22 +270,15 @@ begin
   inherited;
 end;
 
-procedure TS1020CollectionItem.setevtTabLotacao(
-  const Value: TevtTabLotacao);
-begin
-  FEvtTabLotacao.Assign(Value);
-end;
-
 { TevtTabLotacao }
 
 constructor TevtTabLotacao.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  fIdeEvento := TIdeEvento.Create;
+  fIdeEvento     := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
-  fInfoLotacao := TInfoLotacao.Create;
+  fInfoLotacao   := TInfoLotacao.Create;
 end;
 
 destructor TevtTabLotacao.destroy;
@@ -517,13 +512,14 @@ end;
 
 { TDadosLotacao }
 
-constructor TDadosLotacao.create;
+constructor TDadosLotacao.Create;
 begin
-  fFPasLotacao := TFPasLotacao.Create;
+  inherited Create;
+  fFPasLotacao     := TFPasLotacao.Create;
   fInfoEmprParcial := TinfoEmprParcial.Create;
 end;
 
-destructor TDadosLotacao.destroy;
+destructor TDadosLotacao.Destroy;
 begin
   fFPasLotacao.Free;
   FinfoEmprParcial.Free;
@@ -533,9 +529,10 @@ end;
 
 { TInfoLotacao }
 
-constructor TInfoLotacao.create;
+constructor TInfoLotacao.Create;
 begin
-  fIdeLotacao := TIdeLotacao.Create;
+  inherited Create;
+  fIdeLotacao   := TIdeLotacao.Create;
   fDadosLotacao := nil;
   fNovaValidade := nil;
 end;
@@ -578,24 +575,11 @@ begin
   Result := Assigned(fNovaValidade);
 end;
 
-{ TProcJudTerceiroCollectionItem }
-
-constructor TProcJudTerceiroCollectionItem.create;
-begin
-
-end;
-
 { TProcJudTerceiroCollection }
 
 function TProcJudTerceiroCollection.Add: TProcJudTerceiroCollectionItem;
 begin
-  Result := TProcJudTerceiroCollectionItem(inherited Add());
-  Result.Create;
-end;
-
-constructor TProcJudTerceiroCollection.create;
-begin
-  inherited create(TProcJudTerceiroCollectionItem);
+  Result := Self.New;
 end;
 
 function TProcJudTerceiroCollection.GetItem(
@@ -610,10 +594,17 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TProcJudTerceiroCollection.New: TProcJudTerceiroCollectionItem;
+begin
+  Result := TProcJudTerceiroCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoProcJudTerceiros }
 
-constructor TInfoProcJudTerceiros.create;
+constructor TInfoProcJudTerceiros.Create;
 begin
+  inherited Create;
   FProcJudTerceiro := TProcJudTerceiroCollection.create;
 end;
 
@@ -626,8 +617,9 @@ end;
 
 { TFPasLotacao }
 
-constructor TFPasLotacao.create;
+constructor TFPasLotacao.Create;
 begin
+  inherited Create;
   FInfoProcJudTerceiros := nil;
 end;
 

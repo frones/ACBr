@@ -85,13 +85,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtExpRisco: TEvtExpRisco;
-    procedure setEvtExpRisco(const Value: TEvtExpRisco);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtExpRisco: TEvtExpRisco read FEvtExpRisco write setEvtExpRisco;
+    property EvtExpRisco: TEvtExpRisco read FEvtExpRisco write FEvtExpRisco;
   end;
 
   TEvtExpRisco = class(TeSocialEvento)
@@ -100,7 +99,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FinfoExpRisco: TinfoExpRisco;
-    FACBreSocial: TObject;
 
     { Geradores da classe }
     procedure GerarInfoExpRisco(objInfoExpRisco: TInfoExpRisco);
@@ -112,7 +110,7 @@ type
     procedure GerarRespReg(pRespReg: TRespRegCollection);
     procedure GerarObs(pObs: TObs);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -361,22 +359,16 @@ begin
   inherited;
 end;
 
-procedure TS2240CollectionItem.setEvtExpRisco(const Value: TEvtExpRisco);
-begin
-  FEvtExpRisco.Assign(Value);
-end;
-
 { TEvtAltContratual }
 
 constructor TEvtExpRisco.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
-  FInfoExpRisco := TInfoExpRisco.Create;
+  FIdeVinculo    := TIdeVinculo.Create;
+  FInfoExpRisco  := TInfoExpRisco.Create;
 end;
 
 destructor TEvtExpRisco.Destroy;

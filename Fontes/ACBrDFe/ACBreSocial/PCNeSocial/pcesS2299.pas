@@ -90,13 +90,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtDeslig : TEvtDeslig;
-    procedure setEvtDeslig(const Value: TEvtDeslig);
   public
     constructor Create(AOwner: Tcomponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtDeslig: TEvtDeslig read FEvtDeslig write setEvtDeslig;
+    property EvtDeslig: TEvtDeslig read FEvtDeslig write FEvtDeslig;
   end;
 
   TEvtDeslig = class(TeSocialEvento)
@@ -105,7 +104,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoDeslig: TInfoDeslig;
-    FACBreSocial: TObject;
 
     procedure GerarInfoDeslig(obj: TInfoDeslig);
     procedure GerarSucessaoVinc(obj: TSucessaoVinc2);
@@ -120,7 +118,7 @@ type
     procedure GerarTransfTit(obj: TtransfTit);
     procedure GerarInfoTrabInterm(obj: TInfoTrabIntermCollection);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -434,11 +432,6 @@ begin
   inherited;
 end;
 
-procedure TS2299CollectionItem.setEvtDeslig(const Value: TEvtDeslig);
-begin
-  FEvtDeslig.Assign(Value);
-end;
-
 { TDmDevCollection }
 
 constructor TDmDevCollection.Create;
@@ -670,13 +663,12 @@ end;
 
 constructor TEvtDeslig.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVInculo := TIdeVinculo.Create;
-  FInfoDeslig := TInfoDeslig.Create;
+  FIdeVInculo    := TIdeVinculo.Create;
+  FInfoDeslig    := TInfoDeslig.Create;
 end;
 
 destructor TEvtDeslig.destroy;

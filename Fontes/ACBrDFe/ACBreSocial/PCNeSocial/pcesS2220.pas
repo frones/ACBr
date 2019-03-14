@@ -78,13 +78,12 @@ type
     FTipoEvento: TTipoEvento;
     FevtMonit: TevtMonit;
 
-    procedure setevtMonit(const Value: TevtMonit);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtMonit: TevtMonit read FevtMonit write setevtMonit;
+    property evtMonit: TevtMonit read FevtMonit write FevtMonit;
   end;
 
   TevtMonit = class(TeSocialEvento)
@@ -92,7 +91,6 @@ type
     FIdeEvento: TIdeEvento2;
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
-    FACBreSocial: TObject;
     FexMedOcup: TexMedOcup;
 
     { Geradores da classe }
@@ -102,7 +100,7 @@ type
     procedure GerarAso;
     procedure GerarRespMonit;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -237,11 +235,6 @@ begin
   inherited;
 end;
 
-procedure TS2220CollectionItem.setevtMonit(const Value: TevtMonit);
-begin
-  FevtMonit.Assign(Value);
-end;
-
 { TAso }
 
 constructor TAso.create;
@@ -286,13 +279,12 @@ end;
 
 constructor TevtMonit.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
-  FexMedOcup := TexMedOcup.Create;
+  FIdeVinculo    := TIdeVinculo.Create;
+  FexMedOcup     := TexMedOcup.Create;
 end;
 
 destructor TevtMonit.destroy;

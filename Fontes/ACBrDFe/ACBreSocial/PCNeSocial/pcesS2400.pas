@@ -75,13 +75,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtCdBenPrRP : TEvtCdBenPrRP;
-    procedure setEvtCdBenPrRP(const Value: TEvtCdBenPrRP);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtCdBenPrRP: TEvtCdBenPrRP read FEvtCdBenPrRP write setEvtCdBenPrRP;
+    property evtCdBenPrRP: TEvtCdBenPrRP read FEvtCdBenPrRP write FEvtCdBenPrRP;
   end;
 
   TEvtCdBenPrRP = class(TeSocialEvento)
@@ -90,7 +89,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeBenef: TIdeBenef;
     FInfoBeneficio: TInfoBeneficio;
-    FACBreSocial: TObject;
 
     procedure GerarIdeBenef(pIdeBenef: TIdeBenef);
     procedure GerarDadosBenef(pDadosBenef: TDadosBenef);
@@ -99,7 +97,7 @@ type
     procedure GerarInfoPenMorte(pInfoPenMorte: TInfoPenMorte);
     procedure GerarFimBeneficio(pFimBeneficio: TFimBeneficio);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -238,11 +236,6 @@ begin
   inherited;
 end;
 
-procedure TS2400CollectionItem.setEvtCdBenPrRP(const Value: TEvtCdBenPrRP);
-begin
-  FEvtCdBenPrRP.Assign(Value);
-end;
-
 { TBeneficio }
 
 constructor TBeneficio.Create;
@@ -326,12 +319,11 @@ end;
 
 constructor TEvtCdBenPrRP.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeBenef := TIdeBenef.Create;
+  FIdeBenef      := TIdeBenef.Create;
   FInfoBeneficio := TInfoBeneficio.Create;
 end;
 

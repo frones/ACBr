@@ -54,7 +54,6 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2190Collection = class;
   TS2190CollectionItem = class;
   TEvtAdmPrelim = class;
   TInfoRegPrelim = class;
@@ -72,14 +71,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmPrelim: TEvtAdmPrelim;
-
-    procedure setEvtAdmPrelim(const Value: TEvtAdmPrelim);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAdmPrelim: TEvtAdmPrelim read FEvtAdmPrelim write setEvtAdmPrelim;
+    property EvtAdmPrelim: TEvtAdmPrelim read FEvtAdmPrelim write  FEvtAdmPrelim;
   end;
 
   TEvtAdmPrelim = class(TeSocialEvento)
@@ -87,11 +84,10 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoRegPrelim: TInfoRegPrelim;
-    FACBreSocial: TObject;
 
     procedure GerarInfoRegPrelim;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -152,18 +148,12 @@ begin
   inherited;
 end;
 
-procedure TS2190CollectionItem.setEvtAdmPrelim(const Value: TEvtAdmPrelim);
-begin
-  FEvtAdmPrelim.Assign(Value);
-end;
-
 { TEvtAdmissao }
 constructor TEvtAdmPrelim.create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento.Create;
+  FIdeEvento     := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoRegPrelim := TInfoRegPrelim.Create;
 end;

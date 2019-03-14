@@ -49,7 +49,8 @@ unit pcesS1030;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, Controls, ACBrUtil,
+  SysUtils, Classes, DateUtils, Controls, Contnrs,
+  ACBrUtil,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -63,26 +64,25 @@ type
   TLeiCargo = class;
   TCargoPublico = class;
 
-  TS1030Collection = class(TOwnedCollection)
+  TS1030Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1030CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1030CollectionItem);
   public
-    function Add: TS1030CollectionItem;
+    function Add: TS1030CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1030CollectionItem;
     property Items[Index: Integer]: TS1030CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1030CollectionItem = class(TCollectionItem)
+  TS1030CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabCargo: TEvtTabCargo;
-    procedure setEvtTabCargo(const Value: TEvtTabCargo);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabCargo: TEvtTabCargo read FEvtTabCargo write setEvtTabCargo;
+    property EvtTabCargo: TEvtTabCargo read FEvtTabCargo write FEvtTabCargo;
   end;
 
   TEvtTabCargo = class(TeSocialEvento)
@@ -91,7 +91,6 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoCargo: TInfoCargo;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeCargo;
@@ -99,7 +98,7 @@ type
     procedure GerarCargoPublico;
     procedure GerarDadosCargo;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -111,7 +110,7 @@ type
     property InfoCargo: TInfoCargo read fInfoCargo write fInfoCargo;
   end;
 
-  TIdeCargo = class(TPersistent)
+  TIdeCargo = class(TObject)
   private
     FCodCargo : string;
     FIniValid : string;
@@ -122,7 +121,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TDadosCargo = class(TPersistent)
+  TDadosCargo = class(TObject)
   private
     FNmCargo: string;
     FCodCBO: string;
@@ -130,7 +129,7 @@ type
 
     function getCargoPublico: TCargoPublico;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function cargoPublicInst(): Boolean;
@@ -140,7 +139,7 @@ type
     property cargoPublico: TCargoPublico read getCargoPublico write FCargoPublico;
   end;
 
-  TInfoCargo = class(TPersistent)
+  TInfoCargo = class(TObject)
   private
     FIdeCargo: TIdeCargo;
     FDadosCargo: TDadosCargo;
@@ -149,7 +148,7 @@ type
     function getDadosCargo: TDadosCargo;
     function getNovaValidade: TidePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function dadosCargoInst(): Boolean;
@@ -160,7 +159,7 @@ type
     property NovaValidade: TidePeriodo read getNovaValidade write FNovaValidade;
   end;
 
-  TLeiCargo = class(TPersistent)
+  TLeiCargo = class(TObject)
   private
     FNrLei: string;
     FDtLei: TDate;
@@ -171,14 +170,14 @@ type
     property sitCargo: tpSitCargo read FSitCargo write FSitCargo;
   end;
 
-  TCargoPublico = class(TPersistent)
+  TCargoPublico = class(TObject)
   private
     FAcumCargo: tpAcumCargo;
     FContagemEsp: tpContagemEsp;
     FDedicExcl: tpSimNao;
     FLeiCargo: TLeiCargo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property acumCargo: tpAcumCargo read FAcumCargo write FAcumCargo;
@@ -197,8 +196,7 @@ uses
 
 function TS1030Collection.Add: TS1030CollectionItem;
 begin
-  Result := TS1030CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1030Collection.GetItem(Index: Integer): TS1030CollectionItem;
@@ -212,11 +210,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1030Collection.New: TS1030CollectionItem;
+begin
+  Result := TS1030CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1030CollectionItem }
 
 constructor TS1030CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1030;
+  inherited Create;
+  FTipoEvento  := teS1030;
   FEvtTabCargo := TEvtTabCargo.Create(AOwner);
 end;
 
@@ -226,17 +231,13 @@ begin
   inherited;
 end;
 
-procedure TS1030CollectionItem.setEvtTabCargo(const Value: TEvtTabCargo);
-begin
-  FEvtTabCargo.Assign(Value);
-end;
-
 { TInfoCargo }
 
-constructor TInfoCargo.create;
+constructor TInfoCargo.Create;
 begin
-  FIdeCargo := TIdeCargo.Create;
-  FDadosCargo := nil;
+  inherited Create;
+  FIdeCargo     := TIdeCargo.Create;
+  FDadosCargo   := nil;
   FNovaValidade := nil;
 end;
 
@@ -277,12 +278,11 @@ end;
 
 constructor TEvtTabCargo.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  fIdeEvento := TIdeEvento.Create;
+  fIdeEvento     := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
-  fInfoCargo := TInfoCargo.Create;
+  fInfoCargo     := TInfoCargo.Create;
 end;
 
 destructor TEvtTabCargo.Destroy;
@@ -458,12 +458,13 @@ end;
 
 { TCargoPublico }
 
-constructor TCargoPublico.create;
+constructor TCargoPublico.Create;
 begin
+  inherited Create;
   FLeiCargo := TLeiCargo.Create;
 end;
 
-destructor TCargoPublico.destroy;
+destructor TCargoPublico.Destroy;
 begin
   FLeiCargo.Free;
 
@@ -477,12 +478,13 @@ begin
   Result := Assigned(FCargoPublico);
 end;
 
-constructor TDadosCargo.create;
+constructor TDadosCargo.Create;
 begin
+  inherited Create;
   FCargoPublico := nil;
 end;
 
-destructor TDadosCargo.destroy;
+destructor TDadosCargo.Destroy;
 begin
   FreeAndNil(FCargoPublico);
 

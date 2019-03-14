@@ -72,14 +72,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtReintegr: TEvtReintegr;
-
-    procedure setEvtReintegr(const Value: TEvtReintegr);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtReintegr: TEvtReintegr read FEvtReintegr write setEvtReintegr;
+    property EvtReintegr: TEvtReintegr read FEvtReintegr write FEvtReintegr;
   end;
 
   TEvtReintegr = class(TeSocialEvento)
@@ -88,11 +86,10 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoReintegr: TInfoReintegr;
-    FACBreSocial: TObject;
 
     procedure GerarInfoReintegr;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -160,17 +157,11 @@ begin
   inherited;
 end;
 
-procedure TS2298CollectionItem.setEvtReintegr(const Value: TEvtReintegr);
-begin
-  FEvtReintegr.Assign(Value);
-end;
-
 { TEvtReintegracao }
 constructor TEvtReintegr.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FIdeVinculo    := TIdeVinculo.Create;

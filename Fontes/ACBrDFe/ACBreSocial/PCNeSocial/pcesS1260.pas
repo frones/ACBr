@@ -77,14 +77,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtComProd: TEvtComProd;
-
-    procedure setEvtComProd(const Value: TEvtComProd);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtComProd: TEvtComProd read FEvtComProd write setEvtComProd;
+    property EvtComProd: TEvtComProd read FEvtComProd write FEvtComProd;
   end;
 
   TEvtComProd = class(TESocialEvento)
@@ -92,7 +90,6 @@ type
     FIdeEvento: TIdeEvento3;
     FIdeEmpregador: TIdeEmpregador;
     FInfoComProd: TInfoComProd;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoComProd;
@@ -101,7 +98,7 @@ type
     procedure GerarIdeAdquir(pIdeAdquir: TIdeAdquirColecao);
     procedure GerarInfoProcJud(pInfoProcJud: TInfoProcJudCollection);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -116,7 +113,7 @@ type
   private
     FIdeEstabel: TIdeEstabel;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property IdeEstabel: TIdeEstabel read FIdeEstabel write FIdeEstabel;
@@ -127,7 +124,7 @@ type
     FnrInscEstabRural: string;
     FTpComerc: TTpComercColecao;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property nrInscEstabRural: string read FnrInscEstabRural write FnrInscEstabRural;
@@ -151,7 +148,7 @@ type
     FIdeAdquir: TIdeAdquirColecao;
     FInfoProcJud: TInfoProcJudCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property indComerc: tpIndComerc read FindComerc write FindComerc;
@@ -228,11 +225,6 @@ begin
   inherited;
 end;
 
-procedure TS1260CollectionItem.setEvtComProd(const Value: TEvtComProd);
-begin
-  FEvtComProd.Assign(Value);
-end;
-
 { TTpComercColecao }
 function TTpComercColecao.Add: TTpComercItem;
 begin
@@ -256,14 +248,14 @@ begin
 end;
 
 { TInfoComProd }
-constructor TInfoComProd.create;
+constructor TInfoComProd.Create;
 begin
   inherited;
 
-  FIdeEstabel := TIdeEstabel.create;
+  FIdeEstabel := TIdeEstabel.Create;
 end;
 
-destructor TInfoComProd.destroy;
+destructor TInfoComProd.Destroy;
 begin
   FIdeEstabel.Free;
 
@@ -271,10 +263,10 @@ begin
 end;
 
 { TTpComercItem }
-constructor TTpComercItem.create;
+constructor TTpComercItem.Create;
 begin
   FIdeAdquir := TIdeAdquirColecao.Create(self);
-  FInfoProcJud := TInfoProcJudCollection.Create(self);
+  FInfoProcJud := TInfoProcJudCollection.Create;
 end;
 
 destructor TTpComercItem.destroy;
@@ -325,7 +317,7 @@ end;
 function TIdeAdquirItem.getNfs: TNfsColecao;
 begin
   if not Assigned(FNfs) then
-    FNfs := TNfsColecao.Create(FNfs);
+    FNfs := TNfsColecao.Create;
   Result := FNfs;
 end;
 
@@ -352,9 +344,8 @@ end;
 { TEvtComProd }
 constructor TEvtComProd.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
   FInfoComProd   := TInfoComProd.create;

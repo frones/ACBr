@@ -78,13 +78,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTSVInicio: TEvtTSVInicio;
-    procedure setEvtTSVInicio(const Value: TEvtTSVInicio);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTSVInicio: TEvtTSVInicio read FEvtTSVInicio write setEvtTSVInicio;
+    property EvtTSVInicio: TEvtTSVInicio read FEvtTSVInicio write FEvtTSVInicio;
   end;
 
   TEvtTSVInicio = class(TeSocialEvento)
@@ -93,7 +92,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
     FinfoTSVInicio : TinfoTSVInicio;
-    FACBreSocial: TObject;
 
     procedure GerarInfoTSVInicio(obj : TinfoTSVInicio);
     procedure GerarInfoComplementares(obj: TinfoComplementares);
@@ -108,7 +106,7 @@ type
     procedure GerarsupervisorEstagio(obj: TsupervisorEstagio);
     procedure GerarTermino(obj: TTermino);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -242,11 +240,6 @@ begin
   inherited;
 end;
 
-procedure TS2300CollectionItem.setEvtTSVInicio(const Value: TEvtTSVInicio);
-begin
-  FEvtTSVInicio.Assign(Value);
-end;
-
 { TinfoTSVInicio }
 
 constructor TinfoTSVInicio.Create;
@@ -299,12 +292,11 @@ end;
 
 constructor TEvtTSVInicio.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FTrabalhador := TTrabalhador.Create;
+  FTrabalhador   := TTrabalhador.Create;
   FinfoTSVInicio := TinfoTSVInicio.Create;
 end;
 

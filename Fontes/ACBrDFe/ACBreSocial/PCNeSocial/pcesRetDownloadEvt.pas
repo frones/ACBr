@@ -49,35 +49,20 @@ unit pcesRetDownloadEvt;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5011;
 
 type
-  TArquivoCollection = class;
-  TArquivoCollectionItem = class;
-  TRetDownloadEvt = class;
-
-  TArquivoCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TArquivoCollectionItem;
-    procedure SetItem(Index: Integer; Value: TArquivoCollectionItem);
-  public
-    constructor create(AOwner: TRetDownloadEvt);
-
-    function Add: TArquivoCollectionItem;
-    property Items[Index: Integer]: TArquivoCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TArquivoCollectionItem = class(TCollectionItem)
+  TArquivoCollectionItem = class(TObject)
   private
     FStatus: TStatus;
     FId: string;
     FnrRec: string;
     FXML: string;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property Status: TStatus read FStatus write FStatus;
@@ -86,22 +71,28 @@ type
     property XML: string read FXML write FXML;
   end;
 
-  TRetDownloadEvt = class(TPersistent)
+  TArquivoCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TArquivoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TArquivoCollectionItem);
+  public
+    function Add: TArquivoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TArquivoCollectionItem;
+    property Items[Index: Integer]: TArquivoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TRetDownloadEvt = class(TObject)
   private
     FLeitor: TLeitor;
     FStatus: TStatus;
     FArquivo: TArquivoCollection;
-
-    procedure SetArquivo(const Value: TArquivoCollection);
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
-
     function LerXml: boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Status: TStatus read FStatus write FStatus;
-    property Arquivo: TArquivoCollection read FArquivo write SetArquivo;
+    property Arquivo: TArquivoCollection read FArquivo write FArquivo;
   end;
 
 implementation
@@ -110,13 +101,7 @@ implementation
 
 function TArquivoCollection.Add: TArquivoCollectionItem;
 begin
-  Result := TArquivoCollectionItem(inherited Add());
-  Result.create;
-end;
-
-constructor TArquivoCollection.create(AOwner: TRetDownloadEvt);
-begin
-  inherited create(TArquivoCollectionItem);
+  Result := Self.New;
 end;
 
 function TArquivoCollection.GetItem(Index: Integer) : TArquivoCollectionItem;
@@ -132,8 +117,9 @@ end;
 
 { TRetIdentEvtsCollectionItem }
 
-constructor TArquivoCollectionItem.create;
+constructor TArquivoCollectionItem.Create;
 begin
+  inherited Create;
   FStatus := TStatus.Create;
 end;
 
@@ -146,11 +132,12 @@ end;
 
 { TRetDownloadEvt }
 
-constructor TRetDownloadEvt.create;
+constructor TRetDownloadEvt.Create;
 begin
-  FLeitor := TLeitor.create;
-  FStatus := TStatus.create;
-  FArquivo := TArquivoCollection.create(Self);
+  inherited Create;
+  FLeitor := TLeitor.Create;
+  FStatus := TStatus.Create;
+  FArquivo := TArquivoCollection.Create;
 end;
 
 destructor TRetDownloadEvt.Destroy;
@@ -160,11 +147,6 @@ begin
   FArquivo.Free;
 
   inherited;
-end;
-
-procedure TRetDownloadEvt.SetArquivo(const Value: TArquivoCollection);
-begin
-  FArquivo := Value;
 end;
 
 function TRetDownloadEvt.LerXml: boolean;
@@ -221,6 +203,12 @@ begin
   except
     Result := False;
   end;
+end;
+
+function TArquivoCollection.New: TArquivoCollectionItem;
+begin
+  Result := TArquivoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

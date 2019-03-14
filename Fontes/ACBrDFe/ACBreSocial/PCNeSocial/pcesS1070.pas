@@ -49,7 +49,8 @@ unit pcesS1070;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes, Contnrs,
+  ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -64,35 +65,34 @@ type
   TIdeProcesso = class;
 
 
-  TS1070Collection = class(TOwnedCollection)
+  TS1070Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1070CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1070CollectionItem);
   public
-    function Add: TS1070CollectionItem;
+    function Add: TS1070CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1070CollectionItem;
     property Items[Index: Integer]: TS1070CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1070CollectionItem = class(TCollectionItem)
+  TS1070CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabProcesso: TEvtTabProcesso;
-    procedure setEvtTabProcesso(const Value: TEvtTabProcesso);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabProcesso: TEvtTabProcesso read FEvtTabProcesso write setEvtTabProcesso;
+    property EvtTabProcesso: TEvtTabProcesso read FEvtTabProcesso write FEvtTabProcesso;
   end;
 
-  TIdeProcesso = class(TPersistent)
+  TIdeProcesso = class(TObject)
   private
     FTpProc : tpTpProc;
     FNrProc : string;
     FIniValid: string;
     FFimValid: string;
-  published
+  public
     property tpProc :tpTpProc read FTpProc write FTpProc;
     property nrProc :string read FNrProc write FNrProc;
     property iniValid: string read FIniValid write FIniValid;
@@ -105,7 +105,6 @@ type
     fIdeEvento: TIdeEvento;
     fIdeEmpregador: TIdeEmpregador;
     fInfoProcesso: TInfoProcesso;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarIdeProcesso;
@@ -113,7 +112,7 @@ type
     procedure GerarDadosProc;
     procedure GerarDadosInfoSusp;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -125,32 +124,30 @@ type
     property InfoProcesso: TInfoProcesso read fInfoProcesso write fInfoProcesso;
   end;
 
-  TInfoSuspCollectionItem = class(TCollectionItem)
+  TInfoSuspCollectionItem = class(TObject)
   private
     FCodSusp: String;
     FIndSusp: tpIndSusp;
     FDTDecisao: TDateTime;
     FIndDeposito: tpSimNao;
   public
-    constructor create; reintroduce;
-
     property codSusp: String read FCodSusp write FCodSusp;
     property indSusp: tpIndSusp read FIndSusp write FIndSusp;
     property dtDecisao: TDateTime read FDTDecisao write FDTDecisao;
     property indDeposito: tpSimNao read FIndDeposito write FIndDeposito;
   end;
 
-  TInfoSuspCollection = class(TCollection)
+  TInfoSuspCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoSuspCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoSuspCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfoSuspCollectionItem;
+    function Add: TInfoSuspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoSuspCollectionItem;
     property Items[Index: Integer]: TInfoSuspCollectionItem read GetItem write SetItem; default;
   end;
 
-  TDadosProcJud = class(TPersistent)
+  TDadosProcJud = class(TObject)
   private
     FUfVara: string;
     FCodMunic: integer;
@@ -161,7 +158,7 @@ type
     property idVara: string read FIdVara write FIdVara;
   end;
 
-  TDadosProc = class(TPersistent)
+  TDadosProc = class(TObject)
   private
     FIndAutoria: tpindAutoria;
     FIndMatProc: tpIndMatProc;
@@ -172,7 +169,7 @@ type
     function getDadosProcJud: TDadosProcJud;
     function getInfoSusp(): TInfoSuspCollection;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function dadosProcJudInst(): Boolean;
@@ -195,7 +192,7 @@ type
     function getDadosProc(): TDadosProc;
     function getNovaValidade(): TIdePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function dadosProcsInst(): Boolean;
@@ -216,8 +213,7 @@ uses
 
 function TS1070Collection.Add: TS1070CollectionItem;
 begin
-  Result := TS1070CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1070Collection.GetItem(Index: Integer): TS1070CollectionItem;
@@ -231,11 +227,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1070Collection.New: TS1070CollectionItem;
+begin
+  Result := TS1070CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1070CollectionItem }
 
 constructor TS1070CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1070;
+  inherited Create;
+  FTipoEvento     := teS1070;
   FEvtTabProcesso := TEvtTabProcesso.Create(AOwner);
 end;
 
@@ -245,23 +248,11 @@ begin
   inherited;
 end;
 
-procedure TS1070CollectionItem.setEvtTabProcesso(
-  const Value: TEvtTabProcesso);
-begin
-  FEvtTabProcesso.Assign(Value);
-end;
-
 { TInfoSuspCollection }
 
 function TInfoSuspCollection.Add: TInfoSuspCollectionItem;
 begin
-  Result := TInfoSuspCollectionItem(inherited Add());
-  Result.Create;
-end;
-
-constructor TInfoSuspCollection.create(AOwner: TPersistent);
-begin
-  inherited create(TInfoSuspCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoSuspCollection.GetItem(
@@ -276,19 +267,19 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
-{ TInfoSuspCollectionItem }
-
-constructor TInfoSuspCollectionItem.create;
+function TInfoSuspCollection.New: TInfoSuspCollectionItem;
 begin
-
+  Result := TInfoSuspCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TDadosProc }
 
-constructor TDadosProc.create;
+constructor TDadosProc.Create;
 begin
+  inherited Create;
   fDadosProcJud := nil;
-  FInfoSusp := nil;
+  FInfoSusp     := nil;
 end;
 
 function TDadosProc.dadosProcJudInst: Boolean;
@@ -296,7 +287,7 @@ begin
   Result := Assigned(fDadosProcJud);
 end;
 
-destructor TDadosProc.destroy;
+destructor TDadosProc.Destroy;
 begin
   FreeAndNil(fDadosProcJud);
   FreeAndNil(FInfoSusp);
@@ -313,7 +304,7 @@ end;
 function TDadosProc.getInfoSusp: TInfoSuspCollection;
 begin
   if Not(Assigned(FInfoSusp)) then
-    FInfoSusp := TInfoSuspCollection.Create(FInfoSusp);
+    FInfoSusp := TInfoSuspCollection.Create;
   Result := FInfoSusp;
 end;
 
@@ -324,7 +315,7 @@ end;
 
 { TInfoProcesso }
 
-constructor TInfoProcesso.create;
+constructor TInfoProcesso.Create;
 begin
   FIdeProcesso := TIdeProcesso.Create;
   FDadosProc := nil;
@@ -367,12 +358,11 @@ end;
 
 constructor TEvtTabProcesso.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  fIdeEvento := TIdeEvento.Create;
+  fIdeEvento     := TIdeEvento.Create;
   fIdeEmpregador := TIdeEmpregador.Create;
-  fInfoProcesso := TInfoProcesso.Create;
+  fInfoProcesso  := TInfoProcesso.Create;
 end;
 
 destructor TEvtTabProcesso.Destroy;

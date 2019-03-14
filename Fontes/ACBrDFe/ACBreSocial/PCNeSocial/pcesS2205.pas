@@ -71,13 +71,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAltCadastral: TEvtAltCadastral;
-    procedure setEvtAltCadastral(const Value: TEvtAltCadastral);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAltCadastral: TEvtAltCadastral read FEvtAltCadastral write setEvtAltCadastral;
+    property EvtAltCadastral: TEvtAltCadastral read FEvtAltCadastral write FEvtAltCadastral;
   end;
 
   TEvtAltCadastral = class(TeSocialEvento)
@@ -88,11 +87,10 @@ type
     FTrabalhador: TTrabalhador;
     FVinculo: TVinculo;
     FIdeTrabalhador: TideTrabalhador;
-    FACBreSocial: TObject;
 
     procedure GerarInfoAltCadastral;
   public
-    constructor Create(AACBreSocial: TObject);
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -146,23 +144,16 @@ begin
   inherited;
 end;
 
-procedure TS2205CollectionItem.setEvtAltCadastral(
-  const Value: TEvtAltCadastral);
-begin
-  FEvtAltCadastral.Assign(Value);
-end;
-
 { TEvtAltCadastral }
 
 constructor TEvtAltCadastral.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FTrabalhador := TTrabalhador.Create;
-  FVinculo := TVinculo.Create;
+  FIdeEvento      := TIdeEvento2.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
+  FTrabalhador    := TTrabalhador.Create;
+  FVinculo        := TVinculo.Create;
   FIdeTrabalhador := TideTrabalhador.Create;
 end;
 

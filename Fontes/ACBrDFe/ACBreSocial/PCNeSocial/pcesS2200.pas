@@ -71,14 +71,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmissao: TEvtAdmissao;
-
-    procedure setEvtAdmissao(const Value: TEvtAdmissao);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtAdmissao: TEvtAdmissao read FEvtAdmissao write setEvtAdmissao;
+    property EvtAdmissao: TEvtAdmissao read FEvtAdmissao write FEvtAdmissao;
   end;
 
   TEvtAdmissao = class(TeSocialEvento)
@@ -87,10 +85,9 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FTrabalhador: TTrabalhador;
     FVinculo: TVinculo;
-    FACBreSocial: TObject;
 
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -141,21 +138,15 @@ begin
   inherited;
 end;
 
-procedure TS2200CollectionItem.setEvtAdmissao(const Value: TEvtAdmissao);
-begin
-  FEvtAdmissao.Assign(Value);
-end;
-
 { TEvtAdmissao }
-constructor TEvtAdmissao.create(AACBreSocial: TObject);
+constructor TEvtAdmissao.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
+  FIdeEvento     := TIdeEvento2.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FTrabalhador := TTrabalhador.Create;
-  FVinculo := TVinculo.Create;
+  FTrabalhador   := TTrabalhador.Create;
+  FVinculo       := TVinculo.Create;
 end;
 
 destructor TEvtAdmissao.destroy;
@@ -172,7 +163,7 @@ function TEvtAdmissao.GerarXML: boolean;
 begin
   try
     Self.VersaoDF := TACBreSocial(FACBreSocial).Configuracoes.Geral.VersaoDF;
-     
+
     Self.Id := GerarChaveEsocial(now, self.ideEmpregador.NrInsc, self.Sequencial);
 
     GerarCabecalho('evtAdmissao');

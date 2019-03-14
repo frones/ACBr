@@ -73,14 +73,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtTSVAltContr: TEvtTSVAltContr;
-
-    procedure setEvtTSVAltContr(const Value: TEvtTSVAltContr);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTSVAltContr: TEvtTSVAltContr read FEvtTSVAltContr write setEvtTSVAltContr;
+    property EvtTSVAltContr: TEvtTSVAltContr read FEvtTSVAltContr write FEvtTSVAltContr;
   end;
 
   TEvtTSVAltContr = class(TeSocialEvento)
@@ -89,7 +87,6 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FideTrabSemVinc: TideTrabSemVinc;
     FinfoTSVAlteracao : TinfoTSVAlteracao;
-    FACBreSocial: TObject;
 
     procedure GerarideTrabSemVinc(obj : TideTrabSemVinc);
     procedure GerarInfoTSVAlteracao(obj: TinfoTSVAlteracao);
@@ -101,7 +98,7 @@ type
     procedure GerarcargoFuncao(obj: TcargoFuncao);
     procedure GerarRemuneracao(obj: TRemuneracao);
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -180,11 +177,6 @@ begin
   inherited;
 end;
 
-procedure TS2306CollectionItem.setEvtTSVAltContr(const Value: TEvtTSVAltContr);
-begin
-  FEvtTSVAltContr.Assign(Value);
-end;
-
 { TinfoComplementares }
 
 constructor TinfoComplementares.Create;
@@ -225,12 +217,11 @@ end;
 
 constructor TEvtTSVAltContr.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FideTrabSemVinc := TideTrabSemVinc.Create;
+  FIdeEvento        := TIdeEvento2.Create;
+  FIdeEmpregador    := TIdeEmpregador.Create;
+  FideTrabSemVinc   := TideTrabSemVinc.Create;
   FinfoTSVAlteracao := TinfoTSVAlteracao.Create;
 end;
 

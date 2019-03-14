@@ -55,9 +55,7 @@ uses
 
 type
 
-  TItemLoteEventosClass = class of TItemLoteEventos;
-
-  TItemLoteEventos = class(TCollectionItem)
+  TItemLoteEventos = class(TObject)
   private
     FACBreSocial : TComponent;
     FTipoEvento : TTipoEvento;
@@ -78,9 +76,8 @@ type
 
   end;
 
-  TLoteEventos = class(TOwnedCollection)
+  TLoteEventos = class(TeSocialCollection)
   private
-    FACBreSocial: TComponent;
     FIdeEmpregador: TIdeEmpregador;
     FIdeTransmissor: TIdeTransmissor;
     FGerador: TGerador;
@@ -89,21 +86,18 @@ type
     function GetItem(Index: integer): TItemLoteEventos;
     procedure SetItem(Index: integer; const Value: TItemLoteEventos);
     procedure CarregarXmlEventos;
-
-  protected
-    procedure GerarCabecalho(const Namespace: string);
-    procedure GerarRodape;
     function Validar: Boolean;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AACBreSocial: TComponent); override;
+    destructor Destroy; override;
 
-    function Add : TItemLoteEventos;
+    function Add: TItemLoteEventos; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TItemLoteEventos;
+
     function LoadFromFile(const CaminhoArquivo: String): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(AXMLString: String): Boolean;
     procedure GerarXML(const AGrupo: TeSocialGrupo);
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
 
     property Items[Index: Integer] : TItemLoteEventos read GetItem write SetItem;
     property IdeEmpregador : TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
@@ -120,40 +114,7 @@ uses
 
 function TLoteEventos.Add: TItemLoteEventos;
 begin
-  Result := TItemLoteEventos(inherited Add);
-end;
-
-procedure TLoteEventos.AfterConstruction;
-begin
-  inherited;
-
-  FIdeEmpregador  := TIdeEmpregador.Create;
-  FIdeTransmissor := TIdeTransmissor.Create;
-  FGerador        := TGerador.Create;
-end;
-
-procedure TLoteEventos.BeforeDestruction;
-begin
-  inherited;
-  FIdeEmpregador.Free;
-  FIdeTransmissor.Free;
-  FGerador.Free;
-end;
-
-constructor TLoteEventos.Create(AOwner: TComponent);
-begin
-  Inherited Create(AOwner, TItemLoteEventos);
-  FACBreSocial    := AOwner;
-end;
-
-procedure TLoteEventos.GerarCabecalho(const Namespace: String);
-begin
-
-end;
-
-procedure TLoteEventos.GerarRodape;
-begin
-
+  Result := Self.New;
 end;
 
 procedure TLoteEventos.CarregarXmlEventos;
@@ -420,13 +381,38 @@ begin
   result := EhValido;
 end;
 
+function TLoteEventos.New: TItemLoteEventos;
+begin
+  Result := TItemLoteEventos.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
+constructor TLoteEventos.Create(AACBreSocial: TComponent);
+begin
+  inherited Create(AACBreSocial);
+
+  FIdeEmpregador  := TIdeEmpregador.Create;
+  FIdeTransmissor := TIdeTransmissor.Create;
+  FGerador        := TGerador.Create;
+end;
+
+destructor TLoteEventos.Destroy;
+begin
+  FIdeEmpregador.Free;
+  FIdeTransmissor.Free;
+  FGerador.Free;
+
+  inherited;
+end;
+
 { TItemLoteEventos }
 
 constructor TItemLoteEventos.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FACBreSocial := AOwner;
-  FLeitor := TLeitor.Create;
-  FXML := '';
+  FLeitor      := TLeitor.Create;
+  FXML         := '';
 end;
 
 function TItemLoteEventos.GetIDEvento: string;

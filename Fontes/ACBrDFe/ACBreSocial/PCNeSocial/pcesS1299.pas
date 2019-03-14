@@ -72,14 +72,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtFechaEvPer: TEvtFechaEvPer;
-
-    procedure setEvtFechaEvPer(const Value: TEvtFechaEvPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtFechaEvPer: TEvtFechaEvPer read FEvtFechaEvPer write setEvtFechaEvPer;
+    property EvtFechaEvPer: TEvtFechaEvPer read FEvtFechaEvPer write FEvtFechaEvPer;
   end;
 
   TEvtFechaEvPer = class(TESocialEvento)
@@ -88,12 +86,11 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeRespInf : TIdeRespInf;
     FInfoFech: TInfoFech;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoFech;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -165,21 +162,15 @@ begin
   inherited;
 end;
 
-procedure TS1299CollectionItem.setEvtFechaEvPer(const Value: TEvtFechaEvPer);
-begin
-  FEvtFechaEvPer.Assign(Value);
-end;
-
 { TEvtSolicTotal }
 constructor TEvtFechaEvPer.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
+  FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeRespInf := TIdeRespInf.Create;
-  FInfoFech := TInfoFech.Create;
+  FIdeRespInf    := TIdeRespInf.Create;
+  FInfoFech      := TInfoFech.Create;
 end;
 
 destructor TEvtFechaEvPer.destroy;

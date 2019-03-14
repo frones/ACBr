@@ -63,12 +63,8 @@ uses
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TGeradorOpcoes = class;
-  TeSocialEvento = class;
-
   TeSocialEvento = class(TeSocial)
   private
-    FACBreSocial: TObject; //alimenta no create
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -83,22 +79,6 @@ type
 
 //    procedure SetXML(const Value: AnsiString);
     procedure SetXML(const Value: String);
-  public
-    constructor Create(AACBreSocial: TObject); overload;//->recebe a instancia da classe TACBreSocial
-    destructor Destroy; override;
-
-    function  GerarXML: boolean; virtual; abstract;
-    procedure SaveToFile(const CaminhoArquivo: string);
-    function  Assinar(const XMLEvento, NomeEvento: String): AnsiString;
-    function  GerarChaveEsocial(const emissao: TDateTime;
-                                const CNPJF: string;
-                                sequencial: Integer): String;
-    procedure Validar(Schema: TeSocialSchema);
-
-    property Alertas: String read FAlertas;
-    property ErroValidacao: String read FErroValidacao;
-    property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
-    property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
   protected
     {Geradores de Uso Comum}
     procedure GerarCabecalho(const Namespace: String);
@@ -189,7 +169,24 @@ type
     procedure GerarIdeEstabLot(pIdeEstabLot : TideEstabLotCollection);
     procedure GerarQuarentena(obj: TQuarentena);
     procedure GerarIdeRespInf(obj: TIdeRespInf);
-  published
+
+  public
+    FACBreSocial: TObject; //alimenta no create
+    constructor Create(AACBreSocial: TObject); reintroduce; virtual; //->recebe a instancia da classe TACBreSocial
+    destructor Destroy; override;
+
+    function  GerarXML: boolean; virtual; abstract;
+    procedure SaveToFile(const CaminhoArquivo: string);
+    function  Assinar(const XMLEvento, NomeEvento: String): AnsiString;
+    function  GerarChaveEsocial(const emissao: TDateTime;
+                                const CNPJF: string;
+                                sequencial: Integer): String;
+    procedure Validar(Schema: TeSocialSchema);
+
+    property Alertas: String read FAlertas;
+    property ErroValidacao: String read FErroValidacao;
+    property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
+    property VersaoDF: TVersaoeSocial read FVersaoDF write FVersaoDF;
     property Gerador: TGerador  read FGerador write FGerador;
     property schema: TeSocialSchema read Fschema write Fschema;
 //    property XML: AnsiString read FXML write SetXML;
@@ -275,14 +272,21 @@ end;
 
 constructor TeSocialEvento.Create(AACBreSocial: TObject);
 begin
-  FACBreSocial := AACBreSocial;
-  FGerador := TGerador.Create;
+  inherited Create;
+  if not(AACBreSocial is TACBreSocial) then
+  begin
+    raise Exception.Create('Parâmetro AACbreSocial precisa ser do tipo TACBreSocial.');
+  end;
+
+  FACBreSocial               := AACBreSocial;
+  FGerador                   := TGerador.Create;
   FGerador.ArquivoFormatoXML := '';
 end;
 
 destructor TeSocialEvento.Destroy;
 begin
   FGerador.Free;
+  inherited;
 end;
 
 procedure TeSocialEvento.SaveToFile(const CaminhoArquivo: string);

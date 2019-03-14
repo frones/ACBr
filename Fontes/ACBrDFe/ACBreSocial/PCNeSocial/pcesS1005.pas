@@ -49,7 +49,7 @@ unit pcesS1005;
 interface
 
 uses
-  SysUtils, Classes, Controls,
+  SysUtils, Classes, Controls, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -70,47 +70,45 @@ type
   TIdeEstab = class;
   TInfoEstab = class;
 
-  TS1005Collection = class(TOwnedCollection)
+  TS1005Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1005CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1005CollectionItem);
   public
-    function Add: TS1005CollectionItem;
+    function Add: TS1005CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1005CollectionItem;
     property Items[Index: Integer]: TS1005CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1005CollectionItem = class(TCollectionItem)
+  TS1005CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtTabEstab: TevtTabEstab;
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property evtTabEstab: TevtTabEstab read FevtTabEstab write FevtTabEstab;
   end;
 
-  TInfoEntEducCollection = class(TCollection)
+  TInfoEntEducCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoEntEducCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoEntEducCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TInfoEntEducCollectionItem;
+    function Add: TInfoEntEducCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoEntEducCollectionItem;
     property Items[Index: Integer]: TInfoEntEducCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfoEntEducCollectionItem = class(TCollectionItem)
+  TInfoEntEducCollectionItem = class(TObject)
   private
     FNrInsc: string;
-  published
-    constructor Create; reintroduce;
-
+  public
     property nrInsc: string read FNrInsc write FNrInsc;
   end;
 
-  TInfoApr = class(TPersistent)
+  TInfoApr = class(TObject)
   private
     FContApr: tpContApr;
     FNrProcJud: string;
@@ -126,7 +124,7 @@ type
     property infoEntEduc: TInfoEntEducCollection read FInfoEntEduc write FInfoEntEduc;
   end;
 
-  TInfoPCD = class(TPersistent)
+  TInfoPCD = class(TObject)
   private
     FContPCD: tpContPCD;
     FNrProcJud: string;
@@ -135,7 +133,7 @@ type
     property nrProcJud: string read FNrProcJud write FNrProcJud;
   end;
 
-  TInfoTrab = class(TPersistent)
+  TInfoTrab = class(TObject)
   private
     FRegPt: tpRegPt;
     FInfoApr: TInfoApr;
@@ -153,21 +151,21 @@ type
     property infoPCD: TInfoPCD read getInfoPCD write FInfoPCD;
   end;
 
-  TInfoObra = class(TPersistent)
+  TInfoObra = class(TObject)
   private
     FIndSubstPatrObra: tpIndSubstPatronalObra;
   public
     property indSubstPatrObra: tpIndSubstPatronalObra read FIndSubstPatrObra write FIndSubstPatrObra;
   end;
 
-  TinfoCaepf = class(TPersistent)
+  TinfoCaepf = class(TObject)
   private
     FtpCaepf: tpCaepf;
   public
     property tpCaepf: tpCaepf read FtpCaepf write FtpCaepf;
   end;
 
-  TDadosEstab = class(TPersistent)
+  TDadosEstab = class(TObject)
   private
     FCnaePrep: string;
     FAliqGilrat: TAliqGilRat;
@@ -191,7 +189,7 @@ type
     property infoTrab: TInfoTrab read FInfoTrab write FInfoTrab;
   end;
 
-  TIdeEstab = class(TPersistent)
+  TIdeEstab = class(TObject)
   private
     FTpInsc: tpTpInsc;
     FNrInsc: string;
@@ -204,7 +202,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TInfoEstab = class(TPersistent)
+  TInfoEstab = class(TObject)
   private
     FIdeEstab: TIdeEstab;
     FDadosEstab: TDadosEstab;
@@ -230,7 +228,6 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoEstab: TInfoEstab;
-    FACBreSocial: TObject;
 
     {. Geradores especificos desta classe .}
     procedure GerarInfoEntEduc;
@@ -242,7 +239,7 @@ type
     procedure GerarInfoCaepf;
     procedure GerarDadosEstab;
   public
-    constructor Create(AACBreSocial: TObject); overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: boolean; override;
@@ -262,15 +259,16 @@ uses
 
 { TDadosEstab }
 
-constructor TDadosEstab.create;
+constructor TDadosEstab.Create;
 begin
+  inherited Create;
   FAliqGilrat := TAliqGilRat.Create;
-  FInfoTrab := TInfoTrab.Create;
-  FInfoObra := nil;
-  FinfoCaepf := nil;
+  FInfoTrab   := TInfoTrab.Create;
+  FInfoObra   := nil;
+  FinfoCaepf  := nil;
 end;
 
-destructor TDadosEstab.destroy;
+destructor TDadosEstab.Destroy;
 begin
   FAliqGilrat.Free;
   FInfoTrab.Free;
@@ -310,7 +308,7 @@ constructor TInfoApr.Create;
 begin
   inherited;
 
-  FInfoEntEduc := TInfoEntEducCollection.Create(Self);
+  FInfoEntEduc := TInfoEntEducCollection.Create;
 end;
 
 destructor TInfoApr.Destroy;
@@ -354,8 +352,9 @@ end;
 
 constructor TInfoEstab.Create;
 begin
-  FIdeEstab := TIdeEstab.Create;
-  FDadosEstab := nil;
+  inherited Create;
+  FIdeEstab     := TIdeEstab.Create;
+  FDadosEstab   := nil;
   FNovaValidade := nil;
 end;
 
@@ -368,7 +367,7 @@ destructor TInfoEstab.Destroy;
 begin
   FIdeEstab.Free;
   FreeAndNil(FDadosEstab);
-  FNovaValidade.Free;
+  FreeAndNil(FNovaValidade);
 
   inherited;
 end;
@@ -396,12 +395,11 @@ end;
 
 constructor TEvtTabEstab.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento.Create;
+  FIdeEvento     := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FInfoEstab := TInfoEstab.Create;
+  FInfoEstab     := TInfoEstab.Create;
 end;
 
 destructor TEvtTabEstab.Destroy;
@@ -689,7 +687,8 @@ end;
 
 constructor TS1005CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1005;
+  inherited Create;
+  FTipoEvento  := teS1005;
   FevtTabEstab := TevtTabEstab.Create(AOwner);
 end;
 
@@ -704,8 +703,7 @@ end;
 
 function TS1005Collection.Add: TS1005CollectionItem;
 begin
-  Result := TS1005CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1005Collection.GetItem(Index: Integer): TS1005CollectionItem;
@@ -718,16 +716,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1005Collection.New: TS1005CollectionItem;
+begin
+  Result := TS1005CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TInfoEntEducCollection }
 function TInfoEntEducCollection.Add: TInfoEntEducCollectionItem;
 begin
-  Result := TInfoEntEducCollectionItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TInfoEntEducCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TInfoEntEducCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoEntEducCollection.GetItem(
@@ -742,11 +740,10 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TInfoEntEducCollectionItem }
-
-constructor TInfoEntEducCollectionItem.Create;
+function TInfoEntEducCollection.New: TInfoEntEducCollectionItem;
 begin
-
+  Result := TInfoEntEducCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

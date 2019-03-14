@@ -49,32 +49,13 @@ unit pcesRetConsultaIdentEvt;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
   pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
   pcesS5001, pcesS5011;
 
 type
-  TRetIdentEvtsCollection = class;
-  TRetIdentEvtsCollectionItem = class;
-  TRetConsultaIdentEvt = class;
-
-  TRetIdentEvtsCollection = class(TCollection)
-  private
-    FqtdeTotEvtsConsulta: integer;
-    FdhUltimoEvtRetornado: TDateTime;
-    function GetItem(Index: Integer): TRetIdentEvtsCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRetIdentEvtsCollectionItem);
-  public
-    constructor create(AOwner: TRetConsultaIdentEvt);
-
-    function Add: TRetIdentEvtsCollectionItem;
-    property Items[Index: Integer]: TRetIdentEvtsCollectionItem read GetItem write SetItem; default;
-    property qtdeTotEvtsConsulta: integer read FqtdeTotEvtsConsulta write FqtdeTotEvtsConsulta;
-    property dhUltimoEvtRetornado: TDateTime read FdhUltimoEvtRetornado write FdhUltimoEvtRetornado;
-  end;
-
-  TRetIdentEvtsCollectionItem = class(TCollectionItem)
+  TRetIdentEvtsCollectionItem = class(TObject)
   private
     FIDEvento: string;
     FnrRec: string;
@@ -83,22 +64,32 @@ type
     property nrRec: string read FnrRec write FnrRec;
   end;
 
-  TRetConsultaIdentEvt = class(TPersistent)
+  TRetIdentEvtsCollection = class(TObjectList)
+  private
+    FqtdeTotEvtsConsulta: integer;
+    FdhUltimoEvtRetornado: TDateTime;
+    function GetItem(Index: Integer): TRetIdentEvtsCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRetIdentEvtsCollectionItem);
+  public
+    function Add: TRetIdentEvtsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetIdentEvtsCollectionItem;
+    property Items[Index: Integer]: TRetIdentEvtsCollectionItem read GetItem write SetItem; default;
+    property qtdeTotEvtsConsulta: integer read FqtdeTotEvtsConsulta write FqtdeTotEvtsConsulta;
+    property dhUltimoEvtRetornado: TDateTime read FdhUltimoEvtRetornado write FdhUltimoEvtRetornado;
+  end;
+
+  TRetConsultaIdentEvt = class(TObject)
   private
     FLeitor: TLeitor;
     FStatus: TStatus;
     FRetIdentEvts: TRetIdentEvtsCollection;
-
-    procedure SetEventos(const Value: TRetIdentEvtsCollection);
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
-
     function LerXml: boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Status: TStatus read FStatus write FStatus;
-    property RetIdentEvts: TRetIdentEvtsCollection read FRetIdentEvts write SetEventos;
+    property RetIdentEvts: TRetIdentEvtsCollection read FRetIdentEvts write FRetIdentEvts;
   end;
 
 implementation
@@ -107,13 +98,7 @@ implementation
 
 function TRetIdentEvtsCollection.Add: TRetIdentEvtsCollectionItem;
 begin
-  Result := TRetIdentEvtsCollectionItem(inherited Add());
-//  Result.create;
-end;
-
-constructor TRetIdentEvtsCollection.create(AOwner: TRetConsultaIdentEvt);
-begin
-  inherited create(TRetIdentEvtsCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetIdentEvtsCollection.GetItem(Index: Integer) : TRetIdentEvtsCollectionItem;
@@ -127,13 +112,20 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TRetIdentEvtsCollection.New: TRetIdentEvtsCollectionItem;
+begin
+  Result := TRetIdentEvtsCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TRetConsultaIdentEvt }
 
-constructor TRetConsultaIdentEvt.create;
+constructor TRetConsultaIdentEvt.Create;
 begin
-  FLeitor := TLeitor.create;
-  FStatus := TStatus.create;
-  FRetIdentEvts := TRetIdentEvtsCollection.create(Self);
+  inherited Create;
+  FLeitor       := TLeitor.Create;
+  FStatus       := TStatus.Create;
+  FRetIdentEvts := TRetIdentEvtsCollection.Create;
 end;
 
 destructor TRetConsultaIdentEvt.Destroy;
@@ -143,11 +135,6 @@ begin
   FRetIdentEvts.Free;
 
   inherited;
-end;
-
-procedure TRetConsultaIdentEvt.SetEventos(const Value: TRetIdentEvtsCollection);
-begin
-  FRetIdentEvts := Value;
 end;
 
 function TRetConsultaIdentEvt.LerXml: boolean;

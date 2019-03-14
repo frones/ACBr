@@ -74,14 +74,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtConvInterm: TEvtConvInterm;
-
-    procedure setEvtConvInterm(const Value: TEvtConvInterm);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtConvInterm: TEvtConvInterm read FEvtConvInterm write setEvtConvInterm;
+    property EvtConvInterm: TEvtConvInterm read FEvtConvInterm write FEvtConvInterm;
   end;
 
   TEvtConvInterm = class(TeSocialEvento)
@@ -90,13 +88,12 @@ type
     FIdeEmpregador: TIdeEmpregador;
     FIdeVinculo: TIdeVinculo;
     FInfoConvInterm: TInfoConvInterm;
-    FACBreSocial: TObject;
 
     procedure GerarInfoConvInterm;
     procedure Gerarjornada;
     procedure GerarlocalTrab;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -190,12 +187,6 @@ begin
   inherited;
 end;
 
-procedure TS2260CollectionItem.setEvtConvInterm(
-  const Value: TEvtConvInterm);
-begin
-  FEvtConvInterm.Assign(Value);
-end;
-
 { TInfoConvInterm }
 
 constructor TInfoConvInterm.create;
@@ -230,12 +221,11 @@ end;
 
 constructor TEvtConvInterm.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento2.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeVinculo := TIdeVinculo.Create;
+  FIdeEvento      := TIdeEvento2.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
+  FIdeVinculo     := TIdeVinculo.Create;
   FInfoConvInterm := TInfoConvInterm.Create;
 end;
 

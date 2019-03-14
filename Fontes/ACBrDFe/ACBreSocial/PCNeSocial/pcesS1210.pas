@@ -49,7 +49,7 @@ unit pcesS1210;
 interface
 
 uses
-  SysUtils, Classes, Controls,
+  SysUtils, Classes, Controls, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -88,13 +88,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtPgtos: TEvtPgtos;
-    procedure setEvtPgtos(const Value: TEvtPgtos);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtPgtos: TEvtPgtos read FEvtPgtos write setEvtPgtos;
+    property evtPgtos: TEvtPgtos read FEvtPgtos write FEvtPgtos;
   end;
 
   TEvtPgtos = class(TeSocialEvento)
@@ -102,7 +101,6 @@ type
     FIdeEvento : TIdeEvento3;
     FIdeEmpregador : TIdeEmpregador;
     FIdeBenef : TIdeBenef;
-    FACBreSocial: TObject;
 
     {Geradores da classe}
     procedure GerarIdeBenef(objIdeBenef: TIdeBenef);
@@ -117,7 +115,7 @@ type
     procedure GerarDetPgtoAnt(pDetPgtoAnt: TDetPgtoAntCollection);
     procedure GerarInfoPgtoAnt(pInfoPgtoAnt: TInfoPgtoAntCollection);
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -226,13 +224,13 @@ type
     property infoPgtoParc: TRubricaCollection read getInfoPgtoParc write FInfoPgtoParc;
   end;
 
-  TRubricasComPensaoCollection = class(TCollection)
+  TRubricasComPensaoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRubricasComPensaoItem;
     procedure SetItem(Index: Integer; const Value: TRubricasComPensaoItem);
   public
-    constructor Create; reintroduce;
-    function Add: TRubricasComPensaoItem;
+    function Add: TRubricasComPensaoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRubricasComPensaoItem;
     property Items[Index: integer]: TRubricasComPensaoItem read GetItem write SetItem;
       default;
   end;
@@ -412,11 +410,6 @@ begin
   FEvtPgtos.Free;
 
   inherited;
-end;
-
-procedure TS1210CollectionItem.setEvtPgtos(const Value: TEvtPgtos);
-begin
-  FEvtPgtos.Assign(Value);
 end;
 
 { TIdeBenef }
@@ -603,12 +596,7 @@ end;
 
 function TRubricasComPensaoCollection.add: TRubricasComPensaoItem;
 begin
-  Result := TRubricasComPensaoItem(inherited add);
-end;
-
-constructor TRubricasComPensaoCollection.Create;
-begin
-  inherited create(TRubricasComPensaoItem);
+  Result := Self.New;
 end;
 
 function TRubricasComPensaoCollection.GetItem(Index: Integer): TRubricasComPensaoItem;
@@ -619,6 +607,12 @@ end;
 procedure TRubricasComPensaoCollection.SetItem(Index: Integer; const Value: TRubricasComPensaoItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TRubricasComPensaoCollection.New: TRubricasComPensaoItem;
+begin
+  Result := TRubricasComPensaoItem.Create;
+  Self.Add(Result);
 end;
 
 { TRubricasComPensaoItem }
@@ -831,12 +825,11 @@ end;
 
 constructor TEvtPgtos.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
+  FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FIdeBenef := TIdeBenef.Create;
+  FIdeBenef      := TIdeBenef.Create;
 end;
 
 destructor TEvtPgtos.Destroy;

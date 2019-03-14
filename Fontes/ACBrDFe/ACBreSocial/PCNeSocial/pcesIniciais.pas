@@ -55,17 +55,17 @@ uses
 
 type
 
-  TIniciais = class(TComponent)
+  TIniciais = class(TObject)
   private
     FS1000: TS1000Collection;
     FS1005: TS1005Collection;
-
+    FACBreSocial: TComponent;
     function GetCount: integer;
     procedure setS1000(const Value: TS1000Collection);
     procedure setS1005(const Value: TS1005Collection);
 
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
 
     procedure GerarXMLs;
@@ -73,8 +73,6 @@ type
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
     function LoadFromIni(const AIniString: String): Boolean;
-
-  published
     property Count: Integer read GetCount;
     property S1000: TS1000Collection read FS1000 write setS1000;
     property S1005: TS1005Collection read FS1005 write setS1005;
@@ -96,10 +94,11 @@ end;
 
 constructor TIniciais.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create;
 
-  FS1000 := TS1000Collection.Create(AOwner, TS1000CollectionItem);
-  FS1005 := TS1005Collection.Create(AOwner, TS1005CollectionItem);
+  FACBreSocial := AOwner;
+  FS1000       := TS1000Collection.Create(AOwner);
+  FS1005       := TS1005Collection.Create(AOwner);
 end;
 
 destructor TIniciais.Destroy;
@@ -132,7 +131,7 @@ var
   i: integer;
   Path, PathName: String;
 begin
-  with TACBreSocial(Self.Owner) do
+  with TACBreSocial(FACBreSocial) do
     Path := PathWithDelim(Configuracoes.Arquivos.GetPatheSocial(Now, Configuracoes.Geral.IdEmpregador));
 
   for I := 0 to Self.S1000.Count - 1 do
@@ -142,7 +141,7 @@ begin
 
     Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.Add do
     begin
       TipoEvento := teS1000;
       PathNome := PathName;
@@ -158,7 +157,7 @@ begin
 
     Self.S1005.Items[i].evtTabEstab.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.Add do
     begin
       TipoEvento := teS1005;
       PathNome := PathName;

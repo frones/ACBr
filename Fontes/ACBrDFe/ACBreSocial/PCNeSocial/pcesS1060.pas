@@ -49,39 +49,36 @@ unit pcesS1060;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes,
+  ACBrUtil,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1060Collection = class;
   TS1060CollectionItem = class;
-  TIdeAmbiente = class;
-  TDadosAmbiente = class;
   TInfoAmbiente = class;
   TEvtTabAmbiente = class;
 
 
-  TS1060Collection = class(TOwnedCollection)
+  TS1060Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1060CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1060CollectionItem);
   public
-    function Add: TS1060CollectionItem;
+    function Add: TS1060CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1060CollectionItem;
     property Items[Index: Integer]: TS1060CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1060CollectionItem = class(TCollectionItem)
+  TS1060CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTabAmbiente: TEvtTabAmbiente;
-    procedure setEvtTabAmbiente(const Value: TEvtTabAmbiente);
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtTabAmbiente: TEvtTabAmbiente read FEvtTabAmbiente write setEvtTabAmbiente;
+    property EvtTabAmbiente: TEvtTabAmbiente read FEvtTabAmbiente write FEvtTabAmbiente;
   end;
 
   TEvtTabAmbiente = class(TeSocialEvento)
@@ -90,12 +87,11 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoAmbiente: TInfoAmbiente;
-    FACBreSocial: TObject;
 
     procedure GerarIdeAmbiente;
     procedure GerarDadosAmbiente;
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -107,7 +103,7 @@ type
     property infoAmbiente: TInfoAmbiente read FInfoAmbiente write FInfoAmbiente;
   end;
 
-  TIdeAmbiente = class(TPersistent)
+  TIdeAmbiente = class(TObject)
   private
     FCodAmb: string;
     FIniValid: string;
@@ -118,7 +114,7 @@ type
     property fimValid: string read FFimValid write FFimValid;
   end;
 
-  TDadosAmbiente = class(TPersistent)
+  TDadosAmbiente = class(TObject)
   private
     FNmAmb: String;
     FDscAmb: String;
@@ -127,9 +123,6 @@ type
     FNrInsc: String;
     FCodLotacao: String;
   public
-    constructor create;
-    destructor Destroy; override;
-
     property nmAmb: string read FNmAmb write FNmAmb;
     property dscAmb: string read FDscAmb write FDscAmb;
     property localAmb: tpLocalAmb read FLocalAmb write FLocalAmb;
@@ -138,7 +131,7 @@ type
     property codLotacao: String read FCodLotacao write FCodLotacao;
   end;
 
-  TInfoAmbiente = class(TPersistent)
+  TInfoAmbiente = class(TObject)
   private
     FIdeAmbiente: TIdeAmbiente;
     FDadosAmbiente: TDadosAmbiente;
@@ -147,7 +140,7 @@ type
     function getDadosAmbiente: TDadosAmbiente;
     function getNovaValidade: TIdePeriodo;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function dadosAmbienteInst(): Boolean;
@@ -168,8 +161,7 @@ uses
 
 function TS1060Collection.Add: TS1060CollectionItem;
 begin
-  Result := TS1060CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1060Collection.GetItem(Index: Integer): TS1060CollectionItem;
@@ -182,11 +174,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1060Collection.New: TS1060CollectionItem;
+begin
+  Result := TS1060CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1060CollectionItem }
 
 constructor TS1060CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1060;
+  inherited Create;
+  FTipoEvento     := teS1060;
   FEvtTabAmbiente := TEvtTabAmbiente.Create(AOwner);
 end;
 
@@ -197,31 +196,14 @@ begin
   inherited;
 end;
 
-procedure TS1060CollectionItem.setEvtTabAmbiente(const Value: TEvtTabAmbiente);
-begin
-  FEvtTabAmbiente.Assign(Value);
-end;
-
-{ TDadosAmbiente }
-
-constructor TDadosAmbiente.create;
-begin
-
-end;
-
-destructor TDadosAmbiente.destroy;
-begin
-
-  inherited;
-end;
-
 { TInfoAmbiente }
 
-constructor TInfoAmbiente.create;
+constructor TInfoAmbiente.Create;
 begin
-  FIdeAmbiente := TIdeAmbiente.Create;
+  inherited Create;
+  FIdeAmbiente   := TIdeAmbiente.Create;
   FDadosAmbiente := nil;
-  FNovaValidade := nil;
+  FNovaValidade  := nil;
 end;
 
 function TInfoAmbiente.dadosAmbienteInst: Boolean;
@@ -229,7 +211,7 @@ begin
   Result := Assigned(FDadosAmbiente);
 end;
 
-destructor TInfoAmbiente.destroy;
+destructor TInfoAmbiente.Destroy;
 begin
   FIdeAmbiente.Free;
   FreeAndNil(FDadosAmbiente);
@@ -261,12 +243,11 @@ end;
 
 constructor TEvtTabAmbiente.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento.Create;
+  FIdeEvento     := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FInfoAmbiente := TInfoAmbiente.create;
+  FInfoAmbiente  := TInfoAmbiente.create;
 end;
 
 destructor TEvtTabAmbiente.Destroy;

@@ -74,13 +74,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtExclusao: TEvtExclusao;
-    procedure setEvtExclusao(const Value: TEvtExclusao);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtExclusao: TEvtExclusao read FEvtExclusao write setEvtExclusao;
+    property EvtExclusao: TEvtExclusao read FEvtExclusao write FEvtExclusao;
   end;
 
   TEvtExclusao = class(TESocialEvento)
@@ -88,11 +87,9 @@ type
     FIdeEvento: TIdeEvento;
     FIdeEmpregador: TIdeEmpregador;
     FInfoExclusao: TInfoExclusao;
-    FACBreSocial: TObject;
-
     {Geradores específicos da classe}
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -159,11 +156,6 @@ begin
   inherited;
 end;
 
-procedure TS3000CollectionItem.setEvtExclusao(const Value: TEvtExclusao);
-begin
-  FEvtExclusao.Assign(Value);
-end;
-
 { TInfoExclusao }
 
 constructor TInfoExclusao.Create;
@@ -186,12 +178,11 @@ end;
 
 constructor TEvtExclusao.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento.Create;
+  FIdeEvento     := TIdeEvento.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FInfoExclusao := TInfoExclusao.Create;
+  FInfoExclusao  := TInfoExclusao.Create;
 end;
 
 destructor TEvtExclusao.destroy;

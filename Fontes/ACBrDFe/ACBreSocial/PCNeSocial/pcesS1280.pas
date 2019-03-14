@@ -75,14 +75,12 @@ type
   private
     FTipoEvento: TTipoEvento;
     FEvtInfoComplPer: TEvtInfoComplPer;
-
-    procedure setEvtInfoComplPer(const Value: TEvtInfoComplPer);
   public
     constructor Create(AOwner: TComponent); reintroduce;
     destructor  Destroy; override;
   published
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property EvtInfoComplPer: TEvtInfoComplPer read FEvtInfoComplPer write setEvtInfoComplPer;
+    property EvtInfoComplPer: TEvtInfoComplPer read FEvtInfoComplPer write FEvtInfoComplPer;
   end;
 
   TEvtInfoComplPer = class(TESocialEvento)
@@ -92,7 +90,6 @@ type
     FInfoSubstPatr: TInfoSubstPatr;
     FInfoAtivConcom: TInfoAtivConcom;
     FInfoSubstPatrOpPort: TInfoSubstPatrOpPortColecao;
-    FACBreSocial: TObject;
 
     {Geradores específicos da classe}
     procedure GerarInfoSubstPatr;
@@ -103,7 +100,7 @@ type
     function getInfoSubstPatrOpPort: TInfoSubstPatrOpPortColecao;
 
   public
-    constructor Create(AACBreSocial: TObject);overload;
+    constructor Create(AACBreSocial: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
@@ -193,25 +190,19 @@ begin
   inherited;
 end;
 
-procedure TS1280CollectionItem.setEvtInfoComplPer(const Value: TEvtInfoComplPer);
-begin
-  FEvtInfoComplPer.Assign(Value);
-end;
-
 { TEvtSolicTotal }
 constructor TEvtInfoComplPer.Create(AACBreSocial: TObject);
 begin
-  inherited;
+  inherited Create(AACBreSocial);
 
-  FACBreSocial := AACBreSocial;
-  FIdeEvento := TIdeEvento3.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
+  FIdeEvento           := TIdeEvento3.Create;
+  FIdeEmpregador       := TIdeEmpregador.Create;
   FInfoSubstPatrOpPort := nil;
-  FInfoSubstPatr := nil;
-  FInfoAtivConcom := nil;
+  FInfoSubstPatr       := nil;
+  FInfoAtivConcom      := nil;
 end;
 
-destructor TEvtInfoComplPer.destroy;
+destructor TEvtInfoComplPer.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

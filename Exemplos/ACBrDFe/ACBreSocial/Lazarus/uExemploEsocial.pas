@@ -871,9 +871,9 @@ begin
         begin
 //          nmAmb      := 'AMBIENTE 01';
           dscAmb     := 'DESCRICAO DO AMBIENTE';
-          localAmb   := tpLocalAmb(0);
-          TpInsc     := tpTpInscAmbTab(0);
-          NrInsc     := '123456789';
+          localAmb   := laEstabProprioEmpregador;
+          TpInsc     := tiCNPJ;
+          NrInsc     := '12345678000112';
           CodLotacao := '';
         end;
 

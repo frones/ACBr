@@ -49,34 +49,33 @@ unit pcesS1270;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1270Collection = class;
   TS1270CollectionItem = class;
   TEvtContratAvNP = class;
   TRemunAvNPItem = class;
   TRemunAvNPColecao = class;
 
-  TS1270Collection = class(TOwnedCollection)
+  TS1270Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1270CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1270CollectionItem);
   public
-    function Add: TS1270CollectionItem;
+    function Add: TS1270CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1270CollectionItem;
     property Items[Index: Integer]: TS1270CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1270CollectionItem = class(TCollectionItem)
+  TS1270CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtContratAvNP: TEvtContratAvNP;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtContratAvNP: TEvtContratAvNP read FEvtContratAvNP write FEvtContratAvNP;
   end;
@@ -101,17 +100,17 @@ type
     property remunAvNp: TRemunAvNPColecao read FRemunAvNp write FRemunAvNp;
   end;
 
-  TRemunAvNPColecao = class(TCollection)
+  TRemunAvNPColecao = class(TObjectList)
   private
     function GetItem(Index: Integer): TRemunAvNPItem;
     procedure SetItem(Index: Integer; const Value: TRemunAvNPItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRemunAvNPItem;
+    function Add: TRemunAvNPItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRemunAvNPItem;
     property Items[Index: Integer]: TRemunAvNPItem read GetItem write SetItem;
   end;
 
-  TRemunAvNPItem = class(TCollectionItem)
+  TRemunAvNPItem = class(TObject)
   private
     FtpInsc: tpTpInsc;
     FnrInsc: string;
@@ -146,8 +145,7 @@ uses
 
 function TS1270Collection.Add: TS1270CollectionItem;
 begin
-  Result := TS1270CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1270Collection.GetItem(Index: Integer): TS1270CollectionItem;
@@ -161,9 +159,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1270Collection.New: TS1270CollectionItem;
+begin
+  Result := TS1270CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 {TS1270CollectionItem}
 constructor TS1270CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento     := teS1270;
   FEvtContratAvNP := TEvtContratAvNP.Create(AOwner);
 end;
@@ -178,12 +183,7 @@ end;
 { TRemunAvNPColecao }
 function TRemunAvNPColecao.Add: TRemunAvNPItem;
 begin
-  Result := TRemunAvNPItem(inherited Add);
-end;
-
-constructor TRemunAvNPColecao.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRemunAvNPItem);
+  Result := Self.New;
 end;
 
 function TRemunAvNPColecao.GetItem(Index: Integer): TRemunAvNPItem;
@@ -197,6 +197,12 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TRemunAvNPColecao.New: TRemunAvNPItem;
+begin
+  Result := TRemunAvNPItem.Create;
+  Self.Add(Result);
+end;
+
 { TEvtContratAvNP }
 constructor TEvtContratAvNP.Create(AACBreSocial: TObject);
 begin
@@ -204,7 +210,7 @@ begin
 
   FIdeEvento     := TIdeEvento3.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FRemunAvNp     := TRemunAvNPColecao.Create(FRemunAvNp);
+  FRemunAvNp     := TRemunAvNPColecao.Create;
 end;
 
 destructor TEvtContratAvNP.Destroy;

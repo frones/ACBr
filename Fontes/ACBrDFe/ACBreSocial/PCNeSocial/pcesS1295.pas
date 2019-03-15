@@ -54,27 +54,26 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1295Collection = class;
   TS1295CollectionItem = class;
   TEvtTotConting = class;
 
-  TS1295Collection = class(TOwnedCollection)
+  TS1295Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1295CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1295CollectionItem);
   public
-    function Add: TS1295CollectionItem;
+    function Add: TS1295CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1295CollectionItem;
     property Items[Index: Integer]: TS1295CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1295CollectionItem = class(TCollectionItem)
+  TS1295CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTotConting: TEvtTotConting;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property evtTotConting: TEvtTotConting read FEvtTotConting write FEvtTotConting;
   end;
@@ -108,8 +107,7 @@ uses
 
 function TS1295Collection.Add: TS1295CollectionItem;
 begin
-  Result := TS1295CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1295Collection.GetItem(Index: Integer): TS1295CollectionItem;
@@ -122,10 +120,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1295Collection.New: TS1295CollectionItem;
+begin
+  Result := TS1295CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 {TS1295CollectionItem}
 constructor TS1295CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1295;
+  inherited Create;
+  FTipoEvento    := teS1295;
   FEvtTotConting := TEvtTotConting.Create(AOwner);
 end;
 

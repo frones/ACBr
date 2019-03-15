@@ -49,7 +49,7 @@ unit pcesS1280;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -62,23 +62,23 @@ type
   TInfoSubstPatr = class;
   TInfoAtivConcom = class;
 
-  TS1280Collection = class(TOwnedCollection)
+  TS1280Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1280CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1280CollectionItem);
   public
-    function Add: TS1280CollectionItem;
+    function Add: TS1280CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1280CollectionItem;
     property Items[Index: Integer]: TS1280CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1280CollectionItem = class(TCollectionItem)
+  TS1280CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtInfoComplPer: TEvtInfoComplPer;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtInfoComplPer: TEvtInfoComplPer read FEvtInfoComplPer write FEvtInfoComplPer;
   end;
@@ -117,7 +117,7 @@ type
     property InfoSubstPatrOpPort: TInfoSubstPatrOpPortColecao read getInfoSubstPatrOpPort write FInfoSubstPatrOpPort;
   end;
 
-  TInfoSubstPatr = class(TPersistent)
+  TInfoSubstPatr = class(TObject)
   private
     FindSubstPatr: tpIndSubstPatrOpPort;
     FpercRedContrib: double;
@@ -126,24 +126,24 @@ type
     property percRedContrib: double read FpercRedContrib write FpercRedContrib;
   end;
 
-  TInfoSubstPatrOpPortItem = class(TCollectionItem)
+  TInfoSubstPatrOpPortItem = class(TObject)
   private
     FcnpjOpPortuario : string;
-  published
+  public
     property cnpjOpPortuario: string read FcnpjOpPortuario write FcnpjOpPortuario;
   end;
 
-  TInfoSubstPatrOpPortColecao = class(TCollection)
+  TInfoSubstPatrOpPortColecao = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoSubstPatrOpPortItem;
     procedure SetItem(Index: Integer; const Value: TInfoSubstPatrOpPortItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoSubstPatrOpPortItem;
+    function Add: TInfoSubstPatrOpPortItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoSubstPatrOpPortItem;
     property Items[Index: Integer]: TInfoSubstPatrOpPortItem read GetItem write SetItem;
   end;
 
-  TInfoAtivConcom = class(TPersistent)
+  TInfoAtivConcom = class(TObject)
   private
     FfatorMes: Double;
     Ffator13: Double;
@@ -162,8 +162,7 @@ uses
 
 function TS1280Collection.Add: TS1280CollectionItem;
 begin
-  Result := TS1280CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1280Collection.GetItem(Index: Integer): TS1280CollectionItem;
@@ -177,10 +176,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1280Collection.New: TS1280CollectionItem;
+begin
+  Result := TS1280CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 {TS1280CollectionItem}
 constructor TS1280CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS1280;
+  inherited Create;
+  FTipoEvento      := teS1280;
   FEvtInfoComplPer := TEvtInfoComplPer.Create(AOwner);
 end;
 
@@ -326,12 +332,7 @@ end;
 { TInfoSubstPatrOpPortColecao }
 function TInfoSubstPatrOpPortColecao.Add: TInfoSubstPatrOpPortItem;
 begin
-  Result := TInfoSubstPatrOpPortItem(inherited add);
-end;
-
-constructor TInfoSubstPatrOpPortColecao.Create;
-begin
-  inherited create(TInfoSubstPatrOpPortItem)
+  Result := Self.New;
 end;
 
 function TInfoSubstPatrOpPortColecao.GetItem(Index: Integer): TInfoSubstPatrOpPortItem;
@@ -410,6 +411,12 @@ begin
   finally
      INIRec.Free;
   end;
+end;
+
+function TInfoSubstPatrOpPortColecao.New: TInfoSubstPatrOpPortItem;
+begin
+  Result := TInfoSubstPatrOpPortItem.Create;
+  Self.Add(Result);
 end;
 
 end.

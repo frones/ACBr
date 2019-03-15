@@ -49,12 +49,11 @@ unit pcesS2220;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2220Collection = class;
   TS2220CollectionItem = class;
   TevtMonit = class;
   TexMedOcup = class;
@@ -63,25 +62,24 @@ type
   TExameCollection = class;
   TRespMonit = class;
   TMedico = class;
-  
-  TS2220Collection = class(TOwnedCollection)
+
+  TS2220Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2220CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2220CollectionItem);
   public
-    function Add: TS2220CollectionItem;
+    function Add: TS2220CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2220CollectionItem;
     property Items[Index: Integer]: TS2220CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2220CollectionItem = class(TCollectionItem)
+  TS2220CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtMonit: TevtMonit;
-
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property evtMonit: TevtMonit read FevtMonit write FevtMonit;
   end;
@@ -112,7 +110,7 @@ type
     property exMedOcup: TexMedOcup read FexMedOcup write FexMedOcup;
   end;
 
-  TexMedOcup = class(TPersistent)
+  TexMedOcup = class(TObject)
   private
     FtpExameOcup: tpTpExameOcup;
     FAso: TAso;
@@ -122,18 +120,18 @@ type
     property Aso : TAso read FAso write FAso;
     property RespMonit : TRespMonit read FRespMonit write FRespMonit;
 
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
   end;
 
-  TAso = class(TPersistent)
+  TAso = class(TObject)
   private
     FDtAso: TDateTime;
     FResAso: tpResAso;
     FExame: TExameCollection;
     FMedico: TMedico;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property DtAso: TDateTime read FDtAso write FDtAso;
@@ -142,17 +140,17 @@ type
     property Medico: TMedico read FMedico write FMedico;
   end;
 
-  TExameCollection = class(TCollection)
+  TExameCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TExameCollectionItem;
     procedure SetItem(Index: Integer; const Value: TExameCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TExameCollectionItem;
+    function Add: TExameCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TExameCollectionItem;
     property Items[Index: Integer]: TExameCollectionItem read GetItem write SetItem;
   end;
 
-  TExameCollectionItem = class(TCollectionItem)
+  TExameCollectionItem = class(TObject)
   private
     FDtExm: TDateTime;
     FProcRealizado: integer;
@@ -205,8 +203,7 @@ uses
 
 function TS2220Collection.Add: TS2220CollectionItem;
 begin
-  Result := TS2220CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2220Collection.GetItem(Index: Integer): TS2220CollectionItem;
@@ -220,12 +217,19 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2220Collection.New: TS2220CollectionItem;
+begin
+  Result := TS2220CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2220CollectionItem }
 
 constructor TS2220CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS2220;
-  FevtMonit     := TevtMonit.Create(AOwner);
+  FevtMonit   := TevtMonit.Create(AOwner);
 end;
 
 destructor TS2220CollectionItem.Destroy;
@@ -237,31 +241,25 @@ end;
 
 { TAso }
 
-constructor TAso.create;
+constructor TAso.Create;
 begin
   inherited;
-  FExame := TExameCollection.Create(self);
+  FExame  := TExameCollection.Create;
   FMedico := TMedico.Create;
 end;
 
-destructor TAso.destroy;
+destructor TAso.Destroy;
 begin
   FExame.Free;
   FMedico.Free;
   inherited;
 end;
 
-{ TExameColecao }
+{ TExameCollection }
 
 function TExameCollection.Add: TExameCollectionItem;
 begin
-  Result := TExameCollectionItem(inherited Add);
-  Result.Create(self);
-end;
-
-constructor TExameCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TExameCollectionItem);
+  Result := Self.New;
 end;
 
 function TExameCollection.GetItem(Index: Integer): TExameCollectionItem;
@@ -273,6 +271,12 @@ procedure TExameCollection.SetItem(Index: Integer;
   const Value: TExameCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TExameCollection.New: TExameCollectionItem;
+begin
+  Result := TExameCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TevtMonit }
@@ -287,7 +291,7 @@ begin
   FexMedOcup     := TexMedOcup.Create;
 end;
 
-destructor TevtMonit.destroy;
+destructor TevtMonit.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
@@ -498,13 +502,14 @@ end;
 
 { TexMedOcup }
 
-constructor TexMedOcup.create;
+constructor TexMedOcup.Create;
 begin
-  FAso := TAso.create;
+  inherited Create;
+  FAso       := TAso.Create;
   FRespMonit := TRespMonit.Create;
 end;
 
-destructor TexMedOcup.destroy;
+destructor TexMedOcup.Destroy;
 begin
   FAso.Free;
   FRespMonit.Free;

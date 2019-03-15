@@ -1988,14 +1988,15 @@ end;
 { TContrato }
 constructor TInfoContrato.Create;
 begin
-  FRemuneracao:= TRemuneracao.Create;
-  FDuracao:= TDuracao.Create;
-  FLocalTrabalho:= TLocalTrabalho.Create;
-  FHorContratual:= THorContratual.Create;
-  FInfoAtivDesemp:= TInfoAtivDesemp.Create;
-  FFiliacaoSindical:= TFiliacaoSindical.Create;
-  FAlvaraJudicial:= TAlvaraJudicial.Create;
-  Fobservacoes := TobservacoesCollection.Create;
+  inherited Create;
+  FRemuneracao      := TRemuneracao.Create;
+  FDuracao          := TDuracao.Create;
+  FLocalTrabalho    := TLocalTrabalho.Create;
+  FHorContratual    := THorContratual.Create;
+  FInfoAtivDesemp   := TInfoAtivDesemp.Create;
+  FFiliacaoSindical := TFiliacaoSindical.Create;
+  FAlvaraJudicial   := TAlvaraJudicial.Create;
+  Fobservacoes      := TobservacoesCollection.Create;
 end;
 
 destructor TInfoContrato.Destroy;

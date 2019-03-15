@@ -58,23 +58,23 @@ type
   TS2200CollectionItem = class;
   TEvtAdmissao = class;
 
-  TS2200Collection = class(TOwnedCollection)
+  TS2200Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2200CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2200CollectionItem);
   public
-    function Add: TS2200CollectionItem;
+    function Add: TS2200CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2200CollectionItem;
     property Items[Index: Integer]: TS2200CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2200CollectionItem = class(TCollectionItem)
+  TS2200CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmissao: TEvtAdmissao;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAdmissao: TEvtAdmissao read FEvtAdmissao write FEvtAdmissao;
   end;
@@ -109,8 +109,7 @@ uses
 
 function TS2200Collection.Add: TS2200CollectionItem;
 begin
-  Result := TS2200CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2200Collection.GetItem(Index: Integer): TS2200CollectionItem;
@@ -124,10 +123,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2200Collection.New: TS2200CollectionItem;
+begin
+  Result := TS2200CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2200CollectionItem }
 constructor TS2200CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2200;
+  inherited Create;
+  FTipoEvento  := teS2200;
   FEvtAdmissao := TEvtAdmissao.Create(AOwner);
 end;
 

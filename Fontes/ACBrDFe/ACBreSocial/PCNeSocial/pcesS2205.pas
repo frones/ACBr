@@ -54,27 +54,26 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2205Collection = class;
   TS2205CollectionItem = class;
   TEvtAltCadastral = class;
 
-  TS2205Collection = class(TOwnedCollection)
+  TS2205Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2205CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2205CollectionItem);
   public
-    function Add: TS2205CollectionItem;
+    function Add: TS2205CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2205CollectionItem;
     property Items[Index: Integer]: TS2205CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2205CollectionItem = class(TCollectionItem)
+  TS2205CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAltCadastral: TEvtAltCadastral;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAltCadastral: TEvtAltCadastral read FEvtAltCadastral write FEvtAltCadastral;
   end;
@@ -114,8 +113,7 @@ uses
 
 function TS2205Collection.Add: TS2205CollectionItem;
 begin
-  Result := TS2205CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2205Collection.GetItem(Index: Integer): TS2205CollectionItem;
@@ -129,11 +127,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2205Collection.New: TS2205CollectionItem;
+begin
+  Result := TS2205CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2205CollectionItem }
 
 constructor TS2205CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2205;
+  inherited Create;
+  FTipoEvento      := teS2205;
   FEvtAltCadastral := TEvtAltCadastral.Create(AOwner);
 end;
 

@@ -169,12 +169,12 @@ constructor TNaoPeriodicos.Create(AOwner: TComponent);
 begin
   inherited;
 
-  FS2190 := TS2190Collection.Create(AOwner, TS2190CollectionItem);
-  FS2200 := TS2200Collection.Create(AOwner, TS2200CollectionItem);
-  FS2205 := TS2205Collection.Create(AOwner, TS2205CollectionItem);
-  FS2206 := TS2206Collection.Create(AOwner, TS2206CollectionItem);
-  FS2210 := TS2210Collection.Create(AOwner, TS2210CollectionItem);
-  FS2220 := TS2220Collection.Create(AOwner, TS2220CollectionItem);
+  FS2190 := TS2190Collection.Create(AOwner);
+  FS2200 := TS2200Collection.Create(AOwner);
+  FS2205 := TS2205Collection.Create(AOwner);
+  FS2206 := TS2206Collection.Create(AOwner);
+  FS2210 := TS2210Collection.Create(AOwner);
+  FS2220 := TS2220Collection.Create(AOwner);
   FS2221 := TS2221Collection.Create(AOwner, TS2221CollectionItem);
   FS2230 := TS2230Collection.Create(AOwner, TS2230CollectionItem);
   FS2240 := TS2240Collection.Create(AOwner, TS2240CollectionItem);

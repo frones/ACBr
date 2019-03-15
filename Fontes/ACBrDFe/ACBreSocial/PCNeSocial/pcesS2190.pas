@@ -58,23 +58,23 @@ type
   TEvtAdmPrelim = class;
   TInfoRegPrelim = class;
 
-  TS2190Collection = class(TOwnedCollection)
+  TS2190Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2190CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2190CollectionItem);
   public
-    function Add: TS2190CollectionItem;
+    function Add: TS2190CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2190CollectionItem;
     property Items[Index: Integer]: TS2190CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2190CollectionItem = class(TCollectionItem)
+  TS2190CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAdmPrelim: TEvtAdmPrelim;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAdmPrelim: TEvtAdmPrelim read FEvtAdmPrelim write  FEvtAdmPrelim;
   end;
@@ -98,7 +98,7 @@ type
     property InfoRegPrelim: TInfoRegPrelim read FInfoRegPrelim write FInfoRegPrelim;
   end;
 
-  TInfoRegPrelim = class(TPersistent)
+  TInfoRegPrelim = class(TObject)
   private
     FcpfTrab: string;
     FdtNascto: TDateTime; //FdtNascto: TDate;
@@ -119,8 +119,7 @@ uses
 
 function TS2190Collection.Add: TS2190CollectionItem;
 begin
-  Result := TS2190CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2190Collection.GetItem(Index: Integer): TS2190CollectionItem;
@@ -134,9 +133,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2190Collection.New: TS2190CollectionItem;
+begin
+  Result := TS2190CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2190CollectionItem }
 constructor TS2190CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS2190;
   FEvtAdmPrelim := TEvtAdmPrelim.Create(AOwner);
 end;
@@ -149,7 +155,7 @@ begin
 end;
 
 { TEvtAdmissao }
-constructor TEvtAdmPrelim.create(AACBreSocial: TObject);
+constructor TEvtAdmPrelim.Create(AACBreSocial: TObject);
 begin
   inherited Create(AACBreSocial);
 
@@ -158,7 +164,7 @@ begin
   FInfoRegPrelim := TInfoRegPrelim.Create;
 end;
 
-destructor TEvtAdmPrelim.destroy;
+destructor TEvtAdmPrelim.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

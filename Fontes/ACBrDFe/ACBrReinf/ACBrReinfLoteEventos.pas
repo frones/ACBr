@@ -296,8 +296,8 @@ var
   end;
 
 begin
-  P := PosReinf;
   AXMLStr := AXMLString;
+  P := PosReinf;
 
   while P > 0 do
   begin

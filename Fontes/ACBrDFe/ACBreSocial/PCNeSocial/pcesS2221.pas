@@ -206,6 +206,8 @@ begin
     Gerador.wGrupo('evtToxic Id="' + Self.Id + '"');
 
     GerarIdeEvento2(Self.IdeEvento);
+    GerarIdeEmpregador(Self.IdeEmpregador);
+    GerarIdeVinculo(Self.IdeVinculo);
     GerarToxicologico(Self.Toxicologico);
 
     Gerador.wGrupo('/evtToxic');
@@ -214,7 +216,7 @@ begin
 
     XML := Assinar(Gerador.ArquivoFormatoXML, 'evtToxic');
 
-    Validar(schevtInsApo);
+    Validar(schEvtToxic);
 
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);

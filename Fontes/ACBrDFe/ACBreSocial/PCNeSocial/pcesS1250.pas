@@ -51,12 +51,11 @@ unit pcesS1250;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS1250Collection = class;
   TS1250CollectionItem = class;
   TEvtAqProd = class;
   TInfoAquisProd=class;
@@ -66,23 +65,23 @@ type
   TIdeProdutorItem = class;
   TIdeProdutorColecao = class;
 
-  TS1250Collection = class(TOwnedCollection)
+  TS1250Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1250CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1250CollectionItem);
   public
-    function Add: TS1250CollectionItem;
+    function Add: TS1250CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1250CollectionItem;
     property Items[Index: Integer]: TS1250CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1250CollectionItem = class(TCollectionItem)
+  TS1250CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAqProd: TEvtAqProd;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAqProd: TEvtAqProd read FEvtAqProd write FEvtAqProd;
   end;
@@ -106,7 +105,6 @@ type
 
     function GerarXML: boolean; override;
     function LerArqIni(const AIniString: String): Boolean;
-
     property IdeEvento: TIdeEvento3 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property InfoAquisProd: TInfoAquisProd read FInfoAquisProd write FInfoAquisProd;
@@ -128,7 +126,7 @@ type
     FnrInscAdq: string;
     FTpAquis: TTpAquisColecao;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property tpInscAdq: tpTpInsc read FtpInscAdq write FtpInscAdq;
@@ -136,24 +134,24 @@ type
     property TpAquis: TTpAquisColecao read FTpAquis write FTpAquis;
   end;
 
-  TTpAquisColecao = class(TCollection)
+  TTpAquisColecao = class(TObjectList)
   private
     function GetItem(Index: Integer): TTpAquisItem;
     procedure SetItem(Index: Integer; const Value: TTpAquisItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TTpAquisItem;
+    function Add: TTpAquisItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TTpAquisItem;
     property Items[Index: Integer]: TTpAquisItem read GetItem write SetItem;
   end;
 
-  TTpAquisItem = class(TCollectionItem)
+  TTpAquisItem = class(TObject)
   private
     FindAquis: tpIdAquis;
     FvlrTotAquis: Double;
     FIdeProdutor: TIdeProdutorColecao;
     FInfoProcJ: TInfoProcJCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property indAquis: tpIdAquis read FindAquis write FindAquis;
@@ -162,17 +160,17 @@ type
     property InfoProcJ: TInfoProcJCollection read FInfoProcJ write FInfoProcJ;
   end;
 
-  TIdeProdutorColecao = class(TCollection)
+  TIdeProdutorColecao = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdeProdutorItem;
     procedure SetItem(Index: Integer; const Value: TIdeProdutorItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TIdeProdutorItem;
+    function Add: TIdeProdutorItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeProdutorItem;
     property Items[Index: Integer]: TIdeProdutorItem read GetItem write SetItem;
   end;
 
-  TIdeProdutorItem = class(TCollectionItem)
+  TIdeProdutorItem = class(TObject)
   private
     FtpInscProd: tpTpInsc;
     FnrInscProd: string;
@@ -185,7 +183,7 @@ type
     FNfs: TNfsColecao;
     FInfoProcJud: TInfoProcJudCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property tpInscProd: tpTpInsc read FtpInscProd write FtpInscProd;
@@ -210,8 +208,7 @@ uses
 
 function TS1250Collection.Add: TS1250CollectionItem;
 begin
-  Result := TS1250CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1250Collection.GetItem(Index: Integer): TS1250CollectionItem;
@@ -225,11 +222,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1250Collection.New: TS1250CollectionItem;
+begin
+  Result := TS1250CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 {TS1250CollectionItem}
 constructor TS1250CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS1250;
-  FEvtAqProd := TEvtAqProd.Create(AOwner);
+  FEvtAqProd  := TEvtAqProd.Create(AOwner);
 end;
 
 destructor TS1250CollectionItem.Destroy;
@@ -376,32 +380,32 @@ procedure TEvtAqProd.GerarTpAquis(pTpAquis: TTpAquisColecao);
 var
   i: Integer;
 begin
-  for i := 0 to InfoAquisProd.IdeEstabAdquir.TpAquis.Count - 1 do
+  for i := 0 to pTpAquis.Count - 1 do
   begin
     if (VersaoDF < ve02_05_00) then
     begin
       Gerador.wGrupo('tpAquis');
 
-      Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, eSIdAquisStr(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].indAquis));
-      Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 1, 14, 1, InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].vlrTotAquis);
+      Gerador.wCampo(tcStr, '', 'indAquis',    1,  1, 1, eSIdAquisStr(pTpAquis.Items[i].indAquis));
+      Gerador.wCampo(tcDe2, '', 'vlrTotAquis', 1, 14, 1, pTpAquis.Items[i].vlrTotAquis);
 
-      GerarIdeProdutor(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].IdeProdutor);
+      GerarIdeProdutor(pTpAquis.Items[i].IdeProdutor);
     end;
 
     if (VersaoDF >= ve02_05_00) then
     begin
-      Gerador.wGrupo('tpAquis indAquis="' + eSIdAquisStr(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].indAquis) + '"' +
-                            ' vlrTotAquis="' + FloatToString(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].vlrTotAquis, '.', FloatMask(2, False)) + '"');
+      Gerador.wGrupo('tpAquis indAquis="' + eSIdAquisStr(pTpAquis.Items[i].indAquis) + '"' +
+                            ' vlrTotAquis="' + FloatToString(pTpAquis.Items[i].vlrTotAquis, '.', FloatMask(2, False)) + '"');
 
-      GerarIdeProdutor(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].IdeProdutor);
+      GerarIdeProdutor(pTpAquis.Items[i].IdeProdutor);
 
-      GerarInfoProcJ(InfoAquisProd.IdeEstabAdquir.TpAquis.Items[i].InfoProcJ);
+      GerarInfoProcJ(pTpAquis.Items[i].InfoProcJ);
     end;
 
     Gerador.wGrupo('/tpAquis');
   end;
 
-  if InfoAquisProd.IdeEstabAdquir.TpAquis.Count > 3 then
+  if pTpAquis.Count > 3 then
     Gerador.wAlerta('', 'tpAquis', 'Lista de Aquisições', ERR_MSG_MAIOR_MAXIMO + '3');
 end;
 
@@ -435,13 +439,7 @@ end;
 { TTpAquisColecao }
 function TTpAquisColecao.Add: TTpAquisItem;
 begin
-  Result := TTpAquisItem(inherited add);
-  Result.Create;
-end;
-
-constructor TTpAquisColecao.create(AOwner: TPersistent);
-begin
-  inherited create(TTpAquisItem)
+  Result := Self.New;
 end;
 
 function TTpAquisColecao.GetItem(Index: Integer): TTpAquisItem;
@@ -452,6 +450,12 @@ end;
 procedure TTpAquisColecao.SetItem(Index: Integer; const Value: TTpAquisItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TTpAquisColecao.New: TTpAquisItem;
+begin
+  Result := TTpAquisItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfoAquisProd }
@@ -472,8 +476,9 @@ end;
 { TTpAquisItem }
 constructor TTpAquisItem.Create;
 begin
-  FIdeProdutor := TIdeProdutorColecao.Create(self);
-  FInfoProcJ := TInfoProcJCollection.Create;
+  inherited Create;
+  FIdeProdutor := TIdeProdutorColecao.Create;
+  FInfoProcJ   := TInfoProcJCollection.Create;
 end;
 
 destructor TTpAquisItem.destroy;
@@ -487,13 +492,7 @@ end;
 { TIdeProdutorColecao }
 function TIdeProdutorColecao.Add: TIdeProdutorItem;
 begin
-  Result := TIdeProdutorItem(inherited Add);
-  Result.Create;
-end;
-
-constructor TIdeProdutorColecao.Create(AOwner: TPersistent);
-begin
-  inherited Create(TIdeProdutorItem);
+  Result := Self.New;
 end;
 
 function TIdeProdutorColecao.GetItem(Index: Integer): TIdeProdutorItem;
@@ -507,15 +506,21 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TIdeProdutorColecao.New: TIdeProdutorItem;
+begin
+  Result := TIdeProdutorItem.Create;
+  Self.Add(Result);
+end;
+
 { TIdeEstabAdquir }
-constructor TIdeEstabAdquir.create;
+constructor TIdeEstabAdquir.Create;
 begin
   inherited;
 
-  FTpAquis := TTpAquisColecao.Create(self);
+  FTpAquis := TTpAquisColecao.Create;
 end;
 
-destructor TIdeEstabAdquir.destroy;
+destructor TIdeEstabAdquir.Destroy;
 begin
   FTpAquis.Free;
 
@@ -525,11 +530,13 @@ end;
 { TIdeProdutorItem }
 constructor TIdeProdutorItem.Create;
 begin
-  FNfs := TNfsColecao.Create;
+  inherited Create;
+
+  FNfs         := TNfsColecao.Create;
   FInfoProcJud := TInfoProcJudCollection.Create;
 end;
 
-destructor TIdeProdutorItem.destroy;
+destructor TIdeProdutorItem.Destroy;
 begin
   FNfs.Free;
   FInfoProcJud.Free;

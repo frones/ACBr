@@ -63,7 +63,6 @@ type
   TdetPgtoFlItem = class;
   TEvtPgtos = class;
   TS1210CollectionItem = class;
-  TS1210Collection = class;
   TDeps = class;
   TDetPgtoBenPr = class;
   TDetPgtoFerCollection = class;
@@ -75,23 +74,23 @@ type
   TInfoPgtoAntCollection = class;
   TInfoPgtoAntItem = class;
 
-  TS1210Collection = class(TOwnedCollection)
+  TS1210Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS1210CollectionItem;
     procedure SetItem(Index: Integer; Value: TS1210CollectionItem);
   public
-    function Add: TS1210CollectionItem;
+    function Add: TS1210CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS1210CollectionItem;
     property Items[Index: Integer]: TS1210CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS1210CollectionItem = class(TCollectionItem)
+  TS1210CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtPgtos: TEvtPgtos;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property evtPgtos: TEvtPgtos read FEvtPgtos write FEvtPgtos;
   end;
@@ -126,7 +125,7 @@ type
     property IdeBenef : TIdeBenef read FIdeBenef write FIdeBenef;
   end;
 
-  TIdeBenef = class(TPersistent)
+  TIdeBenef = class(TObject)
   private
     FCpfBenef : String;
     FDeps: TDeps;
@@ -145,24 +144,24 @@ type
     property InfoPgto : TInfoPgtoCollection read getInfoPgto write FInfoPgto;
   end;
 
-  TDeps = class(TPersistent)
+  TDeps = class(TObject)
   private
     FVrDedDep: Double;
   public
     property vrDedDep: Double read FVrDedDep write FVrDedDep;
   end;
 
-  TInfoPgtoCollection = class(TCollection)
+  TInfoPgtoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoPgtoItem;
     procedure SetItem(Index: Integer; const Value: TInfoPgtoItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoPgtoItem;
+    function Add: TInfoPgtoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoPgtoItem;
     property Items[Index: Integer]: TInfoPgtoItem read GetItem write SetItem;
   end;
 
-  TInfoPgtoItem = class(TCollectionItem)
+  TInfoPgtoItem = class(TObject)
   private
     FDtPgto      : TDate;
     FTpPgto      : tpTpPgto;
@@ -174,12 +173,12 @@ type
     FIdePgtoExt  : TPgtoExt;
 
     function GetdetPgtoFl : TdetPgtoFlCollection;
-    function GetPgtoExt : TPgtoExt;
+    function GetIdePgtoExt : TPgtoExt;
     function getDetPgtoBenPr: TdetPgtoBenPr;
     function getDetPgtoFer: TDetPgtoFerCollection;
     function getDetPgtoAnt: TDetPgtoAntCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor  Destroy; override;
 
     function detPgtoFlInst(): Boolean;
@@ -195,10 +194,10 @@ type
     property detPgtoBenPr: TdetPgtoBenPr read getDetPgtoBenPr write FdetPgtoBenPr;
     property detPgtoFer: TDetPgtoFerCollection read getDetPgtoFer write FDetPgtoFer;
     property detPgtoAnt: TDetPgtoAntCollection read getDetPgtoAnt write FDetPgtoAnt;
-    property IdePgtoExt : TPgtoExt read GetPgtoExt write FIdePgtoExt;
+    property IdePgtoExt : TPgtoExt read GetIdePgtoExt write FIdePgtoExt;
   end;
 
-  TDetPgtoBenPr = class(TPersistent)
+  TDetPgtoBenPr = class(TObject)
   private
     FPerRef: String;
     FIdeDmDev: string;
@@ -210,7 +209,7 @@ type
     function getRetPgtoTot: TRubricaCollection;
     function getInfoPgtoParc: TRubricaCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     function retPgtoTotInst: boolean;
@@ -239,27 +238,26 @@ type
   private
     FPenAlim: TPensaoAlimCollection;
 
-    function getPensaoAlim: TPensaoAlimCollection;
+    function getpenAlim: TPensaoAlimCollection;
   public
     constructor Create;
     destructor  Destroy; override;
 
     function pensaoAlimInst: boolean;
-
-    property penAlim: TPensaoAlimCollection read getPEnsaoAlim write FPenAlim;
+    property penAlim: TPensaoAlimCollection read getpenAlim write FPenAlim;
   end;
 
-  TdetPgtoFlCollection = class(TCollection)
+  TdetPgtoFlCollection = class(TObjectList)
   private
     function GetITem(Index: Integer): TdetPgtoFlItem;
     procedure SetItem(Index: Integer; const Value: TdetPgtoFlItem);
   public
-    constructor Create; reintroduce;
-    function Add: TdetPgtoFlItem;
+    function Add: TdetPgtoFlItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetPgtoFlItem;
     property Items[Index: Integer]: TdetPgtoFlItem read GetItem write SetItem;
   end;
 
-  TdetPgtoFlItem = class(TCollectionItem)
+  TdetPgtoFlItem = class(TObject)
   private
     FperRef : String;
     FIdeDmDev: string;
@@ -272,7 +270,7 @@ type
     function getRetPagtoTot: TRubricasComPensaoCollection;
     function getInfoPgtoParc: TRubricaCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor  Destroy; override;
 
     function retPagtoToInst: boolean;
@@ -287,30 +285,30 @@ type
     property infoPgtoParc: TRubricaCollection read getInfoPgtoParc write FInfoPgtoParc;
   end;
 
-  TPgtoExt = class(TPersistent)
+  TPgtoExt = class(TObject)
   private
     FidePais : TIdePais;
     FEndExt : TEndExt;
   public
-    constructor create;
+    constructor Create;
     destructor  Destroy; override;
 
     property idePais: TIdePais read FIdePais write FIdePais;
     property endExt: TEndExt read FEndExt write FEndExt;
   end;
 
-  TDetPgtoFerCollection = class(TCollection)
+  TDetPgtoFerCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDetPgtoFerItem;
     procedure SetItem(Index: Integer; const Value: TDetPgtoFerItem);
   public
-    constructor Create; reintroduce;
-    function Add: TDetPgtoFerItem;
+    function Add: TDetPgtoFerItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDetPgtoFerItem;
     property Items[Index: Integer]: TDetPgtoFerItem read GetItem write SetITem;
       default;
   end;
 
-  TDetPgtoFerItem = class(TCollectionItem)
+  TDetPgtoFerItem = class(TObject)
   private
     FCodCateg: integer;
     FDtIniGoz: TDate;
@@ -319,7 +317,7 @@ type
     FDetRubrFer: TRubricasComPensaoCollection;
     Fmatricula: String;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property codCateg: integer read FCodCateg write FCodCateg;
@@ -330,41 +328,41 @@ type
     property detRubrFer: TRubricasComPensaoCollection read FDetRubrFer write FDetRubrFer;
   end;
 
-  TDetPgtoAntCollection = class(TCollection)
+  TDetPgtoAntCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDetPgtoAntItem;
     procedure SetItem(Index: Integer; const Value: TDetPgtoAntItem);
   public
-    constructor Create; reintroduce;
-    function Add: TDetPgtoAntItem;
+    function Add: TDetPgtoAntItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDetPgtoAntItem;
     property Items[Index: Integer]: TDetPgtoAntItem read GetItem write SetITem;
       default;
   end;
 
-  TDetPgtoAntItem = class(TCollectionItem)
+  TDetPgtoAntItem = class(TObject)
   private
     FCodCateg: Integer;
     FInfoPgtoAnt: TInfoPgtoAntCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property codCateg: Integer read FCodCateg write FCodCateg;
     property infoPgtoAnt: TInfoPgtoAntCollection read FInfoPgtoAnt write FInfoPgtoAnt;
   end;
 
-  TInfoPgtoAntCollection = class(TCollection)
+  TInfoPgtoAntCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoPgtoAntItem;
     procedure SetItem(Index: Integer; const Value: TInfoPgtoAntItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoPgtoAntItem;
+    function Add: TInfoPgtoAntItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoPgtoAntItem;
     property Items[Index: Integer]: TInfoPgtoAntItem read GetItem write SetITem;
       default;
   end;
 
-  TInfoPgtoAntItem = class(TCollectionItem)
+  TInfoPgtoAntItem = class(TObject)
   private
     FTpBcIRRF: tpCodIncIRRF;
     FVrBcIRRF: Double;
@@ -383,8 +381,7 @@ uses
 
 function TS1210Collection.Add: TS1210CollectionItem;
 begin
-  Result := TS1210CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS1210Collection.GetItem(Index: Integer): TS1210CollectionItem;
@@ -397,10 +394,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS1210Collection.New: TS1210CollectionItem;
+begin
+  Result := TS1210CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS1210CollectionItem }
 
 constructor TS1210CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS1210;
   FEvtPgtos   := TEvtPgtos.Create(AOwner);
 end;
@@ -453,12 +457,7 @@ end;
 
 function TInfoPgtoAntCollection.Add: TInfoPgtoAntItem;
 begin
-  Result := TInfoPgtoAntItem(inherited add);
-end;
-
-constructor TInfoPgtoAntCollection.Create;
-begin
-  inherited create(TInfoPgtoAntItem);
+  Result := Self.New;
 end;
 
 function TInfoPgtoAntCollection.GetItem(Index: Integer): TInfoPgtoAntItem;
@@ -471,16 +470,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoPgtoAntCollection.New: TInfoPgtoAntItem;
+begin
+  Result := TInfoPgtoAntItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoPgtoCollection }
 
 function TInfoPgtoCollection.Add: TInfoPgtoItem;
 begin
-  Result := TInfoPgtoItem(inherited add);
-end;
-
-constructor TInfoPgtoCollection.Create;
-begin
-  inherited create(TInfoPgtoItem);
+  Result := Self.New;
 end;
 
 function TInfoPgtoCollection.GetItem(Index: Integer): TInfoPgtoItem;
@@ -493,19 +493,25 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoPgtoCollection.New: TInfoPgtoItem;
+begin
+  Result := TInfoPgtoItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoPgtoItem }
 
-constructor TInfoPgtoItem.create;
+constructor TInfoPgtoItem.Create;
 begin
-//  inherited
-  FdetPgtoFl := TdetPgtoFlCollection.Create;
-  FIdePgtoExt := TPgtoExt.Create;
+  inherited Create;
+  FdetPgtoFl    := TdetPgtoFlCollection.Create;
+  FIdePgtoExt   := TPgtoExt.Create;
   FdetPgtoBenPr := nil;
-  FDetPgtoFer := nil;
-  FDetPgtoAnt := nil;
-  end;
+  FDetPgtoFer   := nil;
+  FDetPgtoAnt   := nil;
+end;
 
-destructor TInfoPgtoItem.destroy;
+destructor TInfoPgtoItem.Destroy;
 begin
   FdetPgtoFl.Free;
   FIdePgtoExt.Free;
@@ -562,7 +568,7 @@ begin
   Result := FdetPgtoBenPr;
 end;
 
-function TInfoPgtoItem.GetPgtoExt: TPgtoExt;
+function TInfoPgtoItem.GetIdePgtoExt: TPgtoExt;
 begin
   if not (Assigned(FIdePgtoExt)) then
     FIdePgtoExt := TPgtoExt.Create;
@@ -578,10 +584,11 @@ end;
 
 { TPgtoExt }
 
-constructor TPgtoExt.create;
+constructor TPgtoExt.Create;
 begin
+  inherited Create;
   FIdePais := TIdePais.Create;
-  FEndExt := TEndExt.Create;
+  FEndExt  := TEndExt.Create;
 end;
 
 destructor TPgtoExt.destroy;
@@ -636,7 +643,7 @@ begin
   result := Assigned(FPenAlim);
 end;
 
-function TRubricasComPensaoItem.getPensaoAlim: TPensaoAlimCollection;
+function TRubricasComPensaoItem.getpenAlim: TPensaoAlimCollection;
 begin
   if not Assigned(FPenAlim) then
     FPenAlim := TPensaoAlimCollection.Create;
@@ -645,14 +652,9 @@ end;
 
 { TdetPgtoFlCollection }
 
-function TdetPgtoFlCollection.add: TdetPgtoFlItem;
+function TdetPgtoFlCollection.Add: TdetPgtoFlItem;
 begin
-  result := TdetPgtoFlItem(inherited add);
-end;
-
-constructor TdetPgtoFlCollection.Create;
-begin
-  inherited create(TdetPgtoFlItem);
+  Result := Self.New;
 end;
 
 function TdetPgtoFlCollection.GetItem(Index: Integer): TdetPgtoFlItem;
@@ -665,11 +667,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TdetPgtoFlCollection.New: TdetPgtoFlItem;
+begin
+  Result := TdetPgtoFlItem.Create;
+  Self.Add(Result);
+end;
+
 { TdetPgtoFlItem }
 
 constructor TdetPgtoFlItem.create;
 begin
-  FRetPagtoTot := nil;
+  inherited Create;
+  FRetPagtoTot  := nil;
   FInfoPgtoParc := nil;
 end;
 
@@ -707,15 +716,9 @@ end;
 
 { TDetPgtoAntCollection }
 
-function TDetPgtoAntCollection.add: TDetPgtoAntItem;
+function TDetPgtoAntCollection.Add: TDetPgtoAntItem;
 begin
-  result := TDetPgtoAntItem(inherited add);
-  Result.Create;
-end;
-
-constructor TDetPgtoAntCollection.Create;
-begin
-  inherited Create(TDetPgtoAntItem);
+  Result := Self.New;
 end;
 
 function TDetPgtoAntCollection.GetItem(Index: Integer): TDetPgtoAntItem;
@@ -728,10 +731,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDetPgtoAntCollection.New: TDetPgtoAntItem;
+begin
+  Result := TDetPgtoAntItem.Create;
+  Self.Add(Result);
+end;
+
 { TDetPgtoAntItem }
 
 constructor TDetPgtoAntItem.Create;
 begin
+  inherited Create;
   FInfoPgtoAnt := TInfoPgtoAntCollection.Create;
 end;
 
@@ -744,15 +754,9 @@ end;
 
 { TDetPgtoFerCollection }
 
-function TDetPgtoFerCollection.add: TDetPgtoFerItem;
+function TDetPgtoFerCollection.Add: TDetPgtoFerItem;
 begin
-  result := TDetPgtoFerItem(inherited add);
-  Result.Create;
-end;
-
-constructor TDetPgtoFerCollection.Create;
-begin
-  inherited create(TDetPgtoFerItem);
+  Result := Self.New;
 end;
 
 function TDetPgtoFerCollection.GetItem(Index: Integer): TDetPgtoFerItem;
@@ -765,10 +769,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDetPgtoFerCollection.New: TDetPgtoFerItem;
+begin
+  Result := TDetPgtoFerItem.Create;
+  Self.Add(Result);
+end;
+
 { TDetPgtoFerItem }
 
 constructor TDetPgtoFerItem.Create;
 begin
+  inherited Create;
   FDetRubrFer := TRubricasComPensaoCollection.Create;
 end;
 
@@ -785,7 +796,7 @@ constructor TDetPgtoBenPr.Create;
 begin
   inherited;
 
-  FRetPgtoTot := nil;
+  FRetPgtoTot   := nil;
   FInfoPgtoParc := nil;
 end;
 

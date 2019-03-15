@@ -143,9 +143,9 @@ begin
   FS1200 := TS1200Collection.Create(AOwner);
   FS1202 := TS1202Collection.Create(AOwner);
   FS1207 := TS1207Collection.Create(AOwner);
-  FS1210 := TS1210Collection.Create(AOwner, TS1210CollectionItem);
-  FS1250 := TS1250Collection.Create(AOwner, TS1250CollectionItem);
-  FS1260 := TS1260Collection.Create(AOwner, TS1260CollectionItem);
+  FS1210 := TS1210Collection.Create(AOwner);
+  FS1250 := TS1250Collection.Create(AOwner);
+  FS1260 := TS1260Collection.Create(AOwner);
   FS1270 := TS1270Collection.Create(AOwner, TS1270CollectionItem);
   FS1280 := TS1280Collection.Create(AOwner, TS1280CollectionItem);
   FS1295 := TS1295Collection.Create(AOwner, TS1295CollectionItem);

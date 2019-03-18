@@ -54,30 +54,29 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2260Collection = class;
   TS2260CollectionItem = class;
   TEvtConvInterm = class;
   TInfoConvInterm = class;
   Tjornada = class;
   TlocalTrab = class;
 
-  TS2260Collection = class(TOwnedCollection)
+  TS2260Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2260CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2260CollectionItem);
   public
-    function Add: TS2260CollectionItem;
+    function Add: TS2260CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2260CollectionItem;
     property Items[Index: Integer]: TS2260CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2260CollectionItem = class(TCollectionItem)
+  TS2260CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtConvInterm: TEvtConvInterm;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtConvInterm: TEvtConvInterm read FEvtConvInterm write FEvtConvInterm;
   end;
@@ -106,7 +105,7 @@ type
     property InfoConvInterm: TInfoConvInterm read FInfoConvInterm write FInfoConvInterm;
   end;
 
-  TInfoConvInterm = class(TPersistent)
+  TInfoConvInterm = class(TObject)
   private
     FcodConv: string;
     FdtInicio: TDateTime;
@@ -115,7 +114,7 @@ type
     Fjornada : Tjornada;
     FlocalTrab: TlocalTrab;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property codConv: string read FcodConv write FcodConv;
@@ -126,7 +125,7 @@ type
     property localTrab: TlocalTrab read FlocalTrab write FlocalTrab;
   end;
 
-  Tjornada = class(TPersistent)
+  Tjornada = class(TObject)
   private
     FcodHorContrat: string;
     FdscJornada: string;
@@ -135,12 +134,12 @@ type
     property dscJornada: string read FdscJornada write FdscJornada;
   end;
 
-  TlocalTrab = class(TPersistent)
+  TlocalTrab = class(TObject)
   private
     FindLocal: string;
     FlocalTrabInterm: TBrasil;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     property indLocal: string read FindLocal write FindLocal;
@@ -157,8 +156,7 @@ uses
 
 function TS2260Collection.Add: TS2260CollectionItem;
 begin
-  Result := TS2260CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2260Collection.GetItem(Index: Integer): TS2260CollectionItem;
@@ -172,11 +170,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2260Collection.New: TS2260CollectionItem;
+begin
+  Result := TS2260CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2260CollectionItem }
 
 constructor TS2260CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2260;
+  inherited Create;
+  FTipoEvento    := teS2260;
   FEvtConvInterm := TEvtConvInterm.Create(AOwner);
 end;
 
@@ -189,13 +194,14 @@ end;
 
 { TInfoConvInterm }
 
-constructor TInfoConvInterm.create;
+constructor TInfoConvInterm.Create;
 begin
-  Fjornada  := Tjornada.create;
+  inherited Create;
+  Fjornada   := Tjornada.Create;
   FlocalTrab := TlocalTrab.Create;
 end;
 
-destructor TInfoConvInterm.destroy;
+destructor TInfoConvInterm.Destroy;
 begin
   Fjornada.Free;
   FlocalTrab.Free;
@@ -205,8 +211,9 @@ end;
 
 { TlocalTrab }
 
-constructor TlocalTrab.create;
+constructor TlocalTrab.Create;
 begin
+  inherited Create;
   FlocalTrabInterm := TBrasil.Create;
 end;
 

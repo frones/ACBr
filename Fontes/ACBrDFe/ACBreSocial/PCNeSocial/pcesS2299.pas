@@ -51,12 +51,11 @@ unit pcesS2299;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2299Collection = class;
   TS2299CollectionItem = class;
   TEvtDeslig = class;
   TInfoDeslig = class;
@@ -77,23 +76,23 @@ type
   TProcCS = class;
 
 
-  TS2299Collection = class(TOwnedCollection)
+  TS2299Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2299CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2299CollectionItem);
   public
-    function Add: TS2299CollectionItem;
+    function Add: TS2299CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2299CollectionItem;
     property Items[Index: Integer]: TS2299CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2299CollectionItem = class(TCollectionItem)
+  TS2299CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtDeslig : TEvtDeslig;
   public
-    constructor Create(AOwner: Tcomponent); reintroduce;
+    constructor Create(AOwner: Tcomponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtDeslig: TEvtDeslig read FEvtDeslig write FEvtDeslig;
   end;
@@ -130,7 +129,7 @@ type
     property InfoDeslig: TInfoDeslig read FInfoDeslig write FInfoDeslig;
   end;
 
-  TInfoDeslig = class(TPersistent)
+  TInfoDeslig = class(TObject)
   private
     FmtvDeslig: String;
     FdtDeslig: TDateTime;
@@ -181,40 +180,39 @@ type
     property QtdDiasInterm: Integer read FQtdDiasInterm write FQtdDiasInterm;
   end;
 
-  TIdePeriodoCollection = class(TCollection)
+  TIdePeriodoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdePeriodoItem;
     procedure SetItem(Index: Integer; Value: TIdePeriodoItem);
   public
-    constructor Create; reintroduce;
-    function Add: TIdePeriodoItem;
+    function Add: TIdePeriodoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdePeriodoItem;
     property Items[Index: Integer]: TIdePeriodoItem read GetItem write SetItem; default;
   end;
 
-  TIdePeriodoItem = class(TCollectionItem)
+  TIdePeriodoItem = class(TObject)
   private
     FPerRef: string;
     FIdeEstabLot: TideEstabLotCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property perRef: string read FPerRef write FPerRef;
     property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
   end;
 
-  TIdeADCCollection = class(TCollection)
+  TIdeADCCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdeADCItem;
     procedure SetItem(Index: Integer; Value: TIdeADCItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TIdeADCItem;
+    function Add: TIdeADCItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeADCItem;
     property Items[Index: Integer]: TIdeADCItem read GetItem write SetItem; default;
   end;
 
-  TIdeADCItem = class(TCollectionItem)
+  TIdeADCItem = class(TObject)
   private
     FDtAcConv: TDateTime;
     FTpAcConv: tpTpAcConv;
@@ -223,7 +221,7 @@ type
     FDsc: String;
     FIdePeriodo: TIdePeriodoCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dtAcConv: TDateTime read FDtAcConv write FDtAcConv;
@@ -234,7 +232,7 @@ type
     property idePeriodo: TIdePeriodoCollection read FIdePeriodo write FIdePeriodo;
   end;
 
-  TInfoPerAnt = class(TPersistent)
+  TInfoPerAnt = class(TObject)
   private
     FIdeADC: TIdeADCCollection;
   public
@@ -244,7 +242,7 @@ type
     property ideADC: TIdeADCCollection read FIdeADC write FIdeADC;
   end;
 
-  TInfoPerApur = class(TPersistent)
+  TInfoPerApur = class(TObject)
   private
     FIdeEstabLot: TideEstabLotCollection;
   public
@@ -254,18 +252,17 @@ type
     property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
   end;
 
-  TDmDevCollection = class(TCollection)
+  TDmDevCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDMDevCollectionItem;
     procedure SetItem(Index: Integer; Value: TDMDevCollectionItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TDMDevCollectionItem;
+    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItem;
     property Items[Index: Integer]: TDMDevCollectionItem read GetItem write SetItem; default;
   end;
 
-  TDMDevCollectionItem = class(TCollectionItem)
+  TDMDevCollectionItem = class(TObject)
   private
     FIdeDmDev: string;
     FInfoPerApur: TInfoPerApur;
@@ -275,7 +272,7 @@ type
     function getInfoPerApur: TInfoPerApur;
     function getInfoPerAnt: TInfoPerAnt;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     function infoPerApurInst: boolean;
@@ -292,24 +289,24 @@ type
     FDmDev: TDmDevCollection;
     FProcCS: TProcCS;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dmDev: TDmDevCollection read FDmDev write FDmDev;
     property ProcCS: TProcCS read FProcCS write FProcCS;
   end;
 
-  TConsigFGTSCollection = class(TCollection)
+  TConsigFGTSCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TConsigFGTSItem;
     procedure SetItem(Index: Integer; Value: TConsigFGTSItem);
   public
-    constructor Create; reintroduce;
-    function Add: TConsigFGTSItem;
+    function Add: TConsigFGTSItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TConsigFGTSItem;
     property Items[Index: Integer]: TConsigFGTSItem read GetItem write SetItem; default;
   end;
 
-  TConsigFGTSItem = class(TCollectionItem)
+  TConsigFGTSItem = class(TObject)
   private
     FidConsig: tpSimNao;
     FinsConsig: string;
@@ -320,7 +317,7 @@ type
     property nrContr: string read FnrContr write FnrContr;
   end;
 
-  TtransfTit = class(TPersistent)
+  TtransfTit = class(TObject)
   private
     FcpfSubstituto: string;
     FdtNascto: TDateTime;
@@ -329,24 +326,24 @@ type
     property dtNascto: TDateTime read FdtNascto write FdtNascto;
   end;
 
-  TInfoTrabIntermCollection = class(TCollection)
+  TInfoTrabIntermCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoTrabIntermItem;
     procedure SetItem(Index: Integer; Value: TInfoTrabIntermItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoTrabIntermItem;
+    function Add: TInfoTrabIntermItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoTrabIntermItem;
     property Items[Index: Integer]: TInfoTrabIntermItem read GetItem write SetItem; default;
   end;
 
-  TInfoTrabIntermItem = class(TCollectionItem)
+  TInfoTrabIntermItem = class(TObject)
   private
     FcodConv: string;
   public
     property codConv: string read FcodConv write FcodConv;
   end;
 
-  TProcCS = class(TPersistent)
+  TProcCS = class(TObject)
   private
     FnrProcJud: String;
   public
@@ -363,8 +360,7 @@ uses
 
 function TS2299Collection.Add: TS2299CollectionItem;
 begin
-  Result := TS2299CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2299Collection.GetItem(Index: Integer): TS2299CollectionItem;
@@ -375,6 +371,12 @@ end;
 procedure TS2299Collection.SetItem(Index: Integer; Value: TS2299CollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TS2299Collection.New: TS2299CollectionItem;
+begin
+  Result := TS2299CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
 end;
 
 { TInfoDeslig }
@@ -392,7 +394,7 @@ begin
   FconsigFGTS   := TConsigFGTSCollection.Create;
 end;
 
-destructor TInfoDeslig.destroy;
+destructor TInfoDeslig.Destroy;
 begin
   FSucessaoVinc.Free;
   FreeAndNil(FVerbasResc);
@@ -401,7 +403,7 @@ begin
   FtransfTit.Free;
   FMudancaCPF.Free;
   Fobservacoes.Free;
-  FreeAndNil(FconsigFGTS);
+  FconsigFGTS.Free;
   inherited;
 end;
 
@@ -421,8 +423,9 @@ end;
 
 constructor TS2299CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento  := teS2299;
-  FEvtDeslig := TEvtDeslig.Create(AOwner);
+  inherited Create;
+  FTipoEvento := teS2299;
+  FEvtDeslig  := TEvtDeslig.Create(AOwner);
 end;
 
 destructor TS2299CollectionItem.Destroy;
@@ -434,15 +437,9 @@ end;
 
 { TDmDevCollection }
 
-constructor TDmDevCollection.Create;
-begin
-  inherited Create(TDMDevCollectionItem);
-end;
-
 function TDmDevCollection.Add: TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited Add);
-  Result.Create;
+  Result := Self.New;
 end;
 
 function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
@@ -455,12 +452,19 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDmDevCollection.New: TDMDevCollectionItem;
+begin
+  Result := TDMDevCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TDMDevCollectionItem }
 
 constructor TDMDevCollectionItem.Create;
 begin
-  FInfoPerApur := nil;
-  FInfoPerAnt := nil;
+  inherited Create;
+  FInfoPerApur    := nil;
+  FInfoPerAnt     := nil;
   FInfoTrabInterm := TInfoTrabIntermCollection.Create;
 end;
 
@@ -501,37 +505,35 @@ end;
 
 constructor TInfoPerApur.Create;
 begin
+  inherited Create;
   FIdeEstabLot := TideEstabLotCollection.Create;
 end;
 
 destructor TInfoPerApur.Destroy;
 begin
   FIdeEstabLot.Free;
+  inherited;
 end;
 
 { TInfoPerAnt }
 
 constructor TInfoPerAnt.Create;
 begin
+  inherited Create;
   FIdeADC := TIdeADCCollection.Create;
 end;
 
 destructor TInfoPerAnt.Destroy;
 begin
   FIdeADC.Free;
+  inherited;
 end;
 
 { TIdeADCCollection }
 
-constructor TIdeADCCollection.Create;
-begin
-  inherited Create(TIdeADCItem);
-end;
-
 function TIdeADCCollection.Add: TIdeADCItem;
 begin
-  Result := TIdeADCItem(inherited Add);
-  Result.Create;
+  Result := Self.New;
 end;
 
 function TIdeADCCollection.GetItem(Index: Integer): TIdeADCItem;
@@ -544,10 +546,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TIdeADCCollection.New: TIdeADCItem;
+begin
+  Result := TIdeADCItem.Create;
+  Self.Add(Result);
+end;
+
 { TIdeADCItem }
 
 constructor TIdeADCItem.Create;
 begin
+  inherited Create;
   FIdePeriodo := TIdePeriodoCollection.Create;
 end;
 
@@ -560,15 +569,9 @@ end;
 
 { TIdePeriodoCollection }
 
-constructor TIdePeriodoCollection.Create;
-begin
-  inherited Create(TIdePeriodoItem);
-end;
-
 function TIdePeriodoCollection.Add: TIdePeriodoItem;
 begin
-  Result := TIdePeriodoItem(inherited Add);
-  Result.Create;
+  Result := Self.New;
 end;
 
 function TIdePeriodoCollection.GetItem(Index: Integer): TIdePeriodoItem;
@@ -581,10 +584,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TIdePeriodoCollection.New: TIdePeriodoItem;
+begin
+  Result := TIdePeriodoItem.Create;
+  Self.Add(Result);
+end;
+
 { TIdePeriodoItem }
 
 constructor TIdePeriodoItem.Create;
 begin
+  inherited Create;
   FIdeEstabLot := TideEstabLotCollection.Create;
 end;
 
@@ -599,7 +609,7 @@ end;
 
 constructor TVerbasRescS2299.Create;
 begin
-  inherited;
+  inherited Create;
 
   FDmDev := TDmDevCollection.Create;
   ProcCS := TProcCS.Create;
@@ -616,13 +626,7 @@ end;
 
 function TInfoTrabIntermCollection.Add: TInfoTrabIntermItem;
 begin
-  Result := TInfoTrabIntermItem(inherited Add);
-//  Result.Create;
-end;
-
-constructor TInfoTrabIntermCollection.Create;
-begin
-  inherited Create(TInfoTrabIntermItem);
+  Result := Self.New;
 end;
 
 function TInfoTrabIntermCollection.GetItem(
@@ -637,16 +641,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoTrabIntermCollection.New: TInfoTrabIntermItem;
+begin
+  Result := TInfoTrabIntermItem.Create;
+end;
+
 { TConsigFGTSCollection }
 
 function TConsigFGTSCollection.Add: TConsigFGTSItem;
 begin
-  Result := TConsigFGTSItem(inherited Add);
-end;
-
-constructor TConsigFGTSCollection.Create;
-begin
-  inherited Create(TConsigFGTSItem);
+  Result := Self.New;
 end;
 
 function TConsigFGTSCollection.GetItem(Index: Integer): TConsigFGTSItem;
@@ -657,6 +661,12 @@ end;
 procedure TConsigFGTSCollection.SetItem(Index: Integer; Value: TConsigFGTSItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TConsigFGTSCollection.New: TConsigFGTSItem;
+begin
+  Result := TConsigFGTSItem.Create;
+  Self.Add(Result);
 end;
 
 { TEvtDeslig }
@@ -671,7 +681,7 @@ begin
   FInfoDeslig    := TInfoDeslig.Create;
 end;
 
-destructor TEvtDeslig.destroy;
+destructor TEvtDeslig.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

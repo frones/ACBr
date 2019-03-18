@@ -180,14 +180,14 @@ begin
   FS2240 := TS2240Collection.Create(AOwner);
   FS2245 := TS2245Collection.Create(AOwner);
   FS2250 := TS2250Collection.Create(AOwner);
-  FS2260 := TS2260Collection.Create(AOwner, TS2260CollectionItem);
-  FS2298 := TS2298Collection.Create(AOwner, TS2298CollectionItem);
-  FS2299 := TS2299Collection.Create(AOwner, TS2299CollectionItem);
-  FS2300 := TS2300Collection.Create(AOwner, TS2300CollectionItem);
-  FS2306 := TS2306Collection.Create(AOwner, TS2306CollectionItem);
-  FS2399 := TS2399Collection.Create(AOwner, TS2399CollectionItem);
-  FS2400 := TS2400Collection.Create(AOwner, TS2400CollectionItem);
-  FS3000 := TS3000Collection.Create(AOwner, TS3000CollectionItem);
+  FS2260 := TS2260Collection.Create(AOwner);
+  FS2298 := TS2298Collection.Create(AOwner);
+  FS2299 := TS2299Collection.Create(AOwner);
+  FS2300 := TS2300Collection.Create(AOwner);
+  FS2306 := TS2306Collection.Create(AOwner);
+  FS2399 := TS2399Collection.Create(AOwner);
+  FS2400 := TS2400Collection.Create(AOwner);
+  FS3000 := TS3000Collection.Create(AOwner);
 end;
 
 destructor TNaoPeriodicos.Destroy;

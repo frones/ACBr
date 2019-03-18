@@ -61,23 +61,23 @@ type
   TEvtExclusao = class;
   TInfoExclusao = class;
 
-  TS3000Collection = class(TOwnedCollection)
+  TS3000Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS3000CollectionItem;
     procedure SetItem(Index: Integer; Value: TS3000CollectionItem);
   public
-    function Add: TS3000CollectionItem;
+    function Add: TS3000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS3000CollectionItem;
     property Items[Index: Integer]: TS3000CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS3000CollectionItem = class(TCollectionItem)
+  TS3000CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtExclusao: TEvtExclusao;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtExclusao: TEvtExclusao read FEvtExclusao write FEvtExclusao;
   end;
@@ -126,8 +126,7 @@ uses
 
 function TS3000Collection.Add: TS3000CollectionItem;
 begin
-  Result := TS3000CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS3000Collection.GetItem(Index: Integer): TS3000CollectionItem;
@@ -141,11 +140,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS3000Collection.New: TS3000CollectionItem;
+begin
+  Result := TS3000CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS3000CollectionItem }
 
 constructor TS3000CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS3000;
+  inherited Create;
+  FTipoEvento  := teS3000;
   FEvtExclusao := TEvtExclusao.Create(AOwner);
 end;
 
@@ -163,10 +169,10 @@ begin
   inherited;
 
   FIdeTrabalhador := TideTrabalhador2.Create;
-  FIdeFolhaPagto := TIdeFolhaPagto.Create;
+  FIdeFolhaPagto  := TIdeFolhaPagto.Create;
 end;
 
-destructor TInfoExclusao.destroy;
+destructor TInfoExclusao.Destroy;
 begin
   FIdeTrabalhador.Free;
   FIdeFolhaPagto.Free;
@@ -185,7 +191,7 @@ begin
   FInfoExclusao  := TInfoExclusao.Create;
 end;
 
-destructor TEvtExclusao.destroy;
+destructor TEvtExclusao.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

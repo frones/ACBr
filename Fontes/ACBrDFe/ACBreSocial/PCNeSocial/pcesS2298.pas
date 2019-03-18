@@ -59,23 +59,23 @@ type
   TEvtReintegr = class;
   TInfoReintegr = class;
 
-  TS2298Collection = class(TOwnedCollection)
+  TS2298Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2298CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2298CollectionItem);
   public
-    function Add: TS2298CollectionItem;
+    function Add: TS2298CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2298CollectionItem;
     property Items[Index: Integer]: TS2298CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2298CollectionItem = class(TCollectionItem)
+  TS2298CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtReintegr: TEvtReintegr;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtReintegr: TEvtReintegr read FEvtReintegr write FEvtReintegr;
   end;
@@ -128,8 +128,7 @@ uses
 
 function TS2298Collection.Add: TS2298CollectionItem;
 begin
-  Result := TS2298CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2298Collection.GetItem(Index: Integer): TS2298CollectionItem;
@@ -143,9 +142,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2298Collection.New: TS2298CollectionItem;
+begin
+  Result := TS2298CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2298CollectionItem }
 constructor TS2298CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento  := teS2298;
   FEvtReintegr := TEvtReintegr.Create(AOwner);
 end;
@@ -168,7 +174,7 @@ begin
   FInfoReintegr  := TInfoReintegr.Create;
 end;
 
-destructor TEvtReintegr.destroy;
+destructor TEvtReintegr.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

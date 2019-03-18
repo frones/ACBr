@@ -52,12 +52,11 @@ unit pcesS2399;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2399Collection = class;
   TS2399CollectionItem = class;
   TEvtTSVTermino = class;
   TInfoTSVTermino = class;
@@ -65,23 +64,23 @@ type
   TDmDevCollectionItem = class;
   TDmDevCollection = class;
 
-  TS2399Collection = class(TOwnedCollection)
+  TS2399Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2399CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2399CollectionItem);
   public
-    function Add: TS2399CollectionItem;
+    function Add: TS2399CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2399CollectionItem;
     property Items[Index: Integer]: TS2399CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2399CollectionItem = class(TCollectionItem)
+  TS2399CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTSVTermino : TEvtTSVTermino;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtTSVTermino: TEvtTSVTermino read FEvtTSVTermino write FEvtTSVTermino;
   end;
@@ -110,7 +109,7 @@ type
     property InfoTSVTermino: TInfoTSVTermino read FInfoTSVTermino write FInfoTSVTermino;
   end;
 
-  TinfoTSVTermino = class(TPersistent)
+  TinfoTSVTermino = class(TObject)
   private
     FdtTerm : TDateTime;
     FmtvDesligTSV : string;
@@ -134,23 +133,22 @@ type
     property pensAlim: tpPensaoAlim read FPensAlim write FPensAlim;
   end;
 
-  TDmDevCollection = class(TCollection)
+  TDmDevCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDMDevCollectionItem;
     procedure SetItem(Index: Integer; Value: TDMDevCollectionItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TDMDevCollectionItem;
+    function Add: TDMDevCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDMDevCollectionItem;
     property Items[Index: Integer]: TDMDevCollectionItem read GetItem write SetItem; default;
   end;
 
-  TDmDevCollectionItem = class(TCollectionItem)
+  TDmDevCollectionItem = class(TObject)
   private
     FIdeDmDev: string;
     FIdeEstabLot: TideEstabLotCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
 
     property ideDmDev: string read FIdeDmDev write FIdeDmDev;
     property ideEstabLot: TideEstabLotCollection read FIdeEstabLot write FIdeEstabLot;
@@ -175,8 +173,7 @@ uses
 
 function TS2399Collection.Add: TS2399CollectionItem;
 begin
-  Result := TS2399CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2399Collection.GetItem(Index: Integer): TS2399CollectionItem;
@@ -189,11 +186,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2399Collection.New: TS2399CollectionItem;
+begin
+  Result := TS2399CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2399CollectionItem }
 
 constructor TS2399CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2399;
+  inherited Create;
+  FTipoEvento    := teS2399;
   FEvtTSVTermino := TEvtTSVTermino.Create(AOwner);
 end;
 
@@ -225,15 +229,9 @@ end;
 
 { TDmDevCollection }
 
-constructor TDmDevCollection.Create;
-begin
-  inherited Create(TDMDevCollectionItem);
-end;
-
 function TDmDevCollection.Add: TDMDevCollectionItem;
 begin
-  Result := TDMDevCollectionItem(inherited Add);
-  Result.Create;
+  Result := Self.New;
 end;
 
 function TDmDevCollection.GetItem(Index: Integer): TDMDevCollectionItem;
@@ -246,10 +244,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDmDevCollection.New: TDMDevCollectionItem;
+begin
+  Result := TDmDevCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TDMDevCollectionItem }
 
 constructor TDMDevCollectionItem.Create;
 begin
+  inherited Create;
   FIdeEstabLot := TideEstabLotCollection.Create;
 end;
 
@@ -275,7 +280,7 @@ begin
   FInfoTSVTermino := TInfoTSVTermino.Create;
 end;
 
-destructor TEvtTSVTermino.destroy;
+destructor TEvtTSVTermino.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;

@@ -227,13 +227,13 @@ var
 
   function PosReinf: integer;
   begin
-    Result := pos('</Reinf>', AXMLString);
+    Result := pos('</Reinf>', AXMLStr);
   end;
 
 begin
   Result := False;
-  P := PosReinf;
   AXMLStr := AXMLString;
+  P := PosReinf;
 
   while P > 0 do
   begin

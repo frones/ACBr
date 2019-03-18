@@ -323,7 +323,7 @@ begin
         rllTitulo.Caption := ACBrStr('CARTA DE CORREÇÃO ELETRÔNICA');
 
         // Preenche os campos - "Condições de uso"
-        RLLabel21.Caption := 'CONDIÇÕES DE USO';
+        RLLabel21.Caption := ACBrStr('CONDIÇÕES DE USO');
         rlmCondUso.Lines.Clear;
         rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso, ';', slineBreak, [rfReplaceAll]));
         rlmCondUso.Lines.Text := StringReplace(rlmCondUso.Lines.Text, ': I', ':'+slineBreak+'I', [rfReplaceAll]);
@@ -340,7 +340,7 @@ begin
 
       teCancSubst:
       begin
-        rllTitulo.Caption := 'CANCELAMENTO DE NF-E POR SUBSTITUIÇÃO';
+        rllTitulo.Caption := ACBrStr('CANCELAMENTO DE NF-E POR SUBSTITUIÇÃO');
         rllJustificativa.Caption := InfEvento.detEvento.xJust + sLineBreak +
                                     InfEvento.detEvento.chNFeRef;
       end;
@@ -369,7 +369,7 @@ begin
       teEPECNFe:
       begin
         rllTitulo.Caption := ACBrStr('EVENTO PRÉVIO DE EMISSÃO EM CONTINGÊNCIA - EPEC');
-        RLLabel21.Caption := 'DESCRIÇÃO';
+        RLLabel21.Caption := ACBrStr('DESCRIÇÃO');
         rlmCondUso.Lines.Clear;
         rlmCondUso.Lines.Add('Destinatário    : ' + fpEventoNFe.InfEvento.detEvento.dest.CNPJCPF);
         rlmCondUso.Lines.Add('Valor da Nota   : ' + FormatFloatBr(msk13x2, fpEventoNFe.InfEvento.detEvento.vNF));
@@ -472,6 +472,7 @@ begin
     begin
       rlbJustificativa.Visible := False;
       rlbCondUso.Visible := True;
+      RLLabel6.Visible := True;
       rlbCorrecao.Visible := True;
       rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
     end;
@@ -480,6 +481,7 @@ begin
   begin
     rlbJustificativa.Visible := False;
     rlbCondUso.Visible := True;
+    RLLabel6.Visible := False;
     rlbCorrecao.Visible := False;
     rliMarcaDagua1.Top := ((rlbCorrecao.Top + rlbCorrecao.Height) div 2) - (rliMarcaDagua1.Height div 2);
   end;

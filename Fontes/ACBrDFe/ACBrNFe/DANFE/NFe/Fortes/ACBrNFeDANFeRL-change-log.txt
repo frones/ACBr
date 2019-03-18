@@ -57,7 +57,7 @@ Símbolo : Significado
 [*] Ajustes na configuração de Margens NFCeA4 e Descrições com caracteres especiais
 	(por: José M S Junior )
 
-01/03/2019
+18/03/2019
 -- ACBrNFeDANFeEventoRLRetrato--
 [*] Ajustes no redimensionamento do campo "Correção" do Evento Carta de Correção
 	(por: José M S Junior )

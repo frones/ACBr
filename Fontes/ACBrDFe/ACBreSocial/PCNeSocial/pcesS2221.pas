@@ -49,38 +49,36 @@ unit pcesS2221;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2221Collection = class;
   TS2221CollectionItem = class;
   TEvtToxic = class;
-  TToxicologico = class;
 
-  TS2221Collection = class(TOwnedCollection)
+  TS2221Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2221CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2221CollectionItem);
   public
-    function Add: TS2221CollectionItem;
+    function Add: TS2221CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2221CollectionItem;
     property Items[Index: Integer]: TS2221CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2221CollectionItem = class(TCollectionItem)
+  TS2221CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtToxic: TEvtToxic;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtToxic: TEvtToxic read FEvtToxic write FEvtToxic;
   end;
 
-  TToxicologico = class(TPersistent)
+  TToxicologico = class(TObject)
   private
     FdtExame: TDateTime;
     FnmMed: String;
@@ -131,6 +129,7 @@ uses
 
 constructor TS2221CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS2221;
   FEvtToxic   := TEvtToxic.Create(AOwner);
 end;
@@ -146,8 +145,7 @@ end;
 
 function TS2221Collection.Add: TS2221CollectionItem;
 begin
-  Result := TS2221CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2221Collection.GetItem(Index: Integer): TS2221CollectionItem;
@@ -159,6 +157,14 @@ procedure TS2221Collection.SetItem(Index: Integer; Value: TS2221CollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;
+
+function TS2221Collection.New: TS2221CollectionItem;
+begin
+  Result := TS2221CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
+{ TEvtToxic }
 
 constructor TEvtToxic.Create(AACBreSocial: TObject);
 begin

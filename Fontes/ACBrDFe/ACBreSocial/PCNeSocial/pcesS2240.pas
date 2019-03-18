@@ -49,7 +49,7 @@ unit pcesS2240;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
@@ -72,23 +72,23 @@ type
   TRespRegCollectionItem = class;
   TObs = class;
 
-  TS2240Collection = class(TOwnedCollection)
+  TS2240Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2240CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2240CollectionItem);
   public
-    function Add: TS2240CollectionItem;
+    function Add: TS2240CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2240CollectionItem;
     property Items[Index: Integer]: TS2240CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2240CollectionItem = class(TCollectionItem)
+  TS2240CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtExpRisco: TEvtExpRisco;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtExpRisco: TEvtExpRisco read FEvtExpRisco write FEvtExpRisco;
   end;
@@ -122,18 +122,17 @@ type
     property infoExpRisco: TinfoExpRisco read FinfoExpRisco write FinfoExpRisco;
   end;
 
-  TRespRegCollection = class(TCollection)
+  TRespRegCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRespRegCollectionItem;
     procedure SetItem(Index: Integer; Value: TRespRegCollectionItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TRespRegCollectionItem;
+    function Add: TRespRegCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRespRegCollectionItem;
     property Items[Index: Integer]: TRespRegCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRespRegCollectionItem = class(TCollectionItem)
+  TRespRegCollectionItem = class(TObject)
   private
     FcpfResp: String;
     FNisResp: String;
@@ -152,7 +151,7 @@ type
     property ufOC: tpuf read FUfOC write FUfOC;
   end;
 
-  TinfoExpRisco = class(TPersistent)
+  TinfoExpRisco = class(TObject)
   private
     FdtIniCondicao: TDateTime;
     FInfoAmb: TInfoAmbCollection;
@@ -162,7 +161,7 @@ type
     FObs: TObs;
     function getRespReg: TRespRegCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dtIniCondicao: TDateTime read FdtIniCondicao write FdtIniCondicao;
@@ -173,64 +172,63 @@ type
     property obs: TObs read FObs write FObs;
   end;
 
-  TInfoAmbCollection = class(TCollection)
+  TInfoAmbCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoAmbCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoAmbCollectionItem;
+    function Add: TInfoAmbCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoAmbCollectionItem;
     property Items[Index: Integer]: TInfoAmbCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoAmbCollectionItem = class(TCollectionItem)
+  TInfoAmbCollectionItem = class(TObject)
   private
     FcodAmb: String;
   public
     property codAmb: String read FcodAmb write FcodAmb;
   end;
 
-  TInfoAtiv = class(TPersistent)
+  TInfoAtiv = class(TObject)
   private
     FdscAtivDes: String;
     FativPericInsal: TAtivPericInsalCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor  Destroy; override;
 
     property dscAtivDes: String read FdscAtivDes write FdscAtivDes;
     property ativPericInsal: TAtivPericInsalCollection read FativPericInsal write FativPericInsal;
   end;
 
-  TAtivPericInsalCollection = class(TCollection)
+  TAtivPericInsalCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TAtivPericInsalCollectionItem;
     procedure SetItem(Index: Integer; Value: TAtivPericInsalCollectionItem);
   public
-    constructor Create; reintroduce;
-    function Add: TAtivPericInsalCollectionItem;
+    function Add: TAtivPericInsalCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TAtivPericInsalCollectionItem;
     property Items[Index: Integer]: TAtivPericInsalCollectionItem read GetItem write SetItem;
   end;
 
-  TAtivPericInsalCollectionItem = class(TCollectionItem)
+  TAtivPericInsalCollectionItem = class(TObject)
   private
     FcodAtiv: String;
   public
     property codAtiv: String read FcodAtiv write FcodAtiv;
   end;
 
-  TFatRiscoCollection = class(TCollection)
+  TFatRiscoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TFatRiscoCollectionItem;
     procedure SetItem(Index: Integer; Value: TFatRiscoCollectionItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TFatRiscoCollectionItem;
+    function Add: TFatRiscoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TFatRiscoCollectionItem;
     property Items[Index: Integer]: TFatRiscoCollectionItem read GetItem write SetItem;
   end;
 
-  TFatRiscoCollectionItem = class(TCollectionItem)
+  TFatRiscoCollectionItem = class(TObject)
   private
     FcodFatRis: String;
     FtpAval: tptpAval;
@@ -244,7 +242,7 @@ type
     FEpcEpi: TEpcEpi;
     function getEpcEpi: TEpcEpi;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property codFatRis: String read FcodFatRis write FcodFatRis;
@@ -259,7 +257,7 @@ type
     property epcEpi: TEpcEpi read getEpcEpi write FEpcEpi;
   end;
 
-  TEpcEpi = class(TPersistent)
+  TEpcEpi = class(TObject)
   private
     FUtilizEPC: tpUtilizEPC;
     FEficEpc: tpSimNao;
@@ -268,7 +266,7 @@ type
 
     function getEpi: TEpiCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
     function epiInst: boolean;
 
@@ -278,17 +276,17 @@ type
     property epi: TEpiCollection read getEpi write FEpi;
   end;
 
-  TEpiCollection = class(TCollection)
+  TEpiCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TEpiCollectionItem;
     procedure SetItem(Index: Integer; Value: TEpiCollectionItem);
   public
-    constructor Create; reintroduce;
-    function Add: TEpiCollectionItem;
+    function Add: TEpiCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TEpiCollectionItem;
     property Items[Index: Integer]: TEpiCollectionItem read GetItem write SetItem; default;
   end;
 
-  TEpiCollectionItem = class(TCollectionItem)
+  TEpiCollectionItem = class(TObject)
   private
     FcaEPI: String;
     FdscEPI: String;
@@ -311,7 +309,7 @@ type
     property higienizacao: tpSimNao read Fhigienizacao write Fhigienizacao;
   end;
 
-  TObs = class(TPersistent)
+  TObs = class(TObject)
   private
     FmetErg: String;
     FobsCompl: String;
@@ -330,8 +328,7 @@ uses
 
 function TS2240Collection.Add: TS2240CollectionItem;
 begin
-  Result := TS2240CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2240Collection.GetItem(Index: Integer): TS2240CollectionItem;
@@ -344,10 +341,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2240Collection.New: TS2240CollectionItem;
+begin
+  Result := TS2240CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2240CollectionItem }
 
 constructor TS2240CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento  := teS2240;
   FEvtExpRisco := TEvtExpRisco.Create(AOwner);
 end;
@@ -595,15 +599,9 @@ end;
 
 { TRespRegCollection }
 
-constructor TRespRegCollection.Create;
-begin
-  Inherited Create(TRespRegCollectionItem);
-end;
-
 function TRespRegCollection.Add: TRespRegCollectionItem;
 begin
-  Result := TRespRegCollectionItem(inherited Add);
-//  Result.Create;
+  Result := Self.New;
 end;
 
 function TRespRegCollection.GetItem(Index: Integer): TRespRegCollectionItem;
@@ -782,16 +780,17 @@ begin
   end;
 end;
 
+function TRespRegCollection.New: TRespRegCollectionItem;
+begin
+  Result := TRespRegCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoAmbCollection }
 
 function TInfoAmbCollection.Add: TInfoAmbCollectionItem;
 begin
-  Result := TInfoAmbCollectionItem(inherited Add);
-end;
-
-constructor TInfoAmbCollection.Create;
-begin
-  inherited Create(TInfoAmbCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoAmbCollection.GetItem(Index: Integer): TInfoAmbCollectionItem;
@@ -802,6 +801,12 @@ end;
 procedure TInfoAmbCollection.SetItem(Index: Integer; Value: TInfoAmbCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TInfoAmbCollection.New: TInfoAmbCollectionItem;
+begin
+  Result := TInfoAmbCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfoAtiv }
@@ -824,12 +829,7 @@ end;
 
 function TAtivPericInsalCollection.Add: TAtivPericInsalCollectionItem;
 begin
-  Result := TAtivPericInsalCollectionItem(inherited Add);
-end;
-
-constructor TAtivPericInsalCollection.Create;
-begin
-  inherited Create(TAtivPericInsalCollectionItem);
+  Result := Self.New;
 end;
 
 function TAtivPericInsalCollection.GetItem(Index: Integer): TAtivPericInsalCollectionItem;
@@ -842,16 +842,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TAtivPericInsalCollection.New: TAtivPericInsalCollectionItem;
+begin
+  Result := TAtivPericInsalCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TFatRiscoCollection }
 
 function TFatRiscoCollection.Add: TFatRiscoCollectionItem;
 begin
-  Result := TFatRiscoCollectionItem(inherited Add);
-end;
-
-constructor TFatRiscoCollection.Create;
-begin
-  inherited Create(TFatRiscoCollectionItem);
+  Result := Self.New;
 end;
 
 function TFatRiscoCollection.GetItem(Index: Integer): TFatRiscoCollectionItem;
@@ -864,10 +865,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TFatRiscoCollection.New: TFatRiscoCollectionItem;
+begin
+  Result := TFatRiscoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TFatRiscoCollectionItem }
 
 constructor TFatRiscoCollectionItem.Create;
 begin
+  inherited Create;
   FEpcEpi := TEpcEpi.Create;
 end;
 
@@ -916,12 +924,7 @@ end;
 { TEpiCollection }
 function TEpiCollection.Add: TEpiCollectionItem;
 begin
-  Result := TEpiCollectionItem(inherited Add);
-end;
-
-constructor TEpiCollection.Create;
-begin
-  inherited Create(TEpiCollectionItem);
+  Result := Self.New;
 end;
 
 function TEpiCollection.GetItem(Index: Integer): TEpiCollectionItem;
@@ -932,6 +935,12 @@ end;
 procedure TEpiCollection.SetItem(Index: Integer; Value: TEpiCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TEpiCollection.New: TEpiCollectionItem;
+begin
+  Result := TEpiCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

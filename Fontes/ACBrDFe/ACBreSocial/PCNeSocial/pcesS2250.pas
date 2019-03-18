@@ -54,30 +54,29 @@ uses
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2250Collection = class;
   TS2250CollectionItem = class;
   TEvtAvPrevio = class;
   TInfoAvPrevio = class;
   TDetAvPrevio = class;
   TCancAvPrevio = class;
 
-  TS2250Collection = class(TOwnedCollection)
+  TS2250Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2250CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2250CollectionItem);
   public
-    function Add: TS2250CollectionItem;
+    function Add: TS2250CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2250CollectionItem;
     property Items[Index: Integer]: TS2250CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2250CollectionItem = class(TCollectionItem)
+  TS2250CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAvPrevio: TEvtAvPrevio;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAvPrevio: TEvtAvPrevio read FEvtAvPrevio write FEvtAvPrevio;
   end;
@@ -110,9 +109,8 @@ type
     FDetAvPrevio : TDetAvPrevio;
     FCancAvPrevio: TCancAvPrevio;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
-
     property DetAvPrevio: TDetAvPrevio read FDetAvPrevio write FDetAvPrevio;
     property CancAvPrevio: TCancAvPrevio read FCancAvPrevio write FCancAvPrevio;
   end;
@@ -151,8 +149,7 @@ uses
 
 function TS2250Collection.Add: TS2250CollectionItem;
 begin
-  Result := TS2250CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2250Collection.GetItem(Index: Integer): TS2250CollectionItem;
@@ -166,11 +163,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2250Collection.New: TS2250CollectionItem;
+begin
+  Result := TS2250CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2250CollectionItem }
 
 constructor TS2250CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento      := teS2250;
+  inherited Create;
+  FTipoEvento  := teS2250;
   FEvtAvPrevio := TEvtAvPrevio.Create(AOwner);
 end;
 
@@ -183,13 +187,14 @@ end;
 
 { TInfoAvPrevio }
 
-constructor TInfoAvPrevio.create;
+constructor TInfoAvPrevio.Create;
 begin
-  FDetAvPrevio  := TDetAvPrevio.create;
+  inherited Create;
+  FDetAvPrevio  := TDetAvPrevio.Create;
   FCancAvPrevio := TCancAvPrevio.Create;
 end;
 
-destructor TInfoAvPrevio.destroy;
+destructor TInfoAvPrevio.Destroy;
 begin
   FDetAvPrevio.Free;
   FCancAvPrevio.Free;

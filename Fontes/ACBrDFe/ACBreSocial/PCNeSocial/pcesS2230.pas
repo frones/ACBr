@@ -49,18 +49,16 @@ unit pcesS2230;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2230Collection = class;
   TS2230CollectionItem = class;
   TEvtAfastTemp = class;
   TinfoAfastamento = class;
   TiniAfastamento = class;
   TaltAfastamento = class;
-  TAltEmpr = class;
   TfimAfastamento = class;
   TinfoAtestado = class;
   TinfoAtestadoItem = class;
@@ -68,23 +66,23 @@ type
   TinfoMandSind = class;
   TinfoRetif = class;
 
-  TS2230Collection = class(TOwnedCollection)
+  TS2230Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2230CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2230CollectionItem);
   public
-    function Add: TS2230CollectionItem;
+    function Add: TS2230CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2230CollectionItem;
     property Items[Index: Integer]: TS2230CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2230CollectionItem = class(TCollectionItem)
+  TS2230CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtAfastTemp: TEvtAfastTemp;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtAfastTemp: TEvtAfastTemp read FEvtAfastTemp write FEvtAfastTemp;
   end;
@@ -117,14 +115,14 @@ type
     property infoAfastamento: TinfoAfastamento read FinfoAfastamento write FinfoAfastamento;
   end;
 
-  TinfoAfastamento = class(TPersistent)
+  TinfoAfastamento = class(TObject)
   private
     FiniAfastamento : TiniAfastamento;
     FaltAfastamento : TaltAfastamento;
     FinfoRetif: TinfoRetif;
     FfimAfastamento : TfimAfastamento;
   public
-    constructor create;
+    constructor Create;
     destructor  Destroy; override;
 
     property iniAfastamento: TiniAfastamento read FiniAfastamento write FiniAfastamento;
@@ -144,7 +142,7 @@ type
 
     function getInfoAtestado: TinfoAtestado;
   public
-    constructor create;
+    constructor Create;
     destructor  Destroy; override;
 
     function infoAtestadoInst: boolean;
@@ -157,17 +155,17 @@ type
     property infoMandSind : TinfoMandSind read FinfoMandSind write FinfoMandSind;
   end;
 
-  TinfoAtestado = class(TCollection)
+  TinfoAtestado = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoAtestadoItem;
     procedure SetItem(Index: Integer; Value: TinfoAtestadoItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoAtestadoItem;
+    function Add: TinfoAtestadoItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoAtestadoItem;
     property Items[Index: Integer]: TinfoAtestadoItem read GetItem write SetItem; default;
   end;
 
-  TinfoAtestadoItem = class(TCollectionItem)
+  TinfoAtestadoItem = class(TObject)
   private
     FcodCID : String;
     FqtDiasAfast : Integer;
@@ -175,17 +173,16 @@ type
 
     function getEmitente: TEmitente;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor  Destroy; override;
 
     function emitenteInst: boolean;
-
     property codCID: String read FCodCId write FcodCID;
     property qtDiasAfast: Integer read FqtDiasAfast write FqtDiasAfast;
     property Emitente: TEmitente read getEmitente write FEmitente;
   end;
 
-  TinfoCessao = class(TPersistent)
+  TinfoCessao = class(TObject)
   private
     FcnpjCess : String;
     FinfOnus : tpInfOnus;
@@ -194,7 +191,7 @@ type
     property infOnus: tpInfOnus read FinfOnus write FinfOnus;
   end;
 
-  TinfoMandSind = class(TPersistent)
+  TinfoMandSind = class(TObject)
   private
     FcnpjSind : String;
     FinfOnusRemun: tpOnusRemun;
@@ -203,7 +200,7 @@ type
     property infOnusRemun: tpOnusRemun read FinfOnusRemun write FinfOnusRemun;
   end;
 
-  TAltEmpr = class(TPersistent)
+  TAltEmpr = class(TObject)
   private
     FCodCID: string;
     FQtdDiasAfast: Integer;
@@ -220,7 +217,7 @@ type
     property ufOC: tpuf read FUfOc write FUfOc;
   end;
 
-  TaltAfastamento = class(TPersistent) //alteração do motivo do afastamento
+  TaltAfastamento = class(TObject) //alteração do motivo do afastamento
   private
     FdtAltMot: TDateTime;
     FcodMotAnt : String;
@@ -233,7 +230,7 @@ type
 
     function getAltEmpr: TAltEmpr;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     function altEmprInst: boolean;
@@ -248,14 +245,14 @@ type
     property altEmpr: TAltEmpr read getAltEmpr write FAltEmpr;
   end;
 
-  TfimAfastamento = class(TPersistent)
+  TfimAfastamento = class(TObject)
   private
     FdtTermAfast : TDateTime;
   public
     property dtTermAfast: TDateTime read FdtTermAfast write FdtTermAfast;
   end;
 
-  TinfoRetif = class(TPersistent)
+  TinfoRetif = class(TObject)
   private
     ForigRetif: Integer;
     FTpProc: tpTpProc;
@@ -276,8 +273,7 @@ uses
 
 function TS2230Collection.Add: TS2230CollectionItem;
 begin
-  Result := TS2230CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2230Collection.GetItem(Index: Integer): TS2230CollectionItem;
@@ -290,11 +286,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TS2230Collection.New: TS2230CollectionItem;
+begin
+  Result := TS2230CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TS2230CollectionItem }
 
 constructor TS2230CollectionItem.Create(AOwner: TComponent);
 begin
-  FTipoEvento := teS2230;
+  inherited Create;
+  FTipoEvento   := teS2230;
   FEvtAfastTemp := TEvtAfastTemp.Create(AOwner);
 end;
 
@@ -307,13 +310,13 @@ end;
 
 { TinfoAfastamento }
 
-constructor TinfoAfastamento.create;
+constructor TinfoAfastamento.Create;
 begin
   inherited;
 
   FiniAfastamento := TiniAfastamento.Create;
   FaltAfastamento := TaltAfastamento.Create;
-  FinfoRetif := TinfoRetif.Create;
+  FinfoRetif      := TinfoRetif.Create;
   FfimAfastamento := TfimAfastamento.Create;
 end;
 
@@ -329,12 +332,12 @@ end;
 
 { tiniAfastamento }
 
-constructor tiniAfastamento.create;
+constructor tiniAfastamento.Create;
 begin
   inherited;
 
   FinfoAtestado := nil;
-  FinfoCessao := TinfoCessao.Create;
+  FinfoCessao   := TinfoCessao.Create;
   FinfoMandSind := TinfoMandSind.Create;
 end;
 
@@ -363,13 +366,7 @@ end;
 
 function TinfoAtestado.Add: TinfoAtestadoItem;
 begin
-  Result := TinfoAtestadoItem(inherited add());
-  Result.Create;
-end;
-
-constructor TinfoAtestado.create;
-begin
-  Inherited create(TinfoAtestadoItem);
+  Result := Self.New;
 end;
 
 function TinfoAtestado.GetItem(
@@ -384,14 +381,21 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TinfoAtestado.New: TinfoAtestadoItem;
+begin
+  Result := TinfoAtestadoItem.Create;
+  Self.Add(Result);
+end;
+
 { TinfoAtestadoItem }
 
-constructor TinfoAtestadoItem.create;
+constructor TinfoAtestadoItem.Create;
 begin
+  inherited Create;
   FEmitente := nil;
 end;
 
-destructor TinfoAtestadoItem.destroy;
+destructor TinfoAtestadoItem.Destroy;
 begin
   FreeAndNil(FEmitente);
 
@@ -435,7 +439,7 @@ end;
 
 function TaltAfastamento.altEmprInst: boolean;
 begin
-  result := Assigned(FAltEmpr);
+  Result := Assigned(FAltEmpr);
 end;
 
 { TEvtAfastTemp }

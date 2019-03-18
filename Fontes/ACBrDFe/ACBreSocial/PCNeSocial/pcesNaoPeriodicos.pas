@@ -175,11 +175,11 @@ begin
   FS2206 := TS2206Collection.Create(AOwner);
   FS2210 := TS2210Collection.Create(AOwner);
   FS2220 := TS2220Collection.Create(AOwner);
-  FS2221 := TS2221Collection.Create(AOwner, TS2221CollectionItem);
-  FS2230 := TS2230Collection.Create(AOwner, TS2230CollectionItem);
-  FS2240 := TS2240Collection.Create(AOwner, TS2240CollectionItem);
-  FS2245 := TS2245Collection.Create(AOwner, TS2245CollectionItem);
-  FS2250 := TS2250Collection.Create(AOwner, TS2250CollectionItem);
+  FS2221 := TS2221Collection.Create(AOwner);
+  FS2230 := TS2230Collection.Create(AOwner);
+  FS2240 := TS2240Collection.Create(AOwner);
+  FS2245 := TS2245Collection.Create(AOwner);
+  FS2250 := TS2250Collection.Create(AOwner);
   FS2260 := TS2260Collection.Create(AOwner, TS2260CollectionItem);
   FS2298 := TS2298Collection.Create(AOwner, TS2298CollectionItem);
   FS2299 := TS2299Collection.Create(AOwner, TS2299CollectionItem);

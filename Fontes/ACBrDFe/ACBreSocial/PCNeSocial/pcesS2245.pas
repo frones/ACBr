@@ -49,12 +49,11 @@ unit pcesS2245;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 
 type
-  TS2245Collection = class;
   TS2245CollectionItem = class;
   TEvtTreiCap = class;
   TTreiCap = class;
@@ -62,23 +61,23 @@ type
   TIdeProfRespCollection = class;
   TIdeProfRespCollectionItem = class;
 
-  TS2245Collection = class(TOwnedCollection)
+  TS2245Collection = class(TeSocialCollection)
   private
     function GetItem(Index: Integer): TS2245CollectionItem;
     procedure SetItem(Index: Integer; Value: TS2245CollectionItem);
   public
-    function Add: TS2245CollectionItem;
+    function Add: TS2245CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TS2245CollectionItem;
     property Items[Index: Integer]: TS2245CollectionItem read GetItem write SetItem; default;
   end;
 
-  TS2245CollectionItem = class(TCollectionItem)
+  TS2245CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FEvtTreiCap: TEvtTreiCap;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AOwner: TComponent);
     destructor  Destroy; override;
-  published
     property TipoEvento: TTipoEvento read FTipoEvento;
     property EvtTreiCap: TEvtTreiCap read FEvtTreiCap write FEvtTreiCap;
   end;
@@ -107,13 +106,13 @@ type
     property treiCap: TTreiCap read FTreiCap write FTreiCap;
   end;
 
-  TTreiCap = class(TPersistent)
+  TTreiCap = class(TObject)
   private
     FcodTreiCap: String;
     FobsTreiCap: String;
     FInfoComplem: TInfoComplem;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property codTreiCap: String read FcodTreiCap write FcodTreiCap;
@@ -121,7 +120,7 @@ type
     property infoComplem: TInfoComplem read FInfoComplem write FInfoComplem;
   end;
 
-  TInfoComplem = class(TPersistent)
+  TInfoComplem = class(TObject)
   private
     FdtTreiCap: TDateTime;
     FdurTreiCap: Double;
@@ -129,7 +128,7 @@ type
     FTpTreiCap: tpTpTreiCap;
     FIdeProfResp: TIdeProfRespCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dtTreiCap: TDateTime read FdtTreiCap write FdtTreiCap;
@@ -139,18 +138,17 @@ type
     property ideProfResp: TIdeProfRespCollection read FIdeProfResp write FIdeProfResp;
   end;
 
-  TIdeProfRespCollection = class(TCollection)
+  TIdeProfRespCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdeProfRespCollectionItem;
     procedure SetItem(Index: Integer; Value: TIdeProfRespCollectionItem);
   public
-    constructor Create; reintroduce;
-
-    function Add: TIdeProfRespCollectionItem;
+    function Add: TIdeProfRespCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeProfRespCollectionItem;
     property Items[Index: Integer]: TIdeProfRespCollectionItem read GetItem write SetItem; default;
   end;
 
-  TIdeProfRespCollectionItem = class(TCollectionItem)
+  TIdeProfRespCollectionItem = class(TObject)
   private
     FcpfProf: String;
     FNmProf: String;
@@ -177,8 +175,9 @@ uses
 
 constructor TS2245CollectionItem.Create(AOwner: TComponent);
 begin
+  inherited Create;
   FTipoEvento := teS2245;
-  FEvtTreiCap   := TEvtTreiCap.Create(AOwner);
+  FEvtTreiCap := TEvtTreiCap.Create(AOwner);
 end;
 
 destructor TS2245CollectionItem.Destroy;
@@ -192,8 +191,7 @@ end;
 
 function TS2245Collection.Add: TS2245CollectionItem;
 begin
-  Result := TS2245CollectionItem(inherited Add);
-  Result.Create(TComponent(Self.Owner));
+  Result := Self.New;
 end;
 
 function TS2245Collection.GetItem(Index: Integer): TS2245CollectionItem;
@@ -216,7 +214,7 @@ begin
   FTreiCap       := TTreiCap.Create;
 end;
 
-destructor TEvtTreiCap.destroy;
+destructor TEvtTreiCap.Destroy;
 begin
   FIdeEvento.Free;
   FIdeEmpregador.Free;
@@ -315,16 +313,17 @@ begin
 
 end;
 
+function TS2245Collection.New: TS2245CollectionItem;
+begin
+  Result := TS2245CollectionItem.Create(FACBreSocial);
+  Self.Add(Result);
+end;
+
 { TIdeProfRespCollection }
 
 function TIdeProfRespCollection.Add: TIdeProfRespCollectionItem;
 begin
-  Result := TIdeProfRespCollectionItem(inherited Add);
-end;
-
-constructor TIdeProfRespCollection.Create;
-begin
-  inherited Create(TIdeProfRespCollectionItem);
+  Result := Self.New;
 end;
 
 function TIdeProfRespCollection.GetItem(Index: Integer): TIdeProfRespCollectionItem;
@@ -335,6 +334,12 @@ end;
 procedure TIdeProfRespCollection.SetItem(Index: Integer; Value: TIdeProfRespCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TIdeProfRespCollection.New: TIdeProfRespCollectionItem;
+begin
+  Result := TIdeProfRespCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfoComplem }

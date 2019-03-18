@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2019
+-- ACBrDANFCeFortesFrA4--
+[*] Ajustes na configuração de Margens NFCeA4 e Descrições com caracteres especiais
+	(por: José M S Junior )
+
+01/03/2019
+-- ACBrNFeDANFeEventoRLRetrato--
+[*] Ajustes no redimensionamento do campo "Correção" do Evento Carta de Correção
+	(por: José M S Junior )
+
 01/03/2019
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [*] Melhoria na condição para apresentar o layout de local retirada / entrega.

@@ -1,22 +1,22 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 481
-  Top = 119
+  Left = 234
+  Top = 0
+  Width = 893
+  Height = 788
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 749
-  ClientWidth = 860
   Font.Height = -18
   PixelsPerInch = 96
   TextHeight = 24
   inherited RLNFe: TRLReport
     Top = 0
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
     Font.Height = -20
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'
@@ -856,10 +856,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 5
         Width = 132
         Height = 40
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object rllChaveAcesso: TRLLabel
         Tag = 10
@@ -1161,10 +1161,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 81
         Width = 144
         Height = 33
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object rllPageNumber: TRLSystemInfo
         Left = 365
@@ -1250,7 +1250,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 126
+        Width = 124
         Height = 7
         Caption = 'INFORMA'#199#213'ES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
@@ -5823,7 +5823,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 82
+        Width = 81
         Height = 7
         Caption = 'INSCRI'#199#195'O MUNICIPAL'
         Font.Charset = DEFAULT_CHARSET
@@ -6971,10 +6971,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object RLDraw27: TRLDraw
-        Left = 550
+        Left = 522
         Top = 16
-        Width = 1
-        Height = 30
+        Width = 3
+        Height = 33
         Angle = 90.000000000000000000
         DrawKind = dkLine
         HoldStyle = hsRelatively
@@ -7006,7 +7006,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLabel4: TRLLabel
         Tag = 10
-        Left = 555
+        Left = 527
         Top = 17
         Width = 42
         Height = 7
@@ -7131,7 +7131,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 7
         Top = 27
-        Width = 538
+        Width = 514
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7143,10 +7143,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLquadroEntregaDocumento: TRLLabel
         Tag = 703
-        Left = 555
+        Left = 527
         Top = 27
-        Width = 80
+        Width = 117
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -7159,7 +7160,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 27
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7201,7 +7202,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 58
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7243,7 +7244,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 88
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7332,7 +7333,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object RLDraw14: TRLDraw
-        Left = 550
+        Left = 523
         Top = 16
         Width = 1
         Height = 30
@@ -7367,7 +7368,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLabel7: TRLLabel
         Tag = 10
-        Left = 555
+        Left = 526
         Top = 17
         Width = 42
         Height = 7
@@ -7492,7 +7493,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 7
         Top = 27
-        Width = 538
+        Width = 513
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7504,10 +7505,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLquadroRetiradaDocumento: TRLLabel
         Tag = 703
-        Left = 555
+        Left = 526
         Top = 27
-        Width = 80
+        Width = 118
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -7520,7 +7522,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 27
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7562,7 +7564,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 58
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
@@ -7604,7 +7606,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 703
         Left = 650
         Top = 88
-        Width = 80
+        Width = 87
         Height = 14
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET

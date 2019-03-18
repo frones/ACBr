@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/03/2019
+-- ACBrNFeDANFeRL--
+[*] Ajustes no tamanho campo CNPJ/CPF em "Local Retirada", "Local Entrega"
+	(por: José M S Junior )
+
+15/03/2019
 -- ACBrDANFCeFortesFrA4--
 [*] Ajustes na configuração de Margens NFCeA4 e Descrições com caracteres especiais
 	(por: José M S Junior )

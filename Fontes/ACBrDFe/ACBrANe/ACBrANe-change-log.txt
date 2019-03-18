@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/03/2019
+-- ACBrANeServicos --
+[*] Removido a URL de homologação que foi desativada.
+   Por: Italo Jurisato Junior
+
 17/05/2018
 -- ACBrANeServicos --
 [*] Incluido uma segunda URL de homologação, se não funcionar com uma deve-se

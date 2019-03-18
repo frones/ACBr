@@ -41,24 +41,16 @@ unit pcesS5003;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor, ACBrUtil, pcesCommon, pcesConversaoeSocial, Dialogs;
+  SysUtils, Classes, Contnrs,
+  pcnConversao, pcnLeitor, ACBrUtil, pcesCommon, pcesConversaoeSocial, Dialogs;
 
 type
-  TS5003 = class;
   TEvtBasesFGTS = class;
-
-  TInfoFGTS = class;
-  TIdeEstabLot2Collection = class;
   TIdeEstabLot2CollectionItem = class;
-  TInfoTrabFGTSCollection = class;
   TInfoTrabFGTSCollectionItem = class;
   TInfoBaseFGTS = class;
-  TBasePerApurCollection = class;
   TBasePerApurCollectionItem = class;
-  TInfoDpsFGTS = class;
-  TInfoTrabDpsCollection = class;
   TInfoTrabDpsCollectionItem = class;
-  TDpsPerApurCollection = class;
   TDpsPerApurCollectionItem = class;
 
   TS5003 = class(TInterfacedObject, IEventoeSocial)
@@ -69,8 +61,6 @@ type
     function GetXml : string;
     procedure SetXml(const Value: string);
     function GetTipoEvento : TTipoEvento;
-    procedure SetEvtBasesFGTS(const Value: TEvtBasesFGTS);
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -78,10 +68,10 @@ type
     function GetEvento : TObject;
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
-    property EvtBasesFGTS: TEvtBasesFGTS read FEvtBasesFGTS write setEvtBasesFGTS;
+    property EvtBasesFGTS: TEvtBasesFGTS read FEvtBasesFGTS write FEvtBasesFGTS;
   end;
   
-  TDpsPerApurCollectionItem = class(TCollectionItem)
+  TDpsPerApurCollectionItem = class(TObject)
   private
     FtpDps: Integer;
     FdpsFGTS: Currency;
@@ -90,56 +80,50 @@ type
     property dpsFGTS: Currency read FdpsFGTS write FdpsFGTS;
   end;
 
-  TDpsPerApurCollection = class(TCollection)
+  TDpsPerApurCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDpsPerApurCollectionItem;
     procedure SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
   public
-    constructor Create(AOwner: TInfoTrabDpsCollectionItem);
-    function Add: TDpsPerApurCollectionItem;
+    function Add: TDpsPerApurCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDpsPerApurCollectionItem;
     property Items[Index: Integer]: TDpsPerApurCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoTrabDpsCollectionItem = class(TCollectionItem)
+  TInfoTrabDpsCollectionItem = class(TObject)
   private
     Fmatricula: String;
     FcodCateg: Integer;
     FDpsPerApur: TDpsPerApurCollection;
-
-    procedure SetDpsPerApur(const Value: TDpsPerApurCollection);
-    function GetDpsPerApur: TDpsPerApurCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property matricula: String read Fmatricula write Fmatricula;
     property codCateg: Integer read FcodCateg write FcodCateg;
-    property dpsPerApur: TDpsPerApurCollection read GetDpsPerApur write SetDpsPerApur;
+    property dpsPerApur: TDpsPerApurCollection read FDpsPerApur write FDpsPerApur;
   end;
 
-  TInfoTrabDpsCollection = class(TCollection)
+  TInfoTrabDpsCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoTrabDpsCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoTrabDpsCollectionItem);
   public
-    constructor Create(AOwner: TInfoDpsFGTS);
-    function Add: TInfoTrabDpsCollectionItem;
+    function Add: TInfoTrabDpsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoTrabDpsCollectionItem;
     property Items[Index: Integer]: TInfoTrabDpsCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoDpsFGTS = class(TPersistent)
+  TInfoDpsFGTS = class(TObject)
   private
     FInfoTrabDps: TInfoTrabDpsCollection;
-
-    procedure SetInfoTrabDps(const Value: TInfoTrabDpsCollection);
-    function GetInfoTrabDps: TInfoTrabDpsCollection;
   public
-    constructor Create(AOwner: TInfoFGTS);
+    constructor Create;
     destructor Destroy; override;
-    property infoTrabDps: TInfoTrabDpsCollection read GetInfoTrabDps write SetInfoTrabDps;
+    property infoTrabDps: TInfoTrabDpsCollection read FInfoTrabDps write FInfoTrabDps;
   end;  
 
-  TBasePerApurCollectionItem = class(TCollectionItem)
+  TBasePerApurCollectionItem = class(TObject)
   private
     FtpValor: Integer;
     FremFGTS: Currency;
@@ -148,36 +132,36 @@ type
     property remFGTS: Currency read FremFGTS write FremFGTS;
   end;
 
-  TBasePerApurCollection = class(TCollection)
+  TBasePerApurCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TBasePerApurCollectionItem;
     procedure SetItem(Index: Integer; Value: TBasePerApurCollectionItem);
   public
-    constructor Create(AOwner: TInfoBaseFGTS);
-    function Add: TBasePerApurCollectionItem;
+    function Add: TBasePerApurCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TBasePerApurCollectionItem;
     property Items[Index: Integer]: TBasePerApurCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoBaseFGTS = class(TPersistent)
+  TInfoBaseFGTS = class(TObject)
   private
     FBasePerApur: TBasePerApurCollection;
   public
-    constructor Create(AOwner: TInfoTrabFGTSCollectionItem);
+    constructor Create;
     destructor Destroy; override;
     property basePerApur: TBasePerApurCollection read FBasePerApur write FBasePerApur;
   end;
 
-  TInfoTrabFGTSCollection = class(TCollection)
+  TInfoTrabFGTSCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoTrabFGTSCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoTrabFGTSCollectionItem);
   public
-    constructor Create(AOwner: TIdeEstabLot2CollectionItem);
-    function Add: TInfoTrabFGTSCollectionItem;
+    function Add: TInfoTrabFGTSCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoTrabFGTSCollectionItem;
     property Items[Index: Integer]: TInfoTrabFGTSCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoTrabFGTSCollectionItem = class(TCollectionItem)
+  TInfoTrabFGTSCollectionItem = class(TObject)
   private
     Fmatricula: String;
     FcodCateg: Integer;
@@ -188,11 +172,8 @@ type
     FdtTerm: TDateTime;
     FmtvDesligTSV: String;
     FInfoBaseFGTS: TInfoBaseFGTS;
-
-    procedure SetInfoBaseFGTS(const Value: TInfoBaseFGTS);
-    function GetInfoBaseFGTS: TInfoBaseFGTS;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property matricula: String read Fmatricula write Fmatricula;
@@ -203,39 +184,36 @@ type
     property mtvDeslig: String read FmtvDeslig write FmtvDeslig;
     property dtTerm: TDateTime read FdtTerm write FdtTerm;
     property mtvDesligTSV: String read FmtvDesligTSV write FmtvDesligTSV;
-    property InfoBaseFGTS: TInfoBaseFGTS read GetInfoBaseFGTS write SetInfoBaseFGTS;
+    property InfoBaseFGTS: TInfoBaseFGTS read FInfoBaseFGTS write FInfoBaseFGTS;
   end;
 
-  TIdeEstabLot2Collection = class(TCollection)
+  TIdeEstabLot2Collection = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdeEstabLot2CollectionItem;
     procedure SetItem(Index: Integer; Value: TIdeEstabLot2CollectionItem);
   public
-    constructor Create(AOwner: TInfoFGTS);
-    function Add: TIdeEstabLot2CollectionItem;
+    function Add: TIdeEstabLot2CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeEstabLot2CollectionItem;
     property Items[Index: Integer]: TIdeEstabLot2CollectionItem read GetItem write SetItem;
   end;
 
-  TIdeEstabLot2CollectionItem = class(TCollectionItem)
+  TIdeEstabLot2CollectionItem = class(TObject)
   private
     FtpInsc: tpTpInsc;
     FnrInsc: String;
     FcodLotacao: String;
     FInfoTrabFGTS: TInfoTrabFGTSCollection;
-
-    procedure SetInfoTrabFGTS(const Value: TInfoTrabFGTSCollection);
-    function GetInfoTrabFGTS: TInfoTrabFGTSCollection;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property tpInsc: tpTpInsc read FtpInsc write FtpInsc;
     property nrInsc: String read FnrInsc write FnrInsc;
     property codLotacao: String read FcodLotacao write FcodLotacao;
-    property InfoTrabFGTS: TInfoTrabFGTSCollection read GetInfoTrabFGTS write SetInfoTrabFGTS;
+    property InfoTrabFGTS: TInfoTrabFGTSCollection read FInfoTrabFGTS write FInfoTrabFGTS;
   end;
 
-  TInfoFGTS = class(TPersistent)
+  TInfoFGTS = class(TObject)
   private
     FdtVenc: TDateTime;
     FIdeEstabLot: TIdeEstabLot2Collection;
@@ -244,14 +222,14 @@ type
     procedure SetIdeEstabLot(const Value: TIdeEstabLot2Collection);
     procedure SetInfoDpsFGTS(const Value: TInfoDpsFGTS);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
     property dtVenc: TDateTime read FdtVenc write FdtVenc;
     property IdeEstabLot: TIdeEstabLot2Collection read FIdeEstabLot write SetIdeEstabLot;
     property infoDpsFGTS: TInfoDpsFGTS read FinfoDpsFGTS write SetInfoDpsFGTS;
   end;
 
-  TEvtBasesFGTS = class(TPersistent)
+  TEvtBasesFGTS = class(TObject)
   private
     FLeitor: TLeitor;
     FId: String;
@@ -272,7 +250,6 @@ type
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTrabalhador: TideTrabalhador2 read FIdeTrabalhador write FIdeTrabalhador;
     property infoFGTS: TInfoFGTS read FinfoFGTS write FinfoFGTS;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Id: String      read FId;
     property XML: String     read FXML;
@@ -323,21 +300,16 @@ begin
   Result := FTipoEvento;
 end;
 
-procedure TS5003.SetEvtBasesFGTS(const Value: TEvtBasesFGTS);
-begin
-  FEvtBasesFGTS.Assign(Value);
-end;
-
 { TEvtBasesFGTS }
 
 constructor TEvtBasesFGTS.Create();
 begin
-  FLeitor := TLeitor.Create;
-
-  FIdeEvento := TIdeEvento5.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
+  inherited Create;
+  FLeitor         := TLeitor.Create;
+  FIdeEvento      := TIdeEvento5.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabalhador := TideTrabalhador2.Create;
-  FinfoFGTS := TInfoFGTS.Create;
+  FinfoFGTS       := TInfoFGTS.Create;
 end;
 
 destructor TEvtBasesFGTS.Destroy;
@@ -487,12 +459,7 @@ end;
 
 function TIdeEstabLot2Collection.Add: TIdeEstabLot2CollectionItem;
 begin
-  Result := TIdeEstabLot2CollectionItem(inherited Add);
-end;
-
-constructor TIdeEstabLot2Collection.Create(AOwner: TInfoFGTS);
-begin
-  inherited create(TIdeEstabLot2CollectionItem);
+  Result := Self.New;
 end;
 
 function TIdeEstabLot2Collection.GetItem(Index: Integer): TIdeEstabLot2CollectionItem;
@@ -509,8 +476,9 @@ end;
 
 constructor TInfoFGTS.Create;
 begin
-  FIdeEstabLot := TIdeEstabLot2Collection.Create(Self);
-  FInfoDpsFGTS := TInfoDpsFGTS.Create(Self);
+  inherited Create;
+  FIdeEstabLot := TIdeEstabLot2Collection.Create;
+  FInfoDpsFGTS := TInfoDpsFGTS.Create;
 end;
 
 destructor TInfoFGTS.Destroy;
@@ -534,7 +502,8 @@ end;
 
 constructor TIdeEstabLot2CollectionItem.Create;
 begin
-  FInfoTrabFGTS := TInfoTrabFGTSCollection.Create(Self);
+  inherited Create;
+  FInfoTrabFGTS := TInfoTrabFGTSCollection.Create;
 end;
 
 destructor TIdeEstabLot2CollectionItem.Destroy;
@@ -543,29 +512,11 @@ begin
   inherited;
 end;
 
-function TIdeEstabLot2CollectionItem.GetInfoTrabFGTS: TInfoTrabFGTSCollection;
-begin
-  if not(Assigned(FInfoTrabFGTS)) then
-     FInfoTrabFGTS := TInfoTrabFGTSCollection.Create(Self);
-  Result := FInfoTrabFGTS;   
-end;
-
-procedure TIdeEstabLot2CollectionItem.SetInfoTrabFGTS(const Value: TInfoTrabFGTSCollection);
-begin
-  FInfoTrabFGTS := Value;
-end;
-
 { TInfoTrabFGTSCollection }
 
 function TInfoTrabFGTSCollection.Add: TInfoTrabFGTSCollectionItem;
 begin
-  Result := TInfoTrabFGTSCollectionItem(inherited Add);
-//  Result.Create(self);
-end;
-
-constructor TInfoTrabFGTSCollection.Create(AOwner: TIdeEstabLot2CollectionItem);
-begin
-  inherited create(TInfoTrabFGTSCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoTrabFGTSCollection.GetItem(Index: Integer): TInfoTrabFGTSCollectionItem;
@@ -577,11 +528,18 @@ procedure TInfoTrabFGTSCollection.SetItem(Index: Integer; Value: TInfoTrabFGTSCo
 begin
   inherited SetItem(Index, Value);
 end;
+function TInfoTrabFGTSCollection.New: TInfoTrabFGTSCollectionItem;
+begin
+  Result := TInfoTrabFGTSCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoBaseFGTS }
 
-constructor TInfoBaseFGTS.Create(AOwner: TInfoTrabFGTSCollectionItem);
+constructor TInfoBaseFGTS.Create;
 begin
-  FBasePerApur := TBasePerApurCollection.Create(Self);
+  inherited Create;
+  FBasePerApur := TBasePerApurCollection.Create;
 end;
 
 destructor TInfoBaseFGTS.Destroy;
@@ -594,7 +552,8 @@ end;
 
 constructor TInfoTrabFGTSCollectionItem.Create;
 begin
-  FInfoBaseFGTS := TInfoBaseFGTS.Create(Self);
+  inherited Create;
+  FInfoBaseFGTS := TInfoBaseFGTS.Create;
 end;
 
 destructor TInfoTrabFGTSCollectionItem.Destroy;
@@ -603,29 +562,11 @@ begin
   inherited;
 end;
 
-function TInfoTrabFGTSCollectionItem.GetInfoBaseFGTS: TInfoBaseFGTS;
-begin
-  if not(Assigned(FInfoBaseFGTS)) then
-     FInfoBaseFGTS := TInfoBaseFGTS.Create(Self);
-  Result := FInfoBaseFGTS;
-end;
-
-procedure TInfoTrabFGTSCollectionItem.SetInfoBaseFGTS(const Value: TInfoBaseFGTS);
-begin
-  FInfoBaseFGTS := Value;
-end;
-
 { TBasePerApurCollection }
 
 function TBasePerApurCollection.Add: TBasePerApurCollectionItem;
 begin
-  Result := TBasePerApurCollectionItem(inherited Add);
-  Result.Create(self);
-end;
-
-constructor TBasePerApurCollection.Create(AOwner: TInfoBaseFGTS);
-begin
-  inherited create(TBasePerApurCollectionItem);
+  Result := Self.New;
 end;
 
 function TBasePerApurCollection.GetItem(Index: Integer): TBasePerApurCollectionItem;
@@ -638,11 +579,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TBasePerApurCollection.New: TBasePerApurCollectionItem;
+begin
+  Result := TBasePerApurCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoDpsFGTS }
 
 constructor TInfoDpsFGTS.Create;
 begin
-  FInfoTrabDps := TInfoTrabDpsCollection.Create(Self);
+  inherited Create;
+  FInfoTrabDps := TInfoTrabDpsCollection.Create;
 end;
 
 destructor TInfoDpsFGTS.Destroy;
@@ -651,28 +599,11 @@ begin
   inherited;
 end;
 
-function TInfoDpsFGTS.GetInfoTrabDps: TInfoTrabDpsCollection;
-begin             
-  if not(Assigned(FInfoTrabDps)) then
-     FInfoTrabDps := TInfoTrabDpsCollection.Create(Self);
-  Result := FInfoTrabDps;
-end;
-
-procedure TInfoDpsFGTS.SetInfoTrabDps(const Value: TInfoTrabDpsCollection);
-begin
-  FInfoTrabDps := Value;
-end;
-
 { TInfoTrabDpsCollection }
 
 function TInfoTrabDpsCollection.Add: TInfoTrabDpsCollectionItem;
 begin
-  Result := TInfoTrabDpsCollectionItem(inherited Add);
-end;
-
-constructor TInfoTrabDpsCollection.Create(AOwner: TInfoDpsFGTS);
-begin
-  inherited create(TInfoTrabDpsCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoTrabDpsCollection.GetItem(Index: Integer): TInfoTrabDpsCollectionItem;
@@ -685,11 +616,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoTrabDpsCollection.New: TInfoTrabDpsCollectionItem;
+begin
+  Result := TInfoTrabDpsCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoTrabDpsCollectionItem }
 
 constructor TInfoTrabDpsCollectionItem.Create;
-begin            
-  FDpsPerApur := TDpsPerApurCollection.Create(Self);
+begin
+  inherited Create;
+  FDpsPerApur := TDpsPerApurCollection.Create;
 end;
 
 destructor TInfoTrabDpsCollectionItem.Destroy;
@@ -698,29 +636,11 @@ begin
   inherited;
 end;
 
-function TInfoTrabDpsCollectionItem.GetDpsPerApur: TDpsPerApurCollection;
-begin
-  if not(Assigned(FDpsPerApur)) then
-     FDpsPerApur := TDpsPerApurCollection.Create(Self);
-  Result := FDpsPerApur;
-end;
-
-procedure TInfoTrabDpsCollectionItem.SetDpsPerApur(const Value: TDpsPerApurCollection);
-begin
-  FDpsPerApur := Value;
-end;
-
 { TDpsPerApurCollection }
 
 function TDpsPerApurCollection.Add: TDpsPerApurCollectionItem;
 begin
-  Result := TDpsPerApurCollectionItem(inherited Add);
-  Result.Create(Self);
-end;
-
-constructor TDpsPerApurCollection.Create(AOwner: TInfoTrabDpsCollectionItem);
-begin
-  inherited create(TDpsPerApurCollectionItem);
+  Result := Self.New;
 end;
 
 function TDpsPerApurCollection.GetItem(Index: Integer): TDpsPerApurCollectionItem;
@@ -731,6 +651,18 @@ end;
 procedure TDpsPerApurCollection.SetItem(Index: Integer; Value: TDpsPerApurCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TIdeEstabLot2Collection.New: TIdeEstabLot2CollectionItem;
+begin
+  Result := TIdeEstabLot2CollectionItem.Create;
+  Self.Add(Result);
+end;
+
+function TDpsPerApurCollection.New: TDpsPerApurCollectionItem;
+begin
+  Result := TDpsPerApurCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

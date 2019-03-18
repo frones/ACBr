@@ -49,7 +49,7 @@ unit pcesS5012;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnLeitor, ACBrUtil,
   pcesCommon, pcesConversaoeSocial;
 
@@ -69,8 +69,6 @@ type
     function GetXml : string;
     procedure SetXml(const Value: string);
     function GetTipoEvento : TTipoEvento;
-    procedure SetEvtIrrf(const Value: TEvtIrrf);
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -78,21 +76,21 @@ type
     function GetEvento : TObject;
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
-    property EvtIrrf: TEvtIrrf read FEvtIrrf write setEvtIrrf;
+    property EvtIrrf: TEvtIrrf read FEvtIrrf write FEvtIrrf;
 
   end;
 
-  TInfoCRContribCollection = class(TCollection)
+  TInfoCRContribCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoCRContribCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoCRContribCollectionItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoCRContribCollectionItem;
+    function Add: TInfoCRContribCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+		function New: TInfoCRContribCollectionItem;
     property Items[Index: Integer]: TInfoCRContribCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoCRContribCollectionItem = class(TCollectionItem)
+  TInfoCRContribCollectionItem = class(TObject)
   private
     FtpCR: String;
     FvrCR: Double;
@@ -101,23 +99,21 @@ type
     property vrCR: Double read FvrCR;
   end;
 
-  TInfoIRRF = class(TPersistent)
+  TInfoIRRF = class(TObject)
   private
     FnrRecArqBase: String;
     FindExistInfo: Integer;
     FInfoCRContrib: TInfoCRContribCollection;
-
-    procedure SetInfoCRContrib(const Value: TInfoCRContribCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property nrRecArqBase: String read FnrRecArqBase;
     property indExistInfo: Integer read FindExistInfo;
-    property InfoCRContrib: TInfoCRContribCollection read FInfoCRContrib write SetInfoCRContrib;
+    property InfoCRContrib: TInfoCRContribCollection read FInfoCRContrib write FInfoCRContrib;
   end;
 
-  TEvtIrrf = class(TPersistent)
+  TEvtIrrf = class(TObject)
   private
     FLeitor: TLeitor;
     FId: String;
@@ -132,11 +128,9 @@ type
 
     function LerXML: Boolean;
     function SalvarINI: boolean;
-
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property InfoIRRF: TInfoIRRF read FInfoIRRF write FInfoIRRF;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Id: String      read FId;
     property XML: String     read FXML;
@@ -151,8 +145,9 @@ uses
 
 constructor TS5012.Create;
 begin
+  inherited Create;
   FTipoEvento := teS5012;
-  FEvtIrrf := TEvtIrrf.Create;
+  FEvtIrrf    := TEvtIrrf.Create;
 end;
 
 destructor TS5012.Destroy;
@@ -164,7 +159,7 @@ end;
 
 function TS5012.GetEvento : TObject;
 begin
-  Result := self;
+  Result := Self;
 end;
 
 function TS5012.GetXml : string;
@@ -187,74 +182,25 @@ begin
   Result := FTipoEvento;
 end;
 
-procedure TS5012.SetEvtIrrf(const Value: TEvtIrrf);
-begin
-  FEvtIrrf.Assign(Value);
-end;
-
 { TEvtIrrf }
 
 constructor TEvtIrrf.Create;
 begin
-  FLeitor := TLeitor.Create;
-
-  FIdeEvento := TIdeEvento5.Create;
+  inherited Create;
+  FLeitor        := TLeitor.Create;
+  FIdeEvento     := TIdeEvento5.Create;
   FIdeEmpregador := TIdeEmpregador.Create;
-  FInfoIRRF := TInfoIRRF.Create;
+  FInfoIRRF      := TInfoIRRF.Create;
 end;
 
 destructor TEvtIrrf.Destroy;
 begin
   FLeitor.Free;
-
   FIdeEvento.Free;
   FIdeEmpregador.Free;
   FInfoIRRF.Free;
 
   inherited;
-end;
-
-{ TInfoCRContribCollection }
-
-function TInfoCRContribCollection.Add: TInfoCRContribCollectionItem;
-begin
-  Result := TInfoCRContribCollectionItem(inherited Add);
-end;
-
-constructor TInfoCRContribCollection.Create;
-begin
-  inherited create(TInfoCRContribCollectionItem);
-end;
-
-function TInfoCRContribCollection.GetItem(
-  Index: Integer): TInfoCRContribCollectionItem;
-begin
-  Result := TInfoCRContribCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TInfoCRContribCollection.SetItem(Index: Integer;
-  Value: TInfoCRContribCollectionItem);
-begin
-  inherited SetItem(Index, Value);
-end;
-
-{ TInfoIRRF }
-
-constructor TInfoIRRF.Create;
-begin
-   FInfoCRContrib := TInfoCRContribCollection.Create;
-end;
-
-destructor TInfoIRRF.Destroy;
-begin
-  FInfoCRContrib.Free;
-
-  inherited;
-end;
-
-procedure TInfoIRRF.SetInfoCRContrib(const Value: TInfoCRContribCollection);
-begin
-  FInfoCRContrib := Value;
 end;
 
 function TEvtIrrf.LerXML: Boolean;
@@ -342,6 +288,47 @@ begin
     AIni.Free;
   end;
 end;
+
+{ TInfoCRContribCollection }
+
+function TInfoCRContribCollection.Add: TInfoCRContribCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TInfoCRContribCollection.GetItem(
+  Index: Integer): TInfoCRContribCollectionItem;
+begin
+  Result := TInfoCRContribCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfoCRContribCollection.SetItem(Index: Integer;
+  Value: TInfoCRContribCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+function TInfoCRContribCollection.New: TInfoCRContribCollectionItem;
+begin
+  Result := TInfoCRContribCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TInfoIRRF }
+
+constructor TInfoIRRF.Create;
+begin
+  inherited Create;
+  FInfoCRContrib := TInfoCRContribCollection.Create;
+end;
+
+destructor TInfoIRRF.Destroy;
+begin
+  FInfoCRContrib.Free;
+
+  inherited;
+end;
+
 
 end.
 

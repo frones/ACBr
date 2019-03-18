@@ -49,15 +49,12 @@ unit pcesS5001;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnLeitor, ACBrUtil,
   pcesCommon, pcesConversaoeSocial;
 
 type
-  TS5001 = class;
-  TInfoCpCalcCollection = class;
   TInfoCpCalcCollectionItem = class;
-  TInfoCp = class;
   TIdeEstabLotCollection = class;
   TIdeEstabLotCollectionItem = class;
   TInfoCategIncidCollection = class;
@@ -76,8 +73,6 @@ type
     function GetXml : string;
     procedure SetXml(const Value: string);
     function GetTipoEvento : TTipoEvento;
-    procedure SetEvtBasesTrab(const Value: TEvtBasesTrab);
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -85,21 +80,21 @@ type
     function GetEvento : TObject;
     property Xml: String read GetXml write SetXml;
     property TipoEvento: TTipoEvento read GetTipoEvento;
-    property EvtBasesTrab: TEvtBasesTrab read FEvtBasesTrab write setEvtBasesTrab;
+    property EvtBasesTrab: TEvtBasesTrab read FEvtBasesTrab write FEvtBasesTrab;
 
   end;
 
-  TInfoCpCalcCollection = class(TCollection)
+  TInfoCpCalcCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoCpCalcCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoCpCalcCollectionItem);
   public
-    constructor Create; reintroduce;
-    function Add: TInfoCpCalcCollectionItem;
+    function Add: TInfoCpCalcCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoCpCalcCollectionItem;
     property Items[Index: Integer]: TInfoCpCalcCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoCpCalcCollectionItem = class(TCollectionItem)
+  TInfoCpCalcCollectionItem = class(TObject)
   private
     FtpCR: string;
     FvrCpSeg: Double;
@@ -110,29 +105,29 @@ type
     property vrDescSeg: Double read FvrDescSeg;
   end;
 
-  TInfoCp = class(TPersistent)
+  TInfoCp = class(TObject)
   private
     FIdeEstabLot: TIdeEstabLotCollection;
 
     procedure SetIdeEstabLot(const Value: TIdeEstabLotCollection);
   public
-    constructor Create(AOwner: TEvtBasesTrab);
+    constructor Create;
     destructor Destroy; override;
 
     property IdeEstabLot: TIdeEstabLotCollection read FIdeEstabLot write SetIdeEstabLot;
   end;
 
-  TIdeEstabLotCollection = class(TCollection)
+  TIdeEstabLotCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TIdeEstabLotCollectionItem;
     procedure SetItem(Index: Integer; Value: TIdeEstabLotCollectionItem);
   public
-    constructor Create(AOwner: TInfoCp);
-    function Add: TIdeEstabLotCollectionItem;
+    function Add: TIdeEstabLotCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TIdeEstabLotCollectionItem;
     property Items[Index: Integer]: TIdeEstabLotCollectionItem read GetItem write SetItem;
   end;
 
-  TIdeEstabLotCollectionItem = class(TCollectionItem)
+  TIdeEstabLotCollectionItem = class(TObject)
   private
     FNrInsc: string;
     FCodLotacao: string;
@@ -141,7 +136,7 @@ type
 
     procedure SetInfoCategIncid(const Value: TInfoCategIncidCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property tpInsc: TpTpInsc read FTpInsc;
@@ -150,17 +145,17 @@ type
     property InfoCategIncid: TInfoCategIncidCollection read FInfoCategIncid write SetInfoCategIncid;
   end;
 
-  TInfoCategIncidCollection = class(TCollection)
+  TInfoCategIncidCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoCategIncidCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoCategIncidCollectionItem);
   public
-    constructor Create(AOwner: TIdeEstabLotCollectionItem);
-    function Add: TInfoCategIncidCollectionItem;
+    function Add: TInfoCategIncidCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoCategIncidCollectionItem;
     property Items[Index: Integer]: TInfoCategIncidCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoCategIncidCollectionItem = class(TCollectionItem)
+  TInfoCategIncidCollectionItem = class(TObject)
   private
     FMatricula: string;
     FcodCateg: Integer;
@@ -171,7 +166,7 @@ type
     procedure SetInfoBaseCS(const Value: TInfoBaseCSCollection);
     procedure SetCalcTerc(const Value: TCalcTercCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property matricula: string read FMatricula;
@@ -181,17 +176,17 @@ type
     property CalcTerc: TCalcTercCollection read FCalcTerc write SetCalcTerc;
   end;
 
-  TInfoBaseCSCollection = class(TCollection)
+  TInfoBaseCSCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfoBaseCSCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfoBaseCSCollectionItem);
   public
-    constructor Create(AOwner: TInfoCategIncidCollectionItem);
-    function Add: TInfoBaseCSCollectionItem;
+    function Add: TInfoBaseCSCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfoBaseCSCollectionItem;
     property Items[Index: Integer]: TInfoBaseCSCollectionItem read GetItem write SetItem;
   end;
 
-  TInfoBaseCSCollectionItem = class(TCollectionItem)
+  TInfoBaseCSCollectionItem = class(TObject)
   private
     Find13: Integer;
     FtpValor: Integer;
@@ -202,17 +197,17 @@ type
     property valor: Double read Fvalor;
   end;
 
-  TCalcTercCollection = class(TCollection)
+  TCalcTercCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TCalcTercCollectionItem;
     procedure SetItem(Index: Integer; Value: TCalcTercCollectionItem);
   public
-    constructor Create(AOwner: TInfoCategIncidCollectionItem);
-    function Add: TCalcTercCollectionItem;
+    function Add: TCalcTercCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TCalcTercCollectionItem;
     property Items[Index: Integer]: TCalcTercCollectionItem read GetItem write SetItem;
   end;
 
-  TCalcTercCollectionItem = class(TCollectionItem)
+  TCalcTercCollectionItem = class(TObject)
   private
     FtpCR: Integer;
     FvrCsSegTerc: Double;
@@ -223,7 +218,7 @@ type
     property vrDescTerc: Double read FvrDescTerc;
   end;
 
-  TEvtBasesTrab = class(TPersistent)
+  TEvtBasesTrab = class(TObject)
   private
     FLeitor: TLeitor;
     FId: String;
@@ -234,21 +229,17 @@ type
     FIdeTrabalhador: TIdeTrabalhador3;
     FInfoCpCalc: TInfoCpCalcCollection;
     FInfoCp: TInfoCp;
-
-    procedure SetInfoCpCalc(const Value: TInfoCpCalcCollection);
   public
     constructor Create;
     destructor  Destroy; override;
 
     function LerXML: boolean;
     function SalvarINI: boolean;
-
     property IdeEvento: TIdeEvento5 read FIdeEvento write FIdeEvento;
     property IdeEmpregador: TIdeEmpregador read FIdeEmpregador write FIdeEmpregador;
     property IdeTrabalhador: TIdeTrabalhador3 read FIdeTrabalhador write FIdeTrabalhador;
-    property InfoCpCalc: TInfoCpCalcCollection read FInfoCpCalc write SetInfoCpCalc;
+    property InfoCpCalc: TInfoCpCalcCollection read FInfoCpCalc write FInfoCpCalc;
     property InfoCp: TInfoCp read FInfoCp write FInfoCp;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Id: String      read FId;
     property XML: String     read FXML;
@@ -299,22 +290,18 @@ begin
   Result := FTipoEvento;
 end;
 
-procedure TS5001.SetEvtBasesTrab(const Value: TEvtBasesTrab);
-begin
-  FEvtBasesTrab.Assign(Value);
-end;
-
 { TEvtBasesTrab }
 
 constructor TEvtBasesTrab.Create();
 begin
-  FLeitor := TLeitor.Create;
+  inherited Create;
 
-  FIdeEvento := TIdeEvento5.Create;
-  FIdeEmpregador := TIdeEmpregador.Create;
+  FLeitor         := TLeitor.Create;
+  FIdeEvento      := TIdeEvento5.Create;
+  FIdeEmpregador  := TIdeEmpregador.Create;
   FIdeTrabalhador := TIdeTrabalhador3.Create;
-  FInfoCpCalc := TInfoCpCalcCollection.Create;
-  FInfoCp := TInfoCp.Create(Self);
+  FInfoCpCalc     := TInfoCpCalcCollection.Create;
+  FInfoCp         := TInfoCp.Create;
 end;
 
 destructor TEvtBasesTrab.Destroy;
@@ -330,21 +317,12 @@ begin
   inherited;
 end;
 
-procedure TEvtBasesTrab.SetInfoCpCalc(const Value: TInfoCpCalcCollection);
-begin
-  FInfoCpCalc := Value;
-end;
 
 { TInfoCpCalcCollection }
 
 function TInfoCpCalcCollection.Add: TInfoCpCalcCollectionItem;
 begin
-  Result := TInfoCpCalcCollectionItem(inherited Add);
-end;
-
-constructor TInfoCpCalcCollection.Create;
-begin
-  inherited create(TInfoCpCalcCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoCpCalcCollection.GetItem(
@@ -359,11 +337,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoCpCalcCollection.New: TInfoCpCalcCollectionItem;
+begin
+  Result := TInfoCpCalcCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoCp }
 
 constructor TInfoCp.Create;
 begin
-  FIdeEstabLot := TIdeEstabLotCollection.Create(Self);
+  inherited Create;
+  FIdeEstabLot := TIdeEstabLotCollection.Create;
 end;
 
 destructor TInfoCp.Destroy;
@@ -382,13 +367,7 @@ end;
 
 function TIdeEstabLotCollection.Add: TIdeEstabLotCollectionItem;
 begin
-  Result := TIdeEstabLotCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TIdeEstabLotCollection.Create(AOwner: TInfoCp);
-begin
-  inherited create(TIdeEstabLotCollectionItem);
+  Result := Self.New;
 end;
 
 function TIdeEstabLotCollection.GetItem(
@@ -403,11 +382,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TIdeEstabLotCollection.New: TIdeEstabLotCollectionItem;
+begin
+  Result := TIdeEstabLotCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TIdeEstabLotCollectionItem }
 
 constructor TIdeEstabLotCollectionItem.Create;
 begin
-  FInfoCategIncid := TInfoCategIncidCollection.Create(Self);
+  inherited Create;
+  FInfoCategIncid := TInfoCategIncidCollection.Create;
 end;
 
 destructor TIdeEstabLotCollectionItem.Destroy;
@@ -427,13 +413,7 @@ end;
 
 function TInfoCategIncidCollection.Add: TInfoCategIncidCollectionItem;
 begin
-  Result := TInfoCategIncidCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TInfoCategIncidCollection.Create;
-begin
-  inherited create(TInfoCategIncidCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoCategIncidCollection.GetItem(
@@ -448,12 +428,19 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoCategIncidCollection.New: TInfoCategIncidCollectionItem;
+begin
+  Result := TInfoCategIncidCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TInfoCategIncidCollectionItem }
 
 constructor TInfoCategIncidCollectionItem.Create;
 begin
-  FInfoBaseCS := TInfoBaseCSCollection.Create(Self);
-  FCalcTerc := TCalcTercCollection.Create(Self);
+  inherited Create;
+  FInfoBaseCS := TInfoBaseCSCollection.Create;
+  FCalcTerc   := TCalcTercCollection.Create;
 end;
 
 destructor TInfoCategIncidCollectionItem.Destroy;
@@ -480,13 +467,7 @@ end;
 
 function TInfoBaseCSCollection.Add: TInfoBaseCSCollectionItem;
 begin
-  Result := TInfoBaseCSCollectionItem(inherited Add);
-end;
-
-constructor TInfoBaseCSCollection.Create(
-  AOwner: TInfoCategIncidCollectionItem);
-begin
-  inherited create(TInfoBaseCSCollectionItem);
+  Result := Self.New;
 end;
 
 function TInfoBaseCSCollection.GetItem(
@@ -501,17 +482,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TInfoBaseCSCollection.New: TInfoBaseCSCollectionItem;
+begin
+  Result := TInfoBaseCSCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TCalcTercCollection }
 
 function TCalcTercCollection.Add: TCalcTercCollectionItem;
 begin
-  Result := TCalcTercCollectionItem(inherited Add);
-end;
-
-constructor TCalcTercCollection.Create(
-  AOwner: TInfoCategIncidCollectionItem);
-begin
-  inherited create(TCalcTercCollectionItem);
+  Result := Self.New;
 end;
 
 function TCalcTercCollection.GetItem(
@@ -525,6 +506,14 @@ procedure TCalcTercCollection.SetItem(Index: Integer;
 begin
   inherited SetItem(Index, Value);
 end;
+
+function TCalcTercCollection.New: TCalcTercCollectionItem;
+begin
+  Result := TCalcTercCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+{ TEvtBasesTrab }
 
 function TEvtBasesTrab.LerXML: boolean;
 var
@@ -727,5 +716,6 @@ begin
     AIni.Free;
   end;
 end;
+
 
 end.

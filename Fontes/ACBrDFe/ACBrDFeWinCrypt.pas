@@ -1271,7 +1271,7 @@ begin
           begin
             // MS CryptoAPI retorna assinatura em "Little Endian bit string", invertendo...
             Result := '';
-            while (mBytesLen > 0) and (mHashBuffer[mBytesLen-1] = #0) do
+            while (mBytesLen > 256) and (mHashBuffer[mBytesLen-1] = #0) do
               Dec(mBytesLen);
 
             for I := mBytesLen downto 1 do

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by PRIVATE (private) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/bpe" targetNamespace="http://www.portalfiscal.inf.br/bpe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:simpleType name="TDateTimeUTC">
 		<xs:annotation>

@@ -43,19 +43,6 @@ uses
   ACBrUtil;
 
 type
-  TACBrCollection = class abstract (TCollection)
-  private
-    FSessao: String;
-    FSessaoItem: String;
-
-  public
-    constructor Create(AItemClass: TCollectionItemClass; const ASessao: String; const ASessaoItem: String = ''); reintroduce;
-
-    property Sessao: String read FSessao;
-    property SessaoItem: String read FSessaoItem;
-
-  end;
-
   { TACBrLibResposta }
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
 
@@ -82,15 +69,6 @@ type
   end;
 
 implementation
-
-{ TACBrCollection }
-constructor TACBrCollection.Create(AItemClass: TCollectionItemClass; const ASessao: String; const ASessaoItem: String);
-begin
-  inherited Create(AItemClass);
-
-  FSessao := ASessao;
-  FSessaoItem := ASessaoItem;
-end;
 
 { TACBrLibResposta }
 

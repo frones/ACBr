@@ -173,6 +173,16 @@ const
   CChaveArquivoPFX = 'ArquivoPFX';
   CChaveNumeroSerie = 'NumeroSerie';
 
+  CChaveBaud = 'Baud';
+  CChaveParity = 'Parity';
+  CChaveStop = 'Stop';
+  CChaveMaxBandwidth = 'MaxBandwidth';
+  CChaveSendBytesCount = 'SendBytesCount';
+  CChaveSendBytesInterval = 'SendBytesInterval';
+  CChaveHandShake = 'HandShake';
+  CChaveSoftFlow = 'SoftFlow';
+  CChaveHardFlow = 'HardFlow';
+
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';
   SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';

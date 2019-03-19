@@ -94,8 +94,11 @@ function BAL_LePeso(MillisecTimeOut: Integer; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_SolicitarPeso: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function BAL_UltimoPesoLido(var Peso: Double): longint;
+      {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 {%endregion}
 
 {%endregion}
@@ -143,6 +146,7 @@ end;
 {%region BAL}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
+
 function BAL_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -197,9 +201,11 @@ function BAL_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
 begin
   Result := LIB_ConfigGravarValor(eSessao, eChave, eValor);
 end;
+
 {%endregion}
 
 {%region Balanço}
+
 function BAL_Ativar: longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   try
@@ -307,6 +313,33 @@ begin
   end;
 end;
 
+function BAL_UltimoPesoLido(var Peso: Double): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('BAL_UltimoPesoLido', logNormal);
+
+    with TACBrLibBAL(pLib) do
+    begin
+      BALDM.Travar;
+      try
+        Peso := BALDM.ACBrBAL1.UltimoPesoLido;
+        Result := SetRetorno(ErrOK);
+      finally
+        BALDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function BAL_InterpretarRespostaPeso(eResposta: PChar; var Peso: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
@@ -339,6 +372,7 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
 {%endregion}
 
 {%endregion}

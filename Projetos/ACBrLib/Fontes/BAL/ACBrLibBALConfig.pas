@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrBAL;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrBAL;
 
 type
 
@@ -73,6 +73,7 @@ type
   TLibBALConfig = class(TLibConfig)
   private
     FBALConfig: TBALConfig;
+    FDeviceConfig: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -89,6 +90,7 @@ type
     destructor Destroy; override;
 
     property BALConfig: TBALConfig read FBALConfig;
+    property DeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation
@@ -143,11 +145,13 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FBALConfig := TBALConfig.Create;
+  FDeviceConfig := TDeviceConfig.Create('BAL_Device');
 end;
 
 destructor TLibBALConfig.Destroy;
 begin
   FBALConfig.Free;
+  FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -166,6 +170,7 @@ begin
   inherited INIParaClasse;
 
   FBALConfig.LerIni(Ini);
+  FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibBALConfig.ClasseParaINI;
@@ -175,6 +180,7 @@ begin
   Ini.WriteString(CSessaoVersao, CLibBALNome, CLibBALVersao);
 
   FBALConfig.GravarIni(Ini);
+  FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibBALConfig.ClasseParaComponentes;

@@ -64,6 +64,7 @@ exports
   BAL_Desativar,
   BAL_LePeso,
   BAL_SolicitarPeso,
+  BAL_UltimoPesoLido,
   BAL_InterpretarRespostaPeso;
 
 begin

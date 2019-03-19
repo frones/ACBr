@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2019
+--- ACBrLibBAL ---
+[+] Adicionado classe com as configurações da porta serial.
+   Por: Rafael Teno Dias
+
 22/08/2018
 --- ACBrLibBAL ---
 [+] Inicio do projeto.

@@ -44,80 +44,15 @@ unit pcnReinfR2099;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR2099Collection = class;
-  TR2099CollectionItem = class;
-  TevtFechaEvPer = class;
-
   {Classes específicas deste evento}
-  TideRespInf = class;
-  TinfoFech = class;
-
-  TR2099Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TR2099CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR2099CollectionItem);
-  public
-    function Add: TR2099CollectionItem;
-    property Items[Index: Integer]: TR2099CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TR2099CollectionItem = class(TCollectionItem)
-  private
-    FTipoEvento: TTipoEvento;
-    FevtFechaEvPer: TevtFechaEvPer;
-    procedure setevtFechaEvPer(const Value: TevtFechaEvPer);
-  public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtFechaEvPer: TevtFechaEvPer read FevtFechaEvPer write setevtFechaEvPer;
-  end;
-
-  TevtFechaEvPer = class(TReinfEvento) //Classe do elemento principal do XML do evento!
-  private
-    FIdeEvento: TIdeEvento2;
-    FideContri: TideContri;
-    FACBrReinf: TObject;
-    FideRespInf: TideRespInf;
-    FinfoFech: TinfoFech;
-
-    {Geradores específicos desta classe}
-    procedure GerarideRespInf;
-    procedure GerarinfoFech;
-  public
-    constructor Create(AACBrReinf: TObject); overload;
-    destructor  Destroy; override;
-
-    function GerarXML: Boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
-    property ideContri: TideContri read FideContri write FideContri;
-    property ideRespInf: TideRespInf read FideRespInf write FideRespInf;
-    property infoFech: TinfoFech read FinfoFech write FinfoFech;
-  end;
-
-  { TideRespInf }
-  TideRespInf = class(TObject)
-  private
-    FnmResp: string;
-    FcpfResp: string;
-    Ftelefone: string;
-    Femail: string;
-  public
-    property nmResp: string read FnmResp write FnmResp;
-    property cpfResp: string read FcpfResp write FcpfResp;
-    property telefone: string read Ftelefone write Ftelefone;
-    property email: string read Femail write Femail;
-  end;
 
   { TinfoFech }
+
   TinfoFech = class(TObject)
   private
     FevtServTm: TtpSimNao;
@@ -139,6 +74,67 @@ type
     property compSemMovto: string read FcompSemMovto write FcompSemMovto;
   end;
 
+  { TideRespInf }
+
+  TideRespInf = class(TObject)
+  private
+    FnmResp: string;
+    FcpfResp: string;
+    Ftelefone: string;
+    Femail: string;
+  public
+    property nmResp: string read FnmResp write FnmResp;
+    property cpfResp: string read FcpfResp write FcpfResp;
+    property telefone: string read Ftelefone write Ftelefone;
+    property email: string read Femail write Femail;
+  end;
+
+  TevtFechaEvPer = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  private
+    FIdeEvento: TIdeEvento2;
+    FideContri: TideContri;
+    FideRespInf: TideRespInf;
+    FinfoFech: TinfoFech;
+
+    {Geradores específicos desta classe}
+    procedure GerarideRespInf;
+    procedure GerarinfoFech;
+  public
+    constructor Create(AACBrReinf: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
+    property ideContri: TideContri read FideContri write FideContri;
+    property ideRespInf: TideRespInf read FideRespInf write FideRespInf;
+    property infoFech: TinfoFech read FinfoFech write FinfoFech;
+  end;
+
+  TR2099CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtFechaEvPer: TevtFechaEvPer;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtFechaEvPer: TevtFechaEvPer read FevtFechaEvPer write FevtFechaEvPer;
+  end;
+
+  TR2099Collection = class(TReinfCollection)
+  private
+    function GetItem(Index: Integer): TR2099CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR2099CollectionItem);
+  public
+    function Add: TR2099CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2099CollectionItem;
+
+    property Items[Index: Integer]: TR2099CollectionItem read GetItem write SetItem; default;
+  end;
+
 implementation
 
 uses
@@ -149,12 +145,18 @@ uses
 
 function TR2099Collection.Add: TR2099CollectionItem;
 begin
-  Result := TR2099CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2099Collection.GetItem(Index: Integer): TR2099CollectionItem;
 begin
   Result := TR2099CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2099Collection.New: TR2099CollectionItem;
+begin
+  Result := TR2099CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2099Collection.SetItem(Index: Integer; Value: TR2099CollectionItem);
@@ -164,31 +166,26 @@ end;
 
 { TR2099CollectionItem }
 
-procedure TR2099CollectionItem.AfterConstruction;
+constructor TR2099CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR2099;
-  FevtFechaEvPer := TevtFechaEvPer.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento    := teR2099;
+  FevtFechaEvPer := TevtFechaEvPer.Create(AOwner);
 end;
 
-procedure TR2099CollectionItem.BeforeDestruction;
+destructor TR2099CollectionItem.Destroy;
 begin
   inherited;
+
   FevtFechaEvPer.Free;
-end;
-
-procedure TR2099CollectionItem.setevtFechaEvPer(const Value: TevtFechaEvPer);
-begin
-  FevtFechaEvPer.Assign(Value);
 end;
 
 { TevtFechaEvPer }
 
 constructor TevtFechaEvPer.Create(AACBrReinf: TObject);
 begin
-  inherited;
-
-  FACBrReinf := AACBrReinf;
+  inherited Create(AACBrReinf);
 
   FideContri  := TideContri.create;
   FIdeEvento  := TIdeEvento2.create;

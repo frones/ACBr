@@ -44,83 +44,46 @@ unit pcnReinfR1070;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR1070Collection = class;
-  TR1070CollectionItem = class;
-  TevtTabProcesso = class;
-
   {Classes específicas deste evento}
-  TinfoProcesso = class;
-  TideProcesso = class;
-  TinfoSuspCollection = class;
-  TinfoSuspCollectionItem = class;
-  TdadosProcJud = class;
 
-  TR1070Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TR1070CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR1070CollectionItem);
+  TdadosProcJud = class(TObject)
+   private
+    FUfVara: string;
+    FCodMunic: integer;
+    FIdVara: string;
   public
-    function Add: TR1070CollectionItem;
-    property Items[Index: Integer]: TR1070CollectionItem read GetItem write SetItem; default;
+    property UfVara: string read FUfVara write FUfVara;
+    property codMunic: integer read FCodMunic write FCodMunic;
+    property idVara: string read FIdVara write FIdVara;
   end;
 
-  TR1070CollectionItem = class(TCollectionItem)
+  TinfoSuspCollectionItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtTabProcesso: TevtTabProcesso;
-    procedure setevtTabProcesso(const Value: TevtTabProcesso);
+    FcodSusp: string;
+    FIndDeposito: TtpSimNao;
+    FDTDecisao: TDateTime;
+    FIndSusp: TIndSusp;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtTabProcesso: TevtTabProcesso read FevtTabProcesso write setevtTabProcesso;
+    property codSusp: string read FcodSusp write FcodSusp;
+    property indSusp: TIndSusp read FIndSusp write FIndSusp;
+    property dtDecisao: TDateTime read FDTDecisao write FDTDecisao;
+    property indDeposito: TtpSimNao read FIndDeposito write FIndDeposito;
   end;
 
-  TevtTabProcesso = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  TinfoSuspCollection = class(TObjectList)
   private
-    FModoLancamento: TTipoOperacao;
-    FIdeEvento: TIdeEvento;
-    FideContri: TideContri;
-    FinfoProcesso: TinfoProcesso;
-    FACBrReinf: TObject;
-
-    {Geradores específicos desta classe}
-    procedure GerarIdeProcesso(pEmp: TideProcesso);
-    procedure GerarinfoSusp;
-    procedure GerarDadosProcJud;
+    function GetItem(Index: Integer): TinfoSuspCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfoSuspCollectionItem);
   public
-    constructor Create(AACBrReinf: TObject); overload;
-    destructor  Destroy; override;
+    function Add: TinfoSuspCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoSuspCollectionItem;
 
-    function GerarXML: Boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ModoLancamento: TTipoOperacao read FModoLancamento write FModoLancamento;
-    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
-    property ideContri: TideContri read FideContri write FideContri;
-    property infoProcesso: TinfoProcesso read FinfoProcesso write FinfoProcesso;
-  end;
-
-  TinfoProcesso = class(TObject)
-  private
-    FideProcesso: TIdeProcesso;
-    FNovaValidade: TidePeriodo;
-
-    function getNovaValidade(): TidePeriodo;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    function novaValidadeInst(): Boolean;
-
-    property ideProcesso: TIdeProcesso read FideProcesso write FideProcesso;
-    property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
+    property Items[Index: Integer]: TinfoSuspCollectionItem read GetItem write SetItem; default;
   end;
 
   TideProcesso = class(TObject)
@@ -145,38 +108,67 @@ type
     property DadosProcJud: TDadosProcJud read FDadosProcJud;
   end;
 
-  TinfoSuspCollection = class(TCollection)
+  TinfoProcesso = class(TObject)
   private
-    function GetItem(Index: Integer): TinfoSuspCollectionItem;
-    procedure SetItem(Index: Integer; Value: TinfoSuspCollectionItem);
+    FideProcesso: TIdeProcesso;
+    FNovaValidade: TidePeriodo;
+
+    function getNovaValidade(): TidePeriodo;
   public
-    constructor create(); reintroduce;
-    function Add: TinfoSuspCollectionItem;
-    property Items[Index: Integer]: TinfoSuspCollectionItem read GetItem write SetItem; default;
+    constructor Create;
+    destructor Destroy; override;
+
+    function novaValidadeInst(): Boolean;
+
+    property ideProcesso: TIdeProcesso read FideProcesso write FideProcesso;
+    property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TinfoSuspCollectionItem = class(TCollectionItem)
+  TevtTabProcesso = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
-    FcodSusp: string;
-    FIndDeposito: TtpSimNao;
-    FDTDecisao: TDateTime;
-    FIndSusp: TIndSusp;
+    FModoLancamento: TTipoOperacao;
+    FIdeEvento: TIdeEvento;
+    FideContri: TideContri;
+    FinfoProcesso: TinfoProcesso;
+
+    {Geradores específicos desta classe}
+    procedure GerarIdeProcesso(pEmp: TideProcesso);
+    procedure GerarinfoSusp;
+    procedure GerarDadosProcJud;
   public
-    property codSusp: string read FcodSusp write FcodSusp;
-    property indSusp: TIndSusp read FIndSusp write FIndSusp;
-    property dtDecisao: TDateTime read FDTDecisao write FDTDecisao;
-    property indDeposito: TtpSimNao read FIndDeposito write FIndDeposito;
+    constructor Create(AACBrReinf: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ModoLancamento: TTipoOperacao read FModoLancamento write FModoLancamento;
+    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
+    property ideContri: TideContri read FideContri write FideContri;
+    property infoProcesso: TinfoProcesso read FinfoProcesso write FinfoProcesso;
   end;
 
-  TdadosProcJud = class(TObject)
-   private
-    FUfVara: string;
-    FCodMunic: integer;
-    FIdVara: string;
+  TR1070CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtTabProcesso: TevtTabProcesso;
   public
-    property UfVara: string read FUfVara write FUfVara;
-    property codMunic: integer read FCodMunic write FCodMunic;
-    property idVara: string read FIdVara write FIdVara;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtTabProcesso: TevtTabProcesso read FevtTabProcesso write FevtTabProcesso;
+  end;
+
+  TR1070Collection = class(TReinfCollection)
+  private
+    function GetItem(Index: Integer): TR1070CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR1070CollectionItem);
+  public
+    function Add: TR1070CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR1070CollectionItem;
+
+    property Items[Index: Integer]: TR1070CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -189,12 +181,18 @@ uses
 
 function TR1070Collection.Add: TR1070CollectionItem;
 begin
-  Result := TR1070CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR1070Collection.GetItem(Index: Integer): TR1070CollectionItem;
 begin
   Result := TR1070CollectionItem(inherited GetItem(Index));
+end;
+
+function TR1070Collection.New: TR1070CollectionItem;
+begin
+  Result := TR1070CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR1070Collection.SetItem(Index: Integer; Value: TR1070CollectionItem);
@@ -204,22 +202,19 @@ end;
 
 { TR1070CollectionItem }
 
-procedure TR1070CollectionItem.AfterConstruction;
+constructor TR1070CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR1070;
-  FevtTabProcesso := TevtTabProcesso.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento     := teR1070;
+  FevtTabProcesso := TevtTabProcesso.Create(AOwner);
 end;
 
-procedure TR1070CollectionItem.BeforeDestruction;
+destructor TR1070CollectionItem.Destroy;
 begin
   inherited;
+
   FevtTabProcesso.Free;
-end;
-
-procedure TR1070CollectionItem.setevtTabProcesso(const Value: TevtTabProcesso);
-begin
-  FevtTabProcesso.Assign(Value);
 end;
 
 { TinfoProcesso }
@@ -272,19 +267,19 @@ end;
 
 function TinfoSuspCollection.Add: TinfoSuspCollectionItem;
 begin
-  Result := TinfoSuspCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoSuspCollection.create;
-begin
-  Inherited create(TinfoSuspCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoSuspCollection.GetItem(
   Index: Integer): TinfoSuspCollectionItem;
 begin
   Result := TinfoSuspCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoSuspCollection.New: TinfoSuspCollectionItem;
+begin
+  Result := TinfoSuspCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoSuspCollection.SetItem(Index: Integer;
@@ -297,12 +292,10 @@ end;
 
 constructor TevtTabProcesso.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri    := TideContri.create;
-  FIdeEvento    := TIdeEvento.create;
+  FideContri    := TideContri.Create;
+  FIdeEvento    := TIdeEvento.Create;
   FinfoProcesso := TinfoProcesso.Create;
 end;
 
@@ -464,7 +457,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoProcesso.ideProcesso.infoSusp.Add do
+          with infoProcesso.ideProcesso.infoSusp.New do
           begin
             codSusp     := sFim;
             indSusp     := StrToIndSusp(Ok, INIRec.ReadString(sSecao, 'indSusp', '01'));

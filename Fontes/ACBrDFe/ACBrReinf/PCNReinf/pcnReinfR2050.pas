@@ -44,7 +44,7 @@ unit pcnReinfR2050;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -61,33 +61,33 @@ type
   TinfoProcCollection = class;
   TinfoProcCollectionItem = class;
 
-  TR2050Collection = class(TOwnedCollection)
+  TR2050Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR2050CollectionItem;
     procedure SetItem(Index: Integer; Value: TR2050CollectionItem);
   public
-    function Add: TR2050CollectionItem;
+    function Add: TR2050CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2050CollectionItem;
+
     property Items[Index: Integer]: TR2050CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR2050CollectionItem = class(TCollectionItem)
+  TR2050CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtComProd: TevtComProd;
-    procedure setevtComProd(const Value: TevtComProd);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtComProd: TevtComProd read FevtComProd write setevtComProd;
+    property evtComProd: TevtComProd read FevtComProd write FevtComProd;
   end;
 
   TevtComProd = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FinfoComProd: TinfoComProd;
 
     {Geradores específicos desta classe}
@@ -95,7 +95,7 @@ type
     procedure GerartipoCom(Lista: TtipoComCollection);
     procedure GerarinfoProc(Lista: TinfoProcCollection);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -146,23 +146,24 @@ type
     property tipoCom: TtipoComCollection read FtipoCom write FtipoCom;
   end;
 
-  TtipoComCollection = class(TCollection)
+  TtipoComCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TtipoComCollectionItem;
     procedure SetItem(Index: Integer; Value: TtipoComCollectionItem);
   public
-    constructor create(AOwner: TideEstab);
-    function Add: TtipoComCollectionItem;
+    function Add: TtipoComCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TtipoComCollectionItem;
+
     property Items[Index: Integer]: TtipoComCollectionItem read GetItem write SetItem; default;
   end;
 
-  TtipoComCollectionItem = class(TCollectionItem)
+  TtipoComCollectionItem = class(TObject)
   private
     FindCom: TindCom;
     FvlrRecBruta: double;
     FinfoProc: TinfoProcCollection;
   public
-    constructor create; reintroduce;
+    constructor Create;// reintroduce;
     destructor Destroy; override;
 
     property indCom: TindCom read FindCom write FindCom;
@@ -170,17 +171,18 @@ type
     property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
   end;
 
-  TinfoProcCollection = class(TCollection)
+  TinfoProcCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcCollectionItem;
+    function Add: TinfoProcCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcCollectionItem;
+
     property Items[Index: Integer]: TinfoProcCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcCollectionItem = class(TCollectionItem)
+  TinfoProcCollectionItem = class(TObject)
   private
     FcodSusp: String;
     FvlrSenarSusp: double;
@@ -207,12 +209,18 @@ uses
 
 function TR2050Collection.Add: TR2050CollectionItem;
 begin
-  Result := TR2050CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2050Collection.GetItem(Index: Integer): TR2050CollectionItem;
 begin
   Result := TR2050CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2050Collection.New: TR2050CollectionItem;
+begin
+  Result := TR2050CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2050Collection.SetItem(Index: Integer; Value: TR2050CollectionItem);
@@ -222,34 +230,29 @@ end;
 
 { TR2050CollectionItem }
 
-procedure TR2050CollectionItem.AfterConstruction;
+constructor TR2050CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create;
+
   FTipoEvento := teR2050;
-  FevtComProd := TevtComProd.Create(Collection.Owner);
+  FevtComProd := TevtComProd.Create(AOwner);
 end;
 
-procedure TR2050CollectionItem.BeforeDestruction;
+destructor TR2050CollectionItem.Destroy;
 begin
   inherited;
-  FevtComProd.Free;
-end;
 
-procedure TR2050CollectionItem.setevtComProd(const Value: TevtComProd);
-begin
-  FevtComProd.Assign(Value);
+  FevtComProd.Free;
 end;
 
 { TevtComProd }
 
 constructor TevtComProd.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri   := TideContri.create;
-  FIdeEvento   := TIdeEvento2.create;
+  FideContri   := TideContri.Create;
+  FIdeEvento   := TIdeEvento2.Create;
   FinfoComProd := TinfoComProd.Create;
 end;
 
@@ -280,7 +283,7 @@ end;
 
 constructor TideEstab.Create;
 begin
-  FtipoCom := TtipoComCollection.create(Self);
+  FtipoCom := TtipoComCollection.Create;
 end;
 
 destructor TideEstab.Destroy;
@@ -294,19 +297,19 @@ end;
 
 function TtipoComCollection.Add: TtipoComCollectionItem;
 begin
-  Result := TtipoComCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TtipoComCollection.create(AOwner: TideEstab);
-begin
-  Inherited create(TtipoComCollectionItem);
+  Result := Self.New;
 end;
 
 function TtipoComCollection.GetItem(
   Index: Integer): TtipoComCollectionItem;
 begin
   Result := TtipoComCollectionItem(inherited GetItem(Index));
+end;
+
+function TtipoComCollection.New: TtipoComCollectionItem;
+begin
+  Result := TtipoComCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TtipoComCollection.SetItem(Index: Integer;
@@ -317,7 +320,7 @@ end;
 
 { TtipoComCollectionItem }
 
-constructor TtipoComCollectionItem.create;
+constructor TtipoComCollectionItem.Create;
 begin
   FinfoProc := TinfoProcCollection.Create;
 end;
@@ -333,19 +336,19 @@ end;
 
 function TinfoProcCollection.Add: TinfoProcCollectionItem;
 begin
-  Result := TinfoProcCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoProcCollection.create;
-begin
-  Inherited create(TinfoProcCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcCollection.GetItem(
   Index: Integer): TinfoProcCollectionItem;
 begin
   Result := TinfoProcCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcCollection.New: TinfoProcCollectionItem;
+begin
+  Result := TinfoProcCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcCollection.SetItem(Index: Integer;

@@ -44,45 +44,19 @@ unit pcnReinfR2098;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR2098Collection = class;
-  TR2098CollectionItem = class;
-  TevtReabreEvPer = class;
-
-  TR2098Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TR2098CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR2098CollectionItem);
-  public
-    function Add: TR2098CollectionItem;
-    property Items[Index: Integer]: TR2098CollectionItem read GetItem write SetItem; default;
-  end;
-
-  TR2098CollectionItem = class(TCollectionItem)
-  private
-    FTipoEvento: TTipoEvento;
-    FevtReabreEvPer: TevtReabreEvPer;
-    procedure setevtReabreEvPer(const Value: TevtReabreEvPer);
-  public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtReabreEvPer: TevtReabreEvPer read FevtReabreEvPer write setevtReabreEvPer;
-  end;
 
   TevtReabreEvPer = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
 
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -90,6 +64,29 @@ type
 
     property ideEvento: TIdeEvento2 read FIdeEvento write FIdeEvento;
     property ideContri: TideContri read FideContri write FideContri;
+  end;
+
+  TR2098CollectionItem = class(TObject)
+  private
+    FTipoEvento: TTipoEvento;
+    FevtReabreEvPer: TevtReabreEvPer;
+  public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtReabreEvPer: TevtReabreEvPer read FevtReabreEvPer write FevtReabreEvPer;
+  end;
+
+  TR2098Collection = class(TReinfCollection)
+  private
+    function GetItem(Index: Integer): TR2098CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR2098CollectionItem);
+  public
+    function Add: TR2098CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2098CollectionItem;
+
+    property Items[Index: Integer]: TR2098CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -102,12 +99,18 @@ uses
 
 function TR2098Collection.Add: TR2098CollectionItem;
 begin
-  Result := TR2098CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2098Collection.GetItem(Index: Integer): TR2098CollectionItem;
 begin
   Result := TR2098CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2098Collection.New: TR2098CollectionItem;
+begin
+  Result := TR2098CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2098Collection.SetItem(Index: Integer; Value: TR2098CollectionItem);
@@ -117,31 +120,26 @@ end;
 
 { TR2098CollectionItem }
 
-procedure TR2098CollectionItem.AfterConstruction;
+constructor TR2098CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR2098;
-  FevtReabreEvPer := TevtReabreEvPer.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento     := teR2098;
+  FevtReabreEvPer := TevtReabreEvPer.Create(AOwner);
 end;
 
-procedure TR2098CollectionItem.BeforeDestruction;
+destructor TR2098CollectionItem.Destroy;
 begin
   inherited;
+
   FevtReabreEvPer.Free;
-end;
-
-procedure TR2098CollectionItem.setevtReabreEvPer(const Value: TevtReabreEvPer);
-begin
-  FevtReabreEvPer.Assign(Value);
 end;
 
 { TevtReabreEvPer }
 
 constructor TevtReabreEvPer.Create(AACBrReinf: TObject);
 begin
-  inherited;
-
-  FACBrReinf := AACBrReinf;
+  inherited Create(AACBrReinf);
 
   FideContri := TideContri.create;
   FIdeEvento := TIdeEvento2.create;

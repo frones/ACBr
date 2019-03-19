@@ -44,7 +44,7 @@ unit pcnReinfR3010;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -66,33 +66,33 @@ type
   TinfoProcCollection = class;
   TinfoProcCollectionItem = class;
 
-  TR3010Collection = class(TOwnedCollection)
+  TR3010Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR3010CollectionItem;
     procedure SetItem(Index: Integer; Value: TR3010CollectionItem);
   public
-    function Add: TR3010CollectionItem;
+    function Add: TR3010CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR3010CollectionItem;
+
     property Items[Index: Integer]: TR3010CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR3010CollectionItem = class(TCollectionItem)
+  TR3010CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtEspDesportivo: TevtEspDesportivo;
-    procedure setevtEspDesportivo(const Value: TevtEspDesportivo);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtEspDesportivo: TevtEspDesportivo read FevtEspDesportivo write setevtEspDesportivo;
+    property evtEspDesportivo: TevtEspDesportivo read FevtEspDesportivo write FevtEspDesportivo;
   end;
 
   TevtEspDesportivo = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento3;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FideEstab: TideEstabCollection;
 
     {Geradores específicos desta classe}
@@ -103,7 +103,7 @@ type
     procedure GerarTotal(Item: TreceitaTotal);
     procedure GerarinfoProc(Lista: TinfoProcCollection);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -292,12 +292,18 @@ uses
 
 function TR3010Collection.Add: TR3010CollectionItem;
 begin
-  Result := TR3010CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR3010Collection.GetItem(Index: Integer): TR3010CollectionItem;
 begin
   Result := TR3010CollectionItem(inherited GetItem(Index));
+end;
+
+function TR3010Collection.New: TR3010CollectionItem;
+begin
+  Result := TR3010CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR3010Collection.SetItem(Index: Integer; Value: TR3010CollectionItem);
@@ -307,31 +313,26 @@ end;
 
 { TR3010CollectionItem }
 
-procedure TR3010CollectionItem.AfterConstruction;
+constructor TR3010CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR3010;
-  FevtEspDesportivo := TevtEspDesportivo.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento       := teR3010;
+  FevtEspDesportivo := TevtEspDesportivo.Create(AOwner);
 end;
 
-procedure TR3010CollectionItem.BeforeDestruction;
+destructor TR3010CollectionItem.Destroy;
 begin
   inherited;
+
   FevtEspDesportivo.Free;
-end;
-
-procedure TR3010CollectionItem.setevtEspDesportivo(const Value: TevtEspDesportivo);
-begin
-  FevtEspDesportivo.Assign(Value);
 end;
 
 { TevtEspDesportivo }
 
 constructor TevtEspDesportivo.Create(AACBrReinf: TObject);
 begin
-  inherited;
-
-  FACBrReinf := AACBrReinf;
+  inherited Create(AACBrReinf);
 
   FideContri := TideContri.create;
   FIdeEvento := TIdeEvento3.create;

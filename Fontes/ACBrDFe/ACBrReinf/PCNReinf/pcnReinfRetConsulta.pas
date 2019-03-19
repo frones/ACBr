@@ -131,7 +131,7 @@ type
     function GetItem(Index: Integer): TRTomCollectionItem;
     procedure SetItem(Index: Integer; Value: TRTomCollectionItem);
   public
-    constructor create(AOwner: TPersistent);
+    constructor Create(AOwner: TPersistent);
 //    constructor Create(AOwner: TInfoTotalContrib);
 
     function Add: TRTomCollectionItem;
@@ -150,7 +150,7 @@ type
 
     procedure SetinfoCRTom(const Value: TinfoCRTomCollection);
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 //    constructor Create(AOwner: TInfoTotalContrib);
 //    destructor Destroy; override;
@@ -287,7 +287,7 @@ type
     function GetItem(Index: Integer): TRetornoEventosCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetornoEventosCollectionItem);
   public
-    constructor create(AOwner: TEvtTotalContrib);
+    constructor Create(AOwner: TEvtTotalContrib);
     function Add: TRetornoEventosCollectionItem;
     property Items[Index: Integer]: TRetornoEventosCollectionItem read GetItem write SetItem;
   end;
@@ -338,7 +338,7 @@ type
     FevtTotalContrib: TEvtTotalContrib;
     FXML: String;
   public
-    constructor create;
+    constructor Create;
     destructor Destroy; override;
 
     function LerXml: boolean;
@@ -364,7 +364,7 @@ end;
 
 constructor TRTomCollection.Create(AOwner: TPersistent); //(AOwner: TInfoTotalContrib);
 begin
-  inherited create(TRTomCollectionItem);
+  inherited Create(TRTomCollectionItem);
 end;
 
 function TRTomCollection.GetItem(Index: Integer): TRTomCollectionItem;
@@ -407,7 +407,7 @@ end;
 
 constructor TRPrestCollection.Create(AOwner: TInfoTotalContrib);
 begin
-  inherited create(TRPrestCollectionItem);
+  inherited Create(TRPrestCollectionItem);
 end;
 
 function TRPrestCollection.GetItem(Index: Integer): TRPrestCollectionItem;
@@ -431,7 +431,7 @@ end;
 
 constructor TRRecRepADCollection.Create(AOwner: TInfoTotalContrib);
 begin
-  inherited create(TRRecRepADCollectionItem);
+  inherited Create(TRRecRepADCollectionItem);
 end;
 
 function TRRecRepADCollection.GetItem(
@@ -456,7 +456,7 @@ end;
 
 constructor TRCPRBCollection.Create(AOwner: TInfoTotalContrib);
 begin
-  inherited create(TRCPRBCollectionItem);
+  inherited Create(TRCPRBCollectionItem);
 end;
 
 function TRCPRBCollection.GetItem(Index: Integer): TRCPRBCollectionItem;
@@ -480,7 +480,7 @@ end;
 
 constructor TRComlCollection.Create;
 begin
-  inherited create(TRcomlCollectionItem);
+  inherited Create(TRcomlCollectionItem);
 end;
 
 function TRComlCollection.GetItem(Index: Integer): TRComlCollectionItem;
@@ -503,7 +503,7 @@ end;
 
 constructor TinfoCRTomCollection.Create(AOwner: TRTomCollectionItem);
 begin
-  inherited create(TinfoCRTomCollectionItem);
+  inherited Create(TinfoCRTomCollectionItem);
 end;
 
 function TinfoCRTomCollection.GetItem(
@@ -574,7 +574,7 @@ begin
   FIdeStatus        := TIdeStatus.Create;
   FInfoRecEv        := TInfoRecEv.Create;
   FInfoTotalContrib := TInfoTotalContrib.Create(Self);
-  FRetornoEventos   := TRetornoEventosCollection.create(Self);
+  FRetornoEventos   := TRetornoEventosCollection.Create(Self);
 end;
 
 destructor TEvtTotalContrib.Destroy;
@@ -591,9 +591,9 @@ end;
 
 { TRetConsulta }
 
-constructor TRetConsulta.create;
+constructor TRetConsulta.Create;
 begin
-  FLeitor := TLeitor.create;
+  FLeitor := TLeitor.Create;
   FevtTotalContrib := TEvtTotalContrib.Create;
 end;
 
@@ -612,9 +612,9 @@ begin
   Result := TRetornoEventosCollectionItem(inherited Add());
 end;
 
-constructor TRetornoEventosCollection.create(AOwner: TEvtTotalContrib);
+constructor TRetornoEventosCollection.Create(AOwner: TEvtTotalContrib);
 begin
-  inherited create(TRetornoEventosCollectionItem);
+  inherited Create(TRetornoEventosCollectionItem);
 end;
 
 function TRetornoEventosCollection.GetItem(Index: Integer): TRetornoEventosCollectionItem;

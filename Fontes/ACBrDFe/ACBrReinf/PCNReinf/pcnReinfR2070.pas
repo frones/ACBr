@@ -44,7 +44,7 @@ unit pcnReinfR2070;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -83,33 +83,33 @@ type
   TpgtoPJCollectionItem = class;
   TpgtoResidExt = class;
 
-  TR2070Collection = class(TOwnedCollection)
+  TR2070Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR2070CollectionItem;
     procedure SetItem(Index: Integer; Value: TR2070CollectionItem);
   public
-    function Add: TR2070CollectionItem;
+    function Add: TR2070CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2070CollectionItem;
+
     property Items[Index: Integer]: TR2070CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR2070CollectionItem = class(TCollectionItem)
+  TR2070CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtPgtosDivs: TevtPgtosDivs;
-    procedure setevtPgtosDivs(const Value: TevtPgtosDivs);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtPgtosDivs: TevtPgtosDivs read FevtPgtosDivs write setevtPgtosDivs;
+    property evtPgtosDivs: TevtPgtosDivs read FevtPgtosDivs write FevtPgtosDivs;
   end;
 
   TevtPgtosDivs = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FideBenef: TideBenef;
 
     {Geradores específicos desta classe}
@@ -133,7 +133,7 @@ type
     procedure GerarpgtoPJ(Lista: TpgtoPJCollection);
     procedure GerarpgtoResidExt(Item: TpgtoResidExt);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -521,12 +521,18 @@ uses
 
 function TR2070Collection.Add: TR2070CollectionItem;
 begin
-  Result := TR2070CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2070Collection.GetItem(Index: Integer): TR2070CollectionItem;
 begin
   Result := TR2070CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2070Collection.New: TR2070CollectionItem;
+begin
+  Result := TR2070CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2070Collection.SetItem(Index: Integer; Value: TR2070CollectionItem);
@@ -536,31 +542,26 @@ end;
 
 { TR2070CollectionItem }
 
-procedure TR2070CollectionItem.AfterConstruction;
+constructor TR2070CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR2070;
-  FevtPgtosDivs := TevtPgtosDivs.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento   := teR2070;
+  FevtPgtosDivs := TevtPgtosDivs.Create(AOwner);
 end;
 
-procedure TR2070CollectionItem.BeforeDestruction;
+destructor TR2070CollectionItem.Destroy;
 begin
   inherited;
+
   FevtPgtosDivs.Free;
-end;
-
-procedure TR2070CollectionItem.setevtPgtosDivs(const Value: TevtPgtosDivs);
-begin
-  FevtPgtosDivs.Assign(Value);
 end;
 
 { TevtPgtosDivs }
 
 constructor TevtPgtosDivs.Create(AACBrReinf: TObject);
 begin
-  inherited;
-
-  FACBrReinf := AACBrReinf;
+  inherited Create(AACBrReinf);
 
   FideContri := TideContri.create;
   FIdeEvento := TIdeEvento2.create;

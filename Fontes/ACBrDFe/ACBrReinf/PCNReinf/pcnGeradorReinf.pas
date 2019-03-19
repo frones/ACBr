@@ -55,7 +55,6 @@ type
 
   TReinfEvento = class(TReinf)
   private
-    FACBrReinf: TObject; //alimenta no create
     FXMLAssinado: String;
     FXMLOriginal: String;
     FAlertas: String;
@@ -68,7 +67,9 @@ type
     FXML: AnsiString;
     procedure SetXML(const Value: AnsiString);
   public
-    constructor Create(AACBrReinf: TObject); overload;//->recebe a instancia da classe TACBrReinf
+    FACBrReinf: TObject; //alimenta no Create
+
+    constructor Create(AACBrReinf: TObject); reintroduce; virtual;//->recebe a instancia da classe TACBrReinf
     destructor Destroy; override;
 
     function  GerarXML: boolean; virtual; abstract;
@@ -83,6 +84,10 @@ type
     property ErroValidacao: String read FErroValidacao;
     property ErroValidacaoCompleto: String read FErroValidacaoCompleto;
     property VersaoDF: TVersaoReinf read FVersaoDF write FVersaoDF;
+
+    property Gerador: TGerador  read FGerador write FGerador;
+    property schema: TReinfSchema read Fschema write Fschema;
+    property XML: AnsiString read FXML write SetXML;
   protected
     {Geradores de Uso Comum}
     procedure GerarCabecalho(Namespace: String);
@@ -94,10 +99,10 @@ type
     procedure GerarModoFechamento(pModo: TTipoOperacao);
     procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
     procedure GerarIdeContri(pEmp: TIdeContri; const GeraGrupo: boolean = True);
-  published
-    property Gerador: TGerador  read FGerador write FGerador;
-    property schema: TReinfSchema read Fschema write Fschema;
-    property XML: AnsiString read FXML write SetXML;
+//  published
+//    property Gerador: TGerador  read FGerador write FGerador;
+//    property schema: TReinfSchema read Fschema write Fschema;
+//    property XML: AnsiString read FXML write SetXML;
   end;
 
   TGeradorOpcoes = class(TObject)
@@ -180,9 +185,15 @@ end;
 
 constructor TReinfEvento.Create(AACBrReinf: TObject);
 begin
-  FACBrReinf := AACBrReinf;
+  inherited Create;
 
-  FGerador := TGerador.Create;
+  if not(AACBrReinf is TACBrReinf) then
+  begin
+    raise Exception.Create('Parâmetro AACBrReinf precisa ser do tipo TACBrReinf.');
+  end;
+
+  FACBrReinf := AACBrReinf;
+  FGerador   := TGerador.Create;
 
   FGerador.ArquivoFormatoXML     := '';
   FGerador.Opcoes.RetirarEspacos := True;
@@ -192,6 +203,8 @@ end;
 destructor TReinfEvento.Destroy;
 begin
   FGerador.Free;
+
+  inherited;
 end;
 
 procedure TReinfEvento.SaveToFile(const CaminhoArquivo: string);

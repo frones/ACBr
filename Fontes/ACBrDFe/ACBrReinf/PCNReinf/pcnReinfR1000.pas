@@ -44,89 +44,61 @@ unit pcnReinfR1000;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR1000Collection = class;
-  TR1000CollectionItem = class;
-  TevtInfoContri = class;
-
   {Classes específicas deste evento}
-  TinfoContribuinte = class;
-  TInfoCadastro = class;
-  TContato = class;
-  TSoftwareHouseCollection = class;
-  TSoftwareHouseCollectionItem = class;
-  TinfoEFR = class;
 
-  TR1000Collection = class(TOwnedCollection)
+  TContato = class(TObject)
   private
-    function GetItem(Index: Integer): TR1000CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR1000CollectionItem);
+    FNmCtt: string;
+    FCpfCtt: string;
+    FFoneFixo: string;
+    FFoneCel: string;
+    FEmail: string;
   public
-    function Add: TR1000CollectionItem;
-    property Items[Index: Integer]: TR1000CollectionItem read GetItem write SetItem; default;
+    property NmCtt: string read FNmCtt write FNmCtt;
+    property CpfCtt: string read FCpfCtt write FCpfCtt;
+    property FoneFixo: string read FFoneFixo write FFoneFixo;
+    property FoneCel: string read FFoneCel write FFoneCel;
+    property Email: string read FEmail write FEmail;
   end;
 
-  TR1000CollectionItem = class(TCollectionItem)
+  TSoftwareHouseCollectionItem = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtInfoContri: TevtInfoContri;
-    procedure setevtInfoContri(const Value: TevtInfoContri);
+    FCnpjSoftHouse: String;
+    FNmRazao: String;
+    FNmCont: String;
+    FTelefone: String;
+    Femail: String;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtInfoContri: TevtInfoContri read FevtInfoContri write setevtInfoContri;
+    property CnpjSoftHouse: String read FCnpjSoftHouse write FCnpjSoftHouse;
+    property NmRazao: String read FNmRazao write FNmRazao;
+    property NmCont: String read FNmCont write FNmCont;
+    property Telefone: String read FTelefone write FTelefone;
+    property email: String read Femail write Femail;
   end;
 
-  TevtInfoContri = class(TReinfEvento) //Classe do elemento principal do XML do evento!
+  TSoftwareHouseCollection = class(TObjectList)
   private
-    FModoLancamento: TTipoOperacao;
-    FIdeEvento: TIdeEvento;
-    FideContri: TideContri;
-    FinfoContribuinte: TinfoContribuinte;
-    FACBrReinf: TObject;
-
-    {Geradores específicos desta classe}
-    procedure GerarInfoCadastro;
-    procedure GerarContato;
-    procedure GerarSoftwareHouse;
-    procedure GerarInfoEFR;
+    function GetItem(Index: Integer): TSoftwareHouseCollectionItem;
+    procedure SetItem(Index: Integer; Value: TSoftwareHouseCollectionItem);
   public
-    constructor Create(AACBrReinf: TObject); overload;
-    destructor  Destroy; override;
+    function Add: TSoftwareHouseCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TSoftwareHouseCollectionItem;
 
-    function GerarXML: Boolean; override;
-    function LerArqIni(const AIniString: String): Boolean;
-
-    property ModoLancamento: TTipoOperacao read FModoLancamento write FModoLancamento;
-    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
-    property ideContri: TideContri read FideContri write FideContri;
-    property infoContribuinte: TinfoContribuinte read FinfoContribuinte write FinfoContribuinte;
+    property Items[Index: Integer]: TSoftwareHouseCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoContribuinte = class(TObject)
+  TInfoEFR = class(TObject)
   private
-    FidePeriodo: TIdePeriodo;
-    FinfoCadastro: TInfoCadastro;
-    FNovaValidade: TidePeriodo;
-
-    function getInfoCadastro(): TInfoCadastro;
-    function getNovaValidade(): TidePeriodo;
+     FideEFR: TtpSimNao;
+     FcnpjEFR: String;
   public
-    constructor Create;
-    destructor Destroy; override;
-
-    function infoCadastroInst(): Boolean;
-    function novaValidadeInst(): Boolean;
-
-    property idePeriodo: TIdePeriodo read FidePeriodo write FidePeriodo;
-    property infoCadastro: TInfoCadastro read getInfoCadastro write FinfoCadastro;
-    property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
+    property ideEFR: TtpSimNao read FideEFR write FideEFR;
+    property cnpjEFR: String read FcnpjEFR write FcnpjEFR;
   end;
 
   TInfoCadastro = class(TObject)
@@ -153,53 +125,72 @@ type
     property infoEFR: TinfoEFR read FinfoEFR write FinfoEFR;
   end;
 
-  TContato = class(TObject)
+  TinfoContribuinte = class(TObject)
   private
-    FNmCtt: string;
-    FCpfCtt: string;
-    FFoneFixo: string;
-    FFoneCel: string;
-    FEmail: string;
+    FidePeriodo: TIdePeriodo;
+    FinfoCadastro: TInfoCadastro;
+    FNovaValidade: TidePeriodo;
+
+    function getInfoCadastro(): TInfoCadastro;
+    function getNovaValidade(): TidePeriodo;
   public
-    property NmCtt: string read FNmCtt write FNmCtt;
-    property CpfCtt: string read FCpfCtt write FCpfCtt;
-    property FoneFixo: string read FFoneFixo write FFoneFixo;
-    property FoneCel: string read FFoneCel write FFoneCel;
-    property Email: string read FEmail write FEmail;
+    constructor Create;
+    destructor Destroy; override;
+
+    function infoCadastroInst(): Boolean;
+    function novaValidadeInst(): Boolean;
+
+    property idePeriodo: TIdePeriodo read FidePeriodo write FidePeriodo;
+    property infoCadastro: TInfoCadastro read getInfoCadastro write FinfoCadastro;
+    property novaValidade: TIdePeriodo read getNovaValidade write FnovaValidade;
   end;
 
-  TSoftwareHouseCollection = class(TCollection)
+  TevtInfoContri = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
-    function GetItem(Index: Integer): TSoftwareHouseCollectionItem;
-    procedure SetItem(Index: Integer; Value: TSoftwareHouseCollectionItem);
+    FModoLancamento: TTipoOperacao;
+    FIdeEvento: TIdeEvento;
+    FideContri: TideContri;
+    FinfoContribuinte: TinfoContribuinte;
+
+    {Geradores específicos desta classe}
+    procedure GerarInfoCadastro;
+    procedure GerarContato;
+    procedure GerarSoftwareHouse;
+    procedure GerarInfoEFR;
   public
-    constructor create(); reintroduce;
-    function Add: TSoftwareHouseCollectionItem;
-    property Items[Index: Integer]: TSoftwareHouseCollectionItem read GetItem write SetItem; default;
+    constructor Create(AACBrReinf: TObject); override;
+    destructor  Destroy; override;
+
+    function GerarXML: Boolean; override;
+    function LerArqIni(const AIniString: String): Boolean;
+
+    property ModoLancamento: TTipoOperacao read FModoLancamento write FModoLancamento;
+    property ideEvento: TIdeEvento read FIdeEvento write FIdeEvento;
+    property ideContri: TideContri read FideContri write FideContri;
+    property infoContribuinte: TinfoContribuinte read FinfoContribuinte write FinfoContribuinte;
   end;
 
-  TSoftwareHouseCollectionItem = class(TCollectionItem)
+  TR1000CollectionItem = class(TObject)
   private
-    FCnpjSoftHouse: String;
-    FNmRazao: String;
-    FNmCont: String;
-    FTelefone: String;
-    Femail: String;
+    FTipoEvento: TTipoEvento;
+    FevtInfoContri: TevtInfoContri;
   public
-    property CnpjSoftHouse: String read FCnpjSoftHouse write FCnpjSoftHouse;
-    property NmRazao: String read FNmRazao write FNmRazao;
-    property NmCont: String read FNmCont write FNmCont;
-    property Telefone: String read FTelefone write FTelefone;
-    property email: String read Femail write Femail;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtInfoContri: TevtInfoContri read FevtInfoContri write FevtInfoContri;
   end;
 
-  TInfoEFR = class(TObject)
+  TR1000Collection = class(TReinfCollection)
   private
-     FideEFR: TtpSimNao;
-     FcnpjEFR: String;
+    function GetItem(Index: Integer): TR1000CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR1000CollectionItem);
   public
-    property ideEFR: TtpSimNao read FideEFR write FideEFR;
-    property cnpjEFR: String read FcnpjEFR write FcnpjEFR;
+    function Add: TR1000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR1000CollectionItem;
+
+    property Items[Index: Integer]: TR1000CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -212,12 +203,18 @@ uses
 
 function TR1000Collection.Add: TR1000CollectionItem;
 begin
-  Result := TR1000CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR1000Collection.GetItem(Index: Integer): TR1000CollectionItem;
 begin
   Result := TR1000CollectionItem(inherited GetItem(Index));
+end;
+
+function TR1000Collection.New: TR1000CollectionItem;
+begin
+  Result := TR1000CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR1000Collection.SetItem(Index: Integer; Value: TR1000CollectionItem);
@@ -227,22 +224,19 @@ end;
 
 { TR1000CollectionItem }
 
-procedure TR1000CollectionItem.AfterConstruction;
+constructor TR1000CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR1000;
-  FevtInfoContri := TevtInfoContri.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento    := teR1000;
+  FevtInfoContri := TevtInfoContri.Create(AOwner);
 end;
 
-procedure TR1000CollectionItem.BeforeDestruction;
+destructor TR1000CollectionItem.Destroy;
 begin
   inherited;
+
   FevtInfoContri.Free;
-end;
-
-procedure TR1000CollectionItem.setevtInfoContri(const Value: TevtInfoContri);
-begin
-  FevtInfoContri.Assign(Value);
 end;
 
 { TinfoContribuinte }
@@ -311,19 +305,19 @@ end;
 
 function TSoftwareHouseCollection.Add: TSoftwareHouseCollectionItem;
 begin
-  Result := TSoftwareHouseCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TSoftwareHouseCollection.create;
-begin
-  Inherited create(TSoftwareHouseCollectionItem);
+  Result := Self.New;
 end;
 
 function TSoftwareHouseCollection.GetItem(
   Index: Integer): TSoftwareHouseCollectionItem;
 begin
   Result := TSoftwareHouseCollectionItem(inherited GetItem(Index));
+end;
+
+function TSoftwareHouseCollection.New: TSoftwareHouseCollectionItem;
+begin
+  Result := TSoftwareHouseCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TSoftwareHouseCollection.SetItem(Index: Integer;
@@ -336,12 +330,10 @@ end;
 
 constructor TevtInfoContri.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri        := TideContri.create;
-  FIdeEvento        := TIdeEvento.create;
+  FideContri        := TideContri.Create;
+  FIdeEvento        := TIdeEvento.Create;
   FinfoContribuinte := TinfoContribuinte.Create;
 end;
 
@@ -521,7 +513,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoContribuinte.infoCadastro.SoftwareHouse.Add do
+          with infoContribuinte.infoCadastro.SoftwareHouse.New do
           begin
             CnpjSoftHouse := sFim;
             nmRazao       := INIRec.ReadString(sSecao, 'nmRazao', '');

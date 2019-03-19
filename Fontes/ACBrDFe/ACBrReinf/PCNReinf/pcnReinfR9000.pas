@@ -44,51 +44,36 @@ unit pcnReinfR9000;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
 type
-  TR9000Collection = class;
-  TR9000CollectionItem = class;
-  TevtExclusao = class;
-
   {Classes específicas deste evento}
-  TinfoExclusao = class;
 
-  TR9000Collection = class(TOwnedCollection)
-  private
-    function GetItem(Index: Integer): TR9000CollectionItem;
-    procedure SetItem(Index: Integer; Value: TR9000CollectionItem);
-  public
-    function Add: TR9000CollectionItem;
-    property Items[Index: Integer]: TR9000CollectionItem read GetItem write SetItem; default;
-  end;
+  { TinfoExclusao }
 
-  TR9000CollectionItem = class(TCollectionItem)
+  TinfoExclusao = class(TObject)
   private
-    FTipoEvento: TTipoEvento;
-    FevtExclusao: TevtExclusao;
-    procedure setevtExclusao(const Value: TevtExclusao);
+    FtpEvento: string;
+    FnrRecEvt: string;
+    FperApu: string;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
-    property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtExclusao: TevtExclusao read FevtExclusao write setevtExclusao;
+    property tpEvento: string read FtpEvento write FtpEvento;
+    property nrRecEvt: string read FnrRecEvt write FnrRecEvt;
+    property perApur: string read FperApu write FperApu;
   end;
 
   TevtExclusao = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FinfoExclusao: TinfoExclusao;
 
     {Geradores específicos desta classe}
     procedure GerarinfoExclusao;
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -99,16 +84,27 @@ type
     property infoExclusao: TinfoExclusao read FinfoExclusao write FinfoExclusao;
   end;
 
-  { TinfoExclusao }
-  TinfoExclusao = class(TObject)
+  TR9000CollectionItem = class(TObject)
   private
-    FtpEvento: string;
-    FnrRecEvt: string;
-    FperApu: string;
+    FTipoEvento: TTipoEvento;
+    FevtExclusao: TevtExclusao;
   public
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property nrRecEvt: string read FnrRecEvt write FnrRecEvt;
-    property perApur: string read FperApu write FperApu;
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
+    property TipoEvento: TTipoEvento read FTipoEvento;
+    property evtExclusao: TevtExclusao read FevtExclusao write FevtExclusao;
+  end;
+
+  TR9000Collection = class(TReinfCollection)
+  private
+    function GetItem(Index: Integer): TR9000CollectionItem;
+    procedure SetItem(Index: Integer; Value: TR9000CollectionItem);
+  public
+    function Add: TR9000CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR9000CollectionItem;
+
+    property Items[Index: Integer]: TR9000CollectionItem read GetItem write SetItem; default;
   end;
 
 implementation
@@ -121,12 +117,18 @@ uses
 
 function TR9000Collection.Add: TR9000CollectionItem;
 begin
-  Result := TR9000CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR9000Collection.GetItem(Index: Integer): TR9000CollectionItem;
 begin
   Result := TR9000CollectionItem(inherited GetItem(Index));
+end;
+
+function TR9000Collection.New: TR9000CollectionItem;
+begin
+  Result := TR9000CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR9000Collection.SetItem(Index: Integer; Value: TR9000CollectionItem);
@@ -136,31 +138,26 @@ end;
 
 { TR9000CollectionItem }
 
-procedure TR9000CollectionItem.AfterConstruction;
+constructor TR9000CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create;
+
   FTipoEvento := teR9000;
-  FevtExclusao := TevtExclusao.Create(Collection.Owner);
+  FevtExclusao := TevtExclusao.Create(AOwner);
 end;
 
-procedure TR9000CollectionItem.BeforeDestruction;
+destructor TR9000CollectionItem.Destroy;
 begin
   inherited;
-  FevtExclusao.Free;
-end;
 
-procedure TR9000CollectionItem.setevtExclusao(const Value: TevtExclusao);
-begin
-  FevtExclusao.Assign(Value);
+  FevtExclusao.Free;
 end;
 
 { TevtExclusao }
 
 constructor TevtExclusao.Create(AACBrReinf: TObject);
 begin
-  inherited;
-
-  FACBrReinf := AACBrReinf;
+  inherited Create(AACBrReinf);
 
   FideContri    := TideContri.create;
   FIdeEvento    := TIdeEvento2.create;

@@ -44,7 +44,7 @@ unit pcnReinfR2060;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -63,33 +63,33 @@ type
   TinfoProcCollection = class;
   TinfoProcCollectionItem = class;
 
-  TR2060Collection = class(TOwnedCollection)
+  TR2060Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR2060CollectionItem;
     procedure SetItem(Index: Integer; Value: TR2060CollectionItem);
   public
-    function Add: TR2060CollectionItem;
+    function Add: TR2060CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2060CollectionItem;
+
     property Items[Index: Integer]: TR2060CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR2060CollectionItem = class(TCollectionItem)
+  TR2060CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtCPRB: TevtCPRB;
-    procedure setevtCPRB(const Value: TevtCPRB);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtCPRB: TevtCPRB read FevtCPRB write setevtCPRB;
+    property evtCPRB: TevtCPRB read FevtCPRB write FevtCPRB;
   end;
 
   TevtCPRB = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FinfoCPRB: TinfoCPRB;
 
     {Geradores específicos desta classe}
@@ -98,7 +98,7 @@ type
     procedure GerartipoAjuste(Lista: TtipoAjusteCollection);
     procedure GerarinfoProc(Lista: TinfoProcCollection);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -141,17 +141,18 @@ type
     property tipoCod: TtipoCodCollection read FtipoCod write FtipoCod;
   end;
 
-  TtipoCodCollection = class(TCollection)
+  TtipoCodCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TtipoCodCollectionItem;
     procedure SetItem(Index: Integer; Value: TtipoCodCollectionItem);
   public
-    constructor create(AOwner: TideEstab);
-    function Add: TtipoCodCollectionItem;
+    function Add: TtipoCodCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TtipoCodCollectionItem;
+
     property Items[Index: Integer]: TtipoCodCollectionItem read GetItem write SetItem; default;
   end;
 
-  TtipoCodCollectionItem = class(TCollectionItem)
+  TtipoCodCollectionItem = class(TObject)
   private
     FcodAtivEcon: string;
     FvlrRecBrutaAtiv: double;
@@ -162,7 +163,7 @@ type
     FtipoAjuste: TtipoAjusteCollection;
     FinfoProc: TinfoProcCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; //reintroduce;
     destructor Destroy; override;
 
     property codAtivEcon: string read FcodAtivEcon write FcodAtivEcon;
@@ -175,17 +176,18 @@ type
     property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
   end;
 
-  TtipoAjusteCollection = class(TCollection)
+  TtipoAjusteCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TtipoAjusteCollectionItem;
     procedure SetItem(Index: Integer; Value: TtipoAjusteCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TtipoAjusteCollectionItem;
+    function Add: TtipoAjusteCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TtipoAjusteCollectionItem;
+
     property Items[Index: Integer]: TtipoAjusteCollectionItem read GetItem write SetItem; default;
   end;
 
-  TtipoAjusteCollectionItem = class(TCollectionItem)
+  TtipoAjusteCollectionItem = class(TObject)
   private
     FtpAjuste: TtpAjuste;
     FcodAjuste: TcodAjuste;
@@ -200,17 +202,18 @@ type
     property dtAjuste: string read FdtAjuste write FdtAjuste;
   end;
 
-  TinfoProcCollection = class(TCollection)
+  TinfoProcCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcCollectionItem;
+    function Add: TinfoProcCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcCollectionItem;
+
     property Items[Index: Integer]: TinfoProcCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcCollectionItem = class(TCollectionItem)
+  TinfoProcCollectionItem = class(TObject)
   private
     FtpProc: TtpProc;
     FnrProc: String;
@@ -233,12 +236,18 @@ uses
 
 function TR2060Collection.Add: TR2060CollectionItem;
 begin
-  Result := TR2060CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2060Collection.GetItem(Index: Integer): TR2060CollectionItem;
 begin
   Result := TR2060CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2060Collection.New: TR2060CollectionItem;
+begin
+  Result := TR2060CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2060Collection.SetItem(Index: Integer; Value: TR2060CollectionItem);
@@ -248,34 +257,29 @@ end;
 
 { TR2060CollectionItem }
 
-procedure TR2060CollectionItem.AfterConstruction;
+constructor TR2060CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create;
+
   FTipoEvento := teR2060;
-  FevtCPRB := TevtCPRB.Create(Collection.Owner);
+  FevtCPRB    := FevtCPRB.Create(AOwner);
 end;
 
-procedure TR2060CollectionItem.BeforeDestruction;
+destructor TR2060CollectionItem.Destroy;
 begin
   inherited;
-  FevtCPRB.Free;
-end;
 
-procedure TR2060CollectionItem.setevtCPRB(const Value: TevtCPRB);
-begin
-  FevtCPRB.Assign(Value);
+  FevtCPRB.Free;
 end;
 
 { TevtCPRB }
 
 constructor TevtCPRB.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri := TideContri.create;
-  FIdeEvento := TIdeEvento2.create;
+  FideContri := TideContri.Create;
+  FIdeEvento := TIdeEvento2.Create;
   FinfoCPRB  := TinfoCPRB.Create;
 end;
 
@@ -306,7 +310,7 @@ end;
 
 constructor TideEstab.Create;
 begin
-  FtipoCod := TtipoCodCollection.create(Self);
+  FtipoCod := TtipoCodCollection.Create;
 end;
 
 destructor TideEstab.Destroy;
@@ -320,19 +324,19 @@ end;
 
 function TtipoCodCollection.Add: TtipoCodCollectionItem;
 begin
-  Result := TtipoCodCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TtipoCodCollection.create(AOwner: TideEstab);
-begin
-  Inherited create(TtipoCodCollectionItem);
+  Result := Self.New;
 end;
 
 function TtipoCodCollection.GetItem(
   Index: Integer): TtipoCodCollectionItem;
 begin
   Result := TtipoCodCollectionItem(inherited GetItem(Index));
+end;
+
+function TtipoCodCollection.New: TtipoCodCollectionItem;
+begin
+  Result := TtipoCodCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TtipoCodCollection.SetItem(Index: Integer;
@@ -343,7 +347,7 @@ end;
 
 { TtipoCodCollectionItem }
 
-constructor TtipoCodCollectionItem.create;
+constructor TtipoCodCollectionItem.Create;
 begin
   FtipoAjuste := TtipoAjusteCollection.Create;
   FinfoProc   := TinfoProcCollection.Create;
@@ -361,19 +365,19 @@ end;
 
 function TtipoAjusteCollection.Add: TtipoAjusteCollectionItem;
 begin
-  Result := TtipoAjusteCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TtipoAjusteCollection.create;
-begin
-  Inherited create(TtipoAjusteCollectionItem);
+  Result := Self.New;
 end;
 
 function TtipoAjusteCollection.GetItem(
   Index: Integer): TtipoAjusteCollectionItem;
 begin
   Result := TtipoAjusteCollectionItem(inherited GetItem(Index));
+end;
+
+function TtipoAjusteCollection.New: TtipoAjusteCollectionItem;
+begin
+  Result := TtipoAjusteCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TtipoAjusteCollection.SetItem(Index: Integer;
@@ -386,19 +390,19 @@ end;
 
 function TinfoProcCollection.Add: TinfoProcCollectionItem;
 begin
-  Result := TinfoProcCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoProcCollection.create;
-begin
-  Inherited create(TinfoProcCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcCollection.GetItem(
   Index: Integer): TinfoProcCollectionItem;
 begin
   Result := TinfoProcCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcCollection.New: TinfoProcCollectionItem;
+begin
+  Result := TinfoProcCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcCollection.SetItem(Index: Integer;
@@ -580,7 +584,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with tipoCod.Add do
+          with tipoCod.New do
           begin
             codAtivEcon := sFim;
             vlrRecBrutaAtiv := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRecBrutaAtiv', ''), 0);
@@ -599,7 +603,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with tipoAjuste.Add do
+              with tipoAjuste.New do
               begin
                 tpAjuste   := StrTotpAjuste(Ok, sFim);
                 codAjuste  := StrTocodAjuste(Ok, INIRec.ReadString(sSecao, 'codAjuste', ''));
@@ -621,7 +625,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoProc.Add do
+              with infoProc.New do
               begin
                 tpProc      := StrToTpProc(Ok, sFim);
                 nrProc      := INIRec.ReadString(sSecao, 'nrProc', '');

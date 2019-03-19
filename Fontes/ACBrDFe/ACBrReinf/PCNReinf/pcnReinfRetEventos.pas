@@ -298,7 +298,7 @@ type
     function GetItem(Index: Integer): TeventoCollectionItem;
     procedure SetItem(Index: Integer; Value: TeventoCollectionItem);
   public
-    constructor create(AOwner: TPersistent);
+    constructor Create(AOwner: TPersistent);
 
     function Add: TeventoCollectionItem;
     property Items[Index: Integer]: TeventoCollectionItem read GetItem write SetItem;
@@ -310,7 +310,7 @@ type
     FArquivoReinf: string;
     FevtTotal: TEvtTotal;
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property Id: string read FId write FId;
@@ -359,7 +359,7 @@ end;
 
 constructor TRRecRepADCollection.Create;
 begin
-  inherited create(TRRecRepADCollectionItem);
+  inherited Create(TRRecRepADCollectionItem);
 end;
 
 function TRRecRepADCollection.GetItem(
@@ -384,7 +384,7 @@ end;
 
 constructor TRCPRBCollection.Create(AOwner: TInfoTotal);
 begin
-  inherited create(TRCPRBCollectionItem);
+  inherited Create(TRCPRBCollectionItem);
 end;
 
 function TRCPRBCollection.GetItem(
@@ -409,7 +409,7 @@ end;
 
 constructor TinfoCRTomCollection.Create(AOwner: TRTom);
 begin
-  inherited create(TinfoCRTomCollectionItem);
+  inherited Create(TinfoCRTomCollectionItem);
 end;
 
 function TinfoCRTomCollection.GetItem(
@@ -434,7 +434,7 @@ end;
 
 constructor TRComlCollection.Create;
 begin
-  inherited create(TRcomlCollectionItem);
+  inherited Create(TRcomlCollectionItem);
 end;
 
 function TRComlCollection.GetItem(Index: Integer): TRComlCollectionItem;
@@ -513,9 +513,9 @@ begin
   Result.Create;
 end;
 
-constructor TeventoCollection.create(AOwner: TPersistent);
+constructor TeventoCollection.Create(AOwner: TPersistent);
 begin
-  inherited create(TeventoCollectionItem);
+  inherited Create(TeventoCollectionItem);
 end;
 
 function TeventoCollection.GetItem(
@@ -532,7 +532,7 @@ end;
 
 { TeventoCollectionItem }
 
-constructor TeventoCollectionItem.create;
+constructor TeventoCollectionItem.Create;
 begin
   evtTotal := TEvtTotal.Create;
   FId := EmptyStr;
@@ -575,7 +575,7 @@ begin
 
   FIdeTransmissor := TIdeTransmissor.Create;
   FStatus         := TStatus.Create;
-  Fevento         := TeventoCollection.create(Self);
+  Fevento         := TeventoCollection.Create(Self);
 end;
 
 destructor TRetEnvioLote.Destroy;

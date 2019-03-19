@@ -44,7 +44,7 @@ unit pcnReinfR2010;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -66,33 +66,33 @@ type
   TinfoProcRetAdCollection = class;
   TinfoProcRetAdCollectionItem = class;
 
-  TR2010Collection = class(TOwnedCollection)
+  TR2010Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR2010CollectionItem;
     procedure SetItem(Index: Integer; Value: TR2010CollectionItem);
   public
-    function Add: TR2010CollectionItem;
+    function Add: TR2010CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2010CollectionItem;
+
     property Items[Index: Integer]: TR2010CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR2010CollectionItem = class(TCollectionItem)
+  TR2010CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtServTom: TevtServTom;
-    procedure setevtServTom(const Value: TevtServTom);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtServTom: TevtServTom read FevtServTom write setevtServTom;
+    property evtServTom: TevtServTom read FevtServTom write FevtServTom;
   end;
 
   TevtServTom = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FinfoServTom: TinfoServTom;
 
     {Geradores específicos desta classe}
@@ -103,7 +103,7 @@ type
     procedure GerarinfoProcRetPr(Lista: TinfoProcRetPrCollection);
     procedure GerarinfoProcRetAd(Lista: TinfoProcRetAdCollection);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -173,17 +173,18 @@ type
     property infoProcRetAd: TinfoProcRetAdCollection read FinfoProcRetAd write FinfoProcRetAd;
   end;
 
-  TnfsCollection = class(TCollection)
+  TnfsCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TnfsCollectionItem;
     procedure SetItem(Index: Integer; Value: TnfsCollectionItem);
   public
-    constructor create(AOwner: TidePrestServ);
-    function Add: TnfsCollectionItem;
+    function Add: TnfsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TnfsCollectionItem;
+
     property Items[Index: Integer]: TnfsCollectionItem read GetItem write SetItem; default;
   end;
 
-  TnfsCollectionItem = class(TCollectionItem)
+  TnfsCollectionItem = class(TObject)
   private
     Fserie: string;
     FnumDocto: string;
@@ -192,7 +193,7 @@ type
     Fobs: string;
     FinfoTpServ: TinfoTpServCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; reintroduce;
     destructor Destroy; override;
 
     property serie: string read Fserie write Fserie;
@@ -203,17 +204,18 @@ type
     property infoTpServ: TinfoTpServCollection read FinfoTpServ write FinfoTpServ;
   end;
 
-  TinfoTpServCollection = class(TCollection)
+  TinfoTpServCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoTpServCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoTpServCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoTpServCollectionItem;
+    function Add: TinfoTpServCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoTpServCollectionItem;
+
     property Items[Index: Integer]: TinfoTpServCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoTpServCollectionItem = class(TCollectionItem)
+  TinfoTpServCollectionItem = class(TObject)
   private
     FtpServico: string;
     FvlrBaseRet: Double;
@@ -238,17 +240,18 @@ type
     property vlrNRetAdic: Double read FvlrNRetAdic write FvlrNRetAdic;
   end;
 
-  TinfoProcRetPrCollection = class(TCollection)
+  TinfoProcRetPrCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcRetPrCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcRetPrCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcRetPrCollectionItem;
+    function Add: TinfoProcRetPrCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcRetPrCollectionItem;
+
     property Items[Index: Integer]: TinfoProcRetPrCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcRetPrCollectionItem = class(TCollectionItem)
+  TinfoProcRetPrCollectionItem = class(TObject)
   private
     FtpProcRetPrinc: TtpProc;
     FnrProcRetPrinc: string;
@@ -261,17 +264,18 @@ type
     property valorPrinc: Double read FvalorPrinc write FvalorPrinc;
   end;
 
-  TinfoProcRetAdCollection = class(TCollection)
+  TinfoProcRetAdCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcRetAdCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcRetAdCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcRetAdCollectionItem;
+    function Add: TinfoProcRetAdCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcRetAdCollectionItem;
+
     property Items[Index: Integer]: TinfoProcRetAdCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcRetAdCollectionItem = class(TCollectionItem)
+  TinfoProcRetAdCollectionItem = class(TObject)
   private
     FtpProcRetAdic: TtpProc;
     FnrProcRetAdic: string;
@@ -294,12 +298,18 @@ uses
 
 function TR2010Collection.Add: TR2010CollectionItem;
 begin
-  Result := TR2010CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2010Collection.GetItem(Index: Integer): TR2010CollectionItem;
 begin
   Result := TR2010CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2010Collection.New: TR2010CollectionItem;
+begin
+  Result := TR2010CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2010Collection.SetItem(Index: Integer; Value: TR2010CollectionItem);
@@ -309,34 +319,29 @@ end;
 
 { TR2010CollectionItem }
 
-procedure TR2010CollectionItem.AfterConstruction;
+constructor TR2010CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
+  inherited Create;
+
   FTipoEvento := teR2010;
-  FevtServTom := TevtServTom.Create(Collection.Owner);
+  FevtServTom := TevtServTom.Create(AOwner);
 end;
 
-procedure TR2010CollectionItem.BeforeDestruction;
+destructor TR2010CollectionItem.Destroy;
 begin
   inherited;
-  FevtServTom.Free;
-end;
 
-procedure TR2010CollectionItem.setevtServTom(const Value: TevtServTom);
-begin
-  FevtServTom.Assign(Value);
+  FevtServTom.Free;
 end;
 
 { TevtServTom }
 
 constructor TevtServTom.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri   := TideContri.create;
-  FIdeEvento   := TIdeEvento2.create;
+  FideContri   := TideContri.Create;
+  FIdeEvento   := TIdeEvento2.Create;
   FinfoServTom := TinfoServTom.Create;
 end;
 
@@ -381,9 +386,9 @@ end;
 
 constructor TidePrestServ.Create;
 begin
-  Fnfs           := TnfsCollection.Create(Self);
+  Fnfs           := TnfsCollection.Create;
   FinfoProcRetPr := TinfoProcRetPrCollection.Create;
-  FinfoProcRetAd := TinfoProcRetAdCollection.create;
+  FinfoProcRetAd := TinfoProcRetAdCollection.Create;
 end;
 
 destructor TidePrestServ.Destroy;
@@ -399,19 +404,19 @@ end;
 
 function TnfsCollection.Add: TnfsCollectionItem;
 begin
-  Result := TnfsCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TnfsCollection.create(AOwner: TidePrestServ);
-begin
-  Inherited create(TnfsCollectionItem);
+  Result := Self.New;
 end;
 
 function TnfsCollection.GetItem(
   Index: Integer): TnfsCollectionItem;
 begin
   Result := TnfsCollectionItem(inherited GetItem(Index));
+end;
+
+function TnfsCollection.New: TnfsCollectionItem;
+begin
+  Result := TnfsCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TnfsCollection.SetItem(Index: Integer;
@@ -422,7 +427,7 @@ end;
 
 { TnfsCollectionItem }
 
-constructor TnfsCollectionItem.create;
+constructor TnfsCollectionItem.Create;
 begin
   FinfoTpServ := TinfoTpServCollection.Create;
 end;
@@ -438,19 +443,19 @@ end;
 
 function TinfoTpServCollection.Add: TinfoTpServCollectionItem;
 begin
-  Result := TinfoTpServCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoTpServCollection.create();
-begin
-  Inherited create(TinfoTpServCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoTpServCollection.GetItem(
   Index: Integer): TinfoTpServCollectionItem;
 begin
   Result := TinfoTpServCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoTpServCollection.New: TinfoTpServCollectionItem;
+begin
+  Result := TinfoTpServCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoTpServCollection.SetItem(Index: Integer;
@@ -463,19 +468,19 @@ end;
 
 function TinfoProcRetPrCollection.Add: TinfoProcRetPrCollectionItem;
 begin
-  Result := TinfoProcRetPrCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoProcRetPrCollection.create;
-begin
-  Inherited create(TinfoProcRetPrCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcRetPrCollection.GetItem(
   Index: Integer): TinfoProcRetPrCollectionItem;
 begin
   Result := TinfoProcRetPrCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcRetPrCollection.New: TinfoProcRetPrCollectionItem;
+begin
+  Result := TinfoProcRetPrCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcRetPrCollection.SetItem(Index: Integer;
@@ -488,19 +493,19 @@ end;
 
 function TinfoProcRetAdCollection.Add: TinfoProcRetAdCollectionItem;
 begin
-  Result := TinfoProcRetAdCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoProcRetAdCollection.create;
-begin
-  Inherited create(TinfoProcRetAdCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcRetAdCollection.GetItem(
   Index: Integer): TinfoProcRetAdCollectionItem;
 begin
   Result := TinfoProcRetAdCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcRetAdCollection.New: TinfoProcRetAdCollectionItem;
+begin
+  Result := TinfoProcRetAdCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcRetAdCollection.SetItem(Index: Integer;
@@ -737,7 +742,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with idePrestServ.nfs.Add do
+          with idePrestServ.nfs.New do
           begin
             serie       := sFim;
             numDocto    := INIRec.ReadString(sSecao, 'numDocto', '');
@@ -755,7 +760,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoTpServ.Add do
+              with infoTpServ.New do
               begin
                 tpServico     := sFim;
                 vlrBaseRet    := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrBaseRet', ''), 0);
@@ -786,7 +791,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with idePrestServ.infoProcRetPr.Add do
+          with idePrestServ.infoProcRetPr.New do
           begin
             tpProcRetPrinc := StrToTpProc(Ok, sFim);
             nrProcRetPrinc := INIRec.ReadString(sSecao, 'nrProcRetPrinc', '');
@@ -807,7 +812,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with idePrestServ.infoProcRetAd.Add do
+          with idePrestServ.infoProcRetAd.New do
           begin
             tpProcRetAdic := StrToTpProc(Ok, sFim);
             nrProcRetAdic := INIRec.ReadString(sSecao, 'nrProcRetAdic', '');

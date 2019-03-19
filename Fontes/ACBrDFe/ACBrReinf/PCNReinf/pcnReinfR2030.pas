@@ -44,7 +44,7 @@ unit pcnReinfR2030;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, ACBrUtil,
   pcnCommonReinf, pcnConversaoReinf, pcnGeradorReinf;
 
@@ -62,33 +62,33 @@ type
   TinfoProcCollection = class;
   TinfoProcCollectionItem = class;
 
-  TR2030Collection = class(TOwnedCollection)
+  TR2030Collection = class(TReinfCollection)
   private
     function GetItem(Index: Integer): TR2030CollectionItem;
     procedure SetItem(Index: Integer; Value: TR2030CollectionItem);
   public
-    function Add: TR2030CollectionItem;
+    function Add: TR2030CollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TR2030CollectionItem;
+
     property Items[Index: Integer]: TR2030CollectionItem read GetItem write SetItem; default;
   end;
 
-  TR2030CollectionItem = class(TCollectionItem)
+  TR2030CollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FevtAssocDespRec: TevtAssocDespRec;
-    procedure setevtAssocDespRec(const Value: TevtAssocDespRec);
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-  published
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
+
     property TipoEvento: TTipoEvento read FTipoEvento;
-    property evtAssocDespRec: TevtAssocDespRec read FevtAssocDespRec write setevtAssocDespRec;
+    property evtAssocDespRec: TevtAssocDespRec read FevtAssocDespRec write FevtAssocDespRec;
   end;
 
   TevtAssocDespRec = class(TReinfEvento) //Classe do elemento principal do XML do evento!
   private
     FIdeEvento: TIdeEvento2;
     FideContri: TideContri;
-    FACBrReinf: TObject;
     FideEstab: TideEstab;
 
     {Geradores específicos desta classe}
@@ -97,7 +97,7 @@ type
     procedure GerarinfoRecurso(Lista: TinfoRecursoCollection);
     procedure GerarinfoProc(Lista: TinfoProcCollection);
   public
-    constructor Create(AACBrReinf: TObject); overload;
+    constructor Create(AACBrReinf: TObject); override;
     destructor  Destroy; override;
 
     function GerarXML: Boolean; override;
@@ -123,17 +123,18 @@ type
     property recursosRec: TrecursosRecCollection read FrecursosRec write FrecursosRec;
   end;
 
-  TrecursosRecCollection = class(TCollection)
+  TrecursosRecCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TrecursosRecCollectionItem;
     procedure SetItem(Index: Integer; Value: TrecursosRecCollectionItem);
   public
-    constructor create(AOwner: TideEstab);
-    function Add: TrecursosRecCollectionItem;
+    function Add: TrecursosRecCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TrecursosRecCollectionItem;
+
     property Items[Index: Integer]: TrecursosRecCollectionItem read GetItem write SetItem; default;
   end;
 
-  TrecursosRecCollectionItem = class(TCollectionItem)
+  TrecursosRecCollectionItem = class(TObject)
   private
     FcnpjOrigRecurso: string;
     FvlrTotalRec: Double;
@@ -142,7 +143,7 @@ type
     FinfoRecurso: TinfoRecursoCollection;
     FinfoProc: TinfoProcCollection;
   public
-    constructor create; reintroduce;
+    constructor Create; //reintroduce;
     destructor Destroy; override;
 
     property cnpjOrigRecurso: string read FcnpjOrigRecurso write FcnpjOrigRecurso;
@@ -153,17 +154,18 @@ type
     property infoProc: TinfoProcCollection read FinfoProc write FinfoProc;
   end;
 
-  TinfoRecursoCollection = class(TCollection)
+  TinfoRecursoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoRecursoCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoRecursoCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoRecursoCollectionItem;
+    function Add: TinfoRecursoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoRecursoCollectionItem;
+
     property Items[Index: Integer]: TinfoRecursoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoRecursoCollectionItem = class(TCollectionItem)
+  TinfoRecursoCollectionItem = class(TObject)
   private
     FvlrRetApur: double;
     FvlrBruto: double;
@@ -176,17 +178,18 @@ type
     property vlrRetApur: double read FvlrRetApur write FvlrRetApur;
   end;
 
-  TinfoProcCollection = class(TCollection)
+  TinfoProcCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcCollectionItem;
+    function Add: TinfoProcCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcCollectionItem;
+
     property Items[Index: Integer]: TinfoProcCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcCollectionItem = class(TCollectionItem)
+  TinfoProcCollectionItem = class(TObject)
   private
     FcodSusp: String;
     FtpProc: TtpProc;
@@ -209,12 +212,18 @@ uses
 
 function TR2030Collection.Add: TR2030CollectionItem;
 begin
-  Result := TR2030CollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TR2030Collection.GetItem(Index: Integer): TR2030CollectionItem;
 begin
   Result := TR2030CollectionItem(inherited GetItem(Index));
+end;
+
+function TR2030Collection.New: TR2030CollectionItem;
+begin
+  Result := TR2030CollectionItem.Create(FACBrReinf);
+  Self.Add(Result);
 end;
 
 procedure TR2030Collection.SetItem(Index: Integer; Value: TR2030CollectionItem);
@@ -224,34 +233,29 @@ end;
 
 { TR2030CollectionItem }
 
-procedure TR2030CollectionItem.AfterConstruction;
+constructor TR2030CollectionItem.Create(AOwner: TComponent);
 begin
-  inherited;
-  FTipoEvento := teR2030;
-  FevtAssocDespRec := TevtAssocDespRec.Create(Collection.Owner);
+  inherited Create;
+
+  FTipoEvento      := teR2030;
+  FevtAssocDespRec := TevtAssocDespRec.Create(AOwner);
 end;
 
-procedure TR2030CollectionItem.BeforeDestruction;
+destructor TR2030CollectionItem.Destroy;
 begin
   inherited;
+
   FevtAssocDespRec.Free;
-end;
-
-procedure TR2030CollectionItem.setevtAssocDespRec(const Value: TevtAssocDespRec);
-begin
-  FevtAssocDespRec.Assign(Value);
 end;
 
 { TevtAssocDespRec }
 
 constructor TevtAssocDespRec.Create(AACBrReinf: TObject);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
-  FACBrReinf := AACBrReinf;
-
-  FideContri := TideContri.create;
-  FIdeEvento := TIdeEvento2.create;
+  FideContri := TideContri.Create;
+  FIdeEvento := TIdeEvento2.Create;
   FideEstab  := TideEstab.Create;
 end;
 
@@ -268,7 +272,7 @@ end;
 
 constructor TideEstab.Create;
 begin
-  FrecursosRec := TrecursosRecCollection.Create(Self);
+  FrecursosRec := TrecursosRecCollection.Create;
 end;
 
 destructor TideEstab.Destroy;
@@ -282,19 +286,19 @@ end;
 
 function TrecursosRecCollection.Add: TrecursosRecCollectionItem;
 begin
-  Result := TrecursosRecCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TrecursosRecCollection.create(AOwner: TideEstab);
-begin
-  Inherited create(TrecursosRecCollectionItem);
+  Result := Self.New;
 end;
 
 function TrecursosRecCollection.GetItem(
   Index: Integer): TrecursosRecCollectionItem;
 begin
   Result := TrecursosRecCollectionItem(inherited GetItem(Index));
+end;
+
+function TrecursosRecCollection.New: TrecursosRecCollectionItem;
+begin
+  Result := TrecursosRecCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TrecursosRecCollection.SetItem(Index: Integer;
@@ -305,10 +309,10 @@ end;
 
 { TrecursosRecCollectionItem }
 
-constructor TrecursosRecCollectionItem.create;
+constructor TrecursosRecCollectionItem.Create;
 begin
   FinfoRecurso := TinfoRecursoCollection.Create;
-  FinfoProc    := TinfoProcCollection.create;
+  FinfoProc    := TinfoProcCollection.Create;
 end;
 
 destructor TrecursosRecCollectionItem.Destroy;
@@ -323,19 +327,19 @@ end;
 
 function TinfoRecursoCollection.Add: TinfoRecursoCollectionItem;
 begin
-  Result := TinfoRecursoCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoRecursoCollection.create();
-begin
-  Inherited create(TinfoRecursoCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoRecursoCollection.GetItem(
   Index: Integer): TinfoRecursoCollectionItem;
 begin
   Result := TinfoRecursoCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoRecursoCollection.New: TinfoRecursoCollectionItem;
+begin
+  Result := TinfoRecursoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoRecursoCollection.SetItem(Index: Integer;
@@ -348,19 +352,19 @@ end;
 
 function TinfoProcCollection.Add: TinfoProcCollectionItem;
 begin
-  Result := TinfoProcCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TinfoProcCollection.create;
-begin
-  Inherited create(TinfoProcCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcCollection.GetItem(
   Index: Integer): TinfoProcCollectionItem;
 begin
   Result := TinfoProcCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcCollection.New: TinfoProcCollectionItem;
+begin
+  Result := TinfoProcCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcCollection.SetItem(Index: Integer;

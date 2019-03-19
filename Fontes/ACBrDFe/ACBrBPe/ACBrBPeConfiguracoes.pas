@@ -138,6 +138,7 @@ type
     property Arquivos: TArquivosConfBPe read GetArquivos;
     property WebServices;
     property Certificados;
+    property RespTec;
   end;
 
 implementation
@@ -162,6 +163,7 @@ begin
   WebServices.Assign(DeConfiguracoesBPe.WebServices);
   Certificados.Assign(DeConfiguracoesBPe.Certificados);
   Arquivos.Assign(DeConfiguracoesBPe.Arquivos);
+  RespTec.Assign(DeConfiguracoesBPe.RespTec);
 end;
 
 function TConfiguracoesBPe.GetArquivos: TArquivosConfBPe;

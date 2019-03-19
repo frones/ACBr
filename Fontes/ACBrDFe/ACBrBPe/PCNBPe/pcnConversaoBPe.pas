@@ -67,7 +67,7 @@ type
   TModalBPe = (moRodoviario, moAquaviario, moFerroviario);
 
   TSchemaBPe = (schErro, schBPe, schconsSitBPe, schconsStatServ, schEventoBPe,
-                schdistDFeInt, schevCancBPe, schevNaoEmbBPe{,
+                schdistDFeInt, schevCancBPe, schevNaoEmbBPe, schevAlteracaoPoltrona{,
                 schresBPe, schresEventoBPe, schprocBPe, schprocEventoBPe});
 
   TLayOutBPe = (LayBPeRecepcao, LayBPeRetRecepcao, LayBPeConsulta,
@@ -109,6 +109,9 @@ type
 
   TTipoComponente = (tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
                      tcSVI, tcOutros);
+
+  TBandeiraCard = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcElo,
+                   bcDinersClub, bcHipercard, bcAura, bcCabal, bcOutros);
 
 function StrToVersaoBPe(out ok: Boolean; const s: String): TVersaoBPe;
 function VersaoBPeToStr(const t: TVersaoBPe): String;
@@ -163,6 +166,10 @@ function tpDescontoToDesc(const t: TTipoDesconto): String;
 function tpComponenteToStr(const t: TTipoComponente): String;
 function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
 function tpComponenteToDesc(const t: TTipoComponente): String;
+
+function BandeiraCardToStr(const t: TBandeiraCard): string;
+function BandeiraCardToDescStr(const t: TBandeiraCard): string;
+function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 
 implementation
 
@@ -492,6 +499,38 @@ begin
                             'TRM', 'SVI', 'Outros'],
                            [tcTarifa, tcPedagio, tcTaxaEmbarque, tcSeguro, tcTRM,
                             tcSVI, tcOutros]);
+end;
+
+function BandeiraCardToStr(const t: TBandeiraCard): string;
+begin
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+                              [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                              bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
+                              bcOutros]);
+end;
+
+function BandeiraCardToDescStr(const t: TBandeiraCard): string;
+begin
+  case t of
+    bcVisa:            Result := 'Visa';
+    bcMasterCard:      Result := 'MasterCard';
+    bcAmericanExpress: Result := 'AmericanExpress';
+    bcSorocred:        Result := 'Sorocred';
+    bcElo:             Result := 'Elo';
+    bcDinersClub:      Result := 'Diners Club';
+    bcHipercard:       Result := 'Hipercard';
+    bcAura:            Result := 'Aura';
+    bcCabal:           Result := 'Cabal';
+    bcOutros:          Result := 'Outros'
+  end;
+end;
+
+function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+                                  [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                                  bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
+                                  bcOutros]);
 end;
 
 end.

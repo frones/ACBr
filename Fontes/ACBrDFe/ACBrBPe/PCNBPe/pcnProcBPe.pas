@@ -76,6 +76,9 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FVersao: String;
+    FcMsg: Integer;
+    FxMsg: String;
+
     // Usando na Montagem do BPeProc
     FXML_BPe: String;
     FXML_prot: String;
@@ -98,6 +101,9 @@ type
     property cStat: Integer             read FcStat              write FcStat;
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Versao: String             read FVersao             write FVersao;
+    property cMsg: Integer              read FcMsg               write FcMsg;
+    property xMsg: String               read FxMsg               write FxMsg;
+
     // Usando na Montagem do BPeProc
     property XML_BPe: String            read FXML_BPe            write FXML_BPe;
     property XML_prot: String           read FXML_prot           write FXML_prot;
@@ -235,6 +241,10 @@ begin
                         PreencherTAG('cStat', XMLinfProt.text) +
                         PreencherTAG('xMotivo', XMLinfProt.text) +
                        '</infProt>' +
+                       '<infFisco>' +
+                        PreencherTAG('cMsg', XMLinfProt.text) +
+                        PreencherTAG('xMsg', XMLinfProt.text) +
+                       '/<infFisco>' +
                       '</protBPe>';
         end;
       end;
@@ -258,6 +268,10 @@ begin
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                       '<xMotivo>' + FxMotivo + '</xMotivo>' +
                      '</infProt>' +
+                     '<infFisco>' +
+                      '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
+                      '<xMsg>' + FxMsg + '</xMsg>' +
+                     '</infFisco>' +
                     '</protBPe>';
       end;
 
@@ -301,6 +315,9 @@ begin
     cStat := TprocBPe(Source).cStat;
     xMotivo := TprocBPe(Source).xMotivo;
     Versao := TprocBPe(Source).Versao;
+    cMsg   := TprocBPe(Source).cMsg;
+    xMsg   := TprocBPe(Source).xMsg;
+
     XML_BPe := TprocBPe(Source).XML_BPe;
     XML_prot := TprocBPe(Source).XML_prot;
   end

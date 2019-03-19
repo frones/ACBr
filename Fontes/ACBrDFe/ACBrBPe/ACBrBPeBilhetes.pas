@@ -521,7 +521,11 @@ begin
     FBPeW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
     FBPeW.Opcoes.NormatizarMunicipios   := Configuracoes.Arquivos.NormatizarMunicipios;
     FBPeW.Opcoes.PathArquivoMunicipios  := Configuracoes.Arquivos.PathArquivoMunicipios;
+
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
+
+    FBPeW.idCSRT := Configuracoes.RespTec.IdCSRT;
+    FBPeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
   FBPeW.Opcoes.GerarTXTSimultaneamente := False;
@@ -837,6 +841,7 @@ begin
       infPassagem.infPassageiro.CPF   := INIRec.ReadString('infPassageiro', 'CPF', '');
       infPassagem.infPassageiro.tpDoc := StrTotpDocumento(Ok, INIRec.ReadString('infPassageiro', 'tpDoc', '1'));
       infPassagem.infPassageiro.nDoc  := INIRec.ReadString('infPassageiro', 'nDoc', '');
+      infPassagem.infPassageiro.xDoc  := INIRec.ReadString('infPassageiro', 'xDoc', '');
       infPassagem.infPassageiro.dNasc := StringToDateTime(INIRec.ReadString('infPassageiro', 'dNasc', '0'));
       infPassagem.infPassageiro.fone  := INIRec.ReadString('infPassageiro', 'fone', '');
       infPassagem.infPassageiro.Email := INIRec.ReadString('infPassageiro', 'Email', '');
@@ -891,6 +896,7 @@ begin
       infValorBPe.vTroco     := StringToFloatDef(INIRec.ReadString('infValorBPe', 'vTroco', ''), 0);
       infValorBPe.tpDesconto := StrTotpDesconto(Ok, INIRec.ReadString('infValorBPe', 'tpDesconto', '01'));
       infValorBPe.xDesconto  := INIRec.ReadString('infValorBPe', 'xDesconto', '');
+      infValorBPe.cDesconto  := INIRec.ReadString('infValorBPe', 'cDesconto', '');
 
       //
       // Seção [Compxxx] Componentes do Valor do BPe
@@ -967,18 +973,20 @@ begin
 
         with pag.Add do
         begin
-          tPag  := StrToFormaPagamento(OK, sFim);
-          xPag  := INIRec.ReadString(sSecao, 'xPag', '');
-          vPag  := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);
+          tPag    := StrToFormaPagamento(OK, sFim);
+          xPag    := INIRec.ReadString(sSecao, 'xPag', '');
+          nDocPag := INIRec.ReadString(sSecao, 'nDocPag', '');
+          vPag    := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);
 
           tpIntegra := StrTotpIntegra(OK,INIRec.ReadString(sSecao, 'tpIntegra', ''));
           CNPJ      := INIRec.ReadString(sSecao, 'CNPJ', '');
-          tBand     := StrToBandeiraCartao(OK, INIRec.ReadString(sSecao, 'tBand', '99'));
+          tBand     := StrToBandeiraCard(OK, INIRec.ReadString(sSecao, 'tBand', '99'));
           xBand     := INIRec.ReadString(sSecao, 'xBand', '');
           cAut      := INIRec.ReadString(sSecao, 'cAut', '');
           nsuTrans  := INIRec.ReadString(sSecao, 'nsuTrans', '');
           nsuHost   := INIRec.ReadString(sSecao, 'nsuHost', '');
           nParcelas := INIRec.ReadInteger(sSecao, 'nParcelas', 1);
+          infAdCard := INIRec.ReadString(sSecao, 'infAdCard', '');
         end;
 
         Inc(I);
@@ -1006,6 +1014,18 @@ begin
       //
       InfAdic.infAdFisco := INIRec.ReadString('infAdic','infAdFisco', '');
       InfAdic.infCpl     := INIRec.ReadString('infAdic','infCpl', '');
+
+      sSecao := 'infRespTec';
+      if INIRec.SectionExists(sSecao) then
+      begin
+        with infRespTec do
+        begin
+          CNPJ     := INIRec.ReadString(sSecao, 'CNPJ', '');
+          xContato := INIRec.ReadString(sSecao, 'xContato', '');
+          email    := INIRec.ReadString(sSecao, 'email', '');
+          fone     := INIRec.ReadString(sSecao, 'fone', '');
+        end;
+      end;
     end;
 
     GerarXML;

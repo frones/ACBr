@@ -202,6 +202,15 @@ begin
             Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
             Gerador.wGrupo('/evNaoEmbBPe');
           end;
+
+      teAlteracaoPoltrona:
+          begin
+            Gerador.wGrupo('evAlteraPoltronaBPe', 'EP01');
+            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 60, 1, Evento.Items[i].InfEvento.DescEvento);
+            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 15, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcInt, 'EP04', 'poltrona  ', 03, 03, 1, Evento.Items[i].InfEvento.detEvento.poltrona);
+            Gerador.wGrupo('/evAlteraPoltronaBPe');
+          end;
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');
@@ -247,20 +256,21 @@ begin
      Result := RetEventoBPe.LerXml;
      with FEvento.Add do
       begin
-        infEvento.ID            := RetEventoBPe.InfEvento.id;
-        infEvento.cOrgao        := RetEventoBPe.InfEvento.cOrgao;
-        infEvento.tpAmb         := RetEventoBPe.InfEvento.tpAmb;
-        infEvento.CNPJ          := RetEventoBPe.InfEvento.CNPJ;
-        infEvento.chBPe         := RetEventoBPe.InfEvento.chBPe;
-        infEvento.dhEvento      := RetEventoBPe.InfEvento.dhEvento;
-        infEvento.tpEvento      := RetEventoBPe.InfEvento.tpEvento;
-        infEvento.nSeqEvento    := RetEventoBPe.InfEvento.nSeqEvento;
-        infEvento.VersaoEvento  := RetEventoBPe.InfEvento.VersaoEvento;
+        infEvento.ID           := RetEventoBPe.InfEvento.id;
+        infEvento.cOrgao       := RetEventoBPe.InfEvento.cOrgao;
+        infEvento.tpAmb        := RetEventoBPe.InfEvento.tpAmb;
+        infEvento.CNPJ         := RetEventoBPe.InfEvento.CNPJ;
+        infEvento.chBPe        := RetEventoBPe.InfEvento.chBPe;
+        infEvento.dhEvento     := RetEventoBPe.InfEvento.dhEvento;
+        infEvento.tpEvento     := RetEventoBPe.InfEvento.tpEvento;
+        infEvento.nSeqEvento   := RetEventoBPe.InfEvento.nSeqEvento;
+        infEvento.VersaoEvento := RetEventoBPe.InfEvento.VersaoEvento;
 
         infEvento.DetEvento.xCorrecao := RetEventoBPe.InfEvento.DetEvento.xCorrecao;
         infEvento.DetEvento.xCondUso  := RetEventoBPe.InfEvento.DetEvento.xCondUso;
         infEvento.DetEvento.nProt     := RetEventoBPe.InfEvento.DetEvento.nProt;
         infEvento.DetEvento.xJust     := RetEventoBPe.InfEvento.DetEvento.xJust;
+        infEvento.DetEvento.poltrona  := RetEventoBPe.InfEvento.DetEvento.poltrona;
 
         infEvento.detEvento.cOrgaoAutor := RetEventoBPe.InfEvento.detEvento.cOrgaoAutor;
         infEvento.detEvento.tpAutor     := RetEventoBPe.InfEvento.detEvento.tpAutor;
@@ -342,6 +352,7 @@ begin
         infEvento.detEvento.xCondUso := '';
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
         infEvento.detEvento.nProt    := INIRec.ReadString(sSecao, 'nProt', '');
+        infEvento.detEvento.poltrona := INIRec.ReadInteger(sSecao, 'poltrona', 0);
       end;
       Inc(I);
     end;

@@ -297,7 +297,9 @@ begin
       if lTipoEvento = '110111' then
         Result := schevCancBPe // Cancelamento
       else if lTipoEvento = '110115' then
-        Result := schevNaoEmbBPe; // Não Embarque
+        Result := schevNaoEmbBPe // Não Embarque
+      else if lTipoEvento = '110116' then
+        Result := schevAlteracaoPoltrona; // Alteração de Poltrona
     end;
   end;
 end;

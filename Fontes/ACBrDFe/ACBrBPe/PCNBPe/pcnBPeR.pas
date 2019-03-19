@@ -258,6 +258,7 @@ begin
       BPe.infPassagem.infPassageiro.CPF   := Leitor.rCampo(tcStr, 'CPF');
       BPe.infPassagem.infPassageiro.tpDoc := StrTotpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
       BPe.infPassagem.infPassageiro.nDoc  := Leitor.rCampo(tcStr, 'nDoc');
+      BPe.infPassagem.infPassageiro.xDoc  := Leitor.rCampo(tcStr, 'xDoc');
       BPe.infPassagem.infPassageiro.dNasc := Leitor.rCampo(tcDat, 'dNasc');
       BPe.infPassagem.infPassageiro.Fone  := Leitor.rCampo(tcStr, 'fone');
       BPe.infPassagem.infPassageiro.Email := Leitor.rCampo(tcStr, 'email');
@@ -298,6 +299,7 @@ begin
     BPe.infValorBPe.vTroco     := Leitor.rCampo(tcDe2, 'vTroco');
     BPe.infValorBPe.tpDesconto := StrTotpDesconto(ok, Leitor.rCampo(tcStr, 'tpDesconto'));
     BPe.infValorBPe.xDesconto  := Leitor.rCampo(tcStr, 'xDesconto');
+    BPe.infValorBPe.cDesconto  := Leitor.rCampo(tcStr, 'cDesconto');
 
     i := 0;
     BPe.infValorBPe.Comp.Clear;
@@ -354,18 +356,20 @@ begin
   while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
   begin
     BPe.Pag.Add;
-    BPe.Pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
-    BPe.Pag[i].xPag := Leitor.rCampo(tcStr, 'xPag');
-    BPe.Pag[i].vPag := Leitor.rCampo(tcDe2, 'vPag');
+    BPe.Pag[i].tPag    := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
+    BPe.Pag[i].xPag    := Leitor.rCampo(tcStr, 'xPag');
+    BPe.Pag[i].nDocPag := Leitor.rCampo(tcStr, 'nDocPag');
+    BPe.Pag[i].vPag    := Leitor.rCampo(tcDe2, 'vPag');
 
     BPe.Pag[i].tpIntegra := StrTotpIntegra(ok, Leitor.rCampo(tcStr, 'tpIntegra'));
     BPe.Pag[i].CNPJ      := Leitor.rCampo(tcStr, 'CNPJ');
-    BPe.Pag[i].tBand     := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
+    BPe.Pag[i].tBand     := StrToBandeiraCard(ok, Leitor.rCampo(tcStr, 'tBand'));
     BPe.Pag[i].xBand     := Leitor.rCampo(tcStr, 'xBand');
     BPe.Pag[i].cAut      := Leitor.rCampo(tcStr, 'cAut');
     BPe.Pag[i].nsuTrans  := Leitor.rCampo(tcStr, 'nsuTrans');
     BPe.Pag[i].nsuHost   := Leitor.rCampo(tcStr, 'nsuHost');
     BPe.Pag[i].nParcelas := Leitor.rCampo(tcInt, 'nParcelas');
+    BPe.Pag[i].infAdCard := Leitor.rCampo(tcStr, 'infAdCard');
 
     inc(i);
   end;
@@ -384,6 +388,16 @@ begin
   begin
     BPe.InfAdic.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
     BPe.InfAdic.infCpl     := Leitor.rCampo(tcStr, 'infCpl');
+  end;
+
+  if Leitor.rExtrai(1, 'infRespTec') <> '' then
+  begin
+    BPe.infRespTec.CNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+    BPe.infRespTec.xContato := Leitor.rCampo(tcStr, 'xContato');
+    BPe.infRespTec.email    := Leitor.rCampo(tcStr, 'email');
+    BPe.infRespTec.fone     := Leitor.rCampo(tcStr, 'fone');
+    BPe.infRespTec.idCSRT   := Leitor.rCampo(tcInt, 'idCSRT');
+    BPe.infRespTec.hashCSRT := Leitor.rCampo(tcStr, 'hashCSRT');
   end;
 
   leitor.Grupo := Leitor.Arquivo;

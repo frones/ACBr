@@ -99,6 +99,27 @@ type
   TInfAdic = class;
   TinfBPeSupl = class;
 
+  { TinfRespTec }
+
+  TinfRespTec = class(TObject)
+  private
+    FCNPJ: String;
+    FxContato: String;
+    Femail: String;
+    Ffone: String;
+    FidCSRT: Integer;
+    FhashCSRT: String;
+  public
+    procedure Assign(Source: TinfRespTec);
+
+    property CNPJ: String     read FCNPJ     write FCNPJ;
+    property xContato: String read FxContato write FxContato;
+    property email: String    read Femail    write Femail;
+    property fone: String     read Ffone     write Ffone;
+    property idCSRT: Integer  read FidCSRT   write FidCSRT;
+    property hashCSRT: String read FhashCSRT write FhashCSRT;
+  end;
+
   { TBPe }
 
   TBPe = class(TPersistent)
@@ -119,6 +140,7 @@ type
     FinfBPeSupl: TinfBPeSupl;
     FSignature: TSignature;
     FProcBPe: TProcBPe;
+    FinfRespTec: TinfRespTec;
 
     procedure SetInfViagem(const Value: TInfViagemCollection);
     procedure SetPag(Value: TpagCollection);
@@ -146,6 +168,7 @@ type
     property infBPeSupl: TinfBPeSupl read FinfBPeSupl write FinfBPeSupl;
     property Signature: TSignature read FSignature write FSignature;
     property procBPe: TProcBPe read FProcBPe write FProcBPe;
+    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
   end;
 
   TinfBPe = class(TPersistent)
@@ -380,6 +403,7 @@ type
     FCPF: String;
     FtpDoc: TTipoDocumento;
     FnDoc: String;
+    FxDoc: String;
     FdNasc: TDateTime;
     FFone: String;
     FEmail: String;
@@ -390,6 +414,7 @@ type
     property CPF: String read FCPF write FCPF;
     property tpDoc: TTipoDocumento read FtpDoc write FtpDoc;
     property nDoc: String read FnDoc write FnDoc;
+    property xDoc: String read FxDoc write FxDoc;
     property dNasc: TDateTime read FdNasc write FdNasc;
     property Fone: String read FFone write FFone;
     property Email: String read FEmail write FEmail;
@@ -459,7 +484,9 @@ type
     FvTroco: Currency;
     FtpDesconto: TTipoDesconto;
     FxDesconto: String;
+    FcDesconto: String;
     FComp: TCompCollection;
+
     procedure SetComp(const Value: TCompCollection);
   public
     constructor Create(AOwner: TBPe);
@@ -473,6 +500,7 @@ type
     property vTroco: Currency read FvTroco write FvTroco;
     property tpDesconto: TTipoDesconto read FtpDesconto write FtpDesconto;
     property xDesconto: String read FxDesconto write FxDesconto;
+    property cDesconto: String read FcDesconto write FcDesconto;
     property Comp: TCompCollection read FComp write SetComp;
   end;
 
@@ -584,29 +612,33 @@ type
   private
     FtPag: TpcnFormaPagamento;
     FxPag: String;
+    FnDocPag: String;
     FvPag: Currency;
     FtpIntegra: TtpIntegra;
     FCNPJ: String;
-    FtBand: TpcnBandeiraCartao;
+    FtBand: TBandeiraCard;
     FxBand: String;
     FcAut: String;
     FnsuTrans: String;
     FnsuHost: String;
     FnParcelas: Integer;
+    FinfAdCard: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
     property xPag: String read FxPag write FxPag;
+    property nDocPag: String read FnDocPag write FnDocPag;
     property vPag: Currency read FvPag write FvPag;
     property tpIntegra: TtpIntegra read FtpIntegra write FtpIntegra;
     property CNPJ: String read FCNPJ write FCNPJ;
-    property tBand: TpcnBandeiraCartao read FtBand write FtBand;
+    property tBand: TBandeiraCard read FtBand write FtBand;
     property xBand: String read FxBand write FxBand;
     property cAut: String read FcAut write FcAut;
     property nsuTrans: String read FnsuTrans write FnsuTrans;
     property nsuHost: String read FnsuHost write FnsuHost;
     property nParcelas: Integer read FnParcelas write FnParcelas;
+    property infAdCard: String read FinfAdCard write FinfAdCard;
   end;
 
   TautXMLCollection = class(TCollection)
@@ -716,6 +748,7 @@ begin
   FinfBPeSupl  := TinfBPeSupl.Create;
   FSignature   := TSignature.create;
   FProcBPe     := TProcBPe.create;
+  FinfRespTec  := TinfRespTec.Create;
 
   FinfBPe.Versao := 0;
 end;
@@ -738,6 +771,7 @@ begin
   FinfBPeSupl.Free;
   FSignature.Free;
   FProcBPe.Free;
+  FinfRespTec.Free;
 
   inherited Destroy;
 end;
@@ -1022,6 +1056,7 @@ begin
     CPF := TinfPassageiro(Source).CPF;
     tpDoc := TinfPassageiro(Source).tpDoc;
     nDoc := TinfPassageiro(Source).nDoc;
+    xDoc := TinfPassageiro(Source).xDoc;
     dNasc := TinfPassageiro(Source).dNasc;
     Fone := TinfPassageiro(Source).Fone;
     Email := TinfPassageiro(Source).Email;
@@ -1117,6 +1152,7 @@ begin
     vTroco := TinfValorBPe(Source).vTroco;
     tpDesconto := TinfValorBPe(Source).tpDesconto;
     xDesconto := TinfValorBPe(Source).xDesconto;
+    cDesconto := TinfValorBPe(Source).cDesconto;
     Comp := TinfValorBPe(Source).Comp;
   end
   else
@@ -1287,6 +1323,7 @@ begin
   begin
     tPag := TpagCollectionItem(Source).tPag;
     xPag := TpagCollectionItem(Source).xPag;
+    nDocPag := TpagCollectionItem(Source).nDocPag;
     vPag := TpagCollectionItem(Source).vPag;
     tpIntegra := TpagCollectionItem(Source).tpIntegra;
     CNPJ := TpagCollectionItem(Source).CNPJ;
@@ -1296,6 +1333,7 @@ begin
     nsuTrans := TpagCollectionItem(Source).nsuTrans;
     nsuHost := TpagCollectionItem(Source).nsuHost;
     nParcelas := TpagCollectionItem(Source).nParcelas;
+    infAdCard := TpagCollectionItem(Source).infAdCard;
   end
   else
     inherited;
@@ -1372,6 +1410,18 @@ begin
   end
   else
     inherited;
+end;
+
+{ TinfRespTec }
+
+procedure TinfRespTec.Assign(Source: TinfRespTec);
+begin
+  CNPJ     := Source.CNPJ;
+  xContato := Source.xContato;
+  email    := Source.email;
+  fone     := Source.fone;
+  idCSRT   := Source.idCSRT;
+  hashCSRT := Source.hashCSRT;
 end;
 
 end.

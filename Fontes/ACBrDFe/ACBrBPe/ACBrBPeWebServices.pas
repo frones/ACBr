@@ -1376,10 +1376,12 @@ begin
         case infEvento.tpEvento of
           teCancelamento: SchemaEventoBPe := schevCancBPe;
           teNaoEmbarque: SchemaEventoBPe := schevNaoEmbBPe;
+          teAlteracaoPoltrona: SchemaEventoBPe := schevAlteracaoPoltrona;
         end;
 
-        infEvento.detEvento.nProt := FEvento.Evento[I].infEvento.detEvento.nProt;
-        infEvento.detEvento.xJust := FEvento.Evento[I].infEvento.detEvento.xJust;
+        infEvento.detEvento.nProt    := FEvento.Evento[I].infEvento.detEvento.nProt;
+        infEvento.detEvento.xJust    := FEvento.Evento[I].infEvento.detEvento.xJust;
+        infEvento.detEvento.poltrona := FEvento.Evento[I].infEvento.detEvento.poltrona;
       end;
     end;
     {*)}

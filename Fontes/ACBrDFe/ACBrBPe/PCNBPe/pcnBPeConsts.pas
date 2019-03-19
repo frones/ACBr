@@ -122,6 +122,10 @@ const
   DSC_NSUTRANS = 'Numero Sequencial Unico da Transação';
   DSC_NSUHOST = 'Numero Sequencial Unico da Host';
   DSC_NPARCELAS = 'Numero de Parcelas';
+  DSC_CDESCONTO = 'Código do Desconto / Beneficio Concedido';
+  DSC_INFADCARD = 'Informações Adicionais do Cartão de Crédito';
+  DSC_XDOC = 'Descrição do Documento';
+  DSC_NDOCPAG = 'Numero do Documento para Pagamento';
   DSC_XXXX = 'XXXX';
 
 implementation

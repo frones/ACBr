@@ -73,6 +73,9 @@ type
     FOpcoes: TGeradorOpcoes;
 
     Versao: String;
+    FChaveBPe: string;
+    FIdCSRT: Integer;
+    FCSRT: String;
 
     procedure GerarInfBPe;
     procedure GerarIde;
@@ -98,6 +101,7 @@ type
     procedure Gerarpag;
     procedure GerarautXML;
     procedure GerarInfAdic;
+    procedure GerarinfRespTec;
 
     procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
 
@@ -109,6 +113,8 @@ type
     property Gerador: TGerador      read FGerador write FGerador;
     property BPe: TBPe              read FBPe     write FBPe;
     property Opcoes: TGeradorOpcoes read FOpcoes  write FOpcoes;
+    property IdCSRT: Integer        read FIdCSRT  write FIdCSRT;
+    property CSRT: String           read FCSRT    write FCSRT;
   end;
 
   TGeradorOpcoes = class(TPersistent)
@@ -164,7 +170,7 @@ end;
 
 function TBPeW.GerarXml: Boolean;
 var
-  chave: String;
+//  chave: String;
   Gerar: Boolean;
   xProtBPe : String;
 begin
@@ -172,10 +178,10 @@ begin
 
   Versao := Copy(BPe.infBPe.VersaoStr, 9, 4);
 
-  chave := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ, BPe.ide.serie,
+  FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ, BPe.ide.serie,
                             BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)),
                             BPe.ide.cBP, BPe.ide.modelo);
-  BPe.infBPe.ID := 'BPe' + chave;
+  BPe.infBPe.ID := 'BPe' + FChaveBPe;
 
   BPe.ide.cDV := ExtrairDigitoChaveAcesso(BPe.infBPe.ID);
   BPe.Ide.cBP := ExtrairCodigoChaveAcesso(BPe.infBPe.ID);
@@ -274,6 +280,7 @@ begin
   GerarPag; // Pagamento
   GerarautXML;
   GerarInfAdic;
+  GerarinfRespTec;
 end;
 
 procedure TBPeW.GerarIde;
@@ -541,17 +548,38 @@ begin
   Gerador.wGrupo('/infPassagem');
 end;
 
+procedure TBPeW.GerarinfRespTec;
+begin
+  if (BPe.infRespTec.CNPJ <> '') then
+  begin
+    Gerador.wGrupo('infRespTec', '#081');
+    Gerador.wCampoCNPJ('#82', BPe.infRespTec.CNPJ, CODIGO_BRASIL, True);
+    Gerador.wCampo(tcStr, '#083', 'xContato', 02, 60, 1, BPe.infRespTec.xContato, DSC_XCONTATO);
+    Gerador.wCampo(tcStr, '#084', 'email   ', 06, 60, 1, BPe.infRespTec.email, DSC_EMAIL);
+    Gerador.wCampo(tcStr, '#085', 'fone    ', 07, 12, 1, BPe.infRespTec.fone, DSC_FONE);
+
+    if (idCSRT <> 0) and (CSRT <> '') then
+    begin
+      Gerador.wCampo(tcInt, '#086', 'idCSRT  ', 02, 02, 1, idCSRT, DSC_IDCSRT);
+      Gerador.wCampo(tcStr, '#087', 'hashCSRT', 28, 28, 1, CalcularHashCSRT(CSRT, FChaveBPe), DSC_HASHCSRT);
+    end;
+
+    Gerador.wGrupo('/infRespTec');
+  end;
+end;
+
 procedure TBPeW.GerarinfPassageiro;
 begin
   Gerador.wGrupo('infPassageiro', '#087');
 
-  Gerador.wCampo(tcStr, '#088', 'xNome', 02, 60, 1, BPe.infPassagem.infPassageiro.xNome, DSC_XNOMEPASS);
+  Gerador.wCampo(tcStr, '#088', 'xNome', 02, 060, 1, BPe.infPassagem.infPassageiro.xNome, DSC_XNOMEPASS);
   Gerador.wCampoCPF('#089', BPe.infPassagem.infPassageiro.CPF, CODIGO_BRASIL, False);
-  Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 01, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
-  Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 20, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
-  Gerador.wCampo(tcDat, '#092', 'dNasc', 10, 10, 0, BPe.infPassagem.infPassageiro.dNasc, DSC_DNASC);
-  Gerador.wCampo(tcStr, '#093', 'fone ', 07, 12, 0, OnlyNumber(BPe.infPassagem.infPassageiro.Fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#094', 'email', 01, 60, 0, BPe.infPassagem.infPassageiro.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 001, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
+  Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 020, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
+  Gerador.wCampo(tcStr, '#091', 'xDoc ', 02, 100, 0, BPe.infPassagem.infPassageiro.xDoc, DSC_XDOC);
+  Gerador.wCampo(tcDat, '#092', 'dNasc', 10, 010, 0, BPe.infPassagem.infPassageiro.dNasc, DSC_DNASC);
+  Gerador.wCampo(tcStr, '#093', 'fone ', 07, 012, 0, OnlyNumber(BPe.infPassagem.infPassageiro.Fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#094', 'email', 01, 060, 0, BPe.infPassagem.infPassageiro.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/infPassageiro');
 end;
@@ -609,6 +637,7 @@ begin
   Gerador.wCampo(tcDe2, '#113', 'vTroco    ', 00,  15, 1, BPe.infValorBPe.vTroco, DSC_VTROCO);
   Gerador.wCampo(tcStr, '#114', 'tpDesconto', 02,  02, 0, tpDescontoToStr(BPe.infValorBPe.tpDesconto), DSC_TPDESCONTO);
   Gerador.wCampo(tcStr, '#115', 'xDesconto ', 02, 100, 0, BPe.infValorBPe.xDesconto, DSC_XDESCONTO);
+  Gerador.wCampo(tcStr, '#115', 'cDesconto ', 02, 020, 0, BPe.infValorBPe.cDesconto, DSC_CDESCONTO);
 
   for i := 0 to BPe.infValorBPe.Comp.Count - 1 do
   begin
@@ -741,9 +770,10 @@ begin
   begin
     Gerador.wGrupo('pag', '#161');
 
-    Gerador.wCampo(tcStr, '#162', 'tPag', 02, 02, 1, FormaPagamentoToStr(BPe.pag[i].tPag), DSC_TPAG);
-    Gerador.wCampo(tcStr, '#162a', 'xPag', 02, 100, 0, BPe.pag[i].xPag, DSC_XPAG);
-    Gerador.wCampo(tcDe2, '#163', 'vPag', 01, 15, 1, BPe.pag[i].vPag, DSC_VPAG);
+    Gerador.wCampo(tcStr, '#162', 'tPag    ', 02, 002, 1, FormaPagamentoToStr(BPe.pag[i].tPag), DSC_TPAG);
+    Gerador.wCampo(tcStr, '#162a', 'xPag   ', 02, 100, 0, BPe.pag[i].xPag, DSC_XPAG);
+    Gerador.wCampo(tcStr, '#162b', 'nDocPag', 02, 020, 0, BPe.pag[i].nDocPag, DSC_NDOCPAG);
+    Gerador.wCampo(tcDe2, '#163', 'vPag    ', 01, 015, 1, BPe.pag[i].vPag, DSC_VPAG);
 
     if(BPe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
       ((BPe.pag[i].CNPJ <> '') or (BPe.pag[i].tpIntegra <> tiNaoInformado))then
@@ -754,12 +784,13 @@ begin
       if BPe.pag[i].CNPJ <> '' then
       begin
         Gerador.wCampo(tcStr, 'YA05', 'CNPJ ', 14, 14, 0, BPe.pag[i].CNPJ, DSC_CNPJ);
-        Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCartaoToStr(BPe.pag[i].tBand), DSC_TBAND);
+        Gerador.wCampo(tcStr, 'YA06', 'tBand', 02, 02, 0, BandeiraCardToStr(BPe.pag[i].tBand), DSC_TBAND);
         Gerador.wCampo(tcStr, 'YA06a', 'xBand', 02, 100, 0, BPe.pag[i].xBand, DSC_XBAND);
         Gerador.wCampo(tcStr, 'YA07', 'cAut ', 01, 20, 0, BPe.pag[i].cAut, DSC_CAUT);
         Gerador.wCampo(tcStr, 'YA07', 'nsuTrans', 01, 20, 0, BPe.pag[i].nsuTrans, DSC_NSUTRANS);
         Gerador.wCampo(tcStr, 'YA07', 'nsuHost', 01, 20, 0, BPe.pag[i].nsuHost, DSC_NSUHOST);
         Gerador.wCampo(tcInt, 'YA07', 'nParcelas', 01, 03, 0, BPe.pag[i].nParcelas, DSC_NPARCELAS);
+        Gerador.wCampo(tcStr, 'YA07', 'infAdCard', 01, 2000, 0, BPe.pag[i].infAdCard, DSC_INFADCARD);
       end;
 
       Gerador.wGrupo('/card');

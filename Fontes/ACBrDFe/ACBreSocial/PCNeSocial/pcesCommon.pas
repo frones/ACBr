@@ -199,7 +199,7 @@ type
     FProcAdmJudRat: TProcAdmJudRat;
     FProcAdmJudFap: TProcAdmJudFap;
     function getProcAdmJudRat(): TProcAdmJudRat;
-    function getProcAdmJudFat(): TProcAdmJudFap;
+    function getProcAdmJudFap(): TProcAdmJudFap;
   public
     constructor Create;
     destructor Destroy; override;
@@ -210,7 +210,7 @@ type
     property Fap: Double read FFap write FFap;
     property AliqRatAjust: Double read FAliqRatAjust write FAliqRatAjust;
     property ProcAdmJudRat: TProcAdmJudRat read getProcAdmJudRat write FProcAdmJudRat;
-    property ProcAdmJudFap: TProcAdmJudFap read getProcAdmJudFat write FProcAdmJudFap;
+    property ProcAdmJudFap: TProcAdmJudFap read getProcAdmJudFap write FProcAdmJudFap;
   end;
 
   TAlvaraJudicial = class
@@ -1283,7 +1283,7 @@ type
     FinfoAgNocivo : TInfoAgNocivo;
     FinfoSimples : TinfoSimples;
 
-    function getInfoSaudeColect: TInfoSaudeColet;
+    function getinfoSaudeColet: TInfoSaudeColet;
     function getInfoAgNocivo: TInfoAgNocivo;
     function getInfoSimples: TinfoSimples;
   public
@@ -1296,7 +1296,7 @@ type
     property nrInsc : string read FnrInsc write FnrInsc;
     property codLotacao : string read FcodLotacao write FcodLotacao;
     property detVerbas : TRubricaCollection read FdetVerbas write FdetVerbas;
-    property infoSaudeColet: TInfoSaudeColet read getInfoSaudeColect write FInfoSaudeColet;
+    property infoSaudeColet: TInfoSaudeColet read getinfoSaudeColet write FInfoSaudeColet;
     property infoAgNocivo : TInfoAgNocivo read getInfoAgNocivo write FinfoAgNocivo;
     property infoSimples : TinfoSimples read getInfoSimples write FinfoSimples;
   end;
@@ -1749,7 +1749,7 @@ begin
   inherited;
 end;
 
-function TAliqGilRat.getProcAdmJudFat: TProcAdmJudFap;
+function TAliqGilRat.getProcAdmJudFap: TProcAdmJudFap;
 begin
   if Not(Assigned(FProcAdmJudFap)) then
     FProcAdmJudFap := TProcAdmJudFap.Create;
@@ -2301,7 +2301,7 @@ begin
   Result := FinfoSimples;
 end;
 
-function TideEstabLotItem.getInfoSaudeColect: TInfoSaudeColet;
+function TideEstabLotItem.getinfoSaudeColet: TInfoSaudeColet;
 begin
   if not Assigned(FInfoSaudeColet) then
     FInfoSaudeColet := TInfoSaudeColet.Create;

@@ -279,7 +279,7 @@ begin
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                       '<xMotivo>' + FxMotivo + '</xMotivo>' +
                       '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
-                      '<xMMsg>' + FxMsg + '</xMsg>' +
+                      '<xMsg>' + FxMsg + '</xMsg>' +
                      '</infProt>' +
                     '</protNFe>';
       end;

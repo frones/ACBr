@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2019
+-- ACBreSocialWebServices --
+[*] Correções no método Consultar Eventos de Identificadores.
+   Por: Wellington
+
 15/03/2019
 -- pcesS2221 --
 [*] https://www.projetoacbr.com.br/forum/topic/50008-evento-s2221/

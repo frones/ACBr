@@ -150,6 +150,7 @@ type
     FdtIni: TDateTime;
     FdtFim: TDateTime;
     FcpfTrab: String;
+    FmetodoConsulta: String;
 
     FRetConsultaIdentEvt: TRetConsultaIdentEvt;
   protected
@@ -666,6 +667,7 @@ var
   EhValido : Boolean;
 begin
 
+  // Deve ser enviado somente a raiz do CNPJ
   if Length(FCnpj) = 14 then
     TpInsc := tiCNPJ
   else
@@ -693,7 +695,17 @@ begin
     Consulta.tipoConsulta := tipoConsulta;
 
     Consulta.tpInsc := eSTpInscricaoToStr(TpInsc);
-    Consulta.nrInsc := Cnpj;
+
+    case TpInsc of
+      tiCNPJ:
+        begin
+          Consulta.nrInsc := copy(Cnpj, 0, 8);
+        end;
+      tiCPF:
+        begin
+          Consulta.nrInsc := Cnpj;
+        end;
+    end;
     Consulta.TipoEvento := Evento;
     Consulta.perApur := FormatDateTime('yyyy-mm', FPerApur);
     Consulta.chEvt := chEvt;
@@ -782,11 +794,11 @@ begin
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
-  Texto := Texto + '<' + 'v1:ConsultarIdentificadoresEventosEmpregador>';
-  Texto := Texto + '<' + 'v1:consultaEventosEmpregador>';
+  Texto := Texto + '<v1:ConsultarIdentificadoresEventos' + FmetodoConsulta + '>';
+  Texto := Texto + '<v1:consultaEventos' + FmetodoConsulta + '>';
   Texto := Texto + DadosMsg;
-  Texto := Texto + '<' + '/v1:consultaEventosEmpregador>';
-  Texto := Texto + '<' + '/v1:ConsultarIdentificadoresEventosEmpregador>';
+  Texto := Texto + '</v1:consultaEventos' + FmetodoConsulta + '>';
+  Texto := Texto + '</v1:ConsultarIdentificadoresEventos' + FmetodoConsulta + '>';
   Texto := Texto + '</' + FPSoapVersion + ':Body>';
   Texto := Texto + '</' + FPSoapVersion + ':Envelope>';
 
@@ -796,7 +808,7 @@ end;
 procedure TConsultaIdentEventos.DefinirServicoEAction;
 begin
   FPServico :=
-    'http://www.esocial.gov.br/servicos/empregador/consulta/identificadores-eventos/v1_0_0/ServicoConsultarIdentificadoresEventos/ConsultarIdentificadoresEventosEmpregador';
+    'http://www.esocial.gov.br/servicos/empregador/consulta/identificadores-eventos/v1_0_0/ServicoConsultarIdentificadoresEventos/ConsultarIdentificadoresEventos' + FmetodoConsulta;
   FPSoapAction := Trim(FPServico);
 end;
 
@@ -839,7 +851,7 @@ var
   i: Integer;
   AXML, NomeArq: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarIdentificadoresEventosEmpregadorResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'ConsultarIdentificadoresEventos' + FmetodoConsulta + 'Result');
 
   FRetConsultaIdentEvt.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsultaIdentEvt.LerXml;
@@ -1131,6 +1143,7 @@ begin
   FConsultaIdentEventos.FCnpj := CnpjEstab;
   FConsultaIdentEventos.FEvento := tpEvt;
   FConsultaIdentEventos.FPerApur := PerApur;
+  FConsultaIdentEventos.FmetodoConsulta := 'Empregador';
 
   if not FConsultaIdentEventos.Executar then
     FConsultaIdentEventos.GerarException(FConsultaIdentEventos.Msg);
@@ -1154,6 +1167,7 @@ begin
   FConsultaIdentEventos.FchEvt := AchEvt;
   FConsultaIdentEventos.FdtIni := AdtIni;
   FConsultaIdentEventos.FdtFim := AdtFim;
+  FConsultaIdentEventos.FmetodoConsulta := 'Tabela';
 
   if not FConsultaIdentEventos.Executar then
     FConsultaIdentEventos.GerarException(FConsultaIdentEventos.Msg);
@@ -1176,6 +1190,7 @@ begin
   FConsultaIdentEventos.FcpfTrab := AcpfTrab;
   FConsultaIdentEventos.FdtIni := AdtIni;
   FConsultaIdentEventos.FdtFim := AdtFim;
+  FConsultaIdentEventos.FmetodoConsulta := 'Trabalhador';
 
   if not FConsultaIdentEventos.Executar then
     FConsultaIdentEventos.GerarException(FConsultaIdentEventos.Msg);

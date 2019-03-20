@@ -249,8 +249,8 @@ begin
   GerarIntermediarioServico;
   GerarListaServicos;
   GerarConstrucaoCivil;
-  // 21/02/2019 - Por: Italo
-  if NFSe.TipoTributacaoRPS  <> ttTribnoMun then
+
+  if (FProvedor = proSP) and (NFSe.TipoTributacaoRPS  <> ttTribnoMun) then
     Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.CodigoMunicipio, '');
 
   Gerador.wGrupoNFSe('/RPS');

@@ -409,7 +409,7 @@ begin
       raise Exception.Create(WebServices.Consulta.Msg);
 
     EventoNFe.Evento.Clear;
-    with EventoNFe.Evento.Add do
+    with EventoNFe.Evento.New do
     begin
       ChaveNFe := OnlyNumber(WebServices.Consulta.NFeChave);
       infEvento.CNPJ := copy(ChaveNFe, 7, 14);
@@ -501,7 +501,7 @@ begin
 
   with fsACBrNFCe do
   begin
-    Det := NotasFiscais.Items[0].NFe.Det.Add;
+    Det := NotasFiscais.Items[0].NFe.Det.New;
 
     Det.Prod.nItem := ItemCupom.Sequencia;
     Det.Prod.cProd := ItemCupom.Codigo;
@@ -686,7 +686,7 @@ begin
     with fsACBrNFCe do
     begin
 
-      NFCePagto := NotasFiscais.Items[0].NFe.pag.Add;
+      NFCePagto := NotasFiscais.Items[0].NFe.pag.New;
 
       NFCePagto.vPag := Pagto.ValorPago;
       NFCePagto.tPag := AdivinharFormaPagamento(fpFormasPagamentos[Pagto.PosFPG].Descricao);

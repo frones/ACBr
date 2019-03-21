@@ -369,7 +369,7 @@ begin
 
   with fsACBrSAT do
   begin
-    Det := CFe.Det.Add;
+    Det := CFe.Det.New;
 
     Det.nItem := ItemCupom.Sequencia;
     Det.Prod.cProd    := ItemCupom.Codigo;
@@ -481,7 +481,7 @@ var
 begin
   with fsACBrSAT do
   begin
-    CfePagto := CFe.Pagto.Add;
+    CfePagto := CFe.Pagto.New;
 
     CfePagto.vMP := Pagto.ValorPago;
     CfePagto.cMP := AdivinharCodigoMP( fpFormasPagamentos[ Pagto.PosFPG ].Descricao );

@@ -455,6 +455,7 @@ begin
   begin
     CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\libeay32.dll');
     CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\ssleay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\msvcr120.dll');
   end;
 end;
 

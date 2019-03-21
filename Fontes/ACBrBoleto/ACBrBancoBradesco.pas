@@ -571,7 +571,7 @@ begin
     PadLeft('', 12, '0')                                 +//Corrente para Débito 217 228 12 - Num *G010
     PadLeft('', 1, ' ')                                  +//Dígito Verificador da Conta 229 229 1 - Alfa *G011
     PadLeft('', 1, ' ')                                  +//DV Dígito Verificador Ag/Conta 230 230 1 - Alfa *G012
-    PadLeft('', 1, ' ')                                  +//Ident. da Emissão do Aviso Déb. Aviso para Débito Automático 231 231 1 - Num *C039
+    PadLeft('', 1, '3')                                  +//Ident. da Emissão do Aviso Déb. Aviso para Débito Automático 231 231 1 - Num *C039
     PadLeft('',9, ' ');                                  //CNAB Uso Exclusivo FEBRABAN/CNAB 232 240 9 - Alfa Brancos G004
     ;
   End;

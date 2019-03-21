@@ -49,6 +49,11 @@ Símbolo : Significado
 
 
 ver: 0.1.0
+
+-- ACBrBancoBradesco --
+[-] Remessa CNAB240: Correção no segmento "R".
+https://www.projetoacbr.com.br/forum/topic/50069-boleto/
+
 -- ACBrBancoBradesco --
 [-] Retorno CNAB240: Correção na leitura do Nosso Numero. (Juliana Tamizou)
 https://www.projetoacbr.com.br/forum/topic/49512-nosso-numero-bradesco-240-continua-errado-na-leitura/

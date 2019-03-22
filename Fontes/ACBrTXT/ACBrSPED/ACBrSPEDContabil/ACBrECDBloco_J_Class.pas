@@ -241,22 +241,21 @@ begin
      begin
         with RegJ005.RegistroJ100.Items[intFor] do
         begin
-           ///
-           /// Layout 7 a partir da escrituração ano calendário 2018
-           if DT_INI >= EncodeDate(2018,01,01) then
+           if DT_INI >= EncodeDate(2018,01,01) then // Layout 7 a partir da escrituração ano calendário 2018
            begin
-              Check(((IND_GRP_BAL = 'A') or (IND_GRP_BAL = 'P')), '(J-J100) No Indicador de grupo do balanço, deve ser informado: A ou P!');
-              Check(((IND_COD_AGL = 'T') or (IND_COD_AGL = 'D')), '(J-J100) No Indicador do tipo de código de aglutinação, deve ser informado: T ou D!');
-              Check(((IND_DC_CTA_FIN = 'D') or (IND_COD_AGL = 'C')), '(J-J100) No Indicador da situação do saldo final, deve ser informado: D ou C!');
+             Check(((IND_GRP_BAL = 'A') or (IND_GRP_BAL = 'P')), '(J100-IND_GRP_BAL) No Indicador de grupo do balanço, deve ser informado: A ou P!');
+             Check(((IND_COD_AGL = 'T') or (IND_COD_AGL = 'D')), '(J100-IND_COD_AGL) No Indicador do tipo de código de aglutinação, deve ser informado: T ou D!');
+             Check(((IND_DC_CTA_FIN = 'D') or (IND_DC_CTA_FIN = 'C')), '(J100-IND_DC_CTA_FIN) No Indicador da situação do saldo final, deve ser informado: D ou C!');
+             Check(((IND_DC_CTA_INI = 'D') or (IND_DC_CTA_INI = 'C')), '(J100-IND_DC_CTA_INI) No Indicador da situação do saldo inicial, deve ser informado: D ou C!');
            end
            else
-              Check(((IND_GRP_BAL = '1') or (IND_GRP_BAL = '2')), '(J-J100) No Indicador de grupo do balanço, deve ser informado o número 1 ou 2!');
-              
-           Check(((IND_DC_BAL = 'D') or (IND_DC_BAL = 'C')), '(J-J100) No Indicador da situação do saldo, deve ser informado: D ou C!');
-           /// Layout 2 a partir da escrituração ano calendário 2013
-           if DT_INI >= EncodeDate(2013,01,01) then
-              Check(((IND_DC_BAL_INI = 'D') or (IND_DC_BAL_INI = 'C')), '(J-J100) No Indicador da situação do saldo inicial do código de aglutinação no Balança Patrimonial, deve ser informado: D ou C!');
-           ///
+           if DT_INI >= EncodeDate(2013,01,01) then // Layout 2 a partir da escrituração ano calendário 2013
+           begin
+             Check(((IND_GRP_BAL = '1') or (IND_GRP_BAL = '2')), '(J100-IND_GRP_BAL) No Indicador de grupo do balanço, deve ser informado o número 1 ou 2!');
+             Check(((IND_DC_BAL_INI = 'D') or (IND_DC_BAL_INI = 'C')), '(J100-IND_DC_BAL_INI) No Indicador da situação do saldo inicial do código de aglutinação no Balança Patrimonial, deve ser informado: D ou C!');
+             Check(((IND_DC_BAL = 'D') or (IND_DC_BAL = 'C')), '(J100-IND_DC_BAL) No Indicador da situação do saldo, deve ser informado: D ou C!');
+           end;
+
            /// Layout 7 a partir da escrituração ano calendário 2018
            if DT_INI >= EncodeDate(2018,01,01) then
            begin

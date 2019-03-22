@@ -156,21 +156,17 @@ begin
        Check(funChecaUF(UF), '(0-0000) A UF "%s" digitada é inválido!', [UF]);
        Check(funChecaIE(IE, UF), '(0-0000) A inscrição estadual "%s" digitada é inválida!', [IE]);
        Check(funChecaMUN(StrToInt(COD_MUN)), '(0-0000) O código do município "%s" digitado é inválido!', [COD_MUN]);
-       Check(((IND_SIT_ESP >= '0') and (IND_SIT_ESP <= '4')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 0 ou 1 ou 2 ou 3 ou 4!', [IND_SIT_ESP]);
+       if DT_INI >= EncodeDate(2014,01,01) then
+       begin
+         Check(((TIP_ECD >= '0') and (TIP_ECD <= '2')), '(0-0000) O indicador "%s" de tipo ECD, deve ser informado o número 0, 1 ou 2!', [TIP_ECD]);
+       end;
        if DT_INI >= EncodeDate(2013,01,01) then
        begin
-         Check(((IND_SIT_ESP >= '1') and (IND_SIT_ESP <= '6')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 1 ou 2 ou 3 ou 4 ou 5 ou 6!', [IND_SIT_ESP]);
          Check(((IND_SIT_INI_PER >= '0') and (IND_SIT_INI_PER <= '3')), '(0-0000) O indicador "%s" de situação no início do período, deve ser informado o número 0 ou 1 ou 2 ou 3!', [IND_SIT_INI_PER]);
          Check(((IND_NIRE >= '0') and (IND_NIRE <= '1')), '(0-0000) O indicador "%s" de existência de NIRE, deve ser informado o número 0 ou 1!', [IND_NIRE]);
          Check(((IND_FIN_ESC >= '0') and (IND_FIN_ESC <= '3')), '(0-0000) O indicador "%s" da finalidade da escrituração, deve ser informado o número 0 ou 1 ou 2 ou 3!', [IND_FIN_ESC]);
          Check(((IND_EMP_GRD_PRT >= '0') and (IND_EMP_GRD_PRT <= '1')), '(0-0000) O indicador "%s" de empresa de grande porte, deve ser informado o número 0 ou 1!', [IND_EMP_GRD_PRT]);
-         if DT_INI >= EncodeDate(2014,01,01) then
-         begin
-           Check(((TIP_ECD >= '0') and (TIP_ECD <= '2')), '(0-0000) O indicador "%s" de tipo ECD, deve ser informado o número 0, 1 ou 2!', [TIP_ECD]);
-         end;
-       end
-       else
-          Check(((IND_SIT_ESP >= '1') and (IND_SIT_ESP <= '6')), '(0-0000) O indicador "%s" de situação especial, deve ser informado o número 0 ou 1 ou 2 ou 3 ou 4!', [IND_SIT_ESP]);
+       end;
 
        // Layout 5 a partir da escrituração ano calendário 2016
        if DT_INI >= EncodeDate(2016,01,01) then

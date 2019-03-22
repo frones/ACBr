@@ -182,7 +182,7 @@ type
     FnProt: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   published
     property Msg: string read Fmsg write Fmsg;
@@ -477,9 +477,9 @@ end;
 
 { TNaoEncerradosResposta }
 
-constructor TNaoEncerradosResposta.Create(const ATipo: TACBrLibRespostaTipo);
+constructor TNaoEncerradosResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 begin
-  inherited Create(CSessaoRespNaoEncerrados, ATipo);
+  inherited Create(ASessao, ATipo);
 end;
 
 { TEncerramentoResposta }

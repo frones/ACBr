@@ -125,16 +125,16 @@ end;
 
 procedure TDeviceConfig.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.ReadInteger(FSessao, CChaveBaud, FBaud);
-  AIni.ReadInteger(FSessao, CChaveData, FData);
-  AIni.ReadInteger(FSessao, CChaveParity, Integer(FParity));
-  AIni.ReadInteger(FSessao, CChaveStop, Integer(FStop));
-  AIni.ReadInteger(FSessao, CChaveMaxBandwidth, FMaxBandwidth);
-  AIni.ReadInteger(FSessao, CChaveSendBytesCount, FSendBytesCount);
-  AIni.ReadInteger(FSessao, CChaveSendBytesInterval, FSendBytesInterval);
-  AIni.ReadInteger(FSessao, CChaveHandShake, Integer(FHandShake));
-  AIni.ReadBool(FSessao, CChaveSoftFlow, FHardFlow);
-  AIni.ReadBool(FSessao, CChaveHardFlow, FSoftFlow);
+  AIni.WriteInteger(FSessao, CChaveBaud, FBaud);
+  AIni.WriteInteger(FSessao, CChaveData, FData);
+  AIni.WriteInteger(FSessao, CChaveParity, Integer(FParity));
+  AIni.WriteInteger(FSessao, CChaveStop, Integer(FStop));
+  AIni.WriteInteger(FSessao, CChaveMaxBandwidth, FMaxBandwidth);
+  AIni.WriteInteger(FSessao, CChaveSendBytesCount, FSendBytesCount);
+  AIni.WriteInteger(FSessao, CChaveSendBytesInterval, FSendBytesInterval);
+  AIni.WriteInteger(FSessao, CChaveHandShake, Integer(FHandShake));
+  AIni.WriteBool(FSessao, CChaveSoftFlow, FHardFlow);
+  AIni.WriteBool(FSessao, CChaveHardFlow, FSoftFlow);
 end;
 
 procedure TDeviceConfig.Assign(const Device: TACBrDevice);

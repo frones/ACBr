@@ -74,6 +74,7 @@ Source: ..\..\..\Fontes\ACBrComum\ACBrComum-change-log.txt; DestDir: {app}\Chang
 Source: ..\..\..\Fontes\ACBrTCP\ACBrTCP-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 Source: ..\..\..\Fontes\ACBrBoleto\ACBrBoleto-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 Source: ..\..\..\Fontes\ACBrDiversos\ACBrDiversos-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
+Source: Notas_Lancamento.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 ;Arquivo de leitura de CHM para exibição diretamente usando a tecla F1
 Source: lhelp\lhelp.exe; DestDir: {app}\lhelp; Flags: ignoreversion sign; Components: programa
 

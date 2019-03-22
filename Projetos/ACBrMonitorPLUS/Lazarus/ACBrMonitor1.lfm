@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 85
+  Left = 39
   Height = 650
-  Top = 17
+  Top = 0
   Width = 1202
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -2927,14 +2927,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/Geral.htm'
           Caption = 'RFD'
           ClientHeight = 327
-          ClientWidth = 870
+          ClientWidth = 989
           ImageIndex = 13
           OnShow = tsRFDShow
           object pgConRFD: TPageControl
             Left = 0
             Height = 327
             Top = 0
-            Width = 870
+            Width = 989
             ActivePage = tsRFDConfig
             Align = alClient
             ShowTabs = False
@@ -2945,14 +2945,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpKeyword = 'ACBrMonitor/Geral.htm'
               Caption = 'Geral'
               ClientHeight = 319
-              ClientWidth = 862
+              ClientWidth = 981
               ImageIndex = 3
               object sbDirRFD: TSpeedButton
                 AnchorSideLeft.Control = edRFDDir
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideTop.Control = edRFDDir
                 AnchorSideTop.Side = asrCenter
-                Left = 669
+                Left = 788
                 Height = 22
                 Hint = 'Abre o diretório RFD'
                 Top = 41
@@ -2992,13 +2992,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 25
                 Hint = 'Diretório para gravação dos arquivos da RFD.'#13#10'Se nada for especificado será criado um subdiretório '#13#10'"RFD" dentro da pasta do ACBrMonitor'#13#10#13#10'Para modifica-lo o componente ECF deve estar desativado'
                 Top = 40
-                Width = 502
+                Width = 621
                 Anchors = [akTop, akLeft, akRight]
                 Enabled = False
                 TabOrder = 1
               end
               object bRFDMF: TBitBtn
-                Left = 708
+                Left = 827
                 Height = 27
                 Hint = 'Captura dados Memoria Fiscal.'#13#10#13#10'Útil para ajudar a preencher os campos '#13#10'de ACBrRFD.ini'
                 Top = 30
@@ -3041,11 +3041,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 109
                 Top = 85
-                Width = 810
+                Width = 929
                 Anchors = [akTop, akLeft, akRight]
                 Caption = 'ECF'
                 ClientHeight = 87
-                ClientWidth = 806
+                ClientWidth = 925
                 TabOrder = 4
                 object Label43: TLabel
                   Left = 16
@@ -3067,7 +3067,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 176
                   Height = 23
                   Top = 13
-                  Width = 549
+                  Width = 668
                   Anchors = [akTop, akLeft, akRight]
                   ItemHeight = 17
                   OnChange = cbRFDModeloChange
@@ -3075,7 +3075,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                 end
                 object Label45: TLabel
-                  Left = 744
+                  Left = 863
                   Height = 17
                   Top = -3
                   Width = 39
@@ -3087,7 +3087,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideLeft.Control = Label45
                   AnchorSideTop.Control = cbRFDModelo
                   AnchorSideTop.Side = asrCenter
-                  Left = 744
+                  Left = 863
                   Height = 23
                   Top = 13
                   Width = 49
@@ -3116,7 +3116,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = deRFDDataSwBasico
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = deRFDDataSwBasico
-                  Left = 326
+                  Left = 445
                   Height = 17
                   Top = 62
                   Width = 266
@@ -3130,7 +3130,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = deRFDDataSwBasico
                   AnchorSideTop.Side = asrCenter
                   Cursor = crIBeam
-                  Left = 743
+                  Left = 862
                   Height = 25
                   Hint = 'Informe aqui a data do ultimo atestado de intervenção técnica '#13#10'em que houve atualização do Sofware Básico '#13#10' (numero de versão acrescido)'
                   Top = 58
@@ -3147,7 +3147,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object deRFDDataSwBasico: TDateEdit
                   Cursor = crIBeam
-                  Left = 595
+                  Left = 714
                   Height = 25
                   Hint = 'Informe aqui a data do ultimo atestado de intervenção técnica'#13#10'em que houve atualização do Sofware Básico'#13#10' (numero de versão acrescido)'
                   Top = 58

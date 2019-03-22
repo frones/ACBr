@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2019
+[*] DoACBrMDFeUnit, ACBrLibMDFeRespostas
+Ajustes no retorno dos Itens Resposta do método ConsultarMDFeNaoEnc
+
 14/03/2019
 [*] ACBrMonitor1
 Ajustes nas configurações de Margem para impressão NFCe Modelo A4

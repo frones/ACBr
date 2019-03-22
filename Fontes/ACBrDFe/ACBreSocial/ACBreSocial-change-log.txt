@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2019
+-- pcesS2299 --
+[*] https://www.projetoacbr.com.br/forum/topic/50146-s-2299-corre%C3%A7%C3%A3o-infotrabinterm/
+   Por: Paulo Aguiar Junior
+
 20/03/2019
 -- ACBreSocialWebServices --
 [*] Correções no método Consultar Eventos de Identificadores.

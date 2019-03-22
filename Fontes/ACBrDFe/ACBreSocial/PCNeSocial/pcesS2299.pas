@@ -644,6 +644,7 @@ end;
 function TInfoTrabIntermCollection.New: TInfoTrabIntermItem;
 begin
   Result := TInfoTrabIntermItem.Create;
+  Self.Add(Result);
 end;
 
 { TConsigFGTSCollection }

@@ -455,18 +455,9 @@ begin
   if (CFe.Emit.cRegTrib = RTSimplesNacional) then
      FPosPrinter.Buffer.Add(Msg_ICMS_123_2006 );
 
-  if CFe.infCFe.versao <= 0.07 then
-  begin
-    for i:=0 to CFe.InfAdic.obsFisco.Count - 1 do
-       FPosPrinter.Buffer.Add(CFe.InfAdic.obsFisco[i].xCampo+'-'+
-                              CFe.InfAdic.obsFisco[i].xTexto);
-  end
-  else
-  begin
-    for i:=0 to CFe.obsFisco.Count - 1 do
-       FPosPrinter.Buffer.Add(CFe.obsFisco[i].xCampo+'-'+
-                              CFe.obsFisco[i].xTexto);
-  end;
+  for i:=0 to CFe.obsFisco.Count - 1 do
+     FPosPrinter.Buffer.Add(CFe.obsFisco[i].xCampo+'-'+
+                            CFe.obsFisco[i].xTexto);
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarDadosEntrega;

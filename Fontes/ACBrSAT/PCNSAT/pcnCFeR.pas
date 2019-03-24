@@ -377,6 +377,12 @@ begin
         CFe.InfAdic.obsFisco.New;
         (*Z04*)CFe.InfAdic.obsFisco[i].xCampo := Leitor.rAtributo('xCampo');
         (*Z05*)CFe.InfAdic.obsFisco[i].xTexto := Leitor.rCampo(tcStr, 'xTexto');
+
+        // Incluindo em Tag compatível com 0.08
+        CFe.obsFisco.New;
+        (*ZA02*)CFe.obsFisco[i].xCampo := CFe.InfAdic.obsFisco[i].xCampo;
+        (*ZA03*)CFe.obsFisco[i].xTexto := CFe.InfAdic.obsFisco[i].xTexto;
+
         inc(i)
       end;
     end;

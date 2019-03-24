@@ -660,9 +660,18 @@ begin
       fObsFisco.Add( Msg_ICMS_123_2006 );
 
     // Copiando as Observações do Fisco para Lista Interna //
-    for I :=0 to InfAdic.obsFisco.Count - 1 do
-      fObsFisco.Add( InfAdic.obsFisco.Items[I].xCampo + '-' +
-                     InfAdic.obsFisco.Items[I].xTexto);
+    if infCFe.versao <= 0.07 then
+    begin
+      for I :=0 to InfAdic.obsFisco.Count - 1 do
+        fObsFisco.Add( InfAdic.obsFisco[I].xCampo + '-' +
+                       InfAdic.obsFisco[I].xTexto);
+    end
+    else
+    begin
+      for I :=0 to obsFisco.Count - 1 do
+        fObsFisco.Add( obsFisco[I].xCampo + '-' +
+                       obsFisco[I].xTexto);
+    end;
 
     lNomeFantasia.Lines.Text:= Emit.xFant ;
     lRazaoSocial.Lines.Text := Emit.xNome ;

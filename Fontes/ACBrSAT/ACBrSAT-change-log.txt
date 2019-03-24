@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2019
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[-] Ajuste para imprimir corretamente Observações do Fisco, na versão 0.08
+    (por: DSA)
+
+-- pcnCFe --
+[-] Ajuste para ler corretamente os números de versões do XML.
+    (por: DSA)
+
 04/02/2019
 -- pcnCFe, pcnCFeW, pcnCFeR --
 -- pcnCFeCanc, pcnCFeCancW, pcnCFeCancW --

@@ -137,16 +137,16 @@ type
 
   TinfCFe = class
   private
-    Fversao : Real;
-    FversaoDadosEnt : Real;
+    Fversao : Currency;
+    FversaoDadosEnt : Currency;
     FversaoSB : integer;
     FID: string;
   public
     constructor Create;
     procedure Clear;
 
-    property versao: Real read Fversao write Fversao;
-    property versaoDadosEnt: Real read FversaoDadosEnt write FversaoDadosEnt;
+    property versao: Currency read Fversao write Fversao;
+    property versaoDadosEnt: Currency read FversaoDadosEnt write FversaoDadosEnt;
     property versaoSB: integer read FversaoSB write FversaoSB;
     property ID: string read FID write FID;
   end;

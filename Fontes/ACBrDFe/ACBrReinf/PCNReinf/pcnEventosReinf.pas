@@ -243,7 +243,7 @@ begin
 
     Self.R1000.Items[i].evtInfoContri.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR1000;
       PathNome := PathName;
@@ -259,7 +259,7 @@ begin
 
     Self.R1070.Items[i].evtTabProcesso.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR1070;
       PathNome := PathName;
@@ -275,7 +275,7 @@ begin
 
     Self.R2010.Items[i].evtServTom.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2010;
       PathNome := PathName;
@@ -291,7 +291,7 @@ begin
 
     Self.R2020.Items[i].evtServPrest.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2020;
       PathNome := PathName;
@@ -307,7 +307,7 @@ begin
 
     Self.R2030.Items[i].evtAssocDespRec.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2030;
       PathNome := PathName;
@@ -323,7 +323,7 @@ begin
 
     Self.R2040.Items[i].evtAssocDespRep.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2040;
       PathNome := PathName;
@@ -339,7 +339,7 @@ begin
 
     Self.R2050.Items[i].evtComProd.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2050;
       PathNome := PathName;
@@ -355,7 +355,7 @@ begin
 
     Self.R2060.Items[i].evtCPRB.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2060;
       PathNome := PathName;
@@ -371,7 +371,7 @@ begin
 
     Self.R2070.Items[i].evtPgtosDivs.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2070;
       PathNome := PathName;
@@ -387,7 +387,7 @@ begin
 
     Self.R2098.Items[i].evtReabreEvPer.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2098;
       PathNome := PathName;
@@ -403,7 +403,7 @@ begin
 
     Self.R2099.Items[i].evtFechaEvPer.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR2099;
       PathNome := PathName;
@@ -419,7 +419,7 @@ begin
 
     Self.R3010.Items[i].evtEspDesportivo.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR3010;
       PathNome := PathName;
@@ -435,7 +435,7 @@ begin
 
     Self.R9000.Items[i].evtExclusao.SaveToFile(PathName);
 
-    with TACBrReinf(Self.Owner).Eventos.Gerados.Add do
+    with TACBrReinf(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teR9000;
       PathNome := PathName;

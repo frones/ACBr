@@ -220,17 +220,18 @@ type
     property dtLaudo: TDateTime read FdtLaudo write FdtLaudo;
   end;
 
-  TideEstabCollection = class(TCollection)
+  TideEstabCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TideEstabCollectionItem;
     procedure SetItem(Index: Integer; Value: TideEstabCollectionItem);
   public
-    constructor create(AOwner: TideBenef);
-    function Add: TideEstabCollectionItem;
+    function Add: TideEstabCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TideEstabCollectionItem;
+
     property Items[Index: Integer]: TideEstabCollectionItem read GetItem write SetItem; default;
   end;
 
-  TideEstabCollectionItem = class(TCollectionItem)
+  TideEstabCollectionItem = class(TObject)
   private
     FtpInsc: TtpInsc;
     FnrInsc: string;
@@ -238,7 +239,7 @@ type
     FpgtoPJ: TpgtoPJCollection;
     FpgtoResidExt: TpgtoResidExt;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property tpInsc: TtpInsc read FtpInsc write FtpInsc default tiCNPJ;
@@ -248,17 +249,18 @@ type
     property pgtoResidExt: TpgtoResidExt read FpgtoResidExt write FpgtoResidExt;
   end;
 
-  TpgtoPFCollection = class(TCollection)
+  TpgtoPFCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TpgtoPFCollectionItem;
     procedure SetItem(Index: Integer; Value: TpgtoPFCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TpgtoPFCollectionItem;
+    function Add: TpgtoPFCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TpgtoPFCollectionItem;
+
     property Items[Index: Integer]: TpgtoPFCollectionItem read GetItem write SetItem; default;
   end;
 
-  TpgtoPFCollectionItem = class(TCollectionItem)
+  TpgtoPFCollectionItem = class(TObject)
   private
     FdtPgto: TDateTime;
     FindSuspExig: TtpSimNao;
@@ -273,7 +275,7 @@ type
     FinfoProcJud: TinfoProcJudCollection;
     FdepJudicial: TdepJudicial;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dtPgto: TDateTime read FdtPgto write FdtPgto;
@@ -290,17 +292,18 @@ type
     property depJudicial: TdepJudicial read FdepJudicial write FdepJudicial;
   end;
 
-  TdetDeducaoCollection = class(TCollection)
+  TdetDeducaoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TdetDeducaoCollectionItem;
     procedure SetItem(Index: Integer; Value: TdetDeducaoCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TdetDeducaoCollectionItem;
+    function Add: TdetDeducaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetDeducaoCollectionItem;
+
     property Items[Index: Integer]: TdetDeducaoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TdetDeducaoCollectionItem = class(TCollectionItem)
+  TdetDeducaoCollectionItem = class(TObject)
   private
     FindTpDeducao: TindTpDeducao;
     FvlrDeducao: double;
@@ -309,17 +312,18 @@ type
     property vlrDeducao: double read FvlrDeducao write FvlrDeducao;
   end;
 
-  TrendIsentoCollection = class(TCollection)
+  TrendIsentoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TrendIsentoCollectionItem;
     procedure SetItem(Index: Integer; Value: TrendIsentoCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TrendIsentoCollectionItem;
+    function Add: TrendIsentoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TrendIsentoCollectionItem;
+
     property Items[Index: Integer]: TrendIsentoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TrendIsentoCollectionItem = class(TCollectionItem)
+  TrendIsentoCollectionItem = class(TObject)
   private
     FtpIsencao: TtpIsencao;
     FvlrIsento: double;
@@ -330,17 +334,18 @@ type
     property descRendimento: String read FdescRendimento write FdescRendimento;
   end;
 
-  TdetCompetCollection = class(TCollection)
+  TdetCompetCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TdetCompetCollectionItem;
     procedure SetItem(Index: Integer; Value: TdetCompetCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TdetCompetCollectionItem;
+    function Add: TdetCompetCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TdetCompetCollectionItem;
+
     property Items[Index: Integer]: TdetCompetCollectionItem read GetItem write SetItem; default;
   end;
 
-  TdetCompetCollectionItem = class(TCollectionItem)
+  TdetCompetCollectionItem = class(TObject)
   private
     FindPerReferencia: TindPerReferencia;
     FperRefPagto: String;
@@ -361,24 +366,25 @@ type
     property vlrCompAnoAnt: double read FvlrCompAnoAnt write FvlrCompAnoAnt;
   end;
 
-  TinfoRRACollection = class(TCollection)
+  TinfoRRACollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoRRACollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoRRACollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoRRACollectionItem;
+    function Add: TinfoRRACollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoRRACollectionItem;
+
     property Items[Index: Integer]: TinfoRRACollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoRRACollectionItem = class(TCollectionItem)
+  TinfoRRACollectionItem = class(TObject)
   private
     FtpProcRRA: TtpProc;
     FnrProcRRA: String;
     FcodSusp: String;
     FnatRRA: String;
     FqtdMesesRRA: Integer;    FdespProcJud: TdespProcJud;  public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property tpProcRRA: TtpProc read FtpProcRRA write FtpProcRRA;
@@ -404,17 +410,18 @@ type
     property ideAdvogado: TideAdvogadoCollection read FideAdvogado write FideAdvogado;
   end;
 
-  TideAdvogadoCollection = class(TCollection)
+  TideAdvogadoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TideAdvogadoCollectionItem;
     procedure SetItem(Index: Integer; Value: TideAdvogadoCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TideAdvogadoCollectionItem;
+    function Add: TideAdvogadoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TideAdvogadoCollectionItem;
+
     property Items[Index: Integer]: TideAdvogadoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TideAdvogadoCollectionItem = class(TCollectionItem)
+  TideAdvogadoCollectionItem = class(TObject)
   private
     FtpInscAdvogado: TtpInsc;
     FnrInscAdvogado: String;
@@ -425,17 +432,18 @@ type
     property vlrAdvogado: double read FvlrAdvogado write FvlrAdvogado;
   end;
 
-  TinfoProcJudCollection = class(TCollection)
+  TinfoProcJudCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TinfoProcJudCollectionItem;
     procedure SetItem(Index: Integer; Value: TinfoProcJudCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TinfoProcJudCollectionItem;
+    function Add: TinfoProcJudCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfoProcJudCollectionItem;
+
     property Items[Index: Integer]: TinfoProcJudCollectionItem read GetItem write SetItem; default;
   end;
 
-  TinfoProcJudCollectionItem = class(TCollectionItem)
+  TinfoProcJudCollectionItem = class(TObject)
   private
     FnrProcJud: String;
     FcodSusp: String;
@@ -443,7 +451,7 @@ type
     FdespProcJud: TdespProcJud;
     ForigemRecursos: TorigemRecursos;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property nrProcJud: String read FnrProcJud write FnrProcJud;
@@ -469,24 +477,25 @@ type
     property vlrDepJudicial: double read FvlrDepJudicial write FvlrDepJudicial;
   end;
 
-  TpgtoPJCollection = class(TCollection)
+  TpgtoPJCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TpgtoPJCollectionItem;
     procedure SetItem(Index: Integer; Value: TpgtoPJCollectionItem);
   public
-    constructor create(); reintroduce;
-    function Add: TpgtoPJCollectionItem;
+    function Add: TpgtoPJCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TpgtoPJCollectionItem;
+
     property Items[Index: Integer]: TpgtoPJCollectionItem read GetItem write SetItem; default;
   end;
 
-  TpgtoPJCollectionItem = class(TCollectionItem)
+  TpgtoPJCollectionItem = class(TObject)
   private
     FdtPagto: TDateTime;
     FvlrRendTributavel: double;
     FvlrRet: double;
     FinfoProcJud: TinfoProcJudCollection;
   public
-    constructor create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property dtPagto: TDateTime read FdtPagto write FdtPagto;
@@ -563,8 +572,8 @@ constructor TevtPgtosDivs.Create(AACBrReinf: TObject);
 begin
   inherited Create(AACBrReinf);
 
-  FideContri := TideContri.create;
-  FIdeEvento := TIdeEvento2.create;
+  FideContri := TideContri.Create;
+  FIdeEvento := TIdeEvento2.Create;
   FideBenef  := TideBenef.Create;
 end;
 
@@ -583,7 +592,7 @@ constructor TideBenef.Create;
 begin
   FinfoResidExt := TinfoResidExt.Create;
   FinfoMolestia := TinfoMolestia.Create;
-  FideEstab     := TideEstabCollection.create(Self);
+  FideEstab     := TideEstabCollection.Create;
 end;
 
 destructor TideBenef.Destroy;
@@ -615,19 +624,19 @@ end;
 
 function TideEstabCollection.Add: TideEstabCollectionItem;
 begin
-  Result := TideEstabCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TideEstabCollection.create(AOwner: TideBenef);
-begin
-  Inherited create(TideEstabCollectionItem);
+  Result := Self.New;
 end;
 
 function TideEstabCollection.GetItem(
   Index: Integer): TideEstabCollectionItem;
 begin
   Result := TideEstabCollectionItem(inherited GetItem(Index));
+end;
+
+function TideEstabCollection.New: TideEstabCollectionItem;
+begin
+  Result := TideEstabCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TideEstabCollection.SetItem(Index: Integer;
@@ -638,10 +647,10 @@ end;
 
 { TideEstabCollectionItem }
 
-constructor TideEstabCollectionItem.create;
+constructor TideEstabCollectionItem.Create;
 begin
   FpgtoPF       := TpgtoPFCollection.Create;
-  FpgtoPJ       := TpgtoPJCollection.create;
+  FpgtoPJ       := TpgtoPJCollection.Create;
   FpgtoResidExt := TpgtoResidExt.Create;
 end;
 
@@ -658,19 +667,19 @@ end;
 
 function TpgtoPFCollection.Add: TpgtoPFCollectionItem;
 begin
-  Result := TpgtoPFCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TpgtoPFCollection.create;
-begin
-  Inherited create(TpgtoPFCollectionItem);
+  Result := Self.New;
 end;
 
 function TpgtoPFCollection.GetItem(
   Index: Integer): TpgtoPFCollectionItem;
 begin
   Result := TpgtoPFCollectionItem(inherited GetItem(Index));
+end;
+
+function TpgtoPFCollection.New: TpgtoPFCollectionItem;
+begin
+  Result := TpgtoPFCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TpgtoPFCollection.SetItem(Index: Integer;
@@ -683,12 +692,12 @@ end;
 
 constructor TpgtoPFCollectionItem.create;
 begin
-  FdetDeducao  := TdetDeducaoCollection.create;
-  FrendIsento  := TrendIsentoCollection.create;
-  FdetCompet   := TdetCompetCollection.create;
+  FdetDeducao  := TdetDeducaoCollection.Create;
+  FrendIsento  := TrendIsentoCollection.Create;
+  FdetCompet   := TdetCompetCollection.Create;
   FcompJud     := TcompJud.Create;
-  FinfoRRA     := TinfoRRACollection.create;
-  FinfoProcJud := TinfoProcJudCollection.create;
+  FinfoRRA     := TinfoRRACollection.Create;
+  FinfoProcJud := TinfoProcJudCollection.Create;
   FdepJudicial := TdepJudicial.Create;
 end;
 
@@ -709,19 +718,19 @@ end;
 
 function TdetDeducaoCollection.Add: TdetDeducaoCollectionItem;
 begin
-  Result := TdetDeducaoCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TdetDeducaoCollection.create;
-begin
-  Inherited create(TdetDeducaoCollectionItem);
+  Result := Self.New;
 end;
 
 function TdetDeducaoCollection.GetItem(
   Index: Integer): TdetDeducaoCollectionItem;
 begin
   Result := TdetDeducaoCollectionItem(inherited GetItem(Index));
+end;
+
+function TdetDeducaoCollection.New: TdetDeducaoCollectionItem;
+begin
+  Result := TdetDeducaoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TdetDeducaoCollection.SetItem(Index: Integer;
@@ -734,19 +743,19 @@ end;
 
 function TrendIsentoCollection.Add: TrendIsentoCollectionItem;
 begin
-  Result := TrendIsentoCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TrendIsentoCollection.create;
-begin
-  Inherited create(TrendIsentoCollectionItem);
+  Result := Self.New;
 end;
 
 function TrendIsentoCollection.GetItem(
   Index: Integer): TrendIsentoCollectionItem;
 begin
   Result := TrendIsentoCollectionItem(inherited GetItem(Index));
+end;
+
+function TrendIsentoCollection.New: TrendIsentoCollectionItem;
+begin
+  Result := TrendIsentoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TrendIsentoCollection.SetItem(Index: Integer;
@@ -759,19 +768,19 @@ end;
 
 function TdetCompetCollection.Add: TdetCompetCollectionItem;
 begin
-  Result := TdetCompetCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TdetCompetCollection.create;
-begin
-  Inherited create(TdetCompetCollectionItem);
+  Result := Self.New;
 end;
 
 function TdetCompetCollection.GetItem(
   Index: Integer): TdetCompetCollectionItem;
 begin
   Result := TdetCompetCollectionItem(inherited GetItem(Index));
+end;
+
+function TdetCompetCollection.New: TdetCompetCollectionItem;
+begin
+  Result := TdetCompetCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TdetCompetCollection.SetItem(Index: Integer;
@@ -784,19 +793,19 @@ end;
 
 function TinfoRRACollection.Add: TinfoRRACollectionItem;
 begin
-  Result := TinfoRRACollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TinfoRRACollection.create;
-begin
-  Inherited create(TinfoRRACollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoRRACollection.GetItem(
   Index: Integer): TinfoRRACollectionItem;
 begin
   Result := TinfoRRACollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoRRACollection.New: TinfoRRACollectionItem;
+begin
+  Result := TinfoRRACollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoRRACollection.SetItem(Index: Integer;
@@ -807,7 +816,7 @@ end;
 
 { TinfoRRACollectionItem }
 
-constructor TinfoRRACollectionItem.create;
+constructor TinfoRRACollectionItem.Create;
 begin
   despProcJud := TdespProcJud.Create;
 end;
@@ -823,7 +832,7 @@ end;
 
 constructor TdespProcJud.Create;
 begin
-  FideAdvogado := TideAdvogadoCollection.create;
+  FideAdvogado := TideAdvogadoCollection.Create;
 end;
 
 destructor TdespProcJud.Destroy;
@@ -837,19 +846,19 @@ end;
 
 function TideAdvogadoCollection.Add: TideAdvogadoCollectionItem;
 begin
-  Result := TideAdvogadoCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TideAdvogadoCollection.create;
-begin
-  Inherited create(TideAdvogadoCollectionItem);
+  Result := Self.New;
 end;
 
 function TideAdvogadoCollection.GetItem(
   Index: Integer): TideAdvogadoCollectionItem;
 begin
   Result := TideAdvogadoCollectionItem(inherited GetItem(Index));
+end;
+
+function TideAdvogadoCollection.New: TideAdvogadoCollectionItem;
+begin
+  Result := TideAdvogadoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TideAdvogadoCollection.SetItem(Index: Integer;
@@ -862,19 +871,19 @@ end;
 
 function TinfoProcJudCollection.Add: TinfoProcJudCollectionItem;
 begin
-  Result := TinfoProcJudCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TinfoProcJudCollection.create;
-begin
-  Inherited create(TinfoProcJudCollectionItem);
+  Result := Self.New;
 end;
 
 function TinfoProcJudCollection.GetItem(
   Index: Integer): TinfoProcJudCollectionItem;
 begin
   Result := TinfoProcJudCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfoProcJudCollection.New: TinfoProcJudCollectionItem;
+begin
+  Result := TinfoProcJudCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TinfoProcJudCollection.SetItem(Index: Integer;
@@ -885,7 +894,7 @@ end;
 
 { TinfoProcJudCollectionItem }
 
-constructor TinfoProcJudCollectionItem.create;
+constructor TinfoProcJudCollectionItem.Create;
 begin
   FdespProcJud    := TdespProcJud.Create;
   ForigemRecursos := TorigemRecursos.Create;
@@ -903,19 +912,19 @@ end;
 
 function TpgtoPJCollection.Add: TpgtoPJCollectionItem;
 begin
-  Result := TpgtoPJCollectionItem(inherited add());
-  Result.Create;
-end;
-
-constructor TpgtoPJCollection.create;
-begin
-  Inherited create(TpgtoPJCollectionItem);
+  Result := Self.New;
 end;
 
 function TpgtoPJCollection.GetItem(
   Index: Integer): TpgtoPJCollectionItem;
 begin
   Result := TpgtoPJCollectionItem(inherited GetItem(Index));
+end;
+
+function TpgtoPJCollection.New: TpgtoPJCollectionItem;
+begin
+  Result := TpgtoPJCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TpgtoPJCollection.SetItem(Index: Integer;
@@ -926,9 +935,9 @@ end;
 
 { TpgtoPJCollectionItem }
 
-constructor TpgtoPJCollectionItem.create;
+constructor TpgtoPJCollectionItem.Create;
 begin
-  FinfoProcJud := TinfoProcJudCollection.create;
+  FinfoProcJud := TinfoProcJudCollection.Create;
 end;
 
 destructor TpgtoPJCollectionItem.Destroy;
@@ -1403,7 +1412,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with ideEstab.Add do
+          with ideEstab.New do
           begin
             tpInsc := StrToTpInscricao(Ok, sFim);
             nrInsc := INIRec.ReadString(sSecao, 'nrInsc', '');
@@ -1418,7 +1427,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with pgtoPF.Add do
+              with pgtoPF.New do
               begin
                 dtPgto            := StringToDateTime(sFim);
                 indSuspExig       := StrToSimNao(Ok, INIRec.ReadString(sSecao, 'indSuspExig', 'S'));
@@ -1437,7 +1446,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with detDeducao.Add do
+                  with detDeducao.New do
                   begin
                     indTpDeducao := StrToindTpDeducao(Ok, sFim);
                     vlrDeducao   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrDeducao', ''), 0);
@@ -1457,7 +1466,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with rendIsento.Add do
+                  with rendIsento.New do
                   begin
                     tpIsencao      := StrTotpIsencao(Ok, sFim);
                     vlrIsento      := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrIsento', ''), 0);
@@ -1478,7 +1487,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with detCompet.Add do
+                  with detCompet.New do
                   begin
                     indPerReferencia  := StrToindPerReferencia(Ok, sFim);
                     perRefPagto       := INIRec.ReadString(sSecao, 'perRefPagto', '');
@@ -1506,7 +1515,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with infoRRA.Add do
+                  with infoRRA.New do
                   begin
                     tpProcRRA   := StrToTpProc(Ok, sFim);
                     nrProcRRA   := INIRec.ReadString(sSecao, 'nrProcRRA', '');
@@ -1533,7 +1542,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with despProcJud.ideAdvogado.Add do
+                        with despProcJud.ideAdvogado.New do
                         begin
                           tpInscAdvogado := StrToTpInscricao(Ok, sFim);
                           nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
@@ -1559,7 +1568,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with infoProcJud.Add do
+                  with infoProcJud.New do
                   begin
                     nrProcJud         := sFim;
                     codSusp           := INIRec.ReadString(sSecao, 'codSusp', '');
@@ -1584,7 +1593,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with despProcJud.ideAdvogado.Add do
+                        with despProcJud.ideAdvogado.New do
                         begin
                           tpInscAdvogado := StrToTpInscricao(Ok, sFim);
                           nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');
@@ -1623,7 +1632,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with pgtoPJ.Add do
+              with pgtoPJ.New do
               begin
                 dtPagto           := StringToDateTime(sFim);
                 vlrRendTributavel := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRendTributavel', ''), 0);
@@ -1640,7 +1649,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with infoProcJud.Add do
+                  with infoProcJud.New do
                   begin
                     nrProcJud         := sFim;
                     codSusp           := INIRec.ReadString(sSecao, 'codSusp', '');
@@ -1665,7 +1674,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with despProcJud.ideAdvogado.Add do
+                        with despProcJud.ideAdvogado.New do
                         begin
                           tpInscAdvogado := StrToTpInscricao(Ok, sFim);
                           nrinscAdvogado := INIRec.ReadString(sSecao, 'nrinscAdvogado', '');

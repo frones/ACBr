@@ -143,7 +143,7 @@ type
     FinfoRecurso: TinfoRecursoCollection;
     FinfoProc: TinfoProcCollection;
   public
-    constructor Create; //reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property cnpjOrigRecurso: string read FcnpjOrigRecurso write FcnpjOrigRecurso;

@@ -50,12 +50,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2019
+-- Diversos -- 
+[*] Mudança na definição de diversas classes, adotato TObject e TObjectList e no que diz
+    respeito as listas a adoção da função New.
+   Por: Italo Jurisato Junior
+
 19/03/2019
 -- Diversos -- 
 [*] Primeira etapa de melhorias nos fontes.
    Por: Italo Jurisato Junior
 
-18/03/2019
+018/03/2019
 -- ACBrReinfEventos -- 
 [*] Mesma correção feita em ACBrReinfLoteEventos.
    Por: Wellington

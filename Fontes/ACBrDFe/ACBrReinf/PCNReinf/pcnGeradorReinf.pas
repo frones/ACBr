@@ -99,10 +99,6 @@ type
     procedure GerarModoFechamento(pModo: TTipoOperacao);
     procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
     procedure GerarIdeContri(pEmp: TIdeContri; const GeraGrupo: boolean = True);
-//  published
-//    property Gerador: TGerador  read FGerador write FGerador;
-//    property schema: TReinfSchema read Fschema write Fschema;
-//    property XML: AnsiString read FXML write SetXML;
   end;
 
   TGeradorOpcoes = class(TObject)

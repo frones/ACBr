@@ -163,7 +163,7 @@ type
     FvlrRecBruta: double;
     FinfoProc: TinfoProcCollection;
   public
-    constructor Create;// reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property indCom: TindCom read FindCom write FindCom;

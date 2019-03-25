@@ -44,7 +44,7 @@ unit ACBrReinfLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  Classes, SysUtils, Dialogs, StrUtils, synautil, Contnrs,
   ACBrUtil,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBrReinfConfiguracoes, ACBrReinfEventos,
@@ -53,7 +53,7 @@ uses
 type
   TItemLoteEventosClass = class of TItemLoteEventos;
 
-  TItemLoteEventos = class(TCollectionItem)
+  TItemLoteEventos = class(TObject)
   private
     FACBrReinf: TComponent;
     FTipoEvento: TTipoEvento;
@@ -64,7 +64,7 @@ type
     procedure SetXML(const Value: String);
     function GetIDEvento: string;
   public
-    constructor Create(AOwner: TComponent); reintroduce; //overload;
+    constructor Create(AOwner: TComponent); reintroduce;
 
     property IDEvento: string read GetIDEvento;
     property XML: String read FXML write SetXML;
@@ -73,7 +73,7 @@ type
     property NomeArq: string read FNomeArq write FNomeArq;
   end;
 
-  TLoteEventos = class(TOwnedCollection)
+  TLoteEventos = class(TReinfCollection)
   private
     FACBrReinf: TComponent;
     FIdeEmpregador: TIdeContri;
@@ -84,20 +84,18 @@ type
     function GetItem(Index: integer): TItemLoteEventos;
     procedure SetItem(Index: integer; const Value: TItemLoteEventos);
     procedure CarregarXmlEventos;
-  protected
-    procedure GerarCabecalho(const Namespace: string);
-    procedure GerarRodape;
     function Validar: Boolean;
   public
-    constructor Create(AOwner: TComponent); reintroduce;
+    constructor Create(AACBrReinf: TComponent); override;
+    destructor Destroy; override;
 
-    function Add : TItemLoteEventos;
+    function Add: TItemLoteEventos; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TItemLoteEventos;
+
     function LoadFromFile(const CaminhoArquivo: String): Boolean;
     function LoadFromStream(AStream: TStringStream): Boolean;
     function LoadFromString(const AXMLString: String): Boolean;
     procedure GerarXML;
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
 
     property Items[Index: Integer] : TItemLoteEventos read GetItem write SetItem;
     property IdeEmpregador : TIdeContri read FIdeEmpregador write FIdeEmpregador;
@@ -114,42 +112,25 @@ uses
 
 function TLoteEventos.Add: TItemLoteEventos;
 begin
-  Result := TItemLoteEventos(inherited Add);
+  Result := Self.New;
 end;
 
-procedure TLoteEventos.AfterConstruction;
+constructor TLoteEventos.Create(AACBrReinf: TComponent);
 begin
-  inherited;
+  inherited Create(AACBrReinf);
 
   FIdeEmpregador  := TIdeContri.Create;
   FIdeTransmissor := TIdeTransmissor.Create;
   FGerador        := TGerador.Create;
 end;
 
-procedure TLoteEventos.BeforeDestruction;
+destructor TLoteEventos.Destroy;
 begin
-  inherited;
-
   FIdeEmpregador.Free;
   FIdeTransmissor.Free;
   FGerador.Free;
-end;
 
-constructor TLoteEventos.Create(AOwner: TComponent);
-begin
-  Inherited Create(AOwner, TItemLoteEventos);
-
-  FACBrReinf := AOwner;
-end;
-
-procedure TLoteEventos.GerarCabecalho(const Namespace: String);
-begin
-
-end;
-
-procedure TLoteEventos.GerarRodape;
-begin
-
+  inherited;
 end;
 
 procedure TLoteEventos.CarregarXmlEventos;
@@ -312,6 +293,12 @@ begin
   Result := Self.Count > 0;
 end;
 
+function TLoteEventos.New: TItemLoteEventos;
+begin
+  Result := TItemLoteEventos.Create(FACBrReinf);
+  Self.Add(Result);
+end;
+
 procedure TLoteEventos.SetItem(Index: integer; const Value: TItemLoteEventos);
 begin
   inherited SetItem(Index, Value);
@@ -340,9 +327,11 @@ end;
 
 constructor TItemLoteEventos.Create(AOwner: TComponent);
 begin
+  inherited Create;
+
   FACBrReinf := AOwner;
-  FLeitor := TLeitor.Create;
-  FXML := '';
+  FLeitor      := TLeitor.Create;
+  FXML         := '';
 end;
 
 function TItemLoteEventos.GetIDEvento: string;

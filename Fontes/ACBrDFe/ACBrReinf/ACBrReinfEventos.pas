@@ -44,7 +44,7 @@ unit ACBrReinfEventos;
 interface
 
 uses
-  SysUtils, Classes, synautil,
+  SysUtils, Classes, Contnrs, synautil,
   pcnGerador, pcnEventosReinf, pcnConversaoReinf;
 
 type
@@ -52,17 +52,18 @@ type
   TGeradosCollection = class;
   TGeradosCollectionItem = class;
 
-  TGeradosCollection = class(TCollection)
+  TGeradosCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TGeradosCollectionItem;
     procedure SetItem(Index: Integer; Value: TGeradosCollectionItem);
   public
-    constructor create(AOwner: TEventos);
-    function Add: TGeradosCollectionItem;
+    function Add: TGeradosCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TGeradosCollectionItem;
+
     property Items[Index: Integer]: TGeradosCollectionItem read GetItem write SetItem; default;
   end;
 
-  TGeradosCollectionItem = class(TCollectionItem)
+  TGeradosCollectionItem = class(TObject)
   private
     FTipoEvento: TTipoEvento;
     FPathNome: String;
@@ -114,18 +115,18 @@ uses
 
 function TGeradosCollection.Add: TGeradosCollectionItem;
 begin
-  Result := TGeradosCollectionItem(inherited add());
-//  Result.Create;
-end;
-
-constructor TGeradosCollection.create(AOwner: TEventos);
-begin
-  Inherited create(TGeradosCollectionItem);
+  Result := Self.New;
 end;
 
 function TGeradosCollection.GetItem(Index: Integer): TGeradosCollectionItem;
 begin
   Result := TGeradosCollectionItem(inherited GetItem(Index));
+end;
+
+function TGeradosCollection.New: TGeradosCollectionItem;
+begin
+  Result := TGeradosCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 procedure TGeradosCollection.SetItem(Index: Integer;
@@ -147,7 +148,7 @@ begin
   inherited;
 
   FReinfEventos := TReinfEventos.Create(AOwner);
-  FGerados := TGeradosCollection.create(Self);
+  FGerados := TGeradosCollection.Create;
 end;
 
 destructor TEventos.Destroy;

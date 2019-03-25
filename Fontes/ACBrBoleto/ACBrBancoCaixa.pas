@@ -103,8 +103,7 @@ begin
    fpOrientacoesBanco.Add(ACBrStr(
                           'SAC CAIXA: 0800 726 0101 (informações, reclamações, sugestões e elogios) ' + sLineBreak +
                           'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
-                          'Ouvidoria: 0800 725 7474') + sLineBreak +
-                          '     caixa.gov.br      ');
+                          'Ouvidoria: 0800 725 7474 - caixa.gov.br'));
 end;
 
 function TACBrCaixaEconomica.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

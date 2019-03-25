@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = -31
+  Left = 1611
   Height = 705
-  Top = 66
+  Top = 142
   Width = 1366
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 705
@@ -14,9 +14,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   OnDestroy = FormDestroy
   LCLVersion = '1.8.4.0'
   object BoletoReciboTopo: TRLReport
-    Left = 182
+    Left = 0
     Height = 1123
-    Top = 98
+    Top = 0
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -1943,9 +1943,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutFaturaDetal: TRLReport
-    Left = 992
+    Left = 87
     Height = 1123
-    Top = 84
+    Top = 17
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -5185,9 +5185,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object LayoutBoleto: TRLReport
-    Left = 1114
+    Left = 32
     Height = 1123
-    Top = 0
+    Top = 53
     Width = 794
     Margins.LeftMargin = 4
     Margins.TopMargin = 5
@@ -9635,9 +9635,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     end
   end
   object BoletoCarne: TRLReport
-    Left = 1165
+    Left = 20
     Height = 1123
-    Top = 75
+    Top = 19
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -10595,25 +10595,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel47: TRLLabel
-        Left = -1
-        Height = 10
-        Top = 276
-        Width = 31
-        Caption = 'Pagador'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel48: TRLLabel
         Left = 1
-        Height = 13
-        Top = 343
+        Height = 12
+        Top = 349
         Width = 61
         Caption = 'Recibo do Pagador'
         Font.CharSet = ANSI_CHARSET
@@ -10628,8 +10613,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object RLLabel49: TRLLabel
         Left = 71
-        Height = 13
-        Top = 343
+        Height = 12
+        Top = 349
         Width = 61
         Caption = 'Autenticar no Verso'
         Font.CharSet = ANSI_CHARSET
@@ -10781,10 +10766,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object txtCPF: TRLLabel
-        Left = -1
-        Height = 12
-        Top = 306
-        Width = 141
+        Left = 0
+        Height = 11
+        Top = 305
+        Width = 142
         AutoSize = False
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
@@ -10819,7 +10804,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 412
         AutoSize = False
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
@@ -11105,8 +11090,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       object txtNomeSacadoCarne: TRLMemo
         Left = 0
         Height = 23
-        Top = 284
-        Width = 141
+        Top = 283
+        Width = 142
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
@@ -11120,10 +11105,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object txtEndCedenteCarne: TRLLabel
-        Left = 202
+        Left = 198
         Height = 12
         Top = 71
-        Width = 364
+        Width = 368
         AutoSize = False
         Caption = 'Endereco Cedente'
         Font.Color = clBlack
@@ -11137,9 +11122,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object memoEndCedenteCarne: TRLMemo
         Left = 0
-        Height = 51
+        Height = 58
         Top = 225
-        Width = 139
+        Width = 142
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
@@ -11161,14 +11146,14 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       end
       object txtOrientacoesBancoCarne: TRLMemo
         Left = 0
-        Height = 23
-        Top = 319
-        Width = 140
+        Height = 32
+        Top = 316
+        Width = 142
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -8
+        Font.Height = -7
         Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0

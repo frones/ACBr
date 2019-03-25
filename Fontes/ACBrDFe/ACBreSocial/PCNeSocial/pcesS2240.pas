@@ -676,6 +676,24 @@ begin
             J := 1;
             while true do
             begin
+              // de 01 até 99
+              sSecao := 'ativPericInsal' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+              sFim   := INIRec.ReadString(sSecao, 'codAtiv', 'FIM');
+
+              if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                break;
+
+              with infoAtiv.ativPericInsal.Add do
+              begin
+                codAtiv  := sFim;
+              end;
+
+              Inc(J);
+            end;
+
+            J := 1;
+            while true do
+            begin
               // de 001 até 999
               sSecao := 'fatRisco' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
               sFim   := INIRec.ReadString(sSecao, 'codFatRis', 'FIM');
@@ -686,11 +704,19 @@ begin
               with fatRisco.Add do
               begin
                 codFatRis  := sFim;
+                tpAval     := StrTotpAval(Ok, INIRec.ReadString(sSecao, 'tpAval', '0'));
                 intConc    := StringToFloatDef(INIRec.ReadString(sSecao, 'intConc', EmptyStr), 0);
+                limTol     := StringToFloatDef(INIRec.ReadString(sSecao, 'limTol', EmptyStr), 0);
+                unMed      := INIRec.ReadInteger(sSecao, 'unMed', 0);
                 tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
+                insalubridade  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'insalubridade', '0'));
+                periculosidade := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periculosidade', '0'));
+                aposentEsp     := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'aposentEsp', '0'));
 
                 epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
+                epcEpi.eficEpc := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', '0'));
                 epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
+
                 {
                 Não consta mais na nova versão
                 K := 1;
@@ -727,9 +753,11 @@ begin
                   with epcEpi.epi.Add do
                   begin
                     caEPI         := sFim;
+                    dscEPI        := INIRec.ReadString(sSecao, 'dscEPI', EmptyStr);
                     eficEpi       := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpi', 'S'));
                     medProtecao   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'medProtecao', 'S'));
                     condFuncto    := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'condFuncto', 'S'));
+                    usoInint      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'usoInint', 'S'));
                     przValid      := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'przValid', 'S'));
                     periodicTroca := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periodicTroca', 'S'));
                     higienizacao  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'higienizacao', 'S'));
@@ -742,7 +770,6 @@ begin
 
               Inc(J);
             end;
-
           end;
 
           Inc(I);
@@ -764,14 +791,17 @@ begin
             // Não consta mais na nova versão
 //          dtIni   := StringToDateTime(sFim);
 //          dtFim   := StringToDateTime(INIRec.ReadString(sSecao, 'dtFim', '0'));
+          cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
           nisResp := INIRec.ReadString(sSecao, 'nisResp', EmptyStr);
-          nrOc    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
+          nmResp  := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
+          ideOC   := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'nrInsc', EmptyStr));
+          dscOC   := INIRec.ReadString(sSecao, 'dscOC', EmptyStr);
+          nrOC    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
           ufOC    := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));
         end;
 
         Inc(I);
       end;
-
     end;
 
     GerarXML;

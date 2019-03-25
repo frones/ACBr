@@ -49,7 +49,7 @@ unit pcesS1299;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, ACBrUtil,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 

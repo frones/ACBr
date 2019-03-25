@@ -49,7 +49,7 @@ unit pcesS1050;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes, ACBrUtil, Contnrs,
   pcnConversao, pcnGerador,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 

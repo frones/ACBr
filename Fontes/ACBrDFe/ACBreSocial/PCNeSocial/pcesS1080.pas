@@ -49,7 +49,7 @@ unit pcesS1080;
 interface
 
 uses
-  SysUtils, Classes, ACBrUtil,
+  SysUtils, Classes, ACBrUtil, Contnrs,
   pcnConversao,
   pcesCommon, pcesConversaoeSocial, pcesGerador;
 

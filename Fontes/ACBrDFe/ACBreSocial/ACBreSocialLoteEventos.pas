@@ -47,7 +47,7 @@ unit ACBreSocialLoteEventos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils, synautil,
+  Classes, SysUtils, Dialogs, StrUtils, synautil, Contnrs,
   ACBrUtil,
   pcnConversao, pcnAuxiliar, pcnLeitor, pcnGerador,
   ACBreSocialConfiguracoes, ACBreSocialEventos,

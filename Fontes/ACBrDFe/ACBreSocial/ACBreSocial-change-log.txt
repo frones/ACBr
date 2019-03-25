@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2019
+-- pcesS2240 --
+[*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=330424
+   Por: Sandro Herbst
+-- Diversos --
+[*] Remoção de warnings
+   Por: Italo Jurisato Junior
+
 22/03/2019
 -- pcesS2299 --
 [*] https://www.projetoacbr.com.br/forum/topic/50146-s-2299-corre%C3%A7%C3%A3o-infotrabinterm/

@@ -789,10 +789,6 @@ end;
 constructor TACBrNFeDANFCeFortesA4.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  self.MargemEsquerda := 10;
-  self.MargemDireita  := 10;
-  self.MargemSuperior := 10;
-  self.MargemInferior := 10;
 end;
 
 destructor TACBrNFeDANFCeFortesA4.Destroy;

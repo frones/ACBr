@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+-- ACBrDANFCeFortesFrA4 --
+[*] Alteração no valor default de conf. Margens
+    (por: Jose M. S. Junior)
+
 19/03/2019
 -- pcnProcNFe --
 [*] Removido um "M" a mais no nome da tag.

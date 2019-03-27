@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2019
+-- ACBrLibNFe --
+[+] Ajustados metodos de impressão para ficar mais parecido com os metodos do ACBrMonitor.
+   Por: Rafael Dias
+
 07/08/2018
 -- ACBrLibNFeRespostas / ACBrLibNFeConst --
 [+] Adicionado todas as possíveis tags de retorno da Consulta de NFe

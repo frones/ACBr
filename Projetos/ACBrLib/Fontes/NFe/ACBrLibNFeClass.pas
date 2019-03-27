@@ -141,17 +141,15 @@ function NFE_DistribuicaoDFePorNSU(const AcUFAutor: integer; eCNPJCPF, eNSU: PCh
 function NFE_DistribuicaoDFePorChave(const AcUFAutor: integer; eCNPJCPF, echNFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
 function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean;
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
 function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-
-function NFE_Imprimir: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;
@@ -171,7 +169,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibNFeConfig, ACBrLibNFeRespostas, ACBrNFe, ACBrMail,
-  pcnConversao, pcnAuxiliar, pcnConversaoNFe, blcksock, ACBrUtil;
+  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
 
 { TACBrLibNFe }
 
@@ -1663,21 +1661,39 @@ begin
   end;
 end;
 
-function NFE_Imprimir: longint;
+function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Resposta: TLibNFeResposta;
+  Impressora, Protocolo,
+  MostrarPreview, MarcaDagua,
+  ViaConsumidor, Simplificado: String;
 begin
   try
     VerificarLibInicializada;
-    pLib.GravarLog('NFe_Imprimir', logNormal);
+
+    Impressora := String(cImpressora);
+    Protocolo := String(cProtocolo);
+    MostrarPreview := String(bMostrarPreview);
+    MarcaDagua := String(cMarcaDagua);
+    ViaConsumidor := String(bViaConsumidor);
+    Simplificado := String(bSimplificado);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFe_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias) + ','
+        + Protocolo + ',' + MostrarPreview + ',' + MarcaDagua + ','
+        + ViaConsumidor + ',' + Simplificado + ')', logCompleto, True)
+    else
+      pLib.GravarLog('NFe_Imprimir', logNormal);
 
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
       Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta);
       try
-        NFeDM.ConfigurarImpressao();
+        NFeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview,
+          MarcaDagua, ViaConsumidor, Simplificado);
         NFeDM.ACBrNFe1.NotasFiscais.Imprimir;
         Resposta.Msg := 'Danfe Impresso com sucesso';
         Result := SetRetorno(ErrOK, Resposta.Gerar);

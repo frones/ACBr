@@ -133,7 +133,8 @@ function NFe_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar;
 function NFe_Imprimir: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_ImprimirPDF: longint;
+function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+    bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
 function NFe_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;

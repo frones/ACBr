@@ -36,7 +36,9 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
+                                  Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
+                                  ViaConsumidor: String = ''; Simplificado: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -45,7 +47,8 @@ type
 implementation
 
 uses
-  ACBrUtil, FileUtil,
+  pcnConversao,
+  ACBrUtil, FileUtil, ACBrNFeDANFEClass,
   ACBrLibNFeConfig, ACBrLibComum, ACBrLibNFeClass;
 
 {$R *.lfm}
@@ -226,7 +229,9 @@ begin
   end;
 end;
 
-procedure TLibNFeDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean);
+procedure TLibNFeDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolean = False;
+  Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
+  ViaConsumidor: String = ''; Simplificado: String = '');
 var
   pLibConfig: TLibNFeConfig;
 begin
@@ -257,8 +262,36 @@ begin
         ForceDirectories(PathWithDelim(pLibConfig.DANFeConfig.PathPDF));
   end;
 
-  if NomeImpressora <> '' then
+  if NaoEstaVazio(NomeImpressora) then
     ACBrNFe1.DANFE.Impressora := NomeImpressora;
+
+  if NaoEstaVazio(MostrarPreview) then
+    ACBrNFe1.DANFE.MostraPreview := StrToBoolDef(MostrarPreview, False);
+
+  if NaoEstaVazio(Simplificado) then
+  begin
+    if StrToBoolDef(Simplificado, False) then
+      ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
+  end;
+
+  if NaoEstaVazio(Protocolo) then
+    ACBrNFe1.DANFE.Protocolo := Protocolo
+  else
+    ACBrNFe1.DANFE.Protocolo := '';
+
+  if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
+  begin
+     if NaoEstaVazio(MarcaDagua) then
+       ACBrNFeDANFeRL1.MarcaDagua := MarcaDagua
+     else
+       ACBrNFeDANFeRL1.MarcaDagua := '';
+  end;
+
+  if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
+  begin
+     if NaoEstaVazio(ViaConsumidor) then
+       TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
+  end;
 
   if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
   begin

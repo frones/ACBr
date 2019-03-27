@@ -21,6 +21,8 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     TipoDANFE = tiSemGeracao
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
     left = 224
     top = 104
   end
@@ -51,6 +53,7 @@ object LibNFeDM: TLibNFeDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     left = 48
     top = 43
   end

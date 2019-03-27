@@ -262,7 +262,7 @@ begin
   inherited Create;
 
   FTipoEvento := teR2060;
-  FevtCPRB    := FevtCPRB.Create(AOwner);
+  FevtCPRB    := TevtCPRB.Create(AOwner);
 end;
 
 destructor TR2060CollectionItem.Destroy;

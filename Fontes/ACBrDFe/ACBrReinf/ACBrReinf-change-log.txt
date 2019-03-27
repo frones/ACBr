@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2019
+-- pcnReinfR2060 -- 
+[*] https://www.projetoacbr.com.br/forum/topic/50255-r-2060-corre%C3%A7%C3%A3o-access-violation/
+   Por: Paulo Aguiar Junior
+
 25/03/2019
 -- Diversos -- 
 [*] Mudança na definição de diversas classes, adotato TObject e TObjectList e no que diz

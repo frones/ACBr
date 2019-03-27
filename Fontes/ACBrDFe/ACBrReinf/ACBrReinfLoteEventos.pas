@@ -75,7 +75,6 @@ type
 
   TLoteEventos = class(TReinfCollection)
   private
-    FACBrReinf: TComponent;
     FIdeEmpregador: TIdeContri;
     FIdeTransmissor: TIdeTransmissor;
     FGerador: TGerador;

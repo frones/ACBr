@@ -2374,7 +2374,6 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Top = 156
         Width = 249
         Height = 18
-        Alignment = taJustify
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

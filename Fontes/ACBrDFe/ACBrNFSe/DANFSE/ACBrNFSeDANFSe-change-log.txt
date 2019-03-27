@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2019
+-- ACBrNFSeDANFSeRLRetrato.dfm
+[*] https://www.projetoacbr.com.br/forum/topic/50202-danfs-e-est%C3%A1-cortando-o-c%C3%B3digo-de-verifica%C3%A7%C3%A3o/
+   Por: Augusto Knirsch
+		
 30/08/2018
 [*] Modificações visando melhorias no DANFSE para imprimir os itens de serviço,
     quando o provedor possibilita essa opção.

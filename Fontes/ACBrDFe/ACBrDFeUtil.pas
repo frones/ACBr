@@ -468,7 +468,7 @@ end;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
 begin
-  Result := SHA1(ACSRT + AChave);
+  Result := EncodeBase64(SHA1(ACSRT + AChave));
 end;
 
 initialization

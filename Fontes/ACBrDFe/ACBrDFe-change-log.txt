@@ -44,7 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-20/12/2019
+27/03/2019
+-- ACBrDFeUtil --
+[*] Ajuste para transformar o resultado do Hash em Base64.
+   Por: Italo Jurisato Junior
+
+20/01/2019
 -- ACBrDFeWinCrypt --
 [-] Ajuste para remoção de Chars NUL, no retorno do Hash da Assinatura
     https://www.projetoacbr.com.br/forum/topic/48899-emissão-de-nfe-com-certificado-na-nuvem-remoteid/

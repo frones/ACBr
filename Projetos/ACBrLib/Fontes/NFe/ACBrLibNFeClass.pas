@@ -90,7 +90,13 @@ function NFE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_LimparLista: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_LimparListaEventos: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Assinar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -350,6 +356,84 @@ begin
   end;
 end;
 
+function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
+begin
+  try
+    VerificarLibInicializada;
+    ArquivoOuXml := string(eArquivoOuXML);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_CarregarEventoXML(' + ArquivoOuXml + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_CarregarEventoXML', logNormal);
+
+    EhArquivo := StringEhArquivo(ArquivoOuXml);
+    if EhArquivo then
+      VerificarArquivoExiste(ArquivoOuXml);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        if EhArquivo then
+          NFeDM.ACBrNFe1.EventoNFe.LerXML(ArquivoOuXml)
+        else
+          NFeDM.ACBrNFe1.EventoNFe.LerXMLFromString(ArquivoOuXml);
+
+        Result := SetRetornoEventoCarregados(NFeDM.ACBrNFe1.EventoNFe.Evento.Count);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoOuINI: string;
+begin
+  try
+    VerificarLibInicializada;
+    ArquivoOuINI := string(eArquivoOuINI);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_CarregarEventoINI(' + ArquivoOuINI + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_CarregarEventoINI', logNormal);
+
+    if StringEhArquivo(ArquivoOuINI) then
+      VerificarArquivoExiste(ArquivoOuINI);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        NFeDM.ACBrNFe1.EventoNFe.LerFromIni(ArquivoOuINI);
+        Result := SetRetornoEventoCarregados(NFeDM.ACBrNFe1.EventoNFe.Evento.Count);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function NFE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -363,6 +447,32 @@ begin
       try
         NFeDM.ACBrNFe1.NotasFiscais.Clear;
         Result := SetRetornoNFeCarregadas(NFeDM.ACBrNFe1.NotasFiscais.Count);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_LimparListaEventos: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_LimparListaEventos', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        NFeDM.ACBrNFe1.EventoNFe.Evento.Clear;
+        Result := SetRetornoEventoCarregados(NFeDM.ACBrNFe1.EventoNFe.Evento.Count);
       finally
         NFeDM.Destravar;
       end;

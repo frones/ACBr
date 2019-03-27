@@ -48,6 +48,9 @@ Símbolo : Significado
 -- ACBrLibNFe --
 [+] Ajustados metodos de impressão para ficar mais parecido com os metodos do ACBrMonitor.
    Por: Rafael Dias
+[+] Adicionado metodos para carregar eventos.
+   Por: Rafael Dias
+
 
 07/08/2018
 -- ACBrLibNFeRespostas / ACBrLibNFeConst --

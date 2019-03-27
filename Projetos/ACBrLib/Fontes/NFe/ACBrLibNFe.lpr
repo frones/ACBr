@@ -48,7 +48,10 @@ exports
   // Arquivos
   NFE_CarregarXML,
   NFE_CarregarINI,
+  NFE_CarregarEventoXML,
+  NFE_CarregarEventoINI,
   NFE_LimparLista,
+  NFE_LimparListaEventos,
   NFE_Assinar,
   NFE_Validar,
   NFE_ValidarRegrasdeNegocios,

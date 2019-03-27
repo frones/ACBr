@@ -135,6 +135,7 @@ Resourcestring
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
 function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
+function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
 
 implementation
 uses
@@ -143,6 +144,11 @@ uses
 function SetRetornoNFeCarregadas(const NumNFe: Integer): Integer;
 begin
   Result := SetRetorno( 0, {NumNFe,} Format(SInfNFeCarregadas, [NumNFe]));
+end;
+
+function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
+begin
+  Result := SetRetorno( 0, {NumNFe,} Format(SInfEventosCarregados, [NumEventos]));
 end;
 
 end.

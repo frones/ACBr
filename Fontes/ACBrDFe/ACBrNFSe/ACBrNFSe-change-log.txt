@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2019
+-- ACBrNFSeWebServices --
+[*] Alterações visando o provedor EReceita
+   Por: Italo Jurisato Junior
+
 07/03/2019
 -- pnfsNFSeW_SP --
 [*] Alterada a condição para gerar ou não a tag <MunicipioPrestacao>

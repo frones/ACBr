@@ -743,6 +743,12 @@ begin
       FPSoapAction := StringReplace(FPSoapAction, 'www.tinus', 'www2.tinus', [rfReplaceAll])
   end;
 
+  if FProvedor = proEReceita then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, 'https://www.ereceita', 'http://www3.ereceita', [rfReplaceAll])
+  end;
+
   if FProvedor = proActconv202 then
   begin
     if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then

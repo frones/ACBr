@@ -18309,7 +18309,7 @@ begin
     no78 : Result := '7.8 - Não tributável';
     no79 : Result := '7.9 - Imposto recolhido pelo regime único de arrecadação';
 
-    no101 : Result := '101 - ISS devido para Abelardo Luz';
+    no101 : Result := '101 - ISS devido no município';
     no103 : Result := '103 - ISENTO';
     no106 : Result := '106 - ISS FIXO';
     no111 : Result := '111 - ISS devido para outro município';
@@ -18318,7 +18318,7 @@ begin
     no121 : Result := '121 - ISS Fixo (Sociedade de Profissionais)';
     no201 : Result := '201 - ISS retido pelo tomador ou intermediário do serviço';
     no301 : Result := '301 - Operação imune, isenta ou não tributada';
-    no501 : Result := '501 - ISS devido para Abelardo Luz (Simples Nacional)';
+    no501 : Result := '501 - ISS devido no município (Simples Nacional)';
 
     no511 : if AProvedor = proPublica then
               Result := '511 - ISS devido para outro município (Simples Nacional)'
@@ -18342,13 +18342,13 @@ begin
     no701 : Result := '701 - Operação imune, isenta ou não tributada (Simples Nacional)';
     no711 : Result := '711 - Prestação de serviço para o exterior - iss mensal sem retenção na fonte';
     no712 : Result := '712 - Prestação de serviço para o exterior - iss mensal com retenção na fonte';
-    no901 : Result := '901 - ISS retido ou sujeito à substituição tributária devido para Abelardo Luz';
+    no901 : Result := '901 - ISS retido ou sujeito à substituição tributária devido no município';
     no902 : Result := '902 - ISS retido ou sujeito à substituição tributária devido para outro município';
     no911 : Result := '911 - Prestação de serviço não enquadrada nas situações anteriores - sem retenção';
     no912 : Result := '912 - Prestação de serviço não enquadrada nas situações anteriores - com retenção';
     no921 : Result := '921 - ISS a ser recolhido pelo prestador do serviço';
     no931 : Result := '931 - Serviço imune, isento ou não tributado';
-    no951 : Result := '951 - ISS retido ou sujeito à substituição tributária devido para Abelardo Luz (prestador optante pelo Simples Nacional)';
+    no951 : Result := '951 - ISS retido ou sujeito à substituição tributária no município (prestador optante pelo Simples Nacional)';
     no952 : Result := '952 - ISS retido ou sujeito à substituição tributária, devido para outro município (prestador optante pelo Simples';
     no971 : Result := '971 - ISS a ser recolhido pelo prestador do serviço (prestador optante pelo Simples Nacional)';
     no981 : Result := '981 - Serviço imune, isento ou não tributado (prestador optante pelo Simples Nacional)';

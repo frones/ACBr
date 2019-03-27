@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2019
+-- ACBrNFeServicos --
+[*] https://www.projetoacbr.com.br/forum/topic/50216-acrescentar-a-url-da-nf-e-40-para-pernambuco/
+  Por: Márcio Antônico
+
 -- ACBrDANFCeFortesFrA4 --
 [*] Alteração no valor default de conf. Margens
     (por: Jose M. S. Junior)

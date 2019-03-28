@@ -152,7 +152,7 @@ type
     procedure GerarIdeTrabalhador2(pideTrabalhador: TideTrabalhador2; const GeraGrupo: boolean);
     procedure GerarIdeTrabalhador3(pideTrabalhador: TideTrabalhador3; const tpTrib: boolean = True);
     procedure GerarIdeFolhaPagto(pIdeFolhaPagto: TIdeFolhaPagto);
-    procedure GerarEmitente(pEmitente: TEmitente);
+    procedure GerarEmitente(pEmitente: TEmitente; ATipoEvento: TTipoEvento);
     procedure GerarEndExt(pEndExt: TEndExt);
     procedure GerarIdePais(pIdePais: TIdePais);
     procedure GerarInfoAgNocivo(pInfoAgNocivo: TInfoAgNocivo);
@@ -1576,14 +1576,19 @@ begin
   end;
 end;
 
-procedure TeSocialEvento.GerarEmitente(pEmitente: TEmitente);
+procedure TeSocialEvento.GerarEmitente(pEmitente: TEmitente; ATipoEvento: TTipoEvento);
 begin
   Gerador.wGrupo('emitente');
 
   Gerador.wCampo(tcStr, '', 'nmEmit', 1, 70, 1, pEmitente.nmEmit);
   Gerador.wCampo(tcStr, '', 'ideOC',  1,  1, 1, eSIdeOCToStr(pEmitente.ideOC));
-  Gerador.wCampo(tcStr, '', 'nrOc',   1, 14, 1, pEmitente.nrOc);
-  Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, pEmitente.ufOC);//eSufToStr(pEmitente.ufOC));
+
+  case ATipoEvento of
+    teS2210: Gerador.wCampo(tcStr, '', 'nrOC', 1, 14, 1, pEmitente.nrOc);
+    teS2230: Gerador.wCampo(tcStr, '', 'nrOc', 1, 14, 1, pEmitente.nrOc);
+  end;
+
+  Gerador.wCampo(tcStr, '', 'ufOC',   2,  2, 0, pEmitente.ufOC);
 
   Gerador.wGrupo('/emitente');
 end;

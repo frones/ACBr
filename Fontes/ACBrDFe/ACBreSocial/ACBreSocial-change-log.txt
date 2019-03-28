@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2019
+-- pcesS2210 / pcesS2230 --
+[*] Acrescentado um parâmetro com o tipo do evento na procedure que gera o grupo Emitente
+    Pois para o evento 2210 a tag a ser gerada é nrOC e no evento 2230 tem que ser nrOc.
+   Por: Italo Jurisato Junior
+
 25/03/2019
 -- pcesS2240 --
 [*] https://www.projetoacbr.com.br/forum/topic/49409-eventos-sst-v25/?do=findComment&comment=330424

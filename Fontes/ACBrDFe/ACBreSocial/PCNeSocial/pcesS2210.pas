@@ -462,7 +462,7 @@ begin
     Gerador.wCampo(tcStr, '', 'codCID',         1,   4, 1, Self.Cat.Atestado.codCID);
     Gerador.wCampo(tcStr, '', 'observacao',     1, 255, 0, Self.Cat.Atestado.observacao);
 
-    GerarEmitente(Self.Cat.Atestado.Emitente);
+    GerarEmitente(Self.Cat.Atestado.Emitente, teS2210);
 
     Gerador.wGrupo('/atestado');
   end;

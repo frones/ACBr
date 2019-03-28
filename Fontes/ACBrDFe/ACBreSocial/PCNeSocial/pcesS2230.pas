@@ -517,7 +517,7 @@ begin
     Gerador.wCampo(tcInt, '', 'qtdDiasAfast', 1, 3, 1, objInfoAtestado[i].qtDiasAfast);
 
     if objInfoAtestado[i].emitenteInst then
-      GerarEmitente(objInfoAtestado[i].Emitente);
+      GerarEmitente(objInfoAtestado[i].Emitente, teS2230);
 
     Gerador.wGrupo('/infoAtestado');
   end;

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2019
+-- ACBrIBGE --
+[-] Ajuste para tratar novo retorno, de forma compactada em GZip
+    https://www.projetoacbr.com.br/forum/topic/48844-codigo-ibeg/?do=findComment&comment=331353
+    (por: DSA)
+
 23/02/2019
 -- ACBrMTER --
 [*] Amplo refactoring no componente, com o intuito de melhorar o uso de várias

@@ -965,7 +965,7 @@ begin
 
   fListaCidades.Clear;
   HTTPGet(CIBGE_URL_MUN);
-  fListaCidades.AddFromJSonStr(RespHTTP.Text);
+  fListaCidades.AddFromJSonStr(UnZip(HTTPSend.Document));
 
   for I := 0 to fListaUFs.Count-1 do
     fListaUFs[I].CidadesCarregadas := True;
@@ -991,7 +991,7 @@ begin
 
   AURL := StringReplace(CIBGE_URL_MUN_UF, '{idUF}', IntToStrZero(ACodUF,2), []);
   HTTPGet(AURL);
-  fListaCidades.AddFromJSonStr(RespHTTP.Text);
+  fListaCidades.AddFromJSonStr(UnZip(HTTPSend.Document));
 
   oUF.CidadesCarregadas := True;
   SalvarCache;
@@ -1126,7 +1126,7 @@ begin
   AURL := StringReplace(AURL, '{idMunicipio}', ListaMunicipios, []);
 
   HTTPGet(AURL);
-  fListaCidades.ParseJSonStat(RespHTTP.Text);
+  fListaCidades.ParseJSonStat(UnZip(HTTPSend.Document));
 
   SalvarCache;
 end;
@@ -1250,7 +1250,7 @@ begin
 
   fListaUFs.Clear;
   HTTPGet(CIBGE_URL_UF);
-  fListaUFs.AddFromJSonStr(RespHTTP.Text);
+  fListaUFs.AddFromJSonStr(UnZip(HTTPSend.Document));
 end;
 
 procedure TACBrIBGE.ObterEstatisticasUF;
@@ -1267,7 +1267,7 @@ begin
   AURL := StringReplace(AURL, '{idUF}', UFs, []);
 
   HTTPGet(AURL);
-  fListaUFs.ParseJSonStat(RespHTTP.Text);
+  fListaUFs.ParseJSonStat(Unzip(HTTPSend.Document));
 end;
 
 function TACBrIBGE.UFToCodUF(const AUF: String): Integer;

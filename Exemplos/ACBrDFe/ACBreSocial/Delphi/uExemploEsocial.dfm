@@ -50,7 +50,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1005 Tabela de Estabelecimentos e Obras de Constru'#231#227'o Civil'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 1
+          TabOrder = 2
         end
         object cbS1010: TCheckBox
           Left = 12
@@ -60,7 +60,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1010 Tabela de Rubricas'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 2
+          TabOrder = 3
         end
         object cbS1020: TCheckBox
           Left = 12
@@ -70,7 +70,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1020 Tabela de Lota'#231#245'es/Departamentos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 3
+          TabOrder = 4
         end
         object cbS1030: TCheckBox
           Left = 12
@@ -80,7 +80,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1030 Tabela de Cargos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 4
+          TabOrder = 5
         end
         object cbS1035: TCheckBox
           Left = 12
@@ -88,7 +88,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 249
           Height = 17
           Caption = 'S-1035 Tabela de Carreiras P'#250'blicas'
-          TabOrder = 5
+          TabOrder = 6
         end
         object Checb_ZeraBase: TCheckBox
           Left = 278
@@ -96,7 +96,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 138
           Height = 17
           Caption = 'Zera Base Homologa'#231#227'o'
-          TabOrder = 6
+          TabOrder = 1
         end
         object cbS1040: TCheckBox
           Left = 374
@@ -212,7 +212,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1300 - Contribui'#231#227'o Sindical Patronal'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 6
+          TabOrder = 11
         end
         object cbS1299: TCheckBox
           Left = 350
@@ -222,7 +222,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1299 - Fechamento dos Eventos Peri'#243'dicos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 7
+          TabOrder = 10
         end
         object cbS1298: TCheckBox
           Left = 350
@@ -232,7 +232,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1298 - Reabertura dos Eventos Peri'#243'dicos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 8
+          TabOrder = 9
         end
         object cbS1295: TCheckBox
           Left = 350
@@ -242,7 +242,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 
             'S-1295 - Solicita'#231#227'o de Totaliza'#231#227'o para Pagamento em Conting'#234'nc' +
             'ia'
-          TabOrder = 9
+          TabOrder = 8
         end
         object cbS1280: TCheckBox
           Left = 350
@@ -252,7 +252,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1280 - Informa'#231#245'es Complementares aos Eventos Peri'#243'dicos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 10
+          TabOrder = 7
         end
         object cbS1270: TCheckBox
           Left = 350
@@ -262,7 +262,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-1270 - Contrata'#231#227'o de Trabalhadores Avulsos N'#227'o Portu'#225'rios'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 11
+          TabOrder = 6
         end
       end
       object tbsEventosNaoPeriodicos: TTabSheet
@@ -332,27 +332,27 @@ object FExemploEsocial: TFExemploEsocial
           Width = 177
           Height = 17
           Caption = 'S-2230 - Afastamento Tempor'#225'rio'
-          TabOrder = 6
+          TabOrder = 7
         end
         object cbS2240: TCheckBox
           Left = 12
-          Top = 150
+          Top = 196
           Width = 332
           Height = 17
           Caption = 'S-2240 -  Condi'#231#245'es Ambientais do Trabalho - Fatores de Risco'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 7
+          TabOrder = 8
         end
         object cbS2245: TCheckBox
           Left = 12
-          Top = 196
+          Top = 219
           Width = 404
           Height = 17
           Caption = 
             'S-2245 - Treinamentos, Capacita'#231#245'es, Exerc'#237'cios Simulados '#13#10'e Ou' +
             'tras Anota'#231#245'es'
-          TabOrder = 8
+          TabOrder = 9
         end
         object cbAviso: TComboBox
           Left = 548
@@ -361,7 +361,7 @@ object FExemploEsocial: TFExemploEsocial
           Height = 21
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 9
+          TabOrder = 11
           Text = 'Aviso'
           Items.Strings = (
             'Aviso'
@@ -375,7 +375,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-2250 - Aviso Pr'#233'vio'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 11
+          TabOrder = 10
         end
         object cbS3000: TCheckBox
           Left = 422
@@ -385,7 +385,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-3000 - Exclus'#227'o de Eventos'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 12
+          TabOrder = 19
         end
         object cbS2400: TCheckBox
           Left = 422
@@ -393,7 +393,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 321
           Height = 17
           Caption = 'S-2400 - Cadastro de Benef'#237'cios Previd'#234'nci'#225'rios - RPPS'
-          TabOrder = 13
+          TabOrder = 18
         end
         object cbS2399: TCheckBox
           Left = 422
@@ -401,7 +401,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 248
           Height = 17
           Caption = 'S-2399 - Trabalhador Sem V'#237'nculo - T'#233'rmino'
-          TabOrder = 14
+          TabOrder = 17
         end
         object cbS2306: TCheckBox
           Left = 422
@@ -409,7 +409,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 311
           Height = 17
           Caption = 'S-2306 - Trabalhador Sem V'#237'nculo - Altera'#231#227'o Contratual'
-          TabOrder = 15
+          TabOrder = 16
         end
         object cbS2300: TCheckBox
           Left = 422
@@ -417,7 +417,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 233
           Height = 17
           Caption = 'S-2300 - Trabalhador Sem V'#237'nculo - In'#237'cio'
-          TabOrder = 16
+          TabOrder = 15
         end
         object cbS2299: TCheckBox
           Left = 422
@@ -425,7 +425,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 135
           Height = 17
           Caption = 'S-2299 - Desligamento'
-          TabOrder = 17
+          TabOrder = 14
         end
         object cbS2298: TCheckBox
           Left = 422
@@ -435,7 +435,7 @@ object FExemploEsocial: TFExemploEsocial
           Caption = 'S-2298 - Reintegra'#231#227'o'
           Ctl3D = False
           ParentCtl3D = False
-          TabOrder = 18
+          TabOrder = 13
         end
         object cbs2260: TCheckBox
           Left = 422
@@ -443,15 +443,15 @@ object FExemploEsocial: TFExemploEsocial
           Width = 332
           Height = 17
           Caption = 'S-2260 Convoca'#231#227'o para Trabalho Intermitente'
-          TabOrder = 19
+          TabOrder = 12
         end
         object cbS2221: TCheckBox
           Left = 12
-          Top = 219
+          Top = 150
           Width = 404
           Height = 17
           Caption = 'S-2221 - Exame Toxicol'#243'gico do Motorista Profissional '
-          TabOrder = 10
+          TabOrder = 6
         end
       end
     end
@@ -481,7 +481,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 109
           Height = 25
           Caption = 'Consultar'
-          TabOrder = 1
+          TabOrder = 5
           OnClick = btnConsultarClick
         end
         object btnEnviar: TButton
@@ -490,7 +490,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 109
           Height = 25
           Caption = 'Enviar'
-          TabOrder = 2
+          TabOrder = 3
           OnClick = btnEnviarClick
         end
         object btnCarregarXML: TButton
@@ -499,7 +499,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 109
           Height = 25
           Caption = 'Carregar XML'
-          TabOrder = 3
+          TabOrder = 1
           OnClick = btnCarregarXMLClick
         end
         object btnCarregarINI: TButton
@@ -508,7 +508,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 109
           Height = 25
           Caption = 'Carregar INI'
-          TabOrder = 4
+          TabOrder = 2
           OnClick = btnCarregarINIClick
         end
         object btnGerarEnviar: TButton
@@ -517,7 +517,7 @@ object FExemploEsocial: TFExemploEsocial
           Width = 109
           Height = 25
           Caption = 'Gerar e Enviar'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnGerarEnviarClick
         end
         object btnConsIdeEveEmp: TButton

@@ -867,7 +867,7 @@ begin
 
         with dadosAmbiente do
         begin
-//          nmAmb      := 'AMBIENTE 01';
+          nmAmb      := 'AMBIENTE 01';
           dscAmb     := 'DESCRICAO DO AMBIENTE';
           localAmb   := laEstabProprioEmpregador;
           TpInsc     := tiCNPJ;
@@ -2940,9 +2940,9 @@ begin
           tpLograd := 'R';
           DscLograd := 'Logradouro Teste';
           NrLograd := '111';
-          bairro := '111';
-          cep := '111';
-          codMunic := 123;
+          bairro := 'centro';
+          cep := '14800000';
+          codMunic := 3512345;
           uf := tpuf(ufPR);
           pais := '008';
           CodPostal := '6546';
@@ -2990,7 +2990,7 @@ begin
           indInternacao := tpSim;
           durTrat := 5;
           indAfast := tpSim;
-          dscLesao := 1;
+          dscLesao := 706090000;
           dscCompLesao := 'Descricao complementar';
           diagProvavel := 'Diagnostico teste';
           codCID := '1234';
@@ -2999,7 +2999,7 @@ begin
           with Emitente do
           begin
             nmEmit := 'Emitente Teste';
-            ideOC := tpIdeOC(1);
+            ideOC := idCRM;
             NrOc := '456123';
             ufOC := 'PR';
           end;
@@ -3192,7 +3192,7 @@ begin
             codCID := '0123';
             qtdDiasAfast := 10;
             nmEmit := 'Nome do emitente na alteração';
-            ideOC := tpIdeOC(0);
+            ideOC := idCRM;
             NrOc := '12313';
             ufOC := ufSP;
           end;
@@ -3250,18 +3250,18 @@ begin
         infoAtiv.ativPericInsal.Clear;
         with infoAtiv.ativPericInsal.Add do
         begin
-          codAtiv := '654';
+          codAtiv := '06.540';
         end;
         with infoAtiv.ativPericInsal.Add do
         begin
-          codAtiv := '548';
+          codAtiv := '05.480';
         end;
 
         FatRisco.Clear;
         with FatRisco.Add do
         begin
-          codFatRis      := '1234567890';
-          tpAval         := tpTpAval(1);
+          codFatRis      := '123456789';
+          tpAval         := tpaQualitativo;
           intConc        := 0.50;
           limTol         := 0.50;
           unMed          := 9;
@@ -3298,7 +3298,7 @@ begin
           cpfResp := '12345678901';
           NisResp := '12345678901';
           nmResp  := 'RESPONSAVEL';
-          ideOC   := tpIdeOC(9);
+          ideOC   := idOutros;
           dscOC   := 'ORGAO';
           NrOc    := '51561561';
           ufOC    := ufSP;

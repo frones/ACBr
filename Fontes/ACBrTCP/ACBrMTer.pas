@@ -279,7 +279,7 @@ type
     property Terminador       : AnsiString     read fTerminador        write SetTerminador;
     property TerminadorBalanca: AnsiString     read fTerminadorBalanca write SetTerminadorBalanca;
     property TimeOut       : Integer           read GetTimeOut      write SetTimeOut default 1000;
-    property WaitInterval  : Integer           read fWaitInterval   write SetWaitInterval default 200;
+    property WaitInterval  : Integer           read fWaitInterval   write SetWaitInterval default 100;
     property Modelo        : TACBrMTerModelo   read fModelo         write SetModelo default mtrNenhum;
     property DisplayLinhas : Integer           read fDisplayLinhas  write fDisplayLinhas default 4;
     property DisplayColunas: Integer           read fDisplayColunas write fDisplayColunas default 20;
@@ -817,6 +817,7 @@ procedure TACBrMTer.DoRecebeDados(const aIP: String;
 var
   wEchoMode: TACBrMTerEchoMode;
   wConexao: TACBrMTerConexao;
+  DadosEcho: String;
 begin
   if (Length(DadosRecebidos) < 1) then
     Exit;
@@ -832,11 +833,12 @@ begin
   if Assigned(fOnRecebeDados) then
     OnRecebeDados(aIP, DadosRecebidos, wEchoMode);
 
+  DadosEcho := fMTer.LimparConteudoParaEnviarEcho(DadosRecebidos);
   case wEchoMode of
     mdeNormal  :
-      fMTer.ComandoEco(wConexao.Comandos, DadosRecebidos);
+      fMTer.ComandoEco(wConexao.Comandos, DadosEcho);
     mdePassword:
-      fMTer.ComandoEco(wConexao.Comandos, StringOfChar(PasswordChar, Length(DadosRecebidos)));
+      fMTer.ComandoEco(wConexao.Comandos, StringOfChar(PasswordChar, Length(DadosEcho)));
   end;
 end;
 
@@ -1062,7 +1064,7 @@ begin
   fTerminadorAsc := '';
   fTerminadorBalanca := '#3';
   fTerminadorBalancaAsc := #3;
-  fWaitInterval := 200;
+  fWaitInterval := 100;
 
   fConexoes := TACBrMTerConexoes.Create(Self);
 

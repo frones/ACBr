@@ -159,7 +159,7 @@ var
   P: Integer;
   S: AnsiString;
 begin
-  S := LimparConteudoParaEnviar(aValue);   // DEBUG S := 'DANIEL'+BS+'SIMOES'+BS+'DE'+BS+BS+'ALMEIDA';
+  S := LimparConteudoParaEnviarEcho(aValue);   // DEBUG S := 'DANIEL'+BS+'SIMOES'+BS+'DE'+BS+BS+'ALMEIDA';
   while (S <> EmptyStr) do
   begin
     P := pos(BS, S+BS);

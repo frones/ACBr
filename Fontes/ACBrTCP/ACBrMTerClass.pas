@@ -113,7 +113,7 @@ type
     procedure ComandoLimparLinha(Comandos: TACBrMTerComandos; const aLinha: Integer); virtual;
 
     function InterpretarResposta(const aRecebido: AnsiString): AnsiString; virtual;
-    function LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;
+    function LimparConteudoParaEnviarEcho(const aString: AnsiString): AnsiString;
     function ExtrairResposta( var ABuffer: Ansistring; LendoPeso: Boolean = False ): AnsiString; virtual;
 
     property ModeloStr: String read fpModeloStr;
@@ -219,7 +219,7 @@ end;
 procedure TACBrMTerClass.ComandoEco(Comandos: TACBrMTerComandos;
   const aValue: AnsiString);
 begin
-  ComandoEnviarTexto(Comandos, LimparConteudoParaEnviar(aValue));
+  ComandoEnviarTexto(Comandos, LimparConteudoParaEnviarEcho(aValue));
 end;
 
 procedure TACBrMTerClass.ComandoEnviarParaParalela(Comandos: TACBrMTerComandos;
@@ -288,7 +288,7 @@ begin
     Result := copy(aRecebido, 1, ALen-1);
 end;
 
-function TACBrMTerClass.LimparConteudoParaEnviar(const aString: AnsiString): AnsiString;
+function TACBrMTerClass.LimparConteudoParaEnviarEcho(const aString: AnsiString): AnsiString;
 var
   aChar: AnsiChar;
   I: Integer;
@@ -303,8 +303,8 @@ begin
   for I := 1 to Length(aString) do
   begin
     aChar := aString[I];
-    { Mantem apenas Letras/Numeros/Pontos/Sinais }
-    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
+    { Mantem apenas Letras/Numeros/Pontos/Sinais e BackSpace (#8) }
+    if not CharInSet(aChar, [#32..#126,#8]) then
       Continue;
 
     Result := Result + aChar;

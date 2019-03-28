@@ -18,12 +18,12 @@ namespace ACBrLib
             }
         }
 
-        public static string[] OpenFiles(string filters, string title = "Abrir")
+        public static string[] OpenFiles(string filters, string title = "Abrir", bool checkFileExists = true)
         {
             using (var ofd = new OpenFileDialog())
             {
                 ofd.CheckPathExists = true;
-                ofd.CheckFileExists = true;
+                ofd.CheckFileExists = checkFileExists;
                 ofd.Multiselect = true;
                 ofd.Filter = filters;
                 ofd.Title = title;

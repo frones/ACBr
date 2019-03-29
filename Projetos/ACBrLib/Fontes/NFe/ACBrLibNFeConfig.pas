@@ -676,6 +676,7 @@ begin
   FQuebraLinhaEmDetalhamentos := AIni.ReadBool(CSessaoDANFE, CChaveQuebraLinhaEmDetalhamentos, FQuebraLinhaEmDetalhamentos);
 
   FNFeConfig.LerIni(AIni);
+  FNFCeConfig.LerIni(AIni);
 
 end;
 
@@ -697,6 +698,7 @@ begin
   AIni.WriteBool(CSessaoDANFE, CChaveQuebraLinhaEmDetalhamentos, FQuebraLinhaEmDetalhamentos);
 
   FNFeConfig.GravarIni(AIni);
+  FNFCeConfig.GravarIni(AIni);
 
 end;
 
@@ -747,6 +749,7 @@ begin
 
   FNFeConfig := TConfiguracoesNFe.Create(nil);
   FNFeConfig.ChaveCryptINI := AChaveCrypt;
+
   FDANFeConfig := TDANFeReportConfig.Create;
   FIntegradorConfig := TIntegradorConfig.Create;
 end;
@@ -773,6 +776,8 @@ procedure TLibNFeConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
+  FNFeConfig.ChaveCryptINI := ChaveCrypt;
+
   FNFeConfig.LerIni(Ini);
   FDANFeConfig.LerIni(Ini);
   FIntegradorConfig.LerIni(Ini);
@@ -781,6 +786,8 @@ end;
 procedure TLibNFeConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
+
+  FNFeConfig.ChaveCryptINI := ChaveCrypt;
 
   Ini.WriteString(CSessaoVersao, CLibNFeNome, CLibNFeVersao);
 
@@ -791,6 +798,8 @@ end;
 
 procedure TLibNFeConfig.ClasseParaComponentes;
 begin
+  FNFeConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
 end;

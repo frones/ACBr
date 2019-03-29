@@ -44,13 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2019
+-- ACBrLibNFe --
+[-] Corrigido erro ao salvar senha do certificado.
+    Por: Rafael Dias
+
 27/03/2019
 -- ACBrLibNFe --
 [+] Ajustados metodos de impressão para ficar mais parecido com os metodos do ACBrMonitor.
    Por: Rafael Dias
 [+] Adicionado metodos para carregar eventos.
    Por: Rafael Dias
-
 
 07/08/2018
 -- ACBrLibNFeRespostas / ACBrLibNFeConst --

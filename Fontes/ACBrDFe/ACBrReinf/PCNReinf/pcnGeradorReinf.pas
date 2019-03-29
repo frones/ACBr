@@ -351,7 +351,7 @@ begin
   if GeraGrupo then
     Gerador.wGrupo('ideEvento');
 
-  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, tpAmbReinfToStr(pEvt.TpAmb));
+  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, TpAmbToStr(TACBrReinf(FACBrReinf).Configuracoes.WebServices.Ambiente));
   Gerador.wCampo(tcStr, '', 'procEmi', 1,  1, 1, ProcEmiReinfToStr(pEvt.ProcEmi));
   Gerador.wCampo(tcStr, '', 'verProc', 1, 20, 1, pEvt.VerProc);
 

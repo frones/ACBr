@@ -556,7 +556,6 @@ begin
       ideEvento.indRetif := StrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
       ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
       ideEvento.perApur  := INIRec.ReadString(sSecao, 'perApur', EmptyStr);
-      ideEvento.TpAmb    := StrTotpAmbReinf(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
       ideEvento.ProcEmi  := StrToProcEmiReinf(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 

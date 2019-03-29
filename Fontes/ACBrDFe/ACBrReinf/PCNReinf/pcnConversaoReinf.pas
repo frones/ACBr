@@ -54,8 +54,6 @@ type
                              teR2030, teR2040, teR2050, teR2060, teR2070,
                              teR2098, teR3010, teR5001, teR5011, teR9000);
 
-  TtpAmb                  = (taNenhum, taProducao, taProducaoRestritaDadosReais);
-
   TprocEmi                = (peNenhum, peAplicEmpregador, peAplicGoverno);
 
   TStatusReinf            = (stIdle, stEnvLoteEventos, stConsultaLote);
@@ -308,9 +306,6 @@ function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 function TpInscricaoToStr(const t: TtpInsc ): string;
 function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 
-function tpAmbReinfToStr(const t: TtpAmb ): string;
-function StrTotpAmbReinf(out ok: boolean; const s: string): TtpAmb;
-
 function procEmiReinfToStr(const t: TprocEmi ): string;
 function StrToprocEmiReinf(var ok: boolean; const s: string): TprocEmi;
 
@@ -550,16 +545,6 @@ end;
 function StrToTpInscricao(out ok: boolean; const s: string): TtpInsc;
 begin
   result := TtpInsc( StrToEnumerado2(ok , s, ['1', '2', '4'] ) );
-end;
-
-function tpAmbReinfToStr(const t: TtpAmb ): string;
-begin
-  result := EnumeradoToStr2(t, ['0', '1', '2']);
-end;
-
-function StrTotpAmbReinf(out ok: boolean; const s: string): TtpAmb;
-begin
-  result := TtpAmb( StrToEnumerado2(ok , s, ['0', '1', '2']) );
 end;
 
 function ProcEmiReinfToStr(const t: TprocEmi ): string;

@@ -50,6 +50,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2019
+-- Diversos --
+[*] Removido de todos os eventos o campo tpAmb, agora ao gerar o XML dos eventos
+    esse campo será preenchido automaticamente com o valor da propriedade de 
+    configuração: Ambiente. 
+   Por: Italo Jurisato Junior
+
 27/03/2019
 -- ACBrReinfLoteEventos -- 
 [*] https://www.projetoacbr.com.br/forum/topic/50265-acbrreinfloteeventos-av/

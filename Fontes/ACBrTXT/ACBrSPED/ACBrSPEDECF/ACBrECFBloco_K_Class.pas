@@ -70,12 +70,16 @@ type
     FRegistroK156Count: Integer;
     FRegistroK355Count: Integer;
     FRegistroK356Count: Integer;
+    FRegistroK915Count: Integer;
+    FRegistroK935Count: Integer;
 
     procedure WriteRegistroK030(RegK001: TRegistroK001);
     procedure WriteRegistroK155(RegK030: TRegistroK030);
     procedure WriteRegistroK156(RegK155: TRegistroK155);
     procedure WriteRegistroK355(RegK030: TRegistroK030);
     procedure WriteRegistroK356(RegK355: TRegistroK355);
+    procedure WriteRegistroK915(RegK001: TRegistroK001);
+    procedure WriteRegistroK935(RegK001: TRegistroK001);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -90,6 +94,8 @@ type
     function RegistroK156New: TRegistroK156;
     function RegistroK355New: TRegistroK355;
     function RegistroK356New: TRegistroK356;
+    function RegistroK915New: TRegistroK915;
+    function RegistroK935New: TRegistroK935;
 
     procedure WriteRegistroK001;
     procedure WriteRegistrok990;
@@ -103,6 +109,8 @@ type
     property RegistroK156Count: Integer read FRegistroK156Count write FRegistroK156Count;
     property RegistroK355Count: Integer read FRegistroK355Count write FRegistroK355Count;
     property RegistroK356Count: Integer read FRegistroK356Count write FRegistroK356Count;
+    property RegistroK915Count: Integer read FRegistroK915Count write FRegistroK915Count;
+    property RegistroK935Count: Integer read FRegistroK935Count write FRegistroK935Count;
   end;
 
 
@@ -222,6 +230,16 @@ begin
   Result := UK355.RegistroK356.New();
 end;
 
+function TBloco_K.RegistroK915New: TRegistroK915;
+begin
+  Result := FRegistroK001.RegistroK915.New();
+end;
+
+function TBloco_K.RegistroK935New: TRegistroK935;
+begin
+  Result := FRegistroK001.RegistroK935.New();
+end;
+
 procedure TBloco_K.WriteRegistroK001;
 begin
   if Assigned(RegistroK001) then
@@ -236,6 +254,8 @@ begin
       if (IND_DAD = idComDados) then
       begin
         WriteRegistroK030(RegistroK001);
+        WriteRegistroK915(RegistroK001);
+        WriteRegistroK935(RegistroK001);
       end;
 
       FRegistroK990.QTD_LIN:= FRegistroK990.QTD_LIN + 1;
@@ -367,6 +387,68 @@ begin
     end;
 
     FRegistroK356Count := FRegistroK356Count + RegK355.RegistroK356.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK915(RegK001: TRegistroK001);
+var
+  intFor: integer;
+begin
+  if Assigned(RegK001.RegistroK915) then
+  begin
+    for intFor := 0 to RegK001.RegistroK915.Count - 1 do
+    begin
+      with RegK001.RegistroK915.Items[intFor] do
+      begin
+        Add( LFill('K915') +
+             LFill(PER_APUR) +
+             LFill(COD_CTA) +
+             LFill(COD_CCUS) +
+             LFill(ID_REGRA) +
+             LFill(VL_SLD_INI_ESP, 19, 2) +
+             LFill(IND_VL_SLD_INI_ESP,0) +
+             LFill(VL_DEB_ESP, 19, 2) +
+             LFill(VL_CRED_ESP, 19, 2) +
+             LFill(VL_SLD_FIN_ESP, 19, 2) +
+             LFill(IND_VL_SLD_FIN_ESP,0) +
+             LFill(SLD_INI_PRE, 19, 2) +
+             LFill(IND_SLD_INI_PRE,0) +
+             LFill(VL_DEB_PRE, 19, 2) +
+             LFill(VL_CRED_PRE, 19, 2) +
+             LFill(SLD_FIN_PRE, 19, 2) +
+             LFill(IND_SLD_FIN_PRE,0) +
+             LFill(JUSTIFICATIVA) );
+      end;
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistroK915Count := FRegistroK915Count + RegK001.RegistroK915.Count
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK935(RegK001: TRegistroK001);
+var
+  intFor: integer;
+begin
+  if Assigned(RegK001.RegistroK935) then
+  begin
+    for intFor := 0 to RegK001.RegistroK935.Count - 1 do
+    begin
+      with RegK001.RegistroK935.Items[intFor] do
+      begin
+        Add( LFill('K935') +
+             LFill(PER_APUR) +
+             LFill(COD_CTA) +
+             LFill(COD_CCUS) +
+             LFill(ID_REGRA) +
+             LFill(VL_SLD_FIN_ESP, 19, 2) +
+             LFill(IND_VL_SLD_FIN_ESP,0) +
+             LFill(SLD_FIN_PRE, 19, 2) +
+             LFill(IND_SLD_FIN_PRE,0) +
+             LFill(JUSTIFICATIVA) );
+      end;
+      FRegistroK990.QTD_LIN := FRegistroK990.QTD_LIN + 1;
+    end;
+    FRegistroK935Count := FRegistroK935Count + RegK001.RegistroK935.Count
   end;
 end;
 

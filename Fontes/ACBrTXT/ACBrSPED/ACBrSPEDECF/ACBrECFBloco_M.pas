@@ -91,6 +91,7 @@ type
     fCOD_CTA_B:        String;
     fDESC_CTA_LAL:     String;
     fDT_AP_LAL:        TDateTime;
+    fCOD_PB_RFB:       String;
     fCOD_LAN_ORIG:     Integer;
     fDESC_LAN_ORIG:    String;
     fDT_LIM_LAL:       TDateTime;
@@ -102,6 +103,7 @@ type
     property COD_CTA_B:        String read fCOD_CTA_B write fCOD_CTA_B;
     property DESC_CTA_LAL:     String read fDESC_CTA_LAL write fDESC_CTA_LAL;
     property DT_AP_LAL:        TDateTime read fDT_AP_LAL write fDT_AP_LAL;
+    property COD_PB_RFB:       String read fCOD_PB_RFB write fCOD_PB_RFB;
     property COD_LAN_ORIG:     Integer read fCOD_LAN_ORIG write fCOD_LAN_ORIG;
     property DESC_LAN_ORIG:    String read fDESC_LAN_ORIG write fDESC_LAN_ORIG;
     property DT_LIM_LAL:       TDateTime read fDT_LIM_LAL write fDT_LIM_LAL;

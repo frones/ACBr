@@ -2296,6 +2296,21 @@ end;
 
 procedure TACBrSPEDECF.WriteRegistro9999;
 begin
+  Bloco_9.Registro9999.QTD_LIN := Bloco_9.Registro9999.QTD_LIN + Bloco_0.Registro0990.QTD_LIN_0 +
+                                                                 Bloco_C.RegistroC990.QTD_LIN +
+                                                                 Bloco_E.RegistroE990.QTD_LIN +
+                                                                 Bloco_J.RegistroJ990.QTD_LIN +
+                                                                 Bloco_K.RegistroK990.QTD_LIN +
+                                                                 Bloco_L.RegistroL990.QTD_LIN +
+                                                                 Bloco_M.RegistroM990.QTD_LIN +
+                                                                 Bloco_N.RegistroN990.QTD_LIN +
+                                                                 Bloco_P.RegistroP990.QTD_LIN +
+                                                                 Bloco_Q.RegistroQ990.QTD_LIN +
+                                                                 Bloco_T.RegistroT990.QTD_LIN +
+                                                                 Bloco_U.RegistroU990.QTD_LIN +
+                                                                 Bloco_X.RegistroX990.QTD_LIN +
+                                                                 Bloco_Y.RegistroY990.QTD_LIN +
+                                                                 Bloco_9.Registro9990.QTD_LIN;
   Bloco_9.WriteRegistro9999;
 end;
 

@@ -395,17 +395,29 @@ begin
     begin
       with RegM001.RegistroM010.Items[intFor] do
       begin
-        Add( LFill('M010')             +
-             LFill(COD_CTA_B)          +
-             LFill(DESC_CTA_LAL)       +
-             LFill(DT_AP_LAL)          +
-             LFill(COD_LAN_ORIG, 6)    +
-             LFill(DESC_LAN_ORIG)      +
-             LFill(DT_LIM_LAL)         +
-             LFill(COD_TRIBUTO)        +
-             VLFill(VL_SALDO_INI,19,2) +
-             LFill(IND_Vl_SALDO_INI)   +
-             LFill(CNPJ_SIT_ESP) );
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao500 then
+          Add( LFill('M010')             +
+               LFill(COD_CTA_B)          +
+               LFill(DESC_CTA_LAL)       +
+               LFill(DT_AP_LAL)          +
+               LFill(COD_PB_RFB)         +
+               LFill(DT_LIM_LAL)         +
+               LFill(COD_TRIBUTO)        +
+               VLFill(VL_SALDO_INI,19,2) +
+               LFill(IND_Vl_SALDO_INI)   +
+               LFill(CNPJ_SIT_ESP) )
+        else
+          Add( LFill('M010')             +
+               LFill(COD_CTA_B)          +
+               LFill(DESC_CTA_LAL)       +
+               LFill(DT_AP_LAL)          +
+               LFill(COD_LAN_ORIG, 6, True) +
+               LFill(DESC_LAN_ORIG)      +
+               LFill(DT_LIM_LAL)         +
+               LFill(COD_TRIBUTO)        +
+               VLFill(VL_SALDO_INI,19,2) +
+               LFill(IND_Vl_SALDO_INI)   +
+               LFill(CNPJ_SIT_ESP) );
       end;
       FRegistroM990.QTD_LIN := FRegistroM990.QTD_LIN + 1;
     end;

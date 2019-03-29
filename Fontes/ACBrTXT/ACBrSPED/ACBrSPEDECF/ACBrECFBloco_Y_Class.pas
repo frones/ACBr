@@ -816,27 +816,47 @@ begin
     begin
       with FRegistroY001.RegistroY672.Items[intFor] do
       begin
-        Add(LFill('Y672') +
-            VLFill(VL_CAPITAL_ANT, 19, 2) +
-            VLFill(VL_CAPITAL, 19, 2) +
-            VLFill(VL_ESTOQUE_ANT, 19, 2) +
-            VLFill(VL_ESTOQUES, 19, 2) +
-            VLFill(VL_CAIXA_ANT, 19, 2) +
-            VLFill(VL_CAIXA, 19, 2) +
-            VLFill(VL_APLIC_FIN_ANT, 19, 2) +
-            VLFill(VL_APLIC_FIN, 19, 2) +
-            VLFill(VL_CTA_REC_ANT, 19, 2) +
-            VLFill(VL_CTA_REC, 19, 2) +
-            VLFill(VL_CTA_PAG_ANT, 19, 2) +
-            VLFill(VL_CTA_PAG, 19, 2) +
-            VLFill(VL_COMPRA_MERC, 19, 2) +
-            VLFill(VL_COMPRA_ATIVO, 19, 2) +
-            VLFill(VL_RECEITAS, 19, 2) +
-            VLFill(TOT_ATIVO, 19, 2) +
-            VLFill(VL_FOLHA, 19, 2) +
-            VLFill(VL_ALIQ_RED, 4, 2) +
-            ifThen( FBloco_0.Registro0000.COD_VER in [ ECFVersao100, ECFVersao200 ], LFill(IND_REG_APUR, 1), '' ) +
-            LFill(IND_AVAL_ESTOQ, 1));
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao500 then
+          Add(LFill('Y672') +
+              VLFill(VL_CAPITAL_ANT, 19, 2) +
+              VLFill(VL_CAPITAL, 19, 2) +
+              VLFill(VL_ESTOQUE_ANT, 19, 2) +
+              VLFill(VL_ESTOQUES, 19, 2) +
+              VLFill(VL_CAIXA_ANT, 19, 2) +
+              VLFill(VL_CAIXA, 19, 2) +
+              VLFill(VL_APLIC_FIN_ANT, 19, 2) +
+              VLFill(VL_APLIC_FIN, 19, 2) +
+              VLFill(VL_CTA_REC_ANT, 19, 2) +
+              VLFill(VL_CTA_REC, 19, 2) +
+              VLFill(VL_CTA_PAG_ANT, 19, 2) +
+              VLFill(VL_CTA_PAG, 19, 2) +
+              VLFill(VL_COMPRA_MERC, 19, 2) +
+              VLFill(VL_COMPRA_ATIVO, 19, 2) +
+              VLFill(VL_RECEITAS, 19, 2) +
+              VLFill(TOT_ATIVO, 19, 2) +
+              LFill(IND_AVAL_ESTOQ, 1))
+        else
+            Add(LFill('Y672') +
+              VLFill(VL_CAPITAL_ANT, 19, 2) +
+              VLFill(VL_CAPITAL, 19, 2) +
+              VLFill(VL_ESTOQUE_ANT, 19, 2) +
+              VLFill(VL_ESTOQUES, 19, 2) +
+              VLFill(VL_CAIXA_ANT, 19, 2) +
+              VLFill(VL_CAIXA, 19, 2) +
+              VLFill(VL_APLIC_FIN_ANT, 19, 2) +
+              VLFill(VL_APLIC_FIN, 19, 2) +
+              VLFill(VL_CTA_REC_ANT, 19, 2) +
+              VLFill(VL_CTA_REC, 19, 2) +
+              VLFill(VL_CTA_PAG_ANT, 19, 2) +
+              VLFill(VL_CTA_PAG, 19, 2) +
+              VLFill(VL_COMPRA_MERC, 19, 2) +
+              VLFill(VL_COMPRA_ATIVO, 19, 2) +
+              VLFill(VL_RECEITAS, 19, 2) +
+              VLFill(TOT_ATIVO, 19, 2) +
+              VLFill(VL_FOLHA, 19, 2) +
+              VLFill(VL_ALIQ_RED, 4, 2) +
+              ifThen( FBloco_0.Registro0000.COD_VER in [ ECFVersao100, ECFVersao200 ], LFill(IND_REG_APUR, 1), '' ) +
+              LFill(IND_AVAL_ESTOQ, 1));
       end;
 
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
@@ -943,7 +963,7 @@ begin
                   LFill(ARQ_RTF) +
                   LFill(IND_FIM_RTF));
 
-          ECFVersao300:
+          ECFVersao300, ECFVersao400, ECFVersao500:
                Add( LFill('Y800') +
                     LFill(TIPO_DOC) +
                     LFill(DESC_RTF) +

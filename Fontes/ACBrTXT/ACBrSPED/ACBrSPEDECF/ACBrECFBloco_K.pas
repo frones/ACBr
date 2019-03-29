@@ -59,16 +59,22 @@ type
   TRegistroK156List = class;
   TRegistroK355List = class;
   TRegistroK356List = class;
+  TRegistroK915List = class;
+  TRegistroK935List = class;
 
   /// Registro K001 - Abertura do Bloco K – Saldos das Contas Contábeis e Referenciais
   TRegistroK001 = class(TOpenBlocos)
   private
     FRegistroK030 :TRegistroK030List;
+    FRegistroK915 :TRegistroK915List;
+    FRegistroK935 :TRegistroK935List;
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
 
     property RegistroK030: TRegistroK030List read FRegistroK030 write FRegistroK030;
+    property RegistroK915: TRegistroK915List read FRegistroK915 write FRegistroK915;
+    property RegistroK935: TRegistroK935List read FRegistroK935 write FRegistroK935;
   end;
 
   /// Registro K030 - Identificação dos Períodos e Formas de Apuração do IRPJ e da CSLL no Ano-Calendário
@@ -224,6 +230,90 @@ type
     property Items[Index: Integer]: TRegistroK356 read GetItem write SetItem;
   end;
 
+  /// Registro K915
+  TRegistroK915 = class(TBlocos)
+  private
+    fPER_APUR : String;
+    fCOD_CTA : String;
+    fCOD_CCUS : String;
+    fID_REGRA : String;
+    fVL_SLD_INI_ESP : Variant;
+    fIND_VL_SLD_INI_ESP : String;
+    fVL_DEB_ESP : Variant;
+    fVL_CRED_ESP : Variant;
+    fVL_SLD_FIN_ESP : Variant;
+    fIND_VL_SLD_FIN_ESP : String;
+    fSLD_INI_PRE : Variant;
+    fIND_SLD_INI_PRE : String;
+    fVL_DEB_PRE : Variant;
+    fVL_CRED_PRE : Variant;
+    fSLD_FIN_PRE : Variant;
+    fIND_SLD_FIN_PRE : String;
+    fJUSTIFICATIVA : String;
+  public
+    property PER_APUR: String read fPER_APUR write fPER_APUR;
+    property COD_CTA: String read fCOD_CTA write fCOD_CTA;
+    property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
+    property ID_REGRA: String read fID_REGRA write fID_REGRA;
+    property VL_SLD_INI_ESP: Variant read fVL_SLD_INI_ESP write fVL_SLD_INI_ESP;
+    property IND_VL_SLD_INI_ESP: String read fIND_VL_SLD_INI_ESP write fIND_VL_SLD_INI_ESP;
+    property VL_DEB_ESP: Variant read fVL_DEB_ESP write fVL_DEB_ESP;
+    property VL_CRED_ESP: Variant read fVL_CRED_ESP write fVL_CRED_ESP;
+    property VL_SLD_FIN_ESP: Variant read fVL_SLD_FIN_ESP write fVL_SLD_FIN_ESP;
+    property IND_VL_SLD_FIN_ESP: String read fIND_VL_SLD_FIN_ESP write fIND_VL_SLD_FIN_ESP;
+    property SLD_INI_PRE: Variant read fSLD_INI_PRE write fSLD_INI_PRE;
+    property IND_SLD_INI_PRE: String read fIND_SLD_INI_PRE write fIND_SLD_INI_PRE;
+    property VL_DEB_PRE: Variant read fVL_DEB_PRE write fVL_DEB_PRE;
+    property VL_CRED_PRE: Variant read fVL_CRED_PRE write fVL_CRED_PRE;
+    property SLD_FIN_PRE: Variant read fSLD_FIN_PRE write fSLD_FIN_PRE;
+    property IND_SLD_FIN_PRE: String read fIND_SLD_FIN_PRE write fIND_SLD_FIN_PRE;
+    property JUSTIFICATIVA: String read fJUSTIFICATIVA write fJUSTIFICATIVA;
+  end;
+
+  //  Registro K915 - Lista
+  TRegistroK915List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK915;
+    procedure SetItem(Index: Integer; const Value: TRegistroK915);
+  public
+    function New(): TRegistroK915;
+    property Items[Index: Integer]: TRegistroK915 read GetItem write SetItem;
+  end;
+
+  /// Registro K935
+  TRegistroK935 = class(TBlocos)
+  private
+    fPER_APUR : String;
+    fCOD_CTA : String;
+    fCOD_CCUS : String;
+    fID_REGRA : String;
+    fVL_SLD_FIN_ESP : Variant;
+    fIND_VL_SLD_FIN_ESP : String;
+    fSLD_FIN_PRE : Variant;
+    fIND_SLD_FIN_PRE : String;
+    fJUSTIFICATIVA : String;
+  public
+    property PER_APUR: String read fPER_APUR write fPER_APUR;
+    property COD_CTA: String read fCOD_CTA write fCOD_CTA;
+    property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
+    property ID_REGRA: String read fID_REGRA write fID_REGRA;
+    property VL_SLD_FIN_ESP: Variant read fVL_SLD_FIN_ESP write fVL_SLD_FIN_ESP;
+    property IND_VL_SLD_FIN_ESP: String read fIND_VL_SLD_FIN_ESP write fIND_VL_SLD_FIN_ESP;
+    property SLD_FIN_PRE: Variant read fSLD_FIN_PRE write fSLD_FIN_PRE;
+    property IND_SLD_FIN_PRE: String read fIND_SLD_FIN_PRE write fIND_SLD_FIN_PRE;
+    property JUSTIFICATIVA: String read fJUSTIFICATIVA write fJUSTIFICATIVA;
+  end;
+
+  //  Registro K935 - Lista
+  TRegistroK935List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroK935;
+    procedure SetItem(Index: Integer; const Value: TRegistroK935);
+  public
+    function New(): TRegistroK935;
+    property Items[Index: Integer]: TRegistroK935 read GetItem write SetItem;
+  end;
+
   /// Registro K990 - ENCERRAMENTO DO BLOCO K
   TRegistroK990 = class(TCloseBlocos)
     fQTD_LIN: Integer;    /// Quantidade total de linhas do Bloco I
@@ -368,19 +458,59 @@ begin
    inherited;
 end;
 
+{ TRegistroK915List }
+
+function TRegistroK915List.GetItem(Index: Integer): TRegistroK915;
+begin
+  Result := TRegistroK915(Inherited Items[Index]);
+end;
+
+function TRegistroK915List.New: TRegistroK915;
+begin
+  Result := TRegistroK915.Create();
+  Add(Result);
+end;
+
+procedure TRegistroK915List.SetItem(Index: Integer; const Value: TRegistroK915);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroK935List }
+
+function TRegistroK935List.GetItem(Index: Integer): TRegistroK935;
+begin
+  Result := TRegistroK935(Inherited Items[Index]);
+end;
+
+function TRegistroK935List.New: TRegistroK935;
+begin
+  Result := TRegistroK935.Create();
+  Add(Result);
+end;
+
+procedure TRegistroK935List.SetItem(Index: Integer; const Value: TRegistroK935);
+begin
+  Put(Index, Value);
+end;
+
 { TRegistroK001 }
 
 constructor TRegistroK001.Create;
 begin
-   inherited Create;
-   FRegistroK030 := TRegistroK030List.Create;
-   //
-   IND_DAD := idComDados;;
+  inherited Create;
+  FRegistroK030 := TRegistroK030List.Create;
+  FRegistroK915 := TRegistroK915List.Create;
+  FRegistroK935 := TRegistroK935List.Create;
+  //
+  IND_DAD := idComDados;;
 end;
 
 destructor TRegistroK001.Destroy;
 begin
-   FRegistroK030.Free;
+  FRegistroK030.Free;
+  FRegistroK915.Free;
+  FRegistroK935.Free;
   inherited;
 end;
 

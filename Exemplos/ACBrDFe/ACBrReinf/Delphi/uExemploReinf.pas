@@ -733,14 +733,13 @@ end;
 procedure TForm2.GerarReinf1000;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R1000.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R1000.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R1000.New do
   begin
     with evtInfoContri do
     begin
       Sequencial     := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -773,7 +772,7 @@ begin
         Contato.email    := edContEmail.Text;
 
         SoftwareHouse.Clear;
-        with SoftwareHouse.Add do
+        with SoftwareHouse.New do
         begin
           CnpjSoftHouse := '12345678000123';
           NmRazao       := 'SoftwareHouse Teste';
@@ -792,14 +791,13 @@ end;
 procedure TForm2.GerarReinf1070;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R1070.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R1070.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R1070.New do
   begin
     with evtTabProcesso do
     begin
       Sequencial     := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -817,7 +815,7 @@ begin
         with ideProcesso do
         begin
           infoSusp.Clear;
-          with infoSusp.Add do
+          with infoSusp.New do
           begin
             codSusp     := '12345678';
             indSusp     := siLiminarMandadoSeguranca;
@@ -840,7 +838,7 @@ end;
 procedure TForm2.GerarReinf2010;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2010.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2010.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2010.New do
   begin
     with evtServTom do
     begin
@@ -849,7 +847,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -876,7 +873,7 @@ begin
             indCPRB           := icNaoContribuintePrevidenciariaReceitaBruta;
 
             nfs.Clear;
-            with nfs.Add do
+            with nfs.New do
             begin
               serie       := '1';
               numDocto    := '123';
@@ -885,7 +882,7 @@ begin
               obs         := '';
 
               infoTpServ.Clear;
-              with infoTpServ.Add do
+              with infoTpServ.New do
               begin
                 tpServico     := '100000003'; {Tabela 06}
                 vlrBaseRet    := 100.00;
@@ -901,7 +898,7 @@ begin
             end;
 
             infoProcRetPr.Clear;
-            with infoProcRetPr.Add do
+            with infoProcRetPr.New do
             begin
               tpProcRetPrinc := tpAdministrativo;
               nrProcRetPrinc := '1122112';
@@ -910,7 +907,7 @@ begin
             end;
 
             infoProcRetAd.Clear;
-            with infoProcRetAd.Add do
+            with infoProcRetAd.New do
             begin
               tpProcRetAdic := tpAdministrativo;
               nrProcRetAdic := '1122112';
@@ -927,7 +924,7 @@ end;
 procedure TForm2.GerarReinf2020;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2020.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2020.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2020.New do
   begin
     with evtServPrest do
     begin
@@ -936,7 +933,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -963,7 +959,7 @@ begin
             vlrTotalNRetAdic  := 10.00;
 
             nfs.Clear;
-            with nfs.Add do
+            with nfs.New do
             begin
               serie       := '1';
               numDocto    := '123';
@@ -972,7 +968,7 @@ begin
               obs         := '';
 
               infoTpServ.Clear;
-              with infoTpServ.Add do
+              with infoTpServ.New do
               begin
                 tpServico     := '100000003'; {Tabela 06}
                 vlrBaseRet    := 100.00;
@@ -988,7 +984,7 @@ begin
             end;
 
             infoProcRetPr.Clear;
-            with infoProcRetPr.Add do
+            with infoProcRetPr.New do
             begin
               tpProcRetPrinc := tpAdministrativo;
               nrProcRetPrinc := '1122112';
@@ -997,7 +993,7 @@ begin
             end;
 
             infoProcRetAd.Clear;
-            with infoProcRetAd.Add do
+            with infoProcRetAd.New do
             begin
               tpProcRetAdic := tpAdministrativo;
               nrProcRetAdic := '1122112';
@@ -1014,7 +1010,7 @@ end;
 procedure TForm2.GerarReinf2030;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2030.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2030.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2030.New do
   begin
     with evtAssocDespRec do
     begin
@@ -1023,7 +1019,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -1036,7 +1031,7 @@ begin
         nrInscEstab := '12345678000123';
 
         recursosRec.Clear;
-        with recursosRec.Add do
+        with recursosRec.New do
         begin
           cnpjOrigRecurso := '12345678000123';
           vlrTotalRec     := 100.00;
@@ -1044,7 +1039,7 @@ begin
           vlrTotalNRet    := 0;
 
           infoRecurso.Clear;
-          with infoRecurso.Add do
+          with infoRecurso.New do
           begin
             tpRepasse   := trPatrocinio;
             descRecurso := 'descricao resumida';
@@ -1053,7 +1048,7 @@ begin
           end;
 
           infoProc.Clear;
-          with infoProc.Add do
+          with infoProc.New do
           begin
             tpProc  := tpAdministrativo;
             nrProc  := '123';
@@ -1069,7 +1064,7 @@ end;
 procedure TForm2.GerarReinf2040;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2040.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2040.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2040.New do
   begin
     with evtAssocDespRep do
     begin
@@ -1078,7 +1073,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -1091,7 +1085,7 @@ begin
         nrInscEstab := '12345678000123';
 
         recursosRep.Clear;
-        with recursosRep.Add do
+        with recursosRep.New do
         begin
           cnpjAssocDesp := '12345678000123';
           vlrTotalRep   := 100.00;
@@ -1099,7 +1093,7 @@ begin
           vlrTotalNRet  := 0;
 
           infoRecurso.Clear;
-          with infoRecurso.Add do
+          with infoRecurso.New do
           begin
             tpRepasse   := trPatrocinio;
             descRecurso := 'descricao resumida';
@@ -1108,7 +1102,7 @@ begin
           end;
 
           infoProc.Clear;
-          with infoProc.Add do
+          with infoProc.New do
           begin
             tpProc  := tpAdministrativo;
             nrProc  := '123';
@@ -1124,7 +1118,7 @@ end;
 procedure TForm2.GerarReinf2050;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2050.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2050.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2050.New do
   begin
     with evtComProd do
     begin
@@ -1133,7 +1127,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -1153,13 +1146,13 @@ begin
         vlrSenarSuspTotal := 100.00;
 
         tipoCom.Clear;
-        with tipoCom.Add do
+        with tipoCom.New do
         begin
           indCom      := icProdRural;
           vlrRecBruta := 100.50;
 
           infoProc.Clear;
-          with infoProc.Add do
+          with infoProc.New do
           begin
             tpProc       := tpAdministrativo;
             nrProc       := '123';
@@ -1177,7 +1170,7 @@ end;
 procedure TForm2.GerarReinf2060;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2060.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2060.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2060.New do
   begin
     with evtCPRB do
     begin
@@ -1186,7 +1179,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -1202,7 +1194,7 @@ begin
         vlrCPRBSuspTotal := 100.00;
 
         tipoCod.Clear;
-        with tipoCod.Add do
+        with tipoCod.New do
         begin
           codAtivEcon     := '12345678';
           vlrRecBrutaAtiv := 100.50;
@@ -1212,7 +1204,7 @@ begin
           vlrCPRBapur     := 100.50;
 
           tipoAjuste.Clear;
-          with tipoAjuste.Add do
+          with tipoAjuste.New do
           begin
             tpAjuste   := taReducao;
             codAjuste  := caRegimeCaixa;
@@ -1222,7 +1214,7 @@ begin
           end;
 
           infoProc.Clear;
-          with infoProc.Add do
+          with infoProc.New do
           begin
             tpProc      := tpAdministrativo;
             nrProc      := '123';
@@ -1242,7 +1234,7 @@ begin
 //  EXIT;
 
   ACBrReinf1.Eventos.ReinfEventos.R2070.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2070.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2070.New do
   begin
     with evtPgtosDivs do
     begin
@@ -1251,7 +1243,6 @@ begin
       ideEvento.indRetif := trOriginal;
       ideEvento.NrRecibo := '123';
       ideEvento.perApur  := '2018-04';
-      IdeEvento.TpAmb    := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi  := peAplicEmpregador;
       IdeEvento.VerProc  := '1.0';
 
@@ -1292,13 +1283,13 @@ begin
         end;
 
         ideEstab.Clear;
-        with ideEstab.Add do
+        with ideEstab.New do
         begin
           tpInsc := tiCNPJ;
           nrInsc := '12345678000112';
 
           pgtoPF.Clear;
-          with pgtoPF.Add do
+          with pgtoPF.New do
           begin
             dtPgto            := Date;
             indSuspExig       := tpSim;
@@ -1306,14 +1297,14 @@ begin
             vlrRendTributavel := 0.0;
 
             detDeducao.Clear;
-            with detDeducao.Add do
+            with detDeducao.New do
             begin
               indTpDeducao := itdOficial;
               vlrDeducao   := 0.0;
             end;
 
             rendIsento.Clear;
-            with rendIsento.Add do
+            with rendIsento.New do
             begin
               tpIsencao      := tiIsenta;
               vlrIsento      := 0.0;
@@ -1321,7 +1312,7 @@ begin
             end;
 
             detCompet.Clear;
-            with detCompet.Add do
+            with detCompet.New do
             begin
               indPerReferencia  := iprMensal;
               perRefPagto       := '2018-04';
@@ -1335,7 +1326,7 @@ begin
             end;
 
             infoRRA.Clear;
-            with infoRRA.Add do
+            with infoRRA.New do
             begin
               tpProcRRA   := tpAdministrativo;
               nrProcRRA   := '1234';
@@ -1349,7 +1340,7 @@ begin
                 vlrDespAdvogados := 0.0;
 
                 ideAdvogado.Clear;
-                with ideAdvogado.Add do
+                with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
                   nrInscAdvogado := '12345678000123';
@@ -1359,7 +1350,7 @@ begin
             end;
 
             infoProcJud.Clear;
-            with infoProcJud.Add do
+            with infoProcJud.New do
             begin
               nrProcJud         := '1234';
               codSusp           := '123';
@@ -1371,7 +1362,7 @@ begin
                 vlrDespAdvogados := 0.0;
 
                 ideAdvogado.Clear;
-                with ideAdvogado.Add do
+                with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
                   nrInscAdvogado := '12345678000123';
@@ -1392,14 +1383,14 @@ begin
           end;
 
           pgtoPJ.Clear;
-          with pgtoPJ.Add do
+          with pgtoPJ.New do
           begin
             dtPagto           := Date;
             vlrRendTributavel := 0.0;
             vlrRet            := 0.0;
 
             infoProcJud.Clear;
-            with infoProcJud.Add do
+            with infoProcJud.New do
             begin
               nrProcJud         := '1234';
               codSusp           := '123';
@@ -1411,7 +1402,7 @@ begin
                 vlrDespAdvogados := 0.0;
 
                 ideAdvogado.Clear;
-                with ideAdvogado.Add do
+                with ideAdvogado.New do
                 begin
                   tpInscAdvogado := tiCNPJ;
                   nrInscAdvogado := '12345678000123';
@@ -1443,14 +1434,13 @@ end;
 procedure TForm2.GerarReinf2098;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2098.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2098.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2098.New do
   begin
     with evtReabreEvPer do
     begin
       Sequencial := 0;
 
       ideEvento.perApur := '2018-04';
-      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -1463,14 +1453,13 @@ end;
 procedure TForm2.GerarReinf2099;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R2099.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R2099.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R2099.New do
   begin
     with evtFechaEvPer do
     begin
       Sequencial := 0;
 
       ideEvento.perApur := '2018-04';
-      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -1504,7 +1493,7 @@ end;
 procedure TForm2.GerarReinf3010;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R3010.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R3010.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R3010.New do
   begin
     with evtEspDesportivo do
     begin
@@ -1519,7 +1508,6 @@ begin
         ideEvento.nrRecibo := edRecibo.Text;
 
       ideEvento.dtApuracao := Date;
-      IdeEvento.TpAmb      := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi    := peAplicEmpregador;
       IdeEvento.VerProc    := '1.0';
 
@@ -1527,13 +1515,13 @@ begin
       ideContri.NrInsc := edtEmitCNPJ.Text;
 
       ideEstab.Clear;
-      with ideEstab.Add do
+      with ideEstab.New do
       begin
         tpInscEstab := tiCNPJ;
         nrInscEstab := edtEmitCNPJ.Text;
 
         boletim.Clear;
-        with boletim.Add do
+        with boletim.New do
         begin
           nrBoletim       := '1234';
           tpCompeticao    := ttcOficial;
@@ -1550,7 +1538,7 @@ begin
           qtdeNaoPagantes := 999;
 
           receitaIngressos.Clear;
-          with receitaIngressos.Add do
+          with receitaIngressos.New do
           begin
             tpIngresso       := ttiArquibancada;
             descIngr         := 'TESTE';
@@ -1562,7 +1550,7 @@ begin
           end;
 
           outrasReceitas.Clear;
-          with outrasReceitas.Add do
+          with outrasReceitas.New do
           begin
             tpReceita   := ttrTransmissao;
             vlrReceita  := 1234;
@@ -1579,7 +1567,7 @@ begin
           vlrRetParc       := 0;
 
           infoProc.Clear;
-          with infoProc.Add do
+          with infoProc.New do
           begin
             tpProc    := tpAdministrativo;
             nrProc    := '1234567890';
@@ -1595,13 +1583,12 @@ end;
 procedure TForm2.GerarReinf9000;
 begin
   ACBrReinf1.Eventos.ReinfEventos.R9000.Clear;
-  with ACBrReinf1.Eventos.ReinfEventos.R9000.Add do
+  with ACBrReinf1.Eventos.ReinfEventos.R9000.New do
   begin
     with evtExclusao do
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb   := taProducaoRestritaDadosReais;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 

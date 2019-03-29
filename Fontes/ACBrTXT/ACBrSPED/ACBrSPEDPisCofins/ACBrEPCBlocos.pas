@@ -1527,7 +1527,7 @@ begin
   else if AValue = '02' then
     Result :=  crAdministradora
   else if AValue = '03' then
-    Result :=   crDocumentoFiscal
+    Result :=   crTituloDeCredito
   else if AValue = '04' then
     Result :=    crDocumentoFiscal
   else if AValue = '05' then

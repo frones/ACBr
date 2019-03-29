@@ -324,7 +324,7 @@ begin
 
               if Leitor.rExtrai(6, 'recepcao') <> '' then
               begin
-                RetEventos.Items[i].Recepcao.tpAmb := eSStrTotpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+                RetEventos.Items[i].Recepcao.tpAmb := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
                 RetEventos.Items[i].Recepcao.dhRecepcao := Leitor.rCampo(tcDatHor, 'dhRecepcao', '');
                 RetEventos.Items[i].Recepcao.versaoAplicRecepcao := Leitor.rCampo(tcStr, 'versaoAppRecepcao');
                 RetEventos.Items[i].Recepcao.Protocolo := Leitor.rCampo(tcStr, 'protocoloEnvioLote');

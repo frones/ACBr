@@ -505,7 +505,6 @@ begin
       ModoLancamento := eSStrToModoLancamento(Ok, INIRec.ReadString(sSecao, 'ModoLancamento', 'inclusao'));
 
       sSecao := 'ideEvento';
-      ideEvento.TpAmb   := eSStrTotpAmb(Ok, INIRec.ReadString(sSecao, 'tpAmb', '1'));
       ideEvento.ProcEmi := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
       ideEvento.VerProc := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 

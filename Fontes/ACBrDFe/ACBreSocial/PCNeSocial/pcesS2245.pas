@@ -306,11 +306,82 @@ begin
 end;
 
 function TEvtTreiCap.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao, sFim: String;
+  I: Integer;
 begin
-  Result := False;
+  Result := True;
 
-  { Implementar }
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
 
+    with Self do
+    begin
+      sSecao := 'evtTreiCap';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      IdeVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+
+      sSecao := 'treiCap';
+      treiCap.codTreiCap := INIRec.ReadString(sSecao, 'codTreiCap', EmptyStr);
+      treiCap.obsTreiCap := INIRec.ReadString(sSecao, 'obsTreiCap', EmptyStr);
+
+      sSecao := 'infoComplem';
+      if INIRec.ReadString(sSecao, 'dtTreiCap', '') <> '' then
+      begin
+        treiCap.infoComplem.dtTreiCap  := StringToDateTime(INIRec.ReadString(sSecao, 'dtTreiCap', '0'));
+        treiCap.infoComplem.durTreiCap := StringToFloatDef(INIRec.ReadString(sSecao, 'durTreiCap', EmptyStr), 0);
+        treiCap.infoComplem.modTreiCap := StrTotpModTreiCap(Ok, INIRec.ReadString(sSecao, 'modTreiCap', '1'));
+        treiCap.infoComplem.tpTreiCap  := StrTotpTpTreiCap(Ok, INIRec.ReadString(sSecao, 'tpTreiCap', '1'));
+      end;
+
+      I := 1;
+      while true do
+      begin
+        // de 01 até 99
+        sSecao := 'ideProfResp' + IntToStrZero(I, 2);
+        sFim   := INIRec.ReadString(sSecao, 'nmProf', 'FIM');
+
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+
+        with treiCap.infoComplem.ideProfResp.New do
+        begin
+          cpfProf  := INIRec.ReadString(sSecao, 'cpfProf', '');
+          nmProf   := sFim;
+          tpProf   := StrTotpTpProf(Ok, INIRec.ReadString(sSecao, 'tpProf', '1'));
+          formProf := INIRec.ReadString(sSecao, 'formProf', '');
+          codCBO   := INIRec.ReadString(sSecao, 'codCBO', '');
+          nacProf  := StrTotpNacProf(Ok, INIRec.ReadString(sSecao, 'nacProf', '1'));
+        end;
+
+        Inc(I);
+      end;
+    end;
+
+    GerarXML;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 function TS2245Collection.New: TS2245CollectionItem;

@@ -232,11 +232,54 @@ begin
 end;
 
 function TEvtToxic.LerArqIni(const AIniString: String): Boolean;
+var
+  INIRec: TMemIniFile;
+  Ok: Boolean;
+  sSecao: String;
 begin
-  Result := False;
+  Result := True;
 
-  { Implementar }
+  INIRec := TMemIniFile.Create('');
+  try
+    LerIniArquivoOuString(AIniString, INIRec);
 
+    with Self do
+    begin
+      sSecao := 'evtToxic';
+      Id         := INIRec.ReadString(sSecao, 'Id', '');
+      Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
+
+      sSecao := 'ideEvento';
+      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+
+      sSecao := 'ideEmpregador';
+      ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
+      ideEmpregador.TpInsc       := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
+      ideEmpregador.NrInsc       := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
+
+      sSecao := 'ideVinculo';
+      ideVinculo.CpfTrab   := INIRec.ReadString(sSecao, 'cpfTrab', EmptyStr);
+      ideVinculo.NisTrab   := INIRec.ReadString(sSecao, 'nisTrab', EmptyStr);
+      ideVinculo.Matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
+      IdeVinculo.codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
+
+      sSecao := 'toxicologico';
+      toxicologico.dtExame     := StringToDateTime(INIRec.ReadString(sSecao, 'dtExame', '0'));
+      toxicologico.cnpjLab     := INIRec.ReadString(sSecao, 'cnpjLab', '');
+      toxicologico.codSeqExame := INIRec.ReadString(sSecao, 'codSeqExame', '');
+      toxicologico.nmMed       := INIRec.ReadString(sSecao, 'nmMed', '');
+      toxicologico.nrCRM       := INIRec.ReadString(sSecao, 'nrCRM', '');
+      toxicologico.ufCRM       := INIRec.ReadString(sSecao, 'ufCRM', '');
+      toxicologico.indRecusa   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indRecusa', 'N'));
+    end;
+
+    GerarXML;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 end.

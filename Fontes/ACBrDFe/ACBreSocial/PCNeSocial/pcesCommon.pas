@@ -558,11 +558,9 @@ type
 
   TIdeEvento = class(TObject)
   private
-    FTpAmb: TpTpAmb;
     FProcEmi: TpProcEmi;
     FVerProc: string;
   public
-    property TpAmb: TpTpAmb read FTpAmb write FTpAmb;
     property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
     property VerProc: string read FVerProc write FVerProc;
   end;
@@ -589,11 +587,9 @@ type
   private
     FIndApuracao: tpIndApuracao;
     FPerApur: string;
-    FTpAmb: TpTpAmb;
     FProcEmi: TpProcEmi;
     FVerProc: string;
   public
-    property TpAmb: TpTpAmb read FTpAmb write FTpAmb;
     property ProcEmi: TpProcEmi read FProcEmi write FProcEmi;
     property VerProc: string read FVerProc write FVerProc;
     property IndApuracao: tpIndApuracao read FIndApuracao write FIndApuracao;

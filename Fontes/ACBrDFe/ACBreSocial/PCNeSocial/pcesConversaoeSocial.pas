@@ -107,8 +107,6 @@ type
                              teS2306, teS2399, teS2400, teS3000, teS4000, teS4999, teS5001, teS5002,
                              teS5003, teS5011, teS5012, teS5013, teS2221);
 
-  TpTpAmb                 = (taProducao, taProducaoRestrita);
-
   tpSimNao                = (tpSim, tpNao);
 
   TpProcEmi               = (peAplicEmpregador, peAplicGovernamental);
@@ -499,9 +497,6 @@ function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
-
-function eStpAmbToStr(const t: TptpAmb ): string;
-function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
 
 function eSprocEmiToStr(const t: TpprocEmi ): string;
 function eSStrToprocEmi(var ok: boolean; const s: string): TpprocEmi;
@@ -1116,16 +1111,6 @@ end;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 begin
   result := EnumeradoToStr2(t, TEventoString);
-end;
-
-function eStpAmbToStr(const t: TptpAmb ): string;
-begin
-  result := EnumeradoToStr2(t, TGenericosString1_2 );
-end;
-
-function eSStrTotpAmb(var ok: boolean; const s: string): TptpAmb;
-begin
-  result  := TptpAmb( StrToEnumerado2(ok , s, TGenericosString1_2 ) );
 end;
 
 function eSProcEmiToStr(const t: TpProcEmi ): string;

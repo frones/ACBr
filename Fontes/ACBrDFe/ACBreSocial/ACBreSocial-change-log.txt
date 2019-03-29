@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/03/2019
+-- Diversos --
+[*] Removido de todos os eventos o campo tpAmb, agora ao gerar o XML dos eventos
+    esse campo será preenchido automaticamente com o valor da propriedade de 
+    configuração: Ambiente. 
+   Por: Italo Jurisato Junior
+
 28/03/2019
 -- pcesS2210 / pcesS2230 --
 [*] Acrescentado um parâmetro com o tipo do evento na procedure que gera o grupo Emitente

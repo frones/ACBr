@@ -1028,7 +1028,7 @@ begin
   if GeraGrupo then
     Gerador.wGrupo('ideEvento');
 
-  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, eStpAmbToStr(pEvt.TpAmb));
+  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, TpAmbToStr(TACBreSocial(FACBreSocial).Configuracoes.WebServices.Ambiente));
   Gerador.wCampo(tcStr, '', 'procEmi', 1,  1, 1, eSProcEmiToStr(pEvt.ProcEmi));
   Gerador.wCampo(tcStr, '', 'verProc', 1, 20, 1, pEvt.VerProc);
 
@@ -1075,7 +1075,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'indApuracao', 1,  1, 1, eSIndApuracaoToStr(pEvt.IndApuracao));
   Gerador.wCampo(tcStr, '', 'perApur',     7,  7, 1, pEvt.perApur);
-  Gerador.wCampo(tcStr, '', 'tpAmb',       1,  1, 1, eStpAmbToStr(pEvt.TpAmb));
+  Gerador.wCampo(tcStr, '', 'tpAmb',   1,  1, 1, TpAmbToStr(TACBreSocial(FACBreSocial).Configuracoes.WebServices.Ambiente));
   Gerador.wCampo(tcStr, '', 'procEmi',     1,  1, 1, eSProcEmiToStr(pEvt.ProcEmi));
   Gerador.wCampo(tcStr, '', 'verProc',     1, 20, 1, pEvt.VerProc);
 

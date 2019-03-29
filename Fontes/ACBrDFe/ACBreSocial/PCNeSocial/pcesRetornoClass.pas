@@ -135,12 +135,12 @@ type
 
   TRecepcao = class
   private
-    FtpAmb: TptpAmb;
+    FtpAmb: TpcnTipoAmbiente;
     FdhRecepcao: TDateTime;
     FversaoAplicRecepcao: String;
     FProtocolo: String;
   public
-    property tpAmb: TptpAmb read FtpAmb write FtpAmb;
+    property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb;
     property dhRecepcao: TDateTime read FdhRecepcao write FdhRecepcao;
     property versaoAplicRecepcao: String read FversaoAplicRecepcao write FversaoAplicRecepcao;
     property Protocolo: String read FProtocolo write FProtocolo;

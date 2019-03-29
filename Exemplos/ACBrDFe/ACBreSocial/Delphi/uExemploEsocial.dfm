@@ -773,7 +773,7 @@ object FExemploEsocial: TFExemploEsocial
       Top = 1
       Width = 279
       Height = 508
-      ActivePage = TabSheet1
+      ActivePage = TabSheet5
       Align = alTop
       MultiLine = True
       TabOrder = 1

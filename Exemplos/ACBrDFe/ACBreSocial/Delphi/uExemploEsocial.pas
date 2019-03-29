@@ -363,9 +363,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      // So tem na Versão 2.4.1
-      // taProducao, taProducaoRestrita
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -464,7 +461,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -543,7 +539,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -622,7 +617,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -685,7 +679,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -731,7 +724,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -765,7 +757,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -797,7 +788,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -852,7 +842,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -891,7 +880,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -944,7 +932,6 @@ begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -982,7 +969,6 @@ begin
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1173,7 +1159,6 @@ begin
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1315,7 +1300,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2017-05';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -1367,7 +1351,6 @@ begin
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatório se indRetif = ireRetificacao.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1551,7 +1534,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -1875,7 +1857,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2044,7 +2025,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2127,7 +2107,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2170,7 +2149,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2201,7 +2179,6 @@ begin
       begin
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2226,7 +2203,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2270,7 +2246,6 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2298,7 +2273,6 @@ begin
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -2324,7 +2298,6 @@ begin
       begin
         // indRetif := tpIndRetificacao(1);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2629,7 +2602,6 @@ begin
       begin
         indRetif := tpIndRetificacao(1);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2789,7 +2761,6 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif = ireRetificacao;
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -2906,7 +2877,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3023,7 +2993,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := TpTpAmb(1);
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3091,7 +3060,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb    := TpTpAmb(1);
         ProcEmi  := TpProcEmi(0);
         VerProc  := '1.0';
       end;
@@ -3129,7 +3097,6 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif=ireRetificacao
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -3219,7 +3186,6 @@ begin
       begin
         indRetif := ireOriginal;
         NrRecibo := '654654865656';
-        TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -3323,7 +3289,6 @@ begin
       begin
         indRetif := ireOriginal;
         NrRecibo := '654654865656';
-        TpAmb    := taProducaoRestrita;
         ProcEmi  := peAplicEmpregador;
         VerProc  := '1.0';
       end;
@@ -3376,7 +3341,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3421,7 +3385,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
 //        NrRecibo := '65.5454.987798798798';
-        TpAmb    := taProducaoRestrita;
         ProcEmi  := TpProcEmi(0);
         VerProc  := '1.0';
       end;
@@ -3475,7 +3438,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3511,7 +3473,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3694,7 +3655,6 @@ begin
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -3915,7 +3875,6 @@ begin
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -3994,7 +3953,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -4107,7 +4065,6 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -4206,7 +4163,6 @@ begin
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 

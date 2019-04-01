@@ -339,6 +339,7 @@ type
 
   TNFSeConsultarLoteRPS = Class(TNFSeWebService)
   private
+    FSituacao: String;
     // Entrada
     FNumeroLote: String;
 
@@ -356,6 +357,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
+    property Situacao: String     read FSituacao;
     //usado pelo provedor IssDsf
     property NumeroLote: String   read FNumeroLote   write FNumeroLote;
   end;
@@ -3832,6 +3834,7 @@ begin
   FaMsg := '';
   FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
   Result := ExtrairNotasRetorno;
+  FSituacao := FRetornoNFSe.Situacao;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsLote);
 end;

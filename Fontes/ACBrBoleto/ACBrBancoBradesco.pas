@@ -532,7 +532,7 @@ begin
     PadRight('', 15, '0')                               + // Número de Inscrição 155 169 15 - Num *G006
     PadRight('', 40, ' ')                               + // Nome do Pagadorr/Avalista 170 209 40 - Alfa G013
     PadRight('0', 3, '0')                               + // Cód. Bco. Corresp. na Compensação 210 212 3 - Num *C031
-    PadRight('',20, '0')                                + // Nosso Nº no Banco Correspondente 213 232 20 - Alfa *C032
+    PadRight('',20, ' ')                                + // Nosso Nº no Banco Correspondente 213 232 20 - Alfa *C032
     PadRight('', 8, ' ');                                 // FEBRABAN/CNAB 233 240 8 - Alfa Brancos G004
 
   {SEGMENTO R OPCIONAL }
@@ -765,9 +765,7 @@ begin
                   TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +  // 219 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
                   PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
                   PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '  +
-                    Sacado.Complemento + ' ' +
-                    Sacado.Bairro + ' ' + Sacado.Cidade + ' '             +
-                    Sacado.UF, 40)                                        +
+                    Sacado.Complemento, 40)                               +  // 275 a 314
                   space(12) + PadRight( Sacado.CEP, 8 )                   +  // 315 a 334 - 1ª Mensagem + CEP
                   PadRight( MensagemCedente, 60 );                           // 335 a 394 - 2ª Mensagem
 

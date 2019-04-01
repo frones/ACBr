@@ -741,10 +741,13 @@ type
     fpNumeroCorrespondente: Integer;
     fpLayoutVersaoArquivo : Integer; // Versão do Hearder do arquivo
     fpLayoutVersaoLote : Integer; // Versão do Hearder do Lote
+    fpCasasDecimaisMoraJuros: Integer;
 
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
+    function FormatarMoraJurosRemessa(const APosicoes: Integer
+       ;const ACBrTitulo: TACBrTitulo):String; Virtual;
   public
     Constructor create(AOwner: TACBrBanco);
     Destructor Destroy; override ;
@@ -765,6 +768,7 @@ type
     property NumeroCorrespondente : Integer read fpNumeroCorrespondente;
     Property LayoutVersaoArquivo  : Integer read fpLayoutVersaoArquivo;
     Property LayoutVersaoLote     : Integer read fpLayoutVersaoLote;
+    property CasasDecimaisMoraJuros: Integer read fpCasasDecimaisMoraJuros;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; const NossoNumero : String = ''; const Convenio: String = ''): Integer; virtual;
@@ -797,6 +801,7 @@ type
     function CalcularNomeArquivoRemessa : String; Virtual;
     function ValidarDadosRetorno(const AAgencia, AContaCedente: String; const ACNPJCPF: String= '';
        const AValidaCodCedente: Boolean= False ): Boolean; Virtual;
+
   end;
 
 
@@ -825,6 +830,7 @@ type
     function GetNumeroCorrespondente: Integer;
     function GetLayoutVersaoArquivo    :Integer;
     function GetLayoutVersaoLote       :Integer;
+    function GetCasasDecimaisMoraJuros         :Integer;
 
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
@@ -836,6 +842,7 @@ type
     procedure SetNumeroCorrespondente(const AValue: Integer);
     procedure SetLayoutVersaoArquivo(const AValue: Integer);
     procedure SetLayoutVersaoLote(const AValue: Integer);
+    procedure SetCasasDecimaisMoraJuros(const AValue: Integer);
   public
     constructor Create( AOwner : TComponent); override;
     destructor Destroy ; override ;
@@ -888,6 +895,7 @@ type
     property NumeroCorrespondente : Integer read GetNumeroCorrespondente write SetNumeroCorrespondente default 0;
     property LayoutVersaoArquivo  : Integer read GetLayoutVersaoArquivo write SetLayoutVersaoArquivo;
     property LayoutVersaoLote     : Integer read GetLayoutVersaoLote write SetLayoutVersaoLote;
+    property CasasDecimaisMoraJuros: Integer read GetCasasDecimaisMoraJuros write SetCasasDecimaisMoraJuros;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite);
@@ -2104,12 +2112,12 @@ begin
       begin
         if DataMulta <> 0 then
           AStringList.Add(ACBrStr('Cobrar multa de ' + FormatCurr('R$ #,##0.00',
-            IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
+            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  )) +
                          ' para pagamento'+ IfThen(DataMulta = Vencimento, ' após o vencimento.',
                                                    ' a partir de '+ FormatDateTime('dd/mm/yyyy',DataMulta))))
         else
           AStringList.Add(ACBrStr('Multa de ' + FormatCurr('R$ #,##0.00',
-            IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
+            IfThen(MultaValorFixo, PercentualMulta, TruncTo((ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento),2)  )) +
                          ' após o vencimento.'));
       end;
       if DataLimitePagto <> 0 then
@@ -2239,6 +2247,11 @@ begin
   Result:=  BancoClass.LayoutVersaoLote;
 end;
 
+function TACBrBanco.GetCasasDecimaisMoraJuros: Integer;
+begin
+  Result:=  BancoClass.CasasDecimaisMoraJuros;
+end;
+
 procedure TACBrBanco.SetDigito(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
@@ -2272,6 +2285,11 @@ end;
 procedure TACBrBanco.SetLayoutVersaoLote(const AValue: Integer);
 begin
   BancoClass.fpLayoutVersaoLote:= AValue;
+end;
+
+procedure TACBrBanco.SetCasasDecimaisMoraJuros(const AValue: Integer);
+begin
+  BancoClass.fpCasasDecimaisMoraJuros:= AValue;
 end;
 
 procedure TACBrBanco.SetTamanhoMaximoNossoNum(const Avalue: Integer);
@@ -2473,6 +2491,7 @@ begin
    fpNumeroCorrespondente  := 0;
    fpLayoutVersaoArquivo   := 0;
    fpLayoutVersaoLote      := 0;
+   fpCasasDecimaisMoraJuros:= 2;
    fpModulo                := TACBrCalcDigito.Create;
    fpOrientacoesBanco      := TStringList.Create;
 end;
@@ -2711,6 +2730,15 @@ begin
   end;
 
   Result := True;
+end;
+
+function TACBrBancoClass.FormatarMoraJurosRemessa(const APosicoes: Integer
+   ;const ACBrTitulo: TACBrTitulo): String;
+var
+  Multiplicador: integer;
+begin
+  Multiplicador:=  StrToIntDef('1' + IntToStrZero(0, fpCasasDecimaisMoraJuros), 100);
+  Result :=  IntToStrZero(round(ACBrTitulo.ValorMoraJuros * Multiplicador ), APosicoes) ;
 end;
 
 function TACBrBancoClass.MontarCodigoBarras ( const ACBrTitulo: TACBrTitulo) : String;

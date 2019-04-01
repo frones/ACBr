@@ -493,51 +493,52 @@ begin
 
     ISequencia := (ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo) * 4) + 1;
     {SEGMENTO P}
-    Result := '033'                                                   + // 001 - 003 / Código do Banco na compensação
-              '0001'                                                  + // 004 - 007 / Numero do lote remessa
-              '3'                                                     + // 008 - 008 / Tipo de registro
-              IntToStrZero(ISequencia ,5)                             + // 009 - 013 / Número seqüencial do registro no lote
-              'P'                                                     + // 014 - 014 / Cód. Segmento do registro detalhe
-              Space(1)                                                + // 015 - 015 / Reservado (uso Banco)
-              sCodMovimento                                           + // 016 - 017 / Código de movimento remessa
-              Copy(sAgencia, 1, 4)                                    + // 018 – 021 / Agência do Cedente
-              Copy(sAgencia, 5, 1)                                    + // 022 – 022 / Dígito da Agência do Cedente
-              Copy(sCCorrente, 1, 9)                                  + // 023 - 031 / da conta corrente
-              Copy(sCCorrente, 10, 1)                                 + // 032 – 032 / Dígito verificador da conta
-              Copy(sCCorrente, 1, 9)                                  + // 033 - 041 / Conta cobrança
-              Copy(sCCorrente, 10, 1)                                 + // 042 - 042 / Dígito da conta cobrança
-              Space(2)                                                + // 043 - 044 / Reservado (uso Banco)
-              NossoNumero + sDigitoNossoNumero                        + // 045 – 057 / Identificação do título no Banco (Nosso Número
-              sTipoCobranca                                           + // 058 - 058 / Tipo de cobrança
-              sTipoCarteira                                           + // 059 - 059 / Forma de Cadastramento = 1 Registrada / 2 Sem Registro
-              sTipoDocto                                              + // 060 - 060 / Tipo de documento
-              Space(1)                                                + // 061 - 061 / Reservado (uso Banco)
-              Space(1)                                                + // 062 - 062 / Reservado (uso Banco)
-              PadRight(Copy(NumeroDocumento, 1, 15), 15)              + // 063 - 077 / Nº do documento              
-              FormatDateTime('ddmmyyyy',Vencimento)                   + // 078 - 085 / Data de vencimento do título
-              IntToStrZero(round(ValorDocumento * 100), 15)           + // 086 - 100 / Valor nominal do título
-              PadLeft('0', 4, '0')                                    + // 101 - 104 / Agência encarregada da cobrança
-              '0'                                                     + // 105 - 105 / Dígito da Agência encarregada da cobrança
-              Space(1)                                                + // 106 - 106 / Reservado (uso Banco)
-              sEspecie                                                + // 107 – 108 / Espécie do título
-              ifThen(Aceite = atSim,  'A', 'N')                       + // 109 - 109 / Identif. de título Aceito/Não Aceito
-              FormatDateTime('ddmmyyyy',DataDocumento)                + // 110 - 117 / Data da emissão do título
-              STipoJuros                                              + // 118 - 118 / Código do juros de mora
-              sDataMoraJuros                                          + // 119 - 126 / Data do juros de mora
-              IntToStrZero(round(ValorMoraJuros * 100), 15)           + // 127 - 141 / Valor da mora/dia ou Taxa mensal
-              sTipoDesconto                                           + // 142 - 142 / Código do desconto 1
-              sDataDesconto                                           + // 143 - 150 / Data de desconto 1
-              IntToStrZero(round(ValorDesconto * 100), 15)            + // 151 - 165 / Valor ou Percentual do desconto concedido
-              IntToStrZero(round(ValorIOF * 100), 15)                 + // 166 - 180 / Valor do IOF a ser recolhido
-              IntToStrZero(round(ValorAbatimento * 100), 15)          + // 181 - 195 / Valor do abatimento
-              PadRight(SeuNumero, 25)                                 + // 196 - 220 / Identificação do título na empresa              
-              Instrucao1                                              + // 221 - 221 / Código para protesto
-              sDiasProtesto                                           + // 222 - 223 / Número de dias para protesto
-              Instrucao2                                              + // 224 - 224 / Código para Baixa/Devolução
-              '0'                                                     + // 225 - 225 / Reservado (uso Banco)
-              sDiasBaixaDevol                                         + // 226 - 227 / Número de dias para Baixa/Devolução
-              '00'                                                    + // 228 - 229 / Código da moeda
-              Space(11)                                               ; // 230 – 240 / Reservado (uso Banco)
+    Result := '033'                                                                                        + // 001 - 003 / Código do Banco na compensação
+              '0001'                                                                                       + // 004 - 007 / Numero do lote remessa
+              '3'                                                                                          + // 008 - 008 / Tipo de registro
+              IntToStrZero(ISequencia ,5)                                                                  + // 009 - 013 / Número seqüencial do registro no lote
+              'P'                                                                                          + // 014 - 014 / Cód. Segmento do registro detalhe
+              Space(1)                                                                                     + // 015 - 015 / Reservado (uso Banco)
+              sCodMovimento                                                                                + // 016 - 017 / Código de movimento remessa
+              Copy(sAgencia, 1, 4)                                                                         + // 018 – 021 / Agência do Cedente
+              Copy(sAgencia, 5, 1)                                                                         + // 022 – 022 / Dígito da Agência do Cedente
+              Copy(sCCorrente, 1, 9)                                                                       + // 023 - 031 / da conta corrente
+              Copy(sCCorrente, 10, 1)                                                                      + // 032 – 032 / Dígito verificador da conta
+              Copy(sCCorrente, 1, 9)                                                                       + // 033 - 041 / Conta cobrança
+              Copy(sCCorrente, 10, 1)                                                                      + // 042 - 042 / Dígito da conta cobrança
+              Space(2)                                                                                     + // 043 - 044 / Reservado (uso Banco)
+              PadLeft(RemoveZerosEsquerda(NossoNumero + sDigitoNossoNumero) , 13, '0')  + // 045 – 057 / Identificação do título no Banco (Nosso Número
+              sTipoCobranca                                                                                + // 058 - 058 / Tipo de cobrança
+              sTipoCarteira                                                                                + // 059 - 059 / Forma de Cadastramento = 1 Registrada / 2 Sem Registro
+              sTipoDocto                                                                                   + // 060 - 060 / Tipo de documento
+              Space(1)                                                                                     + // 061 - 061 / Reservado (uso Banco)
+              Space(1)                                                                                     + // 062 - 062 / Reservado (uso Banco)
+              PadRight(Copy(NumeroDocumento, 1, 15), 15)                                                   + // 063 - 077 / Nº do documento
+              FormatDateTime('ddmmyyyy',Vencimento)                                                        + // 078 - 085 / Data de vencimento do título
+              IntToStrZero(round(ValorDocumento * 100), 15)                                                + // 086 - 100 / Valor nominal do título
+              PadLeft('0', 4, '0')                                                                         + // 101 - 104 / Agência encarregada da cobrança
+              '0'                                                                                          + // 105 - 105 / Dígito da Agência encarregada da cobrança
+              Space(1)                                                                                     + // 106 - 106 / Reservado (uso Banco)
+              sEspecie                                                                                     + // 107 – 108 / Espécie do título
+              ifThen(Aceite = atSim,  'A', 'N')                                                            + // 109 - 109 / Identif. de título Aceito/Não Aceito
+              FormatDateTime('ddmmyyyy',DataDocumento)                                                     + // 110 - 117 / Data da emissão do título
+              STipoJuros                                                                                   + // 118 - 118 / Código do juros de mora
+              sDataMoraJuros                                                                               + // 119 - 126 / Data do juros de mora
+              ifthen((STipoJuros = '2'), FormatarMoraJurosRemessa(15, ACBrTitulo ),
+                                 IntToStrZero(round(ValorMoraJuros * 100), 15))                            + // 127 - 141 / Valor da mora/dia ou Taxa mensal
+              sTipoDesconto                                                                                + // 142 - 142 / Código do desconto 1
+              sDataDesconto                                                                                + // 143 - 150 / Data de desconto 1
+              IntToStrZero(round(ValorDesconto * 100), 15)                                                 + // 151 - 165 / Valor ou Percentual do desconto concedido
+              IntToStrZero(round(ValorIOF * 100), 15)                                                      + // 166 - 180 / Valor do IOF a ser recolhido
+              IntToStrZero(round(ValorAbatimento * 100), 15)                                               + // 181 - 195 / Valor do abatimento
+              PadRight(SeuNumero, 25)                                                                      + // 196 - 220 / Identificação do título na empresa
+              Instrucao1                                                                                   + // 221 - 221 / Código para protesto
+              sDiasProtesto                                                                                + // 222 - 223 / Número de dias para protesto
+              Instrucao2                                                                                   + // 224 - 224 / Código para Baixa/Devolução
+              '0'                                                                                          + // 225 - 225 / Reservado (uso Banco)
+              sDiasBaixaDevol                                                                              + // 226 - 227 / Número de dias para Baixa/Devolução
+              '00'                                                                                         + // 228 - 229 / Código da moeda
+              Space(11)                                                                                    ; // 230 – 240 / Reservado (uso Banco)
     {SEGMENTO P - FIM}
 
     Inc(ISequencia);
@@ -977,7 +978,8 @@ begin
         ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
         ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
         ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
-        ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+        ValorPago           := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+        ValorRecebido       := StrToFloatDef(copy(Linha, 93, 15), 0) / 100;
         ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
         ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
         DataOcorrencia      := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+

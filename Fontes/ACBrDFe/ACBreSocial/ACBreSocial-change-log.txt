@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2019
+-- pcesS5011 --
+[*] https://www.projetoacbr.com.br/forum/topic/50320-erro-ao-carregar-xml-do-evento-s-5011/?do=findComment&comment=331763
+   Por: Carlos Solla
+
 29/03/2019
 -- Diversos --
 [*] Removido de todos os eventos o campo tpAmb, agora ao gerar o XML dos eventos

@@ -1173,6 +1173,7 @@ end;
 function TinfoCREstabCollection.New: TinfoCREstabCollectionItem;
 begin
   Result := TinfoCREstabCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TideEstabCollectionItem }

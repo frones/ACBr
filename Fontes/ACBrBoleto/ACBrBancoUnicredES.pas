@@ -174,7 +174,7 @@ procedure TACBrBancoUnicredES.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo;
 var
   sDigitoNossoNumero, sAgencia : String;
   sTipoSacado, sConta    : String;
-  sCarteira, sLinha, sNossoNumero, sNumContrato       : String;
+  sCarteira, sLinha, sNossoNumero, sNumContrato, sTipoMulta : String;
   iTamNossoNum: Integer;
 begin
 
@@ -222,7 +222,12 @@ begin
       begin
          (*if Mensagem.Text <> '' then
             sMensagemCedente:= Mensagem[0]; *)
-         
+
+         if PercentualMulta > 0 then
+           sTipoMulta := CodMultaToStr(CodigoMulta)
+         else
+           sTipoMulta := '3';
+
          sLinha:= '1'                                                           +//'|'+  { 001 a 001  	Identificação do Registro }
                   sAgencia                                                      +//'|'+  { 002 a 006  	Agência do BENEFICIÁRIO na UNICRED }
                   Cedente.AgenciaDigito                                         +//'|'+  { 007 a 007  	Dígito da Agência  	001 }
@@ -236,7 +241,7 @@ begin
                   StringOfChar('0', 2)                                          +//'|'+  { 066 a 067	  Zeros	002	Zeros }
                   Space(25)                                                     +//'|'+  { 068 a 092	  Branco	025	Branco}
                   '0'                                                           +//'|'+  { 093 a 093	  Filler	001	Zeros}
-                  CodMultaToStr(CodigoMulta)                                    +//'|'+  { 094 a 094	  Código da Multa	001}
+                  sTipoMulta                                                    +//'|'+  { 094 a 094	  Código da Multa	001}
                   IntToStrZero(Round(PercentualMulta * 100), 10)                +//'|'+  { 095 a 104	  Valor/Percentual da Multa	010 }
                   CodJurosToStr(CodigoMoraJuros,ValorMoraJuros)                 +//'|'+  { 105 a 105	  Tipo de Valor Mora	001}
                   '0'                                                           +//'|'+  { 106 a 106	  Filler	001 }
@@ -438,9 +443,12 @@ begin
             end;
           end;
 
-         DataOcorrencia := StringToDateTimeDef( Copy(sLinha,111,2)+'/'+
-                                                Copy(sLinha,113,2)+'/'+
-                                                Copy(sLinha,115,2),0, 'DD/MM/YY' );
+         if  (Copy(sLinha,111,2)<>'00')
+         and (Copy(sLinha,111,2)<>'  ') then
+           DataOcorrencia := StringToDateTimeDef( Copy(sLinha,111,2)+'/'+
+                                                  Copy(sLinha,113,2)+'/'+
+                                                  Copy(sLinha,115,2),0, 'DD/MM/YY' );
+
          if Copy(sLinha,147,2)<>'00' then
             Vencimento := StringToDateTimeDef( Copy(sLinha,147,2)+'/'+
                                                Copy(sLinha,149,2)+'/'+

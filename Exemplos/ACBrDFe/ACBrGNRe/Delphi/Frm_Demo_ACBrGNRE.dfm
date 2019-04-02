@@ -280,6 +280,19 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               Height = 21
               TabOrder = 2
             end
+            object rgVersaoDF: TRadioGroup
+              Left = 8
+              Top = 123
+              Width = 129
+              Height = 50
+              Caption = 'Vers'#227'o DF'
+              Columns = 2
+              ItemIndex = 1
+              Items.Strings = (
+                '1.00'
+                '2.00')
+              TabOrder = 3
+            end
           end
         end
         object TabSheet3: TTabSheet

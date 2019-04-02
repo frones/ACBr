@@ -117,6 +117,7 @@ type
     Label42: TLabel;
     edtPathSchemas: TEdit;
     spPathSchemas: TSpeedButton;
+    rgVersaoDF: TRadioGroup;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -189,9 +190,10 @@ begin
   Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text);
   Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text);
 
-  Ini.WriteBool(   'Geral','Salvar'      ,ckSalvar.Checked);
-  Ini.WriteString( 'Geral','PathSalvar'  ,edtPathLogs.Text);
-  Ini.WriteString( 'Geral','PathSchemas'  ,edtPathSchemas.Text);
+  Ini.WriteBool(   'Geral', 'Salvar'     , ckSalvar.Checked);
+  Ini.WriteString( 'Geral', 'PathSalvar' , edtPathLogs.Text);
+  Ini.WriteString( 'Geral', 'PathSchemas', edtPathSchemas.Text);
+  Ini.WriteInteger('Geral', 'VersaoDF'   , rgVersaoDF.ItemIndex);
 
   Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
   Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
@@ -269,11 +271,17 @@ begin
     sbtnCaminhoCert.Visible := False;
     {$ENDIF}
 
-    ckSalvar.Checked    := Ini.ReadBool(   'Geral','Salvar'     , True);
-    edtPathLogs.Text    := Ini.ReadString( 'Geral','PathSalvar' , '');
-    edtPathSchemas.Text := Ini.ReadString( 'Geral','PathSchemas', '' );
+    ckSalvar.Checked     := Ini.ReadBool(   'Geral', 'Salvar'     , True);
+    edtPathLogs.Text     := Ini.ReadString( 'Geral', 'PathSalvar' , '');
+    edtPathSchemas.Text  := Ini.ReadString( 'Geral', 'PathSchemas', '' );
+    rgVersaoDF.ItemIndex := Ini.ReadInteger('Geral', 'VersaoDF'   , 0);
 
     ACBrGNRE1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
+
+    if rgVersaoDF.ItemIndex = 0 then
+      ACBrGNRE1.Configuracoes.Geral.VersaoDF := ve100
+    else
+      ACBrGNRE1.Configuracoes.Geral.VersaoDF := ve200;
 
     cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
     rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);

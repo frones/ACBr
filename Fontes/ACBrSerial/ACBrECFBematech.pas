@@ -1426,7 +1426,7 @@ end;
 }
 function TACBrECFBematech.GetEstado: TACBrECFEstado;
 Var RetCmd : AnsiString ;
-    DataMov, DataHora : String ;
+    DataMov, DataHora, Data: TDateTime ;
     B1, B2 : Byte ;
 begin
   fpEstado := estNaoInicializada ;
@@ -1468,18 +1468,21 @@ begin
     if fpEstado = estDesconhecido then
     begin
        fpEstado := estLivre ;
-       DataMov  := RetornaInfoECF( '27' ) ;
+       DataMov := Self.GetDataMovimento;
 
-       if DataMov <> '000000' then
-        begin
-          DataHora := RetornaInfoECF( '23' ) ;
-          if DataMov <> copy(DataHora,1,6) then
+       if (DataMov > 0) then
+       begin
+          DataHora := Self.GetDataHora;
+          Data := DateOf(DataHora);
+          if (DataMov < Data) and ((HoursBetween(Data, DataHora) > 2)) then
             fpEstado := estRequerZ ;
-        end
-//         else
-//          fpEstado :=  estRequerX ;
-          { OBS.: comentado pois a Leitura X na Bematech não abre o Movimento,
-            apenas a abertura de cupom, inicializa a DataMov }
+       end;
+//     else
+//     begin
+//       fpEstado :=  estRequerX ;
+//       { OBS.: comentado pois a Leitura X na Bematech não abre o Movimento,
+//       apenas a abertura de cupom, inicializa a DataMov }
+//     end;
     end ;
   finally
     Result := fpEstado ;

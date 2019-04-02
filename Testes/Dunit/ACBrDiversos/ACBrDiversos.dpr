@@ -12,10 +12,13 @@ program ACBrDiversos;
 
 {$IFDEF CONSOLE_TESTRUNNER}
 {$APPTYPE CONSOLE}
-{$ENDIF}
+{$ENDIF}{$STRONGLINKTYPES ON}
 
 uses
   Forms,
+  {$IFDEF TESTINSIGHT}
+  TestInsight.DUnit,
+  {$ENDIF }
   TestFramework,
   GUITestRunner,
   TextTestRunner,
@@ -24,6 +27,10 @@ uses
 {$R *.RES}
 
 begin
+{$IFDEF TESTINSIGHT}
+  TestInsight.DUnit.RunRegisteredTests;
+  exit;
+{$ENDIF}
   Application.Initialize;
   if IsConsole then
     with TextTestRunner.RunRegisteredTests do

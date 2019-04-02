@@ -265,10 +265,11 @@ begin
     if not InternetQueryOption(fRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
       raise EACBrWinReqResp.Create('InternetQueryOption erro ao ler wininet flags.' + GetWininetError(GetLastError));
 
-    flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+    flags := flags or SECURITY_FLAG_IGNORE_REVOCATION or
+                      SECURITY_FLAG_IGNORE_UNKNOWN_CA or
                       SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
-                      SECURITY_FLAG_IGNORE_REVOCATION;
+                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                      SECURITY_FLAG_IGNORE_WRONG_USAGE;
     CheckNotAborted;
     if not InternetSetOption(fRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
       raise EACBrWinReqResp.Create('InternetQueryOption erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS' + GetWininetError(GetLastError));

@@ -294,8 +294,9 @@ begin
       raise EACBrWinReqResp.Create('Falha lendo WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
 
     flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
-                      SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
+                      SECURITY_FLAG_IGNORE_CERT_WRONG_USAGE or
+                      SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
+                      SECURITY_FLAG_IGNORE_CERT_DATE_INVALID;
     CheckNotAborted;
     if not WinHttpSetOption(fRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
       raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));

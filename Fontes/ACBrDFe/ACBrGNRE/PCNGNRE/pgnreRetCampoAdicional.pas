@@ -159,18 +159,20 @@ begin
       while Leitor.rExtrai(2, 'ns1:campoAdicional', '', i + 1) <> '' do
       begin
         retCampoAdicional.Add;
-        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio    := Leitor.rCampo(tcStr, 'ns1:obrigatorio');
-        retCampoAdicional.Items[i].RetCampoAdicional.codigo         := StrToInt(SeparaDados(Leitor.Grupo, 'ns1:codigo'));
-        retCampoAdicional.Items[i].RetCampoAdicional.tipo           := SeparaDados(Leitor.Grupo, 'ns1:tipo');
-        retCampoAdicional.Items[i].RetCampoAdicional.tamanho        := Leitor.rCampo(tcInt, 'ns1:tamanho');
+        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio := Leitor.rCampo(tcStr, 'ns1:obrigatorio');
+        retCampoAdicional.Items[i].RetCampoAdicional.codigo      := StrToInt(SeparaDados(Leitor.Grupo, 'ns1:codigo'));
+        retCampoAdicional.Items[i].RetCampoAdicional.tipo        := SeparaDados(Leitor.Grupo, 'ns1:tipo');
+        retCampoAdicional.Items[i].RetCampoAdicional.tamanho     := Leitor.rCampo(tcInt, 'ns1:tamanho');
+
         if Pos('ns1:casasDecimais', Leitor.Grupo) > 0 then
-          retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais  := Leitor.rCampo(tcInt, 'ns1:casasDecimais');
-        retCampoAdicional.Items[i].RetCampoAdicional.titulo         := Leitor.rCampo(tcStr, 'ns1:titulo');
+          retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais := Leitor.rCampo(tcInt, 'ns1:casasDecimais');
+
+        retCampoAdicional.Items[i].RetCampoAdicional.titulo := Leitor.rCampo(tcStr, 'ns1:titulo');
         inc(i);
       end;
 
-      if i = 0
-       then retCampoAdicional.Add;
+      if i = 0 then
+        retCampoAdicional.Add;
 
       Result := True;
     end;

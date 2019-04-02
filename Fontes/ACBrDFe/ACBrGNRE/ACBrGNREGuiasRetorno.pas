@@ -114,16 +114,18 @@ end;
 
 procedure GuiaRetorno.Imprimir;
 begin
- if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia )
-  then raise Exception.Create('Componente GNREGuia não associado.')
-  else TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia.ImprimirGuia(GNRE);
+ if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia ) then
+   raise Exception.Create('Componente GNREGuia não associado.')
+ else
+   TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia.ImprimirGuia(GNRE);
 end;
 
 procedure GuiaRetorno.ImprimirPDF;
 begin
- if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia )
-  then raise Exception.Create('Componente DANFSE não associado.')
-  else TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia.ImprimirGuiaPDF(GNRE);
+ if not Assigned( TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia ) then
+   raise Exception.Create('Componente DANFSE não associado.')
+ else
+   TACBrGNRE( TGuiasRetorno( Collection ).ACBrGNRE ).GNREGuia.ImprimirGuiaPDF(GNRE);
 end;
 
 { TGuiaRetorno }
@@ -136,8 +138,8 @@ end;
 constructor TGuiasRetorno.Create(AOwner: TPersistent;
   ItemClass: TCollectionItemClass);
 begin
- if not (AOwner is TACBrGNRE )
-  then raise Exception.Create( 'AOwner deve ser do tipo TGNRE.') ;
+ if not (AOwner is TACBrGNRE ) then
+   raise Exception.Create( 'AOwner deve ser do tipo TGNRE.') ;
 
  inherited;
  FACBrGNRE := TACBrGNRE( AOwner ) ;
@@ -155,16 +157,18 @@ end;
 
 procedure TGuiasRetorno.Imprimir;
 begin
- if not Assigned( TACBrGNRE( FACBrGNRE ).GNREGuia )
-  then raise Exception.Create('Componente GNREGuia não associado.')
-  else TACBrGNRE( FACBrGNRE ).GNREGuia.ImprimirGuia(nil);
+ if not Assigned( TACBrGNRE( FACBrGNRE ).GNREGuia ) then
+   raise Exception.Create('Componente GNREGuia não associado.')
+ else
+   TACBrGNRE( FACBrGNRE ).GNREGuia.ImprimirGuia(nil);
 end;
 
 procedure TGuiasRetorno.ImprimirPDF;
 begin
- if not Assigned( TACBrGNRE( FACBrGNRE ).GNREGuia )
-  then raise Exception.Create('Componente GNREGuia não associado.')
-  else TACBrGNRE( FACBrGNRE ).GNREGuia.ImprimirGuiaPDF(nil);
+ if not Assigned( TACBrGNRE( FACBrGNRE ).GNREGuia ) then
+   raise Exception.Create('Componente GNREGuia não associado.')
+ else
+   TACBrGNRE( FACBrGNRE ).GNREGuia.ImprimirGuiaPDF(nil);
 end;
 
 function TGuiasRetorno.Insert(Index: Integer): GuiaRetorno;
@@ -173,7 +177,8 @@ begin
 end;
 
 function TGuiasRetorno.LoadFromFile(CaminhoArquivo: string): boolean;
-var GNRERetorno : TGNRERetorno;
+var
+  GNRERetorno: TGNRERetorno;
   ArquivoRetorno: TStringList;
   i: Integer;
 begin
@@ -249,15 +254,14 @@ begin
     ArquivoRetorno.Free;
   except
     raise;
-    Result := False;
   end;
 end;
 
 function TGuiasRetorno.LoadFromString(Arquivo: String): boolean;
 var 
-	GNRERetorno : TGNRERetorno;
+	GNRERetorno: TGNRERetorno;
   i: Integer;
-	ArquivoRetorno : TStringList;
+	ArquivoRetorno: TStringList;
 begin
   try
     Result := True;
@@ -334,7 +338,6 @@ begin
 		end;
   except
     raise;
-    Result := False;
   end;
 end;
 

@@ -52,7 +52,6 @@ interface
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
   pgnreConfigUF;
-// pgnreConversao;
 
 type
   TRetInfTipoDocumentoOrigemCollection = class;
@@ -164,8 +163,8 @@ begin
         inc(i);
       end;
 
-      if i = 0
-       then retTipoDocumentoOrigem.Add;
+      if i = 0 then
+        retTipoDocumentoOrigem.Add;
 
       Result := True;
     end;

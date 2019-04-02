@@ -51,9 +51,7 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
-(*
- pgnreConversao;
-*)
+
 type
   TTretLote_GNRE = class
   private
@@ -68,7 +66,7 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: boolean;
-  published
+
     property Leitor: TLeitor read FLeitor write FLeitor;
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numero: string read Fnumero write Fnumero;

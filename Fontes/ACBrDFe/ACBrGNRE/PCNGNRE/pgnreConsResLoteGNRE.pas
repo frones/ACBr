@@ -88,8 +88,10 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('TConsLote_GNRE ' + NAME_SPACE_GNRE);
-  Gerador.wCampo(tcStr, '', 'ambiente  ', 001, 001, 1, tpAmbToStr(FAmbiente), DSC_TPAMB);
-  Gerador.wCampo(tcStr, '', 'numeroRecibo   ', 010, 010, 1, FnumeroRecibo, DSC_NREC);
+
+  Gerador.wCampo(tcStr, '', 'ambiente    ', 01, 01, 1, tpAmbToStr(FAmbiente), DSC_TPAMB);
+  Gerador.wCampo(tcStr, '', 'numeroRecibo', 10, 10, 1, FnumeroRecibo, DSC_NREC);
+
   Gerador.wGrupo('/TConsLote_GNRE');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

@@ -95,11 +95,14 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('TConsultaConfigUf ' + NAME_SPACE_GNRE);
-  Gerador.wCampo(tcStr, '', 'ambiente  ', 001, 001, 1, tpAmbToStr(FAmbiente), DSC_TPAMB);
-  Gerador.wCampo(tcStr, '', 'uf   ', 002, 002, 1, FUF, DSC_UF);
+
+  Gerador.wCampo(tcStr, '', 'ambiente', 01, 01, 1, tpAmbToStr(FAmbiente), DSC_TPAMB);
+  Gerador.wCampo(tcStr, '', 'uf      ', 02, 02, 1, FUF, DSC_UF);
+
   if FReceita > 0 then
   begin
-    Gerador.wCampo(tcInt, '', 'receita  ', 006, 006, 1, FReceita);
+    Gerador.wCampo(tcInt, '', 'receita', 06, 06, 1, FReceita);
+
     if FReceita = 100056 then
     begin
       if SameText(FEmpresaCourier, 'S') then
@@ -108,6 +111,7 @@ begin
         Gerador.ArquivoFormatoXML := StringReplace(Gerador.ArquivoFormatoXML, '<receita', '<receita  courier="N" ', [rfReplaceAll]);
     end;
   end;
+
   Gerador.wGrupo('/TConsultaConfigUf');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

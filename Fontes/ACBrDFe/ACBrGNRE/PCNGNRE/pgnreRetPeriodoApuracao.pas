@@ -52,9 +52,6 @@ interface
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
   pgnreConfigUF;
-(*
- pgnreConversao;
-*)
 
 type
   TRetInfPeriodoApuracaoCollection = class;
@@ -134,7 +131,6 @@ begin
   inherited;
 end;
 
-
 { TRetPeriodoApuracao }
 
 constructor TRetPeriodoApuracao.Create;
@@ -166,8 +162,8 @@ begin
         inc(i);
       end;
 
-      if i = 0
-       then retPeriodoApuracao.Add;
+      if i = 0 then
+        retPeriodoApuracao.Add;
 
       Result := True;
     end;

@@ -81,7 +81,7 @@ type
     function GetXMLAssinado: String;
     procedure SetXML(AValue: String);
     procedure SetXMLOriginal(AValue: String);
-    function ValidarConcatChave: Boolean;
+//    function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
@@ -261,7 +261,7 @@ begin
 
   with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    VerServ := 1.00;
+    VerServ := VersaoGNREToDbl(Configuracoes.Geral.VersaoDF); // 1.00;
 
     ALayout := LayGNRERecepcao;
 
@@ -314,8 +314,6 @@ var
   IniGuia: TMemIniFile;
   sSecao: String;
 begin
-  Result := False;
-
   IniGuia := TMemIniFile.Create('');
   try
     LerIniArquivoOuString(AIniString, IniGuia);
@@ -413,14 +411,11 @@ end;
 
 function Guia.LerXML(AXML: AnsiString): Boolean;
 begin
-  Result := False;
-  FGNRER.Leitor.Arquivo := AXML;
+  XMLOriginal := string(AXML);
+  FGNRER.Leitor.Arquivo := XMLOriginal;
+  FGNRER.Versao := TACBrGNRE(TGuias(Collection).ACBrGNRE).Configuracoes.Geral.VersaoDF;
 
   Result := FGNRER.LerXML;
-
-  XMLOriginal := string(AXML);
-
-  Result := True;
 end;
 
 function Guia.GravarXML(NomeArquivo, PathArquivo: String): Boolean;
@@ -435,8 +430,6 @@ end;
 
 function Guia.GravarStream(AStream: TStream): Boolean;
 begin
-  Result := False;
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
@@ -492,10 +485,13 @@ begin
   with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
     IdAnterior := GNRE.c42_identificadorGuia;
-    FGNREW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FGNREW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FGNREW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FGNREW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FGNREW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FGNREW.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+
+    FGNREW.Versao := Configuracoes.Geral.VersaoDF;
+
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -567,7 +563,7 @@ begin
 
   Result := PathArquivo + NomeArquivo;
 end;
-
+(*
 function Guia.ValidarConcatChave: Boolean;
 var
   wAno, wMes, wDia: word;
@@ -579,7 +575,7 @@ begin
 
   Result := True;
 end;
-
+*)
 function Guia.GetConfirmada: Boolean;
 begin
   Result := True;
@@ -751,8 +747,6 @@ var
   i, l: integer;
   MS: TMemoryStream;
 begin
-  Result := False;
-
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
@@ -788,7 +782,6 @@ function TGuias.LoadFromStream(AStream: TStringStream;
 var
   AXML: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 

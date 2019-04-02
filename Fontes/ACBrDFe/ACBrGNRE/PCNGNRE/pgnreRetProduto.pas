@@ -52,9 +52,7 @@ interface
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
   pgnreConfigUF;
-(*
- pgnreConversao;
-*)
+
 type
   TRetInfProdutoCollection = class;
   TRetInfProdutoCollectionItem = class;
@@ -164,8 +162,8 @@ begin
         inc(i);
       end;
 
-      if i = 0
-       then retProduto.Add;
+      if i = 0 then
+        retProduto.Add;
 
       Result := True;
     end;

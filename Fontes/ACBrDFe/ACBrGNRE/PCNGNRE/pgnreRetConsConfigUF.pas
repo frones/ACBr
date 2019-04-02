@@ -53,9 +53,7 @@ uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
   pgnreRetReceita,
   ACBrUtil;
-(*
- pgnreConversao;
-*)
+
 type
 
   TTConfigUf = class(TPersistent)
@@ -110,12 +108,12 @@ begin
     //Faltou o namespace ns1
     if Leitor.rExtrai(1, 'ns1:TConfigUf') <> '' then
     begin
-      (*1*)FAmbiente                    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
-      (*2*)FUf                          := Leitor.rCampo(tcStr, 'ns1:Uf');
-      (*4*)Fcodigo                      := Leitor.rCampo(tcInt, 'ns1:codigo');
-      (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'ns1:descricao');
-      (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'ns1:exigeUfFavorecida');
-      (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'ns1:exigeReceita');
+      (*1*)FAmbiente          := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
+      (*2*)FUf                := Leitor.rCampo(tcStr, 'ns1:Uf');
+      (*4*)Fcodigo            := Leitor.rCampo(tcInt, 'ns1:codigo');
+      (*5*)Fdescricao         := Leitor.rCampo(tcStr, 'ns1:descricao');
+      (*6*)FexigeUfFavorecida := SeparaDados(Leitor.Grupo, 'ns1:exigeUfFavorecida');
+      (*7*)FexigeReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeReceita');
 
       if SameText(FexigeReceita, 'S') then
       begin
@@ -132,6 +130,5 @@ begin
     Result := false;
   end;
 end;
-
 
 end.

@@ -444,6 +444,7 @@ var
 //  ok: Boolean;
   VerServ: Double;
 begin
+  (*
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
     VerServ := 1.00; //FGuias.Items[0].GNRE.infGNRE.Versao;
@@ -453,8 +454,10 @@ begin
   begin                   // Se não tem GNRE, use as configurações do componente
     VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   end;
+  *)
 
-  FAmbiente  := FPConfiguracoesGNRE.WebServices.Ambiente;
+  VerServ   := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
+  FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
   FPLayout := LayGNRERecepcao;
@@ -539,8 +542,6 @@ begin
 end;
 
 procedure TGNRERetRecepcao.Clear;
-//var
-//  i, j: Integer;
 begin
   inherited Clear;
 
@@ -549,7 +550,6 @@ begin
   FPArqEnv := 'ped-rec';
   FPArqResp := 'pro-rec';
 
-//  FnumeroRecibo := '';
   Fcodigo := 0;
   Fresultado := '';
   Fdescricao := '';
@@ -590,8 +590,8 @@ end;
 procedure TGNRERetRecepcao.DefinirURL;
 var
   VerServ: Double;
-//  ok: Boolean;
 begin
+  (*
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
     VerServ := 1.00;
@@ -603,7 +603,9 @@ begin
   begin                   // Se não tem GNRE, use as configurações do componente
     VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   end;
+  *)
 
+  VerServ   := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -702,8 +704,7 @@ end;
 
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
-  I{, J}: Integer;
-//  SalvarXML: Boolean;
+  I: Integer;
 begin
   Result := False;
   //Verificando se existe alguma guia confirmada
@@ -734,7 +735,6 @@ begin
       FPMsg := FPMsg + IntToStr(FGuias.Items[I].GNRE.c02_receita) +
         '->' + FGuias.Items[I].Msg + LineBreak;
   end;
-
 end;
 
 function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
@@ -834,8 +834,8 @@ end;
 procedure TGNRERecibo.DefinirURL;
 var
   VerServ: Double;
-//  ok: Boolean;
 begin
+  (*
   if FGuias.Count > 0 then    // Tem GNRE ? Se SIM, use as informações do XML
   begin
     VerServ := 1.00;;
@@ -847,7 +847,9 @@ begin
   begin                   // Se não tem GNRE, use as configurações do componente
     VerServ := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   end;
+  *)
 
+  VerServ   := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -921,7 +923,6 @@ end;
 constructor TGNREConsultaUF.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-
 end;
 
 destructor TGNREConsultaUF.Destroy;
@@ -983,9 +984,8 @@ end;
 procedure TGNREConsultaUF.DefinirURL;
 var
   VerServ: Double;
-//  ok: Boolean;
 begin
-  VerServ := 1.00;
+  VerServ   := VersaoGNREToDbl(FPConfiguracoesGNRE.Geral.VersaoDF);
   FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -1131,8 +1131,10 @@ begin
     FEnviar.GerarException( FEnviar.Msg );
 
   FRetorno.numeroRecibo := FEnviar.numero;
+
   if not FRetorno.Executar then
     FRetorno.GerarException(FRetorno.Msg);
+
   Result := True;
 end;
 

@@ -51,9 +51,6 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
-(*
- pgnreConversao, ACBrUtil;
-*) 
 
 type
   TInfReceita = class;
@@ -110,7 +107,7 @@ type
     FexigeDataPagamento: string;
     FexigeConvenio: string; 
     FexigeCamposAdicionais: string;
-  published
+  public
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
     property courier: string read Fcourier write Fcourier;
@@ -142,7 +139,7 @@ type
   private
     Fcodigo: Integer;
     Fdescricao: string;
-  published
+  public
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
   end;
@@ -160,7 +157,7 @@ type
   private
     Fcodigo: Integer;
     Fdescricao: string;
-  published
+  public
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
   end;
@@ -178,7 +175,7 @@ type
   private
     Fcodigo: Integer;
     Fdescricao: string;
-  published
+  public
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
   end;
@@ -196,7 +193,7 @@ type
   private
     Fcodigo: Integer;
     Fdescricao: string;
-  published
+  public
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
   end;
@@ -226,7 +223,7 @@ type
     Ftamanho: Integer;
     FcasasDecimais: Integer;
     Ftitulo: string;
-  published
+  public
     property obrigatorio: string read Fobrigatorio write Fobrigatorio;
     property codigo: Integer read Fcodigo write Fcodigo;
     property tipo: string read Ftipo write Ftipo;

@@ -55,9 +55,7 @@ uses
   pgnreRetPeriodoApuracao, pgnreRetTipoDocumentoOrigem,
   pgnreRetCampoAdicional,
   ACBrUtil;
-(*
- pgnreConversao;
-*)
+
 type
   TRetInfReceitaCollection = class;
   TRetInfReceitaCollectionItem = class;
@@ -178,6 +176,7 @@ destructor TRetReceita.Destroy;
 begin
   FLeitor.Free;
   FretReceita.Free;
+
   if Assigned(FInfDetalhamentoReceita) then
     FInfDetalhamentoReceita.Free;
 
@@ -211,10 +210,12 @@ begin
       while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
         FretReceita.Add;
-        FretReceita.Items[i].RetInfReceita.codigo                        := Leitor.rAtributo('codigo');
-        FretReceita.Items[i].RetInfReceita.descricao                     := Leitor.rAtributo('descricao');
+        FretReceita.Items[i].RetInfReceita.codigo    := Leitor.rAtributo('codigo');
+        FretReceita.Items[i].RetInfReceita.descricao := Leitor.rAtributo('descricao');
+
         if Pos('courier', Leitor.Grupo) > 0 then
-          FretReceita.Items[i].RetInfReceita.courier                     := Leitor.rAtributo('courier');
+          FretReceita.Items[i].RetInfReceita.courier := Leitor.rAtributo('courier');
+
         FretReceita.Items[i].RetInfReceita.exigeContribuinteEmitente     := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
         FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');
         FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'ns1:exigeProduto');
@@ -356,8 +357,8 @@ begin
         inc(i);
       end;
 
-      if i = 0
-       then retReceita.Add;
+      if i = 0 then
+        retReceita.Add;
 
       Result := True;
     end;

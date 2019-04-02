@@ -59,7 +59,7 @@ type
                       
   TLayOutGNRE = ( LayGNRERecepcao, LayGNRERetRecepcao, LayGNREConsultaConfigUF );
 
-  TVersaoGNRE = (ve100);
+  TVersaoGNRE = (ve100, ve200);
 
   TSchemaGNRE = ( schErro, schGNRE, schretGNRE, schprocGNRE, schconsReciGNRE );
 
@@ -111,13 +111,14 @@ end;
 
 function VersaoGNREToStr(const t: TVersaoGNRE): String;
 begin
-  Result := EnumeradoToStr(t, ['1.00'], [ve100]);
+  Result := EnumeradoToStr(t, ['1.00', '2.00'], [ve100, ve200]);
 end;
 
 function VersaoGNREToDbl(const t: TVersaoGNRE): Double;
 begin
   case t of
     ve100: Result := 1.0;
+    ve200: Result := 2.0;
   else
     Result := 0;
   end;

@@ -319,9 +319,11 @@ begin
     Gerador.wCampo(tcDe2, '', 'vrAlim',      1, 14, 0, obj.vrAlim);
   end;
 
-  GerarVerbasResc(obj.verbasResc);
-  GerarMudancaCPF3(obj.mudancaCPF);
-//  GerarRemunOutrEmpr(obj.verbasResc.infoMV.remunOutrEmpr);
+  if obj.mtvDesligTSV <> '07' then
+     GerarVerbasResc(obj.verbasResc);
+  if (VersaoDF >= ve02_05_00) and (obj.mtvDesligTSV = '07') then
+     GerarMudancaCPF3(obj.mudancaCPF);
+	 
   GerarQuarentena(obj.quarentena);
 
   Gerador.wGrupo('/infoTSVTermino');

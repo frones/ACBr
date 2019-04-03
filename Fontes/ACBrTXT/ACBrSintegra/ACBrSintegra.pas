@@ -229,6 +229,7 @@ type
     FAliquotaICMSST: Double;
     FAliquotaICMSOP: Double;
     FVlrIPI: Double;
+    FChaveNFE: string;
   public
     property CNPJ: string read FCNPJ write FCNPJ;
     property Modelo: string read FModelo write FModelo;
@@ -247,6 +248,7 @@ type
     property AliquotaICMSST: Double read FAliquotaICMSST write FAliquotaICMSST;
     property AliquotaICMSOP: Double read FAliquotaICMSOP write FAliquotaICMSOP;
     property VlrIPI: Double read FVlrIPI write FVlrIPI;
+    property ChaveNFE: string read FChaveNFE write FChaveNFE;
   end;
   {Lista de objetos do tipo Registro88STITNF}
   TRegistros88STITNF = class(TObjectList)
@@ -2974,12 +2976,12 @@ begin
       wregistro := wregistro+TBStrZero(TiraPontos(CNPJ),14);
       wregistro := wregistro+PadRight(Modelo,2);
       wregistro := wregistro+PadRight(Serie,3);
-      wregistro := wregistro+TBStrZero(Numero, 6);
+      wregistro := wregistro+TBStrZero(Numero, 9);
       wregistro := wregistro+PadRight(CFOP,4);
       wregistro := wregistro+PadRight(CST,3);
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('000', NumeroItem)),3); //Numero do Item
       wregistro := wregistro+FormatDateTime('yyyymmdd',DataEntrada);
-      wregistro := wregistro+TBStrZero(CodigoProduto,14);
+      wregistro := wregistro+TBStrZero(CodigoProduto,60);
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,###0.00', Quantidade)),11); //quantidade do produto
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00', VlrProduto)),12); //valor do produto
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00', ValorDesconto)),12); //valor desconto
@@ -2988,6 +2990,7 @@ begin
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,###0.00', AliquotaICMSOP)),4);
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,###0.00', AliquotaICMSST)),4);
       wregistro := wregistro+TBStrZero(TiraPontos(FormatFloat('#,##0.00', VlrIPI)),12);
+      wregistro := wregistro+TBStrZero(TiraPontos(ChaveNFE),44);
       WriteRecord(wregistro, True);
     end;//With
   end;//For

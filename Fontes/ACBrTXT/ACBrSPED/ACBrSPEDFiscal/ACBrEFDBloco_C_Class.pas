@@ -755,13 +755,25 @@ begin
 end;
 
 function TBloco_C.RegistroC310New: TregistroC310;
+var
+   C300Count: integer;
 begin
-   Result := FRegistroC001.RegistroC300.Items[FRegistroC001.RegistroC300.Count -1].RegistroC310.New;
+   C300Count := FRegistroC001.RegistroC300.Count -1;
+   if C300Count = -1 then
+      raise Exception.Create('O registro C310 deve ser filho do registro C300, e não existe nenhum C300 pai!');
+	  
+   Result := FRegistroC001.RegistroC300.Items[C300Count].RegistroC310.New;
 end;
 
 function TBloco_C.RegistroC320New: TRegistroC320;
+var
+   C300Count: integer;
 begin
-   Result := FRegistroC001.RegistroC300.Items[FRegistroC001.RegistroC300.Count -1].RegistroC320.New;
+  C300Count := FRegistroC001.RegistroC300.Count -1;
+  if C300Count = -1 then
+    raise Exception.Create('O registro C320 deve ser filho do registro C300, e não existe nenhum C300 pai!');
+
+  Result := FRegistroC001.RegistroC300.Items[C300Count].RegistroC320.New;
 end;
 
 function TBloco_C.RegistroC321New: TRegistroC321;
@@ -769,10 +781,16 @@ var
 C300Count: integer;
 C320Count: integer;
 begin
-   C300Count := FRegistroC001.RegistroC300.Count -1;
-   C320Count := FRegistroC001.RegistroC300.Items[C300Count].RegistroC320.Count -1;
+  C300Count := FRegistroC001.RegistroC300.Count -1;
+  if C300Count = -1 then
+    raise Exception.Create('O registro C321 deve ser filho de um registro C320 filho de um registro C300, e não existe nenhum C300 pai!');
+
+  C320Count := FRegistroC001.RegistroC300.Items[C300Count].RegistroC320.Count -1;
+  if C320Count = -1 then
+    raise Exception.Create('O registro C321 deve ser filho do registro C320, e não existe nenhum C320 pai!');
+
    //
-   Result := FRegistroC001.RegistroC300.Items[C300Count].RegistroC320.Items[C320Count].RegistroC321.New;
+  Result := FRegistroC001.RegistroC300.Items[C300Count].RegistroC320.Items[C320Count].RegistroC321.New;
 end;
 
 function TBloco_C.RegistroC350New: TRegistroC350;

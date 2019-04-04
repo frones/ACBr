@@ -358,7 +358,7 @@ const
 
 procedure TFExemploEsocial.GerareSocial1000;
 begin
-  with ACBreSocial1.Eventos.Iniciais.S1000.Add do
+  with ACBreSocial1.Eventos.Iniciais.S1000.New do
   begin
     with evtInfoEmpregador do
     begin
@@ -367,7 +367,7 @@ begin
 
       // So tem na Versão 2.4.1
       // taProducao, taProducaoRestrita
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -434,7 +434,7 @@ begin
 
           SoftwareHouse.Clear;
 
-          with SoftwareHouse.Add do
+          with SoftwareHouse.New do
           begin
             CnpjSoftHouse := '00000000000000';
             NmRazao := 'SoftwareHouse Teste';
@@ -459,14 +459,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1005;
 begin
-  with ACBreSocial1.Eventos.Iniciais.S1005.Add do
+  with ACBreSocial1.Eventos.Iniciais.S1005.New do
   begin
     with evtTabEstab do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -520,7 +520,7 @@ begin
 
               infoEntEduc.Clear;
 
-              with infoEntEduc.Add do
+              with infoEntEduc.New do
                 NrInsc := '0123456789';
             end;
 
@@ -538,14 +538,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1010;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1010.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1010.New do
   begin
     with EvtTabRubrica do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -575,7 +575,7 @@ begin
 
           IdeProcessoCP.Clear;
 
-          with IdeProcessoCP.Add do
+          with IdeProcessoCP.New do
           begin
             nrProc := '1020';
             ExtDecisao := tpExtDecisao(1);
@@ -584,7 +584,7 @@ begin
 
           IdeProcessoIRRF.Clear;
 
-          with IdeProcessoIRRF.Add do
+          with IdeProcessoIRRF.New do
           begin
             nrProc := '1020';
             codSusp := '2';
@@ -592,14 +592,14 @@ begin
 
           IdeProcessoFGTS.Clear;
 
-          with IdeProcessoFGTS.Add do
+          with IdeProcessoFGTS.New do
           begin
             nrProc := '50740';
           end;
 
           IdeProcessoSIND.Clear;
 
-          with IdeProcessoSIND.Add do
+          with IdeProcessoSIND.New do
           begin
             nrProc := '123456';
           end;
@@ -617,14 +617,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1020;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1020.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1020.New do
   begin
     with EvtTabLotacao do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -653,7 +653,7 @@ begin
             begin
               procJudTerceiro.Clear;
 
-              with procJudTerceiro.Add do
+              with procJudTerceiro.New do
               begin
                 codTerc := '1111';
                 nrProcJud := '1234567891239-1345';
@@ -680,14 +680,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1030;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1030.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1030.New do
   begin
     with EvtTabCargo do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -726,14 +726,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1035;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1035.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1035.New do
   begin
     with evtTabCarreira do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -760,14 +760,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1040;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1040.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1040.New do
   begin
     with EvtTabFuncao do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -792,14 +792,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1050;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1050.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1050.New do
   begin
     with EvtTabHorContratual do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -821,7 +821,7 @@ begin
 
           horarioIntervalo.Clear;
 
-          with horarioIntervalo.Add do
+          with horarioIntervalo.New do
           begin
             tpInterv := tptpIntervalo(0);
             durInterv := 90;
@@ -829,7 +829,7 @@ begin
             termInterv := '1330';
           end;
 
-          with horarioIntervalo.Add do
+          with horarioIntervalo.New do
           begin
             tpInterv := tptpIntervalo(1);
             durInterv := 15;
@@ -847,14 +847,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1060;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1060.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1060.New do
   begin
     with EvtTabAmbiente do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -886,14 +886,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1070;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1070.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1070.New do
   begin
     with EvtTabProcesso do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -921,7 +921,7 @@ begin
 
           infoSusp.Clear;
 
-          with infoSusp.Add do
+          with infoSusp.New do
           begin
             codSusp := '1';
             indSusp := tpIndSusp(0);
@@ -939,14 +939,14 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1080;
 begin
-  with ACBreSocial1.Eventos.Tabelas.S1080.Add do
+  with ACBreSocial1.Eventos.Tabelas.S1080.New do
   begin
     with EvtTabOperPortuario do
     begin
       Sequencial := 0;
       ModoLancamento := GetTipoOperacao;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -972,7 +972,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1200;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1200.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1200.New do
   begin
     with evtRemun do
     begin
@@ -984,7 +984,7 @@ begin
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1005,7 +1005,7 @@ begin
             O grupo abaixocorresponde a funcionários que tenham dois empregos em empresas diferentes }
             remunOutrEmpr.Clear;
 
-          with remunOutrEmpr.Add do
+          with remunOutrEmpr.New do
           begin
             TpInsc := tiCNPJ;
             NrInsc := '01234567890123';
@@ -1038,7 +1038,7 @@ begin
         // contribuições
         procJudTrab.Clear;
 
-        with procJudTrab.Add do
+        with procJudTrab.New do
         begin
           tpTrib := tptPrevidenciaria;
           nrProcJud := '95135703320156150258';
@@ -1048,12 +1048,12 @@ begin
 
       dmDev.Clear;
 
-      with dmDev.Add do
+      with dmDev.New do
       begin
         ideDmDev := '1';
         CodCateg := 111;
 
-        with infoPerApur.ideEstabLot.Add do
+        with infoPerApur.ideEstabLot.New do
         begin
           TpInsc := tiCNPJ;
           NrInsc := '01234567891234';
@@ -1062,14 +1062,14 @@ begin
 
           remunPerAnt.Clear;
 
-          with remunPerApur.Add do
+          with remunPerApur.New do
           begin
             Matricula := 'A1234';
             indSimples := idsIntegralmente;
 
             itensRemun.Clear;
 
-            with itensRemun.Add do
+            with itensRemun.New do
             begin
               CodRubr := '987654';
               ideTabRubr := 'E380';
@@ -1081,7 +1081,7 @@ begin
 
             infoSaudeColet.detOper.Clear;
 
-            with infoSaudeColet.detOper.Add do
+            with infoSaudeColet.detOper.New do
             begin
               cnpjOper := '01234567891234';
               regANS := 'A1B2C3';
@@ -1089,7 +1089,7 @@ begin
 
               detPlano.Clear;
 
-              with detPlano.Add do
+              with detPlano.New do
               begin
                 tpDep := tdConjuge;
                 cpfDep := '01234567891';
@@ -1105,7 +1105,7 @@ begin
 
         infoPerAnt.ideADC.Clear;
 
-        with infoPerAnt.ideADC.Add do
+        with infoPerAnt.ideADC.New do
         begin
           dtAcConv := Now;
           tpAcConv := tacLegislacaoFederalEstadualMunicipalDistrital;
@@ -1115,13 +1115,13 @@ begin
 
           idePeriodo.Clear;
 
-          with IdePeriodo.Add do
+          with IdePeriodo.New do
           begin
             perRef := '2015-04';
 
             ideEstabLot.Clear;
 
-            with ideEstabLot.Add do
+            with ideEstabLot.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '01234567891234';
@@ -1129,14 +1129,14 @@ begin
 
               remunPerAnt.Clear;
 
-              with remunPerAnt.Add do
+              with remunPerAnt.New do
               begin
                 Matricula := 'A1234';
                 indSimples := idsIntegralmente;
 
                 itensRemun.Clear;
 
-                with itensRemun.Add do
+                with itensRemun.New do
                 begin
                   CodRubr := '987654';
                   ideTabRubr := 'E380';
@@ -1154,7 +1154,7 @@ begin
 
         infoTrabInterm.Clear;
 
-        with infoTrabInterm.Add do
+        with infoTrabInterm.New do
           codConv := '123456';
       end;
     end;
@@ -1163,7 +1163,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1202;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1202.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1202.New do
   begin
     with evtRmnRPPS do
     begin
@@ -1175,7 +1175,7 @@ begin
         // NrRecibo  := '4564654'; Numero do recibo que será retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1193,7 +1193,7 @@ begin
         // e houver decisão que incida sobre as  contribuições
         procJudTrab.Clear;
 
-        with procJudTrab.Add do
+        with procJudTrab.New do
         begin
           tpTrib := tptPrevidenciaria;
           nrProcJud := '95135703320156150258';
@@ -1203,27 +1203,27 @@ begin
 
       dmDev.Clear;
 
-      with dmDev.Add do
+      with dmDev.New do
       begin
         ideDmDev := '1';
 
         infoPerApur.ideEstab.Clear;
 
-        with infoPerApur.IdeEstab.Add do
+        with infoPerApur.IdeEstab.New do
         begin
           TpInsc := tiCNPJ;
           NrInsc := '012345678987654';
 
           remunPerApur.Clear;
 
-          with remunPerApur.Add do
+          with remunPerApur.New do
           begin
             Matricula := 'A1234';
             CodCateg := 101;
 
             itensRemun.Clear;
 
-            with itensRemun.Add do
+            with itensRemun.New do
             begin
               CodRubr := '987654';
               ideTabRubr := 'E380';
@@ -1235,7 +1235,7 @@ begin
 
             infoSaudeColet.detOper.Clear;
 
-            with infoSaudeColet.detOper.Add do
+            with infoSaudeColet.detOper.New do
             begin
               cnpjOper := '01234567898765';
               regANS := 'A1B2C3';
@@ -1243,7 +1243,7 @@ begin
 
               detPlano.Clear;
 
-              with detPlano.Add do
+              with detPlano.New do
               begin
                 tpDep := tdConjuge;
                 cpfDep := '01234567898';
@@ -1257,7 +1257,7 @@ begin
 
         infoPerAnt.ideADC.Clear;
 
-        with infoPerAnt.ideADC.Add do
+        with infoPerAnt.ideADC.New do
         begin
           dtLei := Now;
           nrLei := '321321/2017';
@@ -1265,27 +1265,27 @@ begin
 
           idePeriodo.Clear;
 
-          with IdePeriodo.Add do
+          with IdePeriodo.New do
           begin
             perRef := '2015-03';
 
             ideEstab.Clear;
 
-            with IdeEstab.Add do
+            with IdeEstab.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '01234567898765';
 
               remunPerAnt.Clear;
 
-              with remunPerAnt.Add do
+              with remunPerAnt.New do
               begin
                 Matricula := 'A1234';
                 CodCateg := 101;
 
                 itensRemun.Clear;
 
-                with itensRemun.Add do
+                with itensRemun.New do
                 begin
                   CodRubr := '987654';
                   ideTabRubr := 'E380';
@@ -1305,7 +1305,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1207;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1207.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1207.New do
   begin
     with evtBenPrRP do
     begin
@@ -1317,7 +1317,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2017-05';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -1329,7 +1329,7 @@ begin
 
       dmDev.Clear;
 
-      with dmDev.Add do
+      with dmDev.New do
       begin
         tpBenef := 01;
         nrBenefic := '3132132';
@@ -1337,14 +1337,14 @@ begin
 
         itens.Clear;
 
-        with itens.Add do
+        with itens.New do
         begin
           CodRubr := '1';
           ideTabRubr := 'E07';
           vrRubr := 110.53;
         end;
 
-        with itens.Add do
+        with itens.New do
         begin
           CodRubr := '2';
           ideTabRubr := 'E08';
@@ -1357,7 +1357,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1210;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1210.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1210.New do
   begin
     with evtPgtos do
     begin
@@ -1369,7 +1369,7 @@ begin
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatório se indRetif = ireRetificacao.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -1384,7 +1384,7 @@ begin
 
         InfoPgto.Clear;
 
-        with InfoPgto.Add do
+        with InfoPgto.New do
         begin
           DtPgto := StrToDate('10/06/2015');
           tpPgto := tpPgtoRemun1200;
@@ -1394,7 +1394,7 @@ begin
           // grupo detPgtoFl agora é um collection
           detPgtoFl.Clear;
 
-          with detPgtoFl.Add do
+          with detPgtoFl.New do
           begin
             perRef := '2015-05';
             ideDmDev := '2';
@@ -1404,7 +1404,7 @@ begin
 
             retPagtoTot.Clear;
 
-            with retPagtoTot.Add do
+            with retPagtoTot.New do
             begin
               CodRubr := '1';
               ideTabRubr := '0';
@@ -1415,7 +1415,7 @@ begin
 
               penAlim.Clear;
 
-              with penAlim.Add do
+              with penAlim.New do
               begin
                 cpfBenef := '12345698745';
                 dtNasctoBenef := Now;
@@ -1426,7 +1426,7 @@ begin
 
             infoPgtoParc.Clear;
 
-            with infoPgtoParc.Add do
+            with infoPgtoParc.New do
             begin
               CodRubr := '2';
               ideTabRubr := '0';
@@ -1446,7 +1446,7 @@ begin
 
             retPgtoTot.Clear;
 
-            with retPgtoTot.Add do
+            with retPgtoTot.New do
             begin
               CodRubr := '321';
               ideTabRubr := '0';
@@ -1458,7 +1458,7 @@ begin
 
             infoPgtoParc.Clear;
 
-            with infoPgtoParc.Add do
+            with infoPgtoParc.New do
             begin
               CodRubr := '555';
               ideTabRubr := '0';
@@ -1471,7 +1471,7 @@ begin
 
           detPgtoFer.Clear;
 
-          with detPgtoFer.Add do
+          with detPgtoFer.New do
           begin
             CodCateg := 111;
             matricula := '54545';
@@ -1481,7 +1481,7 @@ begin
 
             detRubrFer.Clear;
 
-            with detRubrFer.Add do
+            with detRubrFer.New do
             begin
               CodRubr := '888';
               ideTabRubr := '0';
@@ -1492,7 +1492,7 @@ begin
 
               penAlim.Clear;
 
-              with penAlim.Add do
+              with penAlim.New do
               begin
                 cpfBenef := '44455588899';
                 dtNasctoBenef := Now;
@@ -1504,13 +1504,13 @@ begin
 
           detPgtoAnt.Clear;
 
-          with detPgtoAnt.Add do
+          with detPgtoAnt.New do
           begin
             CodCateg := 111;
 
             infoPgtoAnt.Clear;
 
-            with infoPgtoAnt.Add do
+            with infoPgtoAnt.New do
             begin
               tpBcIRRF := tpCodIncIRRF(0);
               vrBcIRRF := 2500.32;
@@ -1541,7 +1541,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1250;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1250.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1250.New do
   begin
     with EvtAqProd do
     begin
@@ -1553,7 +1553,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -1568,14 +1568,14 @@ begin
 
         TpAquis.Clear;
 
-        with TpAquis.Add do
+        with TpAquis.New do
         begin
           indAquis := tpIdAquis(0);
           vlrTotAquis := 520000.80;
 
           IdeProdutor.Clear;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCNPJ;
             nrInscProd := '98765432100015';
@@ -1586,7 +1586,7 @@ begin
 
             Nfs.Clear;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '64896549898789';
@@ -1597,7 +1597,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1608,7 +1608,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1619,7 +1619,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1632,7 +1632,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '56464897';
               codSusp := 333;
@@ -1642,7 +1642,7 @@ begin
             end;
           end;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCNPJ;
             nrInscProd := '98765432100015';
@@ -1653,7 +1653,7 @@ begin
 
             Nfs.Clear;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1664,7 +1664,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1675,7 +1675,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1686,7 +1686,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1699,7 +1699,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '56464897';
               codSusp := 222;
@@ -1711,14 +1711,14 @@ begin
 
         end;
 
-        with TpAquis.Add do
+        with TpAquis.New do
         begin
           indAquis := tpIdAquis(1);
           vlrTotAquis := 520000.80;
 
           IdeProdutor.Clear;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCPF;
             nrInscProd := '74913476653';
@@ -1729,7 +1729,7 @@ begin
 
             Nfs.Clear;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '64896549898789';
@@ -1740,7 +1740,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1753,7 +1753,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '00000002';
               codSusp := 222;
@@ -1763,7 +1763,7 @@ begin
             end;
           end;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCPF;
             nrInscProd := '00003476653';
@@ -1774,7 +1774,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '33333333';
               codSusp := 333;
@@ -1785,14 +1785,14 @@ begin
           end;
         end;
 
-        with TpAquis.Add do
+        with TpAquis.New do
         begin
           indAquis := tpIdAquis(2);
           vlrTotAquis := 33300.80;
 
           IdeProdutor.Clear;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCPF;
             nrInscProd := '74913476653';
@@ -1803,7 +1803,7 @@ begin
 
             Nfs.Clear;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '64896549898789';
@@ -1814,7 +1814,7 @@ begin
               vrSenarDesc := 2500.30;
             end;
 
-            with Nfs.Add do
+            with Nfs.New do
             begin
               serie := '00004';
               nrDocto := '648965498987894';
@@ -1827,7 +1827,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '00000002';
               codSusp := 222;
@@ -1837,7 +1837,7 @@ begin
             end;
           end;
 
-          with IdeProdutor.Add do
+          with IdeProdutor.New do
           begin
             tpInscProd := tiCPF;
             nrInscProd := '00003476653';
@@ -1848,7 +1848,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               nrProcJud := '33333333';
               codSusp := 333;
@@ -1865,7 +1865,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1260;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1260.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1260.New do
   begin
     with EvtComProd do
     begin
@@ -1877,7 +1877,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -1893,14 +1893,14 @@ begin
 
           TpComerc.Clear;
 
-          with TpComerc.Add do
+          with TpComerc.New do
           begin
             indComerc := tpIndComerc(0);
             vrTotCom := 5000.80;
 
             IdeAdquir.Clear;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1909,7 +1909,7 @@ begin
 
               nfs.Clear;
 
-              with Nfs.Add do
+              with Nfs.New do
               begin
                 serie := '00004';
                 nrDocto := '648965498987894';
@@ -1921,7 +1921,7 @@ begin
               end;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1929,7 +1929,7 @@ begin
               vrRetPR := 9999.99;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1937,7 +1937,7 @@ begin
               vrRetPR := 9999.99;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1946,7 +1946,7 @@ begin
 
               nfs.Clear;
 
-              with Nfs.Add do
+              with Nfs.New do
               begin
                 serie := '00004';
                 nrDocto := '648965498987894';
@@ -1959,14 +1959,14 @@ begin
             end;
           end;
 
-          with TpComerc.Add do
+          with TpComerc.New do
           begin
             indComerc := tpIndComerc(1);
             vrTotCom := 5000.80;
 
             IdeAdquir.Clear;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1974,7 +1974,7 @@ begin
               vrRetPR := 9999.99;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1982,14 +1982,14 @@ begin
               vrRetPR := 9999.99;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
               vrComerc := 8888.88;
             end;
 
-            with IdeAdquir.Add do
+            with IdeAdquir.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '99999999999999';
@@ -1998,7 +1998,7 @@ begin
 
               nfs.Clear;
 
-              with Nfs.Add do
+              with Nfs.New do
               begin
                 serie := '00004';
                 nrDocto := '648965498987894';
@@ -2012,7 +2012,7 @@ begin
 
             InfoProcJud.Clear;
 
-            with InfoProcJud.Add do
+            with InfoProcJud.New do
             begin
               tpProc := tpAdministrativo;
               tpTrib := tptIRRF;
@@ -2034,7 +2034,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1270;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1270.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1270.New do
   begin
     with EvtContratAvNP do
     begin
@@ -2046,7 +2046,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2056,7 +2056,7 @@ begin
 
       remunAvNp.Clear;
 
-      with RemunAvNP.Add do
+      with RemunAvNP.New do
       begin
         TpInsc := tiCNPJ;
         NrInsc := '98765432100015';
@@ -2070,7 +2070,7 @@ begin
         vrDescCP := 500.30;
       end;
 
-      with RemunAvNP.Add do
+      with RemunAvNP.New do
       begin
         TpInsc := tpTpInsc(1);
         NrInsc := '65432198700015';
@@ -2084,7 +2084,7 @@ begin
         vrDescCP := 500.30;
       end;
 
-      with RemunAvNP.Add do
+      with RemunAvNP.New do
       begin
         TpInsc := tpTpInsc(2);
         NrInsc := '98765432100015';
@@ -2098,7 +2098,7 @@ begin
         vrDescCP := 500.30;
       end;
 
-      with RemunAvNP.Add do
+      with RemunAvNP.New do
       begin
         TpInsc := tpTpInsc(1);
         NrInsc := '11111111111111';
@@ -2117,7 +2117,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1280;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1280.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1280.New do
   begin
     with EvtInfoComplPer do
     begin
@@ -2129,7 +2129,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2142,12 +2142,12 @@ begin
 
       InfoSubstPatrOpPort.Clear;
 
-      with InfoSubstPatrOpPort.Add do
+      with InfoSubstPatrOpPort.New do
       begin
         cnpjOpPortuario := '12345678900112';
       end;
 
-      with InfoSubstPatrOpPort.Add do
+      with InfoSubstPatrOpPort.New do
       begin
         cnpjOpPortuario := '98765432100014';
       end;
@@ -2160,7 +2160,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1295;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1295.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1295.New do
   begin
     with evtTotConting do
     begin
@@ -2172,7 +2172,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2193,7 +2193,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1298;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1298.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1298.New do
   begin
     with EvtReabreEvPer do
     begin
@@ -2203,7 +2203,7 @@ begin
       begin
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2216,7 +2216,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1299;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1299.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1299.New do
   begin
     with EvtFechaEvPer do
     begin
@@ -2228,7 +2228,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2260,7 +2260,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial1300;
 begin
-  with ACBreSocial1.Eventos.Periodicos.S1300.Add do
+  with ACBreSocial1.Eventos.Periodicos.S1300.New do
   begin
     with EvtContrSindPatr do
     begin
@@ -2272,7 +2272,7 @@ begin
         NrRecibo := '65.5454.987798798798';
         IndApuracao := iapuMensal;
         perApur := '2015-06';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2282,7 +2282,7 @@ begin
 
       ContribSind.Clear;
 
-      with ContribSind.Add do
+      with ContribSind.New do
       begin
         cnpjSindic := '01234567891111';
         tpContribSind := tpTpContribSind(0);
@@ -2294,13 +2294,13 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2190;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2190.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2190.New do
   begin
     with EvtAdmPrelim do
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -2316,7 +2316,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2200;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2200.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2200.New do
   begin
     with EvtAdmissao do
     begin
@@ -2326,7 +2326,7 @@ begin
       begin
         // indRetif := tpIndRetificacao(1);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2436,7 +2436,7 @@ begin
 
         Dependente.Clear;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdConjuge;
           nmDep := 'Dependente 1';
@@ -2447,7 +2447,7 @@ begin
           incTrab := tpNao;
         end;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdFilhoOuEnteado;
           nmDep := 'Dependente 2';
@@ -2507,7 +2507,7 @@ begin
 
               IdeTrabSubstituido.Clear;
 
-              with IdeTrabSubstituido.Add do
+              with IdeTrabSubstituido.New do
                 CpfTrabSubst := '12345678912';
             end;
 
@@ -2571,13 +2571,13 @@ begin
 
             horario.Clear;
 
-            with horario.Add do
+            with horario.New do
             begin
               Dia := tpTpDia(diSegundaFeira);
               codHorContrat := '54';
             end;
 
-            with horario.Add do
+            with horario.New do
             begin
               Dia := tpTpDia(diTercaFeira);
               codHorContrat := '10';
@@ -2593,7 +2593,7 @@ begin
 
           observacoes.Clear;
 
-          with observacoes.Add do
+          with observacoes.New do
             observacao := 'Observacao';
         end;
 
@@ -2621,7 +2621,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2205;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2205.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2205.New do
   begin
     with EvtAltCadastral do
     begin
@@ -2631,7 +2631,7 @@ begin
       begin
         indRetif := tpIndRetificacao(1);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2743,7 +2743,7 @@ begin
 
         Dependente.Clear;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdConjuge;
           nmDep := 'Dependente 1';
@@ -2754,7 +2754,7 @@ begin
           incTrab := tpNao;
         end;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdFilhoOuEnteado;
           nmDep := 'Dependente 2';
@@ -2781,7 +2781,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2206;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2206.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2206.New do
   begin
     with EvtAltContratual do
     begin
@@ -2791,7 +2791,7 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif = ireRetificacao;
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -2875,7 +2875,7 @@ begin
 
             horario.Clear;
 
-            with horario.Add do
+            with horario.New do
             begin
               Dia := diSegundaFeira;
               codHorContrat := '001';
@@ -2898,7 +2898,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2210;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2210.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2210.New do
   begin
     with EvtCAT do
     begin
@@ -2908,7 +2908,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -2955,19 +2955,19 @@ begin
 
         ParteAtingida.Clear;
 
-        with ParteAtingida.Add do
+        with ParteAtingida.New do
         begin
           codParteAting := 753030000;
           lateralidade := tpLateralidade(1);
         end;
 
-        with ParteAtingida.Add do
+        with ParteAtingida.New do
         begin
           codParteAting := 753070700;
           lateralidade := tpLateralidade(2);
         end;
 
-        with ParteAtingida.Add do
+        with ParteAtingida.New do
         begin
           codParteAting := 753510200;
           lateralidade := tpLateralidade(3);
@@ -2975,13 +2975,13 @@ begin
 
         AgenteCausador.Clear;
 
-        with AgenteCausador.Add do
+        with AgenteCausador.New do
           codAgntCausador := 302010300;
 
-        with AgenteCausador.Add do
+        with AgenteCausador.New do
           codAgntCausador := 302010600;
 
-        with AgenteCausador.Add do
+        with AgenteCausador.New do
           codAgntCausador := 302050500;
 
         with Atestado do
@@ -3015,7 +3015,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2220;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2220.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2220.New do
   begin
     with evtMonit do
     begin
@@ -3025,7 +3025,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := TpTpAmb(1);
+        //TpAmb := TpTpAmb(1);
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3047,7 +3047,7 @@ begin
 
           Exame.Clear;
 
-          with Exame.Add do
+          with Exame.New do
           begin
             DtExm := date;
             procRealizado := 123;
@@ -3056,7 +3056,7 @@ begin
             indResult := tpIndResult(1);
           end;
 
-          with Exame.Add do
+          with Exame.New do
           begin
             DtExm := date + 1;
             procRealizado := 456;
@@ -3083,7 +3083,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2221;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2221.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2221.New do
   begin
     with evtToxic do
     begin
@@ -3093,7 +3093,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb    := TpTpAmb(1);
+        //TpAmb    := TpTpAmb(1);
         ProcEmi  := TpProcEmi(0);
         VerProc  := '1.0';
       end;
@@ -3121,7 +3121,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2230;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2230.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2230.New do
   begin
     with EvtAfastTemp do
     begin
@@ -3131,7 +3131,7 @@ begin
       begin
         indRetif := ireOriginal;
         // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigatório se indRetif=ireRetificacao
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -3155,7 +3155,7 @@ begin
 
           infoAtestado.Clear;
 
-          with infoAtestado.Add do
+          with infoAtestado.New do
           begin
             codCID := '1234';
             qtDiasAfast := 13;
@@ -3211,7 +3211,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2240;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2240.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2240.New do
   begin
     with EvtExpRisco do
     begin
@@ -3221,7 +3221,7 @@ begin
       begin
         indRetif := ireOriginal;
         NrRecibo := '654654865656';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -3238,11 +3238,11 @@ begin
         dtIniCondicao := date;
 
         InfoAmb.Clear;
-        with InfoAmb.Add do
+        with InfoAmb.New do
         begin
           codAmb := '654';
         end;
-        with InfoAmb.Add do
+        with InfoAmb.New do
         begin
           codAmb := '548';
         end;
@@ -3250,17 +3250,17 @@ begin
         infoAtiv.dscAtivDes := 'DESCRICAO ATIVIDADE';
 
         infoAtiv.ativPericInsal.Clear;
-        with infoAtiv.ativPericInsal.Add do
+        with infoAtiv.ativPericInsal.New do
         begin
           codAtiv := '654';
         end;
-        with infoAtiv.ativPericInsal.Add do
+        with infoAtiv.ativPericInsal.New do
         begin
           codAtiv := '548';
         end;
 
         FatRisco.Clear;
-        with FatRisco.Add do
+        with FatRisco.New do
         begin
           codFatRis      := '1234567890';
           tpAval         := tpTpAval(1);
@@ -3279,7 +3279,7 @@ begin
             utilizEPI := uEPIUtilizado;
 
             epi.Clear;
-            with epi.Add do
+            with epi.New do
             begin
               caEPI         := '321654';
               dscEPI        := 'CAPACETE';
@@ -3295,7 +3295,7 @@ begin
         end;
 
         respReg.Clear;
-        with respReg.Add do
+        with respReg.New do
         begin
           cpfResp := '12345678901';
           NisResp := '12345678901';
@@ -3315,7 +3315,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2245;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2245.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2245.New do
   begin
     with evtTreiCap do
     begin
@@ -3325,7 +3325,7 @@ begin
       begin
         indRetif := ireOriginal;
         NrRecibo := '654654865656';
-        TpAmb    := taProducaoRestrita;
+        //TpAmb    := taProducaoRestrita;
         ProcEmi  := peAplicEmpregador;
         VerProc  := '1.0';
       end;
@@ -3351,7 +3351,7 @@ begin
 
           ideProfResp.Clear;
 
-          with ideProfResp.Add do
+          with ideProfResp.New do
           begin
             cpfProf  := '12345678901';
             nmProf   := 'PROFISSIONAL';
@@ -3368,7 +3368,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2250;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2250.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2250.New do
   begin
     with EvtAvPrevio do
     begin
@@ -3378,7 +3378,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3413,7 +3413,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2260;
 begin
- with ACBreSocial1.Eventos.NaoPeriodicos.S2260.Add do
+ with ACBreSocial1.Eventos.NaoPeriodicos.S2260.New do
   begin
     with EvtConvInterm do
     begin
@@ -3423,7 +3423,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
 //        NrRecibo := '65.5454.987798798798';
-        TpAmb    := taProducaoRestrita;
+        //TpAmb    := taProducaoRestrita;
         ProcEmi  := TpProcEmi(0);
         VerProc  := '1.0';
       end;
@@ -3467,7 +3467,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2298;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2298.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2298.New do
   begin
     with EvtReintegr do
     begin
@@ -3477,7 +3477,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3503,7 +3503,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2299;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2299.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2299.New do
   begin
     with EvtDeslig do
     begin
@@ -3513,7 +3513,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -3547,7 +3547,7 @@ begin
         observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
         // Obsercação opcional - versão 2.04.02
-        with observacoes.Add do
+        with observacoes.New do
          observacao := 'Anotações relevantes sobre o desligamento que não tenham campo próprio';
 
         SucessaoVinc.tpInscSuc := tiCNPJ;
@@ -3557,7 +3557,7 @@ begin
         begin
           dmDev.Clear;
 
-          with dmDev.Add do
+          with dmDev.New do
           begin
             ideDmDev := '1234567890';
 
@@ -3565,7 +3565,7 @@ begin
             begin
               ideEstabLot.Clear;
 
-              with ideEstabLot.Add do
+              with ideEstabLot.New do
               begin
                 TpInsc := tiCNPJ;
                 NrInsc := '12345678901234';
@@ -3573,7 +3573,7 @@ begin
 
                 detVerbas.Clear;
 
-                with detVerbas.Add do
+                with detVerbas.New do
                 begin
                   CodRubr := 'Pg123';
                   ideTabRubr := 'A01';
@@ -3583,13 +3583,13 @@ begin
                   vrRubr := 304.70;
                 end;
 
-                with infoSaudeColet.detOper.Add do
+                with infoSaudeColet.detOper.New do
                 begin
                   cnpjOper := '74563215000195';
                   regANS := '123456';
                   vrPgTit := 150.65;
 
-                  with detPlano.Add do
+                  with detPlano.New do
                   begin
                     cpfDep := '11111111111';
                     nmDep := 'Nome do dependente';
@@ -3607,7 +3607,7 @@ begin
             begin
               ideADC.Clear;
 
-              with ideADC.Add do
+              with ideADC.New do
               begin
                 dtAcConv := Now;
                 tpAcConv := tacAcordoColTrab;
@@ -3616,13 +3616,13 @@ begin
 
                 idePeriodo.Clear;
 
-                with IdePeriodo.Add do
+                with IdePeriodo.New do
                 begin
                   perRef := '2017-05';
 
                   ideEstabLot.Clear;
 
-                  with ideEstabLot.Add do
+                  with ideEstabLot.New do
                   begin
                     TpInsc := tiCNPJ;
                     NrInsc := '12345678901234';
@@ -3630,7 +3630,7 @@ begin
 
                     detVerbas.Clear;
 
-                    with detVerbas.Add do
+                    with detVerbas.New do
                     begin
                       CodRubr := 'Pg124';
                       ideTabRubr := 'A01';
@@ -3650,7 +3650,7 @@ begin
 
           procJudTrab.Clear;
 
-          with procJudTrab.Add do
+          with procJudTrab.New do
           begin
             tpTrib := tptIRRF;
             nrProcJud := '0123654789';
@@ -3663,7 +3663,7 @@ begin
 
             remunOutrEmpr.Clear;
 
-            with remunOutrEmpr.Add do
+            with remunOutrEmpr.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '12345678901234';
@@ -3677,7 +3677,7 @@ begin
 
         consigFGTS.Clear;
 
-        with consigFGTS.Add do
+        with consigFGTS.New do
         begin
           idConsig := tpSim;
           insConsig := '12345';
@@ -3690,13 +3690,13 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2300;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2300.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2300.New do
   begin
     with EvtTSVInicio do
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -3799,7 +3799,7 @@ begin
 
         Dependente.Clear;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdConjuge;
           nmDep := 'Dependente 1';
@@ -3809,7 +3809,7 @@ begin
           depSF := tpNao;
         end;
 
-        with Dependente.Add do
+        with Dependente.New do
         begin
           tpDep := tdFilhoOuEnteado;
           nmDep := 'Dependente 2';
@@ -3911,13 +3911,13 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2306;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2306.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2306.New do
   begin
     with EvtTSVAltContr do
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := peAplicEmpregador;
       IdeEvento.VerProc := '1.0';
 
@@ -3986,7 +3986,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2399;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2399.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2399.New do
   begin
     with EvtTSVTermino do
     begin
@@ -3996,7 +3996,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -4017,13 +4017,13 @@ begin
         begin
           dmDev.Clear;
 
-          with dmDev.Add do
+          with dmDev.New do
           begin
             ideDmDev := '012345';
 
             ideEstabLot.Clear;
 
-            with ideEstabLot.Add do
+            with ideEstabLot.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '12345678987654';
@@ -4031,7 +4031,7 @@ begin
 
               detVerbas.Clear;
 
-              with detVerbas.Add do
+              with detVerbas.New do
               begin
                 CodRubr := 'Pg123';
                 ideTabRubr := 'A01';
@@ -4045,7 +4045,7 @@ begin
               begin
                 detOper.Clear;
 
-                with detOper.Add do
+                with detOper.New do
                 begin
                   cnpjOper := '89652048000195';
                   regANS := '123456';
@@ -4053,7 +4053,7 @@ begin
 
                   detPlano.Clear;
 
-                  with detPlano.Add do
+                  with detPlano.New do
                   begin
                     cpfDep := '55555555555';
                     nmDep := 'Nome do Dependente';
@@ -4070,7 +4070,7 @@ begin
 
           procJudTrab.Clear;
 
-          with procJudTrab.Add do
+          with procJudTrab.New do
           begin
             tpTrib := tpTpTributo(0);
             nrProcJud := '123456789';
@@ -4081,7 +4081,7 @@ begin
           begin
             indMV := tpIndMV(0);
 
-            with remunOutrEmpr.Add do
+            with remunOutrEmpr.New do
             begin
               TpInsc := tiCNPJ;
               NrInsc := '14236547000195';
@@ -4099,7 +4099,7 @@ end;
 
 procedure TFExemploEsocial.GerareSocial2400;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S2400.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S2400.New do
   begin
     with evtCdBenPrRP do
     begin
@@ -4109,7 +4109,7 @@ begin
       begin
         indRetif := tpIndRetificacao(0);
         NrRecibo := '65.5454.987798798798';
-        TpAmb := taProducaoRestrita;
+        //TpAmb := taProducaoRestrita;
         ProcEmi := TpProcEmi(0);
         VerProc := '1.0';
       end;
@@ -4202,13 +4202,13 @@ end;
 
 procedure TFExemploEsocial.GerareSocial3000;
 begin
-  with ACBreSocial1.Eventos.NaoPeriodicos.S3000.Add do
+  with ACBreSocial1.Eventos.NaoPeriodicos.S3000.New do
   begin
     with EvtExclusao do
     begin
       Sequencial := 0;
 
-      IdeEvento.TpAmb := taProducaoRestrita;
+      //IdeEvento.TpAmb := taProducaoRestrita;
       IdeEvento.ProcEmi := TpProcEmi(0);
       IdeEvento.VerProc := '1.0';
 
@@ -4775,7 +4775,7 @@ end;
 procedure TFExemploEsocial.sbtnListaCertClick(Sender: TObject);
 var
   i: Integer;
-  ASerie: String;
+  //ASerie: String;
   AddRow: Boolean;
 begin
   frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
@@ -4801,7 +4801,7 @@ begin
     begin
       with ACBreSocial1.SSL.ListaCertificados[i] do
       begin
-        ASerie := NumeroSerie;
+        //ASerie := NumeroSerie;
         if (CNPJ <> '') then
         begin
           with frSelecionarCertificado.StringGrid1 do

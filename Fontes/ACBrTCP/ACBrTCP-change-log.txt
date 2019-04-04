@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2019
+-- ACBrIBGE --
+[-] Ajuste para Traduzir Arquivo descompactado de UTF8 para String nativa da IDE
+    https://www.projetoacbr.com.br/forum/topic/50361-falha-na-busca-de-cidades-do-acbribge/
+    (por: DSA)
+
 02/04/2019
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
 [*] Ajusta as requisições para ignorar erros de certificado do servidor.

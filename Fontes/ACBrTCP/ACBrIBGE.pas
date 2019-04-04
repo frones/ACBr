@@ -211,6 +211,8 @@ type
     fOnLerCache: TACBrIBGELerGravarCache;
     function GetCacheArquivo: String;
     procedure SetIgnorarCaixaEAcentos(AValue: Boolean);
+
+    function UnZipDoc: String;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy ; override ;
@@ -836,6 +838,21 @@ begin
   fCacheLido := False;  // Força recarga do Cache, no formato correto
 end;
 
+function TACBrIBGE.UnZipDoc: String;
+var
+  CT, UnZipStr: String;
+  RespIsUTF8: Boolean;
+begin
+  UnZipStr := UnZip(HTTPSend.Document);
+
+  CT := LowerCase( GetHeaderValue('Content-Type:') );
+  RespIsUTF8 := (pos('utf-8', CT) > 0);
+  if RespIsUTF8 then
+    Result := UTF8ToNativeString(UnZipStr)
+  else
+    Result := UnZipStr;
+end;
+
 constructor TACBrIBGE.Create(AOwner : TComponent) ;
 begin
   inherited Create(AOwner) ;
@@ -965,7 +982,7 @@ begin
 
   fListaCidades.Clear;
   HTTPGet(CIBGE_URL_MUN);
-  fListaCidades.AddFromJSonStr(UnZip(HTTPSend.Document));
+  fListaCidades.AddFromJSonStr(UnZipDoc);
 
   for I := 0 to fListaUFs.Count-1 do
     fListaUFs[I].CidadesCarregadas := True;
@@ -991,7 +1008,7 @@ begin
 
   AURL := StringReplace(CIBGE_URL_MUN_UF, '{idUF}', IntToStrZero(ACodUF,2), []);
   HTTPGet(AURL);
-  fListaCidades.AddFromJSonStr(UnZip(HTTPSend.Document));
+  fListaCidades.AddFromJSonStr(UnZipDoc);
 
   oUF.CidadesCarregadas := True;
   SalvarCache;
@@ -1126,7 +1143,7 @@ begin
   AURL := StringReplace(AURL, '{idMunicipio}', ListaMunicipios, []);
 
   HTTPGet(AURL);
-  fListaCidades.ParseJSonStat(UnZip(HTTPSend.Document));
+  fListaCidades.ParseJSonStat(UnZipDoc);
 
   SalvarCache;
 end;
@@ -1250,7 +1267,7 @@ begin
 
   fListaUFs.Clear;
   HTTPGet(CIBGE_URL_UF);
-  fListaUFs.AddFromJSonStr(UnZip(HTTPSend.Document));
+  fListaUFs.AddFromJSonStr(UnZipDoc);
 end;
 
 procedure TACBrIBGE.ObterEstatisticasUF;
@@ -1267,7 +1284,7 @@ begin
   AURL := StringReplace(AURL, '{idUF}', UFs, []);
 
   HTTPGet(AURL);
-  fListaUFs.ParseJSonStat(Unzip(HTTPSend.Document));
+  fListaUFs.ParseJSonStat(UnZipDoc);
 end;
 
 function TACBrIBGE.UFToCodUF(const AUF: String): Integer;

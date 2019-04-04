@@ -548,7 +548,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'procJudTrab', '', i + 1) <> '' do
         begin
-          IdeTrabalhador.procJudTrab.Add;
+          IdeTrabalhador.procJudTrab.New;
           IdeTrabalhador.procJudTrab.Items[i].nrProcJud := leitor.rCampo(tcStr, 'nrProcJud');
           IdeTrabalhador.procJudTrab.Items[i].codSusp   := leitor.rCampo(tcStr, 'codSusp');
           inc(i);
@@ -558,7 +558,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'infoCpCalc', '', i + 1) <> '' do
       begin
-        infoCpCalc.Add;
+        infoCpCalc.New;
         infoCpCalc.Items[i].FtpCR      := leitor.rCampo(tcStr, 'tpCR');
         infoCpCalc.Items[i].FvrCpSeg   := leitor.rCampo(tcDe2, 'vrCpSeg');
         infoCpCalc.Items[i].FvrDescSeg := leitor.rCampo(tcDe2, 'vrDescSeg');
@@ -570,7 +570,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'ideEstabLot', '', i + 1) <> '' do
         begin
-          infoCp.IdeEstabLot.Add;
+          infoCp.IdeEstabLot.New;
           infoCp.IdeEstabLot.Items[i].FtpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
           infoCp.IdeEstabLot.Items[i].FnrInsc     := leitor.rCampo(tcStr, 'nrInsc');
           infoCp.IdeEstabLot.Items[i].FcodLotacao := leitor.rCampo(tcStr, 'codLotacao');
@@ -578,7 +578,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'infoCategIncid', '', j + 1) <> '' do
           begin
-            infoCp.IdeEstabLot.Items[i].InfoCategIncid.Add;
+            infoCp.IdeEstabLot.Items[i].InfoCategIncid.New;
             infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].Fmatricula  := leitor.rCampo(tcStr, 'matricula');
             infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].FcodCateg   := leitor.rCampo(tcInt, 'codCateg');
             infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].FindSimples := eSStrToIndSimples(ok, leitor.rCampo(tcStr, 'indSimples'));
@@ -586,7 +586,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'infoBaseCS', '', k + 1) <> '' do
             begin
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Add;
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.New;
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].Find13   := leitor.rCampo(tcInt, 'ind13');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].FtpValor := leitor.rCampo(tcInt, 'tpValor');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].InfoBaseCS.Items[k].Fvalor   := leitor.rCampo(tcDe2, 'valor');
@@ -596,7 +596,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'calcTerc', '', k + 1) <> '' do
             begin
-              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Add;
+              infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.New;
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FtpCR        := leitor.rCampo(tcInt, 'tpCR');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrCsSegTerc := leitor.rCampo(tcDe2, 'vrCsSegTerc');
               infoCp.IdeEstabLot.Items[i].InfoCategIncid.Items[j].CalcTerc.Items[k].FvrDescTerc  := leitor.rCampo(tcDe2, 'vrDescTerc');

@@ -173,7 +173,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'arquivo', '', i + 1) <> '' do
           begin
-            Arquivo.Add;
+            Arquivo.New;
 
             if Leitor.rExtrai(5, 'status') <> '' then
             begin

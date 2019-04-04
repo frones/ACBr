@@ -525,7 +525,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with altContratual.infoContrato.horContratual.horario.Add do
+        with altContratual.infoContrato.horContratual.horario.New do
         begin
           dia           := eSStrToTpDia(Ok, sFim);
           CodHorContrat := INIRec.ReadString(sSecao, 'codHorContrat', '');
@@ -566,7 +566,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with altContratual.infoContrato.observacoes.Add do
+        with altContratual.infoContrato.observacoes.New do
         begin
           observacao := sFim;
         end;

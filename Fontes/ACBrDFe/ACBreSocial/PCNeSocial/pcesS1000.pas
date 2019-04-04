@@ -719,7 +719,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoEmpregador.infoCadastro.SoftwareHouse.Add do
+          with infoEmpregador.infoCadastro.SoftwareHouse.New do
           begin
             CnpjSoftHouse := sFim;
             nmRazao       := INIRec.ReadString(sSecao, 'nmRazao', '');

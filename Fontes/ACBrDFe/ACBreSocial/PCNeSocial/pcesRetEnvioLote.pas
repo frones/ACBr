@@ -132,7 +132,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'ocorrencia', '', i + 1) <> '' do
           begin
-            Status.Ocorrencias.Add;
+            Status.Ocorrencias.New;
             Status.Ocorrencias.Items[i].Codigo      := FLeitor.rCampo(tcInt, 'codigo');
             Status.Ocorrencias.Items[i].Descricao   := FLeitor.rCampo(tcStr, 'descricao');
             Status.Ocorrencias.Items[i].Tipo        := FLeitor.rCampo(tcInt, 'tipo');

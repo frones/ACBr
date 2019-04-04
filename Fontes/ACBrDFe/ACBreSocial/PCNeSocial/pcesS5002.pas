@@ -422,14 +422,14 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'infoIrrf', '', i + 1) <> '' do
       begin
-        InfoIrrf.Add;
+        InfoIrrf.New;
         InfoIrrf.Items[i].FCodCateg := leitor.rCampo(tcInt, 'codCateg');
         InfoIrrf.Items[i].FindResBr := leitor.rCampo(tcStr, 'indResBr');
 
         j := 0;
         while Leitor.rExtrai(3, 'basesIrrf', '', j + 1) <> '' do
         begin
-          InfoIrrf.Items[i].basesIrrf.Add;
+          InfoIrrf.Items[i].basesIrrf.New;
           InfoIrrf.Items[i].basesIrrf.Items[j].FtpValor := leitor.rCampo(tcInt, 'tpValor');
           InfoIrrf.Items[i].basesIrrf.Items[j].Fvalor   := leitor.rCampo(tcDe2, 'valor');
           inc(j);
@@ -438,7 +438,7 @@ begin
         j := 0;
         while Leitor.rExtrai(3, 'irrf', '', j + 1) <> '' do
         begin
-          InfoIrrf.Items[i].irrf.Add;
+          InfoIrrf.Items[i].irrf.New;
           InfoIrrf.Items[i].irrf.Items[j].FtpCR       := leitor.rCampo(tcStr, 'tpCR');
           InfoIrrf.Items[i].irrf.Items[j].FvrIrrfDesc := leitor.rCampo(tcDe2, 'vrIrrfDesc');
           inc(j);

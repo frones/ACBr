@@ -668,7 +668,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with cat.parteAtingida.Add do
+        with cat.parteAtingida.New do
         begin
           codParteAting := StrToInt(sFim);
           lateralidade  := eSStrToLateralidade(Ok, INIRec.ReadString(sSecao, 'lateralidade', '1'));
@@ -687,7 +687,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with cat.agenteCausador.Add do
+        with cat.agenteCausador.New do
         begin
           codAgntCausador := StrToInt(sFim);
         end;

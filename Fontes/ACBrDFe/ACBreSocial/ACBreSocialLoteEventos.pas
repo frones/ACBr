@@ -353,7 +353,7 @@ begin
     AXML := copy(AXMLString, 1, P + 9);
     AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
 
-    Self.Add.FXML := AXML;
+    Self.New.FXML := AXML;
 
     P := PoseSocial;
   end;

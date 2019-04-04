@@ -318,7 +318,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with remunAvNP.Add do
+        with remunAvNP.New do
         begin
           TpInsc     := eSStrToTpInscricao(Ok, sFim);
           NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);

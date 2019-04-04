@@ -708,7 +708,7 @@ begin
         // de 0 até 9
         sSecao := 'infoAtestado' + IntToStrZero(I, 1);
 
-        with infoAfastamento.iniAfastamento.infoAtestado.Add do
+        with infoAfastamento.iniAfastamento.infoAtestado.New do
         begin
           codCID      := INIRec.ReadString(sSecao, 'codCID', '');
           qtDiasAfast := INIRec.ReadInteger(sSecao, 'qtdDiasAfast', 0);

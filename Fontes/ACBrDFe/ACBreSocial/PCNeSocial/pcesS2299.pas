@@ -1033,7 +1033,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infoDeslig.VerbasResc.dmDev.Add do
+        with infoDeslig.VerbasResc.dmDev.New do
         begin
           ideDmDev := sFim;
 
@@ -1047,7 +1047,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoPerApur.ideEstabLot.Add do
+            with infoPerApur.ideEstabLot.New do
             begin
               tpInsc     := eSStrToTpInscricao(Ok, sFim);
               NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
@@ -1064,7 +1064,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with detVerbas.Add do
+                with detVerbas.New do
                 begin
                   codRubr    := sFim;
                   ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1088,7 +1088,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoSaudeColet.detOper.Add do
+                with infoSaudeColet.detOper.New do
                 begin
                   cnpjOper := sFim;
                   regANS   := INIRec.ReadString(sSecao, 'regANS', EmptyStr);
@@ -1105,7 +1105,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with detPlano.Add do
+                    with detPlano.New do
                     begin
                       tpDep    := eSStrToTpDep(Ok, sFim);
                       cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', EmptyStr);
@@ -1142,7 +1142,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoPerAnt.ideADC.Add do
+                with infoPerAnt.ideADC.New do
                 begin
                   dtAcConv   := StringToDateTime(sFim);
                   tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
@@ -1161,7 +1161,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with idePeriodo.Add do
+                    with idePeriodo.New do
                     begin
                       perRef := sFim;
 
@@ -1177,7 +1177,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with ideEstabLot.Add do
+                        with ideEstabLot.New do
                         begin
                           tpInsc     := eSStrToTpInscricao(Ok, sFim);
                           NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
@@ -1195,7 +1195,7 @@ begin
                             if (sFim = 'FIM') or (Length(sFim) <= 0) then
                               break;
 
-                            with detVerbas.Add do
+                            with detVerbas.New do
                             begin
                               codRubr    := sFim;
                               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1245,7 +1245,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoTrabInterm.Add do
+            with infoTrabInterm.New do
             begin
               codConv := sFim;
             end;
@@ -1268,7 +1268,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infoDeslig.VerbasResc.procJudTrab.Add do
+        with infoDeslig.VerbasResc.procJudTrab.New do
         begin
           tpTrib    := eSStrToTpTributo(Ok, sFim);
           nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
@@ -1293,7 +1293,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoDeslig.VerbasResc.infoMV.remunOutrEmpr.Add do
+          with infoDeslig.VerbasResc.infoMV.remunOutrEmpr.New do
           begin
             TpInsc     := eSStrToTpInscricao(Ok, sFim);
             NrInsc     := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
@@ -1323,7 +1323,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infoDeslig.consigFGTS.Add do
+        with infoDeslig.consigFGTS.New do
         begin
           idConsig  := eSStrToSimNao(Ok, sFim);
           insConsig := INIRec.ReadString(sSecao, 'insConsig', EmptyStr);

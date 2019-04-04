@@ -377,7 +377,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with trabalhador.Dependente.Add do
+        with trabalhador.Dependente.New do
         begin
           tpDep    := eSStrToTpDep(Ok, sFim);
           nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');

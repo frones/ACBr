@@ -543,7 +543,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoProcesso.dadosProc.infoSusp.Add do
+          with infoProcesso.dadosProc.infoSusp.New do
           begin
             codSusp     := sFim;
             indSusp     := eSStrToIndSusp(Ok, INIRec.ReadString(sSecao, 'indSusp', '01'));

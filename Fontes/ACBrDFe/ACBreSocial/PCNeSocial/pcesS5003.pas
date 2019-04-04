@@ -362,7 +362,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'ideEstabLot', '', i + 1) <> '' do
         begin
-          infoFGTS.IdeEstabLot.Add;
+          infoFGTS.IdeEstabLot.New;
           infoFGTS.IdeEstabLot.Items[i].TpInsc     := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
           infoFGTS.IdeEstabLot.Items[i].NrInsc     := leitor.rCampo(tcStr, 'nrInsc');
           infoFGTS.IdeEstabLot.Items[i].codLotacao := leitor.rCampo(tcStr, 'codLotacao');
@@ -370,7 +370,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'infoTrabFGTS', '', j + 1) <> '' do
           begin
-            infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Add;
+            infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.New;
             infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].matricula    := leitor.rCampo(tcStr, 'matricula');
             infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].codCateg     := leitor.rCampo(tcInt, 'codCateg');
             infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].dtAdm        := leitor.rCampo(tcDat, 'dtAdm');
@@ -383,7 +383,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'basePerApur', '', k + 1) <> '' do
             begin
-              infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].InfoBaseFGTS.basePerApur.Add;
+              infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].InfoBaseFGTS.basePerApur.New;
               infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].InfoBaseFGTS.basePerApur.Items[k].tpValor := leitor.rCampo(tcInt, 'tpValor');
               infoFGTS.IdeEstabLot.Items[i].InfoTrabFGTS.Items[j].InfoBaseFGTS.basePerApur.Items[k].remFGTS := leitor.rCampo(tcDe2, 'remFGTS');
 
@@ -402,14 +402,14 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'infoTrabDps', '', j + 1) <> '' do
           begin
-            infoFGTS.infoDpsFGTS.infoTrabDps.Add;
+            infoFGTS.infoDpsFGTS.infoTrabDps.New;
             infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].matricula := leitor.rCampo(tcStr, 'matricula');
             infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].codCateg  := leitor.rCampo(tcInt, 'codCateg');
 
             k := 0;
             while Leitor.rExtrai(5, 'dpsPerApur', '', k + 1) <> '' do
             begin
-              infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].dpsPerApur.Add;
+              infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].dpsPerApur.New;
               infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].dpsPerApur.Items[k].tpDps   := leitor.rCampo(tcInt, 'tpDps');
               infoFGTS.infoDpsFGTS.infoTrabDps.Items[j].dpsPerApur.Items[k].dpsFGTS := leitor.rCampo(tcDe2, 'dpsFGTS');
 

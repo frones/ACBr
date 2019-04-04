@@ -783,7 +783,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with ideTrabalhador.procJudTrab.Add do
+        with ideTrabalhador.procJudTrab.New do
         begin
           tpTrib    := eSStrToTpTributo(Ok, INIRec.ReadString(sSecao, 'tpTrib', '1'));
           nrProcJud := sFim;
@@ -803,7 +803,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with dmDev.Add do
+        with dmDev.New do
         begin
           ideDmDev := sFim;
 
@@ -817,7 +817,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoPerApur.ideEstab.Add do
+            with infoPerApur.ideEstab.New do
             begin
               tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
               nrInsc     := sFim;
@@ -833,7 +833,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with remunPerApur.Add do
+                with remunPerApur.New do
                 begin
                   matricula := sFim;
                   codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
@@ -850,7 +850,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with itensRemun.Add do
+                    with itensRemun.New do
                     begin
                       codRubr    := sFim;
                       ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');
@@ -875,7 +875,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with infoSaudeColet.detOper.Add do
+                    with infoSaudeColet.detOper.New do
                     begin
                       cnpjOper := sFim;
                       regANS   := INIRec.ReadString(sSecao, 'regANS', '');
@@ -893,7 +893,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with detPlano.Add do
+                        with detPlano.New do
                          begin
                           tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', '00'));
                           cpfDep   := sFim;
@@ -930,7 +930,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoPerAnt.ideADC.Add do
+            with infoPerAnt.ideADC.New do
             begin
               dtLei := StringToDateTime(sFim);
               nrLei := INIRec.ReadString(sSecao, 'nrLei', '');
@@ -947,7 +947,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with idePeriodo.Add do
+                with idePeriodo.New do
                 begin
                   perRef := sFim;
 
@@ -962,7 +962,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with ideEstab.Add do
+                    with ideEstab.New do
                     begin
                       tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
                       nrInsc     := sFim;
@@ -978,7 +978,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with remunPerAnt.Add do
+                        with remunPerAnt.New do
                         begin
                           matricula := sFim;
                           codCateg  := INIRec.ReadInteger(sSecao, 'codCateg', 0);
@@ -996,7 +996,7 @@ begin
                             if (sFim = 'FIM') or (Length(sFim) <= 0) then
                               break;
 
-                            with itensRemun.Add do
+                            with itensRemun.New do
                             begin
                               codRubr    := sFim;
                               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');

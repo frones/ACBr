@@ -475,7 +475,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoLotacao.dadosLotacao.fpasLotacao.infoProcJudTerceiros.procJudTerceiro.Add do
+          with infoLotacao.dadosLotacao.fpasLotacao.infoProcJudTerceiros.procJudTerceiro.New do
           begin
             codTerc   := sFim;
             nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', '');

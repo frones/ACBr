@@ -394,7 +394,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infoSubstPatrOpPort.Add do
+        with infoSubstPatrOpPort.New do
         begin
           cnpjOpPortuario := sFim;
           InfoAtivConcom.fatorMes := StringToFloatDef(INIRec.ReadString(sSecao, 'fatorMes', ''), 0);

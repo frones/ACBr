@@ -303,7 +303,7 @@ begin
            i := 0;
            while Leitor.rExtrai(4, 'basePerApur', '', i + 1) <> '' do
            begin
-             InfoFGTS.infoBaseFGTS.basePerApur.Add;
+             InfoFGTS.infoBaseFGTS.basePerApur.New;
              InfoFGTS.infoBaseFGTS.basePerApur.Items[i].tpValor  := leitor.rCampo(tcInt, 'tpValor');
              InfoFGTS.infoBaseFGTS.basePerApur.Items[i].baseFGTS := leitor.rCampo(tcDe2, 'baseFGTS');
              inc(i);
@@ -315,7 +315,7 @@ begin
            i := 0;
            while Leitor.rExtrai(4, 'dpsPerApur', '', i + 1) <> '' do
            begin
-             InfoFGTS.infoDpsFGTS.dpsPerApur.Add;
+             InfoFGTS.infoDpsFGTS.dpsPerApur.New;
              InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].tpDps  := leitor.rCampo(tcInt, 'tpDps');
              InfoFGTS.infoDpsFGTS.dpsPerApur.Items[i].vrFGTS := leitor.rCampo(tcDe2, 'vrFGTS');
              inc(i);

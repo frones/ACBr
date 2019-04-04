@@ -428,7 +428,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoHorContratual.dadosHorContratual.horarioIntervalo.Add do
+          with infoHorContratual.dadosHorContratual.horarioIntervalo.New do
           begin
             tpInterv   := eSStrToTpIntervalo(Ok, sFim);
             durInterv  := INIRec.ReadInteger(sSecao, 'durInterv', 0);

@@ -1124,7 +1124,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with ideTrabalhador.infoMV.remunOutrEmpr.Add do
+          with ideTrabalhador.infoMV.remunOutrEmpr.New do
           begin
             tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
             nrInsc     := sFim;
@@ -1166,7 +1166,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with ideTrabalhador.procJudTrab.Add do
+        with ideTrabalhador.procJudTrab.New do
         begin
           tpTrib     := eSStrToTpTributo(Ok, INIRec.ReadString(sSecao, 'tpTrib', '1'));
           nrProcJud  := sFim;
@@ -1186,7 +1186,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with dmDev.Add do
+        with dmDev.New do
         begin
           ideDmDev := sFim;
           codCateg := INIRec.ReadInteger(sSecao, 'codCateg', 0);
@@ -1201,7 +1201,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoPerApur.ideEstabLot.Add do
+            with infoPerApur.ideEstabLot.New do
             begin
               tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
               nrInsc     := sFim;
@@ -1235,7 +1235,7 @@ begin
                 sSecao := 'remunPerApur' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
                              IntToStrZero(K, 1);
 
-                with remunPerApur.Add do
+                with remunPerApur.New do
                 begin
                   matricula  := INIRec.ReadString(sSecao, 'matricula', 'FIM');
                   indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
@@ -1252,7 +1252,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with itensRemun.Add do
+                    with itensRemun.New do
                     begin
                       codRubr    := sFim;
                       ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');
@@ -1277,7 +1277,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with infoSaudeColet.detOper.Add do
+                    with infoSaudeColet.detOper.New do
                     begin
                       cnpjOper := sFim;
                       regANS   := INIRec.ReadString(sSecao, 'regANS', '');
@@ -1295,7 +1295,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with detPlano.Add do
+                        with detPlano.New do
                          begin
                           tpDep    := eSStrToTpDep(Ok, INIRec.ReadString(sSecao, 'tpDep', '00'));
                           cpfDep   := INIRec.ReadString(sSecao, 'cpfDep', '');
@@ -1336,7 +1336,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoPerAnt.ideADC.Add do
+            with infoPerAnt.ideADC.New do
             begin
               dtAcConv   := StringToDateTime(sFim);
               tpAcConv   := eSStrToTpAcConv(Ok, INIRec.ReadString(sSecao, 'tpAcConv', 'A'));
@@ -1356,7 +1356,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with idePeriodo.Add do
+                with idePeriodo.New do
                 begin
                   perRef := sFim;
 
@@ -1371,7 +1371,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with ideEstabLot.Add do
+                    with ideEstabLot.New do
                     begin
                       tpInsc     := eSStrToTpInscricao(Ok, INIRec.ReadString(sSecao, 'tpInsc', '1'));
                       nrInsc     := sFim;
@@ -1388,7 +1388,7 @@ begin
                         if (sFim = 'FIM') or (Length(sFim) <= 0) then
                           break;
 
-                        with remunPerAnt.Add do
+                        with remunPerAnt.New do
                         begin
                           matricula  := sFim;
                           indSimples := eSStrToIndSimples(Ok, INIRec.ReadString(sSecao, 'indSimples', '1'));
@@ -1406,7 +1406,7 @@ begin
                             if (sFim = 'FIM') or (Length(sFim) <= 0) then
                               break;
 
-                            with itensRemun.Add do
+                            with itensRemun.New do
                             begin
                               codRubr    := sFim;
                               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');
@@ -1454,7 +1454,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with infoTrabInterm.Add do
+            with infoTrabInterm.New do
             begin
               codConv := sFim;
             end;

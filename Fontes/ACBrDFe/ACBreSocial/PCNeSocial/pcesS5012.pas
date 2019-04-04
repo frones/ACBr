@@ -233,7 +233,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'infoCRContrib', '', i + 1) <> '' do
         begin
-          infoIRRF.infoCRContrib.Add;
+          infoIRRF.infoCRContrib.New;
           infoIRRF.infoCRContrib.Items[i].FtpCR := leitor.rCampo(tcStr, 'tpCR');
           infoIRRF.infoCRContrib.Items[i].FvrCR := leitor.rCampo(tcDe2, 'vrCR');
           inc(i);

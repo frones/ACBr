@@ -141,7 +141,7 @@ begin
 
     Self.S1000.Items[i].evtInfoEmpregador.SaveToFile(PathName);
 
-    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.Add do
+    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.New do
     begin
       TipoEvento := teS1000;
       PathNome := PathName;
@@ -157,7 +157,7 @@ begin
 
     Self.S1005.Items[i].evtTabEstab.SaveToFile(PathName);
 
-    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.Add do
+    with TACBreSocial(Self.FACBreSocial).Eventos.Gerados.New do
     begin
       TipoEvento := teS1005;
       PathNome := PathName;
@@ -182,8 +182,8 @@ var
   Ok: Boolean;
 begin
   case StringXMLToTipoEvento(Ok, AXMLString) of
-    teS1000: Self.S1000.Add.evtInfoEmpregador.XML := AXMLString;
-    teS1005: Self.S1005.Add.evtTabEstab.XML := AXMLString;
+    teS1000: Self.S1000.New.evtInfoEmpregador.XML := AXMLString;
+    teS1005: Self.S1005.New.evtTabEstab.XML := AXMLString;
   end;
 
   Result := (GetCount > 0);
@@ -194,8 +194,8 @@ var
   Ok: Boolean;
 begin
   case StringINIToTipoEvento(Ok, AIniString) of
-    teS1000: Self.S1000.Add.evtInfoEmpregador.LerArqIni(AIniString);
-    teS1005: Self.S1005.Add.evtTabEstab.LerArqIni(AIniString);
+    teS1000: Self.S1000.New.evtInfoEmpregador.LerArqIni(AIniString);
+    teS1005: Self.S1005.New.evtTabEstab.LerArqIni(AIniString);
   end;
 
   Result := (GetCount > 0);

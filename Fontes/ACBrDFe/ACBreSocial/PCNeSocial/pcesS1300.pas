@@ -288,7 +288,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with contribSind.Add do
+        with contribSind.New do
         begin
           cnpjSindic     := sFim;
           tpContribSind  := eSStrToTpContribSind(Ok, INIRec.ReadString(sSecao, 'tpTpContribSind', '1'));

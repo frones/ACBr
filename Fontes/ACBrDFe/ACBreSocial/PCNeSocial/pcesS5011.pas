@@ -640,7 +640,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'ideEstab', '', i + 1) <> '' do
         begin
-          infoCS.ideEstab.Add;
+          infoCS.ideEstab.New;
           infoCS.ideEstab.Items[i].FTpInsc := eSStrToTpInscricao(ok, leitor.rCampo(tcStr, 'tpInsc'));
           infoCS.ideEstab.Items[i].FNrInsc := leitor.rCampo(tcStr, 'nrInsc');
 
@@ -658,7 +658,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'ideLotacao', '', j + 1) <> '' do
           begin
-            infoCS.ideEstab.Items[i].ideLotacao.Add;
+            infoCS.ideEstab.Items[i].ideLotacao.New;
             infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodLotacao   := leitor.rCampo(tcStr, 'codLotacao');
             infoCS.ideEstab.Items[i].ideLotacao.Items[j].Ffpas         := leitor.rCampo(tcInt, 'fpas');
             infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcodTercs     := leitor.rCampo(tcStr, 'codTercs');
@@ -667,7 +667,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'infoTercSusp', '', k + 1) <> '' do
             begin
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.New;
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoTercSusp.Items[k].FcodTerc := leitor.rCampo(tcStr, 'codTerc');
               inc(k);
             end;
@@ -691,7 +691,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'basesRemun', '', k + 1) <> '' do
             begin
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.New;
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FindIncid := leitor.rCampo(tcInt, 'indIncid');
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].basesRemun.Items[k].FcodCateg := leitor.rCampo(tcInt, 'codCateg');
 
@@ -734,7 +734,7 @@ begin
             k := 0;
             while Leitor.rExtrai(5, 'infoSubstPatrOpPort', '', k + 1) <> '' do
             begin
-              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Add;
+              infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.New;
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].infoSubstPatrOpPort.Items[k].FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
               inc(k);
             end;
@@ -745,7 +745,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'basesAquis', '', j + 1) <> '' do
           begin
-            infoCS.ideEstab.Items[i].basesAquis.Add;
+            infoCS.ideEstab.Items[i].basesAquis.New;
             infoCS.ideEstab.Items[i].basesAquis.Items[j].FindAquis    := leitor.rCampo(tcInt, 'indAquis');
             infoCS.ideEstab.Items[i].basesAquis.Items[j].FvlrAquis    := leitor.rCampo(tcDe2, 'vlrAquis');
             infoCS.ideEstab.Items[i].basesAquis.Items[j].FvrCPDescPR  := leitor.rCampo(tcDe2, 'vrCPDescPR');
@@ -763,7 +763,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'basesComerc', '', j + 1) <> '' do
           begin
-            infoCS.ideEstab.Items[i].basesComerc.Add;
+            infoCS.ideEstab.Items[i].basesComerc.New;
             infoCS.ideEstab.Items[i].basesComerc.Items[j].FindComerc   := leitor.rCampo(tcInt, 'indComerc');
             infoCS.ideEstab.Items[i].basesComerc.Items[j].FvrBcComPr   := leitor.rCampo(tcDe2, 'vrBcComPr');
             infoCS.ideEstab.Items[i].basesComerc.Items[j].FvrCPSusp    := leitor.rCampo(tcDe2, 'vrCPSusp');
@@ -775,7 +775,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'infoCREstab', '', j + 1) <> '' do
           begin
-            infoCS.ideEstab.Items[i].infoCREstab.Add;
+            infoCS.ideEstab.Items[i].infoCREstab.New;
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FtpCR     := leitor.rCampo(tcInt, 'tpCR');
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FvrCR     := leitor.rCampo(tcDe2, 'vrCR');
             infoCS.ideEstab.Items[i].infoCREstab.Items[j].FvrSuspCR := leitor.rCampo(tcDe2, 'vrSuspCR');
@@ -788,7 +788,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'infoCRContrib', '', i + 1) <> '' do
         begin
-          infoCS.infoCRContrib.Add;
+          infoCS.infoCRContrib.New;
           infoCS.infoCRContrib.Items[i].FtpCR     := leitor.rCampo(tcStr, 'tpCR');
           infoCS.infoCRContrib.Items[i].FvrCR     := leitor.rCampo(tcDe2, 'vrCR');
           infoCS.infoCRContrib.Items[i].FvrCRSusp := leitor.rCampo(tcDe2, 'vrCRSusp');

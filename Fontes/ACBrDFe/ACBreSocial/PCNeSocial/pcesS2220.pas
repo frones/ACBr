@@ -464,7 +464,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with exMedOcup.aso.exame.Add do
+        with exMedOcup.aso.exame.New do
         begin
           dtExm         := StringToDateTime(sFim);
           ProcRealizado := INIRec.ReadInteger(sSecao, 'procRealizado', 0);

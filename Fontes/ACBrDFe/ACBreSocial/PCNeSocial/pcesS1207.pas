@@ -374,7 +374,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with dmDev.Add do
+        with dmDev.New do
         begin
           tpBenef   := INIRec.ReadInteger(sSecao, 'tpBenef', 0);
           nrBenefic := sFim;
@@ -390,7 +390,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with itens.Add do
+            with itens.New do
             begin
               codRubr    := sFim;
               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', '');

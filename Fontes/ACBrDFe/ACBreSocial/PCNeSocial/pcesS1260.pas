@@ -525,7 +525,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with InfoComProd.IdeEstabel.tpComerc.Add do
+        with InfoComProd.IdeEstabel.tpComerc.New do
         begin
           indComerc := eSStrToIndComerc(Ok, sFim);
           vrTotCom  := StringToFloatDef(INIRec.ReadString(sSecao, 'vrTotCom', ''), 0);
@@ -540,7 +540,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with ideAdquir.Add do
+            with ideAdquir.New do
             begin
               tpInsc   := eSStrToTpInscricao(Ok, sFim);
               nrInsc   := INIRec.ReadString(sSecao, 'nrInsc', EmptyStr);
@@ -557,7 +557,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with nfs.Add do
+                with nfs.New do
                 begin
                   serie       := sFim;
                   nrDocto     := INIRec.ReadString(sSecao, 'nrDocto', EmptyStr);
@@ -582,7 +582,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoProcJud.Add do
+                with infoProcJud.New do
                 begin
                   tpProc      := eSStrToTpProcesso(Ok, INIRec.ReadString(sSecao, 'tpProc', '1'));
                   nrProcJud   := sFim;

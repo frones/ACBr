@@ -353,7 +353,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with trabalhador.Dependente.Add do
+        with trabalhador.Dependente.New do
         begin
           tpDep    := eSStrToTpDep(Ok, sFim);
           nmDep    := INIRec.ReadString(sSecao, 'nmDep', '');
@@ -432,7 +432,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.Add do
+        with vinculo.InfoRegimeTrab.InfoCeletista.trabTemporario.IdeTrabSubstituido.New do
         begin
           cpfTrabSubst := sFim;
         end;
@@ -517,7 +517,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with vinculo.infoContrato.horContratual.horario.Add do
+        with vinculo.infoContrato.horContratual.horario.New do
         begin
           dia           := eSStrToTpDia(Ok, sFim);
           CodHorContrat := INIRec.ReadString(sSecao, 'codHorContrat', '');
@@ -558,7 +558,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with vinculo.infoContrato.observacoes.Add do
+        with vinculo.infoContrato.observacoes.New do
         begin
           observacao := sFim;
         end;

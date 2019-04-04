@@ -466,7 +466,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoRubrica.dadosRubrica.ideProcessoCP.Add do
+          with infoRubrica.dadosRubrica.ideProcessoCP.New do
           begin
             tpProc     := eSStrToTpProcesso(Ok, sFim);
             nrProc     := INIRec.ReadString(sSecao, 'nrProc', '');
@@ -487,7 +487,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoRubrica.dadosRubrica.ideProcessoIRRF.Add do
+          with infoRubrica.dadosRubrica.ideProcessoIRRF.New do
           begin
             nrProc  := INIRec.ReadString(sSecao, 'nrProc', '');
             codSusp := INIRec.ReadString(sSecao, 'codSusp', '');
@@ -506,7 +506,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoRubrica.dadosRubrica.ideProcessoFGTS.Add do
+          with infoRubrica.dadosRubrica.ideProcessoFGTS.New do
           begin
             nrProc := INIRec.ReadString(sSecao, 'nrProc', '');
           end;
@@ -524,7 +524,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoRubrica.dadosRubrica.ideProcessoSIND.Add do
+          with infoRubrica.dadosRubrica.ideProcessoSIND.New do
           begin
             nrProc := INIRec.ReadString(sSecao, 'nrProc', '');
           end;

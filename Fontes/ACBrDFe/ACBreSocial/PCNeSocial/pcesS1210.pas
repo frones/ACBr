@@ -1140,7 +1140,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with ideBenef.InfoPgto.Add do
+        with ideBenef.InfoPgto.New do
         begin
           DtPgto   := StringToDateTime(sFim);
           TpPgto   := eSStrTotpTpPgto(Ok, INIRec.ReadString(sSecao, 'tpPgto', '1'));
@@ -1156,7 +1156,7 @@ begin
             if (sFim = 'FIM') then
               break;
 
-            with detPgtoFl.Add do
+            with detPgtoFl.New do
             begin
               perRef     := sFim;
               ideDmDev   := INIRec.ReadString(sSecao, 'ideDmDev', EmptyStr);
@@ -1175,7 +1175,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with retPagtoTot.Add do
+                with retPagtoTot.New do
                 begin
                   codRubr    := sFim;
                   ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1195,7 +1195,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with penAlim.Add do
+                    with penAlim.New do
                     begin
                       cpfBenef      := sFim;
                       dtNasctoBenef := StringToDateTime(INIRec.ReadString(sSecao, 'dtNasctoBenef', '0'));
@@ -1222,7 +1222,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoPgtoParc.Add do
+                with infoPgtoParc.New do
                 begin
                   matricula := INIRec.ReadString(sSecao, 'matricula', EmptyStr);
                   codRubr    := sFim;
@@ -1260,7 +1260,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with detPgtoBenPr.retPgtoTot.Add do
+            with detPgtoBenPr.retPgtoTot.New do
             begin
               codRubr    := sFim;
               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1283,7 +1283,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with detPgtoBenPr.infoPgtoParc.Add do
+            with detPgtoBenPr.infoPgtoParc.New do
             begin
               codRubr    := sFim;
               ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1306,7 +1306,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with detPgtoFer.Add do
+            with detPgtoFer.New do
             begin
               codCateg  := StrToInt(sFim);
               matricula := INIRec.ReadString(sSecao, 'matricula', '');
@@ -1325,7 +1325,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with detRubrFer.Add do
+                with detRubrFer.New do
                 begin
                   codRubr    := sFim;
                   ideTabRubr := INIRec.ReadString(sSecao, 'ideTabRubr', EmptyStr);
@@ -1345,7 +1345,7 @@ begin
                     if (sFim = 'FIM') or (Length(sFim) <= 0) then
                       break;
 
-                    with penAlim.Add do
+                    with penAlim.New do
                     begin
                       cpfBenef      := sFim;
                       dtNasctoBenef := StringToDateTime(INIRec.ReadString(sSecao, 'dtNasctoBenef', '0'));
@@ -1376,7 +1376,7 @@ begin
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
               break;
 
-            with detPgtoAnt.Add do
+            with detPgtoAnt.New do
             begin
               codCateg := StrToInt(sFim);
 
@@ -1391,7 +1391,7 @@ begin
                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
                   break;
 
-                with infoPgtoAnt.Add do
+                with infoPgtoAnt.New do
                 begin
                   tpBcIRRF := eSStrToCodIncIRRF(Ok, sFim);
                   vrBcIRRF := StringToFloatDef(INIRec.ReadString(sSecao, 'vrBcIRRF', ''), 0);

@@ -278,7 +278,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'ocorrencia', '', i + 1) <> '' do
           begin
-            Status.Ocorrencias.Add;
+            Status.Ocorrencias.New;
             Status.Ocorrencias.Items[i].Codigo := FLeitor.rCampo(tcInt, 'codigo');
             Status.Ocorrencias.Items[i].Descricao := FLeitor.rCampo(tcStr, 'descricao');
             Status.Ocorrencias.Items[i].Tipo := FLeitor.rCampo(tcInt, 'tipo');
@@ -305,7 +305,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'evento', '', i + 1) <> '' do
         begin
-          RetEventos.Add;
+          RetEventos.New;
           RetEventos.Items[i].Id := FLeitor.rAtributo('Id=', 'evento');
 
           if (FLeitor.rAtributo('evtDupl=', 'evento') <> '') then
@@ -342,7 +342,7 @@ begin
                   j := 0;
                   while Leitor.rExtrai(8, 'ocorrencia', '', j + 1) <> '' do
                   begin
-                    RetEventos.Items[i].Processamento.Ocorrencias.Add;
+                    RetEventos.Items[i].Processamento.Ocorrencias.New;
                     RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Codigo := Leitor.rCampo(tcInt, 'codigo');
                     RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Descricao := Leitor.rCampo(tcStr, 'descricao');
                     RetEventos.Items[i].Processamento.Ocorrencias.Items[j].Tipo := Leitor.rCampo(tcInt, 'tipo');
@@ -442,7 +442,7 @@ begin
                     j := 0;
                     while Leitor.rExtrai(9, 'horario', '', j + 1) <> '' do
                     begin
-                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Add;
+                      RetEventos.Items[i].Recibo.Contrato.horContratual.horario.New;
                       RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].dia            := eSStrToTpDia(ok, FLeitor.rCampo(tcStr, 'dia'));
                       RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].codHorContrat  := FLeitor.rCampo(tcStr, 'codHorContrat');
                       RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].hrEntr         := FLeitor.rCampo(tcStr, 'hrEntr');
@@ -453,7 +453,7 @@ begin
                       k := 0;
                       while Leitor.rExtrai(10, 'horarioIntervalo', '', k + 1) <> '' do
                       begin
-                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Add;
+                        RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.New;
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].tpInterv   := eSStrToTpIntervalo(ok, FLeitor.rCampo(tcStr, 'tpInterv'));
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].durInterv  := FLeitor.rCampo(tcInt, 'durInterv');
                         RetEventos.Items[i].Recibo.Contrato.horContratual.horario.Items[j].horarioIntervalo.Items[k].iniInterv  := FLeitor.rCampo(tcStr, 'iniInterv');
@@ -474,7 +474,7 @@ begin
           j := 0;
           while Leitor.rExtrai(4, 'tot', '', j + 1) <> '' do
           begin
-            RetEventos.Items[i].tot.Add;
+            RetEventos.Items[i].tot.New;
             RetEventos.Items[i].tot.Items[j].tipo := FLeitor.rAtributo('tipo=', 'tot');
             RetEventos.Items[i].tot.Items[j].XML := RetornarConteudoEntre(Leitor.Grupo, '>', '</tot');
 

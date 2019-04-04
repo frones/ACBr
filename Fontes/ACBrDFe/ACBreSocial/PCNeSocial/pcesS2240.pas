@@ -664,7 +664,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoExpRisco.infoAmb.Add do
+          with infoExpRisco.infoAmb.New do
             codAmb := sFim;
 
           with infoExpRisco do
@@ -682,7 +682,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoAtiv.ativPericInsal.Add do
+              with infoAtiv.ativPericInsal.New do
               begin
                 codAtiv  := sFim;
               end;
@@ -700,7 +700,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with fatRisco.Add do
+              with fatRisco.New do
               begin
                 codFatRis  := sFim;
                 tpAval     := StrTotpAval(Ok, INIRec.ReadString(sSecao, 'tpAval', '0'));
@@ -749,7 +749,7 @@ begin
                   if (sFim = 'FIM') or (Length(sFim) <= 0) then
                     break;
 
-                  with epcEpi.epi.Add do
+                  with epcEpi.epi.New do
                   begin
                     caEPI         := sFim;
                     dscEPI        := INIRec.ReadString(sSecao, 'dscEPI', EmptyStr);
@@ -785,7 +785,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infoExpRisco.respReg.Add do
+        with infoExpRisco.respReg.New do
         begin
             // Não consta mais na nova versão
 //          dtIni   := StringToDateTime(sFim);

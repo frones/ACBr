@@ -244,7 +244,7 @@ begin
 
     Self.S1200.Items[i].evtRemun.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1200;
       PathNome := PathName;
@@ -260,7 +260,7 @@ begin
 
     Self.S1202.Items[i].EvtRmnRPPS.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1202;
       PathNome := PathName;
@@ -276,7 +276,7 @@ begin
 
     Self.S1207.Items[i].evtBenPrRP.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1207;
       PathNome := PathName;
@@ -292,7 +292,7 @@ begin
 
     Self.S1210.Items[i].evtPgtos.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1210;
       PathNome := PathName;
@@ -308,7 +308,7 @@ begin
 
     Self.S1250.Items[i].EvtAqProd.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1250;
       PathNome := PathName;
@@ -324,7 +324,7 @@ begin
 
     Self.S1260.Items[i].EvtComProd.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1260;
       PathNome := PathName;
@@ -340,7 +340,7 @@ begin
 
     Self.S1270.Items[i].EvtContratAvNP.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1270;
       PathNome := PathName;
@@ -356,7 +356,7 @@ begin
 
     Self.S1280.Items[i].EvtInfoComplPer.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1280;
       PathNome := PathName;
@@ -372,7 +372,7 @@ begin
 
     Self.S1295.Items[i].evtTotConting.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1295;
       PathNome := PathName;
@@ -388,7 +388,7 @@ begin
 
     Self.S1298.Items[i].EvtReabreEvPer.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1298;
       PathNome := PathName;
@@ -404,7 +404,7 @@ begin
 
     Self.S1299.Items[i].EvtFechaEvPer.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1299;
       PathNome := PathName;
@@ -420,7 +420,7 @@ begin
 
     Self.S1300.Items[i].EvtContrSindPatr.SaveToFile(PathName);
 
-    with TACBreSocial(Self.Owner).Eventos.Gerados.Add do
+    with TACBreSocial(Self.Owner).Eventos.Gerados.New do
     begin
       TipoEvento := teS1300;
       PathNome := PathName;
@@ -495,18 +495,18 @@ var
   Ok: Boolean;
 begin
   case StringXMLToTipoEvento(Ok, AXMLString) of
-    teS1200: Self.S1200.Add.evtRemun.XML := AXMLString;
-    teS1202: Self.S1202.Add.EvtRmnRPPS.XML := AXMLString;
-    teS1207: Self.S1207.Add.evtBenPrRP.XML := AXMLString;
-    teS1210: Self.S1210.Add.evtPgtos.XML := AXMLString;
-    teS1250: Self.S1250.Add.EvtAqProd.XML := AXMLString;
-    teS1260: Self.S1260.Add.EvtComProd.XML := AXMLString;
-    teS1270: Self.S1270.Add.EvtContratAvNP.XML := AXMLString;
-    teS1280: Self.S1280.Add.EvtInfoComplPer.XML := AXMLString;
-    teS1295: Self.S1295.Add.evtTotConting.XML := AXMLString;
-    teS1298: Self.S1298.Add.EvtReabreEvPer.XML := AXMLString;
-    teS1299: Self.S1299.Add.EvtFechaEvPer.XML := AXMLString;
-    teS1300: Self.S1300.Add.EvtContrSindPatr.XML := AXMLString;
+    teS1200: Self.S1200.New.evtRemun.XML := AXMLString;
+    teS1202: Self.S1202.New.EvtRmnRPPS.XML := AXMLString;
+    teS1207: Self.S1207.New.evtBenPrRP.XML := AXMLString;
+    teS1210: Self.S1210.New.evtPgtos.XML := AXMLString;
+    teS1250: Self.S1250.New.EvtAqProd.XML := AXMLString;
+    teS1260: Self.S1260.New.EvtComProd.XML := AXMLString;
+    teS1270: Self.S1270.New.EvtContratAvNP.XML := AXMLString;
+    teS1280: Self.S1280.New.EvtInfoComplPer.XML := AXMLString;
+    teS1295: Self.S1295.New.evtTotConting.XML := AXMLString;
+    teS1298: Self.S1298.New.EvtReabreEvPer.XML := AXMLString;
+    teS1299: Self.S1299.New.EvtFechaEvPer.XML := AXMLString;
+    teS1300: Self.S1300.New.EvtContrSindPatr.XML := AXMLString;
   end;
 
   Result := (GetCount > 0);
@@ -517,18 +517,18 @@ var
   Ok: Boolean;
 begin
   case StringINIToTipoEvento(Ok, AIniString) of
-    teS1200: Self.S1200.Add.evtRemun.LerArqIni(AIniString);
-    teS1202: Self.S1202.Add.EvtRmnRPPS.LerArqIni(AIniString);
-    teS1207: Self.S1207.Add.evtBenPrRP.LerArqIni(AIniString);
-    teS1210: Self.S1210.Add.evtPgtos.LerArqIni(AIniString);
-    teS1250: Self.S1250.Add.EvtAqProd.LerArqIni(AIniString);
-    teS1260: Self.S1260.Add.EvtComProd.LerArqIni(AIniString);
-    teS1270: Self.S1270.Add.EvtContratAvNP.LerArqIni(AIniString);
-    teS1280: Self.S1280.Add.EvtInfoComplPer.LerArqIni(AIniString);
-    teS1295: Self.S1295.Add.evtTotConting.LerArqIni(AIniString);
-    teS1298: Self.S1298.Add.EvtReabreEvPer.LerArqIni(AIniString);
-    teS1299: Self.S1299.Add.EvtFechaEvPer.LerArqIni(AIniString);
-    teS1300: Self.S1300.Add.EvtContrSindPatr.LerArqIni(AIniString);
+    teS1200: Self.S1200.New.evtRemun.LerArqIni(AIniString);
+    teS1202: Self.S1202.New.EvtRmnRPPS.LerArqIni(AIniString);
+    teS1207: Self.S1207.New.evtBenPrRP.LerArqIni(AIniString);
+    teS1210: Self.S1210.New.evtPgtos.LerArqIni(AIniString);
+    teS1250: Self.S1250.New.EvtAqProd.LerArqIni(AIniString);
+    teS1260: Self.S1260.New.EvtComProd.LerArqIni(AIniString);
+    teS1270: Self.S1270.New.EvtContratAvNP.LerArqIni(AIniString);
+    teS1280: Self.S1280.New.EvtInfoComplPer.LerArqIni(AIniString);
+    teS1295: Self.S1295.New.evtTotConting.LerArqIni(AIniString);
+    teS1298: Self.S1298.New.EvtReabreEvPer.LerArqIni(AIniString);
+    teS1299: Self.S1299.New.EvtFechaEvPer.LerArqIni(AIniString);
+    teS1300: Self.S1300.New.EvtContrSindPatr.LerArqIni(AIniString);
   end;
 
   Result := (GetCount > 0);

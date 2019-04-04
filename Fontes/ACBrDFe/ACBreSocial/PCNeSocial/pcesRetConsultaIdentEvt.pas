@@ -162,7 +162,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'identificadoresEvts', '', i + 1) <> '' do
         begin
-          RetIdentEvts.Add;
+          RetIdentEvts.New;
           RetIdentEvts.Items[i].Id := FLeitor.rCampo(tcStr, 'id');
           RetIdentEvts.Items[i].nrRec := Leitor.rCampo(tcStr, 'nrRec');
 

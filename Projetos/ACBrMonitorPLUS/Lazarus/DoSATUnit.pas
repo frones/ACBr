@@ -268,7 +268,7 @@ function TACBrObjetoSAT.ParamAsXML(AParam: String): String;
 var
   SL : TStringList;
 begin
-  Result := Trim(AParam);
+  Result := '';
 
   if (pos(#10,AParam) = 0) and FileExists(AParam) then
   begin
@@ -279,7 +279,9 @@ begin
     finally
       SL.Free;
     end;
-  end;
+  end
+  else
+    raise Exception.Create('Diretório ou Arquivo: '+AParam+' não encontrado! ');
 end;
 
 procedure TACBrObjetoSAT.CarregarDadosCancelamento(aStr: String);
@@ -907,12 +909,18 @@ begin
 
   with TACBrObjetoSAT(fpObjetoDono) do
   begin
-
-    ArqCFe := ParamAsXML(cArqXML);
-    if ArqCFe = '' then
+    if NaoEstaVazio(cArqXML) then
+    begin
+      ArqCFe := ParamAsXML(cArqXML);
+      if StringIsXML( ArqCFe ) then
+        Resultado := ACBrSAT.EnviarDadosVenda( ArqCFe )
+      else
+        raise Exception.Create('XML em: '+cArqXML+' é inválido! ');
+    end
+    else if (ACBrSAT.CFe.ide.signAC <> '') then
       Resultado := ACBrSAT.EnviarDadosVenda
     else
-      Resultado := ACBrSAT.EnviarDadosVenda( ArqCFe );
+      raise Exception.Create('Nenhum XML encontrado para envio! ');
 
     RespostaEnviarDadosVenda( Resultado );
 
@@ -1328,7 +1336,8 @@ begin
     29 : AMetodoClass := TMetodoSetLogoMarca;
     30 : AMetodoClass := TMetodoGerarAssinaturaSAT;
 
-    31..46 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

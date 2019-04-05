@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -193,16 +193,23 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
         <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
         <PackageName Value="ACBrSerial"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibPosPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -238,6 +245,10 @@
         <Filename Value="ACBrLibPosPrinterConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

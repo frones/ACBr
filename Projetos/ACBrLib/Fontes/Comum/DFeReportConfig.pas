@@ -169,20 +169,20 @@ procedure TDFeReportConfig.Assign(const DFeReport: TACBrDFeReport);
 begin
   if not Assigned(DFeReport) then Exit;
 
-  DFeReport.PathPDF := PathPDF;
-  DFeReport.UsaSeparadorPathPDF := UsaSeparadorPathPDF;
-  DFeReport.Impressora := Impressora;
-  DFeReport.NomeDocumento := NomeDocumento;
-  DFeReport.MostraSetup := MostraSetup;
-  DFeReport.MostraPreview := MostraPreview;
-  DFeReport.MostraStatus := MostraStatus;
-  DFeReport.NumCopias := NumCopias;
-  DFeReport.Logo := Logo;
-  DFeReport.MargemInferior := MargemInferior;
-  DFeReport.MargemSuperior := MargemSuperior;
-  DFeReport.MargemEsquerda := MargemEsquerda;
-  DFeReport.MargemDireita := MargemDireita;
-  DFeReport.ExpandeLogoMarca := ExpandeLogoMarca;
+  DFeReport.PathPDF := FPathPDF;
+  DFeReport.UsaSeparadorPathPDF := FUsaSeparadorPathPDF;
+  DFeReport.Impressora := FImpressora;
+  DFeReport.NomeDocumento := FNomeDocumento;
+  DFeReport.MostraSetup := FMostraSetup;
+  DFeReport.MostraPreview := FMostraPreview;
+  DFeReport.MostraStatus := FMostraStatus;
+  DFeReport.NumCopias := FNumCopias;
+  DFeReport.Logo := FLogo;
+  DFeReport.MargemInferior := FMargemInferior;
+  DFeReport.MargemSuperior := FMargemSuperior;
+  DFeReport.MargemEsquerda := FMargemEsquerda;
+  DFeReport.MargemDireita := FMargemDireita;
+  DFeReport.ExpandeLogoMarca := FExpandeLogoMarca;
 
   With DFeReport.CasasDecimais do
   begin

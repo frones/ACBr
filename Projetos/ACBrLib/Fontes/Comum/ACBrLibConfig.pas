@@ -163,10 +163,8 @@ type
   TPosPrinterConfig = class
   private
     FArqLog: String;
-    FDeviceParams: String;
     FModelo: Integer;
     FPorta: String;
-    FTimeOut: Integer;
     FPaginaDeCodigo: Integer;
     FColunasFonteNormal: Integer;
     FEspacoEntreLinhas: byte;
@@ -207,10 +205,8 @@ type
     procedure GravarIni(const AIni: TCustomIniFile);
 
     property ArqLog: string read FArqLog write FArqLog;
-    property DeviceParams: String read FDeviceParams write FDeviceParams;
     property Modelo: Integer read FModelo write FModelo;
     property Porta: String read FPorta write FPorta;
-    property TimeOut: Integer read FTimeOut write FTimeOut;
     property PaginaDeCodigo: Integer read FPaginaDeCodigo write FPaginaDeCodigo;
     property ColunasFonteNormal: Integer read FColunasFonteNormal write FColunasFonteNormal;
     property EspacoEntreLinhas: byte read FEspacoEntreLinhas write FEspacoEntreLinhas;
@@ -487,9 +483,7 @@ end;
 constructor TPosPrinterConfig.Create;
 begin
   FModelo := 0;
-  FDeviceParams := '';
   FPorta := '';
-  FTimeOut := 3;
   FPaginaDeCodigo := 2;
   FColunasFonteNormal := 48;
   FEspacoEntreLinhas := 0;
@@ -534,9 +528,7 @@ procedure TPosPrinterConfig.LerIni(const AIni: TCustomIniFile);
 begin
   FArqLog := AIni.ReadString(CSessaoPosPrinter, CChaveArqLog, FArqLog);
   FModelo := AIni.ReadInteger(CSessaoPosPrinter, CChaveModelo, FModelo);
-  FDeviceParams := AIni.ReadString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   FPorta := AIni.ReadString(CSessaoPosPrinter, CChavePorta, FPorta);
-  FTimeOut := AIni.ReadInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
   FPaginaDeCodigo := AIni.ReadInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, FPaginaDeCodigo);
   FColunasFonteNormal := AIni.ReadInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   FEspacoEntreLinhas :=  AIni.ReadInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
@@ -580,9 +572,7 @@ procedure TPosPrinterConfig.GravarIni(const AIni: TCustomIniFile);
 begin
   AIni.WriteString(CSessaoPosPrinter, CChaveArqLog, FArqLog);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveModelo, Integer(FModelo));
-  AIni.WriteString(CSessaoPosPrinter, CChaveDevice, FDeviceParams);
   AIni.WriteString(CSessaoPosPrinter, CChavePorta, FPorta);
-  AIni.WriteInteger(CSessaoPosPrinter, CChaveTimeOut, FTimeOut);
   AIni.WriteInteger(CSessaoPosPrinter, CChavePaginaDeCodigo, Integer(FPaginaDeCodigo));
   AIni.WriteInteger(CSessaoPosPrinter, CChaveColunasFonteNormal, FColunasFonteNormal);
   AIni.WriteInteger(CSessaoPosPrinter, CChaveEspacoEntreLinhas, FEspacoEntreLinhas);
@@ -921,11 +911,13 @@ end;
 
 function TLibConfig.PrecisaCriptografar(ASessao, AChave: String): Boolean;
 begin
-  Result := (AChave = CChaveSenha) and
-            ( (ASessao = CSessaoProxy) or
-              (ASessao = CSessaoEmail) or
-              (ASessao = CSessaoDFe)
-            );
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar(' + ASessao + ',' + AChave + ')', logParanoico);
+
+  Result := (AChave = CChaveSenha) and ((ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or
+                                        (ASessao = CSessaoDFe));
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar - Feito Result: ' + BoolToStr(Result, True), logParanoico);
 end;
 
 end.

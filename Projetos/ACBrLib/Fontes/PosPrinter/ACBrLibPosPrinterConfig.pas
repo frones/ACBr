@@ -39,14 +39,18 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrLibConfig;
+  ACBrLibConfig, ACBrDeviceConfig;
 
 type
   { TLibPosPrinterConfig }
   TLibPosPrinterConfig = class(TLibConfig)
+  private
+    FDeviceConfig: TDeviceConfig;
+
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
 
+    procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
 
@@ -56,6 +60,8 @@ type
   public
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
+
+    property DeviceConfig: TDeviceConfig read FDeviceConfig;
 
   end;
 
@@ -70,10 +76,14 @@ uses
 constructor TLibPosPrinterConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
+
+  FDeviceConfig := TDeviceConfig.Create('POS_Device');
 end;
 
 destructor TLibPosPrinterConfig.Destroy;
 begin
+  FDeviceConfig.Free;
+
   inherited Destroy;
 end;
 
@@ -86,11 +96,20 @@ begin
             (inherited AtualizarArquivoConfiguracao);
 end;
 
+procedure TLibPosPrinterConfig.INIParaClasse;
+begin
+  inherited INIParaClasse;
+
+  FDeviceConfig.LerIni(Ini);
+end;
+
 procedure TLibPosPrinterConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
   Ini.WriteString(CSessaoVersao, CLibPosPrinterNome, CLibPosPrinterVersao);
+
+  FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibPosPrinterConfig.ClasseParaComponentes;

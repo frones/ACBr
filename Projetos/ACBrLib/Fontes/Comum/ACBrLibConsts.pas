@@ -203,15 +203,29 @@ resourcestring
 const
 {$I ACBrLibErros.inc}
 
-function SetRetornoWebService(const CodigoHTTP: Integer; const WebServico: String): Integer;
+function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
 
 implementation
 uses
-  ACBrLibComum;
+  ACBrLibComum, ACBrLibResposta, ACBrUtil;
 
-function SetRetornoWebService(const CodigoHTTP: Integer; const WebServico: String): Integer;
+function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+Var
+  Resp: TACBrLibHttpResposta;
+  Resposta: String;
 begin
-  Result := SetRetorno(CodigoHTTP, Format(SErrRetornoHttpWebService, [WebServico, CodigoHTTP]))
+  Resposta := '';
+  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta);
+  try
+    Resp.CodigoHTTP := CodigoHTTP;
+    Resp.WebService := WebService;
+    Resp.Msg := IfEmptyThen(Message, Format(SErrRetornoHttpWebService, [WebService, CodigoHTTP]));
+    Resposta := Resp.Gerar;
+  finally
+    Resp.Free;
+  end;
+
+  Result := SetRetorno(ErrHttp, Resposta);
 end;
 
 end.

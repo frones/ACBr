@@ -47,7 +47,7 @@ Function LerConverterIni( AStr: AnsiString ) : TMemIniFile;
 Function StringIsXML(AStr: AnsiString) : Boolean;
 
 implementation
-Uses ACBrUtil, DateUtils, pcnConversao,
+Uses ACBrUtil, DateUtils, pcnConversao, utilUnit,
   {$IFDEF MSWINDOWS}sndkey32, Windows,{$ENDIF}
   {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
@@ -279,6 +279,9 @@ begin
 
          else if Cmd.Metodo = 'ajustalinhaslog' then //ACBR.AjustaLinhasLog
            AjustaLinhasLog
+
+         else if cmd.Metodo = 'versao' then
+            Cmd.Resposta := VersaoACBr
 
         ELSE
            raise Exception.Create('Comando inválido ('+ copy(Cmd.Comando,6,length(Cmd.Comando))+')') ;

@@ -618,7 +618,8 @@ begin
     56 : AMetodoClass := TMetodoCertificadoDataVencimento; // DataVencimentoCertificado
     57 : AMetodoClass := TMetodoSetTipoImpressao;
 
-    58..72 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then
@@ -716,7 +717,7 @@ begin
             ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[I].NFe.infNFe.ID)+'-nfe.pdf';
 
             fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-              'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF ;
+              'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
           if (NotasFiscais.Items[I].Confirmada) and (pImprimir) then
@@ -1276,7 +1277,7 @@ begin
         ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
 
         fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-                'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF ;
+                'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak ;
       end;
 
       try

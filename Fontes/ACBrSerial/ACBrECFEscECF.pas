@@ -154,7 +154,7 @@ TACBrECFEscECFProtocolo = class
      fsWAKCounter: Integer;
      fsTimeOutStatus: TDateTime;
      fsSincronizou: Boolean;
-     fsTentouSincronizar: Boolean;
+     fsTentativasSincronizacao: Integer;
      fsSPR: Byte;
 
      procedure Sincronizar;
@@ -673,7 +673,7 @@ begin
   fsACK               := False;
   fsWAKCounter        := 0;
   fsSincronizou       := False;
-  fsTentouSincronizar := False;
+  fsTentativasSincronizacao := 0;
   fsTimeOutStatus     := 0;
   fsSPR               := 0;
 end;
@@ -757,7 +757,7 @@ begin
     EscECFResposta.Clear( True ) ;       // Zera toda a Resposta
     ACmd := EscECFComando.Comando ;
 
-    if fsTentouSincronizar then
+    if (fsTentativasSincronizacao > 0) then
       GravaLog( '         Status TX -> '+ACmd, True);
 
     fsACK           := False;
@@ -814,24 +814,24 @@ begin
 
        if ErroMsg <> '' then
         begin
-          if (not fsTentouSincronizar) and
+          if (fsTentativasSincronizacao < cNumFalhasMax ) and
              (EscECFResposta.CAT = 15) and (EscECFResposta.RET.ECF = 1) then    // Erro de sincronização
           begin
             GravaLog( '    Falha SYN - RX <- '+EscECFResposta.Resposta, True);
-            fsSincronizou       := False;  // Força a sincronização
-            fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
-            Self.EnviaComando_ECF();       // Gera chamada recursiva
+            fsSincronizou       := False;   // Força a sincronização
+            Inc(fsTentativasSincronizacao); // Evita loop infinito, no caso de ocorrer o mesmo erro
+            Self.EnviaComando_ECF();        // Gera chamada recursiva
             exit;
           end;
 
-          if (not fsTentouSincronizar) and IsDaruma and
+          if (fsTentativasSincronizacao < cNumFalhasMax) and IsDaruma and
              (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 140) then // 140-Relógio está travado
           begin
             GravaLog( '    Daruma Erro:140 - RX <- '+EscECFResposta.Resposta, True);
             Sleep(200);
-            fsSincronizou       := False;  // Força a sincronização
-            fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
-            Self.EnviaComando_ECF();       // Gera chamada recursiva
+            fsSincronizou       := False;   // Força a sincronização
+            Inc(fsTentativasSincronizacao); // Evita loop infinito, no caso de ocorrer o mesmo erro
+            Self.EnviaComando_ECF();        // Gera chamada recursiva
             exit;
           end;
 
@@ -848,7 +848,7 @@ begin
 
     finally
        TimeOut := OldTimeOut ;
-       fsTentouSincronizar := False;
+       fsTentativasSincronizacao := 0;
     end ;
   end;
 end;
@@ -1043,9 +1043,9 @@ begin
        end;
     end;
 
-    fsSincronizou       := False;
-    fsTentouSincronizar := False;
-    fsTimeOutStatus     := 0;
+    fsSincronizou := False;
+    fsTentativasSincronizacao := 0;
+    fsTimeOutStatus := 0;
 
     RespostasComando.Clear;
 

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/04/2019
+-- ACBrECFEscECF --
+[-] Aplicado workaround para Erro 140 disparado pela Daruma FS800I, mais de uma
+    vez por comando.
+    https://www.projetoacbr.com.br/forum/topic/50456-categoria-16-erro-específico-do-fabricante-motivo-140-relógio-está-travado/
+    (por: DSA)
+
 Data: 21/02/2019
 -- ACBrPosPrinter, ACBrEscCustomPos ---
 [+] Adicionado novo modelo "ppCustomPos", para permitir a compatibilização com as

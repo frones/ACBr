@@ -280,7 +280,8 @@ begin
     19 : AMetodoClass := TMetodoRetornaLinhaDigitavel;
     20 : AMetodoClass := TMetodoRetornaCodigoBarras;
 
-    21..34 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

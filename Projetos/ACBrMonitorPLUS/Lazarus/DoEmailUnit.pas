@@ -605,19 +605,22 @@ end;
 
 { Params: 0 - string contendo o path e nome do arquivo
           1 - string contendo a descrição
+          2 - Integer definindo anexo como inline ou attachement
 }
 procedure TMetodoAdicionaAnexo.Executar;
 var
   AArq, ADesc: String;
+  aAttach: Integer;
 begin
   AArq := fpCmd.Params(0);
   ADesc  := fpCmd.Params(1);
+  aAttach := StrToIntDef( fpCmd.Params(2), 0 );  //Default = attachement
 
   with TACBrObjetoEMail(fpObjetoDono) do
   begin
     ChecarEmailNovo;
 
-    fACBrEMail.AddAttachment(AArq, ADesc);
+    fACBrEMail.AddAttachment(AArq, ADesc, TMailAttachmentDisposition( aAttach ) );
     fpCmd.Resposta := 'Anexo incluído com sucesso!';
   end;
 end;

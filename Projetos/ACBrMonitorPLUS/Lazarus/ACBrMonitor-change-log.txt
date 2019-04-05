@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2019
+[+] DoACBrUnit
+Adicionado o método "Versao" (retorna versão do ACBrMonitor)
+
+05/04/2019
+[+] DoSATUnit
+Adicionado Validações para Envio de CFe
+
+03/04/2019
+[+] DoEmailUnit
+Adicionado parâmetro no metodo AdicionarAnexo de e-mail para definir a disposição como "Attachement" ou in-line
+
+03/04/2019
+[*] DoACBrNFeUnit
+Ajustes no Retorno do método EnviarLoteNFe
+
 22/03/2019
 [*] DoACBrMDFeUnit, ACBrLibMDFeRespostas
 Ajustes no retorno dos Itens Resposta do método ConsultarMDFeNaoEnc

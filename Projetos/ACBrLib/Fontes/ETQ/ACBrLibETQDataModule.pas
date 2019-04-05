@@ -100,6 +100,8 @@ begin
     BackFeed       := pLibConfig.ETQConfig.BackFeed;
     Origem         := pLibConfig.ETQConfig.Origem;
     DPI            := pLibConfig.ETQConfig.DPI;
+
+    pLibConfig.DeviceConfig.Assign(Device);
   end;
 end;
 

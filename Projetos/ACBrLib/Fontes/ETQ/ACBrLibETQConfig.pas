@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrDevice, ACBrETQ;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrDevice, ACBrETQ;
 
 type
 
@@ -66,19 +66,19 @@ type
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
 
-    property ArqLog:          String           read FArqLog         write FArqLog;
-    property Unidade:         TACBrETQUnidade  read FUnidade        write FUnidade;
-    property Modelo:          TACBrETQModelo   read FModelo         write FModelo;
-    property BackFeed:        TACBrETQBackFeed read FBackFeed       write FBackFeed;
-    property LimparMemoria:   Boolean          read FLimparMemoria  write FLimparMemoria;
-    property Temperatura:     Integer          read FTemperatura    write FTemperatura;
-    property Velocidade:      Integer          read FVelocidade     write FVelocidade;
-    property Origem:          TACBrETQOrigem   read FOrigem         write FOrigem;
-    property DPI:             TACBrETQDPI      read FDPI            write FDPI;
-    property Avanco:          Integer          read FAvanco         write FAvanco;
-    property MargemEsquerda:  Integer          read FMargemEsquerda write FMargemEsquerda;
-    property Porta:           String           read FPorta          write FPorta;
-    property Ativo:           Boolean          read FAtivo          write FAtivo;
+    property ArqLog: String read FArqLog write FArqLog;
+    property Unidade: TACBrETQUnidade read FUnidade write FUnidade;
+    property Modelo: TACBrETQModelo read FModelo write FModelo;
+    property BackFeed: TACBrETQBackFeed read FBackFeed write FBackFeed;
+    property LimparMemoria: Boolean read FLimparMemoria write FLimparMemoria;
+    property Temperatura: Integer read FTemperatura write FTemperatura;
+    property Velocidade: Integer read FVelocidade write FVelocidade;
+    property Origem: TACBrETQOrigem read FOrigem write FOrigem;
+    property DPI: TACBrETQDPI read FDPI write FDPI;
+    property Avanco: Integer read FAvanco write FAvanco;
+    property MargemEsquerda: Integer read FMargemEsquerda write FMargemEsquerda;
+    property Porta: String read FPorta write FPorta;
+    property Ativo: Boolean read FAtivo write FAtivo;
 
   end;
 
@@ -86,6 +86,7 @@ type
   TLibETQConfig = class(TLibConfig)
   private
     FETQConfig: TETQConfig;
+    FDeviceConfig: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -102,6 +103,7 @@ type
     destructor Destroy; override;
 
     property ETQConfig: TETQConfig read FETQConfig;
+    property DeviceConfig: TDeviceConfig read FDeviceConfig;
   end;
 
 implementation
@@ -174,11 +176,13 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FETQConfig := TETQConfig.Create;
+  FDeviceConfig := TDeviceConfig.Create('ETQ_Device');
 end;
 
 destructor TLibETQConfig.Destroy;
 begin
   FETQConfig.Free;
+  FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -197,6 +201,7 @@ begin
   inherited INIParaClasse;
 
   FETQConfig.LerIni(Ini);
+  FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibETQConfig.ClasseParaINI;
@@ -206,6 +211,7 @@ begin
   Ini.WriteString(CSessaoVersao, CLibETQNome, CLibETQVersao);
 
   FETQConfig.GravarIni(Ini);
+  FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibETQConfig.ClasseParaComponentes;

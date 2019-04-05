@@ -94,7 +94,7 @@ begin
 
 end;
 
-{ TACBrNFeDANFERaveFileNameProperty }
+{ TACBrNFeDANFEFRFileNameProperty }
 
 function TACBrNFeDANFEFRFileNameProperty.GetFilter: String;
 begin

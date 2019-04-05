@@ -734,10 +734,9 @@ begin
       Resp.CNPJ := CNPJCPF;
       Resp.ChMDFe := InfMDFe.Items[ItemID].chMDFe;
       Resp.NProt := InfMDFe.Items[ItemID].nProt;
-      end;
+    end;
 
-      fpCmd.Resposta := sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta +  Resp.Gerar;
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Resp.Gerar;
 
   finally
     Resp.Free;

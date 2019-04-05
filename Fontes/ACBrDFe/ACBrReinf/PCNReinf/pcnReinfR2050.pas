@@ -510,7 +510,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with tipoCom.Add do
+          with tipoCom.New do
           begin
             indCom      := StrToindCom(Ok, sFim);
             vlrRecBruta := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrRecBruta', ''), 0);
@@ -525,7 +525,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoProc.Add do
+              with infoProc.New do
               begin
                 tpProc       := StrToTpProc(Ok, sFim);
                 nrProc       := INIRec.ReadString(sSecao, 'nrProc', '');

@@ -536,7 +536,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with recursosRep.Add do
+          with recursosRep.New do
           begin
             cnpjAssocDesp := sFim;
             vlrTotalRep   := StringToFloatDef(INIRec.ReadString(sSecao, 'vlrTotalRep', ''), 0);
@@ -553,7 +553,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoRecurso.Add do
+              with infoRecurso.New do
               begin
                 tpRepasse   := StrTotpRepasse(Ok, sFim);
                 descRecurso := INIRec.ReadString(sSecao, 'descRecurso', '');
@@ -574,7 +574,7 @@ begin
               if (sFim = 'FIM') or (Length(sFim) <= 0) then
                 break;
 
-              with infoProc.Add do
+              with infoProc.New do
               begin
                 tpProc  := StrToTpProc(Ok, sFim);
                 nrProc  := INIRec.ReadString(sSecao, 'nrProc', '');

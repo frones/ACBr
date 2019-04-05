@@ -652,7 +652,7 @@ begin
           if (sFim = 'FIM') or (Length(sFim) <= 0) then
             break;
 
-          with infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc.Add do
+          with infoEstab.DadosEstab.infoTrab.infoApr.FInfoEntEduc.New do
           begin
             nrInsc := sFim;
           end;

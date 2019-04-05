@@ -284,7 +284,7 @@ begin
     AXML := copy(AXMLStr, 1, P + 7);
     AXMLStr := Trim(copy(AXMLStr, P + 8, length(AXMLStr)));
 
-    Self.Add.FXML := AXML;
+    Self.New.FXML := AXML;
 
     P := PosReinf;
   end;

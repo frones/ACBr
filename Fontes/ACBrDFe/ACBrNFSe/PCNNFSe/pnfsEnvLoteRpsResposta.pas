@@ -140,8 +140,9 @@ type
     function LerXml_proSP: Boolean;
     function LerXML_proFriburgo: Boolean;
     function LerXml_proCTA: Boolean;
-    Function LerXML_proSmarapd: Boolean;
+    function LerXML_proSmarapd: Boolean;
     function LerXML_proIPM: Boolean;
+    function LerXML_proGiap: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -296,6 +297,7 @@ begin
    proCTA:        Result := LerXml_proCTA;
    proSMARAPD:    Result := LerXML_proSmarapd;
    proIPM:        Result := LerXML_proIPM;
+   proGiap:       Result := LerXML_proGiap;
  else
    Result := LerXml_ABRASF;
  end;
@@ -1070,6 +1072,83 @@ begin
     end;
   except
     Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proGiap: Boolean;
+var
+  i, j : Smallint;
+  s : String;
+  sMessage, sValue : TStringList;
+begin
+  Result   := False;
+  sMessage := TStringList.Create;
+  sValue   := TStringList.Create;
+  try
+    if Leitor.rExtrai(1, 'nfeResposta') <> '' then
+    begin
+      i := 0;
+
+      while Leitor.rExtrai(2, 'notaFiscal', '', i + 1) <> '' do
+      begin
+        s := Leitor.rExtrai(2, 'notaFiscal', '', i + 1);
+        Result := Leitor.rCampo(tcStr, 'statusEmissao') = '200';
+
+        FInfRec.FSucesso         := BoolToStr(Result, True);
+        if Result then
+        begin
+          FInfRec.FDataRecebimento := Now;
+          FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'statusEmissao');
+
+          with FInfRec.ListaChaveNFeRPS.Add do
+          begin
+            ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'codigoVerificacao');
+            ChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numeroNota');
+            ChaveNFeRPS.NumeroRPS         := Leitor.rCampo(tcStr, 'numeroRps');
+            ChaveNFeRPS.Link              := Leitor.rCampo(tcStr, 'link');
+          end;
+        end
+        else
+        begin
+          sMessage.Text:= ReplaceStr(s, '<messages', #13+'<messages');
+          sMessage.Text:= ReplaceStr(sMessage.Text, '</notaFiscal>', '');
+          for j := 0 to sMessage.Count -1 do
+          begin
+            if pos('messages', sMessage[j]) > 0 then
+            begin
+              sValue.Text := ReplaceStr(sMessage[j], '<messages ', '');
+              sValue.Text := ReplaceStr(sValue.Text, '/>', '');
+              sValue.Text := ReplaceStr(sValue.Text, 'message', #13+'message');
+              sValue.Text := ReplaceStr(sValue.Text, '"', '');
+
+              s := sValue.Text;
+
+              if sValue.Count > 1 then
+              begin
+                with FInfRec.MsgRetorno.Add do
+                begin
+                  FCodigo   := sValue.Values['code'];
+
+                  s := sValue.Values['message'];
+                  s := Copy(s, 1, LastDelimiter(':', s) - 1);
+
+                  FMensagem := s;
+
+                  s := sValue.Values['message'];
+                  Delete(s, 1, LastDelimiter(':', s));
+                  FCorrecao := s;
+                end;
+              end;
+            end;
+          end;
+        end;
+
+        Inc(i);
+      end;
+    end;
+  finally
+    FreeAndNil(sMessage);
+    FreeAndNil(sValue);
   end;
 end;
 

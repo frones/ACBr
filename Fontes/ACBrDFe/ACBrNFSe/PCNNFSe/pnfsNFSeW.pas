@@ -249,7 +249,7 @@ end;
 
 function TNFSeWClass.GerarXml: Boolean;
 begin
-  Result := False;
+//  Result := False;
   raise EACBrDFeException.Create(ClassName + '.GerarXml, não implementado');
 end;
 

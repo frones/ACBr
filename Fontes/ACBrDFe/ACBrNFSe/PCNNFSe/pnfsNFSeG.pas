@@ -680,6 +680,7 @@ begin
            end;
 
      proSMARAPD,
+     proGiap,
      proIPM:
           begin
             Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas
@@ -1219,6 +1220,13 @@ begin
                      // Nenhum valor
                    end;
 
+    proGiap: begin
+               Gerador.wGrupoNFSe('consulta');
+               Gerador.wCampoNFSe(tcStr, '', 'inscricaoMunicipal', 01, 11, 1, IM, '');
+               Gerador.wCampoNFSe(tcStr, '', 'codigoVerificacao', 01, 02, 1, CodVerificacaoRPS, '');
+               Gerador.wGrupoNFSe('/consulta');
+             end;
+
     proSP, 
     proNotaBlu: begin
                   Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
@@ -1755,7 +1763,14 @@ begin
         Gerador.ArquivoFormatoXML := NumeroRps;
       end;
 
-    proNotaBlu,
+    proGiap: begin
+               Gerador.wGrupoNFSe('cancelaNota');
+               Gerador.wGrupoNFSe('numeroNota>' + NumeroNFSe + '</numeroNota');
+               Gerador.wGrupoNFSe('codigoMotivo>' + CodigoCanc + '</codigoMotivo');
+               Gerador.wGrupoNFSe('/cancelaNota');
+             end;
+
+	proNotaBlu,
     proSP:
       begin
         Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
@@ -1860,6 +1875,7 @@ begin
     proSP,
     proNotaBlu,
     proSMARAPD,
+    proGiap,
     proIPM:
       begin
         TagI := '';

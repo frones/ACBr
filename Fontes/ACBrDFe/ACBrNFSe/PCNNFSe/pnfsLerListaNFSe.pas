@@ -1140,6 +1140,31 @@ begin
           Result := False;
       end;
     end;
+
+    {Provedor Giap}
+    if FProvedor = proGiap then
+    begin
+      if Leitor.rExtrai(1, 'consultaResposta') <> EmptyStr then
+      begin
+        if Leitor.rCampo(tcStr, 'notaExiste') = 'Sim' then
+        begin
+          ListaNFSe.ChaveNFeRPS.CodigoVerificacao  := Leitor.rCampo(tcStr, 'codigoVerificacao');
+          ListaNFSe.ChaveNFeRPS.Numero             := Leitor.rCampo(tcStr, 'numeroNota');
+          ListaNFSe.ChaveNFeRPS.Link               := '';
+          ListaNFSe.Sucesso                        := 'True';
+        end
+        else
+        begin
+          with ListaNFSe.MsgRetorno.Add do
+          begin
+            Codigo := '0';
+            Mensagem:= 'Nota Não Existe';
+          end;
+          Result := False;
+        end;
+      end;
+    end;
+
   except
     Result := False;
   end;

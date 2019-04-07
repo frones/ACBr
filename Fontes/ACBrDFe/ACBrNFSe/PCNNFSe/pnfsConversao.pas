@@ -112,7 +112,8 @@ type
                     proActconv202, proSigep, proSafeWeb, proSH3, proSIAPNet,
                     proIPM, proBelford, proISSJoinville, proAsten, proELv2,
                     proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart,
-                    proMetropolisWeb, proDesenvolve, proCenti, proRLZ);
+                    proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
+					proGiap);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -128,7 +129,7 @@ type
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
                 loInfisc, loISSDSF, loGoverna, loSP, loCONAM, loAgili, loSMARAPD, 
-                loIPM);
+                loIPM, loGiap);
 
   TnfseFrete = ( tfPrestador, tfTomador );
 
@@ -514,7 +515,7 @@ begin
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ'],
+         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -531,7 +532,8 @@ begin
          proSMARAPD, proSmarAPDABRASF, proActconv201, proActconv202, proSigep,
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ]);
+         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
+		 proGiap]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -552,7 +554,7 @@ begin
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ'],
+         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -569,7 +571,8 @@ begin
          proSMARAPD, proSmarAPDABRASF, proActconv201, proActconv202, proSigep,
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ]);
+         proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
+		 proGiap]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18435,7 +18438,7 @@ begin
     proActconv201, proActconv202, proVersaTecnologia, proSigep, proSafeWeb,
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-    proDataSmart, proDesenvolve, proCenti, proRLZ: Result := loABRASFv2;
+    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;
@@ -18452,6 +18455,7 @@ begin
     proCONAM:       Result := loCONAM;
     proSMARAPD:     Result := loSMARAPD;
     proIPM:         Result := loIPM;
+    proGiap:        Result := loGiap;
   else
     Result := loNone;
   end;
@@ -18471,7 +18475,8 @@ begin
     proVersaTecnologia, proActconv201, proSafeWeb, proActconv202, proWebISSv2,
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-    proDataSmart, proDesenvolve, proCenti, proRLZ: Result := ve200;
+    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, 
+	proGiap: Result := ve200;
 
     proInfiscv11: Result := ve110;
   else

@@ -37,6 +37,7 @@ uses
   SysUtils, Classes, Forms,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
+//  strutils
 
 type
 
@@ -152,6 +153,7 @@ type
     function LerXml_proSP: Boolean;
     function LerXml_proGoverna: Boolean;
     function LerXml_proSMARAPD: Boolean;
+    function LerXml_proGIAP: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -309,6 +311,7 @@ begin
     proNotaBlu:     Result := LerXml_proSP;
     proGoverna:     Result := LerXml_proGoverna;
     proSMARAPD:     Result := LerXml_proSMARAPD;
+    proGiap:        Result := LerXml_proGIAP;
   else
     Result := LerXml_ABRASF;
   end;
@@ -723,6 +726,83 @@ begin
     Result := True;
   except
     result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proGIAP: Boolean;
+var
+  i, j : Smallint;
+  s : String;
+  sMessage, sValue : TStringList;
+begin
+  Result   := False;
+  sMessage := TStringList.Create;
+  sValue   := TStringList.Create;
+  try
+    if Leitor.rExtrai(1, 'nfeResposta') <> '' then
+    begin
+      i := 0;
+
+      while Leitor.rExtrai(2, 'notaFiscal', '', i + 1) <> '' do
+      begin
+        s := Leitor.rExtrai(2, 'notaFiscal', '', i + 1);
+        Result := Leitor.rCampo(tcStr, 'statusEmissao') = '200';
+
+        if Result then
+        begin
+          FInfCanc.DataHora        := Now;
+          FInfCanc.Protocolo       := Leitor.rCampo(tcStr, 'statusEmissao');
+          FInfCanc.Sucesso         := BoolToStr(Result, True);
+          FInfCanc.MsgCanc         := Leitor.rAtributo('message', 'messages');
+          if FInfCanc.MsgCanc = EmptyStr then
+            FInfCanc.MsgCanc := 'Nota Fiscal Cancelada com Sucesso!';
+
+          with FInfCanc.NotasCanceladas.Add do
+          begin
+            NumeroNota        := Leitor.rCampo(tcStr, 'numeroNota');
+          end;
+        end
+        else
+        begin
+          sMessage.Text:= StringReplace(s, '<messages', #13+'<messages', [rfReplaceAll]);
+          sMessage.Text:= StringReplace(sMessage.Text, '</notaFiscal>', '', [rfReplaceAll]);
+          for j := 0 to sMessage.Count -1 do
+          begin
+            if pos('messages', sMessage[j]) > 0 then
+            begin
+              sValue.Text := StringReplace(sMessage[j], '<messages ', '', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, '/>', '', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, 'message', #13+'message', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, '"', '', [rfReplaceAll]);
+
+              s := sValue.Text;
+
+              if sValue.Count > 1 then
+              begin
+                with FInfCanc.MsgRetorno.Add do
+                begin
+                  FCodigo   := sValue.Values['code'];
+
+                  s := sValue.Values['message'];
+                  s := Copy(s, 1, LastDelimiter(':', s) - 1);
+
+                  FMensagem := s;
+
+                  s := sValue.Values['message'];
+                  Delete(s, 1, LastDelimiter(':', s));
+                  FCorrecao := s;
+                end;
+              end;
+            end;
+          end;
+        end;
+
+        Inc(i);
+      end;
+    end;
+  finally
+    FreeAndNil(sMessage);
+    FreeAndNil(sValue);
   end;
 end;
 

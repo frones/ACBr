@@ -872,6 +872,10 @@ begin
     Texto := StringReplace(Texto, '%inscricaoMunicipal%', FPConfiguracoesNFSe.Geral.Emitente.InscMun, [rfReplaceAll]);
   end;
 
+  {Configura Authorization para GIAP}
+//  if Provedor = proGiap then
+//    FAuthorization := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
+
   FPEnvelopeSoap := Texto;
 end;
 
@@ -1013,6 +1017,8 @@ begin
       proInfisc,
       proInfiscv11,
       proSMARAPD: FNameSpaceDad := xmlns3 + FNameSpace + '"';
+
+      proGiap: FNameSpaceDad := xmlns3 + FNameSpace + '"';
 
       proIssDSF: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
@@ -1491,7 +1497,7 @@ begin
   end;
 
   // Validação de sucesso para provedores que não retornam data de recebimento
-  if FProvedor in [proNotaBlu] then
+  if FProvedor in [proNotaBlu, proGiap] then
     Result := UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true')
   else // Validação através da data de recebimento
     Result := (FDataRecebimento <> 0);
@@ -1677,6 +1683,7 @@ begin
                          '</rgm:NotaFiscal>';
 
         proSMARAPD,
+		proGiap,
         proIPM: FvNotas := RPS;
       else
         FvNotas := FvNotas +
@@ -1706,6 +1713,7 @@ begin
                             '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>'+
                          '</' + FPrefixo4 + 'Rps>';
 
+			 proGiap,
              proCONAM: FvNotas := FvNotas + RPS;
 
              proAgiliv2: FvNotas := FvNotas +
@@ -1814,6 +1822,7 @@ begin
            proEL,
            proFISSLex,
            proTinus,
+		   proGiap,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
@@ -1863,6 +1872,7 @@ begin
 
            proFISSLex,
            proIPM,
+		   proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1904,6 +1914,7 @@ begin
 
            proFISSLex,
            proIPM,
+		   proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1942,6 +1953,7 @@ begin
            proGoverna,
            proFISSLex,
            proIPM,
+		   proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1969,6 +1981,7 @@ begin
 
            proFISSLex,
            proIPM,
+		   proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -2027,6 +2040,7 @@ begin
            proBetha,
            proGoverna,
            proSMARAPD,
+		   proGiap,
            proIPM: FTagI := '';
          else
            begin
@@ -2050,6 +2064,7 @@ begin
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSMARAPD,
+		   proGiap,
            proIPM: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -2078,6 +2093,7 @@ begin
                                         FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
            proSMARAPD,
+		   proGiap,
            proIPM: FTagI := '';
          else begin
                 FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
@@ -2120,7 +2136,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM] then
+         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
@@ -2128,7 +2144,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM] then
+         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
@@ -2136,7 +2152,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proGoverna, proFISSLex, proSMARAPD, proIPM] then
+         if FProvedor in [proGoverna, proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
 
          if FProvedor in [proDBSeller] then
@@ -2147,7 +2163,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM] then
+         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
@@ -2157,6 +2173,7 @@ begin
            proBetha,
            proGoverna,
            proIPM,
+		   proGiap,
            proSMARAPD: FTagF := '';
 
            proISSNet: FTagF := '</p1:' + FTagGrupo + '>';
@@ -2189,6 +2206,7 @@ begin
            proAgiliv2: FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
 
            proSMARAPD,
+		   proGiap,
            proIPM: FTagF := '';
          else
            FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
@@ -2258,7 +2276,7 @@ begin
     // Agili, Agiliv2, CTA, Governa, proEGoverneISS
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
     if (ChaveAcessoPrefeitura = '') and
-       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS]) then
+       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS, proGiap]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
   end;
@@ -2661,7 +2679,7 @@ begin
     if not (FProvedor in [proSP, proNotaBlu]) then
       FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
 
-    if FProvedor = proSMARAPD then
+    if FProvedor in [proSMARAPD, proGiap] then
       FPDadosMsg := StringReplace(FPDadosMsg, '<?xml version="1.0" encoding="UTF-8"?>', '', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
@@ -2733,6 +2751,14 @@ begin
                   FNotasFiscais.Items[i].NFSe.Link              := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Link;
                 end;
 
+        proGiap: begin
+                  FNotasFiscais.Items[i].NFSe.Numero            := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
+                  FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
+                  FNotasFiscais.Items[i].NFSe.Link              := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Link;
+                  FNotasFiscais.Items[i].GerarXML;
+                  FNotasFiscais.Items[i].GravarXML();
+                end;
+				
         proCTA,
         proSP,
         ProNotaBlu: begin
@@ -2756,6 +2782,8 @@ begin
 
   if FProvedor in [proSP, ProNotaBlu] then
     Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true')
+  else if FProvedor in [proGiap] then
+    Result := RetEnvLote.InfRec.ListaChaveNFeRPS.Count > 0
   else
     Result := (RetEnvLote.InfRec.Protocolo <> '');
 
@@ -4000,7 +4028,11 @@ begin
       begin
         ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
         CodVerificacaoRPS     := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
-      end;
+      end
+      else if FProvedor = proGiap then
+      begin
+        CodVerificacaoRPS := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      end
     end;
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
@@ -4309,6 +4341,7 @@ begin
       proSP,
       proNotaBlu,
       proSMARAPD,
+	  proGiap,
       proIPM: FURI := '';
 
       proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
@@ -4567,9 +4600,15 @@ begin
                        'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
   end
-  else FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+  else 
+  begin
+    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                 'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
                 'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
+
+    if Provedor = proGiap then
+      FPMsg := RetCancNFSe.InfCanc.MsgCanc;
+  end;
 
   Result := (FDataHora > 0) or (RetCancNFSe.InfCanc.Sucesso='S') or (UpperCase(RetCancNFSe.InfCanc.Sucesso)='TRUE');
 end;

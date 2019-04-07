@@ -273,6 +273,7 @@ begin
       proIPM:     DocElemento := 'nfse';
       proNotaBlu: DocElemento := 'RPS';
       proSMARAPD: DocElemento := 'tbnfd';
+      proGiap:    DocElemento := 'nfe';
     else
       DocElemento := 'Rps';
     end;
@@ -284,6 +285,7 @@ begin
       proNotaBlu:     InfElemento := 'RPS';
       proIPM:         InfElemento := 'nfse';
       proSMARAPD:     InfElemento := 'nfd';
+      proGiap:        InfElemento := 'notaFiscal';
     else
       InfElemento := InfElemento;
     end;
@@ -883,7 +885,7 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..11] of String;
+  TagF: Array[1..12] of String;
 
   function PosNFSe: Integer;
   begin
@@ -899,6 +901,7 @@ var
     // Necessários para o Provedor EL
     TagF[10] := '</nfeRpsNotaFiscal>';
     TagF[11] := '</notasFiscais>';
+    TagF[12] := '</notaFiscal>'; //Provedor GIAP
 
     i := 0;
 

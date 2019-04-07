@@ -1838,17 +1838,19 @@ begin
     ATV;
   except
     on E : EACBrTEFDGPNaoResponde do
-     begin
-       if AutoAtivarGP then
-       begin
-         TACBrTEFD(Owner).DoExibeMsg( opmOK,
-               'O Gerenciador Padrão não está ativo e será ativado automaticamente!');
-         AtivarGP;
-         ATV;
-       end;
-     end;
+    begin
+      if AutoAtivarGP then
+      begin
+        TACBrTEFD(Owner).DoExibeMsg( opmOK,
+              'O Gerenciador Padrão não está ativo e será ativado automaticamente!');
+        AtivarGP;
+        ATV;
+      end
+      else
+        raise;
+    end
     else
-      raise ;
+      raise;
   end;
 end;
 

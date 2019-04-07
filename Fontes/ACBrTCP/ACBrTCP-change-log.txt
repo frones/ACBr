@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/04/2019
+-- ACBrMTER --
+[-] Ajuste para evitar A.V. quando componente ACBrBAL nao está associado a ACBrMTER
+    (por: Elias DJ)
+
 04/04/2019
 -- ACBrIBGE --
 [-] Ajuste para Traduzir Arquivo descompactado de UTF8 para String nativa da IDE

@@ -1097,9 +1097,16 @@ begin
 end;
 
 procedure TACBrMTer.Ativar;
+var
+  wBalStr: String;
 begin
   if Ativo then
     Exit;
+
+  if Assigned(fACBrBAL) and Assigned(fACBrBAL.BAL) then
+    wBalStr := fACBrBAL.ModeloStr
+  else
+    wBalStr := 'Nenhuma';
 
   if (Modelo = mtrNenhum) then
     raise Exception.Create(ACBrStr('Modelo ainda não foi definido'));
@@ -1109,8 +1116,7 @@ begin
            ' - Modelo: ' + ModeloStr + ' - Porta: ' + fTCPServer.Port +
            ' - Terminador: ' + fTCPServer.Terminador +
            ' - Timeout: ' + IntToStr(fTCPServer.TimeOut) +
-           ' - Balança: ' + IfThen(Assigned(fACBrBAL), fACBrBAL.ModeloStr, 'Nenhuma')+
-           sLineBreak + StringOfChar('-', 80) + sLineBreak);
+           ' - Balança: ' + wBalStr +sLineBreak+ StringOfChar('-', 80)+sLineBreak);
 
   fTCPServer.Ativar;
 end;

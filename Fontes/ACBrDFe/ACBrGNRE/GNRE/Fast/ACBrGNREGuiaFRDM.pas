@@ -264,7 +264,6 @@ begin
     Outline         := False;
     HTMLTags        := True;
     Quality         := 95;
-    Transparency    := False;
     Author          := 'FastReport';
     ProtectionFlags := [ePrint, eModify, eCopy, eAnnot];
     HideToolbar     := False;
@@ -273,7 +272,6 @@ begin
     FitWindow       := False;
     CenterWindow    := False;
     PrintScaling    := False;
-    PdfA            := False;
   end;
 
   cdsGuia := TClientDataSet.Create(nil);

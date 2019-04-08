@@ -52,7 +52,8 @@ uses
   SysUtils, Classes, Contnrs,
   ACBrUtil,
   pcnConversao, pcnGerador,
-  pcesCommon, pcesConversaoeSocial, pcesGerador;
+  pcesCommon, pcesConversaoeSocial, pcesGerador,
+  pcnLeitor;
 
 type
   TS1060CollectionItem = class;
@@ -95,6 +96,7 @@ type
     destructor  Destroy; override;
 
     function GerarXML: boolean; override;
+    function LerXML : Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     property ModoLancamento: TModoLancamento read FModoLancamento write FModoLancamento;
@@ -384,6 +386,67 @@ begin
     GerarXML;
   finally
      INIRec.Free;
+  end;
+end;
+
+function TEvtTabAmbiente.LerXML: Boolean;
+var
+  Leitor : TLeitor;
+  bOK : Boolean;
+  sEvento : String;
+begin
+  Result := True;
+  Leitor := TLeitor.Create;
+  Leitor.Arquivo := XML;
+  Leitor.Grupo := Leitor.Arquivo;
+  try
+    if Leitor.rExtrai(1, 'ideEvento') <> '' then
+    begin
+      Self.FIdeEvento.ProcEmi := eSStrToprocEmi(bOK, Leitor.rCampo(tcStr, 'procEmi'));
+      Self.FIdeEvento.VerProc := Leitor.rCampo(tcStr, 'verProc');
+    end;
+
+    if Leitor.rExtrai(1, 'ideEmpregador') <> '' then
+    begin
+      Self.FIdeEmpregador.TpInsc := eSStrToTpInscricao(bOK, Leitor.rCampo(tcStr, 'tpInsc'));
+      Self.FIdeEmpregador.NrInsc := Leitor.rCampo(tcStr, 'nrInsc');
+    end;
+
+    if Leitor.rExtrai(1, 'dadosAmbiente') <> '' then
+    begin
+      Self.FInfoAmbiente.DadosAmbiente.nmAmb      := Leitor.rCampo(tcStr, 'nmAmb');
+      Self.FInfoAmbiente.DadosAmbiente.dscAmb     := Leitor.rCampo(tcStr, 'dscAmb');
+      Self.FInfoAmbiente.DadosAmbiente.localAmb   := eSStrToLocalAmb(bOK, Leitor.rCampo(tcStr, 'localAmb'));
+      Self.FInfoAmbiente.DadosAmbiente.tpInsc     := eSStrToTpInscricao(bOK, Leitor.rCampo(tcStr, 'tpInsc'));
+      Self.FInfoAmbiente.DadosAmbiente.nrInsc     := Leitor.rCampo(tcStr, 'nrInsc');
+      Self.FInfoAmbiente.DadosAmbiente.codLotacao := Leitor.rCampo(tcStr, 'codLotacao');
+    end;
+
+    if Leitor.rExtrai(1, 'ideAmbiente') <> '' then
+    begin
+      Self.FInfoAmbiente.ideAmbiente.codAmb   := Leitor.rCampo(tcStr, 'codAmb');
+      Self.FInfoAmbiente.ideAmbiente.iniValid := Leitor.rCampo(tcStr, 'iniValid');
+      Self.FInfoAmbiente.ideAmbiente.fimValid := Leitor.rCampo(tcStr, 'fimValid');
+    end;
+
+    Self.ModoLancamento := TModoLancamento.mlInclusao;
+
+    if Leitor.rExtrai(1, 'alteracao') <> '' then
+    begin
+      Self.ModoLancamento := TModoLancamento.mlAlteracao;
+
+      if Leitor.rExtrai(1, 'alteracao') <> '' then
+      begin
+        Self.infoAmbiente.novaValidade.IniValid :=  Leitor.rCampo(tcStr, 'iniValid');
+        Self.infoAmbiente.novaValidade.FimValid :=  Leitor.rCampo(tcStr, 'fimValid');
+      end;
+    end
+    else if Leitor.rExtrai(1, 'exclusao') <> '' then
+    begin
+      Self.ModoLancamento := TModoLancamento.mlExclusao;
+    end;
+  finally
+    Leitor.Free;
   end;
 end;
 

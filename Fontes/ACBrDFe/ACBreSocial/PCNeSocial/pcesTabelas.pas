@@ -403,7 +403,14 @@ begin
     teS1035: Self.S1035.New.evtTabCarreira.XML := AXMLString;
     teS1040: Self.S1040.New.EvtTabFuncao.XML := AXMLString;
     teS1050: Self.S1050.New.EvtTabHorContratual.XML := AXMLString;
-    teS1060: Self.S1060.New.EvtTabAmbiente.XML := AXMLString;
+    teS1060:
+    begin
+      with Self.S1060.New do
+      begin
+        EvtTabAmbiente.XML := AXMLString;
+        EvtTabAmbiente.LerXML;
+      end;
+    end;
     teS1070: Self.S1070.New.EvtTabProcesso.XML := AXMLString;
     teS1080: Self.S1080.New.EvtTabOperPortuario.XML := AXMLString;
   end;

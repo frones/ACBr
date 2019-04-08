@@ -1110,16 +1110,16 @@ begin
         end
         else
         begin
-          sMessage.Text:= ReplaceStr(s, '<messages', #13+'<messages');
-          sMessage.Text:= ReplaceStr(sMessage.Text, '</notaFiscal>', '');
+          sMessage.Text:= StringReplace(s, '<messages', #13+'<messages', [rfReplaceAll]);
+          sMessage.Text:= StringReplace(sMessage.Text, '</notaFiscal>', '', [rfReplaceAll]);
           for j := 0 to sMessage.Count -1 do
           begin
             if pos('messages', sMessage[j]) > 0 then
             begin
-              sValue.Text := ReplaceStr(sMessage[j], '<messages ', '');
-              sValue.Text := ReplaceStr(sValue.Text, '/>', '');
-              sValue.Text := ReplaceStr(sValue.Text, 'message', #13+'message');
-              sValue.Text := ReplaceStr(sValue.Text, '"', '');
+              sValue.Text := StringReplace(sMessage[j], '<messages ', '', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, '/>', '', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, 'message', #13+'message', [rfReplaceAll]);
+              sValue.Text := StringReplace(sValue.Text, '"', '', [rfReplaceAll]);
 
               s := sValue.Text;
 

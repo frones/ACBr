@@ -3975,7 +3975,7 @@ begin
     if PosIni > 0 then
     begin
       PosIni := PosIni + Pos('>', copy(UTexto, PosIni, length(UTexto)));
-      PosFim := Pos('/' + UChave + '>', UTexto)
+      PosFim := Pos('/' + UChave + '>', UTexto);
     end;
   end;
 

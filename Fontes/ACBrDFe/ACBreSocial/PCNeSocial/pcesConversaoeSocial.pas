@@ -492,10 +492,10 @@ Const
                                           'evtCdBenPrRP', 'evtExclusao');
 
 function TipoEventoToStr(const t: TTipoEvento ): string;
-function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StrToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 function TipoEventoToStrEvento(const t: TTipoEvento ): string;
 
 function eSprocEmiToStr(const t: TpprocEmi ): string;
@@ -589,7 +589,7 @@ function eSTpIndMatProcToStr(const t: tpIndMatProc): string;
 function eSStrToTpIndMatProc(var ok: boolean; const s: string): tpIndMatProc;
 
 function eSIndRetificacaoToStr(const t: TpIndRetificacao ): string;
-function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
+function eSStrToIndRetificacao(out ok: boolean; const s: string): TpIndRetificacao;
 
 function eSIndApuracaoToStr(const t: TpIndApuracao ): string;
 function eSStrToIndApuracao(var ok: boolean; const s: string): TpIndApuracao;
@@ -1103,7 +1103,7 @@ begin
   result := EnumeradoToStr2(t, TTipoEventoString );
 end;
 
-function StrToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StrToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 begin
   result  := TTipoEvento( StrToEnumerado2(ok , s, TTipoEventoString ) );
 end;
@@ -1830,7 +1830,7 @@ begin
   result := EnumeradoToStr2(t,TGenericosString1_2  );
 end;
 
-function eSStrToIndRetificacao(var ok: boolean; const s: string): TpIndRetificacao;
+function eSStrToIndRetificacao(out ok: boolean; const s: string): TpIndRetificacao;
 begin
   result := TpIndRetificacao( StrToEnumerado2(ok , s,TGenericosString1_2 ));
 end;
@@ -2421,7 +2421,7 @@ begin
    result := tpMotivosAfastamento(StrToEnumerado2(ok , s, TMotivoAfastamento));
 end;
 
-function StrEventoToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StrEventoToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 const
   EventoString: array[0..52] of String =('evtInfoEmpregador', 'evtTabEstab',
        'evtTabRubrica', 'evtTabLotacao', 'evtTabCargo', 'evtTabCarreira',
@@ -2439,7 +2439,7 @@ begin
   result := TTipoEvento( StrToEnumerado2(ok , s, EventoString ) );
 end;
 
-function StringINIToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringINIToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin
@@ -2458,7 +2458,7 @@ begin
     ok := False;
   end;
 end;
-function StringXMLToTipoEvento(var ok: boolean; const s: string): TTipoEvento;
+function StringXMLToTipoEvento(out ok: boolean; const s: string): TTipoEvento;
 var
   i: integer;
 begin

@@ -429,11 +429,11 @@ begin
       Self.FInfoAmbiente.ideAmbiente.fimValid := Leitor.rCampo(tcStr, 'fimValid');
     end;
 
-    Self.ModoLancamento := TModoLancamento.mlInclusao;
+    Self.ModoLancamento := mlInclusao;
 
     if Leitor.rExtrai(1, 'alteracao') <> '' then
     begin
-      Self.ModoLancamento := TModoLancamento.mlAlteracao;
+      Self.ModoLancamento := mlAlteracao;
 
       if Leitor.rExtrai(1, 'alteracao') <> '' then
       begin
@@ -443,7 +443,7 @@ begin
     end
     else if Leitor.rExtrai(1, 'exclusao') <> '' then
     begin
-      Self.ModoLancamento := TModoLancamento.mlExclusao;
+      Self.ModoLancamento := mlExclusao;
     end;
   finally
     Leitor.Free;

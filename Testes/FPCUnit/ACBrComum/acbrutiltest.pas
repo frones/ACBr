@@ -183,6 +183,7 @@ type
     procedure SemAbrirChave;
     procedure ComPrefixo;
     procedure MostrarChaveComPrefixo;
+    procedure QuandoImitacaoChaveEstaNoMeio;
   end;
 
   { QuebrarLinhaTest }
@@ -4390,6 +4391,13 @@ const
 begin
   CheckEquals('<ns0:ACBrTeste>Projeto ACBr</ns0:ACBrTeste>', SeparaDados(TEXTO, 'ACBrTeste', True));
   CheckEquals('', SeparaDados(TEXTO, 'ACBrTeste', False, False));
+end;
+
+procedure SepararDadosTest.QuandoImitacaoChaveEstaNoMeio;
+const
+  TEXTO = '<ACBr>Teste/ACBr</ACBr>';
+begin
+  CheckEquals('Teste/ACBr', SeparaDados(TEXTO, 'ACBr'));
 end;
 
 procedure SepararDadosTest.ComPrefixo;

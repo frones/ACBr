@@ -436,7 +436,7 @@ begin
     {Multa}
     if (PercentualMulta > 0) then
     begin
-        ADataMulta := IfThen(DataMoraJuros > 0,FormatDateTime('ddmmyyyy', DataMoraJuros),FormatDateTime('ddmmyyyy', Vencimento + 1))
+        ADataMulta := IfThen(DataMulta > 0,FormatDateTime('ddmmyyyy', DataMulta),FormatDateTime('ddmmyyyy', Vencimento + 1))
     end
     else
     begin
@@ -553,7 +553,7 @@ begin
 
     IfThen((PercentualMulta > 0), '2', '0')                     + //Código da Multa 66 66 1 - Alfa G073
 
-    PadLeft('', 8, '0')                                  + //Data da Multa 67 74 8 - Num G074  INFORMAR ZERO
+    ADataMulta                                                  + //Data da Multa 67 74 8 - Num G074
 
     IfThen(PercentualMulta > 0,
       IntToStrZero(round(PercentualMulta * 100), 15),

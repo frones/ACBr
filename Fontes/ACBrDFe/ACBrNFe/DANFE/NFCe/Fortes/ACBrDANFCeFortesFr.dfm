@@ -76,12 +76,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 0
         Width = 278
         Height = 24
+        Margins.RightMargin = 8.000000000000000000
         AutoSize = True
         BeforePrint = rlbDetItemBeforePrint
         object mLinhaItem: TRLMemo
           Left = 0
           Top = 0
-          Width = 278
+          Width = 248
           Height = 12
           Align = faTop
           Behavior = [beSiteExpander]
@@ -91,7 +92,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object mLinhaTotalItem: TRLMemo
           Left = 0
           Top = 12
-          Width = 278
+          Width = 248
           Height = 12
           Align = faTop
           Alignment = taRightJustify

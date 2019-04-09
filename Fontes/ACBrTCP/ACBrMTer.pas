@@ -296,7 +296,7 @@ type
 implementation
 
 uses
-  strutils, dateutils, math,
+  strutils, dateutils, math, typinfo,
   ACBrMTerVT100, ACBrMTerPMTG, ACBrMTerStxEtx, ACBrMTerSB100,
   ACBrConsts, ACBrUtil;
 
@@ -831,7 +831,11 @@ begin
 
   wEchoMode := EchoMode;
   if Assigned(fOnRecebeDados) then
+  begin
+    GravaLog( '  OnRecebeDados');
     OnRecebeDados(aIP, DadosRecebidos, wEchoMode);
+    GravaLog( '    EchoMode: '+GetEnumName(TypeInfo(TACBrMTerEchoMode), Integer(wEchoMode)));
+  end;
 
   DadosEcho := fMTer.LimparConteudoParaEnviarEcho(DadosRecebidos);
   case wEchoMode of

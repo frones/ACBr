@@ -1570,7 +1570,7 @@ begin
         FieldByName('DescricaoViaEstabelec').AsString := 'Via Estabelecimento';
     end;
 
-    if Assigned(FNFe) then
+    if Assigned(FNFe) and (FNFe.InfNFe.ID <> '') then
     begin
       if (DANFEClassOwner is TACBrNFeDANFEClass) and TACBrNFeDANFEClass(DANFEClassOwner).ExibeResumoCanhoto then
       begin

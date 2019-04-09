@@ -150,7 +150,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
-    procedure SetXMLString(AValue : AnsiString) ;
+    procedure SetXMLString(const AValue : AnsiString) ;
   published
     property infBPe: TinfBPe read FinfBPe write FinfBPe;
     property Ide: TIde read FIde write FIde;
@@ -717,7 +717,7 @@ begin
     inherited;
 end;
 
-procedure TBPe.SetXMLString(AValue: AnsiString);
+procedure TBPe.SetXMLString(const AValue: AnsiString);
 var
  LocBPeR : TBPeR;
 begin

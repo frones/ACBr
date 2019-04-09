@@ -324,7 +324,7 @@ var
   ok: Boolean;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
   Self.Evento.Clear;
 
   INIRec := TMemIniFile.Create('');
@@ -356,8 +356,6 @@ begin
       end;
       Inc(I);
     end;
-
-    Result := True;
   finally
      INIRec.Free;
   end;

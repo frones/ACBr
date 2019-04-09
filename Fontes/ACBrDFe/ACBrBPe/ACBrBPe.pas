@@ -73,7 +73,7 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesBPe;
-    function Distribuicao(AcUFAutor: Integer; ACNPJCPF, AultNSU, ANSU,
+    function Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
       chBPe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesBPe);
@@ -92,7 +92,7 @@ type
       StreamBPe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -102,8 +102,8 @@ type
     function CstatProcessado(AValue: Integer): Boolean;
     function CstatCancelada(AValue: Integer): Boolean;
 
-    function Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
-    function Consultar( AChave: String = ''): Boolean;
+    function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
+    function Consultar( const AChave: String = ''): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
 
     procedure LerServicoDeParams(LayOutServico: TLayOutBPe; var Versao: Double;
@@ -128,16 +128,16 @@ type
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
 
-    function DistribuicaoDFe(AcUFAutor: Integer; ACNPJCPF, AultNSU,
-      ANSU: String; AchBPe: String = ''): Boolean;
-    function DistribuicaoDFePorUltNSU(AcUFAutor: Integer; ACNPJCPF,
+    function DistribuicaoDFe(AcUFAutor: Integer; const ACNPJCPF, AultNSU,
+      ANSU: String; const AchBPe: String = ''): Boolean;
+    function DistribuicaoDFePorUltNSU(AcUFAutor: Integer; const ACNPJCPF,
       AultNSU: String): Boolean;
-    function DistribuicaoDFePorNSU(AcUFAutor: Integer; ACNPJCPF,
+    function DistribuicaoDFePorNSU(AcUFAutor: Integer; const ACNPJCPF,
       ANSU: String): Boolean;
-    function DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; ACNPJCPF,
+    function DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; const ACNPJCPF,
       AchBPe: String): Boolean;
 
-    procedure EnviarEmailEvento(sPara, sAssunto: String;
+    procedure EnviarEmailEvento(const sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -418,7 +418,7 @@ begin
   end;
 end;
 
-function TACBrBPe.Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
+function TACBrBPe.Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
 var
   i: Integer;
 begin
@@ -453,7 +453,7 @@ begin
   Result := True;
 end;
 
-function TACBrBPe.Consultar(AChave: String): Boolean;
+function TACBrBPe.Consultar(const AChave: String): Boolean;
 var
   i: Integer;
 begin
@@ -483,7 +483,7 @@ begin
   Result := Enviar(IntToStr(ALote), Imprimir);
 end;
 
-function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean = True): Boolean;
+function TACBrBPe.Enviar(const ALote: String; Imprimir: Boolean = True): Boolean;
 var
   i: Integer;
 begin
@@ -616,7 +616,7 @@ begin
     DABPE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrBPe.Distribuicao(AcUFAutor: Integer; ACNPJCPF, AultNSU, ANSU,
+function TACBrBPe.Distribuicao(AcUFAutor: Integer; const ACNPJCPF, AultNSU, ANSU,
   chBPe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
@@ -632,30 +632,30 @@ begin
 end;
 
 function TACBrBPe.DistribuicaoDFe(AcUFAutor: Integer;
-  ACNPJCPF, AultNSU, ANSU: String; AchBPe: String = ''): Boolean;
+  const ACNPJCPF, AultNSU, ANSU: String; const AchBPe: String = ''): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, AchBPe);
 end;
 
-function TACBrBPe.DistribuicaoDFePorUltNSU(AcUFAutor: Integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorUltNSU(AcUFAutor: Integer; const ACNPJCPF,
   AultNSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
 end;
 
-function TACBrBPe.DistribuicaoDFePorNSU(AcUFAutor: Integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorNSU(AcUFAutor: Integer; const ACNPJCPF,
   ANSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
 end;
 
-function TACBrBPe.DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; const ACNPJCPF,
   AchBPe: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchBPe);
 end;
 
-procedure TACBrBPe.EnviarEmailEvento(sPara, sAssunto: String;
+procedure TACBrBPe.EnviarEmailEvento(const sPara, sAssunto: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings;
   sReplyTo: TStrings);
 var

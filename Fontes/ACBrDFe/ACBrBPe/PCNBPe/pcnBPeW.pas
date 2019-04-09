@@ -103,7 +103,7 @@ type
     procedure GerarInfAdic;
     procedure GerarinfRespTec;
 
-    procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+    procedure AjustarMunicipioUF(out xUF: String; out xMun: String; out cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 
   public
     constructor Create(AOwner: TBPe);
@@ -833,7 +833,7 @@ end;
 // Outras //////////////////////////////////////////////////////////////////////
 
 procedure TBPeW.AjustarMunicipioUF(out xUF: String; out xMun: String; out
-  cMun: Integer; cPais: Integer; vxUF, vxMun: String; vcMun: Integer);
+  cMun: Integer; cPais: Integer; const vxUF, vxMun: String; vcMun: Integer);
 var
   PaisBrasil: Boolean;
 begin

@@ -185,7 +185,7 @@ type
     FprotBPe: TProcBPe;
     FprocEventoBPe: TRetEventoBPeCollection;
     
-    procedure SetBPeChave(AValue: String);
+    procedure SetBPeChave(const AValue: String);
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -337,7 +337,7 @@ type
     destructor Destroy; override;
 
     function Envia(ALote: Integer): Boolean; overload;
-    function Envia(ALote: String): Boolean; overload;
+    function Envia(const ALote: String): Boolean; overload;
 
     property ACBrBPe: TACBrDFe read FACBrBPe write FACBrBPe;
     property StatusServico: TBPeStatusServico read FStatusServico write FStatusServico;
@@ -886,7 +886,7 @@ begin
   FprocEventoBPe := TRetEventoBPeCollection.Create(FOwner);
 end;
 
-procedure TBPeConsulta.SetBPeChave(AValue: String);
+procedure TBPeConsulta.SetBPeChave(const AValue: String);
 var
   NumChave: String;
 begin
@@ -998,7 +998,7 @@ begin
     FprotBPe.PathBPe := BPeRetorno.protBPe.PathBPe;
     FprotBPe.PathRetConsReciBPe := BPeRetorno.protBPe.PathRetConsReciBPe;
     FprotBPe.PathRetConsSitBPe := BPeRetorno.protBPe.PathRetConsSitBPe;
-    FprotBPe.PathRetConsSitBPe := BPeRetorno.protBPe.PathRetConsSitBPe;
+//    FprotBPe.PathRetConsSitBPe := BPeRetorno.protBPe.PathRetConsSitBPe;
     FprotBPe.tpAmb := BPeRetorno.protBPe.tpAmb;
     FprotBPe.verAplic := BPeRetorno.protBPe.verAplic;
     FprotBPe.chBPe := BPeRetorno.protBPe.chBPe;
@@ -1469,7 +1469,7 @@ begin
       FTpAmb   := EventoRetorno.retEvento.Items[0].RetinfEvento.tpAmb;
 
       FEventoRetorno.cStat    := FcStat;
-      FEventoRetorno.xMotivo  := FxMotivo;
+//      FEventoRetorno.xMotivo  := FxMotivo;
       FEventoRetorno.xMotivo  := FPMsg;
       FEventoRetorno.tpAmb    := FTpAmb;
       FEventoRetorno.verAplic := EventoRetorno.retEvento.Items[0].RetinfEvento.verAplic;
@@ -1911,7 +1911,7 @@ begin
   Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String): Boolean;
+function TWebServices.Envia(const ALote: String): Boolean;
 begin
   FEnviar.Clear;
 

@@ -101,9 +101,9 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathBPe(Data: TDateTime = 0; CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathBPe: Boolean read FEmissaoPathBPe
       write FEmissaoPathBPe default False;
@@ -278,7 +278,7 @@ begin
   FDownloadBPe.Assign(DeArquivosConfBPe.DownloadBPe);
 end;
 
-function TArquivosConfBPe.GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String;
+function TArquivosConfBPe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;
   Data: TDateTime): String;
 var
   Dir: String;
@@ -294,12 +294,12 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathBPe, ModeloDF, CNPJ, Data, ModeloDF);
 end;
 
-function TArquivosConfBPe.GetPathDownload(xNome, CNPJ: String;
+function TArquivosConfBPe.GetPathDownload(const xNome, CNPJ: String;
   Data: TDateTime): String;
 var
   rPathDown: String;

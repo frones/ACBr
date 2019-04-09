@@ -76,9 +76,9 @@ type
     function GetMsg: String;
     function GetNumID: String;
     function GetXMLAssinado: String;
-    procedure SetXML(AValue: String);
-    procedure SetXMLOriginal(AValue: String);
-    function ValidarConcatChave: Boolean;
+    procedure SetXML(const AValue: String);
+    procedure SetXMLOriginal(const AValue: String);
+//    function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
     function GetcStat: Integer;
@@ -93,18 +93,18 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: String): Boolean;
+    function LerXML(const AXML: String): Boolean;
     function LerArqIni(const AIniString: String): Boolean;
 
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GerarTXT: String;
-    function GravarTXT(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarTXT(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil);
 
@@ -165,12 +165,12 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarBPe que determina se após carregar os dados da BPe
     // para o componente, será gerado ou não novamente o XML da BPe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarBPe: Boolean = False): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarBPe: Boolean = False): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarBPe: Boolean = False): Boolean;
-    function LoadFromString(AXMLString: String; AGerarBPe: Boolean = False): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String; AGerarBPe: Boolean = False): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
     function GravarTXT(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrBPe: TComponent read FACBrBPe;
@@ -422,7 +422,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Bilhete.LerXML(AXML: String): Boolean;
+function Bilhete.LerXML(const AXML: String): Boolean;
 var
   XMLStr: String;
 begin
@@ -438,7 +438,7 @@ begin
   Result := True;
 end;
 
-function Bilhete.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function Bilhete.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -448,7 +448,7 @@ begin
   Result := TACBrBPe(TBilhetes(Collection).ACBrBPe).Gravar(FNomeArq, FXMLOriginal);
 end;
 
-function Bilhete.GravarTXT(NomeArquivo: String; PathArquivo: String): Boolean;
+function Bilhete.GravarTXT(const NomeArquivo: String; const PathArquivo: String): Boolean;
 var
   ATXT: String;
 begin
@@ -468,10 +468,10 @@ begin
   Result := True;
 end;
 
-procedure Bilhete.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure Bilhete.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq : String;
+  NomeArq_Temp : String;
   AnexosEmail:TStrings;
   StreamBPe : TMemoryStream;
 begin
@@ -494,8 +494,8 @@ begin
         if Assigned(DABPE) then
         begin
           DABPE.ImprimirDABPEPDF(FBPe);
-          NomeArq := PathWithDelim(DABPE.PathPDF) + NumID + '-bpe.pdf';
-          AnexosEmail.Add(NomeArq);
+          NomeArq_Temp := PathWithDelim(DABPE.PathPDF) + NumID + '-bpe.pdf';
+          AnexosEmail.Add(NomeArq_Temp);
         end;
       end;
 
@@ -626,27 +626,27 @@ begin
   Result := PathArquivo + NomeArquivo;
 end;
 
-function Bilhete.ValidarConcatChave: Boolean;
-var
-  wAno, wMes, wDia: word;
-  chaveBPe : String;
-begin
-  DecodeDate(BPe.ide.dhEmi, wAno, wMes, wDia);
-
-  chaveBPe := 'BPe' + OnlyNumber(BPe.infBPe.ID);
-  {(*}
-  Result := not
-    ((Copy(chaveBPe, 4, 2) <> IntToStrZero(BPe.Ide.cUF, 2)) or
-    (Copy(chaveBPe, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(chaveBPe, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(chaveBPe, 10, 14)<> PadLeft(OnlyNumber(BPe.Emit.CNPJ), 14, '0')) or
-    (Copy(chaveBPe, 24, 2) <> IntToStrZero(BPe.Ide.modelo, 2)) or
-    (Copy(chaveBPe, 26, 3) <> IntToStrZero(BPe.Ide.serie, 3)) or
-    (Copy(chaveBPe, 29, 9) <> IntToStrZero(BPe.Ide.nBP, 9)) or
-    (Copy(chaveBPe, 38, 1) <> TpEmisToStr(BPe.Ide.tpEmis)) or
-    (Copy(chaveBPe, 39, 8) <> IntToStrZero(BPe.Ide.cBP, 8)));
-  {*)}
-end;
+//function Bilhete.ValidarConcatChave: Boolean;
+//var
+//  wAno, wMes, wDia: word;
+//  chaveBPe : String;
+//begin
+//  DecodeDate(BPe.ide.dhEmi, wAno, wMes, wDia);
+//
+//  chaveBPe := 'BPe' + OnlyNumber(BPe.infBPe.ID);
+//  {(*}
+//  Result := not
+//    ((Copy(chaveBPe, 4, 2) <> IntToStrZero(BPe.Ide.cUF, 2)) or
+//    (Copy(chaveBPe, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+//    (Copy(chaveBPe, 8, 2)  <> FormatFloat('00', wMes)) or
+//    (Copy(chaveBPe, 10, 14)<> PadLeft(OnlyNumber(BPe.Emit.CNPJ), 14, '0')) or
+//    (Copy(chaveBPe, 24, 2) <> IntToStrZero(BPe.Ide.modelo, 2)) or
+//    (Copy(chaveBPe, 26, 3) <> IntToStrZero(BPe.Ide.serie, 3)) or
+//    (Copy(chaveBPe, 29, 9) <> IntToStrZero(BPe.Ide.nBP, 9)) or
+//    (Copy(chaveBPe, 38, 1) <> TpEmisToStr(BPe.Ide.tpEmis)) or
+//    (Copy(chaveBPe, 39, 8) <> IntToStrZero(BPe.Ide.cBP, 8)));
+//  {*)}
+//end;
 
 function Bilhete.GetConfirmada: Boolean;
 begin
@@ -689,12 +689,12 @@ begin
   Result := FXMLAssinado;
 end;
 
-procedure Bilhete.SetXML(AValue: String);
+procedure Bilhete.SetXML(const AValue: String);
 begin
   LerXML(AValue);
 end;
 
-procedure Bilhete.SetXMLOriginal(AValue: String);
+procedure Bilhete.SetXMLOriginal(const AValue: String);
 var
   XMLUTF8: String;
 begin
@@ -717,7 +717,7 @@ var
   OK: Boolean;
   I: Integer;
 begin
-  Result := False;
+  Result := True;
 
   INIRec := TMemIniFile.Create('');
   try
@@ -1029,8 +1029,6 @@ begin
     end;
 
     GerarXML;
-
-    Result := True;
   finally
      INIRec.Free;
   end;
@@ -1176,7 +1174,7 @@ begin
   end;
 end;
 
-function TBilhetes.LoadFromFile(CaminhoArquivo: String;
+function TBilhetes.LoadFromFile(const CaminhoArquivo: String;
   AGerarBPe: Boolean): Boolean;
 var
   XMLUTF8: AnsiString;
@@ -1213,7 +1211,7 @@ begin
   Result := Self.LoadFromString(String(AXML), AGerarBPe);
 end;
 
-function TBilhetes.LoadFromString(AXMLString: String;
+function TBilhetes.LoadFromString(const AXMLString: String;
   AGerarBPe: Boolean): Boolean;
 var
   ABPeXML, XMLStr: AnsiString;
@@ -1261,7 +1259,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TBilhetes.LoadFromIni(AIniString: String): Boolean;
+function TBilhetes.LoadFromIni(const AIniString: String): Boolean;
 begin
   with Self.Add do
     LerArqIni(AIniString);
@@ -1269,7 +1267,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TBilhetes.GravarXML(PathNomeArquivo: String): Boolean;
+function TBilhetes.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;

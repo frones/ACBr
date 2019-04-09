@@ -58,7 +58,7 @@ type
   TACBrBPeDABPEClass = class( TACBrDFeReport )
   private
     procedure SetBPe(const Value: TComponent);
-    procedure ErroAbstract(NomeProcedure: String);
+    procedure ErroAbstract(const NomeProcedure: String);
 
   protected
    function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -188,7 +188,7 @@ begin
   end;
 end;
 
-procedure TACBrBPeDABPEClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrBPeDABPEClass.ErroAbstract(const NomeProcedure: String);
 begin
   raise EACBrBPeException.Create(NomeProcedure + ' não implementado em: ' + ClassName);
 end;

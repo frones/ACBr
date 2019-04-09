@@ -231,6 +231,7 @@ begin
     COD_GEN := Valor;
     COD_LST := Valor;
     ALIQ_ICMS := ValorFV;
+    CEST := Valor;
   end;
 end;
 

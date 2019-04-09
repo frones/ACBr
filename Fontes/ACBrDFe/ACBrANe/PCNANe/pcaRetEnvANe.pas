@@ -376,7 +376,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'Erro', '', i + 1) <> '' do
           begin
-            Erros.FErro.Add;
+            Erros.FErro.New;
             Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
             Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
             Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
@@ -394,7 +394,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'DadosSeguro', '', i + 1) <> '' do
           begin
-            Averbado.FDadosSeguro.Add;
+            Averbado.FDadosSeguro.New;
             Averbado.FDadosSeguro[i].FNumeroAverbacao := Leitor.rCampo(tcStr, 'NumeroAverbacao');
             Averbado.FDadosSeguro[i].FCNPJSeguradora  := Leitor.rCampo(tcStr, 'CNPJSeguradora');
             Averbado.FDadosSeguro[i].FNomeSeguradora  := Leitor.rCampo(tcStr, 'NomeSeguradora');
@@ -413,7 +413,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'Info', '', i + 1) <> '' do
           begin
-            Infos.FInfo.Add;
+            Infos.FInfo.New;
             Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
             Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
 
@@ -438,7 +438,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'Erro', '', i + 1) <> '' do
           begin
-            Erros.FErro.Add;
+            Erros.FErro.New;
             Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
             Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
             Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
@@ -459,7 +459,7 @@ begin
           i := 0;
           while Leitor.rExtrai(4, 'Info', '', i + 1) <> '' do
           begin
-            Infos.FInfo.Add;
+            Infos.FInfo.New;
             Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
             Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
 

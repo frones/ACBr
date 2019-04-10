@@ -1501,18 +1501,17 @@ begin
                   begin
                      if NFe.infNFe.Versao >= 2 then
                       begin
-                        if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
+                        Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
+
+                        if (NFe.infNFe.Versao >= 4) then
                         begin
-                          Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
-
-                          if (NFe.infNFe.Versao >= 4) then
-                          begin
-                            Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-                            Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
-                          end;
-
-                          Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                          Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
+                          // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
+                          Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                         end;
+
+                        Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+
                         if (NFe.infNFe.Versao >= 4) then
                         begin
                           if (nfe.Det[i].Imposto.ICMS.vBCFCPSTRet > 0) or (nfe.Det[i].Imposto.ICMS.pFCPSTRet > 0) or (nfe.Det[i].Imposto.ICMS.vFCPSTRet > 0) then
@@ -1638,7 +1637,8 @@ begin
                      if (NFe.infNFe.Versao >= 4) then
                      begin
                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-                       Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
+                       // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
+                       Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                      end;
 
                      Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRet, DSC_VICMSSTRET);
@@ -1728,18 +1728,17 @@ begin
                   end;
                csosn500 :
                   begin //10g
-                    if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
+                    Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
+
+                    if (NFe.infNFe.Versao >= 4) then
                     begin
-                      Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
-
-                      if (NFe.infNFe.Versao >= 4) then
-                      begin
-                        Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-                        Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
-                      end;
-
-                      Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
+                      // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
+                      Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                     end;
+
+                    Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
+
                     if (NFe.infNFe.Versao >= 4) then
                     begin
                       if (nfe.Det[i].Imposto.ICMS.vBCFCPSTRet > 0) or (nfe.Det[i].Imposto.ICMS.pFCPSTRet > 0) or (nfe.Det[i].Imposto.ICMS.vFCPSTRet > 0) then

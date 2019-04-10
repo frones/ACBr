@@ -144,7 +144,7 @@ type
     FId: String;
     FtpAmb: String;
     FverAplic: String;
-    FchDFe: String;
+    FchNFe: String;
     FdhRecbto: TDateTime;
     FnProt: String;
     FdigVal: String;
@@ -161,7 +161,7 @@ type
     property Id: String read FId write FId;
     property tpAmb: String read FtpAmb write FtpAmb;
     property verAplic: String read FverAplic write FverAplic;
-    property chDFe: String read FchDFe write FchDFe;
+    property chNFe: String read FchNFe write FchNFe;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property nProt: String read FnProt write FnProt;
     property digVal: String read FdigVal write FdigVal;
@@ -1475,7 +1475,7 @@ begin
   FId := Item.Id;
   FtpAmb := TpAmbToStr(Item.tpAmb);
   FverAplic := Item.verAplic;
-  FchDFe := Item.chDFe;
+  FchNFe := Item.chDFe;
   FdhRecbto := Item.dhRecbto;
   FnProt := Item.nProt;
   FdigVal := Item.digVal;

@@ -45,6 +45,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/04/2019
+-- ACBrLibNFeRespostas --
+[-] Corrigido nome campo chNFe, no retorno dos itens da NFe.
+    Por: Jose m S Junior	
+
+
+10/04/2019
 -- ACBrLibNFe --
 [-] Corrigido erro ao enviar a NFe/NFCe para tratar o retorno correto.
     Por: Rafael Dias	

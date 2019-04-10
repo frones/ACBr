@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2019
+[*] DoACBrNFeUnit
+Alteração dos métodos de Resposta da classe DoACBrNFeUnit utilizando as funções
+ProcessarResposta da classe da ACBrLibNFe
+
 05/04/2019
 [+] DoACBrUnit
 Adicionado o método "Versao" (retorna versão do ACBrMonitor)

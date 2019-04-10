@@ -42,7 +42,7 @@ uses
   pcnConversao,
   ACBrNFeConfiguracoes, Graphics,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeRLClass,
-  ACBrLibConfig, ACBrIntegradorConfig, DFeReportConfig;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
 
 type
   TTipoRelatorioEvento = (evA4, evBobina);
@@ -225,6 +225,7 @@ type
     FDANFeConfig: TDANFeReportConfig;
     FNFeConfig: TConfiguracoesNFe;
     FIntegradorConfig: TIntegradorConfig;
+    FDeviceConfig: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -245,6 +246,8 @@ type
     property NFeConfig: TConfiguracoesNFe read FNFeConfig;
     property DANFeConfig: TDANFeReportConfig read FDANFeConfig;
     property IntegradorConfig: TIntegradorConfig read FIntegradorConfig;
+    property PosDeviceConfig: TDeviceConfig read FDeviceConfig write FDeviceConfig;
+
   end;
 
 implementation
@@ -390,6 +393,9 @@ end;
 
 procedure TDANFeNFeConfig.Assign(const DFeReport: TACBrNFeDANFeRL);
 begin
+
+  if not Assigned(DFeReport) then Exit;
+
   with DFeReport do
   begin
     FormularioContinuo := FFormularioContinuo;
@@ -592,6 +598,9 @@ end;
 
 procedure TDANFeNFCeConfig.Assign(const DFeReport: TACBrNFeDANFCEClass);
 begin
+
+  if not Assigned(DFeReport) then Exit;
+
   with DFeReport do
   begin
     LarguraBobina := FLarguraBobina;
@@ -756,9 +765,10 @@ end;
 
 destructor TLibNFeConfig.Destroy;
 begin
-  FNFeConfig.Destroy;
+  FNFeConfig.Free;
   FDANFeConfig.Free;
   FIntegradorConfig.Free;
+  if FDeviceConfig <> nil then FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -781,6 +791,7 @@ begin
   FNFeConfig.LerIni(Ini);
   FDANFeConfig.LerIni(Ini);
   FIntegradorConfig.LerIni(Ini);
+  if FDeviceConfig <> nil then FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibNFeConfig.ClasseParaINI;
@@ -794,6 +805,7 @@ begin
   FNFeConfig.GravarIni(Ini);
   FDANFeConfig.GravarIni(Ini);
   FIntegradorConfig.GravarIni(Ini);
+  if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibNFeConfig.ClasseParaComponentes;

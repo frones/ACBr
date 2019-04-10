@@ -30,6 +30,7 @@ exports
   NFE_StatusServico,
   NFE_Inutilizar,
   NFE_Enviar,
+  NFE_ConsultarRecibo,
   NFE_Consultar,
   NFE_Cancelar,
   NFE_EnviarEvento,

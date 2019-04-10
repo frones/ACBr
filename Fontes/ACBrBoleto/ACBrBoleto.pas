@@ -1886,7 +1886,7 @@ begin
   // O arredondamento é com objetivo de remover as diferenças em arredondamentos posteriores,
   //    que causa uma diferença entre o valor do documento e a linha digitável.
   // Veja: https://www.projetoacbr.com.br/forum/topic/48941-erro-ao-gerar-boleto-linha-digitavél-diferente-do-valor-do-boleto-sicoob
-  fValorDocumento := RoundTo(Double(AValue), -2);
+  fValorDocumento := RoundABNT(AValue, 2);
 end;
 
 { TACBrBoleto }

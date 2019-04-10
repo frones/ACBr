@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2019
+-- ACBrBPeBilhetes --
+[*] Removido de Uses a unit Dialogs.
+   Por: Italo Jurisato Junior
+
 19/03/2019
 -- Diversos --
 [*] Alterações visando atender a NT 2019/001.

@@ -46,7 +46,7 @@ unit ACBrBPeBilhetes;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, StrUtils,
+  Classes, SysUtils, StrUtils,
   ACBrBPeConfiguracoes,
   pcnBPe, pcnBPeR, pcnBPeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 

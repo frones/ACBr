@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2019
+-- pcnReinfConsulta --
+[*] https://www.projetoacbr.com.br/forum/topic/49873-consultareciboevento/?do=findComment&comment=333664
+   Por: mysyfy
+
 29/03/2019
 -- Diversos --
 [*] Removido de todos os eventos o campo tpAmb, agora ao gerar o XML dos eventos

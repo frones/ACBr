@@ -110,7 +110,6 @@ begin
 
   if Length(nrInscEstab) = 14 then
   begin
-    nrInscEstab := Copy( nrInscEstab, 1, 8 );
     FtpInscEstab := '1';
   end
   else
@@ -118,7 +117,6 @@ begin
 
   if Length(nrInscTomador) = 14 then
   begin
-    nrInscTomador := Copy( nrInscTomador, 1, 8 );
     FtpInscTomador := '1';
   end
   else

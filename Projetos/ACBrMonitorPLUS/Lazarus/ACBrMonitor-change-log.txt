@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2019
+[*] DoACBrNFeUnit
+Ajustes nos métodos de Resposta com padronizações
+
 10/04/2019
 [*] DoACBrNFeUnit
 Alteração dos métodos de Resposta da classe DoACBrNFeUnit utilizando as funções

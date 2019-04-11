@@ -1132,14 +1132,11 @@ begin
     end;
 
     DoValidarIntegradorNFCe();
-
+    ACBrNFe.WebServices.ConsultaCadastro.Executar;
     Resp := TConsultaCadastroResposta.Create(resINI);
     try
-      if ACBrNFe.WebServices.ConsultaCadastro.Executar then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= Resp.Msg + sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= Resp.Msg + sLineBreak + Resp.Gerar ;
 
     finally
       Resp.Free;
@@ -1176,9 +1173,9 @@ begin
   begin
     DoValidarIntegradorNFCe( IntToStrZero(0,20) + IntToStr(AModelo));
 
+    ACBrNFe.WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, AModelo, ASerie, ANumInicial, ANumFinal);
     Resposta := TInutilizarNFeResposta.Create(resINI);
     try
-      ACBrNFe.WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, AModelo, ASerie, ANumInicial, ANumFinal);
       Resposta.ProcessarResposta(ACBrNFe);
       fpCmd.Resposta:= Resposta.Msg + sLineBreak + Resposta.Gerar ;
 
@@ -1287,19 +1284,16 @@ begin
     ACBrNFe.WebServices.Recibo.Recibo := ARecibo;
     DoValidarIntegradorNFCe();
 
-    if ACBrNFe.WebServices.Retorno.Executar then
-    begin
-      RespRetorno := TRetornoResposta.Create(resINI);
-      try
-        RespRetorno.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta := RespRetorno.Msg + sLineBreak + RespRetorno.Gerar;
-
-        if ACBrNFe.Configuracoes.Geral.Salvar then
-          fpCmd.Resposta := fpCmd.Resposta + sLineBreak + 'Arquivo=' + ACBrNFe.Configuracoes.Arquivos.PathSalvar +
-                        ARecibo + '-pro-rec.xml';
-      finally
-        RespRetorno.Free;
-      end;
+    ACBrNFe.WebServices.Retorno.Executar;
+    RespRetorno := TRetornoResposta.Create(resINI);
+    try
+      RespRetorno.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta := RespRetorno.Msg + sLineBreak + RespRetorno.Gerar;
+      if ACBrNFe.Configuracoes.Geral.Salvar then
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + 'Arquivo=' + ACBrNFe.Configuracoes.Arquivos.PathSalvar +
+                      ARecibo + '-pro-rec.xml';
+    finally
+      RespRetorno.Free;
     end;
 
   end;
@@ -1336,16 +1330,14 @@ begin
 
       DoValidarIntegradorNFCe(ACBrNFe.WebServices.Consulta.NFeChave);
 
+      ACBrNFe.WebServices.Consulta.Executar;
       Resposta := TConsultaNFeResposta.Create(resINI);
       try
-        if ACBrNFe.WebServices.Consulta.Executar then
-        begin
-          Resposta.ProcessarResposta(ACBrNFe);
-          fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
+        Resposta.ProcessarResposta(ACBrNFe);
+        fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
 
-          if  FilesExists( AXML ) then
-            fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak + 'Arquivo=' + AXML;
-        end;
+        if  FilesExists( AXML ) then
+          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak + 'Arquivo=' + AXML;
 
       finally
         Resposta.Free;
@@ -1432,17 +1424,15 @@ begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     DoValidarIntegradorNFCe();
-    if ACBrNFe.WebServices.StatusServico.Executar then
-    begin
-      Resposta := TStatusServicoResposta.Create(resINI);
-      try
-        Resposta.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
-
-      finally
-        Resposta.Free;
-      end;
+    ACBrNFe.WebServices.StatusServico.Executar;
+    Resposta := TStatusServicoResposta.Create(resINI);
+    try
+      Resposta.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
+    finally
+      Resposta.Free;
     end;
+
   end;
 end;
 
@@ -2149,18 +2139,15 @@ begin
       infEvento.detEvento.xJust := AJustificativa;
     end;
     DoValidarIntegradorNFCe(AChave);
-
-    if ACBrNFe.EnviarEvento(ALote) then
-    begin
-      Resposta := TCancelamentoResposta.Create(resINI);
-      try
-        Resposta.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta := Resposta.XMotivo + sLineBreak + Resposta.Gerar;
-      finally
-        Resposta.Free;
-      end;
-
+    ACBrNFe.EnviarEvento(ALote);
+    Resposta := TCancelamentoResposta.Create(resINI);
+    try
+      Resposta.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta := Resposta.XMotivo + sLineBreak + Resposta.Gerar;
+    finally
+      Resposta.Free;
     end;
+
 
   end;
 end;
@@ -2402,13 +2389,11 @@ begin
     if ACBrNFe.EventoNFe.Evento.Count > 0 then
       DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
 
+    ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
     Resp := TEventoResposta.Create(resINI);
     try
-      if ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= sLineBreak + Resp.Gerar;
 
     finally
       Resp.Free;
@@ -2437,14 +2422,11 @@ begin
 
     if ACBrNFe.EventoNFe.Evento.Count > 0 then
       DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
-
+    ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
     Resp := TEventoResposta.Create(resINI);
     try
-      if ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
 
     finally
       Resp.Free;
@@ -2472,15 +2454,13 @@ begin
     CargaDFeEvento := TACBrCarregarNFeEvento.Create(ACBrNFe, AArq);
     Resp := TEventoResposta.Create(resINI);
     try
-
       if ACBrNFe.EventoNFe.Evento.Count > 0 then
         DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
 
-      if ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
-      end;
+      ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
+
 
     finally
       CargaDFeEvento.Free;
@@ -2513,14 +2493,11 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     DoValidarIntegradorNFCe();
-
+    ACBrNFe.DistribuicaoDFePorChaveNFe(AUF, ACNPJ, AChave);
     Resp:= TDistribuicaoDFeResposta.Create(resINI);
     try
-      if ACBrNFe.DistribuicaoDFePorChaveNFe(AUF, ACNPJ, AChave) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
 
     finally
       Resp.Free;
@@ -2554,13 +2531,11 @@ begin
 
     DoValidarIntegradorNFCe();
 
+    ACBrNFe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
     Resp:= TDistribuicaoDFeResposta.Create(resINI);
     try
-      if ACBrNFe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
 
     finally
       Resp.Free;
@@ -2593,15 +2568,11 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     DoValidarIntegradorNFCe();
-
+    ACBrNFe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
     Resp:= TDistribuicaoDFeResposta.Create(resINI);
     try
-      if ACBrNFe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
-      end;
-
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
     finally
       Resp.Free;
     end;
@@ -3195,14 +3166,11 @@ begin
       raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
 
     DoValidarIntegradorNFCe();
-
+    ACBrNFe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave);
     Resp:= TDistribuicaoDFeResposta.Create(resINI);
     try
-      if ACBrNFe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave) then
-      begin
-        Resp.ProcessarResposta(ACBrNFe);
-        fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
-      end;
+      Resp.ProcessarResposta(ACBrNFe);
+      fpCmd.Resposta:= fpCmd.Resposta + sLineBreak + Resp.Gerar ;
 
     finally
       Resp.Free;

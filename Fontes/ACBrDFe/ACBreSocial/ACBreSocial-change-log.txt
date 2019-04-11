@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/04/2019
+-- ACBreSocialWebServices --
+[*] Possivel correção na passagem dos parametros para o método Download.
+   Por: Italo Jurisato Junior
+
 02/04/2019
 -- pcesS2399 --
 [*] https://www.projetoacbr.com.br/forum/topic/50319-s2399-desligamento-por-mudan%C3%A7a-de-cpf/

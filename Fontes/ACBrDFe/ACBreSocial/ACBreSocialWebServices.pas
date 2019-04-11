@@ -913,7 +913,10 @@ var
 begin
 
   if Length(FCnpj) = 14 then
-    TpInsc := tiCNPJ
+  begin
+    TpInsc := tiCNPJ;
+    FCnpj  := Copy(FCnpj, 1, 8);
+  end
   else
     TpInsc := tiCPF;
 
@@ -939,7 +942,7 @@ begin
   if FPorID <> '' then
     FPDadosMsg := FPDadosMsg +
                   '<solicDownloadEvtsPorId>' +
-                    '<id>' + FPorID + '</id>' + // Pode ser uma lista
+                    '<id>' + OnlyNumber(FPorID) + '</id>' + // Pode ser uma lista
                   '</solicDownloadEvtsPorId>'
   else
     FPDadosMsg := FPDadosMsg +

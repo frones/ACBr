@@ -121,12 +121,11 @@ function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
 function NFE_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ConsultarRecibo(ARecibo: String;
+function NFE_ConsultarRecibo(ARecibo: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -895,18 +894,18 @@ begin
   end;
 end;
 
-function NFE_ConsultarRecibo(ARecibo: String; const sResposta: PChar; var esTamanho: longint): longint;
+function NFE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTamanho: longint): longint;
 var
   Resp: TReciboResposta;
-  Recibo, Resposta: string;
+  sRecibo, Resposta: string;
 begin
   try
     VerificarLibInicializada;
 
-    Recibo := string(ARecibo);
+    sRecibo := string(ARecibo);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFE_ConsultarRecibo(' + Recibo + ' )', logCompleto, True)
+      pLib.GravarLog('NFE_ConsultarRecibo(' + sRecibo + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFE_ConsultarRecibo', logNormal);
 
@@ -917,22 +916,22 @@ begin
       try
         with NFeDM.ACBrNFe1 do
         begin
-          WebServices.Recibo.Recibo := Recibo;
-          if WebServices.Recibo.Executar then
-          begin
-            Resp := TReciboResposta.Create(pLib.Config.TipoResposta);
-            try
-              Resp.ProcessarResposta(NFeDM.ACBrNFe1);
-              Resposta := Resp.Gerar;
-            finally
-              Resp.Free;
-            end;
+          WebServices.Recibo.Recibo := sRecibo;
+          WebServices.Recibo.Executar;
 
-            MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
-          end
-          else
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'Recibo', WebServices.Recibo.Msg);
+          Resp := TReciboResposta.Create(pLib.Config.TipoResposta);
+          try
+            Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+            pLib.GravarLog('Resp.Gerar', logNormal);
+            Resposta := Resp.Gerar;
+          finally
+            pLib.GravarLog('Resp.Free', logNormal);
+            Resp.Free;
+          end;
+
+          pLib.GravarLog('Result', logNormal);
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, StrPas(sResposta));
         end;
       finally
         NFeDM.Destravar;
@@ -992,8 +991,7 @@ begin
             raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJInvalido, [ACNPJ]));
         end;
 
-        Infevento.cOrgao := StrToIntDef(
-          copy(OnlyNumber(NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave), 1, 2), 0);
+        Infevento.cOrgao := StrToIntDef(copy(OnlyNumber(NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave), 1, 2), 0);
         Infevento.dhEvento := now;
         Infevento.tpEvento := teCancelamento;
         Infevento.chNFe := NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave;
@@ -1039,7 +1037,6 @@ function NFE_EnviarEvento(idLote: Integer;
 var
   Resp: TEventoResposta;
   Resposta: String;
-  I: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -1055,7 +1052,7 @@ begin
 
       with NFeDM.ACBrNFe1 do
       begin
-        if EventoNFe.Evento.Count =0 then
+        if EventoNFe.Evento.Count = 0 then
           raise EACBrLibException.Create(ErrEnvioEvento, Format(SInfEventosCarregados, [EventoNFe.Evento.Count]))
         else
         begin

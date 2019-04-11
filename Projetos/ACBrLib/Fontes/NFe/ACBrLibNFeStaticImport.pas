@@ -102,12 +102,16 @@ function NFe_Consultar(const eChaveOuNFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
+function NFE_ConsultarRecibo(const ARecibo: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
+
 function NFe_Inutilizar(const ACNPJ, AJustificativa: PChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Enviar(ALote: Integer; Imprimir: Boolean;
+function NFe_Enviar((ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 

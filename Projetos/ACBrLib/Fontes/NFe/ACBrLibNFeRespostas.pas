@@ -1565,12 +1565,12 @@ begin
     XMotivo := Recibo.XMotivo;
     CUF := Recibo.cUF;
 
-    with Recibo do
+    with Recibo.NFeRetorno do
     begin
-      for i := 0 to NFeRetorno.ProtDFe.Count - 1 do
+      for i := 0 to ProtDFe.Count - 1 do
       begin
-        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(NFeRetorno.ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
-        Item.ProcessarResposta(NFeRetorno.ProtDFe.Items[i]);
+        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
+        Item.ProcessarResposta(ProtDFe.Items[i]);
         FItens.Add(Item);
       end;
     end;

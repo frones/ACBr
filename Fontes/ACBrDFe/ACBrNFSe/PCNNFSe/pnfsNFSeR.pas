@@ -1759,7 +1759,7 @@ begin
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
-    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2, proCenti]) then
+    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2, proCenti, proRLZ]) then
     begin
       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
@@ -1999,7 +1999,7 @@ begin
 
       if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica,
                         proFiorilli, proPronimv2, proVitoria, proSmarAPDABRASF,
-                        proGovDigital, proDataSmart, proTecnos]) then
+                        proGovDigital, proDataSmart, proTecnos, proRLZ]) then
       begin
         if NFSe.Servico.Valores.IssRetido = stRetencao then
           NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

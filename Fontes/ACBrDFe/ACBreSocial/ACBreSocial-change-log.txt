@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2019
+-- ACBreSocialWebServices --
+[*] Removido a função OnlyNumber do parametro ID para o método Download.
+   Por: Italo Jurisato Junior
+
 11/04/2019
 -- ACBreSocialWebServices --
 [*] Possivel correção na passagem dos parametros para o método Download.

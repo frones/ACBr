@@ -942,7 +942,7 @@ begin
   if FPorID <> '' then
     FPDadosMsg := FPDadosMsg +
                   '<solicDownloadEvtsPorId>' +
-                    '<id>' + OnlyNumber(FPorID) + '</id>' + // Pode ser uma lista
+                    '<id>' + FPorID + '</id>' + // Pode ser uma lista
                   '</solicDownloadEvtsPorId>'
   else
     FPDadosMsg := FPDadosMsg +

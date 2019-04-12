@@ -282,7 +282,7 @@ begin
                   IntToStrZero(0, 2)                                      +  // Filler - Zeros
                   PadLeft( aConta, 7, '0')                                +  // Conta Corrente de Cobrança + Dígito da Conta Corrente
                   PadLeft( Cedente.ContaDigito, 1, '0')                   +  // Dígito da conta corrente
-                  IntToStrZero( round( aPercMulta * 100 ), 2)             +  // Percentual de Multa por atraso
+                  IntToStrZero( Trunc( aPercMulta), 2)                    +  // Percentual de Multa por atraso
                   Space(4)                                                +  // Filler - Brancos
                   PadRight( SeuNumero,25,' ')                             +  // Numero de Controle do Participante
                   NossoNumero + DigitoNossoNumero                         +

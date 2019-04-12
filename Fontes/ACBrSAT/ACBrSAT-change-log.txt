@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2019
+-- ACBrSATExtratoFortesFr --
+[-] Correção na detectção de Logo carregado em "PictureLogo"
+[*] Ajustes para Extrato de Cancelamento, no novo layout MO 2.17.07
+    https://www.projetoacbr.com.br/forum/topic/50649-adapta%C3%A7%C3%A3o-do-extrato-de-cancelamento-do-sat-para-fortes-ao-novo-layout/
+
+-- ACBrSATClass --
+[-] Ajuste para detectção de Status de não cancelado, em alguns modelos de equipamento
+    https://www.projetoacbr.com.br/forum/topic/50477-corre%C3%A7%C3%A3o-status-lan-mfe/
+    (por: DSA)
+
 23/03/2019
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
 [-] Ajuste para imprimir corretamente Observações do Fisco, na versão 0.08

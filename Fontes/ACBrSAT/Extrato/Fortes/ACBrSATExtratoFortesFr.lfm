@@ -1,22 +1,22 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 445
-  Height = 1011
+  Left = 449
+  Height = 999
   Top = 7
-  Width = 772
+  Width = 748
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 1011
-  ClientWidth = 772
+  ClientHeight = 999
+  ClientWidth = 748
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.0.2'
+  LCLVersion = '2.0.0.4'
   object rlVenda: TRLReport
     Left = 40
     Height = 1512
-    Top = 0
+    Top = 8
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -1825,418 +1825,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     ShowProgress = False
     BeforePrint = rlCancelamentoBeforePrint
     OnDataRecord = rlVendaDataRecord
-    object rlbCanRodape: TRLBand
-      Left = 8
-      Height = 589
-      Top = 318
-      Width = 286
-      AutoSize = True
-      BandType = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
-      object RLDraw8: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 286
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lDataHoraCan: TRLLabel
-        Left = 0
-        Height = 14
-        Top = 20
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '14/08/1971 - 08:00:00'
-        Layout = tlCenter
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object pNumSATCan: TRLPanel
-        Left = 0
-        Height = 12
-        Top = 8
-        Width = 286
-        Align = faTop
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        BeforePrint = pNumSATCanBeforePrint
-        object lTitSATCan: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 0
-          Width = 136
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'SAT N°:  '
-          Layout = tlCenter
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lNumSATCan: TRLLabel
-          Left = 136
-          Height = 12
-          Top = 0
-          Width = 150
-          Align = faClient
-          Caption = '900000102'
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
-      object bcChaveAcessoCan1: TRLBarcode
-        Left = 0
-        Height = 26
-        Top = 46
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        BarcodeType = bcCode128C
-        Caption = '3514031111111111111159'
-        CheckSumMethod = cmNone
-        Margins.LeftMargin = 1
-        Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object imgQRCodeCan: TRLImage
-        Left = 0
-        Height = 133
-        Top = 115
-        Width = 286
-        Align = faTop
-        Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Scaled = True
-      end
-      object pGap6: TRLPanel
-        Left = 0
-        Height = 17
-        Top = 98
-        Width = 286
-        Align = faTop
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object RLDraw9: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 248
-        Width = 286
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object pNumSATCancl: TRLPanel
-        Left = 0
-        Height = 12
-        Top = 266
-        Width = 286
-        Align = faTop
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        BeforePrint = pNumSATCanclBeforePrint
-        object lTitSATCanl: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 0
-          Width = 137
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'SAT N°:  '
-          Layout = tlCenter
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lNumSATCanl: TRLLabel
-          Left = 137
-          Height = 12
-          Top = 0
-          Width = 149
-          Align = faClient
-          Caption = '900000102'
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
-      object lDataHoraCanl: TRLLabel
-        Left = 0
-        Height = 14
-        Top = 278
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '14/08/1971 - 08:00:00'
-        Layout = tlCenter
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object bcChaveAcessoCanl1: TRLBarcode
-        Left = 0
-        Height = 26
-        Top = 304
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        BarcodeType = bcCode128C
-        Caption = '3514031111111111111159'
-        CheckSumMethod = cmNone
-        Margins.LeftMargin = 1
-        Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object pGap7: TRLPanel
-        Left = 0
-        Height = 17
-        Top = 356
-        Width = 286
-        Align = faTop
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object imgQRCodeCanl: TRLImage
-        Left = 0
-        Height = 150
-        Top = 373
-        Width = 286
-        Align = faTop
-        Center = True
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Scaled = True
-      end
-      object bcChaveAcessoCan2: TRLBarcode
-        Left = 0
-        Height = 26
-        Top = 72
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        BarcodeType = bcCode128C
-        Caption = '9000001020002235664805'
-        CheckSumMethod = cmNone
-        Margins.LeftMargin = 1
-        Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object bcChaveAcessoCanl2: TRLBarcode
-        Left = 0
-        Height = 26
-        Top = 330
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        BarcodeType = bcCode128C
-        Caption = '9000001020002235664805'
-        CheckSumMethod = cmNone
-        Margins.LeftMargin = 1
-        Margins.RightMargin = 1
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object pEspacoFinalCan: TRLPanel
-        Left = 0
-        Height = 22
-        Top = 567
-        Width = 286
-        Align = faBottom
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        object RLDraw12: TRLDraw
-          Left = 0
-          Height = 1
-          Top = 21
-          Width = 286
-          Align = faBottom
-          Angle = 0
-          DrawKind = dkLine
-          Pen.Style = psDot
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
-      object mMsgAppQRCodeCanc: TRLMemo
-        Left = 0
-        Height = 24
-        Top = 523
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Lines.Strings = (
-          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
-          'disponível na AppStore (Apple) e PlayStore (Android)'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object mSwHouseSiteCanc: TRLMemo
-        Left = 0
-        Height = 20
-        Top = 547
-        Width = 286
-        Align = faBottom
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
-        Lines.Strings = (
-          'Projeto ACBr'
-          'http://www.projetoacbr.com.br'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lChaveAcessoCan: TRLMemo
-        Left = 0
-        Height = 12
-        Top = 34
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Layout = tlBottom
-        Lines.Strings = (
-          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lChaveAcessoCanl: TRLMemo
-        Left = 0
-        Height = 12
-        Top = 292
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Layout = tlBottom
-        Lines.Strings = (
-          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lTitCancelamento2: TRLMemo
-        Left = 0
-        Height = 10
-        Top = 256
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        Lines.Strings = (
-          'DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-    end
     object rlbCabecalhoCan: TRLBand
       Left = 8
-      Height = 147
+      Height = 112
       Top = 8
       Width = 286
       AutoSize = True
@@ -2245,34 +1836,182 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object RLDraw11: TRLDraw
+      object paLogoEClicheCanc: TRLPanel
         Left = 0
-        Height = 8
-        Top = 97
+        Height = 44
+        Top = 0
         Width = 286
-        Align = faBottom
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Style = psDot
+        Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        object paClicheCanc: TRLPanel
+          Left = 40
+          Height = 44
+          Top = 0
+          Width = 246
+          Align = faClientTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object lNomeFantasiaCanc: TRLMemo
+            Left = 0
+            Height = 20
+            Top = 0
+            Width = 246
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -16
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            Lines.Strings = (
+              'Nome Fantasia'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lRazaoSocialCanc: TRLMemo
+            Left = 0
+            Height = 12
+            Top = 20
+            Width = 246
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Razão Social'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lEnderecoCanc: TRLMemo
+            Left = 0
+            Height = 12
+            Top = 32
+            Width = 246
+            Align = faTop
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Dados do Endereço'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+        object paLogoCanc: TRLPanel
+          Left = 0
+          Height = 1
+          Top = 0
+          Width = 40
+          Align = faLeftTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object imgLogoCanc: TRLImage
+            Left = 0
+            Height = 1
+            Top = 0
+            Width = 40
+            Align = faClientTop
+            AutoSize = True
+            Center = True
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            Scaled = True
+            Transparent = False
+          end
+        end
+      end
+      object lEmitCNPJ_IE_IMCanc: TRLMemo
+        Left = 0
+        Height = 28
+        Top = 44
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Layout = tlBottom
+        Lines.Strings = (
+          'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.233'
+        )
+        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object lNumeroExtratoCan: TRLLabel
+      object pGap13: TRLPanel
         Left = 0
-        Height = 14
-        Top = 105
+        Height = 7
+        Top = 72
         Width = 286
-        Align = faBottom
+        Align = faTop
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object lNumeroExtratoCanc: TRLMemo
+        Left = 0
+        Height = 12
+        Top = 79
+        Width = 286
+        Align = faTop
         Alignment = taCenter
-        Caption = 'Extrato N°: <NUMERO>'
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         Layout = tlCenter
+        Lines.Strings = (
+          'EXTRATO N° <NUMERO> do CUPOM FISCAL ELETRÔNICO - SAT'
+        )
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pGap14: TRLPanel
+        Left = 0
+        Height = 7
+        Top = 91
+        Width = 286
+        Align = faTop
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -2281,7 +2020,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object lTitCancelamento: TRLLabel
         Left = 0
         Height = 14
-        Top = 133
+        Top = 98
         Width = 286
         Align = faBottom
         Alignment = taCenter
@@ -2297,245 +2036,90 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object lNomeFantasiaCan: TRLMemo
-        Left = 0
-        Height = 20
-        Top = 1
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -16
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        Lines.Strings = (
-          'Nome Fantasia'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lEnderecoCan: TRLMemo
-        Left = 0
-        Height = 24
-        Top = 45
-        Width = 286
-        Align = faBottom
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Lines.Strings = (
-          'Endereço LINHA 1'
-          'Endereço LINHA 2'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lRazaoSocialCan: TRLMemo
-        Left = 0
-        Height = 24
-        Top = 21
-        Width = 286
-        Align = faBottom
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Lines.Strings = (
-          'Razão Social Canc - Linha 1'
-          'Razão Social Canc - Linha 2'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lCupomFiscalEletronicoCan: TRLMemo
+    end
+    object rlbTesteCan: TRLBand
+      Left = 8
+      Height = 56
+      Top = 120
+      Width = 286
+      AutoSize = True
+      BandType = btHeader
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlbTesteBeforePrint
+      object lTeste1: TRLLabel
         Left = 0
         Height = 14
-        Top = 119
-        Width = 286
-        Align = faBottom
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        Lines.Strings = (
-          'CUPOM FISCAL ELETRÔNICO - SAT'
-        )
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lEmitCNPJ_IE_IMCan: TRLMemo
-        Left = 0
-        Height = 28
-        Top = 69
-        Width = 286
-        Align = faBottom
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Layout = tlBottom
-        Lines.Strings = (
-          'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.233'
-        )
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object paLogoCanc: TRLPanel
-        Left = 0
-        Height = 1
         Top = 0
         Width = 286
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Caption = '= T E S T E ='
+        Layout = tlCenter
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        object imgLogoCanc: TRLImage
-          Left = 0
-          Height = 1
-          Top = 0
-          Width = 286
-          Align = faClientTop
-          AutoSize = True
-          Center = True
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-          Scaled = True
-          Transparent = False
-        end
+      end
+      object lFiller4: TRLLabel
+        Left = 0
+        Height = 14
+        Top = 14
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        Layout = tlBottom
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object lFiller5: TRLLabel
+        Left = 0
+        Height = 14
+        Top = 28
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        Layout = tlBottom
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object lFiller6: TRLLabel
+        Left = 0
+        Height = 14
+        Top = 42
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        Layout = tlBottom
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
-      Height = 79
-      Top = 239
+      Height = 57
+      Top = 176
       Width = 286
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object RLDraw13: TRLDraw
-        Left = 0
-        Height = 10
-        Top = 0
-        Width = 286
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Style = psDot
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lRazaoSocialNomeCanc: TRLMemo
-        Left = 0
-        Height = 14
-        Top = 37
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Behavior = [beSiteExpander]
-        Layout = tlBottom
-        Lines.Strings = (
-          'Razão Social/Nome: <xNome>'
-        )
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object pTotalCanc: TRLPanel
-        Left = 0
-        Height = 28
-        Top = 51
-        Width = 286
-        Align = faClient
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        BeforePrint = pTotalCancBeforePrint
-        object lTotalCan: TRLLabel
-          Left = 144
-          Height = 28
-          Top = 0
-          Width = 142
-          Align = faClient
-          Caption = '99.999,99'
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lTitTotalCan: TRLLabel
-          Left = 0
-          Height = 28
-          Top = 0
-          Width = 144
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'TOTAL R$   '
-          Layout = tlCenter
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
-      object lCPF_CNPJCan: TRLMemo
-        Left = 0
-        Height = 15
-        Top = 22
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        Layout = tlBottom
-        Lines.Strings = (
-          'CPF/CNPJ Consumidor: <CPF_CNPJ>'
-        )
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object lTitCancelamento1: TRLMemo
         Left = 0
         Height = 12
-        Top = 10
+        Top = 0
         Width = 286
         Align = faTop
         Alignment = taCenter
@@ -2554,79 +2138,842 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object pConsumidorCanc: TRLPanel
+        Left = 0
+        Height = 21
+        Top = 12
+        Width = 286
+        Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        object pGap12: TRLPanel
+          Left = 0
+          Height = 7
+          Top = 0
+          Width = 286
+          Align = faTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lCPF_CNPJCanc: TRLMemo
+          Left = 0
+          Height = 14
+          Top = 7
+          Width = 286
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Lines.Strings = (
+            'CPF/CNPJ Consumidor: <CPF_CNPJ>'
+          )
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
+      object pTotalCanc: TRLPanel
+        Left = 0
+        Height = 24
+        Top = 33
+        Width = 286
+        Align = faClient
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = pTotalCancBeforePrint
+        object lTitTotalCan: TRLLabel
+          Left = 0
+          Height = 24
+          Top = 0
+          Width = 144
+          Align = faLeft
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'TOTAL R$   '
+          Layout = tlCenter
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTotalCan: TRLLabel
+          Left = 144
+          Height = 24
+          Top = 0
+          Width = 142
+          Align = faClient
+          Caption = '99.999,99'
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Layout = tlCenter
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
     end
-    object rlbTesteCan: TRLBand
+    object rlbCanRodape: TRLBand
       Left = 8
-      Height = 84
-      Top = 155
+      Height = 603
+      Top = 233
       Width = 286
       AutoSize = True
-      BandType = btHeader
+      BandType = btSummary
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = rlbTesteBeforePrint
-      object lFiller4: TRLLabel
+      object pSATSerieHoraCanc: TRLPanel
         Left = 0
-        Height = 14
-        Top = 42
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-        Layout = tlBottom
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lFiller5: TRLLabel
-        Left = 0
-        Height = 14
-        Top = 56
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-        Layout = tlBottom
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lFiller6: TRLLabel
-        Left = 0
-        Height = 14
-        Top = 70
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-        Layout = tlBottom
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lTesteCan: TRLMemo
-        Left = 0
-        Height = 42
+        Height = 44
         Top = 0
+        Width = 286
+        Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = pSATSerieHoraCancBeforePrint
+        object pGap17: TRLPanel
+          Left = 0
+          Height = 7
+          Top = 0
+          Width = 286
+          Align = faTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object pNumSATCanc: TRLPanel
+          Left = 0
+          Height = 16
+          Top = 7
+          Width = 286
+          Align = faTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = pNumSATCancBeforePrint
+          object lTitSATCanc: TRLLabel
+            Left = 0
+            Height = 16
+            Top = 0
+            Width = 130
+            Align = faLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'SAT N°: '
+            Layout = tlCenter
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lNumSATCanc: TRLLabel
+            Left = 130
+            Height = 16
+            Top = 0
+            Width = 156
+            Align = faClient
+            Caption = '900.000.102'
+            Font.Color = clBlack
+            Font.Height = -11
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+        object lDataHoraCanc: TRLLabel
+          Left = 0
+          Height = 14
+          Top = 23
+          Width = 286
+          Align = faTop
+          Alignment = taCenter
+          Caption = '14/08/1971 - 08:00:00'
+          Layout = tlCenter
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object pGap18: TRLPanel
+          Left = 0
+          Height = 7
+          Top = 37
+          Width = 286
+          Align = faTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
+      object lChaveAcessoCan: TRLMemo
+        Left = 0
+        Height = 12
+        Top = 44
         Width = 286
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
-        Layout = tlCenter
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Layout = tlBottom
         Lines.Strings = (
-          ''
-          '= T E S T E ='
-          ''
+          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
         )
+        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+      end
+      object bcChaveAcessoCan1: TRLBarcode
+        Left = 0
+        Height = 26
+        Top = 56
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Caption = '3514031111111111111159'
+        CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object bcChaveAcessoCan2: TRLBarcode
+        Left = 0
+        Height = 26
+        Top = 82
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Caption = '9000001020002235664805'
+        CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pGap6: TRLPanel
+        Left = 0
+        Height = 10
+        Top = 108
+        Width = 286
+        Align = faTop
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pQRCodeCanc: TRLPanel
+        Left = 0
+        Height = 135
+        Top = 118
+        Width = 286
+        Align = faTop
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = pQRCodeCancBeforePrint
+        object imgQRCodeCan: TRLImage
+          Left = 0
+          Height = 135
+          Top = 0
+          Width = 144
+          Align = faClient
+          Center = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Scaled = True
+        end
+        object pTextoLateralCanc: TRLPanel
+          Left = 144
+          Height = 135
+          Top = 0
+          Width = 142
+          Align = faRight
+          Margins.LeftMargin = 2
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object pConsumidorLateralCanc: TRLPanel
+            Left = 8
+            Height = 28
+            Top = 0
+            Width = 134
+            Align = faTop
+            AutoExpand = True
+            AutoSize = True
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            BeforePrint = pConsumidorLateralCancBeforePrint
+            object lTitConsumidorLateralCanc: TRLLabel
+              Left = 0
+              Height = 14
+              Top = 0
+              Width = 134
+              Align = faTop
+              Alignment = taCenter
+              Caption = 'Consumidor'
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'Arial'
+              Font.Style = [fsBold]
+              ParentFont = False
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
+            object mConsumidorLateralCanc: TRLMemo
+              Left = 0
+              Height = 14
+              Top = 14
+              Width = 134
+              Align = faTop
+              Alignment = taCenter
+              Behavior = [beSiteExpander]
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
+          end
+          object pNumSATDataHoraLateralCan: TRLPanel
+            Left = 8
+            Height = 26
+            Top = 28
+            Width = 134
+            Align = faTop
+            AutoExpand = True
+            AutoSize = True
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            BeforePrint = pNumSATDataHoraLateralCanBeforePrint
+            object pNumSATLateralCanc: TRLPanel
+              Left = 0
+              Height = 12
+              Top = 0
+              Width = 134
+              Align = faTop
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+              BeforePrint = pNumSATLateralCancBeforePrint
+              object lTitSATLateralCanc: TRLLabel
+                Left = 0
+                Height = 12
+                Top = 0
+                Width = 72
+                Align = faLeftTop
+                Alignment = taRightJustify
+                AutoSize = False
+                Caption = 'N° Série SAT '
+                Font.Color = clBlack
+                Font.Height = -9
+                Font.Name = 'Arial'
+                Font.Style = [fsBold]
+                Layout = tlCenter
+                ParentFont = False
+                RealBounds.Left = 0
+                RealBounds.Top = 0
+                RealBounds.Width = 0
+                RealBounds.Height = 0
+              end
+              object lNumSATLateralCanc: TRLLabel
+                Left = 72
+                Height = 12
+                Top = 0
+                Width = 62
+                Align = faClientTop
+                Caption = '900.000.102'
+                Font.Color = clBlack
+                Font.Height = -9
+                Font.Name = 'Arial'
+                Layout = tlCenter
+                ParentFont = False
+                RealBounds.Left = 0
+                RealBounds.Top = 0
+                RealBounds.Width = 0
+                RealBounds.Height = 0
+              end
+            end
+            object lDataHoraLateralCanc: TRLLabel
+              Left = 0
+              Height = 14
+              Top = 12
+              Width = 134
+              Align = faTop
+              Alignment = taCenter
+              Caption = '14/08/1971 - 08:00:00'
+              Layout = tlCenter
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
+          end
+          object mMsgAppQRCodeLateralCanc: TRLMemo
+            Left = 8
+            Height = 28
+            Top = 107
+            Width = 134
+            Align = faBottom
+            Alignment = taCenter
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -7
+            Font.Name = 'Arial'
+            Lines.Strings = (
+              'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+              'disponível na AppStore (Apple) e PlayStore (Android)'
+            )
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+      end
+      object RLDraw9: TRLDraw
+        Left = 0
+        Height = 8
+        Top = 253
+        Width = 286
+        Align = faTop
+        Angle = 0
+        DrawKind = dkLine
+        Pen.Style = psDot
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object lTitCancelamento2: TRLMemo
+        Left = 0
+        Height = 10
+        Top = 261
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          'DADOS DO CUPOM FISCAL ELETRÔNICO DE CANCELAMENTO'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pSATSerieHoraCanc2: TRLPanel
+        Left = 0
+        Height = 44
+        Top = 271
+        Width = 286
+        Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = pSATSerieHoraCanc2BeforePrint
+        object pGap15: TRLPanel
+          Left = 0
+          Height = 7
+          Top = 0
+          Width = 286
+          Align = faTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object pNumSATCanc2: TRLPanel
+          Left = 0
+          Height = 16
+          Top = 7
+          Width = 286
+          Align = faTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          BeforePrint = pNumSATCanc2BeforePrint
+          object lTitSATCanc2: TRLLabel
+            Left = 0
+            Height = 16
+            Top = 0
+            Width = 130
+            Align = faLeft
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'SAT N°: '
+            Layout = tlCenter
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lNumSATCanc2: TRLLabel
+            Left = 130
+            Height = 16
+            Top = 0
+            Width = 156
+            Align = faClient
+            Caption = '900.000.102'
+            Font.Color = clBlack
+            Font.Height = -11
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            Layout = tlCenter
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+        object lDataHoraCanc2: TRLLabel
+          Left = 0
+          Height = 14
+          Top = 23
+          Width = 286
+          Align = faTop
+          Alignment = taCenter
+          Caption = '14/08/1971 - 08:00:00'
+          Layout = tlCenter
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object pGap16: TRLPanel
+          Left = 0
+          Height = 7
+          Top = 37
+          Width = 286
+          Align = faTop
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
+      object lChaveAcessoCanc2: TRLMemo
+        Left = 0
+        Height = 12
+        Top = 315
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Layout = tlBottom
+        Lines.Strings = (
+          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object bcChaveAcessoCanc21: TRLBarcode
+        Left = 0
+        Height = 26
+        Top = 327
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Caption = '3514031111111111111159'
+        CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object bcChaveAcessoCanc22: TRLBarcode
+        Left = 0
+        Height = 26
+        Top = 353
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Caption = '9000001020002235664805'
+        CheckSumMethod = cmNone
+        Margins.LeftMargin = 1
+        Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pGap7: TRLPanel
+        Left = 0
+        Height = 10
+        Top = 379
+        Width = 286
+        Align = faTop
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pQRCodeCanc2: TRLPanel
+        Left = 0
+        Height = 135
+        Top = 389
+        Width = 286
+        Align = faTop
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = pQRCodeCanc2BeforePrint
+        object imgQRCodeCanc2: TRLImage
+          Left = 0
+          Height = 135
+          Top = 0
+          Width = 144
+          Align = faClient
+          Center = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Scaled = True
+        end
+        object pTextoLateralCanc2: TRLPanel
+          Left = 144
+          Height = 135
+          Top = 0
+          Width = 142
+          Align = faRight
+          Margins.LeftMargin = 2
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object pNumSATDataHoraLateralCanc2: TRLPanel
+            Left = 8
+            Height = 26
+            Top = 0
+            Width = 134
+            Align = faTop
+            AutoExpand = True
+            AutoSize = True
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            BeforePrint = pNumSATDataHoraLateralCanc2BeforePrint
+            object pNumSATLateralCanc2: TRLPanel
+              Left = 0
+              Height = 12
+              Top = 0
+              Width = 134
+              Align = faTop
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+              BeforePrint = pNumSATLateralCanc2BeforePrint
+              object lTitSATLateralCanc2: TRLLabel
+                Left = 0
+                Height = 12
+                Top = 0
+                Width = 72
+                Align = faLeftTop
+                Alignment = taRightJustify
+                AutoSize = False
+                Caption = 'N° Série SAT '
+                Font.Color = clBlack
+                Font.Height = -9
+                Font.Name = 'Arial'
+                Font.Style = [fsBold]
+                Layout = tlCenter
+                ParentFont = False
+                RealBounds.Left = 0
+                RealBounds.Top = 0
+                RealBounds.Width = 0
+                RealBounds.Height = 0
+              end
+              object lNumSATLateralCanc2: TRLLabel
+                Left = 72
+                Height = 12
+                Top = 0
+                Width = 62
+                Align = faClientTop
+                Caption = '900.000.102'
+                Font.Color = clBlack
+                Font.Height = -9
+                Font.Name = 'Arial'
+                Layout = tlCenter
+                ParentFont = False
+                RealBounds.Left = 0
+                RealBounds.Top = 0
+                RealBounds.Width = 0
+                RealBounds.Height = 0
+              end
+            end
+            object lDataHoraLateralCanc2: TRLLabel
+              Left = 0
+              Height = 14
+              Top = 12
+              Width = 134
+              Align = faTop
+              Alignment = taCenter
+              Caption = '14/08/1971 - 08:00:00'
+              Layout = tlCenter
+              RealBounds.Left = 0
+              RealBounds.Top = 0
+              RealBounds.Width = 0
+              RealBounds.Height = 0
+            end
+          end
+        end
+      end
+      object RLDraw7: TRLDraw
+        Left = 0
+        Height = 10
+        Top = 524
+        Width = 286
+        Align = faBottom
+        Angle = 0
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object mMsgAppQRCodeCanc: TRLMemo
+        Left = 0
+        Height = 24
+        Top = 534
+        Width = 286
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'disponível na AppStore (Apple) e PlayStore (Android)'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object mSwHouseSiteCanc: TRLMemo
+        Left = 0
+        Height = 20
+        Top = 558
+        Width = 286
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Courier New'
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pEspacoFinalCan: TRLPanel
+        Left = 0
+        Height = 25
+        Top = 578
+        Width = 286
+        Align = faBottom
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        object RLDraw12: TRLDraw
+          Left = 0
+          Height = 1
+          Top = 24
+          Width = 286
+          Align = faBottom
+          Angle = 0
+          DrawKind = dkLine
+          Pen.Style = psDot
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
     end
   end

@@ -525,7 +525,10 @@ end;
 function TACBrSATStatus.StrToStatusLan(var ok: boolean; const s: string
   ): TACBrSATStatusLan;
 begin
-  result := StrToEnumerado(ok, s, ['CONECTADO', 'NAO_CONECTADO'], [lanCONECTADO, lanNAO_CONECTADO]);
+  if (UpperCase(s) = 'CONECTADO') then
+    Result := lanCONECTADO
+  else
+    Result := lanNAO_CONECTADO;
 end;
 
 function TACBrSATStatus.NivelBateriaToStr(const t: TACBrSATNivelBateria

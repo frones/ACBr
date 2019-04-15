@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+15/04/2019
+-- ACBrBancoBRB --
+[*] Correção na geração Remessa - CNAB400, validação Intrução para protesto
+https://www.projetoacbr.com.br/forum/topic/50713-arquivo-de-remessa-do-banco-de-bras%C3%ADlia-brb-no-cnab-400-%C3%A9-preciso-implementar-o-c%C3%B3digo-de-instru%C3%A7%C3%B5es-e-prazo-1%E2%81%B0-e-2%E2%81%B0/
+
 12/04/2019
 -- ACBrBancoNordeste --
 [*] Correção na geração Percentual Multa Remessa - CNAB400 

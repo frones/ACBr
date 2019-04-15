@@ -229,7 +229,7 @@ var
   TipoPessoa: Char;
   TipoDocumento, TipoJuros, fsTipoDesconto, lDataDesconto: String;
   Prazo1, Prazo2, wLinha, lNossoNumero, wAgenciaCB: String;
-  wDiasPagto, wInstrucaoLimitePagto : String;
+  wDiasPagto, wInstrucaoLimitePagto, wDiasProtesto : String;
 begin
   with ACBrTitulo do
   begin
@@ -261,62 +261,80 @@ begin
 
      { Juros de Mora }
      if ValorMoraJuros > 0 then
-      begin
-        TipoJuros := '50';
-        Instrucao1 := '01'; // 01- Não Dispensar Juros de Mora
-        Prazo1 := '01';
-      end
+     begin
+       TipoJuros := '50';
+       Instrucao1 := '01'; // 01- Não Dispensar Juros de Mora
+       Prazo1 := '01';
+     end
      else
-      begin
-        TipoJuros := '00';
-        Instrucao1 := '00'; // 00- Sem Instrução
-        Prazo1 := '00';
-      end;
+     begin
+       TipoJuros := '00';
+       Instrucao1 := '00'; // 00- Sem Instrução
+       Prazo1 := '00';
+     end;
 
      { Multa }
      if PercentualMulta > 0 then
-      begin
-       Instrucao2 := '03'; // 03- Cobrar multa de ...% sobre o valor do título
-       Prazo2 := '01';
-      end
+     begin
+      Instrucao2 := '03'; // 03- Cobrar multa de ...% sobre o valor do título
+      Prazo2 := '01';
+     end
      else
-      begin
-        Instrucao2 := '00'; // 00- Sem Instrução
-        Prazo2 := '00';
-      end;
+     begin
+       Instrucao2 := '00'; // 00- Sem Instrução
+       Prazo2 := '00';
+     end;
 
-      if (DataLimitePagto > 0) then
-      begin
-        wDiasPagto:= IntToStrZero(DaysBetween(Vencimento, DataLimitePagto),2);
-
-        if Vencimento <> DataLimitePagto then
+     if (DataLimitePagto > 0) then
+     begin
+       wDiasPagto:= IntToStrZero(DaysBetween(Vencimento, DataLimitePagto),2);
+       if Vencimento <> DataLimitePagto then
          wInstrucaoLimitePagto := '94'
-        else
+       else
          wInstrucaoLimitePagto := '13';
+       if (Instrucao1 = '00') then
+       begin
+         Instrucao1 := wInstrucaoLimitePagto;
+         Prazo1    := wDiasPagto;
+       end
+       else if (Instrucao2 = '00') then
+       begin
+        Instrucao2 := wInstrucaoLimitePagto;
+        Prazo2    := wDiasPagto;
+       end;
+     end;
 
-        if (Instrucao1 = '00') then
-         begin
-	      Instrucao1 := wInstrucaoLimitePagto;
-          Prazo1    := wDiasPagto;
-         end
-        else if (Instrucao2 = '00') then
-         begin
-          Instrucao2 := wInstrucaoLimitePagto;
-          Prazo2    := wDiasPagto;
-        end
-      end;
+     {Instruções Protesto}
+     if ((DataProtesto <> 0) and (DataProtesto > Vencimento)) then //Se tiver protesto
+     begin
+       if TipoDiasProtesto = diCorridos then
+         wDiasProtesto:= IntToStrZero(DaysBetween(DataProtesto, Vencimento),2)
+       else
+         wDiasProtesto:= IntToStrZero(DiasDeProtesto,2);
+
+       if (Trim(Instrucao1) = '00') then
+       begin
+         Instrucao1 := '09';
+         Prazo1 := wDiasProtesto;
+       end
+       else if (Trim(Instrucao2) = '00') then
+       begin
+         Instrucao2 := '09';
+         Prazo2 := wDiasProtesto;
+       end;
+     end;
 
      { Descontos }
      if ValorDesconto > 0 then
-      begin
-        fsTipoDesconto := '53';
-        lDataDesconto := FormatDateTime('ddmmyyyy',DataDesconto);
-      end
+     begin
+       fsTipoDesconto := '53';
+       lDataDesconto := FormatDateTime('ddmmyyyy',DataDesconto);
+     end
      else
-      begin
-        fsTipoDesconto := '00';
-        lDataDesconto := '00000000';
-      end;
+     begin
+       fsTipoDesconto := '00';
+       lDataDesconto := '00000000';
+     end;
 
      with ACBrBoleto do
      begin

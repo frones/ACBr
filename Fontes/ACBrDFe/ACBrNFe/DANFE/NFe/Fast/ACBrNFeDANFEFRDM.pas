@@ -2348,8 +2348,8 @@ begin
     frxPDFExport.Title         := TITULO_PDF;
     frxPDFExport.Subject       := TITULO_PDF;
     frxPDFExport.Keywords      := TITULO_PDF;
-    frxPDFExport.EmbeddedFonts := False;
-    frxPDFExport.Background    := False;
+    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    frxPDFExport.Background    := IncorporarBackgroundPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try
@@ -2400,12 +2400,14 @@ var
 begin
   if PrepareReportEvento then
   begin
-    frxPDFExport.Author   := DANFEClassOwner.Sistema;
-    frxPDFExport.Creator  := DANFEClassOwner.Sistema;
-    frxPDFExport.Producer := DANFEClassOwner.Sistema;
-    frxPDFExport.Title    := TITULO_PDF;
-    frxPDFExport.Subject  := TITULO_PDF;
-    frxPDFExport.Keywords := TITULO_PDF;
+    frxPDFExport.Author        := DANFEClassOwner.Sistema;
+    frxPDFExport.Creator       := DANFEClassOwner.Sistema;
+    frxPDFExport.Producer      := DANFEClassOwner.Sistema;
+    frxPDFExport.Title         := TITULO_PDF;
+    frxPDFExport.Subject       := TITULO_PDF;
+    frxPDFExport.Keywords      := TITULO_PDF;
+    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    frxPDFExport.Background    := IncorporarBackgroundPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try
@@ -2446,12 +2448,14 @@ var
 begin
   if PrepareReportInutilizacao then
   begin
-    frxPDFExport.Author   := DANFEClassOwner.Sistema;
-    frxPDFExport.Creator  := DANFEClassOwner.Sistema;
-    frxPDFExport.Producer := DANFEClassOwner.Sistema;
-    frxPDFExport.Title    := TITULO_PDF;
-    frxPDFExport.Subject  := TITULO_PDF;
-    frxPDFExport.Keywords := TITULO_PDF;
+    frxPDFExport.Author        := DANFEClassOwner.Sistema;
+    frxPDFExport.Creator       := DANFEClassOwner.Sistema;
+    frxPDFExport.Producer      := DANFEClassOwner.Sistema;
+    frxPDFExport.Title         := TITULO_PDF;
+    frxPDFExport.Subject       := TITULO_PDF;
+    frxPDFExport.Keywords      := TITULO_PDF;
+    frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+    frxPDFExport.Background    := IncorporarBackgroundPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try

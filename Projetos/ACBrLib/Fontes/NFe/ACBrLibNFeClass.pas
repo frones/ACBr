@@ -126,6 +126,7 @@ function NFE_ConsultarRecibo(ARecibo: PChar;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};

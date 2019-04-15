@@ -44,8 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/2019
+-- ACBrLibNFeClass --
+[-] Corrigido metodo NFe_Cancelar adicionado a declaração de convenção de chamada.
+    Por: Rafael Dias
+
 11/04/2019
--- ACBrLibNFeRespostas --
+-- ACBrLibNFeClass --
 [-] Corrigido metodo NFe_ConsultarRecibo.
     Por: Rafael Dias
 

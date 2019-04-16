@@ -1683,7 +1683,7 @@ begin
                          '</rgm:NotaFiscal>';
 
         proSMARAPD,
-		proGiap,
+        proGiap,
         proIPM: FvNotas := RPS;
       else
         FvNotas := FvNotas +
@@ -1713,7 +1713,7 @@ begin
                             '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>'+
                          '</' + FPrefixo4 + 'Rps>';
 
-			 proGiap,
+             proGiap,
              proCONAM: FvNotas := FvNotas + RPS;
 
              proAgiliv2: FvNotas := FvNotas +
@@ -1821,8 +1821,8 @@ begin
            proCONAM,
            proEL,
            proFISSLex,
-           proTinus,
-		   proGiap,
+//           proTinus,
+           proGiap,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
@@ -1872,7 +1872,7 @@ begin
 
            proFISSLex,
            proIPM,
-		   proGiap,
+           proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1914,7 +1914,7 @@ begin
 
            proFISSLex,
            proIPM,
-		   proGiap,
+           proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1953,7 +1953,7 @@ begin
            proGoverna,
            proFISSLex,
            proIPM,
-		   proGiap,
+           proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -1981,7 +1981,7 @@ begin
 
            proFISSLex,
            proIPM,
-		   proGiap,
+           proGiap,
            proSMARAPD: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -2040,7 +2040,7 @@ begin
            proBetha,
            proGoverna,
            proSMARAPD,
-		   proGiap,
+           proGiap,
            proIPM: FTagI := '';
          else
            begin
@@ -2064,7 +2064,7 @@ begin
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSMARAPD,
-		   proGiap,
+           proGiap,
            proIPM: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -2093,7 +2093,7 @@ begin
                                         FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
            proSMARAPD,
-		   proGiap,
+           proGiap,
            proIPM: FTagI := '';
          else begin
                 FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
@@ -2173,7 +2173,7 @@ begin
            proBetha,
            proGoverna,
            proIPM,
-		   proGiap,
+           proGiap,
            proSMARAPD: FTagF := '';
 
            proISSNet: FTagF := '</p1:' + FTagGrupo + '>';
@@ -2206,7 +2206,7 @@ begin
            proAgiliv2: FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
 
            proSMARAPD,
-		   proGiap,
+           proGiap,
            proIPM: FTagF := '';
          else
            FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
@@ -4340,7 +4340,7 @@ begin
       proSP,
       proNotaBlu,
       proSMARAPD,
-	  proGiap,
+      proGiap,
       proIPM: FURI := '';
 
       proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;

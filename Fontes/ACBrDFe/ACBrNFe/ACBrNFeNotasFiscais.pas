@@ -3500,6 +3500,7 @@ begin
     FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
     FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
     FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
+    FNFeW.Opcoes.ForcarGerarTagRejeicao938          := Configuracoes.Geral.ForcarGerarTagRejeicao938;
 
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
@@ -3530,14 +3531,15 @@ var
 begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
-    IdAnterior := NFe.infNFe.ID;
-    FNFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
-    FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
-    FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FNFeW.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
-    FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
-    FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
-    FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
+    IdAnterior                             := NFe.infNFe.ID;
+    FNFeW.Gerador.Opcoes.FormatoAlerta     := Configuracoes.Geral.FormatoAlerta;
+    FNFeW.Gerador.Opcoes.RetirarAcentos    := Configuracoes.Geral.RetirarAcentos;
+    FNFeW.Gerador.Opcoes.RetirarEspacos    := Configuracoes.Geral.RetirarEspacos;
+    FNFeW.Gerador.Opcoes.IdentarXML        := Configuracoes.Geral.IdentarXML;
+    FNFeW.Opcoes.NormatizarMunicipios      := Configuracoes.Arquivos.NormatizarMunicipios;
+    FNFeW.Opcoes.PathArquivoMunicipios     := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FNFeW.Opcoes.CamposFatObrigatorios     := Configuracoes.Geral.CamposFatObrigatorios;
+    FNFeW.Opcoes.ForcarGerarTagRejeicao938 := Configuracoes.Geral.ForcarGerarTagRejeicao938;
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := True;
@@ -3549,7 +3551,7 @@ begin
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := FNFeW.Gerador.ListaDeAlertas.Text;
-  Result := FNFeW.Gerador.ArquivoFormatoTXT;
+  Result   := FNFeW.Gerador.ArquivoFormatoTXT;
 end;
 
 function NotaFiscal.CalcularNomeArquivo: String;

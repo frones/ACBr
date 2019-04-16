@@ -177,6 +177,7 @@ type
                 schresCTe, schprocCTe, schprocCTeOS, schprocEventoCTe,
                 schresMDFe, schprocMDFe, schprocEventoMDFe,
                 schresBPe, schprocBPe, schprocEventoBPe);
+  TForcarGeracaoTag = (fgtNunca, fgtSomenteProducao, fgtSomenteHomologacao, fgtSempre);
 
 const
   TpcnTpEventoString : array[0..54] of String =('-99999', '110110', '110111',

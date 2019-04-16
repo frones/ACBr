@@ -58,6 +58,7 @@ type
     FCSC: String;
     FVersaoQRCode: TpcnVersaoQrCode;
     FCamposFatObrigatorios: Boolean;
+    FForcarGerarTagRejeicao938: TForcarGeracaoTag;
 
     procedure SetCSC(const AValue: String);
     procedure SetIdCSC(const AValue: String);
@@ -80,6 +81,7 @@ type
     property VersaoQRCode: TpcnVersaoQrCode read FVersaoQRCode write FVersaoQRCode default veqr100;
     property CamposFatObrigatorios: Boolean
       read FCamposFatObrigatorios write FCamposFatObrigatorios default True;
+    property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938 default fgtNunca;
   end;
 
   { TDownloadConfNFe }
@@ -229,14 +231,15 @@ constructor TGeralConfNFe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FModeloDF := moNFe;
-  FModeloDFCodigo := StrToInt(ModeloDFToStr(FModeloDF));
-  FVersaoDF := ve400;
-  FAtualizarXMLCancelado := False;
-  FIdCSC := '';
-  FCSC := '';
-  FVersaoQRCode := veqr000;
-  FCamposFatObrigatorios := True;
+  FModeloDF                  := moNFe;
+  FModeloDFCodigo            := StrToInt(ModeloDFToStr(FModeloDF));
+  FVersaoDF                  := ve400;
+  FAtualizarXMLCancelado     := False;
+  FIdCSC                     := '';
+  FCSC                       := '';
+  FVersaoQRCode              := veqr000;
+  FCamposFatObrigatorios     := True;
+  FForcarGerarTagRejeicao938 := fgtNunca;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);
@@ -250,6 +253,7 @@ begin
   CSC      := DeGeralConfNFe.CSC;
   VersaoQRCode := DeGeralConfNFe.VersaoQRCode;
   CamposFatObrigatorios := DeGeralConfNFe.CamposFatObrigatorios;
+  ForcarGerarTagRejeicao938 := DeGeralConfNFe.ForcarGerarTagRejeicao938;
 end;
 
 procedure TGeralConfNFe.GravarIni(const AIni: TCustomIniFile);
@@ -263,19 +267,21 @@ begin
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode));
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TagNT2018005', Integer(ForcarGerarTagRejeicao938));
 end;
 
 procedure TGeralConfNFe.LerIni(const AIni: TCustomIniFile);
 begin
   inherited LerIni(AIni);
 
-  IdCSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
-  CSC := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
-  ModeloDF := TpcnModeloDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
-  VersaoDF := TpcnVersaoDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
-  AtualizarXMLCancelado := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
-  VersaoQRCode :=  TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
-  CamposFatObrigatorios := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
+  IdCSC                     := AIni.ReadString(fpConfiguracoes.SessaoIni, 'IdCSC', IdCSC);
+  CSC                       := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CSC', CSC);
+  ModeloDF                  := TpcnModeloDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
+  VersaoDF                  := TpcnVersaoDF(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  AtualizarXMLCancelado     := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AtualizarXMLCancelado', AtualizarXMLCancelado);
+  VersaoQRCode              := TpcnVersaoQrCode(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoQRCode', Integer(VersaoQRCode)));
+  CamposFatObrigatorios     := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'CamposFatObrigatorios', CamposFatObrigatorios);
+  ForcarGerarTagRejeicao938 := TForcarGeracaoTag(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TagNT2018005', Integer(ForcarGerarTagRejeicao938)));
 end;
 
 procedure TGeralConfNFe.SetModeloDF(AValue: TpcnModeloDF);

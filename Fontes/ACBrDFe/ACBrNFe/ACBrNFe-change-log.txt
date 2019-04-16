@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2019
+-- ACBrNFe, pcnConversao.pas --
+[+] Adicionado tipo TForcarGeracaoTag que poderá ser usado em qualquer DF-e para parametrizar a exigência ou não de uma tag.
+[+] Adicionada propriedade ForcarGerarTagRejeicao938 em Opções para tentar resolver
+    de forma definitiva os problemas da geração da tag vICMSSubstituto e rejeição 938.
+    Veja: https://www.projetoacbr.com.br/forum/topic/50014-rejei%C3%A7%C3%A3o-n%C3%A3o-informada-vbcstret-pst-vicmssubstituto-e-vicmsstret/
+
 27/03/2019
 -- ACBrNFeServicos --
 [*] https://www.projetoacbr.com.br/forum/topic/50216-acrescentar-a-url-da-nf-e-40-para-pernambuco/

@@ -62,7 +62,7 @@ uses
 
 type
 
-  TBPeR = class(TPersistent)
+  TBPeR = class(TObject)
   private
     FLeitor: TLeitor;
     FBPe: TBPe;
@@ -70,7 +70,6 @@ type
     constructor Create(AOwner: TBPe);
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor read FLeitor write FLeitor;
     property BPe: TBPe       read FBPe    write FBPe;
   end;
@@ -85,6 +84,7 @@ uses
 
 constructor TBPeR.Create(AOwner: TBPe);
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FBPe    := AOwner;
 end;

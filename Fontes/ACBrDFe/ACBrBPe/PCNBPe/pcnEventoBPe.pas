@@ -211,7 +211,7 @@ type
 
   { TRetInfEvento }
 
-  TRetInfEvento = class(TPersistent)
+  TRetInfEvento = class(TObject)
   private
     FId: String;
     FNomeArquivo: String;
@@ -234,7 +234,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Id: String                         read FId          write FId;
     property tpAmb: TpcnTipoAmbiente            read FtpAmb       write FtpAmb;
     property verAplic: String                   read FverAplic    write FverAplic;
@@ -378,6 +378,7 @@ end;
 
 constructor TRetInfEvento.Create;
 begin
+  inherited Create;
   FchBPePend := TRetchBPePendCollection.Create(Self);
 end;
 

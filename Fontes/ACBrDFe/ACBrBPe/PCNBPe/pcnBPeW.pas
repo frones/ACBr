@@ -148,17 +148,18 @@ uses
 
 constructor TBPeW.Create(AOwner: TBPe);
 begin
-  FBPe := AOwner;
-  FGerador := TGerador.Create;
+  inherited Create;
+  FBPe                      := AOwner;
+  FGerador                  := TGerador.Create;
   FGerador.FIgnorarTagNivel := '|?xml version|BPe xmlns|infBPe versao|obsCont|obsFisco|';
-  FOpcoes := TGeradorOpcoes.Create;
-  FOpcoes.FAjustarTagNro := True;
-  FOpcoes.FGerarTXTSimultaneamente := False;
+  FOpcoes                   := TGeradorOpcoes.Create;
+  FOpcoes.FAjustarTagNro               := True;
+  FOpcoes.FGerarTXTSimultaneamente     := False;
   FOpcoes.FGerarTagIPIparaNaoTributado := True;
-  FOpcoes.FNormatizarMunicipios := False;
-  FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
-  FOpcoes.FValidarInscricoes := False;
-  FOpcoes.FValidarListaServicos := False;
+  FOpcoes.FNormatizarMunicipios        := False;
+  FOpcoes.FGerarTagAssinatura          := taSomenteSeAssinada;
+  FOpcoes.FValidarInscricoes           := False;
+  FOpcoes.FValidarListaServicos        := False;
 end;
 
 destructor TBPeW.Destroy;

@@ -70,14 +70,13 @@ type
 
   { TDownloadConfBPe }
 
-  TDownloadConfBPe = class(TPersistent)
+  TDownloadConfBPe = class(TObject)
   private
     FPathDownload: String;
     FSepararPorNome: Boolean;
   public
     Constructor Create;
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TDownloadConfBPe);
     property PathDownload: String read FPathDownload write FPathDownload;
     property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
   end;
@@ -223,19 +222,15 @@ end;
 
 { TDownloadConfBPe }
 
-procedure TDownloadConfBPe.Assign(Source: TPersistent);
+procedure TDownloadConfBPe.Assign(Source: TDownloadConfBPe);
 begin
-  if Source is TDownloadConfBPe then
-  begin
-    FPathDownload := TDownloadConfBPe(Source).PathDownload;
-    FSepararPorNome := TDownloadConfBPe(Source).SepararPorNome;
-  end
-  else
-    inherited Assign(Source);
+  FPathDownload   := Source.PathDownload;
+  FSepararPorNome := Source.SepararPorNome;
 end;
 
 constructor TDownloadConfBPe.Create;
 begin
+  inherited Create;
   FPathDownload := '';
   FSepararPorNome := False;
 end;

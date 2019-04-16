@@ -122,7 +122,7 @@ type
 
   { TBPe }
 
-  TBPe = class(TPersistent)
+  TBPe = class(TObject)
   private
     FinfBPe: TinfBPe;
     FIde: TIde;
@@ -149,9 +149,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TBPe);
     procedure SetXMLString(const AValue : AnsiString) ;
-  published
     property infBPe: TinfBPe read FinfBPe write FinfBPe;
     property Ide: TIde read FIde write FIde;
     property Emit: TEmit read FEmit write FEmit;
@@ -476,7 +475,7 @@ type
     property sitVeiculo: TSitVeiculo read FsitVeiculo write FsitVeiculo;
   end;
 
-  TinfValorBPe = class(TPersistent)
+  TinfValorBPe = class(TObject)
   private
     FvBP: Currency;
     FvDesconto: Currency;
@@ -492,8 +491,7 @@ type
     constructor Create(AOwner: TBPe);
     destructor Destroy; override;
 
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TinfValorBPe);
     property vBP: Currency read FvBP write FvBP;
     property vDesconto: Currency read FvDesconto write FvDesconto;
     property vPgto: Currency read FvPgto write FvPgto;
@@ -695,26 +693,21 @@ implementation
 uses
   ACBrUtil, pcnBPeR;
 
-procedure TBPe.Assign(Source: TPersistent);
+procedure TBPe.Assign(Source: TBPe);
 begin
-  if Source is TBPe then
-  begin
-    infBPe.Assign(TBPe(Source).infBPe);
-    Ide.Assign(TBPe(Source).Ide);
-    Emit.Assign(TBPe(Source).Emit);
-    Comp.Assign(TBPe(Source).Comp);
-    Agencia.Assign(TBPe(Source).Agencia);
-    infBPeSub.Assign(TBPe(Source).infBPeSub);
-    infPassagem.Assign(TBPe(Source).infPassagem);
-    infViagem.Assign(TBPe(Source).infViagem);
-    infValorBPe.Assign(TBPe(Source).infValorBPe);
-    Imp.Assign(TBPe(Source).Imp);
-    infBPeSupl.Assign(TBPe(Source).infBPeSupl);
-    Signature.Assign(TBPe(Source).Signature);
-    procBPe.Assign(TBPe(Source).procBPe);
-  end
-  else
-    inherited;
+  infBPe.Assign(Source.infBPe);
+  Ide.Assign(Source.Ide);
+  Emit.Assign(Source.Emit);
+  Comp.Assign(Source.Comp);
+  Agencia.Assign(Source.Agencia);
+  infBPeSub.Assign(Source.infBPeSub);
+  infPassagem.Assign(Source.infPassagem);
+  infViagem.Assign(Source.infViagem);
+  infValorBPe.Assign(Source.infValorBPe);
+  Imp.Assign(Source.Imp);
+  infBPeSupl.Assign(Source.infBPeSupl);
+  Signature.Assign(Source.Signature);
+  procBPe.Assign(Source.procBPe);
 end;
 
 procedure TBPe.SetXMLString(const AValue: AnsiString);
@@ -732,6 +725,7 @@ end;
 
 constructor TBPe.Create;
 begin
+  inherited Create;
   FinfBPe      := TinfBPe.Create;
   FIde         := TIde.Create(Self);
   FEmit        := TEmit.Create(Self);
@@ -1142,25 +1136,21 @@ end;
 
 { TinfValorBPe }
 
-procedure TinfValorBPe.Assign(Source: TPersistent);
+procedure TinfValorBPe.Assign(Source: TinfValorBPe);
 begin
-  if Source is TinfValorBPe then
-  begin
-    vBP := TinfValorBPe(Source).vBP;
-    vDesconto := TinfValorBPe(Source).vDesconto;
-    vPgto := TinfValorBPe(Source).vPgto;
-    vTroco := TinfValorBPe(Source).vTroco;
-    tpDesconto := TinfValorBPe(Source).tpDesconto;
-    xDesconto := TinfValorBPe(Source).xDesconto;
-    cDesconto := TinfValorBPe(Source).cDesconto;
-    Comp := TinfValorBPe(Source).Comp;
-  end
-  else
-    inherited;
+  vBP        := Source.vBP;
+  vDesconto  := Source.vDesconto;
+  vPgto      := Source.vPgto;
+  vTroco     := Source.vTroco;
+  tpDesconto := Source.tpDesconto;
+  xDesconto  := Source.xDesconto;
+  cDesconto  := Source.cDesconto;
+  Comp       := Source.Comp;
 end;
 
 constructor TinfValorBPe.Create(AOwner: TBPe);
 begin
+  inherited Create;
   FComp := TCompCollection.Create(Self);
 end;
 

@@ -338,7 +338,7 @@ begin
   AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoBoletoDiretorioConfig, CChaveLayoutRemessa, '1'));
   AssertEquals(ErrOK, Boleto_ConfigGravarValor(CSessaoBoletoDiretorioConfig, CChaveLeCedenteRetorno, '1'));
   AssertEquals(ErrOK, Boleto_ConfigGravar(''));
-  AssertEquals('Erro ao tentar Ler Retorno', ErrOK, Boleto_LerRetorno('C:\ACBr\Projetos\ACBrLib\Testes\Boleto','RetornoBB400.ret', False));
+  AssertEquals('Erro ao tentar Ler Retorno', ErrOK, Boleto_LerRetorno('C:\ACBr\Projetos\ACBrLib\Testes\Boleto','RetornoBB400.ret'));
   AssertEquals(ErrOK, Boleto_Finalizar());
 
 end;

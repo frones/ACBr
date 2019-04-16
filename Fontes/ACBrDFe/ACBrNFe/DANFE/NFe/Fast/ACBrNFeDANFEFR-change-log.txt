@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2019
+-- ACBrNFeDANFEFRDM --
+[*] Correção na verificação da condição para impressão dos dados de entrega e retirada.
+    https://www.projetoacbr.com.br/forum/topic/50655-local-de-entrega-n%C3%A3o-est%C3%A1-saindo-no-danfe/
+        por: BigWings
+
 12/02/2019
 -- ACBrNFeDANFEFRDM -
 [+] adiçao de novos campos para exibição do novo layout de Local de entrega / retirada 

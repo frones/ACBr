@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2019
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[*] Correção na verificação da condição para impressão dos dados de entrega e retirada.
+    https://www.projetoacbr.com.br/forum/topic/50655-local-de-entrega-n%C3%A3o-est%C3%A1-saindo-no-danfe/
+    (por: BigWings)
+
 15/03/2019
 -- ACBrNFeDANFeRL--
 [*] Ajustes no tamanho campo CNPJ/CPF em "Local Retirada", "Local Entrega"

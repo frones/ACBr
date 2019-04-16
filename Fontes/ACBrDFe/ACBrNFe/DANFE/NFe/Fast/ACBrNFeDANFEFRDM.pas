@@ -201,9 +201,7 @@ type
     procedure ImprimirEVENTOPDF(ANFE: TNFe = nil);
     procedure ImprimirINUTILIZACAO(ANFE: TNFe = nil);
     procedure ImprimirINUTILIZACAOPDF(ANFE: TNFe = nil);
-
   end;
-
 
 implementation
 
@@ -1481,7 +1479,7 @@ begin
     Close;
     CreateDataSet;
 
-    if NaoEstaVazio(FNFe.Entrega.CNPJCPF) then
+    if NaoEstaVazio(FNFe.Entrega.xLgr) then
     begin
       Append;
 
@@ -1514,7 +1512,7 @@ begin
     Close;
     CreateDataSet;
 
-    if NaoEstaVazio(FNFe.Retirada.CNPJCPF) then
+    if NaoEstaVazio(FNFe.Retirada.xLgr) then
     begin
       Append;
 

@@ -1904,7 +1904,7 @@ procedure TfrlDANFeRLRetrato.DefinirEntrega;
 begin
   with fpNFe.Entrega do
   begin
-    rlbEntrega.Visible := NaoEstaVazio(xNome) or NaoEstaVazio(CNPJCPF);
+    rlbEntrega.Visible := NaoEstaVazio(xLgr);
 
     if rlbEntrega.Visible then
     begin
@@ -1927,7 +1927,7 @@ procedure TfrlDANFeRLRetrato.DefinirRetirada;
 begin
   with fpNFe.Retirada do
   begin
-    rlbRetirada.Visible := NaoEstaVazio(xNome) or NaoEstaVazio(CNPJCPF);
+    rlbRetirada.Visible := NaoEstaVazio(xLgr);
 
     if rlbRetirada.Visible then
     begin

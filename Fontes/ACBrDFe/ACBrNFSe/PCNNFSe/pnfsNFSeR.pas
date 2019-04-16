@@ -1274,6 +1274,7 @@ var
   ok: Boolean;
   CM: String;
   DataHorBR: String;
+  DataEmiBR: TDateTime;
 begin
   if FProvedor = proNenhum then
   begin
@@ -1372,6 +1373,16 @@ begin
 
             NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
           end;
+
+        proSigCorp:
+        begin
+          DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+          // ConsultarNFSePorRps volta com formato m/d/yyyy
+          If (not TryStrToDateTime(DataHorBR, DataEmiBR)) OR (Pos('M', DataHorBR) > 0) then
+            NFSe.DataEmissao := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
+          else
+            NFSe.DataEmissao := DataEmiBR;
+        end;
       else
         NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
       end;
@@ -1383,6 +1394,12 @@ begin
         begin
           DataHorBR := Leitor.rCampo(tcStr, 'DataEmissaoRps');
           NFSe.DataEmissaoRps := StringToDateTime(DataHorBr, 'DD/MM/YYYY');
+        end
+        else if FProvedor = proSigCorp then
+        begin
+          DataHorBR := Leitor.rCampo(tcStr, 'DataEmissaoRps');
+          if Trim(DataHorBR) <> emptyStr then
+            NFSe.DataEmissaoRps := StrToDate(DataHorBr);
         end
         else
           NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
@@ -1751,6 +1768,8 @@ function TNFSeR.LerNFSe_ABRASF_V2: Boolean;
 var
   Nivel: Integer;
   ok: Boolean;
+  DataHorBR: string;
+  DataEmiBR: TDateTime;
 begin
   if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
   begin
@@ -1899,6 +1918,12 @@ begin
 
   if FProvedor = ProTecnos then
     NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))
+  else if FProvedor = ProSigCorp  then
+  begin
+    NFSe.Competencia := Copy(Leitor.rCampo(tcStr, 'Competencia'),5,2);
+    NFSe.Competencia := Copy(Leitor.rCampo(tcStr, 'Competencia'),1,4) + '/' +
+      IfThen(Length(NFSe.Competencia) = 1, '0' + NFSe.Competencia, NFSe.Competencia);
+  end
   else
     NFSe.Competencia := Leitor.rCampo(tcStr, 'Competencia');
 
@@ -1908,14 +1933,28 @@ begin
 
   if (Leitor.rExtrai(Nivel, 'Rps') <> '') then
   begin
-    NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+    if FProvedor = proSigCorp then
+    begin
+      DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+      // ConsultarNFSePorRps volta com formato m/d/yyyy
+      If (not TryStrToDateTime(DataHorBR, DataEmiBR)) OR (Pos('M', DataHorBR) > 0) then
+        NFSe.DataEmissaoRps := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
+      else
+        NFSe.DataEmissaoRps := DataEmiBR;
+    end
+    else
+      NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+
     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
     if (Leitor.rExtrai(Nivel+1, 'IdentificacaoRps') <> '') then
     begin
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
-      NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+      if (FProvedor = proSigCorp) then
+        NFSe.IdentificacaoRps.Tipo   := trRPS
+      else
+        NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
       if NFSe.InfID.ID = '' then
         NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;

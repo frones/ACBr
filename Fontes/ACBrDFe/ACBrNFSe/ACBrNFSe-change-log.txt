@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/04/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/50336-sigcorp-altera%C3%A7%C3%A3o-de-servidor-em-avar%C3%A9sp-de-fiorilli-para-sigcorp/?do=findComment&comment=332973
+   Por: Jeferson S Lima / j Guto
 -- ACBrNFSeDANFSeFR --
 [*] https://www.projetoacbr.com.br/forum/topic/50623-nome-do-arquivo-pdf-gerado-pelo-acbrnfse/?do=findComment&comment=333865
    Por: Gumercino

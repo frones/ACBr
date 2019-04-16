@@ -67,7 +67,7 @@ public interface ACBrBoleto extends Library {
     
     int Boleto_GerarRemessa(String eDir, int eNumArquivo, String eNomeArquivo);
     
-    int Boleto_LerRetorno(String eDir, String eNomeArq, Boolean eListaRelat);
+    int Boleto_LerRetorno(String eDir, String eNomeArq);
     
     int Boleto_EnviarEmail(String ePara, String eAssunto, String eMensagem, String eCC);
     

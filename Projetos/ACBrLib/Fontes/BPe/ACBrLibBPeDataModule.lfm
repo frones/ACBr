@@ -1,0 +1,42 @@
+object LibBPeDM: TLibBPeDM
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  left = 346
+  top = 174
+  Height = 231
+  HorizontalOffset = 199
+  VerticalOffset = 121
+  Width = 491
+  PPI = 96
+  object ACBrBPe1: TACBrBPe
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    left = 63
+    top = 42
+  end
+  object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    TipoDABPE = tiSemGeracao
+    Cancelada = False
+    ViaConsumidor = True
+    ImprimeNomeFantasia = False
+    left = 176
+    top = 42
+  end
+end

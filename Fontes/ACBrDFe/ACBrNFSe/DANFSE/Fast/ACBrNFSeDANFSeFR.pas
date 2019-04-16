@@ -203,6 +203,8 @@ begin
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
         frxReport.Export(frxPDFExport);
+
+        FPArquivoPDF := frxPDFExport.FileName;
       end;
     finally
       frxPDFExport.ShowDialog := OldShowDialog;

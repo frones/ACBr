@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/04/2019
+-- ACBrNFSeDANFSeFR --
+[*] https://www.projetoacbr.com.br/forum/topic/50623-nome-do-arquivo-pdf-gerado-pelo-acbrnfse/?do=findComment&comment=333865
+   Por: Gumercino
+
 12/04/2019
 -- pnfsNFSeG / pnfsNFSeR --
 [*] Alterações visando o provedor RLZ

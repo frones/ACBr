@@ -121,7 +121,7 @@ type
   function Boleto_GerarRemessa(eDir: PChar; eNumArquivo: longInt; eNomeArq: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
-  function Boleto_LerRetorno(eDir, eNomeArq: PChar; eListaRelat: Boolean): longint;
+  function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 
   function Boleto_EnviarEmail(ePara, eAssunto, eMensagem, eCC: PChar): longint;
@@ -262,7 +262,9 @@ begin
        try
          Resposta := '';
          if not (BoletoDM.ACBrBoleto1.LerArqIni( ArquivoIni )) then
-           Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni]);
+           Resposta := Format( SErroLerArquivoEntrada, [ArquivoIni])
+         else
+           Resposta := 'OK';
 
          MoverStringParaPChar(Resposta, sResposta, esTamanho);
          Result := SetRetorno(ErrOK, Resposta);
@@ -336,7 +338,7 @@ begin
              end;
 
            end;
-
+           Resposta := 'OK';
          end;
 
          MoverStringParaPChar(Resposta, sResposta, esTamanho);
@@ -537,18 +539,16 @@ begin
   end;
 end;
 
-function Boleto_LerRetorno(eDir, eNomeArq: PChar; eListaRelat: Boolean): longint;
+function Boleto_LerRetorno(eDir, eNomeArq: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Dir: String;
   NomeArq: String;
-  //ListaRelat: Boolean;
 begin
   try
     VerificarLibInicializada;
     Dir := String(eDir);
     NomeArq:= String(eNomeArq);
-    //ListaRelat:= eListaRelat;
     pLib.GravarLog('Boleto_LerRetorno', logNormal);
 
     with TACBrLibBoleto(pLib) do
@@ -561,8 +561,7 @@ begin
           BoletoDM.ACBrBoleto1.NomeArqRetorno:= NomeArq;
         BoletoDM.ACBrBoleto1.LerRetorno();
         BoletoDM.ACBrBoleto1.GravarArqIni(Dir,'');
-        //if ( ListaRelat ) then
-          //ImprimeRelatorioRetorno(Dir);
+
         Result := SetRetorno(ErrOK);
 
       finally

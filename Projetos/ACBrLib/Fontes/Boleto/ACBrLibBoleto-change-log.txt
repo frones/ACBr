@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/2018
+--- ACBrLibBoleto --
+[*] Ajustes no tratamento de retornos dos métodos LibBoleto
+
 15/02/2018
 --- ACBrLibBoleto --
 [*] Ajustes e adicionado UnitTest para todos os métodos

@@ -19,10 +19,12 @@ object LibBPeDM: TLibBPeDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     left = 63
     top = 42
   end
   object ACBrBPeDABPeESCPOS1: TACBrBPeDABPeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6

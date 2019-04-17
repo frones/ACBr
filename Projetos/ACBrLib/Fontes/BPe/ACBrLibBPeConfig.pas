@@ -38,11 +38,10 @@ unit ACBrLibBPeConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
-  ACBrBPeConfiguracoes, Graphics,
+  Classes, SysUtils, IniFiles, Graphics,
   pcnConversao,
-  ACBrDFeReport, ACBrBPeDABPEClass,
-  ACBrLibConfig, DFeReportConfig;
+  ACBrDFeReport, ACBrBPeDABPEClass, ACBrBPeConfiguracoes,
+  ACBrLibConfig, ACBrDeviceConfig, DFeReportConfig;
 
 type
 
@@ -80,33 +79,8 @@ type
     FExibeResumoCanhoto: Boolean;
     FPosCanhoto: TPosRecibo;       //
     FUsarSeparadorPathPDF: Boolean; //
-    FUsuario: String;            //
+    FUsuario: String;
 
-{
-CasasDecimais.Formato = tdetInteger
-CasasDecimais._qCom = 2
-CasasDecimais._vUnCom = 2
-CasasDecimais._Mask_qCom = ',0.00'
-CasasDecimais._Mask_vUnCom = ',0.00'
-FormularioContinuo = False
-TamanhoFonte_DemaisCampos = 8
-ProdutosPorPagina = 0
-ImprimirDetalhamentoEspecifico = True
-ImprimirItens = True
-vTroco = 0
-ViaConsumidor = True
-TamanhoLogoHeight = 0
-TamanhoLogoWidth = 0
-RecuoEndereco = 0
-RecuoEmpresa = 0
-LogoemCima = False
-TamanhoFonteEndereco = 0
-RecuoLogo = 0
-TributosSeparadamente = False
-vTribFed = 0
-vTribEst = 0
-vTribMun = 0
-}
   public
     constructor Create;
     procedure DefinirValoresPadroes;
@@ -144,54 +118,6 @@ vTribMun = 0
     property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia;
     property ImprimirTotalLiquido: Boolean read FImprimirTotalLiquido write FImprimirTotalLiquido;
-    {
-    property MostrarPreview: Boolean                 read FMostrarPreview                 write FMostrarPreview;
-    property MostrarStatus: Boolean                  read FMostrarStatus                  write FMostrarStatus;
-    property TipoDABPE: TpcnTipoImpressao            read FTipoDABPE                      write FTipoDABPE;
-    property NumCopias: Integer                      read FNumCopias                      write FNumCopias;
-    property ImprimirDescPorc: Boolean               read FImprimeDescPorc                write FImprimeDescPorc;
-    property ImprimirTotalLiquido: Boolean           read FImprimirTotalLiquido           write FImprimirTotalLiquido;
-    property CasasDecimais: TCasasDecimais           read FCasasDecimais;
-    property ExibirResumoCanhoto: Boolean            read FExibeResumoCanhoto             write FExibeResumoCanhoto;
-    property FormularioContinuo: Boolean             read FFormularioContinuo             write FFormularioContinuo;
-    property TamanhoFonte_DemaisCampos: Integer      read FTamanhoFonte_DemaisCampos      write FTamanhoFonte_DemaisCampos;
-    property ProdutosPorPagina: Integer              read FProdutosPorPagina              write FProdutosPorPagina;
-    property ImprimirDetalhamentoEspecifico: Boolean read FImprimirDetalhamentoEspecifico write FImprimirDetalhamentoEspecifico;
-    property BPeCancelada: Boolean                   read FBPeCancelada                   write FBPeCancelada;
-    property ImprimirItens: Boolean                  read FImprimeItens                   write FImprimeItens;
-    property vTroco: Currency                        read FvTroco                         write FvTroco;
-    property ViaConsumidor : Boolean                 read FViaConsumidor                  write FViaConsumidor;
-    property TamanhoLogoHeight: Integer              read FTamanhoLogoHeight              write FTamanhoLogoHeight;
-    property TamanhoLogoWidth: Integer               read FTamanhoLogoWidth               write FTamanhoLogoWidth;
-    property RecuoEndereco: Integer                  read FRecuoEndereco                  write FRecuoEndereco;
-    property RecuoEmpresa: Integer                   read FRecuoEmpresa                   write FRecuoEmpresa;
-    property LogoemCima: Boolean                     read FLogoEmCima                     write FLogoEmCima;
-    property TamanhoFonteEndereco: Integer           read FTamanhoFonteEndereco           write FTamanhoFonteEndereco;
-    property RecuoLogo: Integer                      read FRecuoLogo                      write FRecuoLogo;
-    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
-    property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
-    property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
-    property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
-
-    property Logo: String                            read FLogo                           write FLogo;
-    property Sistema: String                         read FSistema                        write FSistema;
-    property Usuario: String                         read FUsuario                        write FUsuario;
-    property PathPDF: String                         read GetPathPDF                      write SetPathPDF;
-    property UsarSeparadorPathPDF: Boolean           read FUsarSeparadorPathPDF           write FUsarSeparadorPathPDF default False;
-    property Impressora: String                      read FImpressora                     write FImpressora;
-    property Fax: String                             read FFax                            write FFax;
-    property Site: String                            read FSite                           write FSite;
-    property Email: String                           read FEmail                          write FEmail;
-    property ProtocoloBPe: String                    read FProtocoloBPe                   write FProtocoloBPe;
-    property ExibirResumoCanhoto_Texto: String       read FExibeResumoCanhoto_Texto       write FExibeResumoCanhoto_Texto;
-    property ExpandirLogoMarca: Boolean              read FExpandirLogoMarca              write FExpandirLogoMarca default false;
-    property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
-    property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
-    property PosCanhoto: TPosRecibo                  read FPosCanhoto                     write FPosCanhoto default prCabecalho;
-    property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
-    property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
-    property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;
-    }
   end;
 
   { TDABPeReportConfig }
@@ -205,7 +131,6 @@ vTribMun = 0
     FvTribMun: currency;
     FFonteTributos: String;
     FChaveTributos: String;
-//    FImprimeTributos: TpcnTributos;
     FImprimeNomeFantasia: Boolean;
     FImprimeEmUmaLinha: Boolean;
     FBPeConfig: TDABPeConfig;
@@ -222,7 +147,6 @@ vTribMun = 0
 
     property TipoDABPE: TpcnTipoImpressao read FTipoDABPE write FTipoDABPE;
     property ImprimeTotalLiquido: Boolean read FImprimeTotalLiquido write FImprimeTotalLiquido;
-//    property ImprimeTributos: TpcnTributos read FImprimeTributos write FImprimeTributos;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha;
     property BPeConfig: TDABPeConfig read FBPeConfig;
@@ -234,6 +158,8 @@ vTribMun = 0
   private
     FBPeConfig: TConfiguracoesBPe;
     FDABPeConfig: TDABPeConfig;
+    FDeviceConfig: TDeviceConfig;
+
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
 
@@ -250,6 +176,7 @@ vTribMun = 0
 
     property BPeConfig: TConfiguracoesBPe read FBPeConfig;
     property DABPeConfig: TDABPeConfig read FDABPeConfig;
+    property PosDeviceConfig: TDeviceConfig read FDeviceConfig write FDeviceConfig;
   end;
 
 implementation
@@ -263,15 +190,7 @@ uses
 procedure TDABPeReportConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
   FTipoDABPE := TpcnTipoImpressao(AIni.ReadInteger(CSessaoDABPE, CChaveTipoDABPE, Integer(FTipoDABPE)));
-//  FImprimeTotalLiquido := AIni.ReadBool(CSessaoDABPE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
-//  FvTribFed := AIni.ReadFloat(CSessaoDABPE, CChavevTribFed, FvTribFed);
-//  FvTribEst := AIni.ReadFloat(CSessaoDABPE, CChavevTribEst, FvTribEst);
-//  FvTribMun := AIni.ReadFloat(CSessaoDABPE, CChavevTribMun, FvTribMun);
-//  FFonteTributos := AIni.ReadString(CSessaoDABPE, CChaveFonteTributos, FFonteTributos);
-//  FChaveTributos := AIni.ReadString(CSessaoDABPE, CChaveChaveTributos, FChaveTributos);
-//  FImprimeTributos := TpcnTributos(AIni.ReadInteger(CSessaoDABPE, CChaveImprimeTributos, Integer(FImprimeTributos)));
   FImprimeNomeFantasia := AIni.ReadBool(CSessaoDABPE, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
-//  FImprimeEmUmaLinha := AIni.ReadBool(CSessaoDABPE, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
 
   FBPeConfig.LerIni(AIni);
 end;
@@ -279,15 +198,7 @@ end;
 procedure TDABPeReportConfig.GravarIniChild(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoDABPE, CChaveTipoDABPE, Integer(FTipoDABPE));
-//  AIni.WriteBool(CSessaoDABPE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
-//  AIni.WriteFloat(CSessaoDABPE, CChavevTribFed, FvTribFed);
-//  AIni.WriteFloat(CSessaoDABPE, CChavevTribEst, FvTribEst);
-//  AIni.WriteFloat(CSessaoDABPE, CChavevTribMun, FvTribMun);
-//  AIni.WriteString(CSessaoDABPE, CChaveFonteTributos, FFonteTributos);
-//  AIni.WriteString(CSessaoDABPE, CChaveChaveTributos, FChaveTributos);
-//  AIni.WriteInteger(CSessaoDABPE, CChaveImprimeTributos, Integer(FImprimeTributos));
   AIni.WriteBool(CSessaoDABPE, CChaveImprimeNomeFantasia, FImprimeNomeFantasia);
-//  AIni.WriteBool(CSessaoDABPE, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
 
   FBPeConfig.GravarIni(AIni);
 end;
@@ -314,7 +225,6 @@ begin
   FvTribMun := 0.0;
   FFonteTributos := '';
   FChaveTributos := '';
-//  FImprimeTributos := trbNormal;
   FImprimeNomeFantasia := False;
   FImprimeEmUmaLinha := False;
 
@@ -484,6 +394,7 @@ destructor TLibBPeConfig.Destroy;
 begin
   FBPeConfig.Destroy;
   FDABPeConfig.Free;
+  if FDeviceConfig <> nil then FDeviceConfig.Free;
 
   inherited Destroy;
 end;

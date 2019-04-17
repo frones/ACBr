@@ -367,7 +367,10 @@ end;
 
 function TGNREWebService.GetUrlWsd: String;
 begin
-  Result := FPDFeOwner.GetNameSpaceURI + '/webservice/';
+//  if FPConfiguracoesGNRE.Geral.VersaoDF = ve100 then
+    Result := FPDFeOwner.GetNameSpaceURI + '/webservice/';
+//  else
+//    Result := FPDFeOwner.GetNameSpaceURI + '/wsdl/';
 end;
 
 { TGNRERecepcao }

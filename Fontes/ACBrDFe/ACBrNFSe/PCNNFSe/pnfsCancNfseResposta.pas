@@ -403,7 +403,11 @@ begin
         begin
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
           if infCanc.DataHora = 0 then
-            infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+            if Provedor = proSigCorp then
+              infCanc.DataHora := StringToDateTime(Leitor.rCampo(tcStr, 'DataHoraCancelamento') , 'MM/DD/YYYY hh:nn:ss')
+            else
+              infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+
           InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');
           InfCanc.Sucesso := Leitor.rCampo(tcStr, 'Sucesso');
 

@@ -586,7 +586,7 @@ begin
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proEReceita]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proEReceita, proSigCorp]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -1378,10 +1378,16 @@ begin
         begin
           DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
           // ConsultarNFSePorRps volta com formato m/d/yyyy
-          If (not TryStrToDateTime(DataHorBR, DataEmiBR)) OR (Pos('M', DataHorBR) > 0) then
+          If (Pos('M', DataHorBR) > 0) then
             NFSe.DataEmissao := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
           else
-            NFSe.DataEmissao := DataEmiBR;
+          If (Pos('T', DataHorBR) > 0) then
+            NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao')
+          else
+          If (Pos('-', DataHorBR) > 0) then
+            NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+          else
+            NFSe.DataEmissao := StrToDate(DataHorBR);
         end;
       else
         NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
@@ -1769,7 +1775,6 @@ var
   Nivel: Integer;
   ok: Boolean;
   DataHorBR: string;
-  DataEmiBR: TDateTime;
 begin
   if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
   begin
@@ -1937,13 +1942,20 @@ begin
     begin
       DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
       // ConsultarNFSePorRps volta com formato m/d/yyyy
-      If (not TryStrToDateTime(DataHorBR, DataEmiBR)) OR (Pos('M', DataHorBR) > 0) then
+      If (Pos('M', DataHorBR) > 0) then
         NFSe.DataEmissaoRps := StringToDateTime(DataHorBR, 'MM/DD/YYYY hh:nn:ss')
       else
-        NFSe.DataEmissaoRps := DataEmiBR;
+        If (Pos('T', DataHorBR) > 0) then
+          NFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissao')
+      else
+      If (Pos('-', DataHorBR) > 0) then
+          NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao')
+      else
+        NFSe.DataEmissaoRps := StrToDate(DataHorBR);
     end
     else
       NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
+
 
     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
@@ -2038,7 +2050,7 @@ begin
 
       if (FProvedor in [proActconv202, proISSe, proVersaTecnologia, proNEAInformatica,
                         proFiorilli, proPronimv2, proVitoria, proSmarAPDABRASF,
-                        proGovDigital, proDataSmart, proTecnos, proRLZ]) then
+                        proGovDigital, proDataSmart, proTecnos, proRLZ, proSigCorp]) then
       begin
         if NFSe.Servico.Valores.IssRetido = stRetencao then
           NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

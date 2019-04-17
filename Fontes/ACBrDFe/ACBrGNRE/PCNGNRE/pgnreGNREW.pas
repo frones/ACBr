@@ -276,7 +276,8 @@ begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('TDadosGNRE versao="2.00"');
+//  Gerador.wGrupo('TDadosGNRE versao="2.00"');
+  Gerador.wGrupo('TDadosGNRE');
 
   Gerador.wCampo(tcStr, '', 'ufFavorecida', 2, 2, 1, GNRE.c01_UfFavorecida, DSC_UF + ' Favorecida');
 // <tipoGnre>...</tipoGnre>

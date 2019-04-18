@@ -77,7 +77,7 @@ constructor TLibPosPrinterConfig.Create(AOwner: TObject; ANomeArquivo: String; A
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
-  FDeviceConfig := TDeviceConfig.Create('POS_Device');
+  FDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
 end;
 
 destructor TLibPosPrinterConfig.Destroy;

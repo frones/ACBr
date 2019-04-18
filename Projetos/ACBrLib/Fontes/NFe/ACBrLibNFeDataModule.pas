@@ -48,7 +48,7 @@ implementation
 
 uses
   pcnConversao,
-  ACBrUtil, FileUtil, ACBrNFeDANFEClass,
+  ACBrUtil, FileUtil, ACBrNFeDANFEClass, ACBrLibConsts,
   ACBrDeviceConfig, ACBrLibNFeConfig, ACBrLibComum, ACBrLibNFeClass;
 
 {$R *.lfm}
@@ -127,7 +127,7 @@ begin
   begin
     GravarLog('     Criando PosPrinter Interno', logCompleto);
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
-    TLibNFeConfig(pLib.Config).PosDeviceConfig := TDeviceConfig.Create('POS_Device');
+    TLibNFeConfig(pLib.Config).PosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
   end;
 
   ACBrNFeDANFeESCPOS1.PosPrinter := FACBrPosPrinter;

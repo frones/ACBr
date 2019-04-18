@@ -75,7 +75,7 @@ type
 implementation
 
 uses
-  strutils, FileUtil,
+  strutils, FileUtil, ACBrDeviceConfig, ACBrLibConsts,
   ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrLibSATClass;
 
 {$R *.lfm}
@@ -153,6 +153,7 @@ begin
   begin
     GravarLog('     Criando PosPrinter Interno', logCompleto);
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
+    TLibSATConfig(pLib.Config).PosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
   end;
 
   ACBrSATExtratoESCPOS1.PosPrinter := FACBrPosPrinter;
@@ -160,19 +161,19 @@ end;
 
 procedure TLibSatDM.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
-  Chave := TLibSATConfig(TACBrLibSAT(pLib).Config).CodigoDeAtivacao;
+  Chave := TLibSATConfig(pLib.Config).CodigoDeAtivacao;
 end;
 
 procedure TLibSatDM.ACBrSAT1GetsignAC(var Chave: AnsiString);
 begin
-  Chave := TLibSATConfig(TACBrLibSAT(pLib).Config).SignAC;
+  Chave := TLibSATConfig(pLib.Config).SignAC;
 end;
 
 procedure TLibSatDM.AplicarConfiguracoes;
 var
   pLibConfig: TLibSATConfig;
 begin
-  pLibConfig := TLibSATConfig(TACBrLibSAT(pLib).Config);
+  pLibConfig := TLibSATConfig(pLib.Config);
 
   with ACBrSAT1 do
   begin
@@ -240,10 +241,10 @@ begin
       usuario := pLibConfig.Rede.usuario;
       senha := B64CryptToString(pLibConfig.Rede.senha, pLibConfig.ChaveCrypt);
       proxy := pLibConfig.Rede.proxy;
-      proxy_ip := pLibConfig.Rede.proxy_ip;
-      proxy_porta := pLibConfig.Rede.proxy_porta;
-      proxy_user := pLibConfig.Rede.proxy_user;
-      proxy_senha := B64CryptToString(pLibConfig.Rede.proxy_senha, pLibConfig.ChaveCrypt);
+      proxy_ip := pLibConfig.ProxyInfo.Servidor;
+      proxy_porta := pLibConfig.ProxyInfo.Porta;
+      proxy_user := pLibConfig.ProxyInfo.Usuario;
+      proxy_senha := pLibConfig.ProxyInfo.Senha;
     end;
 
     if pLibConfig.IsMFe then
@@ -297,6 +298,8 @@ begin
 end;
 
 procedure TLibSatDM.AplicarConfigPosPrinter;
+var
+  pLibConfig: TLibSATConfig;
 begin
   if Assigned(FLibPosPrinter) then
   begin
@@ -304,50 +307,51 @@ begin
     Exit;
   end;
 
+  pLibConfig := TLibSATConfig(pLib.Config);
+
   with FACBrPosPrinter do
   begin
-    ArqLog := pLib.Config.PosPrinter.ArqLog;
-    Modelo := TACBrPosPrinterModelo(pLib.Config.PosPrinter.Modelo);
-    Porta := pLib.Config.PosPrinter.Porta;
-    Device.TimeOut := pLib.Config.PosPrinter.TimeOut;
-    PaginaDeCodigo := TACBrPosPaginaCodigo(pLib.Config.PosPrinter.PaginaDeCodigo);
-    ColunasFonteNormal := pLib.Config.PosPrinter.ColunasFonteNormal;
-    EspacoEntreLinhas := pLib.Config.PosPrinter.EspacoEntreLinhas;
-    LinhasEntreCupons := pLib.Config.PosPrinter.LinhasEntreCupons;
-    CortaPapel := pLib.Config.PosPrinter.CortaPapel;
-    TraduzirTags := pLib.Config.PosPrinter.TraduzirTags;
-    IgnorarTags := pLib.Config.PosPrinter.IgnorarTags;
-    LinhasBuffer := pLib.Config.PosPrinter.LinhasBuffer;
-    ControlePorta := pLib.Config.PosPrinter.ControlePorta;
-    VerificarImpressora := pLib.Config.PosPrinter.VerificarImpressora;
+    ArqLog := pLibConfig.PosPrinter.ArqLog;
+    Modelo := TACBrPosPrinterModelo(pLibConfig.PosPrinter.Modelo);
+    Porta := pLibConfig.PosPrinter.Porta;
+    PaginaDeCodigo := TACBrPosPaginaCodigo(pLibConfig.PosPrinter.PaginaDeCodigo);
+    ColunasFonteNormal := pLibConfig.PosPrinter.ColunasFonteNormal;
+    EspacoEntreLinhas := pLibConfig.PosPrinter.EspacoEntreLinhas;
+    LinhasEntreCupons := pLibConfig.PosPrinter.LinhasEntreCupons;
+    CortaPapel := pLibConfig.PosPrinter.CortaPapel;
+    TraduzirTags := pLibConfig.PosPrinter.TraduzirTags;
+    IgnorarTags := pLibConfig.PosPrinter.IgnorarTags;
+    LinhasBuffer := pLibConfig.PosPrinter.LinhasBuffer;
+    ControlePorta := pLibConfig.PosPrinter.ControlePorta;
+    VerificarImpressora := pLibConfig.PosPrinter.VerificarImpressora;
 
-    ConfigBarras.MostrarCodigo := pLib.Config.PosPrinter.BcMostrarCodigo;
-    ConfigBarras.LarguraLinha := pLib.Config.PosPrinter.BcLarguraLinha;
-    ConfigBarras.Altura := pLib.Config.PosPrinter.BcAltura;
-    ConfigBarras.Margem := pLib.Config.PosPrinter.BcMargem;
+    ConfigBarras.MostrarCodigo := pLibConfig.PosPrinter.BcMostrarCodigo;
+    ConfigBarras.LarguraLinha := pLibConfig.PosPrinter.BcLarguraLinha;
+    ConfigBarras.Altura := pLibConfig.PosPrinter.BcAltura;
+    ConfigBarras.Margem := pLibConfig.PosPrinter.BcMargem;
 
-    ConfigQRCode.Tipo := pLib.Config.PosPrinter.QrTipo;
-    ConfigQRCode.LarguraModulo := pLib.Config.PosPrinter.QrLarguraModulo;
-    ConfigQRCode.ErrorLevel := pLib.Config.PosPrinter.QrErrorLevel;
+    ConfigQRCode.Tipo := pLibConfig.PosPrinter.QrTipo;
+    ConfigQRCode.LarguraModulo := pLibConfig.PosPrinter.QrLarguraModulo;
+    ConfigQRCode.ErrorLevel := pLibConfig.PosPrinter.QrErrorLevel;
 
-    ConfigLogo.IgnorarLogo := pLib.Config.PosPrinter.LgIgnorarLogo;
-    ConfigLogo.KeyCode1 := pLib.Config.PosPrinter.LgKeyCode1;
-    ConfigLogo.KeyCode2 := pLib.Config.PosPrinter.LgKeyCode2;
-    ConfigLogo.FatorX := pLib.Config.PosPrinter.LgFatorX;
-    ConfigLogo.FatorY := pLib.Config.PosPrinter.LgFatorY;
+    ConfigLogo.IgnorarLogo := pLibConfig.PosPrinter.LgIgnorarLogo;
+    ConfigLogo.KeyCode1 := pLibConfig.PosPrinter.LgKeyCode1;
+    ConfigLogo.KeyCode2 := pLibConfig.PosPrinter.LgKeyCode2;
+    ConfigLogo.FatorX := pLibConfig.PosPrinter.LgFatorX;
+    ConfigLogo.FatorY := pLibConfig.PosPrinter.LgFatorY;
 
-    ConfigGaveta.SinalInvertido := pLib.Config.PosPrinter.GvSinalInvertido;
-    ConfigGaveta.TempoON := pLib.Config.PosPrinter.GvTempoON;
-    ConfigGaveta.TempoOFF := pLib.Config.PosPrinter.GvTempoOFF;
+    ConfigGaveta.SinalInvertido := pLibConfig.PosPrinter.GvSinalInvertido;
+    ConfigGaveta.TempoON := pLibConfig.PosPrinter.GvTempoON;
+    ConfigGaveta.TempoOFF := pLibConfig.PosPrinter.GvTempoOFF;
 
-    ConfigModoPagina.Largura := pLib.Config.PosPrinter.MpLargura;
-    ConfigModoPagina.Altura := pLib.Config.PosPrinter.MpAltura;
-    ConfigModoPagina.Esquerda := pLib.Config.PosPrinter.MpEsquerda;
-    ConfigModoPagina.Topo := pLib.Config.PosPrinter.MpTopo;
-    ConfigModoPagina.Direcao := TACBrPosDirecao(pLib.Config.PosPrinter.MpDirecao);
-    ConfigModoPagina.EspacoEntreLinhas := pLib.Config.PosPrinter.MpEspacoEntreLinhas;
+    ConfigModoPagina.Largura := pLibConfig.PosPrinter.MpLargura;
+    ConfigModoPagina.Altura := pLibConfig.PosPrinter.MpAltura;
+    ConfigModoPagina.Esquerda := pLibConfig.PosPrinter.MpEsquerda;
+    ConfigModoPagina.Topo := pLibConfig.PosPrinter.MpTopo;
+    ConfigModoPagina.Direcao := TACBrPosDirecao(pLibConfig.PosPrinter.MpDirecao);
+    ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinter.MpEspacoEntreLinhas;
 
-    Device.ParamsString := pLib.Config.PosPrinter.DeviceParams;
+    pLibConfig.PosDeviceConfig.Assign(Device);
   end;
 end;
 
@@ -362,7 +366,7 @@ procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolea
 var
   pLibConfig: TLibSATConfig;
 begin
-  pLibConfig := TLibSATConfig(pLib.Config);
+  pLibConfig := TLibSATConfig(pLibConfig);
 
   with pLibConfig.Extrato do
   begin

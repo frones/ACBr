@@ -32,7 +32,8 @@ interface
 
 uses
   Classes, SysUtils, IniFiles,
-  ACBrLibConfig, ACBrSAT, ACBrSATClass, ACBrSATExtratoClass,
+  ACBrLibConfig, ACBrDeviceConfig,
+  ACBrSAT, ACBrSATClass, ACBrSATExtratoClass,
   ACBrIntegradorConfig, ACBrDFeSSL, ACBrSATExtratoESCPOS,
   pcnRede, pcnConversao;
 
@@ -235,7 +236,7 @@ type
     FRede: TRede;
     FExtrato: TExtratoConfig;
     FIntegrador: TIntegradorConfig;
-    FChaveCrypt: String;
+    FDeviceConfig: TDeviceConfig;
 
     function GetIsMFe: Boolean;
 
@@ -271,6 +272,7 @@ type
     property Rede: TRede read FRede;
     property Extrato: TExtratoConfig read FExtrato;
     property Integrador: TIntegradorConfig read FIntegrador;
+    property PosDeviceConfig: TDeviceConfig read FDeviceConfig write FDeviceConfig;
 
   end;
 
@@ -565,7 +567,6 @@ begin
   FRede := TRede.Create;
   FExtrato := TExtratoConfig.Create;
   FIntegrador := TIntegradorConfig.Create;
-  FChaveCrypt := AChaveCrypt;
 end;
 
 destructor TLibSATConfig.Destroy;
@@ -575,6 +576,7 @@ begin
   FSATCertificado.Free;
   FRede.Free;
   FExtrato.Free;
+  if FDeviceConfig <> nil then FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -610,16 +612,13 @@ begin
     usuario := AIni.ReadString(CSessaoSATRede, CChaveUsuario, usuario);
     senha := AIni.ReadString(CSessaoSATRede, CChaveSenha, '');
     proxy := AIni.ReadInteger(CSessaoSATRede, CChaveProxy, proxy);
-    proxy_ip := AIni.ReadString(CSessaoProxy, CChaveServidor, proxy_ip);
-    proxy_porta := AIni.ReadInteger(CSessaoProxy, CChavePorta, proxy_porta);
-    proxy_user := AIni.ReadString(CSessaoProxy, CChaveUsuario, proxy_user);
-    proxy_senha := AIni.ReadString(CSessaoProxy, CChaveSenha, '');
   end;
 
   FConfig.LerIni(AIni);
   FConfigArquivos.LerIni(AIni);
   FExtrato.LerIni(AIni);
   FIntegrador.LerIni(AIni);
+  if FDeviceConfig <> nil then FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibSATConfig.GravarIni(const AIni: TCustomIniFile);
@@ -645,7 +644,7 @@ begin
     AIni.WriteString(CSessaoSATRede, CChaveLanDNS1, lanDNS1);
     AIni.WriteString(CSessaoSATRede, CChaveLanDNS2, lanDNS2);
     AIni.WriteString(CSessaoSATRede, CChaveUsuario, usuario);
-    AIni.WriteString(CSessaoSATRede, CChaveSenha, StringToB64Crypt(senha, FChaveCrypt));
+    AIni.WriteString(CSessaoSATRede, CChaveSenha, StringToB64Crypt(senha, ChaveCrypt));
     AIni.WriteInteger(CSessaoSATRede, CChaveProxy, proxy);
   end;
 
@@ -653,6 +652,7 @@ begin
   FConfigArquivos.GravarIni(AIni);
   FExtrato.GravarIni(AIni);
   FIntegrador.GravarIni(AIni);
+  if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);
 end;
 
 function TLibSATConfig.AtualizarArquivoConfiguracao: boolean;

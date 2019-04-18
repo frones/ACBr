@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado Propriedade "ForcarGerarTagRejeicao938"
+
 11/04/2019
 [*] DoACBrNFeUnit
 Ajustes nos métodos de Resposta com padronizações

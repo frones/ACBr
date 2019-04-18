@@ -814,6 +814,7 @@ const
   CKeyTimeZoneMode =                 'TimeZoneMode';
   CKeyTimeZoneStr =                  'TimeZoneStr';
   CKeyCamposFatObrig =               'CamposFatObrig';
+  CKeyTagRejeicao938 =               'ForcarGerarTagRejeicao938';
 
   CKeyIdEmpregador =                 'IdEmpregador';
   CKeyIdTransmissor =                'IdTransmissor';

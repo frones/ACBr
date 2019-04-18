@@ -251,6 +251,10 @@ type
     cbFormaEmissaoCTe: TComboBox;
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
+    ckCamposFatObrigatorio: TCheckBox;
+    GroupBox9: TGroupBox;
+    Label227: TLabel;
+    Label229: TLabel;
     cbGavetaSinalInvertido: TCheckBox;
     cbLog: TCheckBox;
     cbxExibeTotalTributosItem: TCheckBox;
@@ -395,7 +399,6 @@ type
     CHMHelpDatabase1: TCHMHelpDatabase;
     ckMemoria: TCheckBox;
     ckNFCeUsarIntegrador: TCheckBox;
-    ckCamposFatObrigatorio: TCheckBox;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
     eAvanco: TEdit;
@@ -606,6 +609,7 @@ type
     TabSheet1: TTabSheet;
     gbxWSeSocial: TTabSheet;
     gbxWSReinf: TTabSheet;
+    cbTagRejeicao938: TComboBox;
     tsRespTecnico: TTabSheet;
     tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
@@ -4515,6 +4519,8 @@ begin
       cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
       cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
       ckCamposFatObrigatorio.Checked   := CamposFatObrig;
+      cbTagRejeicao938.ItemIndex       := TagRejeicao938;
+
     end;
 
     with ESocial do
@@ -5630,6 +5636,7 @@ begin
         FormaEmissaoMDFe         := cbFormaEmissaoMDFe.ItemIndex;
         FormaEmissaoGNRe         := cbFormaEmissaoGNRe.ItemIndex;
         CamposFatObrig           := ckCamposFatObrigatorio.Checked;
+        TagRejeicao938           := cbTagRejeicao938.ItemIndex;
       end;
 
       with ESocial do
@@ -9146,7 +9153,7 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
     TConfiguracoesNFe(Configuracoes).Geral.CamposFatObrigatorios    := ckCamposFatObrigatorio.Checked;
-
+    TConfiguracoesNFe(Configuracoes).Geral.ForcarGerarTagRejeicao938 := TForcarGeracaoTag(cbTagRejeicao938.ItemIndex);
 
   end
   else if Configuracoes is TConfiguracoesCTe then

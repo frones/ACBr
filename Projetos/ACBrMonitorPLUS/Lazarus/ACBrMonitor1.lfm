@@ -7,8 +7,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 650
-  ClientWidth = 1202
+  ClientHeight = 0
+  ClientWidth = 0
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -1466,7 +1466,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/ECF.htm'
           Caption = '&ECF'
           ClientHeight = 327
-          ClientWidth = 870
+          ClientWidth = 989
           ImageIndex = 1
           object sbECFSerial: TSpeedButton
             AnchorSideLeft.Control = cbECFPorta
@@ -7294,11 +7294,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   end
                   object GroupBox2: TGroupBox
                     Left = 300
-                    Height = 121
+                    Height = 137
                     Top = 118
                     Width = 254
                     Caption = 'Forma de Emissão'
-                    ClientHeight = 99
+                    ClientHeight = 115
                     ClientWidth = 250
                     TabOrder = 4
                     object Label195: TLabel
@@ -7425,23 +7425,75 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Text = 'teNormal'
                     end
                   end
-                  object ckCamposFatObrigatorio: TCheckBox
-                    AnchorSideLeft.Side = asrCenter
-                    AnchorSideTop.Side = asrBottom
-                    Left = 300
-                    Height = 16
-                    Top = 239
-                    Width = 388
-                    AutoSize = False
-                    BorderSpacing.Top = 6
-                    Caption = 'Campos do grupo "Fatura" Obrigatórios no XML NFe 4.0'
+                  object GroupBox9: TGroupBox
+                    Left = 561
+                    Height = 256
+                    Top = -1
+                    Width = 305
+                    Anchors = [akTop, akLeft, akRight]
+                    Caption = 'Regras Gerar XML NFe'
+                    ClientHeight = 234
+                    ClientWidth = 301
                     TabOrder = 5
+                    object ckCamposFatObrigatorio: TCheckBox
+                      AnchorSideLeft.Side = asrCenter
+                      AnchorSideTop.Side = asrBottom
+                      Left = 12
+                      Height = 16
+                      Top = 10
+                      Width = 239
+                      AutoSize = False
+                      BorderSpacing.Top = 6
+                      Caption = 'Grupo "Fatura" Obrigatórios no XML'
+                      TabOrder = 0
+                    end
+                    object Label227: TLabel
+                      Left = 13
+                      Height = 17
+                      Top = 41
+                      Width = 149
+                      Caption = 'Forçar geração das Tags:'
+                      ParentColor = False
+                    end
+                    object Label229: TLabel
+                      Left = 13
+                      Height = 14
+                      Top = 60
+                      Width = 247
+                      Caption = '(vBCSTRet, pST, vICMSSubstituto e vICMSSTRet)'
+                      Font.CharSet = ANSI_CHARSET
+                      Font.Height = -11
+                      Font.Name = 'Arial'
+                      Font.Pitch = fpVariable
+                      Font.Quality = fqDraft
+                      Font.Style = [fsItalic]
+                      ParentColor = False
+                      ParentFont = False
+                    end
+                    object cbTagRejeicao938: TComboBox
+                      Left = 13
+                      Height = 23
+                      Top = 77
+                      Width = 191
+                      Font.Height = -12
+                      ItemHeight = 15
+                      ItemIndex = 0
+                      Items.Strings = (
+                        'fgtNunca'
+                        'fgtSempre'
+                        'fgtSomenteHomologacao'
+                        'fgtSomenteProducao'
+                      )
+                      ParentFont = False
+                      TabOrder = 1
+                      Text = 'fgtNunca'
+                    end
                   end
                 end
                 object tsWSNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 267
-                  ClientWidth = 854
+                  ClientWidth = 973
                   ImageIndex = 2
                   object Label131: TLabel
                     Left = 0
@@ -7513,7 +7565,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbxWSeSocial: TTabSheet
                   Caption = 'e-Social'
                   ClientHeight = 267
-                  ClientWidth = 854
+                  ClientWidth = 973
                   object cbVersaoWSeSocial: TComboBox
                     Left = 20
                     Height = 25
@@ -7601,7 +7653,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object gbxWSReinf: TTabSheet
                   Caption = 'Reinf'
                   ClientHeight = 267
-                  ClientWidth = 854
+                  ClientWidth = 973
                   object Label219: TLabel
                     Left = 20
                     Height = 17
@@ -7898,9 +7950,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 297
                 Top = 0
                 Width = 981
-                ActivePage = tsImpGeralDFe
+                ActivePage = tsImpCTe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 4
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -8967,7 +9019,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsImpCTe: TTabSheet
                   Caption = 'CT-e'
                   ClientHeight = 267
-                  ClientWidth = 854
+                  ClientWidth = 973
                   object rgTamanhoPapelDacte: TRadioGroup
                     Left = 6
                     Height = 44
@@ -13905,7 +13957,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

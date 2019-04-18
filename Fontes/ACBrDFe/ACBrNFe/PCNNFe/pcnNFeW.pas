@@ -1311,32 +1311,45 @@ end;
 
 procedure TNFeW.GerarDetImpostoICMS(const i: Integer);
 
-    function BuscaTag(const t: TpcnCSTIcms): String;
-     begin
-       case t of
-          cst00		: result := '00';
-          cst10		: result := '10';
-          cst20		: result := '20';
-          cst30		: result := '30';
-          cst40	,
-          cst41	,
-          cst50		: result := '40';
-          cst51		: result := '51';
-          cst60		: result := '60';
-          cst70		: result := '70';
-          cst80		: result := '80';
-          cst81		: result := '81';
-          cst90		: result := '90';
-          cstPart10 ,
-          cstPart90 : result := 'Part';
-          cstRep41  : result := 'ST';
-          cstRep60  : result :=IIf(nfe.infNFe.Versao < 4, '60', 'ST');
-       end;
-     end;
+  function BuscaTag(const t: TpcnCSTIcms): String;
+  begin
+    case t of
+      cst00		: result := '00';
+      cst10		: result := '10';
+      cst20		: result := '20';
+      cst30		: result := '30';
+      cst40	,
+      cst41	,
+      cst50		: result := '40';
+      cst51		: result := '51';
+      cst60		: result := '60';
+      cst70		: result := '70';
+      cst80		: result := '80';
+      cst81		: result := '81';
+      cst90		: result := '90';
+      cstPart10 ,
+      cstPart90 : result := 'Part';
+      cstRep41  : result := 'ST';
+      cstRep60  : result :=IIf(nfe.infNFe.Versao < 4, '60', 'ST');
+    end;
+  end;
+
+  function OcorrenciasVICMSSubstituto : Integer;
+  begin
+	if (FOpcoes.ForcarGerarTagRejeicao938 = fgtSempre) or
+	   ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteProducao) and (nfe.Ide.tpAmb = taProducao)) or
+	   ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteHomologacao) and (nfe.Ide.tpAmb = taHomologacao))  then
+	begin
+	  Result := 1;
+	end
+	else
+	begin
+	  Result := 0;
+	end;
+  end;
 
 var
   sTagTemp : String;
-  OcorrenciasTagVICMSSubstituto : integer;
 
 begin
    Gerador.wGrupo('ICMS', 'N01');
@@ -1515,18 +1528,8 @@ begin
                           if (NFe.infNFe.Versao >= 4) then
                           begin
                             Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-                            if (FOpcoes.ForcarGerarTagRejeicao938 = fgtSempre) or
-                               ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteProducao) and (nfe.Ide.tpAmb = taProducao)) or
-                               ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteHomologacao) and (nfe.Ide.tpAmb = taHomologacao))  then
-                            begin
-                              OcorrenciasTagVICMSSubstituto := 1;
-                            end
-                            else
-                            begin
-                              OcorrenciasTagVICMSSubstituto := 0;
-                            end;
                             // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
-                            Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasTagVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
+                            Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                           end;
 
                           Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);
@@ -1656,9 +1659,9 @@ begin
 
                      if (NFe.infNFe.Versao >= 4) then
                      begin
-                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
+                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
                        // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
-                       Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
+                       Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                      end;
 
                      Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRet, DSC_VICMSSTRET);
@@ -1755,19 +1758,8 @@ begin
                       if (NFe.infNFe.Versao >= 4) then
                       begin
                         Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-
-                        if (FOpcoes.ForcarGerarTagRejeicao938 = fgtSempre) or
-                           ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteProducao) and (nfe.Ide.tpAmb = taProducao)) or
-                           ((FOpcoes.ForcarGerarTagRejeicao938 = fgtSomenteHomologacao) and (nfe.Ide.tpAmb = taHomologacao))  then
-                        begin
-                          OcorrenciasTagVICMSSubstituto := 1;
-                        end
-                        else
-                        begin
-                          OcorrenciasTagVICMSSubstituto := 0;
-                        end;
                         // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
-                        Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasTagVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
+                        Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
                       end;
 
                       Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRET, DSC_VICMSSTRET);

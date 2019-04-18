@@ -1444,6 +1444,7 @@ procedure TCancelamentoResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0] do
   begin
+    Arquivo:= RetInfEvento.NomeArquivo;
     Versao := RetInfevento.verAplic;
     TpAmb := TpAmbToStr(RetInfevento.TpAmb);
     VerAplic := RetInfevento.VerAplic;

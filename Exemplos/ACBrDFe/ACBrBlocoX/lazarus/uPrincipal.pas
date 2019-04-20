@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ACBrBlocoX, ACBrBlocoX_Comum;
+  Spin, ACBrBlocoX, ACBrBlocoX_Comum;
 
 type
 
@@ -17,11 +17,15 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    btValAssEstoque: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     Label1: TLabel;
     Label2: TLabel;
+    OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
+    seItensEstoque: TSpinEdit;
+    procedure btValAssEstoqueClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -35,6 +39,8 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+uses
+  dateutils;
 
 {$R *.lfm}
 
@@ -67,11 +73,14 @@ end;
 procedure TfrmPrincipal.Button1Click(Sender: TObject);
 var
   I: Integer;
+  tini, tfim: TDateTime;
 begin
   if SaveDialog1.Execute then
   begin
     with ACBrBlocoX1 do
     begin
+      tini := now;
+
       PreencherCabecalho(ACBrBlocoX1);
 
       // arquivo de Estoque
@@ -80,12 +89,12 @@ begin
         DataReferencia := DATE;
 
         Produtos.Clear;
-        for I := 1 to 10 do
+        for I := 1 to seItensEstoque.Value do
         begin
           with Produtos.Add do
           begin
             Codigo.Tipo             := tpcGTIN;
-            Codigo.CodigoGTIN           := '7891234567891';
+            Codigo.CodigoGTIN       := '7891234567891';
             Descricao               := 'PRODUTO TESTE ' + IntToStr(I);
             ValorUnitario           := 1.23;
             Ippt                    := ipptTerceiros;
@@ -98,9 +107,44 @@ begin
         end;
 
         SaveToFile(SaveDialog1.FileName);
-        ShowMessage('terminado');
+        tfim := now;
+
+        ShowMessage('terminado '+FormatFloat('##0.00',SecondSpan(tini,tfim))+' segundos');
       end;
     end;
+  end;
+end;
+
+procedure TfrmPrincipal.btValAssEstoqueClick(Sender: TObject);
+var
+  Msg , AXML: String;
+  SL: TStringList;
+  ok: Boolean;
+  tini, tfim: TDateTime;
+begin
+  OpenDialog1.Title := 'Selecione o XML';
+  OpenDialog1.DefaultExt := '*.XML';
+  OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrBlocoX1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(OpenDialog1.FileName);
+      AXML := SL.Text;
+    finally
+      SL.Free;
+    end;
+
+    tini := now;
+    ok := ACBrBlocoX1.SSL.VerificarAssinatura(AXML, Msg, 'Mensagem');
+    tfim := now;
+
+    if ok then
+      ShowMessage('Assinatura VÁLIDA. '+FormatFloat('##0.00',SecondSpan(tini,tfim))+' segundos')
+    else
+      ShowMessage('Erro na Assinatura '+FormatFloat('##0.00',SecondSpan(tini,tfim))+' segundos');
   end;
 end;
 

@@ -6,9 +6,9 @@ object frmPrincipal: TfrmPrincipal
   Caption = 'ACBrBlocoX - Demonstração'
   ClientHeight = 240
   ClientWidth = 701
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '2.0.0.4'
   object Button1: TButton
-    Left = 432
+    Left = 352
     Height = 25
     Top = 80
     Width = 195
@@ -17,7 +17,7 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 0
   end
   object Button2: TButton
-    Left = 432
+    Left = 352
     Height = 25
     Top = 118
     Width = 195
@@ -64,24 +64,47 @@ object frmPrincipal: TfrmPrincipal
     OnClick = Button3Click
     TabOrder = 4
   end
+  object seItensEstoque: TSpinEdit
+    Left = 472
+    Height = 23
+    Top = 45
+    Width = 75
+    MaxValue = 999999
+    MinValue = 1
+    TabOrder = 5
+    Value = 1000
+  end
+  object btValAssEstoque: TButton
+    Left = 560
+    Height = 25
+    Top = 80
+    Width = 120
+    Caption = 'Validar Assinatura'
+    OnClick = btValAssEstoqueClick
+    TabOrder = 6
+  end
   object ACBrBlocoX1: TACBrBlocoX
     Configuracoes.VersaoER = erv0204
-    Configuracoes.Geral.SSLLib = libNone
-    Configuracoes.Geral.SSLCryptLib = cryNone
-    Configuracoes.Geral.SSLHttpLib = httpNone
-    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.SSLLib = libWinCrypt
+    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
+    Configuracoes.Geral.SSLHttpLib = httpWinHttp
+    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 288
-    top = 152
+    left = 120
+    top = 128
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = '.XML'
     Filter = 'Arquivos XML|*.XML'
     Options = [ofNoChangeDir, ofEnableSizing, ofViewDetail]
-    left = 340
-    top = 118
+    left = 168
+    top = 176
+  end
+  object OpenDialog1: TOpenDialog
+    left = 90
+    top = 172
   end
 end

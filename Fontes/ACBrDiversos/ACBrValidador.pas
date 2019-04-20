@@ -1392,7 +1392,7 @@ begin
 
   OK := (Tamanho > 0) and (Length(fsDocto) = Tamanho) ;
   if not OK then
-     fsMsgErro := Format('Tamanho Inválido, esperado %d caracteres, foram digitados somente %d caracteres, verique', [Tamanho, Length(fsDocto)]) ;
+     fsMsgErro := Format('Tamanho Inválido, esperado %d caracteres, foram digitados somente %d caracteres, verifique', [Tamanho, Length(fsDocto)]) ;
 
   { Verificando os digitos nas posicoes são permitidos }
   fsDocto := PadLeft(fsDocto,14) ;

@@ -419,13 +419,18 @@ end;
 procedure TGNRERecepcao.DefinirDadosMsg;
 var
   i: Integer;
-  vGuias: String;
+  vGuias, Versao: String;
 begin
   vGuias := '';
   for i := 0 to FGuias.Count - 1 do
     vGuias := vGuias + FGuias.Items[i].XML;
 
-  FPDadosMsg := '<TLote_GNRE xmlns="http://www.gnre.pe.gov.br">' +
+  if FPConfiguracoesGNRE.Geral.VersaoDF = ve200 then
+    Versao := 'versao="2.00" '
+  else
+    Versao := '';
+
+  FPDadosMsg := '<TLote_GNRE ' + Versao + 'xmlns="http://www.gnre.pe.gov.br">' +
                 '<guias>' + vGuias + '</guias>' +
                '</TLote_GNRE>';
 

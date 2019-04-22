@@ -105,7 +105,9 @@ begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('TDadosGNRE');
+  Gerador.wGrupo('TDadosGNRE versao="1.00"');
+//  Gerador.wGrupo('TDadosGNRE');
+
   Gerador.wCampo(tcStr, '', 'c01_UfFavorecida  ', 002, 002, 1, GNRE.c01_UfFavorecida, DSC_UF + ' Favorecida');
   Gerador.wCampo(tcInt, '', 'c02_receita   ', 006, 006, 1, GNRE.c02_receita, '');
   if GNRE.c25_detalhamentoReceita > 0 then
@@ -276,8 +278,8 @@ begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
-//  Gerador.wGrupo('TDadosGNRE versao="2.00"');
-  Gerador.wGrupo('TDadosGNRE');
+  Gerador.wGrupo('TDadosGNRE versao="2.00"');
+//  Gerador.wGrupo('TDadosGNRE');
 
   Gerador.wCampo(tcStr, '', 'ufFavorecida', 2, 2, 1, GNRE.c01_UfFavorecida, DSC_UF + ' Favorecida');
 // <tipoGnre>...</tipoGnre>

@@ -1079,6 +1079,17 @@ begin
 end;
 
 procedure TNFeW.GerarDetProdMed(const i: Integer);
+  function ValidacProdANVISA(const cProdANVISA: string): Boolean;
+  var
+    Tamanho: Integer;
+  begin
+    Result := True;
+    Tamanho := Length(cProdANVISA);
+    if (Tamanho = 6) and (cProdANVISA <> 'ISENTO') then
+    begin
+      Result := False
+    end;
+  end;
 var
   j, MaxMed: Integer;
 begin
@@ -1088,7 +1099,11 @@ begin
 
     if NFe.infNFe.Versao >= 4 then
     begin
-      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA   ', 13, 013, 1, nfe.Det[i].Prod.med[j].cProdANVISA, DSC_CPRODANVISA);
+      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA   ',  6, 013, 1, nfe.Det[i].Prod.med[j].cProdANVISA, DSC_CPRODANVISA);
+
+      if not ValidacProdANVISA(nfe.Det[i].Prod.med[j].cProdANVISA) then
+        Gerador.wAlerta('K01a', 'cProdANVISA', DSC_CPRODANVISA, 'Valor inválido.');
+
       Gerador.wCampo(tcStr, 'K01b', 'xMotivoIsencao', 01, 255, 0, nfe.Det[i].Prod.med[j].xMotivoIsencao, DSC_CPRODANVISA);
     end;
 

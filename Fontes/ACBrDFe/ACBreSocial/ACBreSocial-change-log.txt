@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2019
+-- pcesS2300 --
+[*] https://www.projetoacbr.com.br/forum/topic/50817-corre%C3%A7%C3%A3o-evento-2300-tag-infodirigentesindical-apenas-sendo-enviada-quando-houver-dtadmorig/
+   Por: G H V Oliveira
+
 12/04/2019
 -- ACBreSocialWebServices --
 [*] Removido a função OnlyNumber do parametro ID para o método Download.

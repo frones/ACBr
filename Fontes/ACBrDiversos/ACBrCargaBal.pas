@@ -653,7 +653,7 @@ begin
       LFIll(Produtos[i].Validade, 3)
     );
 
-    if (Produtos[i].Setor.Descricao <> '') or (Produtos[i].Tecla <> '') then
+    if (Produtos[i].Setor.Descricao <> '') or (Produtos[i].Tecla > 0) then
     Setor.Add(
       RFill(Produtos[i].Setor.Descricao, 12) +
       LFIll(Produtos[i].Codigo, 6) +

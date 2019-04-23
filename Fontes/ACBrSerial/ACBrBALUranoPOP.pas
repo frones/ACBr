@@ -101,15 +101,27 @@ var
 begin
   Result    := 0;
   wResposta := aResposta;
-  wResposta := Copy(wResposta, Pos('PESO L:', wResposta), 16);
 
-  wPos := Pos(':', wResposta);
-
-  if (Length(wResposta) > 1) then
+  wPos := Pos('PESO L:', wResposta);  // Protocolo USE-CB2
+  if (wPos > 0) then
   begin
-    wQtd      := (Pos('g', wResposta) - 2);
-    wQtd      := wQtd - (wPos + 1);
-    wResposta := Copy(wResposta, wPos + 2, wQtd); //123456
+    wResposta := Copy(wResposta,wPos, 16);
+    wPos := Pos(':', wResposta);
+
+    if (Length(wResposta) > 1) then
+    begin
+      wQtd      := (Pos('g', wResposta) - 2);
+      wQtd      := wQtd - (wPos + 1);
+      wResposta := Copy(wResposta, wPos + 2, wQtd); //123456
+    end;
+  end
+  else
+  begin
+    wPos := Pos('kg', wResposta);  // Protocolo USE-P2
+    if (wPos > 0) then
+      wResposta := copy(wResposta, wPos-7, 6)
+    else
+      wResposta := '';
   end;
 
   if (wResposta = EmptyStr) then

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/04/2019
+-- ACBrBALUranoPOP --
+[+] Adicionado suporte ao protocolo USE-P2
+    https://www.projetoacbr.com.br/forum/topic/50830-urano-us-202-pop-s/
+    (por: DSA)
+
 Data: 05/04/2019
 -- ACBrECFEscECF --
 [-] Aplicado workaround para Erro 140 disparado pela Daruma FS800I, mais de uma

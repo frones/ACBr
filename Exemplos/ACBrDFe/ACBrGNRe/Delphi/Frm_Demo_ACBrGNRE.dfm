@@ -93,7 +93,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet2
+        ActivePage = TabSheet1
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -937,6 +937,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
     GNREGuia = ACBrGNREGuiaRL1
     Left = 334

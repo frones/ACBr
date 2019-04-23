@@ -338,6 +338,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
 
+    // Assessor Publico
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'NFSE') <> '');
+
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaLote') <> '');
 
@@ -464,6 +468,7 @@ begin
             ((Provedor in [proEL]) and (Leitor.rExtrai(Nivel, 'notasFiscais', '', i + 1) <> '')) or // ConsultaLote
             ((Provedor in [proEL]) and (Leitor.rExtrai(Nivel, 'nfeRpsNotaFiscal', '', i + 1) <> '')) or // ConsultaNFSePorRPS
             ((Provedor in [proSMARAPD]) and (Leitor.rExtrai(Nivel, 'nfdok', '', i + 1) <> '')) or
+            ((Provedor in [proAssessorPublico]) and (Leitor.rExtrai(Nivel, 'NOTA', '', i + 1) <> '')) or
             ((Provedor in [proIPM]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
@@ -514,6 +519,9 @@ begin
               if Provedor = proSMARAPD then
                 FNFSe.XML := Leitor.Grupo;
 
+              if (Provedor = proAssessorPublico) and (NFSe.XML = '') then
+                FNFSe.XML := Leitor.Grupo;
+
               if (Provedor = proEL) then
               begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'notasFiscais', True);
@@ -532,8 +540,15 @@ begin
               end;
 
               FNFSe.NumeroLote    := NumeroLoteTemp;
+
+              if FNFSe.NumeroLote = '0' then
+                FNFSe.NumeroLote := NFSeLida.NFSe.NumeroLote;
+
               FNFSe.dhRecebimento := DataRecebimentoTemp;
               FNFSe.Protocolo     := ProtocoloTemp;
+
+              if FNFSe.Protocolo = '0' then
+                FNFSe.Protocolo := Protocolo;
 
               // Retorno do ConsultarLoteRps
               FNFSe.Situacao := SituacaoTemp;

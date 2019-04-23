@@ -143,7 +143,7 @@ type
     function LerXML_proSmarapd: Boolean;
     function LerXML_proIPM: Boolean;
     function LerXML_proGiap: Boolean;
-
+    function LerXML_proAssessorPublica: Boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -298,6 +298,7 @@ begin
    proSMARAPD:    Result := LerXML_proSmarapd;
    proIPM:        Result := LerXML_proIPM;
    proGiap:       Result := LerXML_proGiap;
+   proAssessorPublico : Result := LerXML_proAssessorPublica;
  else
    Result := LerXml_ABRASF;
  end;
@@ -366,6 +367,34 @@ begin
       inc(i);
     end;
 
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proAssessorPublica: Boolean;
+var
+  erro, msg : string;
+begin
+  Result := True;
+  try
+    msg := Trim(Leitor.rCampo(tcStr,'Mensagem'));
+    erro := Trim(Leitor.rExtrai(1,'ERRO'));
+    if erro <> '' then begin
+      FInfRec.FMsgRetorno.Add;
+      FInfRec.FMsgRetorno[0].FCodigo   := '';
+      FInfRec.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'ERRO');
+      FInfRec.FMsgRetorno[0].FCorrecao := '';
+    end
+    else begin
+      if StrToIntDef(msg,-1) > 0 then begin
+        FInfRec.Protocolo := msg;
+        FInfRec.Sucesso := 'Sim';
+        FInfRec.DataRecebimento := Now;
+      end;
+    end;
+
+    Result := erro = '';
   except
     Result := False;
   end;

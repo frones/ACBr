@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/49926-propriedade-linkvisualizacaonfse/?do=findComment&comment=335316
+   Por: Henrique Sandri Zimermam
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/50740-provedor-iss-online/?do=findComment&comment=335082
+   Por: Fernando Banhos
+
 17/04/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/50336-sigcorp-altera%C3%A7%C3%A3o-de-servidor-em-avar%C3%A9sp-de-fiorilli-para-sigcorp/?do=findComment&comment=334831

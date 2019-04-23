@@ -58,7 +58,7 @@ type
 
     property NumeroLote: String                   read FNumeroLote write FNumeroLote;
     property Situacao: String                     read FSituacao   write FSituacao;
-    property Sucesso: String                      read FSucesso         write FSucesso;
+    property Sucesso: String                      read FSucesso    write FSucesso;
     property MsgRetorno: TMsgRetornoSitCollection read FMsgRetorno write SetMsgRetorno;
     property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
@@ -115,9 +115,9 @@ type
     function LerXML_proEquiplano: Boolean;
     function LerXML_proInfisc: Boolean;
     function LerXml_proISSDSF: Boolean;
-	  function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
-
+    function LerXML_proAssessorPublico: boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
@@ -221,6 +221,7 @@ begin
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
     proSP, 
     proNotaBlu:    Result := LerXml_proSP;
+    proAssessorPublico: Result := LerXML_proAssessorPublico;															 
   else
     Result := LerXml_ABRASF;
   end;
@@ -290,6 +291,11 @@ begin
   except
     Result := False;
   end;
+end;
+
+function TretSitLote.LerXML_proAssessorPublico: boolean;
+begin
+  // nada feito aqui
 end;
 
 function TretSitLote.LerXml_proCONAM: Boolean;

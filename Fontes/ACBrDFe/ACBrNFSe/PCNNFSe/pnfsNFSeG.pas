@@ -745,6 +745,16 @@ begin
            Gerador.wGrupoNFSe('/LoteRps');
           end;
 
+     proAssessorPublico:
+       begin
+         Gerador.Prefixo := 'nfse:';
+         Gerador.wGrupoNFSe('Nfse.Execute');
+         Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '1', '');
+         Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
+         Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
+         Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, Notas, '');
+         Gerador.wGrupoNFSe('/Nfse.Execute');
+       end
   else
     begin
       Gerador.Prefixo := Prefixo3;
@@ -793,6 +803,8 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgConsSitLote: String;
+var
+  strTemp : string;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -875,7 +887,24 @@ begin
                   Gerador.wGrupoNFSe('/Prestador');
 
                   Gerador.wCampoNFSe(tcStr, '#4', 'Protocolo', 01, 50, 1, Protocolo, '', True, aNameSpace);
-                end
+                end;
+
+    proAssessorPublico:
+      begin
+        strTemp := '<NFSE><IDENTIFICACAO>'+
+                   '<INSCRICAO>'+IM+'</INSCRICAO>'+
+                   '<LOTE>'+NumeroLote+'</LOTE>'+
+//                                     '<SEQUENCIA>'+NUMERO DA NOTA+'</SEQUENCIA>'+
+                   '</IDENTIFICACAO></NFSE>';
+
+        Gerador.Prefixo := 'nfse:';
+        Gerador.wGrupoNFSe('Nfse.Execute');
+        Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '3', '');
+        Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, strTemp, '');
+        Gerador.wGrupoNFSe('/Nfse.Execute');
+      end;
   else
     begin
       Gerador.Prefixo := Prefixo3;
@@ -920,6 +949,8 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgConsLote: String;
+var
+  strTemp : string;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -1034,6 +1065,23 @@ begin
               Gerador.wGrupoNFSe('/pesquisa');
               Gerador.wGrupoNFSe('/nfse');
             end;
+
+    proAssessorPublico:
+      begin
+        strTemp := '<NFSE><IDENTIFICACAO>'+
+                   '<INSCRICAO>'+IM+'</INSCRICAO>'+
+                   '<LOTE>'+NumeroLote+'</LOTE>'+
+//                                     '<SEQUENCIA>'+NUMERO DA NOTA+'</SEQUENCIA>'+
+                   '</IDENTIFICACAO></NFSE>';
+
+        Gerador.Prefixo := 'nfse:';
+        Gerador.wGrupoNFSe('Nfse.Execute');
+        Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '3', '');
+        Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, strTemp, '');
+        Gerador.wGrupoNFSe('/Nfse.Execute');
+      end;
   else
     begin
       Gerador.Prefixo := Prefixo3;
@@ -1042,18 +1090,6 @@ begin
       Gerador.Prefixo := Prefixo4;
 
       GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
-
-//      if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
-//      begin
-//        Gerador.wGrupoNFSe('CpfCnpj');
-//        if Length(Cnpj) <= 11 then
-//          Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//        else
-//          Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//        Gerador.wGrupoNFSe('/CpfCnpj');
-//      end
-//      else
-//        Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
       if Provedor = proTecnos then
         Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');

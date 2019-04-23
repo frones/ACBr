@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2019
+-- ACBrLibNFeRespostas --
+[-] Corrigido metodo ProcessarResposta da classe TDistribuicaoDFeResposta, para retornar corretamente o ultNsu e os itens do retorno.
+    Por: Rafael Dias
+
 18/04/2019
 -- ACBrLibNFeRespostas --
 [-] Corrigido metodo ProcessarResposta com path do XML retorno.

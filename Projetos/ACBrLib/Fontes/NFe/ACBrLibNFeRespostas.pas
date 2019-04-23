@@ -1186,32 +1186,31 @@ end;
 
 procedure TDistribuicaoDFeResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
 var
-  sTemMais: String;
   I, J: Integer;
   Item: TDistribuicaoDFeItemResposta;
 begin
    with ACBrNFe.WebServices.DistribuicaoDFe do
    begin
-     Versao := retDistDFeInt.versao;
-     VerAplic := retDistDFeInt.VerAplic;
-     tpAmb := TpAmbToStr(retDistDFeInt.tpAmb);
-     CStat := retDistDFeInt.cStat;
-     XMotivo := retDistDFeInt.XMotivo;
-     dhResp := retDistDFeInt.dhResp;
-     ultNSU := retDistDFeInt.ultNSU;
-     maxNSU := retDistDFeInt.maxNSU;
-     arquivo := ACBrNFe.WebServices.DistribuicaoDFe.NomeArq;
+     self.Versao := retDistDFeInt.versao;
+     self.Msg := ACBrNFe.WebServices.DistribuicaoDFe.Msg;
+     self.VerAplic := retDistDFeInt.VerAplic;
+     self.tpAmb := TpAmbToStr(retDistDFeInt.tpAmb);
+     self.CStat := retDistDFeInt.cStat;
+     self.XMotivo := retDistDFeInt.XMotivo;
+     self.dhResp := retDistDFeInt.dhResp;
+     self.ultNSU := retDistDFeInt.ultNSU;
+     self.maxNSU := retDistDFeInt.maxNSU;
+     self.arquivo := ACBrNFe.WebServices.DistribuicaoDFe.NomeArq;
 
      if cStat = 137 then
-       sTemMais := '1'  // Sim
+       indCont := '1'  // Sim
      else
-       sTemMais := '0'; // Não
-
-     indCont := sTemMais;
+       indCont := '0'; // Não
 
      J := 1;
      for I := 0 to retDistDFeInt.docZip.Count - 1 do
-       if ( Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
+     begin
+       if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), FTipo);
          Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].resDFe,
@@ -1220,10 +1219,12 @@ begin
          FItems.Add(Item);
          inc(J);
        end;
+     end;
 
      J := 1;
      for I := 0 to retDistDFeInt.docZip.Count - 1 do
-       if ( Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
+     begin
+       if (Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), FTipo);
          Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].resEvento,
@@ -1232,28 +1233,35 @@ begin
          FItems.Add(Item);
          inc(J);
        end;
+     end;
 
      J := 1;
      for I := 0 to retDistDFeInt.docZip.Count - 1 do
-       if ( Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
+     begin
+       if (Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), FTipo);
          Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].procEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
+         inc(J);
        end;
+     end;
 
      J := 1;
      for I := 0 to retDistDFeInt.docZip.Count - 1 do
-       if ( Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
+     begin
+       if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), FTipo);
          Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
+         inc(J);
        end;
+     end;
    end;
 end;
 

@@ -75,6 +75,9 @@ type
 
 implementation
 
+const
+  DSC_TIPOGNRE = 'Tipo de GNRE';
+
 { TGNREW }
 
 constructor TGNREW.Create(AOwner: TGNRE);
@@ -282,7 +285,7 @@ begin
 //  Gerador.wGrupo('TDadosGNRE');
 
   Gerador.wCampo(tcStr, '', 'ufFavorecida', 2, 2, 1, GNRE.c01_UfFavorecida, DSC_UF + ' Favorecida');
-// <tipoGnre>...</tipoGnre>
+  Gerador.wCampo(tcStr, '', 'tipoGnre    ', 1, 1, 1, TipoGNREToStr(GNRE.tipoGnre), DSC_TIPOGNRE);
 
   if GNRE.c03_idContribuinteEmitente <> '' then
   begin

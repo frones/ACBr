@@ -186,11 +186,12 @@ function TGNRER.LerXml2: boolean;
 var
   i: Integer;
   CampoExtra: TCampoExtraCollectionItem;
+  Ok: Boolean;
 begin
   if Leitor.rExtrai(1, 'TDadosGNRE') <> '' then
   begin
-    GNRE.c01_UfFavorecida              := Leitor.rCampo(tcStr, 'ufFavorecida');
-// <tipoGnre>...</tipoGnre>
+    GNRE.c01_UfFavorecida := Leitor.rCampo(tcStr, 'ufFavorecida');
+    GNRE.tipoGNRE         := StrToTipoGNRE(Ok, Leitor.rCampo(tcStr, 'tipoGnre'));
 
     if Leitor.rExtrai(2, 'contribuinteEmitente') <> '' then
     begin

@@ -63,6 +63,8 @@ type
 
   TSchemaGNRE = ( schErro, schGNRE, schretGNRE, schprocGNRE, schconsReciGNRE );
 
+  TTipoGNRE = ( tgSimples, tgMultiplosDoc, tgMultiplasReceitas );
+
 function LayOutToServico(const t: TLayOutGNRE): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutGNRE;
 
@@ -72,6 +74,9 @@ function SchemaGNREToStr(const t: TSchemaGNRE): String;
 
 function VersaoGNREToStr(const t: TVersaoGNRE): String;
 function VersaoGNREToDbl(const t: TVersaoGNRE): Double;
+
+function TipoGNREToStr(const t: TTipoGNRE): String;
+function StrToTipoGNRE(out ok: Boolean; const s: String): TTipoGNRE;
 
 implementation
 
@@ -122,6 +127,20 @@ begin
   else
     Result := 0;
   end;
+end;
+
+function TipoGNREToStr(const t: TTipoGNRE): String;
+begin
+  Result := EnumeradoToStr(t,
+    ['0', '1', '2'],
+    [tgSimples, tgMultiplosDoc, tgMultiplasReceitas]);
+end;
+
+function StrToTipoGNRE(out ok: Boolean; const s: String): TTipoGNRE;
+begin
+  Result := StrToEnumerado(ok, s,
+    ['0', '1', '2'],
+    [tgSimples, tgMultiplosDoc, tgMultiplasReceitas]);
 end;
 
 end.

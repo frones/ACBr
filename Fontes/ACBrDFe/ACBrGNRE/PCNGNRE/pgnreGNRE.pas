@@ -137,6 +137,7 @@ type
     Freferencia: TReferencia;
     FcamposExtras: TCampoExtraCollection;
     Fc42_identificadorGuia: string;
+    FtipoGNRE: TTipoGNRE;
   public
     constructor Create;
     destructor Destroy; override;
@@ -169,6 +170,8 @@ type
     property referencia: TReferencia read Freferencia write Freferencia;
     property camposExtras: TCampoExtraCollection read FcamposExtras write FcamposExtras;
     property c42_identificadorGuia: string read Fc42_identificadorGuia write Fc42_identificadorGuia;
+    // usado na versão 2.00
+    property tipoGNRE: TTipoGNRE read FtipoGNRE write FtipoGNRE;
   end;
 
 implementation

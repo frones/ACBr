@@ -1681,6 +1681,7 @@ var
   Y: TSSLType;
   IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
     IFormaEmissaoMDFe: TpcnTipoEmissao;
+  IForcarTagICMSSubs: TForcarGeracaoTag;
   iETQModelo : TACBrETQModelo ;
   iETQDPI: TACBrETQDPI;
   iETQUnidade: TACBrETQUnidade;
@@ -2055,6 +2056,11 @@ begin
   for IFormaEmissaoMDFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
     cbFormaEmissaoMDFe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoMDFe)));
   cbFormaEmissaoMDFe.ItemIndex := 0;
+
+  cbTagRejeicao938.Items.Clear;
+  for IForcarTagICMSSubs := Low(TForcarGeracaoTag) to High(TForcarGeracaoTag) do
+    cbTagRejeicao938.Items.Add(GetEnumName(TypeInfo(TForcarGeracaoTag), integer(IForcarTagICMSSubs)));
+  cbTagRejeicao938.ItemIndex := 0;
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
   try

@@ -7,8 +7,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 650
+  ClientWidth = 1202
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -7480,9 +7480,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ItemIndex = 0
                       Items.Strings = (
                         'fgtNunca'
-                        'fgtSempre'
-                        'fgtSomenteHomologacao'
                         'fgtSomenteProducao'
+                        'fgtSomenteHomologacao'
+                        'fgtSempre'
                       )
                       ParentFont = False
                       TabOrder = 1
@@ -13957,6 +13957,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

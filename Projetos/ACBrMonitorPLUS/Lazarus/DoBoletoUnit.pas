@@ -464,8 +464,7 @@ begin
     begin
         Mensagem := TStringList.Create;
       try
-        Mensagem.Add(EmailMensagemBoleto);
-
+        Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
         ACBrBoleto.EnviarEmail( ADest,
                  EmailAssuntoBoleto,
                  Mensagem,
@@ -516,12 +515,12 @@ begin
       begin
         Mensagem := TStringList.Create;
         try
-          Mensagem.Add(EmailMensagemBoleto);
-              ACBrBoleto.EnviarEmail( ACBrBoleto.ListadeBoletos[0].Sacado.Email,
+          Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
+          ACBrBoleto.EnviarEmail( ACBrBoleto.ListadeBoletos[0].Sacado.Email,
                            EmailAssuntoBoleto,
                            Mensagem,
                            True );
-              fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          fpCmd.Resposta := 'E-mail enviado com sucesso!'
 
         finally
           Mensagem.Free;

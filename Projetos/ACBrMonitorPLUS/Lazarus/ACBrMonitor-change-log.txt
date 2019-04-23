@@ -43,9 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18/04/2019
-[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
-Adicionado Propriedade "ForcarGerarTagRejeicao938"
+23/04/2019
+[-] ACBrMonitor1
+Ajuste na configuração da propriedade "ForcarGerarTagRejeicao938"
+
+22/04/2019
+[-] DoBoletoUnit
+Ajuste na mensagem padrão para envio de email
 
 11/04/2019
 [*] DoACBrNFeUnit

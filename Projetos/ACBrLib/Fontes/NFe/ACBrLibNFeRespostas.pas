@@ -738,6 +738,8 @@ type
     FChNFe: String;
     FNProt: String;
     FDigVal: String;
+    FcMsg: Integer;
+    FxMsg: String;
     FInfCan: TConsultaNFeInfCanResposta;
     FEventos: TObjectList;
 
@@ -757,6 +759,8 @@ type
     property ChNFe: String read FChNFe write FChNFe;
     property NProt: String read FNProt write FNProt;
     property DigVal: String read FDigVal write FDigVal;
+    property cMsg: Integer read FcMsg write FcMsg;
+    property xMsg: String read FxMsg write FxMsg;
 
   end;
 
@@ -1719,6 +1723,8 @@ begin
     ChNFe := Consulta.NFeChave;
     NProt := Consulta.Protocolo;
     DigVal := Consulta.protNFe.digVal;
+    cMsg := Consulta.protNFe.cMsg;
+    xMsg := Consulta.ProtNFe.xMsg;
 
     if NaoEstaVazio(Trim(Consulta.retCancNFe.nProt)) then
     begin

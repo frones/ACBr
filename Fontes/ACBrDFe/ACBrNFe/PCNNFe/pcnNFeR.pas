@@ -1120,6 +1120,8 @@ begin
     NFe.procNFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
     NFe.procNFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
     NFe.procNFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+    NFe.procNFe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+    NFe.procNFe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
   end;
 
   Result := true;

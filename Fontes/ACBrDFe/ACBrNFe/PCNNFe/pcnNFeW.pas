@@ -322,6 +322,10 @@ begin
      (*********)'<digVal>'+nfe.procNFe.digVal+'</digVal>'+
      (*********)'<cStat>'+IntToStr(nfe.procNFe.cStat)+'</cStat>'+
      (*********)'<xMotivo>'+nfe.procNFe.xMotivo+'</xMotivo>'+
+                IIF( (nfe.procNFe.cMsg > 0) or (nfe.procNFe.xMsg <> ''),
+         (*********)'<cMsg>'+IntToStr(nfe.procNFe.cMsg)+'</cMsg>'+
+         (*********)'<xMsg>'+nfe.procNFe.xMsg+'</xMsg>',
+                    '') +
      (******)'</infProt>'+
      {****}'</protNFe>';
 

@@ -50,6 +50,13 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+24/04/2019
+-- ACBrBancoCaixa --
+[*] Ajustes na geração Remessa - CNAB400, adicionado novos campos
+    conforme especificação do manual atualizado Fevereiro/2009
+https://www.projetoacbr.com.br/forum/topic/50728-cnab-400-cef-vers%C3%A3o-fev2019/
+
+
 15/04/2019
 -- ACBrBancoBRB --
 [*] Correção na geração Remessa - CNAB400, validação Intrução para protesto

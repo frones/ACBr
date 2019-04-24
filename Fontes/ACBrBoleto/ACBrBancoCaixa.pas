@@ -807,9 +807,10 @@ procedure TACBrCaixaEconomica.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo;
 var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade  :String;
   aDataDesconto, ANossoNumero, ATipoAceite, ATipoEspecieDoc  :String;
-  ATipoSacado, ATipoCendente, AMensagem, wLinha              :String;
+  ATipoSacado, ATipoCendente, wLinha                         :String;
   TamConvenioMaior6                                          :Boolean;
   wCarteira                                                  :Integer;
+  ACodigoDesconto, ADataMulta : String;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -817,8 +818,7 @@ var
      with ACBrTitulo, ACBrBoleto do
      begin
 
-        {Primeira instrução vai no registro 1}
-        if Mensagem.Count <= 1 then
+        if Mensagem.Count < 1 then
         begin
            Result := '';
            Exit;
@@ -907,6 +907,14 @@ begin
       else
          ADataMoraJuros := PadLeft('', 6, '0');
 
+      {Multa}
+      if (PercentualMulta > 0) then
+        ADataMulta := IfThen(DataMulta > 0,
+                             FormatDateTime('ddmmyy', DataMulta),
+                             ADataMoraJuros)
+      else
+        ADataMulta := PadLeft('', 6, '0');
+
       TamConvenioMaior6:= Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
 
       {Pegando Código da Ocorrencia}
@@ -960,15 +968,28 @@ begin
 
 
 
-
-      aDataDesconto:= '000000';
-
+      {Descontos}
       if ValorDesconto > 0 then
       begin
          if DataDesconto > EncodeDate(2000,01,01) then
             aDataDesconto := FormatDateTime('ddmmyy',DataDesconto)
          else
             aDataDesconto := '777777';
+
+         case TipoDesconto of
+           tdValorFixoAteDataInformada : ACodigoDesconto := '1';
+           tdPercentualAteDataInformada: ACodigoDesconto := '2';
+           tdValorAntecipacaoDiaCorrido: ACodigoDesconto := '3';
+           tdValorAntecipacaoDiaUtil   : ACodigoDesconto := '4';
+           tdPercentualSobreValorNominalDiaCorrido: ACodigoDesconto := '5';
+           tdPercentualSobreValorNominalDiaUtil: ACodigoDesconto := '6';
+	 else
+	   ACodigoDesconto := '1';
+         end;
+      end
+      else begin
+        aDataDesconto := PadRight('', 6, '0');
+        ACodigoDesconto := '0';
       end;
 
       {Pegando Tipo de Sacado}
@@ -984,10 +1005,6 @@ begin
          pFisica   : ATipoCendente := '01';
          pJuridica : ATipoCendente := '02';
       end;
-
-      AMensagem   := '';
-      if Mensagem.Text <> '' then
-         AMensagem   := Mensagem.Strings[0];
 
       with ACBrBoleto do
       begin
@@ -1007,7 +1024,10 @@ begin
                   PadRight(Copy(AModalidade,1,2), 2, '0')                          + // 57 até 58  - Modalidade identificação
                   PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                      + // 59 até 73  - Nosso Numero
                   Space(3)                                                         + // 74 Até 76  - Brancos
-                  PadRight(AMensagem, 30)                                          + //77 até  106 - mensagem impressa
+                  Space(1)                                                         + //77 até 77 - Campo em branco
+                  ADataMoraJuros                                                   + //78 até 83 - Data Inicio de Juros
+                  ACodigoDesconto                                                  + //84 até 84 - Código do Tipo de Desconto
+                  Space(22)                                                        + //85 até 106 - Campos em Branco
                   '01'                                                             + //107 até 108 - Código Carteira //PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0')
                   ATipoOcorrencia                                                  + //109 até 110 - Código da ocorrencia
                   PadRight(NumeroDocumento, 10, ' ')                               + //111 ate 120 - Seu Numero - Nr. titulo dado pelo cedente
@@ -1035,7 +1055,7 @@ begin
                   PadLeft(OnlyNumber(Sacado.CEP), 8, '0')                          + // 327 até 334 - CEP do endereço do sacado
                   PadRight(trim(Sacado.Cidade), 15)                                + // 335 até 349  - Cidade do sacado
                   PadRight(Sacado.UF, 2 )                                          + // 350 até 351  - UF da cidade do sacado
-                  ADataMoraJuros                                                   + //352 até 357  - Data Multa
+                  ADataMulta                                                       + //352 até 357  - Data Multa
                   IntToStrZero(round((ValorDocumento* (PercentualMulta*100) )/100), 10)    + //358 até 367 - Valor nominal da multa
                   PadRight(Sacado.NomeSacado, 22)                                  + // 368 até 389 - Nome do Sacador Avalista
                   '00'                                                             + // 390  391 - Terceira instrução de Cobrança Default '00'

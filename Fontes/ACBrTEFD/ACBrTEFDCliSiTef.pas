@@ -167,11 +167,12 @@ type
                 {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
 
-     xFinalizaTransacaoSiTefInterativo : procedure (
-                 smallint: Word;
-                 pNumeroCuponFiscal: PAnsiChar;
+     xFinalizaFuncaoSiTefInterativo : procedure (
+                 pConfirma: SmallInt;
+                 pCupomFiscal: PAnsiChar;
                  pDataFiscal: PAnsiChar;
-                 pHorario: PAnsiChar );
+                 pHoraFiscal: PAnsiChar;
+                 pParamAdic: PAnsiChar);
                  {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
 
@@ -285,7 +286,7 @@ type
         TempoEsperaRx: SmallInt; CuponFiscal: AnsiString;
         Confirmar: Boolean): Integer;
      procedure FinalizarTransacao( Confirma : Boolean;
-        DocumentoVinculado : AnsiString);
+        DocumentoVinculado : AnsiString; ParamAdic: AnsiString = '');
      function ValidaCampoCodigoEmBarras(Dados: AnsiString;
         var Tipo: SmallInt): Integer;
      function VerificaPresencaPinPad: Boolean;
@@ -601,7 +602,7 @@ begin
   xConfiguraIntSiTefInterativoEx      := nil;
   xIniciaFuncaoSiTefInterativo        := nil;
   xContinuaFuncaoSiTefInterativo      := nil;
-  xFinalizaTransacaoSiTefInterativo   := nil;
+  xFinalizaFuncaoSiTefInterativo      := nil;
   xEscreveMensagemPermanentePinPad    := nil;
   xObtemQuantidadeTransacoesPendentes := nil;
   xValidaCampoCodigoEmBarras          := nil;
@@ -661,7 +662,7 @@ begin
    CliSiTefFunctionDetect('ConfiguraIntSiTefInterativoEx', @xConfiguraIntSiTefInterativoEx);
    CliSiTefFunctionDetect('IniciaFuncaoSiTefInterativo', @xIniciaFuncaoSiTefInterativo);
    CliSiTefFunctionDetect('ContinuaFuncaoSiTefInterativo', @xContinuaFuncaoSiTefInterativo);
-   CliSiTefFunctionDetect('FinalizaTransacaoSiTefInterativo', @xFinalizaTransacaoSiTefInterativo);
+   CliSiTefFunctionDetect('FinalizaFuncaoSiTefInterativo', @xFinalizaFuncaoSiTefInterativo);
    CliSiTefFunctionDetect('EscreveMensagemPermanentePinPad',@xEscreveMensagemPermanentePinPad);
    CliSiTefFunctionDetect('ObtemQuantidadeTransacoesPendentes',@xObtemQuantidadeTransacoesPendentes);
    CliSiTefFunctionDetect('ValidaCampoCodigoEmBarras',@xValidaCampoCodigoEmBarras);
@@ -682,7 +683,7 @@ begin
   xConfiguraIntSiTefInterativoEx      := Nil;
   xIniciaFuncaoSiTefInterativo        := Nil;
   xContinuaFuncaoSiTefInterativo      := Nil;
-  xFinalizaTransacaoSiTefInterativo   := Nil;
+  xFinalizaFuncaoSiTefInterativo      := Nil;
   xEscreveMensagemPermanentePinPad    := Nil;
   xObtemQuantidadeTransacoesPendentes := Nil;
   xValidaCampoCodigoEmBarras          := Nil;
@@ -917,7 +918,7 @@ procedure TACBrTEFDCliSiTef.CNF(Rede, NSU, Finalizacao: String;
 begin
   // CliSiTEF não usa Rede, NSU e Finalizacao
 
-  FinalizarTransacao( True, DocumentoVinculado );
+  FinalizarTransacao( True, DocumentoVinculado, Finalizacao );
 end;
 
 function TACBrTEFDCliSiTef.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
@@ -967,7 +968,7 @@ procedure TACBrTEFDCliSiTef.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
   // CliSiTEF não usa Rede, NSU, Finalizacao e Valor
-  FinalizarTransacao( False, DocumentoVinculado );
+  FinalizarTransacao( False, DocumentoVinculado, Finalizacao );
 end;
 
 function TACBrTEFDCliSiTef.ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
@@ -1504,11 +1505,11 @@ begin
   end ;
 end;
 
-procedure TACBrTEFDCliSiTef.FinalizarTransacao( Confirma : Boolean;
-   DocumentoVinculado : AnsiString);
+procedure TACBrTEFDCliSiTef.FinalizarTransacao(Confirma: Boolean;
+  DocumentoVinculado: AnsiString; ParamAdic: AnsiString);
 Var
    DataStr, HoraStr : AnsiString;
-   Finalizacao : Integer;
+   Finalizacao : SmallInt;
    AMsg: String;
    Est: AnsiChar;
 begin
@@ -1546,10 +1547,11 @@ begin
                                           ' Data: '      +DataStr+
                                           ' Hora: '      +HoraStr ) ;
 
-  xFinalizaTransacaoSiTefInterativo( Finalizacao,
-                                     PAnsiChar( DocumentoVinculado ),
-                                     PAnsiChar( DataStr ),
-                                     PAnsiChar( HoraStr ) ) ;
+  xFinalizaFuncaoSiTefInterativo( Finalizacao,
+                                  PAnsiChar( DocumentoVinculado ),
+                                  PAnsiChar( DataStr ),
+                                  PAnsiChar( HoraStr ),
+                                  PAnsiChar( ParamAdic ) ) ;
 
   if not Confirma then
   begin

@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/04/2019
+-- ACBrTEFDCliSitef --
+[*] Chamada ao Método "FinalizaTransacaoSiTefInterativo" que está depreciado,
+    foi substituido por "FinalizaFuncaoSiTefInterativo"
+[*] Método "FinalizarTransacao" modificado para receber novo Parâmetro,
+    ParamAdic: AnsiString
+    https://www.projetoacbr.com.br/forum/topic/50545-finalizatransacaositefinterativo-fun%C3%A7%C3%A3o-descontinuada/-
+    (por: DSA)
+
 01/02/2019
 -- ACBrTEFDCliSitef --
 [+] Adicionada as propriedades "CNPJEstabelecimento" e "CNPJSoftwareHouse", para

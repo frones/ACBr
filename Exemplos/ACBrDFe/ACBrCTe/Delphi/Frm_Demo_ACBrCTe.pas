@@ -560,14 +560,14 @@ begin
     compl.xObs     := 'Observação livre';
 
     // Obs Estruturada do Contribuinte - Incluir se necessário
-    with compl.ObsCont.Add do
+    with compl.ObsCont.New do
     begin
       xCampo := 'Nome do Campo';
       xTexto := 'Valor do Campo';
     end;
 
     // Obs Estruturada para o Fisco - Incluir se necessário
-    with compl.ObsFisco.Add do
+    with compl.ObsFisco.New do
     begin
       xCampo := 'Nome do Campo';
       xTexto := 'Valor do Campo';
@@ -666,7 +666,7 @@ begin
     vPrest.vRec    := 100.00;
 
     {Carrega componentes do valor da prestacao}
-    with vPrest.comp.Add do
+    with vPrest.comp.New do
     begin
       xNome := 'DFRNER KRTJ';
       vComp := 100.00;
@@ -730,14 +730,14 @@ begin
       infCarga.vCargaAverb := 5000;
 
       // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS);
-      with infCarga.InfQ.Add do
+      with infCarga.InfQ.New do
       begin
         cUnid  := uKg;
         tpMed  := 'Kg';
         qCarga := 10;
       end;
 
-      with infCarga.InfQ.Add do
+      with infCarga.InfQ.New do
       begin
         cUnid  := uUnidade;
         tpMed  := 'Caixa';
@@ -745,7 +745,7 @@ begin
       end;
 
       {Informações dos Documentos}
-      with infDoc.infNFe.Add do
+      with infDoc.infNFe.New do
         chave := 'chave da NFe emitida pelo remente da carga';
 
       {Carrega Informacoes do Modal}
@@ -799,7 +799,7 @@ begin
         fat.vDesc := 0;
         fat.vLiq  := 100;
 
-        with dup.Add do
+        with dup.New do
         begin
           nDup  := '123';
           dVenc := Date + 30;
@@ -910,7 +910,7 @@ begin
     vPrest.vRec            := 100.00;
 
     {Carrega componentes do valor da prestacao}
-    with vPrest.comp.Add do
+    with vPrest.comp.New do
     begin
       xNome                := 'DFRNER KRTJ';
       vComp                := 374347.00;
@@ -986,7 +986,7 @@ begin
     end;}
 
     {Carrega informacoes do seguro}
-    with infCTeNorm.Seg.Add do
+    with infCTeNorm.Seg.New do
     begin
       respSeg := rsTomadorServico;
       xSeg    := 'TESTE';
@@ -1552,7 +1552,7 @@ begin
 
     ACBrCTe1.EventoCTe.Evento.Clear;
 
-    with ACBrCTe1.EventoCTe.Evento.Add do
+    with ACBrCTe1.EventoCTe.Evento.New do
     begin
       infEvento.nSeqEvento      := 1; // Para o Evento de Cancelamento: nSeqEvento sempre = 1
       infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);

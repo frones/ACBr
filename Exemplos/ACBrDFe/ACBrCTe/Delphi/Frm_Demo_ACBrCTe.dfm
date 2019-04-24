@@ -1202,12 +1202,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ModeloDF = moCTeOS
-    Configuracoes.Arquivos.PathSalvar = 'C:\ZettaBrasil\DeltaCTe\XMLRet\'
     Configuracoes.Arquivos.PathSchemas = 'D:\Componentes\DelphiXE3\ACBR\Exemplos\ACBrDFe\Schemas\CTe\'
     Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.Arquivos.PathCTe = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
-    Configuracoes.Arquivos.PathInu = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
-    Configuracoes.Arquivos.PathEvento = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2019
+-- ACBrNFeServicos --
+[*] Ajuste das URL de consulta por chave de acesso NFCe homologação para as UF
+    usuárias da SVRS.
+  Por: BigWings
+
 16/04/2019
 -- ACBrNFe, pcnConversao.pas --
 [+] Adicionado tipo TForcarGeracaoTag que poderá ser usado em qualquer DF-e para parametrizar a exigência ou não de uma tag.

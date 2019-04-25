@@ -2110,6 +2110,11 @@ begin
      //      proEGoverneISS: FTagI := '<' + FTagGrupo + ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
      //                                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+//           proRecife:
+//             FTagI := '<' + FTagGrupo + //FNameSpaceDad +
+//                      ' xmlns="http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd"' +
+//                      '>';
+
            proEGoverneISS,
            proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
@@ -3511,6 +3516,14 @@ begin
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                           FPConfiguracoes.Arquivos.PathSchemas +
                           FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
+
+   if FProvedor = proRecife then
+     FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd' ,
+       'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd', [rfReplaceAll]);
+
+   if FProvedor = proRecife then
+     FPDadosMsg := StringReplace(FPDadosMsg, '<InfRps' ,
+       '<InfRps' + FNameSpaceDad + ' ', [rfReplaceAll]);
   end
   else
   begin

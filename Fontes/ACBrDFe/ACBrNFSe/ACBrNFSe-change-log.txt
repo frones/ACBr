@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/04/2019
+-- ACBrNFSeWebServices --
+[*] Alterações visando o provedor Recife - Método GerarNFSe
+   Por: Italo Jurisato Junior
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/50851-atualiza%C3%A7%C3%A3o-para-importa%C3%A7%C3%A3o-xml-sigiss-e-elotech/
     Ainda falta muito a ser feito, mas já é um começo.

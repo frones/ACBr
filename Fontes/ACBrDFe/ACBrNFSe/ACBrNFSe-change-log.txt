@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/04/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/50851-atualiza%C3%A7%C3%A3o-para-importa%C3%A7%C3%A3o-xml-sigiss-e-elotech/
+    Ainda falta muito a ser feito, mas já é um começo.
+   Por: Digibyte
+
 22/04/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/49926-propriedade-linkvisualizacaonfse/?do=findComment&comment=335316

@@ -361,8 +361,14 @@ begin
     begin
       InfRec.FMsgRetorno.Add;
       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+      if InfRec.FMsgRetorno[i].FCodigo = '' then
+        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Code');
+
       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
-      InfRec.FMsgRetorno[i].FCorrecao := '';
+      if InfRec.FMsgRetorno[i].FMensagem = '' then
+        InfRec.FMsgRetorno[i].FMensagem   := Leitor.rCampo(tcStr, 'Reason');
+
+      InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Detail');
 
       inc(i);
     end;

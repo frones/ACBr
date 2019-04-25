@@ -113,7 +113,7 @@ type
                     proIPM, proBelford, proISSJoinville, proAsten, proELv2,
                     proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart,
                     proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-					proGiap, proAssessorPublico);
+					proGiap, proAssessorPublico, proSigIss, proElotech);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -129,7 +129,7 @@ type
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
                 loInfisc, loISSDSF, loGoverna, loSP, loCONAM, loAgili, loSMARAPD, 
-                loIPM, loGiap, loAssessorPublico);
+                loIPM, loGiap, loAssessorPublico, loSigIss, loElotech);
 
   TnfseFrete = ( tfPrestador, tfTomador );
 
@@ -515,7 +515,8 @@ begin
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico'],
+         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
+		 'SigIss', 'Elotech'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -533,7 +534,7 @@ begin
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-		 proGiap, proAssessorPublico]);
+		 proGiap, proAssessorPublico, proSigIss, proElotech]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -554,7 +555,8 @@ begin
          'Smarapd', 'SmarAPDABRASF', 'Actconv201', 'Actconv202', 'Sigep', 'SafeWeb',
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
-         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico'],
+         'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
+		 'SigIss', 'Elotech'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -572,7 +574,7 @@ begin
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-		 proGiap, proAssessorPublico]);
+		 proGiap, proAssessorPublico, proSigIss, proElotech]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18456,7 +18458,9 @@ begin
     proSMARAPD:     Result := loSMARAPD;
     proIPM:         Result := loIPM;
     proGiap:        Result := loGiap;
-    proAssessorPublico : Result := loAssessorPublico;
+    proAssessorPublico: Result := loAssessorPublico;
+    proSigIss:      Result := loSigIss;
+    proElotech:     Result := loElotech;
 else
     Result := loNone;
   end;

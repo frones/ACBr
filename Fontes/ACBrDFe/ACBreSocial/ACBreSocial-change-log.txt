@@ -52,6 +52,8 @@ Símbolo : Significado
 -- pcesS2240 --
 [-] Ajuste para o campo dscOC ser gerado apenas quando o campo ideOC igual a 9.
    Por: Rafael Dias
+[-] Ajuste para o campo eficEpc ser gerado apenas quando o campo utilizEPC igual a 2.
+   Por: Rafael Dias
 
 22/04/2019
 -- pcesS2300 --

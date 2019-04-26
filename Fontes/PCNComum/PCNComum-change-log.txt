@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2019
+[*] pcnRetDistDFeInt
+    Para CTe o nome da tag correta é retEventoCTe e não retEvento.
+   Por: Italo Jurisato Junior
+
 19/03/2019
 -- pcnConversao --
 [*] Acrescentado o tipo de evento de Alteração de Poltrona a ser usado no BP-e.

@@ -75,8 +75,6 @@ type
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); virtual;
-    function SelectElements(const aDoc: xmlDocPtr; const infElement: String)
-      : xmlNodeSetPtr;
     function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring;
     function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
       const SignatureNode: String; const SelectionNamespaces: String;
@@ -123,6 +121,7 @@ begin
   { Init libxml and libxslt libraries }
   xmlInitThreads();
   xmlInitParser();
+  xmlXPathInit();
   xmlSubstituteEntitiesDefault(1);
   __xmlLoadExtDtdDefaultValue^ := XML_DETECT_IDS or XML_COMPLETE_ATTRS;
   __xmlIndentTreeOutput^ := 1;
@@ -138,6 +137,9 @@ begin
 
   { Shutdown libxslt/libxml }
   xmlCleanupParser();
+  xmlCleanupThreads();
+  xmlCleanupMemory();
+  xmlCleanupGlobals();
 
   LibXMLLoaded := False;
 end;
@@ -262,22 +264,50 @@ end;
 function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr;
   const infElement: String): Ansistring;
 var
-  Elements: xmlNodeSetPtr;
   buffer: PAnsiChar;
+  ANode: xmlNodePtr;
+  ElementName: String;
+  SubDoc: xmlDocPtr;
 begin
   Result := '';
   buffer := Nil;
-  Elements := Nil;
+
+  ANode := xmlDocGetRootElement(aDoc);
+  if (ANode = nil) then
+    raise EACBrDFeException.Create(cErrFindRootNode);
+
+  //ns := xmlCopyNamespace(ANode^.ns);
+  { Se infElement possui prefixo o mesmo tem que ser removido }
+  ElementName := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
 
   try
     // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
     // Talvez seja necessario no futuro checar a versão do c14n
     // aplica a transformação C14N
-    if (infElement <> '') then
+    if (ElementName <> '') then
     begin
-      Elements := SelectElements(aDoc, infElement);
-      if xmlC14NDocDumpMemory(aDoc, Elements, 0, nil, 0, @buffer) < 0 then
-        raise EACBrDFeException.Create(cErrC14NTransformation);
+      { Procura InfElement em todos os nós, filhos de Raiz, usando LibXml }
+      ANode := LibXmlLookUpNode(ANode, ElementName);
+      if (ANode = nil) then
+        raise EACBrDFeException.Create(cErrSelecionarElements);
+
+      try
+        SubDoc := xmlNewDoc(PAnsichar(ansistring('1.0')));
+        if (SubDoc = nil) then
+          raise EACBrDFeException.Create(cErrSelecionarElements);
+
+        ANode := xmlCopyNode(ANode, 1);
+        if (ANode = nil) then
+          raise EACBrDFeException.Create(cErrSelecionarElements);
+
+        xmlDocSetRootElement(SubDoc, ANode);
+
+        if xmlC14NDocDumpMemory(SubDoc, nil, 0, nil, 0, @buffer) < 0 then
+          raise EACBrDFeException.Create(cErrC14NTransformation);
+      finally
+        if (SubDoc <> nil) then
+          xmlFreeDoc(SubDoc);
+      end;
     end
     else
     begin
@@ -290,48 +320,10 @@ begin
 
     Result := Ansistring(buffer);
     // DEBUG
-    // WriteToTXT('C:\TEMP\CanonC14n.xml', Result, False, False);
+    //WriteToTXT('C:\TEMP\CanonC14n.xml', Result, False, False);
   finally
-    if (Elements <> Nil) then
-      xmlXPathFreeNodeSet(Elements);
-
     if (buffer <> Nil) then
       xmlFree(buffer);
-  end;
-end;
-
-function TDFeSSLXmlSignLibXml2.SelectElements(const aDoc: xmlDocPtr;
-  const infElement: String): xmlNodeSetPtr;
-var
-  xpathCtx: xmlXPathContextPtr;
-  xpathExpr: AnsiString;
-  xpathObj: xmlXPathObjectPtr;
-begin
-  Result := nil;
-  // Cria o contexto XPath
-  xpathCtx := xmlXPathNewContext(aDoc);
-  try
-    if (xpathCtx = nil) then
-      raise EACBrDFeException.Create('Erro ao obter o contexto do XPath');
-
-    // expressão para selecionar os elementos n: e o namespace selecionado
-    xpathExpr := '(//.|//@*|//namespace::*)[ancestor-or-self::*[local-name()='''
-      + Copy(infElement, pos(':', infElement) + 1, Length(infElement)) + ''']]';
-
-    // seleciona os elementos baseados na expressão(retorna um objeto XPath com os elementos)
-    xpathObj := xmlXPathEvalExpression(PAnsiChar(xpathExpr), xpathCtx);
-
-    if (xpathObj = nil) then
-      raise EACBrDFeException.Create(cErrSelecionarElements);
-
-    if (xpathObj.nodesetval.nodeNr > 0) then
-      Result := xpathObj.nodesetval
-    else
-      raise EACBrDFeException.Create(cErrElementsNotFound);
-
-  finally
-    if (xpathCtx <> nil) then
-      xmlXPathFreeContext(xpathCtx);
   end;
 end;
 

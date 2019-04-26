@@ -1797,6 +1797,13 @@ begin
 
   // Ajusta o tamanho do quadro conforme a OBS
   rlsQuadro08.Height := rlmObs.Height + 20;
+  rlb_09_Obs.Height  := rlsQuadro08.Height + 4;
+
+  if rllMsgTeste.Visible and (rlb_09_Obs.Height < 68) then
+  begin
+    rlsQuadro08.Height := 64;
+    rlb_09_Obs.Height  := 68;
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_10_ModRodFracionadoBeforePrint(Sender: TObject;

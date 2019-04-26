@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] Corrigido a altura da banda para mostrar as mensagens de cancelamento e outros.
+  por: Elton Barbosa / Italo Jurisato Junior
+
 08/08/2018
 -- Diversos --
 [*] Alterações visando deixar o componente em conformidade com a Nota Técnica 2018/002.

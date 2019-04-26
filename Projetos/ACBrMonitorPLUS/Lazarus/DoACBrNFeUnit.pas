@@ -582,8 +582,8 @@ begin
     43 : AMetodoClass := TMetodoCartaCorrecao;
     44 : AMetodoClass := TMetodoXMLEnviarEvento;
     45 : AMetodoClass := TMetodoDistribuicaoDFeporChaveNFe;
-    46 : AMetodoClass := TMetodoDistribuicaoDFeporUltNSU;
-    47 : AMetodoClass := TMetodoDistribuicaoDFeporNSU;
+    46 : AMetodoClass := TMetodoDistribuicaoDFeporNSU;
+    47 : AMetodoClass := TMetodoDistribuicaoDFeporUltNSU;
     48 : AMetodoClass := TMetodoEnviaremailEvento;
     49 : AMetodoClass := TMetodoEnviaremailInutilizacao;
     50 : AMetodoClass := TMetodoValidarRegrasNegocios;

@@ -50,6 +50,12 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+26/04/2019
+-- ACBrBancoBrasil --
+[-] Correção para permitir o processamento do arquivo retorno CNAB400 para convênios de
+    6 posições. (Juliana Tamizou)
+https://www.projetoacbr.com.br/forum/topic/50789-tamanho-nosso-n%C3%BAmero-do-bb/?tab=comments#comment-335886
+
 24/04/2019
 -- ACBrBancoCaixa --
 [*] Ajustes na geração Remessa - CNAB400, adicionado novos campos

@@ -1807,6 +1807,7 @@ function StringToDateTime(const DateTimeString : String ; const Format : String
    ) : TDateTime ;
 Var
   AStr : String;
+  DS, TS: Char;
   {$IFDEF HAS_FORMATSETTINGS}
   FS: TFormatSettings;
   {$ELSE}
@@ -1822,8 +1823,17 @@ begin
   if Format <> '' then
     FS.ShortDateFormat := Format;
 
-  AStr := Trim( StringReplace(DateTimeString,'/',FS.DateSeparator, [rfReplaceAll])) ;
-  AStr := StringReplace(AStr,':',FS.TimeSeparator, [rfReplaceAll]) ;
+  DS := FS.DateSeparator;
+  TS := FS.TimeSeparator;
+
+  if DS <> '-' then
+    AStr := Trim( StringReplace(DateTimeString,'-',DS, [rfReplaceAll])) ;
+
+  if DS <> '/' then
+    AStr := Trim( StringReplace(DateTimeString,'/',DS, [rfReplaceAll])) ;
+
+  if TS <> ':' then
+    AStr := StringReplace(AStr,':',TS, [rfReplaceAll]) ;
 
   Result := StrToDateTime(AStr, FS);
   {$ELSE}
@@ -1832,8 +1842,17 @@ begin
     if Format <> '' then
       ShortDateFormat := Format ;
 
-    AStr := Trim( StringReplace(DateTimeString,'/',DateSeparator, [rfReplaceAll])) ;
-    AStr := StringReplace(AStr,':',TimeSeparator, [rfReplaceAll]) ;
+    DS := DateSeparator;
+    TS := TimeSeparator;
+
+    if DS <> '-' then
+      AStr := Trim( StringReplace(DateTimeString,'-',DS, [rfReplaceAll])) ;
+
+    if DS <> '/' then
+      AStr := Trim( StringReplace(DateTimeString,'/',DS, [rfReplaceAll])) ;
+
+    if TS <> ':' then
+      AStr := StringReplace(AStr,':',TS, [rfReplaceAll]) ;
 
     Result := StrToDateTime( AStr ) ;
   finally

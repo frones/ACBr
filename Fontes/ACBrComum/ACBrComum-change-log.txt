@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/04/2019
+-- ACBrUtil --
+[*] Ajustes de validação do Separador Data e Hora na função StringToDateTime.
+    (por: José M. S. Junior)
+
 Data: 06/02/2019
 -- ACBrUtil --
 [*] Inclusão de parâmetro nos métodos "SeparaDados" e "SeparaDadoArray" para

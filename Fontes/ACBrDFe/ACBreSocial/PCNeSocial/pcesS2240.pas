@@ -499,7 +499,8 @@ begin
     Gerador.wCampo(tcStr, '', 'nisResp', 1, 11, 1, pRespReg[i].nisResp);
     Gerador.wCampo(tcStr, '', 'nmResp',  1, 70, 1, pRespReg[i].nmResp);
     Gerador.wCampo(tcStr, '', 'ideOC',   1,  1, 1, eSIdeOCToStr(pRespReg[i].ideOC));
-    Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
+    if pRespReg[i].ideOC = idOutros then
+      Gerador.wCampo(tcStr, '', 'dscOC',   1, 20, 1, pRespReg[i].dscOC);
     Gerador.wCampo(tcStr, '', 'nrOC',    1, 14, 1, pRespReg[i].nrOc);
     Gerador.wCampo(tcStr, '', 'ufOC',    2,  2, 0, eSufToStr(pRespReg[i].ufOC));
 
@@ -793,7 +794,7 @@ begin
           cpfResp := INIRec.ReadString(sSecao, 'cpfResp', EmptyStr);
           nisResp := INIRec.ReadString(sSecao, 'nisResp', EmptyStr);
           nmResp  := INIRec.ReadString(sSecao, 'nmResp', EmptyStr);
-          ideOC   := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'nrInsc', EmptyStr));
+          ideOC   := eSStrToIdeOC(Ok, INIRec.ReadString(sSecao, 'ideOC', EmptyStr));
           dscOC   := INIRec.ReadString(sSecao, 'dscOC', EmptyStr);
           nrOC    := INIRec.ReadString(sSecao, 'nrOc', EmptyStr);
           ufOC    := eSStrTouf(Ok, INIRec.ReadString(sSecao, 'ufOC', 'SP'));

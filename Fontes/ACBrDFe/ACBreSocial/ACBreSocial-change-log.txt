@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2019
+-- pcesS2240 --
+[-] Ajuste para o campo dscOC ser gerado apenas quando o campo ideOC igual a 9.
+   Por: Rafael Dias
+
 22/04/2019
 -- pcesS2300 --
 [*] https://www.projetoacbr.com.br/forum/topic/50817-corre%C3%A7%C3%A3o-evento-2300-tag-infodirigentesindical-apenas-sendo-enviada-quando-houver-dtadmorig/
@@ -60,7 +65,7 @@ Símbolo : Significado
 
 11/04/2019
 -- ACBreSocialWebServices --
-[*] Possivel correção na passagem dos parametros para o método Download.
+[-] Possivel correção na passagem dos parametros para o método Download.
    Por: Italo Jurisato Junior
 
 02/04/2019

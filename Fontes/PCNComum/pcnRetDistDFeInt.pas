@@ -586,7 +586,8 @@ begin
               end;
             end;
 
-            if (oLeitorInfZip.rExtrai(2, 'retEvento' + FtpDFe) <> '') then
+            if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') or
+               (oLeitorInfZip.rExtrai(2, 'retEvento' + FtpDFe) <> '') then
             begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));

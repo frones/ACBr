@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2019
+-- pcnRetConsSitNFe --
+[-] Correção de tipo na leitura da tag cMsg.
+    https://www.projetoacbr.com.br/forum/topic/50987-erro-invalid-argument-ao-enviarconsultar-nfc-e-tag-cmsg/
+  Por: elrond
+
 25/04/2019
 -- ACBrNFeServicos --
 [*] Ajuste das URL de consulta por chave de acesso NFCe homologação para as UF

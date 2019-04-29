@@ -429,7 +429,8 @@ end;
 
 procedure TevtInfoEmpregador.GerarInfoOp;
 begin
-  if infoEmpregador.infoCadastro.infoOpInst() and (infoEmpregador.infoCadastro.InfoOp.nrSiafi <> EmptyStr) then
+  //if infoEmpregador.infoCadastro.infoOpInst() and (infoEmpregador.infoCadastro.InfoOp.nrSiafi <> EmptyStr) then
+  if infoEmpregador.infoCadastro.infoOpInst() and (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico) then
   begin
     Gerador.wGrupo('infoOP');
 

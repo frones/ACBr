@@ -71,8 +71,8 @@ type
     frTNPDFExport1: TfrTNPDFExport;
     frUserDataset1: TfrUserDataset;
     PrintDialog1: TPrintDialog;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
     procedure frReport1GetValue(const ParName: string;
       var ParValue: variant);
     procedure frReport1EnterRect(Memo: TStringList; View: TfrView);{%h-}
@@ -231,14 +231,14 @@ end;
 
 { TdmACbrBoletoFCLazReport }
 
-procedure TdmACbrBoletoFCLazReport.FormCreate(Sender: TObject);
+procedure TdmACbrBoletoFCLazReport.DataModuleCreate(Sender: TObject);
 begin
   fIndice        := 0;
   MensagemPadrao := TStringList.Create;
   fBoletoFC      := TACBrBoletoFCLazReport(Owner);
 end;
 
-procedure TdmACbrBoletoFCLazReport.FormDestroy(Sender: TObject);
+procedure TdmACbrBoletoFCLazReport.DataModuleDestroy(Sender: TObject);
 begin
   MensagemPadrao.Free;
 end;

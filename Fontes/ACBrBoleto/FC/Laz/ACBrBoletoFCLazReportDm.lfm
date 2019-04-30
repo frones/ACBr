@@ -1,5 +1,6 @@
 object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
-  OnCreate = FormCreate
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
   OldCreateOrder = False
   left = 373
   top = 183
@@ -7,6 +8,7 @@ object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
   HorizontalOffset = 517
   VerticalOffset = 298
   Width = 264
+  PPI = 96
   object frReport1: TfrReport
     Dataset = frUserDataset1
     InitialZoom = pzDefault
@@ -19,9 +21,6 @@ object dmACbrBoletoFCLazReport: TdmACbrBoletoFCLazReport
     OnEnterRect = frReport1EnterRect
     left = 32
     top = 32
-    ReportForm = {
-      19000000
-    }
   end
   object frUserDataset1: TfrUserDataset
     OnCheckEOF = frUserDataset1CheckEOF

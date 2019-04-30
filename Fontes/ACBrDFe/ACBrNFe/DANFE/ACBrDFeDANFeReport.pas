@@ -41,7 +41,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFeReport,
-  pcnNFe, pcnConversao;
+  pcnNFe, pcnConversao, pcnAuxiliar;
 
 type
   TpcnTributos = (trbNenhum, trbNormal, trbSeparadamente);
@@ -357,14 +357,18 @@ end;
 
 function TACBrDFeDANFeReport.ManterInfAdFisco(ANFe: TNFe): String;
   // Informações de interesse do fisco
+var
+  infAdFisco: string;
 begin
   Result := '';
-  if ANFe.InfAdic.infAdFisco > '' then
+  infAdFisco := ANFe.InfAdic.infAdFisco;
+
+  if infAdFisco > '' then
   begin
     if ANFe.InfAdic.infCpl > '' then
-      Result := ANFe.InfAdic.infAdFisco + '; '
+      Result := infAdFisco + IIf(Copy(infAdFisco, Length(infAdFisco), 1) = ';', '', '; ')
     else
-      Result := ANFe.InfAdic.infAdFisco;
+      Result := infAdFisco;
   end;
 end;
 

@@ -271,6 +271,7 @@ var
 begin
   Result := '';
   buffer := Nil;
+  SubDoc := Nil;
 
   ANode := xmlDocGetRootElement(aDoc);
   if (ANode = nil) then

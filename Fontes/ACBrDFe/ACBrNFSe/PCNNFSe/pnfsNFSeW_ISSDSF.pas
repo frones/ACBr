@@ -286,17 +286,17 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, OperacaoToStr(NFSe.Servico.Operacao), '');
   Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, TributacaoToStr(NFSe.Servico.Tributacao), '');
 
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorPIS',    01, 02, 1, NFSe.Servico.Valores.ValorPis, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorCOFINS', 01, 02, 1, NFSe.Servico.Valores.ValorCofins, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorINSS',   01, 02, 1, NFSe.Servico.Valores.ValorInss, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorIR',     01, 02, 1, NFSe.Servico.Valores.ValorIr, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorCSLL',   01, 02, 1, NFSe.Servico.Valores.ValorCsll, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorPIS',    01, 15, 1, NFSe.Servico.Valores.ValorPis, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorCOFINS', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorINSS',   01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorIR',     01, 15, 1, NFSe.Servico.Valores.ValorIr, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorCSLL',   01, 15, 1, NFSe.Servico.Valores.ValorCsll, '');
 
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaPIS',    01, 02, 1, NFSe.Servico.Valores.AliquotaPIS, '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaCOFINS', 01, 02, 1, NFSe.Servico.Valores.AliquotaCOFINS, '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaINSS',   01, 02, 1, NFSe.Servico.Valores.AliquotaINSS, '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaIR',     01, 02, 1, NFSe.Servico.Valores.AliquotaIR, '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaCSLL',   01, 02, 1, NFSe.Servico.Valores.AliquotaCSLL, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaPIS',    01, 06, 1, NFSe.Servico.Valores.AliquotaPIS, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaCOFINS', 01, 06, 1, NFSe.Servico.Valores.AliquotaCOFINS, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaINSS',   01, 06, 1, NFSe.Servico.Valores.AliquotaINSS, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaIR',     01, 06, 1, NFSe.Servico.Valores.AliquotaIR, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaCSLL',   01, 06, 1, NFSe.Servico.Valores.AliquotaCSLL, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'DescricaoRPS', 01, 1500, 1, NFSe.OutrasInformacoes, '');
 end;

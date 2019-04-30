@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+30/04/2019
+-- ACBrBancoSafra --
+[-] Correção leitura do retorno CNAB400 quando a leitura da ocorrência de retorno.
+https://www.projetoacbr.com.br/forum/topic/49467-ajuste-retorno-banco-safra/
+
 26/04/2019
 -- ACBrBancoBrasil --
 [-] Correção para permitir o processamento do arquivo retorno CNAB400 para convênios de

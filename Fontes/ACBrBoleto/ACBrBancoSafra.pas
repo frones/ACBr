@@ -534,13 +534,12 @@ begin
     with Titulo do
     begin
 
-      NossoNumero := Copy(Linha, 63, 8);
-      OcorrenciaOriginal.Tipo :=
-        CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 103, 2), 0));
+      NossoNumero    := Copy(Linha, 63, 8);
+      CodOcorrencia  := StrToIntDef(copy(Linha, 109, 2),0);
+      OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
 
       Carteira := copy(Linha, 108, 1);
 
-      CodOcorrencia  := StrToIntDef(copy(Linha, 109, 2),0);
       DataOcorrencia := StringToDateTimeDef(copy(Linha, 111, 2) + '/' +
                                             copy(Linha, 113, 2) + '/' +
                                             copy(Linha, 115, 2), 0, 'DD/MM/YY');

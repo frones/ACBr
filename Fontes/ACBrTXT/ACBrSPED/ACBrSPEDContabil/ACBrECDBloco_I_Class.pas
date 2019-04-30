@@ -679,14 +679,27 @@ begin
      begin
         with FRegistroI200.Items[intFor] do
         begin
+           /// Layout 7 a partir da escrituração ano calendário 2018
+           if DT_INI >= EncodeDate(2018,01,01) then
+           begin
+             Add( LFill('I200') +
+                  LFill(NUM_LCTO) +
+                  LFill(DT_LCTO) +
+                  LFill(VL_LCTO, 19, 2) +
+                  LFill(IND_LCTO) +
+                  LFill(DT_LCTO_EXT)
+                  );
+           end
            ///
-           Add( LFill('I200') +
-                LFill(NUM_LCTO) +
-                LFill(DT_LCTO) +
-                LFill(VL_LCTO, 19, 2) +
-                LFill(IND_LCTO) +
-                LFill('')
-                );
+           else
+           begin
+             Add( LFill('I200') +
+                  LFill(NUM_LCTO) +
+                  LFill(DT_LCTO) +
+                  LFill(VL_LCTO, 19, 2) +
+                  LFill(IND_LCTO)
+                  );
+           end;       
         end;
         // Registro Filho
         WriteRegistroI250(FRegistroI200.Items[intFor]);

@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/05/2019
+-- ACBrNFSeWebServices --
+[*] Não estava apresentado de forma correta o retorno - Provedor EGoverneISS.
 -- ACBrNFSe --
 [*] Não estava assinado o RPS para ser enviado pelo SubstituicaoNFSe - Provedor Fiorilli
    Por: Italo Jurisato Junior

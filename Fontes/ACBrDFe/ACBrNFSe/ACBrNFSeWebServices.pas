@@ -1500,11 +1500,20 @@ begin
   end
   else begin
     if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
-      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
-               'Situação...... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Situacao + LineBreak +
-               'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
-               'Protocolo..... : ' + FProtocolo + LineBreak +
-               'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak
+    begin
+      if FProvedor = proEgoverneISS then
+        FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+                 'Autenticador.. : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Autenticador + LineBreak +
+                 'Link.......... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Link + LineBreak +
+                 'Numero........ : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Numero + LineBreak +
+                 'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak
+      else
+        FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+                 'Situação...... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Situacao + LineBreak +
+                 'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+                 'Protocolo..... : ' + FProtocolo + LineBreak +
+                 'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+    end
     else
       FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +

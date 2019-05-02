@@ -584,7 +584,7 @@ begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
-  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe,
                                       AMotivoCancelamento);

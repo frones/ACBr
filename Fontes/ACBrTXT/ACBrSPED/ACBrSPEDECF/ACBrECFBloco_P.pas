@@ -134,6 +134,8 @@ type
     fIND_VAL_CTA_REF_INI: string;
     fNIVEL: integer;
     fTIPO:  string;
+    fVAL_CTA_REF_DEB:     Variant;
+    fVAL_CTA_REF_CRED:    Variant;
     fVAL_CTA_REF_FIN: variant;
     fVAL_CTA_REF_INI: variant;
   public
@@ -145,6 +147,8 @@ type
     property COD_CTA_SUP: string read fCOD_CTA_SUP write fCOD_CTA_SUP;
     property VAL_CTA_REF_INI: variant read fVAL_CTA_REF_INI write fVAL_CTA_REF_INI;
     property IND_VAL_CTA_REF_INI: string read fIND_VAL_CTA_REF_INI write fIND_VAL_CTA_REF_INI;
+    property VAL_CTA_REF_DEB: Variant read fVAL_CTA_REF_DEB write fVAL_CTA_REF_DEB;
+    property VAL_CTA_REF_CRED: Variant read fVAL_CTA_REF_CRED write fVAL_CTA_REF_CRED;
     property VAL_CTA_REF_FIN: variant read fVAL_CTA_REF_FIN write fVAL_CTA_REF_FIN;
     property IND_VAL_CTA_REF_FIN: string read fIND_VAL_CTA_REF_FIN write fIND_VAL_CTA_REF_FIN;
   end;

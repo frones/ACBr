@@ -312,18 +312,37 @@ begin
     begin
       with RegP030.RegistroP100.Items[intFor] do
       begin
-
-        Add(LFill('P100')                 +
-            LFill(CODIGO)                 +
-            LFill(DESCRICAO)              +
-            LFill(TIPO)                   +
-            LFill(NIVEL, 1)               +
-            LFill(COD_NAT)                +
-            LFill(COD_CTA_SUP)            +
-            VLFill(VAL_CTA_REF_INI, 19, 2) +
-            LFill(IND_VAL_CTA_REF_INI, 1) +
-            VLFill(VAL_CTA_REF_FIN, 19, 2) +
-            LFill(IND_VAL_CTA_REF_FIN, 1));
+        /// Layout 5 a partir da escrituração ano calendário 2018
+        if DT_INI >= EncodeDate(2018,01,01) then
+        begin
+          Add(LFill('P100')                  +
+              LFill(CODIGO)                  +
+              LFill(DESCRICAO)               +
+              LFill(TIPO)                    +
+              LFill(NIVEL, 1)                +
+              LFill(COD_NAT)                 +
+              LFill(COD_CTA_SUP)             +
+              VLFill(VAL_CTA_REF_INI, 19, 2) +
+              LFill(IND_VAL_CTA_REF_INI, 1)  +
+              VLFill(VAL_CTA_REF_DEB,2)      +
+              VLFill(VAL_CTA_REF_CRED,2)     +
+              VLFill(VAL_CTA_REF_FIN, 19, 2) +
+              LFill(IND_VAL_CTA_REF_FIN, 1));
+        end
+        else
+        begin
+          Add(LFill('P100')                  +
+              LFill(CODIGO)                  +
+              LFill(DESCRICAO)               +
+              LFill(TIPO)                    +
+              LFill(NIVEL, 1)                +
+              LFill(COD_NAT)                 +
+              LFill(COD_CTA_SUP)             +
+              VLFill(VAL_CTA_REF_INI, 19, 2) +
+              LFill(IND_VAL_CTA_REF_INI, 1)  +
+              VLFill(VAL_CTA_REF_FIN, 19, 2) +
+              LFill(IND_VAL_CTA_REF_FIN, 1));
+        end;
       end;
 
       FRegistroP990.QTD_LIN := FRegistroP990.QTD_LIN + 1;

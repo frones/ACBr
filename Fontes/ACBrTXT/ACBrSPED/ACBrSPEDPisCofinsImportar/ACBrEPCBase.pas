@@ -100,7 +100,14 @@ var
   vValor: string;
 begin
   Indice := Indice + 1;
-  vValor := Delimitador[Indice];
+  { Verificar se o Índique que se está tentando ler não é maior que a quantidade
+    de colunas disponíveis no arquivo que está sendo importado. Isso pode acontecer
+    quando tentamos importar arquivos de SPED mais antigos que possuem menos colunas
+    que a definição atual }
+  if (Indice <= Delimitador.Count - 1) then
+    vValor := Delimitador[Indice]
+  else
+    vValor := '';
 
   if Assigned(FAntesInserirValor) then
     FAntesInserirValor(vValor, Indice);

@@ -52,7 +52,7 @@ const
   {$IfDef MSWINDOWS}
   CSKLIB = 'sk_access.dll';
   {$Else}
-  CSKLIB = 'libsk_access.so';
+  CSKLIB = 'libsk_access64.so';
   {$EndIf}
 
 type

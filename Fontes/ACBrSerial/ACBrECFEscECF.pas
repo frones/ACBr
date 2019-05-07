@@ -3221,7 +3221,7 @@ begin
 
   EscECFComando.AddParamInteger( PosAliq ) ;
   EscECFComando.AddParamString( Tipo ) ;
-  EscECFComando.AddParamString( IntToStrZero( Trunc(Aliquota*100), 4 ) ) ;
+  EscECFComando.AddParamString( IntToStrZero( TruncFix(Aliquota*100), 4 ) );
   EnviaComando;
 
   CarregaAliquotas;

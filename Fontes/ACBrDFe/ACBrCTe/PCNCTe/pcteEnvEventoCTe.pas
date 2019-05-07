@@ -617,7 +617,7 @@ begin
 
           tePrestDesacordo:
             begin
-              infEvento.detEvento.xOBS := INIRec.ReadString(sSecao, 'nObs', '');
+              infEvento.detEvento.xOBS := INIRec.ReadString(sSecao, 'xObs', '');
             end;
 
           teGTV:

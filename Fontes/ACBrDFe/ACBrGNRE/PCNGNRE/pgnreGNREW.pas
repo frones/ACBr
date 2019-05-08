@@ -108,8 +108,8 @@ begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
-  Gerador.wGrupo('TDadosGNRE versao="1.00"');
-//  Gerador.wGrupo('TDadosGNRE');
+//  Gerador.wGrupo('TDadosGNRE versao="1.00"');
+  Gerador.wGrupo('TDadosGNRE');
 
   Gerador.wCampo(tcStr, '', 'c01_UfFavorecida  ', 002, 002, 1, GNRE.c01_UfFavorecida, DSC_UF + ' Favorecida');
   Gerador.wCampo(tcInt, '', 'c02_receita   ', 006, 006, 1, GNRE.c02_receita, '');

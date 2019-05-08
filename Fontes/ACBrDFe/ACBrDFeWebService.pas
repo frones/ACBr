@@ -63,6 +63,8 @@ type
   { TDFeWebService }
 
   TDFeWebService = class
+  private
+    function TemIntegrador: Boolean;
   protected
     FPSoapVersion: String;
     FPSoapEnvelopeAtributtes: String;
@@ -183,7 +185,7 @@ begin
   FPRetornoWS := '';
   FPRetWS := '';
   FPMsg := '';
-  if Assigned(FPDFeOwner) and Assigned(FPDFeOwner.Integrador) then
+  if TemIntegrador then
     FPDFeOwner.Integrador.Clear;
 end;
 
@@ -197,7 +199,7 @@ begin
   InicializarServico;
   try
     DefinirDadosMsg;
-    if Assigned(FPDFeOwner.Integrador) then
+    if TemIntegrador then
       DefinirDadosIntegrador;
 
     DefinirEnvelopeSoap;
@@ -205,9 +207,12 @@ begin
 
     try
       EnviarDados;
-      Result := TratarResposta;
-      FazerLog(GerarMsgLog, True);
-      SalvarResposta;
+      try
+        Result := TratarResposta;
+      finally
+        FazerLog(GerarMsgLog, True);
+        SalvarResposta;
+      end;
     except
       on E: Exception do
       begin
@@ -274,7 +279,7 @@ end;
 
 procedure TDFeWebService.DefinirDadosIntegrador;
 begin
-  if not Assigned(FPDFeOwner.Integrador) then Exit;
+  if not TemIntegrador then Exit;
 
   FPDFeOwner.Integrador.Clear;
   FPDFeOwner.Integrador.Parametros.Values['versaoDados'] := FPVersaoServico;
@@ -493,6 +498,11 @@ begin
   GerarException(ACBrStr('TratarResposta não implementado para: ') + ClassName);
 end;
 
+function TDFeWebService.TemIntegrador: Boolean;
+begin
+  Result := (Assigned(FPDFeOwner) and Assigned(FPDFeOwner.Integrador));
+end;
+
 procedure TDFeWebService.FazerLog(const Msg: String; Exibir: Boolean);
 var
   Tratado: Boolean;
@@ -550,7 +560,8 @@ begin
   { Sobrescrever apenas se necessário }
   if EstaVazio(FPRetWS) then
     raise EACBrDFeException.Create( CErroSemResposta +
-          ifthen(NaoEstaVazio(FPRetornoWS),sLineBreak+FPRetornoWS,''));
+          ifthen(NaoEstaVazio(FPRetornoWS),sLineBreak+
+          IfThen(TemIntegrador,EncodeBase64(FPRetornoWS),FPRetornoWS),''));
 end;
 
 function TDFeWebService.GetUrlWsd: String;

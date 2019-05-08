@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/51127-itemlistaservico-com-zero-a-esquerda/
+   Por: Duarte F / Italo Jurisato Junior
+
 02/05/2019
 -- ACBrNFSeWebServices --
 [*] Não estava apresentado de forma correta o retorno - Provedor EGoverneISS.

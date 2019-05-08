@@ -165,6 +165,7 @@ end;
 procedure TNFSeR.SetxItemListaServico;
 var
   Item: Integer;
+  ItemServico: string;
 begin
   NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
@@ -175,11 +176,18 @@ begin
   if Item < 100 then
     Item := Item * 100 + 1;
 
-  NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+  ItemServico := FormatFloat('0000', Item);
 
-  if not (FProvedor in [ProRJ, ProSisPMJP]) then
-    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
+  case FProvedor of
+    proAbaco:
+      NFSe.Servico.ItemListaServico := IntToStr(Item);
+
+    ProRJ, ProSisPMJP:
+      NFSe.Servico.ItemListaServico := ItemServico;
+  else
+    NFSe.Servico.ItemListaServico := Copy(ItemServico, 1, 2) + '.' +
+                                     Copy(ItemServico, 3, 2);
+  end;
 
   if TabServicosExt then
     NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))

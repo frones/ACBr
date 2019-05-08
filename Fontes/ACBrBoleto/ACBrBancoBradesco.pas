@@ -582,7 +582,7 @@ end;
 procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
-  Protesto, TipoSacado, MensagemCedente, aConta     :String;
+  Protesto, TipoSacado, MensagemCedente, aConta, aDigitoConta     :String;
   aCarteira, wLinha, ANossoNumero: String;
   TipoBoleto :Char;
   aPercMulta: Double;
@@ -632,7 +632,7 @@ var
                   aCarteira                                           +
                   aAgencia                                            +
                   aConta                                              +
-                  Cedente.ContaDigito                                 +
+                  aDigitoConta                                        +
                   ANossoNumero + DigitoNossoNumero                    +
                   IntToStrZero( aRemessa.Count + 2, 6);                  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
      end;
@@ -656,6 +656,7 @@ begin
       aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
       aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),7);
       aCarteira:= IntToStrZero(StrToIntDef(trim(Carteira),0), 3);
+      aDigitoConta := PadLeft(trim(ACBrBoleto.Cedente.ContaDigito),1,'0');
 
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
@@ -742,7 +743,7 @@ begin
                   '0'+ aCarteira                                          +
                   aAgencia                                                +
                   aConta                                                  +
-                  Cedente.ContaDigito                                     +
+                  aDigitoConta                                            +
                   PadRight( SeuNumero,25,' ')+'000'                       +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
                   IfThen( PercentualMulta > 0, '2', '0')                  +  // 066 a 066 - Indica se exite Multa ou não
                   IntToStrZero( round( aPercMulta * 100 ) , 4)            +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais

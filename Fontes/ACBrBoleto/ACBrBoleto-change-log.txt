@@ -50,6 +50,10 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+07/05/2019
+-- ACBrBancoBradesco --
+[*] Ajustes na geração Remessa - CNAB400, validação do dígito da conta
+
 30/04/2019
 -- ACBrBancoSafra --
 [-] Correção leitura do retorno CNAB400 quando a leitura da ocorrência de retorno.

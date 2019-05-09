@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2019
+-- pnfsNFSeW_Infisc --
+[*] https://www.projetoacbr.com.br/forum/topic/51230-aliquotas-dos-itens-devem-ser-zeradas-devido-o-contribuinte-ser-optante-pelo-simples-nacional/
+   Por: Celso Pothin / Italo Jurisato Junior
+
 08/05/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/51127-itemlistaservico-com-zero-a-esquerda/

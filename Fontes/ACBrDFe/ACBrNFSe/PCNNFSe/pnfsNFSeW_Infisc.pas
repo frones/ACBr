@@ -239,7 +239,7 @@ end;
 
 procedure TNFSeW_Infisc.GerarListaServicos_v10;
 var
-  i: Integer;
+  i, GeraTag: Integer;
   cServ, xServ: String;
 begin
   dTotBCISS := 0;
@@ -264,9 +264,15 @@ begin
     Gerador.wCampoNFSe(tcDe3, '', 'vUnit' , 01, 015, 1, NFSe.Servico.ItemServico.Items[i].ValorUnitario, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vServ' , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vDesc' , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 015, 0, NFSe.Servico.ItemServico.Items[i].BaseCalculo, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'pISS'  , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].Aliquota, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].ValorIss, '');
+
+    if Nfse.RegimeEspecialTributacao = retSimplesNacional then
+      GeraTag := 1
+    else
+      GeraTag := 0;
+
+    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 015, GeraTag, NFSe.Servico.ItemServico.Items[i].BaseCalculo, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'pISS'  , 01, 015, GeraTag, NFSe.Servico.ItemServico.Items[i].Aliquota, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 015, GeraTag, NFSe.Servico.ItemServico.Items[i].ValorIss, '');
 
     dTotBCISS := dTotBCISS + NFSe.Servico.ItemServico.Items[i].BaseCalculo;
     dTotISS   := dTotISS   + NFSe.Servico.ItemServico.Items[i].ValorIss;
@@ -550,7 +556,7 @@ end;
 
 procedure TNFSeW_Infisc.GerarListaServicos_v11;
 var
-  i: Integer;
+  i, GeraTag: Integer;
   cServ, xServ: String;
 begin
   dTotBCISS := 0;
@@ -583,9 +589,14 @@ begin
 
     if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '2' then
     begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, 0, NFSe.Servico.ItemServico.Items[i].BaseCalculo, '');
-      Gerador.wCampoNFSe(tcDe2, '', 'pISS'  , 01, 15, 0, NFSe.Servico.ItemServico.Items[i].Aliquota, '');
-      Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, 0, NFSe.Servico.ItemServico.Items[i].ValorIss, '');
+      if Nfse.RegimeEspecialTributacao = retSimplesNacional then
+        GeraTag := 1
+      else
+        GeraTag := 0;
+
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, GeraTag, NFSe.Servico.ItemServico.Items[i].BaseCalculo, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'pISS'  , 01, 15, GeraTag, NFSe.Servico.ItemServico.Items[i].Aliquota, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, GeraTag, NFSe.Servico.ItemServico.Items[i].ValorIss, '');
 
       dTotBCISS := dTotBCISS + NFSe.Servico.ItemServico.Items[i].BaseCalculo;
       dTotISS   := dTotISS   + NFSe.Servico.ItemServico.Items[i].ValorIss;
@@ -594,7 +605,7 @@ begin
     // Retenção INSS
     if NFSe.Servico.ItemServico.Items[i].ValorInss > 0 then
     begin
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCINSS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCINSS, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCINSS ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCINSS, '');
       Gerador.wCampoNFSe(tcDe2, '', 'pRetINSS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetINSS, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vRetINSS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorInss, '');
     end;
@@ -605,14 +616,14 @@ begin
     if NFSe.Servico.ItemServico.Items[i].ValorIr > 0 then
     begin
       Gerador.wCampoNFSe(tcDe2, '', 'vBCRetIR', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCRetIR, '');
-      Gerador.wCampoNFSe(tcDe2, '', 'pRetIR', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetIR, '');
-      Gerador.wCampoNFSe(tcDe2, '', 'vRetIR', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorIr, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'pRetIR  ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetIR, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vRetIR  ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorIr, '');
     end;
 
     // Retenção COFINS
     if NFSe.Servico.ItemServico.Items[i].ValorCofins > 0 then
     begin
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCCOFINS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCCOFINS, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCCOFINS ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCCOFINS, '');
       Gerador.wCampoNFSe(tcDe2, '', 'pRetCOFINS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetCOFINS, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vRetCOFINS', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorCofins, '');
     end;
@@ -620,7 +631,7 @@ begin
     // Retenção CSLL
     if NFSe.Servico.ItemServico.Items[i].ValorCsll > 0 then
     begin
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCCSLL', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCCSLL, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCCSLL ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCCSLL, '');
       Gerador.wCampoNFSe(tcDe2, '', 'pRetCSLL', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetCSLL, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vRetCSLL', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorCsll, '');
     end;
@@ -628,7 +639,7 @@ begin
     // Retenção PIS
     if NFSe.Servico.ItemServico.Items[i].ValorPis > 0 then
     begin
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCPISPASEP', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCPISPASEP, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCPISPASEP ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vBCPISPASEP, '');
       Gerador.wCampoNFSe(tcDe2, '', 'pRetPISPASEP', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].pRetPISPASEP, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vRetPISPASEP', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorPis, '');
     end;
@@ -639,7 +650,7 @@ begin
     if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '1' then
     begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao
       Gerador.wGrupoNFSe('ISSST');
-      Gerador.wCampoNFSe(tcDe2, '', 'vBCST',  01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vBCST ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
       Gerador.wCampoNFSe(tcDe2, '', 'pISSST', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].AlicotaISSST, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vISSST', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorISSST, '');
       Gerador.wGrupoNFSe('/ISSST');

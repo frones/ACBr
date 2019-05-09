@@ -461,7 +461,7 @@ namespace ACBrLibNFe.Demo
         {
             try
             {
-                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
                 if (string.IsNullOrEmpty(arquivoXml)) return;
 
                 var ret = AcbrNFe.NFE_LimparLista();
@@ -635,7 +635,7 @@ namespace ACBrLibNFe.Demo
                 if (InputBox.Show("WebServices Inutilização", "Modelo", ref modelo) != DialogResult.OK) return;
                 if (InputBox.Show("WebServices Inutilização", "Serie", ref serie) != DialogResult.OK) return;
                 if (InputBox.Show("WebServices Inutilização", "Número Inicial", ref numeroInicial) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Número Inicial", ref numeroFinal) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Inutilização", "Número Final", ref numeroFinal) != DialogResult.OK) return;
                 if (InputBox.Show("WebServices Inutilização", "CNPJ ou o CPF do autor do Emitente", ref eCNPJ) != DialogResult.OK) return;
                 if (InputBox.Show("WebServices Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
 

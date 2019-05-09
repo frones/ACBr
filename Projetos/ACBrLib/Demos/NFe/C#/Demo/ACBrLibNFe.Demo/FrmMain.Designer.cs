@@ -75,6 +75,26 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cmbCrypt = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.tbpEmail = new System.Windows.Forms.TabPage();
+            this.txtMensagem = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtAssunto = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtSenha = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtHost = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.ckbSSL = new System.Windows.Forms.CheckBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.ckbTLS = new System.Windows.Forms.CheckBox();
+            this.nudPorta = new System.Windows.Forms.NumericUpDown();
+            this.txtNome = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnInutilizar = new System.Windows.Forms.Button();
             this.btnCancelarNFe = new System.Windows.Forms.Button();
@@ -87,26 +107,6 @@
             this.btnStatusServ = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tbpEmail = new System.Windows.Forms.TabPage();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtNome = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.ckbTLS = new System.Windows.Forms.CheckBox();
-            this.ckbSSL = new System.Windows.Forms.CheckBox();
-            this.txtHost = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.nudPorta = new System.Windows.Forms.NumericUpDown();
-            this.txtSenha = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.txtAssunto = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtMensagem = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tbpWebservices.SuspendLayout();
@@ -116,11 +116,11 @@
             this.groupBox3.SuspendLayout();
             this.tbpCertificados.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tbpEmail.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tbpEmail.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbRespostas
@@ -319,7 +319,7 @@
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(50, 13);
             this.label15.TabIndex = 20;
-            this.label15.Text = "Usuario";
+            this.label15.Text = "Usuário";
             // 
             // label14
             // 
@@ -542,7 +542,7 @@
             this.groupBox4.Controls.Add(this.txtCertPath);
             this.groupBox4.Controls.Add(this.btnSelecionarCertificado);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(6, 87);
+            this.groupBox4.Location = new System.Drawing.Point(6, 132);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(249, 145);
             this.groupBox4.TabIndex = 7;
@@ -624,7 +624,7 @@
             "xsMsXml",
             "xsMsXmlCapicom",
             "xsLibXml2"});
-            this.cmbXmlSign.Location = new System.Drawing.Point(81, 60);
+            this.cmbXmlSign.Location = new System.Drawing.Point(9, 105);
             this.cmbXmlSign.Name = "cmbXmlSign";
             this.cmbXmlSign.Size = new System.Drawing.Size(129, 21);
             this.cmbXmlSign.TabIndex = 6;
@@ -633,7 +633,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 63);
+            this.label6.Location = new System.Drawing.Point(6, 89);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 5;
@@ -649,7 +649,7 @@
             "httpWinHttp",
             "httpOpenSSL",
             "httpIndy"});
-            this.cmbHttp.Location = new System.Drawing.Point(81, 33);
+            this.cmbHttp.Location = new System.Drawing.Point(9, 65);
             this.cmbHttp.Name = "cmbHttp";
             this.cmbHttp.Size = new System.Drawing.Size(129, 21);
             this.cmbHttp.TabIndex = 4;
@@ -658,7 +658,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 36);
+            this.label5.Location = new System.Drawing.Point(6, 49);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 13);
             this.label5.TabIndex = 3;
@@ -673,7 +673,7 @@
             "cryOpenSSL",
             "cryCapicom",
             "cryWinCrypt"});
-            this.cmbCrypt.Location = new System.Drawing.Point(81, 6);
+            this.cmbCrypt.Location = new System.Drawing.Point(9, 25);
             this.cmbCrypt.Name = "cmbCrypt";
             this.cmbCrypt.Size = new System.Drawing.Size(129, 21);
             this.cmbCrypt.TabIndex = 2;
@@ -687,6 +687,210 @@
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 1;
             this.label4.Text = "CryptLib";
+            // 
+            // tbpEmail
+            // 
+            this.tbpEmail.Controls.Add(this.txtMensagem);
+            this.tbpEmail.Controls.Add(this.label25);
+            this.tbpEmail.Controls.Add(this.txtAssunto);
+            this.tbpEmail.Controls.Add(this.label24);
+            this.tbpEmail.Controls.Add(this.groupBox6);
+            this.tbpEmail.Location = new System.Drawing.Point(4, 22);
+            this.tbpEmail.Name = "tbpEmail";
+            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpEmail.Size = new System.Drawing.Size(261, 413);
+            this.tbpEmail.TabIndex = 3;
+            this.tbpEmail.Text = "Email";
+            this.tbpEmail.UseVisualStyleBackColor = true;
+            // 
+            // txtMensagem
+            // 
+            this.txtMensagem.Location = new System.Drawing.Point(6, 327);
+            this.txtMensagem.Multiline = true;
+            this.txtMensagem.Name = "txtMensagem";
+            this.txtMensagem.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtMensagem.Size = new System.Drawing.Size(249, 80);
+            this.txtMensagem.TabIndex = 34;
+            this.txtMensagem.WordWrap = false;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(3, 311);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(67, 13);
+            this.label25.TabIndex = 35;
+            this.label25.Text = "Mensagem";
+            // 
+            // txtAssunto
+            // 
+            this.txtAssunto.Location = new System.Drawing.Point(6, 288);
+            this.txtAssunto.Name = "txtAssunto";
+            this.txtAssunto.Size = new System.Drawing.Size(249, 20);
+            this.txtAssunto.TabIndex = 32;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(3, 272);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(52, 13);
+            this.label24.TabIndex = 33;
+            this.label24.Text = "Assunto";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.txtSenha);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.txtUsuario);
+            this.groupBox6.Controls.Add(this.txtHost);
+            this.groupBox6.Controls.Add(this.label23);
+            this.groupBox6.Controls.Add(this.ckbSSL);
+            this.groupBox6.Controls.Add(this.label21);
+            this.groupBox6.Controls.Add(this.ckbTLS);
+            this.groupBox6.Controls.Add(this.nudPorta);
+            this.groupBox6.Controls.Add(this.txtNome);
+            this.groupBox6.Controls.Add(this.txtEmail);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(249, 263);
+            this.groupBox6.TabIndex = 31;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Configurações";
+            // 
+            // txtSenha
+            // 
+            this.txtSenha.Location = new System.Drawing.Point(9, 227);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.PasswordChar = '*';
+            this.txtSenha.Size = new System.Drawing.Size(234, 20);
+            this.txtSenha.TabIndex = 28;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(6, 16);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(39, 13);
+            this.label19.TabIndex = 23;
+            this.label19.Text = "Nome";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(6, 211);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(43, 13);
+            this.label22.TabIndex = 30;
+            this.label22.Text = "Senha";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(6, 94);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(71, 13);
+            this.label20.TabIndex = 19;
+            this.label20.Text = "Host SMTP";
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Location = new System.Drawing.Point(9, 188);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(234, 20);
+            this.txtUsuario.TabIndex = 27;
+            // 
+            // txtHost
+            // 
+            this.txtHost.Location = new System.Drawing.Point(9, 110);
+            this.txtHost.Name = "txtHost";
+            this.txtHost.Size = new System.Drawing.Size(234, 20);
+            this.txtHost.TabIndex = 20;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(6, 172);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(50, 13);
+            this.label23.TabIndex = 29;
+            this.label23.Text = "Usuário";
+            // 
+            // ckbSSL
+            // 
+            this.ckbSSL.AutoSize = true;
+            this.ckbSSL.Location = new System.Drawing.Point(79, 136);
+            this.ckbSSL.Name = "ckbSSL";
+            this.ckbSSL.Size = new System.Drawing.Size(49, 17);
+            this.ckbSSL.TabIndex = 21;
+            this.ckbSSL.Text = "SSL";
+            this.ckbSSL.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(9, 133);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(37, 13);
+            this.label21.TabIndex = 26;
+            this.label21.Text = "Porta";
+            // 
+            // ckbTLS
+            // 
+            this.ckbTLS.AutoSize = true;
+            this.ckbTLS.Location = new System.Drawing.Point(79, 152);
+            this.ckbTLS.Name = "ckbTLS";
+            this.ckbTLS.Size = new System.Drawing.Size(49, 17);
+            this.ckbTLS.TabIndex = 22;
+            this.ckbTLS.Text = "TLS";
+            this.ckbTLS.UseVisualStyleBackColor = true;
+            // 
+            // nudPorta
+            // 
+            this.nudPorta.Location = new System.Drawing.Point(12, 149);
+            this.nudPorta.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudPorta.Name = "nudPorta";
+            this.nudPorta.Size = new System.Drawing.Size(61, 20);
+            this.nudPorta.TabIndex = 25;
+            // 
+            // txtNome
+            // 
+            this.txtNome.Location = new System.Drawing.Point(9, 32);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(234, 20);
+            this.txtNome.TabIndex = 17;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(9, 71);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(234, 20);
+            this.txtEmail.TabIndex = 18;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(6, 55);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 13);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Email";
             // 
             // btnSalvar
             // 
@@ -714,7 +918,7 @@
             this.btnCancelarNFe.Name = "btnCancelarNFe";
             this.btnCancelarNFe.Size = new System.Drawing.Size(118, 23);
             this.btnCancelarNFe.TabIndex = 16;
-            this.btnCancelarNFe.Text = "Cancelar NFe (Chave)";
+            this.btnCancelarNFe.Text = "Cancelar NFe";
             this.btnCancelarNFe.UseVisualStyleBackColor = true;
             this.btnCancelarNFe.Click += new System.EventHandler(this.BtnCancelarNFe_Click);
             // 
@@ -816,201 +1020,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Respostas";
             // 
-            // tbpEmail
-            // 
-            this.tbpEmail.Controls.Add(this.txtMensagem);
-            this.tbpEmail.Controls.Add(this.label25);
-            this.tbpEmail.Controls.Add(this.txtAssunto);
-            this.tbpEmail.Controls.Add(this.label24);
-            this.tbpEmail.Controls.Add(this.groupBox6);
-            this.tbpEmail.Location = new System.Drawing.Point(4, 22);
-            this.tbpEmail.Name = "tbpEmail";
-            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpEmail.Size = new System.Drawing.Size(261, 413);
-            this.tbpEmail.TabIndex = 3;
-            this.tbpEmail.Text = "Email";
-            this.tbpEmail.UseVisualStyleBackColor = true;
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Location = new System.Drawing.Point(9, 71);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(234, 20);
-            this.txtEmail.TabIndex = 18;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 55);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(32, 13);
-            this.label18.TabIndex = 24;
-            this.label18.Text = "Email";
-            // 
-            // txtNome
-            // 
-            this.txtNome.Location = new System.Drawing.Point(9, 32);
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(234, 20);
-            this.txtNome.TabIndex = 17;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 16);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(35, 13);
-            this.label19.TabIndex = 23;
-            this.label19.Text = "Nome";
-            // 
-            // ckbTLS
-            // 
-            this.ckbTLS.AutoSize = true;
-            this.ckbTLS.Location = new System.Drawing.Point(79, 152);
-            this.ckbTLS.Name = "ckbTLS";
-            this.ckbTLS.Size = new System.Drawing.Size(46, 17);
-            this.ckbTLS.TabIndex = 22;
-            this.ckbTLS.Text = "TLS";
-            this.ckbTLS.UseVisualStyleBackColor = true;
-            // 
-            // ckbSSL
-            // 
-            this.ckbSSL.AutoSize = true;
-            this.ckbSSL.Location = new System.Drawing.Point(79, 136);
-            this.ckbSSL.Name = "ckbSSL";
-            this.ckbSSL.Size = new System.Drawing.Size(46, 17);
-            this.ckbSSL.TabIndex = 21;
-            this.ckbSSL.Text = "SSL";
-            this.ckbSSL.UseVisualStyleBackColor = true;
-            // 
-            // txtHost
-            // 
-            this.txtHost.Location = new System.Drawing.Point(9, 110);
-            this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(234, 20);
-            this.txtHost.TabIndex = 20;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 94);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(62, 13);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "Host SMTP";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(9, 133);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(32, 13);
-            this.label21.TabIndex = 26;
-            this.label21.Text = "Porta";
-            // 
-            // nudPorta
-            // 
-            this.nudPorta.Location = new System.Drawing.Point(12, 149);
-            this.nudPorta.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudPorta.Name = "nudPorta";
-            this.nudPorta.Size = new System.Drawing.Size(61, 20);
-            this.nudPorta.TabIndex = 25;
-            // 
-            // txtSenha
-            // 
-            this.txtSenha.Location = new System.Drawing.Point(9, 227);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(234, 20);
-            this.txtSenha.TabIndex = 28;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 211);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(38, 13);
-            this.label22.TabIndex = 30;
-            this.label22.Text = "Senha";
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Location = new System.Drawing.Point(9, 188);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(234, 20);
-            this.txtUsuario.TabIndex = 27;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 172);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(43, 13);
-            this.label23.TabIndex = 29;
-            this.label23.Text = "Usuário";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.txtSenha);
-            this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Controls.Add(this.label22);
-            this.groupBox6.Controls.Add(this.label20);
-            this.groupBox6.Controls.Add(this.txtUsuario);
-            this.groupBox6.Controls.Add(this.txtHost);
-            this.groupBox6.Controls.Add(this.label23);
-            this.groupBox6.Controls.Add(this.ckbSSL);
-            this.groupBox6.Controls.Add(this.label21);
-            this.groupBox6.Controls.Add(this.ckbTLS);
-            this.groupBox6.Controls.Add(this.nudPorta);
-            this.groupBox6.Controls.Add(this.txtNome);
-            this.groupBox6.Controls.Add(this.txtEmail);
-            this.groupBox6.Controls.Add(this.label18);
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(249, 263);
-            this.groupBox6.TabIndex = 31;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Configurações";
-            // 
-            // txtAssunto
-            // 
-            this.txtAssunto.Location = new System.Drawing.Point(6, 288);
-            this.txtAssunto.Name = "txtAssunto";
-            this.txtAssunto.Size = new System.Drawing.Size(249, 20);
-            this.txtAssunto.TabIndex = 32;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(3, 272);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(45, 13);
-            this.label24.TabIndex = 33;
-            this.label24.Text = "Assunto";
-            // 
-            // txtMensagem
-            // 
-            this.txtMensagem.Location = new System.Drawing.Point(6, 327);
-            this.txtMensagem.Multiline = true;
-            this.txtMensagem.Name = "txtMensagem";
-            this.txtMensagem.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtMensagem.Size = new System.Drawing.Size(249, 80);
-            this.txtMensagem.TabIndex = 34;
-            this.txtMensagem.WordWrap = false;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(3, 311);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(59, 13);
-            this.label25.TabIndex = 35;
-            this.label25.Text = "Mensagem";
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1043,13 +1052,13 @@
             this.tbpCertificados.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.tbpEmail.ResumeLayout(false);
             this.tbpEmail.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

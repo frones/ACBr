@@ -58,7 +58,7 @@ implementation
 class procedure TDFeReportFortes.AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
 begin
   FReport.ShowProgress := AConfig.MostraStatus;
-  FReport.PrintDialog := (not (AConfig.MostraPreview)) and EstaVazio(AConfig.Impressora) or (AConfig.MostraSetup);
+  FReport.PrintDialog := AConfig.MostraSetup or ((not AConfig.MostraPreview) and EstaVazio(AConfig.Impressora));
 
   if NaoEstaVazio(AConfig.Impressora) then
       RLPrinter.PrinterName := AConfig.Impressora;

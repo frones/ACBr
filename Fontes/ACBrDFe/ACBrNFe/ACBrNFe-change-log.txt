@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2019
+-- ACBrECFVirtualNFCe --
+[*] Atribuir a chave da NFe a propriedade ChaveCupom antes de levantar a exception em caso de falha de envia, possibilitando pegar a chave da NFe.
+  Por: Rafael Dias
+
 26/04/2019
 -- pcnRetConsSitNFe --
 [-] Correção de tipo na leitura da tag cMsg.

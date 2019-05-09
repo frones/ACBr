@@ -800,6 +800,7 @@ begin
           begin
             cStat := IntToStr(WebServices.Enviar.cStat);
             xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo);
+            ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
 
             raise EACBrNFeException.Create('Erro ao enviar Dados da Venda:' + sLineBreak +
               'cStat: ' + cStat + sLineBreak +

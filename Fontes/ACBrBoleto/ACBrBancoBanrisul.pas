@@ -752,7 +752,7 @@ begin
   rCNPJCPF := FormatarCNPJouCPF(OnlyNumber(copy(ARetorno[0], 19, 14)));
 
   try
-    ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
+    ValidarDadosRetorno(rAgencia, rConta, OnlyNumber(rCNPJCPF));
     with ACBrBanco.ACBrBoleto do
     begin
 

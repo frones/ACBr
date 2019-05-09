@@ -50,6 +50,10 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+09/05/2019
+-- ACBrBancoBanrisul --
+[*] Ajustes na leitura do retorno CNAB240
+
 07/05/2019
 -- ACBrBancoBradesco --
 [*] Ajustes na geração Remessa - CNAB400, validação do dígito da conta

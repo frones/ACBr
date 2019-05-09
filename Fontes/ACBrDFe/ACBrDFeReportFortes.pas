@@ -58,11 +58,11 @@ implementation
 class procedure TDFeReportFortes.AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
 begin
   FReport.ShowProgress := AConfig.MostraStatus;
-  FReport.PrintDialog := (not (AConfig.MostraPreview)) and EstaVazio(AConfig.Impressora);
+  FReport.PrintDialog := (not (AConfig.MostraPreview)) and EstaVazio(AConfig.Impressora) or (AConfig.MostraSetup);
 
   if NaoEstaVazio(AConfig.Impressora) then
       RLPrinter.PrinterName := AConfig.Impressora;
-	  
+
   if RLPrinter.SupportsDuplex Then
      RLPrinter.Duplex := false;
 	 

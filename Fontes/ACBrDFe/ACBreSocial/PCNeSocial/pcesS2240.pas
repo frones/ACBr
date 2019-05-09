@@ -437,7 +437,7 @@ begin
     Gerador.wCampo(tcStr, '', 'tpAval',         1,  1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
     Gerador.wCampo(tcDe4, '', 'intConc',        1, 10, 0, objFatRisco.Items[i].intConc);
     Gerador.wCampo(tcDe4, '', 'limTol',         1, 10, 0, objFatRisco.Items[i].limTol);
-    Gerador.wCampo(tcStr, '', 'unMed',          1,  2, 0, objFatRisco.Items[i].unMed);
+    Gerador.wCampo(tcInt, '', 'unMed',          1,  2, 0, objFatRisco.Items[i].unMed);
     Gerador.wCampo(tcStr, '', 'tecMedicao',     1, 40, 0, objFatRisco.Items[i].tecMedicao);
     Gerador.wCampo(tcStr, '', 'insalubridade',  1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].insalubridade));
     Gerador.wCampo(tcStr, '', 'periculosidade', 1,  1, 1, eSSimNaoToStr(objFatRisco.Items[i].periculosidade));

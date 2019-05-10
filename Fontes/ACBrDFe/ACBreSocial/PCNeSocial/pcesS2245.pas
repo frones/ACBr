@@ -126,6 +126,7 @@ type
     FdurTreiCap: Double;
     FModTreiCap: tpModTreiCap;
     FTpTreiCap: tpTpTreiCap;
+    FindTreinAnt: tpSimNao;
     FIdeProfResp: TIdeProfRespCollection;
   public
     constructor Create;
@@ -135,6 +136,7 @@ type
     property durTreiCap: Double read FdurTreiCap write FdurTreiCap;
     property modTreiCap: tpModTreiCap read FModTreiCap write FModTreiCap;
     property tpTreiCap: tpTpTreiCap read FTpTreiCap write FTpTreiCap;
+    property indTreinAnt: tpSimNao read FindTreinAnt write FindTreinAnt;
     property ideProfResp: TIdeProfRespCollection read FIdeProfResp write FIdeProfResp;
   end;
 
@@ -256,6 +258,7 @@ begin
     Gerador.wCampo(tcDe2, '', 'durTreiCap',  1,  6, 1, objInfoComplem.durTreiCap);
     Gerador.wCampo(tcStr, '', 'modTreiCap',  1,  1, 1, tpModTreiCapToStr(objInfoComplem.modTreiCap));
     Gerador.wCampo(tcStr, '', 'tpTreiCap',   1,  1, 1, tpTpTreiCapToStr(objInfoComplem.tpTreiCap));
+    Gerador.wCampo(tcStr, '', 'indTreinAnt', 1,  1, 1, eSSimNaoToStr(objInfoComplem.indTreinAnt));
 
     GerarIdeProfResp(objInfoComplem.ideProfResp);
 
@@ -348,10 +351,11 @@ begin
       sSecao := 'infoComplem';
       if INIRec.ReadString(sSecao, 'dtTreiCap', '') <> '' then
       begin
-        treiCap.infoComplem.dtTreiCap  := StringToDateTime(INIRec.ReadString(sSecao, 'dtTreiCap', '0'));
-        treiCap.infoComplem.durTreiCap := StringToFloatDef(INIRec.ReadString(sSecao, 'durTreiCap', EmptyStr), 0);
-        treiCap.infoComplem.modTreiCap := StrTotpModTreiCap(Ok, INIRec.ReadString(sSecao, 'modTreiCap', '1'));
-        treiCap.infoComplem.tpTreiCap  := StrTotpTpTreiCap(Ok, INIRec.ReadString(sSecao, 'tpTreiCap', '1'));
+        treiCap.infoComplem.dtTreiCap   := StringToDateTime(INIRec.ReadString(sSecao, 'dtTreiCap', '0'));
+        treiCap.infoComplem.durTreiCap  := StringToFloatDef(INIRec.ReadString(sSecao, 'durTreiCap', EmptyStr), 0);
+        treiCap.infoComplem.modTreiCap  := StrTotpModTreiCap(Ok, INIRec.ReadString(sSecao, 'modTreiCap', '1'));
+        treiCap.infoComplem.tpTreiCap   := StrTotpTpTreiCap(Ok, INIRec.ReadString(sSecao, 'tpTreiCap', '1'));
+        treiCap.infoComplem.indTreinAnt := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indTreinAnt', 'N'));
       end;
 
       I := 1;

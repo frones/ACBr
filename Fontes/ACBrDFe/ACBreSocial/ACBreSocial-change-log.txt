@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/05/2019
+-- pcesS2245 --
+[*] Inclusão do campo: indTreinAnt.
+   Por: Italo Jurisato Junior
+
 07/05/2019
 -- pcesS2299 --
 [*] https://www.projetoacbr.com.br/forum/topic/51115-evento-2299-tag-qtddiasinterm/

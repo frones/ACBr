@@ -83,7 +83,8 @@ type
       const NameSpace: String = ''): xmlNodePtr;
     function LibXmlNodeWasFound(ANode: xmlNodePtr; const NodeName: String;
       const NameSpace: String): boolean;
-    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String): xmlNodePtr;
+    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String;
+      docElement: String = ''): xmlNodePtr;
   public
     function Assinar(const ConteudoXML, docElement, infElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
@@ -199,7 +200,7 @@ begin
     // DEBUG
     //WriteToTXT('C:\TEMP\CanonDigest.xml', Canon, False, False, True);
 
-    SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
+    SignNode := AdicionarNode( aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst), docElement);
 
     // gerar o hash
     DigestValue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64);
@@ -637,9 +638,10 @@ begin
   Result := _LibXmlLookUpNode(ParentNode^.children, NodeName, NameSpace);
 end;
 
-function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String): xmlNodePtr;
+function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr;
+  const ConteudoXML: String; docElement: String): xmlNodePtr;
 Var
-  NewNode: xmlNodePtr;
+  NewNode, DocNode: xmlNodePtr;
   memDoc: xmlDocPtr;
   NewNodeXml: String;
 begin
@@ -652,7 +654,15 @@ begin
     NewNodeXml := '<a>' + ConteudoXML + '</a>';
     memDoc := xmlReadMemory(PAnsiChar(AnsiString(NewNodeXml)), Length(NewNodeXml), nil, nil, 0);
     NewNode := xmlDocCopyNode(xmlDocGetRootElement(memDoc), aDoc.doc, 1);
-    Result := xmlAddChildList(xmlDocGetRootElement(aDoc), NewNode.children);
+
+    DocNode := xmlDocGetRootElement(aDoc);
+    if (docElement <> '') then
+      DocNode := LibXmlLookUpNode(DocNode, docElement);
+
+    if (DocNode = nil) then
+      raise EACBrDFeException.Create(cErrElementsNotFound);
+
+    Result := xmlAddChildList(DocNode, NewNode.children);
   finally
     if NewNode <> nil then
     begin

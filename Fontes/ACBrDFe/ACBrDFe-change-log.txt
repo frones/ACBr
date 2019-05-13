@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2019
+-- ACBrDFeSSL --
+[-] Correção no método: TDFeSSLXmlSignClass.AdicionarSignatureElement, que não
+    removia o final do XML, ao adicionar o Grupo de Assinatura...
+
+-- ACBrDFeXsLibXml2 --
+[-] Método "TDFeSSLXmlSignLibXml2.AdicionarNode", corrigido para adicionar
+    Grupo de Assinatura, dentro do Grupo "docElement"
+    (por: DSA)
+
 26/04/2019
 -- ACBrDFeXsLibXml2 --
 [*] Otimização de desempenho, no método Assinar

@@ -136,6 +136,9 @@ begin
     if (not XmlEstaAssinado(AXml)) or (vSignatureNode <> CSIGNATURE_NODE) then
       AXml := AdicionarSignatureElement(AXml, False, docElement, IdSignature, IdAttr);
 
+    // DEBUG
+    //WriteToFile('c:\temp\XmlDocWithSignatureTag.xml', AXml);
+
     try
       // Criando XMLDOC //
       xmldoc := CoDOMDocument50.Create;

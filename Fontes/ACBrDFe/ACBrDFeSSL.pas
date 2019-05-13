@@ -871,7 +871,7 @@ begin
 
   Result := copy(ConteudoXML, 1, I - 1) +
             SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst) +
-            TagEndDocElement;
+            copy(ConteudoXML, I, Length(ConteudoXML));
 end;
 
 function TDFeSSLXmlSignClass.AjustarXMLAssinado(const ConteudoXML: String;

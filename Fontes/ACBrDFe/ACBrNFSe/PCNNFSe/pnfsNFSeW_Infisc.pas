@@ -265,7 +265,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vServ' , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vDesc' , 01, 015, 0, NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, '');
 
-    if Nfse.RegimeEspecialTributacao = retSimplesNacional then
+    if ( Nfse.RegimeEspecialTributacao = retSimplesNacional ) or ( Nfse.OptanteSimplesNacional = snSim ) then
       GeraTag := 1
     else
       GeraTag := 0;

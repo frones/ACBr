@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/05/2019
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido o provedor RLZ na lista de provedores cuja tag Aliquota tem apenas 2
+    casas decimais.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeW_Infisc --
+[*] https://www.projetoacbr.com.br/forum/topic/51230-aliquotas-dos-itens-devem-ser-zeradas-devido-o-contribuinte-ser-optante-pelo-simples-nacional/?do=findComment&comment=338133
+   Por: Celso Pothin
+
 09/05/2019
 -- pnfsNFSeW_Infisc --
 [*] https://www.projetoacbr.com.br/forum/topic/51230-aliquotas-dos-itens-devem-ser-zeradas-devido-o-contribuinte-ser-optante-pelo-simples-nacional/

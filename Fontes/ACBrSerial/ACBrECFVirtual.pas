@@ -1667,7 +1667,23 @@ end;
 procedure TACBrECFVirtualClass.Ativar;
 begin
   if not Assigned(ECFVirtual) then
+  begin
     inherited Ativar;
+  end
+  else
+  begin
+    GravaLog( sLineBreak +
+              StringOfChar('-',80)+ sLineBreak +
+              'ATIVAR - '+FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now)+
+              ' - Modelo: '+ModeloStr+
+              //' - Porta: '+fpDevice.Porta+
+              //' - TimeOut: '+IntToStr(TimeOut)+ sLineBreak +
+              //'         Device: '+fpDevice.DeviceToString(False) +
+              sLineBreak +
+              StringOfChar('-',80) + sLineBreak );
+    //fpEstado := estDesconhecido ;
+    fpAtivo  := true ;
+  end;
 
   try
     LeArqINI ;
@@ -3619,6 +3635,12 @@ end;
 function TACBrECFVirtualClass.GetEstado: TACBrECFEstado;
 Var estAnterior : TACBrECFEstado ;
 begin
+  if (not fpAtivo) then
+  begin
+    Result := estNaoInicializada ;
+    Exit ;
+  end;
+
   estAnterior := fpEstado ;
 
   if not (fpEstado in [estNaoInicializada,estDesconhecido]) then

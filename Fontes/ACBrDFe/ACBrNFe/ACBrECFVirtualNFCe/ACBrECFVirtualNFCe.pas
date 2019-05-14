@@ -909,7 +909,7 @@ end;
 procedure TACBrECFVirtualNFCeClass.GravaArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se cupom está aberto, deve persistir o CFe //
-  if (fpEstado in estCupomAberto) and (fsEhVenda) then
+  if (fsEhVenda) and (fpEstado in estCupomAberto) then
     fsACBrNFCe.NotasFiscais.GravarXML(fsNomeArqTempXML)
   else if (fsNomeArqTempXML <> '') and FileExists(fsNomeArqTempXML) then
     DeleteFile(fsNomeArqTempXML);

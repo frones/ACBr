@@ -52,6 +52,10 @@ Símbolo : Significado
 -- pcesS2210 --
 [*] Trocado o tipo de conversão de tcStr para tcInt nos campos que são Integer.
    Por: Italo Jurisato Junior
+-- pcesGerador/pcesConversaoeSocial --
+[*] https://www.projetoacbr.com.br/forum/topic/51319-s-2230-afastamento-pelo-motivo-35-licen%C3%A7a-maternidade-antecipa%C3%A7%C3%A3o-eou-prorroga%C3%A7%C3%A3o-mediante-atestado-m%C3%A9dico/
+[*] Troca do tipo de conversão de tcStr para tcInt de alguns campos do pcesGerador.
+   Por: Alex Camilo / Italo Jurisato Junior
 
 10/05/2019
 -- pcesS2245 --

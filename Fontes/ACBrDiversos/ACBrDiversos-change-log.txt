@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2019
+-- ACBrCargaBal --
++ Inclusão do campo "Observacoes" usado no "arquivo de informações extras"
+    ou "arquivo de receitas" da MGV6
+* Informações extras ou relativas a receita movidas para nova classe
+    TACBrCargaBalInformacaoExtra usada para o arquivo mencionado acima
+    veja: https://www.projetoacbr.com.br/forum/topic/51307-adi%C3%A7%C3%A3o-do-campo-observa%C3%A7%C3%A3o-nas-informa%C3%A7%C3%B5es-extras-receita-da-balan%C3%A7a/?tab=comments#comment-338350 
+    por: EMBarbosa
+
 04/07/2018
 -- ACBrValidador --
 [+] Adicionado a validação do prefixo GTIN ao ACBrValidador, conforme tabela 

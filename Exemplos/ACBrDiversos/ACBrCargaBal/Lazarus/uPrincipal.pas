@@ -83,7 +83,7 @@ begin
         ValorVenda      := 1.23;
         Validade        := 15;
         Tecla           := 0;
-        Receita         := Format('Receita do item %d', [I]);
+        InformacaoExtra.Receita := Format('Receita do item %d', [I]);
 //        Nutricional     := Format('Informação Nutricional do item %d', [I]);;
 
         Nutricional.Codigo:=I;

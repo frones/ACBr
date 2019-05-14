@@ -1521,14 +1521,16 @@ begin
                'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
 
-  // Validação de sucesso para provedores que não retornam data de recebimento
-  if FProvedor in [proNotaBlu, proGiap] then
-    Result := UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true')
-  else // Validação através da data de recebimento
-    Result := (FDataRecebimento <> 0);
+  case Fprovedor of
+    proNotaBlu,
+    proGiap: Result := (UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true'));
 
-  if (FProvedor = proISSDSF) and Alerta203 then
-    Result := True;
+    proISSDSF: Result := Alerta203;
+
+    proEgoverneISS: Result := (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[0].Codigo <> 'Erro');
+  else
+    Result := (FDataRecebimento <> 0);
+  end;
 end;
 
 function TNFSeWebService.GerarRetornoNFSe(ARetNFSe: String): String;

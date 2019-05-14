@@ -345,6 +345,24 @@ begin
       inc(i);
     end;
 
+    if Provedor = proISSDigital then
+    begin
+      i := 0;
+      while Leitor.rExtrai(1, 'ListaMensagemRetorno', '', i + 1) <> '' do
+      begin
+        InfRec.FMsgRetorno.Add;
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+        InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
+
+        InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+        inc(i);
+      end;
+    end;
+
     i := 0;
     while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
     begin

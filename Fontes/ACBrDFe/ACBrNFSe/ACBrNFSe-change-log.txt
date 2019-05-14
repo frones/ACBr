@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2019
+-- ACBrNFSeWebServices --
+[*] Corrigido o retorno do método que faz a leitura do retorno do webservice, não estava
+    tratando corretamente o retorno do provedor EGoverneISS.
+   Por: Italo Jurisato Junior
+
 13/05/2019
 -- pnfsNFSeW_ABRASFv2 --
 [*] Incluido o provedor RLZ na lista de provedores cuja tag Aliquota tem apenas 2

@@ -435,7 +435,7 @@ begin
   begin
     Gerador.wGrupo('agenteCausador');
 
-    Gerador.wCampo(tcStr, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
+    Gerador.wCampo(tcInt, '', 'codAgntCausador', 1, 9, 1, Self.Cat.AgenteCausador.Items[i].codAgntCausador);
 
     Gerador.wGrupo('/agenteCausador');
   end;
@@ -454,9 +454,9 @@ begin
     Gerador.wCampo(tcDat, '', 'dtAtendimento', 10,  10, 1, Self.Cat.Atestado.dtAtendimento);
     Gerador.wCampo(tcStr, '', 'hrAtendimento',  4,   4, 1, Self.Cat.Atestado.hrAtendimento);
     Gerador.wCampo(tcStr, '', 'indInternacao',  1,   1, 1, eSSimNaoToStr(Self.Cat.Atestado.indInternacao));
-    Gerador.wCampo(tcStr, '', 'durTrat',        1,   4, 1, Self.Cat.Atestado.durTrat);
+    Gerador.wCampo(tcInt, '', 'durTrat',        1,   4, 1, Self.Cat.Atestado.durTrat);
     Gerador.wCampo(tcStr, '', 'indAfast',       1,   1, 1, eSSimNaoToStr(Self.Cat.Atestado.indAfast));
-    Gerador.wCampo(tcStr, '', 'dscLesao',       1,   9, 0, Self.Cat.Atestado.dscLesao);
+    Gerador.wCampo(tcInt, '', 'dscLesao',       1,   9, 0, Self.Cat.Atestado.dscLesao);
     Gerador.wCampo(tcStr, '', 'dscCompLesao',   1, 200, 0, Self.Cat.Atestado.dscCompLesao);
     Gerador.wCampo(tcStr, '', 'diagProvavel',   1, 100, 0, Self.Cat.Atestado.diagProvavel);
     Gerador.wCampo(tcStr, '', 'codCID',         1,   4, 1, Self.Cat.Atestado.codCID);
@@ -480,7 +480,7 @@ begin
   Gerador.wCampo(tcStr, '', 'indCatObito',       1,   1, 1, eSSimNaoToStr(Self.Cat.indCatObito));
   Gerador.wCampo(tcDat, '', 'dtObito',          10,  10, 0, Self.Cat.dtOBito);
   Gerador.wCampo(tcStr, '', 'indComunPolicia',   1,   1, 1, eSSimNaoToStr(Self.Cat.indComunPolicia));
-  Gerador.wCampo(tcStr, '', 'codSitGeradora',    1,   9, 0, Self.Cat.codSitGeradora);
+  Gerador.wCampo(tcInt, '', 'codSitGeradora',    1,   9, 0, Self.Cat.codSitGeradora);
   Gerador.wCampo(tcStr, '', 'iniciatCAT',        1,   1, 1, eSIniciatCATToStr(Self.Cat.iniciatCAT));
   Gerador.wCampo(tcStr, '', 'obsCAT',            1, 255, 0, Self.Cat.obsCAT);
 
@@ -531,7 +531,7 @@ begin
   Gerador.wCampo(tcStr, '', 'complemento', 1,  30, 0, Self.Cat.LocalAcidente.complemento);
   Gerador.wCampo(tcStr, '', 'bairro',      1,  90, 0, Self.Cat.LocalAcidente.bairro);
   Gerador.wCampo(tcStr, '', 'cep',         1,   8, 0, Self.Cat.LocalAcidente.cep);
-  Gerador.wCampo(tcStr, '', 'codMunic',    7,   7, 0, Self.Cat.LocalAcidente.codMunic);
+  Gerador.wCampo(tcInt, '', 'codMunic',    7,   7, 0, Self.Cat.LocalAcidente.codMunic);
   Gerador.wCampo(tcStr, '', 'uf',          2,   2, 0, eSufToStr(Self.Cat.LocalAcidente.uf));
   Gerador.wCampo(tcStr, '', 'pais',        1,   3, 0, Self.Cat.LocalAcidente.pais);
   Gerador.wCampo(tcStr, '', 'codPostal',   1,  12, 0, Self.Cat.LocalAcidente.codPostal);
@@ -549,7 +549,7 @@ begin
   begin
     Gerador.wGrupo('parteAtingida');
 
-    Gerador.wCampo(tcStr, '', 'codParteAting', 1, 9, 1, Self.Cat.ParteAtingida.Items[i].codParteAting);
+    Gerador.wCampo(tcInt, '', 'codParteAting', 1, 9, 1, Self.Cat.ParteAtingida.Items[i].codParteAting);
     Gerador.wCampo(tcStr, '', 'lateralidade',  1, 1, 1, eSLateralidadeToStr(Self.Cat.ParteAtingida.Items[i].lateralidade));
 
     Gerador.wGrupo('/parteAtingida');

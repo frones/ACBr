@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/05/2019
+-- pcesS2210 --
+[*] Trocado o tipo de conversão de tcStr para tcInt nos campos que são Integer.
+   Por: Italo Jurisato Junior
+
 10/05/2019
 -- pcesS2245 --
 [*] Inclusão do campo: indTreinAnt.

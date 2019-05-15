@@ -1190,7 +1190,7 @@ var
   i, l, ii: Integer;
   xData: TDateTime;
   NovoRetorno, CondicaoNovoRetorno: Boolean;
-  Alerta203: Boolean;
+  Alerta203, ProcSucesso: Boolean;
 begin
   FRetornoNFSe := TRetornoNFSe.Create;
 
@@ -1480,6 +1480,7 @@ begin
 
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
+    ProcSucesso := True;
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
     begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
@@ -1499,6 +1500,7 @@ begin
     end;
   end
   else begin
+    ProcSucesso := False;
     if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
     begin
       if FProvedor = proEgoverneISS then
@@ -1527,7 +1529,7 @@ begin
 
     proISSDSF: Result := Alerta203;
 
-    proEgoverneISS: Result := (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[0].Codigo <> 'Erro');
+    proEgoverneISS: Result := ProcSucesso;
   else
     Result := (FDataRecebimento <> 0);
   end;
@@ -4547,14 +4549,14 @@ begin
 
     InicializarGerarDadosMsg;
 
-    if FProvedor in [proSP, proNotaBlu] then
-    begin
-      sAssinatura := Poem_Zeros(GerarDadosMsg.IM, 8) + Poem_Zeros(TNFSeCancelarNfse(Self).NumeroNFSe, 12);
-      GerarDadosMsg.AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
-    end;
-
     with GerarDadosMsg do
     begin
+      if FProvedor in [proSP, proNotaBlu] then
+      begin
+        sAssinatura := Poem_Zeros(IM, 8) + Poem_Zeros(TNFSeCancelarNfse(Self).NumeroNFSe, 12);
+        AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
+      end;
+
       case FProvedor of
         proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
                      CodMunicipio := 999;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2019
+-- ACBrNFSeWebServices --
+[-] Correção de um bug surgido na correção anterior.
+   Por: Italo Jurisato Junior
+
 14/05/2019
 -- ACBrNFSeWebServices --
 [*] Corrigido o retorno do método que faz a leitura do retorno do webservice, não estava

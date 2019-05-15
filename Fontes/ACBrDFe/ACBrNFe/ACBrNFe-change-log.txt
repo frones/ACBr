@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2019
+-- ACBrNFeNotasFiscais--
+[-] remoção de regras antigas de validação da série
+[-] alterado método de validação do cnpj do emitente para 
+    considerar CPF (Produtor Rural)
+   Por: Régys Silveira
+
 09/05/2019
 -- ACBrECFVirtualNFCe --
 [*] Atribuir a chave da NFe a propriedade ChaveCupom antes de levantar a exception em caso de falha de envia, possibilitando pegar a chave da NFe.

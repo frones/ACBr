@@ -58,6 +58,7 @@ type
     constructor Create(AOwner: TACBrPosPrinter);
 
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
+    function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); override;
   end;
 
@@ -65,6 +66,7 @@ type
 implementation
 
 Uses
+  math,
   ACBrUtil;
 
 { TACBrEscElgin }
@@ -74,6 +76,17 @@ begin
   inherited Create(AOwner);
 
   fpModeloStr := 'EscElgin';
+end;
+
+function TACBrEscElgin.ComandoGaveta(NumGaveta: Integer): AnsiString;
+var
+  Tempo: Integer;
+begin
+  with fpPosPrinter.ConfigGaveta do
+  begin
+    Tempo := max(TempoON, TempoOFF);
+    Result := ESC + 'v' + 'n' + AnsiChr( Tempo );
+  end;
 end;
 
 procedure TACBrEscElgin.LerStatus(var AStatus: TACBrPosPrinterStatus);

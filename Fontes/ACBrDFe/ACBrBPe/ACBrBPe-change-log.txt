@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2019
+-- pcnEnvEventoBPe --
+[*] Alteração visando disponibilziar o BPe no ACBrMonitor.
+   Por: Italo Jurisato Junior
+
 20/04/2019
 -- ACBrBPeServicos --
 [*] URLs de Homologação/Produção de Mato Grosso

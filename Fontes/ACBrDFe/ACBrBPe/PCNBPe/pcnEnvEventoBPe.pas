@@ -108,6 +108,7 @@ type
     function LerXML(const CaminhoArquivo: String): Boolean;
     function LerXMLFromString(const AXML: String): Boolean;
     function LerFromIni(const AIniString: String): Boolean;
+    function ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
   published
     property Gerador: TGerador            read FGerador write FGerador;
     property idLote: Integer              read FidLote  write FidLote;
@@ -337,7 +338,7 @@ begin
     while true do
     begin
       sSecao := 'EVENTO'+IntToStrZero(I,3);
-      sFim   := INIRec.ReadString(sSecao, 'chCTe', 'FIM');
+      sFim   := INIRec.ReadString(sSecao, 'chBPe', 'FIM');
       if (sFim = 'FIM') or (Length(sFim) <= 0) then
         break;
 
@@ -358,6 +359,26 @@ begin
     end;
   finally
      INIRec.Free;
+  end;
+end;
+
+function TEventoBPe.ObterNomeArquivo(tpEvento: TpcnTpEvento): String;
+begin
+  case tpEvento of
+     teCCe                       : Result := IntToStr(Self.idLote) + '-cce.xml';     // Carta de Correção Eletrônica
+     teCancelamento,
+     teCancSubst                 : Result := IntToStr(Self.idLote) + '-can-eve.xml'; // Cancelamento da NFe como Evento
+     teManifDestCiencia,
+     teManifDestConfirmacao,
+     teManifDestDesconhecimento,
+     teManifDestOperNaoRealizada : Result := IntToStr(Self.idLote) + '-man-des.xml'; // Manifestação do Destinatário
+     teEPEC                      : Result := Evento.Items[0].InfEvento.chBPe + '-ped-epec.xml'; // EPEC
+     tePedProrrog1,
+     tePedProrrog2               : Result := Evento.Items[0].InfEvento.chBPe + '-ped-prorr.xml';
+     teCanPedProrrog1,
+     teCanPedProrrog2            : Result := Evento.Items[0].InfEvento.chBPe + '-can-prorr.xml';
+   else
+     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
   end;
 end;
 

@@ -394,7 +394,12 @@ begin
         FPDFeOwner.Integrador.Parametros.Values['dados'] := EncodeBase64(FPEnvelopeSoap);
         FPDFeOwner.Integrador.Enviar(True);
         if (FPDFeOwner.Integrador.Respostas.Count >= 6) then
-          FPRetornoWS := DecodeBase64(FPDFeOwner.Integrador.Respostas[6])
+        begin
+          if StrIsBase64(FPDFeOwner.Integrador.Respostas[6]) then
+            FPRetornoWS := DecodeBase64(FPDFeOwner.Integrador.Respostas[6])
+          else
+            FPRetornoWS := FPDFeOwner.Integrador.Respostas[6];
+        end
         else
         begin
           if (FPDFeOwner.Integrador.Respostas.Count >= 2) then
@@ -561,7 +566,7 @@ begin
   if EstaVazio(FPRetWS) then
     raise EACBrDFeException.Create( CErroSemResposta +
           ifthen(NaoEstaVazio(FPRetornoWS),sLineBreak+
-          IfThen(TemIntegrador,EncodeBase64(FPRetornoWS),FPRetornoWS),''));
+          FPRetornoWS,''));
 end;
 
 function TDFeWebService.GetUrlWsd: String;

@@ -408,12 +408,14 @@ begin
     LoadLayout('<E01>   E03|CPF¨');
     LoadLayout('<E01> E03a|idEstrangeiro¨');
     LoadLayout('<E05>   E05|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨');
-    LoadLayout('<F01>     F|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨');
+    LoadLayout('<F01>     F|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨|Email¨|IE¨');
     LoadLayout('<F01>   F02|CNPJ¨');
     LoadLayout('<F01>  F02a|CPF¨');
-    LoadLayout('<G01>     G|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨');
+    LoadLayout('<F01>  F02b|XNome¨');
+    LoadLayout('<G01>     G|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨|Email¨|IE¨');
     LoadLayout('<G01>   G02|CNPJ¨');
     LoadLayout('<G01>  G02a|CPF¨');
+    LoadLayout('<G01>  G02b|XNome¨');
     LoadLayout('<G01>  GA02|CNPJ¨');
     LoadLayout('<G01>  GA03|CPF¨');
     LoadLayout('<H01>     H|NItem¨|InfAdProd¨');
@@ -426,7 +428,7 @@ begin
     LoadLayout('<I52>   I52|nRE¨|chNFe¨|qExport¨');
     LoadLayout('<I80>   I80|nLote¨|qLote¨|dFab¨|dVal¨|cAgreg¨');
     LoadLayout('<J01>    JA|tpOp¨|chassi¨|cCor¨|xCor¨|pot¨|Cilin¨|pesoL¨|pesoB¨|NSerie¨|TpComb¨|NMotor¨|CMT¨|Dist¨|AnoMod¨|AnoFab¨|TpPint¨|TpVeic¨|EspVeic¨|VIN¨|CondVeic¨|CMod¨|cCorDENATRAN¨|lota¨|tpRest¨');
-    LoadLayout('<K01>     K|cProdANVISA¨|vPMC¨');
+    LoadLayout('<K01>     K|cProdANVISA¨|xMotivoIsencao¨|vPMC¨');
     LoadLayout('<L01>     L|TpArma¨|NSerie¨|NCano¨|Descr¨');
     LoadLayout('<LA>     LA|cProdANP¨|descANP¨|pGLP¨|pGNn¨|pGNi¨|vPart¨|CODIF¨|qTemp¨|UFCons¨');
     LoadLayout('<LA07> LA07|QBCProd¨|VAliqProd¨|VCIDE¨');
@@ -440,16 +442,16 @@ begin
     LoadLayout('<N05>   N05|Orig¨|CST¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨|VICMSDeson¨|MotDesICMS¨');
     LoadLayout('<N06>   N06|Orig¨|CST¨|vICMSDeson¨|MotDesICMS¨');
     LoadLayout('<N07>   N07|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMSOp¨|PDif¨|VICMSDif¨|VICMS¨|vBCFCP¨|pFCP¨|vFCP¨');
-    LoadLayout('<N08>   N08|Orig¨|CST¨|VBCSTRet¨|pST¨|VICMSSTRet¨|vICMSSTRet¨|vBCFCPSTRet¨|pFCPSTRet¨|vFCPSTRet¨|pRedBCEfet¨|vBCEfet¨|pICMSEfet¨|vICMSEfet¨');
+    LoadLayout('<N08>   N08|Orig¨|CST¨|VBCSTRet¨|pST¨|vICMSSubstituto¨|vICMSSTRet¨|vBCFCPSTRet¨|pFCPSTRet¨|vFCPSTRet¨|pRedBCEfet¨|vBCEfet¨|pICMSEfet¨|vICMSEfet¨');
     LoadLayout('<N09>   N09|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMS¨|vBCFCP¨|pFCP¨|vFCP¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨|VICMSDeson¨|MotDesICMS¨');
     LoadLayout('<N10>   N10|Orig¨|CST¨|ModBC¨|VBC¨|PRedBC¨|PICMS¨|VICMS¨|vBCFCP¨|pFCP¨|vFCP¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨|VICMSDeson¨|MotDesICMS¨');
     LoadLayout('<N10a> N10a|Orig¨|CST¨|ModBC¨|VBC¨|PRedBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|pBCOp¨|UFST¨');
-    LoadLayout('<N10b> N10b|Orig¨|CST¨|vBCSTRet¨|vICMSSTRet¨|vBCSTDest¨|vICMSSTDest¨');
+    LoadLayout('<N10b> N10b|Orig¨|CST¨|vBCSTRet¨|pST¨|vICMSSubstituto¨|vICMSSTRet¨|vBCFCPSTRet¨|pFCPSTRet¨|vFCPSTRet¨|vBCSTDest¨|vICMSSTDest¨|pRedBCEfet¨|vBCEfet¨|pICMSEfet¨|vICMSEfet¨');
     LoadLayout('<N10c> N10c|Orig¨|CSOSN¨|pCredSN¨|vCredICMSSN¨');
     LoadLayout('<N10d> N10d|Orig¨|CSOSN¨');
     LoadLayout('<N10e> N10e|Orig¨|CSOSN¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨|pCredSN¨|vCredICMSSN¨');
     LoadLayout('<N10f> N10f|Orig¨|CSOSN¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨');
-    LoadLayout('<N10g> N10g|Orig¨|CSOSN¨|vBCSTRet¨|pST¨|vICMSSTRet¨|vBCFCPSTRet¨|pFCPSTRet¨|vFCPSTRet¨|pRedBCEfet¨|vBCEfet¨|pICMSEfet¨|vICMSEfet¨');
+    LoadLayout('<N10g> N10g|Orig¨|CSOSN¨|vBCSTRet¨|pST¨|vICMSSubstituto¨|vICMSSTRet¨|vBCFCPSTRet¨|pFCPSTRet¨|vFCPSTRet¨|pRedBCEfet¨|vBCEfet¨|pICMSEfet¨|vICMSEfet¨');
     LoadLayout('<N10h> N10h|Orig¨|CSOSN¨|modBC¨|vBC¨|pRedBC¨|pICMS¨|vICMS¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨|pCredSN¨|vCredICMSSN¨');
     LoadLayout('<NA>     NA|vBCUFDest¨|vBCFCPUFDest¨|pFCPUFDest¨|pICMSUFDest¨|pICMSInter¨|pICMSInterPart¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨');
     LoadLayout('<O01>     O|CNPJProd¨|CSelo¨|QSelo¨|CEnq¨');
@@ -507,6 +509,8 @@ begin
     LoadLayout('<ZC>     ZB|Safra¨|Ref¨|QTotMes¨|QTotAnt¨|QTotGer¨|VFor¨|VTotDed¨|VLiqFor¨');
     LoadLayout('<ZC04> ZC04|Dia¨|Qtde¨');
     LoadLayout('<ZC10> ZC10|XDed¨|VDed¨');
+    LoadLayout('<ZD01> ZD01|CNPJ¨|xContato¨|email¨|fone¨');
+    LoadLayout('<ZD07> ZD07|idCSRT¨|hashCSRT¨');
   end;
 
   Result := Layout;

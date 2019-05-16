@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 15/05/2019
+-- pcnNFeRTXT, pcnLAyoutTXT --
+[*] Atualizado layout TXT com ultimas NTs.
+  Por: Jose M S Junior
+
+15/05/2019
 -- ACBrNFeNotasFiscais--
 [-] remoção de regras antigas de validação da série
 [-] alterado método de validação do cnpj do emitente para 

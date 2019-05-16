@@ -448,11 +448,19 @@ begin
     (*F07*)NFe.Retirada.cMun := LerCampo(tcInt, 'cMun');
     (*F08*)NFe.Retirada.xMun := LerCampo(tcStr, 'xMun');
     (*F09*)NFe.Retirada.UF := LerCampo(tcStr, 'UF');
+    (*F10*)NFe.Retirada.CEP := LerCampo(tcInt, 'CEP');
+    (*F11*)NFe.Retirada.cPais := LerCampo(tcInt, 'cPais');
+    (*F12*)NFe.Retirada.xPais := LerCampo(tcStr, 'xPais');
+    (*F13*)NFe.Retirada.fone := LerCampo(tcStr, 'fone');
+    (*F14*)NFe.Retirada.Email := LerCampo(tcStr, 'email');
+    (*F15*)NFe.Retirada.IE := LerCampo(tcStr, 'IE');
   end;
   if ID = 'F02' then
     (*F02*)NFe.Retirada.CNPJCPF := LerCampo(tcStr, 'CNPJ');
   if ID = 'F02A' then
     (*F02a*)NFe.Retirada.CNPJCPF := LerCampo(tcStr, 'CPF');
+  if ID = 'F02B' then
+    (*F02a*)NFe.Retirada.xNome := LerCampo(tcStr, 'xNome');
 
   if ID = 'G' then (* Grupo da TAG <entrega> **********************************)
   begin
@@ -463,11 +471,19 @@ begin
     (*G07*)NFe.Entrega.cMun := LerCampo(tcInt, 'cMun');
     (*G08*)NFe.Entrega.xMun := LerCampo(tcStr, 'xMun');
     (*G09*)NFe.Entrega.UF := LerCampo(tcStr, 'UF');
+    (*G10*)NFe.Entrega.CEP := LerCampo(tcInt, 'CEP');
+    (*G11*)NFe.Entrega.cPais := LerCampo(tcInt, 'cPais');
+    (*G12*)NFe.Entrega.xPais := LerCampo(tcStr, 'xPais');
+    (*G13*)NFe.Entrega.fone := LerCampo(tcStr, 'fone');
+    (*G14*)NFe.Entrega.Email := LerCampo(tcStr, 'email');
+    (*G15*)NFe.Entrega.IE := LerCampo(tcStr, 'IE');
   end;
   if ID = 'G02' then
     (*G02*)NFe.Entrega.CNPJCPF := LerCampo(tcStr, 'CNPJ');
   if ID = 'G02A' then
     (*G02a*)NFe.Entrega.CNPJCPF := LerCampo(tcStr, 'CPF');
+  if ID = 'G02B' then
+    (*F02a*)NFe.Entrega.xNome := LerCampo(tcStr, 'xNome');
 
   if ID = 'GA02' then
      NFe.autXML.New.CNPJCPF := LerCampo(tcStr, 'CNPJ');
@@ -637,6 +653,7 @@ begin
     if (NFe.infNFe.Versao >= 4.00) then
     begin
       (*K01a*)NFe.Det[i].Prod.med[j].cProdANVISA := LerCampo(tcStr, 'cProdANVISA');
+      (*K01b*)NFe.Det[i].Prod.med[j].xMotivoIsencao := LerCampo(tcStr, 'xMotivoIsencao');
       (*K06*) NFe.Det[i].Prod.med[j].vPMC := LerCampo(tcDe2, 'vPMC');
     end
     else
@@ -790,6 +807,7 @@ begin
       (*N23b*)NFe.Det[i].Imposto.ICMS.pFCPST := LerCampo(tcDe2, 'pFCPST');
       (*N23d*)NFe.Det[i].Imposto.ICMS.vFCPST := LerCampo(tcDe2, 'vFCPST');
       (*N26a*)NFe.Det[i].Imposto.ICMS.pST := LerCampo(tcDe2, 'pST');
+      (*N26b*)NFe.Det[i].Imposto.ICMS.vICMSSubstituto := LerCampo(tcDe2, 'vICMSSubstituto');
       (*N27a*)NFe.Det[i].Imposto.ICMS.vBCFCPSTRet := LerCampo(tcDe2, 'vBCFCPSTRet');
       (*N27b*)NFe.Det[i].Imposto.ICMS.pFCPSTRet := LerCampo(tcDe2, 'pFCPSTRet');
       (*N27d*)NFe.Det[i].Imposto.ICMS.vFCPSTRet := LerCampo(tcDe2, 'vFCPSTRet');
@@ -1273,6 +1291,20 @@ begin
     i := nfe.cana.deduc.Count - 1;
     NFe.cana.deduc[i].xDed := LerCampo(tcStr, 'xDed');
     NFe.cana.deduc[i].vDed := LerCampo(tcDe2, 'vDed');
+  end;
+
+  if ID = 'ZD01' then  (* Grupo da TAG <infRespTec> *********************************)
+  begin
+    NFe.infRespTec.CNPJ := LerCampo(tcStr, 'CNPJ');
+    NFe.infRespTec.xContato := LerCampo(tcStr, 'xContato');
+    NFe.infRespTec.email := LerCampo(tcStr, 'email');
+    NFe.infRespTec.fone := LerCampo(tcStr, 'fone');
+  end;
+
+  if ID = 'ZD07' then
+  begin
+    NFe.infRespTec.idCSRT := LerCampo(tcInt, 'idCSRT');
+    NFe.infRespTec.hashCSRT := LerCampo(tcStr, 'hashCSRT');
   end;
 
 end;

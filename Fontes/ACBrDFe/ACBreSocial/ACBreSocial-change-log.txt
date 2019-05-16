@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2019
+-- pcesConversaoeSocial --
+[*] Incluido o enumerador ufEX no tpUF para ser utilizado quando for Exterior.
+   Por: Italo Jurisato Junior
+
 14/05/2019
 -- pcesS2210 --
 [*] Trocado o tipo de conversão de tcStr para tcInt nos campos que são Integer.

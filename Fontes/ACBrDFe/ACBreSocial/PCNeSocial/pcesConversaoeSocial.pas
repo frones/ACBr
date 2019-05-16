@@ -139,7 +139,7 @@ type
 
   tpuf                    = (ufAC, ufAL, ufAP, ufAM, ufBA, ufCE, ufDF, ufES, ufGO, ufMA,
                              ufMT, ufMS, ufMG, ufPA, ufPB, ufPR, ufPE, ufPI, ufRJ, ufRN,
-                             ufRS, ufRO, ufRR, ufSC, ufSP, ufSE, ufTO);
+                             ufRS, ufRO, ufRR, ufSC, ufSP, ufSE, ufTO, ufEX);
 
   tpIndSituacaoEspecial   = (iseSituacaoNormal, iseExtincao, iseFusao, iseCisao, iseIncorporacao);
 
@@ -925,9 +925,9 @@ const
                                                  'S-4999', 'S-5001', 'S-5002', 'S-5003', 'S-5011',
                                                  'S-5012', 'S-5013', 'S-2221');
 
-  TUFString           : array[0..26] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
+  TUFString           : array[0..27] of String = ('AC','AL','AP','AM','BA','CE','DF','ES','GO',
                                                   'MA','MT','MS','MG','PA','PB','PR','PE','PI',
-                                                  'RJ','RN','RS','RO','RR','SC','SP','SE','TO');
+                                                  'RJ','RN','RS','RO','RR','SC','SP','SE','TO', '');
 
   TModoLancamentoString : array[0..2] of String = ('inclusao', 'alteracao', 'exclusao');
 

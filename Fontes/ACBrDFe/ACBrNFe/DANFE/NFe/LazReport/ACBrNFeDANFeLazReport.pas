@@ -43,7 +43,7 @@ uses
   DateUtils, PrintersDlgs, Printers, strutils, BufDataset, DB, LResources,
   pcnNFe, pcnConversao, pcnConversaoNFe, pcnEnvEventoNFe, pcnRetInutNFe,
   ACBrNFe, ACBrNFeDANFEClass, ACBrUtil, ACBrDFeUtil, ACBrValidador,
-  ACBrDelphiZXingQrCode,
+  ACBrDelphiZXingQRCode,
   LR_Class, LR_View, LR_BarC, LR_Shape, LR_DBSet, LR_Desgn, lr_e_fclpdf;
 
 type

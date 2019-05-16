@@ -1480,7 +1480,8 @@ begin
         proFriburgo,
         proElotech: NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao');
 
-        proNFSeBrasil:
+        proNFSeBrasil,
+        proSilTecnologia:
           begin
             DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
 

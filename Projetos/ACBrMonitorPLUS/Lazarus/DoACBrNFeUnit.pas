@@ -1510,6 +1510,7 @@ begin
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
       ACBrNFe.DANFE:= DanfeRL;
+      ACBrNFe.DANFE.Impressora := ' ';
       DoConfiguraDANFe(False, Trim(APreview) );
 
       if NaoEstaVazio(AImpressora) then

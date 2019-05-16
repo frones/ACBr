@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2019
+[*] DoACBrSAT
+Ajuste na validação dos dados em tela para geração do XML de envio
+
+15/05/2019
+[*] DoACBrNFe
+Ajuste na validação de impressora padrão definida em tela
+
+10/05/2019
+[*] ACBrMonitor1
+Ajustes na validaçao Impressão de Cupom Fiscal, geração de PDF sempre em Fortes.
+
 09/05/2019
 [*] DoSatUnit
 Melhorias nas validações, métodos Carregar XML, Leitura do .INI e Envio.

@@ -312,10 +312,22 @@ begin
 end;
 
 procedure TACBrObjetoSAT.GerarIniCFe(AStr: String);
+var
+  ok: boolean;
 begin
   with fACBrSAT do
   begin
     CFe.Clear;
+    //Campos preenchidos em tela
+    CFe.ide.CNPJ := MonitorConfig.SAT.SATSWH.CNPJ;
+    CFe.ide.signAC := MonitorConfig.SAT.SATSWH.Assinatura;
+    CFe.Emit.CNPJ := MonitorConfig.SAT.SATImpressao.SATEmit.CNPJ;
+    CFe.Emit.IE := MonitorConfig.SAT.SATImpressao.SATEmit.IE;
+    CFe.Emit.IM := MonitorConfig.SAT.SATImpressao.SATEmit.IM;
+    CFe.Emit.cRegTrib := StrToRegTrib(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTributario));
+    CFe.Emit.cRegTribISSQN := StrToRegTribISSQN(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTribISSQN));
+    CFe.Emit.indRatISSQN := StrToindRatISSQN(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.IndRatISSQN));
+
     CFe.LoadFromIni(AStr);
 
   end;

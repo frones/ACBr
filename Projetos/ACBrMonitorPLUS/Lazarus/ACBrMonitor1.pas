@@ -8205,7 +8205,8 @@ end ;
 
 procedure TFrmACBrMonitor.PrepararImpressaoSAT(NomeImpressora : string; GerarPDF : boolean);
 begin
-  if cbUsarFortes.Checked then
+
+  if ( not(cbUsarEscPos.Checked) or (GerarPDF)) then
   begin
     ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
 
@@ -8246,8 +8247,6 @@ begin
   end
   else
   begin
-    if GerarPDF then
-      raise Exception.Create('Função gerar PDF não implementada para modo de impressão ESCPOS.');
 
     ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 
@@ -8492,7 +8491,10 @@ begin
     else
     begin
       ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
-      ACBrNFe1.DANFE.Impressora := cbxImpressora.Text;
+      if NaoEstaVazio(cbxImpressora.Text) then
+        ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
+      else
+        ACBrNFe1.DANFE.Impressora := ' ';
     end;
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then

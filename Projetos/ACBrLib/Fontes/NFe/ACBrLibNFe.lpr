@@ -70,5 +70,3 @@ begin
   MainThreadID := GetCurrentThreadId();
   Application.Initialize;
 end.
-
-

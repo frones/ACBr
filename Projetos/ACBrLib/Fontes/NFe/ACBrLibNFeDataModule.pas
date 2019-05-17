@@ -49,7 +49,7 @@ implementation
 uses
   pcnConversao,
   ACBrUtil, FileUtil, ACBrNFeDANFEClass, ACBrLibConsts,
-  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrLibComum, ACBrLibNFeClass;
+  ACBrDeviceConfig, ACBrLibNFeConfig, ACBrLibComum;
 
 {$R *.lfm}
 

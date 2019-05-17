@@ -1503,6 +1503,7 @@ function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProt
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
   Resposta: TLibImpressaoResposta;
+  NumCopias: Integer;
   Impressora, Protocolo,
   MostrarPreview, MarcaDagua,
   ViaConsumidor, Simplificado: String;
@@ -1531,9 +1532,13 @@ begin
       try
         NFeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview,
           MarcaDagua, ViaConsumidor, Simplificado);
+        NumCopias := NFeDM.ACBrNFe1.DANFE.NumCopias;
+        if nNumCopias > 0 then
+          NFeDM.ACBrNFe1.DANFE.NumCopias := nNumCopias;
         NFeDM.ACBrNFe1.NotasFiscais.Imprimir;
         Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
+        NFeDM.ACBrNFe1.DANFE.NumCopias := NumCopias;
         Resposta.Free;
         NFeDM.Destravar;
       end;

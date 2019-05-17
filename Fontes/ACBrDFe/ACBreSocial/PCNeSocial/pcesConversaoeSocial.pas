@@ -1336,12 +1336,12 @@ end;
 
 function eSTpExameOcupToStr(const t: tpTpExameOcup ): string;
 begin
-  result := EnumeradoToStr2(t,[ '0', '1', '2', '3', '4', '8' ] );
+  result := EnumeradoToStr2(t,[ '0', '1', '2', '3', '4', '9' ] );
 end;
 
 function eSStrToTpExameOcup(var ok: boolean; const s: string): tpTpExameOcup;
 begin
-  result := tpTpExameOcup( StrToEnumerado2(ok , s, [ '0', '1', '2', '3', '4', '8' ] ) );
+  result := tpTpExameOcup( StrToEnumerado2(ok , s, [ '0', '1', '2', '3', '4', '9' ] ) );
 end;
 
 function eSResAsoToStr(const t: tpResAso ): string;

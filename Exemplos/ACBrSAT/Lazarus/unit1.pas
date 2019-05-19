@@ -697,6 +697,7 @@ var
   PagamentoMFe : TEnviarPagamento;
   RespostaPagamentoMFe : TRespostaPagamento;
 begin
+  RespostaPagamentoMFe := Nil;
   PagamentoMFe := TEnviarPagamento.Create;
   try
     with PagamentoMFe do
@@ -715,10 +716,18 @@ begin
       EmitirCupomNFCE := False;
       OrigemPagamento := 'Mesa 1234';
     end;
-    RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
-    ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
+
+    if ACBrSAT1.SAT is TACBrSATMFe_integrador_XML then
+      RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe)
+    else
+      RespostaPagamentoMFe := ACBrIntegrador1.EnviarPagamento(PagamentoMFe);
+
+    if Assigned(RespostaPagamentoMFe) then
+      ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
   finally
     PagamentoMFe.Free;
+    if Assigned(RespostaPagamentoMFe) then
+      RespostaPagamentoMFe.Free;
   end;
 end;
 

@@ -108,6 +108,7 @@ type
     function AuthLogin: Boolean;
     function AuthCram: Boolean;
     function AuthPlain: Boolean;
+    function AuthXOauth2: Boolean;
     function Helo: Boolean;
     function Ehlo: Boolean;
     function Connect: Boolean;
@@ -385,10 +386,19 @@ end;
 
 function TSMTPSend.AuthPlain: Boolean;
 var
-  s: ansistring;
+  s: AnsiString;
 begin
   s := ansichar(0) + FUsername + ansichar(0) + FPassword;
   FSock.SendString('AUTH PLAIN ' + EncodeBase64(s) + CRLF);
+  Result := ReadResult = 235;
+end;
+
+function TSMTPSend.AuthXOauth2: Boolean;
+var
+  s: AnsiString;
+begin
+  s := 'user=' + FUsername + ansichar(1)+ 'auth=Bearer ' + FPassword + ansichar(1) + ansichar(1);
+  FSock.SendString('AUTH XOAUTH2 ' + EncodeBase64(s) + CRLF);
   Result := ReadResult = 235;
 end;
 
@@ -476,6 +486,8 @@ begin
           FAuthDone := AuthLogin;
         if (not FauthDone) and (Pos('CRAM-MD5', auths) > 0) then
           FAuthDone := AuthCram;
+        if (not FauthDone) and (Pos('XOAUTH2', auths) > 0) then
+          FAuthDone := AuthXOauth2;
       end;
     end;
     s := FindCap('SIZE');

@@ -38,7 +38,7 @@ Uses
   SysUtils, Classes, Math, ACBrMonitorConfig;
 
 Const
-   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL","REINF"' ;
+   Objetos = '"ECF","CHQ","GAV","DIS","LCB","ACBR","BAL","ETQ","BOLETO","CEP","IBGE","EMAIL","SEDEX","NCM","NFE","CTE","MDFE","SAT","ESCPOS","GNRE","ESOCIAL","REINF","BPE"' ;
 
 type
 
@@ -92,12 +92,14 @@ TACBrEventoConfiguraDACTe = procedure(GerarPDF: Boolean; MostrarPreview : String
 TACBrEventoPrepararImpressaoSAT = procedure(NomeImpressora : String; GerarPDF : Boolean) of object;
 TACBrEventoRespostaIntegrador = function():String of object;
 TACBrEventoSubstituirVariaveis = function(const ATexto: String): String of object;
+TACBrEventoConfiguraDABPe = procedure(GerarPDF: Boolean; MostrarPreview : String) of  object;
 
 { TACBrObjetoDFe }
 
 TACBrObjetoDFe = class(TACBrObjeto)
 private
   FOnAntesDeImprimir: TACBrEventoAntesImprimir;
+  FOnConfiguraDABPe: TACBrEventoConfiguraDABPe;
   FOnDepoisDeImprimir: TACBrEventoDepoisImprimir;
   FOnConfiguraDANFe: TACBrEventoConfiguraDANFe;
   FOnValidarIntegradorNFCe: TACBrEventoValidarIntegradorNFCe;
@@ -114,6 +116,7 @@ public
   procedure DoPrepararImpressaoSAT(NomeImpressora : String; GerarPDF : Boolean = False);
   function  DoRespostaIntegrador():String;
   function  DoSubstituirVariaveis(const ATexto: String): String;
+  procedure DoConfiguraDABPe(GerarPDF: Boolean; MostrarPreview : String);
 
   property OnAntesDeImprimir: TACBrEventoAntesImprimir read FOnAntesDeImprimir write FOnAntesDeImprimir;
   property OnDepoisDeImprimir: TACBrEventoDepoisImprimir read FOnDepoisDeImprimir write FOnDepoisDeImprimir;
@@ -123,6 +126,7 @@ public
   property OnPrepararImpressaoSAT: TACBrEventoPrepararImpressaoSAT read FOnPrepararImpressaoSAT write FOnPrepararImpressaoSAT;
   property OnRespostaIntegrador: TACBrEventoRespostaIntegrador read FOnRespostaIntegrador write FOnRespostaIntegrador;
   property OnSubstituirVariaveis: TACBrEventoSubstituirVariaveis read FOnSubstituirVariaveis write FOnSubstituirVariaveis;
+  property OnConfiguraDABPe: TACBrEventoConfiguraDABPe read FOnConfiguraDABPe write FOnConfiguraDABPe;
 end;
 
 { TACBrMetodo }
@@ -191,6 +195,13 @@ function TACBrObjetoDFe.DoSubstituirVariaveis(const ATexto: String): String;
 begin
   if Assigned(FOnSubstituirVariaveis) then
     Result:= FOnSubstituirVariaveis(ATexto);
+end;
+
+procedure TACBrObjetoDFe.DoConfiguraDABPe(GerarPDF: Boolean;
+  MostrarPreview: String);
+begin
+  if Assigned(FOnConfiguraDABPe) then
+    FOnConfiguraDABPe(GerarPDF, MostrarPreview);
 end;
 
 { TACBrObjeto }

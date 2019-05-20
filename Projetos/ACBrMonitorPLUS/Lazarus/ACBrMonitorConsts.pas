@@ -26,6 +26,9 @@ ResourceString
   SErroArqNaoEncontado = 'Arquivo %s nao encontrado.';
   SErroMDFeAbrir = 'Erro ao abrir o arquivo do Manifesto: %s';
 
+  SErroBPeCarregar = 'Erro ao carregar BPe';
+  SErroBPeAbrir = 'Erro ao abrir o arquivo do Bilhete: %s';
+
   SErroeSocialCarregar = 'Erro ao carregar eSocial';
   SErroeSocialAbrir = 'Erro ao abrir o arquivo do eSocial: %s';
   SMsgeSocialEventoAdicionado = 'Evento Adicionado: %s';
@@ -53,6 +56,7 @@ const
   CACBrGNREServicosIni =               'ACBrGNREServicos.ini';
   CACBreSocialServicosIni =            'ACBreSocialServicos.ini';
   CACBrReinfServicosIni =              'ACBrReinfServicos.ini';
+  CACBrBPeServicosIni =                'ACBrBPeServicos.ini';
 
   CMetodoSATAtivar =                   'ativar';
   CMetodoInicializar =                 'inicializar';
@@ -408,6 +412,21 @@ const
   CMetodoGerarINICTe =                 'gerarinicte';
   CMetodoGetPathCTe =                  'getpathcte';
 
+  CMetodoValidarBPe =                  'validarbpe';
+  CMetodoAssinarBPe =                  'assinarbpe';
+  CMetodoConsultarBPe =                'consultarbpe';
+  CMetodoCancelarBPe =                 'cancelarbpe';
+  CMetodoImprimirDABPe =               'imprimirdabpe';
+  CMetodoImprimirDABPePDF =            'imprimirdabpepdf';
+
+  CMetodoEnviarBPe =                   'enviarbpe';
+  CMetodoCriarBPe =                    'criarbpe';
+  CMetodoCriarEnviarBPe =              'criarenviarbpe';
+  CMetodoLerBPe =                      'lerbpe';
+  CMetodoGetPathBPe =                  'getpathbpe';
+  CMetodoGerarINIBPe =                 'gerarinibpe';
+  CMetodoDistribuicaoDFeporChaveBPe =  'distribuicaodfeporchavebpe';
+
   CMetodoCriarEventoeSocial =          'criareventoesocial';
   CMetodoCriarEnviareSocial =          'criarenviaresocial';
   CMetodoEnviareSocial =               'enviaresocial';
@@ -629,6 +648,9 @@ const
   CExtensaoXmlMdfeEve =              '-eve.xml';
   CExtensaoXmlGNRe =                 '-gnre.xml';
 
+  CExtensaoXmlBPe =                 '-bpe.xml';
+  CExtensaoXmlBPeEve =              '-eve.xml';
+
   CPathLogs =                        'Logs';
 
   CSecACBrMonitor =                  'ACBrMonitor';
@@ -782,6 +804,7 @@ const
   CKeyArquivoWebServicesGNRe =        'ArquivoWebServicesGNRe';
   CKeyArquivoWebServiceseSocial =     'ArquivoWebServiceseSocial';
   CKeyArquivoWebServicesReinf =       'ArquivoWebServicesReinf';
+  CKeyArquivoWebServicesBPe =         'ArquivoWebServicesBPe';
   CKeyValidarDigest =                 'ValidarDigest';
   CKeyTimeoutWebService =             'TimeoutWebService';
 
@@ -801,10 +824,12 @@ const
   CKeyVersaoeSocial =                'VersaoeSocial';
   CKeyVersaoReinf =                  'VersaoReinf';
   CKeyVersaoQRCode =                 'VersaoQRCode';
+  CKeyVersaoBPe =                    'VersaoBPe';
   CKeyFormaEmissaoCTe =              'FormaEmissaoCTe';
   CKeyFormaEmissaoNFe =              'FormaEmissaoNFe';
   CKeyFormaEmissaoMDFe =             'FormaEmissaoMDFe';
   CKeyFormaEmissaoGNRe =             'FormaEmissaoGNRe';
+  CKeyFormaEmissaoBPe =              'FormaEmissaoBPe';
   CKeyUF =                           'UF';
   CKeyAmbiente =                     'Ambiente';
   CKeyAjustarAut =                   'AjustarAut';
@@ -847,9 +872,11 @@ const
   CKeyMensagemNFe =                  'MensagemNFe';
   CKeyMensagemCTe =                  'MensagemCTe';
   CKeyMensagemMDFe =                 'MensagemMDFe';
+  CKeyMensagemBPe =                  'AssuntoBPe';
   CKeyAssuntoNFe =                   'AssuntoNFe';
   CKeyAssuntoCTe =                   'AssuntoCTe';
   CKeyAssuntoMDFe =                  'AssuntoMDFe';
+  CKeyAssuntoBPe =                   'AssuntoBPe';
 
   CSecNFe =                          'NFe';
   CKeyNFeCNPJContador =              'CNPJContador';

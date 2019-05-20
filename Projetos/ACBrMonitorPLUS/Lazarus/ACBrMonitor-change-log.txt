@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2019
+[+] DoACBrBPe, ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, ACBrCMD
+Adicionado o Componente ACBrBPe e realizado as configurações necessárias para o componente
+
 15/05/2019
 [*] DoACBrSAT
 Ajuste na validação dos dados em tela para geração do XML de envio

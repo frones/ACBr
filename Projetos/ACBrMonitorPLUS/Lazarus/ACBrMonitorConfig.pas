@@ -231,6 +231,7 @@ type
     Versao            : String;
     VersaoMDFe        : String;
     VersaoCTe         : String;
+    VersaoBPe         : String;
     VersaoeSocial     : String;
     VersaoReinf       : String;
     VersaoQRCode      : String;
@@ -238,6 +239,7 @@ type
     FormaEmissaoNFe   : Integer;
     FormaEmissaoCTe   : Integer;
     FormaEmissaoMDFe  : Integer;
+    FormaEmissaoBPe   : Integer;
     FormaEmissaoGNRe  : Integer;
     Ambiente          : Integer;
     UF                : String;
@@ -330,9 +332,11 @@ type
     MensagemCTe       : String;
     MensagemNFe       : String;
     MensagemMDFe      : String;
+    MensagemBPe       : String;
     AssuntoCTe        : String;
     AssuntoNFe        : String;
     AssuntoMDFe       : String;
+    AssuntoBPe        : String;
   end;
 
   TDFeRespTecnico = record
@@ -372,6 +376,7 @@ type
     ArquivoWebServicesGNRe: String;
     ArquivoWebServiceseSocial: String;
     ArquivoWebServicesReinf: String;
+    ArquivoWebServicesBPe: String;
     ValidarDigest      : Boolean;
     TimeoutWebService  : Integer;
     Certificado        : TCertificado;
@@ -390,7 +395,7 @@ type
     ImprimeEmUmaLinha           : Boolean;
     ImprimeChaveEmUmaLinha      : Integer;
     UsaCodigoEanImpressao       : Boolean;
-    ImprimeQRCodeLateral         : Boolean;
+    ImprimeQRCodeLateral        : Boolean;
     ImprimeLogoLateral          : Boolean;
   end;
 
@@ -866,6 +871,7 @@ begin
       Ini.WriteString( CSecACBrNFeMonitor, CKeyArquivoWebServicesGNRe, ArquivoWebServicesGNRe );
       Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServiceseSocial, ArquivoWebServiceseSocial );
       Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServicesReinf, ArquivoWebServicesReinf );
+      Ini.Writestring( CSecACBrNFeMonitor, CKeyArquivoWebServicesBPe, ArquivoWebServicesBPe );
       Ini.WriteBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       Ini.WriteInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
     end;
@@ -903,10 +909,12 @@ begin
       Ini.WriteString( CSecWebService, CKeyVersaoReinf, VersaoReinf );
       Ini.WriteString( CSecWebService, CKeyVersaoeSocial, VersaoeSocial );
       Ini.WriteString( CSecWebService, CKeyVersaoQRCode, VersaoQRCode );
+      Ini.WriteString( CSecWebService, CKeyVersaoBPe, VersaoBPe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoNFe, FormaEmissaoNFe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoCTe, FormaEmissaoCTe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoMDFe, FormaEmissaoMDFe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoGNRe, FormaEmissaoGNRe );
+      Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoBPe, FormaEmissaoBPe );
       Ini.WriteInteger( CSecWebService, CKeyAmbiente, Ambiente );
       Ini.WriteString( CSecWebService, CKeyUF, UF );
       Ini.WriteBool( CSecWebService, CKeyAjustarAut, AjustarAut );
@@ -963,6 +971,8 @@ begin
       Ini.WriteString( CSecEmail, CKeyAssuntoCTe, AssuntoCTe );
       Ini.WriteString( CSecEmail, CKeyMensagemMDFe, MensagemMDFe );
       Ini.WriteString( CSecEmail, CKeyAssuntoMDFe, AssuntoMDFe );
+      Ini.WriteString( CSecEmail, CKeyMensagemBPe, MensagemBPe );
+      Ini.WriteString( CSecEmail, CKeyAssuntoBPe, AssuntoBPe );
     end;
 
     with DFe.WebService.NFe do
@@ -1510,6 +1520,7 @@ begin
       ArquivoWebServicesGNRe    := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesGNRe, AcertaPath( CACBrGNREServicosIni ) );
       ArquivoWebServiceseSocial := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServiceseSocial, AcertaPath( CACBreSocialServicosIni ) );
       ArquivoWebServicesReinf   := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesReinf, AcertaPath( CACBrReinfServicosIni ) );
+      ArquivoWebServicesBPe     := Ini.ReadString( CSecACBrNFeMonitor, CKeyArquivoWebServicesBPe, AcertaPath( CACBrBPeServicosIni ) );
       ValidarDigest             := Ini.ReadBool( CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest );
       TimeoutWebService         := Ini.ReadInteger( CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeoutWebService );
     end;
@@ -1547,10 +1558,12 @@ begin
       VersaoeSocial             := Ini.ReadString( CSecWebService, CKeyVersaoeSocial, CvalueVersaoeSocial );
       VersaoReinf               := Ini.ReadString( CSecWebService, CKeyVersaoReinf, CvalueVersaoReinf );
       VersaoQRCode              := Ini.ReadString( CSecWebService, CKeyVersaoQRCode, CvalueVersaoQRCode );
+      VersaoBPe                 := Ini.ReadString( CSecWebService, CKeyVersaoBPe, VersaoBPe );
       FormaEmissaoNFe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoNFe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoCTe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoCTe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoGNRe          := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoGNRe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoMDFe          := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoMDFe, DFe.Impressao.Geral.FormaEmissao );
+      FormaEmissaoBPe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoBPe, DFe.Impressao.Geral.FormaEmissao );
       Ambiente                  := Ini.ReadInteger( CSecWebService, CKeyAmbiente, Ambiente);
       UF                        := Ini.ReadString( CSecWebService, CKeyUF, UF);
       AjustarAut                := Ini.ReadBool( CSecWebService, CKeyAjustarAut, AjustarAut);
@@ -1587,6 +1600,8 @@ begin
       AssuntoCTe                := Ini.ReadString( CSecEmail, CKeyAssuntoCTe, AssuntoCTe);
       MensagemMDFe              := Ini.ReadString( CSecEmail, CKeyMensagemMDFe, MensagemMDFe );
       AssuntoMDFe               := Ini.ReadString( CSecEmail, CKeyAssuntoMDFe, AssuntoMDFe);
+      MensagemBPe               := Ini.ReadString( CSecEmail, CKeyMensagemBPe, MensagemBPe );
+      AssuntoBPe                := Ini.ReadString( CSecEmail, CKeyAssuntoBPe, AssuntoBPe);
     end;
 
     with DFe.WebService.NFe do
@@ -2138,6 +2153,7 @@ begin
     ArquivoWebServicesGNRe    := AcertaPath( 'ACBrGNREServicos.ini' );
     ArquivoWebServiceseSocial := AcertaPath( 'ACBreSocialServicos.ini' );
     ArquivoWebServicesReinf   := AcertaPath( 'ACBrReinfServicos.ini' );
+    ArquivoWebServicesBPe     := AcertaPath( 'ACBrBPeServicos.ini' );
     ValidarDigest             := True;
     TimeoutWebService         := 15;
   end;
@@ -2175,10 +2191,12 @@ begin
     VersaoeSocial             := '02_04_02';
     VersaoReinf               := '1_03_02';
     VersaoQRCode              := '0';
+    VersaoBPe                 := '1.00';
     FormaEmissaoNFe           := 0;
     FormaEmissaoCTe           := 0;
     FormaEmissaoGNRe          := 0;
     FormaEmissaoMDFe          := 0;
+    FormaEmissaoBPe           := 0;
     Ambiente                  := 1;
     UF                        := 'SP';
     AjustarAut                := False;
@@ -2215,6 +2233,8 @@ begin
     AssuntoCTe                := '';
     MensagemMDFe              := '';
     AssuntoMDFe               := '';
+    MensagemBPe               := '';
+    AssuntoBPe                := '';
   end;
 
   with DFe.WebService.NFe do

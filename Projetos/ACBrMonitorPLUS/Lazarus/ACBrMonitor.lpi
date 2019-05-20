@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="2"/>
-      <BuildNr Value="60"/>
+      <BuildNr Value="61"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
@@ -38,7 +38,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\BPe"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Linking>
@@ -73,112 +73,118 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="34">
+    <RequiredPackages Count="36">
       <Item1>
-        <PackageName Value="lazreportpdfexport"/>
+        <PackageName Value="ACBr_BPeDabpeESCPOS"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_Reinf"/>
+        <PackageName Value="ACBr_BPe"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_Integrador"/>
+        <PackageName Value="lazreportpdfexport"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBre_Social"/>
+        <PackageName Value="ACBr_Reinf"/>
       </Item4>
       <Item5>
-        <PackageName Value="lhelpcontrolpkg"/>
+        <PackageName Value="ACBr_Integrador"/>
       </Item5>
       <Item6>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="ACBre_Social"/>
       </Item6>
       <Item7>
-        <PackageName Value="frce"/>
+        <PackageName Value="lhelpcontrolpkg"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_GNREGuiaRL"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="frce"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_BlocoX"/>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
       </Item10>
       <Item11>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="ACBr_BlocoX"/>
       </Item12>
       <Item13>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item13>
       <Item14>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
       </Item14>
       <Item15>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item16>
       <Item17>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item17>
       <Item18>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item18>
       <Item19>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item19>
       <Item20>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item20>
       <Item21>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="SynEdit"/>
       </Item21>
       <Item22>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="FCL"/>
       </Item22>
       <Item23>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item23>
       <Item24>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item26>
       <Item27>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item27>
       <Item28>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item28>
       <Item29>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrSerial"/>
       </Item29>
       <Item30>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrTCP"/>
       </Item30>
       <Item31>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item31>
       <Item32>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item32>
       <Item33>
-        <PackageName Value="LCLBase"/>
-        <MinVersion Major="1" Release="1" Valid="True"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item33>
       <Item34>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrComum"/>
       </Item34>
+      <Item35>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
+      </Item35>
+      <Item36>
+        <PackageName Value="LCL"/>
+      </Item36>
     </RequiredPackages>
-    <Units Count="55">
+    <Units Count="58">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -416,6 +422,18 @@
         <Filename Value="..\..\ACBrLib\Fontes\eSocial\ACBrLibeSocialRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit54>
+      <Unit55>
+        <Filename Value="DoACBrBPeUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="..\..\ACBrLib\Fontes\BPe\ACBrLibBPeConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="..\..\ACBrLib\Fontes\BPe\ACBrLibBPeRespostas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit57>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -426,7 +444,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe"/>
+      <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\BPe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
@@ -437,11 +455,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="1">
-      <Item1>
-        <Name Value="EConvertError"/>
-      </Item1>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

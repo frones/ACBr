@@ -63,6 +63,7 @@ Source: ..\..\..\Fontes\ACBrDFe\ACBrCTe\ACBrCTeServicos.ini; DestDir: {app}; Fla
 Source: ..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: ..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Arquivos de Change-log.TXT
 Source: ACBrMonitor-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
@@ -112,6 +113,7 @@ Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\MDFe\*.*; DestDir: {app}\Schemas; Co
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\NFe\*.*; DestDir: {app}\Schemas; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\eSocial\*.*; DestDir: {app}\Schemas; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\Reinf\*.*; DestDir: {app}\Schemas; Components: programa;
+Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\BPe\*.*; DestDir: {app}\Schemas; Components: programa;
 ;Lista de municípios do IBGE
 Source: MunIBGE\*.*; DestDir: {app}\MunIBGE; Flags: ; Components: programa
 ;DLLs de Fabricantes SAT

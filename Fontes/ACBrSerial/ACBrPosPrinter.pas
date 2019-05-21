@@ -483,7 +483,8 @@ uses
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
-  ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos;
+  ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos,
+   ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
 
 { TACBrConfigModoPagina }
 

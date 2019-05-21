@@ -54,12 +54,6 @@ type
   TACBrEscPosEpson = class(TACBrPosPrinterClass)
   protected
     procedure VerificarKeyCodes; virtual;
-    function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
-    function ComandoImprimirImagemColumnStr(const RasterStr: AnsiString; AWidth: Integer;
-      AHeight: Integer): AnsiString;
-
-    function ComandoGravarLogoColumnStr(const RasterStr: AnsiString; AWidth: Integer;
-      AHeight: Integer; KeyCode: Byte): AnsiString;
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
@@ -89,6 +83,12 @@ type
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
   function ComandoCodBarrasEscPosNo128ABC(const ATag: String; const ACodigo: AnsiString;
     const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+
+  function ComandoImprimirImagemColumnStr(APosPrinter: TACBrPosPrinter;
+    const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+  function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
+  function ComandoGravarLogoColumnStr(const RasterStr: AnsiString; AWidth: Integer;
+    AHeight: Integer; KeyCode: Byte): AnsiString;
 
 implementation
 
@@ -210,9 +210,39 @@ begin
   end;
 end;
 
-{ TACBrEscPosEpson }
+//https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
+function ComandoImprimirImagemColumnStr( APosPrinter: TACBrPosPrinter;
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+var
+  Slices: TStrings;
+  i: Integer;
+begin
+  with APosPrinter do
+  begin
+    Result := PosPrinter.ComandoEspacoEntreLinhas(16);  // 24 dots
 
-function TACBrEscPosEpson.AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
+    Slices := TStringList.Create;
+    try
+      RasterStrToColumnStr(RasterStr, AWidth, Slices, 3);
+
+      For i := 0 to Slices.Count-1 do
+      begin
+          Result := Result + ESC +
+                             '*' + // Bit image mode
+                             #33 + // 24-dot double density
+                             IntToLEStr(AWidth) +
+                             Slices[i] +
+                             LF;
+      end;
+    finally
+      Slices.Free;
+    end;
+
+    Result := Result + PosPrinter.ComandoEspacoEntreLinhas( APosPrinter.EspacoEntreLinhas );
+  end;
+end;
+
+function AjustarKeyCodeUnico(AKeyCode: Byte): Byte;
 begin
   if (AKeyCode >= 48) and (AKeyCode <= 57) then  // '0'..'9'
     Result := StrToInt( chr(AKeyCode) )
@@ -220,52 +250,8 @@ begin
     Result := AKeyCode;
 end;
 
-procedure TACBrEscPosEpson.VerificarKeyCodes;
-  procedure VerificarKeyCode(AkeyCode: Integer; NomeKeyCode: String);
-  begin
-    if (AKeyCode < 32) or (AkeyCode > 126) then
-      raise EPosPrinterException.Create(NomeKeyCode+' deve estar entre 32 a 126');
-  end;
-begin
-  with fpPosPrinter.ConfigLogo do
-  begin
-    VerificarKeyCode(KeyCode1, 'KeyCode1');
-    VerificarKeyCode(KeyCode2, 'KeyCode2');
-  end;
-end;
-
-//https://bitbucket.org/bernd_summerswell/delphi_escpos_bitmap/overview
-function TACBrEscPosEpson.ComandoImprimirImagemColumnStr(
-  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
-var
-  Slices: TStrings;
-  i: Integer;
-begin
-  Result := ComandoEspacoEntreLinhas(24);  // 24 dots
-
-  Slices := TStringList.Create;
-  try
-    RasterStrToColumnStr(RasterStr, AWidth, Slices, 3);
-
-    For i := 0 to Slices.Count-1 do
-    begin
-        Result := Result + ESC +
-                           '*' + // Bit image mode
-                           #33 + // 24-dot double density
-                           IntToLEStr(AWidth) +
-                           Slices[i] +
-                           LF;
-    end;
-  finally
-    Slices.Free;
-  end;
-
-  Result := Result + ComandoEspacoEntreLinhas( fpPosPrinter.EspacoEntreLinhas );
-end;
-
-function TACBrEscPosEpson.ComandoGravarLogoColumnStr(
-  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer; KeyCode: Byte
-  ): AnsiString;
+function ComandoGravarLogoColumnStr( const RasterStr: AnsiString; AWidth: Integer;
+  AHeight: Integer; KeyCode: Byte): AnsiString;
 var
   SLColumnStr: TStrings;
   HeightInBytes, LenBuffer, LenSLineBreak, LenK: Integer;
@@ -295,6 +281,22 @@ begin
                   IntToLEStr(AWidth)  +
                   IntToLEStr(HeightInBytes) +
                   Buffer;
+end;
+
+{ TACBrEscPosEpson }
+
+procedure TACBrEscPosEpson.VerificarKeyCodes;
+  procedure VerificarKeyCode(AkeyCode: Integer; NomeKeyCode: String);
+  begin
+    if (AKeyCode < 32) or (AkeyCode > 126) then
+      raise EPosPrinterException.Create(NomeKeyCode+' deve estar entre 32 a 126');
+  end;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    VerificarKeyCode(KeyCode1, 'KeyCode1');
+    VerificarKeyCode(KeyCode2, 'KeyCode2');
+  end;
 end;
 
 constructor TACBrEscPosEpson.Create(AOwner: TACBrPosPrinter);
@@ -679,7 +681,7 @@ begin
     }
 
     if (KeyCode2 = 0) then
-      Result := ComandoImprimirImagemColumnStr(RasterStr, AWidth, AHeight)
+      Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight)
     else
     begin
       // Comando para gravar Raster Img na memória

@@ -39,6 +39,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/05/2019
+-- ACBrPosPrinter --
+[-] Restaurando suporte a Hooks Epson e Elgin, removidos acidentalmente no commit: 16570
+
+-- ACBrEscBematech --
+[+] Adicionado suporte aos métodos: ComandoImprimirImagemRasterStr,
+    ComandoGravarLogoRasterStr e ComandoApagarLogo
+    https://www.projetoacbr.com.br/forum/topic/48851-acbrposprinter-suporte-a-impress%C3%A3o-de-imagens-e-grava%C3%A7%C3%A3o-de-logos/
+
+-- ACBrEscPosEpson --
+[*] Modificações para permitir uso de metodos genéricos, por classes não filhas
+
+-- ACBrEscCustomPos --
+[*] Ajuste para compatibilizar com mudanças em ACBrEscPosEpson
+    (por: DSA)
+
 Data: 23/04/2019
 -- ACBrBALUranoPOP --
 [+] Adicionado suporte ao protocolo USE-P2

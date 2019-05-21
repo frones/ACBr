@@ -80,15 +80,6 @@ uses
 
 { TACBrEscCustomPos }
 
-procedure TACBrEscCustomPos.VerificarKeyCodes;
-begin
-  with fpPosPrinter.ConfigLogo do
-  begin
-    if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
-      raise EPosPrinterException.Create('Custom apenas aceitas KeyCode2=1, KeyCode2=0');
-  end;
-end;
-
 constructor TACBrEscCustomPos.Create(AOwner: TACBrPosPrinter);
 begin
   inherited Create(AOwner);
@@ -189,6 +180,15 @@ begin
   Result := '';   // Não há suporte de PageMode na Custom
 end;
 
+procedure TACBrEscCustomPos.VerificarKeyCodes;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
+      raise EPosPrinterException.Create('Custom apenas aceitas KeyCode1=1, KeyCode2=0');
+  end;
+end;
+
 function TACBrEscCustomPos.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 //var
@@ -208,7 +208,7 @@ begin
   //                        IntToLEStr(AHeight) +
   //                        RasterStr;
   //end;
-  Result := ComandoImprimirImagemColumnStr(RasterStr, AWidth, AHeight)
+  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight)
 end;
 
 function TACBrEscCustomPos.ComandoGravarLogoRasterStr(

@@ -57,6 +57,7 @@ type
 
   TACBrEscBematech = class(TACBrPosPrinterClass)
   private
+    procedure VerificarKeyCodes;
   public
     constructor Create(AOwner: TACBrPosPrinter);
 
@@ -65,7 +66,12 @@ type
     function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
     function ComandoPaginaCodigo(APagCodigo: TACBrPosPaginaCodigo): AnsiString;
       override;
+    function ComandoImprimirImagemRasterStr(const RasterStr: AnsiString;
+      AWidth: Integer; AHeight: Integer): AnsiString; override;
     function ComandoLogo: AnsiString; override;
+    function ComandoGravarLogoRasterStr(const RasterStr: AnsiString; AWidth: Integer;
+      AHeight: Integer): AnsiString; override;
+    function ComandoApagarLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
     function ComandoInicializa: AnsiString; override;
 
@@ -170,6 +176,21 @@ begin
   Result := ESC + 't' + AnsiChr( CmdPag );
 end;
 
+procedure TACBrEscBematech.VerificarKeyCodes;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
+      raise EPosPrinterException.Create('Bematech apenas aceitas KeyCode1=1, KeyCode2=0');
+  end;
+end;
+
+function TACBrEscBematech.ComandoImprimirImagemRasterStr(
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+begin
+  Result := ComandoImprimirImagemColumnStr(fpPosPrinter, RasterStr, AWidth, AHeight)
+end;
+
 function TACBrEscBematech.ComandoLogo: AnsiString;
 var
   m, KeyCode: Integer;
@@ -193,6 +214,34 @@ begin
       m := m + 2;
 
     Result := FS + 'p' + AnsiChr(KeyCode) + AnsiChr(m);
+  end;
+end;
+
+function TACBrEscBematech.ComandoGravarLogoRasterStr(
+  const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+var
+  KeyCode: Byte;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    KeyCode := AjustarKeyCodeUnico(KeyCode1);
+    VerificarKeyCodes;
+
+    Result := ComandoGravarLogoColumnStr(RasterStr, AWidth, AHeight, KeyCode);
+  end;
+end;
+
+function TACBrEscBematech.ComandoApagarLogo: AnsiString;
+var
+  KeyCode: Byte;
+begin
+  with fpPosPrinter.ConfigLogo do
+  begin
+    KeyCode := AjustarKeyCodeUnico(KeyCode1);
+    VerificarKeyCodes;
+
+    KeyCode := AjustarKeyCodeUnico(KeyCode1);
+    Result := ComandoGravarLogoColumnStr(#0, 1, 1, KeyCode);
   end;
 end;
 

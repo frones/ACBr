@@ -1659,7 +1659,9 @@ begin
     CUF := Inutilizacao.cUF;
     DhRecbto := Inutilizacao.DhRecbto;
     NomeArquivo := Inutilizacao.NomeArquivo;
+    NProt := Inutilizacao.Protocolo;
     Xml := Inutilizacao.XML_ProcInutNFe;
+
   end;
 end;
 

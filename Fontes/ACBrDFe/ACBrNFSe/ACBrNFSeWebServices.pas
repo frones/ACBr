@@ -1480,7 +1480,7 @@ begin
 
   if FRetornoNFSe.ListaNFSe.MsgRetorno.Count > 0 then
   begin
-    ProcSucesso := True;
+    ProcSucesso := False;
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
     begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
@@ -1500,7 +1500,7 @@ begin
     end;
   end
   else begin
-    ProcSucesso := False;
+    ProcSucesso := True;
     if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
     begin
       if FProvedor = proEgoverneISS then

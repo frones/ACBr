@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2019
+-- ACBrNFSeWebServices --
+[*] Valor atribuido de forma invertida a variável ProcSucesso.
+   Por: Italo Jurisato Junior
+
 16/05/2019
 -- Diversos --
 [+] Implementação do provedor SilTecnologia.

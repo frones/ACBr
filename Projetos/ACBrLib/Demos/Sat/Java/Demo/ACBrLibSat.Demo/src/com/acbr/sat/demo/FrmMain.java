@@ -862,7 +862,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
             int ret;
@@ -891,7 +891,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("ini", "Ini File (*.ini)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
             int ret;
@@ -919,7 +919,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
             int ret;
@@ -947,7 +947,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
                        
@@ -966,7 +966,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
                        
@@ -985,7 +985,7 @@ public class FrmMain extends javax.swing.JFrame {
             OpenFileFilter filter = new OpenFileFilter("xml", "Arquivo Xml CFe (*.xml)");
             chooser.addChoosableFileFilter(filter);
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showSaveDialog(rootPane);
+            int returnVal = chooser.showOpenDialog(rootPane);
             if (returnVal != JFileChooser.APPROVE_OPTION) return;
             
             ByteBuffer buffer = ByteBuffer.allocate(256);

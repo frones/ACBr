@@ -1221,9 +1221,6 @@ Private Sub btnConsultaXml_Click()
     Dim retorno As Long
     retorno = NFE_LimparLista
     CheckResult retorno
-        
-    retorno = NFE_CarregarXML(CommonDialog1.FileName)
-    CheckResult retorno
     
     Dim buffer As String
     Dim bufferLen As Long

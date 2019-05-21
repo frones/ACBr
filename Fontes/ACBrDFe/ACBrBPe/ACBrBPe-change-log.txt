@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/05/2019
+-- ACBrBPeBilhetes --
+[*] Corrigido o método LerArqIni - campos: cPais e xPais
+   Por: Italo Jurisato Junior
+
 15/05/2019
 -- pcnEnvEventoBPe --
 [*] Alteração visando disponibilziar o BPe no ACBrMonitor.

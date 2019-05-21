@@ -790,8 +790,8 @@ begin
       Comp.enderComp.xMun    := INIRec.ReadString('comp', 'xMun', '');
       Comp.enderComp.CEP     := INIRec.ReadInteger('comp', 'CEP', 0);
       Comp.enderComp.UF      := INIRec.ReadString('comp', 'UF', '');
-      Comp.EnderComp.cPais   := INIRec.ReadInteger('comp', 'cPais', 1058);
-      Comp.EnderComp.xPais   := INIRec.ReadString('comp', 'xPais', 'BRASIL');
+      Comp.EnderComp.cPais   := INIRec.ReadInteger('comp', 'cPais', 0);
+      Comp.EnderComp.xPais   := INIRec.ReadString('comp', 'xPais', '');
       Comp.enderComp.fone    := INIRec.ReadString('comp', 'fone', '');
       Comp.enderComp.Email   := INIRec.ReadString('comp', 'Email', '');
 
@@ -809,6 +809,8 @@ begin
       Agencia.enderAgencia.xMun    := INIRec.ReadString('Agencia', 'xMun', '');
       Agencia.enderAgencia.CEP     := INIRec.ReadInteger('Agencia', 'CEP', 0);
       Agencia.enderAgencia.UF      := INIRec.ReadString('Agencia', 'UF', '');
+      Agencia.enderAgencia.cPais   := INIRec.ReadInteger('Agencia', 'cPais', 0);
+      Agencia.enderAgencia.xPais   := INIRec.ReadString('Agencia', 'xPais', '');
       Agencia.enderAgencia.fone    := INIRec.ReadString('Agencia', 'fone', '');
       Agencia.enderAgencia.Email   := INIRec.ReadString('Agencia', 'Email', '');
 

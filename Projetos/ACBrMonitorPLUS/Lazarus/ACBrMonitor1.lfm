@@ -412,19 +412,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Monitor.htm'
           Caption = '&Monitor'
-          ClientHeight = 327
+          ClientHeight = 378
           ClientWidth = 989
           Font.Height = -13
           ImageIndex = 0
@@ -15856,6 +15856,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

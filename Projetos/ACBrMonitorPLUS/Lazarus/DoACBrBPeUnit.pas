@@ -345,15 +345,12 @@ begin
   ListaDeMetodos.Add(CMetodoConsultarBPe);
   ListaDeMetodos.Add(CMetodoCancelarBPe);
   ListaDeMetodos.Add(CMetodoImprimirDABPe);
-  ListaDeMetodos.Add(CMetodoImprimirDABPePDF);
   ListaDeMetodos.Add(CMetodoImprimirEvento);
-  ListaDeMetodos.Add(CMetodoImprimirEventoPDF);
   ListaDeMetodos.Add(CMetodoEnviarBPe);
   ListaDeMetodos.Add(CMetodoCriarBPe);
   ListaDeMetodos.Add(CMetodoCriarEnviarBPe);
   ListaDeMetodos.Add(CMetodoEnviarEmail);
   ListaDeMetodos.Add(CMetodoSetAmbiente);
-  ListaDeMetodos.Add(CMetodoSetLogoMarca);
   ListaDeMetodos.Add(CMetodoSetFormaEmissao);
   ListaDeMetodos.Add(CMetodoSetVersaoDF);
   ListaDeMetodos.Add(CMetodoLerBPe);
@@ -363,8 +360,6 @@ begin
   ListaDeMetodos.Add(CMetodoVersao);
   ListaDeMetodos.Add(CMetodoCNPJCertificado);
   ListaDeMetodos.Add(CMetodoGetPathBPe);
-  ListaDeMetodos.Add(CMetodoGetPathCCe);
-  ListaDeMetodos.Add(CMetodoGetPathCan);
   ListaDeMetodos.Add(CMetodoGetPathEvento);
   ListaDeMetodos.Add(CMetodoGerarINIBPe);
   ListaDeMetodos.Add(CMetodoEnviarEvento);
@@ -375,7 +370,6 @@ begin
   ListaDeMetodos.Add(CMetodoEnviarEmailEvento);
   ListaDeMetodos.Add(CMetodoValidarRegrasNegocios);
   ListaDeMetodos.Add(CMetodoDataVencimentoCertificado);
-  ListaDeMetodos.Add(CMetodoSetTipoImpressao);
 
   // DoACBr
   ListaDeMetodos.Add(CMetodoSavetofile);
@@ -413,37 +407,32 @@ begin
     3  : AMetodoClass := TMetodoConsultarBPe;
     4  : AMetodoClass := TMetodoCancelarBPe;
     5  : AMetodoClass := TMetodoImprimirDaBPe;
-    6  : AMetodoClass := TMetodoImprimirDaBPePDF;
-    7  : AMetodoClass := TMetodoImprimirEvento;
-    8  : AMetodoClass := TMetodoImprimirEventoPDF;
-    9  : AMetodoClass := TMetodoEnviarBPe;
-    10 : AMetodoClass := TMetodoCriarBPe;
-    11 : AMetodoClass := TMetodoCriarEnviarBPe;
-    12 : AMetodoClass := TMetodoEnviarEmail;
-    13 : AMetodoClass := TMetodoSetAmbiente;
-    14 : AMetodoClass := TMetodoSetLogoMarca;
-    15 : AMetodoClass := TMetodoSetformaEmissao;
-    16 : AMetodoClass := TMetodoSetVersaoDF;
-    17 : AMetodoClass := TMetodoLerBPe;
-    18 : AMetodoClass := TMetodoFileExists;
-    19 : AMetodoClass := TMetodoCertificadoDataVencimento;
-    20 : AMetodoClass := TMetodoGeraChave;
-    21 : AMetodoClass := TMetodoVersao;
-    22 : AMetodoClass := TMetodoCNPJCertificado;
-    23 : AMetodoClass := TMetodoGetPathBPe;
-    24 : AMetodoClass := TMetodoGetPathCCe;
-    25 : AMetodoClass := TMetodoGetPathCan;
-    26 : AMetodoClass := TMetodoGetPathEvento;
-    27 : AMetodoClass := TMetodoLerBPe; // GerarIniBPe
-    28 : AMetodoClass := TMetodoEnviarEvento;
-    29 : AMetodoClass := TMetodoXMLEnviarEvento;
-    30 : AMetodoClass := TMetodoDistribuicaoDFeporChaveBPe;
-    31 : AMetodoClass := TMetodoDistribuicaoDFeporNSU;
-    32 : AMetodoClass := TMetodoDistribuicaoDFeporUltNSU;
-    33 : AMetodoClass := TMetodoEnviaremailEvento;
-    34 : AMetodoClass := TMetodoValidarRegrasNegocios;
-    35 : AMetodoClass := TMetodoCertificadoDataVencimento; // DataVencimentoCertificado
-    36 : AMetodoClass := TMetodoSetTipoImpressao;
+    6  : AMetodoClass := TMetodoImprimirEvento;
+    7  : AMetodoClass := TMetodoEnviarBPe;
+    8  : AMetodoClass := TMetodoCriarBPe;
+    9  : AMetodoClass := TMetodoCriarEnviarBPe;
+    10 : AMetodoClass := TMetodoEnviarEmail;
+    11 : AMetodoClass := TMetodoSetAmbiente;
+    12 : AMetodoClass := TMetodoSetformaEmissao;
+    13 : AMetodoClass := TMetodoSetVersaoDF;
+    14 : AMetodoClass := TMetodoLerBPe;
+    15 : AMetodoClass := TMetodoFileExists;
+    16 : AMetodoClass := TMetodoCertificadoDataVencimento;
+    17 : AMetodoClass := TMetodoGeraChave;
+    18 : AMetodoClass := TMetodoVersao;
+    19 : AMetodoClass := TMetodoCNPJCertificado;
+    20 : AMetodoClass := TMetodoGetPathBPe;
+    21 : AMetodoClass := TMetodoGetPathEvento;
+    22 : AMetodoClass := TMetodoLerBPe; // GerarIniBPe
+    23 : AMetodoClass := TMetodoEnviarEvento;
+    24 : AMetodoClass := TMetodoXMLEnviarEvento;
+    25 : AMetodoClass := TMetodoDistribuicaoDFeporChaveBPe;
+    26 : AMetodoClass := TMetodoDistribuicaoDFeporNSU;
+    27 : AMetodoClass := TMetodoDistribuicaoDFeporUltNSU;
+    28 : AMetodoClass := TMetodoEnviaremailEvento;
+    29 : AMetodoClass := TMetodoValidarRegrasNegocios;
+    30 : AMetodoClass := TMetodoCertificadoDataVencimento; // DataVencimentoCertificado
+
   else
     DoACbr(ACmd);
   end;

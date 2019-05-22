@@ -836,7 +836,7 @@ implementation
 
 Uses
   dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
-  ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
+  ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
 var
@@ -1624,6 +1624,7 @@ begin
          begin
            Usar715 := True;
            fpImagemComprovante2aVia.Clear;
+           fpQtdLinhasComprovante := Linha.Informacao.AsInteger;
          end;
        715 :
          begin

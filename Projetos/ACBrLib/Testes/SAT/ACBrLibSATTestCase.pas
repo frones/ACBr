@@ -30,6 +30,8 @@ type
     procedure Test_SAT_CriarEnviarCFe;
     procedure Test_SAT_ImpressaoExtratoFortes;
     procedure Test_SAT_ImpressaoExtratoEscPOS;
+    procedure Test_SAT_ImpressaoExtratoPDF_Sem_Path;
+    procedure Test_SAT_ImpressaoExtratoPDF_Com_Path;
   end;
 
 implementation
@@ -290,6 +292,69 @@ begin
   AssertEquals(ErrOK, SAT_ConfigGravar(''));
   AssertEquals(ErrOK, SAT_InicializarSAT);
   AssertEquals(ErrOK, SAT_ImprimirExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', ''));
+
+  AssertEquals(ErrOK, SAT_Finalizar());
+end;
+
+procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Sem_Path;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+
+   // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
+                SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', '', PChar(AStr), Bufflen));
+
+  if Bufflen > 255 then
+  begin
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+  end;
+
+  AssertEquals(ErrOK, SAT_Finalizar());
+end;
+
+procedure TTestACBrSATLib.Test_SAT_ImpressaoExtratoPDF_Com_Path;
+var
+  Bufflen: Integer;
+  AStr: String;
+begin
+  AssertEquals(ErrOk, SAT_Inicializar('',''));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogNivel, '4'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoPrincipal, CChaveLogPath, PChar(ApplicationPath)));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveModelo, '1'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoSAT, CChaveNomeDLL, 'C:\SAT\SAT.dll'));
+  AssertEquals(ErrOK, SAT_ConfigGravarValor(CSessaoExtrato, CChaveTipo, '0'));
+  AssertEquals(ErrOK, SAT_ConfigGravar(''));
+  AssertEquals(ErrOK, SAT_InicializarSAT);
+
+  if FileExists('AD35180911111111111111591234567890001684429520.pdf') then
+    DeleteFile('AD35180911111111111111591234567890001684429520.pdf');
+
+   // Obtendo o Tamanho //
+  Bufflen := 255;
+  AStr := Space(Bufflen);
+
+  AssertEquals('Erro ao tentar geara PDF do CFe', ErrOK,
+                SAT_GerarPDFExtratoVenda('..\AD35180911111111111111591234567890001684429520.xml', 'AD35180911111111111111591234567890001684429520.pdf', PChar(AStr), Bufflen));
+
+  if Bufflen > 255 then
+  begin
+    AStr := Space(Bufflen);
+    AssertEquals(ErrOK, SAT_UltimoRetorno(PChar(AStr), Bufflen));
+  end;
 
   AssertEquals(ErrOK, SAT_Finalizar());
 end;

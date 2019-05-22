@@ -1236,7 +1236,8 @@ end;
 function SAT_GerarPDFCancelamento(eArqXMLVenda, eArqXMLCancelamento, eNomeArquivo: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  ArqXMLVenda, ArqXMLCancelamento, NomeArquivo: String;
+  Resp: TPadraoSATResposta;
+  ArqXMLVenda, ArqXMLCancelamento, NomeArquivo, Resposta: String;
 begin
    try
     VerificarLibInicializada;
@@ -1253,14 +1254,23 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
       try
+       Resposta := '';
         SatDM.ConfigurarImpressao('', True);
         SatDM.CarregarDadosVenda(ArqXMLVenda);
         SatDM.CarregarDadosCancelamento(ArqXMLCancelamento, NomeArquivo);
+
         SatDM.ACBrSAT1.ImprimirExtratoCancelamento;
+
+        Resp.Arquivo:= SatDM.ACBrSAT1.Extrato.NomeDocumento;
+        Resp.XML:= SatDM.ACBrSAT1.CFeCanc.XMLOriginal;
+        Resposta := Resp.Gerar;
+
         SatDM.ACBrSAT1.Extrato := nil;
-        Result := SetRetorno(ErrOK);
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         SatDM.Destravar;
       end;

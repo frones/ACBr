@@ -333,13 +333,11 @@ end;
 
 procedure TExtratoConfig.AssignChild(const DFeReport: TACBrDFeReport);
 var
-  pLibConfig: TLibSatConfig;
   AExtrato: TACBrSATExtratoClass;
 begin
   if not (DFeReport is TACBrSATExtratoClass) then
     raise EACBrLibException.Create(-10, 'DFeReport deve ser do tipo [TACBrSATExtratoClass]');
 
-  pLibConfig := TLibSatConfig(pLib.Config);
   AExtrato := TACBrSATExtratoClass(DFeReport);
 
   if FileExists(Logo) then
@@ -363,7 +361,6 @@ begin
     TACBrSATExtratoFortes(DFeReport).EspacoFinal := EspacoFinal;
     TACBrSATExtratoFortes(DFeReport).LogoWidth := LogoWidth;
     TACBrSATExtratoFortes(DFeReport).LogoHeigth := LogoHeigth;
-    TACBrSATExtratoFortes(DFeReport).LogoStretch := ExpandeLogoMarca;
     TACBrSATExtratoFortes(DFeReport).LogoAutoSize := LogoAutoSize;
     TACBrSATExtratoFortes(DFeReport).LogoCenter := LogoCenter;
     TACBrSATExtratoFortes(DFeReport).LogoVisible := LogoVisible;
@@ -600,6 +597,7 @@ begin
 
   FConfig.LerIni(AIni);
   FConfigArquivos.LerIni(AIni);
+  FSATCertificado.LerIni(AIni);
   FExtrato.LerIni(AIni);
   FIntegrador.LerIni(AIni);
   if FDeviceConfig <> nil then FDeviceConfig.LerIni(Ini);
@@ -634,6 +632,7 @@ begin
 
   FConfig.GravarIni(AIni);
   FConfigArquivos.GravarIni(AIni);
+  FSATCertificado.GravarIni(AIni);
   FExtrato.GravarIni(AIni);
   FIntegrador.GravarIni(AIni);
   if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);

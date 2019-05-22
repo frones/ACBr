@@ -1168,7 +1168,7 @@ public class FrmMain extends javax.swing.JFrame {
             buffer = ByteBuffer.allocate(256);
             bufferLen = new IntByReference(256);
 
-            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("NumCopias"), buffer, bufferLen);
+            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("Copias"), buffer, bufferLen);
             ACBrSat.checkResult(ret);
             
             nudCopias.setValue(Integer.parseInt(ACBrSat.fromUTF8(buffer, bufferLen.getValue())));
@@ -1176,7 +1176,7 @@ public class FrmMain extends javax.swing.JFrame {
             buffer = ByteBuffer.allocate(256);
             bufferLen = new IntByReference(256);
 
-            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("SoftwareHouse"), buffer, bufferLen);
+            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Sistema"), ACBrSat.toUTF8("Nome"), buffer, bufferLen);
             ACBrSat.checkResult(ret);
             
             txtSoftwareHouse.setText(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
@@ -1184,7 +1184,7 @@ public class FrmMain extends javax.swing.JFrame {
             buffer = ByteBuffer.allocate(256);
             bufferLen = new IntByReference(256);
 
-            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("PrinterName"), buffer, bufferLen);
+            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("Impressora"), buffer, bufferLen);
             ACBrSat.checkResult(ret);
             
             cmbImpressora.setSelectedItem(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
@@ -1192,7 +1192,7 @@ public class FrmMain extends javax.swing.JFrame {
             buffer = ByteBuffer.allocate(256);
             bufferLen = new IntByReference(256);
 
-            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Extrato"), ACBrSat.toUTF8("Site"), buffer, bufferLen);
+            ret = acbrSat.SAT_ConfigLerValor(ACBrSat.toUTF8("Emissor"), ACBrSat.toUTF8("WebSite"), buffer, bufferLen);
             ACBrSat.checkResult(ret);
             
             txtSite.setText(ACBrSat.fromUTF8(buffer, bufferLen.getValue()));
@@ -1452,18 +1452,18 @@ public class FrmMain extends javax.swing.JFrame {
                     ACBrSat.toUTF8(nudCopias.getValue().toString()));
             ACBrSat.checkResult(ret);
             
-            ret = acbrSat.SAT_ConfigGravarValor(ACBrSat.toUTF8("Extrato"), 
-                    ACBrSat.toUTF8("SoftwareHouse"), 
+            ret = acbrSat.SAT_ConfigGravarValor(ACBrSat.toUTF8("Sistema"), 
+                    ACBrSat.toUTF8("Nome"), 
                     ACBrSat.toUTF8(txtSoftwareHouse.getText()));
             ACBrSat.checkResult(ret);
             
             ret = acbrSat.SAT_ConfigGravarValor(ACBrSat.toUTF8("Extrato"), 
-                    ACBrSat.toUTF8("PrinterName"), 
+                    ACBrSat.toUTF8("Impressora"), 
                     ACBrSat.toUTF8(cmbImpressora.getSelectedItem().toString()));
             ACBrSat.checkResult(ret);
             
-            ret = acbrSat.SAT_ConfigGravarValor(ACBrSat.toUTF8("Extrato"), 
-                    ACBrSat.toUTF8("Site"), 
+            ret = acbrSat.SAT_ConfigGravarValor(ACBrSat.toUTF8("Emissor"), 
+                    ACBrSat.toUTF8("WebSite"), 
                     ACBrSat.toUTF8(txtSite.getText()));
             ACBrSat.checkResult(ret);
             

@@ -1730,7 +1730,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = SAT_ConfigLerValor("Extrato", "NumCopias", buffer, bufferLen)
+    retorno = SAT_ConfigLerValor("Extrato", "Copias", buffer, bufferLen)
     CheckResult ret
     
     nudCopias.Value = CInt(Trim$(FromUTF8(buffer)))
@@ -1738,7 +1738,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = SAT_ConfigLerValor("Extrato", "SoftwareHouse", buffer, bufferLen)
+    retorno = SAT_ConfigLerValor("Sistema", "Nome", buffer, bufferLen)
     CheckResult ret
     
     txtSoftwareHouse.Text = Trim$(FromUTF8(buffer))
@@ -1746,7 +1746,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = SAT_ConfigLerValor("Extrato", "PrinterName", buffer, bufferLen)
+    retorno = SAT_ConfigLerValor("Extrato", "Impressora", buffer, bufferLen)
     CheckResult ret
     
     cbbImpressora.Text = Trim$(FromUTF8(buffer))
@@ -1754,7 +1754,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = SAT_ConfigLerValor("Extrato", "Site", buffer, bufferLen)
+    retorno = SAT_ConfigLerValor("Emissor", "WebSite", buffer, bufferLen)
     CheckResult ret
     
     txtSite.Text = Trim$(FromUTF8(buffer))
@@ -1976,16 +1976,16 @@ Private Sub SaveConfig()
     retorno = SAT_ConfigGravarValor("Extrato", "Tipo", CStr(cmbImpressao.ListIndex))
     CheckResult ret
     
-    retorno = SAT_ConfigGravarValor("Extrato", "NumCopias", CStr(nudCopias.Value))
+    retorno = SAT_ConfigGravarValor("Extrato", "Copias", CStr(nudCopias.Value))
     CheckResult ret
     
-    retorno = SAT_ConfigGravarValor("Extrato", "SoftwareHouse", txtSoftwareHouse.Text)
+    retorno = SAT_ConfigGravarValor("Sistema", "Nome", txtSoftwareHouse.Text)
     CheckResult ret
     
-    retorno = SAT_ConfigGravarValor("Extrato", "PrinterName", cbbImpressora.Text)
+    retorno = SAT_ConfigGravarValor("Extrato", "Impressora", cbbImpressora.Text)
     CheckResult ret
     
-    retorno = SAT_ConfigGravarValor("Extrato", "Site", txtSite.Text)
+    retorno = SAT_ConfigGravarValor("Emissor", "WebSite", txtSite.Text)
     CheckResult ret
     
     retorno = SAT_ConfigGravarValor("Extrato", "MostrarPreview", CStr(chkPreview.Value))

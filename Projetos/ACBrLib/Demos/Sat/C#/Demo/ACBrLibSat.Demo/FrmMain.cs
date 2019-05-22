@@ -353,7 +353,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "NumCopias".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Extrato".ToUTF8(), "Copias".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             nudCopias.Value = int.Parse(pValue.ToString());
@@ -377,7 +377,7 @@ namespace ACBrLibSat.Demo
             bufferLen = 256;
             pValue.Clear();
 
-            ret = ACBrSat.SAT_ConfigLerValor("SoftwareHouse".ToUTF8(), "WebSite".ToUTF8(), pValue, ref bufferLen);
+            ret = ACBrSat.SAT_ConfigLerValor("Emissor".ToUTF8(), "WebSite".ToUTF8(), pValue, ref bufferLen);
             ACBrSat.CheckResult(ret);
 
             txtSite.Text = pValue.ToString();
@@ -593,7 +593,7 @@ namespace ACBrLibSat.Demo
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "Tipo".ToUTF8(), cmbImpressao.SelectedIndex.ToString().ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "NumCopias".ToUTF8(), nudCopias.Text.ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "Copias".ToUTF8(), nudCopias.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("Sistema".ToUTF8(), "Nome".ToUTF8(), txtSoftwareHouse.Text.ToUTF8());
@@ -602,7 +602,7 @@ namespace ACBrLibSat.Demo
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "Impressora".ToUTF8(), cbbImpressora.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
-            ret = ACBrSat.SAT_ConfigGravarValor("SoftwareHouse".ToUTF8(), "WebSite".ToUTF8(), txtSite.Text.ToUTF8());
+            ret = ACBrSat.SAT_ConfigGravarValor("Emissor".ToUTF8(), "WebSite".ToUTF8(), txtSite.Text.ToUTF8());
             ACBrSat.CheckResult(ret);
 
             ret = ACBrSat.SAT_ConfigGravarValor("Extrato".ToUTF8(), "MostraPreview".ToUTF8(), (chkPreview.Checked ? "1" : "0").ToUTF8());

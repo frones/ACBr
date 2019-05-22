@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -17,8 +17,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <MajorVersionNr Value="2019"/>
-      <MinorVersionNr Value="1"/>
-      <RevisionNr Value="7"/>
+      <MinorVersionNr Value="5"/>
+      <RevisionNr Value="22"/>
       <BuildNr Value="1"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
@@ -195,9 +195,16 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
         <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="4">
       <Item1>
@@ -213,7 +220,7 @@
         <PackageName Value="ACBr_SAT"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="ACBrLibSAT.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -271,6 +278,10 @@
         <Filename Value="..\PosPrinter\ACBrLibPosPrinterImport.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\Comum\DFeReportConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

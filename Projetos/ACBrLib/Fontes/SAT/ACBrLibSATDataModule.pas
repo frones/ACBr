@@ -370,57 +370,18 @@ begin
 
   with pLibConfig.Extrato do
   begin
-    if TipoExtrato = teFortes then
-    begin
-      ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
-
-      if NomeImpressora <> '' then
-        ACBrSATExtratoFortes1.Impressora := NomeImpressora
-      else
-        ACBrSATExtratoFortes1.Impressora := Impressora;
-
-      ACBrSATExtratoFortes1.LarguraBobina := LarguraBobina;
-      ACBrSATExtratoFortes1.MargemSuperior := MargensTopo;
-      ACBrSATExtratoFortes1.MargemEsquerda := MargensEsquerda;
-      ACBrSATExtratoFortes1.MargemInferior := MargensFundo;
-      ACBrSATExtratoFortes1.MargemDireita := MargensDireita;
-      ACBrSATExtratoFortes1.EspacoFinal := EspacoFinal;
-      ACBrSATExtratoFortes1.LogoWidth := LogoWidth;
-      ACBrSATExtratoFortes1.LogoHeigth := LogoHeigth;
-      ACBrSATExtratoFortes1.LogoStretch := LogoStretch;
-      ACBrSATExtratoFortes1.LogoAutoSize := LogoAutoSize;
-      ACBrSATExtratoFortes1.LogoCenter := LogoCenter;
-      ACBrSATExtratoFortes1.LogoVisible := LogoVisible;
-    end
+    if GerarPDF or (TipoExtrato = teFortes) then
+      ACBrSAT1.Extrato := ACBrSATExtratoFortes1
     else
-    begin
       ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
-      ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := ImprimeChaveEmUmaLinha;
-    end;
 
-    if FileExists(PictureLogo) then
-      ACBrSAT1.Extrato.PictureLogo.Bitmap.LoadFromFile(PictureLogo);
+    pLibConfig.Extrato.Assign(ACBrSAT1.Extrato);
 
-    ACBrSAT1.Extrato.CasasDecimais.MaskqCom := MaskqCom;
-    ACBrSAT1.Extrato.CasasDecimais.MaskvUnCom := MaskvUnCom;
-    ACBrSAT1.Extrato.ImprimeQRCode := ImprimeQRCode;
-    ACBrSAT1.Extrato.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
-    ACBrSAT1.Extrato.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
-    ACBrSAT1.Extrato.MostraPreview := MostraPreview;
-    ACBrSAT1.Extrato.MostraSetup := MostraSetup;
-    ACBrSAT1.Extrato.NumCopias := NumCopias;
-    ACBrSAT1.Extrato.NomeDocumento := NomeDocumento;
-    ACBrSAT1.Extrato.Sistema := pLibConfig.Sistema.Nome;
-    ACBrSAT1.Extrato.Site := pLibConfig.Emissor.WebSite;
-    ACBrSAT1.Extrato.MsgAppQRCode := MsgAppQRCode;
-    ACBrSAT1.Extrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
-    ACBrSAT1.Extrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
-    ACBrSAT1.Extrato.ImprimeCodigoEan := ImprimeCodigoEan;
+    if NomeImpressora <> '' then
+      ACBrSAT1.Extrato.Impressora := NomeImpressora;
 
     if GerarPDF then
       ACBrSAT1.Extrato.Filtro := fiPDF
-    else
-      ACBrSAT1.Extrato.Filtro := Filtro;
   end;
 end;
 

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2019
+[*] Melhorias na função de impressão PDF, para sempre setar como fortes na hora de exportar.
+    (por Rafael Dias)
+[*] Melhorias nas configurações do extrato herdando da classe base TDFeReportConfig.
+    (por Rafael Dias)
+
 08/01/2019
 [*] Melhorias no codigo de carregamento do INI.
     (por Rafael Dias)

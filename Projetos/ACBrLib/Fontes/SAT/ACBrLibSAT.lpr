@@ -4,7 +4,7 @@ library ACBrLibSat;
 
 uses
   Interfaces, sysutils, Classes, Forms,
-  ACBrLibConfig, ACBrLibComum,
+  ACBrLibConfig, ACBrLibComum, DFeReportConfig,
   ACBrLibSATConfig, ACBrLibSatDataModule, ACBrLibSATClass;
 
 {$R *.res}

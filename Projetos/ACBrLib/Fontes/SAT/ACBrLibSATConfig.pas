@@ -33,6 +33,7 @@ interface
 uses
   Classes, SysUtils, IniFiles,
   ACBrLibConfig, ACBrDeviceConfig,
+  ACBrDFeReport, DFeReportConfig,
   ACBrSAT, ACBrSATClass, ACBrSATExtratoClass,
   ACBrIntegradorConfig, ACBrDFeSSL, ACBrSATExtratoESCPOS,
   pcnRede, pcnConversao;
@@ -41,74 +42,51 @@ type
   TTipoExtrato = (teFortes, teEscPos);
 
   { TExtratoConfig }
-  TExtratoConfig = class
+  TExtratoConfig = class(TDFeReportConfig)
   private
     FTipoExtrato: TTipoExtrato;
-    FMask_qCom: String;
-    FMask_vUnCom: String;
     FImprimeQRCode: Boolean;
     FImprimeMsgOlhoNoImposto: Boolean;
     FImprimeCPFNaoInformado: Boolean;
-    FPictureLogo: String;
-    FMostrarPreview: Boolean;
-    FMostrarSetup: Boolean;
-    FNumCopias: Integer;
-    FNomeArquivo: String;
     FFiltro: TACBrSATExtratoFiltro;
     FMsgAppQRCode: String;
     FImprimeEmUmaLinha: Boolean;
     FImprimeDescAcrescItem: Boolean;
     FUsaCodigoEanImpressao: Boolean;
     FLarguraBobina: Integer;
-    FMargensTopo: Integer;
-    FMargensEsquerda: Integer;
-    FMargensFundo: Integer;
-    FMargensDireita: Integer;
     FEspacoFinal: Integer;
     FLogoWidth: Integer;
     FLogoHeigth: Integer;
-    FLogoStretch: Boolean;
     FLogoAutoSize: Boolean;
     FLogoCenter: Boolean;
     FLogoVisible: Boolean;
-    FPrinterName: String;
     FImprimeChaveEmUmaLinha: TAutoSimNao;
+
+  protected
+    procedure LerIniChild(const AIni: TCustomIniFile); override;
+    procedure GravarIniChild(const AIni: TCustomIniFile); override;
+    procedure AssignChild(const DFeReport: TACBrDFeReport); override;
+    procedure DefinirValoresPadroesChild; override;
 
   public
     constructor Create;
 
-    procedure LerIni(const AIni: TCustomIniFile);
-    procedure GravarIni(const AIni: TCustomIniFile);
-
     property TipoExtrato: TTipoExtrato read FTipoExtrato write FTipoExtrato;
-    property MaskqCom: String   read FMask_qCom      write FMask_qCom;
-    property MaskvUnCom: String   read FMask_vUnCom    write FMask_vUnCom;
     property ImprimeQRCode: Boolean  read FImprimeQRCode  write FImprimeQRCode;
     property ImprimeMsgOlhoNoImposto: Boolean read FImprimeMsgOlhoNoImposto write FImprimeMsgOlhoNoImposto;
     property ImprimeCPFNaoInformado: Boolean read FImprimeCPFNaoInformado write FImprimeCPFNaoInformado;
-    property PictureLogo: String read FPictureLogo write FPictureLogo;
-    property MostraPreview: Boolean read FMostrarPreview write FMostrarPreview;
-    property MostraSetup: Boolean read FMostrarSetup write FMostrarSetup;
-    property NumCopias: Integer read FNumCopias write FNumCopias;
-    property NomeDocumento: String read FNomeArquivo  write FNomeArquivo ;
     property Filtro: TACBrSATExtratoFiltro read FFiltro write FFiltro;
     property MsgAppQRCode: String read FMsgAppQRCode write FMsgAppQRCode;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha;
     property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem write FImprimeDescAcrescItem;
     property ImprimeCodigoEan: Boolean read FUsaCodigoEanImpressao write FUsaCodigoEanImpressao;
     property LarguraBobina: Integer read FLarguraBobina  write FLarguraBobina;
-    property MargensTopo: Integer read FMargensTopo write FMargensTopo;
-    property MargensEsquerda: Integer read FMargensEsquerda write FMargensEsquerda;
-    property MargensFundo: Integer read FMargensFundo write FMargensFundo;
-    property MargensDireita: Integer read FMargensDireita write FMargensDireita;
     property EspacoFinal: Integer read FEspacoFinal write FEspacoFinal;
     property LogoWidth: Integer read FLogoWidth write FLogoWidth;
     property LogoHeigth: Integer read FLogoHeigth write FLogoHeigth;
-    property LogoStretch: Boolean read FLogoStretch write FLogoStretch;
     property LogoAutoSize: Boolean read FLogoAutoSize write FLogoAutoSize;
     property LogoCenter: Boolean read FLogoCenter write FLogoCenter;
     property LogoVisible: Boolean read FLogoVisible write FLogoVisible;
-    property Impressora: String read FPrinterName write FPrinterName;
     property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
       write FImprimeChaveEmUmaLinha default rAuto;
 
@@ -280,110 +258,116 @@ implementation
 
 uses
   ACBrLibSATClass, ACBrLibSATConsts, ACBrLibConsts, ACBrLibComum,
-  ACBrUtil, ACBrConsts;
+  ACBrUtil, ACBrConsts, ACBrSATExtratoFortesFr;
 
 { TExtratoConfig }
 constructor TExtratoConfig.Create;
 begin
+  inherited Create(CSessaoExtrato);
+end;
+
+procedure TExtratoConfig.DefinirValoresPadroesChild;
+begin
   FTipoExtrato := teFortes;
-  FMask_qCom := ',0.0000';
-  FMask_vUnCom := ',0.000';
   FImprimeQRCode := True;
   FImprimeMsgOlhoNoImposto := True;
   FImprimeCPFNaoInformado := True;
-  FPictureLogo := '';
-  FMostrarPreview := False;
-  FMostrarSetup := False;
-  FNumCopias := 1;
-  FNomeArquivo := '';
   FFiltro := fiNenhum;
   FMsgAppQRCode := ACBrStr(cMsgAppQRCode);
   FImprimeEmUmaLinha := True;
   FImprimeDescAcrescItem := True;
   FUsaCodigoEanImpressao := False;
   FLarguraBobina := 302;
-  FMargensTopo := 2;
-  FMargensEsquerda := 2;
-  FMargensFundo := 4;
-  FMargensDireita := 2;
   FEspacoFinal := 0;
   FLogoWidth := 77;
   FLogoHeigth := 50;
-  FLogoStretch := False;
   FLogoAutoSize := True;
   FLogoCenter := True;
   FLogoVisible := True;
-  FPrinterName := '';
   FImprimeChaveEmUmaLinha := rAuto;
 end;
 
-procedure TExtratoConfig.LerIni(const AIni: TCustomIniFile);
+procedure TExtratoConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
-  FTipoExtrato := TTipoExtrato(AIni.ReadInteger(CSessaoExtrato, CChaveTipo, Integer(FTipoExtrato)));
-  FMask_qCom := AIni.ReadString(CSessaoExtrato, CChaveMaskqCom, FMask_qCom);
-  FMask_vUnCom := AIni.ReadString(CSessaoExtrato, CChaveMaskvUnCom, FMask_vUnCom);
-  FImprimeQRCode := AIni.ReadBool(CSessaoExtrato, CChaveImprimeQRCode, FImprimeQRCode);
-  FImprimeMsgOlhoNoImposto := AIni.ReadBool(CSessaoExtrato, CChaveImprimeMsgOlhoNoImposto, FImprimeMsgOlhoNoImposto);
-  FImprimeCPFNaoInformado := AIni.ReadBool(CSessaoExtrato, CChaveImprimeCPFNaoInformado, FImprimeCPFNaoInformado);
-  FPictureLogo := AIni.ReadString(CSessaoExtrato, CChavePictureLogo, FPictureLogo);
-  FMostrarPreview := AIni.ReadBool(CSessaoExtrato, CChaveMostraPreview, FMostrarPreview);
-  FMostrarSetup := AIni.ReadBool(CSessaoExtrato, CChaveMostraSetup, FMostrarSetup);
-  FNumCopias := AIni.ReadInteger(CSessaoExtrato, CChaveNumCopias, FNumCopias);
-  FNomeArquivo := AIni.ReadString(CSessaoExtrato, CChaveNomeDocumento, FNomeArquivo);
-  FFiltro := TACBrSATExtratoFiltro(AIni.ReadInteger(CSessaoExtrato, CChaveFiltro, Integer(FFiltro)));
-  FMsgAppQRCode := AIni.ReadString(CSessaoExtrato, CChaveMsgAppQRCode, FMsgAppQRCode);
-  FImprimeEmUmaLinha := AIni.ReadBool(CSessaoExtrato, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
-  FImprimeDescAcrescItem := AIni.ReadBool(CSessaoExtrato, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
-  FUsaCodigoEanImpressao := AIni.ReadBool(CSessaoExtrato, CChaveImprimeCodigoEan, FUsaCodigoEanImpressao);
-  FLarguraBobina := AIni.ReadInteger(CSessaoExtrato, CChaveLarguraBobina, FLarguraBobina);
-  FMargensTopo := AIni.ReadInteger(CSessaoExtrato, CChaveMargensTopo, FMargensTopo);
-  FMargensEsquerda := AIni.ReadInteger(CSessaoExtrato, CChaveMargensEsquerda, FMargensEsquerda);
-  FMargensFundo := AIni.ReadInteger(CSessaoExtrato, CChaveMargensFundo, FMargensFundo);
-  FMargensDireita := AIni.ReadInteger(CSessaoExtrato, CChaveMargensDireita, FMargensDireita);
-  FEspacoFinal := AIni.ReadInteger(CSessaoExtrato, CChaveEspacoFinal, FEspacoFinal);
-  FLogoWidth := AIni.ReadInteger(CSessaoExtrato, CChaveLogoWidth, FLogoWidth);
-  FLogoHeigth := AIni.ReadInteger(CSessaoExtrato, CChaveLogoHeigth, FLogoHeigth);
-  FLogoStretch := AIni.ReadBool(CSessaoExtrato, CChaveLogoStretch, FLogoStretch);
-  FLogoAutoSize := AIni.ReadBool(CSessaoExtrato, CChaveLogoAutoSize, FLogoAutoSize);
-  FLogoCenter := AIni.ReadBool(CSessaoExtrato, CChaveLogoCenter, FLogoCenter);
-  FLogoVisible := AIni.ReadBool(CSessaoExtrato, CChaveLogoVisible, FLogoVisible);
-  FPrinterName := AIni.ReadString(CSessaoExtrato, CChavePrinterName, FPrinterName);
-  FImprimeChaveEmUmaLinha := TAutoSimNao(AIni.ReadInteger(CSessaoExtrato, CChaveImprimeChaveEmUmaLinha,
+  FTipoExtrato := TTipoExtrato(AIni.ReadInteger(FSessao, CChaveTipo, Integer(FTipoExtrato)));
+  FImprimeQRCode := AIni.ReadBool(FSessao, CChaveImprimeQRCode, FImprimeQRCode);
+  FImprimeMsgOlhoNoImposto := AIni.ReadBool(FSessao, CChaveImprimeMsgOlhoNoImposto, FImprimeMsgOlhoNoImposto);
+  FImprimeCPFNaoInformado := AIni.ReadBool(FSessao, CChaveImprimeCPFNaoInformado, FImprimeCPFNaoInformado);
+  FFiltro := TACBrSATExtratoFiltro(AIni.ReadInteger(FSessao, CChaveFiltro, Integer(FFiltro)));
+  FMsgAppQRCode := AIni.ReadString(FSessao, CChaveMsgAppQRCode, FMsgAppQRCode);
+  FImprimeEmUmaLinha := AIni.ReadBool(FSessao, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
+  FImprimeDescAcrescItem := AIni.ReadBool(FSessao, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
+  FUsaCodigoEanImpressao := AIni.ReadBool(FSessao, CChaveImprimeCodigoEan, FUsaCodigoEanImpressao);
+  FLarguraBobina := AIni.ReadInteger(FSessao, CChaveLarguraBobina, FLarguraBobina);
+  FEspacoFinal := AIni.ReadInteger(FSessao, CChaveEspacoFinal, FEspacoFinal);
+  FLogoWidth := AIni.ReadInteger(FSessao, CChaveLogoWidth, FLogoWidth);
+  FLogoHeigth := AIni.ReadInteger(FSessao, CChaveLogoHeigth, FLogoHeigth);
+  FLogoAutoSize := AIni.ReadBool(FSessao, CChaveLogoAutoSize, FLogoAutoSize);
+  FLogoCenter := AIni.ReadBool(FSessao, CChaveLogoCenter, FLogoCenter);
+  FLogoVisible := AIni.ReadBool(FSessao, CChaveLogoVisible, FLogoVisible);
+  FImprimeChaveEmUmaLinha := TAutoSimNao(AIni.ReadInteger(FSessao, CChaveImprimeChaveEmUmaLinha,
     Integer(FImprimeChaveEmUmaLinha)));
 end;
 
-procedure TExtratoConfig.GravarIni(const AIni: TCustomIniFile);
+procedure TExtratoConfig.GravarIniChild(const AIni: TCustomIniFile);
 begin
   AIni.WriteInteger(CSessaoExtrato, CChaveTipo, Integer(FTipoExtrato));
-  AIni.WriteString(CSessaoExtrato, CChaveMaskqCom, FMask_qCom);
-  AIni.WriteString(CSessaoExtrato, CChaveMaskvUnCom, FMask_vUnCom);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeQRCode, FImprimeQRCode);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeMsgOlhoNoImposto, FImprimeMsgOlhoNoImposto);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeCPFNaoInformado, FImprimeCPFNaoInformado);
-  AIni.WriteString(CSessaoExtrato, CChavePictureLogo, FPictureLogo);
-  AIni.WriteBool(CSessaoExtrato, CChaveMostraPreview, FMostrarPreview);
-  AIni.WriteBool(CSessaoExtrato, CChaveMostraSetup, FMostrarSetup);
-  AIni.WriteInteger(CSessaoExtrato, CChaveNumCopias, FNumCopias);
-  AIni.WriteString(CSessaoExtrato, CChaveNomeDocumento, FNomeArquivo);
-  AIni.WriteInteger(CSessaoExtrato, CChaveFiltro, Integer(FFiltro));
-  AIni.WriteString(CSessaoExtrato, CChaveMsgAppQRCode, FMsgAppQRCode);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
-  AIni.WriteBool(CSessaoExtrato, CChaveImprimeCodigoEan, FUsaCodigoEanImpressao);
-  AIni.WriteInteger(CSessaoExtrato, CChaveLarguraBobina, FLarguraBobina);
-  AIni.WriteInteger(CSessaoExtrato, CChaveMargensTopo, FMargensTopo);
-  AIni.WriteInteger(CSessaoExtrato, CChaveMargensEsquerda, FMargensEsquerda);
-  AIni.WriteInteger(CSessaoExtrato, CChaveMargensFundo, FMargensFundo);
-  AIni.WriteInteger(CSessaoExtrato, CChaveMargensDireita, FMargensDireita);
-  AIni.WriteInteger(CSessaoExtrato, CChaveEspacoFinal, FEspacoFinal);
-  AIni.WriteInteger(CSessaoExtrato, CChaveLogoWidth, FLogoWidth);
-  AIni.WriteInteger(CSessaoExtrato, CChaveLogoHeigth, FLogoHeigth);
-  AIni.WriteBool(CSessaoExtrato, CChaveLogoStretch, FLogoStretch);
-  AIni.WriteBool(CSessaoExtrato, CChaveLogoAutoSize, FLogoAutoSize);
-  AIni.WriteBool(CSessaoExtrato, CChaveLogoCenter, FLogoCenter);
-  AIni.WriteBool(CSessaoExtrato, CChaveLogoVisible, FLogoVisible);
-  AIni.WriteString(CSessaoExtrato, CChavePrinterName, FPrinterName);
-  AIni.WriteInteger(CSessaoExtrato, CChaveImprimeChaveEmUmaLinha, Integer(FImprimeChaveEmUmaLinha));
+  AIni.WriteBool(FSessao, CChaveImprimeQRCode, FImprimeQRCode);
+  AIni.WriteBool(FSessao, CChaveImprimeQRCode, FImprimeQRCode);
+  AIni.WriteBool(FSessao, CChaveImprimeMsgOlhoNoImposto, FImprimeMsgOlhoNoImposto);
+  AIni.WriteBool(FSessao, CChaveImprimeCPFNaoInformado, FImprimeCPFNaoInformado);
+  AIni.WriteInteger(FSessao, CChaveFiltro, Integer(FFiltro));
+  AIni.WriteString(FSessao, CChaveMsgAppQRCode, FMsgAppQRCode);
+  AIni.WriteBool(FSessao, CChaveImprimeEmUmaLinha, FImprimeEmUmaLinha);
+  AIni.WriteBool(FSessao, CChaveImprimeDescAcrescItem, FImprimeDescAcrescItem);
+  AIni.WriteBool(FSessao, CChaveImprimeCodigoEan, FUsaCodigoEanImpressao);
+  AIni.WriteInteger(FSessao, CChaveLarguraBobina, FLarguraBobina);
+  AIni.WriteInteger(FSessao, CChaveEspacoFinal, FEspacoFinal);
+  AIni.WriteInteger(FSessao, CChaveLogoWidth, FLogoWidth);
+  AIni.WriteInteger(FSessao, CChaveLogoHeigth, FLogoHeigth);
+  AIni.WriteBool(FSessao, CChaveLogoAutoSize, FLogoAutoSize);
+  AIni.WriteBool(FSessao, CChaveLogoCenter, FLogoCenter);
+  AIni.WriteBool(FSessao, CChaveLogoVisible, FLogoVisible);
+  AIni.WriteInteger(FSessao, CChaveImprimeChaveEmUmaLinha, Integer(FImprimeChaveEmUmaLinha));
+end;
+
+procedure TExtratoConfig.AssignChild(const DFeReport: TACBrDFeReport);
+var
+  pLibConfig: TLibSatConfig;
+  AExtrato: TACBrSATExtratoClass;
+begin
+  if not (AExtrato is TACBrSATExtratoClass) then
+    raise EACBrLibException.Create(-10, 'DFeReport deve ser do tipo [TACBrSATExtratoClass]');
+
+  pLibConfig := TLibSatConfig(pLib.Config);
+  AExtrato := TACBrSATExtratoClass(DFeReport);
+
+  if FileExists(Logo) then
+    AExtrato.PictureLogo.Bitmap.LoadFromFile(Logo);
+
+  AExtrato.ImprimeQRCode := ImprimeQRCode;
+  AExtrato.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
+  AExtrato.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
+  AExtrato.MsgAppQRCode := MsgAppQRCode;
+  AExtrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
+  AExtrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
+  AExtrato.ImprimeCodigoEan := ImprimeCodigoEan;
+  AExtrato.Filtro := Filtro;
+
+  if DFeReport is TACBrSATExtratoESCPOS then
+    TACBrSATExtratoESCPOS(DFeReport).ImprimeChaveEmUmaLinha := ImprimeChaveEmUmaLinha;
+
+  if DFeReport is TACBrSATExtratoFortes then
+  begin
+    TACBrSATExtratoFortes(DFeReport).LarguraBobina := LarguraBobina;
+    TACBrSATExtratoFortes(DFeReport).EspacoFinal := EspacoFinal;
+    TACBrSATExtratoFortes(DFeReport).LogoWidth := LogoWidth;
+    TACBrSATExtratoFortes(DFeReport).LogoHeigth := LogoHeigth;
+    TACBrSATExtratoFortes(DFeReport).LogoStretch := ExpandeLogoMarca;
+    TACBrSATExtratoFortes(DFeReport).LogoAutoSize := LogoAutoSize;
+    TACBrSATExtratoFortes(DFeReport).LogoCenter := LogoCenter;
+    TACBrSATExtratoFortes(DFeReport).LogoVisible := LogoVisible;
+  end;
 end;
 
 { TSATConfig }

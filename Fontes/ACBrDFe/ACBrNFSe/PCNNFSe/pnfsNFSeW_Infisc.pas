@@ -714,8 +714,9 @@ begin
   if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '2' then
   begin  // 2 - stNormal
     Gerador.wGrupoNFSe('ISS');
-    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, 0, dTotBCISS, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, 0, dTotISS, '');
+    // alterado de 0->1 por Italo em 22/05/2019
+    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, 1, dTotBCISS, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, 1, dTotISS, '');
 
     Gerador.wGrupoNFSe('/ISS');
   end;

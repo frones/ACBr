@@ -366,7 +366,7 @@ procedure TLibSatDM.ConfigurarImpressao(NomeImpressora: String; GerarPDF: Boolea
 var
   pLibConfig: TLibSATConfig;
 begin
-  pLibConfig := TLibSATConfig(pLibConfig);
+  pLibConfig := TLibSATConfig(pLib.Config);
 
   with pLibConfig.Extrato do
   begin
@@ -391,12 +391,12 @@ begin
 
   if FileExists(XmlArquivoOuString) then
   begin
-    GravarLog('Carregando arquivo xml' + XmlArquivoOuString, logParanoico);
+    GravarLog('Carregando arquivo xml [' + XmlArquivoOuString + ']', logParanoico);
     ACBrSAT1.CFe.LoadFromFile(XmlArquivoOuString);
   end
   else
   begin
-    GravarLog('Carregando xml string' + XmlArquivoOuString, logParanoico);
+    GravarLog('Carregando xml string  [' + XmlArquivoOuString + ']', logParanoico);
     ACBrSAT1.CFe.AsXMLString := XmlArquivoOuString;
   end;
 
@@ -411,12 +411,12 @@ begin
 
   if FileExists(aStr) then
   begin
-    GravarLog('Carregando arquivo xml cancelamento', logParanoico);
+    GravarLog('Carregando arquivo xml cancelamento [' + aStr + ']', logParanoico);
     ACBrSAT1.CFeCanc.LoadFromFile(aStr);
   end
   else
   begin
-    GravarLog('Carregando xml string de cancelamento', logParanoico);
+    GravarLog('Carregando xml string de cancelamento  [' + aStr + ']', logParanoico);
     ACBrSAT1.CFeCanc.AsXMLString := aStr;
   end;
 

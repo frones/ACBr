@@ -49,6 +49,8 @@ Símbolo : Significado
     (por Rafael Dias)
 [*] Melhorias nas configurações do extrato herdando da classe base TDFeReportConfig.
     (por Rafael Dias)
+[-] Corrigido erro ao configurar a impressão.
+    (por Rafael Dias)
 
 08/01/2019
 [*] Melhorias no codigo de carregamento do INI.

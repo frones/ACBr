@@ -58,6 +58,7 @@ type
     FBorderStyle : TFormBorderStyle;
     FTitulo: String ;
     FValor : Double ;
+    FValorInicio: Double;
     FTexto : String ;
     FPrecisao: Integer;
     FSaiComEsc: Boolean;
@@ -68,6 +69,7 @@ type
     FCentraliza: Boolean;
     FOnCalcKey: TKeyPressEvent;
     FOnDisplayChange: TACBrCalculadoraDisplayChange;
+    procedure SetValor(AValue: Double);
   public
     constructor Create(AOwner: TComponent); override;
     function Execute: Boolean;
@@ -75,7 +77,7 @@ type
   published
   { TODO : Adicionar evento OnMudaValor }
 
-     property Valor  : Double read FValor  write FValor stored false ;
+     property Valor  : Double read FValor  write SetValor stored false ;
      property Titulo : String read FTitulo write FTitulo ;
      property Precisao : Integer read FPrecisao write FPrecisao default 4 ;
      property SaiComEsc : Boolean read FSaiComEsc write FSaiComEsc
@@ -105,6 +107,13 @@ Uses {$IFDEF VisualCLX}
      {$ENDIF};
 
 { TACBrCalculadora }
+
+procedure TACBrCalculadora.SetValor(AValue: Double);
+begin
+  if FValor = AValue then Exit;
+  FValor := AValue;
+  FValorInicio := AValue;
+end;
 
 constructor TACBrCalculadora.Create(AOwner: TComponent);
 begin
@@ -144,11 +153,12 @@ begin
      FrCalculadora.Caption := FTitulo ;
      FrCalculadora.Color := FCorForm;
      FrCalculadora.pValor.Font.Color := FCor ;
-     FrCalculadora.ValorDisplay := FloatToStr( FValor ) ;
+     FrCalculadora.ValorDisplay := FloatToStr( FValorInicio ) ;
      FrCalculadora.pSaiComEsc := FSaiComEsc ;
      FrCalculadora.pPrecisao := FPrecisao ;
      FrCalculadora.pOnCalKey := FOnCalcKey ;
      FrCalculadora.pOnDisplayChange := FOnDisplayChange ;
+     FValorInicio := 0;
 
      Result := ( FrCalculadora.ShowModal = mrOk ) ;
 

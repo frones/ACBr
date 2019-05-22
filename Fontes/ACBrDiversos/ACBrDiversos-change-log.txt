@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2019
+-- ACBrCalculadora --
+[+] Ajuste para Zerar o Valor do display, quando sair com Esc
+    https://www.projetoacbr.com.br/forum/topic/32846-acbrcalculadora-sugestão/
+    (por: DSA)
+
 14/05/2019
 -- ACBrCargaBal --
 + Inclusão do campo "Observacoes" usado no "arquivo de informações extras"

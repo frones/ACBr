@@ -336,7 +336,7 @@ var
   pLibConfig: TLibSatConfig;
   AExtrato: TACBrSATExtratoClass;
 begin
-  if not (AExtrato is TACBrSATExtratoClass) then
+  if not (DFeReport is TACBrSATExtratoClass) then
     raise EACBrLibException.Create(-10, 'DFeReport deve ser do tipo [TACBrSATExtratoClass]');
 
   pLibConfig := TLibSatConfig(pLib.Config);

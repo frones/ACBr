@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/05/2019
+-- ACBrNFeWebServices --
+[-] Ajuste no Método Inutiliza, para validar emitente com CPF
+  Por: Jose M S Junior
+
 15/05/2019
 -- pcnNFeRTXT, pcnLAyoutTXT --
 [*] Atualizado layout TXT com ultimas NTs.

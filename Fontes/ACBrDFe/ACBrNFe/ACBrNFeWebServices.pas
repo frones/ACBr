@@ -3790,7 +3790,7 @@ var
 begin
   CNPJ := OnlyNumber(ACNPJ);
 
-  if not ValidarCNPJ(CNPJ) then
+  if not ValidarCNPJouCPF(CNPJ) then
     raise EACBrNFeException.Create('CNPJ: ' + CNPJ + ACBrStr(', inválido.'));
 
   FInutilizacao.CNPJ := CNPJ;

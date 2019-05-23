@@ -1662,7 +1662,7 @@ begin
     begin
       Gerador.wGrupo('nfs serie="' + pNfs.Items[i].serie + '"' +
                         ' nrDocto="' + pNfs.Items[i].nrDocto + '"' +
-                        ' dtEmisNF="' + DateToStr(pNfs.Items[i].dtEmisNF) + '"' +
+                        ' dtEmisNF="' + FormatDateTime('yyyy-mm-dd', pNfs.Items[i].dtEmisNF) + '"' +
                         ' vlrBruto="' + FloatToString(pNfs.Items[i].vlrBruto, '.', FloatMask(2, False)) + '"' +
                         ' vrCPDescPR="' + FloatToString(pNfs.Items[i].vrCPDescPR, '.', FloatMask(2, False)) + '"' +
                         ' vrRatDescPR="' + FloatToString(pNfs.Items[i].vrRatDescPR, '.', FloatMask(2, False)) + '"' +

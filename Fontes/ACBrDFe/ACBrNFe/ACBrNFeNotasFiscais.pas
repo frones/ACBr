@@ -206,11 +206,11 @@ begin
     FNFe.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
     FNFe.infNFe.Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
 
-    FNFe.Ide.tpNF := tnSaida;
-    FNFe.Ide.indPag := ipVista;
-    FNFe.Ide.verProc := 'ACBrNFe';
-    FNFe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
-    FNFe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
+    FNFe.Ide.tpNF    := tnSaida;
+    FNFe.Ide.indPag  := ipVista;
+    FNFe.Ide.verProc := 'ACBrNFe'; // 'ACBr'+ ModeloDFIntegerToPrefixo(FNFe.Ide.modelo);
+    FNFe.Ide.tpAmb   := Configuracoes.WebServices.Ambiente;
+    FNFe.Ide.tpEmis  := Configuracoes.Geral.FormaEmissao;
 
     if Assigned(DANFE) then
       FNFe.Ide.tpImp := DANFE.TipoDANFE;
@@ -237,7 +237,7 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     if not Assigned(DANFE) then
-      raise EACBrNFeException.Create('Componente DANFE não associado.')
+      raise EACBrNFeException.Create('Componente DA'+ModeloDFToPrefixo(Configuracoes.Geral.ModeloDF)+' não associado.')
     else
       DANFE.ImprimirDANFE(NFe);
   end;
@@ -248,7 +248,7 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     if not Assigned(DANFE) then
-      raise EACBrNFeException.Create('Componente DANFE não associado.')
+      raise EACBrNFeException.Create('Componente DA'+ModeloDFToPrefixo(Configuracoes.Geral.ModeloDF)+' não associado.')
     else
       DANFE.ImprimirDANFEPDF(NFe);
   end;
@@ -2566,7 +2566,7 @@ begin
   Result := '';
 
   if not ValidarChave(NFe.infNFe.ID) then
-    raise EACBrNFeException.Create('NFe Inconsistente para gerar INI. Chave Inválida.');
+    raise EACBrNFeException.Create(ModeloDFToPrefixo(FConfiguracoes.Geral.ModeloDF)+' Inconsistente para gerar INI. Chave Inválida.');
 
   INIRec := TMemIniFile.Create('');
   try
@@ -3781,7 +3781,7 @@ begin
 
   if Self.Count < 1 then
   begin
-    Erros := 'Nenhuma NFe carregada';
+    Erros := 'Nenhuma '+ModeloDFToPrefixo(Self.FConfiguracoes.Geral.ModeloDF)+' carregada';
     Result := False;
     Exit;
   end;

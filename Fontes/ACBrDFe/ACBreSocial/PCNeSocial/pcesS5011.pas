@@ -105,7 +105,7 @@ type
   private
     FindCoop: Integer;
     FindConstr: Integer;
-    FindSubstPart: Integer;
+    FindSubstPatr: Integer;
     FpercRedContrib: Double;
     FinfoAtConc: TinfoAtConc;
   public
@@ -114,7 +114,7 @@ type
 
     property indCoop: Integer read FindCoop;
     property indConstr: Integer read FindConstr;
-    property indSubstPart: Integer read FindSubstPart;
+    property indSubstPatr: Integer read FindSubstPatr;
     property percRedContrib: Double read FpercRedContrib;
     property infoAtConc: TinfoAtConc read FinfoAtConc write FinfoAtConc;
   end;
@@ -133,9 +133,9 @@ type
 
   TInfoComplObra = class(TObject)
   private
-    FindSubstPartObra: Integer;
+    FindSubstPatrObra: Integer;
   public
-    property indSubstPartObra: Integer read FindSubstPartObra;
+    property indSubstPatrObra: Integer read FindSubstPatrObra;
   end;
 
   TInfoEstab = class(TObject)
@@ -626,7 +626,7 @@ begin
           begin
             infoCS.InfoContrib.infoPJ.FindCoop        := leitor.rCampo(tcInt, 'indCoop');
             infoCS.InfoContrib.infoPJ.FindConstr      := leitor.rCampo(tcInt, 'indConstr');
-            infoCS.InfoContrib.infoPJ.FindSubstPart   := leitor.rCampo(tcInt, 'indSubstPart');
+            infoCS.InfoContrib.infoPJ.FindSubstPatr   := leitor.rCampo(tcInt, 'indSubstPatr');
             infoCS.InfoContrib.infoPJ.FpercRedContrib := leitor.rCampo(tcDe2, 'percRedContrib');
 
             if leitor.rExtrai(5, 'infoAtConc') <> '' then
@@ -652,7 +652,7 @@ begin
             infoCS.ideEstab.Items[i].infoEstab.FaliqRatAjust := leitor.rCampo(tcDe4, 'aliqRatAjust');
 
             if leitor.rExtrai(5, 'infoComplObra') <> '' then
-              infoCS.ideEstab.Items[i].infoEstab.infoComplObra.FindSubstPartObra := leitor.rCampo(tcInt, 'indSubstPartObra');
+              infoCS.ideEstab.Items[i].infoEstab.infoComplObra.FindSubstPatrObra := leitor.rCampo(tcInt, 'indSubstPatrObra');
           end;
 
           j := 0;
@@ -840,7 +840,7 @@ begin
       sSecao := 'infoPJ';
       AIni.WriteInteger(sSecao, 'indCoop',      infoCS.infoContrib.infoPJ.indCoop);
       AIni.WriteInteger(sSecao, 'indConstr',    infoCS.infoContrib.infoPJ.indConstr);
-      AIni.WriteInteger(sSecao, 'indSubstPart', infoCS.infoContrib.infoPJ.indSubstPart);
+      AIni.WriteInteger(sSecao, 'indSubstPatr', infoCS.infoContrib.infoPJ.indSubstPatr);
       AIni.WriteFloat(sSecao, 'percRedContrib', infoCS.infoContrib.infoPJ.percRedContrib);
 
       sSecao := 'infoAtConc';
@@ -863,7 +863,7 @@ begin
 
         sSecao := 'infoComplObra' + IntToStrZero(I, 4);
 
-        AIni.WriteInteger(sSecao, 'indSubstPartObra', infoCS.ideEstab.Items[i].infoEstab.infoComplObra.indSubstPartObra);
+        AIni.WriteInteger(sSecao, 'indSubstPatrObra', infoCS.ideEstab.Items[i].infoEstab.infoComplObra.indSubstPatrObra);
 
         with infoCS.ideEstab.Items[i] do
         begin

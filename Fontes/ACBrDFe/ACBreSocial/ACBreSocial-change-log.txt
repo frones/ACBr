@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/05/2019
+-- pcesS5011 --
+[-] https://www.projetoacbr.com.br/forum/topic/51495-corre%C3%A7%C3%A3o-pcess5011pas/
+   Por: Patrick Alves
 -- pcesGerador --
 [-] https://www.projetoacbr.com.br/forum/topic/51488-corre%C3%A7%C3%A3o-pcesgeradorpas-m%C3%A9todo-gerarnfs/
    Por: Digibyte

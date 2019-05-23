@@ -55,17 +55,12 @@ public
   function GerarBPeIni(XML: string): string;
   procedure RespostaBilhetes(pImprimir: Boolean; pImpressora: String;
             pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
-  procedure RespostaItensBPe(BilhetesID: integer = 0; ItemID: integer = 0; Gerar: boolean = False);
 
   procedure RespostaEnvio;
-//  procedure RespostaRetorno;
 
   procedure RespostaStatus;
   procedure RespostaConsulta;
   procedure RespostaCancelamento;
-
-  //  procedure RespostaRecibo;
-//  procedure RespostaItensRecibo(ItemID: integer = 0);
 
   procedure RespostaEvento;
   procedure RespostaItensEvento(ItemID: integer = 0);
@@ -474,50 +469,17 @@ begin
     Resp.Free;
   end;
 end;
-{
-procedure TACBrObjetoBPe.RespostaRetorno;
-var
-  Resp: TRetornoResposta;
-begin
-  Resp := TRetornoResposta.Create(resINI);
-  try
-    with fACBrBPe.WebServices.Retorno do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.verAplic := verAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := xMotivo;
-      Resp.CUF := cUF;
-      Resp.nRec := Recibo;
-      Resp.Msg := Msg;
 
-      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-}
 procedure TACBrObjetoBPe.RespostaBilhetes(pImprimir: Boolean; pImpressora: String;
           pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
 var
-  I, J: integer;
+  I: integer;
   ArqPDF: String;
 begin
-  {
   with fACBrBPe do
   begin
-    for I := 0 to WebServices.Retorno.BPeRetorno.ProtDFe.Count - 1 do
-    begin
-      for J := 0 to Bilhetes.Count - 1 do
+      for I := 0 to Bilhetes.Count - 1 do
       begin
-        if ('BPe' + WebServices.Retorno.BPeRetorno.ProtDFe.Items[i].chDFe =
-          Bilhetes.Items[j].BPe.infBPe.Id) then
-        begin
-          RespostaItensBPe(J, I, True);
-
           DoConfiguraDABPe(False, BoolToStr(pPreview,'1',''));
           if NaoEstaVazio(pImpressora) then
             DABPe.Impressora := pImpressora;
@@ -531,63 +493,17 @@ begin
             ArqPDF := OnlyNumber(ACBrBPe.Bilhetes.Items[I].BPe.infBPe.ID)+'-bpe.pdf';
 
             fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-              'PDF='+ PathWithDelim(ACBrBPe.DABPe.PathPDF) + ArqPDF ;
+              'PDF='+ PathWithDelim(ACBrBPe.DABPe.PathPDF) + ArqPDF;
           end;
 
-          if (Bilhetes.Items[i].Confirmado) and (pImprimir) then
-          begin
-            try
-              DoAntesDeImprimir((pPreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
-//              DoAntesDeImprimir(DABPe.MostrarPreview);
-              Bilhetes.Items[i].Imprimir;
-            finally
-              DoDepoisDeImprimir;
-            end;
-          end;
+          if (pImprimir) then
+            Bilhetes.Items[I].Imprimir;
 
           break;
         end;
-      end;
-    end;
+
   end;
-  }
-end;
 
-procedure TACBrObjetoBPe.RespostaItensBPe(BilhetesID: integer;
-  ItemID: integer; Gerar: boolean);
-var
-  Resp: TRetornoItemResposta;
-begin
-  {
-  Resp := TRetornoItemResposta.Create(
-    'BPe' + Trim(IntToStr(
-    fACBrBPe.Bilhetes.Items[BilhetesID].BPe.Ide.nCT)), resINI);
-  try
-    with fACBrBPe.WebServices.Retorno.BPeRetorno.ProtDFe.Items[ItemID] do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := fACBrBPe.WebServices.Retorno.BPeRetorno.cUF;
-      Resp.ChBPe := chDFe;
-      Resp.DhRecbto := dhRecbto;
-      Resp.NProt := nProt;
-      Resp.DigVal := digVal;
-
-      if Gerar then
-        Resp.Arquivo :=
-          PathWithDelim(fACBrBPe.Configuracoes.Arquivos.PathSalvar) +
-          OnlyNumber(fACBrBPe.Bilhetes.Items[BilhetesID].BPe.infBPe.ID) +
-          '-bpe.xml';
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-  }
 end;
 
 procedure TACBrObjetoBPe.RespostaStatus;
@@ -803,33 +719,8 @@ procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeResEve(ItemID: integer);
 //var
 //  Resp: TDistribuicaoDFeItemResposta;
 begin
-  // Atualmente o DistribuicaoDFe do CT-e não retorna Resumo de Eventos.
-  (*
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
-  try
-    with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resEvento do
-    begin
-      Resp.NSU := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chBPe := chBPe;
-      Resp.CNPJCPF := CNPJCPF;
-      Resp.dhEvento := dhEvento;
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.xEvento := xEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.cOrgao := cOrgao;
-      Resp.dhRecbto := dhRecbto;
-      Resp.nProt := nProt;
-      Resp.XML := fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrBPe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaBPeToStr(fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
+  // Atualmente o DistribuicaoDFe do BP-e não retorna Resumo de Eventos.
 
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-  *)
 end;
 
 procedure TACBrObjetoBPe.RespostaItensDistribuicaoDFeProEve(ItemID: integer);
@@ -1194,11 +1085,10 @@ end;
 
 { Params: 0 - Email: String com email Destinatário
           1 - XML: String com path do XML
-          2 - Boolean 1 : Envia PDF
-          3 - Assunto: String com Assunto do e-mail
-          4 - Copia: String com e-mails copia (Separados ;)
-          5 - Anexo: String com Path de Anexos (Separados ;)
-          6 - Replay: String com endereços replay (Separados ;)
+          2 - Assunto: String com Assunto do e-mail
+          3 - Copia: String com e-mails copia (Separados ;)
+          4 - Anexo: String com Path de Anexos (Separados ;)
+          5 - Replay: String com endereços replay (Separados ;)
 }
 procedure TMetodoEnviarEmail.Executar;
 var
@@ -1207,13 +1097,13 @@ var
   CargaDFe: TACBrCarregarBPe;
   AEnviaPDF: Boolean;
 begin
+  AEnviaPDF := False;
   ADestinatario := fpCmd.Params(0);
   APathXML := fpCmd.Params(1);
-  AEnviaPDF := StrToBoolDef(fpCmd.Params(2), False);
-  AAssunto := fpCmd.Params(3);
-  AEmailCopias := fpCmd.Params(4);
-  AAnexos := fpCmd.Params(5);
-  AReplay := fpCmd.Params(6);
+  AAssunto := fpCmd.Params(2);
+  AEmailCopias := fpCmd.Params(3);
+  AAnexos := fpCmd.Params(4);
+  AReplay := fpCmd.Params(5);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
@@ -1226,7 +1116,7 @@ begin
     try
       CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, APathXML);
       try
-        DoConfiguraDABPe(True, '');
+        DoConfiguraDABPe(False, '');
 
         with MonitorConfig.DFE.Email do
         begin
@@ -1431,7 +1321,6 @@ end;
           1 - XMLBPe - Uma String com um Path completo XML BPe
           2 - String com nome Impressora
           3 - Integer Número de Cópias
-          4 - Mostrar Preview (1 - para preview)
 }
 procedure TMetodoImprimirEvento.Executar;
 var
@@ -1439,13 +1328,11 @@ var
   CargaDFeEvento: TACBrCarregarBPeEvento;
   AXMLEvento, AXML, AImpressora: String;
   ACopias: Integer;
-  APreview: Boolean;
 begin
   AXMLEvento := fpCmd.Params(0);
   AXML := fpCmd.Params(1);
   AImpressora := fpCmd.Params(2);
   ACopias := StrToIntDef(fpCmd.Params(3), 0);
-  APreview := StrToBoolDef(fpCmd.Params(4), False);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
@@ -1454,20 +1341,15 @@ begin
     ACBrBPe.Bilhetes.Clear;
     CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, AXML);
     try
-      DoConfiguraDABPe(False, BoolToStr(APreview,'1',''));
+      DoConfiguraDABPe(False, BoolToStr(False,'1',''));
       if NaoEstaVazio(AImpressora) then
         ACBrBPe.DABPe.Impressora := AImpressora;
 
       if (ACopias > 0) then
         ACBrBPe.DABPe.NumCopias := ACopias;
 
-      try
-        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
-//        DoAntesDeImprimir(ACBrBPe.DABPe.MostrarPreview);
-        ACBrBPe.ImprimirEvento;
-      finally
-        DoDepoisDeImprimir;
-      end;
+      ACBrBPe.ImprimirEvento;
+
     finally
       CargaDFeEvento.Free;
       CargaDFe.Free;
@@ -1498,7 +1380,7 @@ begin
     ACBrBPe.Bilhetes.Clear;
     CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, AChave);
     try
-      DoConfiguraDABPe(True, '');
+      DoConfiguraDABPe(False, '');
 
       if NaoEstaVazio(AProtocolo) then
         ACBrBPe.DABPe.Protocolo := AProtocolo;
@@ -1527,9 +1409,8 @@ end;
           1 - NumeroLote: Integer com número do lote a ser adicionado
           2 - Imprime : 1 para imprimir
           3 - NomeImpressora: String com nome impressora para impressão (Default)
-          4 - MostrarPreview: 1 para mostrar preview (Default)
-          5 - Numero de Copias: Inteiro com número de cópias (Default)
-          6 - ImprimirPDF: 1 para imprimir PDF (Default)
+          4 - Numero de Copias: Inteiro com número de cópias (Default)
+
 }
 procedure TMetodoCriarEnviarBPe.Executar;
 var
@@ -1538,17 +1419,13 @@ var
   ArqBPe: string;
   Resp, AIni, AImpressora: string;
   ALote: Integer;
-  APreview: Boolean;
   ACopias: Integer;
-  APDF: Boolean;
 begin
   AIni := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AImprime := StrToBoolDef(fpCmd.Params(2), False);
   AImpressora := fpCmd.Params(3);
-  APreview := StrToBoolDef(fpCmd.Params(4), False);
-  ACopias := StrToIntDef(fpCmd.Params(5), 0);
-  APDF := StrToBoolDef(fpCmd.Params(6), False);
+  ACopias := StrToIntDef(fpCmd.Params(4), 0);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
@@ -1589,19 +1466,8 @@ begin
 
     ACBrBPe.WebServices.Enviar.Executar;
     RespostaEnvio;
-    RespostaBilhetes(AImprime, AImpressora, APreview, ACopias, APDF);
-    {
-    RespEnvio := TEnvioResposta.Create(resINI);
-    try
-       RespEnvio.ProcessarResposta(ACBrBPe);
-       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-    finally
-       RespEnvio.Free;
-    end;
+    RespostaBilhetes(AImprime, AImpressora, False, ACopias, False);
 
-    if AImprime then //Sincrono
-      ImprimirBPe(AImpressora, APreview, ACopias, APDF);
-    }
   end;
 end;
 
@@ -1647,18 +1513,7 @@ begin
       ACBrBPe.WebServices.Enviar.Executar;
       RespostaEnvio;
       RespostaBilhetes(AImprime, AImpressora, False, 0, False);
-      {
-      RespEnvio := TEnvioResposta.Create(resINI);
-      try
-         RespEnvio.ProcessarResposta(ACBrBPe);
-         fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
-      finally
-         RespEnvio.Free;
-      end;
 
-      if AImprime then //Sincrono
-        ImprimirBPe(AImpressora, APreview, ACopias, APDF);
-      }
     finally
       CargaDFe.Free;
     end;
@@ -1670,17 +1525,20 @@ end;
 { Params: 0 - IniFile - Uma String com um Path completo arquivo .ini BPe
                          ou Uma String com conteúdo txt do BPe
           1 - RetornaXML: 1 para Retornar XML Gerado na Resposta
+          2 - Assina: 1 para assinar BPe
 }
 procedure TMetodoCriarBPe.Executar;
 var
   Salva, ARetornaXML: boolean;
   Alertas: ansistring;
   ArqBPe: string;
+  AAssina: Boolean;
   SL: TStringList;
   Resp, AIni: string;
 begin
   AIni := fpCmd.Params(0);
   ARetornaXML := StrToBoolDef(fpCmd.Params(1), False);
+  AAssina := StrToBoolDef(fpCmd.Params(2), False);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
@@ -1698,8 +1556,11 @@ begin
     ACBrBPe.Bilhetes.GerarBPe;
     Alertas := ACBrBPe.Bilhetes.Items[0].Alertas;
 
-    ACBrBPe.Bilhetes.Assinar;
-    ACBrBPe.Bilhetes.Validar;
+    if AAssina then
+    begin
+      ACBrBPe.Bilhetes.Assinar;
+      ACBrBPe.Bilhetes.Validar;
+    end;
 
     ArqBPe := PathWithDelim(ACBrBPe.Configuracoes.Arquivos.PathSalvar) +
       OnlyNumber(ACBrBPe.Bilhetes.Items[0].BPe.infBPe.ID) + '-bpe.xml';
@@ -1743,21 +1604,19 @@ var
   AChave, AImpressora, AProtocolo: String;
   ACopias: Integer;
   ACancelado: Boolean;
-  APreview: Boolean;
 begin
   AChave := fpCmd.Params(0);
   AImpressora := fpCmd.Params(1);
   ACopias := StrToIntDef(fpCmd.Params(2), 0);
   AProtocolo := fpCmd.Params(3);
   ACancelado := StrToBoolDef(fpCmd.Params(4), False);
-  APreview := StrToBoolDef(fpCmd.Params(5), False);
 
   with TACBrObjetoBPe(fpObjetoDono) do
   begin
     ACBrBPe.Bilhetes.Clear;
     CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, AChave);
     try
-      DoConfiguraDABPe(False, BoolToStr(APreview,'1',''));
+      DoConfiguraDABPe(False, BoolToStr(False,'1',''));
 
       if NaoEstaVazio(AImpressora) then
         ACBrBPe.DABPe.Impressora := AImpressora;
@@ -1770,13 +1629,8 @@ begin
 
       ACBrBPe.DABPe.Cancelada := ACancelado;
 
-      try
-        DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
-//        DoAntesDeImprimir(ACBrBPe.DABPe.MostrarPreview);
-        ACBrBPe.Bilhetes.Imprimir;
-      finally
-        DoDepoisDeImprimir;
-      end;
+      ACBrBPe.Bilhetes.Imprimir;
+
     finally
       CargaDFe.Free;
     end;
@@ -1982,8 +1836,8 @@ begin
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeResBPe(I);
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+      //RespostaItensDistribuicaoDFeResEve(I);
 
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeProEve(I);
@@ -2022,8 +1876,8 @@ begin
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeResBPe(I);
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+      //RespostaItensDistribuicaoDFeResEve(I);
 
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeProEve(I);
@@ -2062,8 +1916,8 @@ begin
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeResBPe(I);
 
-    for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
+    //for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
+      //RespostaItensDistribuicaoDFeResEve(I);
 
     for I := 0 to ACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
       RespostaItensDistribuicaoDFeProEve(I);
@@ -2094,14 +1948,14 @@ var
   AEnviaPDF: Boolean;
   TipoEvento: TpcnTpEvento;
 begin
+  AEnviaPDF:= False;
   ADestinatario := fpCmd.Params(0);
   APathXMLEvento := fpCmd.Params(1);
   APathXML := fpCmd.Params(2);
-  AEnviaPDF := StrToBoolDef(fpCmd.Params(3), False);
-  AAssunto := fpCmd.Params(4);
-  AEmailCopias := fpCmd.Params(5);
-  AAnexos := fpCmd.Params(6);
-  AReplay := fpCmd.Params(7);
+  AAssunto := fpCmd.Params(3);
+  AEmailCopias := fpCmd.Params(4);
+  AAnexos := fpCmd.Params(5);
+  AReplay := fpCmd.Params(6);
   ArqEvento := '';
 
   with TACBrObjetoBPe(fpObjetoDono) do
@@ -2117,7 +1971,7 @@ begin
       CargaDFeEvento := TACBrCarregarBPeEvento.Create(ACBrBPe, APathXMLEvento);
       CargaDFe := TACBrCarregarBPe.Create(ACBrBPe, APathXML);
       try
-        DoConfiguraDABPe(True, '');
+        DoConfiguraDABPe(False, '');
         if AEnviaPDF then
         begin
           try

@@ -7465,7 +7465,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                   ParentFont = False
                 end
-                object sbArquivoWebServicesReinf1: TSpeedButton
+                object sbArquivoWebServicesBPe: TSpeedButton
                   Left = 528
                   Height = 25
                   Top = 183
@@ -7487,7 +7487,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     3BB33773333773333773B333333B3333333B7333333733333337
                   }
                   NumGlyphs = 2
-                  OnClick = sbArquivoWebServicesReinf1Click
+                  OnClick = sbArquivoWebServicesBPeClick
                   ParentFont = False
                 end
               end
@@ -7965,11 +7965,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 981
-                ActivePage = gbxWSReinf
+                ActivePage = tsWSNFe
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e/BP-e'
@@ -7992,8 +7992,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 6
                       Height = 16
                       Top = 0
-                      Width = 70
-                      Caption = 'UF Destino:'
+                      Width = 76
+                      Caption = 'UF Emitente:'
                       Font.Color = clWindowText
                       Font.Height = -13
                       Font.Name = 'MS Sans Serif'
@@ -8113,7 +8113,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Top = 0
                       Width = 205
                       AutoFill = True
-                      Caption = 'Selecione o Ambiente de Destino'
+                      Caption = 'Selecione o Ambiente'
                       ChildSizing.LeftRightSpacing = 6
                       ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                       ChildSizing.EnlargeVertical = crsHomogenousChildResize

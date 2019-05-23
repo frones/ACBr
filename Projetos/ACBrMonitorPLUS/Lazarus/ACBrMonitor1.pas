@@ -562,7 +562,7 @@ type
     sbArquivoWebServicesReinf: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
     sbArquivoWebServiceseSocial: TSpeedButton;
-    sbArquivoWebServicesReinf1: TSpeedButton;
+    sbArquivoWebServicesBPe: TSpeedButton;
     sbLogoMarca1: TSpeedButton;
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
@@ -1366,7 +1366,7 @@ type
     procedure sbArquivoWebServicesGNReClick(Sender: TObject);
     procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
-    procedure sbArquivoWebServicesReinf1Click(Sender: TObject);
+    procedure sbArquivoWebServicesBPeClick(Sender: TObject);
     procedure sbArquivoWebServicesReinfClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
     procedure sbLogoMarca1Click(Sender: TObject);
@@ -1607,6 +1607,7 @@ type
     procedure SalvarIni;
     procedure ConfiguraDANFe(GerarPDF: Boolean; MostrarPreview : String);
     procedure ConfiguraDACTe(GerarPDF: Boolean; MostrarPreview : String);
+    procedure ConfiguraDABPe(GerarPDF: Boolean; MostrarPreview : String);
     procedure VerificaDiretorios;
     procedure LimparResp;
     procedure ExibeResp(Documento: ansistring);
@@ -6969,7 +6970,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.sbArquivoWebServicesReinf1Click(Sender: TObject);
+procedure TFrmACBrMonitor.sbArquivoWebServicesBPeClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione o arquivo';
   OpenDialog1.DefaultExt := '*.ini';
@@ -8786,6 +8787,27 @@ begin
     else
       ACBrCTe1.DACTE.MostraPreview := StrToBoolDef(MostrarPreview, False);
 end;
+
+procedure TFrmACBrMonitor.ConfiguraDABPe(GerarPDF: Boolean;
+  MostrarPreview: String);
+begin
+    GerarPDF:= False;
+    MostrarPreview:= '';
+    ACBrBPe1.DABPE := ACBrBPeDABPeESCPOS1;
+    ACBrBPeDABPeESCPOS1.PosPrinter.Modelo := TACBrPosPrinterModelo(cbxModelo.ItemIndex);
+    ACBrBPeDABPeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
+    ACBrBPeDABPeESCPOS1.ImprimeNomeFantasia := cbxImprimirNomeFantasiaNFCe.Checked;
+
+    if not ACBrPosPrinter1.ControlePorta then
+    begin
+       ACBrBPeDABPeESCPOS1.PosPrinter.Ativar;
+       if not ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativo then
+         ACBrBPeDABPeESCPOS1.PosPrinter.Device.Ativar;
+    end
+
+
+end;
+
 
 procedure TFrmACBrMonitor.VerificaDiretorios;
 var

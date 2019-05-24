@@ -30,8 +30,6 @@ requires
   ACBr_Comum;
 
 contains
-  libxmlsec in '..\..\..\Fontes\ACBrOpenSSL\libxmlsec.pas',
-  libxml2 in '..\..\..\Fontes\ACBrOpenSSL\libxml2.pas',
   libeay32 in '..\..\..\Fontes\ACBrOpenSSL\libeay32.pas',
   ACBrEAD in '..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas',
   ACBrOpenSSLReg in '..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas';

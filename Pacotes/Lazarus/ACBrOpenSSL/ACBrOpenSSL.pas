@@ -4,10 +4,11 @@
 
 unit ACBrOpenSSL;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrEAD, OpenSSLExt, ACBrOpenSSLReg, libxml2, libxmlsec, LazarusPackageIntf;
+  ACBrEAD, OpenSSLExt, ACBrOpenSSLReg, LazarusPackageIntf;
 
 implementation
 

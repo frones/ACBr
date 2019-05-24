@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\Terceiros\Ole"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\Terceiros\Ole;..\..\..\Fontes\Terceiros\LibXmlSec"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>

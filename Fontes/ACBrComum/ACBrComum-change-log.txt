@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/05/2019
+-- ACBrImage --
+[-] Correção nos métodos "BMPMonoToRasterStr", "AscIIToRasterStr",
+    "AscIIToColumnStr" e "BitmapToRasterStr", para evitar problemas de conversão
+    de Char para AnsiChar
+    (por: DSA)
+
 Data: 26/04/2019
 -- ACBrUtil --
 [*] Ajustes de validação do Separador Data e Hora na função StringToDateTime.

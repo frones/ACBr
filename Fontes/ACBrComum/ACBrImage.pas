@@ -214,7 +214,7 @@ begin
           bPixel := bPixel xor bPixel;
       end;
 
-      ARasterStr := ARasterStr + chr(bPixel);
+      ARasterStr := ARasterStr + AnsiChr(bPixel);
       inc(i);
     end;
     StreamLastPos := RowStart-1;
@@ -281,7 +281,7 @@ begin
     while J < RealWidth do
     begin
       BinaryByte := copy(ALine,j,8);
-      ARasterStr := ARasterStr + chr(BinToInt(BinaryByte));
+      ARasterStr := ARasterStr + AnsiChr(BinToInt(BinaryByte));
       inc(j,8);
     end;
   end;
@@ -352,7 +352,7 @@ begin
         ByteStr := ByteStr + GetBit(SliceStart+Row, Col);
         if ((Row mod 8) = 0) then
         begin
-          AColumn := AColumn + chr(BinToInt(ByteStr));
+          AColumn := AColumn + AnsiChr(BinToInt(ByteStr));
           ByteStr := '';
         end;
       end;
@@ -524,7 +524,7 @@ begin
         ByteStr := ByteStr + ifthen(Bit,'1','0');
         if (Length(ByteStr) = 8) then
         begin
-          ARasterStr := ARasterStr + chr(BinToInt(ByteStr));
+          ARasterStr := ARasterStr + AnsiChr(BinToInt(ByteStr));
           ByteStr := '';
         end;
       end;
@@ -535,7 +535,7 @@ begin
     {$EndIf}
 
     if (Length(ByteStr) > 0) then
-      ARasterStr := ARasterStr + chr(BinToInt(PadRight(ByteStr, 8, '0')));
+      ARasterStr := ARasterStr + AnsiChr(BinToInt(PadRight(ByteStr, 8, '0')));
   end;
 end;
 {$EndIf}

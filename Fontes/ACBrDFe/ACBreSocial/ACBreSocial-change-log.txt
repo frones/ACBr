@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/51507-corre%C3%A7%C3%A3o-do-evento-s-2298/
+   Por: Gustavo Ribeiro Croscato
+
 23/05/2019
 -- pcesS5011 --
 [-] https://www.projetoacbr.com.br/forum/topic/51495-corre%C3%A7%C3%A3o-pcess5011pas/

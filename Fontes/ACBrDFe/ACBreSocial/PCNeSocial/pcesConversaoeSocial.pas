@@ -388,8 +388,6 @@ type
   tpTpReint               = (trReintegracaoDecisaoJudicial, trReintegracaoAnistiaLegal, trReversaoServidorPublico, trReconducaoServidorPublico,
                              trReinclusoMilitar, trOutros);
 
-  tpNrLeiAnistia          = (nrLEI6683_1979, nrLEI8632_1993, nrLEI8878_1994, nrLEI10559_2002, nrLEI10790_2003, nrLEI11282_2006);
-
   tpTpContribSind         = (csContribSindical, csContribAssociativa, csContribAssistencial, csContribConfederativa);
 
   tpIndSubstPatrOpPort    = (spIntegralmenteSubstituida, spParcialmenteSubstituida);
@@ -797,9 +795,6 @@ function eSStrToMtvCancAvPrevio(var ok: boolean; const s: string): tpMtvCancAvPr
 
 function eSTpReintToStr(const t: tpTpReint ): string;
 function eSStrToTpReint(var ok: boolean; const s: string): tpTpReint;
-
-function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
-function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
 
 function eSTpContribSindToStr(const t: tpTpContribSind ): string;
 function eSStrToTpContribSind(var ok: boolean; const s: string): tpTpContribSind;
@@ -1462,16 +1457,6 @@ end;
 function eSStrToTpAvPrevio(var ok: boolean; const s: string): tpTpAvPrevio;
 begin
   result := tpTpAvPrevio( StrToEnumerado2(ok , s, [ '1', '2', '4', '5', '6' ] ) );
-end;
-
-function eSNrLeiAnistiaToStr(const t: tpNrLeiAnistia ): string;
-begin
-  result := EnumeradoToStr2(t, TNrLeiAnistia );
-end;
-
-function eSStrToNrLeiAnistia(var ok: boolean; const s: string): tpNrLeiAnistia;
-begin
-  result := tpNrLeiAnistia( StrToEnumerado2(ok , s, TNrLeiAnistia ) );
 end;
 
 function eSTpContribSindToStr(const t: tpTpContribSind ): string;

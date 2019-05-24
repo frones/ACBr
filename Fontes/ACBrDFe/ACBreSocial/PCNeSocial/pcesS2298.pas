@@ -105,14 +105,14 @@ type
   private
      FtpReint: tpTpReint;
      FnrProcJud: string;
-     FnrLeiAnistia: tpNrLeiAnistia;
+     FnrLeiAnistia: string;
      FdtEfetRetorno: TDateTime;
      FdtEfeito: TDateTime;
      FindPagtoJuizo: tpSimNao;
   public
     property tpReint: tpTpReint read FtpReint write FtpReint;
     property nrProcJud: string read FnrProcJud write FnrProcJud;
-    property nrLeiAnistia: tpNrLeiAnistia read FnrLeiAnistia write FnrLeiAnistia;
+    property nrLeiAnistia: string read FnrLeiAnistia write FnrLeiAnistia;
     property dtEfetRetorno: TDateTime read FdtEfetRetorno write FdtEfetRetorno;
     property dtEfeito: TDateTime read FdtEfeito write FdtEfeito;
     property indPagtoJuizo: tpSimNao read FindPagtoJuizo write FindPagtoJuizo;
@@ -194,7 +194,7 @@ begin
     Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, self.InfoReintegr.nrProcJud);
 
   if eSTpReintToStr(self.InfoReintegr.tpReint) = '2' then
-    Gerador.wCampo(tcStr, '', 'nrLeiAnistia', 1, 13, 0, eSNrLeiAnistiaToStr(self.InfoReintegr.nrLeiAnistia));
+    Gerador.wCampo(tcStr, '', 'nrLeiAnistia', 5, 13, 0, self.InfoReintegr.nrLeiAnistia);
 
   Gerador.wCampo(tcDat, '', 'dtEfetRetorno', 10, 10, 1, self.InfoReintegr.dtEfetRetorno);
   Gerador.wCampo(tcDat, '', 'dtEfeito',      10, 10, 1, self.InfoReintegr.dtEfeito);
@@ -269,7 +269,7 @@ begin
       sSecao := 'infoReintegr';
       infoReintegr.tpReint       := eSStrToTpReint(Ok, INIRec.ReadString(sSecao, 'tpReint', '1'));
       infoReintegr.nrProcJud     := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-      infoReintegr.nrLeiAnistia  := eSStrToNrLeiAnistia(Ok, INIRec.ReadString(sSecao, 'nrLeiAnistia', 'LEI6683_1979'));
+      infoReintegr.nrLeiAnistia  := INIRec.ReadString(sSecao, 'nrLeiAnistia', 'LEI6683_1979');
       infoReintegr.dtEfetRetorno := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfetRetorno', '0'));
       infoReintegr.dtEfeito      := StringToDateTime(INIRec.ReadString(sSecao, 'dtEfeito', '0'));
       infoReintegr.indPagtoJuizo := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPagtoJuizo', 'S'));

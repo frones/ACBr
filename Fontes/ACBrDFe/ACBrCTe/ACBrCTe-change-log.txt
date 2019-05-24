@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2019
+-- ACBrCTeWebservices --
+[*] Corrigido a montagem do XML do evento para ser validado corretamente
+   Por: Italo Jurisato Junior
+
 07/05/2019
 -- pcteEnvEventoCTe --
 [-] Corrigido a nomenclatura do campo usado pelo evento: Prestação de Serviço em Desacordo.

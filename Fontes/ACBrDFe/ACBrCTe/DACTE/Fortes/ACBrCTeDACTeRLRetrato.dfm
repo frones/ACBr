@@ -9,8 +9,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
-    Left = 16
-    Top = 16
+    Left = 8
+    Top = 8
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -694,7 +694,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         DrawKind = dkLine
       end
       object rlsLinhaV07: TRLDraw
-        Left = 614
+        Left = 616
         Top = 32
         Width = 1
         Height = 27
@@ -943,7 +943,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllNumCte: TRLLabel
-        Left = 394
+        Left = 392
         Top = 42
         Width = 70
         Height = 15
@@ -1165,7 +1165,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
       object RLLabel77: TRLLabel
-        Left = 616
+        Left = 618
         Top = 34
         Width = 120
         Height = 8
@@ -1181,7 +1181,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllInscSuframa: TRLLabel
-        Left = 616
+        Left = 618
         Top = 42
         Width = 56
         Height = 12

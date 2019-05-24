@@ -2664,7 +2664,7 @@ var
   EventoCTe: TEventoCTe;
   I, J, K, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
-//  FErroValidacao: String;
+  FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin
@@ -2815,8 +2815,53 @@ begin
     end;
 
     // Separa o XML especifico do Evento para ser Validado.
-    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
-                  SeparaDados(FPDadosMsg, 'detEvento');
+    AXMLEvento := SeparaDados(FPDadosMsg, 'detEvento');
+
+    case SchemaEventoCTe of
+      schevCCeCTe:
+        begin
+         AXMLEvento := '<evCCeCTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCCeCTe>', '</evCCeCTe>')) +
+                        '</evCCeCTe>';
+        end;
+
+      schevCancCTe:
+        begin
+          AXMLEvento := '<evCancCTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancCTe>', '</evCancCTe>')) +
+                        '</evCancCTe>';
+        end;
+
+      schevRegMultimodal:
+        begin
+          AXMLEvento := '<evRegMultimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evRegMultimodal>', '</evRegMultimodal>')) +
+                        '</evRegMultimodal>';
+        end;
+
+      schevEPECCTe:
+        begin
+          AXMLEvento := '<evEPECCTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evEPECCTe>', '</evEPECCTe>')) +
+                        '</evEPECCTe>';
+        end;
+
+      schevPrestDesacordo:
+        begin
+          AXMLEvento := '<evPrestDesacordo xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evPrestDesacordo>', '</evPrestDesacordo>')) +
+                        '</evPrestDesacordo>';
+        end;
+
+      schevGTV:
+        begin
+          AXMLEvento := '<evGTV xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evGTV>', '</evGTV>')) +
+                        '</evGTV>';
+        end;
+    end;
+
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
 
     with TACBrCTe(FPDFeOwner) do
     begin
@@ -2829,13 +2874,15 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
+
     if not EventoEhValido then
     begin
-      //FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
-      //  FPMsg;
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
 
-//      raise EACBrCTeException.CreateDef(FErroValidacao);
+      raise EACBrCTeException.CreateDef(FErroValidacao);
     end;
+
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoCTe.Evento[I].InfEvento.id;
   finally

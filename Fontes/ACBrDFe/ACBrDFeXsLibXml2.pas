@@ -266,49 +266,65 @@ function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr;
   const infElement: String): Ansistring;
 var
   buffer: PAnsiChar;
-  ANode: xmlNodePtr;
+  RootNode, ANode, NewNode: xmlNodePtr;
   ElementName: String;
   SubDoc: xmlDocPtr;
+  RootNs: xmlNsPtr;
+  TodoDocumento: Boolean;
 begin
   Result := '';
   buffer := Nil;
   SubDoc := Nil;
+  RootNs := Nil;
 
-  ANode := xmlDocGetRootElement(aDoc);
-  if (ANode = nil) then
-    raise EACBrDFeException.Create(cErrFindRootNode);
-
-  //ns := xmlCopyNamespace(ANode^.ns);
   { Se infElement possui prefixo o mesmo tem que ser removido }
   ElementName := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
+  TodoDocumento := (ElementName = '');
 
   try
     // Estamos aplicando a versão 1.0 do c14n, mas existe a versão 1.1
     // Talvez seja necessario no futuro checar a versão do c14n
     // aplica a transformação C14N
-    if (ElementName <> '') then
+    if not TodoDocumento then
     begin
+      RootNode := xmlDocGetRootElement(aDoc);
+      if (RootNode = nil) then
+        raise EACBrDFeException.Create(cErrFindRootNode);
+
       { Procura InfElement em todos os nós, filhos de Raiz, usando LibXml }
-      ANode := LibXmlLookUpNode(ANode, ElementName);
+      ANode := LibXmlLookUpNode(RootNode, ElementName);
       if (ANode = nil) then
         raise EACBrDFeException.Create(cErrSelecionarElements);
 
+      TodoDocumento := (ANode = RootNode);
+    end;
+
+    if not TodoDocumento then
+    begin
       try
         SubDoc := xmlNewDoc(PAnsichar(ansistring('1.0')));
         if (SubDoc = nil) then
           raise EACBrDFeException.Create(cErrSelecionarElements);
 
-        ANode := xmlCopyNode(ANode, 1);
-        if (ANode = nil) then
+        NewNode := xmlCopyNode(ANode, 1);
+        if (NewNode = nil) then
           raise EACBrDFeException.Create(cErrSelecionarElements);
 
-        xmlDocSetRootElement(SubDoc, ANode);
+        // Copiando NameSpaces do RootNode
+        RootNs := RootNode.ns;
+        while (RootNs <> Nil) do
+        begin
+          xmlNewNs(NewNode, RootNs.href, RootNs.prefix);   // não adiciona se já existir no Nó destino
+          RootNs := RootNs.next;
+        end;
+
+        xmlDocSetRootElement(SubDoc, NewNode);
 
         if xmlC14NDocDumpMemory(SubDoc, nil, 0, nil, 0, @buffer) < 0 then
           raise EACBrDFeException.Create(cErrC14NTransformation);
       finally
         if (SubDoc <> nil) then
-          xmlFreeDoc(SubDoc);
+          xmlFreeDoc(SubDoc);   // também libera NewNode;
       end;
     end
     else
@@ -512,7 +528,7 @@ function TDFeSSLXmlSignLibXml2.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
   ): xmlNodePtr;
 var
   rootNode, infNode, SignNode: xmlNodePtr;
-  vSignatureNode, vSelectionNamespaces: String;
+  vSignatureNode, vSelectionNamespaces, vinfElement: String;
 begin
   Result := nil;
 
@@ -526,22 +542,21 @@ begin
   VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
 
   { Se infElement possui prefixo o mesmo tem que ser removido }
-  if Pos(':', infElement) > 0 then
-    infElement := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
+  vinfElement := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
 
-  { Se tem InfElement, procura pelo mesmo. Isso permitirá acharmos o nó de
+  { Se tem vinfElement, procura pelo mesmo. Isso permitirá acharmos o nó de
     assinatura, relacionado a ele (mesmo pai) }
-  if (infElement <> '') then
+  if (vinfElement <> '') then
   begin
-    { Procura InfElement em todos os nós, filhos de Raiz, usando LibXml }
-    infNode := LibXmlLookUpNode(rootNode, infElement);
+    { Procura vinfElement em todos os nós, filhos de Raiz, usando LibXml }
+    infNode := LibXmlLookUpNode(rootNode, vinfElement);
 
-    { Não achei o InfElement em nenhum nó :( }
+    { Não achei o vinfElement em nenhum nó :( }
     if (infNode = nil) then
       Exit;
 
     { Vamos agora, achar o pai desse Elemento, pois com ele encontraremos a assinatura }
-    if (infNode^.Name = infElement) and
+    if (infNode^.Name = vinfElement) and
        Assigned(infNode^.parent) and
        (infNode^.parent^.Name <> '') then
     begin
@@ -550,7 +565,7 @@ begin
   end
   else
   begin
-    { InfElement não foi informado... vamos usar o nó raiz, para pesquisar pela assinatura }
+    { vinfElement não foi informado... vamos usar o nó raiz, para pesquisar pela assinatura }
     infNode := rootNode;
   end;
 
@@ -643,7 +658,7 @@ function TDFeSSLXmlSignLibXml2.AdicionarNode(var aDoc: xmlDocPtr;
 Var
   NewNode, DocNode: xmlNodePtr;
   memDoc: xmlDocPtr;
-  NewNodeXml: String;
+  NewNodeXml, vdocElement: String;
 begin
 {$IFNDEF COMPILER23_UP}
   Result := nil;
@@ -654,10 +669,13 @@ begin
     NewNodeXml := '<a>' + ConteudoXML + '</a>';
     memDoc := xmlReadMemory(PAnsiChar(AnsiString(NewNodeXml)), Length(NewNodeXml), nil, nil, 0);
     NewNode := xmlDocCopyNode(xmlDocGetRootElement(memDoc), aDoc.doc, 1);
-
     DocNode := xmlDocGetRootElement(aDoc);
-    if (docElement <> '') then
-      DocNode := LibXmlLookUpNode(DocNode, docElement);
+
+    { Se docElement possui prefixo o mesmo tem que ser removido }
+    vdocElement := copy(docElement, Pos(':', docElement) + 1, Length(docElement));
+
+    if (vdocElement <> '') then
+      DocNode := LibXmlLookUpNode(DocNode, vdocElement);
 
     if (DocNode = nil) then
       raise EACBrDFeException.Create(cErrElementsNotFound);

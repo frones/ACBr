@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2019
+-- ACBrDFeXsLibXml2 --
+[-] Correção no método "CanonC14n", para usar todos os atributos de NameSpace
+    especificados no Nó Root do XML
+    https://www.projetoacbr.com.br/forum/topic/51135-notablu-assinatura-difere-do-calculado-no-cancelamento/
+
+[-] Ajuste no método "AdicionarNode", para funcionar com Tags com prefixo (:)
+    (por: DSA, e Italo Jurisato Jr)
+
 13/05/2019
 -- ACBrDFeSSL --
 [-] Correção no método: TDFeSSLXmlSignClass.AdicionarSignatureElement, que não

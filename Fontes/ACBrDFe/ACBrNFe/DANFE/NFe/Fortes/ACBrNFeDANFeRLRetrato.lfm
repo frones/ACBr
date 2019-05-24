@@ -1,9 +1,10 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 285
-  Top = 37
+  Left = 355
+  Height = 627
+  Top = 144
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 627
+  ClientWidth = 810
   Font.Height = -18
   inherited RLNFe: TRLReport
     Top = 0
@@ -1558,7 +1559,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 3
         Height = 7
         Top = 23
-        Width = 124
+        Width = 126
         Caption = 'INFORMAÇÕES COMPLEMENTARES'
         Font.Color = clBlack
         Font.Height = -7
@@ -6946,7 +6947,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Left = 3
         Height = 7
         Top = 23
-        Width = 81
+        Width = 82
         Caption = 'INSCRIÇÃO MUNICIPAL'
         Font.Color = clBlack
         Font.Height = -7
@@ -7640,7 +7641,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbCancelada: TRLBand[15]
+    object rlbCanceladaDenegada: TRLBand[15]
       Left = 26
       Height = 30
       Top = 1100
@@ -7651,7 +7652,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       Visible = False
-      object RLLCancelada: TRLLabel
+      object RLLCanceladaDenegada: TRLLabel
         Left = 296
         Height = 19
         Top = 3

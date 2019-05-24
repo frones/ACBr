@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2019
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[*] Adicionado Mensagem no DANFe para NFe Denegada
+    (por: José M S Junior )
+
 16/04/2019
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [*] Correção na verificação da condição para impressão dos dados de entrega e retirada.

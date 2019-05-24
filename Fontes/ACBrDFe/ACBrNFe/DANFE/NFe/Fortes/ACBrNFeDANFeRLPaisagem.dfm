@@ -4184,14 +4184,14 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
     end
-    object rlbCancelada: TRLBand
+    object rlbCanceladaDenegada: TRLBand
       Left = 99
       Top = 631
       Width = 998
       Height = 30
       BandType = btColumnHeader
       Visible = False
-      object RLLCancelada: TRLLabel
+      object RLLCanceladaDenegada: TRLLabel
         Left = 440
         Top = 5
         Width = 118

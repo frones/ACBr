@@ -328,8 +328,8 @@ type
     RlbDadoValorDesconto: TRLLabel;
     RlbDadoValorLiquido: TRLLabel;
     RLDrawFaturareal: TRLDraw;
-    rlbCancelada: TRLBand;
-    RLLCancelada: TRLLabel;
+    rlbCanceladaDenegada: TRLBand;
+    RLLCanceladaDenegada: TRLLabel;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
     lblDadosDoProduto: TRLLabel;
@@ -627,6 +627,7 @@ var
   vAutoSizeAux: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
+  rlbCanceladaDenegada.Visible:= False;
 
   if not TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo) then
   begin
@@ -668,12 +669,12 @@ begin
   rllDadosVariaveis3_Descricao.Visible := True;
   rlbCodigoBarras.Visible := False;
   rllXmotivo.Visible := True;
-  rlbCancelada.Visible := fpDANFe.Cancelada;
-  if rlbCancelada.Visible then
+  rlbCanceladaDenegada.Visible := fpDANFe.Cancelada;
+  if rlbCanceladaDenegada.Visible then
   begin
     rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
     rllXmotivo.Caption := 'NF-e CANCELADA';
-    RLLCancelada.Caption := 'NF-e CANCELADA';
+    RLLCanceladaDenegada.Caption := 'NF-e CANCELADA';
   end
   else
   begin
@@ -697,6 +698,8 @@ begin
         begin
           rllXmotivo.Caption := 'NF-e DENEGADA';
           rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
+          rlbCanceladaDenegada.Visible:= True;
+          RLLCanceladaDenegada.Caption := 'NF-e DENEGADA';
         end;
 
         else

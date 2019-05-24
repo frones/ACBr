@@ -6394,14 +6394,14 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
     end
-    object rlbCancelada: TRLBand
+    object rlbCanceladaDenegada: TRLBand
       Left = 26
       Top = 1100
       Width = 742
       Height = 30
       BandType = btColumnHeader
       Visible = False
-      object RLLCancelada: TRLLabel
+      object RLLCanceladaDenegada: TRLLabel
         Left = 296
         Top = 3
         Width = 118

@@ -276,6 +276,9 @@ begin
   buffer := Nil;
   SubDoc := Nil;
   RootNs := Nil;
+  RootNode := Nil;
+  ANode := Nil;
+  NewNode := Nil;
 
   { Se infElement possui prefixo o mesmo tem que ser removido }
   ElementName := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
@@ -306,12 +309,16 @@ begin
         if (SubDoc = nil) then
           raise EACBrDFeException.Create(cErrSelecionarElements);
 
-        NewNode := xmlCopyNode(ANode, 1);
+        if (ANode <> nil) then
+          NewNode := xmlCopyNode(ANode, 1);
+
         if (NewNode = nil) then
           raise EACBrDFeException.Create(cErrSelecionarElements);
 
         // Copiando NameSpaces do RootNode
-        RootNs := RootNode.ns;
+        if (RootNode <> Nil) then
+          RootNs := RootNode.ns;
+
         while (RootNs <> Nil) do
         begin
           xmlNewNs(NewNode, RootNs.href, RootNs.prefix);   // não adiciona se já existir no Nó destino

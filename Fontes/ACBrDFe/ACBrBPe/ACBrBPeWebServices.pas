@@ -1411,8 +1411,32 @@ begin
     end;
 
     // Separa o XML especifico do Evento para ser Validado.
-    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
-                  SeparaDados(FPDadosMsg, 'detEvento');
+    AXMLEvento := SeparaDados(FPDadosMsg, 'detEvento');
+
+    case SchemaEventoBPe of
+      schevCancBPe:
+        begin
+          AXMLEvento := '<evCancBPe xmlns="' + ACBRBPE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancBPe>', '</evCancBPe>')) +
+                        '</evCancBPe>';
+        end;
+
+      schevNaoEmbBPe:
+        begin
+          AXMLEvento := '<evNaoEmbBPe xmlns="' + ACBRBPE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evNaoEmbBPe>', '</evNaoEmbBPe>')) +
+                        '</evNaoEmbBPe>';
+        end;
+
+      schevAlteracaoPoltrona:
+        begin
+          AXMLEvento := '<evAlteracaoPoltrona xmlns="' + ACBRBPE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evAlteracaoPoltrona>', '</evAlteracaoPoltrona>')) +
+                        '</evAlteracaoPoltrona>';
+        end;
+    end;
+
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
 
     with TACBrBPe(FPDFeOwner) do
     begin
@@ -1431,7 +1455,7 @@ begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
         FPMsg;
 
-//      raise EACBrBPeException.CreateDef(FErroValidacao);
+      raise EACBrBPeException.CreateDef(FErroValidacao);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

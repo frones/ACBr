@@ -1941,8 +1941,32 @@ begin
     end;
 
     // Separa o XML especifico do Evento para ser Validado.
-    AXMLEvento := '<' + ENCODING_UTF8 + '>' +
-                  SeparaDados(FPDadosMsg, 'detEvento');
+    AXMLEvento := SeparaDados(FPDadosMsg, 'detEvento');
+
+    case SchemaEventoMDFe of
+      schevCancMDFe:
+        begin
+          AXMLEvento := '<evCancMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancMDFe>', '</evCancMDFe>')) +
+                        '</evCancMDFe>';
+        end;
+
+      schevEncMDFe:
+        begin
+          AXMLEvento := '<evEncMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evEncMDFe>', '</evEncMDFe>')) +
+                        '</evEncMDFe>';
+        end;
+
+      schevIncCondutorMDFe:
+        begin
+          AXMLEvento := '<evIncCondutorMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evIncCondutorMDFe>', '</evIncCondutorMDFe>')) +
+                        '</evIncCondutorMDFe>';
+        end;
+    end;
+
+    AXMLEvento := '<' + ENCODING_UTF8 + '>' + AXMLEvento;
 
     with TACBrMDFe(FPDFeOwner) do
     begin
@@ -1955,13 +1979,15 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
+
     if not EventoEhValido then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
         FPMsg;
 
-//      raise EACBrMDFeException.CreateDef(FErroValidacao);
+      raise EACBrMDFeException.CreateDef(FErroValidacao);
     end;
+
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoMDFe.Evento[I].InfEvento.id;
   finally

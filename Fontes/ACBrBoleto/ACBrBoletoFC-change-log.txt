@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/05/2019
+--ACBrBoletoFCFortesFr--
+[*] Ajuste no tamanho campo Linha Digitável no modelo Boleto Normal
+
 25/03/2019
 --ACBrBoletoFCFortesFr, ACBrBancoCaixa--
 [*] Ajuste na Mensagem de Ouvidoria do Banco no Boleto modelo Carne

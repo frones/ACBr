@@ -8172,7 +8172,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -16
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
@@ -9008,7 +9008,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -16
+        Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False

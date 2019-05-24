@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 1611
+  Left = 302
   Height = 705
-  Top = 142
+  Top = 139
   Width = 1366
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 705
@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.2.0'
   object BoletoReciboTopo: TRLReport
     Left = 0
     Height = 1123
@@ -916,7 +916,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         AutoSize = False
         Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
         Font.Color = clBlack
-        Font.Height = -16
+        Font.Height = -15
         Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0
@@ -1891,7 +1891,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         AutoSize = False
         Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
         Font.Color = clBlack
-        Font.Height = -16
+        Font.Height = -15
         Font.Name = 'Arial'
         ParentFont = False
         RealBounds.Left = 0

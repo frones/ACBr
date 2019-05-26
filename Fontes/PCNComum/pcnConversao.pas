@@ -378,6 +378,11 @@ function StrToTpNF(out ok: Boolean; const s: String): TpcnTipoNFe;
 function SchemaDFeToStr(const t: TSchemaDFe): String;
 function StrToSchemaDFe(const s: String): TSchemaDFe;
 
+function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
+function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib ): string;
+function indISSToStrTagPosText(const t: TpcnindISS ): string;
+function indIncentivoToStrTagPosText(const t: TpcnindIncentivo ): string;
+
 implementation
 
 uses
@@ -746,20 +751,20 @@ begin
   // ID -> N10b - Grupo de informação do ICMS ST devido para a UF de destino,nas operações interestaduais de produtos que tiveram retenção antecipada de ICMS por ST na UF do remetente. Repasse via Substituto Tributário. (v2.0)
   // ID -> N11  - ICMS devido para outras UF
   // ID -> N12  - Outros
-  result := EnumeradoToStr(t, ['', '00' , '10' , '20' , '30' , '40' , '41' , '50' , '51' ,
-                               '60' , '70' , '80' , '81', '90', '90', 'SN',
+  result := EnumeradoToStr(t, ['', '00', '10', '20', '30', '40', '41', '45', '50', '51',
+                               '60', '70', '80', '81', '90', '90', 'SN',
                                '10', '90', '41', '60'],
-                              [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51,
+                              [cstVazio, cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51,
                               cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
                               cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60',
+  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '45', '50', '51', '60',
                                    '70', '80', '81', '90', '91', 'SN',
                                    '10part', '90part', '41rep', '60rep'],
-                                  [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60,
+                                  [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60,
                                    cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN,
                                    cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
@@ -788,8 +793,14 @@ begin
     '81 - ICMS DEVIDO À OUTRA UF',
     '90 - ICMS OUTROS',
     '90 - ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
-    '90 - SIMPLES NACIONAL'],
-    [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
+    '90 - SIMPLES NACIONAL',
+    '10 - TRIBUTADA E COM COBRANÇA DO ICMS POR SUBSTITUIÇÃO TRIBUTÁRIA - PARTILHA',
+    '90 - OUTROS - PARTILHA',
+    '41 - NÃO TRIBUTADO - REPASSE',
+    '60 - COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA - REPASSE'
+    ],
+    [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70,
+    cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN, cstPart10, cstPart90, cstRep41, cstRep60]);
 end;
 
 // N13 - Modalidade de determinação da BC do ICMS ******************************
@@ -1586,6 +1597,56 @@ begin
   end;
 
   Result := TSchemaDFe( CodSchema );
+end;
+
+function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
+begin
+  // 1 – Táxi;
+  // 2 – Deficiente Físico;
+  // 3 – Produtor Agropecuário;
+  // 4 – Frotista/Locadora;
+  // 5 – Diplomático/Consular;
+  // 6 – Utilitários e Motocicletas da
+  // Amazônia Ocidental e Áreas de
+  // Livre Comércio (Resolução
+  // 714/88 e 790/94 – CONTRAN e
+  // suas alterações);
+  // 7 – SUFRAMA;
+  // 8 – Venda a Orgãos Publicos;
+  // 9 – outros. (v2.0)
+  // 10 – Deficiente Condutor (Convênio ICMS 38/12). (v3.1)
+  // 11 – Deficiente não Condutor (Convênio ICMS 38/12). (v3.1)
+  // 12 - Orgão Fomento
+  // 16 - Olimpiadas Rio 2016
+  // 90 - Solicitado pelo Fisco
+result := EnumeradoToStr(t, ['1 – Táxi', '2 – Deficiente Físico', '3 – Produtor Agropecuário',
+  '4 – Frotista/Locadora', '5 – Diplomático/Consular', '6 - Utilit./Motos da Am./Áreas Livre Com.',
+  '7 – SUFRAMA', '8 – Venda a Orgãos Publicos', '9 – Outros', '10 – Deficiente Condutor',
+  '11 – Deficiente não Condutor', '12 - Orgão Fomento', '16 - Olimpiadas Rio 2016', '90 - Solicitado pelo Fisco'],
+  [mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora,
+   mdiDiplomaticoConsular, mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos,
+   mdiOutros, mdiDeficienteCondutor, mdiDeficienteNaoCondutor, mdiOrgaoFomento,
+   mdiOlimpiadaRio2016, mdiSolicitadoFisco]);
+end;
+
+function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib): string;
+begin
+  result := EnumeradoToStr(t, ['','N - Normal','R - Retida','S - Substituta','I - Isenta'],
+  [ISSQNcSitTribVazio , ISSQNcSitTribNORMAL, ISSQNcSitTribRETIDA, ISSQNcSitTribSUBSTITUTA,ISSQNcSitTribISENTA]);
+end;
+
+function indISSToStrTagPosText(const t: TpcnindISS): string;
+begin
+  result := EnumeradoToStr(t, ['1 - Exigível', '2 - Não incidência', '3 - Isenção', '4 - Exportação',
+                               '5 - Imunidade', '6 - Exig. Susp. Dec. Jud.', '7 - Exig. Susp. Proc. Adm.'],
+                              [iiExigivel, iiNaoIncidencia, iiIsencao, iiExportacao,
+                               iiImunidade, iiExigSuspDecisaoJudicial, iiExigSuspProcessoAdm]);
+end;
+
+function indIncentivoToStrTagPosText(const t: TpcnindIncentivo): string;
+begin
+  result := EnumeradoToStr(t, ['1 - Sim', '2 - Não'],
+                              [iiSim, iiNao]);
 end;
 
 end.

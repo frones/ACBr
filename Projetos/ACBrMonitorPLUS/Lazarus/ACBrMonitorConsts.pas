@@ -89,6 +89,7 @@ const
   CMetodoSetNumeroSessao =             'setnumerosessao';
   CMetodoSetlogomarcaSAT =             'setlogomarca';
   CMetodoGerarAssinaturaSAT =          'gerarassinaturasat';
+  CMetodoEnviarEmailCFe =              'enviaremailcfe';
 
   CMetodoECFachar =                                      'achar';
   CMetodoECFativar =                                     'ativar';
@@ -434,6 +435,7 @@ const
   CMetodoLimpareSocial =               'limparesocial';
   CMetodoCarregarXMLEventoeSocial =    'carregarxmleventoesocial';
   CMetodoSetIDEmpregadoreSocial =      'setidempregador';
+  CMetodoSetTipoEmpregadoreSocial =    'settipoempregador';
   CMetodoSetIDTransmissoresocial =     'setidtransmissor';
   CMetodoConsultaIdentEventosEmpreg =  'ConsultaIdentificadoresEventosEmpregador';
   CMetodoConsultaIdentEventosTabela =  'ConsultaIdentificadoresEventosTabela';

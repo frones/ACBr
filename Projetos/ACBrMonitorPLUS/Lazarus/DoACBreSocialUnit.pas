@@ -134,6 +134,13 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoSetTipoEmpregador}
+
+TMetodoSetTipoEmpregador = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 { TMetodoConsultaIdentificadoresEventosEmpregador }
 
 TMetodoConsultaIdentificadoresEventosEmpregador = class(TACBrMetodo)
@@ -166,7 +173,24 @@ end;
 implementation
 
 uses
-  DoACBrUnit, Forms;
+  DoACBrUnit, Forms, typinfo;
+
+{ TMetodoSetTipoEmpregador }
+
+procedure TMetodoSetTipoEmpregador.Executar;
+var
+  nTipoEmpregador: integer;
+begin
+  nTipoEmpregador := StrToIntDef(fpCmd.Params(0),0);
+
+  with TACBrObjetoeSocial(fpObjetoDono) do
+  begin
+    with MonitorConfig.DFE.ESocial do
+      TipoEmpregador := GetEnumName( TypeInfo(TEmpregador), Integer(nTipoEmpregador) );
+
+    MonitorConfig.SalvarArquivo;
+  end;
+end;
 
 { TMetodoDownloadEventos }
 
@@ -660,6 +684,7 @@ begin
   ListaDeMetodos.Add(CMetodoConsultaIdentEventosTabela);
   ListaDeMetodos.Add(CMetodoConsultaIdentEventosTrab);
   ListaDeMetodos.Add(CMetodoDownloadEventos);
+  ListaDeMetodos.Add(CMetodoSetTipoEmpregadoreSocial);
 
 end;
 
@@ -693,7 +718,10 @@ begin
     9  : AMetodoClass := TMetodoConsultaIdentificadoresEventosTabela;
     10 : AMetodoClass := TMetodoConsultaIdentificadoresEventosTrabalhador;
     11 : AMetodoClass := TMetodoDownloadEventos;
-    12..25 : DoACbr(ACmd);
+    12 : AMetodoClass := TMetodoSetTipoEmpregador;
+
+    else
+      DoACbr(ACmd);
 
   end;
 

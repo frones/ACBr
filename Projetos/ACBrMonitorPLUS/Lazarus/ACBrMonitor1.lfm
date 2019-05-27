@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsMonitor
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7045,11 +7045,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 989
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsWebServiceDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 2
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -7965,11 +7965,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 981
-                ActivePage = tsWSNFe
+                ActivePage = gbxWSeSocial
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 0
+                TabIndex = 2
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e/BP-e'
@@ -15856,7 +15856,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -16947,6 +16946,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     }
   end
   object ACBrSAT1: TACBrSAT
+    MAIL = ACBrMail1
     Modelo = satDinamico_cdecl
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'

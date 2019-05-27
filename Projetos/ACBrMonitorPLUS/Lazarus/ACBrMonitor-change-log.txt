@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2019
+[+] DoACBreSocialUnit, ACBrMonitor1
+Adicionado o método "SetTipoEmpregador"
+
+24/05/2019
+[+] DoSATUnit, ACBrMonitor1
+Adicionado o método "EnviarEmailCFe"
+
 23/05/2019
 [*] DoACBrBPe, ACBrMonitor1
 Ajustes no Componente ACBrBPe

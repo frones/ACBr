@@ -587,7 +587,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vDesc', 01, 15, 0, NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vDed' , 01, 15, 0, NFSe.Servico.ItemServico.Items[i].vDed, '');
 
-    if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '2' then
+    if NFSe.Servico.Valores.IssRetido = stNormal then
     begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao
       if Nfse.RegimeEspecialTributacao = retSimplesNacional then
         GeraTag := 1
@@ -647,7 +647,7 @@ begin
     Gerador.wGrupoNFSe('/serv');
 
     // Retenção ISSQN
-    if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '1' then
+    if NFSe.Servico.Valores.IssRetido = stRetencao then
     begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao
       Gerador.wGrupoNFSe('ISSST');
       Gerador.wCampoNFSe(tcDe2, '', 'vBCST ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
@@ -703,7 +703,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vtDespesas', 01, 15, 1, NFSe.Servico.Valores.ValorDespesasNaoTributaveis, '');
 
   // Total Retenção ISSQN
-  if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '1' then
+  if NFSe.Servico.Valores.IssRetido = stRetencao then
   begin  // 1 - stRetencao
     Gerador.wGrupoNFSe('ISS');
     Gerador.wCampoNFSe(tcDe2, '', 'vBCSTISS', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
@@ -711,7 +711,7 @@ begin
     Gerador.wGrupoNFSe('/ISS');
   end;
 
-  if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '2' then
+  if (NFSe.Servico.Valores.IssRetido = stNormal) and (dTotBCISS > 0.0) and (dTotISS > 0.0) then
   begin  // 2 - stNormal
     Gerador.wGrupoNFSe('ISS');
     // alterado de 0->1 por Italo em 22/05/2019

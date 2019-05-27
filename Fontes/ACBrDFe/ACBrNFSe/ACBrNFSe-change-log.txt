@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2019
+-- pnfsNFSeW_Infisc --
+[*] O grupo ISS não deve ser gerado se os valores de vBCISS e vISS for zero
+   Por: Italo Jurisato Junior
+
 21/05/2019
 -- ACBrNFSeWebServices --
 [*] Valor atribuido de forma invertida a variável ProcSucesso.

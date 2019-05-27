@@ -342,7 +342,8 @@ end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
-  i: integer;
+  i, j: integer;
+  averbacao: string;
 begin
   inherited;
   rlb_2_Rodo.Enabled := (fpMDFe.Ide.modal = moRodoviario);
@@ -420,6 +421,16 @@ begin
   begin
     rlmRespSeguradora.Lines.Add(fpMDFe.seg.Items[i].xSeg);
     rlmRespApolice.Lines.Add(fpMDFe.seg.Items[i].nApol);
+
+    averbacao := '';
+    for j := 0 to fpMDFe.seg.Items[i].aver.Count - 1 do
+    begin
+      if (averbacao = '') then
+        averbacao := fpMDFe.seg.Items[i].aver.Items[j].nAver
+      else
+        averbacao := averbacao +'; '+ fpMDFe.seg.Items[i].aver.Items[j].nAver;
+    end;
+    rlmRespAverbacao.Lines.Add(averbacao);
   end;
 end;
 

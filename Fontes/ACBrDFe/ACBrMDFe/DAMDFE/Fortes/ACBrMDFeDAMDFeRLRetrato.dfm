@@ -11,7 +11,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 30
-    Top = -200
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -523,9 +523,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object RLLabel32: TRLLabel
           Left = 646
           Top = 123
-          Width = 92
+          Width = 96
           Height = 14
-          Caption = 'N'#250'mero da Ap'#243'lice'
+          Caption = 'N'#250'm. da Averba'#231#227'o '
           Color = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText

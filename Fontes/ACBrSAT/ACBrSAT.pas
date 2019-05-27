@@ -1776,12 +1776,12 @@ begin
   end;
 
   if Assigned(StreamCFe) then
-    MAIL.AddAttachment(StreamCFe, NomeArq);
+    MAIL.AddAttachment(StreamCFe, NomeArq, adAttachment);
 
   if Assigned(Anexos) then
   begin
     for i := 0 to Anexos.Count - 1 do
-      MAIL.AddAttachment(Anexos[i]);
+      MAIL.AddAttachment(Anexos[i],'',AdAttachment);
   end;
 
   if Assigned(sCC) then

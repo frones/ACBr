@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/05/2019
+-- ACBrSAT --
+[*] Ajuste para envio de e-mail de CFe em modo Attachment
+  (por: José M S Junior)
+
 12/04/2019
 -- ACBrSATExtratoFortesFr --
 [-] Correção na detectção de Logo carregado em "PictureLogo"

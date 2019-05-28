@@ -82,17 +82,6 @@ type
     FLogoEmCima: Boolean;
     FRecuoLogo: Integer;
 
-    function IsBitIntSet(const AValueToCheck, ABitIndex: Integer): Boolean;
-    function VeiculoToInteger(const AValue: TDetVeiculos): Integer;
-    function MedicamentoToInteger(const AValue: TDetMedicamentos): Integer;
-    function ArmamentoToInteger(const AValue: TDetArmamentos): Integer;
-    function CombustivelToInteger(const AValue: TDetCombustiveis): Integer;
-
-    function ToVeiculoBitSet(const AValue: Integer): TDetVeiculos;
-    function ToMedicamentoBitSet(const AValue: Integer): TDetMedicamentos;
-    function ToArmamentoBitSet(const AValue: Integer): TDetArmamentos;
-    function ToCombustivelBitSet(const AValue: Integer): TDetCombustiveis;
-
   public
     constructor Create;
     destructor Destroy; override;
@@ -102,6 +91,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile);
     procedure Assign(const DFeReport: TACBrNFeDANFeRL);
 
+  published
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo;
     property ImprimeValor: TImprimirUnidQtdeValor read FImprimeValor write FImprimeValor;
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual;
@@ -253,6 +243,7 @@ type
 implementation
 
 uses
+  typinfo,
   ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum,
   ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
@@ -308,6 +299,8 @@ begin
 end;
 
 procedure TDANFeNFeConfig.LerIni(const AIni: TCustomIniFile);
+Var
+  PropValue: String;
 begin
   FormularioContinuo := AIni.ReadBool(CSessaoDANFENFE, CChaveFormularioContinuo, FormularioContinuo);
   ImprimeValor := TImprimirUnidQtdeValor(AIni.ReadInteger(CSessaoDANFENFE, CChaveImprimeValor, Integer(ImprimeValor)));
@@ -319,10 +312,13 @@ begin
   ExibeCampoFatura := AIni.ReadBool(CSessaoDANFENFE, CChaveExibeCampoFatura, ExibeCampoFatura);
   ExibeDadosISSQN := AIni.ReadBool(CSessaoDANFENFE, CChaveExibeDadosISSQN, ExibeDadosISSQN);
   ExibeDadosDocReferenciados := AIni.ReadBool(CSessaoDANFENFE, CChaveExibeDadosDocReferenciados, ExibeDadosDocReferenciados);
-  DetVeiculos := ToVeiculoBitSet(AIni.ReadInteger(CSessaoDANFENFE, CChaveDetVeiculos, VeiculoToInteger(DetVeiculos)));
-  DetMedicamentos := ToMedicamentoBitSet(AIni.ReadInteger(CSessaoDANFENFE, CChaveDetMedicamentos, MedicamentoToInteger(DetMedicamentos)));
-  DetArmamentos := ToArmamentoBitSet(AIni.ReadInteger(CSessaoDANFENFE, CChaveDetArmamentos, ArmamentoToInteger(DetArmamentos)));
-  DetCombustiveis := ToCombustivelBitSet(AIni.ReadInteger(CSessaoDANFENFE, CChaveDetCombustiveis, CombustivelToInteger(DetCombustiveis)));
+
+  // Usando RTTI para trabalhar com Sets
+  SetSetProp(self, 'DetVeiculos', AIni.ReadString(CSessaoDANFENFE, CChaveDetVeiculos, GetSetProp(self, 'DetVeiculos', True)));
+  SetSetProp(self, 'DetMedicamentos', AIni.ReadString(CSessaoDANFENFE, CChaveDetMedicamentos, GetSetProp(self, 'DetMedicamentos', True)));
+  SetSetProp(self, 'DetArmamentos', AIni.ReadString(CSessaoDANFENFE, CChaveDetArmamentos, GetSetProp(self, 'DetArmamentos', True)));
+  SetSetProp(self, 'DetCombustiveis', AIni.ReadString(CSessaoDANFENFE, CChaveDetCombustiveis, GetSetProp(self, 'DetCombustiveis', True)));
+
   TributosPercentual := TpcnPercentualTributos(AIni.ReadInteger(CSessaoDANFENFE, CChaveTributosPercentual, Integer(TributosPercentual)));
   TributosPercentualPersonalizado := AIni.ReadFloat(CSessaoDANFENFE, CChaveTributosPercentualPersonalizado, TributosPercentualPersonalizado);
   MarcadAgua := AIni.ReadString(CSessaoDANFENFE, CChaveMarcadAgua, MarcadAgua);
@@ -361,10 +357,13 @@ begin
   AIni.WriteBool(CSessaoDANFENFE, CChaveExibeCampoFatura, ExibeCampoFatura);
   AIni.WriteBool(CSessaoDANFENFE, CChaveExibeDadosISSQN, ExibeDadosISSQN);
   AIni.WriteBool(CSessaoDANFENFE, CChaveExibeDadosDocReferenciados, ExibeDadosDocReferenciados);
-  AIni.WriteInteger(CSessaoDANFENFE, CChaveDetVeiculos, VeiculoToInteger(DetVeiculos));
-  AIni.WriteInteger(CSessaoDANFENFE, CChaveDetMedicamentos, MedicamentoToInteger(DetMedicamentos));
-  AIni.WriteInteger(CSessaoDANFENFE, CChaveDetArmamentos, ArmamentoToInteger(DetArmamentos));
-  AIni.WriteInteger(CSessaoDANFENFE, CChaveDetCombustiveis, CombustivelToInteger(DetCombustiveis));
+
+  // Usando RTTI para trabalhar com Sets
+  AIni.WriteString(CSessaoDANFENFE, CChaveDetVeiculos, GetSetProp(self, 'DetVeiculos', True));
+  AIni.WriteString(CSessaoDANFENFE, CChaveDetMedicamentos, GetSetProp(self, 'DetMedicamentos', True));
+  AIni.WriteString(CSessaoDANFENFE, CChaveDetArmamentos, GetSetProp(self, 'DetArmamentos', True));
+  AIni.WriteString(CSessaoDANFENFE, CChaveDetCombustiveis, GetSetProp(self, 'DetCombustiveis', True));
+
   AIni.WriteInteger(CSessaoDANFENFE, CChaveTributosPercentual, Integer(TributosPercentual));
   AIni.WriteFloat(CSessaoDANFENFE, CChaveTributosPercentualPersonalizado, TributosPercentualPersonalizado);
   AIni.WriteString(CSessaoDANFENFE, CChaveMarcadAgua, MarcadAgua);
@@ -437,107 +436,6 @@ begin
       TamanhoFonteDemaisCampos := FFonte.TamanhoFonteDemaisCampos;
     end;
   end;
-end;
-
-function TDANFeNFeConfig.IsBitIntSet(const AValueToCheck, ABitIndex: Integer): Boolean;
-begin
-  Result := AValueToCheck and (1 shl ABitIndex) <> 0;
-end;
-
-function TDANFeNFeConfig.VeiculoToInteger(const AValue: TDetVeiculos): Integer;
-Var
- i: TDetVeiculo;
-begin
-  Result := 0;
-  for i := Low(TDetVeiculos) to High(TDetVeiculos) do
-    begin
-      if i in AValue then
-        Result := Result + (1 << Ord(i));
-    end;
-end;
-
-function TDANFeNFeConfig.MedicamentoToInteger(const AValue: TDetMedicamentos): Integer;
-Var
- i: TDetMedicamento;
-begin
-  Result := 0;
-  for i := Low(TDetMedicamentos) to High(TDetMedicamentos) do
-    begin
-      if i in AValue then
-        Result := Result + (1 << Ord(i));
-    end;
-end;
-
-function TDANFeNFeConfig.ArmamentoToInteger(const AValue: TDetArmamentos): Integer;
-Var
- i: TDetArmamento;
-begin
-  Result := 0;
-  for i := Low(TDetArmamentos) to High(TDetArmamentos) do
-    begin
-      if i in AValue then
-        Result := Result + (1 << Ord(i));
-    end;
-end;
-
-function TDANFeNFeConfig.CombustivelToInteger(const AValue: TDetCombustiveis): Integer;
-Var
- i: TDetCombustivel;
-begin
-  Result := 0;
-  for i := Low(TDetCombustiveis) to High(TDetCombustiveis) do
-    begin
-      if i in AValue then
-        Result := Result + (1 << Ord(i));
-    end;
-end;
-
-function TDANFeNFeConfig.ToVeiculoBitSet(const AValue: Integer): TDetVeiculos;
-Var
- i: TDetVeiculo;
-begin
-  Result := [];
-  for i := Low(TDetVeiculos) to High(TDetVeiculos) do
-    begin
-      if IsBitIntSet(AValue, Ord(i)) then
-        Include(Result, i);
-    end;
-end;
-
-function TDANFeNFeConfig.ToMedicamentoBitSet(const AValue: Integer): TDetMedicamentos;
-Var
- i: TDetMedicamento;
-begin
-  Result := [];
-  for i := Low(TDetMedicamentos) to High(TDetMedicamentos) do
-    begin
-      if IsBitIntSet(AValue, Ord(i)) then
-        Include(Result, i);
-    end;
-end;
-
-function TDANFeNFeConfig.ToArmamentoBitSet(const AValue: Integer): TDetArmamentos;
-Var
- i: TDetArmamento;
-begin
-  Result := [];
-  for i := Low(TDetArmamentos) to High(TDetArmamentos) do
-    begin
-      if IsBitIntSet(AValue, Ord(i)) then
-        Include(Result, i);
-    end;
-end;
-
-function TDANFeNFeConfig.ToCombustivelBitSet(const AValue: Integer): TDetCombustiveis;
-Var
- i: TDetCombustivel;
-begin
-  Result := [];
-  for i := Low(TDetCombustiveis) to High(TDetCombustiveis) do
-    begin
-      if IsBitIntSet(AValue, Ord(i)) then
-        Include(Result, i);
-    end;
 end;
 
 { TDANFeNFCeConfig }

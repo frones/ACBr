@@ -589,7 +589,9 @@ begin
 
     if NFSe.Servico.Valores.IssRetido = stNormal then
     begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao
-      if Nfse.RegimeEspecialTributacao = retSimplesNacional then
+
+      // Alterado de = para <> por Italo em 28/05/2019
+      if Nfse.RegimeEspecialTributacao <> retSimplesNacional then
         GeraTag := 1
       else
         GeraTag := 0;
@@ -711,13 +713,11 @@ begin
     Gerador.wGrupoNFSe('/ISS');
   end;
 
-  if (NFSe.Servico.Valores.IssRetido = stNormal) and (dTotBCISS > 0.0) and (dTotISS > 0.0) then
+  if NFSe.Servico.Valores.IssRetido = stNormal then
   begin  // 2 - stNormal
     Gerador.wGrupoNFSe('ISS');
-    // alterado de 0->1 por Italo em 22/05/2019
-    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, 1, dTotBCISS, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, 1, dTotISS, '');
-
+    Gerador.wCampoNFSe(tcDe2, '', 'vBCISS', 01, 15, 0, dTotBCISS, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'vISS'  , 01, 15, 0, dTotISS, '');
     Gerador.wGrupoNFSe('/ISS');
   end;
 

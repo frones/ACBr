@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2019
+-- pnfsNFSeW_Infisc --
+[*] Alteração baseana na postagem: 
+    https://www.projetoacbr.com.br/forum/topic/51392-infiscv11-simples-nacional/?do=findComment&comment=340050
+   Por: Italo Jurisato Junior
+
 27/05/2019
 -- pnfsNFSeW_Infisc --
 [*] O grupo ISS não deve ser gerado se os valores de vBCISS e vISS for zero

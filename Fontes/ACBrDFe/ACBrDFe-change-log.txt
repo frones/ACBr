@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/05/2019
+-- ACBrDFeConfiguracoes --
+[*] Ajustando os campos do proxy no ini para ficar compativel com o ACBrLib.
+   (Por: Rafael Teno Dias)
+
 24/05/2019
 -- ACBrDFeXsLibXml2 --
 [-] Correção no método "CanonC14n", para usar todos os atributos de NameSpace

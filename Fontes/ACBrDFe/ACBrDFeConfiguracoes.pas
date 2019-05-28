@@ -47,6 +47,7 @@ uses
 
 const
   CDFeSessaoIni = 'DFe';
+  CProxySessaoIni = 'Proxy';
 
 type
 
@@ -786,10 +787,10 @@ begin
   AIni.WriteString(CDFeSessaoIni, 'UF', UF);
   AIni.WriteInteger(CDFeSessaoIni, 'TimeZone.Modo', Integer(TimeZoneConf.ModoDeteccao));
   AIni.WriteString(CDFeSessaoIni, 'TimeZone.Str', TimeZoneConf.TimeZoneStr);
-  AIni.WriteString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
-  AIni.WriteString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
-  AIni.WriteString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  AIni.WriteString(CDFeSessaoIni, 'Proxy.Pass', EncodeBase64(
+  AIni.WriteString(CProxySessaoIni, 'Servidor', ProxyHost);
+  AIni.WriteString(CProxySessaoIni, 'Porta', ProxyPort);
+  AIni.WriteString(CProxySessaoIni, 'Usuario', ProxyUser);
+  AIni.WriteString(CProxySessaoIni, 'Senha', EncodeBase64(
     StrCrypt(ProxyPass, IfEmptyThen(fpConfiguracoes.ChaveCryptINI, ProxyHost))));
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then
@@ -813,10 +814,10 @@ begin
   UF := AIni.ReadString(CDFeSessaoIni, 'UF', UF);
   TimeZoneConf.ModoDeteccao := TTimeZoneModoDeteccao(AIni.ReadInteger(CDFeSessaoIni, 'TimeZone.Modo', Integer(TimeZoneConf.ModoDeteccao)));
   TimeZoneConf.TimeZoneStr := AIni.ReadString(CDFeSessaoIni, 'TimeZone.Str', TimeZoneConf.TimeZoneStr);
-  ProxyHost := AIni.ReadString(CDFeSessaoIni, 'Proxy.Host', ProxyHost);
-  ProxyPort := AIni.ReadString(CDFeSessaoIni, 'Proxy.Port', ProxyPort);
-  ProxyUser := AIni.ReadString(CDFeSessaoIni, 'Proxy.User', ProxyUser);
-  ProxyPass := StrCrypt(DecodeBase64(AIni.ReadString(CDFeSessaoIni, 'Proxy.Pass', '')),
+  ProxyHost := AIni.ReadString(CProxySessaoIni, 'Servidor', ProxyHost);
+  ProxyPort := AIni.ReadString(CProxySessaoIni, 'Porta', ProxyPort);
+  ProxyUser := AIni.ReadString(CProxySessaoIni, 'Usuario', ProxyUser);
+  ProxyPass := StrCrypt(DecodeBase64(AIni.ReadString(CProxySessaoIni, 'Senha', '')),
     IfEmptyThen(fpConfiguracoes.ChaveCryptINI, ProxyHost));
 
   if NaoEstaVazio(fpConfiguracoes.SessaoIni) then

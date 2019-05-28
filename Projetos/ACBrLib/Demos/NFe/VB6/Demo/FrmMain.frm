@@ -1580,7 +1580,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = NFE_ConfigLerValor("DFe", "Proxy.Host", buffer, bufferLen)
+    retorno = NFE_ConfigLerValor("Proxy", "Servidor", buffer, bufferLen)
     CheckResult retorno
     
     txtProxyServidor.Text = Trim$(FromUTF8(buffer))
@@ -1588,7 +1588,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = NFE_ConfigLerValor("DFe", "Proxy.Port", buffer, bufferLen)
+    retorno = NFE_ConfigLerValor("Proxy", "Porta", buffer, bufferLen)
     CheckResult retorno
     
     If bufferLen > 0 Then
@@ -1598,7 +1598,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = NFE_ConfigLerValor("DFe", "Proxy.User", buffer, bufferLen)
+    retorno = NFE_ConfigLerValor("Proxy", "Usuario", buffer, bufferLen)
     CheckResult retorno
     
     txtProxyUsuario.Text = Trim$(FromUTF8(buffer))
@@ -1606,7 +1606,7 @@ Private Sub LoadConfig()
     bufferLen = 256
     buffer = String$(bufferLen, " ")
     
-    retorno = NFE_ConfigLerValor("DFe", "Proxy.Pass", buffer, bufferLen)
+    retorno = NFE_ConfigLerValor("Proxy", "Senha", buffer, bufferLen)
     CheckResult retorno
     
     txtProxySenha.Text = Trim$(FromUTF8(buffer))
@@ -1722,16 +1722,16 @@ Private Sub SalvarConfig()
     retorno = NFE_ConfigGravarValor("NFe", "Timeout", CStr(nudTimeOut.Value))
     CheckResult retorno
     
-    retorno = NFE_ConfigGravarValor("DFe", "Proxy.Host", txtProxyServidor.Text)
+    retorno = NFE_ConfigGravarValor("Proxy", "Servidor", txtProxyServidor.Text)
     CheckResult retorno
     
-    retorno = NFE_ConfigGravarValor("DFe", "Proxy.Port", CStr(nudProxyPorta.Value))
+    retorno = NFE_ConfigGravarValor("Proxy", "Porta", CStr(nudProxyPorta.Value))
     CheckResult retorno
     
-    retorno = NFE_ConfigGravarValor("DFe", "Proxy.User", txtProxyUsuario.Text)
+    retorno = NFE_ConfigGravarValor("Proxy", "Usuario", txtProxyUsuario.Text)
     CheckResult retorno
     
-    retorno = NFE_ConfigGravarValor("DFe", "Proxy.Pass", txtProxySenha.Text)
+    retorno = NFE_ConfigGravarValor("Proxy", "Senha", txtProxySenha.Text)
     CheckResult retorno
     
     retorno = NFE_ConfigGravarValor("Email", "Nome", txtNome.Text)

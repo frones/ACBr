@@ -100,16 +100,16 @@ namespace ACBrLibNFe.Demo
             ret = AcbrNFe.NFE_ConfigGravarValor("NFe".ToUTF8(), "Timeout".ToUTF8(), nudTimeOut.Text.ToUTF8());
             AcbrNFe.CheckResult(ret);
 
-            ret = AcbrNFe.NFE_ConfigGravarValor("DFe".ToUTF8(), "Proxy.Host".ToUTF8(), txtProxyServidor.Text.ToUTF8());
+            ret = AcbrNFe.NFE_ConfigGravarValor("Proxy".ToUTF8(), "Servidor".ToUTF8(), txtProxyServidor.Text.ToUTF8());
             AcbrNFe.CheckResult(ret);
 
-            ret = AcbrNFe.NFE_ConfigGravarValor("DFe".ToUTF8(), "Proxy.Port".ToUTF8(), nudProxyPorta.Text.ToUTF8());
+            ret = AcbrNFe.NFE_ConfigGravarValor("Proxy".ToUTF8(), "Porta".ToUTF8(), nudProxyPorta.Text.ToUTF8());
             AcbrNFe.CheckResult(ret);
 
-            ret = AcbrNFe.NFE_ConfigGravarValor("DFe".ToUTF8(), "Proxy.User".ToUTF8(), txtProxyUsuario.Text.ToUTF8());
+            ret = AcbrNFe.NFE_ConfigGravarValor("Proxy".ToUTF8(), "Usuario".ToUTF8(), txtProxyUsuario.Text.ToUTF8());
             AcbrNFe.CheckResult(ret);
 
-            ret = AcbrNFe.NFE_ConfigGravarValor("DFe".ToUTF8(), "Proxy.Pass".ToUTF8(), txtProxySenha.Text.ToUTF8());
+            ret = AcbrNFe.NFE_ConfigGravarValor("Proxy".ToUTF8(), "Senha".ToUTF8(), txtProxySenha.Text.ToUTF8());
             AcbrNFe.CheckResult(ret);
 
             ret = AcbrNFe.NFE_ConfigGravarValor("Email".ToUTF8(), "Nome".ToUTF8(), txtNome.Text.ToUTF8());
@@ -276,7 +276,7 @@ namespace ACBrLibNFe.Demo
             buffer.Clear();
             buffer.Capacity = bufferLen;
 
-            ret = AcbrNFe.NFE_ConfigLerValor("DFe".ToUTF8(), "Proxy.Host".ToUTF8(), buffer, ref bufferLen);
+            ret = AcbrNFe.NFE_ConfigLerValor("Proxy".ToUTF8(), "Servidor".ToUTF8(), buffer, ref bufferLen);
             AcbrNFe.CheckResult(ret);
 
             txtProxyServidor.Text = buffer.FromUTF8();
@@ -285,7 +285,7 @@ namespace ACBrLibNFe.Demo
             buffer.Clear();
             buffer.Capacity = bufferLen;
 
-            ret = AcbrNFe.NFE_ConfigLerValor("DFe".ToUTF8(), "Proxy.Port".ToUTF8(), buffer, ref bufferLen);
+            ret = AcbrNFe.NFE_ConfigLerValor("Proxy".ToUTF8(), "Porta".ToUTF8(), buffer, ref bufferLen);
             AcbrNFe.CheckResult(ret);
 
             nudProxyPorta.Text = buffer.FromUTF8();
@@ -294,7 +294,7 @@ namespace ACBrLibNFe.Demo
             buffer.Clear();
             buffer.Capacity = bufferLen;
 
-            ret = AcbrNFe.NFE_ConfigLerValor("DFe".ToUTF8(), "Proxy.User".ToUTF8(), buffer, ref bufferLen);
+            ret = AcbrNFe.NFE_ConfigLerValor("Proxy".ToUTF8(), "Usuario".ToUTF8(), buffer, ref bufferLen);
             AcbrNFe.CheckResult(ret);
 
             txtProxyUsuario.Text = buffer.FromUTF8();
@@ -303,7 +303,7 @@ namespace ACBrLibNFe.Demo
             buffer.Clear();
             buffer.Capacity = bufferLen;
 
-            ret = AcbrNFe.NFE_ConfigLerValor("DFe".ToUTF8(), "Proxy.Pass".ToUTF8(), buffer, ref bufferLen);
+            ret = AcbrNFe.NFE_ConfigLerValor("Proxy".ToUTF8(), "Senha".ToUTF8(), buffer, ref bufferLen);
             AcbrNFe.CheckResult(ret);
 
             txtProxySenha.Text = buffer.FromUTF8();

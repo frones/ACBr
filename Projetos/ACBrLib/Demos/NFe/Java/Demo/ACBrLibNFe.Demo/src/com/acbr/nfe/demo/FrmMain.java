@@ -1216,7 +1216,7 @@ public class FrmMain extends javax.swing.JFrame {
             bufferLen.setValue(256);
             buffer = ByteBuffer.allocate(256);
             
-            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("DFe"), ACBrNFe.toUTF8("Proxy.Host"), buffer, bufferLen);
+            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("Proxy"), ACBrNFe.toUTF8("Servidor"), buffer, bufferLen);
             ACBrNFe.checkResult(ret);
             
             txtProxyServidor.setText(ACBrNFe.fromUTF8(buffer, bufferLen));
@@ -1224,7 +1224,7 @@ public class FrmMain extends javax.swing.JFrame {
             bufferLen.setValue(256);
             buffer = ByteBuffer.allocate(256);
             
-            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("DFe"), ACBrNFe.toUTF8("Proxy.Port"), buffer, bufferLen);
+            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("Proxy"), ACBrNFe.toUTF8("Porta"), buffer, bufferLen);
             ACBrNFe.checkResult(ret);
             
             nudProxyPorta.setValue(ACBrNFe.parseInt(buffer, bufferLen));
@@ -1232,7 +1232,7 @@ public class FrmMain extends javax.swing.JFrame {
             bufferLen.setValue(256);
             buffer = ByteBuffer.allocate(256);
             
-            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("DFe"), ACBrNFe.toUTF8("Proxy.User"), buffer, bufferLen);
+            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("Proxy"), ACBrNFe.toUTF8("Usuario"), buffer, bufferLen);
             ACBrNFe.checkResult(ret);
             
             txtProxyUsuario.setText(ACBrNFe.fromUTF8(buffer, bufferLen));
@@ -1240,7 +1240,7 @@ public class FrmMain extends javax.swing.JFrame {
             bufferLen.setValue(256);
             buffer = ByteBuffer.allocate(256);
             
-            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("DFe"), ACBrNFe.toUTF8("Proxy.Pass"), buffer, bufferLen);
+            ret = acbrNFe.NFE_ConfigLerValor(ACBrNFe.toUTF8("Proxy"), ACBrNFe.toUTF8("Senha"), buffer, bufferLen);
             ACBrNFe.checkResult(ret);
             
             txtProxySenha.setText(ACBrNFe.fromUTF8(buffer, bufferLen));
@@ -1386,23 +1386,23 @@ public class FrmMain extends javax.swing.JFrame {
                     ACBrNFe.toUTF8(nudTimeOut.getValue().toString()));
             ACBrNFe.checkResult(ret);
             
-            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("DFe"), 
-                    ACBrNFe.toUTF8("Proxy.Host"), 
+            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("Proxy"), 
+                    ACBrNFe.toUTF8("Servidor"), 
                     ACBrNFe.toUTF8(txtProxyServidor.getText()));
             ACBrNFe.checkResult(ret);
             
-            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("DFe"), 
-                    ACBrNFe.toUTF8("Proxy.Port"), 
+            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("Proxy"), 
+                    ACBrNFe.toUTF8("Porta"), 
                     ACBrNFe.toUTF8(nudProxyPorta.getValue().toString()));
             ACBrNFe.checkResult(ret);
             
-            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("DFe"), 
-                    ACBrNFe.toUTF8("Proxy.User"), 
+            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("Proxy"), 
+                    ACBrNFe.toUTF8("Usuario"), 
                     ACBrNFe.toUTF8(txtProxyUsuario.getText()));
             ACBrNFe.checkResult(ret);
             
-            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("DFe"), 
-                    ACBrNFe.toUTF8("Proxy.Pass"), 
+            ret = acbrNFe.NFE_ConfigGravarValor(ACBrNFe.toUTF8("Proxy"), 
+                    ACBrNFe.toUTF8("Senha"), 
                     ACBrNFe.toUTF8(txtProxySenha.getPassword()));
             ACBrNFe.checkResult(ret);
             

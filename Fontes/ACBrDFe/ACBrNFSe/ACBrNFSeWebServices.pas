@@ -739,37 +739,48 @@ begin
       FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
   end;
 
-  if FProvedor = proTinus then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, 'www.tinus', 'www2.tinus', [rfReplaceAll])
-  end;
+  case FProvedor of
+    proTinus:
+      begin
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+          FPSoapAction := StringReplace(FPSoapAction, 'www.tinus', 'www2.tinus', [rfReplaceAll]);
 
-  if FProvedor = proEReceita then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, 'https://www.ereceita', 'http://www3.ereceita', [rfReplaceAll])
-  end;
-  {
-  if FProvedor = proActcon then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'nfseserv', [rfReplaceAll]);
-  end;
-  }
-  if FProvedor = proActconv202 then
-  begin
-    if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
-      Ambiente := 'nfse'
-    else
-      Ambiente := 'nfseserv';
+        if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 2407104 then
+        begin
+          // Macaiba/RN
+          if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
+            FPSoapAction := StringReplace(FPSoapAction, 'www.tinus.com.br', 'tempuri.org', [rfReplaceAll]);
+        end;
+      end;
 
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', Ambiente, [rfReplaceAll]);
+    proEReceita:
+      begin
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+          FPSoapAction := StringReplace(FPSoapAction, 'https://www.ereceita', 'http://www3.ereceita', [rfReplaceAll]);
+      end;
+
+    proActconv202:
+      begin
+        if FPConfiguracoesNFSe.Geral.CodigoMunicipio = 3167202 then
+          Ambiente := 'nfse'
+        else
+          Ambiente := 'nfseserv';
+
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+          FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
+        else
+          FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', Ambiente, [rfReplaceAll]);
+      end;
+
+    proActcon:
+      begin
+      {
+        if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+          FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
+        else
+          FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'nfseserv', [rfReplaceAll]);
+      }
+      end;
   end;
 end;
 

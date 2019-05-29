@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2019
+-- ACBrNFSeWebServices --
+[*] Ajustes para o provedor Tinus - URL SoapAction.
+   Por: Italo Jurisato Junior
+
 28/05/2019
 -- pnfsNFSeW_Infisc --
 [*] Alteração baseana na postagem: 

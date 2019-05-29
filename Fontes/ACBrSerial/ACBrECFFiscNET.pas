@@ -1217,13 +1217,13 @@ end;
 procedure TACBrECFFiscNET.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString);
 begin
-  fsEmPagamento := True ;
   if DescontoAcrescimo = 0 then
      exit ;
   FiscNETComando.NomeComando := 'AcresceSubtotal' ;
   FiscNETComando.AddParamBool('Cancelar',False) ;
   FiscNETComando.AddParamDouble('ValorAcrescimo',DescontoAcrescimo) ;
   EnviaComando ;
+  fsEmPagamento := True ;
 end;
 
 procedure TACBrECFFiscNET.VendeItem(Codigo, Descricao : String ;

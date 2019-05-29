@@ -3126,7 +3126,6 @@ end;
 procedure TACBrECFEscECF.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString );
 begin
-  fsEmPagamento := True ;
   if DescontoAcrescimo = 0 then exit ;
   
   with EscECFComando do
@@ -3142,6 +3141,7 @@ begin
     RespostasComando.AddField( 'SubTotal', EscECFResposta.Params[0] );
 
   SalvaRespostasMemoria(False);
+  fsEmPagamento := True ;
 end;
 
 procedure TACBrECFEscECF.CancelaDescontoAcrescimoSubTotal(

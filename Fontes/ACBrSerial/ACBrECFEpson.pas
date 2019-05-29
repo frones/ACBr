@@ -2305,7 +2305,6 @@ end;
 procedure TACBrECFEpson.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString);
 begin
-  fsEmPagamento := True ;
   fsTotalPago := 0 ;
 
   if DescontoAcrescimo = 0 then
@@ -2321,6 +2320,7 @@ begin
 
   ZeraCache;
   RespostasComando.AddField( 'SubTotal', EpsonResposta.Params[0] );
+  fsEmPagamento := True ;
 end;
 
 procedure TACBrECFEpson.VendeItem(Codigo, Descricao : String ;

@@ -4435,7 +4435,7 @@ begin
 
     // Removido o provedor proISSDSF para que será incluido o profixo em
     // FdocElemento
-    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes, proEquiplano]) then
+    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes]) then
       FdocElemento := FPrefixo3 + FdocElemento;
 
     if FNotasFiscais.Count > 0 then

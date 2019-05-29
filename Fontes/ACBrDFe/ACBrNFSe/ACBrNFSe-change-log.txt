@@ -49,6 +49,10 @@ Símbolo : Significado
 
 29/05/2019
 -- ACBrNFSeWebServices --
+[*] Removido da lista de provedores o provedor Equiplano para que o 
+    docElemento receba o prefixo (namespace).
+   Por: Michel Ouriques
+-- ACBrNFSeWebServices --
 [*] Ajustes para o provedor Tinus - URL SoapAction.
    Por: Italo Jurisato Junior
 

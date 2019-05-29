@@ -236,6 +236,7 @@ type
     FlimTol: Double;
     FunMed: Integer;
     FtecMedicao: String;
+    FdscFatRisc: String;
     Finsalubridade: tpSimNao;
     Fpericulosidade: tpSimNao;
     FaposentEsp: tpSimNao;
@@ -251,6 +252,7 @@ type
     property limTol: Double read FlimTol write FlimTol;
     property unMed: Integer read FunMed write FunMed;
     property tecMedicao: String read FtecMedicao write FtecMedicao;
+    property dscFatRisc : String read FdscFatRisc write FdscFatRisc;
     property insalubridade: tpSimNao read Finsalubridade write Finsalubridade;
     property periculosidade: tpSimNao read Fpericulosidade write Fpericulosidade;
     property aposentEsp: tpSimNao read FaposentEsp write FaposentEsp;
@@ -434,6 +436,7 @@ begin
     Gerador.wGrupo('fatRisco');
 
     Gerador.wCampo(tcStr, '', 'codFatRis',      1, 10, 1, objFatRisco.Items[i].codFatRis);
+    Gerador.wCampo(tcStr, '', 'dscFatRisc',     2, 999, 0, objFatRisco.Items[i].dscFatRisc);
     Gerador.wCampo(tcStr, '', 'tpAval',         1,  1, 1, tpAvalToStr(objFatRisco.Items[i].tpAval));
     Gerador.wCampo(tcDe4, '', 'intConc',        1, 10, 0, objFatRisco.Items[i].intConc);
     Gerador.wCampo(tcDe4, '', 'limTol',         1, 10, 0, objFatRisco.Items[i].limTol);
@@ -636,10 +639,10 @@ begin
       Sequencial := INIRec.ReadInteger(sSecao, 'Sequencial', 0);
 
       sSecao := 'ideEvento';
-      ideEvento.indRetif    := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
-      ideEvento.NrRecibo    := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
-      ideEvento.ProcEmi     := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
-      ideEvento.VerProc     := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
+      ideEvento.indRetif := eSStrToIndRetificacao(Ok, INIRec.ReadString(sSecao, 'indRetif', '1'));
+      ideEvento.NrRecibo := INIRec.ReadString(sSecao, 'nrRecibo', EmptyStr);
+      ideEvento.ProcEmi  := eSStrToProcEmi(Ok, INIRec.ReadString(sSecao, 'procEmi', '1'));
+      ideEvento.VerProc  := INIRec.ReadString(sSecao, 'verProc', EmptyStr);
 
       sSecao := 'ideEmpregador';
       ideEmpregador.OrgaoPublico := (TACBreSocial(FACBreSocial).Configuracoes.Geral.TipoEmpregador = teOrgaoPublico);
@@ -685,9 +688,7 @@ begin
                 break;
 
               with infoAtiv.ativPericInsal.New do
-              begin
-                codAtiv  := sFim;
-              end;
+                codAtiv := sFim;
 
               Inc(J);
             end;
@@ -705,17 +706,19 @@ begin
               with fatRisco.New do
               begin
                 codFatRis  := sFim;
+                dscFatRisc := INIRec.ReadString(sSecao, 'dscFatRisc', EmptyStr);
                 tpAval     := StrTotpAval(Ok, INIRec.ReadString(sSecao, 'tpAval', '0'));
                 intConc    := StringToFloatDef(INIRec.ReadString(sSecao, 'intConc', EmptyStr), 0);
                 limTol     := StringToFloatDef(INIRec.ReadString(sSecao, 'limTol', EmptyStr), 0);
                 unMed      := INIRec.ReadInteger(sSecao, 'unMed', 0);
                 tecMedicao := INIRec.ReadString(sSecao, 'tecMedicao', EmptyStr);
+
                 insalubridade  := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'insalubridade', '0'));
                 periculosidade := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'periculosidade', '0'));
                 aposentEsp     := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'aposentEsp', '0'));
 
                 epcEpi.utilizEPC := eSStrTotpUtilizEPC(Ok, INIRec.ReadString(sSecao, 'utilizEPC', '0'));
-                epcEpi.eficEpc := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', '0'));
+                epcEpi.eficEpc   := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'eficEpc', '0'));
                 epcEpi.utilizEPI := eSStrTotpUtilizEPI(Ok, INIRec.ReadString(sSecao, 'utilizEPI', '0'));
 
                 {

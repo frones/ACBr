@@ -226,6 +226,9 @@ type
     destructor Destroy; override;
 
     function Envia(AGrupo: TeSocialGrupo): Boolean;
+    function GeraLote(AGrupo: TeSocialGrupo;FlSalvar:boolean = True): Boolean;
+
+
     function Consultar(const AProtocolo: string): Boolean;
     function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
         tpEvt : TTipoEvento; PerApur : TDateTime): boolean;
@@ -1115,6 +1118,36 @@ begin
     EnvioLote.GerarException(EnvioLote.Msg);
 
   Result := True;
+end;
+
+function TWebServices.GeraLote(AGrupo: TeSocialGrupo;FlSalvar:boolean = True): boolean;
+  var
+  ErroMsg: String;
+begin
+
+  Result :=False;
+
+  EnvioLote.FazerLog('Inicio '+ClassName, False);
+
+  try
+    EnvioLote.DefinirDadosMsg;
+    if Assigned(EnvioLote.FPDFeOwner.Integrador) then
+       EnvioLote.DefinirDadosIntegrador;
+
+    EnvioLote.DefinirEnvelopeSoap;
+    if FlSalvar then
+    begin
+       EnvioLote.SalvarEnvio;
+    end;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      ErroMsg := EnvioLote.GerarMsgErro(E);
+      EnvioLote.GerarException(ErroMsg, E);
+    end;
+  end;
+
 end;
 
 function TWebServices.Consultar(const AProtocolo: string): Boolean;

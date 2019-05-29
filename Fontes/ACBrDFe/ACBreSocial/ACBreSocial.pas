@@ -111,6 +111,7 @@ type
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
 
     function Enviar(AGrupo: TeSocialGrupo): boolean;
+    function GerarLote(AGrupo: TeSocialGrupo;FlSalvar:boolean = True): boolean;
     function Consultar(const AProtocolo: string): boolean;
     function ConsultaIdentificadoresEventosEmpregador(const CnpjEstab: String;
         tpEvt: TTipoEvento; PerApur: TDateTime): boolean;
@@ -163,6 +164,12 @@ begin
   FWebServices.Free;
 
   inherited;
+end;
+
+function TACBreSocial.GerarLote(AGrupo: TeSocialGrupo;FlSalvar:boolean = True): boolean;
+begin
+   WebServices.EnvioLote.Clear;
+   result := WebServices.GeraLote(AGrupo,FlSalvar);
 end;
 
 function TACBreSocial.GetConfiguracoes: TConfiguracoeseSocial;

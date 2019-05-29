@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2019
+-- pcesS2240 --
+[*] https://www.projetoacbr.com.br/forum/topic/51599-nota-t%C3%A9cnica-122019-s2240/
+   Por: Angelo Sobreira
+-- ACBreSocial / ACBreSocialWebServices --
+[+] https://www.projetoacbr.com.br/forum/topic/51394-esocial-possibilidade-de-escolher-entre-gerar-assinar-validar-ou-enviar-temos-casos-onde-o-cliente-n%C3%A3o-vai-enviar-diretamente-para-o-webservice/?do=findComment&comment=340170
+   Por: Dream Sistemas
+
 24/05/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/51507-corre%C3%A7%C3%A3o-do-evento-s-2298/

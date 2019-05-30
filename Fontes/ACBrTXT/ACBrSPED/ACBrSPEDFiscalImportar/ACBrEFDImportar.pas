@@ -36,6 +36,11 @@
 |*
 |* 23/02/2015: Macgayver Armini Apolonio - Criação
 |* 03/07/2017: Rodrigo Buschmann | Digibyte - Importação ICMS IPI
+|* 08/05/2019: Rodrigo Coelho | Bunny Soft - Tratamento de exceção
+|*  - Verificação se existe mais de um delimitador para cada linha no momento da
+|*    importação. Isso se faz necessário pois em arquivos SPED que já foram
+|*    assinados existem linhas após a finalização do arquivo (Bloco 9999) e estas
+|*    linhas devem ser ignoradas na importação para não ocasionarem erro
 *******************************************************************************}
 
 unit ACBrEFDImportar;
@@ -134,18 +139,22 @@ begin
         FAntesDeInserirLinha(LinhaAtual, I);
 
       Delimitador.Text := StringReplace(LinhaAtual, Delimiter, sLineBreak, [rfReplaceAll]);
-      Bloco := Delimitador[1][1];
+      // Verificar se a linha tem mais de um delimitador (ver histórico)
+      if (Delimitador.Count > 1) then
+      begin
+        Bloco := Delimitador[1][1];
 
-      if (Bloco = '0') then
-        ProcessaBloco0(Delimitador)
-      else if (Bloco = 'C') then
-        ProcessaBlocoC(Delimitador)
-      else if (Bloco = 'D') then
-        ProcessaBlocoD(Delimitador)
-      else if (Bloco = 'E') then
-        ProcessaBlocoE(Delimitador);
-//      else if (Bloco = '1') then
-//        ProcessaBloco1(Delimitador);
+        if (Bloco = '0') then
+          ProcessaBloco0(Delimitador)
+        else if (Bloco = 'C') then
+          ProcessaBlocoC(Delimitador)
+        else if (Bloco = 'D') then
+          ProcessaBlocoD(Delimitador)
+        else if (Bloco = 'E') then
+          ProcessaBlocoE(Delimitador);
+  //      else if (Bloco = '1') then
+  //        ProcessaBloco1(Delimitador);
+      end;
     end;
   finally
     FileStr.Free;

@@ -36,6 +36,11 @@
 |*
 |* 23/02/2015: Macgayver Armini Apolonio
 |*  - Criação
+|* 30/04/2019: Rodrigo Coelho | Bunny Soft - Tratamento de exceção
+|*  - Verificação se o Índique que se está tentando ler não é maior que a quantidade
+|*  de colunas disponíveis no arquivo que está sendo importado. Isso pode acontecer
+|*  quando tentamos importar arquivos de SPED mais antigos que possuem menos colunas
+|*  que a definição atual
 *******************************************************************************}
 unit ACBrEPCBase;
 
@@ -100,10 +105,7 @@ var
   vValor: string;
 begin
   Indice := Indice + 1;
-  { Verificar se o Índique que se está tentando ler não é maior que a quantidade
-    de colunas disponíveis no arquivo que está sendo importado. Isso pode acontecer
-    quando tentamos importar arquivos de SPED mais antigos que possuem menos colunas
-    que a definição atual }
+  // Verificar se Índice a ser lido não é maior que a quantidade de colunas disponíveis no arquivo
   if (Indice <= Delimitador.Count - 1) then
     vValor := Delimitador[Indice]
   else

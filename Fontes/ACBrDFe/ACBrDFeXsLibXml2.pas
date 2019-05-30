@@ -272,13 +272,13 @@ var
   RootNs: xmlNsPtr;
   TodoDocumento: Boolean;
 begin
-  Result := '';
-  buffer := Nil;
-  SubDoc := Nil;
-  RootNs := Nil;
+  Result   := '';
+  buffer   := Nil;
+  SubDoc   := Nil;
+  RootNs   := Nil;
   RootNode := Nil;
-  ANode := Nil;
-  NewNode := Nil;
+  ANode    := Nil;
+  NewNode  := Nil;
 
   { Se infElement possui prefixo o mesmo tem que ser removido }
   ElementName := copy(infElement, Pos(':', infElement) + 1, Length(infElement));

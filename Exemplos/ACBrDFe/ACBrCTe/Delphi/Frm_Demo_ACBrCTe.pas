@@ -965,11 +965,11 @@ begin
     imp.vTotTrib   := 17.00;
 
     //Impostos federais
-    imp.infTribFed.vPIS    := 0;
-    imp.infTribFed.vCOFINS := 0;
-    imp.infTribFed.vIR     := 0;
-    imp.infTribFed.vINSS   := 5.00;
-    imp.infTribFed.vCSLL   := 0;
+    imp.infTribFed.vPIS    := 1;
+    imp.infTribFed.vCOFINS := 2;
+    imp.infTribFed.vIR     := 3;
+    imp.infTribFed.vINSS   := 4.00;
+    imp.infTribFed.vCSLL   := 5;
 
     {Carrega as informacoes CTe Normal}
     infCTeNorm.infServico.xDescServ := 'TEJEJRBEFR ERFERF TESTET JFREJ';

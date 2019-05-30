@@ -617,6 +617,7 @@ end;
 
 destructor TVerbasRescS2299.Destroy;
 begin
+  FDMDev.Free;
   ProcCS.Free;
 
   inherited;

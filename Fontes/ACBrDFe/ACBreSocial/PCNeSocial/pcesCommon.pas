@@ -1284,6 +1284,7 @@ type
     function getInfoSimples: TinfoSimples;
   public
     constructor Create;
+    destructor Destroy; override;
     function infoSaudeColetInst: boolean;
     function infoAgNocivoInst: boolean;
     function infoSimplesInst: Boolean;
@@ -2281,6 +2282,16 @@ begin
   FInfoSaudeColet := nil;
   FinfoAgNocivo   := nil;
   FinfoSimples    := nil;
+end;
+
+destructor TideEstabLotItem.Destroy;
+begin
+  FdetVerbas.Free;
+
+  if Assigned(FinfoAgNocivo) then
+    FreeAndNil(FInfoAgNocivo);
+
+  inherited;
 end;
 
 function TideEstabLotItem.getInfoAgNocivo: TInfoAgNocivo;

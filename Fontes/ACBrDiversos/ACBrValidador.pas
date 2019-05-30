@@ -1552,7 +1552,6 @@ type
 var
   I: Integer;
   CodigoNormalizado: String;
-  IsGtin8: Boolean;
   sPrefixo: String;
   iPrefixo: Integer;
   bEncontrado: Boolean;
@@ -1692,7 +1691,6 @@ begin
   if fsMsgErro = '' then
   begin
     CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
-    IsGtin8           := StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0;
 
   if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
      sPrefixo := copy(CodigoNormalizado, 7, 3)

@@ -3135,8 +3135,14 @@ begin
 end;
 
 procedure TpagCollection.Assign(Source: TpagCollection);
+var
+  I: Integer;
 begin
   vTroco := Source.vTroco;
+
+  Self.Clear;
+  for I := 0 to Source.Count - 1 do
+    Self.New.Assign(Source.Items[I]);
 end;
 
 constructor TpagCollection.Create;

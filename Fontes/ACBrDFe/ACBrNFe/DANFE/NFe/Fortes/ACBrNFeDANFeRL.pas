@@ -104,6 +104,7 @@ begin
   if (Length(ANotas) < 1) then
     Exit;
 
+  DANFeReport := nil;
   try
     SetLength(ReportArray, Length(ANotas));
 
@@ -134,7 +135,9 @@ begin
 
     if ADANFe.MostraPreview then
     begin
-      SelectedFilter := DANFeReport.RLPDFFilter1;
+      if Assigned(DANFeReport) then
+        SelectedFilter := DANFeReport.RLPDFFilter1;
+
       Report.PreviewModal;
     end
     else

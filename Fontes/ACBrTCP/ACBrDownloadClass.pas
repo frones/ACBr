@@ -50,6 +50,9 @@ unit ACBrDownloadClass;
 interface
 
 uses
+{$IFDEF MSWINDOWS}
+  Windows,
+{$ENDIF}
   Classes, SysUtils, Forms,
   blcksock;
 

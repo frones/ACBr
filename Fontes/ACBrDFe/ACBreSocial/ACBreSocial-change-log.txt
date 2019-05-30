@@ -49,6 +49,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/05/2019
+-- pcesS5013 --
+[*] https://www.projetoacbr.com.br/forum/topic/51645-vazamento-de-mem%C3%B3ria-s-5013/
+   Por: Alisson Souza Pereira
 -- pcesS2299 / pcesCommon --
 [*] https://www.projetoacbr.com.br/forum/topic/51641-vazamento-de-mem%C3%B3ria-s-2299/
    Por: Alisson Souza Pereira

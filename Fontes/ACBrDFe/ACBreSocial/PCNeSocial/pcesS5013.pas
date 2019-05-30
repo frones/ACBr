@@ -257,6 +257,7 @@ end;
 destructor TInfoFGTS.Destroy;
 begin
   FInfoBaseFGTS.Free;
+  FInfoDpsFGTS.Free;
 
   inherited;
 end;
@@ -432,4 +433,3 @@ begin
 end;
 
 end.
-

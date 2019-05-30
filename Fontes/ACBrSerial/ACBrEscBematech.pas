@@ -219,29 +219,20 @@ end;
 
 function TACBrEscBematech.ComandoGravarLogoRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
-var
-  KeyCode: Byte;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
-    KeyCode := AjustarKeyCodeUnico(KeyCode1);
     VerificarKeyCodes;
-
-    Result := ComandoGravarLogoColumnStr(RasterStr, AWidth, AHeight, KeyCode);
+    Result := ComandoGravarLogoColumnStr(RasterStr, AWidth, AHeight, KeyCode1);
   end;
 end;
 
 function TACBrEscBematech.ComandoApagarLogo: AnsiString;
-var
-  KeyCode: Byte;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
-    KeyCode := AjustarKeyCodeUnico(KeyCode1);
     VerificarKeyCodes;
-
-    KeyCode := AjustarKeyCodeUnico(KeyCode1);
-    Result := ComandoGravarLogoColumnStr(#0, 1, 1, KeyCode);
+    Result := ComandoGravarLogoColumnStr(#0, 1, 1, KeyCode1);
   end;
 end;
 

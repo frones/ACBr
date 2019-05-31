@@ -1538,7 +1538,7 @@ begin
     proNotaBlu,
     proGiap: Result := (UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true'));
 
-    proISSDSF: Result := Alerta203;
+    proISSDSF: Result := Alerta203 or (FDataRecebimento <> 0);
 
     proEgoverneISS: Result := ProcSucesso;
   else

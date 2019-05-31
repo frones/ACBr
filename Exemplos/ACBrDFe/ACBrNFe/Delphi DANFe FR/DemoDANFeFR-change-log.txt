@@ -53,10 +53,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+31/05/2019
+-- DemoDANFeFR --- 
+[+] Teste de Quebra Linha Em Detalhamentos 
+     Demonstra a utilização da Propriedade QuebraLinhaEmDetalhamentos
+[*] Separação da Configuração por componente
+      Por : Henrique Leonardo
+
 22/01/2018
 -- DemoDANFeFR --- 
 [+] Teste de ImprimirCodigoEan 
-     Demostra a impressão do código do produto (cProd ) ou código de Barras (cEan ) 
+     Demonstra a impressão do código do produto (cProd ) ou código de Barras (cEan ) 
       Por : Henrique Leonardo
 
 [*] Ajustes para demonstrar o uso do novo componente ACBrNFeDANFCEFR para NFCe.

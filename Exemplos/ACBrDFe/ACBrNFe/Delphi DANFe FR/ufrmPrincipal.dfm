@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Demo DANF-e em Fast Report'
-  ClientHeight = 471
+  ClientHeight = 485
   ClientWidth = 358
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -26,7 +26,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object pnlbotoes: TPanel
     Left = 0
-    Top = 379
+    Top = 393
     Width = 358
     Height = 92
     Align = alBottom
@@ -79,7 +79,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 149
     Width = 358
-    Height = 230
+    Height = 244
     ActivePage = TabArquivos
     Align = alClient
     TabOrder = 1
@@ -89,7 +89,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 0
         Width = 350
-        Height = 202
+        Height = 216
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
@@ -124,7 +124,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 46
         Width = 105
-        Height = 156
+        Height = 170
         Align = alLeft
         Caption = 'Margem'
         TabOrder = 1
@@ -235,6 +235,14 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Imprime itens'
         TabOrder = 5
       end
+      object ChkQuebraLinhaEmDetalhamentos: TCheckBox
+        Left = 137
+        Top = 196
+        Width = 184
+        Height = 17
+        Caption = 'Quebra Linha Em Detalhamentos'
+        TabOrder = 7
+      end
     end
     object Decimais: TTabSheet
       Caption = 'Decimais'
@@ -256,7 +264,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 49
         Width = 350
-        Height = 153
+        Height = 167
         ActivePage = TabtdetInteger
         Align = alClient
         TabOrder = 1
@@ -425,6 +433,7 @@ object frmPrincipal: TfrmPrincipal
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrNFe = ACBrNFe1
     TipoDANFE = tiSemGeracao
+    ExibeTotalTributosItem = True
     EspessuraBorda = 1
     ExpandirDadosAdicionaisAuto = False
     IncorporarBackgroundPdf = True

@@ -160,6 +160,7 @@ type
     Confirmacao       : Boolean;
     SegundoPlano      : Boolean;
     Codificacao       : String;
+    HTML              : Boolean;
   end;
 
   TCertificado = record
@@ -454,6 +455,11 @@ type
     SATPrinter                 : TSATPrinter;
   end;
 
+  TSATEmail = record
+    MensagemSAT                : String;
+    AssuntoSAT                 : String;
+  end;
+
   TSAT = record
     Modelo                       : Integer;
     ArqLog                       : String;
@@ -474,6 +480,7 @@ type
     SATImpressao                 : TSATImpressao;
     SATRede                      : TSATRede;
     SATSWH                       : TSATSwH;
+    SATEmail                     : TSATEmail;
   end;
 
   TIntegradorFiscal = record
@@ -855,6 +862,7 @@ begin
       Ini.WriteBool( CSecEmail, CKeyEmailConfirmacao, Confirmacao );
       Ini.WriteBool( CSecEmail, CKeyEmailSegundoPlano, SegundoPlano );
       Ini.WriteString( CSecEmail, CKeyEmailCodificacao, Codificacao );
+      Ini.WriteBool( CSecEmail, CKeyEmailHTML, HTML );
     end;
 
     with DFe do
@@ -1169,6 +1177,12 @@ begin
     begin
       ini.WriteString(CSecSATSwH, CKeySATSwHCNPJ,       CNPJ);
       ini.WriteString(CSecSATSwH, CKeySATSwHAssinatura, Assinatura);
+    end;
+
+    with SAT.SATEmail do
+    begin
+      ini.WriteString(CSecSATEmail, CKeySATEmailAssunto, AssuntoSAT);
+      ini.WriteString(CSecSATEmail, CKeySATEmailMensagem, MensagemSAT);
     end;
 
     with IntegradorFiscal do
@@ -1504,6 +1518,7 @@ begin
       Confirmacao               := Ini.ReadBool( CSecEmail, CKeyEmailConfirmacao, Confirmacao );
       SegundoPlano              := Ini.ReadBool( CSecEmail, CKeyEmailSegundoPlano, SegundoPlano );
       Codificacao               := Ini.ReadString( CSecEmail, CKeyEmailCodificacao, Codificacao );
+      HTML                      := Ini.ReadBool( CSecEmail, CKeyEmailHTML, HTML );
     end;
 
     with DFe do
@@ -1825,6 +1840,12 @@ begin
       Assinatura            := ini.ReadString(CSecSATSwH, CKeySATSwHAssinatura, Assinatura);
     end;
 
+    with SAT.SATEmail do
+    begin
+      AssuntoSAT            := ini.ReadString(CSecSATEmail, CKeySATEmailAssunto, AssuntoSAT);
+      MensagemSAT           := ini.ReadString(CSecSATEmail, CKeySATEmailMensagem, MensagemSAT);
+    end;
+
     with IntegradorFiscal do
     begin
       Input                 :=  ini.ReadString(CSecSATIntegrador, CKeySATIntegradorInput,       Input);
@@ -2137,6 +2158,7 @@ begin
     Confirmacao               := False;
     SegundoPlano              := False;
     Codificacao               := '';
+    HTML                      := False;
   end;
 
   with DFe do
@@ -2448,6 +2470,12 @@ begin
   begin
     CNPJ                  := '';
     Assinatura            := '';
+  end;
+
+  with SAT.SATEmail do
+  begin
+    AssuntoSAT             := '';
+    MensagemSAT            := '';
   end;
 
   with IntegradorFiscal do

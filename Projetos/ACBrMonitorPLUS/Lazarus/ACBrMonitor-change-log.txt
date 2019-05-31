@@ -43,6 +43,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, DoSATUnit
+Adicionado para o SAT os Campos para configuração de Assunto e Mensagem de e-mail em tela
+
+29/05/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade na aba e-mail para definir Envio do Corpo e-mail como HTML
+
+29/05/2019
+[*] DoSATUnit
+Ajuste leitura da versão do SAT configurado em tela
+
 24/05/2019
 [+] DoACBreSocialUnit, ACBrMonitor1
 Adicionado o método "SetTipoEmpregador"

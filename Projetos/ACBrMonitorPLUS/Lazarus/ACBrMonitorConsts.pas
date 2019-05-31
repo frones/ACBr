@@ -871,6 +871,7 @@ const
   CKeyEmailConfirmacao =             'Confirmacao';
   CKeyEmailSegundoPlano =            'SegundoPlano';
   CKeyEmailCodificacao =             'Codificacao';
+  CKeyEmailHTML =                    'HTML';
   CKeyMensagemNFe =                  'MensagemNFe';
   CKeyMensagemCTe =                  'MensagemCTe';
   CKeyMensagemMDFe =                 'MensagemMDFe';
@@ -1053,6 +1054,10 @@ const
   CSecSATSwH =                              'SATSwH';
   CKeySATSwHCNPJ =                          'CNPJ';
   CKeySATSwHAssinatura =                    'Assinatura';
+
+  CSecSATEmail =                            'SATemail';
+  CKeySATEmailAssunto =                     'Assunto';
+  CKeySATEmailMensagem =                    'Mensagem';
 
   CSecSATIntegrador =                       'SATIntegrador';
   CKeySATIntegradorInput =                  'Input';

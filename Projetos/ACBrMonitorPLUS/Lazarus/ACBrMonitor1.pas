@@ -247,8 +247,10 @@ type
     bvCadastro3: TBevel;
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
+    bvCadastro6: TBevel;
     cbBackFeed: TComboBox;
     cbDPI: TComboBox;
+    cbEmailHTML: TCheckBox;
     cbETQModelo: TComboBox;
     cbETQPorta: TComboBox;
     cbFormaEmissaoCTe: TComboBox;
@@ -258,6 +260,7 @@ type
     cbVersaoWSBPe: TComboBox;
     ckCamposFatObrigatorio: TCheckBox;
     edtArquivoWebServicesBPe: TEdit;
+    edtEmailAssuntoSAT: TEdit;
     GroupBox9: TGroupBox;
     Label227: TLabel;
     Label229: TLabel;
@@ -508,6 +511,9 @@ type
     Label230: TLabel;
     Label231: TLabel;
     Label232: TLabel;
+    Label233: TLabel;
+    Label234: TLabel;
+    Label235: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -550,6 +556,7 @@ type
     mmEmailMsgCTe: TMemo;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
+    mmEmailMsgSAT: TMemo;
     pnLogoBanco: TPanel;
     PanelMenu: TPanel;
     PanelScroll: TPanel;
@@ -620,6 +627,7 @@ type
     gbxWSeSocial: TTabSheet;
     gbxWSReinf: TTabSheet;
     cbTagRejeicao938: TComboBox;
+    tsSATemail: TTabSheet;
     tsRespTecnico: TTabSheet;
     tsIntegrador: TTabSheet;
     tsRelatorio: TTabSheet;
@@ -1352,6 +1360,7 @@ type
     procedure bECFTestarClick(Sender: TObject);
     procedure bECFLeituraXClick(Sender: TObject);
     procedure bECFAtivarClick(Sender: TObject);
+    procedure Label138Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
@@ -4473,6 +4482,7 @@ begin
     cbEmailConfirmation.Checked        := Confirmacao;
     cbEmailThread.Checked              := SegundoPlano;
     cbEmailCodificacao.Text            := Codificacao;
+    cbEmailHTML.Checked                := HTML;
   end;
 
   {Parametro Sedex}
@@ -4940,6 +4950,12 @@ begin
       edtSwHAssinatura.Text := Assinatura;
     end;
 
+    with SATEmail do
+    begin
+      edtEmailAssuntoSAT.Text            := AssuntoSAT;
+      mmEmailMsgSAT.Lines.Text           := StringToBinaryString(MensagemSAT);
+    end;
+
     AjustaACBrSAT;
 
   end;
@@ -5158,6 +5174,7 @@ begin
     UseThread := cbEmailThread.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
+    IsHTML := cbEmailHTML.Checked;
   end;
 
   with ACBrIBGE1 do
@@ -5617,6 +5634,7 @@ begin
       Confirmacao             := cbEmailConfirmation.Checked;
       SegundoPlano            := cbEmailThread.Checked;
       Codificacao             := cbEmailCodificacao.Text;
+      HTML                    := cbEmailHTML.Checked;
     end;
 
     { Parametros Sedex }
@@ -5938,6 +5956,13 @@ begin
         CNPJ                           := edtSwHCNPJ.Text;
         Assinatura                     := edtSwHAssinatura.Text;
       end;
+
+      with SATEmail do
+      begin
+         AssuntoSAT                    := edtEmailAssuntoSAT.Text;
+         MensagemSAT                   := BinaryStringToString( mmEmailMsgSAT.Lines.Text );
+      end;
+
     end;
 
     {Parametro Integrador}
@@ -6835,6 +6860,11 @@ begin
 
   AvaliaEstadoTsECF;
   AvaliaEstadoTsRFD;
+end;
+
+procedure TFrmACBrMonitor.Label138Click(Sender: TObject);
+begin
+
 end;
 
 procedure TFrmACBrMonitor.meUSUHoraCadastroExit(Sender: TObject);

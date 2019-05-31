@@ -243,7 +243,7 @@ begin
     begin
       with Imposto do
       begin
-        Result := 'Val Aprox Tributos: ' + FormatFloatBr(Imposto.vTotTrib);
+        Result := SeparadorDetalhamentos +'Val Aprox Tributos: ' + FormatFloatBr(Imposto.vTotTrib);
 
         if (FTributosPercentual = ptValorNF) then
         begin

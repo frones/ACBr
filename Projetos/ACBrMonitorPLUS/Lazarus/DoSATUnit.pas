@@ -325,8 +325,12 @@ begin
   begin
     CFe.Clear;
     //Campos preenchidos em tela
+    ACBrSAT.Config.infCFe_versaoDadosEnt := MonitorConfig.SAT.versaoDadosEnt;
+    CFe.infCFe.versaoDadosEnt:= ACBrSAT.Config.infCFe_versaoDadosEnt;
+
     CFe.ide.CNPJ := MonitorConfig.SAT.SATSWH.CNPJ;
     CFe.ide.signAC := MonitorConfig.SAT.SATSWH.Assinatura;
+    CFe.ide.numeroCaixa := MonitorConfig.SAT.NumeroCaixa;
     CFe.Emit.CNPJ := MonitorConfig.SAT.SATImpressao.SATEmit.CNPJ;
     CFe.Emit.IE := MonitorConfig.SAT.SATImpressao.SATEmit.IE;
     CFe.Emit.IM := MonitorConfig.SAT.SATImpressao.SATEmit.IM;
@@ -428,7 +432,9 @@ var
   cMensagem: String;
   cCC: String;
   cAnexos: String;
+  sAssuntoSAT: String;
   slMensagem, slCC, slAnexos: TStringList;
+
 begin
   cDestinatario:= fpCmd.Params(0);
   cXMLVenda:= fpCmd.Params(1);
@@ -448,12 +454,21 @@ begin
       CarregarDadosVenda(cXMLVenda);
       DoPrepararImpressaoSAT(' ',False);
 
-      QuebrarLinha(cMensagem, slMensagem);
+      with MonitorConfig.SAT.SATEmail do
+      begin
+         slMensagem.Text := IfThen(NaoEstaVazio(cMensagem), cMensagem, StringToBinaryString(MensagemSAT));
+         sAssuntoSAT := IfThen(NaoEstaVazio(cAssunto),cAssunto, AssuntoSAT);
+      end;
+
       QuebrarLinha(cCC, slCC);
       QuebrarLinha(cAnexos, slAnexos);
 
       try
-        ACBrSAT.EnviarEmail(cDestinatario, cAssunto, slMensagem, slCC, slAnexos);
+        ACBrSAT.EnviarEmail(cDestinatario,
+                            sAssuntoSAT,
+                            slMensagem,
+                            slCC,
+                            slAnexos);
         fpCmd.Resposta := 'Email enviado com sucesso';
       except
         on E: Exception do

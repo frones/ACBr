@@ -1218,7 +1218,11 @@ procedure TACBrECFFiscNET.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString);
 begin
   if DescontoAcrescimo = 0 then
-     exit ;
+  begin
+    fsEmPagamento := True ;
+    Exit ;
+  end;
+
   FiscNETComando.NomeComando := 'AcresceSubtotal' ;
   FiscNETComando.AddParamBool('Cancelar',False) ;
   FiscNETComando.AddParamDouble('ValorAcrescimo',DescontoAcrescimo) ;

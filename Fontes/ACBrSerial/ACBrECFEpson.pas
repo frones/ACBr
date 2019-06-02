@@ -2308,7 +2308,10 @@ begin
   fsTotalPago := 0 ;
 
   if DescontoAcrescimo = 0 then
-     exit ;
+   begin
+     fsEmPagamento := True ;
+     Exit ;
+   end;
 
   EpsonComando.Comando  := '0A04' ;
   if DescontoAcrescimo < 0 then

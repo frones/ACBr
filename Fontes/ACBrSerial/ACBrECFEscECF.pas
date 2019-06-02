@@ -3126,8 +3126,12 @@ end;
 procedure TACBrECFEscECF.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString );
 begin
-  if DescontoAcrescimo = 0 then exit ;
-  
+  if DescontoAcrescimo = 0 then
+  begin
+    fsEmPagamento := True ;
+    Exit ;
+  end;
+
   with EscECFComando do
   begin
      CMD := 29 ;

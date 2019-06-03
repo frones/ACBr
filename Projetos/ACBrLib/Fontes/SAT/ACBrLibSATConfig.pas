@@ -42,7 +42,7 @@ type
   TTipoExtrato = (teFortes, teEscPos);
 
   { TExtratoConfig }
-  TExtratoConfig = class(TDFeReportConfig)
+  TExtratoConfig = class(TDFeReportConfig<TACBrSATExtratoClass>)
   private
     FTipoExtrato: TTipoExtrato;
     FImprimeQRCode: Boolean;
@@ -65,7 +65,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrDFeReport); override;
+    procedure AssignChild(const DFeReport: TACBrSATExtratoClass); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -331,26 +331,19 @@ begin
   AIni.WriteInteger(FSessao, CChaveImprimeChaveEmUmaLinha, Integer(FImprimeChaveEmUmaLinha));
 end;
 
-procedure TExtratoConfig.AssignChild(const DFeReport: TACBrDFeReport);
-var
-  AExtrato: TACBrSATExtratoClass;
+procedure TExtratoConfig.AssignChild(const DFeReport: TACBrSATExtratoClass);
 begin
-  if not (DFeReport is TACBrSATExtratoClass) then
-    raise EACBrLibException.Create(-10, 'DFeReport deve ser do tipo [TACBrSATExtratoClass]');
-
-  AExtrato := TACBrSATExtratoClass(DFeReport);
-
   if FileExists(Logo) then
-    AExtrato.PictureLogo.Bitmap.LoadFromFile(Logo);
+    DFeReport.PictureLogo.Bitmap.LoadFromFile(Logo);
 
-  AExtrato.ImprimeQRCode := ImprimeQRCode;
-  AExtrato.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
-  AExtrato.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
-  AExtrato.MsgAppQRCode := MsgAppQRCode;
-  AExtrato.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
-  AExtrato.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
-  AExtrato.ImprimeCodigoEan := ImprimeCodigoEan;
-  AExtrato.Filtro := Filtro;
+  DFeReport.ImprimeQRCode := ImprimeQRCode;
+  DFeReport.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
+  DFeReport.ImprimeCPFNaoInformado := ImprimeCPFNaoInformado;
+  DFeReport.MsgAppQRCode := MsgAppQRCode;
+  DFeReport.ImprimeEmUmaLinha := ImprimeEmUmaLinha;
+  DFeReport.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
+  DFeReport.ImprimeCodigoEan := ImprimeCodigoEan;
+  DFeReport.Filtro := Filtro;
 
   if DFeReport is TACBrSATExtratoESCPOS then
     TACBrSATExtratoESCPOS(DFeReport).ImprimeChaveEmUmaLinha := ImprimeChaveEmUmaLinha;

@@ -38,22 +38,53 @@ unit ACBrLibSATRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes,
+  ACBrSat, ACBrLibResposta;
 
 type
 
   { TPadraoSATResposta }
 
-  TPadraoSATResposta = class(TACBrLibResposta)
+  TPadraoSATResposta = class(TACBrLibResposta<TACBrSAT>)
   private
     FArquivo: String;
     FXML: String;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const SAT: TACBrSAT); virtual; reintroduce;
+
   published
     property Arquivo: String read FArquivo write FArquivo;
     property XML: String read FXML write FXML;
+
+  end;
+
+  { TACBrLibSATResposta }
+
+  TACBrLibSATResposta = class(TACBrLibResposta)
+  private
+    FCodigoDeErro: Integer;
+    FNumeroSessao : Integer ;
+    FCodigoDeRetorno : Integer ;
+    FMensagemRetorno : String;
+    FCodigoSEFAZ : Integer ;
+    FMensagemSEFAZ : String;
+    FRetorno : String ;
+
+  public
+    constructor Create( const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const SAT: TACBrSAT);
+
+  published
+    property NumeroSessao : Integer read FNumeroSessao write FNumeroSessao;
+    property CodigoDeRetorno : Integer read  FCodigoDeRetorno write FCodigoDeRetorno;
+    property CodigoDeErro : Integer read  FCodigoDeErro write FCodigoDeErro;
+    property MensagemRetorno : String read FMensagemRetorno write FMensagemRetorno;
+    property CodigoSEFAZ : Integer read  FCodigoSEFAZ write FCodigoSEFAZ;
+    property MensagemSEFAZ : String read FMensagemSEFAZ write FMensagemSEFAZ;
+    property Retorno : String read FRetorno write FRetorno;
 
   end;
 
@@ -64,6 +95,8 @@ type
     FnCFe: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const SAT: TACBrSAT); override;
 
   published
     property nCFe: String read FnCFe write FnCFe;
@@ -78,9 +111,10 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const SAT: TACBrSAT); override;
+
   published
     property nCFeCanc: String read FnCFeCanc write FnCFeCanc;
-
 
   end;
 
@@ -91,6 +125,8 @@ type
     FnCFe: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const SAT: TACBrSAT); override;
 
   published
     property nCFe: String read FnCFe write FnCFe;
@@ -107,6 +143,8 @@ type
     FRetornoStr: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const SAT: TACBrSAT); override;
 
   published
     property Resultado: String read FResultado write FResultado;
@@ -127,6 +165,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const SAT: TACBrSAT); override;
+
   published
     property Resultado: String read FResultado write FResultado;
     property NumeroSessao: Integer read FnumeroSessao write FnumeroSessao;
@@ -145,6 +185,8 @@ type
     FRetornoStr: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const SAT: TACBrSAT); override;
 
   published
     property Resultado: String read FResultado write FResultado;
@@ -179,6 +221,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const SAT: TACBrSAT);
+
   published
     property NSERIE           : String    read  FNSERIE           write FNSERIE;
     property LAN_MAC          : String    read  FLAN_MAC          write FLAN_MAC;
@@ -201,17 +245,40 @@ type
 
   end;
 
-
 implementation
 
 uses
-  ACBrLibSATConsts;
+  ACBrUtil, ACBrLibSATConsts;
 
 { TRetornoStatusSAT }
 
 constructor TRetornoStatusSAT.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoStatusSAT, ATipo);
+end;
+
+procedure TRetornoStatusSAT.Processar(const SAT: TACBrSAT);
+begin
+  with SAT.Status do
+  begin
+    Self.NSERIE := NSERIE;
+    Self.LAN_MAC := LAN_MAC;
+    Self.STATUS_LAN := StatusLanToStr(STATUS_LAN);
+    Self.NIVEL_BATERIA := NivelBateriaToStr(NIVEL_BATERIA);
+    Self.MT_TOTAL := MT_TOTAL;
+    Self.MT_USADA := MT_USADA;
+    Self.DH_ATUAL := DH_ATUAL;
+    Self.VER_SB := VER_SB;
+    Self.VER_LAYOUT := VER_LAYOUT;
+    Self.ULTIMO_CFe := ULTIMO_CFe;
+    Self.LISTA_INICIAL := LISTA_INICIAL;
+    Self.LISTA_FINAL := LISTA_FINAL;
+    Self.DH_CFe := DH_CFe;
+    Self.DH_ULTIMA := DH_ULTIMA;
+    Self.CERT_EMISSAO := CERT_EMISSAO;
+    Self.CERT_VENCIMENTO := CERT_VENCIMENTO;
+    Self.ESTADO_OPERACAO := EstadoOperacaoToStr(ESTADO_OPERACAO);
+  end;
 end;
 
 { TRetornoEnvio }
@@ -221,11 +288,33 @@ begin
   inherited Create(CSessaoENVIO, ATipo);
 end;
 
+procedure TRetornoEnvio.Processar(const SAT: TACBrSAT);
+begin
+  Self.NumeroSessao := SAT.Resposta.numeroSessao;
+  Self.CodigoDeRetorno  := SAT.Resposta.codigoDeRetorno;
+  Self.RetornoStr  := SAT.Resposta.RetornoStr;
+  Self.XML:= SAT.CFe.AsXMLString;
+
+  if (SAT.CFe.NomeArquivo <> '') and FileExists(SAT.CFe.NomeArquivo) then
+    Self.Arquivo:= SAT.CFe.NomeArquivo;
+end;
+
 { TRetornoTesteFimaFim }
 
 constructor TRetornoTesteFimaFim.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoTESTEFIMAFIM, ATipo);
+end;
+
+procedure TRetornoTesteFimaFim.Processar(const SAT: TACBrSAT);
+begin
+  with SAT do
+  begin
+    Self.NumeroSessao := Resposta.numeroSessao;
+    Self.CodigoDeRetorno := Resposta.codigoDeRetorno;
+    Self.RetornoStr := Resposta.RetornoStr;
+    Self.XML := CFe.AsXMLString;
+  end;
 end;
 
 { TRetornoCancelarCFe }
@@ -235,11 +324,33 @@ begin
   inherited Create(CSessaoCFeCancelado, ATipo);
 end;
 
+procedure TRetornoCancelarCFe.Processar(const SAT: TACBrSAT);
+begin
+  Self.NumeroSessao := SAT.Resposta.numeroSessao;
+  Self.CodigoDeRetorno  := SAT.Resposta.codigoDeRetorno;
+  Self.RetornoStr  := SAT.Resposta.RetornoStr;
+  Self.XML:= SAT.CFeCanc.AsXMLString;
+
+  if (SAT.CFeCanc.NomeArquivo <> '') and FileExists(SAT.CFeCanc.NomeArquivo) then
+    Self.Arquivo:= SAT.CFeCanc.NomeArquivo;
+end;
+
 { TRetornoCriarCFe }
 
 constructor TRetornoCriarCFe.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoCFe, ATipo);
+end;
+
+procedure TRetornoCriarCFe.Processar(const SAT: TACBrSAT);
+begin
+  Self.nCFe := IntToStr(SAT.CFe.ide.nCFe);
+  Self.XML  := SAT.CFe.AsXMLString;
+  Self.Arquivo := SAT.CalcCFeNomeArq(SAT.ConfigArquivos.PastaEnvio,
+                          IntToStrZero(SAT.CFe.ide.numeroCaixa,3)+'-'+
+                          IntToStrZero(SAT.CFe.ide.cNF,6),'-satcfe');
+
+  SAT.CFe.SaveToFile(Arquivo);
 end;
 
 { TRetornoConsultarSessaoCancelado }
@@ -250,11 +361,26 @@ begin
   inherited Create(CSessaoCFeCancelado, ATipo);
 end;
 
+procedure TRetornoConsultarSessaoCancelado.Processar(const SAT: TACBrSAT);
+begin
+  with SAT.CFeCanc do
+  begin
+    Self.nCFeCanc := IntToStrZero(ide.nCFe, 0);
+    Self.XML := AsXMLString;
+    Self.Arquivo := SAT.CFeCanc.NomeArquivo;
+  end;
+end;
+
 { TPadraoResposta }
 
 constructor TPadraoSATResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(ASessao, ATipo);
+end;
+
+procedure TPadraoSATResposta.Processar(const SAT: TACBrSAT);
+begin
+  // Metodo para ser implementada nas classes filhas
 end;
 
 { TRetornoConsultarSessao }
@@ -264,6 +390,36 @@ begin
   inherited Create(CSessaoCFe, ATipo);
 end;
 
+procedure TRetornoConsultarSessao.Processar(const SAT: TACBrSAT);
+begin
+  with SAT.CFe do
+  begin
+    Self.nCFe := IntToStrZero(ide.nCFe, 0);
+    Self.XML := AsXMLString;
+    Self.Arquivo := SAT.CFe.NomeArquivo;
+  end;
+end;
+
+{ TPadraoResposta }
+
+constructor TACBrLibSATResposta.Create(const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create(CSessaoRespostaSat, ATipo);
+end;
+
+procedure TACBrLibSATResposta.Processar(const SAT: TACBrSAT);
+begin
+  with SAT.Resposta do
+  begin
+    Self.NumeroSessao := numeroSessao;
+    Self.CodigoDeRetorno := codigoDeRetorno;
+    Self.CodigoDeErro := codigoDeErro;
+    Self.MensagemRetorno := mensagemRetorno;
+    Self.CodigoSEFAZ := codigoSEFAZ;
+    Self.MensagemSEFAZ := mensagemSEFAZ;
+    Self.Retorno := RetornoStr;
+  end;
+end;
 
 end.
 

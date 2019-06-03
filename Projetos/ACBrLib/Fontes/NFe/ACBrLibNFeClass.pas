@@ -622,7 +622,7 @@ begin
         begin
           if WebServices.StatusServico.Executar then
           begin
-            Resposta.ProcessarResposta(NFeDM.ACBrNFe1);
+            Resposta.Processar(NFeDM.ACBrNFe1);
             MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
             Result := SetRetorno(ErrOK, StrPas(sResposta));
           end
@@ -689,7 +689,7 @@ begin
         begin
           if WebServices.Consulta.Executar then
           begin
-            Resposta.ProcessarResposta(NFeDM.ACBrNFe1);
+            Resposta.Processar(NFeDM.ACBrNFe1);
             MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
             Result := SetRetorno(ErrOK, StrPas(sResposta));
           end
@@ -755,7 +755,7 @@ begin
 
             if Inutilizacao.Executar then
             begin
-              Resposta.ProcessarResposta(NFeDM.ACBrNFe1);
+              Resposta.Processar(NFeDM.ACBrNFe1);
               MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
               Result := SetRetorno(ErrOK, StrPas(sResposta));
             end
@@ -834,7 +834,7 @@ begin
 
           RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta);
           try
-            RespEnvio.ProcessarResposta(NFeDM.ACBrNFe1);
+            RespEnvio.Processar(NFeDM.ACBrNFe1);
             Resposta := RespEnvio.Gerar;
           finally
             RespEnvio.Free;
@@ -848,7 +848,7 @@ begin
 
           RespRetorno := TRetornoResposta.Create(pLib.Config.TipoResposta);
           try
-            RespRetorno.ProcessarResposta(NFeDM.ACBrNFe1);
+            RespRetorno.Processar(NFeDM.ACBrNFe1);
             Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
           finally
             RespRetorno.Free;
@@ -922,7 +922,7 @@ begin
 
           Resp := TReciboResposta.Create(pLib.Config.TipoResposta);
           try
-            Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+            Resp.Processar(NFeDM.ACBrNFe1);
             pLib.GravarLog('Resp.Gerar', logNormal);
             Resposta := Resp.Gerar;
           finally
@@ -1005,7 +1005,7 @@ begin
         begin
           Resp := TCancelamentoResposta.Create(resINI);
           try
-            Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+            Resp.Processar(NFeDM.ACBrNFe1);
             Resposta := Resp.XMotivo + sLineBreak;
             Resposta := Resposta + Resp.Gerar;
           finally
@@ -1064,7 +1064,7 @@ begin
           begin
             try
               Resp := TEventoResposta.Create(pLib.Config.TipoResposta);
-              Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+              Resp.Processar(NFeDM.ACBrNFe1);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;
@@ -1122,7 +1122,7 @@ begin
           begin
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+              Resp.Processar(NFeDM.ACBrNFe1);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;
@@ -1183,7 +1183,7 @@ begin
           begin
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+              Resp.Processar(NFeDM.ACBrNFe1);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;
@@ -1247,7 +1247,7 @@ begin
           begin
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.ProcessarResposta(NFeDM.ACBrNFe1);
+              Resp.Processar(NFeDM.ACBrNFe1);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;

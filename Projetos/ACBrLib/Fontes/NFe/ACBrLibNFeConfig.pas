@@ -165,7 +165,7 @@ type
 
   { TDANFeReportConfig }
 
-  TDANFeReportConfig = class(TDFeReportConfig)
+  TDANFeReportConfig = class(TDFeReportConfig<TACBrDFeDANFeReport>)
   private
     FTipoDANFE: TpcnTipoImpressao;
     FImprimeTotalLiquido: Boolean;
@@ -187,7 +187,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrDFeReport); override;
+    procedure AssignChild(const DFeReport: TACBrDFeDANFeReport); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -299,8 +299,6 @@ begin
 end;
 
 procedure TDANFeNFeConfig.LerIni(const AIni: TCustomIniFile);
-Var
-  PropValue: String;
 begin
   FormularioContinuo := AIni.ReadBool(CSessaoDANFENFE, CChaveFormularioContinuo, FormularioContinuo);
   ImprimeValor := TImprimirUnidQtdeValor(AIni.ReadInteger(CSessaoDANFENFE, CChaveImprimeValor, Integer(ImprimeValor)));
@@ -609,18 +607,13 @@ begin
 
 end;
 
-procedure TDANFeReportConfig.AssignChild(const DFeReport: TACBrDFeReport);
+procedure TDANFeReportConfig.AssignChild(const DFeReport: TACBrDFeDANFeReport);
 var
   pLibConfig: TLibNFeConfig;
-  ADanfe: TACBrDFeDANFeReport;
 begin
-  if not (DFeReport is TACBrDFeDANFeReport) then
-    raise EACBrLibException.Create(-10, 'DFeReport deve ser do tipo [TACBrDFeDANFeReport]');
-
   pLibConfig := TLibNFeConfig(pLib.Config);
-  ADanfe := TACBrDFeDANFeReport(DFeReport);
 
-  with ADanfe do
+  with DFeReport do
   begin
     TipoDANFE := FTipoDANFE;
     ImprimeTotalLiquido := FImprimeTotalLiquido;

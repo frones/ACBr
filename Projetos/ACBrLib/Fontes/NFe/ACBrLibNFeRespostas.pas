@@ -61,8 +61,9 @@ type
 
   { TLibNFeServiceResposta }
 
-  TLibNFeServiceResposta = class(TLibNFeResposta)
+  TLibNFeServiceResposta = class abstract(TACBrLibResposta<TACBrNFe>)
   private
+    FMsg: string;
     Fversao: string;
     FtpAmb: string;
     FverAplic: string;
@@ -70,12 +71,14 @@ type
     FxMotivo: string;
     FcUF: integer;
     FdhRecbto: TDateTime;
+
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); virtual; abstract;
+    procedure Processar(const ACBrNFe: TACBrNFe); virtual; abstract;
 
   published
+    property Msg: string read FMsg write FMsg;
     property Versao: string read Fversao write Fversao;
     property tpAmb: string read FtpAmb write FtpAmb;
     property VerAplic: string read FverAplic write FverAplic;
@@ -95,7 +98,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   published
     property TMed: integer read FTMed write FTMed;
@@ -113,7 +116,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   published
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
@@ -130,7 +133,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   published
    property TMed: integer read FtMed write FtMed;
@@ -155,7 +158,7 @@ type
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 
-    procedure ProcessarResposta(const Item: TProtDFeCollectionItem);
+    procedure Processar(const Item: TProtDFeCollectionItem);
 
   published
     property Id: String read FId write FId;
@@ -188,7 +191,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
     function Gerar: String; override;
 
     property Items[Index: Integer]: TRetornoItemResposta read GetItem; default;
@@ -206,7 +209,7 @@ type
 
   TReciboResposta = class(TRetornoResposta)
   public
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   end;
 
@@ -226,7 +229,7 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   published
     property chNFe: string read FchNFe write FchNFe;
@@ -269,7 +272,7 @@ type
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 
-    procedure ProcessarResposta(const Item: TInfCadCollectionItem);
+    procedure Processar(const Item: TInfCadCollectionItem);
 
   published
     property arquivo: String read Farquivo write Farquivo;
@@ -313,7 +316,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
     function Gerar: String; override;
 
     property Items[Index: Integer]: TConsultaCadastroItemResposta read GetItem; default;
@@ -351,7 +354,7 @@ type
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const AInfEvento: TRetInfEvento);
+    procedure Processar(const AInfEvento: TRetInfEvento);
 
   published
     property tpAmb: string read FtpAmb write FtpAmb;
@@ -387,7 +390,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
     function Gerar: String; override;
 
     property Items[Index: Integer]: TEventoItemResposta read GetItem;
@@ -447,10 +450,10 @@ type
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
-    procedure ProcessarResposta(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
-    procedure ProcessarResposta(const AprocEvento: TprocEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
-    procedure ProcessarResposta(const ARetInfEvento: TprocEvento_RetInfEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
+    procedure Processar(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
+    procedure Processar(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
+    procedure Processar(const AprocEvento: TprocEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
+    procedure Processar(const ARetInfEvento: TprocEvento_RetInfEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
 
   published
     property Versao: string read Fversao write Fversao;
@@ -515,7 +518,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
     function Gerar: String; override;
 
     property Items[Index: Integer]: TDistribuicaoDFeItemResposta read GetItem;
@@ -533,10 +536,11 @@ type
   private
     FChNFe: String;
     FNProt: String;
+
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ARetCancNFe: TRetCancNFe); reintroduce;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
 
   published
     property ChNFe: String read FChNFe write FChNFe;
@@ -551,7 +555,7 @@ type
   public
     constructor Create(const AId, AIndex: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const AItem: TitemPedidoCollectionItem);
+    procedure Processar(const AItem: TitemPedidoCollectionItem);
 
   published
     property numItem: Integer         read FnumItem        write FnumItem;
@@ -566,7 +570,7 @@ type
   public
     constructor Create(const AId, AIndex, ASIndex: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure ProcessarResposta(const ARetchNFePend: TRetchNFePendCollectionItem);
+    procedure Processar(const ARetchNFePend: TRetchNFePendCollectionItem);
 
   published
     property chNFePend : String       read FchNFePend      write FchNFePend;
@@ -604,7 +608,7 @@ type
      constructor Create(const AId, AIndex: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
      destructor Destroy; override;
 
-     procedure ProcessarResposta(const ARetInfEvento: TRetInfEvento);
+     procedure Processar(const ARetInfEvento: TRetInfEvento);
      function Gerar: String; override;
 
      property Items[Index: Integer]: TConsultaNFeChNFePendResposta read GetItem;
@@ -663,7 +667,7 @@ type
     constructor Create(const AId: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const AEvento: TDetEvento);
+    procedure Processar(const AEvento: TDetEvento);
     function Gerar: String; override;
 
     property Items[Index: Integer]: TConsultaNFeItemPedidoResposta read GetItem;
@@ -713,7 +717,7 @@ type
     constructor Create(const AId: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const AEvento: TRetEventoNFeCollectionItem); reintroduce;
+    procedure Processar(const AEvento: TRetEventoNFeCollectionItem); reintroduce;
     function Gerar: String; override;
 
     property detEvento: TConsultaNFeDetEventoResposta read FDetEvento write FDetEvento;
@@ -749,7 +753,7 @@ type
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
     destructor Destroy; override;
 
-    procedure ProcessarResposta(const ACBrNFe: TACBrNFe); override;
+    procedure Processar(const ACBrNFe: TACBrNFe); override;
     function Gerar: String; override;
 
     property InfCan: TConsultaNFeInfCanResposta read FInfCan write FInfCan;
@@ -770,7 +774,6 @@ type
     constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
 
   end;
-
 
 implementation
 
@@ -810,7 +813,7 @@ begin
                 + Trim(IntToStrZero(ASIndex +1, 3)), ATipo);
 end;
 
-procedure TConsultaNFeChNFePendResposta.ProcessarResposta(const ARetchNFePend: TRetchNFePendCollectionItem);
+procedure TConsultaNFeChNFePendResposta.Processar(const ARetchNFePend: TRetchNFePendCollectionItem);
 begin
   chNFePend:= ARetchNFePend.ChavePend;
 end;
@@ -851,10 +854,10 @@ end;
 
 function TConsultaNFeRetEventoResposta.GetItem(Index: Integer): TConsultaNFeChNFePendResposta;
 begin
-  Result := TConsultaNFeChNFePendResposta(FItems.Items[0]);
+  Result := TConsultaNFeChNFePendResposta(FItems.Items[Index]);
 end;
 
-procedure TConsultaNFeRetEventoResposta.ProcessarResposta(const ARetInfEvento: TRetInfEvento);
+procedure TConsultaNFeRetEventoResposta.Processar(const ARetInfEvento: TRetInfEvento);
 Var
   i: Integer;
   Item: TConsultaNFeChNFePendResposta;
@@ -879,7 +882,7 @@ begin
   for i := 0 to ARetInfEvento.chNFePend.Count - 1  do
    begin
      Item := TConsultaNFeChNFePendResposta.Create(FAId, FAIndex, i+1, FTipo);
-     Item.ProcessarResposta(ARetInfEvento.chNFePend.Items[i]);
+     Item.Processar(ARetInfEvento.chNFePend.Items[i]);
      FItems.Add(Item);
    end;
 end;
@@ -892,7 +895,7 @@ begin
   inherited Create('ItemPedido' + Trim(IntToStrZero(AId, 3)) + Trim(IntToStrZero(AIndex, 3)), ATipo);
 end;
 
-procedure TConsultaNFeItemPedidoResposta.ProcessarResposta(const AItem: TitemPedidoCollectionItem);
+procedure TConsultaNFeItemPedidoResposta.Processar(const AItem: TitemPedidoCollectionItem);
 begin
   numItem := AItem.numItem;
   qtdeItem := AItem.qtdeItem;
@@ -930,10 +933,10 @@ end;
 
 function TConsultaNFeDetEventoResposta.GetItem(Index: Integer): TConsultaNFeItemPedidoResposta;
 begin
-  Result := TConsultaNFeItemPedidoResposta(FItems.Items[0]);
+  Result := TConsultaNFeItemPedidoResposta(FItems.Items[Index]);
 end;
 
-procedure TConsultaNFeDetEventoResposta.ProcessarResposta(const AEvento: TDetEvento);
+procedure TConsultaNFeDetEventoResposta.Processar(const AEvento: TDetEvento);
 Var
   i: Integer;
   Item: TConsultaNFeItemPedidoResposta;
@@ -962,7 +965,7 @@ begin
    for i := 0 to AEvento.itemPedido.Count - 1  do
    begin
      Item := TConsultaNFeItemPedidoResposta.Create(FId, i+1, FTipo);
-     Item.ProcessarResposta(AEvento.itemPedido.Items[i]);
+     Item.Processar(AEvento.itemPedido.Items[i]);
      FItems.Add(Item);
    end;
 
@@ -991,7 +994,7 @@ end;
 
 function TConsultaNFeProcEventoResposta.GetEventos(Index: Integer): TConsultaNFeRetEventoResposta;
 begin
-  Result := TConsultaNFeRetEventoResposta(FRetEventos.Items[0]);
+  Result := TConsultaNFeRetEventoResposta(FRetEventos.Items[Index]);
 end;
 
 function TConsultaNFeProcEventoResposta.Gerar: String;
@@ -1007,7 +1010,7 @@ begin
   end;
 end;
 
-procedure TConsultaNFeProcEventoResposta.ProcessarResposta(const AEvento: TRetEventoNFeCollectionItem);
+procedure TConsultaNFeProcEventoResposta.Processar(const AEvento: TRetEventoNFeCollectionItem);
 Var
   i: Integer;
   RetEvento: TConsultaNFeRetEventoResposta;
@@ -1021,12 +1024,12 @@ begin
    nSeqEvento := AEvento.RetEventoNFe.InfEvento.nSeqEvento;
    verEvento := AEvento.RetEventoNFe.InfEvento.versaoEvento;
 
-   FDetEvento.ProcessarResposta(AEvento.RetEventoNFe.InfEvento.detEvento);
+   FDetEvento.Processar(AEvento.RetEventoNFe.InfEvento.detEvento);
 
    for i := 0 to AEvento.RetEventoNFe.retEvento.Count - 1  do
    begin
      RetEvento := TConsultaNFeRetEventoResposta.Create(FId, i+1, FTipo);
-     RetEvento.ProcessarResposta(AEvento.RetEventoNFe.retEvento.Items[i].RetInfEvento);
+     RetEvento.Processar(AEvento.RetEventoNFe.retEvento.Items[i].RetInfEvento);
      FRetEventos.Add(RetEvento);
    end;
 end;
@@ -1038,16 +1041,19 @@ begin
   inherited Create(CSessaoRespConsultaInfCan, ATipo);
 end;
 
-procedure TConsultaNFeInfCanResposta.ProcessarResposta(const ARetCancNFe: TRetCancNFe);
+procedure TConsultaNFeInfCanResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
-  tpAmb := TpAmbToStr(ARetCancNFe.tpAmb);
-  VerAplic := ARetCancNFe.verAplic;
-  CStat := ARetCancNFe.cStat;
-  XMotivo := ARetCancNFe.xMotivo;
-  CUF := ARetCancNFe.cUF;
-  ChNFe := ARetCancNFe.chNFE;
-  DhRecbto := ARetCancNFe.dhRecbto;
-  NProt := ARetCancNFe.nProt;
+  with ACBrNFe.WebServices.Consulta do
+  begin
+    Self.tpAmb := TpAmbToStr(retCancNFe.tpAmb);
+    Self.VerAplic := retCancNFe.verAplic;
+    Self.CStat := retCancNFe.cStat;
+    Self.XMotivo := retCancNFe.xMotivo;
+    Self.CUF := retCancNFe.cUF;
+    Self.ChNFe := retCancNFe.chNFE;
+    Self.DhRecbto := retCancNFe.dhRecbto;
+    Self.NProt := retCancNFe.nProt;
+  end;
 end;
 
 { TDistribuicaoDFeItemResposta }
@@ -1058,7 +1064,7 @@ begin
   inherited Create(ASessao, ATipo);
 end;
 
-procedure TDistribuicaoDFeItemResposta.ProcessarResposta(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String;
+procedure TDistribuicaoDFeItemResposta.Processar(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String;
   const  ASchema: TSchemaDFe);
 begin
   NSU := ANSU;
@@ -1078,7 +1084,7 @@ begin
   nProt := AresDFe.nProt;
 end;
 
-procedure TDistribuicaoDFeItemResposta.ProcessarResposta(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String;
+procedure TDistribuicaoDFeItemResposta.Processar(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String;
   const  ASchema: TSchemaDFe);
 begin
   NSU := ANSU;
@@ -1096,7 +1102,7 @@ begin
   nProt := AresEvento.nProt;
 end;
 
-procedure TDistribuicaoDFeItemResposta.ProcessarResposta(const AprocEvento: TprocEvento; const ANSU, AArquivo, AXml: String;
+procedure TDistribuicaoDFeItemResposta.Processar(const AprocEvento: TprocEvento; const ANSU, AArquivo, AXml: String;
   const  ASchema: TSchemaDFe);
 begin
   NSU := ANSU;
@@ -1129,7 +1135,7 @@ begin
   end;
 end;
 
-procedure TDistribuicaoDFeItemResposta.ProcessarResposta(const ARetInfEvento: TprocEvento_RetInfEvento; const ANSU, AArquivo,
+procedure TDistribuicaoDFeItemResposta.Processar(const ARetInfEvento: TprocEvento_RetInfEvento; const ANSU, AArquivo,
   AXml: String; const  ASchema: TSchemaDFe);
 begin
   NSU := ANSU;
@@ -1185,10 +1191,10 @@ end;
 
 function TDistribuicaoDFeResposta.GetItem(Index: Integer): TDistribuicaoDFeItemResposta;
 begin
-  Result := TDistribuicaoDFeItemResposta(FItems.Items[0]);
+  Result := TDistribuicaoDFeItemResposta(FItems.Items[Index]);
 end;
 
-procedure TDistribuicaoDFeResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TDistribuicaoDFeResposta.Processar(const ACBrNFe: TACBrNFe);
 var
   I, J: Integer;
   Item: TDistribuicaoDFeItemResposta;
@@ -1217,7 +1223,7 @@ begin
        if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), FTipo);
-         Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].resDFe,
+         Item.Processar(retDistDFeInt.docZip.Items[I].resDFe,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
@@ -1231,7 +1237,7 @@ begin
        if (Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), FTipo);
-         Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].resEvento,
+         Item.Processar(retDistDFeInt.docZip.Items[I].resEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
@@ -1245,7 +1251,7 @@ begin
        if (Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), FTipo);
-         Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].procEvento,
+         Item.Processar(retDistDFeInt.docZip.Items[I].procEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
@@ -1259,7 +1265,7 @@ begin
        if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
        begin
          Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), FTipo);
-         Item.ProcessarResposta(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
+         Item.Processar(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
          FItems.Add(Item);
@@ -1277,7 +1283,7 @@ begin
   inherited Create(ASessao, ATipo);
 end;
 
-procedure TEventoItemResposta.ProcessarResposta(const AInfEvento: TRetInfEvento);
+procedure TEventoItemResposta.Processar(const AInfEvento: TRetInfEvento);
 begin
   Id := AInfEvento.Id;
   tpAmb := TpAmbToStr(AInfEvento.tpAmb);
@@ -1316,7 +1322,7 @@ end;
 
 function TEventoResposta.GetItem(Index: Integer): TEventoItemResposta;
 begin
-  Result := TEventoItemResposta(FItems.Items[0]);
+  Result := TEventoItemResposta(FItems.Items[Index]);
 end;
 
 function TEventoResposta.Gerar: String;
@@ -1331,7 +1337,7 @@ begin
   end;
 end;
 
-procedure TEventoResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TEventoResposta.Processar(const ACBrNFe: TACBrNFe);
 Var
   I: Integer;
   Item: TEventoItemResposta;
@@ -1348,7 +1354,7 @@ begin
     for I := 0 to EventoRetorno.retEvento.Count - 1 do
     begin
       Item := TEventoItemResposta.Create('Evento' + Trim(IntToStrZero(I +1, 3)), FTipo);
-      Item.ProcessarResposta(EventoRetorno.retEvento.Items[i].RetInfEvento);
+      Item.Processar(EventoRetorno.retEvento.Items[i].RetInfEvento);
       FItems.Add(Item);
     end;
   end;
@@ -1362,7 +1368,7 @@ begin
   inherited Create(ASessao, ATipo);
 end;
 
-procedure TConsultaCadastroItemResposta.ProcessarResposta(const Item: TInfCadCollectionItem);
+procedure TConsultaCadastroItemResposta.Processar(const Item: TInfCadCollectionItem);
 begin
   IE := Item.IE;
   CNPJ := Item.CNPJ;
@@ -1418,7 +1424,7 @@ begin
   end;
 end;
 
-procedure TConsultaCadastroResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TConsultaCadastroResposta.Processar(const ACBrNFe: TACBrNFe);
 var
   i: Integer;
   Item: TConsultaCadastroItemResposta;
@@ -1439,7 +1445,7 @@ begin
     for i := 0 to ConsultaCadastro.RetConsCad.InfCad.Count - 1 do
     begin
       Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), FTipo);
-      Item.ProcessarResposta(ConsultaCadastro.RetConsCad.InfCad.Items[i]);
+      Item.Processar(ConsultaCadastro.RetConsCad.InfCad.Items[i]);
       FItens.Add(Item);
     end;
   end;
@@ -1452,7 +1458,7 @@ begin
   inherited Create(CSessaoRespCancelamento, ATipo);
 end;
 
-procedure TCancelamentoResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TCancelamentoResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0] do
   begin
@@ -1483,7 +1489,7 @@ begin
   inherited Create(ASessao, ATipo);
 end;
 
-procedure TRetornoItemResposta.ProcessarResposta(const Item: TProtDFeCollectionItem);
+procedure TRetornoItemResposta.Processar(const Item: TProtDFeCollectionItem);
 begin
   FId := Item.Id;
   FtpAmb := TpAmbToStr(Item.tpAmb);
@@ -1529,7 +1535,7 @@ begin
   end;
 end;
 
-procedure TRetornoResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TRetornoResposta.Processar(const ACBrNFe: TACBrNFe);
 Var
   i: Integer;
   Item: TRetornoItemResposta;
@@ -1554,7 +1560,7 @@ begin
       for i := 0 to ProtDFe.Count - 1 do
       begin
         Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
-        Item.ProcessarResposta(ProtDFe.Items[i]);
+        Item.Processar(ProtDFe.Items[i]);
         FItens.Add(Item);
       end;
     end;
@@ -1563,7 +1569,7 @@ end;
 
 { TReciboResposta }
 
-procedure TReciboResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TReciboResposta.Processar(const ACBrNFe: TACBrNFe);
 Var
   i: Integer;
   Item: TRetornoItemResposta;
@@ -1583,7 +1589,7 @@ begin
       for i := 0 to ProtDFe.Count - 1 do
       begin
         Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
-        Item.ProcessarResposta(ProtDFe.Items[i]);
+        Item.Processar(ProtDFe.Items[i]);
         FItens.Add(Item);
       end;
     end;
@@ -1597,7 +1603,7 @@ begin
   inherited Create(CSessaoRespEnvio, ATipo);
 end;
 
-procedure TEnvioResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TEnvioResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices do
   begin
@@ -1621,7 +1627,7 @@ begin
   inherited Create(CSessaoRespStatus, ATipo);
 end;
 
-procedure TStatusServicoResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TStatusServicoResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices do
   begin
@@ -1646,7 +1652,7 @@ begin
   inherited Create(CSessaoRespInutilizacao, ATipo);
 end;
 
-procedure TInutilizarNFeResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TInutilizarNFeResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
   with ACBrNFe.WebServices do
   begin
@@ -1707,7 +1713,7 @@ begin
   end;
 end;
 
-procedure TConsultaNFeResposta.ProcessarResposta(const ACBrNFe: TACBrNFe);
+procedure TConsultaNFeResposta.Processar(const ACBrNFe: TACBrNFe);
 Var
   I: Integer;
   ProcEvento: TConsultaNFeProcEventoResposta;
@@ -1727,16 +1733,19 @@ begin
     DigVal := Consulta.protNFe.digVal;
     cMsg := Consulta.protNFe.cMsg;
     xMsg := Consulta.ProtNFe.xMsg;
+  end;
 
-    if NaoEstaVazio(Trim(Consulta.retCancNFe.nProt)) then
-    begin
-      InfCan.ProcessarResposta(Consulta.retCancNFe);
-    end;
+  if NaoEstaVazio(Trim(ACBrNFe.WebServices.Consulta.retCancNFe.nProt)) then
+  begin
+    InfCan.Processar(ACBrNFe);
+  end;
 
+  with ACBrNFe.WebServices do
+  begin
     for I:= 0 to Consulta.procEventoNFe.Count-1 do
     begin
       ProcEvento := TConsultaNFeProcEventoResposta.Create(I + 1, FTipo);
-      ProcEvento.ProcessarResposta(Consulta.procEventoNFe.Items[I]);
+      ProcEvento.Processar(Consulta.procEventoNFe.Items[I]);
       FEventos.Add(ProcEvento);
     end;
   end;

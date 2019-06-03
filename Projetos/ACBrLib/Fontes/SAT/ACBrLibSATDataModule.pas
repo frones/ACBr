@@ -70,13 +70,15 @@ type
     procedure Travar;
     procedure Destravar;
 
+    function RespostaIntegrador: String;
+
   end;
 
 implementation
 
 uses
   strutils, FileUtil, ACBrDeviceConfig, ACBrLibConsts,
-  ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrLibSATClass;
+  ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrIntegradorConfig;
 
 {$R *.lfm}
 
@@ -435,6 +437,24 @@ procedure TLibSatDM.Destravar;
 begin
   GravarLog('Destravar', logParanoico);
   FLock.Release;
+end;
+
+function TLibSatDM.RespostaIntegrador: String;
+Var
+  Resp: TIntegradorResp;
+begin
+  Result := '';
+  if ACBrSAT1.Integrador = ACBrIntegrador1 then
+  begin
+    Resp := TIntegradorResp.Create(pLib.Config.TipoResposta);
+    try
+      Resp.Codigo := ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo;
+      Resp.Valor := ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor;
+      Result := sLineBreak + Resp.Gerar;
+    finally
+      Resp.Free;
+    end;
+  end;
 end;
 
 end.

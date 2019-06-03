@@ -129,6 +129,7 @@ const
   CChavePrinterName = 'Impressora';
   CChaveImprimeChaveEmUmaLinha = 'ImprimeChaveEmUmaLinha';
 
+  CSessaoRespostaSat = 'RespostaSat';
   CSessaoCFe = 'CFE';
   CSessaoENVIO = 'ENVIO';
   CSessaoCFeCancelado = 'CANCELAMENTO';

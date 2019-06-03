@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, laz2_DOM, laz2_XMLWrite, StrUtils,
   inifiles, fpjson, jsonparser, TypInfo, rttiutils,
-  ACBrUtil;
+  ACBrBase, ACBrUtil;
 
 const
   CSessaoHttpResposta = 'RespostaHttp';
@@ -50,25 +50,32 @@ type
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
 
   TACBrLibResposta = class abstract
-  protected
+  private
     FSessao: String;
     FTipo: TACBrLibRespostaTipo;
-
 
     function GerarXml: String;
     function GerarIni: String;
     function GerarJson: String;
 
+  protected
     procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
     procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
     procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
+
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 
     property Sessao: String read FSessao;
+    property Tipo: String read FTipo;
 
     function Gerar: String; virtual;
 
+  end;
+
+  TACBrLibResposta<T: TACBrComponent> = class abstract(TACBrLibResposta)
+  public
+    procedure Processar(const Control: T); virtual; abstract;
   end;
 
   { TACBrLibHttpResposta }
@@ -191,18 +198,13 @@ end;
 procedure TACBrLibResposta.GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean);
 var
   PropList: TPropInfoList;
-  i, j, x: Integer;
+  i, j: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
-  SetValues: TSplitResult;
   Sessao: String;
-  ValoresSet: String;
-  //SetOrdValue: Int64;
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
-  AOrdTypeInfo: PTypeInfo;
-  OrdTypeData: PTypeData;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
 
@@ -243,24 +245,7 @@ begin
           end;
         tkSet:
           begin
-            {Para gerar uma string, poderia ser alterado para
-            ValoresSet := GetSetProp(Target, PI, True);
-            AIni.WriteString(ASessao, PI^.Name, ValoresSet);
-            // Isso poderia ser lido depois usando o método SetSetProp.
-            }
-            //SetOrdValue := 0;
-            ValoresSet := '[';
-            SetValues := Split(',', GetSetProp(Target, PI, false));
-            OrdTypeData:= GetTypeData(PT);
-            AOrdTypeInfo := OrdTypeData^.CompType;
-            for j := 0 to Length(SetValues) - 1 do
-            begin
-              x := GetEnumValue(AOrdTypeInfo, SetValues[j]);
-              ValoresSet := ValoresSet +  IntToStr(x) + ',' ;
-            end;
-            ValoresSet[Length(ValoresSet)] := ']';
-
-            AIni.WriteString(ASessao, PI^.Name, ValoresSet);
+            AIni.WriteString(ASessao, PI^.Name, GetSetProp(Target, PI, True));
           end;
         tkBool,
         tkEnumeration,

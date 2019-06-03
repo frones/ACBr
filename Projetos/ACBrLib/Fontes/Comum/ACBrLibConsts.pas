@@ -65,7 +65,6 @@ const
   CChaveSenha = 'Senha';
   CChavePorta = 'Porta';
   CChaveDevice = 'Device';
-  CChaveIntegrador = 'Integrador';
 
   CSessaoSistema = 'Sistema';
   CChaveVersao = 'Versao';
@@ -118,6 +117,7 @@ const
   CChaveCasasDecimaisqCom = 'CasasDecimais.qCom';
   CChaveCasasDecimaisvUnCom = 'CasasDecimais.vUnCom';
 
+  CSessaoIntegrador = 'Integrador';
   CChaveArqLog = 'ArqLog';
   CChavePastaInput = 'PastaInput';
   CChavePastaOutput = 'PastaOutput';

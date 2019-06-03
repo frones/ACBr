@@ -274,8 +274,15 @@ begin
     begin
       SatDM.Travar;
       try
-        SatDM.ACBrSAT1.Inicializar;
-        Result := SetRetorno(ErrOK);
+        if SatDM.ACBrSAT1.Inicializado then
+        begin
+          Result := SetRetorno(-8, 'SAT já inicializado');
+        end
+        else
+        begin
+          SatDM.ACBrSAT1.Inicializar;
+          Result := SetRetorno(ErrOK);
+        end;
       finally
         SatDM.Destravar;
       end;
@@ -300,8 +307,15 @@ begin
     begin
       SatDM.Travar;
       try
-        SatDM.ACBrSAT1.DesInicializar;
-        Result := SetRetorno(ErrOK);
+        if not SatDM.ACBrSAT1.Inicializado then
+        begin
+          Result := SetRetorno(-8, 'SAT não inicializado');
+        end
+        else
+        begin
+          SatDM.ACBrSAT1.DesInicializar;
+          Result := SetRetorno(ErrOK);
+        end;
       finally
         SatDM.Destravar;
       end;
@@ -322,6 +336,7 @@ function SAT_AssociarAssinatura(CNPJvalue, assinaturaCNPJs: PChar;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   CNPJ, Assinatura, Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -329,8 +344,7 @@ begin
     Assinatura := ansistring(assinaturaCNPJs);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' +
-        Assinatura + ' )', logCompleto, True)
+      pLib.GravarLog('SAT_AssociarAssinatura(' + CNPJ + ',' + Assinatura + ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_AssociarAssinatura', logNormal);
 
@@ -338,12 +352,17 @@ begin
     begin
       SatDM.Travar;
 
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.AssociarAssinatura(CNPJ, Assinatura);
+        SatDM.ACBrSAT1.AssociarAssinatura(CNPJ, Assinatura);
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
+
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -360,6 +379,7 @@ function SAT_BloquearSAT(const sResposta: PChar; var esTamanho: longint): longin
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -369,13 +389,16 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.BloquearSAT;
+        SatDM.ACBrSAT1.BloquearSAT;
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -392,6 +415,7 @@ function SAT_DesbloquearSAT(const sResposta: PChar; var esTamanho: longint): lon
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -401,13 +425,16 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.DesbloquearSAT;
+        SatDM.ACBrSAT1.DesbloquearSAT;
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -425,6 +452,7 @@ function SAT_TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: PChar;
   var esTamanho: longint): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   CodigoAtivacao, NovoCodigoAtv, Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -441,14 +469,16 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao,
-          opcao, NovoCodigoAtv);
+        SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao, opcao, NovoCodigoAtv);
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -465,6 +495,7 @@ function SAT_ConsultarSAT(const sResposta: PChar; var esTamanho: longint): longi
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -475,12 +506,17 @@ begin
     begin
       SatDM.Travar;
 
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.ConsultarSAT;
+        SatDM.ACBrSAT1.ConsultarSAT;
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -498,6 +534,8 @@ function SAT_ConsultarStatusOperacional(const sResposta: PChar;
         {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
+  Resp: TRetornoStatusSAT;
 begin
   try
     VerificarLibInicializada;
@@ -508,12 +546,26 @@ begin
     begin
       SatDM.Travar;
 
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      Resp := TRetornoStatusSAT.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.ConsultarStatusOperacional;
+        SatDM.ACBrSAT1.ConsultarStatusOperacional;
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
+
+        if (SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 10000) then
+        begin
+          Resp.Processar(SatDM.ACBrSAT1);
+          Resposta := sLineBreak + Resp.Gerar;
+        end;
+
+        Resposta := SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
+        Resp.Free;
         SatDM.Destravar;
       end;
     end;
@@ -538,8 +590,7 @@ begin
     VerificarLibInicializada;
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_ConsultarNumeroSessao(' + IntToStr(cNumeroDeSessao) +
-        ' )', logCompleto, True)
+      pLib.GravarLog('SAT_ConsultarNumeroSessao(' + IntToStr(cNumeroDeSessao) + ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_ConsultarNumeroSessao', logNormal);
 
@@ -556,16 +607,10 @@ begin
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
         begin
-          Resp := TRetornoConsultarSessao.Create(resINI);
+          Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta);
           try
-            with SatDM.ACBrSAT1.CFe do
-            begin
-              Resp.nCFe := IntToStrZero(ide.nCFe, 0);
-              Resp.XML := AsXMLString;
-              Resp.Arquivo := SatDM.ACBrSAT1.CFe.NomeArquivo;
-
-              Resposta := sLineBreak + Resp.Gerar;
-            end;
+            Resp.Processar(SatDM.ACBrSAT1);
+            Resposta := sLineBreak + Resp.Gerar;
           finally
             Resp.Free;
           end;
@@ -575,19 +620,14 @@ begin
         begin
           RespCanc := TRetornoConsultarSessaoCancelado.Create(resINI);
           try
-            with SatDM.ACBrSAT1.CFeCanc do
-            begin
-              RespCanc.nCFeCanc := IntToStrZero(ide.nCFe, 0);
-              RespCanc.XML := AsXMLString;
-              RespCanc.Arquivo := SatDM.ACBrSAT1.CFe.NomeArquivo;
-
-              Resposta := sLineBreak + Resp.Gerar;
-            end;
+            RespCanc.Processar(SatDM.ACBrSAT1);
+            Resposta := sLineBreak + RespCanc.Gerar;
           finally
             RespCanc.Free;
           end;
         end;
 
+        Resposta := SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -607,6 +647,7 @@ function SAT_AtualizarSoftwareSAT(const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -616,13 +657,16 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.AtualizarSoftwareSAT;
+        SatDM.ACBrSAT1.AtualizarSoftwareSAT;
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -640,6 +684,7 @@ function SAT_ComunicarCertificadoICPBRASIL(certificado: PChar;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   cCertificado, Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
 begin
   try
     VerificarLibInicializada;
@@ -654,13 +699,16 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
       try
         Resposta := '';
-        Resposta := SatDM.ACBrSAT1.ComunicarCertificadoICPBRASIL(cCertificado);
+        SatDM.ACBrSAT1.ComunicarCertificadoICPBRASIL(cCertificado);
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -712,7 +760,7 @@ function SAT_TesteFimAFim(eArquivoXmlVenda: PChar; const sResposta: PChar;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   ArquivoXmlVenda: ansistring;
-  Resultado, Resposta: String;
+  Resposta: String;
   Resp: TRetornoTesteFimaFim;
 begin
   try
@@ -730,17 +778,8 @@ begin
       Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta);
       try
         Resposta := '';
-        Resultado := SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
-
-        with SatDM.ACBrSAT1 do
-        begin
-          Resp.Resultado := Resultado;
-          Resp.NumeroSessao  := Resposta.numeroSessao;
-          Resp.CodigoDeRetorno := Resposta.codigoDeRetorno;
-          Resp.RetornoStr := Resposta.RetornoStr;
-          Resp.XML := CFe.AsXMLString;
-        end;
-
+        Resp.Resultado := SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
+        Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
@@ -836,15 +875,7 @@ begin
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
         SatDM.ACBrSAT1.CFe.GerarXML(True);
 
-        ArqCFe := SatDM.ACBrSAT1.CalcCFeNomeArq(SatDM.ACBrSAT1.ConfigArquivos.PastaEnvio,
-                          IntToStrZero(SatDM.ACBrSAT1.CFe.ide.numeroCaixa,3)+'-'+
-                          IntToStrZero(SatDM.ACBrSAT1.CFe.ide.cNF,6),'-satcfe');
-
-        SatDM.ACBrSAT1.CFe.SaveToFile(ArqCFe);
-        Resp.nCFe := IntToStr(SatDM.ACBrSAT1.CFe.ide.nCFe);
-        Resp.XML  := SatDM.ACBrSAT1.CFe.AsXMLString;
-        Resp.Arquivo:= ArqCFe;
-
+        Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
@@ -889,16 +920,9 @@ begin
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
 
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
-
-        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
-        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
-        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
-        Resp.XML:= SatDM.ACBrSAT1.CFe.AsXMLString;
-
-       if (SatDM.ACBrSAT1.CFe.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFe.NomeArquivo) then
-          Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
-
+        Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
+        Resposta := SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -941,15 +965,10 @@ begin
         SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
-        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
-        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
-        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
-        Resp.XML:= SatDM.ACBrSAT1.CFe.AsXMLString;
-
-       if (SatDM.ACBrSAT1.CFe.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFe.NomeArquivo) then
-          Resp.Arquivo:= SatDM.ACBrSAT1.CFe.NomeArquivo;
+        Resp.Processar(SatDM.ACBrSAT1);
 
         Resposta := Resp.Gerar;
+        Resposta := SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -995,16 +1014,9 @@ begin
         end;
 
         Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
-
-        Resp.NumeroSessao := SatDM.ACBrSAT1.Resposta.numeroSessao;
-        Resp.CodigoDeRetorno  := SatDM.ACBrSAT1.Resposta.codigoDeRetorno;
-        Resp.RetornoStr  := SatDM.ACBrSAT1.Resposta.RetornoStr;
-        Resp.XML:= SatDM.ACBrSAT1.CFeCanc.AsXMLString;
-
-       if (SatDM.ACBrSAT1.CFeCanc.NomeArquivo <> '') and FileExists(SatDM.ACBrSAT1.CFeCanc.NomeArquivo) then
-          Resp.Arquivo:= SatDM.ACBrSAT1.CFeCanc.NomeArquivo;
-
+        Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
+        Resposta := SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally

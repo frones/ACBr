@@ -258,9 +258,11 @@ type
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
     cbVersaoWSBPe: TComboBox;
+    cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
     edtArquivoWebServicesBPe: TEdit;
     edtEmailAssuntoSAT: TEdit;
+    edtPathDownload: TEdit;
     GroupBox9: TGroupBox;
     Label227: TLabel;
     Label229: TLabel;
@@ -514,6 +516,7 @@ type
     Label233: TLabel;
     Label234: TLabel;
     Label235: TLabel;
+    Label236: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -574,6 +577,7 @@ type
     sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     sbPathArqTXT: TSpeedButton;
+    sbPathDownload: TSpeedButton;
     ScrollBox: TScrollBox;
     seGavetaTempoOFF: TSpinEdit;
     seGavetaTempoON: TSpinEdit;
@@ -1384,6 +1388,7 @@ type
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
     procedure sbPathArqTXTClick(Sender: TObject);
+    procedure sbPathDownloadClick(Sender: TObject);
     procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure sbPathInuClick(Sender: TObject);
@@ -4721,11 +4726,13 @@ begin
       cbxAtualizarXMLCancelado.Checked := AtualizarXMLCancelado;
       cbxNormatizarMunicipios.Checked  := NormatizarMunicipios;
       cbxUsarSeparadorPathPDF.Checked  := UsarSeparadorPathPDF;
+      cbxSepararPorNome.Checked        := SepararPorNome;
       edtPathNFe.Text                  := IfThen( NaoEstaVazio(PathNFe), PathNFe, AcertaPath('Arqs'));
       edtPathInu.Text                  := IfThen( NaoEstaVazio(PathInu), PathInu, AcertaPath('Arqs'));
       edtPathDPEC.Text                 := IfThen( NaoEstaVazio(PathDPEC), PathDPEC, AcertaPath('Arqs'));
       edtPathEvento.Text               := IfThen( NaoEstaVazio(PathEvento), PathEvento, AcertaPath('Arqs'));
       edtPathArqTXT.Text               := IfThen( NaoEstaVazio(PathArqTXT), PathArqTXT, AcertaPath('TXT'));
+      edtPathDownload.Text             := IfThen( NaoEstaVazio(PathDownload), PathDownload, AcertaPath('Arqs'));
 
     end;
 
@@ -5865,11 +5872,13 @@ begin
         AtualizarXMLCancelado          := cbxAtualizarXMLCancelado.Checked;
         NormatizarMunicipios           := cbxNormatizarMunicipios.Checked;
         UsarSeparadorPathPDF           := cbxUsarSeparadorPathPDF.Checked;
+        SepararPorNome                 := cbxSepararPorNome.Checked;
         PathNFe                        := edtPathNFe.Text;
         PathInu                        := edtPathInu.Text;
         PathDPEC                       := edtPathDPEC.Text;
         PathEvento                     := edtPathEvento.Text;
         PathArqTXT                     := edtPathArqTXT.Text;
+        PathDownload                   := edtPathDownload.Text;
       end;
     end;
 
@@ -7143,6 +7152,11 @@ end;
 procedure TFrmACBrMonitor.sbPathArqTXTClick(Sender: TObject);
 begin
   PathClick(edtPathArqTXT);
+end;
+
+procedure TFrmACBrMonitor.sbPathDownloadClick(Sender: TObject);
+begin
+  PathClick(edtPathDownload);
 end;
 
 procedure TFrmACBrMonitor.sbPathDPECClick(Sender: TObject);
@@ -8860,6 +8874,7 @@ begin
   sbPathInu.Enabled := CanEnabled;
   sbPathDPEC.Enabled := CanEnabled;
   sbPathEvento.Enabled := CanEnabled;
+  sbPathDownload.Enabled := CanEnabled;
 
   edtPathLogs.Enabled := ckSalvar.Checked;
   sbPathSalvar.Enabled := ckSalvar.Checked;
@@ -9280,6 +9295,8 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.PathNFe        := edtPathNFe.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
+    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadNFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadNFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9297,6 +9314,8 @@ begin
     TConfiguracoesCTe(Configuracoes).Arquivos.PathCTe        := edtPathNFe.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
+    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadCTe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadCTe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.SalvarApenasCTeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9310,6 +9329,8 @@ begin
     TConfiguracoesMDFe(Configuracoes).Arquivos.EmissaoPathMDFe := cbxEmissaoPathNFe.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathMDFe        := edtPathNFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathEvento      := edtPathEvento.Text;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadMDFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadMDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarApenasMDFeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9323,6 +9344,8 @@ begin
     TConfiguracoesBPe(Configuracoes).Arquivos.EmissaoPathBPe := cbxEmissaoPathNFe.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathBPe        := edtPathNFe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
+    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadBPe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadBPe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.SalvarApenasBPeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;

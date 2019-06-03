@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado Propriedade "DownloadDFe" e "Separar por Nome" para baixar XML de Documentos do DistribuicaoDFe
+
 29/05/2019
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, DoSATUnit
 Adicionado para o SAT os Campos para configuração de Assunto e Mensagem de e-mail em tela

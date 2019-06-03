@@ -322,11 +322,13 @@ type
     AtualizarXMLCancelado        : Boolean;
     NormatizarMunicipios         : Boolean;
     UsarSeparadorPathPDF         : Boolean;
+    SepararPorNome               : Boolean;
     PathNFe                      : String;
     PathInu                      : String;
     PathDPEC                     : String;
     PathEvento                   : String;
     PathArqTXT                   : String;
+    PathDownload                 : String;
   end;
 
   TDFeEmail = record
@@ -1088,11 +1090,13 @@ begin
       Ini.WriteBool(CSecArquivos,    CKeyArquivosAtualizarXMLCancelado,       AtualizarXMLCancelado       );
       Ini.WriteBool(CSecArquivos,    CKeyArquivosNormatizarMunicipios,        NormatizarMunicipios        );
       Ini.WriteBool(CSecArquivos,    CKeyArquivosUsarSeparadorPathPDF,        UsarSeparadorPathPDF        );
+      Ini.WriteBool(CSecArquivos,    CKeyArquivosSepararPorNome,              SepararPorNome              );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathNFe,                     PathNFe                     );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathInu,                     PathInu                     );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathDPEC,                    PathDPEC                    );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathEvento,                  PathEvento                  );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathArqTXT,                  PathArqTXT                  );
+      Ini.WriteString(CSecArquivos,  CKeyArquivosPathDownload,                PathDownload                );
     end;
 
     with SAT do
@@ -1729,11 +1733,13 @@ begin
       AtualizarXMLCancelado      := Ini.ReadBool( CSecArquivos,    CKeyArquivosAtualizarXMLCancelado,       AtualizarXMLCancelado       );
       NormatizarMunicipios       := Ini.ReadBool( CSecArquivos,    CKeyArquivosNormatizarMunicipios,        NormatizarMunicipios        );
       UsarSeparadorPathPDF       := Ini.ReadBool( CSecArquivos,    CKeyArquivosUsarSeparadorPathPDF,        UsarSeparadorPathPDF        );
+      SepararPorNome             := Ini.ReadBool( CSecArquivos,    CKeyArquivosSepararPorNome,              SepararPorNome              );
       PathNFe                    := Ini.ReadString(CSecArquivos,   CKeyArquivosPathNFe,                     PathNFe                     );
       PathInu                    := Ini.ReadString(CSecArquivos,   CKeyArquivosPathInu,                     PathInu                     );
       PathDPEC                   := Ini.ReadString(CSecArquivos,   CKeyArquivosPathDPEC,                    PathDPEC                    );
       PathEvento                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathEvento,                  PathEvento                  );
       PathArqTXT                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathArqTXT,                  PathArqTXT                  );
+      PathDownload               := Ini.ReadString(CSecArquivos,   CKeyArquivosPathDownload,                PathDownload                );
     end;
 
     with DFe.RespTecnico do
@@ -2361,11 +2367,13 @@ begin
     AtualizarXMLCancelado      :=  True;
     NormatizarMunicipios       :=  True;
     UsarSeparadorPathPDF       :=  True;
+    SepararPorNome             :=  False;
     PathNFe                    :=  AcertaPath('Arqs');
     PathInu                    :=  AcertaPath('Arqs');
     PathDPEC                   :=  AcertaPath('Arqs');
     PathEvento                 :=  AcertaPath('Arqs');
     PathArqTXT                 :=  AcertaPath('TXT');
+    PathDownload               :=  AcertaPath('Arqs');
   end;
 
   with DFe.RespTecnico do

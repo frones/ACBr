@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsSat
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 17
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7055,11 +7055,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 989
-            ActivePage = tsEmailDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 3
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -10897,6 +10897,60 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 NumGlyphs = 2
                 OnClick = sbPathArqTXTClick
                 ParentFont = False
+              end
+              object edtPathDownload: TEdit
+                Left = 6
+                Height = 25
+                Top = 275
+                Width = 252
+                Font.Height = -13
+                ParentFont = False
+                TabOrder = 17
+              end
+              object Label236: TLabel
+                Left = 6
+                Height = 17
+                Top = 259
+                Width = 256
+                Caption = 'Salvar XML de Downloads (DistribuicaoDFe)'
+                Font.Height = -13
+                ParentColor = False
+                ParentFont = False
+              end
+              object sbPathDownload: TSpeedButton
+                Left = 258
+                Height = 25
+                Top = 275
+                Width = 23
+                Enabled = False
+                Font.Height = -13
+                Glyph.Data = {
+                  76010000424D7601000000000000760000002800000020000000100000000100
+                  04000000000000010000130B0000130B00001000000000000000000000000000
+                  800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+                  FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+                  333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+                  0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+                  07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+                  07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+                  0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+                  33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+                  B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+                  3BB33773333773333773B333333B3333333B7333333733333337
+                }
+                NumGlyphs = 2
+                OnClick = sbPathDownloadClick
+                ParentFont = False
+              end
+              object cbxSepararPorNome: TCheckBox
+                Left = 288
+                Height = 21
+                Top = 91
+                Width = 307
+                Caption = 'Separar Downloads  por Nome (DistribuicaoDFe)'
+                Font.Height = -13
+                ParentFont = False
+                TabOrder = 18
               end
             end
             object tsRespTecnico: TTabSheet
@@ -15937,7 +15991,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

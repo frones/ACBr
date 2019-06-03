@@ -975,11 +975,13 @@ const
   CKeyArquivosAtualizarXMLCancelado =       'AtualizarXMLCancelado';
   CKeyArquivosNormatizarMunicipios =        'NormatizarMunicipios';
   CKeyArquivosUsarSeparadorPathPDF =        'UsarSeparadorPathPDF';
+  CKeyArquivosSepararPorNome =              'SepararPorNome';
   CKeyArquivosPathNFe =                     'PathNFe';
   CKeyArquivosPathInu =                     'PathInu';
   CKeyArquivosPathDPEC =                    'PathDPEC';
   CKeyArquivosPathEvento =                  'PathEvento';
   CKeyArquivosPathArqTXT =                  'PathArqTXT';
+  CKeyArquivosPathDownload =                'PathDonwload';
 
   CSeceSocial =                             'eSocial';
   CSecReinf =                               'Reinf';

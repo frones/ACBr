@@ -67,7 +67,7 @@ type
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 
     property Sessao: String read FSessao;
-    property Tipo: String read FTipo;
+    property Tipo: TACBrLibRespostaTipo read FTipo;
 
     function Gerar: String; virtual;
 

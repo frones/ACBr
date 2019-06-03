@@ -881,7 +881,7 @@ begin
 
   for i := 0 to ARetInfEvento.chNFePend.Count - 1  do
    begin
-     Item := TConsultaNFeChNFePendResposta.Create(FAId, FAIndex, i+1, FTipo);
+     Item := TConsultaNFeChNFePendResposta.Create(FAId, FAIndex, i+1, Tipo);
      Item.Processar(ARetInfEvento.chNFePend.Items[i]);
      FItems.Add(Item);
    end;
@@ -964,7 +964,7 @@ begin
 
    for i := 0 to AEvento.itemPedido.Count - 1  do
    begin
-     Item := TConsultaNFeItemPedidoResposta.Create(FId, i+1, FTipo);
+     Item := TConsultaNFeItemPedidoResposta.Create(FId, i+1, Tipo);
      Item.Processar(AEvento.itemPedido.Items[i]);
      FItems.Add(Item);
    end;
@@ -1028,7 +1028,7 @@ begin
 
    for i := 0 to AEvento.RetEventoNFe.retEvento.Count - 1  do
    begin
-     RetEvento := TConsultaNFeRetEventoResposta.Create(FId, i+1, FTipo);
+     RetEvento := TConsultaNFeRetEventoResposta.Create(FId, i+1, Tipo);
      RetEvento.Processar(AEvento.RetEventoNFe.retEvento.Items[i].RetInfEvento);
      FRetEventos.Add(RetEvento);
    end;
@@ -1222,7 +1222,7 @@ begin
      begin
        if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
        begin
-         Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), FTipo);
+         Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo);
          Item.Processar(retDistDFeInt.docZip.Items[I].resDFe,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
@@ -1236,7 +1236,7 @@ begin
      begin
        if (Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
        begin
-         Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), FTipo);
+         Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), Tipo);
          Item.Processar(retDistDFeInt.docZip.Items[I].resEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
@@ -1250,7 +1250,7 @@ begin
      begin
        if (Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
        begin
-         Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), FTipo);
+         Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), Tipo);
          Item.Processar(retDistDFeInt.docZip.Items[I].procEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
@@ -1264,7 +1264,7 @@ begin
      begin
        if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
        begin
-         Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), FTipo);
+         Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo);
          Item.Processar(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
                                 retDistDFeInt.docZip.Items[I].NSU, listaArqs[I],
                                 retDistDFeInt.docZip.Items[I].XML, retDistDFeInt.docZip.Items[I].schema);
@@ -1353,7 +1353,7 @@ begin
 
     for I := 0 to EventoRetorno.retEvento.Count - 1 do
     begin
-      Item := TEventoItemResposta.Create('Evento' + Trim(IntToStrZero(I +1, 3)), FTipo);
+      Item := TEventoItemResposta.Create('Evento' + Trim(IntToStrZero(I +1, 3)), Tipo);
       Item.Processar(EventoRetorno.retEvento.Items[i].RetInfEvento);
       FItems.Add(Item);
     end;
@@ -1444,7 +1444,7 @@ begin
 
     for i := 0 to ConsultaCadastro.RetConsCad.InfCad.Count - 1 do
     begin
-      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), FTipo);
+      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo);
       Item.Processar(ConsultaCadastro.RetConsCad.InfCad.Items[i]);
       FItens.Add(Item);
     end;
@@ -1559,7 +1559,7 @@ begin
     begin
       for i := 0 to ProtDFe.Count - 1 do
       begin
-        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
+        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo);
         Item.Processar(ProtDFe.Items[i]);
         FItens.Add(Item);
       end;
@@ -1588,7 +1588,7 @@ begin
     begin
       for i := 0 to ProtDFe.Count - 1 do
       begin
-        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), FTipo);
+        Item := TRetornoItemResposta.Create('NFe' + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo);
         Item.Processar(ProtDFe.Items[i]);
         FItens.Add(Item);
       end;
@@ -1744,7 +1744,7 @@ begin
   begin
     for I:= 0 to Consulta.procEventoNFe.Count-1 do
     begin
-      ProcEvento := TConsultaNFeProcEventoResposta.Create(I + 1, FTipo);
+      ProcEvento := TConsultaNFeProcEventoResposta.Create(I + 1, Tipo);
       ProcEvento.Processar(Consulta.procEventoNFe.Items[I]);
       FEventos.Add(ProcEvento);
     end;

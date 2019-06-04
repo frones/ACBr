@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/06/2019
+[-] DoNFeUnit
+Ajuste no nome das chamadas de métodos de Respostas conforme alterações da classe lib.
+
+03/06/2019
+[-] DoSATUnit
+Correção na leitura em tela das configurações de Regime Tributário.
+
 31/05/2019
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado Propriedade "DownloadDFe" e "Separar por Nome" para baixar XML de Documentos do DistribuicaoDFe

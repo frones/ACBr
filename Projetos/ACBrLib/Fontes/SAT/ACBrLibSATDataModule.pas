@@ -78,7 +78,7 @@ implementation
 
 uses
   strutils, FileUtil, ACBrDeviceConfig, ACBrLibConsts,
-  ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrIntegradorConfig;
+  ACBrUtil, ACBrLibSATConfig, ACBrLibComum, ACBrLibIntegradorResposta;
 
 {$R *.lfm}
 
@@ -448,8 +448,7 @@ begin
   begin
     Resp := TIntegradorResp.Create(pLib.Config.TipoResposta);
     try
-      Resp.Codigo := ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo;
-      Resp.Valor := ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor;
+      Resp.Processar(ACBrIntegrador1);
       Result := sLineBreak + Resp.Gerar;
     finally
       Resp.Free;

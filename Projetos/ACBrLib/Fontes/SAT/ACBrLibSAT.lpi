@@ -220,7 +220,7 @@
         <PackageName Value="ACBr_SAT"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="15">
       <Unit0>
         <Filename Value="ACBrLibSAT.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -282,6 +282,10 @@
         <Filename Value="..\Comum\DFeReportConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="..\Comum\ACBrLibIntegradorResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

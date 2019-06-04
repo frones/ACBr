@@ -33,75 +33,47 @@
 
 {$I ACBr.inc}
 
-unit ACBrIntegradorConfig;
+unit ACBrLibIntegradorResposta;
 
 interface
 
 uses
-  Classes, SysUtils, IniFiles, synachar;
+  Classes, SysUtils,
+  ACBrIntegrador, ACBrLibResposta;
 
 type
-
-  { TIntegradorConfig }
-
-  TIntegradorConfig = class
+  { TIntegradorResp }
+  TIntegradorResp = class(TACBrLibResposta<TACBrIntegrador>)
   private
-    FArqLOG: String;
-    FPastaInput: String;
-    FPastaOutput: String;
-    FTimeout: Integer;
+    FCodigo: string;
+    FValor: string;
 
   public
-    constructor Create;
+    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
-    procedure DefinirValoresPadroes;
-    procedure LerIni(const AIni: TCustomIniFile);
-    procedure GravarIni(const AIni: TCustomIniFile);
+    procedure Processar(const Integrador: TACBrIntegrador); override;
 
-    property ArqLOG: String read FArqLOG write FArqLOG ;
-    property PastaInput: String read FPastaInput write FPastaInput;
-    property PastaOutput: String  read FPastaOutput write FPastaOutput;
-    property Timeout: Integer read FTimeout write FTimeout;
+  published
+      property Codigo: String read FCodigo write FCodigo;
+      property Valor: String read FValor write FValor;
 
   end;
 
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibComum,
-  ACBrUtil;
+  ACBrLibConsts;
 
-{ TIntegradorConfig }
-
-constructor TIntegradorConfig.Create;
+{ TIntegradorResp }
+constructor TIntegradorResp.Create;
 begin
-  inherited Create;
-
-  DefinirValoresPadroes;
+  inherited Create(CSessaoIntegrador, ATipo);
 end;
 
-procedure TIntegradorConfig.DefinirValoresPadroes;
+procedure TIntegradorResp.Processar(const Integrador: TACBrIntegrador);
 begin
-  FArqLOG := '';
-  FPastaInput := 'C:\Integrador\Input\';
-  FPastaOutput := 'C:\Integrador\Output\';
-  FTimeout := 30;
-end;
-
-procedure TIntegradorConfig.LerIni(const AIni: TCustomIniFile);
-begin
-  FArqLOG := AIni.ReadString(CSessaoIntegrador, CChaveArqLog, FArqLOG);
-  FPastaInput := AIni.ReadString(CSessaoIntegrador, CChavePastaInput, FPastaInput);
-  FPastaOutput := AIni.ReadString(CSessaoIntegrador, CChavePastaOutput, FPastaOutput);
-  FTimeout := AIni.ReadInteger(CSessaoIntegrador, CChaveTimeout, FTimeout);
-end;
-
-procedure TIntegradorConfig.GravarIni(const AIni: TCustomIniFile);
-begin
-  AIni.WriteString(CSessaoIntegrador, CChaveArqLog, FArqLOG);
-  AIni.WriteString(CSessaoIntegrador, CChavePastaInput, FPastaInput);
-  AIni.WriteString(CSessaoIntegrador, CChavePastaOutput, FPastaOutput);
-  AIni.WriteInteger(CSessaoIntegrador, CChaveTimeout, FTimeout);
+  Self.Codigo := Integrador.ComandoIntegrador.IntegradorResposta.Codigo;
+  Self.Valor := Integrador.ComandoIntegrador.IntegradorResposta.Valor;
 end;
 
 end.

@@ -334,9 +334,9 @@ begin
     CFe.Emit.CNPJ := MonitorConfig.SAT.SATImpressao.SATEmit.CNPJ;
     CFe.Emit.IE := MonitorConfig.SAT.SATImpressao.SATEmit.IE;
     CFe.Emit.IM := MonitorConfig.SAT.SATImpressao.SATEmit.IM;
-    CFe.Emit.cRegTrib := StrToRegTrib(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTributario));
-    CFe.Emit.cRegTribISSQN := StrToRegTribISSQN(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.RegTribISSQN));
-    CFe.Emit.indRatISSQN := StrToindRatISSQN(ok, inttostr(MonitorConfig.SAT.SATImpressao.SATEmit.IndRatISSQN));
+    CFe.Emit.cRegTrib := TpcnRegTrib(MonitorConfig.SAT.SATImpressao.SATEmit.RegTributario);
+    CFe.Emit.cRegTribISSQN := TpcnRegTribISSQN(MonitorConfig.SAT.SATImpressao.SATEmit.RegTribISSQN);
+    CFe.Emit.indRatISSQN :=  TpcnindRatISSQN(MonitorConfig.SAT.SATImpressao.SATEmit.IndRatISSQN);
 
     CFe.LoadFromIni(AStr);
 

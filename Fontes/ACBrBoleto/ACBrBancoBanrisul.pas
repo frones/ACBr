@@ -405,7 +405,7 @@ begin
                PadLeft(trim(Instrucao2), 2)                                        + // 2ª Instrução
                PadLeft(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
 
-               ifthen(ValorMoraJuros > 0,
+               ifthen(ValorMoraJuros >= 0,
                        IntToStrZero(Round(ValorMoraJuros*100), 12), Space(12))  + // Valor ao dia ou Taxa Mensal de juros
                IfThen(DataDesconto = 0, space(6),                                 //se nao tem valor deve ser branco os campos numéricos
                       FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto

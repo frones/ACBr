@@ -1098,7 +1098,10 @@ begin
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],158,6),0);
 
    rCedente        := trim(copy(ARetorno[0], 73, 30));
-   rCNPJCPF        := OnlyNumber( copy(ARetorno[0], 19, 14) );
+   if copy(ARetorno[0], 18, 1) = '1' then
+      rCNPJCPF        := OnlyNumber((copy(ARetorno[0], 22, 11)))
+   else
+      rCNPJCPF        := OnlyNumber((copy(ARetorno[0], 19, 14)));
    rConvenioCedente:= Trim(RemoveZerosEsquerda(Copy(ARetorno[0], 33, 9)));
 
    ValidarDadosRetorno('', '', rCNPJCPF);

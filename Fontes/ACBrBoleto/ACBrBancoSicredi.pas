@@ -818,7 +818,16 @@ begin
         end;
         toRetornoDebitoTarifas:
         begin
-          case StrtoInt(CodMotivo) of
+          case StrtoIntDef(CodMotivo, -1) of
+            -1:
+            begin
+              if(CodMotivo = 'S4') Then
+                Result := 'S4 - Tarifa de Inclusão Negativação'
+              else if(CodMotivo = 'S5') Then
+                Result := 'S5 - Tarifa de Exclusão Negativação'
+              else
+                Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
+            end;
             01: Result := '01 - Tarifa de extrato de posição';
             02: Result := '02 - Tarifa de manutenção de título vencido';
             03: Result := '03 - Tarifa de sustação';
@@ -889,7 +898,7 @@ begin
                             'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6',
                             'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',
                             'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1',
-                            'L2', 'L3', 'L4', 'C4', 'C7', 'C8', 'C9']) of
+                            'L2', 'L3', 'L4', 'C1', 'C2', 'C3', 'C4', 'C7', 'C8', 'C9']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -937,10 +946,13 @@ begin
             44: Result:= 'L2-Sacado consta na lista de falência';
             45: Result:= 'L3-Apresentante não aceita publicação de edital';
             46: Result:= 'L4-Dados do sacado em branco ou inválido';
-            47: Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
-            48: Result:= 'C7-Título já baixado';
-            49: Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
-            50: Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
+            47: Result:= 'C1-Data limite para concessão de desconto inválida';
+            48: Result:= 'C2-Aceite do título inválido';
+            49: Result:= 'C3-Campo alterado na instrução “31 – alteração de outros dados” inválido';
+            50: Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
+            51: Result:= 'C7-Título já baixado';
+            52: Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            53: Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
           else
             case StrToInt(CodMotivo) of
               02: Result:= '02-Código do registro detalhe inválido';
@@ -1731,7 +1743,7 @@ begin
       pFisica:   TipoAvalista := '1';
       pJuridica: TipoAvalista := '2';
     else
-      TipoAvalista := '9';
+      TipoAvalista := '0';
     end;
 
      {Pegando Tipo de Boleto}
@@ -1930,9 +1942,9 @@ begin
       SegU := ARetorno[ContLinha + 1] ;
 
       if (SegT[14] <> 'T') then
-        Continue
-      else if (Copy(SegT,16,2) = '28') then // se a ocorrência do campo 016~017 for = 28
-         Continue;
+        Continue;
+//      else if (Copy(SegT,16,2) = '28') then // se a ocorrência do campo 016~017 for = 28
+//         Continue;
 
       Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 

@@ -50,6 +50,44 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+04/06/2019
+
+-- ACBrBancoCresol--
+[*] Atualização dos tipos de Códigos para campo espécie na Remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/51469-espécie-documento-boletos-cresol/
+
+-- ACBrBancoItau--
+[*] Atualização de Códigos de Retornos de Rejeição.
+https://www.projetoacbr.com.br/forum/topic/50792-sicredi-gerarregistrotransacao240-tiposacado/
+
+-- ACBrBancoSicred--
+[*] Ajuste no remessa CNAB240, validação tipo do Sacado
+https://www.projetoacbr.com.br/forum/topic/50792-sicredi-gerarregistrotransacao240-tiposacado/
+
+-- ACBrBancoSantander--
+[*] Ajuste no retorno CNAB240, validação de códigos de ocorrencias
+https://www.projetoacbr.com.br/forum/topic/50711-retorno-santander-240-ocorrência-25/
+
+-- ACBrBancoBrasil--
+[*] Ajuste retorno CNAB240, validação CPF
+https://www.projetoacbr.com.br/forum/topic/50558-cedente-com-cpf-bb/
+
+-- ACBrBancoSicred--
+[*] Ajuste no retorno CNAB400 Leitura de tarifas
+https://www.projetoacbr.com.br/forum/topic/50256-c2-is-not-a-valid-integer-value-sicredi-cnab-400/
+
+[*] Ajuste no retorno CNAB240 Leitura de tarifas
+https://www.projetoacbr.com.br/forum/topic/47238-acbrboletos-sicredi-cnab-240-retorno-não-carrega-as-tarifas/
+
+-- ACBrBancoBanrisul--
+[*] Ajuste na geração remessa CNAB400, validando informação de Juros
+https://www.projetoacbr.com.br/forum/topic/51028-cnab-400-banrisul-posi%C3%A7%C3%A3o-161-162-173/
+
+30/05/2019
+-- ACBrBancoSicred --
+[*] Ajustes na geração cód ocorrencia
+https://www.projetoacbr.com.br/forum/topic/50256-c2-is-not-a-valid-integer-value-sicredi-cnab-400/
+
 09/05/2019
 -- ACBrBancoBanrisul --
 [*] Ajustes na leitura do retorno CNAB240

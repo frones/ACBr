@@ -263,20 +263,35 @@ begin
         DigitoNossoNumero := '0';
 
       {Pegando Especie}
-      if trim(EspecieDoc) = 'DM' then
-         aEspecie:= '01'
-      else if trim(EspecieDoc) = 'NP' then
-         aEspecie:= '02'
-      else if trim(EspecieDoc) = 'NS' then
-         aEspecie:= '03'
-      else if trim(EspecieDoc) = 'CS' then
-         aEspecie:= '04'
-      else if trim(EspecieDoc) = 'ND' then
-         aEspecie:= '11'
+
+      if trim(EspecieDoc) = 'CH' then
+         aEspecie:= '01'   // cheque
+      else if trim(EspecieDoc) = 'DM' then
+         aEspecie:= '02'   // Duplicata mercantil
       else if trim(EspecieDoc) = 'DS' then
-         aEspecie:= '12'
+         aEspecie:= '04'  // Duplicata de serviço
+      else if trim(EspecieDoc) = 'DR' then
+         aEspecie:= '06'  // Duplicata rural
+      else if trim(EspecieDoc) = 'LC' then
+         aEspecie:= '07'  // Letra de cambio
+      else if trim(EspecieDoc) = 'NP' then
+         aEspecie:= '12'   // Nota promissoria
+      else if trim(EspecieDoc) = 'RC' then
+         aEspecie:= '17'    // Recibo
+      else if trim(EspecieDoc) = 'ND' then
+         aEspecie:= '19'   // Nota de débito
+      else if trim(EspecieDoc) = 'WR' then
+         aEspecie:= '26'  // Warrant
+      else if trim(EspecieDoc) = 'DE' then
+         aEspecie:= '27'  // Divida ativa de estado
+      else if trim(EspecieDoc) = 'DAM' then
+         aEspecie:= '28'  // Divida ativa municipio
+      else if trim(EspecieDoc) = 'DU' then
+         aEspecie:= '29'  // Divida ativa da uniao
+      else if trim(EspecieDoc) = 'EC' then
+         aEspecie:= '30'  // Encargos condominiais
       else if trim(EspecieDoc) = 'OU' then
-         aEspecie:= '99'
+         aEspecie:= '99'   // Outros
       else
          aEspecie := EspecieDoc;
 

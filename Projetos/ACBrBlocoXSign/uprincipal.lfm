@@ -1,15 +1,16 @@
 object frmPrincipal: TfrmPrincipal
-  Left = 206
+  Left = 414
   Height = 426
-  Top = 137
+  Top = 301
   Width = 897
   ActiveControl = PageControl1
   Caption = 'ACBrBlocoX'
   ClientHeight = 426
   ClientWidth = 897
+  OnClose = FormClose
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '2.0.2.0'
   object ACBrGIF1: TACBrGIF
     Cursor = crHandPoint
     Left = 8
@@ -23,18 +24,18 @@ object frmPrincipal: TfrmPrincipal
     Height = 408
     Top = 8
     Width = 712
-    ActivePage = TabSheet1
+    ActivePage = tsWSRecepcao
     Anchors = [akTop, akLeft, akRight, akBottom]
     TabIndex = 0
     TabOrder = 0
-    object TabSheet1: TTabSheet
-      Caption = 'Transmissão'
+    object tsWSRecepcao: TTabSheet
+      Caption = 'WebService Recepcao'
       ClientHeight = 380
       ClientWidth = 704
       object memArqAssinado: TMemo
         Left = 16
-        Height = 193
-        Top = 143
+        Height = 256
+        Top = 80
         Width = 680
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.Color = clBlue
@@ -46,40 +47,10 @@ object frmPrincipal: TfrmPrincipal
         ScrollBars = ssAutoBoth
         TabOrder = 0
       end
-      object btnBuscarCertificado: TSpeedButton
-        Left = 432
-        Height = 25
-        Top = 25
-        Width = 31
-        Anchors = [akTop, akRight]
-        Caption = '...'
-        OnClick = btnBuscarCertificadoClick
-      end
-      object edtCertificado: TEdit
-        Left = 16
-        Height = 23
-        Top = 25
-        Width = 415
-        Anchors = [akTop, akLeft, akRight]
-        Font.Color = clBlue
-        ParentFont = False
-        ReadOnly = True
-        TabOrder = 1
-      end
-      object Label1: TLabel
-        Left = 16
-        Height = 15
-        Top = 8
-        Width = 58
-        Caption = 'Certificado'
-        Font.Color = clMaroon
-        ParentColor = False
-        ParentFont = False
-      end
       object Label2: TLabel
         Left = 16
         Height = 15
-        Top = 64
+        Top = 11
         Width = 118
         Caption = 'Arquivo a ser assinado'
         Font.Color = clMaroon
@@ -172,46 +143,22 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnCriarAssinaturaClick
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 7
-      end
-      object rbtTipoCapicom: TRadioButton
-        Left = 624
-        Height = 19
-        Top = 8
-        Width = 68
-        Anchors = [akTop, akRight]
-        Caption = 'Capicom'
-        Checked = True
-        Font.Color = clMaroon
-        ParentFont = False
         TabOrder = 3
-        TabStop = True
-      end
-      object rbtTipoOpenSSL: TRadioButton
-        Left = 624
-        Height = 19
-        Top = 32
-        Width = 67
-        Anchors = [akTop, akRight]
-        Caption = 'OpenSSL'
-        Font.Color = clMaroon
-        ParentFont = False
-        TabOrder = 4
       end
       object edtArqBlocoX: TEdit
         Left = 16
         Height = 23
-        Top = 80
+        Top = 27
         Width = 415
         Anchors = [akTop, akLeft, akRight]
         Font.Color = clBlue
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 1
       end
       object btnBuscarArquivo: TSpeedButton
         Left = 432
         Height = 25
-        Top = 78
+        Top = 25
         Width = 31
         Anchors = [akTop, akRight]
         Caption = '...'
@@ -263,7 +210,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSalvarArquivoClick
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 8
+        TabOrder = 4
       end
       object btnTransmitir: TBitBtn
         Left = 420
@@ -311,7 +258,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnTransmitirClick
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 9
+        TabOrder = 5
       end
       object btnValidar: TBitBtn
         Left = 16
@@ -356,28 +303,6 @@ object frmPrincipal: TfrmPrincipal
           A000A4A0A000A4A0A000A4A0A000A4A0A000A4A0A0006E6E6E00
         }
         OnClick = btnValidarClick
-        TabOrder = 6
-      end
-      object Label5: TLabel
-        Left = 480
-        Height = 15
-        Top = 8
-        Width = 32
-        Caption = 'Senha'
-        Font.Color = clMaroon
-        ParentColor = False
-        ParentFont = False
-      end
-      object edtSenhaCertificado: TEdit
-        Left = 480
-        Height = 23
-        Top = 25
-        Width = 130
-        Anchors = [akTop, akLeft, akRight]
-        EchoMode = emPassword
-        Font.Color = clBlue
-        ParentFont = False
-        PasswordChar = '*'
         TabOrder = 2
       end
       object btnConsultar: TBitBtn
@@ -426,19 +351,19 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnConsultarClick
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 10
+        TabOrder = 6
       end
       object Bevel2: TBevel
         Left = 16
         Height = 15
-        Top = 128
+        Top = 64
         Width = 680
         Shape = bsTopLine
       end
       object rgTipo: TRadioGroup
         Left = 480
         Height = 51
-        Top = 61
+        Top = 8
         Width = 208
         AutoFill = True
         Caption = 'Tipo:'
@@ -457,18 +382,176 @@ object frmPrincipal: TfrmPrincipal
           'ReduçãoZ '
           'Estoque'
         )
-        TabOrder = 11
+        TabOrder = 7
         Visible = False
       end
     end
-    object TabSheet2: TTabSheet
+    object tsWSBlocoX: TTabSheet
+      Caption = 'WebService BlocoX'
+      ClientHeight = 380
+      ClientWidth = 704
+      object pnComandos: TPanel
+        Left = 0
+        Height = 380
+        Top = 0
+        Width = 248
+        Align = alLeft
+        ClientHeight = 380
+        ClientWidth = 248
+        TabOrder = 0
+        object btTransmitirArq: TButton
+          AnchorSideLeft.Control = pnComandos
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = pnComandos
+          Left = 24
+          Height = 25
+          Top = 21
+          Width = 200
+          BorderSpacing.Top = 20
+          Caption = 'Transmitir Arquivo'
+          OnClick = btTransmitirArqClick
+          TabOrder = 0
+        end
+        object btCancelarArq: TButton
+          AnchorSideLeft.Control = btConsultarProcessArq
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btConsultarProcessArq
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 101
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Cancelar Arquivo'
+          OnClick = btCancelarArqClick
+          TabOrder = 1
+        end
+        object btConsultarHistArq: TButton
+          AnchorSideLeft.Control = btCancelarArq
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btCancelarArq
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 141
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Consultar Histórico Arq.'
+          OnClick = btConsultarHistArqClick
+          TabOrder = 2
+        end
+        object btConsultarPendContrib: TButton
+          AnchorSideLeft.Control = btConsultarHistArq
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btConsultarHistArq
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 181
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Consultar Pendências Contrib.'
+          OnClick = btConsultarPendContribClick
+          TabOrder = 3
+        end
+        object btConsultarPendDesenvolvedor: TButton
+          AnchorSideLeft.Control = btConsultarPendContrib
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btConsultarPendContrib
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 221
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Consultar Pendências Dev. Paf-ECF'
+          OnClick = btConsultarPendDesenvolvedorClick
+          TabOrder = 4
+        end
+        object btConsultarProcessArq: TButton
+          AnchorSideLeft.Control = btTransmitirArq
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btTransmitirArq
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 61
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Consultar Processamento Arq.'
+          OnClick = btConsultarProcessArqClick
+          TabOrder = 5
+        end
+        object btDownloadArq: TButton
+          AnchorSideLeft.Control = btConsultarPendDesenvolvedor
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btConsultarPendDesenvolvedor
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 261
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Download Arquivo'
+          OnClick = btDownloadArqClick
+          TabOrder = 6
+        end
+        object btListarArquivos: TButton
+          AnchorSideLeft.Control = btDownloadArq
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btDownloadArq
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 301
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Listar Arquivos'
+          OnClick = btListarArquivosClick
+          TabOrder = 7
+        end
+        object btReprocessarArq: TButton
+          AnchorSideLeft.Control = btListarArquivos
+          AnchorSideLeft.Side = asrCenter
+          AnchorSideTop.Control = btListarArquivos
+          AnchorSideTop.Side = asrBottom
+          Left = 24
+          Height = 25
+          Top = 341
+          Width = 200
+          BorderSpacing.Top = 15
+          Caption = 'Reprocessar Arquivo'
+          OnClick = btReprocessarArqClick
+          TabOrder = 8
+        end
+      end
+      object Panel1: TPanel
+        Left = 248
+        Height = 380
+        Top = 0
+        Width = 456
+        Align = alClient
+        ClientHeight = 380
+        ClientWidth = 456
+        TabOrder = 1
+        object mmRetornoBlocoX: TMemo
+          Left = 1
+          Height = 378
+          Top = 1
+          Width = 454
+          Align = alClient
+          TabOrder = 0
+        end
+      end
+    end
+    object tsConfiguracao: TTabSheet
       Caption = 'Configurações'
       ClientHeight = 380
       ClientWidth = 704
       object gbProxy: TGroupBox
         Left = 8
         Height = 89
-        Top = 8
+        Top = 72
         Width = 416
         Caption = 'Proxy'
         ClientHeight = 69
@@ -538,6 +621,82 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 1
         end
       end
+      object edtCertificado: TEdit
+        Left = 8
+        Height = 23
+        Top = 33
+        Width = 415
+        Anchors = [akTop, akLeft, akRight]
+        Font.Color = clBlue
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+      end
+      object Label1: TLabel
+        Left = 8
+        Height = 15
+        Top = 16
+        Width = 58
+        Caption = 'Certificado'
+        Font.Color = clMaroon
+        ParentColor = False
+        ParentFont = False
+      end
+      object btnBuscarCertificado: TSpeedButton
+        Left = 424
+        Height = 25
+        Top = 33
+        Width = 31
+        Anchors = [akTop, akRight]
+        Caption = '...'
+        OnClick = btnBuscarCertificadoClick
+      end
+      object edtSenhaCertificado: TEdit
+        Left = 472
+        Height = 23
+        Top = 33
+        Width = 130
+        Anchors = [akTop, akLeft, akRight]
+        EchoMode = emPassword
+        Font.Color = clBlue
+        ParentFont = False
+        PasswordChar = '*'
+        TabOrder = 2
+      end
+      object Label5: TLabel
+        Left = 472
+        Height = 15
+        Top = 16
+        Width = 32
+        Caption = 'Senha'
+        Font.Color = clMaroon
+        ParentColor = False
+        ParentFont = False
+      end
+      object rbtTipoCapicom: TRadioButton
+        Left = 616
+        Height = 19
+        Top = 16
+        Width = 68
+        Anchors = [akTop, akRight]
+        Caption = 'Capicom'
+        Checked = True
+        Font.Color = clMaroon
+        ParentFont = False
+        TabOrder = 3
+        TabStop = True
+      end
+      object rbtTipoOpenSSL: TRadioButton
+        Left = 616
+        Height = 19
+        Top = 40
+        Width = 67
+        Anchors = [akTop, akRight]
+        Caption = 'OpenSSL'
+        Font.Color = clMaroon
+        ParentFont = False
+        TabOrder = 4
+      end
     end
   end
   object ACBrEnterTab1: TACBrEnterTab
@@ -558,7 +717,7 @@ object frmPrincipal: TfrmPrincipal
     top = 40
   end
   object ACBrBlocoX1: TACBrBlocoX
-    Configuracoes.VersaoER = erv0204
+    Configuracoes.VersaoER = erv0205
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.SSLCryptLib = cryCapicom
     Configuracoes.Geral.SSLHttpLib = httpWinINet
@@ -566,6 +725,9 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.IntervaloTentativas = 5000
+    Configuracoes.WebServices.Salvar = True
+    Configuracoes.WebServices.TimeOut = 500000
     Configuracoes.WebServices.QuebradeLinha = '|'
     left = 832
     top = 40

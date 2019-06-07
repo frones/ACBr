@@ -3,26 +3,45 @@ unit uPrincipal;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Controls, StdCtrls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Controls, StdCtrls, Forms, Clipbrd,
   Dialogs, Buttons, ACBrBase, ACBrDFe, ACBrBlocoX;
 
 type
   TfrmPrincipal = class(TForm)
-    Button1: TButton;
+    btnGerarXMLEstoque: TButton;
     ACBrBlocoX1: TACBrBlocoX;
     Edit1: TEdit;
     Label1: TLabel;
     Edit2: TEdit;
     Label2: TLabel;
     SpeedButton1: TSpeedButton;
-    Button2: TButton;
+    btnGerarXMLRZ: TButton;
     SaveDialog1: TSaveDialog;
-    Button3: TButton;
+    btnValidarEnviarXML: TButton;
     OpenDialog1: TOpenDialog;
-    procedure Button1Click(Sender: TObject);
+    btnConsultarProcArquivo: TButton;
+    edtRecibo: TEdit;
+    Label3: TLabel;
+    mmoRetWS: TMemo;
+    Label4: TLabel;
+    btnReprocArquivo: TButton;
+    btnDownloadArquivo: TButton;
+    edtMotivo: TEdit;
+    Label5: TLabel;
+    btnCancArquivo: TButton;
+    Label6: TLabel;
+    edtNumSerie: TEdit;
+    procedure btnGerarXMLEstoqueClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure btnGerarXMLRZClick(Sender: TObject);
+    procedure btnValidarEnviarXMLClick(Sender: TObject);
+    procedure btnConsultarProcArquivoClick(Sender: TObject);
+    procedure btnReprocArquivoClick(Sender: TObject);
+    procedure btnDownloadArquivoClick(Sender: TObject);
+    procedure btnCancArquivoClick(Sender: TObject);
+    procedure ACBrBlocoX1AntesDeAssinar(var ConteudoXML: string;
+      const docElement, infElement, SignatureNode, SelectionNamespaces,
+      IdSignature: string);
   private
     procedure PreencherCabecalho(const AACBrBlocoX: TACBrBlocoX);
   public
@@ -58,7 +77,40 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.Button1Click(Sender: TObject);
+procedure TfrmPrincipal.btnDownloadArquivoClick(Sender: TObject);
+begin
+  if edtRecibo.Text = EmptyStr then
+    Raise Exception.Create('Informe o recibo do arquivo transmitido antes de continuar!');
+  with ACBrBlocoX1 do
+  begin
+    mmoRetWS.Clear;
+
+    DownloadArquivo.Recibo := Trim(edtRecibo.Text);
+    DownloadArquivo.GerarXML(True);
+
+    //Clipboard.AsText := DownloadArquivo.XMLAssinado;
+
+    with (WebServices) do
+    begin
+      DownloadArquivoBlocoX.XML := DownloadArquivo.XMLAssinado;
+      DownloadArquivoBlocoX.UsarCData := True;
+      if DownloadArquivoBlocoX.Executar then
+      begin
+        mmoRetWS.Lines.Text := DownloadArquivoBlocoX.RetWS;
+        Clipboard.AsText := DownloadArquivoBlocoX.BlocoXRetorno.Arquivo;
+        {Base decodificar e gerar o arquivo .zip, o retorno vem em base64
+
+         URL para decodificação online:
+         https://www.motobit.com/util/base64-decoder-encoder.asp
+
+         By: Marcos Fincotto
+        }
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmPrincipal.btnGerarXMLEstoqueClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -99,7 +151,7 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.Button2Click(Sender: TObject);
+procedure TfrmPrincipal.btnGerarXMLRZClick(Sender: TObject);
 var
   I, X: Integer;
 begin
@@ -169,7 +221,39 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.Button3Click(Sender: TObject);
+procedure TfrmPrincipal.btnReprocArquivoClick(Sender: TObject);
+const
+  MotivoReprocessamentoCancelamento = 'Falha na transmissão do arquivo BlocoX';
+begin
+  if edtRecibo.Text = EmptyStr then
+    Raise Exception.Create('Informe o recibo do arquivo transmitido antes de continuar!');
+  with ACBrBlocoX1 do
+  begin
+    mmoRetWS.Clear;
+
+    ReprocessarArquivo.Recibo := Trim(edtRecibo.Text);
+    ReprocessarArquivo.Motivo := MotivoReprocessamentoCancelamento;
+    ReprocessarArquivo.GerarXML(True);
+
+    //Clipboard.AsText := ReprocessarArquivo.XMLAssinado;
+
+    with (WebServices) do
+    begin
+      ReprocessarArquivoBlocoX.XML := ReprocessarArquivo.XMLAssinado;
+      ReprocessarArquivoBlocoX.UsarCData := True;
+      if ReprocessarArquivoBlocoX.Executar then
+      begin
+        mmoRetWS.Lines.Text := ReprocessarArquivoBlocoX.RetWS;
+        {with ReprocessarArquivoBlocoX.BlocoXRetorno do
+        begin
+          ShowMessage(SituacaoProcStr);
+        end;}
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmPrincipal.btnValidarEnviarXMLClick(Sender: TObject);
 var
   RespostaValidacao: String;
   Arquivo: TStringList;
@@ -218,9 +302,89 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.ACBrBlocoX1AntesDeAssinar(var ConteudoXML: string;
+  const docElement, infElement, SignatureNode, SelectionNamespaces,
+  IdSignature: string);
+begin
+  with ACBrBlocoX1.Configuracoes.Certificados do
+  begin
+    if NumeroSerie = EmptyStr then
+      NumeroSerie := Trim(edtNumSerie.Text);
+  end;
+end;
+
+procedure TfrmPrincipal.btnCancArquivoClick(Sender: TObject);
+begin
+  if edtRecibo.Text = EmptyStr then
+    Raise Exception.Create('Informe o recibo do arquivo transmitido antes de continuar!');
+  with ACBrBlocoX1 do
+  begin
+    mmoRetWS.Clear;
+
+    ConsultarProcessamentoArquivo.Recibo := Trim(edtRecibo.Text);
+    ConsultarProcessamentoArquivo.RemoverEncodingXMLAssinado := True;
+    ConsultarProcessamentoArquivo.GerarXML(True);
+
+    WebServices.ConsultarProcessamentoArquivoBlocoX.XML := ACBrBlocoX1.ConsultarProcessamentoArquivo.XMLAssinado;
+    WebServices.ConsultarProcessamentoArquivoBlocoX.UsarCData := True;
+    if WebServices.ConsultarProcessamentoArquivoBlocoX.Executar then
+    begin
+      mmoRetWS.Lines.Text := WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
+      with WebServices.ConsultarProcessamentoArquivoBlocoX do
+      begin
+        with BlocoXRetorno do
+          if not SituacaoProcCod = 0 then
+            Raise Exception.Create('Recibo com situação diferente de "Sucesso" não pode ser cancelado: ' + SituacaoProcStr);
+        CancelarArquivo.Recibo := Trim(edtRecibo.Text);
+        CancelarArquivo.Motivo := Trim(edtMotivo.Text);
+        CancelarArquivo.RemoverEncodingXMLAssinado := True;
+        CancelarArquivo.GerarXML(True);
+        WebServices.CancelarArquivoBlocoX.XML := CancelarArquivo.XMLAssinado;
+        WebServices.CancelarArquivoBlocoX.UsarCData := True;
+        if WebServices.CancelarArquivoBlocoX.Executar then
+          mmoRetWS.Lines.Text := WebServices.CancelarArquivoBlocoX.RetWS;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmPrincipal.btnConsultarProcArquivoClick(Sender: TObject);
+begin
+  if edtRecibo.Text = EmptyStr then
+    Raise Exception.Create('Informe o recibo do arquivo transmitido antes de continuar!');
+  with ACBrBlocoX1 do
+  begin
+    mmoRetWS.Clear;
+
+    ConsultarProcessamentoArquivo.Recibo := Trim(edtRecibo.Text);
+    ConsultarProcessamentoArquivo.RemoverEncodingXMLAssinado := True;
+    ConsultarProcessamentoArquivo.GerarXML(True);
+
+    //  XML Assinado
+    //ConsultarProcessamentoArquivo.XMLAssinado;
+
+    WebServices.ConsultarProcessamentoArquivoBlocoX.XML := ACBrBlocoX1.ConsultarProcessamentoArquivo.XMLAssinado;
+    WebServices.ConsultarProcessamentoArquivoBlocoX.UsarCData := True;
+    if WebServices.ConsultarProcessamentoArquivoBlocoX.Executar then
+    begin
+      mmoRetWS.Lines.Text := WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
+      with WebServices.ConsultarProcessamentoArquivoBlocoX do
+      begin
+        {with BlocoXRetorno do
+        begin
+          ShowMessage(Recibo);
+          ShowMessage(IntToStr(SituacaoProcCod));
+          ShowMessage(SituacaoProcStr);
+        end;}
+      end;
+    end;
+  end;
+end;
+
 procedure TfrmPrincipal.SpeedButton1Click(Sender: TObject);
 begin
   Edit1.Text := ACBrBlocoX1.SSL.SelecionarCertificado;
+  edtNumSerie.Text := ACBrBlocoX1.Configuracoes.Certificados.NumeroSerie;
 end;
 
 end.

@@ -39,6 +39,7 @@ type
 
   TACBrBlocoX_TipoCodigo = (tpcGTIN, tpcEAN, tpcProprio);
   TACBrBlocoX_SitTributaria = (stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN);
+  TACBrBlocoX_URLWebService = (wsRecepcao, wsBlocoX);
   TACBrBlocoX_Ippt = (ipptProprio, ipptTerceiros);
   TVersaoER = (erv0204, erv0205);
 
@@ -135,12 +136,15 @@ type
     property Items[Index: integer]: TACBrBlocoX_Servico read GetItem write SetItem; default;
   end;
 
+  { TACBrBlocoX_BaseFile }
+
   TACBrBlocoX_BaseFile = class(TComponent)
   protected
     FACBrBlocoX: TComponent;
     FGerador: TGerador;
-    FXMLOriginal: String;
-    FXMLAssinado: String;
+    FXMLOriginal: string;
+    FXMLAssinado: string;
+    FRemoverEncodingXMLAssinado: Boolean;
 
     procedure GerarDadosEstabelecimento;
     procedure GerarDadosPafECF;
@@ -148,11 +152,12 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    property XMLOriginal: String read FXMLOriginal;
-    property XMLAssinado: String read FXMLAssinado;
+    property XMLOriginal: string read FXMLOriginal;
+    property XMLAssinado: string read FXMLAssinado;
+    property RemoverEncodingXMLAssinado: Boolean read FRemoverEncodingXMLAssinado write FRemoverEncodingXMLAssinado;
 
     procedure GerarXML(const Assinar: Boolean = True); virtual;
-    procedure SaveToFile(const AXmlFileName: String; const AAssinar: Boolean = True); virtual;
+    procedure SaveToFile(const AXmlFileName: string; const AAssinar: Boolean = True); virtual;
   end;
 
   function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
@@ -163,10 +168,12 @@ type
   function StrToSituacaoTributaria(var OK: Boolean; const AValue: String): TACBrBlocoX_SitTributaria;
   function StrToIppt(var OK: Boolean; const AValue: String): TACBrBlocoX_Ippt;
 
+  function ZipFile(const DadosXML: string; const NomeArquivo: String): AnsiString;
+
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil, pcnConversao;
+  ACBrBlocoX, ACBrUtil, ACBrCompress, pcnConversao, synacode;
 
 function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
 begin
@@ -214,6 +221,11 @@ begin
     ['P', 'T'],
     [ipptProprio, ipptTerceiros]
   );
+end;
+
+function ZipFile(const DadosXML: string; const NomeArquivo: String): AnsiString;
+begin
+  Result := ACBrCompress.ZipFileCompress(DadosXML, NomeArquivo);
 end;
 
 { TACBrBlocoX_Produto }
@@ -284,6 +296,7 @@ begin
 
   FACBrBlocoX := TACBrBlocoX(AOwner);
   FGerador := TGerador.Create;
+  FRemoverEncodingXMLAssinado := False;
 end;
 
 destructor TACBrBlocoX_BaseFile.Destroy;
@@ -297,7 +310,7 @@ begin
   raise EACBrBlocoXException.Create('Método não implementado "GerarXML"');
 end;
 
-procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: String; const AAssinar: Boolean);
+procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: string; const AAssinar: Boolean);
 begin
   raise EACBrBlocoXException.Create('Método não implementado "SaveToFileName"');
 end;

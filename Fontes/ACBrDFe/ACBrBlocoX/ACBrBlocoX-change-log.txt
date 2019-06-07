@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2019
+[+] Inclusão classe ACBrBlocoX_Consulta com novos métodos de acordo com novos WebServices (Requisitos LVIII e LIX),
+    como ConsultarProcessamentoArquivoBlocoX, ReprocessarArquivoBlocoX, DownloadArquivoBlocoX
+[+] Adicionados vários recursos de acordo com as alterações nos novos WebServices
+[*] ajustes acima no componente e demo por Elias César, Luciano (mansur) e Marcos Fincotto (Consinco S/A).
+Veja: https://www.projetoacbr.com.br/forum/topic/49596-altera%C3%A7%C3%A3o-webservice-bloco-x-acbrblocox/
+
 11/07/2018
 [+] Campo para retorno das mensagens do WebServices
     https://www.projetoacbr.com.br/forum/topic/44625-bloco-x-retorno-do-campo-mensagem/

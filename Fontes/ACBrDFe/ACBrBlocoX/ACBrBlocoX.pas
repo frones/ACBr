@@ -32,12 +32,13 @@ unit ACBrBlocoX;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrDFe, ACBrDFeConfiguracoes, ACBrBlocoX_WebServices,
-  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum,
-  ACBrUtil;
+  Classes, SysUtils, 
+  ACBrDFe, ACBrDFeConfiguracoes, ACBrBlocoX_WebServices, 
+  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum, 
+  ACBrBlocoX_Consulta, ACBrUtil;
 
 type
+
   { TConfiguracoesBlocoX }
 
   TConfiguracoesBlocoX = class(TConfiguracoes)
@@ -111,6 +112,14 @@ type
     FReducoesZ: TACBrBlocoX_ReducaoZ;
     FECF: TACBrBlocoX_ECF;
     FWebServices: TACBrBlocoX_WebServices;
+    FConsultarProcessamentoArquivo: TACBrBlocoX_ConsultarProcessamentoArquivo;
+    FReprocessarArquivo: TACBrBlocoX_ReprocessarArquivo;
+    FConsultarHistoricoArquivo: TACBrBlocoX_ConsultarHistoricoArquivo;
+    FListarArquivos: TACBrBlocoX_ListarArquivos;
+    FDownloadArquivo: TACBrBlocoX_DownloadArquivo;
+    FCancelarArquivo: TACBrBlocoX_CancelarArquivo;
+    FConsultarPendenciasContribuinte: TACBrBlocoX_ConsultarPendenciasContribuinte;
+    FConsultarPendenciasDesenvolvedorPafEcf: TACBrBlocoX_ConsultarPendenciasDesenvolvedorPafEcf;
     function GetConfiguracoes: TConfiguracoesBlocoX;
     procedure SetConfiguracoes(const Value: TConfiguracoesBlocoX);
   protected
@@ -121,12 +130,23 @@ type
 
     property Estoque: TACBrBlocoX_Estoque read FEstoque write FEstoque;
     property ReducoesZ: TACBrBlocoX_ReducaoZ read FReducoesZ write FReducoesZ;
-    property WebServices: TACBrBlocoX_WebServices read FWebServices write FWebServices;
+
+    property ConsultarProcessamentoArquivo: TACBrBlocoX_ConsultarProcessamentoArquivo read FConsultarProcessamentoArquivo write FConsultarProcessamentoArquivo;
+    property ReprocessarArquivo: TACBrBlocoX_ReprocessarArquivo read FReprocessarArquivo write FReprocessarArquivo;
+    property ConsultarHistoricoArquivo: TACBrBlocoX_ConsultarHistoricoArquivo read FConsultarHistoricoArquivo write FConsultarHistoricoArquivo;
+    property ListarArquivos: TACBrBlocoX_ListarArquivos read FListarArquivos write FListarArquivos;
+    property DownloadArquivo: TACBrBlocoX_DownloadArquivo read FDownloadArquivo write FDownloadArquivo;
+    property CancelarArquivo: TACBrBlocoX_CancelarArquivo read FCancelarArquivo write FCancelarArquivo;
+    property ConsultarPendenciasContribuinte: TACBrBlocoX_ConsultarPendenciasContribuinte read FConsultarPendenciasContribuinte write FConsultarPendenciasContribuinte;
+    property ConsultarPendenciasDesenvolvedorPafEcf: TACBrBlocoX_ConsultarPendenciasDesenvolvedorPafEcf
+      read FConsultarPendenciasDesenvolvedorPafEcf write FConsultarPendenciasDesenvolvedorPafEcf;
   published
     property Estabelecimento: TACBrBlocoX_Estabelecimento read FEstabelecimento write FEstabelecimento;
     property PafECF: TACBrBlocoX_PafECF read FPafECF write FPafECF;
     property ECF: TACBrBlocoX_ECF read FECF write FECF;
     property Configuracoes: TConfiguracoesBlocoX read GetConfiguracoes Write SetConfiguracoes;
+
+    property WebServices: TACBrBlocoX_WebServices read FWebServices write FWebServices;
   end;
 
 implementation
@@ -136,13 +156,20 @@ implementation
 constructor TACBrBlocoX.Create(AOwner: TComponent);
 begin
   inherited;
-
   FEstoque         := TACBrBlocoX_Estoque.Create(Self);
   FReducoesZ       := TACBrBlocoX_ReducaoZ.Create(Self);
   FPafECF          := TACBrBlocoX_PafECF.Create;
   FEstabelecimento := TACBrBlocoX_Estabelecimento.Create;
   FECF             := TACBrBlocoX_ECF.Create;
   FWebServices     := TACBrBlocoX_WebServices.Create(Self);
+  FConsultarProcessamentoArquivo          := TACBrBlocoX_ConsultarProcessamentoArquivo.Create(Self);
+  FReprocessarArquivo                     := TACBrBlocoX_ReprocessarArquivo.Create(Self);
+  FConsultarHistoricoArquivo              := TACBrBlocoX_ConsultarHistoricoArquivo.Create(Self);
+  FListarArquivos                         := TACBrBlocoX_ListarArquivos.Create(Self);
+  FDownloadArquivo                        := TACBrBlocoX_DownloadArquivo.Create(Self);
+  FCancelarArquivo                        := TACBrBlocoX_CancelarArquivo.Create(Self);
+  FConsultarPendenciasContribuinte        := TACBrBlocoX_ConsultarPendenciasContribuinte.Create(Self);
+  FConsultarPendenciasDesenvolvedorPafEcf := TACBrBlocoX_ConsultarPendenciasDesenvolvedorPafEcf.Create(Self);
 end;
 
 destructor TACBrBlocoX.Destroy;
@@ -153,7 +180,14 @@ begin
   FEstabelecimento.Free;
   FECF.Free;
   FWebServices.Free;
-
+  FConsultarProcessamentoArquivo.Free;
+  FReprocessarArquivo.Free;
+  FConsultarHistoricoArquivo.Free;
+  FListarArquivos.Free;
+  FDownloadArquivo.Free;
+  FCancelarArquivo.Free;
+  FConsultarPendenciasContribuinte.Free;
+  FConsultarPendenciasDesenvolvedorPafEcf.Free;
   inherited;
 end;
 

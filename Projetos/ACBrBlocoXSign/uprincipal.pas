@@ -6,10 +6,10 @@ unit uPrincipal;
 interface
 
 uses
-  Windows, Classes, SysUtils, strutils, dateutils, IniFiles, base64, FileUtil,
-  Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit,
-  Menus, ComCtrls, Spin, EditBtn, UtilUnit, ACBrGIF, ACBrUtil, ACBrValidador,
-  ACBrEnterTab, ACBrDFe, ACBrDFeSSL, ACBrDFeWebService, ACBrBlocoX, ACBrDFeUtil;
+  Windows, Classes, SysUtils, strutils, dateutils, IniFiles, FileUtil, Forms,
+  Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus,
+  ComCtrls, Spin, EditBtn, UtilUnit, ACBrGIF, ACBrUtil, ACBrEnterTab, ACBrDFe,
+  ACBrDFeSSL, ACBrDFeWebService, ACBrBlocoX, ACBrDFeUtil;
 
 const
   _C = 'tYk*5W@';
@@ -23,13 +23,22 @@ type
     ACBrEnterTab1: TACBrEnterTab;
     ACBrGIF1: TACBrGIF;
     Bevel2: TBevel;
+    btnBuscarCertificado: TSpeedButton;
     btnConsultar: TBitBtn;
     btnValidar: TBitBtn;
     btnBuscarArquivo: TSpeedButton;
-    btnBuscarCertificado: TSpeedButton;
     btnCriarAssinatura: TBitBtn;
     btnSalvarArquivo: TBitBtn;
     btnTransmitir: TBitBtn;
+    btTransmitirArq: TButton;
+    btCancelarArq: TButton;
+    btConsultarHistArq: TButton;
+    btConsultarPendContrib: TButton;
+    btConsultarPendDesenvolvedor: TButton;
+    btConsultarProcessArq: TButton;
+    btDownloadArq: TButton;
+    btListarArquivos: TButton;
+    btReprocessarArq: TButton;
     edProxyHost: TEdit;
     edProxyPorta: TSpinEdit;
     edProxySenha: TEdit;
@@ -46,21 +55,35 @@ type
     lblProxySenha: TLabel;
     lblProxyHost: TLabel;
     memArqAssinado: TMemo;
+    mmRetornoBlocoX: TMemo;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
-    rgTipo: TRadioGroup;
+    Panel1: TPanel;
+    pnComandos: TPanel;
     rbtTipoCapicom: TRadioButton;
     rbtTipoOpenSSL: TRadioButton;
+    rgTipo: TRadioGroup;
     SaveDialog1: TSaveDialog;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    tsWSRecepcao: TTabSheet;
+    tsConfiguracao: TTabSheet;
+    tsWSBlocoX: TTabSheet;
     procedure ACBrGIF1Click(Sender: TObject);
+    procedure btCancelarArqClick(Sender: TObject);
+    procedure btConsultarHistArqClick(Sender: TObject);
+    procedure btConsultarPendContribClick(Sender: TObject);
+    procedure btConsultarPendDesenvolvedorClick(Sender: TObject);
+    procedure btConsultarProcessArqClick(Sender: TObject);
+    procedure btDownloadArqClick(Sender: TObject);
+    procedure btListarArquivosClick(Sender: TObject);
     procedure btnBuscarArquivoClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnCriarAssinaturaClick(Sender: TObject);
     procedure btnSalvarArquivoClick(Sender: TObject);
     procedure btnTransmitirClick(Sender: TObject);
     procedure btnValidarClick(Sender: TObject);
+    procedure btReprocessarArqClick(Sender: TObject);
+    procedure btTransmitirArqClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure Image2Click(Sender: TObject);
     procedure LerConfiguracoes;
@@ -68,6 +91,7 @@ type
   private
     procedure ConfigurarDFe;
     function GetPathConfig: String;
+    function GetXML: AnsiString;
     procedure GravarConfiguracoes;
     procedure CarregarGifBannerACBrSAC;
     function ValidarArquivo : Boolean;
@@ -81,7 +105,7 @@ var
 implementation
 
 Uses
-  ACBrBlocoX_WebServices;
+  ACBrBlocoX_WebServices, synautil;
 
 const
   TIPO_CAPICOM = 'CAPICOM';
@@ -126,6 +150,36 @@ begin
   Result := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
 end;
 
+function TfrmPrincipal.GetXML: AnsiString;
+var
+  wArqXml: String;
+  wFS: TFileStream;
+begin
+  Result := EmptyStr;
+  OpenDialog1.Title      := 'Selecione o XML';
+  OpenDialog1.DefaultExt := '.xml';
+  OpenDialog1.Filter     := 'Arquivos XML|*.xml';
+  OpenDialog1.InitialDir := ApplicationPath;
+
+  if OpenDialog1.Execute then
+  begin
+    wArqXml := OpenDialog1.FileName;
+    if (wArqXml = EmptyStr) then
+      Exit;
+
+    if (not FileExists(wArqXml)) then
+      raise Exception.Create('Arquivo não encontrado');
+
+    wFS := TFileStream.Create(wArqXml, fmOpenRead);
+    try
+      wFS.Position := 0;
+      Result := ReadStrFromStream(wFS, wFS.Size);
+    finally
+      wFS.Free;
+    end;
+  end;
+end;
+
 procedure TfrmPrincipal.ConfigurarDFe;
 begin
   if rbtTipoCapicom.Checked then
@@ -135,8 +189,8 @@ begin
   end
   else
   begin
-    ACBrBlocoX1.Configuracoes.Geral.SSLLib             := libOpenSSL;
-    ACBrBlocoX1.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
+    ACBrBlocoX1.Configuracoes.Geral.SSLLib            := libOpenSSL;
+    ACBrBlocoX1.Configuracoes.Certificados.ArquivoPFX := edtCertificado.Text;
   end;
   ACBrBlocoX1.Configuracoes.Certificados.Senha := edtSenhaCertificado.Text;
   ACBrBlocoX1.Configuracoes.WebServices.ProxyHost := edProxyHost.Text;
@@ -152,8 +206,8 @@ begin
   F := TIniFile.Create(GetPathConfig);
   try
     F.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
-    F.WriteString('CONFIG', 'UltimoArquivo',     edtArqBlocoX.Text);
-    F.WriteString('CONFIG', 'Tipo',        IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL));
+    F.WriteString('CONFIG', 'UltimoArquivo', edtArqBlocoX.Text);
+    F.WriteString('CONFIG', 'Tipo', IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL));
     GravaINICrypt(F, 'Certificado', 'Senha', edtSenhaCertificado.Text, _C);
     F.WriteString('Proxy', 'Host', edProxyHost.Text);
     F.WriteString('Proxy', 'Porta', edProxyPorta.Text);
@@ -264,6 +318,248 @@ begin
   OpenURL('http://www.projetoacbr.com.br/forum/SAC/cadastro/');
 end;
 
+procedure TfrmPrincipal.btCancelarArqClick(Sender: TObject);
+var
+  wXML: AnsiString;
+  wMotivo, wRecibo: String;
+begin
+  if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
+    Exit;
+
+  if not InputQuery('Consultar Processamento', 'Informe o Motivo do cancelamento', wMotivo) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.CancelarArquivo do
+  begin
+    Recibo := wRecibo;
+    Motivo := wMotivo;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.CancelarArquivoBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btConsultarHistArqClick(Sender: TObject);
+var
+  wRecibo: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ConsultarHistoricoArquivo do
+  begin
+    Recibo := wRecibo;
+    RemoverEncodingXMLAssinado := False;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.xml', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.ConsultarHistoricoArquivoBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btConsultarPendContribClick(Sender: TObject);
+var
+  wIE: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Consultar Pendencias Contribuinte', 'Informe a Inscrição Estadual', wIE) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ConsultarPendenciasContribuinte do
+  begin
+    InscricaoEstadual := wIE;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.ConsultarPendenciasContribuinteBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btConsultarPendDesenvolvedorClick(Sender: TObject);
+var
+  wCNPJ: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Consultar Pend. Desenvolvedor PAF-ECF', 'Informe o CNPJ', wCNPJ) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ConsultarPendenciasDesenvolvedorPafEcf do
+  begin
+    CNPJ := wCNPJ;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.xml', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.ConsultarPendenciasDesenvolvedorPafEcfBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btConsultarProcessArqClick(Sender: TObject);
+var
+  wRecibo: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ConsultarProcessamentoArquivo do
+  begin
+    Recibo := wRecibo;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btDownloadArqClick(Sender: TObject);
+var
+  wRecibo: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Consultar Processamento', 'Informe o número do Recibo', wRecibo) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.DownloadArquivo do
+  begin
+    Recibo := wRecibo;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', XMLAssinado);
+  end;
+
+  with ACBrBlocoX1.WebServices.DownloadArquivoBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btListarArquivosClick(Sender: TObject);
+var
+  wIE: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Listar Arquivos', 'Informe a Inscrição Estadual', wIE) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ListarArquivos do
+  begin
+    InscricaoEstadual := wIE;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', wXML);
+  end;
+
+  with ACBrBlocoX1.WebServices.ListarArquivosBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
 procedure TfrmPrincipal.btnBuscarArquivoClick(Sender: TObject);
 begin
   OpenDialog1.DefaultExt :=  '*.xml';
@@ -274,10 +570,10 @@ end;
 
 procedure TfrmPrincipal.btnConsultarClick(Sender: TObject);
 var
-  Recibo : String;
+  Recibo: String;
 begin
   if not InputQuery('Consultar', 'Entre com o número do recibo', Recibo) then
-    exit;
+    Exit;
 
   ConfigurarDFe;
 
@@ -289,13 +585,11 @@ end;
 
 procedure TfrmPrincipal.btnCriarAssinaturaClick(Sender: TObject);
 var
-  StrCodigoVinculacao: String;
-  MsgErroValidacao: String;
   FXMLOriginal: TStringList;
 begin
   memArqAssinado.Lines.Clear;
 
-  if Trim(edtCertificado.Text) = '' then
+  if (Trim(edtCertificado.Text) = '') then
   begin
     edtCertificado.SetFocus;
     raise Exception.Create('Certificado não foi informado!');
@@ -333,14 +627,14 @@ end;
 
 procedure TfrmPrincipal.btnTransmitirClick(Sender: TObject);
 var
-  wWebServiceBlocoX: TEnviarBlocoX;
+  wWebServiceBlocoX: TTransmitirArquivoBlocoX;
 begin
   if not ValidarArquivo then
     Exit;
 
   ConfigurarDFe;
 
-  wWebServiceBlocoX := ACBrBlocoX1.WebServices.EnviarBlocoX;
+  wWebServiceBlocoX := ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX;
 
   wWebServiceBlocoX.XML := memArqAssinado.Text;
 
@@ -362,12 +656,78 @@ begin
   wWebServiceBlocoX := ACBrBlocoX1.WebServices.ValidarBlocoX;
 
   wWebServiceBlocoX.XML := memArqAssinado.Text;
-  wWebServiceBlocoX.ValidarPafEcfEEcf    := True;
+  wWebServiceBlocoX.ValidarPafEcfEEcf := True;
 
   if wWebServiceBlocoX.Executar then
     memArqAssinado.Text := wWebServiceBlocoX.RetWS
   else
     memArqAssinado.Text := 'Erro ao validar' + sLineBreak + wWebServiceBlocoX.Msg;
+end;
+
+procedure TfrmPrincipal.btReprocessarArqClick(Sender: TObject);
+var
+  wRecibo: String;
+  wXML: AnsiString;
+begin
+  if not InputQuery('Reprocessar Arquivo', 'Informe o número do Recibo', wRecibo) then
+    Exit;
+
+  ConfigurarDFe;
+
+  with ACBrBlocoX1.ReprocessarArquivo do
+  begin
+    Recibo := wRecibo;
+    RemoverEncodingXMLAssinado := True;
+    GerarXML(True);
+    wXML := XMLAssinado;
+
+    // DEBUG:
+    //WriteToTXT('_LogXML.txt', XMLAssinado);
+  end;
+
+  with ACBrBlocoX1.WebServices.ReprocessarArquivoBlocoX do
+  begin
+    UsarCData := True;
+    XML := wXML;
+    Executar;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+    mmRetornoBlocoX.Text := RetWS;
+  end;
+end;
+
+procedure TfrmPrincipal.btTransmitirArqClick(Sender: TObject);
+var
+  wXML: AnsiString;
+  wWebServiceBlocoX: TTransmitirArquivoBlocoX;
+begin
+  wXML := GetXML;
+  if (wXML = EmptyStr) then
+    Exit;
+
+  ConfigurarDFe;
+
+  wWebServiceBlocoX := ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX;
+  with wWebServiceBlocoX do
+  begin
+    XML := wXML;
+
+    // DEBUG:
+    //WriteToTXT('_Log.txt', RetornoWS + sLineBreak + sLineBreak + RetWS);
+
+
+    if Executar then
+      mmRetornoBlocoX.Text := RetWS
+    else
+      mmRetornoBlocoX.Text := 'Erro ao enviar' + sLineBreak + Msg;
+  end;
+end;
+
+procedure TfrmPrincipal.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+  GravarConfiguracoes
 end;
 
 end.

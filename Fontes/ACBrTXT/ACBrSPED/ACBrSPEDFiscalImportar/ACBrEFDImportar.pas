@@ -58,7 +58,8 @@ uses
   ACBrEFDBloco_0_Importar,
   ACBrEFDBloco_C_Importar,
   ACBrEFDBloco_D_Importar,
-  ACBrEFDBloco_E_Importar;
+  ACBrEFDBloco_E_Importar,
+  ACBrEFDBloco_H_Importar;
 //  ACBrEFDBloco_1_Importar;
 
 const
@@ -84,6 +85,7 @@ type
     procedure ProcessaBlocoC(const Delimiter: TStrings);
     procedure ProcessaBlocoD(const Delimiter: TStrings);
     procedure ProcessaBlocoE(const Delimiter: TStrings);
+    procedure ProcessaBlocoH(const Delimiter: TStrings);
 //    procedure ProcessaBloco1(const Delimiter: TStrings);
   public
     procedure Importar;
@@ -151,7 +153,9 @@ begin
         else if (Bloco = 'D') then
           ProcessaBlocoD(Delimitador)
         else if (Bloco = 'E') then
-          ProcessaBlocoE(Delimitador);
+          ProcessaBlocoE(Delimitador)
+        else if (Bloco = 'H') then
+          ProcessaBlocoH(Delimitador);
   //      else if (Bloco = '1') then
   //        ProcessaBloco1(Delimitador);
       end;
@@ -209,6 +213,19 @@ begin
     ImportarBlocoE.Free;
   end;
 end;
+
+procedure TACBrSpedFiscalImportar.ProcessaBlocoH(const Delimiter: TStrings);
+var
+  ImportarBlocoH: TACBrSpedFiscalImportar_BlocoH;
+begin
+  ImportarBlocoH := TACBrSpedFiscalImportar_BlocoH.Create;
+  try
+    ProcessaBloco(ImportarBlocoH, Delimiter);
+  finally
+    ImportarBlocoH.Free;
+  end;
+end;
+
 {
 procedure TACBrSpedFiscalImportar.ProcessaBloco1(const Delimiter: TStrings);
 var

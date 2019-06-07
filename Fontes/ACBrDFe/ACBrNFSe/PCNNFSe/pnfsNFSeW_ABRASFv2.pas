@@ -146,7 +146,7 @@ begin
   begin
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
         proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2]) or
-       ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
+       ((FProvedor in [proActconv201, proActconv2, profintelISS]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
       Gerador.wGrupoNFSe('Tomador');
@@ -239,7 +239,7 @@ begin
 
     if (FProvedor in [proActcon, proELv2, proVersaTecnologia, proISSJoinville,
         proSmarAPDABRASF, proNotaInteligente, proGiss, proTcheInfov2]) or
-        ((FProvedor in [proActconv201, proActconv2]) and (FVersaoDados = '2.01')) then
+        ((FProvedor in [proActconv201, proActconv2, profintelISS]) and (FVersaoDados = '2.01')) then
       Gerador.wGrupoNFSe('/TomadorServico')
     else
       Gerador.wGrupoNFSe('/Tomador');
@@ -491,6 +491,7 @@ begin
   if FProvedor <> proGoiania then
   begin
     case FProvedor of
+      proBethav2,
       proSisPMJP,
       proVirtual: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 0, OnlyNumber(NFSe.Servico.ItemListaServico), DSC_CLISTSERV);
 

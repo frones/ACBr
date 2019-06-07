@@ -4817,8 +4817,8 @@ begin
 end;
 
 procedure TForm1.btnMenuFiscalConfigPAFECFClick(Sender: TObject);
-var
-  Parametros: TACBrECFInfoPaf;
+//var
+//  Parametros: TACBrECFInfoPaf;
 begin
   // para ERs mais novas usar, onde 'X' é o perfil de requisitos aplicado
   ACBrECF1.PafMF_RelParametrosConfiguracao('X');

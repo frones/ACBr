@@ -1278,7 +1278,7 @@ procedure TACBrSATExtratoFortesFr.rlCancelamentoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
   NumExtrato, qrcode: String;
-  NomeConsumidor: String;
+//  NomeConsumidor: String;
 begin
   with ACBrSATExtrato.CFe do
   begin

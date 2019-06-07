@@ -59,6 +59,8 @@ type
 
   TACBrECFVirtualNFCeQuandoCancelarDocumento = procedure(Justificativa: string) of object;
 
+  TACBrECFVirtualNFCeQuandoImprimirDocumento = procedure(var Tratado: Boolean) of object;
+
   { TACBrECFVirtualNFCe }
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -72,6 +74,7 @@ type
     function GetQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
     function GetQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
     function GetQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
+    function GetQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
 
     procedure SetQuandoAbrirDocumento(
       AValue: TACBrECFVirtualNFCeQuandoAbrirDocumento);
@@ -84,6 +87,7 @@ type
       AValue: TACBrECFVirtualNFCeQuandoCancelarDocumento);
     procedure SetACBrNFCe(AValue: TACBrNFe);
     procedure SetImprimir2ViaOffLine(AValue: Boolean);
+    procedure SetQuandoImprimirDocumento(const AValue: TACBrECFVirtualNFCeQuandoImprimirDocumento);
   protected
     procedure CreateVirtualClass; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
@@ -101,7 +105,8 @@ type
       read GetQuandoFecharDocumento write SetQuandoFecharDocumento;
     property QuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento
       read GetQuandoCancelarDocumento write SetQuandoCancelarDocumento;
-
+    property QuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento
+      read GetQuandoImprimirDocumento write SetQuandoImprimirDocumento;
   end;
 
   { TACBrECFVirtualNFCeClass }
@@ -119,6 +124,7 @@ type
     fsQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
     fsQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
     fsQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
+    fsQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
     fsNomeArqTempXML: string;
     fsECF: TACBrECF;
     fsDestCNPJ: string;
@@ -130,6 +136,7 @@ type
     procedure SomaTotais;
     procedure CancelarNFCe;
     function GetACBrECF: TACBrECF;
+    procedure FazerImpressaoDocumento;
   protected
     function GetSubModeloECF: string; override;
     function GetNumVersao: string; override;
@@ -169,6 +176,8 @@ type
       read fsQuandoFecharDocumento write fsQuandoFecharDocumento;
     property QuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento
       read fsQuandoCancelarDocumento write fsQuandoCancelarDocumento;
+    property QuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento
+      read fsQuandoImprimirDocumento write fsQuandoImprimirDocumento;
   end;
 
 procedure Register;
@@ -286,6 +295,17 @@ begin
   TACBrECFVirtualNFCeClass(fpECFVirtualClass).QuandoCancelarDocumento := AValue;
 end;
 
+function TACBrECFVirtualNFCe.GetQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
+begin
+  Result := TACBrECFVirtualNFCeClass(fpECFVirtualClass).QuandoImprimirDocumento;
+end;
+
+procedure TACBrECFVirtualNFCe.SetQuandoImprimirDocumento(
+  const AValue: TACBrECFVirtualNFCeQuandoImprimirDocumento);
+begin
+  TACBrECFVirtualNFCeClass(fpECFVirtualClass).QuandoImprimirDocumento := AValue;
+end;
+
 { TACBrECFVirtualNFCeClass }
 
 constructor TACBrECFVirtualNFCeClass.Create(
@@ -295,15 +315,29 @@ begin
 
   fsACBrNFCe := nil;
   fsECF := nil;
-  fsQuandoAbrirDocumento := nil;
-  fsQuandoEfetuarPagamento := nil;
-  fsQuandoVenderItem := nil;
-  fsQuandoFecharDocumento := nil;
+  fsQuandoAbrirDocumento    := nil;
+  fsQuandoEfetuarPagamento  := nil;
+  fsQuandoVenderItem        := nil;
+  fsQuandoFecharDocumento   := nil;
+  fsQuandoImprimirDocumento := nil;
   fsNomeArqTempXML := '';
   fsDestNome := '';
   fsDestCNPJ := '';
   fsEhVenda := False;
   fsImprimir2ViaOffLine := True;
+end;
+
+procedure TACBrECFVirtualNFCeClass.FazerImpressaoDocumento;
+var
+  ImpressaoTratada: Boolean;
+begin
+  ImpressaoTratada := False;
+  if Assigned(fsQuandoImprimirDocumento) then
+    fsQuandoImprimirDocumento(ImpressaoTratada);
+  if not ImpressaoTratada then
+  begin
+    fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+  end;
 end;
 
 function TACBrECFVirtualNFCeClass.AdivinharFormaPagamento(const DescricaoPagto: string
@@ -445,7 +479,11 @@ end;
 
 procedure TACBrECFVirtualNFCeClass.AtivarVirtual;
 begin
-  fsACBrNFCe.NotasFiscais.Clear;
+  if not (fpEstado in estCupomAberto) then
+  begin
+    fsACBrNFCe.NotasFiscais.Clear;
+  end;
+
   inherited AtivarVirtual;
 
   fsACBrNFCe.Configuracoes.Geral.ModeloDF := moNFCe;
@@ -720,12 +758,12 @@ begin
         //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
         //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
         TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := True;
-        fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+        FazerImpressaoDocumento;
 
         if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
         begin
           TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := False;
-          fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+          FazerImpressaoDocumento;
         end;
       end;
     end
@@ -783,12 +821,12 @@ begin
             // imprimir obrigatoriamente duas vias quando em off-line
             // uma para consumidor e outra para o estabelecimento
             TACBrNFeDANFCEClass(DANFE).ViaConsumidor := True;
-            NotasFiscais.Items[0].Imprimir;
+            FazerImpressaoDocumento;
 
             if fsImprimir2ViaOffLine then
             begin
               TACBrNFeDANFCEClass(DANFE).ViaConsumidor := False;
-              NotasFiscais.Items[0].Imprimir;
+              FazerImpressaoDocumento;
             end;
           end;
         end
@@ -811,8 +849,8 @@ begin
         ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
 
         if NotasFiscais.Items[0].Confirmada then
-          NotasFiscais.Items[0].Imprimir;
-      end;
+          FazerImpressaoDocumento;
+    end;
     end;
   end
   else
@@ -893,9 +931,8 @@ end;
 
 procedure TACBrECFVirtualNFCeClass.LeArqINIVirtual(ConteudoINI: TStrings);
 begin
-  // Se o cupom está aberto, deve ler conteudo temporário do XML
-
-  if (fpEstado in estCupomAberto) then
+  // Se o cupom está aberto, ou inicializando o ECF, deve ler conteudo temporário do XML
+  if (fpEstado in [estVenda, estPagamento, estNaoInicializada] ) then
     if (fsNomeArqTempXML <> '') and FileExists(fsNomeArqTempXML) then
     begin
       fsACBrNFCe.NotasFiscais.Clear;
@@ -910,7 +947,11 @@ procedure TACBrECFVirtualNFCeClass.GravaArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se cupom está aberto, deve persistir o CFe //
   if (fsEhVenda) and (fpEstado in estCupomAberto) then
-    fsACBrNFCe.NotasFiscais.GravarXML(fsNomeArqTempXML)
+  begin
+    // Forçar geração do XML para persistir itens
+    fsACBrNFCe.NotasFiscais[0].GerarXML; 
+    fsACBrNFCe.NotasFiscais.GravarXML(fsNomeArqTempXML);
+  end
   else if (fsNomeArqTempXML <> '') and FileExists(fsNomeArqTempXML) then
     DeleteFile(fsNomeArqTempXML);
 

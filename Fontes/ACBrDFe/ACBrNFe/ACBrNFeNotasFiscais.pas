@@ -512,9 +512,9 @@ begin
     if (NFe.Ide.dhCont > Agora) then //B28-30
       AdicionaErro('558-Rejeição: Data de entrada em contingência posterior a data de recebimento');
 
-    GravaLog('Validar: 559-Data Entrada contingência');
+    GravaLog('Validar: 569-Data Entrada contingência');
     if (NFe.Ide.dhCont > 0) and ((Agora - NFe.Ide.dhCont) > 30) then //B28-40
-      AdicionaErro('559-Rejeição: Data de entrada em contingência muito atrasada');
+      AdicionaErro('569-Rejeição: Data de entrada em contingência muito atrasada');
 
     GravaLog('Validar: 207-CNPJ emitente');
     // adicionado CNPJ por conta do produtor rural

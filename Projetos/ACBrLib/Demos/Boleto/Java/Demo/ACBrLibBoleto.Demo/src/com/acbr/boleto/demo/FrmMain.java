@@ -1028,7 +1028,7 @@ public class FrmMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addComponent(jTabbedPane5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1114,16 +1114,12 @@ public class FrmMain extends javax.swing.JFrame {
         try
         {            
             int ret;
-            ByteBuffer buffer = ByteBuffer.allocate(256);
-            IntByReference bufferLen = new IntByReference(256);            
-            
             ret = acbrBoleto.Boleto_GerarRemessa(ACBrBoleto.toUTF8(txtDirRemessa.getText()),
-                    Integer.parseInt(ACBrBoleto.toUTF8("1")),
+                    1,
                     ACBrBoleto.toUTF8(txtNomeRemessa.getText()));
             ACBrBoleto.checkResult(ret);
             
-            rtbRespostas.append( ACBrBoleto.fromUTF8(buffer, bufferLen.getValue())+"\n");          
-            
+            rtbRespostas.append( "Remessa gerada.\n");
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1132,14 +1128,10 @@ public class FrmMain extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         try{
             int ret;
-            ByteBuffer buffer = ByteBuffer.allocate(256);
-            IntByReference bufferLen = new IntByReference(256);           
-            
             ret = acbrBoleto.Boleto_Imprimir(ACBrBoleto.toUTF8(""));
             ACBrBoleto.checkResult(ret);
             
-            rtbRespostas.append( ACBrBoleto.fromUTF8(buffer, bufferLen.getValue())+"\n");
-            
+            rtbRespostas.append( "Boletos impressos.\n");            
         } catch (Exception ex) {
             Logger.getLogger(FrmMain.class.getName()).log(Level.SEVERE, null, ex);
         }

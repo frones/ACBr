@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Text;
+using System.Windows.Forms;
 
 namespace ACBrLib
 {
@@ -40,6 +42,31 @@ namespace ACBrLib
                 fbd.ShowNewFolderButton = true;
                 return fbd.ShowDialog().Equals(DialogResult.Cancel) ? string.Empty : fbd.SelectedPath;
             }
+        }
+
+        public static string SaveFile(string filters, string title = "Salvar")
+        {
+            using (var ofd = new SaveFileDialog())
+            {
+                ofd.CheckPathExists = true;
+                ofd.Filter = filters;
+                ofd.Title = title;
+
+                return ofd.ShowDialog().Equals(DialogResult.Cancel) ? null : ofd.FileName;
+            }
+        }
+
+        public static void AppendLine(this RichTextBox rtb, StringBuilder line)
+        {
+            rtb.AppendLine(line.FromUTF8());
+        }
+
+        public static void AppendLine(this RichTextBox rtb, string line)
+        {
+            if (rtb.Text != string.Empty)
+                rtb.AppendText(Environment.NewLine);
+
+            rtb.AppendText(line);
         }
     }
 }

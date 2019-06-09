@@ -557,10 +557,10 @@ begin
         if (SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 10000) then
         begin
           Resp.Processar(SatDM.ACBrSAT1);
-          Resposta := sLineBreak + Resp.Gerar;
+          Resposta := Resposta + sLineBreak + Resp.Gerar;
         end;
 
-        Resposta := SatDM.RespostaIntegrador;
+        Resposta := Resposta + SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -583,6 +583,7 @@ function SAT_ConsultarNumeroSessao(cNumeroDeSessao: integer;
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   Resposta: ansistring;
+  RespSat: TACBrLibSATResposta;
   Resp: TRetornoConsultarSessao;
   RespCanc: TRetornoConsultarSessaoCancelado;
 begin
@@ -597,20 +598,23 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
 
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
         SatDM.ACBrSAT1.CFeCanc.Clear;
 
-        Resposta := SatDM.ACBrSAT1.ConsultarNumeroSessao(cNumeroDeSessao);
+        SatDM.ACBrSAT1.ConsultarNumeroSessao(cNumeroDeSessao);
+        RespSat.Processar(SatDM.ACBrSAT1);
+        Resposta := RespSat.Gerar;
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
         begin
           Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta);
           try
             Resp.Processar(SatDM.ACBrSAT1);
-            Resposta := sLineBreak + Resp.Gerar;
+            Resposta := Resposta + sLineBreak + Resp.Gerar;
           finally
             Resp.Free;
           end;
@@ -621,16 +625,17 @@ begin
           RespCanc := TRetornoConsultarSessaoCancelado.Create(resINI);
           try
             RespCanc.Processar(SatDM.ACBrSAT1);
-            Resposta := sLineBreak + RespCanc.Gerar;
+            Resposta := Resposta + sLineBreak + RespCanc.Gerar;
           finally
             RespCanc.Free;
           end;
         end;
 
-        Resposta := SatDM.RespostaIntegrador;
+        Resposta := Resposta + SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
+        RespSat.Free;
         SatDM.Destravar;
       end;
     end;
@@ -853,7 +858,7 @@ function SAT_CriarCFe(eArquivoIni: PChar; const sResposta: PChar;
 var
   Resp: TRetornoCriarCFe;
   Resposta: Ansistring;
-  ArquivoIni, ArqCFe: String;
+  ArquivoIni: String;
 begin
    try
     VerificarLibInicializada;
@@ -874,7 +879,6 @@ begin
         SatDM.ACBrSAT1.InicializaCFe;
         SatDM.ACBrSAT1.CFe.LoadFromIni(ArquivoIni);
         SatDM.ACBrSAT1.CFe.GerarXML(True);
-
         Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
@@ -922,7 +926,7 @@ begin
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
         Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
-        Resposta := SatDM.RespostaIntegrador;
+        Resposta := Resposta + SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -968,7 +972,7 @@ begin
         Resp.Processar(SatDM.ACBrSAT1);
 
         Resposta := Resp.Gerar;
-        Resposta := SatDM.RespostaIntegrador;
+        Resposta := Resposta + SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally
@@ -1016,7 +1020,7 @@ begin
         Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
         Resp.Processar(SatDM.ACBrSAT1);
         Resposta := Resp.Gerar;
-        Resposta := SatDM.RespostaIntegrador;
+        Resposta := Resposta + SatDM.RespostaIntegrador;
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
       finally

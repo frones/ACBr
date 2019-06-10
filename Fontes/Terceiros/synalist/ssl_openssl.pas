@@ -341,11 +341,15 @@ begin
           if SSLCTXusecertificate(Fctx, cert) > 0 then
             if SSLCTXusePrivateKey(Fctx, pkey) > 0 then
               Result := True;
+
+        //  Set Certificate Verification chain
+        if Result and (ca <> nil) then
+          SslCtxCtrl(Fctx, SSL_CTRL_CHAIN, 0, ca);
       {pf}
       finally
         EvpPkeyFree(pkey);
         X509free(cert);
-        SkX509PopFree(ca,_X509Free); // for ca=nil a new STACK was allocated...
+        //SkX509PopFree(ca,_X509Free); // for ca=nil a new STACK was allocated...
       end;
       {/pf}
     finally

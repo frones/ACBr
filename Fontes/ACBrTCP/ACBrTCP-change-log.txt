@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2019
+-- ACBrMTER --
+[-] Correção para que EchoMode não influencie o Passwordchar
+    https://www.projetoacbr.com.br/forum/topic/51820-acbrmter-echomode-password/
+    (por: DSA)
+
 07/04/2019
 -- ACBrMTER --
 [-] Ajuste para evitar A.V. quando componente ACBrBAL nao está associado a ACBrMTER

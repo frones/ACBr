@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 326
+  Left = 346
   Height = 714
-  Top = 172
+  Top = 179
   Width = 1202
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsDFe
+        ActivePage = tsSat
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 16
+        TabIndex = 17
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -12208,15 +12208,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/DadosEmitente.htm'
               Caption = 'Dados Emitente'
-              ClientHeight = 297
-              ClientWidth = 862
+              ClientHeight = 348
+              ClientWidth = 981
               Font.Height = -13
               ParentFont = False
               object Label134: TLabel
                 Left = 12
                 Height = 17
                 Top = 10
-                Width = 30
+                Width = 29
                 Caption = 'CNPJ'
                 Font.Height = -13
                 ParentColor = False
@@ -12287,7 +12287,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 12
                 Height = 17
                 Top = 60
-                Width = 105
+                Width = 104
                 Caption = 'Regime Tributario'
                 Font.Height = -13
                 ParentColor = False
@@ -12308,7 +12308,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 192
                 Height = 17
                 Top = 60
-                Width = 115
+                Width = 114
                 Caption = 'Regime Trib. ISSQN'
                 Font.Height = -13
                 ParentColor = False
@@ -12340,15 +12340,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/DadosSwHouse.htm'
               Caption = 'Dados Sw.House'
-              ClientHeight = 297
-              ClientWidth = 834
+              ClientHeight = 348
+              ClientWidth = 981
               Font.Height = -13
               ParentFont = False
               object Label171: TLabel
                 Left = 10
                 Height = 17
                 Top = 15
-                Width = 30
+                Width = 29
                 Caption = 'CNPJ'
                 Font.Height = -13
                 ParentColor = False
@@ -12358,7 +12358,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 10
                 Height = 25
                 Top = 31
-                Width = 524
+                Width = 358
                 Anchors = [akTop, akLeft, akRight]
                 Font.Height = -13
                 ParentFont = False
@@ -12378,7 +12378,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 10
                 Height = 25
                 Top = 89
-                Width = 789
+                Width = 936
                 Anchors = [akTop, akLeft, akRight]
                 Font.Height = -13
                 ParentFont = False
@@ -12411,8 +12411,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/Rede.htm'
               Caption = 'Rede'
-              ClientHeight = 297
-              ClientWidth = 834
+              ClientHeight = 348
+              ClientWidth = 981
               Font.Height = -13
               ParentFont = False
               object gbPPPoE: TGroupBox
@@ -12576,7 +12576,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object rgRedeTipoInter: TRadioGroup
                 Left = 2
-                Height = 41
+                Height = 45
                 Top = 0
                 Width = 144
                 AutoFill = True
@@ -12588,7 +12588,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ChildSizing.ShrinkVertical = crsScaleChilds
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
                 ChildSizing.ControlsPerLine = 2
-                ClientHeight = 19
+                ClientHeight = 23
                 ClientWidth = 140
                 Columns = 2
                 Font.Height = -13
@@ -12683,7 +12683,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object rgRedeTipoLan: TRadioGroup
                 Left = 148
-                Height = 41
+                Height = 45
                 Top = 0
                 Width = 288
                 AutoFill = True
@@ -12695,7 +12695,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ChildSizing.ShrinkVertical = crsScaleChilds
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
                 ChildSizing.ControlsPerLine = 3
-                ClientHeight = 19
+                ClientHeight = 23
                 ClientWidth = 284
                 Columns = 3
                 Font.Height = -13
@@ -14860,13 +14860,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object btnSATCont: TPanel
           Tag = 9
           Left = 0
-          Height = 130
+          Height = 150
           Top = 870
           Width = 179
           Align = alTop
           AutoSize = True
           BevelOuter = bvNone
-          ClientHeight = 130
+          ClientHeight = 150
           ClientWidth = 179
           Font.Height = -13
           ParentBidiMode = False
@@ -14997,9 +14997,35 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Font.Height = -13
             ParentColor = False
             ParentFont = False
-            TabOrder = 4
+            TabOrder = 6
             TabStop = True
             OnClick = btnSATPrintClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSATEMAIL: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATPrint
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 130
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Email'
+            Color = 16777139
+            Font.Height = -13
+            ParentColor = False
+            ParentFont = False
+            TabOrder = 4
+            TabStop = True
+            OnClick = btnSATEMAILClick
             OnMouseEnter = ACT_ButtonMouseEnter
             OnMouseLeave = ACT_ButtonMouseLeave
             OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -15027,7 +15053,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object btnPosPrinter: TPanel
           Left = 0
           Height = 30
-          Top = 1030
+          Top = 1050
           Width = 179
           Align = alTop
           BevelOuter = bvNone
@@ -15065,7 +15091,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object btnIntegrador: TPanel
           Left = 0
           Height = 30
-          Top = 1000
+          Top = 1020
           Width = 179
           Align = alTop
           BevelOuter = bvNone

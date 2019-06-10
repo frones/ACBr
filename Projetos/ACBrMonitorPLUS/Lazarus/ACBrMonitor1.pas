@@ -1287,6 +1287,7 @@ type
     procedure btnRFDGeralClick(Sender: TObject);
     procedure btnSATClick(Sender: TObject);
     procedure btnSATDadosClick(Sender: TObject);
+    procedure btnSATEMAILClick(Sender: TObject);
     procedure btnSATEmitenteClick(Sender: TObject);
     procedure btnSATPrintClick(Sender: TObject);
     procedure btnSATRedeClick(Sender: TObject);
@@ -3395,6 +3396,12 @@ begin
   SetColorSubButtons(Sender);
   SetScroll(TPanel(Sender).Parent);
   pgSAT.ActivePage := tsDadosSAT;
+end;
+
+procedure TFrmACBrMonitor.btnSATEMAILClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := tsSATemail;
 end;
 
 procedure TFrmACBrMonitor.btnSATEmitenteClick(Sender: TObject);

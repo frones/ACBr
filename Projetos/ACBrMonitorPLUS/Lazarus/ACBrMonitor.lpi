@@ -454,5 +454,10 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CompilerMessages>
+        <IgnoredMessages idx3123="True" idx3060="True"/>
+      </CompilerMessages>
+    </Other>
   </CompilerOptions>
 </CONFIG>

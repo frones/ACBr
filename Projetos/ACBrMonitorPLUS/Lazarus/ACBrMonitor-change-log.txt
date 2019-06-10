@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/0/2019
+[+] ACBrMonitor1
+Adicionado SubMenu: Email referente ao componente SAT
+
 04/06/2019
 [-] DoNFeUnit
 Ajuste no nome das chamadas de métodos de Respostas conforme alterações da classe lib.

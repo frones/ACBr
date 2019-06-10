@@ -226,6 +226,8 @@ begin
   FDANFEClassOwner := TACBrDFeDANFeReport(AOwner);
 
   FfrxReport := TfrxReport.Create( nil);
+  //Antes de alterar a linha abaixo, queira verificar o seguinte tópico:
+  //https://www.projetoacbr.com.br/forum/topic/51505-travamento-preview-de-v%C3%A1rias-danfes/
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
   FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];

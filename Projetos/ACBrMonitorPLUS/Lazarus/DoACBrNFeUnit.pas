@@ -2241,6 +2241,8 @@ var
   ACopias: Integer;
   APreview: String;
   DanfeRL: TACBrNFeDANFeRL;
+  DanfeEscPos: TACBrNFeDANFeESCPOS;
+  POSPrinter: TACBrPosPrinter;
 begin
   AXMLInut := fpCmd.Params(0);
   AImpressora := fpCmd.Params(1);
@@ -2251,30 +2253,78 @@ begin
   begin
     ACBrNFe.InutNFe.ID := '';
     CargaDFeInut := TACBrCarregarNFeInut.Create(ACBrNFe, AXMLInut);
-    DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
-      ACBrNFe.DANFE:= DanfeRL;
-      DoConfiguraDANFe(False, Trim(APreview) );
+      if (ACBrNFe.InutNFe.modelo = 65) and
+        (MonitorConfig.DFE.Impressao.NFCe.Emissao.Modelo = 1 ) then
+      begin
+        DanfeEscPos := TACBrNFeDANFeESCPOS.Create(ACBrNFe.DANFE);
+        POSPrinter  := TACBrPosPrinter.Create(DanfeEscPos.PosPrinter);
+        try
 
-      if NaoEstaVazio(AImpressora) then
-        ACBrNFe.DANFe.Impressora := AImpressora;
+          PosPrinter.Device.Porta := MonitorConfig.PosPrinter.Porta;
+          PosPrinter.Modelo := TACBrPosPrinterModelo(MonitorConfig.PosPrinter.Modelo);
+          POSPrinter.LinhasEntreCupons:= MonitorConfig.PosPrinter.LinhasPular;
+          PosPrinter.ColunasFonteNormal := MonitorConfig.PosPrinter.Colunas;
+          PosPrinter.CortaPapel := MonitorConfig.PosPrinter.CortarPapel;
+          POSPrinter.EspacoEntreLinhas := MonitorConfig.PosPrinter.EspacoEntreLinhas;
+          POSPrinter.LinhasBuffer:= MonitorConfig.PosPrinter.LinhasBuffer;
+          POSPrinter.TraduzirTags:= MonitorConfig.PosPrinter.TraduzirTags;
+          Posprinter.IgnorarTags:= MonitorConfig.PosPrinter.IgnorarTags;
+          PosPrinter.PaginaDeCodigo:= TACBrPosPaginaCodigo( MonitorConfig.PosPrinter.PaginaDeCodigo );
 
-      if (ACopias > 0) then
-        ACBrNFe.DANFe.NumCopias := ACopias;
+          DanfeEscPos.PosPrinter:= POSPrinter;
+          ACBrNFe.DANFE := DanfeEscPos;
 
-      try
-        DoAntesDeImprimir(( StrToBoolDef(APreview,False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
-        ACBrNFe.ImprimirInutilizacao;
-      finally
-        DoDepoisDeImprimir;
+          if not PosPrinter.ControlePorta then
+          begin
+            PosPrinter.Ativar;
+            if not PosPrinter.Device.Ativo then
+              PosPrinter.Device.Ativar;
+          end;
+
+          if (ACopias > 0) then
+            ACBrNFe.DANFe.NumCopias := ACopias;
+
+          ACBrNFe.ImprimirInutilizacao;
+
+        finally
+          DanfeEscPos.Free;
+          POSPrinter.Free;
+        end;
+      end
+      else
+      begin
+        DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
+        try
+          ACBrNFe.DANFE:= DanfeRL;
+          DoConfiguraDANFe(False, Trim(APreview) );
+
+          if NaoEstaVazio(AImpressora) then
+            ACBrNFe.DANFe.Impressora := AImpressora;
+
+          if (ACopias > 0) then
+            ACBrNFe.DANFe.NumCopias := ACopias;
+
+          try
+            DoAntesDeImprimir(( StrToBoolDef(APreview,False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+            ACBrNFe.ImprimirInutilizacao;
+          finally
+            DoDepoisDeImprimir;
+          end;
+
+        finally
+          DanfeRL.Free;
+        end;
+
       end;
+
     finally
       CargaDFeInut.Free;
-      DanfeRL.Free;
     end;
 
     fpCmd.Resposta := 'Inutilização Impresso com sucesso';
   end;
+
 end;
 
 { TMetodoImprimirInutilizacaoPDF }

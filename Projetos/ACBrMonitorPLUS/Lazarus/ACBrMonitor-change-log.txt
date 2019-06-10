@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2019
+[+] DoACBrNFeUnit
+Adicionado funcionalidade de impressão de inutilização de NFCe em ESCPOS
+
 08/0/2019
 [+] ACBrMonitor1
 Adicionado SubMenu: Email referente ao componente SAT

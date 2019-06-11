@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/06/2019
+-- ACBrCTeConhecimentos --
+[*] Incluido a leitura do campo indAlteraToma ao ler o arquivo INI.
+   Por: Italo Jurisato Junior
+
 24/05/2019
 -- ACBrCTeWebservices --
 [*] Corrigido a montagem do XML do evento para ser validado corretamente

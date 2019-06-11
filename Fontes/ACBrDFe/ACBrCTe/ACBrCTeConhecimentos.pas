@@ -2722,7 +2722,8 @@ begin
         with infCTeSub do
         {$ENDIF}
         begin
-          chCte := INIRec.ReadString( 'infCteSub','chCte','');
+          chCte         := INIRec.ReadString( 'infCteSub','chCte','');
+          indAlteraToma := StrToTIndicador(Ok, INIRec.ReadString( 'infCteSub','indAlteraToma','0'));
 
           tomaICMS.refNFe := INIRec.ReadString( 'infCteSub','refNFe','');
 

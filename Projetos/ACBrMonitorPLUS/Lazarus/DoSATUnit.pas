@@ -318,8 +318,8 @@ begin
 end;
 
 procedure TACBrObjetoSAT.GerarIniCFe(AStr: String);
-var
-  ok: boolean;
+//var
+  //ok: boolean;
 begin
   with fACBrSAT do
   begin

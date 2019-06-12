@@ -1666,7 +1666,7 @@ begin
     ACBrBPe.WebServices.Consulta.Executar;
 
     ACBrBPe.EventoBPe.Evento.Clear;
-    with ACBrBPe.EventoBPe.Evento.Add {New} do
+    with ACBrBPe.EventoBPe.Evento.New do
     begin
       Infevento.CNPJ := ACNPJ;
       if Trim(Infevento.CNPJ) = '' then

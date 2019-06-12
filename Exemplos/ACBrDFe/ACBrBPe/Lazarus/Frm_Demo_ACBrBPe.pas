@@ -428,7 +428,7 @@ Begin
    // Informações sobre a Viagem
    //
 
-   with infViagem.Add do
+   with infViagem.New do
    begin
      cPercurso    := 'Código do Percurso';
      xPercurso    := 'Descrição do Percurso';
@@ -460,17 +460,17 @@ Begin
    //
    // Composição do valor do BPe
    //
-   with infValorBPe.Comp.Add do
+   with infValorBPe.Comp.New do
    begin
      tpComp := tcTarifa;
      vComp  := 25.00;
    end;
-   with infValorBPe.Comp.Add do
+   with infValorBPe.Comp.New do
    begin
      tpComp := tcPedagio;
      vComp  := 35.00;
    end;
-   with infValorBPe.Comp.Add do
+   with infValorBPe.Comp.New do
    begin
      tpComp := tcOutros;
      vComp  := 38.00;
@@ -492,7 +492,7 @@ Begin
    // Informações sobre o Pagamento
    //
 
-   with Pag.Add do
+   with Pag.New do
    begin
      tPag := fpDinheiro;
      vPag := 98.00;
@@ -507,12 +507,12 @@ Begin
    // Autorizados para o Download do XML do BPe
    //
    (*
-   with autXML.Add do
+   with autXML.New do
    begin
      CNPJCPF := '00000000000000';
    end;
 
-   with autXML.Add do
+   with autXML.New do
    begin
      CNPJCPF := '11111111111111';
    end;
@@ -1114,7 +1114,7 @@ begin
        exit;
     ACBrBPe1.EventoBPe.Evento.Clear;
     ACBrBPe1.EventoBPe.idLote := StrToInt(idLote);
-    with ACBrBPe1.EventoBPe.Evento.Add do
+    with ACBrBPe1.EventoBPe.Evento.New do
     begin
      infEvento.dhEvento := now;
      infEvento.tpEvento := teCancelamento;
@@ -1151,7 +1151,7 @@ begin
      exit;
 
   ACBrBPe1.EventoBPe.Evento.Clear;
-  with ACBrBPe1.EventoBPe.Evento.Add do
+  with ACBrBPe1.EventoBPe.Evento.New do
    begin
      infEvento.chBPe := Chave;
      infEvento.CNPJ   := CNPJ;

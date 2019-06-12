@@ -57,14 +57,15 @@ unit pcnRetEnvBPe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor;
+  SysUtils, Classes, Contnrs,
+  pcnConversao, pcnLeitor;
 
 type
 
   TProtBPeCollection     = class;
   TProtBPeCollectionItem = class;
 
-  TretEnvBPe = class(TPersistent)
+  TretEnvBPe = class(TObject)
   private
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
@@ -80,7 +81,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property versao: String          read Fversao    write Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb    write FtpAmb;
@@ -91,17 +91,17 @@ type
     property ProtBPe: TProtBPeCollection read FProtBPe  write SetProtBPe;
   end;
 
-  TProtBPeCollection = class(TCollection)
+  TProtBPeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TProtBPeCollectionItem;
     procedure SetItem(Index: Integer; Value: TProtBPeCollectionItem);
   public
-    constructor Create(AOwner: TretEnvBPe); reintroduce;
-    function Add: TProtBPeCollectionItem;
+    function Add: TProtBPeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TProtBPeCollectionItem;
     property Items[Index: Integer]: TProtBPeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TProtBPeCollectionItem = class(TCollectionItem)
+  TProtBPeCollectionItem = class(TObject)
   private
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
@@ -112,7 +112,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FXMLprotBPe: String;
-  published
+  public
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
     property verAplic: String        read FverAplic   write FverAplic;
     property chBPe: String           read FchBPe      write FchBPe;
@@ -130,8 +130,9 @@ implementation
 
 constructor TretEnvBPe.Create;
 begin
+  inherited;
   FLeitor  := TLeitor.Create;
-  FProtBPe := TProtBPeCollection.Create(self);
+  FProtBPe := TProtBPeCollection.Create;
 end;
 
 destructor TretEnvBPe.Destroy;
@@ -148,14 +149,9 @@ end;
 
 { TProtBPeCollection }
 
-constructor TProtBPeCollection.Create(AOwner: TretEnvBPe);
-begin
-  inherited Create(TProtBPeCollectionItem);
-end;
-
 function TProtBPeCollection.Add: TProtBPeCollectionItem;
 begin
-  Result := TProtBPeCollectionItem(inherited Add);
+  Result := Self.New;
 end;
 
 function TProtBPeCollection.GetItem(Index: Integer): TProtBPeCollectionItem;
@@ -188,7 +184,7 @@ begin
       i := 0;
       while (FcStat = 100) and (Leitor.rExtrai(1, 'protBPe', '', i + 1) <> '') do
       begin
-        ProtBPe.Add;
+        ProtBPe.New;
 
         // A propriedade XMLprotBPe contem o XML que traz o resultado do
         // processamento da BP-e.
@@ -213,6 +209,12 @@ begin
   except
     Result := false;
   end;
+end;
+
+function TProtBPeCollection.New: TProtBPeCollectionItem;
+begin
+  Result := TProtBPeCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

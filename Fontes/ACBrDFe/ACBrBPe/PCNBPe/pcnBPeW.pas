@@ -72,7 +72,7 @@ type
     FBPe: TBPe;
     FOpcoes: TGeradorOpcoes;
 
-    Versao: String;
+    FVersao: String;
     FChaveBPe: string;
     FIdCSRT: Integer;
     FCSRT: String;
@@ -177,7 +177,7 @@ var
 begin
   Gerador.ListaDeAlertas.Clear;
 
-  Versao := Copy(BPe.infBPe.VersaoStr, 9, 4);
+  FVersao := Copy(BPe.infBPe.VersaoStr, 9, 4);
 
   FChaveBPe := GerarChaveAcesso(BPe.ide.cUF, BPe.ide.dhEmi, BPe.emit.CNPJ, BPe.ide.serie,
                             BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)),

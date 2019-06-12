@@ -57,36 +57,33 @@ unit pcnRetConsSitBPe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnLeitor, pcnProcBPe, pcnRetEnvEventoBPe;
 
 type
 
-  TRetEventoBPeCollection     = class;
   TRetEventoBPeCollectionItem = class;
-  TRetConsSitBPe              = class;
 
-  TRetEventoBPeCollection = class(TCollection)
+  TRetEventoBPeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TRetEventoBPeCollectionItem;
     procedure SetItem(Index: Integer; Value: TRetEventoBPeCollectionItem);
   public
-    constructor Create(AOwner: TPersistent);
-    function Add: TRetEventoBPeCollectionItem;
+    function Add: TRetEventoBPeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TRetEventoBPeCollectionItem;
     property Items[Index: Integer]: TRetEventoBPeCollectionItem read GetItem write SetItem; default;
   end;
 
-  TRetEventoBPeCollectionItem = class(TCollectionItem)
+  TRetEventoBPeCollectionItem = class(TObject)
   private
     FRetEventoBPe: TRetEventoBPe;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-  published
     property RetEventoBPe: TRetEventoBPe read FRetEventoBPe write FRetEventoBPe;
   end;
 
-  TRetConsSitBPe = class(TPersistent)
+  TRetConsSitBPe = class(TObject)
   private
     FLeitor: TLeitor;
     Fversao: String;
@@ -102,7 +99,6 @@ type
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
-  published
     property Leitor: TLeitor                        read FLeitor        write FLeitor;
     property versao: String                         read Fversao        write Fversao;
     property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
@@ -178,11 +174,11 @@ begin
       if Assigned(procEventoBPe) then
         procEventoBPe.Free;
 
-      procEventoBPe := TRetEventoBPeCollection.Create(Self);
+      procEventoBPe := TRetEventoBPeCollection.Create;
       i:=0;
       while Leitor.rExtrai(1, 'procEventoBPe', '', i + 1) <> '' do
       begin
-        procEventoBPe.Add;
+        procEventoBPe.New;
         procEventoBPe.Items[i].RetEventoBPe.Leitor.Arquivo := Leitor.Grupo;
         procEventoBPe.Items[i].RetEventoBPe.XML            := Leitor.Grupo; 
         procEventoBPe.Items[i].RetEventoBPe.LerXml;
@@ -200,13 +196,7 @@ end;
 
 function TRetEventoBPeCollection.Add: TRetEventoBPeCollectionItem;
 begin
-  Result := TRetEventoBPeCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TRetEventoBPeCollection.Create(AOwner: TPersistent);
-begin
-  inherited Create(TRetEventoBPeCollectionItem);
+  Result := Self.New;
 end;
 
 function TRetEventoBPeCollection.GetItem(Index: Integer): TRetEventoBPeCollectionItem;
@@ -231,6 +221,12 @@ destructor TRetEventoBPeCollectionItem.Destroy;
 begin
   FRetEventoBPe.Free;
   inherited;
+end;
+
+function TRetEventoBPeCollection.New: TRetEventoBPeCollectionItem;
+begin
+  Result := TRetEventoBPeCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

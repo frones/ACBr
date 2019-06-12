@@ -198,7 +198,6 @@ begin
   begin
     FBPe.Ide.modelo := 63;
     FBPe.infBPe.Versao := VersaoBPeToDbl(Configuracoes.Geral.VersaoDF);
-
     FBPe.Ide.tpBPe := tbNormal;
     FBPe.Ide.verProc := 'ACBrBPe';
     FBPe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
@@ -859,7 +858,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infViagem.Add do
+        with infViagem.New do
         begin
           cPercurso    := sFim;
           xPercurso    := INIRec.ReadString(sSecao, 'xPercurso', '');
@@ -911,7 +910,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break;
 
-        with infValorBPe.Comp.Add do
+        with infValorBPe.Comp.New do
         begin
           tpComp := StrTotpComponente(Ok, sFim);
           vComp  := StringToFloatDef(INIRec.ReadString(sSecao, 'vComp', ''), 0);
@@ -973,7 +972,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;
 
-        with pag.Add do
+        with pag.New do
         begin
           tPag    := StrToFormaPagamento(OK, sFim);
           xPag    := INIRec.ReadString(sSecao, 'xPag', '');
@@ -1005,7 +1004,7 @@ begin
         if (sFim = 'FIM') or (Length(sFim) <= 0) then
           break ;
 
-        with autXML.Add do
+        with autXML.New do
           CNPJCPF := sFim;
 
         Inc(I);
@@ -1043,7 +1042,7 @@ begin
   if not (AOwner is TACBrBPe) then
     raise EACBrBPeException.Create('AOwner deve ser do tipo TACBrBPe');
 
-  inherited;
+  inherited Create(AOwner, ItemClass);
 
   FACBrBPe := TACBrBPe(AOwner);
   FConfiguracoes := TACBrBPe(FACBrBPe).Configuracoes;

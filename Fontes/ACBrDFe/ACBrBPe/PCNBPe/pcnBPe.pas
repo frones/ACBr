@@ -57,7 +57,7 @@ unit pcnBPe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnConversao, pcnConversaoBPe, pcnSignature, pcnProcBPe, pcnGerador;
 
 type
@@ -170,7 +170,7 @@ type
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
   end;
 
-  TinfBPe = class(TPersistent)
+  TinfBPe = class(TObject)
   private
     FVersao: Real;
     FID: String;
@@ -178,14 +178,14 @@ type
     function GetVersaoStr: String;
     function GetVersao: Real;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TinfBPe);
+
     property Versao: Real read GetVersao write FVersao;
     property VersaoStr: String read GetVersaoStr;
     property ID: String read FID write FID;
   end;
 
-  TIde = class(TPersistent)
+  TIde = class(TObject)
   private
     FcUF: Integer;
     FtpAmb: TpcnTipoAmbiente;
@@ -208,11 +208,8 @@ type
     FxJust  : String;
 
   public
-    constructor Create(AOwner: TBPe);
-    destructor Destroy; override;
+    procedure Assign(Source: TIde);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property cUF: Integer read FcUF write FcUF;
     property tpAmb: TpcnTipoAmbiente read FtpAmb write FtpAmb default taHomologacao;
     property modelo: Integer read Fmodelo write Fmodelo;
@@ -234,7 +231,7 @@ type
     property xJust: String read FxJust write FxJust;
   end;
 
-  TEmit = class(TPersistent)
+  TEmit = class(TObject)
   private
     FCNPJ: String;
     FIE: String;
@@ -247,11 +244,10 @@ type
     FenderEmit: TenderEmit;
     FTAR: String;
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TEmit);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property CNPJ: String read FCNPJ write FCNPJ;
     property IE: String read FIE write FIE;
     property IEST: String read FIEST write FIEST;
@@ -264,7 +260,7 @@ type
     property TAR: String read FTAR write FTAR;
   end;
 
-  TEnderEmit = class(TPersistent)
+  TEnderEmit = class(TObject)
   private
     FxLgr: String;
     Fnro: String;
@@ -277,8 +273,8 @@ type
     Ffone: String;
     FEmail: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TEnderEmit);
+
     property xLgr: String read FxLgr write FxLgr;
     property nro: String read Fnro write Fnro;
     property xCpl: String read FxCpl write FxCpl;
@@ -291,7 +287,7 @@ type
     property Email: String read FEmail write FEmail;
   end;
 
-  TComp = class(TPersistent)
+  TComp = class(TObject)
   private
     FxNome: String;
     FCNPJCPF: String;
@@ -299,11 +295,10 @@ type
     FIE: String;
     FenderComp: TenderComp;
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TComp);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property xNome: String read FxNome write FxNome;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
@@ -311,7 +306,7 @@ type
     property EnderComp: TEnderComp read FEnderComp write FEnderComp;
   end;
 
-  TEnderComp = class(TPersistent)
+  TEnderComp = class(TObject)
   private
     FxLgr: String;
     Fnro: String;
@@ -326,8 +321,8 @@ type
     Ffone: String;
     FEmail: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TEnderComp);
+
     property xLgr: String read FxLgr write FxLgr;
     property nro: String read Fnro write Fnro;
     property xCpl: String read FxCpl write FxCpl;
@@ -342,37 +337,33 @@ type
     property Email: String read FEmail write FEmail;
   end;
 
-  TAgencia = class(TPersistent)
+  TAgencia = class(TObject)
   private
     FxNome: String;
     FCNPJ: String;
     FenderAgencia: TenderComp;
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TAgencia);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property xNome: String read FxNome write FxNome;
     property CNPJ: String read FCNPJ write FCNPJ;
     property EnderAgencia: TEnderComp read FEnderAgencia write FEnderAgencia;
   end;
 
-  TinfBPeSub = class(TPersistent)
+  TinfBPeSub = class(TObject)
   private
     FchBPe: String;
     FtpSub: TTipoSubstituicao;
   public
-    constructor Create(AOwner: TBPe);
-    destructor Destroy; override;
+    procedure Assign(Source: TinfBPeSub);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property chBPe: String read FchBPe write FchBPe;
     property tpSub: TTipoSubstituicao read FtpSub write FtpSub;
   end;
 
-  TinfPassagem = class(TPersistent)
+  TinfPassagem = class(TObject)
   private
     FcLocOrig: String;
     FxLocOrig: String;
@@ -382,11 +373,10 @@ type
     FdhValidade: TDateTime;
     FinfPassageiro: TinfPassageiro;
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TinfPassagem);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property cLocOrig: String read FcLocOrig write FcLocOrig;
     property xLocOrig: String read FxLocOrig write FxLocOrig;
     property cLocDest: String read FcLocDest write FcLocDest;
@@ -396,7 +386,7 @@ type
     property infPassageiro: TinfPassageiro read FinfPassageiro write FinfPassageiro;
   end;
 
-  TinfPassageiro = class(TPersistent)
+  TinfPassageiro = class(TObject)
   private
     FxNome: String;
     FCPF: String;
@@ -407,8 +397,8 @@ type
     FFone: String;
     FEmail: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TinfPassageiro);
+
     property xNome: String read FxNome write FxNome;
     property CPF: String read FCPF write FCPF;
     property tpDoc: TTipoDocumento read FtpDoc write FtpDoc;
@@ -419,18 +409,17 @@ type
     property Email: String read FEmail write FEmail;
   end;
 
-  TInfViagemCollection = class(TCollection)
+  TInfViagemCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfViagemCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfViagemCollectionItem);
   public
-    constructor Create(AOwner: TBPe);
-    destructor Destroy; override;
-    function Add: TInfViagemCollectionItem;
+    function Add: TInfViagemCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfViagemCollectionItem;
     property Items[Index: Integer]: TInfViagemCollectionItem read GetItem write SetItem; default;
   end;
 
-  TInfViagemCollectionItem = class(TCollectionItem)
+  TInfViagemCollectionItem = class(TObject)
   private
     FcPercurso: String;
     FxPercurso: String;
@@ -445,11 +434,10 @@ type
     FPlataforma: String;
     FinfTravessia: TinfTravessia;
   public
-    constructor Create(Collection: TCollection); override;
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TInfViagemCollectionItem);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property cPercurso: String read FcPercurso write FcPercurso;
     property xPercurso: String read FxPercurso write FxPercurso;
     property tpViagem: TTipoViagem read FtpViagem write FtpViagem;
@@ -464,13 +452,13 @@ type
     property infTravessia: TinfTravessia read FinfTravessia write FinfTravessia;
   end;
 
-  TinfTravessia = class(TPersistent)
+  TinfTravessia = class(TObject)
   private
     FtpVeiculo: TTipoVeiculo;
     FsitVeiculo: TSitVeiculo;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TinfTravessia);
+
     property tpVeiculo: TTipoVeiculo read FtpVeiculo write FtpVeiculo;
     property sitVeiculo: TSitVeiculo read FsitVeiculo write FsitVeiculo;
   end;
@@ -488,7 +476,7 @@ type
 
     procedure SetComp(const Value: TCompCollection);
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
 
     procedure Assign(Source: TinfValorBPe);
@@ -502,49 +490,44 @@ type
     property Comp: TCompCollection read FComp write SetComp;
   end;
 
-  TCompCollection = class(TCollection)
+  TCompCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TCompCollectionItem;
     procedure SetItem(Index: Integer; Value: TCompCollectionItem);
   public
-    constructor Create(AOwner: TinfValorBPe);
-    function Add: TCompCollectionItem;
+    function Add: TCompCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TCompCollectionItem;
     property Items[Index: Integer]: TCompCollectionItem read GetItem write SetItem; default;
   end;
 
-  TCompCollectionItem = class(TCollectionItem)
+  TCompCollectionItem = class(TObject)
   private
     FtpComp: TTipoComponente;
     FvComp: Currency;
   public
-    constructor Create(Collection: TCollection); override;
-    destructor Destroy; override;
-
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TCompCollectionItem);
     property tpComp: TTipoComponente read FtpComp write FtpComp;
     property vComp: Currency read FvComp write FvComp;
   end;
 
-  TImp = class(TPersistent)
+  TImp = class(TObject)
   private
     FICMS: TICMS;
     FvTotTrib: Currency;
     FinfAdFisco: String;
     FICMSUFFim: TICMSUFFim;
   public
-    constructor Create(AOwner: TBPe);
+    constructor Create;
     destructor Destroy; override;
+    procedure Assign(Source: TImp);
 
-    procedure Assign(Source: TPersistent); override;
-  published
     property ICMS: TICMS read FICMS write FICMS;
     property vTotTrib: Currency read FvTotTrib write FvTotTrib;
     property infAdFisco: String read FinfAdFisco write FinfAdFisco;
     property ICMSUFFim: TICMSUFFim read FICMSUFFim write FICMSUFFim;
   end;
 
-  TICMS = class(TPersistent)
+  TICMS = class(TObject)
   private
     FCST: TpcnCSTIcms;
     FvBC: Currency;
@@ -557,8 +540,7 @@ type
     FpICMSOutraUF: Currency;
     FvICMSOutraUF: Currency;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TICMS);
     property CST: TpcnCSTIcms read FCST write FCST default cst00;
     property vBC: Currency read FvBC write FvBC;
     property pICMS: Currency read FpICMS write FpICMS;
@@ -571,7 +553,7 @@ type
     property vICMSOutraUF: Currency read FvICMSOutraUF write FvICMSOutraUF;
   end;
 
-  TICMSUFFim = class(TPersistent)
+  TICMSUFFim = class(TObject)
   private
     FvBCUFFim: Currency;
     FpFCPUFFim: Currency;
@@ -582,8 +564,8 @@ type
     FvICMSUFFim: Currency;
     FvICMSUFIni: Currency;    
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TICMSUFFim);
+
     property vBCUFFim: Currency read FvBCUFFim write FvBCUFFim;
     property pFCPUFFim: Currency read FpFCPUFFim write FpFCPUFFim;
     property pICMSUFFim: Currency read FpICMSUFFim write FpICMSUFFim;
@@ -596,17 +578,17 @@ type
 
   { TpagCollection}
 
-  TpagCollection = class(TCollection)
+  TpagCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TpagCollectionItem;
     procedure SetItem(Index: Integer; Value: TpagCollectionItem);
   public
-    constructor Create(AOwner: TBPe);
-    function Add: TpagCollectionItem;
+    function Add: TpagCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TpagCollectionItem;
     property Items[Index: Integer]: TpagCollectionItem read GetItem write SetItem; default;
   end;
 
-  TpagCollectionItem = class(TCollectionItem)
+  TpagCollectionItem = class(TObject)
   private
     FtPag: TpcnFormaPagamento;
     FxPag: String;
@@ -622,8 +604,7 @@ type
     FnParcelas: Integer;
     FinfAdCard: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TpagCollectionItem);
     property tPag: TpcnFormaPagamento read FtPag write FtPag;
     property xPag: String read FxPag write FxPag;
     property nDocPag: String read FnDocPag write FnDocPag;
@@ -639,46 +620,40 @@ type
     property infAdCard: String read FinfAdCard write FinfAdCard;
   end;
 
-  TautXMLCollection = class(TCollection)
+  TautXMLCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TautXMLCollectionItem;
     procedure SetItem(Index: Integer; Value: TautXMLCollectionItem);
   public
-    constructor Create(AOwner: TBPe);
-    function Add: TautXMLCollectionItem;
+    function Add: TautXMLCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TautXMLCollectionItem;
     property Items[Index: Integer]: TautXMLCollectionItem read GetItem write SetItem; default;
   end;
 
-  TautXMLCollectionItem = class(TCollectionItem)
+  TautXMLCollectionItem = class(TObject)
   private
     FCNPJCPF: String;
   public
-    constructor Create(Collection: TCollection); override;
-    destructor Destroy; override;
-
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TautXMLCollectionItem);
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
   end;
 
-  TInfAdic = class(TPersistent)
+  TInfAdic = class(TObject)
   private
     FinfAdFisco: String;
     FinfCpl: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TInfAdic);
     property infAdFisco: String read FinfAdFisco write FinfAdFisco;
     property infCpl: String read FinfCpl write FinfCpl;
   end;
 
-  TinfBPeSupl = class(TPersistent)
+  TinfBPeSupl = class(TObject)
   private
     FqrCodBPe: String;
     FboardPassBPe: String;
   public
-    procedure Assign(Source: TPersistent); override;
-  published
+    procedure Assign(Source: TinfBPeSupl);
     property qrCodBPe: String read FqrCodBPe write FqrCodBPe;
     property boardPassBPe: String read FboardPassBPe write FboardPassBPe;
   end;
@@ -727,17 +702,17 @@ constructor TBPe.Create;
 begin
   inherited Create;
   FinfBPe      := TinfBPe.Create;
-  FIde         := TIde.Create(Self);
-  FEmit        := TEmit.Create(Self);
-  FComp        := TComp.Create(Self);
-  FAgencia     := TAgencia.Create(Self);
-  FinfBPeSub   := TinfBPeSub.Create(Self);
-  FinfPassagem := TinfPassagem.Create(Self);
-  FinfViagem   := TInfViagemCollection.Create(Self);
-  FinfValorBPe := TinfValorBPe.Create(Self);
-  FImp         := TImp.Create(Self);
-  Fpag         := TpagCollection.Create(Self);
-  FautXML      := TautXMLCollection.Create(Self);
+  FIde         := TIde.Create;
+  FEmit        := TEmit.Create;
+  FComp        := TComp.Create;
+  FAgencia     := TAgencia.Create;
+  FinfBPeSub   := TinfBPeSub.Create;
+  FinfPassagem := TinfPassagem.Create;
+  FinfViagem   := TInfViagemCollection.Create;
+  FinfValorBPe := TinfValorBPe.Create;
+  FImp         := TImp.Create;
+  Fpag         := TpagCollection.Create;
+  FautXML      := TautXMLCollection.Create;
   FinfAdic     := TinfAdic.Create;
   FinfBPeSupl  := TinfBPeSupl.Create;
   FSignature   := TSignature.create;
@@ -787,15 +762,10 @@ end;
 
 { TinfBPe }
 
-procedure TinfBPe.Assign(Source: TPersistent);
+procedure TinfBPe.Assign(Source: TinfBPe);
 begin
-  if Source is TinfBPe then
-  begin
-    ID := TinfBPe(Source).ID;
-    Versao := TinfBPe(Source).Versao;
-  end
-  else
-    inherited;
+  ID     := Source.ID;
+  Versao := Source.Versao;
 end;
 
 function TinfBPe.GetVersao: Real;
@@ -816,66 +786,46 @@ end;
 
 {Ide}
 
-procedure TIde.Assign(Source: TPersistent);
+procedure TIde.Assign(Source: TIde);
 begin
-  if Source is TIde then
-  begin
-    cUF := TIde(Source).cUF;
-    tpAmb := TIde(Source).tpAmb;
-    modelo := TIde(Source).modelo;
-    serie := TIde(Source).serie;
-    nBP := TIde(Source).nBP;
-    cBP := TIde(Source).cBP;
-    cDV := TIde(Source).cDV;
-    Modal := TIde(Source).modal;
-    dhEmi := TIde(Source).dhEmi;
-    tpEmis := TIde(Source).tpEmis;
-    verProc := TIde(Source).verProc;
-    tpBPe := TIde(Source).tpBPe;
-    indPres := TIde(Source).indPres;
-    UFIni := TIde(Source).UFIni;
-    cMunIni := TIde(Source).cMunIni;
-    UFFim := TIde(Source).UFFim;
-    cMunFim := TIde(Source).cMunFim;
-    dhCont := TIde(Source).dhCont;
-    xJust := TIde(Source).xJust;
-  end
-  else
-    inherited;
-end;
-
-constructor TIde.Create(AOwner: TBPe);
-begin
-  inherited Create;
-end;
-
-destructor TIde.Destroy;
-begin
-  inherited;
+  cUF     := Source.cUF;
+  tpAmb   := Source.tpAmb;
+  modelo  := Source.modelo;
+  serie   := Source.serie;
+  nBP     := Source.nBP;
+  cBP     := Source.cBP;
+  cDV     := Source.cDV;
+  Modal   := Source.modal;
+  dhEmi   := Source.dhEmi;
+  tpEmis  := Source.tpEmis;
+  verProc := Source.verProc;
+  tpBPe   := Source.tpBPe;
+  indPres := Source.indPres;
+  UFIni   := Source.UFIni;
+  cMunIni := Source.cMunIni;
+  UFFim   := Source.UFFim;
+  cMunFim := Source.cMunFim;
+  dhCont  := Source.dhCont;
+  xJust   := Source.xJust;
 end;
 
 {Emit}
 
-procedure TEmit.Assign(Source: TPersistent);
+procedure TEmit.Assign(Source: TEmit);
 begin
-  if Source is TEmit then
-  begin
-    CNPJ := TEmit(Source).CNPJ;
-    IE := TEmit(Source).IE;
-    IEST := TEmit(Source).IEST;
-    xNome := TEmit(Source).xNome;
-    xFant := TEmit(Source).xFant;
-    IM := TEmit(Source).IM;
-    CNAE := TEmit(Source).CNAE;
-    CRT := TEmit(Source).CRT;
-    EnderEmit.Assign(TEmit(Source).EnderEmit);
-    TAR := TEmit(Source).TAR;
-  end
-  else
-    inherited;
+  CNPJ  := Source.CNPJ;
+  IE    := Source.IE;
+  IEST  := Source.IEST;
+  xNome := Source.xNome;
+  xFant := Source.xFant;
+  IM    := Source.IM;
+  CNAE  := Source.CNAE;
+  CRT   := Source.CRT;
+  EnderEmit.Assign(Source.EnderEmit);
+  TAR   := Source.TAR;
 end;
 
-constructor TEmit.Create(AOwner: TBPe);
+constructor TEmit.Create;
 begin
   inherited Create;
   FEnderEmit := TEnderEmit.Create;
@@ -890,42 +840,33 @@ end;
 
 { TenderEmit }
 
-procedure TenderEmit.Assign(Source: TPersistent);
+procedure TenderEmit.Assign(Source: TEnderEmit);
 begin
-  if Source is TenderEmit then
-  begin
-    xLgr := TenderEmit(Source).xLgr;
-    nro := TenderEmit(Source).nro;
-    xCpl := TenderEmit(Source).xCpl;
-    xBairro := TenderEmit(Source).xBairro;
-    cMun := TenderEmit(Source).cMun;
-    xMun := TenderEmit(Source).xMun;
-    CEP := TenderEmit(Source).CEP;
-    UF := TenderEmit(Source).UF;
-    fone := TenderEmit(Source).fone;
-    Email := TenderEmit(Source).Email;
-  end
-  else
-    inherited;
+  xLgr    := Source.xLgr;
+  nro     := Source.nro;
+  xCpl    := Source.xCpl;
+  xBairro := Source.xBairro;
+  cMun    := Source.cMun;
+  xMun    := Source.xMun;
+  CEP     := Source.CEP;
+  UF      := Source.UF;
+  fone    := Source.fone;
+  Email   := Source.Email;
 end;
 
 { TComp }
 
-procedure TComp.Assign(Source: TPersistent);
+procedure TComp.Assign(Source: TComp);
 begin
-  if Source is TComp then
-  begin
-    xNome := TComp(Source).xNome;
-    CNPJCPF := TComp(Source).CNPJCPF;
-    idEstrangeiro := TComp(Source).idEstrangeiro;
-    IE := TComp(Source).IE;
-    EnderComp.Assign(TComp(Source).EnderComp);
-  end
-  else
-    inherited;
+  xNome         := Source.xNome;
+  CNPJCPF       := Source.CNPJCPF;
+  idEstrangeiro := Source.idEstrangeiro;
+  IE            := Source.IE;
+  EnderComp.Assign(Source.EnderComp);
+
 end;
 
-constructor TComp.Create(AOwner: TBPe);
+constructor TComp.Create;
 begin
   inherited Create;
   FEnderComp := TEnderComp.Create;
@@ -939,42 +880,32 @@ end;
 
 { TEnderComp }
 
-procedure TEnderComp.Assign(Source: TPersistent);
+procedure TEnderComp.Assign(Source: TEnderComp);
 begin
-  if Source is TEnderComp then
-  begin
-    xLgr := TEnderComp(Source).xLgr;
-    nro := TEnderComp(Source).nro;
-    xCpl := TEnderComp(Source).xCpl;
-    xBairro := TEnderComp(Source).xBairro;
-    cMun := TEnderComp(Source).cMun;
-    xMun := TEnderComp(Source).xMun;
-    UF := TEnderComp(Source).UF;
-    CEP := TEnderComp(Source).CEP;
-    cPais := TEnderComp(Source).cPais;
-    xPais := TEnderComp(Source).xPais;
-    fone := TEnderComp(Source).fone;
-    Email := TEnderComp(Source).Email;
-  end
-  else
-    inherited;
+  xLgr    := Source.xLgr;
+  nro     := Source.nro;
+  xCpl    := Source.xCpl;
+  xBairro := Source.xBairro;
+  cMun    := Source.cMun;
+  xMun    := Source.xMun;
+  UF      := Source.UF;
+  CEP     := Source.CEP;
+  cPais   := Source.cPais;
+  xPais   := Source.xPais;
+  fone    := Source.fone;
+  Email   := Source.Email;
 end;
 
 { TAgencia }
 
-procedure TAgencia.Assign(Source: TPersistent);
+procedure TAgencia.Assign(Source: TAgencia);
 begin
-  if Source is TAgencia then
-  begin
-    xNome := TAgencia(Source).xNome;
-    CNPJ := TEmit(Source).CNPJ;
-    EnderAgencia.Assign(TAgencia(Source).EnderAgencia);
-  end
-  else
-    inherited;
+  xNome := Source.xNome;
+  CNPJ  := Source.CNPJ;
+  EnderAgencia.Assign(Source.EnderAgencia);
 end;
 
-constructor TAgencia.Create(AOwner: TBPe);
+constructor TAgencia.Create;
 begin
   inherited Create;
   FEnderAgencia := TEnderComp.Create;
@@ -988,47 +919,26 @@ end;
 
 { TinfBPeSub }
 
-procedure TinfBPeSub.Assign(Source: TPersistent);
+procedure TinfBPeSub.Assign(Source: TinfBPeSub);
 begin
-  if Source is TinfBPeSub then
-  begin
-    chBPe := TinfBPeSub(Source).chBPe;
-    tpSub := TinfBPeSub(Source).tpSub;
-  end
-  else
-    inherited;
-end;
-
-constructor TinfBPeSub.Create(AOwner: TBPe);
-begin
-  inherited Create;
-end;
-
-destructor TinfBPeSub.Destroy;
-begin
-
-  inherited;
+  chBPe := Source.chBPe;
+  tpSub := Source.tpSub;
 end;
 
 { TinfPassagem }
 
-procedure TinfPassagem.Assign(Source: TPersistent);
+procedure TinfPassagem.Assign(Source: TinfPassagem);
 begin
-  if Source is TinfPassagem then
-  begin
-    cLocOrig := TinfPassagem(Source).cLocOrig;
-    xLocOrig := TinfPassagem(Source).xLocOrig;
-    cLocDest := TinfPassagem(Source).cLocDest;
-    xLocDest := TinfPassagem(Source).xLocDest;
-    dhEmb := TinfPassagem(Source).dhEmb;
-    dhValidade := TinfPassagem(Source).dhValidade;
-    infPassageiro.Assign(TinfPassagem(Source).infPassageiro);
-  end
-  else
-    inherited;
+  cLocOrig   := Source.cLocOrig;
+  xLocOrig   := Source.xLocOrig;
+  cLocDest   := Source.cLocDest;
+  xLocDest   := Source.xLocDest;
+  dhEmb      := Source.dhEmb;
+  dhValidade := Source.dhValidade;
+  infPassageiro.Assign(Source.infPassageiro);
 end;
 
-constructor TinfPassagem.Create(AOwner: TBPe);
+constructor TinfPassagem.Create;
 begin
   inherited Create;
   FinfPassageiro := TinfPassageiro.Create;
@@ -1042,21 +952,16 @@ end;
 
 { TinfPassageiro }
 
-procedure TinfPassageiro.Assign(Source: TPersistent);
+procedure TinfPassageiro.Assign(Source: TinfPassageiro);
 begin
-  if Source is TinfPassageiro then
-  begin
-    xNome := TinfPassageiro(Source).xNome;
-    CPF := TinfPassageiro(Source).CPF;
-    tpDoc := TinfPassageiro(Source).tpDoc;
-    nDoc := TinfPassageiro(Source).nDoc;
-    xDoc := TinfPassageiro(Source).xDoc;
-    dNasc := TinfPassageiro(Source).dNasc;
-    Fone := TinfPassageiro(Source).Fone;
-    Email := TinfPassageiro(Source).Email;
-  end
-  else
-    inherited;
+  xNome := Source.xNome;
+  CPF   := Source.CPF;
+  tpDoc := Source.tpDoc;
+  nDoc  := Source.nDoc;
+  xDoc  := Source.xDoc;
+  dNasc := Source.dNasc;
+  Fone  := Source.Fone;
+  Email := Source.Email;
 end;
 
 { TInfViagemCollection }
@@ -1071,45 +976,36 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-constructor TInfViagemCollection.Create(AOwner: TBPe);
-begin
-  inherited Create(TInfViagemCollectionItem);
-end;
-
-destructor TInfViagemCollection.Destroy;
-begin
-  inherited;
-end;
-
 function TInfViagemCollection.Add: TInfViagemCollectionItem;
 begin
-  Result := TInfViagemCollectionItem(inherited Add)
+  Result := Self.New;
+end;
+
+function TInfViagemCollection.New: TInfViagemCollectionItem;
+begin
+  Result := TInfViagemCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TInfViagemCollectionItem }
 
-procedure TInfViagemCollectionItem.Assign(Source: TPersistent);
+procedure TInfViagemCollectionItem.Assign(Source: TInfViagemCollectionItem);
 begin
-  if Source is TInfViagemCollectionItem then
-  begin
-    cPercurso := TInfViagemCollectionItem(Source).cPercurso;
-    xPercurso := TInfViagemCollectionItem(Source).xPercurso;
-    tpViagem := TInfViagemCollectionItem(Source).tpViagem;
-    tpServ := TInfViagemCollectionItem(Source).tpServ;
-    tpAcomodacao := TInfViagemCollectionItem(Source).tpAcomodacao;
-    tpTrecho := TInfViagemCollectionItem(Source).tpTrecho;
-    dhViagem := TInfViagemCollectionItem(Source).dhViagem;
-    dhConexao := TInfViagemCollectionItem(Source).dhConexao;
-    Prefixo := TInfViagemCollectionItem(Source).Prefixo;
-    Poltrona := TInfViagemCollectionItem(Source).Poltrona;
-    Plataforma := TInfViagemCollectionItem(Source).Plataforma;
-    infTravessia.Assign(TInfViagemCollectionItem(Source).infTravessia);
-  end
-  else
-    inherited;
+  cPercurso    := Source.cPercurso;
+  xPercurso    := Source.xPercurso;
+  tpViagem     := Source.tpViagem;
+  tpServ       := Source.tpServ;
+  tpAcomodacao := Source.tpAcomodacao;
+  tpTrecho     := Source.tpTrecho;
+  dhViagem     := Source.dhViagem;
+  dhConexao    := Source.dhConexao;
+  Prefixo      := Source.Prefixo;
+  Poltrona     := Source.Poltrona;
+  Plataforma   := Source.Plataforma;
+  infTravessia.Assign(Source.infTravessia);
 end;
 
-constructor TInfViagemCollectionItem.Create(Collection: TCollection);
+constructor TInfViagemCollectionItem.Create;
 begin
   inherited;
   FinfTravessia := TinfTravessia.Create;
@@ -1123,15 +1019,10 @@ end;
 
 { TinfTravessia }
 
-procedure TinfTravessia.Assign(Source: TPersistent);
+procedure TinfTravessia.Assign(Source: TinfTravessia);
 begin
-  if Source is TInfTravessia then
-  begin
-    tpVeiculo := TInfTravessia(Source).tpVeiculo;
-    sitVeiculo := TInfTravessia(Source).sitVeiculo;
-  end
-  else
-    inherited;
+  tpVeiculo  := Source.tpVeiculo;
+  sitVeiculo := Source.sitVeiculo;
 end;
 
 { TinfValorBPe }
@@ -1148,10 +1039,10 @@ begin
   Comp       := Source.Comp;
 end;
 
-constructor TinfValorBPe.Create(AOwner: TBPe);
+constructor TinfValorBPe.Create;
 begin
   inherited Create;
-  FComp := TCompCollection.Create(Self);
+  FComp := TCompCollection.Create;
 end;
 
 destructor TinfValorBPe.Destroy;
@@ -1170,12 +1061,7 @@ end;
 
 function TCompCollection.Add: TCompCollectionItem;
 begin
-  Result := TCompCollectionItem(inherited Add);
-end;
-
-constructor TCompCollection.Create(AOwner: TinfValorBPe);
-begin
-  inherited Create(TCompCollectionItem);
+  Result := Self.New;
 end;
 
 function TCompCollection.GetItem(Index: Integer): TCompCollectionItem;
@@ -1188,47 +1074,31 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TCompCollection.New: TCompCollectionItem;
+begin
+  Result := TCompCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TCompCollectionItem }
 
-procedure TCompCollectionItem.Assign(Source: TPersistent);
+procedure TCompCollectionItem.Assign(Source: TCompCollectionItem);
 begin
-  if Source is TCompCollectionItem then
-  begin
-    tpComp := TCompCollectionItem(Source).FtpComp;
-    vComp := TCompCollectionItem(Source).vComp;
-  end
-  else
-    inherited;
-end;
-
-constructor TCompCollectionItem.Create(Collection: TCollection);
-begin
-  inherited;
-
-end;
-
-destructor TCompCollectionItem.Destroy;
-begin
-
-  inherited;
+  tpComp := Source.FtpComp;
+  vComp  := Source.vComp;
 end;
 
 { TImp }
 
-procedure TImp.Assign(Source: TPersistent);
+procedure TImp.Assign(Source: TImp);
 begin
-  if Source is TImp then
-  begin
-    ICMS := TImp(Source).ICMS;
-    vTotTrib := TImp(Source).vTotTrib;
-    infAdFisco := TImp(Source).infAdFisco;
-    ICMSUFFim := TImp(Source).ICMSUFFim;
-  end
-  else
-    inherited;
+  ICMS       := Source.ICMS;
+  vTotTrib   := Source.vTotTrib;
+  infAdFisco := Source.infAdFisco;
+  ICMSUFFim  := Source.ICMSUFFim;
 end;
 
-constructor TImp.Create(AOwner: TBPe);
+constructor TImp.Create;
 begin
   inherited Create;
   FICMS := TICMS.Create;
@@ -1244,54 +1114,39 @@ end;
 
 { TICMS }
 
-procedure TICMS.Assign(Source: TPersistent);
+procedure TICMS.Assign(Source: TICMS);
 begin
-  if Source is TICMS then
-  begin
-    CST := TICMS(Source).CST;
-    vBC := TICMS(Source).vBC;
-    pICMS := TICMS(Source).pICMS;
-    vICMS := TICMS(Source).vICMS;
-    pRedBC := TICMS(Source).pRedBC;
-    vCred := TICMS(Source).vCred;
-    pRedBCOutraUF := TICMS(Source).pRedBCOutraUF;
-    vBCOutraUF := TICMS(Source).vBCOutraUF;
-    pICMSOutraUF := TICMS(Source).pICMSOutraUF;
-    vICMSOutraUF := TICMS(Source).vICMSOutraUF;
-  end
-  else
-    inherited;
+  CST           := Source.CST;
+  vBC           := Source.vBC;
+  pICMS         := Source.pICMS;
+  vICMS         := Source.vICMS;
+  pRedBC        := Source.pRedBC;
+  vCred         := Source.vCred;
+  pRedBCOutraUF := Source.pRedBCOutraUF;
+  vBCOutraUF    := Source.vBCOutraUF;
+  pICMSOutraUF  := Source.pICMSOutraUF;
+  vICMSOutraUF  := Source.vICMSOutraUF;
 end;
 
 { TICMSUFFim }
 
-procedure TICMSUFFim.Assign(Source: TPersistent);
+procedure TICMSUFFim.Assign(Source: TICMSUFFim);
 begin
-  if Source is TICMSUFFim then
-  begin
-    vBCUFFim := TICMSUFFim(Source).vBCUFFim;
-    pFCPUFFim := TICMSUFFim(Source).pFCPUFFim;
-    pICMSUFFim := TICMSUFFim(Source).pICMSUFFim;
-    pICMSInter := TICMSUFFim(Source).pICMSInter;
-    pICMSInterPart := TICMSUFFim(Source).pICMSInterPart;
-    vFCPUFFim := TICMSUFFim(Source).vFCPUFFim;
-    vICMSUFFim := TICMSUFFim(Source).vICMSUFFim;
-    vICMSUFIni := TICMSUFFim(Source).vICMSUFIni;
-  end
-  else
-    inherited;
+  vBCUFFim       := Source.vBCUFFim;
+  pFCPUFFim      := Source.pFCPUFFim;
+  pICMSUFFim     := Source.pICMSUFFim;
+  pICMSInter     := Source.pICMSInter;
+  pICMSInterPart := Source.pICMSInterPart;
+  vFCPUFFim      := Source.vFCPUFFim;
+  vICMSUFFim     := Source.vICMSUFFim;
+  vICMSUFIni     := Source.vICMSUFIni;
 end;
 
 { TpagCollection }
 
 function TpagCollection.Add: TpagCollectionItem;
 begin
-  Result := TpagCollectionItem(inherited Add);
-end;
-
-constructor TpagCollection.Create(AOwner: TBPe);
-begin
-  inherited Create(TpagCollectionItem);
+  Result := Self.New;
 end;
 
 function TpagCollection.GetItem(Index: Integer): TpagCollectionItem;
@@ -1305,41 +1160,36 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TpagCollection.New: TpagCollectionItem;
+begin
+  Result := TpagCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TpagCollectionItem }
 
-procedure TpagCollectionItem.Assign(Source: TPersistent);
+procedure TpagCollectionItem.Assign(Source: TpagCollectionItem);
 begin
-  if Source is TpagCollectionItem then
-  begin
-    tPag := TpagCollectionItem(Source).tPag;
-    xPag := TpagCollectionItem(Source).xPag;
-    nDocPag := TpagCollectionItem(Source).nDocPag;
-    vPag := TpagCollectionItem(Source).vPag;
-    tpIntegra := TpagCollectionItem(Source).tpIntegra;
-    CNPJ := TpagCollectionItem(Source).CNPJ;
-    tBand := TpagCollectionItem(Source).tBand;
-    xBand := TpagCollectionItem(Source).xBand;
-    cAut := TpagCollectionItem(Source).cAut;
-    nsuTrans := TpagCollectionItem(Source).nsuTrans;
-    nsuHost := TpagCollectionItem(Source).nsuHost;
-    nParcelas := TpagCollectionItem(Source).nParcelas;
-    infAdCard := TpagCollectionItem(Source).infAdCard;
-  end
-  else
-    inherited;
+  tPag      := Source.tPag;
+  xPag      := Source.xPag;
+  nDocPag   := Source.nDocPag;
+  vPag      := Source.vPag;
+  tpIntegra := Source.tpIntegra;
+  CNPJ      := Source.CNPJ;
+  tBand     := Source.tBand;
+  xBand     := Source.xBand;
+  cAut      := Source.cAut;
+  nsuTrans  := Source.nsuTrans;
+  nsuHost   := Source.nsuHost;
+  nParcelas := Source.nParcelas;
+  infAdCard := Source.infAdCard;
 end;
 
 { TautXMLCollection }
 
 function TautXMLCollection.Add: TautXMLCollectionItem;
 begin
-  Result := TautXMLCollectionItem(inherited Add);
-////  Result.create;
-end;
-
-constructor TautXMLCollection.Create(AOwner: TBPe);
-begin
-  inherited Create(TautXMLCollectionItem);
+  Result := Self.New;
 end;
 
 function TautXMLCollection.GetItem(Index: Integer): TautXMLCollectionItem;
@@ -1353,53 +1203,33 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TautXMLCollection.New: TautXMLCollectionItem;
+begin
+  Result := TautXMLCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TautXMLCollectionItem }
 
-procedure TautXMLCollectionItem.Assign(Source: TPersistent);
+procedure TautXMLCollectionItem.Assign(Source: TautXMLCollectionItem);
 begin
-  if Source is TautXMLCollectionItem then
-  begin
-    CNPJCPF := TautXMLCollectionItem(Source).CNPJCPF;
-  end
-  else
-    inherited;
-end;
-
-constructor TautXMLCollectionItem.Create(Collection: TCollection);
-begin
-    inherited;
-end;
-
-destructor TautXMLCollectionItem.Destroy;
-begin
-
-  inherited;
+  CNPJCPF := Source.CNPJCPF;
 end;
 
 {infAdic}
 
-procedure TInfAdic.Assign(Source: TPersistent);
+procedure TInfAdic.Assign(Source: TInfAdic);
 begin
-  if Source is TInfAdic then
-  begin
-    infAdFisco := TInfAdic(Source).infAdFisco;
-    infCpl := TInfAdic(Source).infCpl;
-  end
-  else
-    inherited;
+  infAdFisco := Source.infAdFisco;
+  infCpl     := Source.infCpl;
 end;
 
 { TinfBPeSupl }
 
-procedure TinfBPeSupl.Assign(Source: TPersistent);
+procedure TinfBPeSupl.Assign(Source: TinfBPeSupl);
 begin
-  if Source is TinfBPeSupl then
-  begin
-    qrCodBPe := TinfBPeSupl(Source).qrCodBPe;
-    boardPassBPe := TinfBPeSupl(Source).boardPassBPe;
-  end
-  else
-    inherited;
+  qrCodBPe     := Source.qrCodBPe;
+  boardPassBPe := Source.boardPassBPe;
 end;
 
 { TinfRespTec }

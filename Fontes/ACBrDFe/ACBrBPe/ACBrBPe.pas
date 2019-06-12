@@ -433,7 +433,7 @@ begin
       GerarException(WebServices.Consulta.Msg);
 
     EventoBPe.Evento.Clear;
-    with EventoBPe.Evento.Add do
+    with EventoBPe.Evento.New do
     begin
       infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.BPeChave), 7, 14);
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.BPeChave), 1, 2), 0);

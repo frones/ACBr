@@ -269,7 +269,7 @@ begin
   BPe.infViagem.Clear;
   while Leitor.rExtrai(1, 'infViagem', '', i + 1) <> '' do
   begin
-    BPe.infViagem.Add;
+    BPe.infViagem.New;
     BPe.infViagem[i].cPercurso    := Leitor.rCampo(tcStr, 'cPercurso');
     BPe.infViagem[i].xPercurso    := Leitor.rCampo(tcStr, 'xPercurso');
     BPe.infViagem[i].tpViagem     := StrTotpViagem(ok, Leitor.rCampo(tcStr, 'tpViagem'));
@@ -305,7 +305,7 @@ begin
     BPe.infValorBPe.Comp.Clear;
     while Leitor.rExtrai(2, 'Comp', '', i + 1) <> '' do
     begin
-      BPe.infValorBPe.Comp.Add;
+      BPe.infValorBPe.Comp.New;
       BPe.infValorBPe.Comp[i].tpComp := StrTotpComponente(ok, Leitor.rCampo(tcStr, 'tpComp'));
       BPe.infValorBPe.Comp[i].vComp  := Leitor.rCampo(tcDe2, 'vComp');
 
@@ -355,7 +355,7 @@ begin
   BPe.Pag.Clear;
   while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
   begin
-    BPe.Pag.Add;
+    BPe.Pag.New;
     BPe.Pag[i].tPag    := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
     BPe.Pag[i].xPag    := Leitor.rCampo(tcStr, 'xPag');
     BPe.Pag[i].nDocPag := Leitor.rCampo(tcStr, 'nDocPag');
@@ -378,7 +378,7 @@ begin
   BPe.autXML.Clear;
   while Leitor.rExtrai(1, 'autXML', '', i + 1) <> '' do
   begin
-    BPe.autXML.Add;
+    BPe.autXML.New;
     BPe.autXML[i].CNPJCPF := Leitor.rCampoCNPJCPF;;
 
     inc(i);

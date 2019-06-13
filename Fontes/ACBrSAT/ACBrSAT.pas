@@ -640,7 +640,7 @@ begin
     1450 : Result := 'Código de modelo de documento fiscal diferente de 59';
     1258 : Result := 'Data/hora inválida. Problemas com o relógio interno do SAT-CF-e';
     1224 : Result := 'CNPJ da Software House inválido';
-    1222 : Result := 'Assinatura do Aplicativo Comercial não é válida';// | Válido até 31/12/2015
+    1222, 1455 : Result := 'Assinatura do Aplicativo Comercial não é válida';// | Válido até 31/12/2015
     1207 : Result := 'CNPJ do emitente inválido';
     1203 : Result := 'Emitente não autorizado para uso do SAT';
     1229 : Result := 'IE do emitente não informada C12 IE não corresponde ao Contribuinte de uso do SAT';
@@ -654,11 +654,15 @@ begin
     1459 : Result := 'Código do produto ou serviço em branco';
     1460 : Result := 'GTIN do item (N) inválido | Validação do dígito verificador';
     1461 : Result := 'Descrição do produto ou serviço em branco';
+    1462 : Result := 'CFOP não é de Operação de saída prevista para CF-e-SAT';
+    1463 : Result := 'Unidade Comercial do produto ou serviço em branco';
     1464 : Result := 'Quantidade Comercial do item (N) inválido';
     1465 : Result := 'Valor Unitário do item (N) inválido';
+    1467 : Result := 'Regra de cálculo do Item (N) inválido (diferente de "A" e "T")';
     1468 : Result := 'Valor do Desconto do item (N) inválido';
     1469 : Result := 'Valor de outras despesas acessórias do item (N) inválido';
-    1535 : Result := 'código da credenciadora de cartão de débito ou crédito inválido';
+    1535 : Result := 'Código da credenciadora de cartão de débito ou crédito inválido';
+    1536 : Result := 'Código da credenciadora de cartão de débito ou crédito não informado para meio de pagamento cartão de débito ou crédito';
     1220 : Result := 'Valor do rateio do desconto sobre subtotal do item (N) inválido';
     1228 : Result := 'Valor do rateio do acréscimo sobre subtotal do item (N) inválido';
     1751 : Result := 'não informado código do produto'; //| Nova redação, efeitos a partir de 01.01.17.
@@ -668,9 +672,13 @@ begin
     1471 : Result := 'Origem da mercadoria do Item (N) inválido (diferente de 0, 1, 2, 3, 4, 5, 6, 7, 8)';
     1472 : Result := 'CST do Item (N) inválido (diferente de 00, 20, 90)';
     1473 : Result := 'Alíquota efetiva do ICMS do item (N) não é maior ou igual a zero';
+    1601 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMS00';
     1475 : Result := 'CST do Item (N) inválido (diferente de 40 e 41 e 50 e 60)';
+    1602 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMS40';
     1476 : Result := 'Código de situação da operação - Simples Nacional - do Item (N) inválido (diferente de 102, 300 e 500)';
+    1603 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMSSN102';
     1477 : Result := 'Código de situação da operação - Simples Nacional - do Item (N) inválido (diferente de 900)';
+    1604 : Result := 'Alerta Código de regime tributário é incompatível com o grupo de ICMSSN900';
     1478 : Result := 'Código de Situação Tributária do PIS Inválido (diferente de 01, 02 e 05)';
     1479 : Result := 'Base de cálculo do PIS do item (N) inválido';
     1480 : Result := 'Alíquota do PIS do item (N) não é maior ou igual a zero';
@@ -704,6 +712,7 @@ begin
     1084 : Result := 'Erro Formatação do Certificado não é válido';
     1085 : Result := 'Erro Assinatura do Aplicativo Comercial não confere com o registro do SAT'; //| Válido até 31/12/2015
     1998 : Result := 'Não é possível gerar o cupom com os dados de entrada informados, pois resultam valores negativos';
+    1999 : Result := 'Erro não identificado';
   else
     Result := 'Erro não identificado';
   end;
@@ -719,6 +728,7 @@ begin
     1258 : Result := 'Data/hora inválida. Problemas com o relógio interno do SAT-CF-e';
     1210 : Result := 'Intervalo de tempo entre a emissão do CF-e a ser cancelado e a emissão do respectivo CF-e de cancelamento é maior que 30 (trinta) minutos';
     1454 : Result := 'CNPJ da Software House inválido';
+    1455 : Result := 'Assinatura do Aplicativo Comercial não é válida';
     1232 : Result := 'CNPJ do destinatário do CF-e de cancelamento diferente daquele do CF-e a ser cancelado';
     1233 : Result := 'CPF do destinatário do CF-e de cancelamento diferente daquele do CF-e a ser cancelado';
     1218 : Result := 'Erro Chave de acesso do CF-e-SAT já consta como cancelado'; //Nova redação a partir de 01.01.16

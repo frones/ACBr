@@ -41,7 +41,7 @@ unit ACBrANeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, IniFiles,
   ACBrDFeConfiguracoes, pcnConversao, pcaConversao;
 
 type
@@ -56,11 +56,14 @@ type
     FSenha: String;
     FCodATM: String;
     FCNPJEmitente: String;
+    FSeguradora: TSeguradora;
 
     procedure SetVersaoDF(const Value: TVersaoANe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfANe: TGeralConfANe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
   published
     property TipoDoc: TTipoDoc read FTipoDoc write FTipoDoc;
@@ -69,6 +72,7 @@ type
     property Senha: String read FSenha write FSenha;
     property CodATM: String read FCodATM write FCodATM;
     property CNPJEmitente: String read FCNPJEmitente write FCNPJEmitente;
+    property Seguradora: TSeguradora read FSeguradora write FSeguradora default tsATM;
   end;
 
   { TArquivosConfANe }
@@ -81,6 +85,8 @@ type
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
     procedure Assign(DeArquivosConfANe: TArquivosConfANe); reintroduce;
+    procedure GravarIni(const AIni: TCustomIniFile); override;
+    procedure LerIni(const AIni: TCustomIniFile); override;
 
     function GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
   published
@@ -171,6 +177,33 @@ begin
   FSenha := '';
   FCodATM := '';
   FCNPJEmitente := '';
+  FSeguradora := tsATM;
+end;
+
+procedure TGeralConfANe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'TipoDoc', Integer(TipoDoc));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Usuario', Usuario);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Senha', Senha);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'CodATM', CodATM);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'CNPJEmitente', CNPJEmitente);
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'Seguradora', Integer(Seguradora));
+end;
+
+procedure TGeralConfANe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  TipoDoc := TTipoDoc(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'TipoDoc', Integer(TipoDoc)));
+  VersaoDF := TVersaoANe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  Usuario := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Usuario', Usuario);
+  Senha := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Senha', Senha);
+  CodATM := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CodATM', CodATM);
+  CNPJEmitente := AIni.ReadString(fpConfiguracoes.SessaoIni, 'CNPJEmitente', CNPJEmitente);
+  Seguradora := TSeguradora(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'Seguradora', Integer(Seguradora)));
 end;
 
 procedure TGeralConfANe.SetVersaoDF(const Value: TVersaoANe);
@@ -205,6 +238,22 @@ end;
 function TArquivosConfANe.GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
   Result := GetPath(FPathANe, 'ANe', CNPJ, Data);
+end;
+
+procedure TArquivosConfANe.GravarIni(const AIni: TCustomIniFile);
+begin
+  inherited GravarIni(AIni);
+
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'EmissaoPathANe', EmissaoPathANe);
+  AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathANe', PathANe);
+end;
+
+procedure TArquivosConfANe.LerIni(const AIni: TCustomIniFile);
+begin
+  inherited LerIni(AIni);
+
+  EmissaoPathANe := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'EmissaoPathANe', EmissaoPathANe);
+  PathANe := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathANe', PathANe);
 end;
 
 end.

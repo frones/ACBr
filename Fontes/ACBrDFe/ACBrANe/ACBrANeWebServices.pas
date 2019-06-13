@@ -88,6 +88,7 @@ type
     FdhAverbacao: TDateTime;
     FProtocolo: String;
     FNumeroAverbacao: String;
+    FArquivo: String;
 
     FErroCodigo: String;
     FErroDescricao: String;
@@ -114,6 +115,7 @@ type
     property dhAverbacao: TDateTime  read FdhAverbacao     write FdhAverbacao;
     property Protocolo: String       read FProtocolo       write FProtocolo;
     property NumeroAverbacao: String read FNumeroAverbacao write FNumeroAverbacao;
+    property Arquivo: String         read FArquivo         write FArquivo;
 
     // Documento Rejeitado
     property ErroCodigo: String         read FErroCodigo         write FErroCodigo;
@@ -237,7 +239,18 @@ begin
   FPDadosMsg := RemoverDeclaracaoXML(FPDadosMsg);
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
-  Texto := Texto + '<' + FPSoapVersion + ':Header/>';
+
+  case FPConfiguracoesANe.Geral.Seguradora of
+    tsELT:
+      begin
+        Texto := Texto + '<' + FPSoapVersion + ':Header>';
+        Texto := Texto + FPCabMsg;
+        Texto := Texto + '</' + FPSoapVersion + ':Header>';
+      end;
+  else
+    Texto := Texto + '<' + FPSoapVersion + ':Header/>';
+  end;
+
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
   Texto := Texto + '<' + FPBodyElement + '>';
   Texto := Texto + FPDadosMsg;
@@ -351,6 +364,7 @@ begin
   FdhAverbacao := 0;
   FProtocolo := '';
   FNumeroAverbacao := '';
+  FArquivo := '';
 
   FErroCodigo := '';
   FErroDescricao := '';
@@ -387,56 +401,108 @@ begin
    tdMDFe: sTipoDoc := 'declaraMDFe';
   end;
 
-  FPServico := CURL_WSDL + sTipoDoc;
-  FPSoapAction := 'urn:ATMWebSvr#' + sTipoDoc;
-  FPBodyElement := 'urn:' + sTipoDoc + 'Request';
+  case FPConfiguracoesANe.Geral.Seguradora of
+    tsELT:
+      begin
+        FPSoapEnvelopeAtributtes := 'xmlns:tem="http://tempuri.org/" ' +
+                      'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"';
+        FPServico := CURL_WSDL + '*';
+        FPSoapAction := 'http://tempuri.org/IELTAverbaService/FileUpload';
+        FPBodyElement := 'tem:RemoteFileInfo';
+      end;
+  else
+    begin
+      FPSoapEnvelopeAtributtes := 'xmlns:urn="urn:ATMWebSvr" ' +
+                    'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"';
+      FPServico := CURL_WSDL + sTipoDoc;
+      FPSoapAction := 'urn:ATMWebSvr#' + sTipoDoc;
+      FPBodyElement := 'urn:' + sTipoDoc + 'Request';
+    end;
+  end;
 end;
 
 procedure TANeAverbar.DefinirDadosMsg;
 begin
-  FPDadosMsg := FDocumentos.Items[0].XMLAssinado;
+  case FPConfiguracoesANe.Geral.Seguradora of
+    tsELT:
+    begin
+      FPCabMsg   := RemoverDeclaracaoXML(FDocumentos.Items[0].XMLAssinado);
+      FPDadosMsg := '<tem:FileByteStream>' +
+                      FDocumentos.Items[0].ANe.Arquivo +
+                    '</tem:FileByteStream>';
+    end
+  else
+    begin
+      FPCabMsg   := '';
+      FPDadosMsg := FDocumentos.Items[0].XMLAssinado;
+    end;
+  end;
 end;
 
 function TANeAverbar.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'SOAP-ENV:Body');
+  FPRetWS := SeparaDadosArray(['SOAP-ENV:Body',
+                               's:Body'],FPRetornoWS );
+
+//  FPRetWS := SeparaDados(FPRetornoWS, 'SOAP-ENV:Body');
 
   ANeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+  ANeRetorno.Seguradora := FPConfiguracoesANe.Geral.Seguradora;
   ANeRetorno.LerXml;
 
-  if( FPConfiguracoesANe.Geral.TipoDoc = tdMDFe )then
-  begin
-    FdhAverbacao := ANeRetorno.Declarado.dhChancela;
-    FProtocolo   := ANeRetorno.Declarado.Protocolo;
-  end
+  case FPConfiguracoesANe.Geral.Seguradora of
+    tsELT:
+      begin
+        FdhAverbacao   := ANeRetorno.DataHora;
+        FProtocolo     := ANeRetorno.Protocolo;
+
+        FNumeroAverbacao := ANeRetorno.CTE;
+
+        FErroCodigo    := IntToStr(ANeRetorno.Codigo);
+        FErroDescricao := ANeRetorno.Resultado;
+        FArquivo       := ANeRetorno.fname;
+
+        FPMsg := ANeRetorno.status;
+
+        Result := (FErroCodigo <> '') or (FProtocolo <> '');
+      end;
   else
-  begin
-    FdhAverbacao := ANeRetorno.Averbado.dhAverbacao;
-    FProtocolo   := ANeRetorno.Averbado.Protocolo;
+    begin
+      if( FPConfiguracoesANe.Geral.TipoDoc = tdMDFe )then
+      begin
+        FdhAverbacao := ANeRetorno.Declarado.dhChancela;
+        FProtocolo   := ANeRetorno.Declarado.Protocolo;
+      end
+      else
+      begin
+        FdhAverbacao := ANeRetorno.Averbado.dhAverbacao;
+        FProtocolo   := ANeRetorno.Averbado.Protocolo;
+      end;
+
+      if ANeRetorno.Averbado.DadosSeguro.Count > 0 then
+        FNumeroAverbacao := ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao;
+
+      if ANeRetorno.Erros.Erro.Count > 0 then
+      begin
+        FErroCodigo         := ANeRetorno.Erros.Erro.Items[0].Codigo;
+        FErroDescricao      := ANeRetorno.Erros.Erro.Items[0].Descricao;
+        FErroValorEsperado  := ANeRetorno.Erros.Erro.Items[0].ValorEsperado;
+        FErroValorInformado := ANeRetorno.Erros.Erro.Items[0].ValorInformado;
+
+        FPMsg := FErroDescricao;
+      end;
+
+      if ANeRetorno.Infos.Info.Count > 0 then
+      begin
+        FInfoCodigo    := ANeRetorno.Infos.Info.Items[0].Codigo;
+        FInfoDescricao := ANeRetorno.Infos.Info.Items[0].Descricao;
+
+        FPMsg := FInfoDescricao;
+      end;
+
+      Result := (FErroCodigo <> '') or (FInfoCodigo <> '') or (FProtocolo <> '');
+    end;
   end;
-
-  if ANeRetorno.Averbado.DadosSeguro.Count > 0 then
-    FNumeroAverbacao := ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao;
-
-  if ANeRetorno.Erros.Erro.Count > 0 then
-  begin
-    FErroCodigo         := ANeRetorno.Erros.Erro.Items[0].Codigo;
-    FErroDescricao      := ANeRetorno.Erros.Erro.Items[0].Descricao;
-    FErroValorEsperado  := ANeRetorno.Erros.Erro.Items[0].ValorEsperado;
-    FErroValorInformado := ANeRetorno.Erros.Erro.Items[0].ValorInformado;
-
-    FPMsg := FErroDescricao;
-  end;
-
-  if ANeRetorno.Infos.Info.Count > 0 then
-  begin
-    FInfoCodigo    := ANeRetorno.Infos.Info.Items[0].Codigo;
-    FInfoDescricao := ANeRetorno.Infos.Info.Items[0].Descricao;
-
-    FPMsg := FInfoDescricao;
-  end;
-
-  Result := (FErroCodigo <> '') or (FInfoCodigo <> '') or (FProtocolo <> '');
 end;
 
 function TANeAverbar.GerarMsgLog: String;
@@ -445,69 +511,93 @@ var
 begin
   xMsg := '';
 
-  if FErroCodigo <> '' then
-  begin
-    xMsg := Format(ACBrStr('Averbação:' + LineBreak +
-                           ' Data     : %s ' + LineBreak +
-                           ' Protocolo: %s ' + LineBreak +
-                           ' Numero   : %s ' + LineBreak + LineBreak +
-                           'Erro:' + LineBreak +
-                           ' Código         : %s' + LineBreak +
-                           ' Descrição      : %s' + LineBreak +
-                           ' Valor Esperado : %s' + LineBreak +
-                           ' Valor Informado: %s' + LineBreak),
-                 [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
-                  FProtocolo,
-                  FNumeroAverbacao,
-                  FErroCodigo,
-                  FErroDescricao,
-                  FErroValorEsperado,
-                  FErroValorInformado]);
-  end;
-
-  if FInfoCodigo <> '' then
-  begin
-    xMsg := Format(ACBrStr('Averbação:' + LineBreak +
-                           ' Data     : %s ' + LineBreak +
-                           ' Protocolo: %s ' + LineBreak +
-                           ' Numero   : %s ' + LineBreak + LineBreak +
-                           'Informações:' + LineBreak +
-                           ' Código   : %s' + LineBreak +
-                           ' Descrição: %s' + LineBreak),
-                   [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
-                    FProtocolo,
-                    FNumeroAverbacao,
-                    FInfoCodigo,
-                    FInfoDescricao]);
-  end;
-
-  if (FProtocolo <> '') and (FErroCodigo = '') and (FInfoCodigo = '') then
-  begin
-    xMsg := Format(ACBrStr('Averbação:' + LineBreak +
-                           ' Data     : %s ' + LineBreak +
-                           ' Protocolo: %s ' + LineBreak +
-                           ' Numero   : %s ' + LineBreak + LineBreak),
+  case FPConfiguracoesANe.Geral.Seguradora of
+    tsELT:
+      begin
+        xMsg := Format(ACBrStr('Averbação:' + LineBreak +
+                               ' Data     : %s ' + LineBreak +
+                               ' Protocolo: %s ' + LineBreak +
+                               ' Numero   : %s ' + LineBreak +
+                               ' Arquivo  : %s ' + LineBreak +
+                               ' Status   : %s ' + LineBreak + LineBreak +
+                               'Resultado:' + LineBreak +
+                               ' Código         : %s' + LineBreak +
+                               ' Descrição      : %s' + LineBreak),
                      [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
                       FProtocolo,
-                      FNumeroAverbacao]);
-
-    if ANeRetorno.Averbado.DadosSeguro.Count > 0 then
+                      FNumeroAverbacao,
+                      FArquivo,
+                      FPMsg,
+                      FErroCodigo,
+                      FErroDescricao]);
+      end;
+  else
     begin
-      xMsg := xMsg + Format(ACBrStr('Dados do Seguro:' + LineBreak +
-                                    ' Numero Averbação: %s' + LineBreak +
-                                    ' CNPJ Seguradora: %s' + LineBreak +
-                                    ' Nome Seguradora: %s' + LineBreak +
-                                    ' Numero Apolice : %s' + LineBreak +
-                                    ' Tipo Movimento : %s' + LineBreak +
-                                    ' Valor Averbado : %s' + LineBreak +
-                                    ' Ramo Averbado  : %s' + LineBreak),
-                     [ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao,
-                      ANeRetorno.Averbado.DadosSeguro.Items[0].CNPJSeguradora,
-                      ANeRetorno.Averbado.DadosSeguro.Items[0].NomeSeguradora,
-                      ANeRetorno.Averbado.DadosSeguro.Items[0].NumApolice,
-                      ANeRetorno.Averbado.DadosSeguro.Items[0].TpMov,
-                      FloatToStr(ANeRetorno.Averbado.DadosSeguro.Items[0].ValorAverbado),
-                      ANeRetorno.Averbado.DadosSeguro.Items[0].RamoAverbado]);
+      if FErroCodigo <> '' then
+      begin
+        xMsg := Format(ACBrStr('Averbação:' + LineBreak +
+                               ' Data     : %s ' + LineBreak +
+                               ' Protocolo: %s ' + LineBreak +
+                               ' Numero   : %s ' + LineBreak + LineBreak +
+                               'Erro:' + LineBreak +
+                               ' Código         : %s' + LineBreak +
+                               ' Descrição      : %s' + LineBreak +
+                               ' Valor Esperado : %s' + LineBreak +
+                               ' Valor Informado: %s' + LineBreak),
+                     [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
+                      FProtocolo,
+                      FNumeroAverbacao,
+                      FErroCodigo,
+                      FErroDescricao,
+                      FErroValorEsperado,
+                      FErroValorInformado]);
+      end;
+
+      if FInfoCodigo <> '' then
+      begin
+        xMsg := Format(ACBrStr('Averbação:' + LineBreak +
+                               ' Data     : %s ' + LineBreak +
+                               ' Protocolo: %s ' + LineBreak +
+                               ' Numero   : %s ' + LineBreak + LineBreak +
+                               'Informações:' + LineBreak +
+                               ' Código   : %s' + LineBreak +
+                               ' Descrição: %s' + LineBreak),
+                       [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
+                        FProtocolo,
+                        FNumeroAverbacao,
+                        FInfoCodigo,
+                        FInfoDescricao]);
+      end;
+
+      if (FProtocolo <> '') and (FErroCodigo = '') and (FInfoCodigo = '') then
+      begin
+        xMsg := Format(ACBrStr('Averbação:' + LineBreak +
+                               ' Data     : %s ' + LineBreak +
+                               ' Protocolo: %s ' + LineBreak +
+                               ' Numero   : %s ' + LineBreak + LineBreak),
+                         [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
+                          FProtocolo,
+                          FNumeroAverbacao]);
+
+        if ANeRetorno.Averbado.DadosSeguro.Count > 0 then
+        begin
+          xMsg := xMsg + Format(ACBrStr('Dados do Seguro:' + LineBreak +
+                                        ' Numero Averbação: %s' + LineBreak +
+                                        ' CNPJ Seguradora: %s' + LineBreak +
+                                        ' Nome Seguradora: %s' + LineBreak +
+                                        ' Numero Apolice : %s' + LineBreak +
+                                        ' Tipo Movimento : %s' + LineBreak +
+                                        ' Valor Averbado : %s' + LineBreak +
+                                        ' Ramo Averbado  : %s' + LineBreak),
+                         [ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao,
+                          ANeRetorno.Averbado.DadosSeguro.Items[0].CNPJSeguradora,
+                          ANeRetorno.Averbado.DadosSeguro.Items[0].NomeSeguradora,
+                          ANeRetorno.Averbado.DadosSeguro.Items[0].NumApolice,
+                          ANeRetorno.Averbado.DadosSeguro.Items[0].TpMov,
+                          FloatToStr(ANeRetorno.Averbado.DadosSeguro.Items[0].ValorAverbado),
+                          ANeRetorno.Averbado.DadosSeguro.Items[0].RamoAverbado]);
+        end;
+      end;
     end;
   end;
 

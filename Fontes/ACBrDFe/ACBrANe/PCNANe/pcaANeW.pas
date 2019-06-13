@@ -52,14 +52,19 @@ type
     FGerador: TGerador;
     FANe: TANe;
     FTipoDoc: TTipoDoc;
+    FSeguradora: TSeguradora;
 
   public
     constructor Create(AOwner: TANe);
     destructor Destroy; override;
     function GerarXml: Boolean;
-    property Gerador: TGerador read FGerador write FGerador;
-    property ANe: TANe         read FANe     write FANe;
-    property TipoDoc: TTipoDoc read FTipoDoc write FTipoDoc;
+    function GerarXml_ATM: Boolean;
+    function GerarXml_ELT: Boolean;
+
+    property Gerador: TGerador       read FGerador    write FGerador;
+    property ANe: TANe               read FANe        write FANe;
+    property TipoDoc: TTipoDoc       read FTipoDoc    write FTipoDoc;
+    property Seguradora: TSeguradora read FSeguradora write FSeguradora;
   end;
 
 const
@@ -73,6 +78,8 @@ const
   DSC_CORPO = 'Corpo do e-mail';
   DSC_CHAVE = 'Chave';
   DSC_CHAVERESP = 'Chave Resposta';
+  DSC_TAMANHO = 'Tamanho do documento a ser averbado';
+  DSC_NOMEARQ = 'Nome do arquivo';
 
 implementation
 
@@ -93,6 +100,16 @@ begin
 end;
 
 function TANeW.GerarXml: Boolean;
+begin
+  case Seguradora of
+    tsATM: Result := GerarXml_ATM;
+    tsELT: Result := GerarXml_ELT;
+  else
+    Result := False;
+  end;
+end;
+
+function TANeW.GerarXml_ATM: Boolean;
 var
   sTipoDoc: String;
 begin
@@ -129,6 +146,25 @@ begin
   end;
 
   Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + sTipoDoc;
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+function TANeW.GerarXml_ELT: Boolean;
+begin
+  Gerador.ListaDeAlertas.Clear;
+
+  Gerador.ArquivoFormatoXML := '';
+
+  // Carrega Layout que sera utilizado para gera o txt
+  Gerador.LayoutArquivoTXT.Clear;
+  Gerador.ArquivoFormatoTXT := '';
+
+  Gerador.wCampo(tcStr, '#1', 'tem:Length  ', 01, 10, 1, ANe.Tamanho, DSC_TAMANHO);
+  Gerador.wCampo(tcStr, '#2', 'tem:FileName', 01, 44, 1, ANe.NomeArq, DSC_NOMEARQ);
+  Gerador.wCampo(tcStr, '#3', 'tem:CNPJ    ', 14, 14, 1, ANe.CNPJ, DSC_CNPJ);
+
+  Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

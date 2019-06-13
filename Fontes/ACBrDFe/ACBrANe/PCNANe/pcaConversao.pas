@@ -55,6 +55,8 @@ type
 
   TTipoDoc       = (tdNFe, tdCTe, tdMDFe, tdAddBackMail);
 
+  TSeguradora    = (tsATM, tsELT);
+
 const
   NAME_SPACE_ANe  = 'xmlns:urn="ATMWebSvr"';
 

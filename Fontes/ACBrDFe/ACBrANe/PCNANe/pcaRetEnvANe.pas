@@ -41,7 +41,7 @@ unit pcaRetEnvANe;
 interface
  uses
   SysUtils, Classes, Contnrs,
-  pcnAuxiliar, pcnConversao, pcnLeitor;
+  pcnAuxiliar, pcnConversao, pcaConversao, pcnLeitor;
 
 type
   TRetEnvANe = class;
@@ -171,6 +171,7 @@ type
     FLeitor: TLeitor;
 
     FXML: String;
+    FSeguradora: TSeguradora;
 
     FNumero: String;
     FSerie: String;
@@ -183,14 +184,29 @@ type
     FAverbado: TAverbado;
     FInfos: TInfos;
     FDeclarado: TDeclarado;
+
+    // ELT
+    FCNPJ: String;
+    FCTE: String;
+    FCodigo: Integer;
+    FDataHora: TDateTime;
+    FDoc: String;
+    FProtocolo: String;
+    FResultado: String;
+    Ffname: String;
+    Fstatus: String;
   public
     constructor Create;
     destructor Destroy; override;
 
     function LerXml: boolean;
+    function LerXml_ATM: boolean;
+    function LerXml_ELT: boolean;
+
     property Leitor: TLeitor read FLeitor write FLeitor;
 
     property XML: String read FXML write FXML;
+    property Seguradora: TSeguradora read FSeguradora write FSeguradora;
 
     property Numero: String  read FNumero  write FNumero;
     property Serie: String   read FSerie   write FSerie;
@@ -203,6 +219,17 @@ type
     property Averbado: TAverbado   read FAverbado  write FAverbado;
     property Infos: TInfos         read FInfos     write FInfos;
     property Declarado: TDeclarado read FDeclarado write FDeclarado;
+
+    // ELT
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property CTE: String read FCTE write FCTE;
+    property Codigo: Integer read FCodigo write FCodigo;
+    property DataHora: TDateTime read FDataHora write FDataHora;
+    property Doc: String read FDoc write FDoc;
+    property Protocolo: String read FProtocolo write FProtocolo;
+    property Resultado: String read FResultado write FResultado;
+    property fname: String read Ffname write Ffname;
+    property status: String read Fstatus write Fstatus;
   end;
 
 implementation
@@ -349,6 +376,16 @@ begin
 end;
 
 function TRetEnvANe.LerXml: boolean;
+begin
+  case Seguradora of
+    tsATM: Result := LerXml_ATM;
+    tsELT: Result := LerXml_ELT;
+  else
+    Result := False;
+  end;
+end;
+
+function TRetEnvANe.LerXml_ATM: boolean;
 var
   i: Integer;
 begin
@@ -471,6 +508,32 @@ begin
       end;
     end;
 
+  except
+    Result := False;
+  end;
+end;
+
+function TRetEnvANe.LerXml_ELT: boolean;
+begin
+  Result := False;
+
+  try
+    Leitor.Grupo := Leitor.Arquivo;
+
+    FXML := Leitor.Grupo;
+
+    if (leitor.rExtrai(1, 'RespostaProcessamento') <> '') then
+    begin
+      FCNPJ      := Leitor.rCampo(tcStr, 'CNPJ');
+      FCTE       := Leitor.rCampo(tcStr, 'CTE');
+      FCodigo    := Leitor.rCampo(tcInt, 'Codigo');
+      FDataHora  := Leitor.rCampo(tcDatHor, 'DataHora');
+      FDoc       := Leitor.rCampo(tcStr, 'Doc');
+      FProtocolo := Leitor.rCampo(tcStr, 'Protocolo');
+      FResultado := Leitor.rCampo(tcStr, 'Resultado');
+      Ffname     := Leitor.rCampo(tcStr, 'fname');
+      Fstatus    := Leitor.rCampo(tcStr, 'status');
+    end;
   except
     Result := False;
   end;

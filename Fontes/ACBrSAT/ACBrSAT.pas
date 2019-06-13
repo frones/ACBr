@@ -707,6 +707,8 @@ begin
   else
     Result := 'Erro não identificado';
   end;
+
+  Result := ACBrStr(Result);
 end;
 
 function MotivoInvalidoCancelamento(cod: integer): String;
@@ -724,6 +726,8 @@ begin
   else
     Result := 'Erro não identificado';
   end;
+
+  Result := ACBrStr(Result);
 end;
 
 { TACBrSAT }

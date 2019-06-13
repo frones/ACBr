@@ -1,9 +1,9 @@
 object frmDemo_ACBrANe: TfrmDemo_ACBrANe
   Left = 224
   Top = 128
-  Width = 877
-  Height = 672
   Caption = 'Demo ACBrANe'
+  ClientHeight = 633
+  ClientWidth = 861
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     Left = 0
     Top = 0
     Width = 297
-    Height = 634
+    Height = 633
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -87,8 +87,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -103,6 +101,8 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl3: TPageControl
       Left = 8
@@ -118,7 +118,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Top = 0
           Width = 275
           Height = 476
-          ActivePage = TabSheet16
+          ActivePage = TabSheet13
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -382,7 +382,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -392,7 +391,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -402,7 +400,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -412,7 +409,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -525,6 +521,19 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Height = 13
                 Caption = 'C'#243'digo ATM'
               end
+              object Label1: TLabel
+                Left = 135
+                Top = 242
+                Width = 55
+                Height = 13
+                Caption = 'Seguradora'
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                Font.Style = []
+                ParentFont = False
+              end
               object edtPathLogs: TEdit
                 Left = 8
                 Top = 315
@@ -551,7 +560,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object edtFormatoAlerta: TEdit
@@ -566,7 +574,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 4
               end
               object cbxRetirarAcentos: TCheckBox
@@ -582,7 +589,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 6
               end
               object edtPathSchemas: TEdit
@@ -626,6 +632,25 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                   'NF-e'
                   'CT-e')
                 TabOrder = 11
+              end
+              object cbSeguradora: TComboBox
+                Left = 135
+                Top = 258
+                Width = 122
+                Height = 24
+                Style = csDropDownList
+                Font.Charset = DEFAULT_CHARSET
+                Font.Color = clWindowText
+                Font.Height = -13
+                Font.Name = 'MS Sans Serif'
+                Font.Style = []
+                ItemIndex = 0
+                ParentFont = False
+                TabOrder = 12
+                Text = 'ATM'
+                Items.Strings = (
+                  'ATM'
+                  'ELT')
               end
             end
           end
@@ -696,7 +721,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -769,7 +793,6 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1333,7 +1356,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     Left = 297
     Top = 0
     Width = 564
-    Height = 634
+    Height = 633
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -1375,7 +1398,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
       Left = 1
       Top = 41
       Width = 562
-      Height = 592
+      Height = 591
       ActivePage = tsDados
       Align = alClient
       TabOrder = 1
@@ -1385,7 +1408,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           TabOrder = 0
         end
@@ -1397,11 +1420,11 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000423900004B3A00000000000000000000000000000000000000000000
+            4C00000042390000303A00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1415,7 +1438,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1428,7 +1451,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1441,7 +1464,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           TabOrder = 0
         end
@@ -1453,7 +1476,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Left = 0
           Top = 0
           Width = 554
-          Height = 564
+          Height = 563
           Align = alClient
           TabOrder = 0
         end
@@ -1473,9 +1496,13 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     MAIL = ACBrMail1
     OnStatusChange = ACBrANe1StatusChange
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.Geral.TipoDoc = tdCTe
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

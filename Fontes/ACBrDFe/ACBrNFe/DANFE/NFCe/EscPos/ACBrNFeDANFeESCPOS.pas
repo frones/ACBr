@@ -273,6 +273,11 @@ var
   VlrAcrescimo, VlrLiquido: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
+  sDescricaoAd: String;
+  posQuebra, posDescricao: Integer;
+
+const
+  tagDescricao = '[DesProd]';
 begin
   if ImprimeItens then
   begin
@@ -283,24 +288,38 @@ begin
     begin
       with FpNFe.Det.Items[i] do
       begin
-        sItem        :=          IntToStrZero( Prod.nItem, 3);
-        sCodigo      :=          ManterCodigo( Prod.cEAN , Prod.cProd );
-        sDescricao   :=                  Trim( Prod.xProd);
-        sQuantidade  :=    FormatarQuantidade( Prod.QCom, False );
-        sUnidade     :=                  Trim( Prod.uCom);
-        sVlrUnitario := FormatarValorUnitario( Prod.VUnCom );
-        sVlrProduto  :=         FormatFloatBr( Prod.vProd );
+        sItem           :=          IntToStrZero( Prod.nItem, 3);
+        sCodigo         :=          ManterCodigo( Prod.cEAN , Prod.cProd );
+        sDescricao      :=           ManterXProd( FpNFe, i );
+        sQuantidade     :=    FormatarQuantidade( Prod.QCom, False );
+        sUnidade        :=                  Trim( Prod.uCom);
+        sVlrUnitario    := FormatarValorUnitario( Prod.VUnCom );
+        sVlrProduto     :=         FormatFloatBr( Prod.vProd );
+
+        sDescricaoAd    := '';
 
         if ImprimeEmUmaLinha then
         begin
-          LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+          LinhaCmd := sItem + ' ' + sCodigo + ' ' + tagDescricao + ' ' + sQuantidade + ' ' +
             sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
 
+          // prepara impressão da segunda linha da descrição (informação adicional)
+          posQuebra := Pos(sLineBreak, sDescricao);
+          posDescricao := Pos(tagDescricao, LinhaCmd);
+
+          if posQuebra > 0 then
+          begin
+            sDescricaoAd := Copy(sDescricao, posQuebra + Length(sLineBreak), MaxInt);
+            sDescricao := Copy(sDescricao, 1, posQuebra - 1);
+          end;
+
           // acerta tamanho da descrição
-          nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
+          nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + Length(tagDescricao);
           sDescricao := PadRight(Copy(sDescricao, 1, nTamDescricao), nTamDescricao);
 
-          LinhaCmd := StringReplace(LinhaCmd, '[DesProd]', sDescricao, [rfReplaceAll]);
+          LinhaCmd := StringReplace(LinhaCmd, tagDescricao, sDescricao, [rfReplaceAll]);
+          if sDescricaoAd <> '' then
+            LinhaCmd := LinhaCmd + sLineBreak + StringOfChar(' ', posDescricao - 1) + sDescricaoAd;
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
         end
         else
@@ -341,10 +360,12 @@ begin
           end;
         end;
 
-        //Informação Adicional do produto
-        LinhaCmd := ManterinfAdProd(FpNFe, i);
-        if Trim(LinhaCmd) <> '' then
-          FPosPrinter.Buffer.Add('<c>'+LinhaCmd);
+        if ExibeInforAdicProduto = infSeparadamente then
+        begin
+          LinhaCmd := FpNFe.Det[i].infAdProd;
+          if Trim(LinhaCmd) <> '' then
+            FPosPrinter.Buffer.Add('<c>' + LinhaCmd);
+        end;
 
       end;
     end;

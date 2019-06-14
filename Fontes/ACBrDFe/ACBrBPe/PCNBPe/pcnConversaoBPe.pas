@@ -57,7 +57,8 @@ unit pcnConversaoBPe;
 interface
 
 uses
-  SysUtils, StrUtils, Classes;
+  SysUtils, StrUtils, Classes,
+  pcnConversao;
 
 type
   TVersaoBPe = (ve100);
@@ -171,10 +172,12 @@ function BandeiraCardToStr(const t: TBandeiraCard): string;
 function BandeiraCardToDescStr(const t: TBandeiraCard): string;
 function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 
+function StrToTpEventoBPe(out ok: boolean; const s: string): TpcnTpEvento;
+
 implementation
 
 uses
-  pcnConversao, typinfo;
+  typinfo;
 
 function StrToVersaoBPe(out ok: Boolean; const s: String): TVersaoBPe;
 begin
@@ -540,6 +543,16 @@ begin
                                   bcElo, bcDinersClub, bcHipercard, bcAura, bcCabal,
                                   bcOutros]);
 end;
+
+function StrToTpEventoBPe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110111', '110115', '110116'],
+            [teNaoMapeado, teCancelamento, teNaoEmbarque, teAlteracaoPoltrona]);
+end;
+
+initialization
+  RegisterStrToTpEventoDFe(StrToTpEventoBPe, 'BPe');
 
 end.
 

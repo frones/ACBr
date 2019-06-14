@@ -348,7 +348,7 @@ begin
         infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJ               := INIRec.ReadString(sSecao, 'CNPJ', '');
         infEvento.dhEvento           := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento           := StrToTpEvento(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.tpEvento           := StrToTpEventoBPe(ok,INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
         infEvento.detEvento.xCondUso := '';
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');

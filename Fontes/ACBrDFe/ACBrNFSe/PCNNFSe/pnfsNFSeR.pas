@@ -2180,6 +2180,12 @@ begin
       NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
       NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'DescontoIncondicionado');
 
+      if (FProvedor = proSystemPro) and (NFSe.Servico.Valores.ValorIssRetido = 0) and (NFSe.Servico.Valores.IssRetido=stRetencao) then
+      begin
+        NFSe.Servico.Valores.ValorIssRetido := NFSe.Servico.Valores.ValorIss;
+        NFSe.Servico.Valores.ValorIss := 0;
+      end;
+
       if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
         NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
                                                  NFSe.Servico.Valores.DescontoIncondicionado -

@@ -22,7 +22,7 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 242
-    Width = 931
+    Width = 939
     Height = 6
     Cursor = crVSplit
     Align = alTop
@@ -30,17 +30,17 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 248
-    Width = 931
-    Height = 189
-    ActivePage = tsLog
+    Width = 939
+    Height = 197
+    ActivePage = tsRecebido
     Align = alClient
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
       object mLog: TMemo
         Left = 0
-        Top = 20
-        Width = 923
+        Top = 28
+        Width = 931
         Height = 141
         Align = alBottom
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -58,8 +58,8 @@ object Form1: TForm1
       inline mVendaEnviar: TMemo
         Left = 0
         Top = 0
-        Width = 906
-        Height = 161
+        Width = 931
+        Height = 169
         Cursor = crIBeam
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
@@ -77,13 +77,13 @@ object Form1: TForm1
       inline mRecebido: TWebBrowser
         Left = 0
         Top = 0
-        Width = 906
-        Height = 161
+        Width = 931
+        Height = 169
         Cursor = crIBeam
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C000000A35D0000A41000000000000000000000000000000000000000000000
+          4C00000039600000771100000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -157,7 +157,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 931
+    Width = 939
     Height = 242
     Align = alTop
     TabOrder = 0
@@ -221,7 +221,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 760
+      Width = 768
       Height = 240
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -229,15 +229,15 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 756
+        Width = 764
         Height = 223
-        ActivePage = tsMFe
+        ActivePage = tsDadosSAT
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
           DesignSize = (
-            748
+            756
             195)
           object Label9: TLabel
             Left = 21
@@ -651,7 +651,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            748
+            756
             195)
           object Label2: TLabel
             Left = 10
@@ -1422,7 +1422,7 @@ object Form1: TForm1
             MaxValue = 0
             MinValue = 10
             TabOrder = 2
-            Value = 10
+            Value = 0
           end
           object btMFEEnviarPagamento: TButton
             Left = 320
@@ -1464,7 +1464,7 @@ object Form1: TForm1
         object TabSheet1: TTabSheet
           Caption = 'Valida'#231#227'o'
           DesignSize = (
-            748
+            756
             195)
           object Label33: TLabel
             Left = 25
@@ -1546,8 +1546,8 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 437
-    Width = 931
+    Top = 445
+    Width = 939
     Height = 23
     Panels = <
       item

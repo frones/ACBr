@@ -614,36 +614,50 @@ begin
   end;
 end;
 
+//Este método é utilizado para Envio de Pagamento utilizando TEF
 procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
 var
   StatusPagamentoMFe : TStatusPagamento;
   RespostaStatusPagamento : TRespostaStatusPagamento;
 begin
+
+  {OBS: Para quem utiliza o Componente ACBrTEFD os dados abaixo podem ser obtidos
+  utilizando a propriedade ACBrTEFDRespNFCeSAT da classe de retorno TACBrTEFDResp do componente ACBrTEFD  }
   StatusPagamentoMFe := TStatusPagamento.Create;
   try
     with StatusPagamentoMFe do
     begin
       Clear;
-      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
-      CodigoAutorizacao := '20551';
-      Bin := '123456';
-      DonoCartao := 'TESTE';
-      DataExpiracao := '01/01';
-      InstituicaoFinanceira:= 'STONE';
-      Parcelas := 1;
-      CodigoPagamento := '12846';
-      ValorPagamento := 1530;
-      IDFila := 1674068;
-      Tipo := '1';
-      UltimosQuatroDigitos := 12345;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';     //Esta chave é Fixa (Esta chave está definida no Manual Integrador Fiscal para Testes)
+      CodigoAutorizacao := '20551';                                       //Código de Realização de Pagamento retornado pela Adquirinte (Autorizadora Pagamento)
+      Bin := '123456';                                                    //Sequencial de Número Iniciais do Cartão fornecidos pela Adquirinte
+      DonoCartao := 'TESTE';                                              //Nome Do titular do Cartão fornecido pela Adquirinte
+      DataExpiracao := '01/01';                                           //Data de Validade do Cartão fornecido pela adquirinte
+      InstituicaoFinanceira:= 'STONE';                                    //Adquirinte que realizou o Pagamento
+      Parcelas := 1;                                                      //Qtd de parcelas aprovadas pela adquirinte
+      CodigoPagamento := '12846';                                         //NSU de Pagamento fornecido pela adquirinte
+      ValorPagamento := 1530;                                             //Valor Documento fornecido pela adquirinte
+      IDFila := 1674068;                                                  //NSU fornecido pela SEFAZ retornado na solicitação de Pagamento
+      Tipo := '1';                                                        //Tipo da Bandeira do Cartão Fornecido pela adquirinte
+      UltimosQuatroDigitos := 1234;                                       //Ultimos quatro dígitos do cartão fornecidos pela adquirinte
     end;
-    RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe);
-    ShowMessage(RespostaStatusPagamento.Retorno);
+    if ACBrSAT1.SAT is TACBrSATMFe_integrador_XML then
+      RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe)  //Retorna Resposta do Integrador com IDPagamento
+    else
+      RespostaStatusPagamento := ACBrIntegrador1.EnviarStatusPagamento(StatusPagamentoMFe);
+
+    if Assigned(RespostaStatusPagamento) then
+    begin
+      showMessage(RespostaStatusPagamento.Retorno);
+      LoadXML( RespostaStatusPagamento.XML, mRecebido );
+      PageControl1.ActivePage := tsRecebido;
+    end;
   finally
     StatusPagamentoMFe.Free;
   end;
 end;
 
+//Este método é utilizado para Envio de Pagamento utilizando POS
 procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
 var
   PagamentoMFe : TEnviarPagamento;
@@ -655,18 +669,18 @@ begin
     with PagamentoMFe do
     begin
       Clear;
-      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
-      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
-      Estabelecimento := '10';
-      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));
-      CNPJ := edtEmitCNPJ.Text;
-      IcmsBase := 0.23;
-      ValorTotalVenda := 1530;
-      HabilitarMultiplosPagamentos := True;
-      HabilitarControleAntiFraude := False;
-      CodigoMoeda := 'BRL';
-      EmitirCupomNFCE := False;
-      OrigemPagamento := 'Mesa 1234';
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';                          //Esta chave é Fixa, (Esta chave está definida no Manual Integrador Fiscal)
+      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';                               //Esta chave deve ser unica por requisição, deve-se gerar um GUID com a combinação: (Cód. Filial / Adquirinte ex:(Cielo) / ID ) - (Esta chave está definida no Manual Integrador Fiscal, para testes)
+      Estabelecimento := '10';                                                                 //Codigo do estabelecimento fornecido pela Adquirinte contratada, enquanto não estiver funcionando a integração deve informar valor fixo
+      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));      //Como não existe este equipamento POS Integrado conforme previsão inicial da SEFAZ CE, está sendo informado o Numero serial do Equipamento POS, independente do Modelo utilizado. (Está gerando random para diversificar o código neste Demo )
+      CNPJ := edtEmitCNPJ.Text;                                                                //CNPJ do Contribuinte
+      IcmsBase := 0.23;                                                                        //Valor sujeito a legislação do ICMS
+      ValorTotalVenda := 1530;                                                                 //Valor total a ser cobrado
+      HabilitarMultiplosPagamentos := True;                                                    //Opção para mais de uma forma de pagamento ou mais de um cartão
+      HabilitarControleAntiFraude := False;                                                    //Será usado para validação de possíveis fraudes no pagamento
+      CodigoMoeda := 'BRL';                                                                    //Formato da moeda
+      EmitirCupomNFCE := False;                                                                //Usado Apenas para emissão de NFCe direto pelo equipamento POS
+      OrigemPagamento := 'Mesa 1234';                                                          //Descrição da origem do pagamento
     end;
 
     if ACBrSAT1.SAT is TACBrSATMFe_integrador_XML then
@@ -675,7 +689,11 @@ begin
       RespostaPagamentoMFe := ACBrIntegrador1.EnviarPagamento(PagamentoMFe);
 
     if Assigned(RespostaPagamentoMFe) then
+    begin
       ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
+      LoadXML( RespostaPagamentoMFe.XML, mRecebido );
+      PageControl1.ActivePage := tsRecebido;
+    end;
   finally
     PagamentoMFe.Free;
     if Assigned(RespostaPagamentoMFe) then
@@ -683,6 +701,8 @@ begin
   end;
 end;
 
+//Este método é utilizado para Finalizar o processo de Pagamento, vinculando um Pagamento a um Documento Fiscal
+//Utilizado também para envio do Extrato CFe para impressão no equipamento POS
 procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
 var
  RespostaFiscal : TRespostaFiscal;
@@ -693,25 +713,36 @@ Begin
       with RespostaFiscal do
       begin
         Clear;
-        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
-        IDFila := 1674068;
-        ChaveAcesso := '35170408723218000186599000113100000279731880';
-        Nsu := '1674068';
-        NumerodeAprovacao := '1234';
-        Bandeira := 'VISA';
-        Adquirente := 'STONE';
-        if Assigned(ACBrSAT1.CFe) then
-          ImpressaoFiscal := '<![CDATA['+ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe+']]>';
-        NumeroDocumento := '1674068';
-        CNPJ:= edtEmitCNPJ.Text;
+        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';                           //Esta chave é Fixa, (Esta chave está definida no Manual Integrador Fiscal para Testes)
+        IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);           //Este ID corresponde ao IDPagamento retornado na Solicitação de: EnviarPagamento
+        ChaveAcesso := '35170408723218000186599000113100000279731880';                            //Chave do Documento Fiscal (CFe) Autorizado no pagamento
+        Nsu := '1674068';                                                                         //NSU de Pagamento fornecido pela Adquirente(Autorizadora Pagamento)
+        NumerodeAprovacao := '123456';                                                            //Código de Autorização de Pagamento Realizado, retornado pela Adquirinte (Autorizadora Pagamento)
+        Bandeira := 'VISA';                                                                       //Tipo de Bandeira do Cartão fornecido pela Adquirinte
+        Adquirente := 'STONE';                                                                    //Adquirinte que realizou a Operação de Aprovação de Pagamento
+        if Assigned(ACBrSAT1.CFe) and (ACBrSAT1.Extrato= ACBrSATExtratoESCPOS1) then
+          ImpressaoFiscal := '<![CDATA['+ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe+']]>';     //Extrato do CFe para impressão no aparelho POS
+        NumeroDocumento := '1674068';                                                             //Número do Cupom Fiscal Autorizado
+        CNPJ:= edtEmitCNPJ.Text;                                                                  //CNPJ do contribuinte
       end;
-      RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal);
-      ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+      if ACBrSAT1.SAT is TACBrSATMFe_integrador_XML then
+        RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal)
+      else
+        RetornoRespostaFiscal := ACBrIntegrador1.RespostaFiscal(RespostaFiscal);
+
+      if Assigned(RetornoRespostaFiscal) then
+      begin
+        ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+        LoadXML( RetornoRespostaFiscal.XML, mRecebido );
+        PageControl1.ActivePage := tsRecebido;
+      end;
     finally
       RespostaFiscal.Free;
     end;
 end;
 
+//OBS: Esta funcionalidade está disponível apenas para testes em Homologação utilizando o "Simulador POS Ceara"
+//Como não existe este equipamento POS Integrado conforme previsão inicial da SEFAZ CE, não deve ser utilizado em Produção
 procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
 var
   VerificarStatusValidador : TVerificarStatusValidador;
@@ -722,11 +753,22 @@ begin
     with VerificarStatusValidador do
     begin
       Clear;
-      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
-      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);
-      CNPJ:= edtEmitCNPJ.Text;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';                          //Esta chave é Fixa, (Esta chave está definida no Manual Integrador Fiscal para Testes)
+      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);          //Deve ser informado o ID de Pagamento retornado pelo Método: EnviarPagamento
+      CNPJ:= edtEmitCNPJ.Text;                                                                 //CNPJ do Contribuinte
     end;
-    RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador) ;
+    if ACBrSAT1.SAT is TACBrSATMFe_integrador_XML then
+      RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador)  //Retorna Resposta do Integrador com IDPagamento
+    else
+      RespostaVerificarStatusValidador := ACBrIntegrador1.VerificarStatusValidador(VerificarStatusValidador);
+
+    if Assigned(RespostaVerificarStatusValidador) then
+    begin
+      ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
+      LoadXML( RespostaVerificarStatusValidador.XML, mRecebido );
+      PageControl1.ActivePage := tsRecebido;
+    end;
+
   finally
     VerificarStatusValidador.Free;
   end;

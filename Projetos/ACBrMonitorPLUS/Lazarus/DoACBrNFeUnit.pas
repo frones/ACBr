@@ -1566,7 +1566,7 @@ begin
     try
       DoConfiguraDANFe(True, '');
 
-      if (ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 55) then
+      if (ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = CModeloNFe55) then
       begin
         if NaoEstaVazio(MarcaDagua) then
           TACBrNFeDANFeRL(ACBrNFe.DANFE).MarcadAgua:= MarcaDagua
@@ -1576,7 +1576,7 @@ begin
 
       ACBrNFe.DANFe.Protocolo :=  trim( AProtocolo );
 
-      if ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
+      if ACBrNFe.NotasFiscais.Items[0].NFe.Ide.modelo = CModeloNFe65 then
       begin
         TACBrNFeDANFCEClass(ACBrNFe.DANFE).ViaConsumidor := Consumidor;
       end;
@@ -2254,8 +2254,8 @@ begin
     ACBrNFe.InutNFe.ID := '';
     CargaDFeInut := TACBrCarregarNFeInut.Create(ACBrNFe, AXMLInut);
     try
-      if (ACBrNFe.InutNFe.modelo = 65) and
-        (MonitorConfig.DFE.Impressao.NFCe.Emissao.Modelo = 1 ) then
+      if (ACBrNFe.InutNFe.modelo = CModeloNFe65) and
+        (MonitorConfig.DFE.Impressao.NFCe.Emissao.Modelo = CEmissaoESCPOS ) then
       begin
         DanfeEscPos := TACBrNFeDANFeESCPOS.Create(ACBrNFe.DANFE);
         POSPrinter  := TACBrPosPrinter.Create(DanfeEscPos.PosPrinter);
@@ -2889,7 +2889,7 @@ begin
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
-    if (MonitorConfig.DFE.Impressao.NFCe.Emissao.Modelo <> 1 )  then
+    if (MonitorConfig.DFE.Impressao.NFCe.Emissao.Modelo <> CEmissaoESCPOS )  then
         raise Exception.Create('Comando disponível apenas para o DANFe modelo DANFe ESCPOS');
 
     DanfeEscPos := TACBrNFeDANFeESCPOS.Create(ACBrNFe.DANFE);

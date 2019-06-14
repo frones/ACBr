@@ -2272,7 +2272,7 @@ begin
 
   with DFe.Impressao.NFCe.Emissao do
   begin
-    Modelo                    := 0;
+    Modelo                    := CEmissaoFortes;
     ModoImpressaoEvento       := 0;
     ImprimirItem1Linha        := True;
     ImprimirDescAcresItem     := True;

@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsSat
+        ActivePage = tsMonitor
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 17
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -3917,8 +3917,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/Etiqueta.htm'
           Caption = 'Etiqueta'
-          ClientHeight = 417
-          ClientWidth = 1239
+          ClientHeight = 378
+          ClientWidth = 989
           Font.Height = -13
           ImageIndex = 15
           ParentFont = False
@@ -4003,7 +4003,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 14
               Height = 17
               Top = 62
-              Width = 78
+              Width = 77
               Anchors = [akLeft, akBottom]
               Caption = 'Temperatura:'
               Font.Height = -13
@@ -4074,7 +4074,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 17
               Hint = 'Utilize ''-1'' para usar velocidade padrão da impressora'
               Top = 112
-              Width = 68
+              Width = 67
               Anchors = [akLeft, akBottom]
               Caption = 'Velocidade:'
               Font.Height = -13
@@ -6970,8 +6970,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/NCM.htm'
           Caption = 'NCM'
-          ClientHeight = 417
-          ClientWidth = 1239
+          ClientHeight = 378
+          ClientWidth = 989
           Font.Height = -13
           ImageIndex = 25
           ParentFont = False
@@ -7010,7 +7010,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 25
             Hint = 'Diretorio onde salvar a lista'
             Top = 78
-            Width = 743
+            Width = 493
             ShowHidden = False
             ButtonWidth = 23
             NumGlyphs = 1
@@ -7031,7 +7031,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             ParentFont = False
           end
           object bDownloadLista: TButton
-            Left = 759
+            Left = 509
             Height = 25
             Top = 78
             Width = 120
@@ -7975,11 +7975,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 981
-                ActivePage = gbxWSReinf
+                ActivePage = tsWSNFe
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 3
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e/BP-e'
@@ -9545,7 +9545,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
-                  ClientHeight = 267
+                  ClientHeight = 318
                   ClientWidth = 973
                   Font.Height = -13
                   ImageIndex = 1
@@ -9696,7 +9696,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object TabSheet1: TTabSheet
                   Caption = 'NFe'
-                  ClientHeight = 267
+                  ClientHeight = 318
                   ClientWidth = 973
                   Font.Height = -13
                   ParentFont = False
@@ -10101,7 +10101,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
-                  ClientHeight = 267
+                  ClientHeight = 318
                   ClientWidth = 973
                   Font.Height = -13
                   ImageIndex = 2
@@ -10343,7 +10343,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object gbxMargem1: TGroupBox
                     Left = 6
                     Height = 72
-                    Top = 191
+                    Top = 242
                     Width = 299
                     Anchors = [akLeft, akBottom]
                     Caption = 'Margens'
@@ -10444,7 +10444,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object GroupBox6: TGroupBox
                     Left = 312
                     Height = 72
-                    Top = 191
+                    Top = 242
                     Width = 82
                     Anchors = [akLeft, akBottom]
                     Caption = 'Largura'
@@ -10469,7 +10469,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsImpCTe: TTabSheet
                   Caption = 'CT-e'
-                  ClientHeight = 267
+                  ClientHeight = 318
                   ClientWidth = 973
                   Font.Height = -13
                   ParentFont = False
@@ -13292,19 +13292,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpType = htKeyword
           HelpKeyword = 'ACBrMonitor/PosPrinter.htm'
           Caption = 'PosPrinter'
-          ClientHeight = 327
+          ClientHeight = 378
           ClientWidth = 989
           Font.Height = -13
           ImageIndex = 1
           ParentFont = False
           object gbConfiguracao: TGroupBox
             Left = 0
-            Height = 327
+            Height = 378
             Top = 0
             Width = 989
             Align = alClient
             Caption = 'Configuração'
-            ClientHeight = 305
+            ClientHeight = 356
             ClientWidth = 985
             Font.Height = -13
             ParentFont = False

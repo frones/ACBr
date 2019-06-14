@@ -50,6 +50,11 @@ const
   CMonitorIni = 'ACBrMonitor.ini';
   _C = 'tYk*5W@';
 
+  CModeloNFe55 = 55;
+  CModeloNFe65 = 65;
+  CEmissaoESCPOS = 1;
+  CEmissaoFortes = 0;
+
   CACBrNFeServicosIni =                'ACBrNFeServicos.ini';
   CACBrCTeServicosIni =                'ACBrCTeServicos.ini';
   CACBrMDFeServicosIni =               'ACBrMDFeServicos.ini';

@@ -51,6 +51,7 @@ type
   TGeralConfMDFe = class(TGeralConf)
   private
     FVersaoDF: TVersaoMDFe;
+    FGerarInfMDFeSupl: TForcarGeracaoTag;
 
     procedure SetVersaoDF(const Value: TVersaoMDFe);
   public
@@ -61,6 +62,7 @@ type
 
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve300;
+    property GerarInfMDFeSupl: TForcarGeracaoTag read FGerarInfMDFeSupl default fgtNunca;
   end;
 
   { TDownloadConfMDFe }

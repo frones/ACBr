@@ -105,6 +105,13 @@ type
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutMDFe): String; reintroduce; overload;
 
+    function GetURLConsulta(const CUF: integer;
+      const TipoAmbiente: TpcnTipoAmbiente;
+      const Versao: Double): String;
+    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
+      const TipoEmissao: TpcnTipoEmissao; const AChaveMDFe: String;
+      const Versao: Double): String;
+
     function IdentificaSchema(const AXML: String): TSchemaMDFe;
     function IdentificaSchemaModal(const AXML: String): TSchemaMDFe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaMDFe;
@@ -136,7 +143,7 @@ type
 implementation
 
 uses
-  strutils, dateutils,
+  strutils, dateutils, math,
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
@@ -226,6 +233,44 @@ begin
   Result := 'MDFe';
 end;
 
+function TACBrMDFe.GetURLConsulta(const CUF: integer;
+  const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
+var
+  VersaoDFe: TVersaoMDFe;
+  ok: Boolean;
+begin
+  VersaoDFe := DblToVersaoMDFe(ok, Versao);
+  Result := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaMDFe', 0);
+end;
+
+function TACBrMDFe.GetURLQRCode(const CUF: integer;
+  const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
+  const AChaveMDFe: String; const Versao: Double): String;
+var
+  idMDFe,
+  sEntrada, urlUF: String;
+  VersaoDFe: TVersaoMDFe;
+  ok: Boolean;
+begin
+  VersaoDFe := DblToVersaoMDFe(ok, Versao);
+
+  urlUF := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  idMDFe := OnlyNumber(AChaveMDFe);
+
+  // Passo 1
+  sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+
+  // Passo 2 calcular o SHA-1 da string idMDFe se o Tipo de Emissão for EPEC ou FSDA
+  if TipoEmissao in [teDPEC, teFSDA] then
+    sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idMDFe));
+
+  // Passo 3
+  if Pos('?', urlUF) < 0 then
+    Result := urlUF + '?';
+
+   Result := Result + sEntrada;
+end;
+
 function TACBrMDFe.GetNameSpaceURI: String;
 begin
   Result := ACBRMDFE_NAMESPACE;
@@ -272,12 +317,13 @@ begin
     I := pos('<infEvento', AXML);
     if I > 0 then
     begin
-      lTipoEvento := StrToTpEvento(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
+      lTipoEvento := StrToTpEventoMDFe(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
 
       case lTipoEvento of
         teCancelamento: Result := schevCancMDFe;
         teEncerramento: Result := schevEncMDFe;
-        else Result := schevIncCondutorMDFe;
+      else 
+        Result := schevIncCondutorMDFe;
       end;
     end;
   end;

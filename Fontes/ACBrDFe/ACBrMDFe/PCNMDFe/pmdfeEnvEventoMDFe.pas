@@ -102,7 +102,7 @@ implementation
 
 uses
   IniFiles,
-  pcnAuxiliar, pmdfeRetEnvEventoMDFe,
+  pcnAuxiliar, pmdfeRetEnvEventoMDFe,  pmdfeConversaoMDFe,
   ACBrUtil, ACBrDFeUtil;
 
 { TEventoMDFe }
@@ -329,7 +329,7 @@ begin
         infEvento.cOrgao     := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJCPF    := INIRec.ReadString(sSecao, 'CNPJCPF', '');
         infEvento.dhEvento   := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento   := StrToTpEvento(Ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.tpEvento   := StrToTpEventoMDFe(Ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
 
         // Usado no detalhamento do evento

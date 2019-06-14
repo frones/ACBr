@@ -182,6 +182,14 @@ begin
   GerarInfMDFe;
   Gerador.wGrupo('/infMDFe');
 
+  if MDFe.infMDFeSupl.qrCodMDFe <> '' then
+  begin
+    Gerador.wGrupo('infMDFeSupl');
+    Gerador.wCampo(tcStr, '#196', 'qrCodMDFe', 50, 1000, 1,
+                     '<![CDATA[' + MDFe.infMDFeSupl.qrCodMDFe + ']]>', DSC_INFQRCODMDFE, False);
+    Gerador.wGrupo('/infMDFeSupl');
+  end;
+
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;

@@ -261,6 +261,24 @@ begin
       Leitor.Free;
     end;
 
+    // Gera o QR-Code para adicionar no XML após ter a
+    // assinatura, e antes de ser salvo.
+
+    if ((Configuracoes.Geral.GerarInfMDFeSupl = fgtSomenteProducao) and
+       (Configuracoes.WebServices.Ambiente = taProducao)) or
+       ((Configuracoes.Geral.GerarInfMDFeSupl = fgtSomenteHomologacao) and
+       (Configuracoes.WebServices.Ambiente = taHomologacao)) or
+       (Configuracoes.Geral.GerarInfMDFeSupl = fgtSempre) then
+    begin
+      with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
+      begin
+        MDFe.infMDFeSupl.qrCodMDFe := GetURLQRCode(MDFe.Ide.cUF, MDFe.Ide.tpAmb,
+                  MDFe.ide.tpEmis, MDFe.infMDFe.ID, MDFe.infMDFe.Versao);
+
+        GerarXML;
+      end;
+    end;
+
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasMDFeProcessados) then
     begin

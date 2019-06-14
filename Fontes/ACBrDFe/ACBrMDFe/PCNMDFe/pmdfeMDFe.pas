@@ -1118,6 +1118,13 @@ type
     property hashCSRT: String read FhashCSRT write FhashCSRT;
  end;
 
+  TinfMDFeSupl = class(TObject)
+  private
+    FqrCodMDFe: String;
+  public
+    property qrCodMDFe: String read FqrCodMDFe write FqrCodMDFe;
+  end;
+
   TMDFe = class(TObject)
   private
     FinfMDFe: TinfMDFe;
@@ -1136,6 +1143,7 @@ type
     FautXML: TautXMLCollection;
     FinfAdic: TinfAdic;
     FinfRespTec: TinfRespTec;
+    FinfMDFeSupl: TinfMDFeSupl;
 
     FProcMDFe: TProcMDFe;
     FSignature: TSignature;
@@ -1163,6 +1171,7 @@ type
     property infAdic: TinfAdic         read FinfAdic write FinfAdic;
 
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property infMDFeSupl: TinfMDFeSupl read FinfMDFeSupl write FinfMDFeSupl;
 
     property procMDFe: TProcMDFe   read FProcMDFe  write FProcMDFe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -1200,6 +1209,7 @@ begin
   FinfAdic := TinfAdic.Create;
 
   FinfRespTec := TinfRespTec.Create;
+  FinfMDFeSupl := TinfMDFeSupl.Create;
 
   FProcMDFe  := TProcMDFe.create;
   Fsignature := Tsignature.create;
@@ -1223,6 +1233,7 @@ begin
   FautXML.Free;
   FinfAdic.Free;
   FinfRespTec.Free;
+  FinfMDFeSupl.Free;
 
   FProcMDFe.Free;
   Fsignature.Free;

@@ -103,6 +103,9 @@ type
 
 implementation
 
+uses
+  pmdfeConversaoMDFe;
+
 { TRetInfEventoCollection }
 
 function TRetInfEventoCollection.Add: TRetInfEventoCollectionItem;
@@ -181,7 +184,7 @@ begin
          infEvento.CNPJCPF    := Leitor.rCampoCNPJCPF; //Leitor.rCampo(tcStr, 'CNPJ');
          infEvento.chMDFe     := Leitor.rCampo(tcStr, 'chMDFe');
          infEvento.dhEvento   := Leitor.rCampo(tcDatHor, 'dhEvento');
-         infEvento.tpEvento   := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+         infEvento.tpEvento   := StrToTpEventoMDFe(ok,Leitor.rCampo(tcStr, 'tpEvento'));
          infEvento.nSeqEvento := Leitor.rCampo(tcInt, 'nSeqEvento');
 
          if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
@@ -230,7 +233,7 @@ begin
 
          // Os campos abaixos seram retornados caso o cStat = 135 ou 136
          FretEvento.Items[i].FRetInfEvento.chMDFe      := Leitor.rCampo(tcStr, 'chMDFe');
-         FretEvento.Items[i].FRetInfEvento.tpEvento    := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+         FretEvento.Items[i].FRetInfEvento.tpEvento    := StrToTpEventoMDFe(ok,Leitor.rCampo(tcStr, 'tpEvento'));
          FretEvento.Items[i].FRetInfEvento.xEvento     := Leitor.rCampo(tcStr, 'xEvento');
          FretEvento.Items[i].FRetInfEvento.nSeqEvento  := Leitor.rCampo(tcInt, 'nSeqEvento');
          FretEvento.Items[i].FRetInfEvento.dhRegEvento := Leitor.rCampo(tcDatHor, 'dhRegEvento');

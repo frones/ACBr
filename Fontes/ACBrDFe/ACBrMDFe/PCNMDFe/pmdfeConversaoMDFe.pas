@@ -41,7 +41,8 @@ unit pmdfeConversaoMDFe;
 interface
 
 uses
-  SysUtils, StrUtils, Classes;
+  SysUtils, StrUtils, Classes,
+  pcnConversao;
 
 type
   TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria,
@@ -105,10 +106,12 @@ function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;
 function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
 function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
 
+function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
+
 implementation
 
 uses
-  pcnConversao, typinfo;
+  typinfo;
 
 function StrToEnumerado(out ok: boolean; const s: string; const AString:
   array of string; const AEnumerados: array of variant): variant;
@@ -324,6 +327,17 @@ begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [rsEmitente, rsTomadorServico]);
 end;
+
+function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110111', '110112', '110114', '110115'],
+            [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
+             teInclusaoDFe]);
+end;
+
+initialization
+  RegisterStrToTpEventoDFe(StrToTpEventoMDFe, 'MDFe');
 
 end.
 

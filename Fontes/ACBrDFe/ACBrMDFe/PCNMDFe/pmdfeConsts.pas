@@ -112,7 +112,8 @@ const
   DSC_TU          = 'Tonelada Útil';
 
   DSC_INDCANALVERDE = 'Indicador de Canal Verde';
-  
+  DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
+
 implementation
 
 end.

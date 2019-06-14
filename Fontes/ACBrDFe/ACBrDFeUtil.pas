@@ -161,7 +161,7 @@ var
 begin
   // Se o usuario informar um código maior que zero validar o mesmo //
   if ACodigo > 0 then
-    if ValidarCodigoDFe(ACodigo, ANumero) then
+    if not ValidarCodigoDFe(ACodigo, ANumero) then
       raise EACBrDFeException.Create('Código Numérico inválido, Chave não Gerada');
 
   // Se o usuario informar um código inferior ou igual a -2 a chave não será gerada //

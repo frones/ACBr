@@ -46,6 +46,12 @@ Símbolo : Significado
 
 14/06/2019
 -- ACBrDFeUtil --
+[-] Ficou faltando um "not" no IF que chama a função que valida o código do 
+    documento fiscal
+  Por: Italo Jurisato Junior
+
+14/06/2019
+-- ACBrDFeUtil --
 [+] Adicionado as funções:
       function GerarCodigoDFe(AnDF: Integer): integer;
       function ValidarCodigoDFe(AcDF, AnDF: Integer): Boolean;

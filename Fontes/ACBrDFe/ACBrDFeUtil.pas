@@ -48,6 +48,10 @@ function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
 
 function GerarCodigoNumerico(numero: integer): integer;
+function GerarCodigoDFe(AnDF: Integer): integer;
+
+function ValidarCodigoDFe(AcDF, AnDF: Integer): Boolean;
+
 function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ:String;
                           ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer = 55): String;
 function FormatarChaveAcesso(AValue: String): String;
@@ -120,27 +124,62 @@ begin
   Result := StrToInt(copy(s, 1, 8));
 end;
 
+function GerarCodigoDFe(AnDF: Integer): integer;
+var
+ ACodigo: Integer;
+begin
+  Repeat
+    ACodigo := Random(99999999);
+  Until ValidarCodigoDFe(ACodigo, AnDF);
+
+  Result := ACodigo;
+end;
+
+function ValidarCodigoDFe(AcDF, AnDF: Integer): Boolean;
+const
+  CCodigosDFeInvalidos: array[0..19] of Integer =  (0, 11111111, 22222222,
+     33333333, 44444444, 55555555, 66666666, 77777777, 88888888, 99999999,
+     12345678, 23456789, 34567890, 45678901, 56789012, 67890123, 78901234,
+     89012345, 90123456, 01234567);
+var
+  i: Integer;
+
+begin
+  Result := (AcDF <> AnDF);
+  i := 0;
+  while Result and (i < 20) do
+  begin
+    Result := (AcDF <> CCodigosDFeInvalidos[i]);
+    Inc(i);
+  end;
+end;
+
 function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
                           ASerie, ANumero, AtpEmi, ACodigo: Integer; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
 begin
-  // Se o usuario informar um código inferior a -2 a chave não será gerada //
-  if ACodigo < -2 then
+  // Se o usuario informar um código maior que zero validar o mesmo //
+  if ACodigo > 0 then
+    if ValidarCodigoDFe(ACodigo, ANumero) then
+      raise EACBrDFeException.Create('Código Numérico inválido, Chave não Gerada');
+
+  // Se o usuario informar um código inferior ou igual a -2 a chave não será gerada //
+  if ACodigo <= -2 then
     raise EACBrDFeException.Create('Código Numérico inválido, Chave não Gerada');
 
   // Se o usuario informar 0 ou -1; o código numerico sera gerado de maneira aleatória //
   if ACodigo = -1 then
     ACodigo := 0;
 
-  while ACodigo = 0 do
-  begin
-    ACodigo := Random(99999999);
-  end;
+  if ACodigo = 0 then
+    ACodigo := GerarCodigoDFe(ANumero);
 
   // Se o usuario informar -2; o código numerico sera ZERO //
-  if ACodigo = -2 then
-    ACodigo := 0;
+  // Pela Regra B03-10 que consta na NT 2019/001 versão 1.00 as notas vão ser
+  // rejeitadas se o cNF for igual a zero.
+//  if ACodigo = -2 then
+//    ACodigo := 0;
 
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);

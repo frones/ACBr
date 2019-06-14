@@ -50,7 +50,8 @@ unit pcnConversaoNFe;
 interface
 
 uses
-  SysUtils, StrUtils, Classes;
+  SysUtils, StrUtils, Classes,
+  pcnConversao;
 
 type
 
@@ -68,7 +69,11 @@ type
 //                schresNFe, schresEvento, schprocNFe, schprocEventoNFe,
                 schconsReciNFe, schconsSitNFe, schconsStatServ, schconsCad,
                 schenvEvento, schconsNFeDest, schdownloadNFe, schretEnviNFe,
-                schadmCscNFCe, schdistDFeInt, scheventoEPEC);
+                schadmCscNFCe, schdistDFeInt, scheventoEPEC, schCancSubst,
+                schPedProrrog1, schPedProrrog2, schCanPedProrrog1,
+                schCanPedProrrog2, schManifDestConfirmacao,
+                schManifDestCiencia, schManifDestDesconhecimento,
+                schManifDestOperNaoRealizada);
 
   TStatusACBrNFe = (stIdle, stNFeStatusServico, stNFeRecepcao, stNFeRetRecepcao,
     stNFeConsulta, stNFeCancelamento, stNFeInutilizacao, stNFeRecibo,
@@ -93,6 +98,7 @@ function LayOutToSchema(const t: TLayOut): TSchemaNFe;
 
 function SchemaNFeToStr(const t: TSchemaNFe): String;
 function StrToSchemaNFe(const s: String): TSchemaNFe;
+function SchemaEventoToStr(const t: TSchemaNFe): String;
 
 function FinNFeToStr(const t: TpcnFinalidadeNFe): String;
 function StrToFinNFe(out ok: Boolean; const s: String): TpcnFinalidadeNFe;
@@ -140,10 +146,12 @@ function modFreteToStr(const t: TpcnModalidadeFrete): string;
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 function modFreteToDesStr(const t: TpcnModalidadeFrete; versao: TpcnVersaoDF): string;
 
+function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
+
 implementation
 
 uses
-  pcnConversao, typinfo;
+  typinfo;
 
 function LayOutToServico(const t: TLayOut): String;
 begin
@@ -575,6 +583,32 @@ begin
       end;
   end;
 end;
+
+function SchemaEventoToStr(const t: TSchemaNFe): String;
+begin
+  result := EnumeradoToStr(t, ['e110110', 'e110111', 'e110112', 'e110140',
+                               'e111500', 'e111501', 'e111502', 'e111503',
+                               'e210200', 'e210210', 'e210220', 'e210240'],
+    [schEnvCCe, schcancNFe, schCancSubst, schEnvEPEC,
+     schPedProrrog1, schPedProrrog2, schCanPedProrrog1, schCanPedProrrog2,
+     schManifDestConfirmacao, schManifDestCiencia, schManifDestDesconhecimento,
+     schManifDestOperNaoRealizada]);
+end;
+
+function StrToTpEventoNFe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110110', '110111', '110112', '110140', '111500',
+             '111501', '111502', '111503', '210200', '210210', '210220',
+             '210240'],
+            [teNaoMapeado, teCCe, teCancelamento, teCancSubst, teEPECNFe,
+             tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
+             teManifDestConfirmacao, teManifDestCiencia,
+             teManifDestDesconhecimento, teManifDestOperNaoRealizada]);
+end;
+
+initialization
+  RegisterStrToTpEventoDFe(StrToTpEventoNFe, 'NFe');
 
 end.
 

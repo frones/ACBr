@@ -122,6 +122,7 @@ type
     function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownloadEvento(tipoEvento: TpcnTpEvento; const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -396,6 +397,32 @@ begin
      rPathDown := FDownloadNFe.PathDownload;
 
   Result := GetPath(rPathDown, 'Down', CNPJ, Data);
+end;
+
+function TArquivosConfNFe.GetPathDownloadEvento(tipoEvento: TpcnTpEvento;
+  const xNome, CNPJ: String; Data: TDateTime): String;
+var
+  rPathDown: String;
+begin
+  rPathDown := '';
+
+  if EstaVazio(FDownloadNFe.PathDownload) then
+     FDownloadNFe.PathDownload := PathSalvar;
+
+  if (FDownloadNFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
+     rPathDown := rPathDown + PathWithDelim(FDownloadNFe.PathDownload) + OnlyAlphaNum(xNome)
+  else
+     rPathDown := FDownloadNFe.PathDownload;
+
+  rPathDown := GetPath(rPathDown, 'Evento', CNPJ, Data);
+
+  if AdicionarLiteral then
+    rPathDown := PathWithDelim(rPathDown) + TpEventoToDescStr(tipoEvento);
+
+  if not DirectoryExists(rPathDown) then
+    ForceDirectories(rPathDown);
+
+  Result := rPathDown;
 end;
 
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;

@@ -486,7 +486,7 @@ begin
         if CCe then
           infEvento.tpEvento := teCCe
         else
-          infEvento.tpEvento := StrToTpEvento(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
+          infEvento.tpEvento := StrToTpEventoNFe(ok,INIRec.ReadString(  sSecao,'tpEvento' ,''));
 
         infEvento.nSeqEvento   := INIRec.ReadInteger( sSecao,'nSeqEvento' ,1);
         infEvento.versaoEvento := INIRec.ReadString(  sSecao,'versaoEvento' ,'1.00');;

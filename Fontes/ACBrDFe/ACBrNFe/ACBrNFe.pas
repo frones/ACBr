@@ -138,6 +138,7 @@ type
     function IdentificaSchema(const AXML: String): TSchemaNFe;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
       ): String;
+    function GerarNomeArqSchemaEvento(ASchemaEventoNFe: TSchemaNFe; VersaoServico: Double): String;
     function GerarChaveContingencia(FNFe: TNFe): String;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
@@ -377,6 +378,17 @@ begin
   end;
 
   Result := ArqSchema;
+end;
+
+function TACBrNFe.GerarNomeArqSchemaEvento(ASchemaEventoNFe: TSchemaNFe;
+  VersaoServico: Double): String;
+begin
+  if VersaoServico = 0.0 then
+    Result := ''
+  else
+    Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
+              SchemaEventoToStr(ASchemaEventoNFe) + '_v' +
+              FloatToString(VersaoServico, '.', '0.00') + '.xsd';
 end;
 
 function TACBrNFe.GerarChaveContingencia(FNFe: TNFe): String;

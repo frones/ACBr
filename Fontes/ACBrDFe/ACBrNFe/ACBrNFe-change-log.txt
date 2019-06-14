@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/06/2019
+-- ACBrNFeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/51923-rejei%C3%A7%C3%A3o-725-nfc-e-com-cfop-inv%C3%A1lido/
+  Por: pcBonetti
+
+14/06/2019
 -- ACBrNFeWebServices --
 [*] A variável SchemaEventoNFe não estava sendo inicializada com o valor schErro.
   Por: Waldir Paim

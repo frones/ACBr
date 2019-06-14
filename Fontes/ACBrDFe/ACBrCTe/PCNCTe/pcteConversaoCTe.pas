@@ -50,7 +50,8 @@ unit pcteConversaoCTe;
 interface
 
 uses
-  SysUtils, StrUtils, Classes, pcnConversao;
+  SysUtils, StrUtils, Classes,
+  pcnConversao;
 
 type
 
@@ -202,6 +203,8 @@ function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
 
 function TpFretamentoToStr(const t: TtpFretamento): String;
 function StrToTpFretamento(out ok: Boolean; const s: String): TtpFretamento;
+
+function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 
 implementation
 
@@ -703,5 +706,17 @@ begin
   result := StrToEnumerado(ok, s, ['', '1','2'],
                                   [tfNenhum, tfEventual, tpContinuo]);
 end;
+
+function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
+begin
+  Result := StrToEnumerado(ok, s,
+            ['-99999', '110110', '110111', '110113', '110160', '110170',
+             '110180', '110181', '610110'],
+            [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
+             teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo]);
+end;
+
+initialization
+  RegisterStrToTpEventoDFe(StrToTpEventoCTe, 'CTe');
 
 end.

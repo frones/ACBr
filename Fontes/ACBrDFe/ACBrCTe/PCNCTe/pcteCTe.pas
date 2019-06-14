@@ -254,6 +254,13 @@ type
   TinfRespTec = class;
 ////////////////////////////////////////////////////////////////////////////////
 
+  TinfCTeSupl = class(TObject)
+  private
+    FqrCodCTe: String;
+  public
+    property qrCodCTe: String read FqrCodCTe write FqrCodCTe;
+  end;
+
   TCTe = class(TObject)
   private
     FinfCTe: TInfCTe;
@@ -275,6 +282,7 @@ type
     FInfCteAnu: TInfCteAnu;
     FautXML: TautXMLCollection;
     FinfRespTec: TinfRespTec;
+    FinfCTeSupl: TinfCTeSupl;
 
     FProcCTe: TProcCTe;
     FSignature: TSignature;
@@ -305,6 +313,7 @@ type
     property autXML: TautXMLCollection read FautXML write SetautXML;
 
     property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property infCTeSupl: TinfCTeSupl read FinfCTeSupl write FinfCTeSupl;
 
     property procCTe: TProcCTe     read FProcCTe   write FProcCTe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -2466,6 +2475,7 @@ begin
   FautXML     := TautXMLCollection.Create;
 
   FinfRespTec := TinfRespTec.Create;
+  FinfCTeSupl := TinfCTeSupl.Create;
 
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
@@ -2492,6 +2502,7 @@ begin
   FInfCTeAnu.Free;
   FautXML.Free;
   FinfRespTec.Free;
+  FinfCTeSupl.Free;
 
   FProcCTe.Free;
   Fsignature.Free;

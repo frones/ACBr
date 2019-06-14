@@ -165,6 +165,7 @@ const
   DSC_INFCTEMULTIMODAL = 'Informações do CT-e Multimodal';
   DSC_TPFRETAMENTO     = 'Tipo de Fretamento';
   DSC_DHVIAGEM         = 'Data / Hora da Viagem';
+  DSC_INFQRCODCTE      = 'Texto com o QR-Code impresso no DACTE';
 
 implementation
 

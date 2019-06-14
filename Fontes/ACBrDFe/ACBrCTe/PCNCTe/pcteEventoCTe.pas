@@ -71,6 +71,9 @@ type
 
   TInfRemDest = class;
 
+  TInfEntregaCollection  = class;
+  TInfEntregaCollectionItem = class;
+
   TInfEvento = class
   private
     FId: String;
@@ -106,6 +109,24 @@ type
     property TipoEvento: String      read getTipoEvento;
   end;
 
+  TInfEntregaCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TInfEntregaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfEntregaCollectionItem);
+  public
+    function Add: TInfEntregaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfEntregaCollectionItem;
+    property Items[Index: Integer]: TInfEntregaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfEntregaCollectionItem = class(TObject)
+  private
+    FchNFe: String;
+
+  public
+    property chNFe: String read FchNFe write FchNFe;
+  end;
+
   TDetEvento = class(TObject)
   private
     FdescEvento: String;
@@ -134,6 +155,14 @@ type
     FCondUso: String;
      // GTV
     FinfGTV: TInfGTVCollection;
+     // Comprovante de Entrega
+    FdhEntrega: TDateTime;
+    FxNome: String;
+    Flatitude: Double;
+    Flongitude: Double;
+    FhashEntrega: String;
+    FdhHashEntrega: TDateTime;
+    FinfEntrega: TInfEntregaCollection;
 
     procedure SetinfCorrecao(const Value: TInfCorrecaoCollection);
     procedure SetxCondUso(const Value: String);
@@ -166,7 +195,15 @@ type
     property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetinfCorrecao;
     property xCondUso: String                    read FCondUso     write SetxCondUso;
 
-    property infGTV: TInfGTVCollection read FinfGTV write FinfGTV;
+    property dhEntrega: TDateTime     read FdhEntrega     write FdhEntrega;
+    property xNome: String            read FxNome         write FxNome;
+    property latitude: Double         read Flatitude      write Flatitude;
+    property longitude: Double        read Flongitude     write Flongitude;
+    property hashEntrega: String      read FhashEntrega   write FhashEntrega;
+    property dhHashEntrega: TDateTime read FdhHashEntrega write FdhHashEntrega;
+
+    property infGTV: TInfGTVCollection         read FinfGTV     write FinfGTV;
+    property infEntrega: TInfEntregaCollection read FinfEntrega write FinfEntrega;
   end;
 
   TInfCorrecaoCollection = class(TObjectList)
@@ -417,7 +454,7 @@ begin
     teautorizadoRedespIntermed    : Desc := 'Autorizado Redespacho Intermediario';
     teAutorizadoSubcontratacao    : Desc := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Desc := 'Autorizado Servico Vinculado Multimodal';
-
+    teComprEntrega                : Desc := 'Comprovante de Entrega do CT-e';
   else
     Result := '';
   end;
@@ -473,6 +510,7 @@ begin
     teautorizadoRedespIntermed    : Result := 'Autorizado Redespacho Intermediario';
     teAutorizadoSubcontratacao    : Result := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Result := 'Autorizado Servico Vinculado Multimodal';
+    teComprEntrega                : Result := 'Comprovante de Entrega do CT-e';
   else
     Result := 'Não Definido';
   end;
@@ -508,14 +546,18 @@ end;
 constructor TDetEvento.Create;
 begin
   inherited Create;
+
   FinfCorrecao := TInfCorrecaoCollection.Create;
   FinfGTV      := TInfGTVCollection.Create;
+  FinfEntrega  := TInfEntregaCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
 begin
   FInfCorrecao.Free;
   FinfGTV.Free;
+  FinfEntrega.Free;
+
   inherited;
 end;
 
@@ -603,6 +645,29 @@ function TInfEspecieCollection.New: TInfEspecieCollectionItem;
 begin
   Result := TInfEspecieCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TInfEntregaCollection }
+
+function TInfEntregaCollection.Add: TInfEntregaCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TInfEntregaCollection.GetItem(Index: Integer): TInfEntregaCollectionItem;
+begin
+  Result := TInfEntregaCollectionItem(inherited GetItem(Index));
+end;
+
+function TInfEntregaCollection.New: TInfEntregaCollectionItem;
+begin
+  Result := TInfEntregaCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TInfEntregaCollection.SetItem(Index: Integer; Value: TInfEntregaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

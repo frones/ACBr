@@ -98,6 +98,13 @@ type
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutCTe): String; reintroduce; overload;
 
+    function GetURLConsulta(const CUF: integer;
+      const TipoAmbiente: TpcnTipoAmbiente;
+      const Versao: Double): String;
+    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
+      const TipoEmissao: TpcnTipoEmissao; const AChaveCTe: String;
+      const Versao: Double): String;
+
     function IdentificaSchema(const AXML: String): TSchemaCTe;
     function IdentificaSchemaModal(const AXML: String): TSchemaCTe;
     function IdentificaSchemaEvento(const AXML: String): TSchemaCTe;
@@ -151,7 +158,7 @@ type
 implementation
 
 uses
-  strutils, dateutils,
+  strutils, dateutils, math,
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
@@ -237,6 +244,43 @@ end;
 function TACBrCTe.GetNomeModeloDFe: String;
 begin
   Result := ModeloCTeToPrefixo( Configuracoes.Geral.ModeloDF );
+end;
+
+function TACBrCTe.GetURLConsulta(const CUF: integer;
+  const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
+var
+  VersaoDFe: TVersaoCTe;
+  ok: Boolean;
+begin
+  VersaoDFe := DblToVersaoCTe(ok, Versao);
+  Result := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaCTe', 0);
+end;
+
+function TACBrCTe.GetURLQRCode(const CUF: integer;
+  const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
+  const AChaveCTe: String; const Versao: Double): String;
+var
+  idCTe, sEntrada, urlUF: String;
+  VersaoDFe: TVersaoCTe;
+  ok: Boolean;
+begin
+  VersaoDFe := DblToVersaoCTe(ok, Versao);
+
+  urlUF := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  idCTe := OnlyNumber(AChaveCTe);
+
+  // Passo 1
+  sEntrada := 'chCTe=' + idCTe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
+
+  // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
+  if TipoEmissao in [teDPEC, teFSDA] then
+    sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idCTe));
+
+  // Passo 3
+  if Pos('?', urlUF) < 0 then
+    Result := urlUF + '?';
+
+   Result := Result + sEntrada;
 end;
 
 function TACBrCTe.GetNameSpaceURI: String;
@@ -369,7 +413,7 @@ begin
       I := pos('<infEvento', AXML);
       if I > 0 then
       begin
-        lTipoEvento := StrToTpEvento(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
+        lTipoEvento := StrToTpEventoCTe(Ok, Trim(RetornarConteudoEntre(AXML, '<tpEvento>', '</tpEvento>')));
 
         case lTipoEvento of
           teCCe:            Result := schEventoCTe;

@@ -55,6 +55,8 @@ type
     FModeloDFCodigo: integer;
     FVersaoDF: TVersaoCTe;
 
+    FGerarInfCTeSupl: TForcarGeracaoTag;
+
     procedure SetVersaoDF(const Value: TVersaoCTe);
     procedure SetModeloDF(const Value: TModeloCTe);
   public
@@ -67,6 +69,7 @@ type
     property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve300;
+    property GerarInfCTeSupl: TForcarGeracaoTag read FGerarInfCTeSupl default fgtNunca;
   end;
 
   { TDownloadConfCTe }

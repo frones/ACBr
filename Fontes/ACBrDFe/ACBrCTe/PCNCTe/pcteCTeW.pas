@@ -268,6 +268,14 @@ begin
   GerarInfCTe;
   Gerador.wGrupo('/infCte');
 
+  if CTe.infCTeSupl.qrCodCTe <> '' then
+  begin
+    Gerador.wGrupo('infCTeSupl');
+    Gerador.wCampo(tcStr, '#196', 'qrCodCTe', 50, 1000, 1,
+                     '<![CDATA[' + CTe.infCTeSupl.qrCodCTe + ']]>', DSC_INFQRCODCTE, False);
+    Gerador.wGrupo('/infCTeSupl');
+  end;
+
   if FOpcoes.GerarTagAssinatura <> taNunca then
   begin
     Gerar := true;
@@ -1315,6 +1323,7 @@ begin
   Gerador.wCampo(tcDe2, '#', 'pFCPUFFim     ', 01, 05, 1, CTe.Imp.ICMSUFFim.pFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
+  // Na versão 3.00a não tem mais: pICMSInterPart
   Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vFCPUFFim     ', 01, 15, 1, CTe.Imp.ICMSUFFim.vFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
@@ -1544,6 +1553,10 @@ begin
         Gerador.wAlerta('#277', 'PIN', DSC_ISUF, ERR_MSG_INVALIDO);
 
     Gerador.wCampo(tcDat, '#278', 'dPrev', 10, 10, 0, CTe.infCTeNorm.infDoc.InfNF[i].dPrev, DSC_DPREV);
+
+    //
+    // Na versão 3.00a teremos opcionalmente o grupo infUnidCarga
+    //
 
     for j := 0 to CTe.infCTeNorm.infDoc.infNF[i].infUnidTransp.Count - 1 do
     begin

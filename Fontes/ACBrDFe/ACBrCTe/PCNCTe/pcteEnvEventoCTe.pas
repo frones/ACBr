@@ -76,6 +76,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
     property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
@@ -119,6 +120,7 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
     function LerFromIni(const AIniString: String; CCe: Boolean = True): Boolean;
+
     property Gerador: TGerador            read FGerador  write FGerador;
     property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
     property idLote: Integer              read FidLote   write FidLote;
@@ -379,6 +381,33 @@ begin
 
        Gerador.wGrupo('/evGTV');
      end;
+
+   teComprEntrega:
+     begin
+       Gerador.wGrupo('evCECTe');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento   ', 33, 33, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'nProt        ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+       Gerador.wCampo(tcStr, 'EP04', 'dhEntrega    ', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhEntrega) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhEntrega), DSC_DEMI);
+       Gerador.wCampo(tcStr, 'EP05', 'nDoc         ', 02, 20, 1, Evento.Items[0].InfEvento.detEvento.nDoc);
+       Gerador.wCampo(tcStr, 'EP06', 'xNome        ', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.xNome);
+       Gerador.wCampo(tcDe6, 'EP07', 'latitude     ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.latitude);
+       Gerador.wCampo(tcDe6, 'EP08', 'longitude    ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.longitude);
+       Gerador.wCampo(tcStr, 'EP09', 'hashEntrega  ', 28, 28, 1, Evento.Items[0].InfEvento.detEvento.hashEntrega);
+       Gerador.wCampo(tcStr, 'EP10', 'dhHashEntrega', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhHashEntrega) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhHashEntrega), DSC_DEMI);
+
+       for i := 0 to Evento.Items[0].FInfEvento.detEvento.infEntrega.Count - 1 do
+       begin
+         Gerador.wGrupo('infEntrega');
+         Gerador.wCampo(tcStr, 'EP12', 'chNFe', 44, 44, 1, Evento.Items[0].InfEvento.detEvento.infEntrega.Items[i].chNFe);
+         Gerador.wGrupo('/infEntrega');
+       end;
+
+       Gerador.wGrupo('/evCECTe');
+     end;
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
@@ -406,10 +435,10 @@ var
 begin
   ArqEvento := TStringList.Create;
   try
-     ArqEvento.LoadFromFile(CaminhoArquivo);
-     Result := LerXMLFromString(ArqEvento.Text);
+    ArqEvento.LoadFromFile(CaminhoArquivo);
+    Result := LerXMLFromString(ArqEvento.Text);
   finally
-     ArqEvento.Free;
+    ArqEvento.Free;
   end;
 end;
 
@@ -421,116 +450,131 @@ begin
   FXML := AXML;
   RetEventoCTe := TRetEventoCTe.Create;
   try
-     RetEventoCTe.Leitor.Arquivo := AXML;
-     Result := RetEventoCTe.LerXml;
-     with FEvento.New do
+    RetEventoCTe.Leitor.Arquivo := AXML;
+    Result := RetEventoCTe.LerXml;
+    with FEvento.New do
+    begin
+      infEvento.Id         := RetEventoCTe.InfEvento.Id;
+      InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
+      infEvento.tpAmb      := RetEventoCTe.InfEvento.tpAmb;
+      infEvento.CNPJ       := RetEventoCTe.InfEvento.CNPJ;
+      infEvento.chCTe      := RetEventoCTe.InfEvento.chCTe;
+      infEvento.dhEvento   := RetEventoCTe.InfEvento.dhEvento;
+      infEvento.tpEvento   := RetEventoCTe.InfEvento.tpEvento;
+      infEvento.nSeqEvento := RetEventoCTe.InfEvento.nSeqEvento;
+
+      infEvento.VersaoEvento         := RetEventoCTe.InfEvento.VersaoEvento;
+      infEvento.detEvento.descEvento := RetEventoCTe.InfEvento.detEvento.descEvento;
+      infEvento.detEvento.nProt      := RetEventoCTe.InfEvento.detEvento.nProt;
+      infEvento.detEvento.xJust      := RetEventoCTe.InfEvento.DetEvento.xJust;
+      infEvento.detEvento.vICMS      := RetEventoCTe.InfEvento.DetEvento.vICMS;
+      infEvento.detEvento.vTPrest    := RetEventoCTe.InfEvento.DetEvento.vTPrest;
+      infEvento.detEvento.vCarga     := RetEventoCTe.InfEvento.DetEvento.vCarga;
+      infEvento.detEvento.toma       := RetEventoCTe.InfEvento.DetEvento.toma;
+      infEvento.detEvento.UF         := RetEventoCTe.InfEvento.DetEvento.UF;
+      infEvento.detEvento.CNPJCPF    := RetEventoCTe.InfEvento.DetEvento.CNPJCPF;
+      infEvento.detEvento.IE         := RetEventoCTe.InfEvento.DetEvento.IE;
+      infEvento.detEvento.modal      := RetEventoCTe.InfEvento.DetEvento.modal;
+      infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
+      infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
+      infEvento.detEvento.xCondUso   := RetEventoCTe.InfEvento.DetEvento.xCondUso;
+      infEvento.detEvento.xOBS       := RetEventoCTe.InfEvento.detEvento.xOBS;
+      infEvento.detEvento.dhEntrega  := RetEventoCTe.InfEvento.detEvento.dhEntrega;
+      infEvento.detEvento.nDoc       := RetEventoCTe.InfEvento.detEvento.nDoc;
+      infEvento.detEvento.xNome      := RetEventoCTe.InfEvento.detEvento.xNome;
+      infEvento.detEvento.latitude   := RetEventoCTe.InfEvento.detEvento.latitude;
+      infEvento.detEvento.longitude  := RetEventoCTe.InfEvento.detEvento.longitude;
+
+      infEvento.detEvento.hashEntrega  := RetEventoCTe.InfEvento.detEvento.hashEntrega;
+      infEvento.detEvento.dhHashEntrega := RetEventoCTe.InfEvento.detEvento.dhHashEntrega;
+
+      signature.URI             := RetEventoCTe.signature.URI;
+      signature.DigestValue     := RetEventoCTe.signature.DigestValue;
+      signature.SignatureValue  := RetEventoCTe.signature.SignatureValue;
+      signature.X509Certificate := RetEventoCTe.signature.X509Certificate;
+
+      for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
       begin
-        infEvento.Id         := RetEventoCTe.InfEvento.Id;
-        InfEvento.cOrgao     := RetEventoCTe.InfEvento.cOrgao;
-        infEvento.tpAmb      := RetEventoCTe.InfEvento.tpAmb;
-        infEvento.CNPJ       := RetEventoCTe.InfEvento.CNPJ;
-        infEvento.chCTe      := RetEventoCTe.InfEvento.chCTe;
-        infEvento.dhEvento   := RetEventoCTe.InfEvento.dhEvento;
-        infEvento.tpEvento   := RetEventoCTe.InfEvento.tpEvento;
-        infEvento.nSeqEvento := RetEventoCTe.InfEvento.nSeqEvento;
-
-        infEvento.VersaoEvento         := RetEventoCTe.InfEvento.VersaoEvento;
-        infEvento.detEvento.descEvento := RetEventoCTe.InfEvento.detEvento.descEvento;
-        infEvento.detEvento.nProt      := RetEventoCTe.InfEvento.detEvento.nProt;
-        infEvento.detEvento.xJust      := RetEventoCTe.InfEvento.DetEvento.xJust;
-        infEvento.detEvento.vICMS      := RetEventoCTe.InfEvento.DetEvento.vICMS;
-        infEvento.detEvento.vTPrest    := RetEventoCTe.InfEvento.DetEvento.vTPrest;
-        infEvento.detEvento.vCarga     := RetEventoCTe.InfEvento.DetEvento.vCarga;
-        infEvento.detEvento.toma       := RetEventoCTe.InfEvento.DetEvento.toma;
-        infEvento.detEvento.UF         := RetEventoCTe.InfEvento.DetEvento.UF;
-        infEvento.detEvento.CNPJCPF    := RetEventoCTe.InfEvento.DetEvento.CNPJCPF;
-        infEvento.detEvento.IE         := RetEventoCTe.InfEvento.DetEvento.IE;
-        infEvento.detEvento.modal      := RetEventoCTe.InfEvento.DetEvento.modal;
-        infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
-        infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
-        infEvento.detEvento.xCondUso   := RetEventoCTe.InfEvento.DetEvento.xCondUso;
-        infEvento.detEvento.xOBS       := RetEventoCTe.InfEvento.detEvento.xOBS;
-
-        signature.URI             := RetEventoCTe.signature.URI;
-        signature.DigestValue     := RetEventoCTe.signature.DigestValue;
-        signature.SignatureValue  := RetEventoCTe.signature.SignatureValue;
-        signature.X509Certificate := RetEventoCTe.signature.X509Certificate;
-
-        for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
-        begin
-          infEvento.detEvento.infCorrecao.New;
-          infEvento.detEvento.infCorrecao[i].grupoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
-          infEvento.detEvento.infCorrecao[i].campoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
-          infEvento.detEvento.infCorrecao[i].valorAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
-          infEvento.detEvento.infCorrecao[i].nroItemAlterado := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
-        end;
-
-        for i := 0 to RetEventoCTe.InfEvento.detEvento.infGTV.Count -1 do
-        begin
-          infEvento.detEvento.infGTV.New;
-          infEvento.detEvento.infGTV[i].nDoc     := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDoc;
-          infEvento.detEvento.infGTV[i].id       := RetEventoCTe.InfEvento.detEvento.infGTV[i].id;
-          infEvento.detEvento.infGTV[i].serie    := RetEventoCTe.InfEvento.detEvento.infGTV[i].serie;
-          infEvento.detEvento.infGTV[i].subserie := RetEventoCTe.InfEvento.detEvento.infGTV[i].subserie;
-          infEvento.detEvento.infGTV[i].dEmi     := RetEventoCTe.InfEvento.detEvento.infGTV[i].dEmi;
-          infEvento.detEvento.infGTV[i].nDV      := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDV;
-          infEvento.detEvento.infGTV[i].qCarga   := RetEventoCTe.InfEvento.detEvento.infGTV[i].qCarga;
-
-          for j := 0 to RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie.Count -1 do
-          begin
-            infEvento.detEvento.infGTV[i].infEspecie.New;
-            infEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie;
-            infEvento.detEvento.infGTV[i].infEspecie[j].vEspecie  := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].vEspecie;
-          end;
-
-          infEvento.detEvento.infGTV[i].rem.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.CNPJCPF;
-          infEvento.detEvento.infGTV[i].rem.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.IE;
-          infEvento.detEvento.infGTV[i].rem.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.UF;
-          infEvento.detEvento.infGTV[i].rem.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.xNome;
-
-          infEvento.detEvento.infGTV[i].dest.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.CNPJCPF;
-          infEvento.detEvento.infGTV[i].dest.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.IE;
-          infEvento.detEvento.infGTV[i].dest.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.UF;
-          infEvento.detEvento.infGTV[i].dest.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.xNome;
-
-          infEvento.detEvento.infGTV[i].placa    := RetEventoCTe.InfEvento.detEvento.infGTV[i].placa;
-          infEvento.detEvento.infGTV[i].UF       := RetEventoCTe.InfEvento.detEvento.infGTV[i].UF;
-          infEvento.detEvento.infGTV[i].RNTRC    := RetEventoCTe.InfEvento.detEvento.infGTV[i].RNTRC;
-        end;
-
-        if RetEventoCTe.retEvento.Count > 0 then
-         begin
-           FRetInfEvento.Id          := RetEventoCTe.retEvento.Items[0].RetInfEvento.Id;
-           FRetInfEvento.tpAmb       := RetEventoCTe.retEvento.Items[0].RetInfEvento.tpAmb;
-           FRetInfEvento.verAplic    := RetEventoCTe.retEvento.Items[0].RetInfEvento.verAplic;
-           FRetInfEvento.cOrgao      := RetEventoCTe.retEvento.Items[0].RetInfEvento.cOrgao;
-           FRetInfEvento.cStat       := RetEventoCTe.retEvento.Items[0].RetInfEvento.cStat;
-           FRetInfEvento.xMotivo     := RetEventoCTe.retEvento.Items[0].RetInfEvento.xMotivo;
-           FRetInfEvento.chCTe       := RetEventoCTe.retEvento.Items[0].RetInfEvento.chCTe;
-           FRetInfEvento.tpEvento    := RetEventoCTe.retEvento.Items[0].RetInfEvento.tpEvento;
-           FRetInfEvento.xEvento     := RetEventoCTe.retEvento.Items[0].RetInfEvento.xEvento;
-           FRetInfEvento.nSeqEvento  := RetEventoCTe.retEvento.Items[0].RetInfEvento.nSeqEvento;
-           FRetInfEvento.CNPJDest    := RetEventoCTe.retEvento.Items[0].RetInfEvento.CNPJDest;
-           FRetInfEvento.emailDest   := RetEventoCTe.retEvento.Items[0].RetInfEvento.emailDest;
-           FRetInfEvento.dhRegEvento := RetEventoCTe.retEvento.Items[0].RetInfEvento.dhRegEvento;
-           FRetInfEvento.nProt       := RetEventoCTe.retEvento.Items[0].RetInfEvento.nProt;
-           FRetInfEvento.XML         := RetEventoCTe.retEvento.Items[0].RetInfEvento.XML;
-         end;
+        infEvento.detEvento.infCorrecao.New;
+        infEvento.detEvento.infCorrecao[i].grupoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
+        infEvento.detEvento.infCorrecao[i].campoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
+        infEvento.detEvento.infCorrecao[i].valorAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
+        infEvento.detEvento.infCorrecao[i].nroItemAlterado := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
       end;
+
+      for i := 0 to RetEventoCTe.InfEvento.detEvento.infGTV.Count -1 do
+      begin
+        infEvento.detEvento.infGTV.New;
+        infEvento.detEvento.infGTV[i].nDoc     := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDoc;
+        infEvento.detEvento.infGTV[i].id       := RetEventoCTe.InfEvento.detEvento.infGTV[i].id;
+        infEvento.detEvento.infGTV[i].serie    := RetEventoCTe.InfEvento.detEvento.infGTV[i].serie;
+        infEvento.detEvento.infGTV[i].subserie := RetEventoCTe.InfEvento.detEvento.infGTV[i].subserie;
+        infEvento.detEvento.infGTV[i].dEmi     := RetEventoCTe.InfEvento.detEvento.infGTV[i].dEmi;
+        infEvento.detEvento.infGTV[i].nDV      := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDV;
+        infEvento.detEvento.infGTV[i].qCarga   := RetEventoCTe.InfEvento.detEvento.infGTV[i].qCarga;
+
+        for j := 0 to RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie.Count -1 do
+        begin
+          infEvento.detEvento.infGTV[i].infEspecie.New;
+          infEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie;
+          infEvento.detEvento.infGTV[i].infEspecie[j].vEspecie  := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].vEspecie;
+        end;
+
+        infEvento.detEvento.infGTV[i].rem.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.CNPJCPF;
+        infEvento.detEvento.infGTV[i].rem.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.IE;
+        infEvento.detEvento.infGTV[i].rem.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.UF;
+        infEvento.detEvento.infGTV[i].rem.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.xNome;
+
+        infEvento.detEvento.infGTV[i].dest.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.CNPJCPF;
+        infEvento.detEvento.infGTV[i].dest.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.IE;
+        infEvento.detEvento.infGTV[i].dest.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.UF;
+        infEvento.detEvento.infGTV[i].dest.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.xNome;
+
+        infEvento.detEvento.infGTV[i].placa    := RetEventoCTe.InfEvento.detEvento.infGTV[i].placa;
+        infEvento.detEvento.infGTV[i].UF       := RetEventoCTe.InfEvento.detEvento.infGTV[i].UF;
+        infEvento.detEvento.infGTV[i].RNTRC    := RetEventoCTe.InfEvento.detEvento.infGTV[i].RNTRC;
+      end;
+
+      if RetEventoCTe.retEvento.Count > 0 then
+      begin
+        FRetInfEvento.Id          := RetEventoCTe.retEvento.Items[0].RetInfEvento.Id;
+        FRetInfEvento.tpAmb       := RetEventoCTe.retEvento.Items[0].RetInfEvento.tpAmb;
+        FRetInfEvento.verAplic    := RetEventoCTe.retEvento.Items[0].RetInfEvento.verAplic;
+        FRetInfEvento.cOrgao      := RetEventoCTe.retEvento.Items[0].RetInfEvento.cOrgao;
+        FRetInfEvento.cStat       := RetEventoCTe.retEvento.Items[0].RetInfEvento.cStat;
+        FRetInfEvento.xMotivo     := RetEventoCTe.retEvento.Items[0].RetInfEvento.xMotivo;
+        FRetInfEvento.chCTe       := RetEventoCTe.retEvento.Items[0].RetInfEvento.chCTe;
+        FRetInfEvento.tpEvento    := RetEventoCTe.retEvento.Items[0].RetInfEvento.tpEvento;
+        FRetInfEvento.xEvento     := RetEventoCTe.retEvento.Items[0].RetInfEvento.xEvento;
+        FRetInfEvento.nSeqEvento  := RetEventoCTe.retEvento.Items[0].RetInfEvento.nSeqEvento;
+        FRetInfEvento.CNPJDest    := RetEventoCTe.retEvento.Items[0].RetInfEvento.CNPJDest;
+        FRetInfEvento.emailDest   := RetEventoCTe.retEvento.Items[0].RetInfEvento.emailDest;
+        FRetInfEvento.dhRegEvento := RetEventoCTe.retEvento.Items[0].RetInfEvento.dhRegEvento;
+        FRetInfEvento.nProt       := RetEventoCTe.retEvento.Items[0].RetInfEvento.nProt;
+        FRetInfEvento.XML         := RetEventoCTe.retEvento.Items[0].RetInfEvento.XML;
+      end;
+
+
+      for i := 0 to RetEventoCTe.InfEvento.detEvento.infEntrega.Count -1 do
+      begin
+        infEvento.detEvento.infEntrega.New;
+        infEvento.detEvento.infEntrega[i].chNFe := RetEventoCTe.InfEvento.detEvento.infEntrega[i].chNFe;
+      end;
+    end;
   finally
-     RetEventoCTe.Free;
+    RetEventoCTe.Free;
   end;
 end;
 
 function TEventoCTe.ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
 begin
- case tpEvento of
+  case tpEvento of
     teCCe         : Result := IntToStr(Self.idLote) + '-cce.xml';
     teCancelamento: Result := Evento.Items[0].InfEvento.chCTe + '-can-eve.xml';
     teEPEC        : Result := Evento.Items[0].InfEvento.chCTe + '-ped-epec.xml';
   else
     raise EventoCTeException.Create('Obter nome do arquivo de Evento não Implementado!');
- end;
+  end;
 end;
 
 function TEventoCTe.LerFromIni(const AIniString: String; CCe: Boolean): Boolean;
@@ -563,7 +607,7 @@ begin
         infEvento.cOrgao             := INIRec.ReadInteger(sSecao, 'cOrgao', 0);
         infEvento.CNPJ               := INIRec.ReadString(sSecao, 'CNPJ', '');
         infEvento.dhEvento           := StringToDateTime(INIRec.ReadString(sSecao, 'dhEvento', ''));
-        infEvento.tpEvento           := StrToTpEvento(ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
+        infEvento.tpEvento           := StrToTpEventoCTe(ok, INIRec.ReadString(sSecao, 'tpEvento', ''));
         infEvento.nSeqEvento         := INIRec.ReadInteger(sSecao, 'nSeqEvento', 1);
         infEvento.detEvento.xCondUso := '';
         infEvento.detEvento.xJust    := INIRec.ReadString(sSecao, 'xJust', '');
@@ -693,6 +737,37 @@ begin
                 Inc(J);
               end;
             end;
+
+          teComprEntrega:
+            begin
+              infEvento.detEvento.nProt     := INIRec.ReadString(sSecao, 'nProt', '');
+              infEvento.detEvento.UF        := INIRec.ReadString(sSecao, 'UF', '');
+              infEvento.detEvento.dhEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhEntrega', ''));
+              infEvento.detEvento.nDoc      := INIRec.ReadString(sSecao, 'nDoc', '');
+              infEvento.detEvento.xNome     := INIRec.ReadString(sSecao, 'xNome', '');
+              infEvento.detEvento.latitude  := StringToFloatDef(INIRec.ReadString(sSecao, 'latitude', ''), 0);
+              infEvento.detEvento.longitude := StringToFloatDef(INIRec.ReadString(sSecao, 'longitude', ''), 0);
+
+              infEvento.detEvento.hashEntrega   := INIRec.ReadString(sSecao, 'hashEntrega', '');
+              infEvento.detEvento.dhHashEntrega := StringToDateTime(INIRec.ReadString(sSecao, 'dhHashEntrega', ''));
+
+              Self.Evento.Items[I-1].InfEvento.detEvento.infEntrega.Clear;
+
+              J := 1;
+              while true do
+              begin
+                // J varia de 0000 até 2000
+                sSecao := 'infEntrega' + IntToStrZero(J, 4);
+                sFim   := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+                if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                  break;
+
+                with Self.Evento.Items[I-1].InfEvento.detEvento.infEntrega.New do
+                  chNFe := sFim;
+
+                Inc(J);
+              end;
+            end;
         end;
       end;
       Inc(I);
@@ -700,7 +775,7 @@ begin
 
     Result := True;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 
@@ -734,6 +809,7 @@ end;
 constructor TInfEventoCollectionItem.Create;
 begin
   inherited Create;
+
   FInfEvento := TInfEvento.Create;
   Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;
@@ -744,6 +820,7 @@ begin
   FInfEvento.Free;
   Fsignature.Free;
   FRetInfEvento.Free;
+
   inherited;
 end;
 

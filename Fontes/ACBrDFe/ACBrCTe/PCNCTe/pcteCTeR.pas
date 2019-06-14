@@ -1494,6 +1494,14 @@ begin
   CTe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
   CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
 
+  (* Grupo da TAG <infCTeSupl> ************************************************)
+  if Leitor.rExtrai(1, 'infCTeSupl') <> '' then
+  begin
+    CTe.infCTeSupl.qrCodCTe := Leitor.rCampo(tcStr, 'qrCodCTe');
+    CTe.infCTeSupl.qrCodCTe := StringReplace(CTe.infCTeSupl.qrCodCTe, '<![CDATA[', '', []);
+    CTe.infCTeSupl.qrCodCTe := StringReplace(CTe.infCTeSupl.qrCodCTe, ']]>', '', []);
+  end;
+
   (* Grupo da TAG <protCTe> ****************************************************)
   if Leitor.rExtrai(1, 'protCTe') <> '' then
   begin

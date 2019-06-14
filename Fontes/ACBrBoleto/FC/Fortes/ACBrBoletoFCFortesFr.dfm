@@ -1,6 +1,6 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 1421
-  Top = 100
+  Left = 424
+  Top = 133
   Width = 1403
   Height = 788
   Caption = 'ACBRBoletoFCFortesFr'
@@ -17,7 +17,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   TextHeight = 13
   object LayoutBoleto: TRLReport
     Left = 14
-    Top = 11
+    Top = 3
     Width = 794
     Height = 1123
     Margins.LeftMargin = 4.000000000000000000
@@ -3273,21 +3273,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Angle = 90.000000000000000000
         DrawKind = dkLine
       end
-      object RLLabel190: TRLLabel
-        Left = 289
-        Top = 21
-        Width = 465
-        Height = 18
-        Alignment = taRightJustify
-        AutoSize = False
-        Caption = 'Comprovante de Entrega'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -16
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object txtNumeroBanco5: TRLLabel
         Left = 183
         Top = 12
@@ -3593,6 +3578,35 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel190: TRLLabel
+        Left = 291
+        Top = 3
+        Width = 476
+        Height = 18
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Comprovante de Entrega'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtLinhaDigitavelComprovanteRec: TRLLabel
+        Left = 291
+        Top = 23
+        Width = 473
+        Height = 19
+        AutoSize = False
+        Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False

@@ -563,7 +563,6 @@ type
     txtValorDocumento5: TRLLabel;
     imgBanco5: TRLImage;
     txtNumeroBanco5: TRLLabel;
-    RLLabel190: TRLLabel;
     RLLabel191: TRLLabel;
     RLLabel194: TRLLabel;
     txtDataDocumento5: TRLLabel;
@@ -826,6 +825,8 @@ type
     txtEmpNome: TRLLabel;
     RLDraw179: TRLDraw;
     RLDraw180: TRLDraw;
+    RLLabel190: TRLLabel;
+    txtLinhaDigitavelComprovanteRec: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -1614,12 +1615,16 @@ end;
 procedure TACBrBoletoFCFortesFr.rlbndComprovanteEntrega2BeforePrint(
   Sender: TObject; var PrintIt: Boolean);
 Var
-   NossoNum,CodCedente,TipoDoc : String;
+   NossoNum,CodCedente,TipoDoc,CodBarras,LinhaDigitavel : String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin
       NossoNum    := Banco.MontarCampoNossoNumero( Titulo );
       CodCedente  := Banco.MontarCampoCodigoCedente(titulo);
+
+      CodBarras      := Banco.MontarCodigoBarras( Titulo );
+      LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo ); 
+      txtLinhaDigitavelComprovanteRec.Caption  := LinhaDigitavel;
 
       case Cedente.TipoInscricao of
          pFisica   : TipoDoc:= 'CPF: ';

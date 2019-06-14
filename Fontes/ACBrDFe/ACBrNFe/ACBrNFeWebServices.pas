@@ -3048,7 +3048,7 @@ begin
   EventoNFe := TEventoNFe.Create;
   try
     EventoNFe.idLote := FidLote;
-
+    SchemaEventoNFe  := schErro;
     {(*}
     for I := 0 to FEvento.Evento.Count - 1 do
     begin
@@ -3207,8 +3207,11 @@ begin
                                        FPMsg);
     end;
 
-    if not MsgEventoEhValido then
+    if (not MsgEventoEhValido) or (SchemaEventoNFe = schErro) then
     begin
+      if (SchemaEventoNFe = schErro) and (FPMsg='') then
+       FPMsg := 'Schema do Evento não foi definido';
+
       FErroValidacao := ACBrStr('Falha na validação da Mensagem do Evento: ') +
         FPMsg;
 

@@ -122,7 +122,8 @@ type
                   teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar,
                   teCancCteComplementar,teCTeSubstituicao,teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
                   teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
-                  teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona);
+                  teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
+                  teComprEntrega, teCancComprEntrega, teInclusaoDFe);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -178,6 +179,12 @@ type
                 schresMDFe, schprocMDFe, schprocEventoMDFe,
                 schresBPe, schprocBPe, schprocEventoBPe);
   TForcarGeracaoTag = (fgtNunca, fgtSomenteProducao, fgtSomenteHomologacao, fgtSempre);
+
+  TStrToTpEvento = function (out ok: boolean; const s: String): TpcnTpEvento;
+  TStrToTpEventoDFe = record
+    StrToTpEventoMethod: TStrToTpEvento;
+    NomeDFe: String;
+  end;
 
 const
   TpcnTpEventoString : array[0..54] of String =('-99999', '110110', '110111',
@@ -291,7 +298,7 @@ function StrToTpCarroceria(out ok: boolean; const s: string): TpcteTipoCarroceri
 function ModeloNFToStr(const t: TpcteModeloNF): string;
 function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
 
-function StrToTpEvento(out ok: boolean; const s: string): TpcnTpEvento;
+function StrToTpEvento_Old(out ok: boolean; const s: string): TpcnTpEvento;
 function TpEventoToStr(const t: TpcnTpEvento): string;
 function TpEventoToDescStr(const t: TpcnTpEvento): string;
 
@@ -382,6 +389,13 @@ function motDesICMSToStrTagPosText(const t: TpcnMotivoDesoneracaoICMS): string;
 function ISSQNcSitTribToStrTagPosText(const t: TpcnISSQNcSitTrib ): string;
 function indISSToStrTagPosText(const t: TpcnindISS ): string;
 function indIncentivoToStrTagPosText(const t: TpcnindIncentivo ): string;
+
+function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;
+
+procedure RegisterStrToTpEventoDFe(AConvertProcedure: TStrToTpEvento; ADFe: String);
+
+var
+  StrToTpEventoDFeList: array of TStrToTpEventoDFe;
 
 implementation
 
@@ -1030,18 +1044,18 @@ begin
    [moNF011AAvulsa, moNFProdutor]);
 end;
 
-function StrToModeloNf(out ok: boolean; const s: string): TpcteModeloNF;
+function StrToModeloNF(out ok: boolean; const s: string): TpcteModeloNF;
 begin
   result := StrToEnumerado(ok, s, ['01','04'],
    [moNF011AAvulsa, moNFProdutor]);
 end;
 
-function StrToTpEvento(out ok: boolean;const s: string): TpcnTpEvento;
+function StrToTpEvento_Old(out ok: boolean;const s: string): TpcnTpEvento;
 begin
   result  := TpcnTpEvento( StrToEnumerado2(ok , s, TpcnTpEventoString ) );
 end;
 
-function TpEventoToStr(const t: TpcnTpEvento): String;
+function TpEventoToStr(const t: TpcnTpEvento): string;
 begin
   result := EnumeradoToStr2( t , TpcnTpEventoString );
 end;
@@ -1089,7 +1103,8 @@ begin
 end;
 
 
-function StrToEnumerado2(out ok: boolean;  const s: string; Const AString: array of string ): variant;
+function StrToEnumerado2(out ok: boolean; const s: string;
+  const AString: array of string): variant;
 // Atencao  não Funciona em Alguns Enumerados ja existentes
 var
   i: integer;
@@ -1525,13 +1540,13 @@ begin
                                   [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
 end;
 
-function TpNavegacaoToStr(const t: TTipoNavegacao): String;
+function TpNavegacaoToStr(const t: TTipoNavegacao): string;
 begin
   result := EnumeradoToStr(t, ['0','1'],
                               [tnInterior, tnCabotagem]);
 end;
 
-function StrToTpNavegacao(out ok: boolean; const s: String): TTipoNavegacao;
+function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 begin
   result := StrToEnumerado(ok, s, ['0','1'],
                                   [tnInterior, tnCabotagem]);
@@ -1647,6 +1662,42 @@ function indIncentivoToStrTagPosText(const t: TpcnindIncentivo): string;
 begin
   result := EnumeradoToStr(t, ['1 - Sim', '2 - Não'],
                               [iiSim, iiNao]);
+end;
+
+function StrToTpEventoDFe(out ok: boolean; const s, aDFe: string): TpcnTpEvento;
+var
+  LenList, i: Integer;
+  UpperDFe: String;
+begin
+  Result := teNaoMapeado;
+  UpperDFe := UpperCase(aDFe);
+  // Varrendo lista de Métodos registrados, para ver se algum conheçe o "aDFe"
+  LenList := Length(StrToTpEventoDFeList);
+  For i := 0 to LenList-1 do
+    if (StrToTpEventoDFeList[i].NomeDFe = UpperDFe) then
+       Result := StrToTpEventoDFeList[i].StrToTpEventoMethod(ok, s);
+end;
+
+procedure RegisterStrToTpEventoDFe(AConvertProcedure: TStrToTpEvento;
+  ADFe: String);
+var
+  LenList, i: Integer;
+  UpperDFe: String;
+begin
+  UpperDFe := UpperCase(ADFe);
+  LenList := Length(StrToTpEventoDFeList);
+  // Verificando se já foi registrado antes...
+  For i := 0 to LenList-1 do
+    if (StrToTpEventoDFeList[i].NomeDFe = UpperDFe) then
+      Exit;
+
+  // Adicionando Novo Item na Lista
+  SetLength(StrToTpEventoDFeList, LenList+1);
+  with StrToTpEventoDFeList[LenList] do
+  begin
+    NomeDFe := UpperDFe;
+    StrToTpEventoMethod := AConvertProcedure;
+  end;
 end;
 
 end.

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2019
+[*] pcnConversao / pcnRetDistDFeInt
+    Correção na conversão do tipo do evento lido do XML para o respectivo 
+    enumerador
+   Por: Italo Jurisato Junior
+
 26/04/2019
 [*] pcnRetDistDFeInt
     Para CTe o nome da tag correta é retEventoCTe e não retEvento.

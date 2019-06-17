@@ -259,6 +259,7 @@ type
     procedure PosicionarCursor(const aIP: String; aLinha, aColuna: Integer);
     procedure SolicitarPeso(const aIP: String; aSerial: Integer);
     procedure VerificarOnline(const aIP: String);
+    procedure Desconectar(const aIP: String);
 
     property Ativo     : Boolean           read GetAtivo    write SetAtivo;
     property CmdEnviado: AnsiString        read fCmdEnviado;
@@ -1303,6 +1304,15 @@ begin
 
   wConexao.UltimoComando.Clear;
   wConexao.VerificarOnLine;
+end;
+
+procedure TACBrMTer.Desconectar(const aIP: String);
+var
+  ASocket: TTCPBlockSocket;
+begin
+  ASocket := EncontrarSocket(aIP);
+  if Assigned(ASocket) then
+    ASocket.CloseSocket;
 end;
 
 end.

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2019
+-- ACBrMTER --
+[+] Adicionado o método TACBrMTer.Desconectar(const aIP: String);
+    https://www.projetoacbr.com.br/forum/topic/51853-desativar-apenas-1-microterminal-e-não-todos/
+    (por: DSA)
+
 10/06/2019
 -- ACBrMTER --
 [-] Correção para que EchoMode não influencie o Passwordchar

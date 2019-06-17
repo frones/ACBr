@@ -3233,7 +3233,8 @@ begin
         Eventos := Copy(Eventos, F + 9, length(Eventos));
 
         // Separa o XML especifico do Evento para ser Validado.
-        AXMLEvento := '<detEvento xmlns="' + ACBRNFE_NAMESPACE + '">' +
+        AXMLEvento := '<detEvento versao="' + FPVersaoServico + '" xmlns="' +
+                                                      ACBRNFE_NAMESPACE + '">' +
                         SeparaDados(Evento, 'detEvento') +
                       '</detEvento>';
 

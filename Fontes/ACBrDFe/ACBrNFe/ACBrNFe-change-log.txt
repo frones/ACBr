@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2019
+-- ACBrNFeWebServices --
+[*] Ao separar o evento para a sua validação ficou faltando o atributo versao.
+  Por: Italo Jurisato Junior
+
 14/06/2019
 -- ACBrNFeNotasFiscais --
 [*] https://www.projetoacbr.com.br/forum/topic/51923-rejei%C3%A7%C3%A3o-725-nfc-e-com-cfop-inv%C3%A1lido/

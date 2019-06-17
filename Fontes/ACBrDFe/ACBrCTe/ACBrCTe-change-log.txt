@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2019
+-- ACBrCTeConhecimentos --
+[*] Incluido a leitura do campo "chCT"e ao ler o arquivo INI para CTe Substituto.
+   Por: José M S Junior
+
+
 14/06/2019
 -- Diversos --
 [+] Adicionado a função especifica para converter o código do evento para 

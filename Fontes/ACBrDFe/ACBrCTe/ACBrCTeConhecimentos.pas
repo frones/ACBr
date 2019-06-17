@@ -2756,6 +2756,7 @@ begin
           tomaICMS.refNF.nro      := INIRec.ReadInteger( 'infCteSub','CNPJ',0);
           tomaICMS.refNF.valor    :=  StringToFloatDef(INIRec.ReadString('infCteSub','valor','') ,0);
           tomaICMS.refNF.dEmi     := StringToDateTime(INIRec.ReadString( 'infCteSub','dEmi','0'));
+          tomaICMS.refCte         := INIRec.ReadString( 'infCteSub','refCte','');
 
           tomaNaoICMS.refCteAnu := INIRec.ReadString( 'infCteSub','refCteAnu','');
         end;

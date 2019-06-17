@@ -146,6 +146,7 @@ type
     btnIntegrador: TPanel;
     btnGerarAssinaturaSAT: TButton;
     btnFonteItens: TButton;
+    btnSATEMAIL: TPanel;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -260,6 +261,7 @@ type
     cbVersaoWSBPe: TComboBox;
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
+    edtBOLDigitoAgConta: TEdit;
     edtArquivoWebServicesBPe: TEdit;
     edtEmailAssuntoSAT: TEdit;
     edtPathDownload: TEdit;
@@ -517,6 +519,7 @@ type
     Label234: TLabel;
     Label235: TLabel;
     Label236: TLabel;
+    Label237: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -4437,6 +4440,7 @@ begin
       edtBOLDigitoConta.Text           := DigitoConta;
       edtBOLAgencia.Text               := Agencia;
       edtBOLDigitoAgencia.Text         := DigitoAgencia;
+      edtBOLDigitoAgConta.Text         := DigitoAgenciaConta;
       edtCodCliente.Text               := CodCedente;
       edtBOLLocalPagamento.Text        := LocalPagamento;
     end;
@@ -5248,6 +5252,7 @@ begin
     Cedente.AgenciaDigito := edtBOLDigitoAgencia.Text;
     Cedente.Conta := edtBOLConta.Text;
     Cedente.ContaDigito := edtBOLDigitoConta.Text;
+    Cedente.DigitoVerificadorAgenciaConta := edtBOLDigitoAgConta.Text;
     Cedente.Modalidade := edtModalidade.Text;
 
     case cbxBOLEmissao.ItemIndex of
@@ -6107,6 +6112,7 @@ begin
        DigitoConta              := edtBOLDigitoConta.Text;
        Agencia                  := edtBOLAgencia.Text;
        DigitoAgencia            := edtBOLDigitoAgencia.Text;
+       DigitoAgenciaConta       := edtBOLDigitoAgConta.Text;
        CodCedente               := edtCodCliente.Text;
        LocalPagamento           := edtBOLLocalPagamento.Text;
        RespEmis                 := cbxBOLEmissao.ItemIndex;

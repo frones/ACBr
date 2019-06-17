@@ -547,6 +547,7 @@ type
     DigitoConta                : String ;
     Agencia                    : String ;
     DigitoAgencia              : String ;
+    DigitoAgenciaConta         : String ;
     CodCedente                 : String ;
     LocalPagamento             : String ;
   end;
@@ -1267,6 +1268,7 @@ begin
       ini.WriteString( CSecBOLETO, CKeyBOLETODigitoConta,   DigitoConta   );
       ini.WriteString( CSecBOLETO, CKeyBOLETOAgencia,       Agencia       );
       ini.WriteString( CSecBOLETO, CKeyBOLETODigitoAgencia, DigitoAgencia );
+      ini.WriteString( CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoAgenciaConta );
       ini.WriteString( CSecBOLETO, CKeyBOLETOCodCedente,    CodCedente    );
       ini.WriteString( CSecBOLETO, CKeyBOLETOLocalPagamento,LocalPagamento );
     end;
@@ -1930,6 +1932,7 @@ begin
       DigitoConta            :=  ini.ReadString( CSecBOLETO, CKeyBOLETODigitoConta,      DigitoConta            );
       Agencia                :=  ini.ReadString( CSecBOLETO, CKeyBOLETOAgencia,          Agencia                );
       DigitoAgencia          :=  ini.ReadString( CSecBOLETO, CKeyBOLETODigitoAgencia,    DigitoAgencia          );
+      DigitoAgenciaConta     :=  ini.ReadString( CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoAgenciaConta   );
       CodCedente             :=  ini.ReadString( CSecBOLETO, CKeyBOLETOCodCedente,       CodCedente             );
       LocalPagamento         :=  ini.ReadString( CSecBOLETO, CKeyBOLETOLocalPagamento,   LocalPagamento         );
     end;
@@ -2564,6 +2567,7 @@ begin
     DigitoConta            :=  '';
     Agencia                :=  '';
     DigitoAgencia          :=  '';
+    DigitoAgenciaConta     :=  '';
     CodCedente             :=  '';
     LocalPagamento         :=  '';
   end;

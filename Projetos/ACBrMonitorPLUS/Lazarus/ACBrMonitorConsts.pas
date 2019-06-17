@@ -1128,6 +1128,7 @@ const
   CKeyBOLETODigitoConta =                   'DigitoConta';
   CKeyBOLETOAgencia =                       'Agencia';
   CKeyBOLETODigitoAgencia =                 'DigitoAgencia';
+  CKeyBOLETODigitoAgenciaConta =            'DigitoAgenciaConta';
   CKeyBOLETOCodCedente =                    'CodCedente';
   CKeyBOLETOLocalPagamento =                'LocalPagamento';
   CKeyBOLETODirLogos =                      'DirLogos';

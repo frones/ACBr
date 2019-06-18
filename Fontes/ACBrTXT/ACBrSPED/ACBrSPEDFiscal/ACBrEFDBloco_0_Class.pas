@@ -54,18 +54,21 @@ type
 
   TBloco_0 = class(TACBrSPED)
   private
+    FOnBeforeWriteRegistro0000: TWriteRegistroEvent;
     FOnBeforeWriteRegistro0200: TWriteRegistroEvent;
     FOnBeforeWriteRegistro0206: TWriteRegistroEvent;
     FOnBeforeWriteRegistro0500: TWriteRegistroEvent;
     FOnBeforeWriteRegistro0600: TWriteRegistroEvent;
     FOnBeforeWriteRegistro0990: TWriteRegistroEvent;
 
+    FOnWriteRegistro0000: TWriteRegistroEvent;
     FOnWriteRegistro0200: TWriteRegistroEvent;
     FOnWriteRegistro0206: TWriteRegistroEvent;
     FOnWriteRegistro0500: TWriteRegistroEvent;
     FOnWriteRegistro0600: TWriteRegistroEvent;
     FOnWriteRegistro0990: TWriteRegistroEvent;
 
+    FOnAfterWriteRegistro0000: TWriteRegistroEvent;
     FOnAfterWriteRegistro0200: TWriteRegistroEvent;
     FOnAfterWriteRegistro0206: TWriteRegistroEvent;
     FOnAfterWriteRegistro0500: TWriteRegistroEvent;
@@ -167,18 +170,21 @@ type
     property Registro0500Count: Integer read FRegistro0500Count write FRegistro0500Count;
     property Registro0600Count: Integer read FRegistro0600Count write FRegistro0600Count;
 
+    property OnBeforeWriteRegistro0000: TWriteRegistroEvent read FOnBeforeWriteRegistro0000 write FOnBeforeWriteRegistro0000;
     property OnBeforeWriteRegistro0200: TWriteRegistroEvent read FOnBeforeWriteRegistro0200 write FOnBeforeWriteRegistro0200;
     property OnBeforeWriteRegistro0206: TWriteRegistroEvent read FOnBeforeWriteRegistro0206 write FOnBeforeWriteRegistro0206;
     property OnBeforeWriteRegistro0500: TWriteRegistroEvent read FOnBeforeWriteRegistro0500 write FOnBeforeWriteRegistro0500;
     property OnBeforeWriteRegistro0600: TWriteRegistroEvent read FOnBeforeWriteRegistro0600 write FOnBeforeWriteRegistro0600;
     property OnBeforeWriteRegistro0990: TWriteRegistroEvent read FOnBeforeWriteRegistro0990 write FOnBeforeWriteRegistro0990;
 
+    property OnWriteRegistro0000      : TWriteRegistroEvent read FOnWriteRegistro0000       write FOnWriteRegistro0000;
     property OnWriteRegistro0200      : TWriteRegistroEvent read FOnWriteRegistro0200       write FOnWriteRegistro0200;
     property OnWriteRegistro0206      : TWriteRegistroEvent read FOnWriteRegistro0206       write FOnWriteRegistro0206;
     property OnWriteRegistro0500      : TWriteRegistroEvent read FOnWriteRegistro0500       write FOnWriteRegistro0500;
     property OnWriteRegistro0600      : TWriteRegistroEvent read FOnWriteRegistro0600       write FOnWriteRegistro0600;
     property OnWriteRegistro0990      : TWriteRegistroEvent read FOnWriteRegistro0990       write FOnWriteRegistro0990;
 
+    property OnAfterWriteRegistro0000 : TWriteRegistroEvent read FOnAfterWriteRegistro0000  write FOnAfterWriteRegistro0000;
     property OnAfterWriteRegistro0200 : TWriteRegistroEvent read FOnAfterWriteRegistro0200  write FOnAfterWriteRegistro0200;
     property OnAfterWriteRegistro0206 : TWriteRegistroEvent read FOnAfterWriteRegistro0206  write FOnAfterWriteRegistro0206;
     property OnAfterWriteRegistro0500 : TWriteRegistroEvent read FOnAfterWriteRegistro0500  write FOnAfterWriteRegistro0500;
@@ -391,11 +397,21 @@ end;
 procedure TBloco_0.WriteRegistro0000 ;
 var
   strIND_PERFIL: String;
+  strLinha: string;
 begin
   if Assigned(Registro0000) then
   begin
+     strLinha := EmptyStr;
+     if Assigned(FOnBeforeWriteRegistro0000) then
+     begin
+       OnBeforeWriteRegistro0000(strLinha);
+       if strLinha <> EmptyStr then       
+          Add(strLinha);
+     end;
+
      with Registro0000 do
      begin
+       strLinha := EmptyStr;
        case IND_PERFIL of
         pfPerfilA: strIND_PERFIL := 'A';
         pfPerfilB: strIND_PERFIL := 'B';
@@ -408,23 +424,36 @@ begin
        Check(funChecaIE(IE, UF), '(0-0000) ENTIDADE: A inscrição estadual "%s" digitada é inválida!', [IE]);
        Check(funChecaMUN(COD_MUN), '(0-0000) ENTIDADE: O código do município "%s" digitado é inválido!', [IntToStr(COD_MUN)]);
        ///
-       Add( LFill( '0000' ) +
-            LFill( CodVerToStr(COD_VER) ) +
-            LFill( Integer(COD_FIN), 1 ) +
-            LFill( DT_INI ) +
-            LFill( DT_FIN ) +
-            LFill( NOME ) +
-            LFill( CNPJ ) +
-            LFill( CPF ) +
-            LFill( UF ) +
-            LFill( IE ) +
-            LFill( COD_MUN, 7 ) +
-            LFill( IM ) +
-            LFill( SUFRAMA ) +
-            LFill( strIND_PERFIL ) +
-            LFill( Integer(IND_ATIV), 1 ) ) ;
+       strLinha := LFill( '0000' ) +
+                   LFill( CodVerToStr(COD_VER) ) +
+                   LFill( Integer(COD_FIN), 1 ) +
+                   LFill( DT_INI ) +
+                   LFill( DT_FIN ) +
+                   LFill( NOME ) +
+                   LFill( CNPJ ) +
+                   LFill( CPF ) +
+                   LFill( UF ) +
+                   LFill( IE ) +
+                   LFill( COD_MUN, 7 ) +
+                   LFill( IM ) +
+                   LFill( SUFRAMA ) +
+                   LFill( strIND_PERFIL ) +
+                   LFill( Integer(IND_ATIV), 1 );
        ///
+       if Assigned(FOnWriteRegistro0000) then
+          FOnWriteRegistro0000(strLinha);
+
+       Add(strLinha);
+
        Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
+     end;
+
+     strLinha := EmptyStr;
+     if Assigned(FOnAfterWriteRegistro0000) then
+     begin
+       OnAfterWriteRegistro0000(strLinha);
+       if strLinha <> EmptyStr then
+          Add(strLinha);
      end;
   end;
 end;

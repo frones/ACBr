@@ -2758,7 +2758,10 @@ begin
           tomaICMS.refNF.dEmi     := StringToDateTime(INIRec.ReadString( 'infCteSub','dEmi','0'));
           tomaICMS.refCte         := INIRec.ReadString( 'infCteSub','refCte','');
 
+          // Usado pela versão 2.00
           tomaNaoICMS.refCteAnu := INIRec.ReadString( 'infCteSub','refCteAnu','');
+          // Usado pela versão 3.00
+          refCteAnu := tomaNaoICMS.refCteAnu;
         end;
       end;
 

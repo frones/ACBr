@@ -47,11 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/06/2019
+-- ACBrCTeConhecimentos --
+[*] Existem 2 campos refCteAnu um para a versão 2.00 e outro para a 3.00
+    Só estava sendo alimentado o campo referente a versão 2.00
+   Por: Italo Jurisato Junior
+
 17/06/2019
 -- ACBrCTeConhecimentos --
 [*] Incluido a leitura do campo "chCT"e ao ler o arquivo INI para CTe Substituto.
    Por: José M S Junior
-
 
 14/06/2019
 -- Diversos --

@@ -41,6 +41,7 @@ interface
 
 uses
   Classes, SysUtils,
+  {$IF CompilerVersion >= 33}System.Net.HttpClient,{$ENDIF}
   ACBrDFeSSL,
   SoapHTTPClient, SOAPHTTPTrans;
 
@@ -54,8 +55,11 @@ type
   private
     FIndyReqResp: THTTPReqResp;
     FMimeType: String;
-
+  {$IF CompilerVersion >= 33}
+    procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Client: THTTPClient);
+  {$ELSE}
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data: Pointer);
+  {$ENDIF}
   protected
     function GetHTTPResultCode: Integer; override;
     procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
@@ -143,8 +147,14 @@ begin
     end;
 
     FIndyReqResp.ConnectTimeout := TimeOut;
+  {$IF CompilerVersion >= 33}
+    //NOTA: Não existe a propriedade SendTimeout em Soap.SOAPHTTPTrans (Delphi 10.3.1)
+    //No Delphi 10.3 SendTimeout = ReceiveTimeout
+    FIndyReqResp.ReceiveTimeout := TimeOut;
+  {$ELSE}
     FIndyReqResp.SendTimeout    := TimeOut;
     FIndyReqResp.ReceiveTimeout := TimeOut;
+  {$ENDIF}
   end;
 
   FMimeType := AMimeType;
@@ -154,6 +164,46 @@ begin
   FIndyReqResp.SoapAction := ASoapAction;
   FIndyReqResp.URL := AURL;
 end;
+
+{$IF CompilerVersion >= 33}
+//Client: THTTPClient requer a unit System.Net.HttpClient
+procedure TDFeHttpIndy.OnBeforePost(const HTTPReqResp: THTTPReqResp;
+  Client: THTTPClient);
+var
+  ContentHeader: String;
+begin
+  with FpDFeSSL do
+  begin
+    if (UseCertificateHTTP) then
+    begin
+      if not InternetSetOption(Client, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+        FpDFeSSL.CertContextWinApi, SizeOf(CERT_CONTEXT)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
+                                       IntToStr(GetLastError));
+    end;
+
+    if trim(ProxyUser) <> '' then
+      if not InternetSetOption(Client, INTERNET_OPTION_PROXY_USERNAME,
+        PChar(ProxyUser), Length(ProxyUser)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_USERNAME: ' +
+                                       IntToStr(GetLastError));
+
+    if trim(ProxyPass) <> '' then
+      if not InternetSetOption(Client, INTERNET_OPTION_PROXY_PASSWORD,
+        PChar(ProxyPass), Length(ProxyPass)) then
+        raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_PASSWORD: ' +
+                                       IntToStr(GetLastError));
+
+    ContentHeader := Format(ContentTypeTemplate, [FMimeType]);
+    HttpAddRequestHeaders(Client, PChar(ContentHeader), Length(ContentHeader),
+                            HTTP_ADDREQ_FLAG_REPLACE);
+  end;
+
+  //Não existe este método CheckContentType em Soap.SOAPHTTPTrans (D10.3.1)
+  //FIndyReqResp.CheckContentType;
+end;
+
+{$ELSE}
 
 procedure TDFeHttpIndy.OnBeforePost(const HTTPReqResp: THTTPReqResp;
   Data: Pointer);
@@ -189,6 +239,8 @@ begin
 
   FIndyReqResp.CheckContentType;
 end;
+{$ENDIF}
+
 
 function TDFeHttpIndy.GetHTTPResultCode: Integer;
 begin

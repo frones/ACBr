@@ -41,12 +41,12 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IF CompilerVersion >= 33}System.Net.HttpClient,{$ENDIF}
+  {$IF CompilerVersion >= 33}System.Net.HttpClient,{$IFEND}
   ACBrDFeSSL,
   SoapHTTPClient, SOAPHTTPTrans;
 
 const
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;      
+  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
   { TDFeDelphiSoap }
@@ -59,7 +59,7 @@ type
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Client: THTTPClient);
   {$ELSE}
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data: Pointer);
-  {$ENDIF}
+  {$IFEND}
   protected
     function GetHTTPResultCode: Integer; override;
     procedure ConfigurarHTTP(const AURL, ASoapAction: String; const AMimeType: String); override;
@@ -154,7 +154,7 @@ begin
   {$ELSE}
     FIndyReqResp.SendTimeout    := TimeOut;
     FIndyReqResp.ReceiveTimeout := TimeOut;
-  {$ENDIF}
+  {$IFEND}
   end;
 
   FMimeType := AMimeType;
@@ -239,7 +239,7 @@ begin
 
   FIndyReqResp.CheckContentType;
 end;
-{$ENDIF}
+{$IFEND}
 
 
 function TDFeHttpIndy.GetHTTPResultCode: Integer;

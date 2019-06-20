@@ -60,12 +60,13 @@ namespace ACBrLibBoleto.Demo
 
         private void LoadConfig()
         {
-            ACBrBoleto.Boleto_ConfigLer("".ToUTF8());
-
             var bufferLen = 256;
             var buffer = new StringBuilder(bufferLen);
 
-            var ret = ACBrBoleto.Boleto_ConfigLerValor("BoletoBancoFCFortesConfig".ToUTF8(), "Layout".ToUTF8(), buffer, ref bufferLen);
+            var ret = ACBrBoleto.Boleto_ConfigLer("".ToUTF8());
+            ACBrBoleto.CheckResult(ret);
+
+            ret = ACBrBoleto.Boleto_ConfigLerValor("BoletoBancoFCFortesConfig".ToUTF8(), "Layout".ToUTF8(), buffer, ref bufferLen);
             ACBrBoleto.CheckResult(ret);
 
             cmbModeloImpressao.SelectedIndex = Convert.ToInt32(buffer.FromUTF8());
@@ -384,14 +385,6 @@ namespace ACBrLibBoleto.Demo
 
             bufferLen = 256;
             buffer.Clear();
-
-            ret = ACBrBoleto.Boleto_ConfigLerValor("BoletoDiretorioConfig".ToUTF8(), "NomeArqRetorno".ToUTF8(), buffer, ref bufferLen);
-            ACBrBoleto.CheckResult(ret);
-
-            txtNomeRetorno.Text = buffer.FromUTF8();
-
-            bufferLen = 256;
-            buffer.Clear();
             ret = ACBrBoleto.Boleto_ConfigLerValor("Email".ToUTF8(), "Nome".ToUTF8(), buffer, ref bufferLen);
             ACBrBoleto.CheckResult(ret);
 
@@ -475,7 +468,7 @@ namespace ACBrLibBoleto.Demo
             ret = ACBrBoleto.Boleto_ConfigGravarValor("BoletoBancoFCFortesConfig".ToUTF8(), "DirLogo".ToUTF8(), txtDirLogo.Text.ToUTF8());
             ACBrBoleto.CheckResult(ret);
 
-            ret = ACBrBoleto.Boleto_ConfigGravarValor("BoletoBancoFCFortesConfig".ToUTF8(), "TipoCobranca".ToUTF8(), cmbBanco.SelectedIndex.ToString().ToUTF8());
+            ret = ACBrBoleto.Boleto_ConfigGravarValor("BoletoBancoConfig".ToUTF8(), "TipoCobranca".ToUTF8(), cmbBanco.SelectedIndex.ToString().ToUTF8());
             ACBrBoleto.CheckResult(ret);
 
             ret = ACBrBoleto.Boleto_ConfigGravarValor("BoletoCedenteConfig".ToUTF8(), "Agencia".ToUTF8(), txtAgencia.Text.ToUTF8());

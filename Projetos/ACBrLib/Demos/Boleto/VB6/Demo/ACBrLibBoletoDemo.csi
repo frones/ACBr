@@ -1,0 +1,15 @@
+[History]
+1=#P0#=mb	#P1#=cmdLimparLista_Click	#P2#=ACBrLibBoletoDemo/FrmMain/cmdLimparLista_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620001132	#P7#=0	#P8#=2	.
+2=#P0#=mb	#P1#=cmdTotalTítulos_Click	#P2#=ACBrLibBoletoDemo/FrmMain/cmdTotalTítulos_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620001053	#P7#=0	#P8#=5	.
+3=#P0#=mb	#P1#=btnGerarRemessa_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnGerarRemessa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620000935	#P7#=0	#P8#=1	.
+4=#P0#=mb	#P1#=btnImprimir_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnImprimir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620000856	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=btnIncluirTitulo_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnIncluirTitulo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620001235	#P7#=0	#P8#=12	.
+6=#P0#=mb	#P1#=btnGravarConfig_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnGravarConfig_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190619235258	#P7#=0	#P8#=1	.
+7=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibBoletoDemo/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190620000537	#P7#=0	#P8#=112	.
+8=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibBoletoDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190619235212	#P7#=0	#P8#=1	.
+9=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibBoletoDemo/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190618182212	#P7#=0	#P8#=11	.
+10=#P0#=mb	#P1#=btnDirLogo_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnDirLogo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190619153952	#P7#=0	#P8#=0	.
+11=#P0#=mb	#P1#=btnDirRemessa_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnDirRemessa_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190618164144	#P7#=0	#P8#=0	.
+12=#P0#=mb	#P1#=btnDirRetorno_Click	#P2#=ACBrLibBoletoDemo/FrmMain/btnDirRetorno_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190618164141	#P7#=0	#P8#=-1	.
+13=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibBoletoDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190620001031	#P7#=0	#P8#=21	.
+14=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibBoletoDemo/ACBrBoleto/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190610003217	#P7#=0	#P8#=-2	.

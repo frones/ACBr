@@ -79,7 +79,7 @@ begin
      TACBrCTeDACTEFRFileNameProperty);
 end;
 
-{ TACBrNFeDANFERaveFileNameProperty }
+{ TACBrCTeDACTEFRFileNameProperty }
 
 function TACBrCTeDACTEFRFileNameProperty.GetFilter: String;
 begin

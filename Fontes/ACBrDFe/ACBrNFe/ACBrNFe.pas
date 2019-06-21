@@ -716,11 +716,7 @@ begin
     for i := 0 to NotasFiscais.Count - 1 do
     begin
       if NotasFiscais.Items[i].Confirmada and Imprimir then
-      begin
         NotasFiscais.Items[i].Imprimir;
-        if (DANFE.ClassName = 'TACBrNFeDANFERaveCB') then
-          Break;
-      end;
     end;
   end;
 end;

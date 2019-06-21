@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2019
+-- ACBrNFe --
+[*] Remoção de um IF no método Enviar que não tem mais nenhuma utilidade.
+-- ACBrNFeServicos --
+[*] Atualização das URLs de QR-Code e de Consulta da UF: PI.
+  Por: Italo Jurisato Junior
+
 17/06/2019
 -- ACBrNFeWebServices --
 [*] Ao separar o evento para a sua validação ficou faltando o atributo versao.

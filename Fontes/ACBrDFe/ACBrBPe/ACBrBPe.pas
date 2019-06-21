@@ -506,11 +506,7 @@ begin
     for i := 0 to Bilhetes.Count - 1 do
     begin
       if Bilhetes.Items[i].Confirmada and Imprimir then
-      begin
         Bilhetes.Items[i].Imprimir;
-        if (DABPE.ClassName = 'TACBrBPeDABPERaveCB') then
-          Break;
-      end;
     end;
   end;
 end;

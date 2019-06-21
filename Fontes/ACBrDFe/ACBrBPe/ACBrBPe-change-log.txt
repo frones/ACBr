@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/06/2019
+-- ACBrBPe --
+[*] Remoção de um IF no método Enviar que não tem mais nenhuma utilidade.
+-- ACBrBPeServicos --
+[+] Incluidas as URLs do ambiente de produção UF: SP
+  Por: Italo Jurisato Junior
+
 14/06/2019
 -- Diversos --
 [+] Adicionado a função especifica para converter o código do evento para 

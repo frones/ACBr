@@ -157,7 +157,7 @@ type
     property RemoverEncodingXMLAssinado: Boolean read FRemoverEncodingXMLAssinado write FRemoverEncodingXMLAssinado;
 
     procedure GerarXML(const Assinar: Boolean = True); virtual;
-    procedure SaveToFile(const AXmlFileName: string; const AAssinar: Boolean = True); virtual;
+    procedure SaveToFile(const AXmlFileName: String; const AAssinar: Boolean = True); virtual;
   end;
 
   function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
@@ -169,6 +169,7 @@ type
   function StrToIppt(var OK: Boolean; const AValue: String): TACBrBlocoX_Ippt;
 
   function ZipFile(const DadosXML: string; const NomeArquivo: String): AnsiString;
+  function UnZipFile(const DadosXML: string): AnsiString;
 
 implementation
 
@@ -226,6 +227,11 @@ end;
 function ZipFile(const DadosXML: string; const NomeArquivo: String): AnsiString;
 begin
   Result := ACBrCompress.ZipFileCompress(DadosXML, NomeArquivo);
+end;
+
+function UnZipFile(const DadosXML: string): AnsiString;
+begin
+  Result := ACBrCompress.ZipFileDeCompress(DadosXML);
 end;
 
 { TACBrBlocoX_Produto }

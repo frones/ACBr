@@ -116,20 +116,22 @@ type
   TRetConsultaArquivoBlocoX = class(TPersistent)
     private
       FLeitor: TLeitor;
+      FSituacaoOperCod: Integer;
+      FSituacaoOperStr: AnsiString;
       FRecibo: AnsiString;
       FSituacaoProcCod: Integer;
       FSituacaoProcStr: AnsiString;
-      FMensagem: AnsiString;
     public
       constructor Create;
       destructor Destroy; override;
       function LerXML: Boolean;
     published
       property Leitor: TLeitor read FLeitor;
+      property SituacaoOperCod: Integer    read FSituacaoOperCod;
+      property SituacaoOperStr: AnsiString read FSituacaoOperStr;
       property Recibo: AnsiString read FRecibo;
       property SituacaoProcCod: Integer read FSituacaoProcCod;
       property SituacaoProcStr: AnsiString read FSituacaoProcStr;
-      property Mensagem: AnsiString read FMensagem;
   end;
 
   { TRetReprocessarBlocoX }
@@ -162,6 +164,7 @@ type
     FLeitor: TLeitor;
     FSituacaoOperCod: Integer;
     FSituacaoOperStr: AnsiString;
+    FRecibo: AnsiString;
     FEventos: TRetEventoBlocoXCollection;
   public
     constructor Create;
@@ -171,7 +174,7 @@ type
     property Leitor:          TLeitor    read FLeitor;
     property SituacaoOperCod: Integer    read FSituacaoOperCod;
     property SituacaoOperStr: AnsiString read FSituacaoOperStr;
-
+    property Recibo:          AnsiString read FRecibo;
     property Eventos: TRetEventoBlocoXCollection read FEventos;
   end;
 
@@ -243,6 +246,7 @@ type
     FLeitor: TLeitor;
     FSituacaoOperCod: Integer;
     FSituacaoOperStr: AnsiString;
+    FRecibo: AnsiString;
     FArquivo: AnsiString;
   public
     constructor Create;
@@ -252,6 +256,7 @@ type
     property Leitor:          TLeitor    read FLeitor;
     property SituacaoOperCod: Integer    read FSituacaoOperCod;
     property SituacaoOperStr: AnsiString read FSituacaoOperStr;
+    property Recibo:          AnsiString read FRecibo;
     property Arquivo:         AnsiString read FArquivo;
   end;
 
@@ -443,7 +448,7 @@ type
     FDataObrigacao: TDateTime;
     FSituacaoOperCod: Integer;
     FTransmiteEstoque: Boolean;
-    FSituacaoOperStr: string;
+    FSituacaoOperStr: AnsiString;
     FReducaoZ: TRetConsPendContrReducoesZBlocoX;
     FEstoques: TRetConsPendContrEstoqueBlocoXCollection;
   public
@@ -451,12 +456,12 @@ type
     destructor Destroy; override;
     function LerXml: Boolean;
 
-    property Leitor:           TLeitor   read FLeitor;
-    property SituacaoOperCod:  Integer   read FSituacaoOperCod;
-    property SituacaoOperStr:  String    read FSituacaoOperStr;
-    property IE:               String    read FIE;
-    property DataObrigacao:    TDateTime read FDataObrigacao;
-    property TransmiteEstoque: Boolean   read FTransmiteEstoque;
+    property Leitor:           TLeitor    read FLeitor;
+    property SituacaoOperCod:  Integer    read FSituacaoOperCod;
+    property SituacaoOperStr:  AnsiString read FSituacaoOperStr;
+    property IE:               String     read FIE;
+    property DataObrigacao:    TDateTime  read FDataObrigacao;
+    property TransmiteEstoque: Boolean    read FTransmiteEstoque;
 
     property ReducaoZ: TRetConsPendContrReducoesZBlocoX         read FReducaoZ;
     property Estoques: TRetConsPendContrEstoqueBlocoXCollection read FEstoques;
@@ -603,6 +608,7 @@ begin
     begin
       FSituacaoOperCod := Leitor.rCampo(tcInt, 'SituacaoOperacaoCodigo');
       FSituacaoOperStr := Leitor.rCampo(tcStr, 'SituacaoOperacaoDescricao');
+      FRecibo          := Leitor.rCampo(tcStr, 'Recibo');
 
       if (Leitor.rExtrai(2, 'Eventos') <> '') then
       begin
@@ -610,9 +616,9 @@ begin
         while (Leitor.rExtrai(3, 'Evento', '', I + 1) <> '') do
         begin
           with FEventos.New do
-          begin                                               
-            FCodigo    := Leitor.rCampo(tcInt, 'Codigo');      
-            FMotivo    := Leitor.rCampo(tcStr, 'Motivo');     
+          begin
+            FCodigo    := Leitor.rCampo(tcInt, 'Codigo');
+            FMotivo    := Leitor.rCampo(tcStr, 'Motivo');
             FDescricao := Leitor.rCampo(tcStr, 'Descricao');
             FDataHora  := Leitor.rCampo(tcDatHor, 'DataHora');
           end;
@@ -693,8 +699,8 @@ begin
             FHashArquivo           := Leitor.rCampo(tcStr, 'HashArquivo');
             FNumeroFabrECF         := Leitor.rCampo(tcStr, 'NumeroFabricacaoEcf');
             FDataRef               := Leitor.rCampo(tcDat, 'DataReferencia');
-            FDataHoraRecepcao      := Leitor.rCampo(tcDatHor, 'DataRecepcao');
-            FDataHoraProcess       := Leitor.rCampo(tcDatHor, 'DataProcessamento');
+            FDataHoraRecepcao      := Leitor.rCampo(tcDatHor, 'DataHoraRecepcao');
+            FDataHoraProcess       := Leitor.rCampo(tcDatHor, 'DataHoraProcessamento');
             FTipoRecepcaoCodigo    := Leitor.rCampo(tcInt, 'TipoRecepcaoCodigo');
             FTipoRecepcaoDescricao := Leitor.rCampo(tcStr, 'TipoRecepcaoDescricao');
             FSituacaoProcCod       := Leitor.rCampo(tcInt, 'SituacaoProcessamentoCodigo');
@@ -735,6 +741,7 @@ begin
     begin
       FSituacaoOperCod := Leitor.rCampo(tcInt, 'SituacaoOperacaoCodigo');
       FSituacaoOperStr := Leitor.rCampo(tcStr, 'SituacaoOperacaoDescricao');
+      FRecibo          := Leitor.rCampo(tcStr, 'Recibo');
       FArquivo         := Leitor.rCampo(tcStr, 'Arquivo');
       Result := True;
     end;
@@ -1041,7 +1048,7 @@ begin
       FIE               := Leitor.rCampo(tcStr, 'IE');
       FSituacaoOperCod  := Leitor.rCampo(tcInt, 'SituacaoOperacaoCodigo');
       FSituacaoOperStr  := Leitor.rCampo(tcStr, 'SituacaoOperacaoDescricao');
-      FDataObrigacao    := Leitor.rCampo(tcDat, 'DatainicioObrigacao');
+      FDataObrigacao    := Leitor.rCampo(tcDat, 'DataInicioObrigacao');
       FTransmiteEstoque := StrToBoolDef(Leitor.rCampo(tcEsp, 'TransmiteEstoque'), True);
 
       // Lendo Reduções Z
@@ -1053,7 +1060,7 @@ begin
           with ReducaoZ.ECFs.New do
           begin
             FNumeroFabricacao  := Leitor.rCampo(tcStr, 'NumeroFabricacaoEcf');
-            FSituacaoPafECFCod := Leitor.rCampo(tcEsp, 'SituacaoPafEcfCodigo');
+            FSituacaoPafECFCod := Leitor.rCampo(tcInt, 'SituacaoPafEcfCodigo');
             FSituacaoPafECFStr := Leitor.rCampo(tcStr, 'SituacaoPafEcfDescricao');
             FQtdPendencias     := Leitor.rCampo(tcInt, 'QuantidadePendencias');
             FQtdAvisos         := Leitor.rCampo(tcInt, 'QuantidadeAvisos');
@@ -1067,7 +1074,7 @@ begin
                 with Pendencias.New do
                 begin
                   FCodigo     := Leitor.rCampo(tcInt, 'Codigo');
-                  FDescricao  := Leitor.rCampo(tcInt, 'Descricao');
+                  FDescricao  := Leitor.rCampo(tcStr, 'Descricao');
                   FQuantidade := Leitor.rCampo(tcInt, 'Quantidade');
 
                   // Lendo Recibos
@@ -1096,7 +1103,7 @@ begin
                 with Avisos.New do
                 begin
                   FCodigo    := Leitor.rCampo(tcInt, 'Codigo');
-                  FDescricao := Leitor.rCampo(tcInt, 'Descricao');
+                  FDescricao := Leitor.rCampo(tcStr, 'Descricao');
                 end;
 
                 Inc(J);
@@ -1130,7 +1137,7 @@ begin
                 with Pendencias.New do
                 begin
                   FCodigo     := Leitor.rCampo(tcInt, 'Codigo');
-                  FDescricao  := Leitor.rCampo(tcInt, 'Descricao');
+                  FDescricao  := Leitor.rCampo(tcStr, 'Descricao');
                   FQuantidade := Leitor.rCampo(tcInt, 'Quantidade');
 
                   // Lendo Recibos
@@ -1159,7 +1166,7 @@ begin
                 with Avisos.New do
                 begin
                   FCodigo    := Leitor.rCampo(tcInt, 'Codigo');
-                  FDescricao := Leitor.rCampo(tcInt, 'Descricao');
+                  FDescricao := Leitor.rCampo(tcStr, 'Descricao');
                 end;
 
                 Inc(J);
@@ -1255,10 +1262,11 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if (Leitor.rExtrai(1, 'RespostaManutencao') <> '') then
     begin
+      FSituacaoOperCod := Leitor.rCampo(tcInt, 'SituacaoOperacaoCodigo');
+      FSituacaoOperStr := Leitor.rCampo(tcStr, 'SituacaoOperacaoDescricao');
       FRecibo := Leitor.rCampo(tcStr, 'Recibo');
       FSituacaoProcCod := Leitor.rCampo(tcInt, 'SituacaoProcessamentoCodigo');
       FSituacaoProcStr := Leitor.rCampo(tcStr, 'SituacaoProcessamentoDescricao');
-      FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
       Result := True;
     end;
   except

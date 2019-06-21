@@ -184,6 +184,8 @@ const
   private
     FRetornoConsulta: TRetConsultaArquivoBlocoX;
     FXML: AnsiString;
+    FSituacaoOperCod: Integer;
+    FSituacaoOperStr: AnsiString;
     FRecibo: AnsiString;
     FSituacaoProcStr: AnsiString;
     FSituacaoProcCod: Integer;
@@ -198,6 +200,8 @@ const
     procedure Clear; override;
 
     property XML:             AnsiString read FXML write FXML;
+    property SituacaoOperCod: Integer    read FSituacaoOperCod;
+    property SituacaoOperStr: AnsiString read FSituacaoOperStr;
     property Recibo:          AnsiString read FRecibo;
     property SituacaoProcCod: Integer    read FSituacaoProcCod;
     property SituacaoProcStr: AnsiString read FSituacaoProcStr;
@@ -253,7 +257,7 @@ const
   public
     destructor Destroy; override;
     procedure Clear; override;
-
+    function ExtrairArquivo(FileName: String): String;
     property XML:             AnsiString read FXML write FXML;
     property SituacaoOperCod: Integer    read FSituacaoOperCod;
     property SituacaoOperStr: AnsiString read FSituacaoOperStr;
@@ -743,7 +747,7 @@ end;
 
 function TTransmitirArquivoBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'TransmitirArquivoResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'TransmitirArquivoResult')));
 
   FBlocoXRetorno.Leitor.Arquivo := FPRetWS;
   FBlocoXRetorno.LerXml;
@@ -772,6 +776,8 @@ end;
 procedure TConsultarProcessamentoArquivoBlocoX.Clear;
 begin
   inherited Clear;
+  FSituacaoOperCod := 0;
+  FSituacaoOperStr := EmptyStr;
   FSituacaoProcCod := 0;
   FSituacaoProcStr := EmptyStr;
   FRecibo          := EmptyStr;
@@ -811,10 +817,11 @@ begin
   FRetornoConsulta.Leitor.Arquivo := FPRetWS;
   FRetornoConsulta.LerXml;
 
+  FSituacaoOperCod := FRetornoConsulta.SituacaoOperCod;
+  FSituacaoOperStr := FRetornoConsulta.SituacaoOperStr;
   FRecibo          := FRetornoConsulta.Recibo;
   FSituacaoProcCod := FRetornoConsulta.SituacaoProcCod;
   FSituacaoProcStr := FRetornoConsulta.SituacaoProcStr;
-  FMensagem        := FRetornoConsulta.Mensagem;
 
   Result := (FPRetWS <> '');
 end;
@@ -858,14 +865,14 @@ end;
 procedure TConsultarHistoricoArquivoBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TConsultarHistoricoArquivoBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarHistoricoArquivoResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarHistoricoArquivoResult')));
 
   FRetornoConsulta.Leitor.Arquivo := FPRetWS;
   FRetornoConsulta.LerXml;
@@ -916,14 +923,14 @@ end;
 procedure TListarArquivosBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TListarArquivosBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ListarArquivosResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ListarArquivosResult')));
 
   FRetornoConsulta.Leitor.Arquivo := FPRetWS;
   FRetornoConsulta.LerXml;
@@ -972,14 +979,14 @@ end;
 procedure TDownloadArquivoBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TDownloadArquivoBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'DownloadArquivoResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'DownloadArquivoResult')));
 
   FRetornoDownload.Leitor.Arquivo := FPRetWS;
   FRetornoDownload.LerXml;
@@ -989,6 +996,35 @@ begin
   FArquivo         := FRetornoDownload.Arquivo;
 
   Result := (FPRetWS <> '');
+end;
+
+function TDownloadArquivoBlocoX.ExtrairArquivo(FileName: String): String;
+var
+  AUnZip: AnsiString;
+  ArquivoXML : TFileStream;
+  iSize : Int64;
+begin
+  Result := '';
+  if (FArquivo = '') then
+    Exit;
+  AUnZip := DecodeBase64(FArquivo);
+  AUnZip := UnZipFile(AUnZip);
+  if (AUnZip = '') then
+  begin
+    Result := 'O seu compilador não tem suporte nativo a ZipFile.' + sLineBreak +
+              'Não foi possível descompactar os dados retornados.';
+  end;
+  try
+    //Tamanho do registro
+    iSize := Length(AUnZip);
+    //Salva o conteúdo no arquivo
+    ArquivoXML := TFileStream.Create(FileName, fmCreate);
+    ArquivoXML.Write(Pointer(AUnZip)^,iSize);
+    ArquivoXML.Free;
+  except on E:Exception do
+    Result := 'Não foi possível extrair os dados retornados.' + sLineBreak +
+              'Erro: ' + E.Message;
+  end;
 end;
 
 { TCancelarArquivoBlocoX }
@@ -1033,14 +1069,14 @@ end;
 procedure TCancelarArquivoBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TCancelarArquivoBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'CancelarArquivoResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'CancelarArquivoResult')));
   FRetornoCancelar.Leitor.Arquivo := FPRetWS;
   FRetornoCancelar.LerXml;
   FSituacaoOperCod := FRetornoCancelar.SituacaoOperCod;
@@ -1090,14 +1126,14 @@ end;
 procedure TReprocessarArquivoBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TReprocessarArquivoBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ReprocessarArquivoResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ReprocessarArquivoResult')));
   FRetornoReprocessar.Leitor.Arquivo := FPRetWS;
   FRetornoReprocessar.LerXml;
   FRecibo := FRetornoReprocessar.Recibo;
@@ -1148,14 +1184,14 @@ end;
 procedure TConsultarPendenciasContribuinteBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TConsultarPendenciasContribuinteBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasContribuinteResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasContribuinteResult')));
 
   FRetornoConsulta.Leitor.Arquivo := FPRetWS;
   FRetornoConsulta.LerXml;
@@ -1207,14 +1243,14 @@ end;
 procedure TConsultarPendenciasDesenvolvedorPafEcfBlocoX.DefinirDadosMsg;
 begin
   if FUsarCData then
-    FPDadosMsg := '<pXml>' + '<![CDATA[' + XML + ']]>' + '</pXml>'
+    FPDadosMsg := '<pXml>' + '<![CDATA[' + FXML + ']]>' + '</pXml>'
   else
-    FPDadosMsg := '<pXml>' + XML + '</pXml>';
+    FPDadosMsg := '<pXml>' + FXML + '</pXml>';
 end;
 
 function TConsultarPendenciasDesenvolvedorPafEcfBlocoX.TratarResposta: Boolean;
 begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasDesenvolvedorPafEcfResponse')));
+  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarPendenciasDesenvolvedorPafEcfResult')));
 
   FRetornoConsulta.Leitor.Arquivo := FPRetWS;
   FRetornoConsulta.LerXml;

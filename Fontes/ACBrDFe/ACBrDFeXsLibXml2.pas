@@ -269,6 +269,10 @@ var
   aDoc: xmlDocPtr;
   NewNode: xmlNodePtr;
 begin
+  Result  := '';
+  aDoc    := nil;
+  NewNode := nil;
+
   try
     aDoc := xmlNewDoc(PAnsichar(ansistring('1.0')));
     if (aDoc = nil) then

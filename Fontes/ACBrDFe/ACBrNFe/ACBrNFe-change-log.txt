@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2019
+-- ACBrNFeWebServices --
+[*] Tratamento do retorno do webservice de autorização NFe PE quando envio zipado.
+    https://www.projetoacbr.com.br/forum/topic/51801-retorno-do-webservice-sefaz-n%C3%A3o-tratado/
+  Por: Wladimir Isnard
+
 21/06/2019
 -- ACBrNFe --
 [*] Remoção de um IF no método Enviar que não tem mais nenhuma utilidade.

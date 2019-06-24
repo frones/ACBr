@@ -1124,6 +1124,7 @@ begin
                                'nfeAutorizacaoResult',
                                'nfeAutorizacaoLoteZipResult',
                                'nfeResultMsg',
+                               'nfeResultMsgZip',
                                'nfeRecepcaoLote2Result'],FPRetornoWS );
 
   VerificarSemResposta;

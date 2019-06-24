@@ -530,8 +530,6 @@ begin
 end;
 
 procedure TfrmDemo_ACBrANe.GerarANe(const ANomeArq: string);
-var
-  MS: TMemoryStream;
 begin
   with ACBrANe1.Documentos.Add.ANe do
   begin
@@ -539,22 +537,14 @@ begin
     Usuario := ACBrANe1.Configuracoes.Geral.Usuario;
     Senha   := ACBrANe1.Configuracoes.Geral.Senha;
     codatm  := ACBrANe1.Configuracoes.Geral.CodATM;
-    xmlDFe  := DocNFeCTe;
 
     // ELT
-    MS := TMemoryStream.Create;
-    try
-      MS.LoadFromFile(ANomeArq);
-      Arquivo := ReadStrFromStream(MS, MS.Size);
-      Tamanho := MS.Size;
-      NomeArq := StringReplace(ExtractFileName(ANomeArq), ExtractFileExt(ANomeArq), '', []);
-      CNPJ    := ACBrANe1.Configuracoes.Geral.CNPJEmitente;
-    finally
-      MS.Free;
-    end;
-  end;
+    NomeArq := ExtractFileName(ANomeArq);
+    CNPJ    := ACBrANe1.Configuracoes.Geral.CNPJEmitente;
 
-  ACBrANe1.Documentos.GerarANe;
+    // ATM e ELT
+    xmlDFe  := DocNFeCTe;
+  end;
 end;
 
 procedure TfrmDemo_ACBrANe.sbtnCaminhoCertClick(Sender: TObject);
@@ -718,6 +708,8 @@ begin
 
  ACBrANe1.Documentos.Clear;
  GerarANe('');
+
+ ACBrANe1.Documentos.GerarANe;
  ACBrANe1.Documentos.Items[0].GravarXML('', '');
 
  ShowMessage('Arquivo gerado em: '+ACBrANe1.Documentos.Items[0].NomeArq);

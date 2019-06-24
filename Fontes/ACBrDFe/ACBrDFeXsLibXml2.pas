@@ -72,10 +72,13 @@ type
 
   TDFeSSLXmlSignLibXml2 = class(TDFeSSLXmlSignClass)
   private
+    function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring; overload;
+    function CanonC14n(const aNode: xmlNodePtr; const infElement: String): Ansistring; overload;
+    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String; docElement: String = ''): xmlNodePtr;
+
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); virtual;
-    function CanonC14n(const aDoc: xmlDocPtr; const infElement: String): Ansistring;
     function LibXmlFindSignatureNode(aDoc: xmlDocPtr;
       const SignatureNode: String; const SelectionNamespaces: String;
       infElement: String): xmlNodePtr;
@@ -83,8 +86,7 @@ type
       const NameSpace: String = ''): xmlNodePtr;
     function LibXmlNodeWasFound(ANode: xmlNodePtr; const NodeName: String;
       const NameSpace: String): boolean;
-    function AdicionarNode(var aDoc: xmlDocPtr; const ConteudoXML: String;
-      docElement: String = ''): xmlNodePtr;
+
   public
     function Assinar(const ConteudoXML, docElement, infElement: String;
       const SignatureNode: String = ''; const SelectionNamespaces: String = '';
@@ -217,10 +219,10 @@ begin
     //WriteToTXT('C:\TEMP\DigestXml.xml', buffer, False, False, True);
 
     // Aplica a transformação c14n o node SignedInfo
-    Canon := CanonC14n(aDoc, cSignedInfoNode);
+    Canon := CanonC14n(SignNode, cSignedInfoNode);
 
     // DEBUG
-    //WriteToTXT('C:\TEMP\CanonGeracao.xml', Canon, False, False, True);
+    //WriteToTXT('C:\TEMP\CanonSignedInfoNode.xml', Canon, False, False, True);
 
     // Assina o node SignedInfo já transformado
     Signaturevalue := FpDFeSSL.CalcHash(Canon, FpDFeSSL.SSLDgst, outBase64, True);
@@ -260,6 +262,28 @@ begin
   //WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False, True);
 
   Result := XmlAss;
+end;
+
+function TDFeSSLXmlSignLibXml2.CanonC14n(const aNode: xmlNodePtr; const infElement: String): Ansistring;
+var
+  aDoc: xmlDocPtr;
+  NewNode: xmlNodePtr;
+begin
+  try
+    aDoc := xmlNewDoc(PAnsichar(ansistring('1.0')));
+    if (aDoc = nil) then
+      raise EACBrDFeException.Create(cErrSelecionarElements);
+
+    if (aNode <> nil) then
+      NewNode := xmlCopyNode(aNode, 1);
+
+    xmlDocSetRootElement(aDoc, NewNode);
+
+    Result := CanonC14n(aDoc, infElement);
+  finally
+    if (aDoc <> nil) then
+       xmlFreeDoc(aDoc);
+  end;
 end;
 
 function TDFeSSLXmlSignLibXml2.CanonC14n(const aDoc: xmlDocPtr;
@@ -492,7 +516,7 @@ begin
       AdicionarNode(aDoc, SignElement);
     end
     else
-      CanonXML := AnsiString(CanonC14n(aDoc, infElement));
+      CanonXML := CanonC14n(aDoc, infElement);
 
     if(not FpDFeSSL.ValidarHash(CanonXML, DigestAlg, DigestXML)) then
     begin
@@ -503,7 +527,7 @@ begin
     X509Certificate := AnsiString(LerTagXML(SignElement, cX509CertificateNode));
     FpDFeSSL.CarregarCertificadoPublico(X509Certificate);
 
-    CanonXML := AnsiString(CanonC14n(aDoc, cSignedInfoNode));
+    CanonXML := CanonC14n(aDoc, cSignedInfoNode);
 
     XmlSign := DecodeBase64(AnsiString(LerTagXML(SignElement, cSignatureValueNode)) );
     Result := FpDFeSSL.ValidarHash(CanonXML, DigestAlg, XmlSign, True);

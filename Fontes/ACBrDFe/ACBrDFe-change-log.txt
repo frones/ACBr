@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2019
+-- ACBrDFeXsLibXml2 --
+[-] Corrigido erro ao assinar lote com RPS contendo assinatura.
+   (Por: Rafael Teno Dias)
+
 14/06/2019
 -- ACBrDFeUtil --
 [-] Ficou faltando um "not" no IF que chama a função que valida o código do 

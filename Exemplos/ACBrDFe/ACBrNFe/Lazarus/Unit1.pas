@@ -1184,7 +1184,7 @@ begin
   while carregarMais  do
   begin
     if OpenDialog1.Execute then
-      ACBrNFe1.NotasFiscais.LoadFromFile({OpenDialog1.FileName}'C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrDFe\ACBrNFe\Lazarus\log\05481336000137\NFCe\201805\NFCe\35180505481336000137651230000013591469366266-nfe.xml',False);
+      ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
     carregarMais := MessageDlg('Carregar mais XML?', mtConfirmation, mbYesNo,0)= mrYes;
   end;
 

@@ -41,7 +41,7 @@ unit ACBrANeWebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
   ACBrANeDocumentos, ACBrANeConfiguracoes,
   pcnAuxiliar, pcnConversao, pcaConversao, pcaANe, pcaRetEnvANe;
@@ -428,7 +428,7 @@ begin
     begin
       FPCabMsg   := RemoverDeclaracaoXML(FDocumentos.Items[0].XMLAssinado);
       FPDadosMsg := '<tem:FileByteStream>' +
-                      FDocumentos.Items[0].ANe.Arquivo +
+                      EncodeBase64( FDocumentos.Items[0].ANe.xmlDFe ) +
                     '</tem:FileByteStream>';
     end
   else

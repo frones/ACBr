@@ -56,6 +56,11 @@ type
     Fsenha: String;
     Fcodatm: String;
 
+    /////// ELT
+    FNomeArq: String;
+    FCNPJ: String;
+
+    /////// ATM e ELT
     FxmlDFe: String;
 
     Faplicacao: String;
@@ -66,18 +71,17 @@ type
     Fchave: String;
     Fchaveresp: String;
 
-    /////// ELT
-    FTamanho: Int64;
-    FNomeArq: String;
-    FCNPJ: String;
-    FArquivo: String;
-
   public
     /////// ATM
     property usuario: String  read Fusuario  write Fusuario;
     property senha: String    read Fsenha    write Fsenha;
     property codatm: String   read Fcodatm   write Fcodatm;
 
+    /////// ELT
+    property NomeArq: String  read FNomeArq write FNomeArq;
+    property CNPJ: String     read FCNPJ    write FCNPJ;
+
+    /////// ATM e ELT
     // A propriedade abaixo é utilizada pelos serviços: AverbaNFe, AverbaCTe e DeclaraMDFe
     property xmlDFe: String   read FxmlDFe   write FxmlDFe;
 
@@ -89,12 +93,6 @@ type
     property corpo: String         read Fcorpo         write Fcorpo;
     property chave: String         read Fchave         write Fchave;
     property chaveresp: String     read Fchaveresp     write Fchaveresp;
-
-    /////// ELT
-    property Tamanho: Int64 read FTamanho write FTamanho;
-    property NomeArq: String  read FNomeArq write FNomeArq;
-    property CNPJ: String     read FCNPJ    write FCNPJ;
-    property Arquivo: String  read FArquivo write FArquivo;
   end;
 
 implementation

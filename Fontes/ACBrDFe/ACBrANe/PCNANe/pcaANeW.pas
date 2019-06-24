@@ -41,7 +41,7 @@ unit pcaANeW;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, synacode,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnGerador, pcaConversao, pcaANe;
 
@@ -160,9 +160,9 @@ begin
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
 
-  Gerador.wCampo(tcStr, '#1', 'tem:Length  ', 01, 10, 1, ANe.Tamanho, DSC_TAMANHO);
+  Gerador.wCampo(tcStr, '#1', 'tem:Length  ', 01, 10, 1, Length(ANe.xmlDFe), DSC_TAMANHO);
   Gerador.wCampo(tcStr, '#2', 'tem:FileName', 01, 44, 1, ANe.NomeArq, DSC_NOMEARQ);
-  Gerador.wCampo(tcStr, '#3', 'tem:CNPJ    ', 14, 14, 1, ANe.CNPJ, DSC_CNPJ);
+  Gerador.wCampo(tcStr, '#3', 'tem:CNPJ    ', 14, 14, 1, OnlyNumber(ANe.CNPJ), DSC_CNPJ);
 
   Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML;
 

@@ -105,9 +105,10 @@ Public Enum ACBrPosPrinterModelo
     EscPosEpson = 1
     EscBematech = 2
     EscDaruma = 3
-    EscVox = 3
-    EscDiebold = 4
-    EscEpsonP2 = 5
+    EscVox = 4
+    EscDiebold = 5
+    EscEpsonP2 = 6
+	CustomPos = 7
 End Enum
 
 Public Enum ACBrPosTipoStatus

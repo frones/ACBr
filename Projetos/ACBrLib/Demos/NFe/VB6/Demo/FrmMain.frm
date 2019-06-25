@@ -1418,16 +1418,16 @@ Private Sub Form_Load()
     End If
     
     retorno = NFE_Inicializar(IniPath, "")
-    CheckResult retornoorno
+    CheckResult retorno
     
     retorno = NFE_ConfigGravarValor("Principal", "LogNivel", "4")
-    CheckResult retornoorno
+    CheckResult retorno
     
     retorno = NFE_ConfigGravarValor("Principal", "LogPath", LogPath)
-    CheckResult retornoorno
+    CheckResult retorno
     
     retorno = NFE_ConfigGravar("")
-    CheckResult retornoorno
+    CheckResult retorno
     
     LoadConfig
 End Sub
@@ -1451,7 +1451,7 @@ Private Sub LoadConfig()
     Dim bufferLen As Long
     
     retorno = NFE_ConfigLer("")
-    CheckResult retornoorno
+    CheckResult retorno
     
     bufferLen = 256
     buffer = String$(bufferLen, " ")

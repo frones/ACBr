@@ -11,6 +11,7 @@ public enum  ACBrPosPrinterModelo {
     EscVox(4),
     EscDiebold(5),
     EscEpsonP2(6);
+    CustomPos(7);
     
     private static final Map<Integer, ACBrPosPrinterModelo> map;
     private final int enumValue; 

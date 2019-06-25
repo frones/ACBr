@@ -8,6 +8,7 @@
         EscDaruma,
         EscVox,
         EscDiebold,
-        EscEpsonP2
+        EscEpsonP2,
+        CustomPos
     }
 }

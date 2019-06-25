@@ -1383,6 +1383,7 @@ type
     fPrinterName    : String;
     fOnObterLogo : TACBrBoletoFCOnObterLogo ;
     fSoftwareHouse  : String;
+    FPdfSenha: string;
     function ComponentStateDesigning: Boolean;
     function GetArquivoLogo: String;
     function GetDirLogo: String;
@@ -1390,6 +1391,7 @@ type
     procedure SetACBrBoleto(const Value: TACBrBoleto);
     procedure SetDirLogo(const AValue: String);
     procedure SetNomeArquivo(const AValue: String);
+    procedure SetPdfSenha(const Value: string);
   protected
     fACBrBoleto : TACBrBoleto;
     procedure SetNumCopias(AValue: Integer);
@@ -1420,6 +1422,7 @@ type
     property PrinterName     : String          read fPrinterName      write fPrinterName;
     property DirLogo         : String          read GetDirLogo        write SetDirLogo;
     property NomeArquivo     : String          read GetNomeArquivo    write SetNomeArquivo ;
+    property PdfSenha        : string          read FPdfSenha         write SetPdfSenha;
   end;
 
 
@@ -3417,6 +3420,11 @@ end;
 procedure TACBrBoletoFCClass.SetNumCopias ( AValue: Integer ) ;
 begin
   fNumCopias := max( 1, Avalue);
+end;
+
+procedure TACBrBoletoFCClass.SetPdfSenha(const Value: string);
+begin
+  FPdfSenha := Value;
 end;
 
 procedure TACBrBoletoFCClass.Imprimir;

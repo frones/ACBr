@@ -80,6 +80,7 @@ type
     function GetPrintMode: TfrxPrintMode;
     function GetPrintOnSheet: Integer;
     function GetExibeCaptionButton: Boolean;
+    function GetZoomModePadrao: TfrxZoomMode;
     function GetBorderIcon: TBorderIcons;
     function GetIncorporarBackgroundPdf: Boolean;
     function GetIncorporarFontesPdf: Boolean;
@@ -89,6 +90,7 @@ type
     procedure SetPrintMode(const Value: TfrxPrintMode);
     procedure SetPrintOnSheet(const Value: Integer);
     procedure SetExibeCaptionButton(const Value: Boolean);
+    procedure SetZoomModePadrao(const Value: TfrxZoomMode);
     procedure SetBorderIcon(const Value: TBorderIcons);
     procedure SetIncorporarBackgroundPdf(const Value: Boolean);
     procedure SetIncorporarFontesPdf(const Value: Boolean);
@@ -122,6 +124,7 @@ type
     property PrintOnSheet: Integer read GetPrintOnSheet write SetPrintOnSheet default 0;
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
     property ExibeCaptionButton: Boolean read GetExibeCaptionButton write SetExibeCaptionButton default False;
+    property ZoomModePadrao: TfrxZoomMode read GetZoomModePadrao write SetZoomModePadrao default ZMDEFAULT;
   end;
 
 	{$IFDEF RTL230_UP}
@@ -141,6 +144,7 @@ type
     function GetPrintMode: TfrxPrintMode;
     function GetPrintOnSheet: Integer;
     function GetExibeCaptionButton: Boolean;
+    function GetZoomModePadrao: TfrxZoomMode;
     function GetBorderIcon: TBorderIcons;
     procedure SetFastFile(const Value: String);
     procedure SetFastFileEvento(const Value: String);
@@ -148,6 +152,7 @@ type
     procedure SetPrintMode(const Value: TfrxPrintMode);
     procedure SetPrintOnSheet(const Value: Integer);
     procedure SetExibeCaptionButton(const Value: Boolean);
+    procedure SetZoomModePadrao(const Value: TfrxZoomMode);
     procedure SetBorderIcon(const Value: TBorderIcons);
 
   public
@@ -174,6 +179,7 @@ type
     property PrintOnSheet: Integer read GetPrintOnSheet write SetPrintOnSheet default 0;
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
     property ExibeCaptionButton: Boolean read GetExibeCaptionButton write SetExibeCaptionButton default False;
+    property ZoomModePadrao: TfrxZoomMode read GetZoomModePadrao write SetZoomModePadrao default ZMDEFAULT;
   end;
 
 implementation
@@ -206,6 +212,11 @@ end;
 function TACBrNFeDANFEFR.GetExibeCaptionButton: Boolean;
 begin
   Result := FdmDanfe.ExibeCaptionButton;
+end;
+
+function TACBrNFeDANFEFR.GetZoomModePadrao: TfrxZoomMode;
+begin
+  Result := FdmDanfe.ZoomModePadrao;
 end;
 
 function TACBrNFeDANFEFR.GetFastFile: String;
@@ -266,6 +277,11 @@ end;
 procedure TACBrNFeDANFEFR.SetExibeCaptionButton(const Value: Boolean);
 begin
   FdmDanfe.ExibeCaptionButton := Value;
+end;
+
+procedure TACBrNFeDANFEFR.SetZoomModePadrao(const Value: TfrxZoomMode);
+begin
+  FdmDanfe.ZoomModePadrao := Value;
 end;
 
 procedure TACBrNFeDANFEFR.SetFastFile(const Value: String);
@@ -366,6 +382,11 @@ begin
   Result := FdmDanfe.ExibeCaptionButton;
 end;
 
+function TACBrNFeDANFCEFR.GetZoomModePadrao: TfrxZoomMode;
+begin
+  Result := FdmDanfe.ZoomModePadrao;
+end;
+
 function TACBrNFeDANFCEFR.GetFastFile: String;
 begin
   Result := FdmDanfe.FastFile;
@@ -452,6 +473,11 @@ end;
 procedure TACBrNFeDANFCEFR.SetExibeCaptionButton(const Value: Boolean);
 begin
   FdmDanfe.ExibeCaptionButton := Value;
+end;
+
+procedure TACBrNFeDANFCEFR.SetZoomModePadrao(const Value: TfrxZoomMode);
+begin
+  FdmDanfe.ZoomModePadrao := Value;
 end;
 
 procedure TACBrNFeDANFCEFR.SetFastFile(const Value: String);

@@ -361,6 +361,11 @@ begin
               frxPDFExport.Keywords := frxPDFExport.Title;
               frxPDFExport.Background := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
               frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+              if PdfSenha <> '' then
+              begin
+                frxPDFExport.UserPassword := PdfSenha;
+                frxPDFExport.ProtectionFlags := [ePrint];
+              end;
               frxReport.Export(FdmBoleto.frxPDFExport);
               if frxPDFExport.FileName <> NomeArquivo then
                 NomeArquivo := frxPDFExport.FileName;

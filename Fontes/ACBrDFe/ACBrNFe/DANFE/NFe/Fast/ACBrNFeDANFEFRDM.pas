@@ -132,6 +132,7 @@ type
     FPrintMode: TfrxPrintMode;
     FPrintOnSheet: Integer;
     FExibeCaptionButton: Boolean;
+    FZoomModePadrao: TfrxZoomMode;
     FBorderIcon : TBorderIcons;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
@@ -182,6 +183,7 @@ type
     property PrintMode: TfrxPrintMode read FPrintMode write FPrintMode default pmDefault;
     property PrintOnSheet: Integer read FPrintOnSheet write FPrintOnSheet default 0;
     property ExibeCaptionButton: Boolean read FExibeCaptionButton write FExibeCaptionButton default False;
+    property ZoomModePadrao: TfrxZoomMode read FZoomModePadrao write FZoomModePadrao default ZMDEFAULT;
     property BorderIcon: TBorderIcons read FBorderIcon write FBorderIcon;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
@@ -219,6 +221,7 @@ begin
 
   FFastFile := '';
   FExibeCaptionButton := False;
+  FZoomModePadrao := ZMDEFAULT;
   FBorderIcon := [biSystemMenu,biMaximize,biMinimize];
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
@@ -425,6 +428,8 @@ begin
         FieldDefs.Add('ValorUnitario'   , ftString, 50);
         FieldDefs.Add('Valorliquido'    , ftString, 18);
         FieldDefs.Add('ValorAcrescimos' , ftString, 18);
+        FieldDefs.Add('vPMC', ftString, 18);
+
         CreateDataSet;
      end;
    end;
@@ -1092,6 +1097,15 @@ begin
         FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,'###,###,##0.00');
         FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
         FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
+
+        if(FNFe.Det.Items[inItem].Prod.med.Count > 0)then
+        begin
+           FieldByName('vPMC').AsString := FormatFloatBr(FNFe.Det.Items[inItem].Prod.med.Items[0].vPMC,'###,###,##0.00');
+        end
+        else
+        begin
+           FieldByName('vPMC').AsString := '0.00';
+        end;
 
         Post;
       end;
@@ -2040,6 +2054,7 @@ begin
   frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
   frxReport.PreviewOptions.AllowEdit := False;
   frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
+  frxReport.PreviewOptions.ZoomMode     := FZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
 
   // Define a impressora
@@ -2119,6 +2134,7 @@ begin
   frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraSetup;
   frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
   frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
+  frxReport.PreviewOptions.ZoomMode     := ZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
 
   // Define a impressora
@@ -2179,6 +2195,7 @@ begin
   frxReport.PrintOptions.ShowDialog := DANFEClassOwner.MostraSetup;
   frxReport.ShowProgress := DANFEClassOwner.MostraStatus;
   frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
+  frxReport.PreviewOptions.ZoomMode     := ZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
 
   // Define a impressora

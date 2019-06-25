@@ -50,7 +50,7 @@ unit pcnSATConsultaRet;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnLeitor, pcnSignature, ACBrUtil;
+  SysUtils, Classes, Contnrs, pcnConversao, pcnLeitor, pcnSignature, ACBrUtil;
 
 type
   TSATConsultaRet = class;
@@ -58,24 +58,24 @@ type
   TInfCFeCollectionItem = class;
 
   { TInfCFeCollection }
-  TInfCFeCollection = class(TCollection)
+  TInfCFeCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TInfCFeCollectionItem;
     procedure SetItem(Index: Integer; Value: TInfCFeCollectionItem);
   public
-    constructor Create(AOwner: TLoteCollectionItem); reintroduce;
-    function Add: TInfCFeCollectionItem;
+    function Add: TInfCFeCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfCFeCollectionItem;
     property Items[Index: Integer]: TInfCFeCollectionItem read GetItem write SetItem; default;
   end;
 
   { TInfCFeCollectionItem }
-  TInfCFeCollectionItem = class(TCollectionItem)
+  TInfCFeCollectionItem = class(TObject)
   private
     FChave : String;
     FnCupom : String;
     FSituacao : String;
     FErros : String;
-  published
+  public
     property Chave    : String        read FChave    write FChave;
     property nCupom   : String        read FnCupom   write FnCupom;
     property Situacao : String        read FSituacao write FSituacao;
@@ -83,18 +83,18 @@ type
   end;
 
   { TLoteCollection }
-  TLoteCollection = class(TCollection)
+  TLoteCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TLoteCollectionItem;
     procedure SetItem(Index: Integer; Value: TLoteCollectionItem);
   public
-    constructor Create(AOwner: TSATConsultaRet); reintroduce;
-    function Add: TLoteCollectionItem;
+    function Add: TLoteCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TLoteCollectionItem;
     property Items[Index: Integer]: TLoteCollectionItem read GetItem write SetItem; default;
   end;
 
   { TLoteCollectionItem }
-  TLoteCollectionItem = class(TCollectionItem)
+  TLoteCollectionItem = class(TObject)
   private
     FNRec            : String;
     FdhEnvioLote     : TDateTime;
@@ -108,10 +108,9 @@ type
 
     procedure SetInfCFe(AValue: TInfCFeCollection);
   public
-    constructor Create(ACollection: TCollection); override;
+    constructor Create;
     destructor Destroy; override;
 
-  published
     property NRec            : String      read FNRec            write FNRec;
     property dhEnvioLote     : TDateTime   read FdhEnvioLote     write FdhEnvioLote;
     property dhProcessamento : TDateTime   read FdhProcessamento write FdhProcessamento;
@@ -126,7 +125,7 @@ type
 
   { TSATConsultaRet }
 
-  TSATConsultaRet = class(TPersistent)
+  TSATConsultaRet = class(TObject)
   private
     FLeitor: TLeitor;
     FCNPJ  : String;
@@ -141,7 +140,6 @@ type
     function LerXml: Boolean;
 
     property Leitor   : TLeitor         read FLeitor   write FLeitor;
-  published
     property CNPJ     : String          read FCNPJ     write FCNPJ;
     property xNome    : String          read FxNome    write FxNome;
     property Mensagem : String          read FMensagem write FMensagem;
@@ -157,11 +155,11 @@ begin
   FInfCFe.Assign(AValue);
 end;
 
-constructor TLoteCollectionItem.Create(ACollection: TCollection);
+constructor TLoteCollectionItem.Create;
 begin
   inherited;
 
-  FInfCFe := TInfCFeCollection.Create(Self);
+  FInfCFe    := TInfCFeCollection.Create;
   FSignature := TSignature.Create;
 end;
 
@@ -184,14 +182,15 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-constructor TInfCFeCollection.Create(AOwner: TLoteCollectionItem);
-begin
-  inherited Create(TInfCFeCollectionItem);
-end;
-
 function TInfCFeCollection.Add: TInfCFeCollectionItem;
 begin
-  Result := TInfCFeCollectionItem(inherited Add);
+  Result := Self.New;
+end;
+
+function TInfCFeCollection.New: TInfCFeCollectionItem;
+begin
+  Result := TInfCFeCollectionItem.Create();
+  Self.Add(Result);
 end;
 
 { TLoteCollection }
@@ -206,14 +205,15 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-constructor TLoteCollection.Create(AOwner: TSATConsultaRet);
-begin
-  inherited Create(TLoteCollectionItem);
-end;
-
 function TLoteCollection.Add: TLoteCollectionItem;
 begin
-  Result := TLoteCollectionItem(inherited Add);
+  Result := Self.New;
+end;
+
+function TLoteCollection.New: TLoteCollectionItem;
+begin
+  Result := TLoteCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TSATConsultaRet }
@@ -225,8 +225,9 @@ end;
 
 constructor TSATConsultaRet.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
-  FLote := TLoteCollection.Create(Self);
+  FLote   := TLoteCollection.Create;
 end;
 
 destructor TSATConsultaRet.Destroy;
@@ -260,7 +261,7 @@ begin
       while Leitor.rExtrai(1, 'Lote', '', i + 1) <> '' do
       begin
 
-        FLote.Add;
+        FLote.New;
         FLote[i].NRec            := Leitor.rCampo(tcStr, 'NRec');
         FLote[i].dhEnvioLote     := Leitor.rCampo(tcDatHorCFe, 'dhEnvioLote');
         FLote[i].dhProcessamento := Leitor.rCampo(tcDatHorCFe, 'dhProcessamento');
@@ -280,7 +281,7 @@ begin
         j:= 0;
         while Leitor.rExtrai(2, 'Cfe', '', j + 1) <> '' do
         begin
-          FLote.Items[i].InfCFe.Add;
+          FLote.Items[i].InfCFe.New;
           FLote.Items[i].InfCFe[j].Chave    :=  Leitor.rCampo(tcStr, 'Chave');
           FLote.Items[i].InfCFe[j].nCupom   :=  Leitor.rCampo(tcStr, 'nCupom');
           FLote.Items[i].InfCFe[j].Situacao :=  Leitor.rCampo(tcStr, 'Situacao');

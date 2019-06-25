@@ -42,7 +42,7 @@ type
 
   TConfiguracoesSATWS = class(TConfiguracoes)
   public
-    procedure Assign(DeConfiguracoesSATWS: TConfiguracoesSATWS); overload;
+    procedure Assign(DeConfiguracoesSATWS: TConfiguracoesSATWS); reintroduce;
   published
     property Geral;
     property WebServices;

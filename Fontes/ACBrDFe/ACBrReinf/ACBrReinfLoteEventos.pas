@@ -203,7 +203,7 @@ begin
   CarregarXmlEventos;
 
   Eventosxml := EmptyStr;
-  FXML := EmptyStr;
+//  FXML := EmptyStr;
 
   FXML :=
   '<Reinf xmlns="http://www.reinf.esocial.gov.br/schemas/envioLoteEventos/v'+
@@ -233,7 +233,7 @@ end;
 function TLoteEventos.LoadFromFile(const CaminhoArquivo: String): Boolean;
 var
   ArquivoXML: TStringList;
-  XML: String;
+  sXMLTemp: String;
   XMLOriginal: String;
   i: integer;
 begin
@@ -248,8 +248,8 @@ begin
   end;
 
   // Converte de UTF8 para a String nativa da IDE //
-  XML := DecodeToString(XMLOriginal, True);
-  LoadFromString(XML);
+  sXMLTemp := DecodeToString(XMLOriginal, True);
+  LoadFromString(sXMLTemp);
 
   for i := 0 to Self.Count - 1 do
     Self.Items[i].NomeArq := CaminhoArquivo;

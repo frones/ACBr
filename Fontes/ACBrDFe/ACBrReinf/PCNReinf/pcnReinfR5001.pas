@@ -88,7 +88,7 @@ type
 
     procedure SetinfoCRTom(const Value: TinfoCRTomCollection);
   public
-    constructor Create(AOwner: TinfoTotal);
+    constructor Create;
     destructor Destroy; override;
 
     property cnpjPrestador: String read FcnpjPrestador;
@@ -496,7 +496,8 @@ end;
 
 constructor TInfoTotal.Create;
 begin
-  FRTom          := TRTom.Create(Self);
+  inherited;
+  FRTom          := TRTom.Create;
   FRPrest        := TRPrest.Create;
   FRRecRepAD     := TRRecRepADCollection.Create;
   FRComl         := TRComlCollection.Create;
@@ -533,8 +534,9 @@ end;
 
 { TRTom }
 
-constructor TRTom.Create(AOwner: TinfoTotal);
+constructor TRTom.Create;
 begin
+  inherited Create;
   FinfoCRTom := TinfoCRTomCollection.Create;
 end;
 

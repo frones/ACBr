@@ -74,7 +74,7 @@ type
 
     function  GerarXML: boolean; virtual; abstract;
     procedure SaveToFile(const CaminhoArquivo: string);
-    function  Assinar(XMLEvento: String; NomeEvento: String): AnsiString;
+    function  Assinar(const XMLEvento: String; NomeEvento: String): AnsiString;
     function  GerarChaveReinf(const emissao: TDateTime;
                                 const CNPJF: string;
                                 sequencial: Integer): String;
@@ -90,7 +90,7 @@ type
     property XML: AnsiString read FXML write SetXML;
   protected
     {Geradores de Uso Comum}
-    procedure GerarCabecalho(Namespace: String);
+    procedure GerarCabecalho(const Namespace: String);
     procedure GerarRodape;
     procedure GerarIdeEvento(pEvt: TIdeEvento; const GeraGrupo: boolean = True);
     procedure GerarIdeEvento2(pEvt: TIdeEvento2; const GeraGrupo: boolean = True; GeraRetif: Boolean = True);
@@ -129,7 +129,7 @@ uses
 
 {TReinfEvento}
 
-function TReinfEvento.Assinar(XMLEvento, NomeEvento: String): AnsiString;
+function TReinfEvento.Assinar(const XMLEvento:string; NomeEvento: String): AnsiString;
 var
   XMLAss, ArqXML: string;
 begin
@@ -290,7 +290,7 @@ begin
   end;
 end;
 
-procedure TReinfEvento.GerarCabecalho(Namespace: String);
+procedure TReinfEvento.GerarCabecalho(const Namespace: String);
 begin
   with TACBrReinf(FACBrReinf) do
   begin

@@ -242,6 +242,7 @@ type
   end;
 
   IEventoReinf = Interface(IInterface)
+  ['{35B759CA-56D7-420A-B110-58736AD39308}']
     function GetXml: string;
     procedure SetXml(const Value: string);
     function GetTipoEvento: TTipoEvento;

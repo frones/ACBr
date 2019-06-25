@@ -83,7 +83,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathReinf(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathReinf(Data: TDateTime = 0; const CNPJ: String = ''): String;
   published
     property EmissaoPathReinf: Boolean read FEmissaoPathReinf write FEmissaoPathReinf default False;
     property PathReinf: String read FPathReinf write FPathReinf;
@@ -223,7 +223,7 @@ begin
 end;
 
 function TArquivosConfReinf.GetPathReinf(Data: TDateTime;
-  CNPJ: String): String;
+  const CNPJ: String): String;
 begin
   Result := GetPath(PathReinf, ACBRReinf_MODELODF, CNPJ, Data, ACBRReinf_MODELODF);
 end;

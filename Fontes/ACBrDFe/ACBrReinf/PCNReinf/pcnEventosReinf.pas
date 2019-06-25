@@ -89,8 +89,8 @@ type
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
-    function LoadFromString(AXMLString: String): Boolean;
-    function LoadFromIni(AIniString: String): Boolean;
+    function LoadFromString(const AXMLString: String): Boolean;
+    function LoadFromIni(const AIniString: String): Boolean;
 
   published
     property Count: Integer read GetCount;
@@ -510,7 +510,7 @@ begin
   FR9000.Assign(Value);
 end;
 
-function TReinfEventos.LoadFromString(AXMLString: String): Boolean;
+function TReinfEventos.LoadFromString(const AXMLString: String): Boolean;
 var
   Ok: Boolean;
 begin
@@ -533,7 +533,7 @@ begin
   Result := (GetCount > 0);
 end;
 
-function TReinfEventos.LoadFromIni(AIniString: String): Boolean;
+function TReinfEventos.LoadFromIni(const AIniString: String): Boolean;
 var
   Ok: Boolean;
 begin

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/06/2019
+-- pcesS1000 --
+[*] https://www.projetoacbr.com.br/forum/topic/52101-campo-indporte-evento-s-1000-nota-tecnica-14-2019/
+   Por: ghvoliveira
+
 30/05/2019
 -- pcesS5013 --
 [*] https://www.projetoacbr.com.br/forum/topic/51645-vazamento-de-mem%C3%B3ria-s-5013/

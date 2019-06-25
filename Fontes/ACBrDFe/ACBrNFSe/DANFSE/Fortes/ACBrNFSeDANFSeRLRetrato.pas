@@ -510,9 +510,14 @@ begin
       with IdentificacaoPrestador do
       begin
         rllPrestCNPJ.Caption          := FormatarCNPJ( Cnpj );
-        rllPrestInscMunicipal.Caption := IfThen( InscricaoMunicipal <> '' , InscricaoMunicipal  , fpDANFSe.InscMunicipal );
-        rllPrestNome.Caption          := IfThen( RazaoSocial <> ''        , RazaoSocial         , fpDANFSe.RazaoSocial);
-        with Tomador.IdentificacaoTomador do
+        rllPrestInscMunicipal.Caption := IfThen(InscricaoMunicipal <> '', InscricaoMunicipal, fpDANFSe.InscMunicipal);
+
+        rllPrestNome.Caption := IfThen(RazaoSocial <> '', RazaoSocial, fpDANFSe.RazaoSocial);
+		
+        if rllPrestNome.Caption = '' then
+          rllPrestNome.Caption := IfThen(NomeFantasia <> '', NomeFantasia, fpDANFSe.RazaoSocial);
+
+        with Tomador.IdentificacaoTomador do  
           rllTomaInscEstadual.Caption := IfThen( InscricaoEstadual <> ''  , InscricaoEstadual   , fpDANFSe.T_InscEstadual );
       end;
 

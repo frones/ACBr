@@ -21,6 +21,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 90.000000000000000000
     PageSetup.PaperHeight = 180.000000000000000000
+    UnlimitedHeight = True
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
     object rlb01_Chave: TRLBand
@@ -712,7 +713,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
         Left = 0
         Top = 0
         Width = 264
-        Height = 35
+        Height = 33
         AutoSize = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET

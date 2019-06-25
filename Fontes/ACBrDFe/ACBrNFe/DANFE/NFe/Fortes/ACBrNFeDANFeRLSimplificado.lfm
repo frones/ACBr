@@ -21,6 +21,7 @@ inherited frlDANFeRLSimplificado: TfrlDANFeRLSimplificado
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 90
     PageSetup.PaperHeight = 180
+    UnlimitedHeight = True
     BeforePrint = RLNFeBeforePrint
     OnDataRecord = RLNFeDataRecord
     object rlb01_Chave: TRLBand[0]

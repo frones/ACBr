@@ -980,8 +980,8 @@ begin
     Gerador.wGrupo('/dmDev');
   end;
 
-  if dmDev.Count > 99 then
-    Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativo de Valores', ERR_MSG_MAIOR_MAXIMO + '99');
+  if dmDev.Count > 999 then
+    Gerador.wAlerta('', 'dmDev', 'Lista de Demostrativo de Valores', ERR_MSG_MAIOR_MAXIMO + '999');
 end;
 
 procedure TEvtRemun.GerarInfoPerApur(pInfoPerApur: TInfoPerApur);
@@ -1179,8 +1179,8 @@ begin
       I := 1;
       while true do
       begin
-        // de 01 até 99
-        sSecao := 'dmDev' + IntToStrZero(I, 2);
+        // de 001 até 999
+        sSecao := 'dmDev' + IntToStrZero(I, 3);
         sFim   := INIRec.ReadString(sSecao, 'ideDmDev', 'FIM');
 
         if (sFim = 'FIM') or (Length(sFim) <= 0) then

@@ -300,6 +300,7 @@ type
     FcodTercsSusp: String;
     FinfoTercSusp: TinfoTercSuspCollection;
     FInfoEmprParcial: TInfoEmprParcial;
+    FcnoObra: String;
     FdadosOpPort: TdadosOpPort;
     Fbasesremun: TbasesremunCollection;
     FbasesAvNport: TbasesAvNport;
@@ -314,6 +315,7 @@ type
     property codTercsSusp: String read FcodTercsSusp;
     property infoTercSusp: TinfoTercSuspCollection read FinfoTercSusp write FinfoTercSusp;
     property InfoEmprParcial: TInfoEmprParcial read FInfoEmprParcial write FInfoEmprParcial;
+    property cnoObra: String read FcnoObra;
     property dadosOpPort: TdadosOpPort read FdadosOpPort write FdadosOpPort;
     property basesremun: TbasesremunCollection read Fbasesremun write Fbasesremun;
     property basesAvNPort: TbasesAvNport read FbasesAvNport write FbasesAvNport;
@@ -680,6 +682,8 @@ begin
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].InfoEmprParcial.FnrInscProp    := leitor.rCampo(tcStr, 'nrInscProp');
             end;
 
+            infoCS.ideEstab.Items[i].ideLotacao.Items[j].FcnoObra := leitor.rCampo(tcStr, 'cnoObra');
+
             if leitor.rExtrai(5, 'dadosOpPort') <> '' then
             begin
               infoCS.ideEstab.Items[i].ideLotacao.Items[j].dadosOpPort.FcnpjOpPortuario := leitor.rCampo(tcStr, 'cnpjOpPortuario');
@@ -875,6 +879,7 @@ begin
             AIni.WriteInteger(sSecao, 'fpas',        ideLotacao.Items[j].fpas);
             AIni.WriteString(sSecao, 'codTercs',     ideLotacao.Items[j].codTercs);
             AIni.WriteString(sSecao, 'codTercsSusp', ideLotacao.Items[j].codTercsSusp);
+            AIni.WriteString(sSecao, 'cnoObra',      ideLotacao.Items[j].cnoObra);
 
             with ideLotacao.Items[j] do
             begin

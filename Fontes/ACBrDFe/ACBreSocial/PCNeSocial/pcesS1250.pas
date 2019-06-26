@@ -319,8 +319,8 @@ begin
     Gerador.wGrupo('/ideProdutor');
   end;
 
-  if pIdeProdutor.Count > 9999 then
-    Gerador.wAlerta('', 'ideProdutor', 'Lista de Produtores', ERR_MSG_MAIOR_MAXIMO + '9999');
+  if pIdeProdutor.Count > 14999 then
+    Gerador.wAlerta('', 'ideProdutor', 'Lista de Produtores', ERR_MSG_MAIOR_MAXIMO + '14999');
 end;
 
 procedure TEvtAqProd.GerarInfoProcJ(pInfoProcJ: TInfoProcJCollection);
@@ -598,8 +598,8 @@ begin
           J := 1;
           while true do
           begin
-            // de 0001 até 9999
-            sSecao := 'ideProdutor' + IntToStrZero(I, 1) + IntToStrZero(J, 4);
+            // de 00001 até 14999
+            sSecao := 'ideProdutor' + IntToStrZero(I, 1) + IntToStrZero(J, 5);
             sFim   := INIRec.ReadString(sSecao, 'tpInscProd', 'FIM');
 
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -619,7 +619,7 @@ begin
               while true do
               begin
                 // de 0000 até 9999
-                sSecao := 'nfs' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                sSecao := 'nfs' + IntToStrZero(I, 1) + IntToStrZero(J, 5) +
                                IntToStrZero(K, 4);
                 sFim   := INIRec.ReadString(sSecao, 'serie', 'FIM');
 
@@ -644,7 +644,7 @@ begin
               while true do
               begin
                 // de 00 até 10
-                sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 4) +
+                sSecao := 'infoProcJud' + IntToStrZero(I, 1) + IntToStrZero(J, 5) +
                                IntToStrZero(K, 2);
                 sFim   := INIRec.ReadString(sSecao, 'nrProcJud', 'FIM');
 

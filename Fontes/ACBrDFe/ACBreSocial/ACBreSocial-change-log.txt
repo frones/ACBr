@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2019
+-- Diversos --
+[*] Alterações visando adequar a geração dos XML em função das alterações realizadas
+    nos Schemas no dia 18/06/2019
+   Por: Italo Jurisato Junior
+
 25/06/2019
 -- pcesS1000 --
 [*] https://www.projetoacbr.com.br/forum/topic/52101-campo-indporte-evento-s-1000-nota-tecnica-14-2019/

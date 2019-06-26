@@ -126,10 +126,8 @@ begin
 
     if MDFe.infMDFe.versao >= 3 then
     begin
-      if Leitor.rCampo(tcStr, 'indCanalVerde') = '1' then
-        MDFe.ide.indCanalVerde := tiSim
-      else
-        MDFe.ide.indCanalVerde := tiNao;
+      MDFe.ide.indCanalVerde := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indCanalVerde'));
+      MDFe.ide.indCarregaPosterior := StrToTIndicador(ok, Leitor.rCampo(tcStr, 'indCarregaPosterior'));
     end;
 
     i01 := 0;

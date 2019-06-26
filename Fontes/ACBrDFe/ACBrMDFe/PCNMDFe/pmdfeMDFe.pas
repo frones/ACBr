@@ -201,6 +201,7 @@ type
     FinfPercurso: TinfPercursoCollection;
     FdhIniViagem: TDateTime;
     FindCanalVerde: TIndicador;
+    FindCarregaPosterior: TIndicador;
 
     procedure SetinfMunCarrega(Value: TinfMunCarregaCollection);
     procedure SetinfPercurso(Value: TinfPercursoCollection);
@@ -227,6 +228,7 @@ type
     property infPercurso: TinfPercursoCollection     read FinfPercurso   write SetinfPercurso;
     property dhIniViagem: TDateTime                  read FdhIniViagem   write FdhIniViagem;
     property indCanalVerde: TIndicador               read FindCanalVerde write FindCanalVerde default tiNao;
+    property indCarregaPosterior: TIndicador         read FindCarregaPosterior write FindCarregaPosterior default tiNao;
   end;
 
   Temit = class(TObject)
@@ -1286,6 +1288,7 @@ begin
   FinfMunCarrega := TinfMunCarregaCollection.Create;
   FinfPercurso   := TinfPercursoCollection.Create;
   FindCanalVerde := tiNao;
+  FindCarregaPosterior := tiNao;
 end;
 
 destructor TIde.Destroy;

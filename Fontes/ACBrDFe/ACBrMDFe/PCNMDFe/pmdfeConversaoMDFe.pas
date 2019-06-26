@@ -54,7 +54,7 @@ type
 
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
-                     LayMDFeDistDFeInt);
+                     LayMDFeDistDFeInt, LayMDFeRecepcaoSinc);
 
   TSchemaMDFe     = (schErro, schMDFe, schEventoMDFe,
                  //    schresMDFe, schresEvento, schprocMDFe, schprocEventoMDFe,
@@ -159,7 +159,8 @@ end;
 function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;
 begin
   case t of
-    LayMDFeRecepcao:       Result := schMDFe;
+    LayMDFeRecepcao,
+    LayMDFeRecepcaoSinc:   Result := schMDFe;
     LayMDFeRetRecepcao:    Result := schconsReciMDFe;
     LayMDFeConsulta:       Result := schconsSitMDFe;
     LayMDFeStatusServico:  Result := schconsStatServMDFe;
@@ -216,10 +217,10 @@ begin
   Result := EnumeradoToStr(t,
     ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
      'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
-     'MDFeDistDFeInt'],
+     'MDFeDistDFeInt', 'MDFeRecepcaoSinc'],
     [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
       LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
-      LayMDFeDistDFeInt ] );
+      LayMDFeDistDFeInt, LayMDFeRecepcaoSinc ] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutMDFe;
@@ -227,10 +228,10 @@ begin
   Result := StrToEnumerado(ok, s,
   ['MDFeRecepcao', 'MDFeRetRecepcao', 'MDFeConsultaProtocolo',
    'MDFeStatusServico', 'RecepcaoEvento', 'MDFeConsNaoEnc',
-   'MDFeDistDFeInt'],
+   'MDFeDistDFeInt', 'MDFeRecepcaoSinc'],
   [ LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
     LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
-    LayMDFeDistDFeInt ] );
+    LayMDFeDistDFeInt, LayMDFeRecepcaoSinc ] );
 end;
 
 function SchemaMDFeToStr(const t: TSchemaMDFe): String;

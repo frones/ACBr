@@ -1383,7 +1383,7 @@ var
   ok: Boolean;
   CM: String;
   DataHorBR: String;
-  DataEmiBR: TDateTime;
+//  DataEmiBR: TDateTime;
 begin
   if FProvedor = proNenhum then
   begin
@@ -3451,7 +3451,7 @@ end;
 function TNFSeR.LerNFSe_SigIss: Boolean;
 var
   bOk :Boolean;
-  valorIssRetido: Double;
+//  valorIssRetido: Double;
 begin
   Result := False;
 
@@ -3507,12 +3507,12 @@ begin
     if (Leitor.rCampo(tcStr, 'ISSRetido') = 'false') then
     begin
       NFSe.Servico.Valores.IssRetido := stNormal;
-      valorIssRetido := 0.00;
+//      valorIssRetido := 0.00;
     end
     else
     begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
-      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
+//      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
     end;
 
     NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
@@ -3595,7 +3595,7 @@ end;
 function TNFSeR.LerNFSe_Elotech: Boolean;
 var
   bOk :Boolean;
-  valorIssRetido: Double;
+//  valorIssRetido: Double;
 begin
   Result := False;
 
@@ -3648,12 +3648,12 @@ begin
     if (Leitor.rCampo(tcStr, 'ISSRetido') = 'false') then
     begin
       NFSe.Servico.Valores.IssRetido := stNormal;
-      valorIssRetido := 0.00;
+//      valorIssRetido := 0.00;
     end
     else
     begin
       NFSe.Servico.Valores.IssRetido := stRetencao;
-      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
+//      valorIssRetido := Leitor.rCampo(tcDe2, 'ValorISS');
     end;
 
     NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -

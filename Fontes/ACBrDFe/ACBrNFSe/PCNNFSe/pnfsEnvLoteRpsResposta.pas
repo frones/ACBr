@@ -418,10 +418,12 @@ begin
       end;
     end;
 
-    Result := erro = '';
   except
     Result := False;
   end;
+
+  Result := Result and (erro = '');
+
 end;
 
 function TretEnvLote.LerXml_proISSDSF: Boolean;

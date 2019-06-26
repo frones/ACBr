@@ -296,6 +296,7 @@ end;
 function TretSitLote.LerXML_proAssessorPublico: boolean;
 begin
   // nada feito aqui
+  Result := False;
 end;
 
 function TretSitLote.LerXml_proCONAM: Boolean;

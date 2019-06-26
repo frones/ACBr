@@ -391,8 +391,9 @@ begin
           IndCoop := TpIndCoop(1);
           IndConstr := TpIndConstr(2);
           IndDesFolha := TpIndDesFolha(1);
+          IndPorte := tpSim;
           IndOptRegEletron := TpIndOptRegEletron(1);
-          IndEtt := tpSimNao(1);
+          IndEtt := tpSim;
           nrRegEtt := '';
 
           with InfoOp do

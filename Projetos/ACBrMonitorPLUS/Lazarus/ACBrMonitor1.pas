@@ -264,6 +264,7 @@ type
     edtBOLDigitoAgConta: TEdit;
     edtArquivoWebServicesBPe: TEdit;
     edtEmailAssuntoSAT: TEdit;
+    edtNumCopiaNFCe: TSpinEdit;
     edtPathDownload: TEdit;
     GroupBox9: TGroupBox;
     Label227: TLabel;
@@ -520,6 +521,7 @@ type
     Label235: TLabel;
     Label236: TLabel;
     Label237: TLabel;
+    Label238: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -4688,6 +4690,7 @@ begin
       cbxImpDescPorc.Checked              := ImpDescPorc;
       cbxMostrarPreview.Checked           := MostrarPreview;
       edtNumCopia.Value                   := Copias;
+      edtNumCopiaNFCe.Value               := CopiasNFCe;
       speLargCodProd.Value                := LarguraCodigoProduto;
       speEspBorda.Value                   := EspessuraBorda;
       speFonteRazao.Value                 := FonteRazao;
@@ -5835,6 +5838,7 @@ begin
         ImpDescPorc                := cbxImpDescPorc.Checked;
         MostrarPreview             := cbxMostrarPreview.Checked;
         Copias                     := edtNumCopia.Value;
+        CopiasNFCe                 := edtNumCopiaNFCe.Value;
         LarguraCodigoProduto       := speLargCodProd.Value;
         EspessuraBorda             := speEspBorda.Value;
         FonteRazao                 := speFonteRazao.Value;
@@ -8700,6 +8704,7 @@ begin
         ACBrNFeDANFCeFortesA4_1.Logo                := edtLogoMarcaNFCeSAT.Text
       else
         ACBrNFeDANFCeFortesA4_1.Logo                := '';
+      ACBrNFeDANFCeFortesA4_1.NumCopias             := edtNumCopiaNFCe.Value;
 
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
@@ -8717,7 +8722,7 @@ begin
       ACBrNFeDANFCeFortes1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
       ACBrNFeDANFCeFortes1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
       ACBrNFeDANFCeFortes1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
-
+      ACBrNFeDANFCeFortes1.NumCopias             := edtNumCopiaNFCe.Value;
 
       ACBrNFeDANFCeFortes1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
@@ -8744,6 +8749,7 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeNomeFantasia   := cbxImprimirNomeFantasiaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
+      ACBrNFeDANFeESCPOS1.NumCopias             := edtNumCopiaNFCe.Value;
 
       ACBrNFeDANFeESCPOS1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
+Adicionado nas configurações de impressão de NFCe um campo pade definir qtd de cópias (Específico para NFCe)
+
 14/06/2019
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
 Adicionado campo para config. "DígitoAgenciaConta" especifico para alguns bancos

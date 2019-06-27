@@ -914,6 +914,7 @@ const
   CKeyDANFEImpDescPorc =               'ImpDescPorc';
   CKeyDANFEMostrarPreview =            'MostrarPreview';
   CKeyDANFECopias =                    'Copias';
+  CKeyDANFECopiasNFCe =                'CopiasNFCe';
   CKeyDANFELarguraCodigoProduto =      'LarguraCodigoProduto';
   CKeyDANFEEspessuraBorda =            'EspessuraBorda';
   CKeyDANFEFonteRazao =                'FonteRazao';

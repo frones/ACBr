@@ -275,6 +275,7 @@ type
     ImpDescPorc                      : Boolean;
     MostrarPreview                   : Boolean;
     Copias                           : Integer;
+    CopiasNFCe                       : Integer;
     LarguraCodigoProduto             : Integer;
     EspessuraBorda                   : Integer;
     FonteRazao                       : Integer;
@@ -1042,6 +1043,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImpDescPorc               , ImpDescPorc );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEMostrarPreview            , MostrarPreview );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFECopias                 , Copias );
+      Ini.WriteInteger( CSecDANFE,  CKeyDANFECopiasNFCe             , CopiasNFCe );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFELarguraCodigoProduto   , LarguraCodigoProduto );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEEspessuraBorda         , EspessuraBorda );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEFonteRazao             , FonteRazao );
@@ -1686,6 +1688,7 @@ begin
       ImpDescPorc               :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEImpDescPorc                       , ImpDescPorc );
       MostrarPreview            :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEMostrarPreview                    , MostrarPreview );
       Copias                    :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFECopias                         , Copias );
+      CopiasNFCe                :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFECopiasNFCe                     , CopiasNFCe );
       LarguraCodigoProduto      :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFELarguraCodigoProduto           , LarguraCodigoProduto );
       EspessuraBorda            :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEEspessuraBorda                 , EspessuraBorda );
       FonteRazao                :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEFonteRazao                     , FonteRazao );
@@ -2321,6 +2324,7 @@ begin
     ImpDescPorc               :=  True;
     MostrarPreview            :=  False;
     Copias                    :=  1;
+    CopiasNFCe                :=  1;
     LarguraCodigoProduto      :=  40;
     EspessuraBorda            :=  1;
     FonteRazao                :=  8;

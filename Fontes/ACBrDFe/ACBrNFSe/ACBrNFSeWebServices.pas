@@ -4628,6 +4628,19 @@ begin
           FPDadosMsg := Copy(FPDadosMsg, 1, iPos -1) + FNameSpaceCan +
                         Copy(FPDadosMsg, iPos, Length(FPDadosMsg));
         end;
+
+      proSigep:
+        begin
+          Gerador.Prefixo := Prefixo4;
+          Gerador.wGrupoNFSe('credenciais');
+          Gerador.wCampoNFSe(tcStr, '#01', 'usuario     ', 01, 15, 1, GerarDadosMsg.UserWeb);
+          Gerador.wCampoNFSe(tcStr, '#02', 'senha       ', 01, 05, 1, GerarDadosMsg.SenhaWeb);
+          Gerador.wCampoNFSe(tcStr, '#03', 'chavePrivada', 01, 01, 1, GerarDadosMsg.ChaveAcessoPrefeitura);
+          Gerador.wGrupoNFSe('/credenciais');
+
+          FPDadosMsg := FTagI + Gerador.ArquivoFormatoXML +
+                                GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+        end;
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
     end;

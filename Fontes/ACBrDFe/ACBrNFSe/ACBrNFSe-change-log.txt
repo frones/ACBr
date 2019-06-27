@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 27/06/2019
+-- ACBrNFSeDANFSeRL/ACBrNFSeDANFSeRLRetrato --
+[*] Alteração na mascara de formatação de valores, visando imprimir
+    valores acima de 9999,99.
+   Por: Italo Jurisato Junior
 -- ACBrNFSeWebServices/pnfsNFSeG --
 [*] Alteração visando o provedor Sigep.
    Por: Italo Jurisato Junior

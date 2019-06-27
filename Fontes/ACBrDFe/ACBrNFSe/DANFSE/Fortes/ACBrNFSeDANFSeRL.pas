@@ -102,13 +102,14 @@ end;
 
 procedure TfrlDANFSeRL.FormDestroy(Sender: TObject);
 begin
- FreeAndNil( cdsItens );
+  FreeAndNil( cdsItens );
 end;
 
 procedure TfrlDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
   var Value: String);
 begin
- if fpSemValorFiscal then Value := '';
+  if fpSemValorFiscal then
+    Value := '';
 end;
 
 procedure TfrlDANFSeRL.RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);

@@ -2,7 +2,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
   Left = 349
   Top = 55
   Caption = 'frlDANFSeRLRetrato'
-  ClientHeight = 741
+  ClientHeight = 749
   ClientWidth = 827
   PixelsPerInch = 96
   TextHeight = 13

@@ -97,6 +97,9 @@ type
 
 implementation
 
+uses
+  math;
+
 { TACBrLibResposta }
 
 constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
@@ -137,6 +140,7 @@ Var
   PI: PPropInfo;
   PT: PTypeInfo;
   ParentNode, Node: TDomNode;
+  FloatValue: Extended;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
 
@@ -160,10 +164,16 @@ begin
         tkAString:
           Node := xDoc.CreateTextNode(Trim(GetStrProp(Target, PI)));
         tkFloat:
-          if (PT = TypeInfo(TDateTime)) then
-            Node := xDoc.CreateTextNode(DateTimeToStr(GetFloatProp(Target, PI)))
-          else
-            Node := xDoc.CreateTextNode(FloatToStr(GetFloatProp(Target, PI)));
+          begin
+            FloatValue := GetFloatProp(Target, PI);
+            if(PT = TypeInfo(TDateTime))then
+            begin
+              if not IsZero(FloatValue) then
+                Node := xDoc.CreateTextNode(DateTimeToStr(FloatValue));
+            end
+            else
+              Node := xDoc.CreateTextNode(FloatToStr(FloatValue));
+          end;
       end;
       ParentNode.AppendChild(Node);
       RootNode.AppendChild(ParentNode);
@@ -205,6 +215,7 @@ var
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
+  FloatValue: Extended;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
 
@@ -260,10 +271,14 @@ begin
           AIni.WriteString(ASessao, PI^.Name, Trim(GetStrProp(Target, PI)));
         tkFloat:
           begin
+            FloatValue := GetFloatProp(Target, PI);
             if (PT = TypeInfo(TDateTime)) then
-              AIni.WriteDateTime(ASessao, PI^.Name, GetFloatProp(Target, PI))
+            begin
+              if not IsZero(FloatValue) then
+                AIni.WriteDateTime(ASessao, PI^.Name, FloatValue);
+            end
             else
-              AIni.WriteFloat(ASessao, PI^.Name, GetFloatProp(Target, PI));
+              AIni.WriteFloat(ASessao, PI^.Name, FloatValue);
           end;
       end;
     end;
@@ -322,7 +337,8 @@ begin
           if (PT = TypeInfo(TDateTime)) then
           begin
             Aux := GetFloatProp(Target, PI);
-            JSONRoot.Add(PI^.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', TDateTime(Aux)));
+            if not IsZero(Aux) then
+              JSONRoot.Add(PI^.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', TDateTime(Aux)));
           end
           else
             JSONRoot.Add(PI^.Name, GetFloatProp(Target, PI));

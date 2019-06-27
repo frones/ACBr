@@ -317,7 +317,7 @@ begin
   inherited;
 
   PrintBand := (RLNFe.PageNumber = 1);
-  RLBarcode1.Caption := fpNFe.InfNFe.Id;
+  RLBarcode1.Caption := OnlyNumber(fpNFe.InfNFe.Id);
   rllChave.Caption := FormatarChaveAcesso(fpNFe.InfNFe.Id);
 
   // Normal **************************************************************

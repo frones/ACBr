@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2019
+-- ACBrDFeConfiguracoes --
+[+] Implementado a classe que contem as propriedades de Download utilizadas
+    pelo método DistribuicaoDFe, acrescentado a função GetPathDownloadEvento.
+   Por: Italo Jurisato Junior
+
 24/06/2019
 -- ACBrDFeXsLibXml2 --
 [-] Corrigido erro ao assinar lote com RPS contendo assinatura.

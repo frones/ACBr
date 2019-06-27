@@ -3719,19 +3719,20 @@ begin
 
   case AItem.schema of
     schresEvento:
-      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.resEvento.tpEvento,
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownloadEvento(AItem.resEvento.tpEvento,
+                                                          AItem.resDFe.xNome,
                                                           AItem.resEvento.CNPJCPF,
                                                           Data);
 
     schprocEventoNFe:
-      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resDFe.xNome,
                                                           AItem.procEvento.CNPJ,
                                                           Data);
 
     schresNFe,
     schprocNFe:
-      Result := FPConfiguracoesNFe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
-                                                        AItem.resDFe.xNome,
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                         AItem.resDFe.CNPJCPF,
                                                         Data);
   end;

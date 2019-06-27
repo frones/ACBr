@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2019
+-- ACBrMDFe / ACBrMDFeWebServices --
+[+] Implementado o modo de envio sincrono do MDF-e.
+    function Enviar(ALote: integer; Imprimir: Boolean = True;
+      ASincrono:  Boolean = False): Boolean;
+    a função enviar agora tem um parametro a mais que define o modo de envio.
+   Por: Italo Jurisato Junior
+-- ACBrMDFeConfiguracoes --
+[*] Removido a classe que contem as propriedades de Download utilizadas
+    pelo método DistribuicaoDFe, pois agora se encontra na unit ACBrDFeConfiguracoes.
+   Por: Italo Jurisato Junior
+
 26/06/2019
 -- Diversos --
 [*] Ajustes visando a versão 3.00a

@@ -1824,7 +1824,8 @@ begin
 
   case AItem.schema of
     schprocEventoBPe:
-      Result := FPConfiguracoesBPe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+      Result := FPConfiguracoesBPe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resDFe.xNome,
                                                           AItem.resDFe.CNPJCPF,
                                                           Data);
 

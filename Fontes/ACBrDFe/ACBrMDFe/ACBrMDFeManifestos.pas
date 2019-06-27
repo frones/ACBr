@@ -765,7 +765,9 @@ begin
         Inc(I);
       end;
 
-      Ide.dhIniViagem := StringToDateTime(INIRec.ReadString('ide', 'dhIniViagem', '0'));
+      Ide.dhIniViagem   := StringToDateTime(INIRec.ReadString('ide', 'dhIniViagem', '0'));
+      Ide.indCanalVerde := StrToTIndicador(Ok, INIRec.ReadString('ide', 'indCanalVerde', '0'));
+      Ide.indCarregaPosterior := StrToTIndicador(Ok, INIRec.ReadString('ide', 'indCarregaPosterior', '0'));
 
       Emit.CNPJCPF := INIRec.ReadString('emit', 'CNPJCPF', INIRec.ReadString('emit', 'CNPJ', ''));
       Emit.IE      := INIRec.ReadString('emit', 'IE', '');

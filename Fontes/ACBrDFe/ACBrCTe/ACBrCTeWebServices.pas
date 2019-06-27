@@ -3277,7 +3277,8 @@ begin
 
   case AItem.schema of
     schprocEventoCTe:
-      Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+      Result := FPConfiguracoesCTe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resDFe.xNome,
                                                           AItem.procEvento.CNPJ,
                                                           Data);
 

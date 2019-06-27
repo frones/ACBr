@@ -41,7 +41,7 @@ unit ACBrMDFeWebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, synacode,
   ACBrDFe, ACBrDFeWebService,
   pmdfeMDFe,
   pcnRetConsReciDFe, pcnAuxiliar, pcnConversao, pmdfeConversaoMDFe,
@@ -127,7 +127,10 @@ type
     FdhRecbto: TDateTime;
     FTMed: Integer;
     FVersaoDF: TVersaoMDFe;
+    FSincrono: Boolean;
+    FMsgUnZip: String;
 
+    FMDFeRetornoSincrono: TRetConsSitMDFe;
     FMDFeRetorno: TretEnvMDFe;
 
     function GetLote: String;
@@ -157,6 +160,8 @@ type
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
+    property Sincrono: Boolean read FSincrono write FSincrono;
+    property MsgUnZip: String read FMsgUnZip write FMsgUnZip;
   end;
 
   { TMDFeRetRecepcao }
@@ -469,8 +474,8 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: Integer): Boolean; overload;
-    function Envia(const ALote: String): Boolean; overload;
+    function Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean; overload;
+    function Envia(const ALote: String; ASincrono:  Boolean = False): Boolean; overload;
     function ConsultaMDFeNaoEnc(const ACNPJCPF: String): Boolean;
 
     property ACBrMDFe: TACBrDFe read FACBrMDFe write FACBrMDFe;
@@ -489,7 +494,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrMDFe,
+  ACBrUtil, ACBrCompress, ACBrMDFe,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
   pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc, pmdfeMDFeW;
 
@@ -679,6 +684,7 @@ end;
 
 destructor TMDFeRecepcao.Destroy;
 begin
+  FMDFeRetornoSincrono.Free;
   FMDFeRetorno.Free;
 
   inherited Destroy;
@@ -707,9 +713,13 @@ begin
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
 
+  if Assigned(FMDFeRetornoSincrono) then
+    FMDFeRetornoSincrono.Free;
+
   if Assigned(FMDFeRetorno) then
     FMDFeRetorno.Free;
 
+  FMDFeRetornoSincrono := TRetConsSitMDFe.Create;
   FMDFeRetorno := TretEnvMDFe.Create;
 end;
 
@@ -740,8 +750,6 @@ var
   Modelo: String;
   VerServ: Double;
 begin
-  FPLayout := LayMDFeRecepcao;
-
   if FManifestos.Count > 0 then    // Tem MDFe ? Se SIM, use as informações do XML
   begin
     FcUF := FManifestos.Items[0].MDFe.Ide.cUF;
@@ -753,6 +761,11 @@ begin
   begin                              // Se não tem MDFe, use as configurações do componente
     FcUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
   end;
+
+  if Sincrono then
+    FPLayout := LayMDFeRecepcaoSinc
+  else
+    FPLayout := LayMDFeRecepcao;
 
   VerServ := VersaoMDFeToDbl(FVersaoDF);
   Modelo := 'MDFe';
@@ -774,8 +787,16 @@ end;
 
 procedure TMDFeRecepcao.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'MDFeRecepcao';
-  FPSoapAction := FPServico + '/mdfeRecepcaoLote';
+  if Sincrono then
+  begin
+    FPServico := GetUrlWsd + 'MDFeRecepcaoSinc';
+    FPSoapAction := FPServico + '/mdfeRecepcao';
+  end
+  else
+  begin
+    FPServico := GetUrlWsd + 'MDFeRecepcao';
+    FPSoapAction := FPServico + '/mdfeRecepcaoLote';
+  end;
 end;
 
 procedure TMDFeRecepcao.DefinirDadosMsg;
@@ -783,14 +804,34 @@ var
   I: Integer;
   vMDFe: String;
 begin
-  vMDFe := '';
-  for I := 0 to FManifestos.Count - 1 do
-    vMDFe := vMDFe + '<MDFe' + RetornarConteudoEntre(
-      FManifestos.Items[I].XMLAssinado, '<MDFe', '</MDFe>') + '</MDFe>';
+  if Sincrono then
+  begin
+    // No envio só podemos ter apena UM MDF-e, pois o seu processamento é síncrono
+    if FManifestos.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de MDF-e transmitidos (máximo de 1 MDF-e)' +
+             ' excedido. Quantidade atual: ' + IntToStr(FManifestos.Count)));
 
-  FPDadosMsg := '<enviMDFe xmlns="' + ACBRMDFE_NAMESPACE + '" versao="' +
-    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
-    vMDFe + '</enviMDFe>';
+    if FManifestos.Count > 0 then
+      FPDadosMsg := '<MDFe' +
+        RetornarConteudoEntre(FManifestos.Items[0].XMLAssinado, '<MDFe', '</MDFe>') +
+        '</MDFe>';
+
+    FMsgUnZip := FPDadosMsg;
+
+    FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
+  end
+  else
+  begin
+    vMDFe := '';
+
+    for I := 0 to FManifestos.Count - 1 do
+      vMDFe := vMDFe + '<MDFe' + RetornarConteudoEntre(
+        FManifestos.Items[I].XMLAssinado, '<MDFe', '</MDFe>') + '</MDFe>';
+
+    FPDadosMsg := '<enviMDFe xmlns="' + ACBRMDFE_NAMESPACE + '" versao="' +
+      FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
+      vMDFe + '</enviMDFe>';
+  end;
 
   // Lote tem mais de 1024kb ? //
   if Length(FPDadosMsg) > (1024 * 1024) then
@@ -801,52 +842,197 @@ begin
 end;
 
 function TMDFeRecepcao.TratarResposta: Boolean;
+var
+  I: integer;
+  chMDFe, AXML, NomeXMLSalvo: String;
+  AProcMDFe: TProcMDFe;
+  SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoLoteResult');
+  FPRetWS := SeparaDadosArray(['mdfeRecepcaoLoteResult',
+                               'mdfeRecepcaoResult'],FPRetornoWS );
 
-  FMDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
-  FMDFeRetorno.LerXml;
+  if Sincrono then
+  begin
+    if pos('retMDFe', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retMDFe', 'retConsSitMDFe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else
+      AXML := FPRetWS;
 
-  Fversao := FMDFeRetorno.versao;
-  FTpAmb := FMDFeRetorno.TpAmb;
-  FverAplic := FMDFeRetorno.verAplic;
-  FcStat := FMDFeRetorno.cStat;
-  FxMotivo := FMDFeRetorno.xMotivo;
-  FdhRecbto := FMDFeRetorno.infRec.dhRecbto;
-  FTMed := FMDFeRetorno.infRec.tMed;
-  FcUF := FMDFeRetorno.cUF;
-  FPMsg := FMDFeRetorno.xMotivo;
-  FRecibo := FMDFeRetorno.infRec.nRec;
+    FMDFeRetornoSincrono.Leitor.Arquivo := ParseText(AXML);
+    FMDFeRetornoSincrono.LerXml;
 
-  Result := (FMDFeRetorno.CStat = 103);
+    Fversao := FMDFeRetornoSincrono.versao;
+    FTpAmb := FMDFeRetornoSincrono.TpAmb;
+    FverAplic := FMDFeRetornoSincrono.verAplic;
+
+    FcUF := FMDFeRetornoSincrono.cUF;
+    chMDFe := FMDFeRetornoSincrono.ProtMDFe.chMDFe;
+
+    if (FMDFeRetornoSincrono.protMDFe.cStat > 0) then
+      FcStat := FMDFeRetornoSincrono.protMDFe.cStat
+    else
+      FcStat := FMDFeRetornoSincrono.cStat;
+
+    if (FMDFeRetornoSincrono.protMDFe.xMotivo <> '') then
+    begin
+      FPMsg := FMDFeRetornoSincrono.protMDFe.xMotivo;
+      FxMotivo := FMDFeRetornoSincrono.protMDFe.xMotivo;
+    end
+    else
+    begin
+      FPMsg := FMDFeRetornoSincrono.xMotivo;
+      FxMotivo := FMDFeRetornoSincrono.xMotivo;
+    end;
+
+    // Verificar se a MDF-e foi autorizado com sucesso
+    Result := (FMDFeRetornoSincrono.cStat = 104) and
+      (TACBrMDFe(FPDFeOwner).CstatProcessado(FMDFeRetornoSincrono.protMDFe.cStat));
+
+    if Result then
+    begin
+      for I := 0 to TACBrMDFe(FPDFeOwner).Manifestos.Count - 1 do
+      begin
+        with TACBrMDFe(FPDFeOwner).Manifestos.Items[I] do
+        begin
+          if OnlyNumber(chMDFe) = NumID then
+          begin
+            if (FPConfiguracoesMDFe.Geral.ValidarDigest) and
+               (FMDFeRetornoSincrono.protMDFe.digVal <> '') and
+               (MDFe.signature.DigestValue <> FMDFeRetornoSincrono.protMDFe.digVal) then
+            begin
+              raise EACBrMDFeException.Create('DigestValue do documento ' + NumID + ' não confere.');
+            end;
+
+            MDFe.procMDFe.cStat := FMDFeRetornoSincrono.protMDFe.cStat;
+            MDFe.procMDFe.tpAmb := FMDFeRetornoSincrono.tpAmb;
+            MDFe.procMDFe.verAplic := FMDFeRetornoSincrono.verAplic;
+            MDFe.procMDFe.chMDFe := FMDFeRetornoSincrono.protMDFe.chMDFe;
+            MDFe.procMDFe.dhRecbto := FMDFeRetornoSincrono.protMDFe.dhRecbto;
+            MDFe.procMDFe.nProt := FMDFeRetornoSincrono.protMDFe.nProt;
+            MDFe.procMDFe.digVal := FMDFeRetornoSincrono.protMDFe.digVal;
+            MDFe.procMDFe.xMotivo := FMDFeRetornoSincrono.protMDFe.xMotivo;
+
+            AProcMDFe := TProcMDFe.Create;
+            try
+              // Processando em UTF8, para poder gravar arquivo corretamente //
+              AProcMDFe.XML_MDFe := RemoverDeclaracaoXML(XMLAssinado);
+              AProcMDFe.XML_Prot := FMDFeRetornoSincrono.XMLprotMDFe;
+              AProcMDFe.Versao := FPVersaoServico;
+              AjustarOpcoes( AProcMDFe.Gerador.Opcoes );
+              AProcMDFe.GerarXML;
+
+              XMLOriginal := AProcMDFe.Gerador.ArquivoFormatoXML;
+
+              if FPConfiguracoesMDFe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesMDFe.Arquivos.SalvarApenasMDFeProcessados) or
+                             Processado;
+
+                // Salva o XML do MDF-e assinado e protocolado
+                if SalvarXML then
+                begin
+                  NomeXMLSalvo := '';
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal ); // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
+
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML; // Salva na pasta baseado nas configurações do PathMDFe
+                end;
+              end ;
+            finally
+              AProcMDFe.Free;
+            end;
+
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end
+  else
+  begin
+    FMDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    FMDFeRetorno.LerXml;
+
+    Fversao := FMDFeRetorno.versao;
+    FTpAmb := FMDFeRetorno.TpAmb;
+    FverAplic := FMDFeRetorno.verAplic;
+    FcStat := FMDFeRetorno.cStat;
+    FxMotivo := FMDFeRetorno.xMotivo;
+    FdhRecbto := FMDFeRetorno.infRec.dhRecbto;
+    FTMed := FMDFeRetorno.infRec.tMed;
+    FcUF := FMDFeRetorno.cUF;
+    FPMsg := FMDFeRetorno.xMotivo;
+    FRecibo := FMDFeRetorno.infRec.nRec;
+
+    Result := (FMDFeRetorno.CStat = 103);
+  end;
 end;
 
 function TMDFeRecepcao.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+  {(*}
+  if Sincrono then
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
                            'Ambiente: %s ' + LineBreak +
                            'Versão Aplicativo: %s ' + LineBreak +
                            'Status Código: %s ' + LineBreak +
                            'Status Descrição: %s ' + LineBreak +
                            'UF: %s ' + sLineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Tempo Médio: %s ' + LineBreak),
-                     [FMDFeRetorno.versao,
-                      TpAmbToStr(FMDFeRetorno.TpAmb),
-                      FMDFeRetorno.verAplic,
-                      IntToStr(FMDFeRetorno.cStat),
-                      FMDFeRetorno.xMotivo,
-                      CodigoParaUF(FMDFeRetorno.cUF),
-                      FMDFeRetorno.infRec.nRec,
-                      IfThen(FMDFeRetorno.InfRec.dhRecbto = 0, '',
-                             FormatDateTimeBr(FMDFeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FMDFeRetorno.InfRec.TMed)]);
+                           'dhRecbto: %s ' + sLineBreak +
+                           'chMDFe: %s ' + LineBreak),
+                     [FMDFeRetornoSincrono.versao,
+                      TpAmbToStr(FMDFeRetornoSincrono.TpAmb),
+                      FMDFeRetornoSincrono.verAplic,
+                      IntToStr(FMDFeRetornoSincrono.protMDFe.cStat),
+                      FMDFeRetornoSincrono.protMDFe.xMotivo,
+                      CodigoParaUF(FMDFeRetornoSincrono.cUF),
+                      FormatDateTimeBr(FMDFeRetornoSincrono.protMDFe.dhRecbto),
+                      FMDFeRetornoSincrono.chMDFe])
+  else
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                             'Ambiente: %s ' + LineBreak +
+                             'Versão Aplicativo: %s ' + LineBreak +
+                             'Status Código: %s ' + LineBreak +
+                             'Status Descrição: %s ' + LineBreak +
+                             'UF: %s ' + sLineBreak +
+                             'Recibo: %s ' + LineBreak +
+                             'Recebimento: %s ' + LineBreak +
+                             'Tempo Médio: %s ' + LineBreak),
+                       [FMDFeRetorno.versao,
+                        TpAmbToStr(FMDFeRetorno.TpAmb),
+                        FMDFeRetorno.verAplic,
+                        IntToStr(FMDFeRetorno.cStat),
+                        FMDFeRetorno.xMotivo,
+                        CodigoParaUF(FMDFeRetorno.cUF),
+                        FMDFeRetorno.infRec.nRec,
+                        IfThen(FMDFeRetorno.InfRec.dhRecbto = 0, '',
+                               FormatDateTimeBr(FMDFeRetorno.InfRec.dhRecbto)),
+                        IntToStr(FMDFeRetorno.InfRec.TMed)]);
+  {*)}
 end;
 
 function TMDFeRecepcao.GerarPrefixoArquivo: String;
 begin
-  Result := Lote;
+  if Sincrono then  // Esta procesando nome do Retorno Sincrono ?
+  begin
+    if FRecibo <> '' then
+    begin
+      Result := Recibo;
+      FPArqResp := 'pro-rec';
+    end
+    else
+    begin
+      Result := Lote;
+      FPArqResp := 'pro-lot';
+    end;
+  end
+  else
+    Result := Lote;
 end;
 
 { TMDFeRetRecepcao }
@@ -2439,7 +2625,8 @@ begin
 
   case AItem.schema of
     schprocEventoMDFe:
-      Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+      Result := FPConfiguracoesMDFe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
+                                                           AItem.resDFe.xNome,
                                                            AItem.procEvento.CNPJ,
                                                            Data);
 
@@ -2576,24 +2763,28 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: Integer): Boolean;
+function TWebServices.Envia(ALote: Integer; ASincrono:  Boolean = False): Boolean;
 begin
-  Result := Envia(IntToStr(ALote));
+  Result := Envia(IntToStr(ALote), ASincrono);
 end;
 
-function TWebServices.Envia(const ALote: String): Boolean;
+function TWebServices.Envia(const ALote: String; ASincrono:  Boolean = False): Boolean;
 begin
   FEnviar.Clear;
   FRetorno.Clear;
 
   FEnviar.Lote := ALote;
+  FEnviar.Sincrono := ASincrono;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
 
-  FRetorno.Recibo := FEnviar.Recibo;
-  if not FRetorno.Executar then
-    FRetorno.GerarException( FRetorno.Msg );
+  if not ASincrono or ((FEnviar.Recibo <> '') and (FEnviar.cStat = 103)) then
+  begin
+    FRetorno.Recibo := FEnviar.Recibo;
+    if not FRetorno.Executar then
+      FRetorno.GerarException( FRetorno.Msg );
+  end;
 
   Result := True;
 end;

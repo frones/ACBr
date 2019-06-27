@@ -713,9 +713,7 @@ begin
      for i := 0 to Conhecimentos.Count-1 do
      begin
        if Conhecimentos.Items[i].Confirmado and Imprimir then
-       begin
          Conhecimentos.Items[i].Imprimir;
-       end;
      end;
   end;
 end;

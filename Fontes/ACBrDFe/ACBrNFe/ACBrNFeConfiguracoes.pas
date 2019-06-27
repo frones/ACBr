@@ -84,20 +84,6 @@ type
     property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938 default fgtNunca;
   end;
 
-  { TDownloadConfNFe }
-
-  TDownloadConfNFe = class(TPersistent)
-  private
-    FPathDownload: String;
-    FSepararPorNome: Boolean;
-  public
-    Constructor Create;
-    procedure Assign(Source: TPersistent); override;
-  published
-    property PathDownload: String read FPathDownload write FPathDownload;
-    property SepararPorNome: Boolean read FSepararPorNome write FSepararPorNome default False;
-  end;
-
   { TArquivosConfNFe }
 
   TArquivosConfNFe = class(TArquivosConf)
@@ -110,7 +96,6 @@ type
     FPathInu: String;
     FPathEvento: String;
     FPathArquivoMunicipios: String;
-    FDownloadNFe: TDownloadConfNFe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
@@ -121,8 +106,6 @@ type
     function GetPathInu(const CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownloadEvento(tipoEvento: TpcnTpEvento; const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -136,7 +119,6 @@ type
     property PathInu: String read FPathInu write FPathInu;
     property PathEvento: String read FPathEvento write FPathEvento;
     property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
-    property DownloadNFe: TDownloadConfNFe read FDownloadNFe write FDownloadNFe;
   end;
 
   { TConfiguracoesNFe }
@@ -166,26 +148,6 @@ implementation
 uses
   ACBrUtil, ACBrNFe,
   DateUtils;
-
-{ TDownloadConfNFe }
-
-constructor TDownloadConfNFe.Create;
-begin
-  inherited Create;
-  FPathDownload := '';
-  FSepararPorNome := False;
-end;
-
-procedure TDownloadConfNFe.Assign(Source: TPersistent);
-begin
-  if Source is TDownloadConfNFe then
-  begin
-    FPathDownload := TDownloadConfNFe(Source).PathDownload;
-    FSepararPorNome := TDownloadConfNFe(Source).SepararPorNome;
-  end
-  else
-    inherited Assign(Source);
-end;
 
 { TConfiguracoesNFe }
 
@@ -318,7 +280,6 @@ constructor TArquivosConfNFe.Create(AOwner: TConfiguracoes);
 begin
   inherited Create(AOwner);
 
-  FDownloadNFe := TDownloadConfNFe.Create;
   FEmissaoPathNFe := False;
   FSalvarEvento := False;
   FSalvarApenasNFeProcessadas := False;
@@ -331,7 +292,6 @@ end;
 
 destructor TArquivosConfNFe.Destroy;
 begin
-  FDownloadNFe.Free;
 
   inherited;
 end;
@@ -348,7 +308,6 @@ begin
   PathInu                    := DeArquivosConfNFe.PathInu;
   PathEvento                 := DeArquivosConfNFe.PathEvento;
   PathArquivoMunicipios      := DeArquivosConfNFe.PathArquivoMunicipios;
-  FDownloadNFe.Assign(DeArquivosConfNFe.DownloadNFe);
 end;
 
 procedure TArquivosConfNFe.GravarIni(const AIni: TCustomIniFile);
@@ -363,8 +322,6 @@ begin
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
   AIni.WriteString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
-  AIni.WriteString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadNFe.PathDownload);
-  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
 end;
 
 procedure TArquivosConfNFe.LerIni(const AIni: TCustomIniFile);
@@ -379,50 +336,6 @@ begin
   PathInu := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathInu', PathInu);
   PathEvento := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathEvento', PathEvento);
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
-  DownloadNFe.PathDownload := AIni.ReadString(fpConfiguracoes.SessaoIni, 'Download.PathDownload', DownloadNFe.PathDownload);
-  DownloadNFe.SepararPorNome := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'Download.SepararPorNome', DownloadNFe.SepararPorNome);
-end;
-
-function TArquivosConfNFe.GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
-var
-  rPathDown: String;
-begin
-  rPathDown := '';
-  if EstaVazio(FDownloadNFe.PathDownload) then
-     FDownloadNFe.PathDownload := PathSalvar;
-
-  if (FDownloadNFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadNFe.PathDownload) + OnlyAlphaNum(xNome)
-  else
-     rPathDown := FDownloadNFe.PathDownload;
-
-  Result := GetPath(rPathDown, 'Down', CNPJ, Data);
-end;
-
-function TArquivosConfNFe.GetPathDownloadEvento(tipoEvento: TpcnTpEvento;
-  const xNome, CNPJ: String; Data: TDateTime): String;
-var
-  rPathDown: String;
-begin
-  rPathDown := '';
-
-  if EstaVazio(FDownloadNFe.PathDownload) then
-     FDownloadNFe.PathDownload := PathSalvar;
-
-  if (FDownloadNFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadNFe.PathDownload) + OnlyAlphaNum(xNome)
-  else
-     rPathDown := FDownloadNFe.PathDownload;
-
-  rPathDown := GetPath(rPathDown, 'Evento', CNPJ, Data);
-
-  if AdicionarLiteral then
-    rPathDown := PathWithDelim(rPathDown) + TpEventoToDescStr(tipoEvento);
-
-  if not DirectoryExists(rPathDown) then
-    ForceDirectories(rPathDown);
-
-  Result := rPathDown;
 end;
 
 function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;

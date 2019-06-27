@@ -133,7 +133,14 @@ begin
       FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
       FcUF      := leitor.rCampo(tcInt, 'cUF');
 
-      if FcStat in [100, 132] then
+      { Caso o valor de FcStat for um dos relacionados abaixo será retornado
+        o grupo protMDFe com as informações sobre a autorização do MDF-e e uma
+        ocorrecia do grupo procEventoMDFe para cada evento vinculado ao MDF-e.
+        100 = Autorizado
+        101 = Cancelado
+        132 = Encerrado
+      }
+      if FcStat in [100, 101, 132] then
       begin
         if (Leitor.rExtrai(1, 'protMDFe') <> '') then
         begin

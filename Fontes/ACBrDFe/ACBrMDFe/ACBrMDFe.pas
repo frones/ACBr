@@ -86,8 +86,10 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamMDFe: TStream = nil; const NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
-    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(ALote: integer; Imprimir: Boolean = True;
+      ASincrono:  Boolean = False): Boolean; overload;
+    function Enviar(const ALote: String; Imprimir: Boolean = True;
+      ASincrono:  Boolean = False): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -559,12 +561,14 @@ begin
   Result := WebServices.ConsultaMDFeNaoEnc(ACNPJCPF);
 end;
 
-function TACBrMDFe.Enviar(ALote: Integer; Imprimir:Boolean = True): Boolean;
+function TACBrMDFe.Enviar(ALote: Integer; Imprimir:Boolean = True;
+      ASincrono:  Boolean = False): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote), Imprimir);
+  Result := Enviar(IntToStr(ALote), Imprimir, ASincrono);
 end;
 
-function TACBrMDFe.Enviar(const ALote: String; Imprimir:Boolean = True): Boolean;
+function TACBrMDFe.Enviar(const ALote: String; Imprimir:Boolean = True;
+      ASincrono:  Boolean = False): Boolean;
 var
  i: Integer;
 begin
@@ -581,16 +585,14 @@ begin
   Manifestos.Assinar;
   Manifestos.Validar;
 
-  Result := WebServices.Envia(ALote);
+  Result := WebServices.Envia(ALote, ASincrono);
 
   if DAMDFE <> nil then
   begin
     for i := 0 to Manifestos.Count - 1 do
     begin
       if Manifestos.Items[i].Confirmado and Imprimir then
-      begin
         Manifestos.Items[i].Imprimir;
-      end;
     end;
   end;
 end;

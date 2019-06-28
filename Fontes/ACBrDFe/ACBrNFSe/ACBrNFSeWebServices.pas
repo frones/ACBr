@@ -4631,15 +4631,21 @@ begin
 
       proSigep:
         begin
-          Gerador.Prefixo := Prefixo4;
-          Gerador.wGrupoNFSe('credenciais');
-          Gerador.wCampoNFSe(tcStr, '#01', 'usuario     ', 01, 15, 1, GerarDadosMsg.UserWeb);
-          Gerador.wCampoNFSe(tcStr, '#02', 'senha       ', 01, 05, 1, GerarDadosMsg.SenhaWeb);
-          Gerador.wCampoNFSe(tcStr, '#03', 'chavePrivada', 01, 01, 1, GerarDadosMsg.ChaveAcessoPrefeitura);
-          Gerador.wGrupoNFSe('/credenciais');
+          Gerador := TGerador.Create;
+          try
+            Gerador.ArquivoFormatoXML := '';
+            Gerador.Prefixo := Prefixo4;
+            Gerador.wGrupoNFSe('credenciais');
+            Gerador.wCampoNFSe(tcStr, '#01', 'usuario     ', 01, 15, 1, GerarDadosMsg.UserWeb);
+            Gerador.wCampoNFSe(tcStr, '#02', 'senha       ', 01, 05, 1, GerarDadosMsg.SenhaWeb);
+            Gerador.wCampoNFSe(tcStr, '#03', 'chavePrivada', 01, 01, 1, GerarDadosMsg.ChaveAcessoPrefeitura);
+            Gerador.wGrupoNFSe('/credenciais');
 
-          FPDadosMsg := FTagI + Gerador.ArquivoFormatoXML +
+            FPDadosMsg := FTagI + Gerador.ArquivoFormatoXML +
                                 GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
+          finally
+            Gerador.Free;
+          end;
         end;
     else
       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;

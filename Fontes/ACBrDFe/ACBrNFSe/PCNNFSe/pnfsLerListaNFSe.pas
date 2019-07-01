@@ -752,6 +752,11 @@ begin
         ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
         ListaNFSe.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+        if FProvedor = proPronimv2 then
+          if (leitor.rExtrai(3, 'IdentificacaoRps') <> '') then
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+
         inc(i);
       end;
 

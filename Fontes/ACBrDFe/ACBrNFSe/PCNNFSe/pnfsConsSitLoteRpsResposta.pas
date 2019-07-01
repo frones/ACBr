@@ -400,44 +400,67 @@ var
 begin
   try
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
+    situacao := Leitor.rCampo(tcStr, 'sit');
+    InfSit.FSituacao   := situacao;
 
-    i := 0;
-    while Leitor.rExtrai(1, 'NFSe', '', i + 1) <> '' do
+    if InfSit.FSituacao = '217' then // 217 = Fila para processamento
+      InfSit.FSituacao := '1'; // 1 = Aguardando processamento
+
+    if InfSit.FSituacao = '100' then
     begin
-      chave := Leitor.rCampo(tcStr, 'chvAcessoNFSe');
-      situacao := Leitor.rCampo(tcStr, 'sit');
-      InfSit.FSituacao   := situacao;
+      InfSit.FSituacao := '4'; // 4 = Processado com Sucesso
 
-      if InfSit.FSituacao = '100' then
-        InfSit.FSituacao := '4' // 4 = Processado com Sucesso
-      else if InfSit.FSituacao = '217' then // 217 = Fila para processamento
-        InfSit.FSituacao := '1' // 1 = Aguardando processamento
-      else if InfSit.FSituacao = '200' then
+      i := 0;
+      while Leitor.rExtrai(1, 'NFSe', '', i + 1) <> '' do
       begin
-        InfSit.FSituacao := '3'; // 3 = Processado com Erro
+        chave := Leitor.rCampo(tcStr, 'chvAcessoNFSe');
+
         j := 0;
         if (leitor.rExtrai(1, 'motivos') <> '') then
         begin
           while Leitor.rExtrai(2, 'mot', '', j + 1) <> '' do
           begin
             sMotDes := Leitor.rCampo(tcStr, 'mot');
+
             if Pos('Error', sMotDes) > 0 then
               sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
             else
               sMotCod := '';
+
             InfSit.FMsgRetorno.Add;
-            InfSit.FMsgRetorno[j].FCodigo   := sMotCod;
-            InfSit.FMsgRetorno[j].FMensagem := sMotDes;
-            InfSit.FMsgRetorno[j].FCorrecao := '';
+            InfSit.FMsgRetorno[j].FCodigo        := sMotCod;
+            InfSit.FMsgRetorno[j].FMensagem      := sMotDes;
+            InfSit.FMsgRetorno[j].FCorrecao      := '';
             InfSit.FMsgRetorno[j].FchvAcessoNFSe := chave;
-            InfSit.FMsgRetorno[j].Fsit := situacao;
+            InfSit.FMsgRetorno[j].Fsit           := situacao;
 
             inc(j);
           end;
         end;
+
+        inc(i);
       end;
-      inc(i);
     end;
+
+    if InfSit.FSituacao = '200' then
+    begin
+      InfSit.FSituacao := '3'; // 3 = Processado com Erro
+      sMotDes := Leitor.rCampo(tcStr, 'mot');
+
+      if Pos('Error', sMotDes) > 0 then
+        sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
+      else
+        sMotCod := '';
+
+      InfSit.FMsgRetorno.Add;
+      InfSit.FMsgRetorno[0].FCodigo        := sMotCod;
+      InfSit.FMsgRetorno[0].FMensagem      := sMotDes;
+      InfSit.FMsgRetorno[0].FCorrecao      := '';
+      InfSit.FMsgRetorno[0].FchvAcessoNFSe := '';
+      InfSit.FMsgRetorno[0].Fsit           := situacao;
+    end;
+
+
 
     Result := True;
   except

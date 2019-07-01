@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2019
+-- pmdfeMDFeR --
+[*] Alterado a forma de leitura das tags: indCanalVerde e indCarregaPosterior.
+   Por: Italo Jurisato Junior
+
 27/06/2019
 -- ACBrMDFe / ACBrMDFeWebServices --
 [+] Implementado o modo de envio sincrono do MDF-e.

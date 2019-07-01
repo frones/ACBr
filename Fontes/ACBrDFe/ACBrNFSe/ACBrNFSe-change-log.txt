@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/07/2019
+-- ACBrNFSeWebServices --
+[*] Possível correção ao método de consulta ao lote - provedor SP.
+   Por: Italo Jurisato Junior
 -- pnfsConsSitLoteRpsResposta --
 [*] Alteração na leitura do retorno - provedor Infisc.
    Por: Marcio st / Italo Jurisato Junior

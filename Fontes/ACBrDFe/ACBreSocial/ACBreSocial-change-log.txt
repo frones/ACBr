@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2019
+-- Diversos --
+[*] Acrescentado o enumerador prpNenhum ao tipo: tpPlanRP, pois a tag é opcional
+    e precisamos de um valor para informar que a mesma não deve ser gerada.
+   Por: Italo Jurisato Junior
+
 26/06/2019
 -- Diversos --
 [*] Alterações visando adequar a geração dos XML em função das alterações realizadas

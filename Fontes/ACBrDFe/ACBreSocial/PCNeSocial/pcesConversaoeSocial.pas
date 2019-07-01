@@ -434,7 +434,7 @@ type
 
   tpInclContr             = (icLocaisSemFiliais, icEstudoDeMercado, icContratacaoSuperior3Meses);
 
-  tpPlanRP                = (prpPlanoPrevidenciarioOuUnico, prpPlanoFinanceiro);
+  tpPlanRP                = (prpNenhum, prpPlanoPrevidenciarioOuUnico, prpPlanoFinanceiro);
 
   tpMtvAlt                = (maPromocao, maReadaptacao, maAproveitamento, maOutros);
 

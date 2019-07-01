@@ -9314,8 +9314,8 @@ begin
     TConfiguracoesNFe(Configuracoes).Arquivos.PathNFe        := edtPathNFe.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
-    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadNFe.PathDownload:= edtPathDownload.Text;
-    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadNFe.SepararPorNome:= cbxSepararPorNome.Checked;
+    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesNFe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.SalvarApenasNFeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesNFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9333,8 +9333,8 @@ begin
     TConfiguracoesCTe(Configuracoes).Arquivos.PathCTe        := edtPathNFe.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathInu        := edtPathInu.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
-    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadCTe.PathDownload:= edtPathDownload.Text;
-    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadCTe.SepararPorNome:= cbxSepararPorNome.Checked;
+    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesCTe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.SalvarApenasCTeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9348,8 +9348,8 @@ begin
     TConfiguracoesMDFe(Configuracoes).Arquivos.EmissaoPathMDFe := cbxEmissaoPathNFe.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathMDFe        := edtPathNFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathEvento      := edtPathEvento.Text;
-    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadMDFe.PathDownload:= edtPathDownload.Text;
-    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadMDFe.SepararPorNome:= cbxSepararPorNome.Checked;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesMDFe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarApenasMDFeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
@@ -9363,8 +9363,8 @@ begin
     TConfiguracoesBPe(Configuracoes).Arquivos.EmissaoPathBPe := cbxEmissaoPathNFe.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathBPe        := edtPathNFe.Text;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathEvento     := edtPathEvento.Text;
-    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadBPe.PathDownload:= edtPathDownload.Text;
-    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadBPe.SepararPorNome:= cbxSepararPorNome.Checked;
+    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadDFe.PathDownload:= edtPathDownload.Text;
+    TConfiguracoesBPe(Configuracoes).Arquivos.DownloadDFe.SepararPorNome:= cbxSepararPorNome.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.SalvarApenasBPeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;

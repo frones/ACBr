@@ -219,13 +219,13 @@ function StrToCondicao(out ok: boolean; const s: String): TnfseCondicaoPagamento
 function CondicaoToStrPublica(const t: TnfseCondicaoPagamento): String;
 function StrPublicaToCondicao(out ok: boolean; const s: String): TnfseCondicaoPagamento;
 
-function ObterDescricaoServico(cCodigo: String): String;
-function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+function ObterDescricaoServico(const cCodigo: String): String;
+function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
                      ASerie:Integer; ANumero, ACodigo: Integer;
                      AModelo: Integer=56): String;
 function RetirarPrefixos(const AXML: String; AProvedor: TnfseProvedor): String;
-function VersaoXML(AXML: String): String;
-function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+function VersaoXML(const AXML: String): String;
+function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
                                ANumero: Int64; AModelo: Integer = 56): String;
 
 function LayOutToServico(const t: TLayOutNFSe): String;
@@ -18056,7 +18056,7 @@ begin
                            [EgConstrucaoCivil, EgOutros]);
 end;
 
-function ObterDescricaoServico(cCodigo: String): String;
+function ObterDescricaoServico(const cCodigo: String): String;
 var
  i: Integer;
  PathArquivo: String;
@@ -18082,7 +18082,7 @@ begin
   end;
 end;
 
-function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
   ASerie: Integer; ANumero, ACodigo: Integer; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vSerie, vNumero,
@@ -18147,7 +18147,7 @@ begin
   result := XML;
 end;
 
-function VersaoXML(AXML: String): String;
+function VersaoXML(const AXML: String): String;
 var
  i: Integer;
 begin
@@ -18157,7 +18157,7 @@ begin
   else result := '2';
 end;
 
-function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
+function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: String;
                        ANumero: Int64; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vNumero, vModelo: String;
@@ -18634,4 +18634,3 @@ begin
 end;
 
 end.
-

@@ -94,7 +94,7 @@ type
     function LerRPS: Boolean;
     function LerNFSe: Boolean;
 
-    function CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
+    function CodCidadeToProvedor(const CodCidade: String): TNFSeProvedor;
     procedure SetxItemListaServico;
   public
     constructor Create(AOwner: TNFSe);
@@ -143,7 +143,7 @@ begin
   inherited Destroy;
 end;
 
-function TNFSeR.CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
+function TNFSeR.CodCidadeToProvedor(const CodCidade: String): TNFSeProvedor;
 var
   Ok: Boolean;
   NomeArqParams: String;

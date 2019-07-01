@@ -116,15 +116,15 @@ type
     procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
     procedure IncluirEncoding(Incluir: Boolean);
-    function ExtrairRetorno(GrupoMsgRet: String): String;
+    function ExtrairRetorno(const GrupoMsgRet: String): String;
     function ExtrairNotasRetorno: Boolean;
-    function GerarRetornoNFSe(ARetNFSe: String): String;
-    procedure DefinirSignatureNode(TipoEnvio: String);
-    procedure GerarLoteRPScomAssinatura(RPS: String);
-    procedure GerarLoteRPSsemAssinatura(RPS: String);
+    function GerarRetornoNFSe(const ARetNFSe: String): String;
+    procedure DefinirSignatureNode(const TipoEnvio: String);
+    procedure GerarLoteRPScomAssinatura(const RPS: String);
+    procedure GerarLoteRPSsemAssinatura(const RPS: String);
     procedure InicializarTagITagF;
     procedure InicializarGerarDadosMsg;
-    function ExtrairGrupoMsgRet(AGrupo: String): String;
+    function ExtrairGrupoMsgRet(const AGrupo: String): String;
     function RemoverCharControle(AXML: String): String;
     function DefinirDadosSenha(ATexto: String): String;
 
@@ -632,46 +632,42 @@ type
 
     function GeraLote(ALote: Integer; AqMaxRps: Integer = 50;
       ASincrono: Boolean = False): Boolean; overload;
-    function GeraLote(ALote: String; AqMaxRps: Integer = 50;
+    function GeraLote(const ALote: String; AqMaxRps: Integer = 50;
       ASincrono: Boolean = False): Boolean; overload;
 
     function Envia(ALote: Integer): Boolean; overload;
-    function Envia(ALote: String): Boolean; overload;
+    function Envia(const ALote: String): Boolean; overload;
 
-    function TestaEnvio(ALote: String): Boolean;
+    function TestaEnvio(const ALote: String): Boolean;
 
     function EnviaSincrono(ALote:Integer): Boolean; overload;
-    function EnviaSincrono(ALote:String): Boolean; overload;
+    function EnviaSincrono(const ALote:String): Boolean; overload;
 
     function Gera(ARps: Integer; ALote: Integer = 1): Boolean;
 
-    function ConsultaSituacao(AProtocolo: String;
+    function ConsultaSituacao(const AProtocolo: String;
                               const ANumLote: String = ''): Boolean;
-    function ConsultaLoteRps(ANumLote,
-                             AProtocolo: String): Boolean;
-    function ConsultaNFSeporRps(ANumero,
-                                ASerie,
-                                ATipo: String;
+    function ConsultaLoteRps(const ANumLote, AProtocolo: String): Boolean;
+    function ConsultaNFSeporRps(const ANumero, ASerie, ATipo: String;
                                 const ANumLote: String = ''): Boolean;
     function ConsultaNFSe(ADataInicial,
                           ADataFinal: TDateTime;
-                          NumeroNFSe: String = '';
+                          const NumeroNFSe: String = '';
                           APagina: Integer = 1;
-                          ACNPJTomador: String = '';
-                          AIMTomador: String = '';
-                          ANomeInter: String = '';
-                          ACNPJInter: String = '';
-                          AIMInter: String = '';
-                          ASerie: String = ''): Boolean;
+                          const ACNPJTomador: String = '';
+                          const AIMTomador: String = '';
+                          const ANomeInter: String = '';
+                          const ACNPJInter: String = '';
+                          const AIMInter: String = '';
+                          const ASerie: String = ''): Boolean;
 
-    function CancelaNFSe(ACodigoCancelamento: String;
-                         ANumeroNFSe: String = '';
-                         AMotivoCancelamento: String = '';
+    function CancelaNFSe(const ACodigoCancelamento: String;
+                         const ANumeroNFSe: String = '';
+                         const AMotivoCancelamento: String = '';
                          const ANumLote: String = ''): Boolean;
 
-    function SubstituiNFSe(ACodigoCancelamento,
-                           ANumeroNFSe: String;
-                           AMotivoCancelamento: String = ''): Boolean;
+    function SubstituiNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
+                           const AMotivoCancelamento: String = ''): Boolean;
 
     property ACBrNFSe: TACBrDFe                            read FACBrNFSe        write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS               read FGerarLoteRPS    write FGerarLoteRPS;
@@ -1133,7 +1129,7 @@ begin
   Result := AXML;
 end;
 
-function TNFSeWebService.ExtrairRetorno(GrupoMsgRet: String): String;
+function TNFSeWebService.ExtrairRetorno(const GrupoMsgRet: String): String;
 var
   AuxXML, XMLRet: String;
 begin
@@ -1546,7 +1542,7 @@ begin
   end;
 end;
 
-function TNFSeWebService.GerarRetornoNFSe(ARetNFSe: String): String;
+function TNFSeWebService.GerarRetornoNFSe(const ARetNFSe: String): String;
 var
   Texto: String;
 begin
@@ -1561,7 +1557,7 @@ begin
   Result := Texto;
 end;
 
-procedure TNFSeWebService.DefinirSignatureNode(TipoEnvio: String);
+procedure TNFSeWebService.DefinirSignatureNode(const TipoEnvio: String);
 var
   TagGrupo, xmlns, xPrefixo, Identificador: String;
   i, j: Integer;
@@ -1681,7 +1677,7 @@ begin
   end;
 end;
 
-procedure TNFSeWebService.GerarLoteRPScomAssinatura(RPS: String);
+procedure TNFSeWebService.GerarLoteRPScomAssinatura(const RPS: String);
 begin
   case FVersaoNFSe of
     // RPS versão 2.00
@@ -1738,7 +1734,7 @@ begin
   end;
 end;
 
-procedure TNFSeWebService.GerarLoteRPSsemAssinatura(RPS: String);
+procedure TNFSeWebService.GerarLoteRPSsemAssinatura(const RPS: String);
 var
   SRpsTmp: String;
 begin
@@ -2391,7 +2387,7 @@ begin
   end;
 end;
 
-function TNFSeWebService.ExtrairGrupoMsgRet(AGrupo: String): String;
+function TNFSeWebService.ExtrairGrupoMsgRet(const AGrupo: String): String;
 var
   aMsgRet: String;
 begin
@@ -5466,7 +5462,7 @@ begin
   Result := GeraLote(IntToStr(ALote), AqMaxRps, ASincrono);
 end;
 
-function TWebServices.GeraLote(ALote: String; AqMaxRps: Integer;
+function TWebServices.GeraLote(const ALote: String; AqMaxRps: Integer;
   ASincrono: Boolean): Boolean;
 begin
   FGerarLoteRPS.FNumeroLote := ALote;
@@ -5484,7 +5480,7 @@ begin
   Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String): Boolean;
+function TWebServices.Envia(const ALote: String): Boolean;
 var
   Tentativas, IntervaloTentativas: Integer;
 begin
@@ -5598,7 +5594,7 @@ begin
   Result := EnviaSincrono(IntToStr(ALote));
 end;
 
-function TWebServices.EnviaSincrono(ALote: String): Boolean;
+function TWebServices.EnviaSincrono(const ALote: String): Boolean;
 var
   Tentativas, IntervaloTentativas: Integer;
 begin
@@ -5690,7 +5686,7 @@ begin
    FGerarNfse.GerarException( FGerarNfse.Msg );
 end;
 
-function TWebServices.ConsultaSituacao(AProtocolo: String;
+function TWebServices.ConsultaSituacao(const AProtocolo: String;
   const ANumLote: String): Boolean;
 begin
   FConsSitLoteRPS.FProtocolo  := AProtocolo;
@@ -5702,7 +5698,7 @@ begin
    FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
 end;
 
-function TWebServices.ConsultaLoteRps(ANumLote, AProtocolo: String): Boolean;
+function TWebServices.ConsultaLoteRps(const ANumLote, AProtocolo: String): Boolean;
 begin
   FConsLote.FNumeroLote := ANumLote;
   FConsLote.FProtocolo  := AProtocolo;
@@ -5713,7 +5709,7 @@ begin
     FConsLote.GerarException( FConsLote.Msg );
 end;
 
-function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo: String;
+function TWebServices.ConsultaNFSeporRps(const ANumero, ASerie, ATipo: String;
                                          const ANumLote: String = ''): Boolean;
 begin
   FConsNfseRps.FNumeroRps  := ANumero;
@@ -5728,7 +5724,7 @@ begin
 end;
 
 function TWebServices.ConsultaNFSe(ADataInicial, ADataFinal: TDateTime;
-  NumeroNFSe: String; APagina: Integer; ACNPJTomador, AIMTomador, ANomeInter,
+  const NumeroNFSe: String; APagina: Integer; const ACNPJTomador, AIMTomador, ANomeInter,
   ACNPJInter, AIMInter, ASerie: String): Boolean;
 begin
   FConsNfse.FDataInicial := ADataInicial;
@@ -5748,8 +5744,8 @@ begin
     FConsNfse.GerarException( FConsNfse.Msg );
 end;
 
-function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
-  ANumeroNFSe: String = ''; AMotivoCancelamento: String = '';
+function TWebServices.CancelaNFSe(const ACodigoCancelamento: String;
+  const ANumeroNFSe: String = ''; const AMotivoCancelamento: String = '';
   const ANumLote: String = ''): Boolean;
 begin
   FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
@@ -5806,8 +5802,8 @@ begin
   end;
 end;
 
-function TWebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String;
-  AMotivoCancelamento: String): Boolean;
+function TWebServices.SubstituiNFSe(const ACodigoCancelamento, ANumeroNFSe: String;
+  const AMotivoCancelamento: String): Boolean;
 begin
   Result := False;
 
@@ -5827,7 +5823,7 @@ begin
   end;
 end;
 
-function TWebServices.TestaEnvio(ALote: String): Boolean;
+function TWebServices.TestaEnvio(const ALote: String): Boolean;
 begin
 
   FTesteEnvioLoteRPS.FNumeroLote := ALote;

@@ -87,14 +87,14 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(const AXML: AnsiString): Boolean;
 
     function GerarXML: String;
-    function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
+    function GravarXML(const NomeArquivo: String = ''; const PathArquivo: String = ''): Boolean;
 
     function GravarStream(AStream: TStream): Boolean;
 
-    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+    procedure EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
       sReplyTo: TStrings = nil; ManterPDFSalvo: Boolean = True);
 
@@ -146,13 +146,13 @@ type
 
     procedure Assinar(Assina: Boolean);
     // Usado para assinar o Lote de RPS
-    function AssinarLote(XMLLote, docElemento, infElemento: String;
-      Assina: Boolean; SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''  ): String;
+    function AssinarLote(const XMLLote, docElemento, infElemento: String;
+      Assina: Boolean; const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''  ): String;
     // Usado para assinar os XMLs de Consulta e Cancelamento
-    function AssinarXML(AXML, docElemento, infElemento: String;
-      Assina: Boolean; SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''  ): String;
+    function AssinarXML(const AXML, docElemento, infElemento: String;
+      Assina: Boolean; const SignatureNode: String = ''; const SelectionNamespaces: String = '';
+      const IdSignature: String = ''  ): String;
 
     procedure ValidarLote(const XMLLote, NomeArqSchema: String);
     procedure Imprimir;
@@ -166,10 +166,10 @@ type
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarNFSe que determina se após carregar os dados da NFSe
     // para o componente, será gerado ou não novamente o XML da NFSe.
-    function LoadFromFile(CaminhoArquivo: String; AGerarNFSe: Boolean = True): Boolean;
+    function LoadFromFile(const CaminhoArquivo: String; AGerarNFSe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarNFSe: Boolean = True): Boolean;
     function LoadFromString(AXMLString: String; AGerarNFSe: Boolean = True): Boolean;
-    function GravarXML(PathNomeArquivo: String = ''): Boolean;
+    function GravarXML(const PathNomeArquivo: String = ''): Boolean;
 
     property XMLLoteOriginal: String read FXMLLoteOriginal write FXMLLoteOriginal;
     property XMLLoteAssinado: String read FXMLLoteAssinado write FXMLLoteAssinado;
@@ -375,7 +375,7 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
+function NotaFiscal.LerXML(const AXML: AnsiString): Boolean;
 begin
   FNFSeR.Leitor.Arquivo := AXML;
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
@@ -393,7 +393,7 @@ begin
   Result := True;
 end;
 
-function NotaFiscal.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
+function NotaFiscal.GravarXML(const NomeArquivo: String; const PathArquivo: String): Boolean;
 begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
@@ -412,11 +412,11 @@ begin
   Result := True;
 end;
 
-procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+procedure NotaFiscal.EnviarEmail(const sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings;
   ManterPDFSalvo: Boolean);
 var
-  NomeArq: String;
+  NomeArqTemp: String;
   AnexosEmail:TStrings;
   StreamNFSe: TMemoryStream;
 begin
@@ -439,8 +439,8 @@ begin
         if Assigned(DANFSE) then
         begin
           DANFSE.ImprimirDANFSEPDF(FNFSe);
-          NomeArq := PathWithDelim(DANFSE.PathPDF) + NumID[FNFSe] + '-nfse.pdf';
-          AnexosEmail.Add(NomeArq);
+          NomeArqTemp := PathWithDelim(DANFSE.PathPDF) + NumID[FNFSe] + '-nfse.pdf';
+          AnexosEmail.Add(NomeArqTemp);
         end;
       end;
 
@@ -449,7 +449,7 @@ begin
     end;
   finally
     if not ManterPDFSalvo then
-      DeleteFile(NomeArq);
+      DeleteFile(NomeArqTemp);
 
     AnexosEmail.Free;
     StreamNFSe.Free;
@@ -665,9 +665,9 @@ begin
   end;
 end;
 
-function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
-  Assina: Boolean; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String): String;
+function TNotasFiscais.AssinarLote(const XMLLote, docElemento, infElemento: String;
+  Assina: Boolean; const SignatureNode: String; const SelectionNamespaces: String;
+  const IdSignature: String): String;
 var
   XMLAss, ArqXML, IdAttr: String;
 begin
@@ -693,9 +693,8 @@ begin
   end;
 end;
 
-function TNotasFiscais.AssinarXML(AXML, docElemento, infElemento: String;
-  Assina: Boolean; SignatureNode, SelectionNamespaces,
-  IdSignature: String): String;
+function TNotasFiscais.AssinarXML(const AXML, docElemento, infElemento: String;
+  Assina: Boolean; const SignatureNode, SelectionNamespaces, IdSignature: String): String;
 var
   XMLAss, ArqXML, IdAttr: String;
 begin
@@ -831,7 +830,7 @@ begin
   end;
 end;
 
-function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
+function TNotasFiscais.LoadFromFile(const CaminhoArquivo: String;
   AGerarNFSe: Boolean = True): Boolean;
 var
   XMLStr: String;
@@ -1018,7 +1017,7 @@ begin
   Result := Self.Count > 0;
 end;
 
-function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;
+function TNotasFiscais.GravarXML(const PathNomeArquivo: String): Boolean;
 var
   i: integer;
   NomeArq, PathArq : String;

@@ -50,7 +50,7 @@ type
  TACBrNFSeDANFSeClass = class(TACBrDFeReport)
   private
     procedure SetNFSe(const Value: TComponent);
-    procedure ErroAbstract( NomeProcedure: String );
+    procedure ErroAbstract( const NomeProcedure: String );
   protected
     FACBrNFSe: TComponent;
     FPrestLogo: String;
@@ -164,7 +164,7 @@ begin
  inherited Destroy;
 end;
 
-procedure TACBrNFSeDANFSeClass.ErroAbstract(NomeProcedure: String);
+procedure TACBrNFSeDANFSeClass.ErroAbstract(const NomeProcedure: String);
 begin
  raise Exception.Create( NomeProcedure );
 end;

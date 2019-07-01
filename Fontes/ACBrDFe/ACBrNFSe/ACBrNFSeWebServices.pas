@@ -782,7 +782,7 @@ end;
 
 procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
-  Texto, DadosMsg, CabMsg, NameSpace, Bound, UsuarioWeb, SenhaWeb: String;
+  Texto, DadosMsg, CabMsg, NameSpaceTemp, Bound, UsuarioWeb, SenhaWeb: String;
 begin
   {$IFDEF FPC}
    Texto := '<' + ENCODING_UTF8 + '>';    // Envelope já está sendo montado em UTF8
@@ -839,9 +839,9 @@ begin
   else
   begin
     if FPConfiguracoesNFSe.WebServices.Ambiente = taProducao then
-      NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
+      NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Producao
     else
-      NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
+      NameSpaceTemp := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
 
     if FProvedor in [proSafeWeb, proTcheInfov2] then
       FPCabMsg := StringReplace(FPCabMsg, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
@@ -850,7 +850,7 @@ begin
     if FCabecalhoStr then
       CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
-    CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpace, [rfReplaceAll]);
+    CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpaceTemp, [rfReplaceAll]);
     CabMsg := StringReplace(CabMsg, '%VersaoAtrib%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoAtrib, [rfReplaceAll]);
     CabMsg := StringReplace(CabMsg, '%VersaoDados%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados, [rfReplaceAll]);
 
@@ -881,7 +881,7 @@ begin
     // %DadosMsg%  : Representa a Mensagem de Dados
 
     Texto := StringReplace(Texto, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
-    Texto := StringReplace(Texto, '%NameSpace%', NameSpace  , [rfReplaceAll]);
+    Texto := StringReplace(Texto, '%NameSpace%', NameSpaceTemp  , [rfReplaceAll]);
     Texto := StringReplace(Texto, '%CabMsg%'   , CabMsg     , [rfReplaceAll]);
     Texto := StringReplace(Texto, '%DadosMsg%' , DadosMsg   , [rfReplaceAll]);
     Texto := StringReplace(Texto, '%inscricaoMunicipal%', FPConfiguracoesNFSe.Geral.Emitente.InscMun, [rfReplaceAll]);
@@ -1559,11 +1559,11 @@ end;
 
 procedure TNFSeWebService.DefinirSignatureNode(const TipoEnvio: String);
 var
-  TagGrupo, xmlns, xPrefixo, Identificador: String;
+  TagGrupoTemp, xmlns, xPrefixo, Identificador: String;
   i, j: Integer;
 begin
-  TagGrupo := RetirarPrefixos('<' + TipoEnvio, FProvedor);
-  TagGrupo := Copy(TagGrupo, 2, Length(TagGrupo));
+  TagGrupoTemp := RetirarPrefixos('<' + TipoEnvio, FProvedor);
+  TagGrupoTemp := Copy(TagGrupoTemp, 2, Length(TagGrupoTemp));
 
   FxSignatureNode := '';
   FxDSIGNSLote := '';
@@ -1604,14 +1604,14 @@ begin
             if FProvedor in [proInfisc, proInfiscv11] then
             begin
               FxSignatureNode := './/' + 'ds:Signature';
-              i := pos(TagGrupo, FPDadosMsg);
-              i := i + Length(TagGrupo + xmlns);
+              i := pos(TagGrupoTemp, FPDadosMsg);
+              i := i + Length(TagGrupoTemp + xmlns);
             end
             else
             begin
-              FxSignatureNode := './/' + xPrefixo + TagGrupo + '/ds:Signature';
-              i := pos(TagGrupo + xmlns, FPDadosMsg);
-              i := i + Length(TagGrupo + xmlns) - 1;
+              FxSignatureNode := './/' + xPrefixo + TagGrupoTemp + '/ds:Signature';
+              i := pos(TagGrupoTemp + xmlns, FPDadosMsg);
+              i := i + Length(TagGrupoTemp + xmlns) - 1;
             end;
 
             j := Pos('">', FPDadosMsg) + 1;
@@ -5290,7 +5290,7 @@ begin
   FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
 
 //  FRetAbrirSessao := TRetAbrirSessao.Create;
-  try
+//  try
 //    FRetAbrirSessao.Leitor.Arquivo := FPRetWS;
 //    FRetAbrirSessao.Provedor       := FProvedor;
 
@@ -5320,9 +5320,9 @@ begin
 //                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
     *)
     Result := (FPMsg = '');
-  finally
+//  finally
 //    FRetAbrirSessao.Free;
-  end;
+//  end;
 end;
 
 procedure TNFSeFecharSessao.FinalizarServico;

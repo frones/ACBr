@@ -34,7 +34,7 @@ unit pnfsCancNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms,
+  SysUtils, Classes, Forms, Contnrs,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 //  strutils
@@ -46,7 +46,7 @@ type
  TNotasCanceladasCollection = class;
  TNotasCanceladasCollectionItem = class;
 
- TInfCanc = class(TPersistent)
+ TInfCanc = class(TObject)
   private
     FPedido: TPedidoCancelamento;
     FDataHora: TDateTime;
@@ -61,7 +61,7 @@ type
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
     procedure SetNotasCanceladas(const Value: TNotasCanceladasCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
     property Pedido: TPedidocancelamento           read FPedido      write FPedido;
     property DataHora: TDateTime                   read FDataHora    write FDataHora;  
@@ -75,17 +75,17 @@ type
     property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
 
- TMsgRetornoCancCollection = class(TCollection)
+ TMsgRetornoCancCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoCancCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoCancCollectionItem);
   public
-    constructor Create(AOwner: TInfCanc);
-    function Add: TMsgRetornoCancCollectionItem;
+    function Add: TMsgRetornoCancCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMsgRetornoCancCollectionItem;
     property Items[Index: Integer]: TMsgRetornoCancCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoCancCollectionItem = class(TCollectionItem)
+ TMsgRetornoCancCollectionItem = class(TObject)
   private
     FCodigo: String;
     FMensagem: String;
@@ -93,9 +93,9 @@ type
     FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
     FChaveNFeRPS: TChaveNFeRPS;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
@@ -103,25 +103,22 @@ type
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
- TNotasCanceladasCollection = class(TCollection)
+ TNotasCanceladasCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TNotasCanceladasCollectionItem;
     procedure SetItem(Index: Integer; Value: TNotasCanceladasCollectionItem);
   public
-    constructor Create(AOwner: TInfCanc);
-    function Add: TNotasCanceladasCollectionItem;
+    function Add: TNotasCanceladasCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TNotasCanceladasCollectionItem;
     property Items[Index: Integer]: TNotasCanceladasCollectionItem read GetItem write SetItem; default;
   end;
 
- TNotasCanceladasCollectionItem = class(TCollectionItem)
+ TNotasCanceladasCollectionItem = class(TObject)
   private
     FNumeroNota: String;
     FCodigoVerficacao: String;
     FInscricaoMunicipalPrestador: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property NumeroNota: String       read FNumeroNota       write FNumeroNota;
     property CodigoVerficacao: String read FCodigoVerficacao write FCodigoVerficacao;
     property InscricaoMunicipalPrestador: String read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
@@ -129,7 +126,7 @@ type
 
  { TretCancNFSe }
 
- TretCancNFSe = class(TPersistent)
+ TretCancNFSe = class(TObject)
   private
     FLeitor: TLeitor;
     FInfCanc: TInfCanc;
@@ -155,7 +152,6 @@ type
     function LerXml_proSMARAPD: Boolean;
     function LerXml_proGIAP: Boolean;
 
-  published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -168,9 +164,10 @@ implementation
 
 constructor TInfCanc.Create;
 begin
+  inherited Create;
   FPedido          := TPedidoCancelamento.Create;
-  FMsgRetorno      := TMsgRetornoCancCollection.Create(Self);
-  FNotasCanceladas := TNotasCanceladasCollection.Create(Self);
+  FMsgRetorno      := TMsgRetornoCancCollection.Create;
+  FNotasCanceladas := TNotasCanceladasCollection.Create;
   FInformacoesLote := TInformacoesLote.Create;
 end;
 
@@ -198,13 +195,7 @@ end;
 
 function TMsgRetornoCancCollection.Add: TMsgRetornoCancCollectionItem;
 begin
-  Result := TMsgRetornoCancCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TMsgRetornoCancCollection.Create(AOwner: TInfCanc);
-begin
-  inherited Create(TMsgRetornoCancCollectionItem);
+  Result := Self.New;
 end;
 
 function TMsgRetornoCancCollection.GetItem(
@@ -219,13 +210,20 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TMsgRetornoCancCollection.New: TMsgRetornoCancCollectionItem;
+begin
+  Result := TMsgRetornoCancCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TMsgRetornoCancCollectionItem }
 
 constructor TMsgRetornoCancCollectionItem.Create;
 begin
-  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  inherited Create;
+  FIdentificacaoRps      := TMsgRetornoIdentificacaoRps.Create;
   FIdentificacaoRps.Tipo := trRPS;
-  FChaveNFeRPS := TChaveNFeRPS.Create;
+  FChaveNFeRPS           := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoCancCollectionItem.Destroy;
@@ -239,13 +237,7 @@ end;
 
 function TNotasCanceladasCollection.Add: TNotasCanceladasCollectionItem;
 begin
-  Result := TNotasCanceladasCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TNotasCanceladasCollection.Create(AOwner: TInfCanc);
-begin
-  inherited Create(TNotasCanceladasCollectionItem);
+  Result := Self.New
 end;
 
 function TNotasCanceladasCollection.GetItem(
@@ -260,23 +252,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TNotasCanceladasCollectionItem }
-
-constructor TNotasCanceladasCollectionItem.Create;
+function TNotasCanceladasCollection.New: TNotasCanceladasCollectionItem;
 begin
-
-end;
-
-destructor TNotasCanceladasCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TNotasCanceladasCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TretCancNFSe }
 
 constructor TretCancNFSe.Create;
 begin
+  inherited Create;
   FLeitor  := TLeitor.Create;
   FInfCanc := TInfCanc.Create;
 end;
@@ -344,7 +330,7 @@ begin
                      begin
                        if Pos('cancelada com sucesso', AnsiLowerCase(Leitor.rCampo(tcStr, 'Mensagem'))) = 0 then
                        begin
-                         InfCanc.FMsgRetorno.Add;
+                         InfCanc.FMsgRetorno.New;
                          InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
                          InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
                          InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -384,7 +370,7 @@ begin
                        i := 0;
                        while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
                        begin
-                         InfCanc.FMsgRetorno.Add;
+                         InfCanc.FMsgRetorno.New;
                          InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
                          InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
                          InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -443,7 +429,7 @@ begin
             i := 0;
             while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
             begin
-              InfCanc.FMsgRetorno.Add;
+              InfCanc.FMsgRetorno.New;
               InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
               InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
               InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -454,7 +440,7 @@ begin
 
           if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
           begin
-             InfCanc.FMsgRetorno.Add;
+             InfCanc.FMsgRetorno.New;
              InfCanc.FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
              InfCanc.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
              InfCanc.FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -466,7 +452,7 @@ begin
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
     begin
-      InfCanc.FMsgRetorno.Add;
+      InfCanc.FMsgRetorno.New;
       InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
       InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
       InfCanc.FMsgRetorno[i].FCorrecao := '';
@@ -503,7 +489,7 @@ begin
       begin
         while (Leitor.rExtrai(2, 'Nota', '', i + 1) <> '') do
         begin
-          FInfCanc.FNotasCanceladas.Add;
+          FInfCanc.FNotasCanceladas.New;
           FInfCanc.FNotasCanceladas[i].InscricaoMunicipalPrestador := Leitor.rCampo(tcStr, 'InscricaoMunicipalPrestador');
           FInfCanc.FNotasCanceladas[i].NumeroNota                  := Leitor.rCampo(tcStr, 'NumeroNota');
           FInfCanc.FNotasCanceladas[i].CodigoVerficacao            := Leitor.rCampo(tcStr,'CodigoVerificacao');
@@ -516,7 +502,7 @@ begin
       begin
         while (Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '') do
         begin
-          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno.New;
           InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
           InfCanc.FMsgRetorno[i].FCorrecao := '';
@@ -529,7 +515,7 @@ begin
       begin
         while (Leitor.rExtrai(2, 'Erro', '', i + 1) <> '') do
         begin
-          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno.New;
           InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
           InfCanc.FMsgRetorno[i].FCorrecao := '';
@@ -559,7 +545,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
         begin
-          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno.New;
           InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
           InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
           InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -571,7 +557,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
         begin
-          InfCanc.FMsgRetorno.Add;
+          InfCanc.FMsgRetorno.New;
           InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
           InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
           InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -610,7 +596,7 @@ begin
           sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
         else
           sMotCod := '';
-        InfCanc.MsgRetorno.Add;
+        InfCanc.MsgRetorno.New;
         InfCanc.MsgRetorno[0].FCodigo   := sMotCod;
         InfCanc.MsgRetorno[0].FMensagem := sMotDes + ' ' +
                                           'CNPJ ' + Leitor.rCampo(tcStr, 'CNPJ') + ' ' +
@@ -637,7 +623,7 @@ begin
     i := 0;
     while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
     begin
-      InfCanc.FMsgRetorno.Add;
+      InfCanc.FMsgRetorno.New;
       InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'mensagens');
       Inc(i);
     end;
@@ -723,7 +709,7 @@ begin
     end
     else
       infCanc.DataHora := 0;
-    FInfCanc.MsgRetorno.Add;
+    FInfCanc.MsgRetorno.New;
     FInfCanc.FMsgRetorno[0].FCodigo   := '';
     FInfCanc.FMsgRetorno[0].FMensagem := leitor.Arquivo;
     FInfCanc.FMsgRetorno[0].FCorrecao := '';
@@ -761,7 +747,7 @@ begin
           if FInfCanc.MsgCanc = EmptyStr then
             FInfCanc.MsgCanc := 'Nota Fiscal Cancelada com Sucesso!';
 
-          with FInfCanc.NotasCanceladas.Add do
+          with FInfCanc.NotasCanceladas.New do
           begin
             NumeroNota        := Leitor.rCampo(tcStr, 'numeroNota');
           end;
@@ -783,7 +769,7 @@ begin
 
               if sValue.Count > 1 then
               begin
-                with FInfCanc.MsgRetorno.Add do
+                with FInfCanc.MsgRetorno.New do
                 begin
                   FCodigo   := sValue.Values['code'];
 
@@ -844,7 +830,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
       begin
-        FInfCanc.MsgRetorno.Add;
+        FInfCanc.MsgRetorno.New;
         FInfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfCanc.FMsgRetorno[i].FCorrecao := '';
@@ -869,7 +855,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
       begin
-        FInfCanc.MsgRetorno.Add;
+        FInfCanc.MsgRetorno.New;
         FInfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfCanc.FMsgRetorno[i].FCorrecao := '';
@@ -912,7 +898,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do
         begin
-          FInfCanc.MsgRetorno.Add;
+          FInfCanc.MsgRetorno.New;
           FInfCanc.MsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Id');
           FInfCanc.MsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Description');
           Inc(i);
@@ -935,7 +921,7 @@ begin
   begin
     if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
     begin
-      FInfCanc.FMsgRetorno.Add;
+      FInfCanc.FMsgRetorno.New;
       FInfCanc.FMsgRetorno[i].FCodigo   := 'Erro';
       FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
     end
@@ -970,13 +956,13 @@ begin
           if (Pos('ja cancelada', Msg) > 0) then
           begin
             infCanc.DataHora := Now;
-            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno.New;
             InfCanc.FMsgRetorno[MsgErro].FMensagem := Msg;
             Inc(MsgErro);
           end;
           if (Pos('OK!', Msg) = 0) and (Pos('cancelada', Msg) = 0) then
           begin
-            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno.New;
             InfCanc.FMsgRetorno[MsgErro].FMensagem := Msg;
             Inc(MsgErro);
           end;

@@ -41,7 +41,7 @@ unit ACBrNFSeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, SysUtils, IniFiles, Contnrs,
   ACBrDFeConfiguracoes, ACBrDFeSSL, pcnConversao, pnfsConversao;
 
 type
@@ -248,25 +248,24 @@ type
 
   { TDadosSenhaParamsCollectionItem }
 
-  TDadosSenhaParamsCollectionItem = class(TCollectionItem)
+  TDadosSenhaParamsCollectionItem = class(TObject)
   private
     FParam: String;
     FConteudo: String;
-  published
+  public
     property Param: String read FParam write FParam;
     property Conteudo: String read FConteudo write FConteudo;
   end;
 
   { TDadosSenhaParamsCollection }
 
-  TDadosSenhaParamsCollection = class(TCollection)
+  TDadosSenhaParamsCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDadosSenhaParamsCollectionItem;
     procedure SetItem(Index: Integer; Const Value: TDadosSenhaParamsCollectionItem);
   public
-    constructor Create(AOwner: TEmitenteConfNFSe);
-
-    function Add: TDadosSenhaParamsCollectionItem;
+    function Add: TDadosSenhaParamsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDadosSenhaParamsCollectionItem;
     property Items[Index: Integer]: TDadosSenhaParamsCollectionItem read GetItem write SetItem; default;
   end;
 
@@ -451,7 +450,7 @@ begin
   FWebSenha         := '';
   FWebFraseSecr     := '';
   FWebChaveAcesso   := '';
-  FDadosSenhaParams := TDadosSenhaParamsCollection.Create(Self);
+  FDadosSenhaParams := TDadosSenhaParamsCollection.Create;
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -1258,13 +1257,7 @@ end;
 
 function TDadosSenhaParamsCollection.Add: TDadosSenhaParamsCollectionItem;
 begin
-  Result := TDadosSenhaParamsCollectionItem(inherited Add);
-end;
-
-constructor TDadosSenhaParamsCollection.Create(
-  AOwner: TEmitenteConfNFSe);
-begin
-  inherited Create(TDadosSenhaParamsCollectionItem);
+  Result := Self.New;
 end;
 
 function TDadosSenhaParamsCollection.GetItem(
@@ -1277,6 +1270,12 @@ procedure TDadosSenhaParamsCollection.SetItem(Index: Integer;
   const Value: TDadosSenhaParamsCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TDadosSenhaParamsCollection.New: TDadosSenhaParamsCollectionItem;
+begin
+  Result := TDadosSenhaParamsCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TConfigEnvelope }

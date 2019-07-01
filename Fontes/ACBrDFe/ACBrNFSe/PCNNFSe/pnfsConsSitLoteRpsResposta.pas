@@ -34,7 +34,7 @@ unit pnfsConsSitLoteRpsResposta;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   ACBrUtil, 
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
@@ -43,7 +43,7 @@ type
  TMsgRetornoSitCollection = class;
  TMsgRetornoSitCollectionItem = class;
 
- TInfSit = class(TPersistent)
+ TInfSit = class(TObject)
   private
     FNumeroLote: String;
     FSituacao: String;
@@ -53,7 +53,7 @@ type
 
     procedure SetMsgRetorno(Value: TMsgRetornoSitCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property NumeroLote: String                   read FNumeroLote write FNumeroLote;
@@ -63,17 +63,17 @@ type
     property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
 
- TMsgRetornoSitCollection = class(TCollection)
+ TMsgRetornoSitCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoSitCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoSitCollectionItem);
   public
-    constructor Create(AOwner: TInfSit);
-    function Add: TMsgRetornoSitCollectionItem;
+    function Add: TMsgRetornoSitCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMsgRetornoSitCollectionItem;
     property Items[Index: Integer]: TMsgRetornoSitCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoSitCollectionItem = class(TCollectionItem)
+ TMsgRetornoSitCollectionItem = class(TObject)
   private
     FCodigo: String;
     FMensagem: String;
@@ -83,9 +83,9 @@ type
     FchvAcessoNFSe: String;
     Fsit: String;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
@@ -97,7 +97,7 @@ type
 
  { TretSitLote }
 
- TretSitLote = class(TPersistent)
+ TretSitLote = class(TObject)
   private
     FLeitor: TLeitor;
     FInfSit: TInfSit;
@@ -118,7 +118,6 @@ type
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
     function LerXML_proAssessorPublico: boolean;
-  published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfSit: TInfSit         read FInfSit   write FInfSit;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -130,7 +129,8 @@ implementation
 
 constructor TInfSit.Create;
 begin
-  FMsgRetorno := TMsgRetornoSitCollection.Create(Self);
+  inherited Create;
+  FMsgRetorno      := TMsgRetornoSitCollection.Create;
   FInformacoesLote := TInformacoesLote.Create;
 end;
 
@@ -150,13 +150,7 @@ end;
 
 function TMsgRetornoSitCollection.Add: TMsgRetornoSitCollectionItem;
 begin
-  Result := TMsgRetornoSitCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TMsgRetornoSitCollection.Create(AOwner: TInfSit);
-begin
-  inherited Create(TMsgRetornoSitCollectionItem);
+  Result := Self.New;
 end;
 
 function TMsgRetornoSitCollection.GetItem(
@@ -171,13 +165,20 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TMsgRetornoSitCollection.New: TMsgRetornoSitCollectionItem;
+begin
+  Result := TMsgRetornoSitCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TMsgRetornoSitCollectionItem }
 
 constructor TMsgRetornoSitCollectionItem.Create;
 begin
-  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  inherited Create;
+  FIdentificacaoRps      := TMsgRetornoIdentificacaoRps.Create;
   FIdentificacaoRps.Tipo := trRPS;
-  FChaveNFeRPS := TChaveNFeRPS.Create;
+  FChaveNFeRPS           := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoSitCollectionItem.Destroy;
@@ -191,6 +192,7 @@ end;
 
 constructor TretSitLote.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FInfSit := TInfSit.Create;
 end;
@@ -254,7 +256,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
         begin
-          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno.New;
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
           InfSit.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
@@ -279,7 +281,7 @@ begin
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
      begin
-       InfSit.FMsgRetorno.Add;
+       InfSit.FMsgRetorno.New;
        InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
        InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
        InfSit.FMsgRetorno[i].FCorrecao := '';
@@ -327,7 +329,7 @@ begin
             sMotCod:=Leitor.rCampo(tcStr, 'Id');
             sMotDes:=Leitor.rCampo(tcStr, 'Description');
 
-            InfSit.MsgRetorno.Add;
+            InfSit.MsgRetorno.New;
             InfSit.MsgRetorno[i].FCodigo   := sMotCod;
             InfSit.MsgRetorno[i].FMensagem := sMotDes;
             Inc(i);
@@ -366,7 +368,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
         begin
-          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno.New;
           InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -378,7 +380,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
         begin
-          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno.New;
           InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'cdMensagem');
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'dsMensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -427,7 +429,7 @@ begin
             else
               sMotCod := '';
 
-            InfSit.FMsgRetorno.Add;
+            InfSit.FMsgRetorno.New;
             InfSit.FMsgRetorno[j].FCodigo        := sMotCod;
             InfSit.FMsgRetorno[j].FMensagem      := sMotDes;
             InfSit.FMsgRetorno[j].FCorrecao      := '';
@@ -452,7 +454,7 @@ begin
       else
         sMotCod := '';
 
-      InfSit.FMsgRetorno.Add;
+      InfSit.FMsgRetorno.New;
       InfSit.FMsgRetorno[0].FCodigo        := sMotCod;
       InfSit.FMsgRetorno[0].FMensagem      := sMotDes;
       InfSit.FMsgRetorno[0].FCorrecao      := '';
@@ -493,7 +495,7 @@ begin
         Msg    := Copy(strAux, 8, Length(strAux));
         if Trim(Msg) <> '' then
         begin
-          InfSit.FMsgRetorno.Add;
+          InfSit.FMsgRetorno.New;
           InfSit.FMsgRetorno[i].Codigo   := Cod;
           InfSit.FMsgRetorno[i].Mensagem := Msg;
           InfSit.FMsgRetorno[i].Correcao := '';
@@ -680,7 +682,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
       begin
-        FInfSit.MsgRetorno.Add;
+        FInfSit.MsgRetorno.New;
         FInfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfSit.FMsgRetorno[i].FCorrecao := '';
@@ -705,7 +707,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
       begin
-        FInfSit.MsgRetorno.Add;
+        FInfSit.MsgRetorno.New;
         FInfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfSit.FMsgRetorno[i].FCorrecao := '';

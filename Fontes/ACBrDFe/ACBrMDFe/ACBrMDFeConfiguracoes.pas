@@ -54,6 +54,7 @@ type
     FGerarInfMDFeSupl: TForcarGeracaoTag;
 
     procedure SetVersaoDF(const Value: TVersaoMDFe);
+    procedure SetGerarInfMDFeSupl(const Value: TForcarGeracaoTag);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); reintroduce;
@@ -62,7 +63,8 @@ type
 
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve300;
-    property GerarInfMDFeSupl: TForcarGeracaoTag read FGerarInfMDFeSupl default fgtNunca;
+    property GerarInfMDFeSupl: TForcarGeracaoTag read FGerarInfMDFeSupl
+      write SetGerarInfMDFeSupl default fgtNunca;
   end;
 
   { TArquivosConfMDFe }
@@ -189,6 +191,11 @@ begin
   inherited LerIni(AIni);
 
   VersaoDF := TVersaoMDFe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+end;
+
+procedure TGeralConfMDFe.SetGerarInfMDFeSupl(const Value: TForcarGeracaoTag);
+begin
+  FGerarInfMDFeSupl := Value;
 end;
 
 procedure TGeralConfMDFe.SetVersaoDF(const Value: TVersaoMDFe);

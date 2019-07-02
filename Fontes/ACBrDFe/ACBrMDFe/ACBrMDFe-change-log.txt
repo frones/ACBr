@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2019
+-- ACBrMDFe / ACBrMDFeConfiguracoes --
+[*] Acrescentado um método para setar a propriedade GerarInfMDFeSupl e 
+    corrigido a função GetURLQRCode.
+   Por: Gilvano Piontkoski
+
 01/07/2019
 -- pmdfeMDFeR --
 [*] Alterado a forma de leitura das tags: indCanalVerde e indCarregaPosterior.

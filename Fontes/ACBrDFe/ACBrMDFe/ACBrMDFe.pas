@@ -257,6 +257,10 @@ begin
   VersaoDFe := DblToVersaoMDFe(ok, Versao);
 
   urlUF := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+
+  if Pos('?', urlUF) <= 0 then
+    urlUF := urlUF + '?';
+
   idMDFe := OnlyNumber(AChaveMDFe);
 
   // Passo 1
@@ -266,11 +270,7 @@ begin
   if TipoEmissao in [teDPEC, teFSDA] then
     sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idMDFe));
 
-  // Passo 3
-  if Pos('?', urlUF) < 0 then
-    Result := urlUF + '?';
-
-   Result := Result + sEntrada;
+  Result := urlUF + sEntrada;
 end;
 
 function TACBrMDFe.GetNameSpaceURI: String;

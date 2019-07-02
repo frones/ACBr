@@ -235,7 +235,7 @@ function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
 function LayOutToStr(const t: TLayOutNFSe): String;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;
-function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
+function StrToSchemaNFSe(const s: String): TSchemaNFSe;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;
 function VersaoNFSeToStr(const t: TVersaoNFSe): String;
@@ -18234,10 +18234,11 @@ begin
   Result := copy(Result, 4, Length(Result)); // Remove prefixo "sch"
 end;
 
-function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
+function StrToSchemaNFSe(const s: String): TSchemaNFSe;
 var
   P: Integer;
   SchemaStr: String;
+  CodSchema: Integer;
 begin
   P := pos('_',s);
   if p > 0 then
@@ -18248,7 +18249,14 @@ begin
   if LeftStr(SchemaStr,3) <> 'sch' then
     SchemaStr := 'sch'+SchemaStr;
 
-  Result := TSchemaNFSe( GetEnumValue(TypeInfo(TSchemaNFSe), SchemaStr ) );
+  CodSchema := GetEnumValue(TypeInfo(TSchemaNFSe), SchemaStr );
+
+  if CodSchema = -1 then
+  begin
+    raise Exception.Create(Format('"%s" não é um valor TSchemaANe válido.',[SchemaStr]));
+  end;
+
+  Result := TSchemaNFSe( CodSchema );
 end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/07/2019
+-- ACBrCTe / ACBrCTeConfiguracoes --
+[*] Acrescentado um método para setar a propriedade GerarInfCTeSupl e 
+    corrigido a função GetURLQRCode.
+   Por: Italo Jurisato Junior
+
 27/06/2019
 -- ACBrCTeConfiguracoes --
 [*] Removido a classe que contem as propriedades de Download utilizadas

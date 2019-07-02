@@ -59,6 +59,7 @@ type
 
     procedure SetVersaoDF(const Value: TVersaoCTe);
     procedure SetModeloDF(const Value: TModeloCTe);
+    procedure SetGerarInfCTeSupl(const Value: TForcarGeracaoTag);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
@@ -69,7 +70,8 @@ type
     property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve300;
-    property GerarInfCTeSupl: TForcarGeracaoTag read FGerarInfCTeSupl default fgtNunca;
+    property GerarInfCTeSupl: TForcarGeracaoTag read FGerarInfCTeSupl
+      write SetGerarInfCTeSupl default fgtNunca;
   end;
 
   { TArquivosConfCTe }
@@ -202,6 +204,11 @@ begin
 
   ModeloDF := TModeloCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
   VersaoDF := TVersaoCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+end;
+
+procedure TGeralConfCTe.SetGerarInfCTeSupl(const Value: TForcarGeracaoTag);
+begin
+  FGerarInfCTeSupl := Value;
 end;
 
 procedure TGeralConfCTe.SetModeloDF(const Value: TModeloCTe);

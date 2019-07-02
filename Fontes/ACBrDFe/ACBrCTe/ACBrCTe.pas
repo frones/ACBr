@@ -267,6 +267,10 @@ begin
   VersaoDFe := DblToVersaoCTe(ok, Versao);
 
   urlUF := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+
+  if Pos('?', urlUF) <= 0 then
+    urlUF := urlUF + '?';
+
   idCTe := OnlyNumber(AChaveCTe);
 
   // Passo 1
@@ -276,11 +280,7 @@ begin
   if TipoEmissao in [teDPEC, teFSDA] then
     sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idCTe));
 
-  // Passo 3
-  if Pos('?', urlUF) < 0 then
-    Result := urlUF + '?';
-
-   Result := Result + sEntrada;
+  Result := urlUF + sEntrada;
 end;
 
 function TACBrCTe.GetNameSpaceURI: String;

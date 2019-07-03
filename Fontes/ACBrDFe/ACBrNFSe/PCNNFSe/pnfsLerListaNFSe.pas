@@ -677,7 +677,7 @@ begin
 
             for j := 0 to NFSeLida.NFSe.CondicaoPagamento.Parcelas.Count -1 do
             begin
-              with ListaNFSe.FCompNFSe[i].FNFSe.CondicaoPagamento.Parcelas.Add do
+              with ListaNFSe.FCompNFSe[i].FNFSe.CondicaoPagamento.Parcelas.New do
               begin
                 Parcela        := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].Parcela;
                 DataVencimento := NFSeLida.NFSe.CondicaoPagamento.Parcelas.Items[j].DataVencimento;

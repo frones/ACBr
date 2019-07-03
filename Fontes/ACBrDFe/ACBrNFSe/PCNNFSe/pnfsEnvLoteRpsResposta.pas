@@ -34,7 +34,7 @@ unit pnfsEnvLoteRpsResposta;
 interface
 
 uses
-  SysUtils, Classes, Variants, Math, StrUtils,
+  SysUtils, Classes, Variants, Math, StrUtils, Contnrs,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
@@ -44,23 +44,23 @@ type
   TMsgRetornoEnvCollectionItem = class;
   TInfRec = class;
 
- TChaveNFeRPSCollectionItem = class(TCollectionItem)
+ TChaveNFeRPSCollectionItem = class(TObject)
   private
     FChaveNFeRPS: TChaveNFeRPS;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
- TChaveNFeRPSCollection = class(TCollection)
+ TChaveNFeRPSCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TChaveNFeRPSCollectionItem;
     procedure SetItem(Index: Integer; Value: TChaveNFeRPSCollectionItem);
   public
-    constructor Create(AOwner: TInfRec);
-    function Add: TChaveNFeRPSCollectionItem;
+    function Add: TChaveNFeRPSCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TChaveNFeRPSCollectionItem;
     property Items[Index: Integer]: TChaveNFeRPSCollectionItem read GetItem write SetItem; default;
   end;
 
@@ -77,7 +77,7 @@ type
     procedure SetMsgRetorno(Value: TMsgRetornoEnvCollection);
     procedure SetListaChaveNFeRPS(const Value: TChaveNFeRPSCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property NumeroLote: String                   read FNumeroLote      write FNumeroLote;
@@ -89,17 +89,17 @@ type
     property ListaChaveNFeRPS: TChaveNFeRPSCollection  read FListaChaveNFeRPS     write SetListaChaveNFeRPS;
   end;
 
- TMsgRetornoEnvCollection = class(TCollection)
+ TMsgRetornoEnvCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoEnvCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoEnvCollectionItem);
   public
-    constructor Create(AOwner: TInfRec);
-    function Add: TMsgRetornoEnvCollectionItem;
+    function Add: TMsgRetornoEnvCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMsgRetornoEnvCollectionItem;
     property Items[Index: Integer]: TMsgRetornoEnvCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoEnvCollectionItem = class(TCollectionItem)
+ TMsgRetornoEnvCollectionItem = class(TObject)
   private
     FCodigo: String;
     FMensagem: String;
@@ -107,9 +107,9 @@ type
     FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
     FChaveNFeRPS: TChaveNFeRPS;
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
@@ -117,7 +117,7 @@ type
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
-  TretEnvLote = class(TPersistent)
+  TretEnvLote = class(TObject)
   private
     FLeitor: TLeitor;
     FInfRec: TInfRec;
@@ -144,7 +144,7 @@ type
     function LerXML_proIPM: Boolean;
     function LerXML_proGiap: Boolean;
     function LerXML_proAssessorPublica: Boolean;
-  published
+
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -156,9 +156,10 @@ implementation
 
 constructor TInfRec.Create;
 begin
-  FMsgRetorno := TMsgRetornoEnvCollection.Create(Self);
-  FInformacoesLote := TInformacoesLote.Create;
-  FListaChaveNFeRPS := TChaveNFeRPSCollection.Create(Self);
+  inherited Create;
+  FMsgRetorno       := TMsgRetornoEnvCollection.Create;
+  FInformacoesLote  := TInformacoesLote.Create;
+  FListaChaveNFeRPS := TChaveNFeRPSCollection.Create;
 end;
 
 destructor TInfRec.Destroy;
@@ -183,13 +184,7 @@ end;
 
 function TMsgRetornoEnvCollection.Add: TMsgRetornoEnvCollectionItem;
 begin
-  Result := TMsgRetornoEnvCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TMsgRetornoEnvCollection.Create(AOwner: TInfRec);
-begin
-  inherited Create(TMsgRetornoEnvCollectionItem);
+  Result := Self.New;
 end;
 
 function TMsgRetornoEnvCollection.GetItem(
@@ -204,13 +199,20 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TMsgRetornoEnvCollection.New: TMsgRetornoEnvCollectionItem;
+begin
+  Result := TMsgRetornoEnvCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TMsgRetornoEnvCollectionItem }
 
 constructor TMsgRetornoEnvCollectionItem.Create;
 begin
-  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  inherited Create;
+  FIdentificacaoRps      := TMsgRetornoIdentificacaoRps.Create;
   FIdentificacaoRps.Tipo := trRPS;
-  FChaveNFeRPS := TChaveNFeRPS.Create;
+  FChaveNFeRPS           := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoEnvCollectionItem.Destroy;
@@ -224,13 +226,7 @@ end;
 
 function TChaveNFeRPSCollection.Add: TChaveNFeRPSCollectionItem;
 begin
-  Result := TChaveNFeRPSCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TChaveNFeRPSCollection.Create(AOwner: TInfRec);
-begin
-  inherited Create(TChaveNFeRPSCollectionItem);
+  Result := Self.New;
 end;
 
 function TChaveNFeRPSCollection.GetItem(
@@ -245,10 +241,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TChaveNFeRPSCollection.New: TChaveNFeRPSCollectionItem;
+begin
+  Result := TChaveNFeRPSCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TChaveNFeRPSCollectionItem }
 
 constructor TChaveNFeRPSCollectionItem.Create;
 begin
+  inherited Create;
   FChaveNFeRPS := TChaveNFeRPS.Create;
 end;
 
@@ -262,6 +265,7 @@ end;
 
 constructor TretEnvLote.Create;
 begin
+  inherited Create;
   FLeitor := TLeitor.Create;
   FInfRec := TInfRec.Create
 end;
@@ -333,7 +337,7 @@ begin
     i := 0;
     while Leitor.rExtrai(iNivel, 'MensagemRetorno', '', i + 1) <> '' do
     begin
-      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno.New;
       InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
       InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
       InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
@@ -350,7 +354,7 @@ begin
       i := 0;
       while Leitor.rExtrai(1, 'ListaMensagemRetorno', '', i + 1) <> '' do
       begin
-        InfRec.FMsgRetorno.Add;
+        InfRec.FMsgRetorno.New;
         InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
         InfRec.FMsgRetorno[i].FIdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
         InfRec.FMsgRetorno[i].FIdentificacaoRps.Tipo   := StrToTipoRPS(Ok, Leitor.rCampo(tcStr, 'Tipo'));
@@ -366,7 +370,7 @@ begin
     i := 0;
     while Leitor.rExtrai(iNivel, 'ErroWebServiceResposta', '', i + 1) <> '' do
     begin
-      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno.New;
       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'CodigoErro');
       InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
       InfRec.FMsgRetorno[i].FCorrecao := '';
@@ -377,7 +381,7 @@ begin
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
     begin
-      InfRec.FMsgRetorno.Add;
+      InfRec.FMsgRetorno.New;
       InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
       if InfRec.FMsgRetorno[i].FCodigo = '' then
         InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Code');
@@ -405,7 +409,7 @@ begin
     msg := Trim(Leitor.rCampo(tcStr,'Mensagem'));
     erro := Trim(Leitor.rExtrai(1,'ERRO'));
     if erro <> '' then begin
-      FInfRec.FMsgRetorno.Add;
+      FInfRec.FMsgRetorno.New;
       FInfRec.FMsgRetorno[0].FCodigo   := '';
       FInfRec.FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'ERRO');
       FInfRec.FMsgRetorno[0].FCorrecao := '';
@@ -460,7 +464,7 @@ begin
           begin
             count := pos('</Alerta>', strAux) + 7;
 
-            FInfRec.FMsgRetorno.Add;
+            FInfRec.FMsgRetorno.New;
 
             LeitorAux := TLeitor.Create;
             leitorAux.Arquivo := copy(strAux, PosI, count);
@@ -491,7 +495,7 @@ begin
           begin
             count := pos('</Erro>', strAux) + 6;
 
-            FInfRec.FMsgRetorno.Add;
+            FInfRec.FMsgRetorno.New;
 
             LeitorAux := TLeitor.Create;
             leitorAux.Arquivo := copy(strAux, PosI, count);
@@ -513,7 +517,7 @@ begin
     else
     begin
       i := 0;
-      FInfRec.FMsgRetorno.Add;
+      FInfRec.FMsgRetorno.New;
       FInfRec.FMsgRetorno[i].FCodigo   := '';
       FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
       FInfRec.FMsgRetorno[i].FCorrecao := '';
@@ -552,7 +556,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'ChaveNFSeRPS', '', i + 1) <> '' do
       begin
-        InfRec.FListaChaveNFeRPS.Add;
+        InfRec.FListaChaveNFeRPS.New;
         InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
         InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
         InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
@@ -571,7 +575,7 @@ begin
           begin
             count := pos('</Alerta>', strAux) + 7;
 
-            FInfRec.FMsgRetorno.Add;
+            FInfRec.FMsgRetorno.New;
 
             LeitorAux := TLeitor.Create;
             leitorAux.Arquivo := copy(strAux, PosI, count);
@@ -602,7 +606,7 @@ begin
           begin
             count := pos('</Erro>', strAux) + 6;
 
-            FInfRec.FMsgRetorno.Add;
+            FInfRec.FMsgRetorno.New;
 
             LeitorAux := TLeitor.Create;
             leitorAux.Arquivo := copy(strAux, PosI, count);
@@ -647,7 +651,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
         begin
-          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno.New;
           InfRec.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'cdMensagem');
           InfRec.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'dsMensagem');
           InfRec.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -660,7 +664,7 @@ begin
       begin
         while Leitor.rExtrai(3, 'alerta', '', i + 1) <> '' do
         begin
-          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno.New;
           InfRec.FMsgRetorno[i].FCodigo  := Leitor.rCampo(tcStr, 'cdMensagem');
           InfRec.FMsgRetorno[i].FMensagem:= Leitor.rCampo(tcStr, 'dsMensagem');
           InfRec.FMsgRetorno[i].FCorrecao:= Leitor.rCampo(tcStr, 'dsCorrecao');
@@ -688,7 +692,7 @@ begin
     i := 0;
     while Leitor.rExtrai(1, 'Erro', '', i + 1) <> '' do
     begin
-      FInfRec.MsgRetorno.Add;
+      FInfRec.MsgRetorno.New;
       FInfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'ErroID');
       FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ErroMensagem');
       FInfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'ErroSolucao');;
@@ -728,7 +732,7 @@ begin
           sMotCod := OnlyNumber(copy(sMotDes, 1, Pos(' ', sMotDes)))
         else
           sMotCod := '';
-        InfRec.MsgRetorno.Add;
+        InfRec.MsgRetorno.New;
         InfRec.MsgRetorno[0].FCodigo   := sMotCod;
         InfRec.MsgRetorno[0].FMensagem := sMotDes + ' ' +
                                           'CNPJ ' + Leitor.rCampo(tcStr, 'CNPJ') + ' ' +
@@ -764,7 +768,7 @@ begin
         Msg    := Copy(strAux, 8, Length(strAux));
         if Trim(Msg) <> '' then
         begin
-          InfRec.FMsgRetorno.Add;
+          InfRec.FMsgRetorno.New;
           InfRec.FMsgRetorno[i].FCodigo   := Cod;
           InfRec.FMsgRetorno[i].FMensagem := Msg;
           InfRec.FMsgRetorno[i].FCorrecao := '';
@@ -823,7 +827,7 @@ begin
         leitorAux.Grupo   := leitorAux.Arquivo;
         strAux2 := leitorAux.rExtrai(1,'erro');
         strAux2 := Leitor.rCampo(tcStr, 'erro');
-        FInfRec.FMsgRetorno.Add;
+        FInfRec.FMsgRetorno.New;
         FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'erro')+#13;
         inc(i);
         LeitorAux.free;
@@ -845,7 +849,7 @@ begin
         leitorAux.Grupo   := leitorAux.Arquivo;
         strAux2 := leitorAux.rExtrai(1,'confirmacao');
         strAux2 := Leitor.rCampo(tcStr, 'confirmacao');
-        FInfRec.FMsgRetorno.Add;
+        FInfRec.FMsgRetorno.New;
         FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'confirmacao')+#13;
         inc(i);
         LeitorAux.free;
@@ -879,7 +883,7 @@ begin
           Msg  := Leitor.rCampo(tcStr, 'DesOco');
           if (Pos('OK!', Msg) = 0) and (Pos('importado com sucesso', Msg) = 0) then
           begin
-            InfRec.FMsgRetorno.Add;
+            InfRec.FMsgRetorno.New;
             InfRec.FMsgRetorno[MsgErro].FMensagem := Msg;
             Inc(MsgErro);
           end;
@@ -895,7 +899,7 @@ begin
             InfRec.DataRecebimento := Now;
             InfRec.FProtocolo := '0';
             InfRec.Sucesso := Leitor.rCampo(tcStr,'FlgRet');
-            InfRec.FListaChaveNFeRPS.Add;
+            InfRec.FListaChaveNFeRPS.New;
             InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumNot');
             InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVer');
             InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumRPS');
@@ -931,7 +935,7 @@ begin
                 sMotCod:=Leitor.rCampo(tcStr, 'Id');
                 sMotDes:=Leitor.rCampo(tcStr, 'Description');
 
-                InfRec.MsgRetorno.Add;
+                InfRec.MsgRetorno.New;
                 InfRec.MsgRetorno[i].FCodigo   := sMotCod;
                 InfRec.MsgRetorno[i].FMensagem := sMotDes;
                 Inc(i);
@@ -980,7 +984,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'ChaveNFeRPS', '', i + 1) <> '' do
       begin
-        FInfRec.FListaChaveNFeRPS.Add;
+        FInfRec.FListaChaveNFeRPS.New;
 
         if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
         begin
@@ -1002,7 +1006,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
       begin
-        FInfRec.MsgRetorno.Add;
+        FInfRec.MsgRetorno.New;
         FInfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfRec.FMsgRetorno[i].FCorrecao := '';
@@ -1027,7 +1031,7 @@ begin
       i := 0;
       while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
       begin
-        FInfRec.MsgRetorno.Add;
+        FInfRec.MsgRetorno.New;
         FInfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
         FInfRec.FMsgRetorno[i].FCorrecao := '';
@@ -1068,7 +1072,7 @@ begin
 
     if pos('Erro',leitor.Arquivo) > 0 Then
     begin
-      FInfRec.MsgRetorno.Add;
+      FInfRec.MsgRetorno.New;
       FInfRec.MsgRetorno[0].FCodigo   := '';
       FInfRec.MsgRetorno[0].FMensagem := leitor.Arquivo;
       FInfRec.MsgRetorno[0].FCorrecao := '';
@@ -1096,7 +1100,7 @@ begin
           i := 0;
           while Leitor.rExtrai(3, 'codigo', '', i + 1) <> '' do
           begin
-            FInfRec.MsgRetorno.Add;
+            FInfRec.MsgRetorno.New;
             FInfRec.FMsgRetorno[i].FCodigo   := Copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5);
             FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'codigo');
             Inc(i);
@@ -1111,7 +1115,7 @@ begin
             FInfRec.FDataRecebimento := StrToDateDef(VarToStr(Leitor.rCampo(tcStr, 'data_nfse')), 0) +
                                         StrToTimeDef(VarToStr(Leitor.rCampo(tcStr, 'hora_nfse')), 0);
 
-            with FInfRec.FListaChaveNFeRPS.Add do
+            with FInfRec.FListaChaveNFeRPS.New do
             begin
               ChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numero_nfse');
               ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
@@ -1155,7 +1159,7 @@ begin
           FInfRec.FDataRecebimento := Now;
           FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'statusEmissao');
 
-          with FInfRec.ListaChaveNFeRPS.Add do
+          with FInfRec.ListaChaveNFeRPS.New do
           begin
             ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'codigoVerificacao');
             ChaveNFeRPS.Numero            := Leitor.rCampo(tcStr, 'numeroNota');
@@ -1180,7 +1184,7 @@ begin
 
               if sValue.Count > 1 then
               begin
-                with FInfRec.MsgRetorno.Add do
+                with FInfRec.MsgRetorno.New do
                 begin
                   FCodigo   := sValue.Values['code'];
 

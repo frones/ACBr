@@ -34,7 +34,7 @@ unit pnfsNFSe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   {$IFNDEF VER130}
     Variants,
   {$ENDIF}
@@ -42,44 +42,17 @@ uses
 
 type
 
- TInfID                             = class;
- TIdentificacaoRps                  = class;
- TIdentificacaoNfse                 = class;
- TValoresNfse                       = class;
- TValores                           = class;
- TItemServicoCollection             = class;
  TItemServicoCollectionItem         = class;
- TDeducaoCollection                 = class;
  TDeducaoCollectionItem             = class;
  TDadosServico                      = class;
- TIdentificacaoPrestador            = class;
- TEndereco                          = class;
- TContato                           = class;
- TDadosPrestador                    = class;
- TIdentificacaoTomador              = class;
- TDadosTomador                      = class;
- TIdentificacaoIntermediarioServico = class;
- TIdentificacaoOrgaoGerador         = class;
- TDadosConstrucaoCivil              = class;
- TParcelasCollectionItem            = class;
- TParcelasCollection                = class;
  TCondicaoPagamento                 = class;
- TemailCollection                   = class;
  TemailCollectionItem               = class;
- TDadosTransportadora               = class;
  TDespesaCollectionItem             = class;
- TDespesaCollection                 = class;
- TAssinaComChaveParamsCollectionItem = class;
- TAssinaComChaveParamsCollection     = class;
 
  TNFSe                              = class;
 
- TLoteRps                           = class;
-
- TPedidoCancelamento                = class;
  TConfirmacaoCancelamento           = class;
- TSubstituicaoNfse                  = class;
-
+ 
 //******************************************************************************
 
   TMsgRetornoIdentificacaoRps = class(TPersistent)
@@ -250,17 +223,17 @@ type
     property ValorTotalRecebido: Currency read FValorTotalRecebido write FValorTotalRecebido;
   end;
 
-  TItemServicoCollection = class(TCollection)
+  TItemServicoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TItemServicoCollectionItem;
     procedure SetItem(Index: Integer; Value: TItemServicoCollectionItem);
   public
-    constructor Create(AOwner: TDadosServico);
-    function Add: TItemServicoCollectionItem;
+    function Add: TItemServicoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TItemServicoCollectionItem;
     property Items[Index: Integer]: TItemServicoCollectionItem read GetItem write SetItem; default;
   end;
 
-  TItemServicoCollectionItem = class(TCollectionItem)
+  TItemServicoCollectionItem = class(TObject)
   private
     FDescricao : String;
 //    FQuantidade : Integer;
@@ -306,9 +279,8 @@ type
     FvRed: currency;
 
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
+    constructor Create;
+
     property Codigo: String read FCodigo write FCodigo;
     property Descricao: String read FDescricao write FDescricao;
 //    property Quantidade: Integer read FQuantidade write FQuantidade;
@@ -352,18 +324,18 @@ type
     property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
   end;
 
- TDeducaoCollection = class(TCollection)
+ TDeducaoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDeducaoCollectionItem;
     procedure SetItem(Index: Integer; Value: TDeducaoCollectionItem);
   public
-    constructor Create(AOwner: TDadosServico);
-    function Add: TDeducaoCollectionItem;
+    function Add: TDeducaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDeducaoCollectionItem;
     property Items[Index: Integer]: TDeducaoCollectionItem read GetItem write SetItem; default;
   end;
 
  //classe usada no provedor IssDSF
- TDeducaoCollectionItem = class(TCollectionItem)
+ TDeducaoCollectionItem = class(TObject)
   private
     FDeducaoPor : TnfseDeducaoPor;
     FTipoDeducao : TnfseTipoDeducao;
@@ -373,9 +345,6 @@ type
     FPercentualDeduzir: Currency;
     FValorDeduzir: Currency;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property DeducaoPor : TnfseDeducaoPor read FDeducaoPor write FDeducaoPor;
     property TipoDeducao : TnfseTipoDeducao read FTipoDeducao write FTipoDeducao;
     property CpfCnpjReferencia : String read FCpfCnpjReferencia write FCpfCnpjReferencia;
@@ -508,7 +477,7 @@ type
     property TipoTelefone: string read FTipoTelefone write FTipoTelefone;
   end;
 
- TDadosPrestador = class(TPersistent)
+ TDadosPrestador = class(TObject)
   private
     FIdentificacaoPrestador: TIdentificacaoPrestador;
     FRazaoSocial: String;
@@ -516,9 +485,9 @@ type
     FEndereco: TEndereco;
     FContato: TContato;
   public
-    constructor Create(AOwner: TNFSe);
+    constructor Create;
     destructor Destroy; override;
-  published
+
     property IdentificacaoPrestador: TIdentificacaoPrestador read FIdentificacaoPrestador write FIdentificacaoPrestador;
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property NomeFantasia: String read FNomeFantasia write FNomeFantasia;
@@ -614,27 +583,26 @@ type
     property nNumeroEncapsulamento : string read FnNumeroEncapsulamento write FnNumeroEncapsulamento;
   end;
 
-  TParcelasCollectionItem = class(TCollectionItem)
+  TParcelasCollectionItem = class(TObject)
   private
     FCondicao: TnfseCondicaoPagamento;
     FParcela: Integer;
     FDataVencimento: TDateTime;
     FValor: Currency;
-  published
+  public
     property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property Parcela: Integer read FParcela write FParcela;
     property DataVencimento: TDateTime read FDataVencimento write FDataVencimento;
     property Valor: Currency read FValor write FValor;
   end;
 
-  TParcelasCollection = class(TCollection)
+  TParcelasCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TParcelasCollectionItem;
     procedure SetItem(Index: Integer; Const Value: TParcelasCollectionItem);
   public
-    constructor Create(AOwner: TCondicaoPagamento);
-
-    function Add: TParcelasCollectionItem;
+    function Add: TParcelasCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TParcelasCollectionItem;
     property Items[Index: Integer]: TParcelasCollectionItem read GetItem write SetItem; default;
   end;
 
@@ -653,23 +621,20 @@ type
     property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
  end;
 
- TemailCollection = class(TCollection)
+ TemailCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TemailCollectionItem;
     procedure SetItem(Index: Integer; Value: TemailCollectionItem);
   public
-    constructor Create(AOwner: TNFSe);
-    function Add: TemailCollectionItem;
+    function Add: TemailCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TemailCollectionItem;
     property Items[Index: Integer]: TemailCollectionItem read GetItem write SetItem; default;
   end;
 
- TemailCollectionItem = class(TCollectionItem)
+ TemailCollectionItem = class(TObject)
   private
     FemailCC: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property emailCC: String read FemailCC write FemailCC;
   end;
 
@@ -700,46 +665,45 @@ type
     property vTipoFreteTrans: TnfseFrete read FvTipoFreteTrans write FvTipoFreteTrans;
   end;
 
-  TDespesaCollection = class(TCollection)
+  TDespesaCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TDespesaCollectionItem;
     procedure SetItem(Index: Integer; Value: TDespesaCollectionItem);
   public
-    constructor Create(AOwner: TNFSe);
-    function Add: TDespesaCollectionItem;
+    function Add: TDespesaCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TDespesaCollectionItem;
     property Items[Index: Integer]: TDespesaCollectionItem read GetItem write SetItem;
   end;
 
-  TDespesaCollectionItem = class(TCollectionItem)
+  TDespesaCollectionItem = class(TObject)
   private
     FnItemDesp: String;
     FxDesp: String;
     FdDesp: TDateTime;
     FvDesp: Currency;
-  published
+  public
     property nItemDesp: String read FnItemDesp write FnItemDesp;
     property xDesp: String read FxDesp write FxDesp;
     property dDesp: TDateTime read FdDesp write FdDesp;
     property vDesp: Currency read FvDesp write FvDesp;
   end;
 
-  TAssinaComChaveParamsCollectionItem = class(TCollectionItem)
+  TAssinaComChaveParamsCollectionItem = class(TObject)
   private
     FParam: String;
     FConteudo: String;
-  published
+  public
     property Param: String read FParam write FParam;
     property Conteudo: String read FConteudo write FConteudo;
   end;
 
-  TAssinaComChaveParamsCollection = class(TCollection)
+  TAssinaComChaveParamsCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TAssinaComChaveParamsCollectionItem;
     procedure SetItem(Index: Integer; Const Value: TAssinaComChaveParamsCollectionItem);
   public
-    constructor Create(AOwner: TNFSe);
-
-    function Add: TAssinaComChaveParamsCollectionItem;
+    function Add: TAssinaComChaveParamsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TAssinaComChaveParamsCollectionItem;
     property Items[Index: Integer]: TAssinaComChaveParamsCollectionItem read GetItem write SetItem; default;
   end;
 
@@ -910,7 +874,7 @@ type
     property QuantidadeRps: String read FQuantidadeRps write FQuantidadeRps;
   end;
 
- TPedidoCancelamento = class(TPersistent)
+ TPedidoCancelamento = class(TObject)
   private
     FInfID: TInfID;
     FIdentificacaoNfse: TIdentificacaoNfse;
@@ -918,13 +882,13 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property InfID: TInfID read FInfID write FInfID;
     property IdentificacaoNfse: TIdentificacaoNfse read FIdentificacaoNfse write FIdentificacaoNfse;
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
   end;
 
- TConfirmacaoCancelamento = class(TPersistent)
+ TConfirmacaoCancelamento = class(TObject)
   private
     FInfID: TInfID;
     FPedido: TPedidoCancelamento;
@@ -932,20 +896,20 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property InfID: TInfID read FInfID write FInfID;
     property Pedido: TPedidoCancelamento read FPedido write FPedido;
     property DataHora: TDateTime read FDataHora write FDataHora;
   end;
 
- TSubstituicaoNfse = class(TPersistent)
+ TSubstituicaoNfse = class(TObject)
   private
     FInfID: TInfID;
     FNfseSubstituidora: String;
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property InfID: TInfID read FInfID write FInfID;
     property NfseSubstituidora: String read FNfseSubstituidora write FNfseSubstituidora;
   end;
@@ -986,8 +950,8 @@ begin
    FValorDespesasNaoTributaveis := 0;
   end;
 
- FItemServico := TItemServicoCollection.Create(Self);
- FDeducao     := TDeducaoCollection.Create(Self);
+ FItemServico := TItemServicoCollection.Create;
+ FDeducao     := TDeducaoCollection.Create;
  FDescricao   := '';
  
 end;
@@ -1008,7 +972,7 @@ end;
 
 { TDadosPrestador }
 
-constructor TDadosPrestador.Create(AOwner: TNFSe);
+constructor TDadosPrestador.Create;
 begin
  inherited Create;
 
@@ -1087,7 +1051,7 @@ begin
  FOutrasInformacoes            := '';
  FInformacoesComplementares    := '';
  FValorCredito                 := 0;
- FPrestadorServico             := TDadosPrestador.Create(self);
+ FPrestadorServico             := TDadosPrestador.Create;
  FOrgaoGerador                 := TIdentificacaoOrgaoGerador.Create;
  FValoresNfse                  := TValoresNfse.Create;
  // RPS e NFSe
@@ -1105,10 +1069,10 @@ begin
 
  FLogradouroLocalPrestacaoServico := llpTomador;
 
- Femail                        := TemailCollection.Create(Self);
- FDespesa                      := TDespesaCollection.Create(Self);
+ Femail                        := TemailCollection.Create;
+ FDespesa                      := TDespesaCollection.Create;
 
- FAssinaComChaveParams         := TAssinaComChaveParamsCollection.Create(Self);
+ FAssinaComChaveParams         := TAssinaComChaveParamsCollection.Create;
 end;
 
 destructor TNFSe.Destroy;
@@ -1172,16 +1136,16 @@ end;
 
 constructor TPedidoCancelamento.Create;
 begin
- FInfID              := TInfID.Create;
- FIdentificacaoNfse  := TIdentificacaoNfse.Create;
- FCodigoCancelamento := '';
+  inherited Create;
+  FInfID              := TInfID.Create;
+  FIdentificacaoNfse  := TIdentificacaoNfse.Create;
+  FCodigoCancelamento := '';
 end;
 
 destructor TPedidoCancelamento.Destroy;
 begin
- FInfID.Free;
- FIdentificacaoNfse.Free;
-
+  FInfID.Free;
+  FIdentificacaoNfse.Free;
   inherited;
 end;
 
@@ -1189,15 +1153,15 @@ end;
 
 constructor TConfirmacaoCancelamento.Create;
 begin
- FInfID     := TInfID.Create;
- FPedido    := TPedidoCancelamento.Create;
+  inherited Create;
+  FInfID     := TInfID.Create;
+  FPedido    := TPedidoCancelamento.Create;
 end;
 
 destructor TConfirmacaoCancelamento.Destroy;
 begin
- FInfID.Free;
- FPedido.Free;
-
+  FInfID.Free;
+  FPedido.Free;
   inherited;
 end;
 
@@ -1205,14 +1169,14 @@ end;
 
 constructor TSubstituicaoNfse.Create;
 begin
- FInfID             := TInfID.Create;
- FNfseSubstituidora := '';
+  inherited Create;
+  FInfID             := TInfID.Create;
+  FNfseSubstituidora := '';
 end;
 
 destructor TSubstituicaoNfse.Destroy;
 begin
- FInfID.Free;
-
+  FInfID.Free;
   inherited;
 end;
 
@@ -1220,13 +1184,7 @@ end;
 
 function TItemServicoCollection.Add: TItemServicoCollectionItem;
 begin
-  Result := TItemServicoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TItemServicoCollection.Create(AOwner: TDadosServico);
-begin
-  inherited Create(TItemServicoCollectionItem);
+  Result := Self.New;
 end;
 
 function TItemServicoCollection.GetItem(Index: Integer): TItemServicoCollectionItem;
@@ -1240,16 +1198,16 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TItemServicoCollection.New: TItemServicoCollectionItem;
+begin
+  Result := TItemServicoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TDeducaoCollection }
 function TDeducaoCollection.Add: TDeducaoCollectionItem;
 begin
-  Result := TDeducaoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TDeducaoCollection.Create(AOwner: TDadosServico);
-begin
-  inherited Create(TDeducaoCollectionItem);
+  Result := Self.New;
 end;
 
 function TDeducaoCollection.GetItem(Index: Integer): TDeducaoCollectionItem;
@@ -1263,44 +1221,27 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TDeducaoCollection.New: TDeducaoCollectionItem;
+begin
+  Result := TDeducaoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TItemServicoCollectionItem }
 
 constructor TItemServicoCollectionItem.Create;
 begin
+  inherited Create;
   // Provedor Infisc Versão XML 1.1
   FCodigo  := '';
   FCodServ := '';
-  FUnidade := 'UN'; 
-end;
-
-destructor TItemServicoCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
-{ TDeducaoCollectionItem }
-
-constructor TDeducaoCollectionItem.Create;
-begin
-
-end;
-
-destructor TDeducaoCollectionItem.Destroy;
-begin
-
-  inherited;
+  FUnidade := 'UN';
 end;
 
 { TParcelasCollection }
 function TParcelasCollection.Add: TParcelasCollectionItem;
 begin
-  Result := TParcelasCollectionItem(inherited Add);
-end;
-
-constructor TParcelasCollection.Create(AOwner : TCondicaoPagamento);
-begin
-  inherited Create(TParcelasCollectionItem);
+  Result := Self.New;
 end;
 
 function TParcelasCollection.GetItem(Index: Integer): TParcelasCollectionItem;
@@ -1314,11 +1255,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
+function TParcelasCollection.New: TParcelasCollectionItem;
+begin
+  Result := TParcelasCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TCondicaoPagamento }
 constructor TCondicaoPagamento.Create;
 begin
   inherited Create;
-  FParcelas := TParcelasCollection.Create(Self);
+  FParcelas := TParcelasCollection.Create;
 end;
 
 destructor TCondicaoPagamento.Destroy;
@@ -1336,13 +1283,7 @@ end;
 
 function TemailCollection.Add: TemailCollectionItem;
 begin
-  Result := TemailCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TemailCollection.Create(AOwner: TNFSe);
-begin
-  inherited Create(TemailCollectionItem);
+  Result := Self.New;
 end;
 
 function TemailCollection.GetItem(Index: Integer): TemailCollectionItem;
@@ -1356,29 +1297,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TemailCollectionItem }
-
-constructor TemailCollectionItem.Create;
+function TemailCollection.New: TemailCollectionItem;
 begin
-
-end;
-
-destructor TemailCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TemailCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TDespesaCollection }
 
 function TDespesaCollection.Add: TDespesaCollectionItem;
 begin
-  Result := TDespesaCollectionItem(inherited Add);
-end;
-
-constructor TDespesaCollection.Create(AOwner: TNFSe);
-begin
-  inherited Create(TDespesaCollectionItem);
+  Result := Self.New;
 end;
 
 function TDespesaCollection.GetItem(Index: Integer): TDespesaCollectionItem;
@@ -1391,17 +1320,17 @@ begin
   Inherited SetItem(Index, Value);
 end;
 
+function TDespesaCollection.New: TDespesaCollectionItem;
+begin
+  Result := TDespesaCollectionItem.Create;
+  Self.Add(Result);
+end;
+
 { TAssinaComChaveParamsCollection }
 
 function TAssinaComChaveParamsCollection.Add: TAssinaComChaveParamsCollectionItem;
 begin
-  Result := TAssinaComChaveParamsCollectionItem(inherited Add);
-end;
-
-constructor TAssinaComChaveParamsCollection.Create(
-  AOwner: TNFSe);
-begin
-  inherited Create(TAssinaComChaveParamsCollectionItem);
+  Result := Self.New;
 end;
 
 function TAssinaComChaveParamsCollection.GetItem(
@@ -1414,6 +1343,12 @@ procedure TAssinaComChaveParamsCollection.SetItem(Index: Integer;
   const Value: TAssinaComChaveParamsCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+function TAssinaComChaveParamsCollection.New: TAssinaComChaveParamsCollectionItem;
+begin
+  Result := TAssinaComChaveParamsCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 end.

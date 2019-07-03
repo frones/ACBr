@@ -34,7 +34,7 @@ unit pnfsSubsNfseResposta;
 interface
 
 uses
-  SysUtils, Classes, Forms, 
+  SysUtils, Classes, Forms, Contnrs,
   pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
@@ -71,49 +71,43 @@ type
     property Provedor: TnfseProvedor                         read FProvedor          write FProvedor;
   end;
 
- TMsgRetornoSubsCollection = class(TCollection)
+ TMsgRetornoSubsCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoSubsCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoSubsCollectionItem);
   public
-    constructor Create(AOwner: TretSubsNFSe);
-    function Add: TMsgRetornoSubsCollectionItem;
+    function Add: TMsgRetornoSubsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMsgRetornoSubsCollectionItem;
     property Items[Index: Integer]: TMsgRetornoSubsCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoSubsCollectionItem = class(TCollectionItem)
+ TMsgRetornoSubsCollectionItem = class(TObject)
   private
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
   end;
 
- TNotaSubstituidoraCollection = class(TCollection)
+ TNotaSubstituidoraCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TNotaSubstituidoraCollectionItem;
     procedure SetItem(Index: Integer; Value: TNotaSubstituidoraCollectionItem);
   public
-    constructor Create(AOwner: TretSubsNFSe);
-    function Add: TNotaSubstituidoraCollectionItem;
+    function Add: TNotaSubstituidoraCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TNotaSubstituidoraCollectionItem;
     property Items[Index: Integer]: TNotaSubstituidoraCollectionItem read GetItem write SetItem; default;
   end;
 
- TNotaSubstituidoraCollectionItem = class(TCollectionItem)
+ TNotaSubstituidoraCollectionItem = class(TObject)
   private
     FNumeroNota: String;
     FCodigoVerficacao: String;
     FInscricaoMunicipalPrestador: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property NumeroNota: String                  read FNumeroNota                  write FNumeroNota;
     property CodigoVerficacao: String            read FCodigoVerficacao            write FCodigoVerficacao;
     property InscricaoMunicipalPrestador: String read FInscricaoMunicipalPrestador write FInscricaoMunicipalPrestador;
@@ -125,13 +119,7 @@ implementation
 
 function TMsgRetornoSubsCollection.Add: TMsgRetornoSubsCollectionItem;
 begin
-  Result := TMsgRetornoSubsCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TMsgRetornoSubsCollection.Create(AOwner: TretSubsNFSe);
-begin
-  inherited Create(TMsgRetornoSubsCollectionItem);
+  Result := Self.New;
 end;
 
 function TMsgRetornoSubsCollection.GetItem(
@@ -146,30 +134,17 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TMsgRetornoSubsCollectionItem }
-
-constructor TMsgRetornoSubsCollectionItem.Create;
+function TMsgRetornoSubsCollection.New: TMsgRetornoSubsCollectionItem;
 begin
-
-end;
-
-destructor TMsgRetornoSubsCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TMsgRetornoSubsCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TNotaSubstituidoraCollection }
 
 function TNotaSubstituidoraCollection.Add: TNotaSubstituidoraCollectionItem;
 begin
-  Result := TNotaSubstituidoraCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TNotaSubstituidoraCollection.Create(AOwner: TretSubsNFSe);
-begin
-  inherited Create(TNotaSubstituidoraCollectionItem);
+  Result := Self.New;
 end;
 
 function TNotaSubstituidoraCollection.GetItem(
@@ -184,26 +159,20 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TNotaSubstituidoraCollectionItem }
-
-constructor TNotaSubstituidoraCollectionItem.Create;
+function TNotaSubstituidoraCollection.New: TNotaSubstituidoraCollectionItem;
 begin
-
-end;
-
-destructor TNotaSubstituidoraCollectionItem.Destroy;
-begin
-
-  inherited;
+  Result := TNotaSubstituidoraCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TretSubsNFSe }
 
 constructor TretSubsNFSe.Create;
 begin
+  inherited Create;
   FLeitor  := TLeitor.Create;
-  FMsgRetorno := TMsgRetornoSubsCollection.Create(Self);
-  FNotaSubstituidora := TNotaSubstituidoraCollection.Create(Self);
+  FMsgRetorno := TMsgRetornoSubsCollection.Create;
+  FNotaSubstituidora := TNotaSubstituidoraCollection.Create;
 end;
 
 destructor TretSubsNFSe.Destroy;
@@ -268,7 +237,7 @@ begin
         i := 0;
         while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
         begin
-          FMsgRetorno.Add;
+          FMsgRetorno.New;
           FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
           FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -278,7 +247,7 @@ begin
 
       if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') then
       begin
-        FMsgRetorno.Add;
+        FMsgRetorno.New;
         FMsgRetorno[0].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         FMsgRetorno[0].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
         FMsgRetorno[0].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
@@ -289,7 +258,7 @@ begin
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
     begin
-      FMsgRetorno.Add;
+      FMsgRetorno.New;
       FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
       FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
       FMsgRetorno[i].FCorrecao := '';

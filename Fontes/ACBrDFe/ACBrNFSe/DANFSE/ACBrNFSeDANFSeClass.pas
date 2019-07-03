@@ -49,7 +49,7 @@ type
   {$ENDIF RTL230_UP}	
  TACBrNFSeDANFSeClass = class(TACBrDFeReport)
   private
-    procedure SetNFSe(const Value: TComponent);
+    procedure SetACBrNFSe(const Value: TComponent);
     procedure ErroAbstract( const NomeProcedure: String );
   protected
     FACBrNFSe: TComponent;
@@ -88,7 +88,7 @@ type
     procedure ImprimirDANFSePDF(NFSe: TNFSe = nil); virtual;
 
   published
-    property ACBrNFSe: TComponent  read FACBrNFSe write SetNFSe;
+    property ACBrNFSe: TComponent  read FACBrNFSe write SetACBrNFSe;
     property PrestLogo: String read FPrestLogo write FPrestLogo;
     property Prefeitura: String read FPrefeitura write FPrefeitura;
 
@@ -178,7 +178,7 @@ begin
   then FACBrNFSe := nil;
 end;
 
-procedure TACBrNFSeDANFSeClass.SetNFSe(const Value: TComponent);
+procedure TACBrNFSeDANFSeClass.SetACBrNFSe(const Value: TComponent);
 var
  OldValue: TACBrNFSe;
 begin

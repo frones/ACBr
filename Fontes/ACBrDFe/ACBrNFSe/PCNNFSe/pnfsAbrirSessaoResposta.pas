@@ -34,7 +34,7 @@ unit pnfsAbrirSessaoResposta;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 
 type
@@ -42,39 +42,36 @@ type
  TMsgRetornoAbreSessaoCollection = class;
  TMsgRetornoAbreSessaoCollectionItem = class;
 
- TInfAbrirSessao = class(TPersistent)
+ TInfAbrirSessao = class(TObject)
   private
     FHashIdent: String;
     FMsgRetorno: TMsgRetornoAbreSessaoCollection;
 
     procedure SetMsgRetorno(Value: TMsgRetornoAbreSessaoCollection);
   public
-    constructor Create; reintroduce;
+    constructor Create;
     destructor Destroy; override;
 
     property HashIdent: String                           read FHashIdent  write FHashIdent;
     property MsgRetorno: TMsgRetornoAbreSessaoCollection read FMsgRetorno write SetMsgRetorno;
   end;
 
- TMsgRetornoAbreSessaoCollection = class(TCollection)
+ TMsgRetornoAbreSessaoCollection = class(TObjectList)
   private
     function GetItem(Index: Integer): TMsgRetornoAbreSessaoCollectionItem;
     procedure SetItem(Index: Integer; Value: TMsgRetornoAbreSessaoCollectionItem);
   public
-    constructor Create(AOwner: TInfAbrirSessao);
-    function Add: TMsgRetornoAbreSessaoCollectionItem;
+    function Add: TMsgRetornoAbreSessaoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMsgRetornoAbreSessaoCollectionItem;
     property Items[Index: Integer]: TMsgRetornoAbreSessaoCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoAbreSessaoCollectionItem = class(TCollectionItem)
+ TMsgRetornoAbreSessaoCollectionItem = class(TObject)
   private
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
   public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
@@ -82,7 +79,7 @@ type
 
  { TretAbrirSessao }
 
- TretAbrirSessao = class(TPersistent)
+ TretAbrirSessao = class(TObject)
   private
     FLeitor: TLeitor;
     FInfAbrirSessao: TInfAbrirSessao;
@@ -92,10 +89,8 @@ type
     destructor Destroy; override;
 
     function LerXml: Boolean;
-
     function LerXML_proEL: Boolean;
 
-  published
     property Leitor: TLeitor                 read FLeitor         write FLeitor;
     property InfAbrirSessao: TInfAbrirSessao read FInfAbrirSessao write FInfAbrirSessao;
     property Provedor: TnfseProvedor         read FProvedor       write FProvedor;
@@ -107,7 +102,8 @@ implementation
 
 constructor TInfAbrirSessao.Create;
 begin
-  FMsgRetorno := TMsgRetornoAbreSessaoCollection.Create(Self);
+  inherited Create;
+  FMsgRetorno := TMsgRetornoAbreSessaoCollection.Create;
 end;
 
 destructor TInfAbrirSessao.Destroy;
@@ -125,13 +121,7 @@ end;
 
 function TMsgRetornoAbreSessaoCollection.Add: TMsgRetornoAbreSessaoCollectionItem;
 begin
-  Result := TMsgRetornoAbreSessaoCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TMsgRetornoAbreSessaoCollection.Create(AOwner: TInfAbrirSessao);
-begin
-  inherited Create(TMsgRetornoAbreSessaoCollectionItem);
+  Result := Self.New;
 end;
 
 function TMsgRetornoAbreSessaoCollection.GetItem(
@@ -146,22 +136,18 @@ begin
   inherited SetItem(Index, Value);
 end;
 
-{ TMsgRetornoAbreSessaoCollectionItem }
-
-constructor TMsgRetornoAbreSessaoCollectionItem.Create;
+function TMsgRetornoAbreSessaoCollection.New: TMsgRetornoAbreSessaoCollectionItem;
 begin
-end;
-
-destructor TMsgRetornoAbreSessaoCollectionItem.Destroy;
-begin
-  inherited;
+  Result := TMsgRetornoAbreSessaoCollectionItem.Create;
+  Self.Add(Result);
 end;
 
 { TretAbrirSessao }
 
 constructor TretAbrirSessao.Create;
 begin
-  FLeitor := TLeitor.Create;
+  inherited Create;
+  FLeitor         := TLeitor.Create;
   FInfAbrirSessao := TInfAbrirSessao.Create;
 end;
 
@@ -207,7 +193,7 @@ begin
         Msg    := Copy(strAux, 8, Length(strAux));
         if Trim(Msg) <> '' then
         begin
-          InfAbrirSessao.FMsgRetorno.Add;
+          InfAbrirSessao.FMsgRetorno.New;
           InfAbrirSessao.FMsgRetorno[i].Codigo   := Cod;
           InfAbrirSessao.FMsgRetorno[i].Mensagem := Msg;
           InfAbrirSessao.FMsgRetorno[i].Correcao := '';

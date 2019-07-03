@@ -1055,7 +1055,7 @@ begin
       if (Leitor.rExtrai(2, 'ReducoesZ') <> '') then
       begin
         I := 0;
-        while (Leitor.rExtrai(3, 'ECF', '', I + 1) <> '') do
+        while (Leitor.rExtrai(3, 'Ecf', '', I + 1) <> '') do
         begin
           with ReducaoZ.ECFs.New do
           begin

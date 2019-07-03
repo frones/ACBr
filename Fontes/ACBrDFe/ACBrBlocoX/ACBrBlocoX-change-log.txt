@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/07/2019
+-- pcnRetEnvBlocoX --
+[*] Correção para leitura correta da lista de ECFs do xml de resposta ao comando ConsultarPendenciasContribuinte.
+	por: Elias César
+
 07/06/2019
 [+] Inclusão classe ACBrBlocoX_Consulta com novos métodos de acordo com novos WebServices (Requisitos LVIII e LIX),
     como ConsultarProcessamentoArquivoBlocoX, ReprocessarArquivoBlocoX, DownloadArquivoBlocoX

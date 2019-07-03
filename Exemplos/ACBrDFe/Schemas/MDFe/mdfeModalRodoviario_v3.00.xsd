@@ -282,8 +282,8 @@ Só preenchido quando o veículo não pertencer à empresa emitente do MDF-e</xs
 											<xs:annotation>
 												<xs:documentation>Tipo Proprietário</xs:documentation>
 												<xs:documentation>Preencher com:
-												0-TAC – Agregado;
-												1-TAC Independente; ou 
+												0-TAC Agregado;
+												1-TAC Independente; 
 												2 – Outros.</xs:documentation>
 											</xs:annotation>
 											<xs:simpleType>
@@ -300,7 +300,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do MDF-e</xs
 							</xs:element>
 							<xs:element name="condutor" maxOccurs="10">
 								<xs:annotation>
-									<xs:documentation>Informações do(s) Condutor(s) do veículo</xs:documentation>
+									<xs:documentation>Informações do(s) Condutor(es) do veículo</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
@@ -505,8 +505,8 @@ Só preenchido quando o veículo não pertencer à empresa emitente do MDF-e</xs
 											<xs:annotation>
 												<xs:documentation>Tipo Proprietário</xs:documentation>
 												<xs:documentation>Preencher com:
-												0-TAC – Agregado;
-												1-TAC Independente; ou 
+												0-TAC Agregado;
+												1-TAC Independente;  
 												2 – Outros.</xs:documentation>
 											</xs:annotation>
 											<xs:simpleType>

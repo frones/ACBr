@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas.softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/mdfe" targetNamespace="http://www.portalfiscal.inf.br/mdfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralMDFe_v3.00.xsd"/>
@@ -60,15 +60,12 @@ OBS: Deve ser preenchido com 2 para emitentes de NF-e e pelas transportadoras qu
 											<xs:documentation>Utilizar o código 58 para identificação do MDF-e</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="serie">
+									<xs:element name="serie" type="TSerie">
 										<xs:annotation>
 											<xs:documentation>Série do Manifesto</xs:documentation>
 											<xs:documentation>Informar a série do documento fiscal (informar zero se inexistente).
 Série na faixa [920-969]: Reservada para emissão por contribuinte pessoa física com inscrição estadual.</xs:documentation>
 										</xs:annotation>
-										<xs:simpleType>
-											<xs:restriction base="TSerie"/>
-										</xs:simpleType>
 									</xs:element>
 									<xs:element name="nMDF" type="TNF">
 										<xs:annotation>
@@ -130,8 +127,7 @@ Série na faixa [920-969]: Reservada para emissão por contribuinte pessoa físi
 									<xs:element name="procEmi">
 										<xs:annotation>
 											<xs:documentation>Identificação do processo de emissão do Manifesto</xs:documentation>
-											<xs:documentation>0 - emissão de MDF-e com aplicativo do contribuinte; 
-3- emissão MDF-e pelo contribuinte com aplicativo fornecido pelo Fisco.</xs:documentation>
+											<xs:documentation>0 - emissão de MDF-e com aplicativo do contribuinte</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TProcEmi"/>
@@ -219,6 +215,16 @@ Informar 'EX' para operações com o exterior.</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
+									<xs:element name="indCarregaPosterior" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Indicador de MDF-e com inclusão da Carga posterior a emissão por evento de inclusão de DF-e</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -238,8 +244,9 @@ Informar 'EX' para operações com o exterior.</xs:documentation>
 										<xs:element name="CPF" type="TCpf">
 											<xs:annotation>
 												<xs:documentation>CPF do emitente</xs:documentation>
-												<xs:documentation>Informar zeros não significativos
-Usar com serie específica 920-969 para emitente pessoa física com inscrição estadual</xs:documentation>
+												<xs:documentation>Informar zeros não significativos.
+
+Usar com série específica 920-969 para emitente pessoa física com inscrição estadual</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 									</xs:choice>
@@ -867,7 +874,7 @@ Dados obrigatórios apenas no modal Rodoviário, depois da lei 11.442/07. Para o
 									</xs:element>
 									<xs:element name="cUnid">
 										<xs:annotation>
-											<xs:documentation>Codigo da unidade de medida do Peso Bruto da Carga / Mercadorias transportadas</xs:documentation>
+											<xs:documentation>Código da unidade de medida do Peso Bruto da Carga / Mercadorias transportadas</xs:documentation>
 											<xs:documentation>01 – KG;  02 - TON</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
@@ -987,12 +994,34 @@ Dados obrigatórios apenas no modal Rodoviário, depois da lei 11.442/07. Para o
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="infMDFeSupl" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Informações suplementares do MDF-e</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="qrCodMDFe">
+							<xs:annotation>
+								<xs:documentation>Texto com o QR-Code para consulta do MDF-e</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:whiteSpace value="preserve"/>
+									<xs:minLength value="50"/>
+									<xs:maxLength value="1000"/>
+									<xs:pattern value="((HTTPS?|https?)://.*\?chMDFe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element ref="ds:Signature"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="TEnviMDFe">
 		<xs:annotation>
-			<xs:documentation>Tipo Pedido de Concessão de Autorização de MDF-e</xs:documentation>
+			<xs:documentation>Tipo Pedido de Autorização Assíncrona de MDF-e</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="idLote" type="TIdLote"/>
@@ -1000,9 +1029,49 @@ Dados obrigatórios apenas no modal Rodoviário, depois da lei 11.442/07. Para o
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVerMDe" use="required"/>
 	</xs:complexType>
+	<xs:complexType name="TRetMDFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Retorno do Pedido de Autorização do MDF-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tpAmb">
+				<xs:annotation>
+					<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cUF" type="TCodUfIBGE">
+				<xs:annotation>
+					<xs:documentation>Identificação da UF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="verAplic" type="TVerAplic">
+				<xs:annotation>
+					<xs:documentation>Versão do Aplicativo que recebeu o Arquivo.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cStat" type="TStat">
+				<xs:annotation>
+					<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="xMotivo" type="TMotivo">
+				<xs:annotation>
+					<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="protMDFe" type="TProtMDFe" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dados do Recibo do Arquivo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerMDe" use="required"/>
+	</xs:complexType>
 	<xs:complexType name="TRetEnviMDFe">
 		<xs:annotation>
-			<xs:documentation>Tipo Retorno do Pedido de Concessão de Autorização do MDF-e</xs:documentation>
+			<xs:documentation>Tipo Retorno do Recibo do Pedido de Autorização do MDF-e</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="tpAmb">
@@ -1998,17 +2067,104 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 				<xs:element name="hashCSRT">
 					<xs:annotation>
 						<xs:documentation>Hash do token do código de segurança do responsável técnico</xs:documentation>
-						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)</xs:documentation>
+						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)
+
+Observação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:base64Binary">
-							<xs:minLength value="28"/>
-							<xs:maxLength value="28"/>
+							<xs:length value="20"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
 			</xs:sequence>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TProtMDFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Protocolo de status resultado do processamento do MDF-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="infProt">
+				<xs:annotation>
+					<xs:documentation>Dados do protocolo de status</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="tpAmb" type="TAmb">
+							<xs:annotation>
+								<xs:documentation>Identificação do Ambiente:
+1 - Produção
+2 - Homologação</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="verAplic" type="TVerAplic">
+							<xs:annotation>
+								<xs:documentation>Versão do Aplicativo que processou a NF-3e</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="chMDFe" type="TChMDFe">
+							<xs:annotation>
+								<xs:documentation>Chave de acesso do MDF-e</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dhRecbto" type="TDateTimeUTC">
+							<xs:annotation>
+								<xs:documentation>Data e hora de processamento, no formato AAAA-MM-DDTHH:MM:SS TZD.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="nProt" type="TProt" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Número do Protocolo de Status do MDF-e</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="digVal" type="ds:DigestValueType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Digest Value do MDF-e processado. Utilizado para conferir a integridade do MDF-e original.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="cStat">
+							<xs:annotation>
+								<xs:documentation>Código do status do MDF-e</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TStat"/>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="xMotivo" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Descrição literal do status do MDF-e.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="Id" type="xs:ID" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="infFisco" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mensagem do Fisco</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="cMsg">
+							<xs:annotation>
+								<xs:documentation>Código do status da mensagem do fisco</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="TStat"/>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="xMsg" type="TMotivo">
+							<xs:annotation>
+								<xs:documentation>Mensagem do Fisco</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ds:Signature" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerMDe" use="required"/>
 	</xs:complexType>
 	<xs:simpleType name="TProcEmi">
 		<xs:annotation>
@@ -2017,7 +2173,6 @@ Por exemplo: para rodoviário tração ou reboque deverá preencher com a placa 
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="0"/>
-			<xs:enumeration value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TIdLote">

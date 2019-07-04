@@ -61,7 +61,7 @@ type
 
     procedure GerarServicoValores;
     procedure GerarListaServicos;
-    procedure GerarValoresServico;
+//    procedure GerarValoresServico;
 
     procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
@@ -448,10 +448,10 @@ begin
     Gerador.wGrupoNFSe('/ListaServicos');
 end;
 
-procedure TNFSeW_ABRASFv1.GerarValoresServico;
-begin
+//procedure TNFSeW_ABRASFv1.GerarValoresServico;
+//begin
 //  Não definido
-end;
+//end;
 
 procedure TNFSeW_ABRASFv1.GerarConstrucaoCivil;
 begin

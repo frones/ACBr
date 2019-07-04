@@ -54,17 +54,17 @@ type
   protected
     procedure GerarIdentificacaoHomologacao;
     procedure GerarIdentificacaoRPS;
-    procedure GerarRPSSubstituido;
+//    procedure GerarRPSSubstituido;
 
     procedure GerarPrestador;
     procedure GerarTomador;
-    procedure GerarIntermediarioServico;
+//    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores;
+//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil;
+//    procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
 
     procedure GerarXML_IPM;
@@ -114,10 +114,10 @@ begin
   end;
 end;
 
-procedure TNFSeW_IPM.GerarRPSSubstituido;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_IPM.GerarRPSSubstituido;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_IPM.GerarPrestador;
 begin
@@ -170,15 +170,15 @@ begin
   Gerador.wGrupoNFSe('/tomador');
 end;
 
-procedure TNFSeW_IPM.GerarIntermediarioServico;
-begin
-  // não definido
-end;
+//procedure TNFSeW_IPM.GerarIntermediarioServico;
+//begin
+//  // não definido
+//end;
 
-procedure TNFSeW_IPM.GerarServicoValores;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_IPM.GerarServicoValores;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_IPM.GerarListaServicos;
 var
@@ -251,10 +251,10 @@ begin
   Gerador.wGrupoNFSe('/nf');
 end;
 
-procedure TNFSeW_IPM.GerarConstrucaoCivil;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_IPM.GerarConstrucaoCivil;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_IPM.GerarCondicaoPagamento;
 var
@@ -297,7 +297,7 @@ begin
   GerarValoresServico;
   GerarPrestador;
   GerarTomador;
-  GerarIntermediarioServico;
+//  GerarIntermediarioServico;
   GerarListaServicos;
 
   if NFSe.Status = srNormal then

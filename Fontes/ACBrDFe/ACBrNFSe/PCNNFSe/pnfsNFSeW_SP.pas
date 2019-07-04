@@ -60,11 +60,11 @@ type
     procedure GerarConstrucaoCivil;
     procedure GerarListaServicos;
 
-    procedure GerarRPSSubstituido;
-    procedure GerarPrestador;
-    procedure GerarServicoValores;
+//    procedure GerarRPSSubstituido;
+//    procedure GerarPrestador;
+//    procedure GerarServicoValores;
 
-    procedure GerarCondicaoPagamento;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_SP;
 
@@ -198,20 +198,20 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'FonteCargaTributaria', 1, 10, 0, NFSe.Servico.FonteCargaTributaria, '');
 end;
 
-procedure TNFSeW_SP.GerarRPSSubstituido;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_SP.GerarRPSSubstituido;
+//begin
+//  // Não definido
+//end;
 
-procedure TNFSeW_SP.GerarPrestador;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_SP.GerarPrestador;
+//begin
+//  // Não definido
+//end;
 
-procedure TNFSeW_SP.GerarServicoValores;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_SP.GerarServicoValores;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_SP.GerarConstrucaoCivil;
 begin
@@ -220,10 +220,10 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'NumeroEncapsulamento', 1, 12, 0, NFSe.ConstrucaoCivil.nNumeroEncapsulamento, '');
 end;
 
-procedure TNFSeW_SP.GerarCondicaoPagamento;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_SP.GerarCondicaoPagamento;
+//begin
+//  // Não definido
+//end;
 
 function TNFSeW_SP.AsciiToByte(const ABinaryString: AnsiString): String;
 var

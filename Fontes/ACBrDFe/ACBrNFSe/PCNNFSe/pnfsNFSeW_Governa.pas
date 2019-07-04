@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS;
-    procedure GerarRPSSubstituido;
+//    procedure GerarIdentificacaoRPS;
+//    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador;
+//    procedure GerarPrestador;
     procedure GerarTomador;
-    procedure GerarIntermediarioServico;
+//    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores;
+//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarConstrucaoCivil;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Governa;
 
@@ -88,20 +88,20 @@ uses
 
 { TNFSeW_Governa }
 
-procedure TNFSeW_Governa.GerarIdentificacaoRPS;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarIdentificacaoRPS;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Governa.GerarRPSSubstituido;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarRPSSubstituido;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Governa.GerarPrestador;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarPrestador;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Governa.GerarTomador;
 begin
@@ -117,15 +117,15 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'EmlTmd'   , 01, 050, 1, '','');
 end;
 
-procedure TNFSeW_Governa.GerarIntermediarioServico;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarIntermediarioServico;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Governa.GerarServicoValores;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarServicoValores;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Governa.GerarListaServicos;
 var
@@ -191,15 +191,15 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'Obs', 01, 16, 1, NFSe.OutrasInformacoes, '');
 end;
 
-procedure TNFSeW_Governa.GerarConstrucaoCivil;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarConstrucaoCivil;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Governa.GerarCondicaoPagamento;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Governa.GerarCondicaoPagamento;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Governa.GerarXML_Governa;
 begin

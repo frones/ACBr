@@ -22,15 +22,15 @@ type
   protected
 
     procedure GerarIdentificacaoRPS;
-    procedure GerarRPSSubstituido;
+//    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador;
+//    procedure GerarPrestador;
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
 
     procedure GerarServicoValores;
     procedure GerarListaServicos;
-    procedure GerarValoresServico;
+//    procedure GerarValoresServico;
 
     procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
@@ -139,16 +139,16 @@ begin
   Gerador.wGrupoNFSe('/tbservico');
 end;
 
-procedure TNFSeW_SMARAPD.GerarPrestador;
-begin
-end;
+//procedure TNFSeW_SMARAPD.GerarPrestador;
+//begin
+//end;
 
-procedure TNFSeW_SMARAPD.GerarRPSSubstituido;
-begin
-  //Para WebService não existe a substituição.
-  //Neste caso você deve enviar o cancelamento da nota que contém os erros e depois enviar a geração de uma nova nota.
-  //Thiago Oliveira - SMARAPD
-end;
+//procedure TNFSeW_SMARAPD.GerarRPSSubstituido;
+//begin
+//  //Para WebService não existe a substituição.
+//  //Neste caso você deve enviar o cancelamento da nota que contém os erros e depois enviar a geração de uma nova nota.
+//  //Thiago Oliveira - SMARAPD
+//end;
 
 procedure TNFSeW_SMARAPD.GerarServicoValores;
 begin
@@ -207,9 +207,9 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'pesobruto',              01, 255, 1, '0', '');
 end;
 
-procedure TNFSeW_SMARAPD.GerarValoresServico;
-begin
-end;
+//procedure TNFSeW_SMARAPD.GerarValoresServico;
+//begin
+//end;
 
 function TNFSeW_SMARAPD.GerarXml: Boolean;
 begin
@@ -231,7 +231,7 @@ begin
   Gerador.Prefixo := '';
   Gerador.wGrupoNFSe('nfd');
   GerarIdentificacaoRPS;
-  GerarRPSSubstituido;
+//  GerarRPSSubstituido;
   GerarTomador;
   GerarCondicaoPagamento;
   GerarListaServicos;

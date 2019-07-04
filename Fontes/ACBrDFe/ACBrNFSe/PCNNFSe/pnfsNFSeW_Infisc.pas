@@ -76,10 +76,10 @@ type
     procedure GerarXML_Infisc_v11;
 
     // **************************** Ambas Versões
-    procedure GerarRPSSubstituido;
+//    procedure GerarRPSSubstituido;
     procedure GerarTransportadora;
-    procedure GerarIntermediarioServico;
-    procedure GerarServicoValores;
+//    procedure GerarIntermediarioServico;
+//    procedure GerarServicoValores;
     procedure GerarConstrucaoCivil;
 
   public
@@ -809,10 +809,10 @@ end;
 // **************************** Ambas Versões
 ////////////////////////////////////////////////////////////////////////////////
 
-procedure TNFSeW_Infisc.GerarRPSSubstituido;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Infisc.GerarRPSSubstituido;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Infisc.GerarTransportadora;
 begin
@@ -837,15 +837,15 @@ begin
   end;
 end;
 
-procedure TNFSeW_Infisc.GerarIntermediarioServico;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Infisc.GerarIntermediarioServico;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Infisc.GerarServicoValores;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Infisc.GerarServicoValores;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Infisc.GerarConstrucaoCivil;
 begin

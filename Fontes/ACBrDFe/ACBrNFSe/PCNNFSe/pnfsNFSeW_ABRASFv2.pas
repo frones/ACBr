@@ -64,7 +64,7 @@ type
     procedure GerarValoresServico;
 
     procedure GerarConstrucaoCivil;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ABRASF_v2;
 
@@ -661,10 +661,10 @@ begin
   Gerador.wGrupoNFSe('/credenciais');
 end;
 
-procedure TNFSeW_ABRASFv2.GerarCondicaoPagamento;
+//procedure TNFSeW_ABRASFv2.GerarCondicaoPagamento;
 //var
 //  i: Integer;
-begin
+//begin
 (*
   if (NFSe.CondicaoPagamento.QtdParcela > 0) then
   begin
@@ -682,7 +682,7 @@ begin
     Gerador.wGrupoNFSe('/CondicaoPagamento');
   end;
 *)
-end;
+//end;
 
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin

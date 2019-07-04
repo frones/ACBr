@@ -4688,8 +4688,8 @@ begin
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +
                             '</' + FTagGrupo + '>';
-  else
-    FPDadosMsg := FPDadosMsg;
+//  else
+//    FPDadosMsg := FPDadosMsg;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.IncluiEncodingDados);

@@ -53,18 +53,18 @@ type
   protected
 
     procedure GerarIdentificacaoRPS;
-    procedure GerarRPSSubstituido;
+//    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador;
+//    procedure GerarPrestador;
     procedure GerarTomador;
-    procedure GerarIntermediarioServico;
+//    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores;
+//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarConstrucaoCivil;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Equiplano;
 
@@ -98,15 +98,15 @@ begin
   Gerador.wCampoNFSe(tcStr,   '', 'isIssRetido ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
 end;
 
-procedure TNFSeW_Equiplano.GerarRPSSubstituido;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarRPSSubstituido;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Equiplano.GerarPrestador;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarPrestador;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Equiplano.GerarTomador;
 var
@@ -147,15 +147,15 @@ begin
   end;
 end;
 
-procedure TNFSeW_Equiplano.GerarIntermediarioServico;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarIntermediarioServico;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Equiplano.GerarServicoValores;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarServicoValores;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Equiplano.GerarListaServicos;
 var
@@ -244,15 +244,15 @@ begin
   Gerador.wGrupoNFSe('/retencoes');
 end;
 
-procedure TNFSeW_Equiplano.GerarConstrucaoCivil;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarConstrucaoCivil;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_Equiplano.GerarCondicaoPagamento;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_Equiplano.GerarCondicaoPagamento;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_Equiplano.GerarXML_Equiplano;
 begin

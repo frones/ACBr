@@ -68,7 +68,7 @@ type
     procedure GerarRegimeEspecialTributacao;
     procedure GerarResponsavelISSQN;
     procedure GerarExigibilidadeISSQN;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Agili;
 
@@ -458,10 +458,10 @@ begin
 end;
 
 
-procedure TNFSeW_Agili.GerarCondicaoPagamento;
+//procedure TNFSeW_Agili.GerarCondicaoPagamento;
 //var
 //  i: Integer;
-begin
+//begin
 (*
   if (NFSe.CondicaoPagamento.QtdParcela > 0) then
   begin
@@ -479,7 +479,7 @@ begin
     Gerador.wGrupoNFSe('/CondicaoPagamento');
   end;
 *)
-end;
+//end;
 
 procedure TNFSeW_Agili.GerarXML_Agili;
 begin

@@ -61,12 +61,12 @@ type
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores;
+//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarConstrucaoCivil;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ISSDSF;
 
@@ -167,10 +167,10 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJIntermediario', 00, 14, 0, OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), '');
 end;
 
-procedure TNFSeW_ISSDSF.GerarServicoValores;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_ISSDSF.GerarServicoValores;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_ISSDSF.GerarListaServicos;
 var
@@ -301,15 +301,15 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'DescricaoRPS', 01, 1500, 1, NFSe.OutrasInformacoes, '');
 end;
 
-procedure TNFSeW_ISSDSF.GerarConstrucaoCivil;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_ISSDSF.GerarConstrucaoCivil;
+//begin
+//  // Não definido
+//end;
 
-procedure TNFSeW_ISSDSF.GerarCondicaoPagamento;
-begin
-  // Não definido
-end;
+//procedure TNFSeW_ISSDSF.GerarCondicaoPagamento;
+//begin
+//  // Não definido
+//end;
 
 procedure TNFSeW_ISSDSF.GerarXML_ISSDSF;
 var

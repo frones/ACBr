@@ -286,8 +286,8 @@ begin
       proIPM:         InfElemento := 'nfse';
       proSMARAPD:     InfElemento := 'nfd';
       proGiap:        InfElemento := 'notaFiscal';
-    else
-      InfElemento := InfElemento;
+//    else
+//      InfElemento := InfElemento;
     end;
 
     if Configuracoes.Geral.ConfigAssinar.URI then

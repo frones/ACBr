@@ -59,12 +59,12 @@ type
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores;
+//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil;
-    procedure GerarCondicaoPagamento;
+//    procedure GerarConstrucaoCivil;
+//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_EL;
 
@@ -226,10 +226,10 @@ begin
   end;
 end;
 
-procedure TNFSeW_EL.GerarServicoValores;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_EL.GerarServicoValores;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_EL.GerarListaServicos;
 var
@@ -276,15 +276,15 @@ begin
   Gerador.wGrupoNFSe('/Valores');
 end;
 
-procedure TNFSeW_EL.GerarConstrucaoCivil;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_EL.GerarConstrucaoCivil;
+//begin
+//  // Não Definido
+//end;
 
-procedure TNFSeW_EL.GerarCondicaoPagamento;
-begin
-  // Não Definido
-end;
+//procedure TNFSeW_EL.GerarCondicaoPagamento;
+//begin
+//  // Não Definido
+//end;
 
 procedure TNFSeW_EL.GerarXML_EL;
 var

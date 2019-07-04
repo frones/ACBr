@@ -1,3 +1,34 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrNFSe                                                 }
+{  Biblioteca multiplataforma de componentes Delphi                            }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{$I ACBr.inc}
+
 unit pnfsNFSeW_SMARAPD;
 
 interface
@@ -22,15 +53,12 @@ type
   protected
 
     procedure GerarIdentificacaoRPS;
-//    procedure GerarRPSSubstituido;
 
-//    procedure GerarPrestador;
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
 
     procedure GerarServicoValores;
     procedure GerarListaServicos;
-//    procedure GerarValoresServico;
 
     procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
@@ -139,17 +167,6 @@ begin
   Gerador.wGrupoNFSe('/tbservico');
 end;
 
-//procedure TNFSeW_SMARAPD.GerarPrestador;
-//begin
-//end;
-
-//procedure TNFSeW_SMARAPD.GerarRPSSubstituido;
-//begin
-//  //Para WebService não existe a substituição.
-//  //Neste caso você deve enviar o cancelamento da nota que contém os erros e depois enviar a geração de uma nova nota.
-//  //Thiago Oliveira - SMARAPD
-//end;
-
 procedure TNFSeW_SMARAPD.GerarServicoValores;
 begin
   Gerador.wCampoNFSe(tcDe2, '', 'pis', 01, 02, 1, FNFSe.Servico.Valores.ValorPis, '');
@@ -207,10 +224,6 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'pesobruto',              01, 255, 1, '0', '');
 end;
 
-//procedure TNFSeW_SMARAPD.GerarValoresServico;
-//begin
-//end;
-
 function TNFSeW_SMARAPD.GerarXml: Boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
@@ -231,7 +244,6 @@ begin
   Gerador.Prefixo := '';
   Gerador.wGrupoNFSe('nfd');
   GerarIdentificacaoRPS;
-//  GerarRPSSubstituido;
   GerarTomador;
   GerarCondicaoPagamento;
   GerarListaServicos;

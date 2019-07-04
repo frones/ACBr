@@ -52,19 +52,10 @@ type
   private
   protected
 
-//    procedure GerarIdentificacaoRPS;
-//    procedure GerarRPSSubstituido;
-
     procedure GerarPrestador;
     procedure GerarTomador;
-//    procedure GerarIntermediarioServico;
 
-//    procedure GerarServicoValores;
-//    procedure GerarListaServicos;
     procedure GerarValoresServico;
-
-//    procedure GerarConstrucaoCivil;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_EGoverneISS;
 
@@ -87,16 +78,6 @@ uses
 {==============================================================================}
 
 { TNFSeW_EGoverneISS }
-
-//procedure TNFSeW_EGoverneISS.GerarIdentificacaoRPS;
-//begin
-  // Não definido
-//end;
-
-//procedure TNFSeW_EGoverneISS.GerarRPSSubstituido;
-//begin
-  // Não definido
-//end;
 
 procedure TNFSeW_EGoverneISS.GerarPrestador;
 begin
@@ -162,21 +143,6 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'TomadorEstrangeiro', 05, 05, 1, 'false', '');
 end;
 
-//procedure TNFSeW_EGoverneISS.GerarIntermediarioServico;
-//begin
-  // Não definido
-//end;
-
-//procedure TNFSeW_EGoverneISS.GerarServicoValores;
-//begin
-//  // Não definido
-//end;
-
-//procedure TNFSeW_EGoverneISS.GerarListaServicos;
-//begin
-//  // Não definido
-//end;
-
 procedure TNFSeW_EGoverneISS.GerarValoresServico;
 begin
   Gerador.wCampoNFSe(tcDe2, '', 'Valor',         01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
@@ -188,16 +154,6 @@ begin
   Gerador.wCampoNFSe(tcDe2, '', 'ValorOutrosImpostos', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorPisPasep', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
 end;
-
-//procedure TNFSeW_EGoverneISS.GerarConstrucaoCivil;
-//begin
-//  // Não definido
-//end;
-
-//procedure TNFSeW_EGoverneISS.GerarCondicaoPagamento;
-//begin
-//  // Não definido
-//end;
 
 procedure TNFSeW_EGoverneISS.GerarXML_EGoverneISS;
 begin
@@ -221,8 +177,6 @@ begin
   Gerador.Prefixo := 'rgm:';
   Gerador.wGrupoNFSe('/NotaFiscal');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_EGoverneISS.Create(ANFSeW: TNFSeW);
 begin

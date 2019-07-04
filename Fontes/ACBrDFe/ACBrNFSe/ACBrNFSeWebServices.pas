@@ -1256,18 +1256,9 @@ begin
         FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero := '14';
         FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie  := 'UNICA';
       end;
+
       // Se o RPS na lista de NFS-e consultado está na lista de FNotasFiscais, então atualiza os dados da mesma. A não existencia, implica em adcionar novo ponteiro em FNotasFiscais
       // foi alterado para testar o Numero, serie e tipo, pois o numero pode voltar ao terminar a seriação.
-      {
-      if ((not (FProvedor in [proNFSeBrasil, proEL])) and
-         ((StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0)) and
-           (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie) and
-           (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Tipo = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Tipo)) or
-          (FNotasFiscais.Items[l].NFSe.InfID.ID = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.InfID.ID)) or
-         ((FProvedor in [proNFSeBrasil, proEL]) and
-          (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))) then
-      }
-
       if FProvedor in [proNFSeBrasil, proEL, proEquiplano] then
         // Se o provedor for NFSeBrasil ou EL compara apenas o numero do RPS
         CondicaoNovoRetorno := (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))
@@ -1872,7 +1863,6 @@ begin
            proCONAM,
            proEL,
            proFISSLex,
-//           proTinus,
            proGiap,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
@@ -1917,9 +1907,6 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
-
-//           proSP: FTagI := '<' + FTagGrupo +
-//                             ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
@@ -1967,9 +1954,6 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
-
-//           proSP: FTagI := '<' + FTagGrupo +
-//                             ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
@@ -3752,10 +3736,7 @@ end;
 function TNFSeConsultarSituacaoLoteRPS.Executar: Boolean;
 var
   IntervaloTentativas, Tentativas: integer;
-//  cSituacao: String;
 begin
-//  Result := False;
-
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeConsultaSituacao);
   try
     Sleep(FPConfiguracoesNFSe.WebServices.AguardarConsultaRet);
@@ -4464,7 +4445,6 @@ begin
 
       proEquiplano,
       proISSCuritiba,
-//      proPronimv2,
       proSP,
       proNotaBlu,
       proSMARAPD,
@@ -4688,8 +4668,6 @@ begin
     proBetha: FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                   FPDadosMsg +
                             '</' + FTagGrupo + '>';
-//  else
-//    FPDadosMsg := FPDadosMsg;
   end;
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar.IncluiEncodingDados);

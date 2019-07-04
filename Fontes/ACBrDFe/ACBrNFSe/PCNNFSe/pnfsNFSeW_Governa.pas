@@ -52,19 +52,10 @@ type
   private
   protected
 
-//    procedure GerarIdentificacaoRPS;
-//    procedure GerarRPSSubstituido;
-
-//    procedure GerarPrestador;
     procedure GerarTomador;
-//    procedure GerarIntermediarioServico;
 
-//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
-
-//    procedure GerarConstrucaoCivil;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Governa;
 
@@ -88,21 +79,6 @@ uses
 
 { TNFSeW_Governa }
 
-//procedure TNFSeW_Governa.GerarIdentificacaoRPS;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Governa.GerarRPSSubstituido;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Governa.GerarPrestador;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_Governa.GerarTomador;
 begin
   Gerador.wCampoNFSE(tcStr, '', 'NumDocTmd', 11, 014, 1, NFSe.Tomador.IdentificacaoTomador.CpfCnpj,'');
@@ -116,16 +92,6 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'CEPTmd'   , 08, 008, 1, NFSe.Tomador.Endereco.CEP, '');
   Gerador.wCampoNFSe(tcStr, '', 'EmlTmd'   , 01, 050, 1, '','');
 end;
-
-//procedure TNFSeW_Governa.GerarIntermediarioServico;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Governa.GerarServicoValores;
-//begin
-//  // Não Definido
-//end;
 
 procedure TNFSeW_Governa.GerarListaServicos;
 var
@@ -191,16 +157,6 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'Obs', 01, 16, 1, NFSe.OutrasInformacoes, '');
 end;
 
-//procedure TNFSeW_Governa.GerarConstrucaoCivil;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Governa.GerarCondicaoPagamento;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_Governa.GerarXML_Governa;
 begin
   Gerador.Prefixo := Prefixo4;
@@ -223,8 +179,6 @@ begin
   Gerador.wGrupoNFSe('/InfRps');
   Gerador.wGrupoNFSe('/Rps');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_Governa.Create(ANFSeW: TNFSeW);
 begin

@@ -76,10 +76,7 @@ type
     procedure GerarXML_Infisc_v11;
 
     // **************************** Ambas Versões
-//    procedure GerarRPSSubstituido;
     procedure GerarTransportadora;
-//    procedure GerarIntermediarioServico;
-//    procedure GerarServicoValores;
     procedure GerarConstrucaoCivil;
 
   public
@@ -809,11 +806,6 @@ end;
 // **************************** Ambas Versões
 ////////////////////////////////////////////////////////////////////////////////
 
-//procedure TNFSeW_Infisc.GerarRPSSubstituido;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_Infisc.GerarTransportadora;
 begin
   if NFSe.Transportadora.xCpfCnpjTrans <> '' then
@@ -836,16 +828,6 @@ begin
     Gerador.wGrupoNFSe('/transportadora');
   end;
 end;
-
-//procedure TNFSeW_Infisc.GerarIntermediarioServico;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Infisc.GerarServicoValores;
-//begin
-//  // Não Definido
-//end;
 
 procedure TNFSeW_Infisc.GerarConstrucaoCivil;
 begin
@@ -874,7 +856,7 @@ var
   lItem: Integer;
   lItemDepesa: TDespesaCollectionItem;
 begin
-  //Criação de desepsas adicionais não tributaveis
+  //Criação de despesas adicionais não tributaveis
   {Usado para inclusão de serviços que não são tributaveis e agregam valor no total da nota}
   if NFSe.Despesa.Count > 0 then
   begin

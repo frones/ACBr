@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2019
+-- Diversos --
+[*] Remoção de linhas de código comentadas.
+   Por: Italo Jurisato Junior
+
 01/07/2019
 -- ACBrNFSeWebServices --
 [*] Possível correção ao método cancelar - provedor Pronimv2.

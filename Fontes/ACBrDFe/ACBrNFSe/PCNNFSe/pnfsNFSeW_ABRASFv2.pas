@@ -64,7 +64,6 @@ type
     procedure GerarValoresServico;
 
     procedure GerarConstrucaoCivil;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ABRASF_v2;
 
@@ -661,29 +660,6 @@ begin
   Gerador.wGrupoNFSe('/credenciais');
 end;
 
-//procedure TNFSeW_ABRASFv2.GerarCondicaoPagamento;
-//var
-//  i: Integer;
-//begin
-(*
-  if (NFSe.CondicaoPagamento.QtdParcela > 0) then
-  begin
-    Gerador.wGrupoNFSe('CondicaoPagamento');
-    Gerador.wCampoNFSe(tcStr, '#53', 'Condicao  ', 01, 15, 1, CondicaoToStr(NFSe.CondicaoPagamento.Condicao), DSC_TPAG);
-    Gerador.wCampoNFSe(tcInt, '#54', 'QtdParcela', 01, 3, 1, NFSe.CondicaoPagamento.QtdParcela, DSC_QPARC);
-    for i := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
-    begin
-      Gerador.wGrupoNFSe('Parcelas');
-      Gerador.wCampoNFSe(tcInt, '#55', 'Parcela', 01, 03, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, DSC_NPARC);
-      Gerador.wCampoNFSe(tcDatVcto, '#55', 'DataVencimento', 10, 10, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, DSC_DVENC);
-      Gerador.wCampoNFSe(tcDe2, '#55', 'Valor', 01, 18, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, DSC_VPARC);
-      Gerador.wGrupoNFSe('/Parcelas');
-    end;
-    Gerador.wGrupoNFSe('/CondicaoPagamento');
-  end;
-*)
-//end;
-
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin
   case FProvedor of
@@ -875,8 +851,6 @@ begin
   if FProvedor in [proTecnos] then
     Gerador.WGrupoNFSe('/tcDeclaracaoPrestacaoServico');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_ABRASFv2.Create(ANFSeW: TNFSeW);
 begin

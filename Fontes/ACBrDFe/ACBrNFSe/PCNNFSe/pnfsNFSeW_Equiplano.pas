@@ -53,18 +53,10 @@ type
   protected
 
     procedure GerarIdentificacaoRPS;
-//    procedure GerarRPSSubstituido;
-
-//    procedure GerarPrestador;
     procedure GerarTomador;
-//    procedure GerarIntermediarioServico;
 
-//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
-
-//    procedure GerarConstrucaoCivil;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Equiplano;
 
@@ -97,16 +89,6 @@ begin
   Gerador.wCampoNFSe(tcStr,   '', 'tpTributacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
   Gerador.wCampoNFSe(tcStr,   '', 'isIssRetido ', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
 end;
-
-//procedure TNFSeW_Equiplano.GerarRPSSubstituido;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Equiplano.GerarPrestador;
-//begin
-//  // Não Definido
-//end;
 
 procedure TNFSeW_Equiplano.GerarTomador;
 var
@@ -146,16 +128,6 @@ begin
     Gerador.wGrupoNFSe('/tomador');
   end;
 end;
-
-//procedure TNFSeW_Equiplano.GerarIntermediarioServico;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Equiplano.GerarServicoValores;
-//begin
-//  // Não Definido
-//end;
 
 procedure TNFSeW_Equiplano.GerarListaServicos;
 var
@@ -244,16 +216,6 @@ begin
   Gerador.wGrupoNFSe('/retencoes');
 end;
 
-//procedure TNFSeW_Equiplano.GerarConstrucaoCivil;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_Equiplano.GerarCondicaoPagamento;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_Equiplano.GerarXML_Equiplano;
 begin
   Gerador.wGrupoNFSe('rps');
@@ -265,8 +227,6 @@ begin
 
   Gerador.wGrupoNFSe('/rps');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_Equiplano.Create(ANFSeW: TNFSeW);
 begin

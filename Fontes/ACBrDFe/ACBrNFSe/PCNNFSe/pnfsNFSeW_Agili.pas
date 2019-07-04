@@ -68,7 +68,6 @@ type
     procedure GerarRegimeEspecialTributacao;
     procedure GerarResponsavelISSQN;
     procedure GerarExigibilidadeISSQN;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Agili;
 
@@ -457,30 +456,6 @@ begin
   end;
 end;
 
-
-//procedure TNFSeW_Agili.GerarCondicaoPagamento;
-//var
-//  i: Integer;
-//begin
-(*
-  if (NFSe.CondicaoPagamento.QtdParcela > 0) then
-  begin
-    Gerador.wGrupoNFSe('CondicaoPagamento');
-    Gerador.wCampoNFSe(tcStr, '#53', 'Condicao  ', 01, 15, 1, CondicaoToStr(NFSe.CondicaoPagamento.Condicao), '');
-    Gerador.wCampoNFSe(tcInt, '#54', 'QtdParcela', 01, 3, 1, NFSe.CondicaoPagamento.QtdParcela, '');
-    for i := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
-    begin
-      Gerador.wGrupoNFSe('Parcelas');
-      Gerador.wCampoNFSe(tcInt, '#55', 'Parcela', 01, 03, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
-      Gerador.wCampoNFSe(tcDatVcto, '#55', 'DataVencimento', 19, 19, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, DSC_DVENC);
-      Gerador.wCampoNFSe(tcDe2, '#55', 'Valor', 01, 18, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
-      Gerador.wGrupoNFSe('/Parcelas');
-    end;
-    Gerador.wGrupoNFSe('/CondicaoPagamento');
-  end;
-*)
-//end;
-
 procedure TNFSeW_Agili.GerarXML_Agili;
 begin
   Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico');
@@ -559,8 +534,6 @@ begin
 
   Gerador.wGrupoNFSe('/InfDeclaracaoPrestacaoServico');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_Agili.Create(ANFSeW: TNFSeW);
 begin

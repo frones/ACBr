@@ -59,12 +59,8 @@ type
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
 
-//    procedure GerarServicoValores;
     procedure GerarListaServicos;
     procedure GerarValoresServico;
-
-//    procedure GerarConstrucaoCivil;
-//    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_EL;
 
@@ -226,11 +222,6 @@ begin
   end;
 end;
 
-//procedure TNFSeW_EL.GerarServicoValores;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_EL.GerarListaServicos;
 var
   i: Integer;
@@ -276,16 +267,6 @@ begin
   Gerador.wGrupoNFSe('/Valores');
 end;
 
-//procedure TNFSeW_EL.GerarConstrucaoCivil;
-//begin
-//  // Não Definido
-//end;
-
-//procedure TNFSeW_EL.GerarCondicaoPagamento;
-//begin
-//  // Não Definido
-//end;
-
 procedure TNFSeW_EL.GerarXML_EL;
 var
   LocPrest: String;
@@ -319,8 +300,6 @@ begin
   Gerador.wCampoNFSe(tcStr, '#90', 'Observacao', 001, 255, 0, NFSe.OutrasInformacoes, '');
   Gerador.wCampoNFSe(tcStr, '#91', 'Status'    , 001, 001, 1, StatusRPSToStr(NFSe.Status), '');
 end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 constructor TNFSeW_EL.Create(ANFSeW: TNFSeW);
 begin

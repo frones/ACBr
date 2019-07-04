@@ -114,6 +114,9 @@ type
   TBandeiraCard = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcElo,
                    bcDinersClub, bcHipercard, bcAura, bcCabal, bcOutros);
 
+  TFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+                        fpOutro);
+
 function StrToVersaoBPe(out ok: Boolean; const s: String): TVersaoBPe;
 function VersaoBPeToStr(const t: TVersaoBPe): String;
 
@@ -173,6 +176,10 @@ function BandeiraCardToDescStr(const t: TBandeiraCard): string;
 function StrToBandeiraCard(out ok: boolean; const s: string): TBandeiraCard;
 
 function StrToTpEventoBPe(out ok: boolean; const s: string): TpcnTpEvento;
+
+function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;
+function FormaPagamentoBPeToDescricao(const t: TFormaPagamento): string;
+function StrToFormaPagamentoBPe(out ok: boolean; const s: string): TFormaPagamento;
 
 implementation
 
@@ -549,6 +556,28 @@ begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110111', '110115', '110116'],
             [teNaoMapeado, teCancelamento, teNaoEmbarque, teAlteracaoPoltrona]);
+end;
+
+function FormaPagamentoBPeToStr(const t: TFormaPagamento): string;
+begin
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '99'],
+                              [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+                               fpOutro]);
+end;
+
+function FormaPagamentoBPeToDescricao(const t: TFormaPagamento): string;
+begin
+  result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Vale Transporte',
+                               'Outro'],
+                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+                                fpOutro]);
+end;
+
+function StrToFormaPagamentoBPe(out ok: boolean; const s: string): TFormaPagamento;
+begin
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '99'],
+                                  [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpValeTransporte,
+                                   fpOutro]);
 end;
 
 initialization

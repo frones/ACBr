@@ -974,7 +974,7 @@ begin
 
         with pag.New do
         begin
-          tPag    := StrToFormaPagamento(OK, sFim);
+          tPag    := StrToFormaPagamentoBPe(OK, sFim);
           xPag    := INIRec.ReadString(sSecao, 'xPag', '');
           nDocPag := INIRec.ReadString(sSecao, 'nDocPag', '');
           vPag    := StringToFloatDef(INIRec.ReadString(sSecao, 'vPag', ''), 0);

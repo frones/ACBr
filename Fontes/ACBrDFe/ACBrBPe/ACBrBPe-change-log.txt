@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/52289-erro-forma-de-pagamento-bpe/
+   Por: Snoopyfael / Italo Jurisato Junior
+
 27/06/2019
 -- ACBrBPeConfiguracoes --
 [*] Removido a classe que contem as propriedades de Download utilizadas

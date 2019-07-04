@@ -356,7 +356,7 @@ begin
   while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
   begin
     BPe.Pag.New;
-    BPe.Pag[i].tPag    := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
+    BPe.Pag[i].tPag    := StrToFormaPagamentoBPe(ok, Leitor.rCampo(tcStr, 'tPag'));
     BPe.Pag[i].xPag    := Leitor.rCampo(tcStr, 'xPag');
     BPe.Pag[i].nDocPag := Leitor.rCampo(tcStr, 'nDocPag');
     BPe.Pag[i].vPag    := Leitor.rCampo(tcDe2, 'vPag');

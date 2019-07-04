@@ -293,7 +293,7 @@ begin
 
   for i := 0 to FpBPe.pag.Count - 1 do
   begin
-    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoToDescricao(FpBPe.pag.Items[i].tPag) +
+    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoBPeToDescricao(FpBPe.pag.Items[i].tPag) +
        '|' + FormatFloatBr(FpBPe.pag.Items[i].vPag),
        FPosPrinter.ColunasFonteCondensada, '|')));
   end;

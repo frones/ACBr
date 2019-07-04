@@ -590,7 +590,7 @@ type
 
   TpagCollectionItem = class(TObject)
   private
-    FtPag: TpcnFormaPagamento;
+    FtPag: TFormaPagamento;
     FxPag: String;
     FnDocPag: String;
     FvPag: Currency;
@@ -605,7 +605,7 @@ type
     FinfAdCard: String;
   public
     procedure Assign(Source: TpagCollectionItem);
-    property tPag: TpcnFormaPagamento read FtPag write FtPag;
+    property tPag: TFormaPagamento read FtPag write FtPag;
     property xPag: String read FxPag write FxPag;
     property nDocPag: String read FnDocPag write FnDocPag;
     property vPag: Currency read FvPag write FvPag;

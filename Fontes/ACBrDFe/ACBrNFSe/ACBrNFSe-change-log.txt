@@ -49,6 +49,11 @@ Símbolo : Significado
 
 01/07/2019
 -- ACBrNFSeWebServices --
+[*] Possível correção ao método cancelar - provedor Pronimv2.
+   Por: Italo Jurisato Junior
+
+01/07/2019
+-- ACBrNFSeWebServices --
 [*] Possível correção ao método de consulta ao lote - provedor SP.
    Por: Italo Jurisato Junior
 -- pnfsConsSitLoteRpsResposta --

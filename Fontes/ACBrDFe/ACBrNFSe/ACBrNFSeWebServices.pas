@@ -2094,6 +2094,7 @@ begin
            proEL,
            proInfisc,
            proInfiscv11,
+           proPronimv2,
            proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
@@ -4458,11 +4459,12 @@ begin
       proCONAM: FURI := 'Sdt_cancelanfe';
 
       proDigifred,
+      proPronimv2,
       proPublica: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
       proEquiplano,
       proISSCuritiba,
-      proPronimv2,
+//      proPronimv2,
       proSP,
       proNotaBlu,
       proSMARAPD,

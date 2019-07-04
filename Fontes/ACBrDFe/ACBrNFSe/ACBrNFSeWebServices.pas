@@ -1996,7 +1996,10 @@ begin
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
-                             ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+                             ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
+
+//           proSP: FTagI := '<' + FTagGrupo +
+//                             ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
@@ -2082,9 +2085,12 @@ begin
            proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
-           proSP,
-           proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                             ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+           proSP: FTagI := '<' + FTagGrupo +
+                             ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
+
+//           proSP,
+//           proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                             ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
 
            proISSNet: begin
                         FNameSpaceCan := ' xmlns:p1="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_cancelar_nfse_envio.xsd"' +

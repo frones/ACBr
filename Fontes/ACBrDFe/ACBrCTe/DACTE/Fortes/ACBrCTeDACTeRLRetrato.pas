@@ -516,7 +516,6 @@ type
     RLDraw79: TRLDraw;
     RLDraw80: TRLDraw;
     rlb_01_Recibo_Aereo: TRLBand;
-    rlLabel19: TRLLabel;
     RLDraw81: TRLDraw;
     RLDraw82: TRLDraw;
     rlLabel57: TRLLabel;
@@ -682,6 +681,7 @@ type
     rlblChaveCteAnulacao: TRLLabel;
     rlChaveCteSerAnulSubst: TRLMemo;
     rlChaveCteAnulacao: TRLMemo;
+    RLMemo1: TRLMemo;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -1700,7 +1700,7 @@ begin
 
       if (RLCTe.PageNumber > 1) then
         Inc(Linhas);
-      if ((cdsDocumentos.recno > 4) and (RLCTe.PageNumber = 1) or (Linhas > 70)) then
+      if ((cdsDocumentos.recno > 10) and (RLCTe.PageNumber = 1) or (Linhas > 70)) then
         break;
 
     end;
@@ -1912,7 +1912,7 @@ procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104AfterPrint(Sender: TObject);
 begin
   inherited;
 
-  if ((cdsDocumentos.recNo > 4) and (rlCte.PageNumber = 1)) then
+  if ((cdsDocumentos.recNo > 10) and (rlCte.PageNumber = 1)) then
     RLCte.newpage;
 end;
 
@@ -2563,6 +2563,7 @@ end;
 procedure TfrmDACTeRLRetrato.rlb_Fluxo_CargaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
+  PrintIt := (RLCTe.PageNumber = 1);
   fluxoCargaVersao30();
 
 end;

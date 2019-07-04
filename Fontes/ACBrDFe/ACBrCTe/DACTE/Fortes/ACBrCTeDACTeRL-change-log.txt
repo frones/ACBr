@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] Melhorias no DACTE tanto para o modal Rodoviário quanto o Aereo.
+  por: Italo Jurisato Junior
+
 26/04/2019
 -- ACBrCTeDACTeRLRetrato --
 [*] Corrigido a altura da banda para mostrar as mensagens de cancelamento e outros.

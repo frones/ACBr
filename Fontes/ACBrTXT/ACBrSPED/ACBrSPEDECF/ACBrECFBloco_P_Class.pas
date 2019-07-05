@@ -312,8 +312,8 @@ begin
     begin
       with RegP030.RegistroP100.Items[intFor] do
       begin
-        /// Layout 5 a partir da escrituração ano calendário 2018
-        if DT_INI >= EncodeDate(2018,01,01) then
+        /// Para o ano calendário 2017 e situações especiais em 2018, Layout 004
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao500 then
         begin
           Add(LFill('P100')                  +
               LFill(CODIGO)                  +

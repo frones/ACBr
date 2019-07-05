@@ -95,13 +95,25 @@ type
 
   end;
 
+  { TLibImpressaoResposta }
+  TLibImpressaoResposta = class(TACBrLibResposta)
+  private
+    FMsg: string;
+
+  public
+    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+  published
+    property Msg: string read FMsg write FMsg;
+
+  end;
+
 implementation
 
 uses
   math;
 
 { TACBrLibResposta }
-
 constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create;
@@ -361,10 +373,16 @@ begin
 end;
 
 { TACBrLibHttpResposta }
-
 constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoHttpResposta, ATipo);
+end;
+
+{ TLibImpressaoResposta }
+constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo);
+begin
+  inherited Create('Impressao', ATipo);
+  Msg := Format('%d Documento (s) impresso(s) com sucesso', [QtdImpresso]);
 end;
 
 end.

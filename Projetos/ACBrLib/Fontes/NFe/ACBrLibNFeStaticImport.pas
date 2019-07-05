@@ -111,7 +111,7 @@ function NFe_Inutilizar(const ACNPJ, AJustificativa: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 
-function NFe_Enviar((ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
+function NFe_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf}; external CACBrNFeLIBName;
 

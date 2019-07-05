@@ -20,10 +20,9 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
-    TipoDANFE = tiSemGeracao
     FonteLinhaItem.Height = -9
     FonteLinhaItem.Name = 'Lucida Console'
-    left = 224
+    left = 176
     top = 104
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
@@ -39,8 +38,8 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.MaskvUnCom = ',0.00'
     ExibeCampoFatura = False
     TributosPercentualPersonalizado = 0
-    left = 224
-    top = 48
+    left = 176
+    top = 56
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libNone
@@ -55,7 +54,7 @@ object LibNFeDM: TLibNFeDM
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     left = 48
-    top = 43
+    top = 48
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -68,8 +67,7 @@ object LibNFeDM: TLibNFeDM
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
-    TipoDANFE = tiSemGeracao
-    left = 224
+    left = 176
     top = 163
   end
 end

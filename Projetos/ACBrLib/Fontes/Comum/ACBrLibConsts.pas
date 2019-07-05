@@ -185,6 +185,9 @@ const
   CChaveSoftFlow = 'SoftFlow';
   CChaveHardFlow = 'HardFlow';
 
+  CSessaoRespRetorno = 'Retorno';
+  CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
+
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';
   SErrLibDono = 'Dono de TLibConfig deve ser do tipo TACBrLib';
@@ -206,27 +209,33 @@ const
 {$I ACBrLibErros.inc}
 
 function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+function GerarRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
 
 implementation
 uses
   ACBrLibComum, ACBrLibResposta, ACBrUtil;
 
-function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+function GerarRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): String;
 Var
   Resp: TACBrLibHttpResposta;
-  Resposta: String;
 begin
-  Resposta := '';
+  Result := '';
   Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta);
   try
     Resp.CodigoHTTP := CodigoHTTP;
     Resp.WebService := WebService;
     Resp.Msg := IfEmptyThen(Message, Format(SErrRetornoHttpWebService, [WebService, CodigoHTTP]));
-    Resposta := Resp.Gerar;
+    Result := Resp.Gerar;
   finally
     Resp.Free;
   end;
+end;
 
+function SetRetornoWebService(const CodigoHTTP: Integer; const WebService: String; const Message: String = ''): Integer;
+Var
+  Resposta: String;
+begin
+  Resposta := GerarRetornoWebService(CodigoHTTP, WebService, Message);
   Result := SetRetorno(ErrHttp, Resposta);
 end;
 

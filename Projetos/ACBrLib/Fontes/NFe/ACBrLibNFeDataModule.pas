@@ -274,12 +274,6 @@ begin
   if NaoEstaVazio(MostrarPreview) then
     ACBrNFe1.DANFE.MostraPreview := StrToBoolDef(MostrarPreview, False);
 
-  if NaoEstaVazio(Simplificado) then
-  begin
-    if StrToBoolDef(Simplificado, False) then
-      ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
-  end;
-
   if NaoEstaVazio(Protocolo) then
     ACBrNFe1.DANFE.Protocolo := Protocolo
   else
@@ -287,6 +281,13 @@ begin
 
   if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
   begin
+
+    if NaoEstaVazio(Simplificado) then
+    begin
+      if StrToBoolDef(Simplificado, False) then
+        ACBrNFeDANFeRL1.TipoDANFE := tiSimplificado;
+    end;
+
      if NaoEstaVazio(MarcaDagua) then
        ACBrNFeDANFeRL1.MarcaDagua := MarcaDagua
      else

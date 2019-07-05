@@ -175,6 +175,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
@@ -230,7 +231,7 @@
         <PackageName Value="FCL"/>
       </Item8>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="18">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -294,6 +295,18 @@
         <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
+      <Unit15>
+        <Filename Value="..\Comum\ACBrLibIntegradorResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Comum\ACBrLibDistribuicaoDFe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\Comum\ACBrLibConsReciDFe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

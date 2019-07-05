@@ -30,6 +30,7 @@ type
     FNomeDocumento: String;
 
     procedure SetNumCopias(const Value: Integer);
+
  protected
     FSessao: String;
 
@@ -167,7 +168,7 @@ end;
 
 procedure TDFeReportConfig<T>.Assign(const DFeReport: T);
 begin
-  if not Assigned(DFeReport) then Exit;
+  if not Assigned(DFeReport) or (DFeReport = nil) then Exit;
 
   DFeReport.PathPDF := FPathPDF;
   DFeReport.UsaSeparadorPathPDF := FUsaSeparadorPathPDF;

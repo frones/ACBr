@@ -53,6 +53,8 @@ type
 
   TACBrECFVirtualSATQuandoEfetuarPagamento = procedure(Det: TMPCollectionItem) of object;
 
+  TACBrECFVirtualSATQuandoImprimirDocumento = procedure(var Tratado: Boolean) of object;
+
   { TACBrECFVirtualSAT }
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
@@ -72,6 +74,8 @@ type
     function GetQuandoFecharDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
     procedure SetQuandoEfetuarPagamento(
       AValue: TACBrECFVirtualSATQuandoEfetuarPagamento);
+    function GetQuandoImprimirDocumento: TACBrECFVirtualSATQuandoImprimirDocumento;
+    procedure SetQuandoImprimirDocumento(const AValue: TACBrECFVirtualSATQuandoImprimirDocumento);
     procedure SetSAT(AValue: TACBrSAT);
   protected
     procedure CreateVirtualClass; override;
@@ -87,6 +91,8 @@ type
       read GetQuandoEfetuarPagamento write SetQuandoEfetuarPagamento ;
     property QuandoFecharDocumento : TACBrECFVirtualSATQuandoAbrirFecharDocumento
       read GetQuandoFecharDocumento write SetQuandoFecharDocumento ;
+    property QuandoImprimirDocumento: TACBrECFVirtualSATQuandoImprimirDocumento
+      read GetQuandoImprimirDocumento write SetQuandoImprimirDocumento;
   end;
 
   { TACBrECFVirtualSATClass }
@@ -104,9 +110,11 @@ type
     fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
     fsQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
     fsQuandoFecharDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
+    fsQuandoImprimirDocumento: TACBrECFVirtualSATQuandoImprimirDocumento;
 
     function AdivinharCodigoMP( const DescricaoPagto: String ): TpcnCodigoMP;
     function GetACBrECF: TACBrECF;
+    procedure FazerImpressaoDocumento;
   protected
     function GetSubModeloECF: string; override;
     function GetNumVersao: string; override;
@@ -144,6 +152,8 @@ type
       read fsQuandoEfetuarPagamento write fsQuandoEfetuarPagamento ;
     property QuandoFecharDocumento:TACBrECFVirtualSATQuandoAbrirFecharDocumento
       read fsQuandoFecharDocumento write fsQuandoFecharDocumento;
+    property QuandoImprimirDocumento: TACBrECFVirtualSATQuandoImprimirDocumento
+      read fsQuandoImprimirDocumento write fsQuandoImprimirDocumento;
   end;
 
 
@@ -244,6 +254,17 @@ begin
   TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoFecharDocumento := AValue ;
 end;
 
+function TACBrECFVirtualSAT.GetQuandoImprimirDocumento: TACBrECFVirtualSATQuandoImprimirDocumento;
+begin
+  Result := TACBrECFVirtualSATClass(fpECFVirtualClass).QuandoImprimirDocumento;
+end;
+
+procedure TACBrECFVirtualSAT.SetQuandoImprimirDocumento(
+  const AValue: TACBrECFVirtualSATQuandoImprimirDocumento);
+begin
+  TACBrECFVirtualSATClass(fpECFVirtualClass).QuandoImprimirDocumento := AValue;
+end;
+
 
 { TACBrECFVirtualSATClass }
 
@@ -254,11 +275,25 @@ begin
 
   fsACBrSAT := Nil;
   fsECF     := Nil;
-  fsQuandoAbrirDocumento   := Nil;
-  fsQuandoEfetuarPagamento := Nil;
-  fsQuandoVenderItem       := Nil;
+  fsQuandoAbrirDocumento    := Nil;
+  fsQuandoEfetuarPagamento  := Nil;
+  fsQuandoVenderItem        := Nil;
+  fsQuandoImprimirDocumento := nil;
   fsNomeArqTempXML := '';
   fsEhVenda := False;
+end;
+
+procedure TACBrECFVirtualSATClass.FazerImpressaoDocumento;
+var
+  ImpressaoTratada: Boolean;
+begin
+  ImpressaoTratada := False;
+  if Assigned(fsQuandoImprimirDocumento) then
+    fsQuandoImprimirDocumento(ImpressaoTratada);
+  if not ImpressaoTratada then
+  begin
+    fsACBrSAT.ImprimirExtrato;
+  end;
 end;
 
 function TACBrECFVirtualSATClass.AdivinharCodigoMP(const DescricaoPagto: String
@@ -533,7 +568,8 @@ begin
 
       ChaveCupom := CFe.infCFe.ID;
 
-      ImprimirExtrato;
+      //ImprimirExtrato;
+      FazerImpressaoDocumento;
     end;
   end
   else

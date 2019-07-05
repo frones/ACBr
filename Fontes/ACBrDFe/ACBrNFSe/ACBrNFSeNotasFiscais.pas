@@ -439,7 +439,7 @@ begin
         if Assigned(DANFSE) then
         begin
           DANFSE.ImprimirDANFSEPDF(FNFSe);
-          NomeArqTemp := PathWithDelim(DANFSE.PathPDF) + NumID[FNFSe] + '-nfse.pdf';
+          NomeArqTemp := DANFSE.ArquivoPDF;
           AnexosEmail.Add(NomeArqTemp);
         end;
       end;

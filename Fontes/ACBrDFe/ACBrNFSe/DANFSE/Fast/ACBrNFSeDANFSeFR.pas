@@ -188,16 +188,12 @@ begin
       begin
         with TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I] do
         begin
-          if TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.NomeLongoNFSe then
-            NomeArqXML := GerarNomeNFSe(UFparaCodigo(NFSe.PrestadorServico.Endereco.UF),
-             NFSe.DataEmissao,
-             NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj,
-             StrToInt64Def(NFSe.Numero,0))
-          else
-            NomeArqXML := NFSe.Numero + NFSe.IdentificacaoRps.Serie;
+//         NomeArqXML := TACBrNFSe(ACBrNFSe).NumID[TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe];
+         NomeArqXML := TACBrNFSe(ACBrNFSe).NumID[NFSe];
         end;
 
-        frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf'; // Correção aplicada do nome do arquivo para o envio de e-mail
+        // Correção aplicada do nome do arquivo para o envio de e-mail
+        frxPDFExport.FileName := PathPDF + NomeArqXML + '-nfse.pdf';
 
         if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
           ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -768,29 +764,33 @@ begin
 
     with ANFSe do
     begin
-			FieldByName('Id').AsString                := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
-			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('Numero').AsString           := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero)
-			else
-		  	FieldByName('Numero').AsString            := IdentificacaoRps.Numero;
-      FieldByName('Serie').AsString             := IdentificacaoRPS.Serie;
-			FieldByName('Competencia').AsString       := Competencia;
+			FieldByName('Id').AsString := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
 
 			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)
+		  	FieldByName('Numero').AsString := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero)
 			else
-		  	FieldByName('NFSeSubstituida').AsString   := ANFSe.NfseSubstituida;
+		  	FieldByName('Numero').AsString := IdentificacaoRps.Numero;
+
+      FieldByName('Serie').AsString       := IdentificacaoRPS.Serie;
+			FieldByName('Competencia').AsString := Competencia;
 
 			if(FormatarNumeroDocumentoNFSe) then
-		  	FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero) 
+		  	FieldByName('NFSeSubstituida').AsString := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)
 			else
-		  	FieldByName('NumeroNFSe').AsString        := ANFSe.Numero;
+		  	FieldByName('NFSeSubstituida').AsString := ANFSe.NfseSubstituida;
+
+			if(FormatarNumeroDocumentoNFSe) then
+		  	FieldByName('NumeroNFSe').AsString := FormatarNumeroDocumentoFiscalNFSe(Numero)
+			else
+		  	FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
+
 			if(Provedor in [proGINFES, proBetha] ) then  // Felipe - Otimizy Sistemas
-				FieldByName('DataEmissao').AsString       := FormatDateTimeBr(ANFSe.DataEmissao) 
+				FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
 			else
-				FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
+				FieldByName('DataEmissao').AsString := FormatDateBr(DataEmissao);
+
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
-      FieldByName('LinkNFSe').AsString := Link;
+      FieldByName('LinkNFSe').AsString          := Link;
     end;
     Post;
   end;
@@ -916,9 +916,10 @@ begin
     CarregaLogoPrefeitura;
     CarregaImagemPrestadora;
 
-    FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
-    FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
-    FieldByName('Site').AsString      := DANFSeClassOwner.Site;
+    FieldByName('Sistema').AsString := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := DANFSeClassOwner.Usuario;
+    FieldByName('Site').AsString    := DANFSeClassOwner.Site;
+
     if Provedor = proEL then
       FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'CANCELADA', '')
     else

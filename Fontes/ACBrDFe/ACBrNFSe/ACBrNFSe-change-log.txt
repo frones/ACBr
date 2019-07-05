@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2019
+-- pnfsNFSeG --
+[*] Possível correção ao método cancelar - provedor SP.
+   Por: Italo Jurisato Junior
+
 04/07/2019
 -- ACBrNFSeWebServices --
 [*] Possível correção ao método cancelar - provedor SP.

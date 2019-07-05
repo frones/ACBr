@@ -1282,7 +1282,8 @@ begin
                   Gerador.wGrupoNFSe('/CPFCNPJRemetente');
 //                  Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
                   Gerador.wGrupoNFSe('/Cabecalho');
-                  Gerador.wGrupoNFSe('Detalhe');
+
+                  Gerador.wGrupoNFSe('Detalhe xmlns=""');
                   Gerador.wGrupoNFSe('ChaveRPS');
                   Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
                   Gerador.wCampoNFSe(tcStr, '', 'SerieRPS', 01, 02, 1, SerieRPS, '');
@@ -1453,7 +1454,8 @@ begin
              Gerador.wGrupoNFSe('/CPFCNPJRemetente');
 //             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
              Gerador.wGrupoNFSe('/Cabecalho');
-             Gerador.wGrupoNFSe('Detalhe');
+
+             Gerador.wGrupoNFSe('Detalhe xmlns=""');
              Gerador.wGrupoNFSe('ChaveNFe');
              Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
              Gerador.wCampoNFSe(tcStr, '', 'Numero', 01, 12, 1, NumeroNFSe, '');

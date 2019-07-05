@@ -44,6 +44,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 01/07/2019
+[+] DoACBrNFeUnit
+Melhorias e padronizações nas classes de Retorno DFe
+
+01/07/2019
 [+] ACBrMonitor1
 Ajuste na chamada das funções DownloadDFe, conforme ajustes realizados nos componentes DFe
 

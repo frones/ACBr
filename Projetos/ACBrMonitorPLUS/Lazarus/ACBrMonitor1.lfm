@@ -1,14 +1,14 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 334
+  Left = 350
   Height = 723
-  Top = 133
+  Top = 167
   Width = 1202
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 723
+  ClientWidth = 1202
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 997
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7070,11 +7070,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 989
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -7188,15 +7188,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Side = asrBottom
                 AnchorSideRight.Control = gbLogComp
                 AnchorSideRight.Side = asrBottom
-                Left = 8
+                Left = 0
                 Height = 234
                 Top = 118
-                Width = 558
+                Width = 566
                 Anchors = [akTop, akLeft, akRight]
                 BorderSpacing.Top = 10
                 Caption = 'Arquivo com Endereços dos WebServices'
                 ClientHeight = 212
-                ClientWidth = 554
+                ClientWidth = 562
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 2
@@ -7204,14 +7204,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 55
                   Height = 25
                   Top = 1
-                  Width = 463
+                  Width = 471
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
                   TabOrder = 0
                 end
                 object sbArquivoWebServicesNFe: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 1
                   Width = 23
@@ -7249,7 +7249,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 32
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
@@ -7266,7 +7266,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object sbArquivoWebServicesCTe: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 32
                   Width = 23
@@ -7294,7 +7294,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 64
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
@@ -7311,7 +7311,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object sbArquivoWebServicesMDFe: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 64
                   Width = 23
@@ -7349,14 +7349,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 96
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
                   TabOrder = 3
                 end
                 object sbArquivoWebServicesGNRe: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 96
                   Width = 23
@@ -7384,7 +7384,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 127
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
@@ -7401,7 +7401,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object sbArquivoWebServiceseSocial: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 127
                   Width = 23
@@ -7439,14 +7439,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 155
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
                   TabOrder = 5
                 end
                 object sbArquivoWebServicesReinf: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 155
                   Width = 23
@@ -7474,7 +7474,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 185
-                  Width = 462
+                  Width = 470
                   Anchors = [akTop, akLeft, akRight]
                   Font.Height = -13
                   ParentFont = False
@@ -7491,7 +7491,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentFont = False
                 end
                 object sbArquivoWebServicesBPe: TSpeedButton
-                  Left = 528
+                  Left = 536
                   Height = 25
                   Top = 183
                   Width = 23

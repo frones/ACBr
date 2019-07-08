@@ -3354,10 +3354,12 @@ end;
       // Precisa ser o ROOT ou a
       // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
       //
-      if Reboot then
-         RunCommand('sudo shutdown -r now')
+      if LogOff then
+        RunCommand('loginctl terminate-session $XDG_SESSION_ID')
+      else if Reboot then
+        RunCommand('sudo shutdown -r now')
       else
-         RunCommand('sudo shutdown -h now') ;
+        RunCommand('sudo shutdown -h now') ;
    end ;
 {$ENDIF}
 

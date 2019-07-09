@@ -65,8 +65,8 @@ begin
 
   if RLPrinter.SupportsDuplex Then
      RLPrinter.Duplex := false;
-	 
-  if RLPrinter.Copies <> AConfig.NumCopias then
+
+  if (AConfig.NumCopias > 0) and (RLPrinter.Copies <> AConfig.NumCopias) then
   begin
     RLPrinter.Copies := AConfig.NumCopias;
   end;

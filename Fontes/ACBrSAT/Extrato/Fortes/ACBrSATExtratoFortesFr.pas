@@ -1393,7 +1393,7 @@ begin
         Resumido := (LayOut = lResumido);
       end;
 
-      if RLPrinter.Copies <> NumCopias then
+      if (NumCopias > 0) and (RLPrinter.Copies <> NumCopias) then
       begin
         RLPrinter.Copies := NumCopias;
       end;

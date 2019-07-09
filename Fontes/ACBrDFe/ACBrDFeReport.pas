@@ -301,7 +301,11 @@ end;
 
 procedure TACBrDFeReport.SetNumCopias(const Value: Integer);
 begin
-  if (Value < 1) then
+  // O valor de cópias zero é utilizado por aplicações ISAPI no momento.
+  // É utilizado por causa de problemas encontrados ao usar o Fortes Report.
+  // Para mais informações, veja:
+  // https://www.projetoacbr.com.br/forum/topic/52337-gerar-pdf-nfcenfe-danfe-aplica%C3%A7%C3%A3o-isapi-com-fortes-report/?tab=comments#comment-344431
+  if (Value < 0) then
     Exit;
 
   FNumCopias := Value;

@@ -196,10 +196,11 @@ begin
 
         if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
         begin
-          infEvento.DetEvento.xCorrecao := Leitor.rCampo(tcStr, 'xCorrecao');
-          infEvento.DetEvento.xCondUso  := Leitor.rCampo(tcStr, 'xCondUso');
-          infEvento.DetEvento.nProt     := Leitor.rCampo(tcStr, 'nProt');
-          infEvento.DetEvento.xJust     := Leitor.rCampo(tcStr, 'xJust');
+          infEvento.DetEvento.descEvento := Leitor.rCampo(tcStr, 'descEvento');
+          infEvento.DetEvento.xCorrecao  := Leitor.rCampo(tcStr, 'xCorrecao');
+          infEvento.DetEvento.xCondUso   := Leitor.rCampo(tcStr, 'xCondUso');
+          infEvento.DetEvento.nProt      := Leitor.rCampo(tcStr, 'nProt');
+          infEvento.DetEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
 
           InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
           infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));

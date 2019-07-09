@@ -400,11 +400,12 @@ begin
         infEvento.nSeqEvento    := RetEventoNFe.InfEvento.nSeqEvento;
         infEvento.VersaoEvento  := RetEventoNFe.InfEvento.VersaoEvento;
 
-        infEvento.DetEvento.xCorrecao := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
-        infEvento.DetEvento.xCondUso  := RetEventoNFe.InfEvento.DetEvento.xCondUso;
-        infEvento.DetEvento.nProt     := RetEventoNFe.InfEvento.DetEvento.nProt;
-        infEvento.DetEvento.xJust     := RetEventoNFe.InfEvento.DetEvento.xJust;
-        infEvento.DetEvento.chNFeRef  := RetEventoNFe.InfEvento.DetEvento.chNFeRef;
+        infEvento.DetEvento.descEvento := RetEventoNFe.InfEvento.DetEvento.descEvento;
+        infEvento.DetEvento.xCorrecao  := RetEventoNFe.InfEvento.DetEvento.xCorrecao;
+        infEvento.DetEvento.xCondUso   := RetEventoNFe.InfEvento.DetEvento.xCondUso;
+        infEvento.DetEvento.nProt      := RetEventoNFe.InfEvento.DetEvento.nProt;
+        infEvento.DetEvento.xJust      := RetEventoNFe.InfEvento.DetEvento.xJust;
+        infEvento.DetEvento.chNFeRef   := RetEventoNFe.InfEvento.DetEvento.chNFeRef;
 
         infEvento.detEvento.cOrgaoAutor := RetEventoNFe.InfEvento.detEvento.cOrgaoAutor;
         infEvento.detEvento.tpAutor     := RetEventoNFe.InfEvento.detEvento.tpAutor;

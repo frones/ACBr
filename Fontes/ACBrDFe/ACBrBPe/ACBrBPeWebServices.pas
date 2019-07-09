@@ -1149,7 +1149,7 @@ begin
             AProcBPe := TProcBPe.Create;
             try
               AProcBPe.XML_BPe := RemoverDeclaracaoXML(XMLOriginal);
-              AProcBPe.XML_Prot := BPeRetorno.XMLprotBPe;
+              AProcBPe.XML_Prot := NativeStringToUTF8(BPeRetorno.XMLprotBPe);
               AProcBPe.Versao := FPVersaoServico;
               AjustarOpcoes( AProcBPe.Gerador.Opcoes );
               AProcBPe.GerarXML;

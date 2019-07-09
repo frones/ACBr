@@ -61,6 +61,8 @@ contains
   pnfsNFSeW_Governa in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Governa.pas',
   pnfsNFSeW_Infisc in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Infisc.pas',
   pnfsNFSeW_ISSDSF in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_ISSDSF.pas',
-  pnfsNFSeW_SP in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SP.pas';
+  pnfsNFSeW_SP in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SP.pas',
+  pnfsNFSeW_SMARAPD in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SMARAPD.pas',
+  pnfsNFSeW_IPM in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_IPM.pas';
 
 end.

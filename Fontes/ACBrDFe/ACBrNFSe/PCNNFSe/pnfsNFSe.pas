@@ -55,18 +55,18 @@ type
  
 //******************************************************************************
 
-  TMsgRetornoIdentificacaoRps = class(TPersistent)
+  TMsgRetornoIdentificacaoRps = class(TObject)
   private
     FNumero: String;
     FSerie: String;
     FTipo: TnfseTipoRps;
-  published
+  public
     property Numero: String     read FNumero write FNumero;
     property Serie: String      read FSerie  write FSerie;
     property Tipo: TnfseTipoRps read FTipo   write FTipo;
   end;
 
-  TInformacoesLote = class(TPersistent)
+  TInformacoesLote = class(TObject)
   private
     FNumeroLote: String;
     FInscricaoPrestador: String;
@@ -85,7 +85,7 @@ type
     property ValorTotalServico: Currency  read FValorTotalServico   write FValorTotalServico;
   end;
 
-  TChaveNFeRPS = class(TPersistent)
+  TChaveNFeRPS = class(TObject)
   private
     FInscricaoPrestador: String;
     FNumero: String;
@@ -106,51 +106,51 @@ type
 
 //******************************************************************************
 
- TInfID = class(TPersistent)
+ TInfID = class(TObject)
   private
     FID: string;
-  published
+  public
     property ID: String read FID write FID;
   end;
 
- TIdentificacaoRps = class(TPersistent)
+ TIdentificacaoRps = class(TObject)
   private
     FNumero: String;
     FSerie: String;
     FTipo: TnfseTipoRps;
-  published
+  public
     property Numero: String read FNumero write FNumero;
     property Serie: String read FSerie write FSerie;
     property Tipo: TnfseTipoRps read FTipo write FTipo;
   end;
 
- TIdentificacaoNfse = class(TPersistent)
+ TIdentificacaoNfse = class(TObject)
   private
     FNumero: String;
     FCnpj: String;
     FInscricaoMunicipal: String;
     FCodigoMunicipio: String;
-  published
+  public
     property Numero: String read FNumero write FNumero;
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
   end;
 
- TValoresNfse = class(TPersistent)
+ TValoresNfse = class(TObject)
  private
    FBaseCalculo: Currency;
    FAliquota: Currency;
    FValorIss: Currency;
    FValorLiquidoNfse: Currency;
- published
+ public
    property BaseCalculo: Currency read FBaseCalculo write FBaseCalculo;
    property Aliquota: Currency read FAliquota write FAliquota;
    property ValorIss: Currency read FValorIss write FValorIss;
    property ValorLiquidoNfse: Currency read FValorLiquidoNfse write FValorLiquidoNfse;
  end;
 
- TValores = class(TPersistent)
+ TValores = class(TObject)
   private
     FValorServicos: Currency;
     FValorDeducoes: Currency;
@@ -181,7 +181,7 @@ type
     FvalorRepasse: Currency; //Governa
     FValorDespesasNaoTributaveis: Currency; //Governa
     FValorTotalRecebido: Currency;
-  published
+  public
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
     property ValorPis: Currency read FValorPis write FValorPis;
@@ -354,7 +354,7 @@ type
     property ValorDeduzir: Currency read FValorDeduzir write FValorDeduzir;
   end;
 
- TDadosServico = class(TPersistent)
+ TDadosServico = class(TObject)
   private
     FValores: TValores;
     FItemListaServico: String;
@@ -385,7 +385,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Valores: TValores read FValores write FValores;
     property ItemListaServico: String read FItemListaServico write FItemListaServico;
     property CodigoCnae: String read FCodigoCnae write FCodigoCnae;
@@ -412,7 +412,7 @@ type
     property FonteCargaTributaria: String read FFonteCargaTributaria write FFonteCargaTributaria;
   end;
 
- TIdentificacaoPrestador = class(TPersistent)
+ TIdentificacaoPrestador = class(TObject)
   private
     FCnpj: String;
     FInscricaoMunicipal: String;
@@ -421,7 +421,7 @@ type
     FcUF: Integer;
     FInscricaoEstadual: String;
     FChaveAcesso: String;
-  published
+  public
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     // As propriedades abaixo são Utilizadas pelo provedor ISSDigital
@@ -433,7 +433,7 @@ type
     property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
   end;
 
- TEndereco = class(TPersistent)
+ TEndereco = class(TObject)
   private
     FEnderecoInformado: Boolean;
     FTipoLogradouro: String;
@@ -448,7 +448,7 @@ type
     FxMunicipio: String;
     FCodigoPais: Integer;
     FxPais: String;
-  published
+  public
     property EnderecoInformado: Boolean read FEnderecoInformado write FEnderecoInformado;
     property TipoLogradouro: String read FTipoLogradouro write FTipoLogradouro;
     property Endereco: String read FEndereco write FEndereco;
@@ -464,13 +464,13 @@ type
     property xPais: String read FxPais write FxPais;
   end;
 
- TContato = class(TPersistent)
+ TContato = class(TObject)
   private
     FTelefone: String;
     FEmail: String;
     FDDD: String;
     FTipoTelefone: string;
-  published
+  public
     property Telefone: String read FTelefone write FTelefone;
     property Email: String read FEmail write FEmail;
     property DDD: String read FDDD write FDDD;
@@ -495,20 +495,20 @@ type
     property Contato: TContato read FContato write FContato;
   end;
 
-  TIdentificacaoTomador = class(TPersistent)
+  TIdentificacaoTomador = class(TObject)
   private
     FCpfCnpj: String;
     FInscricaoMunicipal: String;
     FInscricaoEstadual: String;
     FDocTomadorEstrangeiro: String;
-  published
+  public
     property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
     property DocTomadorEstrangeiro: String read FDocTomadorEstrangeiro write FDocTomadorEstrangeiro;
   end;
 
- TDadosTomador = class(TPersistent)
+ TDadosTomador = class(TObject)
   private
     FIdentificacaoTomador: TIDentificacaoTomador;
     FRazaoSocial: String;
@@ -517,21 +517,21 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property IdentificacaoTomador: TIdentificacaoTomador read FIdentificacaoTomador write FIdentificacaoTomador;
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
   end;
 
- TIdentificacaoIntermediarioServico = class(TPersistent)
+ TIdentificacaoIntermediarioServico = class(TObject)
   private
     FRazaoSocial: String;
     FCpfCnpj: String;
     FInscricaoMunicipal: String;
     FIssRetido: TnfseSituacaoTributaria;
     FEMail: String;
-  published
+  public
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property CpfCnpj: String read FCpfCnpj write FCpfCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
@@ -539,16 +539,16 @@ type
     property EMail: String read FEMail write FEMail;
   end;
 
- TIdentificacaoOrgaoGerador = class(TPersistent)
+ TIdentificacaoOrgaoGerador = class(TObject)
   private
     FCodigoMunicipio: String;
     FUf: String;
-  published
+  public
     property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
     property Uf: String read FUf write FUf;
   end;
 
- TDadosConstrucaoCivil = class(TPersistent)
+ TDadosConstrucaoCivil = class(TObject)
   private
     FCodigoObra: String;
     FArt: String;
@@ -565,7 +565,7 @@ type
     FnProj: string;
     FnMatri: string;
     FnNumeroEncapsulamento : string;
-  published
+  public
     property CodigoObra: String read FCodigoObra write FCodigoObra;
     property Art: String read FArt write FArt;
     property LogradouroObra: string read FLogradouroObra write FLogradouroObra;
@@ -606,7 +606,7 @@ type
     property Items[Index: Integer]: TParcelasCollectionItem read GetItem write SetItem; default;
   end;
 
-  TCondicaoPagamento = class(TPersistent)
+  TCondicaoPagamento = class(TObject)
   private
     FCondicao: TnfseCondicaoPagamento;
     FQtdParcela: Integer;
@@ -615,7 +615,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Condicao: TnfseCondicaoPagamento read FCondicao write FCondicao;
     property QtdParcela: Integer read FQtdParcela write FQtdParcela;
     property Parcelas: TParcelasCollection read FParcelas write SetParcelas;
@@ -638,7 +638,7 @@ type
     property emailCC: String read FemailCC write FemailCC;
   end;
 
- TDadosTransportadora = class(TPersistent)
+ TDadosTransportadora = class(TObject)
   private
     FxNomeTrans: String;
     FxCpfCnpjTrans: String;
@@ -651,7 +651,7 @@ type
     FcPaisTrans: Integer;
     FxPaisTrans: String;
     FvTipoFreteTrans: TnfseFrete;
-  published
+  public
     property xNomeTrans: String read FxNomeTrans write FxNomeTrans;
     property xCpfCnpjTrans: String read FxCpfCnpjTrans write FxCpfCnpjTrans;
     property xInscEstTrans: String read FxInscEstTrans write FxInscEstTrans;
@@ -856,7 +856,7 @@ type
     property FrmRec: TnfseFrmRec read FFrmRec write FFrmRec; //Governa
   end;
 
- TLoteRps = class(TPersistent)
+ TLoteRps = class(TObject)
   private
     FInfID: TInfID;
     FNumeroLote: String;
@@ -866,7 +866,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property InfID: TInfID read FInfID write FInfID;
     property NumeroLote: String read FNumeroLote write FNumeroLote;
     property Cnpj: String read FCnpj write FCnpj;

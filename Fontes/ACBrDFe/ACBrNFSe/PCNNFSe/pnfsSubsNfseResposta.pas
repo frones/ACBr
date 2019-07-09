@@ -44,7 +44,7 @@ type
  TNotaSubstituidoraCollection = class;
  TNotaSubstituidoraCollectionItem = class;
 
- TretSubsNFSe = class(TPersistent)
+ TretSubsNFSe = class(TObject)
   private
     FLeitor: TLeitor;
     FMsgRetorno: TMsgRetornoSubsCollection;
@@ -64,7 +64,6 @@ type
     function LerXML_proInfisc: Boolean;
     function LerXML_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
-  published
     property Leitor: TLeitor                                 read FLeitor            write FLeitor;
     property MsgRetorno: TMsgRetornoSubsCollection           read FMsgRetorno        write SetMsgRetorno;
     property NotaSubstituidora: TNotaSubstituidoraCollection read FNotaSubstituidora write SetNotaSubstituidora;

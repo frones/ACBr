@@ -155,9 +155,17 @@ type
   private
     fVL_SLD_FIN:     Variant;
     fIND_VL_SLD_FIN: String;
+    fVL_SLD_INI:     Variant;
+    fIND_VL_SLD_INI: String;
+    fVL_CRED:        Variant;
+    fVL_DEB:         Variant;
     fCOD_CTA_REF:    String;
   public
     property COD_CTA_REF:    String read fCOD_CTA_REF write fCOD_CTA_REF;
+    property VL_SLD_INI:     Variant read fVL_SLD_INI write fVL_SLD_INI;
+    property IND_VL_SLD_INI: String read fIND_VL_SLD_INI write fIND_VL_SLD_INI;
+    property VL_DEB:         Variant read fVL_DEB write fVL_DEB;
+    property VL_CRED:        Variant read fVL_CRED write fVL_CRED;
     property VL_SLD_FIN:     Variant read fVL_SLD_FIN write fVL_SLD_FIN;
     property IND_VL_SLD_FIN: String read fIND_VL_SLD_FIN write fIND_VL_SLD_FIN;
   end;

@@ -335,6 +335,7 @@ begin
     proSaatri,
     proGiss,
     proRLZ,
+    proTinus,
     proSalvador: IdLote := 'lote' + NumeroLote;
 
 

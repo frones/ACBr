@@ -1869,6 +1869,7 @@ begin
                 '</' + Prefixo3 + 'Pedido>';
       end;
 
+    proRecife,
     proRJ,
     proSimplISS:
       begin

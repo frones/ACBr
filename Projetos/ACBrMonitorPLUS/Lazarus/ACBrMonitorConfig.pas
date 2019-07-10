@@ -330,6 +330,8 @@ type
     PathEvento                   : String;
     PathArqTXT                   : String;
     PathDownload                 : String;
+    PathSchemasDFe               : String;
+
   end;
 
   TDFeEmail = record
@@ -1100,6 +1102,7 @@ begin
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathEvento,                  PathEvento                  );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathArqTXT,                  PathArqTXT                  );
       Ini.WriteString(CSecArquivos,  CKeyArquivosPathDownload,                PathDownload                );
+      Ini.WriteString(CSecArquivos,  CKeyArquivosPathSchemasDFe,              PathSchemasDFe              );
     end;
 
     with SAT do
@@ -1745,6 +1748,8 @@ begin
       PathEvento                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathEvento,                  PathEvento                  );
       PathArqTXT                 := Ini.ReadString(CSecArquivos,   CKeyArquivosPathArqTXT,                  PathArqTXT                  );
       PathDownload               := Ini.ReadString(CSecArquivos,   CKeyArquivosPathDownload,                PathDownload                );
+      PathSchemasDFe             := Ini.ReadString(CSecArquivos,   CKeyArquivosPathSchemasDFe,              PathSchemasDFe              );
+
     end;
 
     with DFe.RespTecnico do
@@ -2381,6 +2386,7 @@ begin
     PathEvento                 :=  AcertaPath('Arqs');
     PathArqTXT                 :=  AcertaPath('TXT');
     PathDownload               :=  AcertaPath('Arqs');
+    PathSchemasDFe             :=  AcertaPath('Schemas');
   end;
 
   with DFe.RespTecnico do

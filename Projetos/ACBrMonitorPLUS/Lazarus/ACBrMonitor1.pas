@@ -266,6 +266,8 @@ type
     edtEmailAssuntoSAT: TEdit;
     edtNumCopiaNFCe: TSpinEdit;
     edtPathDownload: TEdit;
+    edtPathSchemasDFe: TEdit;
+    grbPathSchemas: TGroupBox;
     GroupBox9: TGroupBox;
     Label227: TLabel;
     Label229: TLabel;
@@ -574,6 +576,7 @@ type
     rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
+    sbSchemaDFe: TSpeedButton;
     sbArquivoWebServicesReinf: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
     sbArquivoWebServiceseSocial: TSpeedButton;
@@ -1402,6 +1405,7 @@ type
     procedure sbPathPDFClick(Sender: TObject);
     procedure sbPathSalvarClick(Sender: TObject);
     procedure sbPosPrinterLogClick(Sender: TObject);
+    procedure sbSchemaDFeClick(Sender: TObject);
     procedure sbSerialClick(Sender: TObject);
     procedure sbSobreClick(Sender: TObject);
     procedure ScrollBoxMouseWheelDown(Sender: TObject; Shift: TShiftState;
@@ -4747,6 +4751,7 @@ begin
       edtPathEvento.Text               := IfThen( NaoEstaVazio(PathEvento), PathEvento, AcertaPath('Arqs'));
       edtPathArqTXT.Text               := IfThen( NaoEstaVazio(PathArqTXT), PathArqTXT, AcertaPath('TXT'));
       edtPathDownload.Text             := IfThen( NaoEstaVazio(PathDownload), PathDownload, AcertaPath('Arqs'));
+      edtPathSchemasDFe.Text           := IfThen( NaoEstaVazio(PathSchemasDFe), PathSchemasDFe, AcertaPath('Schemas'));
 
     end;
 
@@ -5895,6 +5900,8 @@ begin
         PathEvento                     := edtPathEvento.Text;
         PathArqTXT                     := edtPathArqTXT.Text;
         PathDownload                   := edtPathDownload.Text;
+        PathSchemasDFe                 := edtPathSchemasDFe.Text;
+
       end;
     end;
 
@@ -7218,6 +7225,11 @@ begin
   OpenURL(AFileLog);
 end;
 
+procedure TFrmACBrMonitor.sbSchemaDFeClick(Sender: TObject);
+begin
+  PathClick(edtPathSchemasDFe);
+end;
+
 procedure TFrmACBrMonitor.sbSobreClick(Sender: TObject);
 begin
   frmSobre := TfrmSobre.Create(self);
@@ -8420,7 +8432,8 @@ begin
   end;
 
   Dialogs.SelectDirectory('Selecione o diretório',Dir,Dir);
-  TEdit(Sender).Text := Dir;
+  if NaoEstaVazio(Dir) then
+    TEdit(Sender).Text := Dir;
 end;
 
 {---------------------------------- ACBrBAL -----------------------------------}
@@ -9225,7 +9238,9 @@ procedure TFrmACBrMonitor.SetComumConfig(Configuracoes: TConfiguracoes);
 var
   OK: boolean;
   PathMunIBGE: String;
+  PathSchemaDFe: String;
 begin
+  PathSchemaDFe := '';
   PathMunIBGE := PathWithDelim(ExtractFilePath(Application.ExeName)) + 'MunIBGE' + PathDelim ;
   with Configuracoes do
   begin
@@ -9322,6 +9337,10 @@ begin
     TConfiguracoesNFe(Configuracoes).Geral.CamposFatObrigatorios    := ckCamposFatObrigatorio.Checked;
     TConfiguracoesNFe(Configuracoes).Geral.ForcarGerarTagRejeicao938 := TForcarGeracaoTag(cbTagRejeicao938.ItemIndex);
 
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'NFe';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesNFe(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
+
   end
   else if Configuracoes is TConfiguracoesCTe then
   begin
@@ -9338,6 +9357,11 @@ begin
     TConfiguracoesCTe(Configuracoes).Arquivos.SalvarApenasCTeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.NormatizarMunicipios  := cbxNormatizarMunicipios.Checked;
     TConfiguracoesCTe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'CTe';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesCTe(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
+
   end
   else if Configuracoes is TConfiguracoesMDFe then
   begin
@@ -9353,6 +9377,11 @@ begin
     TConfiguracoesMDFe(Configuracoes).Arquivos.SalvarApenasMDFeProcessados := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesMDFe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'MDFe';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesMDFe(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
+
   end
   else if Configuracoes is TConfiguracoesBPe then
   begin
@@ -9368,6 +9397,11 @@ begin
     TConfiguracoesBPe(Configuracoes).Arquivos.SalvarApenasBPeProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.NormatizarMunicipios := cbxNormatizarMunicipios.Checked;
     TConfiguracoesBPe(Configuracoes).Arquivos.PathArquivoMunicipios := PathMunIBGE;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'BPe';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesBPe(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
+
   end
   else if Configuracoes is TConfiguracoesGNRE then
   begin
@@ -9378,7 +9412,12 @@ begin
     TConfiguracoesGNRE(Configuracoes).Arquivos.PathGNRE        := edtPathNFe.Text;
     TConfiguracoesGNRE(Configuracoes).Arquivos.SalvarApenasGNREProcessadas := cbxSalvarNFesProcessadas.Checked;
     TConfiguracoesGNRE(Configuracoes).Arquivos.PathArqTXT      := edtPathArqTXT.Text;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'GNRe';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesGNRE(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
   end
+
   else if Configuracoes is TConfiguracoeseSocial then
   begin
     TConfiguracoeseSocial(Configuracoes).Arquivos.IniServicos       := edtArquivoWebServiceseSocial.Text;
@@ -9388,6 +9427,11 @@ begin
     TConfiguracoeseSocial(Configuracoes).Geral.TipoEmpregador       := TEmpregador(cbTipoEmpregador.ItemIndex);
     TConfiguracoeseSocial(Configuracoes).Geral.IdEmpregador         := edtIDEmpregador.Text;
     TConfiguracoeseSocial(Configuracoes).Geral.IdTransmissor        := edtIDTransmissor.Text;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'eSocial';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoeseSocial(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
+
   end
   else if Configuracoes is TConfiguracoesReinf then
   begin
@@ -9398,6 +9442,10 @@ begin
     TConfiguracoesReinf(Configuracoes).Geral.TipoContribuinte     := TContribuinte(cbTipoContribuinte.ItemIndex);
     TConfiguracoesReinf(Configuracoes).Geral.IdContribuinte       := edtIDContribuinte.Text;
     TConfiguracoesReinf(Configuracoes).Geral.IdTransmissor        := edtIDTransmissorReinf.Text;
+
+    PathSchemaDFe := edtPathSchemasDFe.Text + PathDelim + 'Reinf';
+    if DirectoryExists(PathSchemaDFe) then
+      TConfiguracoesReinf(Configuracoes).Arquivos.PathSchemas:= PathSchemaDFe ;
   end
 
 end;

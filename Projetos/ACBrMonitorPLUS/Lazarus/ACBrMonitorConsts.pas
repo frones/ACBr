@@ -989,6 +989,15 @@ const
   CKeyArquivosPathArqTXT =                  'PathArqTXT';
   CKeyArquivosPathDownload =                'PathDonwload';
 
+  CKeyArquivosPathSchemasDFe =              'PathSchemasDFe';
+  {CKeyArquivosPathSchemaNFe =               'PathSchemaNFe';
+  CKeyArquivosPathSchemaCTe =               'PathSchemaCTe';
+  CKeyArquivosPathSchemaMDFe =              'PathSchemaMDFe';
+  CKeyArquivosPathSchemaGNRe =              'PathSchemaGNRe';
+  CKeyArquivosPathSchemaBPe =               'PathSchemaBPe';
+  CKeyArquivosPathSchemaeSocial =           'PathSchemaeSocial';
+  CKeyArquivosPathSchemaReInf =             'PathSchemaReInf';}
+
   CSeceSocial =                             'eSocial';
   CSecReinf =                               'Reinf';
   CKey =                                    'Host';

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/07/2019
+[+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
+Adicionado campo para parametrizar o diretório dos Schemas DFe, foi realizado alteração para separar os schemas por tipo DFe.
+
 01/07/2019
 [+] DoACBrNFeUnit
 Melhorias e padronizações nas classes de Retorno DFe

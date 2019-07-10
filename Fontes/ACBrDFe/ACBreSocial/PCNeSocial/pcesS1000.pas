@@ -489,7 +489,8 @@ begin
     Gerador.wCampo(tcStr, '', 'indOpcCP', 1, 001, 0, eSIndOpcCPToStr(Self.infoEmpregador.infoCadastro.IndOpcCP));
 
   if (VersaoDF >= ve02_05_00) and (Not (Self.infoEmpregador.infoCadastro.ClassTrib in [ct21, ct22])) then
-    Gerador.wCampo(tcStr, '', 'indPorte',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndPorte));
+    if (Self.infoEmpregador.infoCadastro.IndPorte = tpSim) then //Somente empresas que não são (ME e EPP)
+      Gerador.wCampo(tcStr, '', 'indPorte',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndPorte));
 
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 

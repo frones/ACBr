@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+10/07/2019
+-- ACBrBancoSicredi --
+[-] Correção na leitura do retorno CNAB400 para considerar corretamente  a recusa A6.
+    (Fernando Henrique)
+
 04/06/2019
 
 -- ACBrBancoCresol--

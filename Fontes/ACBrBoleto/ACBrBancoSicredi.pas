@@ -898,7 +898,7 @@ begin
                             'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6',
                             'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',
                             'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1',
-                            'L2', 'L3', 'L4', 'C1', 'C2', 'C3', 'C4', 'C7', 'C8', 'C9']) of
+                            'L2', 'L3', 'L4', 'C1', 'C2', 'C3', 'C4', 'C7', 'C8', 'C9','A6']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -953,6 +953,7 @@ begin
             51: Result:= 'C7-Título já baixado';
             52: Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
             53: Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
+            54: Result:= 'A6-Data da instrução/ocorrência inválida';
           else
             case StrToInt(CodMotivo) of
               02: Result:= '02-Código do registro detalhe inválido';

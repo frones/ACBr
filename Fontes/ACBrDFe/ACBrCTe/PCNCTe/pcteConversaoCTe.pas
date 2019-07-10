@@ -711,9 +711,10 @@ function StrToTpEventoCTe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110113', '110160', '110170',
-             '110180', '110181', '610110'],
+             '110180', '110181', '610110', '310610'],
             [teNaoMapeado, teCCe, teCancelamento, teEPEC, teMultiModal,
-             teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo]);
+             teGTV, teComprEntrega, teCancComprEntrega, tePrestDesacordo,
+             teMDFeAutorizado2]);
 end;
 
 initialization

@@ -1718,6 +1718,7 @@ begin
           Descricao := Leitor.rCampo(tcStr, 'Descricao');
           Quantidade := Leitor.rCampo(tcInt, 'Quantidade');
           ValorUnitario := Leitor.rCampo(tcDe2, 'ValorUnitario');
+          ValorTotal    := Quantidade * ValorUnitario;
         end;
         inc(i);
       end;

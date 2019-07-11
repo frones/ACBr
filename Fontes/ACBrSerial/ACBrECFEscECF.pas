@@ -958,7 +958,7 @@ begin
       if (Byte1 = WAK) then // Ocupado, aguarde e solicite novo Status
       begin
         if (fsWAKCounter > 0) and                // Já esteve ocupada antes ?
-           (EscECFComando.fsCMD in [22,26]) and  // Foi um comando de "Leitura de Informações" ?
+           (EscECFComando.fsCMD in [20,22,26]) and  // Foi um comando de "Leitura X Serial" ou "Leitura de Informações" ?
            (IsBematech or IsDaruma) and
            (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
         begin

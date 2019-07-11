@@ -1106,7 +1106,7 @@ begin
     if not ValidarCNPJouCPF(ACNPJ) then
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
-    ACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJ, ANSU);
+    ACBrMDFe.DistribuicaoDFePorNSU(ACNPJ, ANSU);
 
     RespostaDistribuicaoDFe;
 

@@ -1909,7 +1909,7 @@ begin
     if not ValidarCNPJouCPF(ACNPJ) then
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
-    ACBrBPe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, ANSU);
+    ACBrBPe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
 
     RespostaDistribuicaoDFe;
 

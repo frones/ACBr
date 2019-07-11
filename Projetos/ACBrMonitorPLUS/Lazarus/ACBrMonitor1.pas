@@ -46,7 +46,7 @@ uses
   ACBrDANFCeFortesFr, ACBrDANFCeFortesFrA4, ACBrNFeDANFeRLClass, ACBrBoleto,
   ACBrBoletoFCFortesFr, Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo,
   PrintersDlgs, IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe, pcnConversaoBPe,
-  ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
+  ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, pgnreConversao,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, fileinfo,
   ACBrDFeConfiguracoes, ACBrBPe, ACBrBPeDABPeESCPOS, ACBrReinf, ACBreSocial,
@@ -259,6 +259,7 @@ type
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
     cbVersaoWSBPe: TComboBox;
+    cbVersaoWSGNRE: TComboBox;
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
     edtBOLDigitoAgConta: TEdit;
@@ -524,6 +525,7 @@ type
     Label236: TLabel;
     Label237: TLabel;
     Label238: TLabel;
+    Label239: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -1699,6 +1701,11 @@ var
   iCEP: TACBrCEPWebService;
   iESO: TVersaoeSocial;
   iREI: TVersaoReinf;
+  iGNR: TVersaoGNRE;
+  iBPE: TVersaoBPe;
+  iMDF: TVersaoMDFe;
+  iCTE: TVersaoCTe;
+  iNFe: TpcnVersaoDF;
   IBanco: TACBrTipoCobranca;
   iSAT: TACBrSATModelo;
   iTipo: TpcnTipoAmbiente;
@@ -1726,6 +1733,7 @@ var
   iETQOrigem: TACBrETQOrigem;
   M: Integer;
   K: Integer;
+  vFormatSettings: TFormatSettings;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1887,6 +1895,57 @@ begin
   fsSLPrecos := TStringList.Create;
   fsSLPrecos.NameValueSeparator := '|';
   fsDTPrecos := 0;
+
+  vFormatSettings.DecimalSeparator  := '.';
+  { Criando lista versões GNRe disponiveis }
+  cbVersaoWSGNRE.Items.Clear;
+  iGNR := Low(TVersaoGNRE);
+  while iGNR <= High(TVersaoGNRE) do
+  begin
+    cbVersaoWSGNRE.Items.Add( FormatFloat('0.00', StrToFloat(copy( GetEnumName(TypeInfo(TVersaoGNRE), integer(iGNR)), 3, 1))
+                              , vFormatSettings ) );
+    Inc(iGNR);
+  end;
+
+  { Criando lista versões BPe disponiveis }
+  cbVersaoWSBPe.Items.Clear;
+  iBPE := Low(TVersaoBPe);
+  while iBPE <= High(TVersaoBPe) do
+  begin
+    cbVersaoWSBPe.Items.Add( FormatFloat('0.00', StrToFloat(copy( GetEnumName(TypeInfo(TVersaoBPe), integer(iBPE)), 3, 1))
+                              , vFormatSettings ) );
+    Inc(iBPE);
+  end;
+
+  { Criando lista versões MDFe disponiveis }
+  cbVersaoWSMDFe.Items.Clear;
+  iMDF := Low(TVersaoMDFe);
+  while iMDF <= High(TVersaoMDFe) do
+  begin
+    cbVersaoWSMDFe.Items.Add( FormatFloat('0.00', StrToFloat(copy( GetEnumName(TypeInfo(TVersaoMDFe), integer(iMDF)), 3, 1))
+                              , vFormatSettings ) );
+    Inc(iMDF);
+  end;
+
+  { Criando lista versões CTe disponiveis }
+  cbVersaoWSCTe.Items.Clear;
+  iCTE := Low(TVersaoCTe);
+  while iCTE <= High(TVersaoCTe) do
+  begin
+    cbVersaoWSCTe.Items.Add( FormatFloat('0.00', StrToFloat(copy( GetEnumName(TypeInfo(TVersaoCTe), integer(iCTE)), 3, 1))
+                              , vFormatSettings ) );
+    Inc(iCTE);
+  end;
+
+  { Criando lista versões NFe disponiveis }
+  cbVersaoWS.Items.Clear;
+  iNFe := Low(TpcnVersaoDF);
+  while iNFe <= High(TpcnVersaoDF) do
+  begin
+    cbVersaoWS.Items.Add( FormatFloat('0.00', (StrToFloat(copy( GetEnumName(TypeInfo(TpcnVersaoDF ), integer(iNFe)), 3, 3))) /100
+                              , vFormatSettings ) );
+    Inc(iNFe);
+  end;
 
   { Criando lista versões e-social disponiveis }
   cbVersaoWSeSocial.Items.Clear;
@@ -4586,6 +4645,7 @@ begin
       cbVersaoWSCTe.ItemIndex          := cbVersaoWSCTe.Items.IndexOf(VersaoCTe);
       cbVersaoWSMDFe.ItemIndex         := cbVersaoWSMDFe.Items.IndexOf(VersaoMDFe);
       cbVersaoWSBPe.ItemIndex          := cbVersaoWSBPe.Items.IndexOf(VersaoBPe);
+      cbVersaoWSGNRE.ItemIndex         := cbVersaoWSGNRE.Items.IndexOf(VersaoGNRe);
       cbVersaoWSeSocial.ItemIndex      := cbVersaoWSeSocial.Items.IndexOf(VersaoeSocial);
       cbVersaoWsReinf.ItemIndex        := cbVersaoWSReinf.Items.IndexOf(VersaoReinf);
       cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
@@ -5728,6 +5788,7 @@ begin
         VersaoCTe                := cbVersaoWSCTe.Text;
         VersaoMDFe               := cbVersaoWSMDFe.Text;
         VersaoBPe                := cbVersaoWSBPe.Text;
+        VersaoGNRe               := cbVersaoWSGNRE.Text;
         VersaoeSocial            := cbVersaoWSeSocial.Text;
         VersaoReinf              := cbVersaoWSReinf.Text;
         VersaoQRCode             := cbVersaoWSQRCode.Text;
@@ -9406,6 +9467,7 @@ begin
   else if Configuracoes is TConfiguracoesGNRE then
   begin
     TConfiguracoesGNRE(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoGNRe.ItemIndex + 1));
+    TConfiguracoesGNRE(Configuracoes).Geral.VersaoDF     := StrToVersaoGNRe(ok, cbVersaoWSGNRE.Text);
 
     TConfiguracoesGNRE(Configuracoes).Arquivos.IniServicos     := edtArquivoWebServicesGNRe.Text;
     TConfiguracoesGNRE(Configuracoes).Arquivos.EmissaoPathGNRE := cbxEmissaoPathNFe.Checked;

@@ -832,6 +832,7 @@ const
   CKeyVersaoReinf =                  'VersaoReinf';
   CKeyVersaoQRCode =                 'VersaoQRCode';
   CKeyVersaoBPe =                    'VersaoBPe';
+  CKeyVersaoGNRe =                   'VersaoGNRe';
   CKeyFormaEmissaoCTe =              'FormaEmissaoCTe';
   CKeyFormaEmissaoNFe =              'FormaEmissaoNFe';
   CKeyFormaEmissaoMDFe =             'FormaEmissaoMDFe';

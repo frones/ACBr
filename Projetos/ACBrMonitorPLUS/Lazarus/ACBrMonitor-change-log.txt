@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2019
+[*] ACBrMonitor1
+Ajuste na validação de versão DFe para atualização em tela
+
+11/07/2019
+[+] ACBrMonitor1
+Adicionado parametro para configuração versão GNRe
+
+10/07/2019
+[*] DoACBrBPeUnit, DoACBrCTeUnit, DoACBrMDFeUnit
+Ajuste na chamada do método DistribuicaoDFeporNSU
+
+10/07/2019
+[*] DoSATUnit
+Ajuste no retorno do método GerarImpressaoFiscalMFe.
+
 10/07/2019
 [+] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
 Adicionado campo para parametrizar o diretório dos Schemas DFe, foi realizado alteração para separar os schemas por tipo DFe.

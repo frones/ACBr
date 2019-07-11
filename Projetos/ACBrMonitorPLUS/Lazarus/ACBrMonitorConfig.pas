@@ -235,6 +235,7 @@ type
     VersaoBPe         : String;
     VersaoeSocial     : String;
     VersaoReinf       : String;
+    VersaoGNRe        : String;
     VersaoQRCode      : String;
     CamposFatObrig    : Boolean;
     FormaEmissaoNFe   : Integer;
@@ -924,6 +925,7 @@ begin
       Ini.WriteString( CSecWebService, CKeyVersaoeSocial, VersaoeSocial );
       Ini.WriteString( CSecWebService, CKeyVersaoQRCode, VersaoQRCode );
       Ini.WriteString( CSecWebService, CKeyVersaoBPe, VersaoBPe );
+      Ini.WriteString( CSecWebService, CKeyVersaoGNRe, VersaoGNRe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoNFe, FormaEmissaoNFe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoCTe, FormaEmissaoCTe );
       Ini.WriteInteger( CSecWebService, CKeyFormaEmissaoMDFe, FormaEmissaoMDFe );
@@ -1585,6 +1587,7 @@ begin
       VersaoReinf               := Ini.ReadString( CSecWebService, CKeyVersaoReinf, CvalueVersaoReinf );
       VersaoQRCode              := Ini.ReadString( CSecWebService, CKeyVersaoQRCode, CvalueVersaoQRCode );
       VersaoBPe                 := Ini.ReadString( CSecWebService, CKeyVersaoBPe, VersaoBPe );
+      VersaoGNRe                := Ini.ReadString( CSecWebService, CKeyVersaoGNRe, VersaoGNRe );
       FormaEmissaoNFe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoNFe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoCTe           := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoCTe, DFe.Impressao.Geral.FormaEmissao );
       FormaEmissaoGNRe          := Ini.ReadInteger( CSecWebService, CKeyFormaEmissaoGNRe, DFe.Impressao.Geral.FormaEmissao );
@@ -2231,6 +2234,7 @@ begin
     VersaoReinf               := '1_03_02';
     VersaoQRCode              := '0';
     VersaoBPe                 := '1.00';
+    VersaoGNRe                := '1.00';
     FormaEmissaoNFe           := 0;
     FormaEmissaoCTe           := 0;
     FormaEmissaoGNRe          := 0;

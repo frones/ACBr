@@ -64,6 +64,7 @@ Source: ..\..\..\Fontes\ACBrDFe\ACBrMDFe\ACBrMDFeServicos.ini; DestDir: {app}; F
 Source: ..\..\..\Fontes\ACBrDFe\ACBreSocial\ACBreSocialServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: ..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Arquivos de Change-log.TXT
 Source: ACBrMonitor-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFe-change-log.txt; DestDir: {app}\ChangeLog; Flags: ignoreversion; Components: help

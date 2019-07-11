@@ -115,6 +115,7 @@ contains
   ACBrEscDiebold in '..\..\..\Fontes\ACBrSerial\ACBrEscDiebold.pas',
   ACBrEscEpsonP2 in '..\..\..\Fontes\ACBrSerial\ACBrEscEpsonP2.pas',
   ACBrEscCustomPos in '..\..\..\Fontes\ACBrSerial\ACBrEscCustomPos.pas',
+  ACBrEscPosStar in '..\..\..\Fontes\ACBrSerial\ACBrEscPosStar.pas',
   ACBrEscPosHook in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas',
   ACBrEscPosHookEpsonDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas',
   ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas',

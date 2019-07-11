@@ -25,7 +25,7 @@ uses
   ACBrECFVirtual, ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, 
   ACBrECFVirtualNaoFiscal, ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, 
   ACBrEscDaruma, ACBrEscDiebold, ACBrEscElgin, ACBrEscEpsonP2, 
-  ACBrEscCustomPos, ACBrEscPosHook, ACBrEscPosHookElginDLL, 
+  ACBrEscCustomPos, ACBrEscPosStar, ACBrEscPosHook, ACBrEscPosHookElginDLL, 
   ACBrEscPosHookEpsonDLL, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
   LazarusPackageIntf;
 

@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="9"/>
-    <Files Count="80">
+    <Files Count="81">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSerialReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -323,33 +323,37 @@
         <UnitName Value="ACBrEscCustomPos"/>
       </Item73>
       <Item74>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas"/>
-        <UnitName Value="ACBrEscPosHook"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosStar.pas"/>
+        <UnitName Value="ACBrEscPosStar"/>
       </Item74>
       <Item75>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas"/>
-        <UnitName Value="ACBrEscPosHookElginDLL"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas"/>
+        <UnitName Value="ACBrEscPosHook"/>
       </Item75>
       <Item76>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas"/>
-        <UnitName Value="ACBrEscPosHookEpsonDLL"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas"/>
+        <UnitName Value="ACBrEscPosHookElginDLL"/>
       </Item76>
       <Item77>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
-        <UnitName Value="ACBrSMS"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas"/>
+        <UnitName Value="ACBrEscPosHookEpsonDLL"/>
       </Item77>
       <Item78>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
-        <UnitName Value="ACBrSMSClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMS.pas"/>
+        <UnitName Value="ACBrSMS"/>
       </Item78>
       <Item79>
-        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
-        <UnitName Value="ACBrSMSDaruma"/>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSClass.pas"/>
+        <UnitName Value="ACBrSMSClass"/>
       </Item79>
       <Item80>
+        <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSDaruma.pas"/>
+        <UnitName Value="ACBrSMSDaruma"/>
+      </Item80>
+      <Item81>
         <Filename Value="..\..\..\Fontes\ACBrSerial\ACBrSMSZTE.pas"/>
         <UnitName Value="ACBrSMSZTE"/>
-      </Item80>
+      </Item81>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

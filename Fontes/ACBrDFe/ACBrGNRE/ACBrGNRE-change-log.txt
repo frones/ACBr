@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2019
+[+] ACBrGNReGuiasa
+Adicionado campo TipoGNRe na leitura .ini (LerArqIni)
+
+11/07/2019
+[+] pgnreConversao
+Adicionado função StrToVersaoGNRe para conversão cód versão
+
 23/04/2019
 -- Diversos --
 [*] Mais alguns ajustes visando a versão (2.00).

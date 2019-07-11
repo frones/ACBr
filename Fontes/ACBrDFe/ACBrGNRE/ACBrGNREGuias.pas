@@ -313,6 +313,7 @@ function Guia.LerArqIni(const AIniString: String): Boolean;
 var
   IniGuia: TMemIniFile;
   sSecao: String;
+  ok: Boolean;
 begin
   IniGuia := TMemIniFile.Create('');
   try
@@ -357,6 +358,7 @@ begin
 
       if IniGuia.SectionExists(sSecao) then
       begin
+        tipoGNRE           := StrToTipoGNRE(ok, IniGuia.ReadString(sSecao,'tipoGNRe','0') );
         c15_convenio       := IniGuia.ReadString(sSecao,'convenio','');
         c02_receita        := IniGuia.ReadInteger(sSecao,'receita',0);
         c01_UfFavorecida   := IniGuia.ReadString(sSecao,'ufFavorecida','');

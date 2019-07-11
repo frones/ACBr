@@ -74,6 +74,7 @@ function SchemaGNREToStr(const t: TSchemaGNRE): String;
 
 function VersaoGNREToStr(const t: TVersaoGNRE): String;
 function VersaoGNREToDbl(const t: TVersaoGNRE): Double;
+function StrToVersaoGNRe(out ok: Boolean; const s: String): TVersaoGNRE;
 
 function TipoGNREToStr(const t: TTipoGNRE): String;
 function StrToTipoGNRE(out ok: Boolean; const s: String): TTipoGNRE;
@@ -127,6 +128,11 @@ begin
   else
     Result := 0;
   end;
+end;
+
+function StrToVersaoGNRe(out ok: Boolean; const s: String): TVersaoGNRE;
+begin
+  Result := StrToEnumerado(ok, s, ['1.00', '2.00'], [ve100, ve200]);
 end;
 
 function TipoGNREToStr(const t: TTipoGNRE): String;

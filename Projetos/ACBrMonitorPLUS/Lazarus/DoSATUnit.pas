@@ -603,9 +603,12 @@ begin
 
   with TACBrObjetoSAT(fpObjetoDono) do
   begin
+    if MonitorConfig.SAT.SATImpressao.SATFortes.UsarFortes then
+      raise Exception.Create( 'Falha ao gerar Impressão! Para Geração de Cupom MFe é preciso configurar Impressão ESCPOS. ');
+
     DoPrepararImpressaoSAT(cImpressora);
     CarregarDadosVenda(cXMLVenda);
-    TACBrSATExtratoESCPOS(ACBrSAT.Extrato).GerarImpressaoFiscalMFe();
+    fpCmd.Resposta := TACBrSATExtratoESCPOS(ACBrSAT.Extrato).GerarImpressaoFiscalMFe();
 
   end;
 

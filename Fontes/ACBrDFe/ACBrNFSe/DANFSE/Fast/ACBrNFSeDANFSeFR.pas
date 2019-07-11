@@ -523,7 +523,7 @@ begin
     LogChanges := False;
   end;
 
-  frxIdentificacao := TfrxDBDataset.Create(nil);
+  frxIdentificacao := TfrxDBDataset.Create(Self);
   with frxIdentificacao do
   begin
     UserName        := 'Identificacao';
@@ -548,7 +548,7 @@ begin
     BCDToCurrency := False;
   end;
 
-  frxPrestador := TfrxDBDataset.Create(nil);
+  frxPrestador := TfrxDBDataset.Create(Self);
   with frxPrestador do
   begin
     UserName        := 'Prestador';
@@ -578,7 +578,7 @@ begin
       BCDToCurrency := False;
     end;
 
-    frxTomador := TfrxDBDataset.Create(nil);
+    frxTomador := TfrxDBDataset.Create(Self);
     with frxTomador do
     begin
       UserName        := 'Tomador';
@@ -609,7 +609,7 @@ begin
       BCDToCurrency := False;
     end;
 
-    frxTransportadora := TfrxDBDataset.Create(nil);
+    frxTransportadora := TfrxDBDataset.Create(Self);
     with frxTransportadora do begin
       UserName        := 'Transportadora';
       CloseDataSource := False;
@@ -633,7 +633,7 @@ begin
       BCDToCurrency := False;
     end;
 
-    frxServicos := TfrxDBDataset.Create(nil);
+    frxServicos := TfrxDBDataset.Create(Self);
     with frxServicos do
     begin
       UserName        := 'Servicos';
@@ -679,7 +679,7 @@ begin
       BCDToCurrency := False;
     end;
 
-    frxParametros := TfrxDBDataset.Create(nil);
+    frxParametros := TfrxDBDataset.Create(Self);
     with frxParametros do
     begin
       UserName        := 'Parametros';
@@ -717,7 +717,7 @@ begin
       BCDToCurrency := False;
     end;
 
-    frxItensServico := TfrxDBDataset.Create(nil);
+    frxItensServico := TfrxDBDataset.Create(Self);
     with frxItensServico do
     begin
       UserName        := 'ItensServico';

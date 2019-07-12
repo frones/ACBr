@@ -723,7 +723,6 @@ function TNFSeR.LerRPS_Agili: Boolean;
 var
   item, i: Integer;
   ok: Boolean;
-  itemServico: TItemServicoCollectionItem;
   codCNAE: String;
   codLCServ: String;
 
@@ -776,28 +775,31 @@ begin
     i := 1;
     while (Leitor.rExtrai(2, 'DadosServico', '', i) <> '') do
     begin
-      itemServico := NFSe.Servico.ItemServico.New;
-      itemServico.Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
-      itemServico.Discriminacao := itemServico.Descricao;
-      itemServico.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
-      itemServico.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
-      itemServico.Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
+      with NFSe.Servico.ItemServico.New do
+      begin
+        Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
+        Discriminacao := Descricao;
+        ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
+        DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
+        Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
 
-      if VersaoNFSe = ve100 then
-        codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
+        if VersaoNFSe = ve100 then
+          codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
 
-      itemServico.CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
+        CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
 
-      Item := StrToIntDef(OnlyNumber(itemServico.CodLCServ), 0);
-      if Item < 100 then
-        Item := Item * 100 + 1;
-      itemServico.CodLCServ := FormatFloat('0000', Item);
-      itemServico.CodLCServ := Copy(itemServico.CodLCServ, 1, 2) + '.' + Copy(itemServico.CodLCServ, 3, 2);
+        Item := StrToIntDef(OnlyNumber(CodLCServ), 0);
+        if Item < 100 then
+          Item := Item * 100 + 1;
 
-      if codLCServ = '' then
-        codLCServ := itemServico.CodLCServ;
+        CodLCServ := FormatFloat('0000', Item);
+        CodLCServ := Copy(CodLCServ, 1, 2) + '.' + Copy(CodLCServ, 3, 2);
 
-      i := i + 1;
+        if codLCServ = '' then
+          codLCServ := CodLCServ;
+      end;
+
+      Inc(i);
     end;
   end; // fim lista serviço
 
@@ -1716,8 +1718,8 @@ begin
       begin
         with NFSe.Servico.ItemServico.New do
         begin
-          Descricao := Leitor.rCampo(tcStr, 'Descricao');
-          Quantidade := Leitor.rCampo(tcInt, 'Quantidade');
+          Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+          Quantidade    := Leitor.rCampo(tcInt, 'Quantidade');
           ValorUnitario := Leitor.rCampo(tcDe2, 'ValorUnitario');
           ValorTotal    := Quantidade * ValorUnitario;
         end;
@@ -2304,7 +2306,6 @@ function TNFSeR.LerNFSe_Agili: Boolean;
 var
   ok: Boolean;
   i: Integer;
-  itemServico: TItemServicoCollectionItem;
   codCNAE: Variant;
   codLCServ: string;
   ValorServicosTotal: Currency;
@@ -2364,40 +2365,44 @@ begin
     i := 1;
     while (Leitor.rExtrai(2, 'DadosServico', '', i) <> '') do
     begin
-      itemServico := NFSe.Servico.ItemServico.New;
-      itemServico.Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
-      itemServico.Discriminacao := itemServico.Descricao;
-      itemServico.ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
-      itemServico.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
-      itemServico.Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
+      with NFSe.Servico.ItemServico.New do
+      begin
+        Descricao := Leitor.rCampo(tcStr, 'Discriminacao');
+        Discriminacao := Descricao;
+        ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
+        DescontoIncondicionado := Leitor.rCampo(tcDe2, 'ValorDesconto');
+        Quantidade := Leitor.rCampo(tcDe6, 'Quantidade');
 
-      if VersaoNFSe = ve100 then
-        codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
+        if VersaoNFSe = ve100 then
+          codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
 
-      itemServico.CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
+        CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
 
-      if codLCServ = '' then
-        codLCServ := itemServico.CodLCServ;
+        if codLCServ = '' then
+          codLCServ := CodLCServ;
 
-      ValorServicosTotal := ValorServicosTotal + itemServico.ValorServicos;
+        ValorServicosTotal := ValorServicosTotal + ValorServicos;
+      end;
       inc(i);
     end;
 
     for I := 0 to NFSe.Servico.ItemServico.Count - 1 do
     begin
-      itemServico := NFSe.Servico.ItemServico.Items[I];
-      if ValorServicosTotal = NFSe.Servico.Valores.ValorServicos then
+      with NFSe.Servico.ItemServico.Items[I] do
       begin
-        itemServico.ValorTotal := itemServico.ValorServicos;
-      if itemServico.Quantidade = 0 then
-        itemServico.ValorUnitario := 0
-      else
-        itemServico.ValorUnitario := itemServico.ValorServicos / itemServico.Quantidade;
-      end
-      else
-      begin
-        itemServico.ValorUnitario := itemServico.ValorServicos;
-        itemServico.ValorTotal := itemServico.ValorUnitario * itemServico.Quantidade;
+        if ValorServicosTotal = NFSe.Servico.Valores.ValorServicos then
+        begin
+          ValorTotal := ValorServicos;
+          if Quantidade = 0 then
+            ValorUnitario := 0
+          else
+            ValorUnitario := ValorServicos / Quantidade;
+        end
+        else
+        begin
+          ValorUnitario := ValorServicos;
+          ValorTotal := ValorUnitario * Quantidade;
+        end;
       end;
     end;
 
@@ -3868,31 +3873,29 @@ begin
     if (Leitor.rExtrai(2, 'Servicos') <> '') then
     begin
       // Total máximo de 12 serviços na prefeitura
-      for I := 1 to 12 do
+      I := 0;
+      while (Leitor.rExtrai(3, 'Servicos', '', I+1) <> '') do
       begin
-        if (Leitor.rExtrai(3, 'Servicos', 'Servicos', I) <> '') then
-        begin
-          NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
+        NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
-          NFSe.Servico.ItemServico.Insert(I - 1, NFSe.Servico.ItemServico.New);
-          NFSe.Servico.ItemServico.Items[I - 1].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
-          NFSe.Servico.ItemServico.Items[I - 1].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
-          NFSe.Servico.ItemServico.Items[I - 1].Quantidade    := Leitor.rCampo(tcDe4, 'Quantidade');
-          NFSe.Servico.ItemServico.Items[I - 1].Unidade       := Leitor.rCampo(tcStr, 'Unidade');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
-          NFSe.Servico.ItemServico.Items[I - 1].Descricao     := Leitor.rCampo(tcStr, 'Descricao');
-          NFSe.Servico.ItemServico.Items[I - 1].Discriminacao := Leitor.rCampo(tcStr, 'Descricao');
-          NFSe.Servico.ItemServico.Items[I - 1].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
+        NFSe.Servico.ItemServico.New;
+        NFSe.Servico.ItemServico[I].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
+        NFSe.Servico.ItemServico[I].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
+        NFSe.Servico.ItemServico[I].Quantidade    := Leitor.rCampo(tcDe4, 'Quantidade');
+        NFSe.Servico.ItemServico[I].Unidade       := Leitor.rCampo(tcStr, 'Unidade');
+        NFSe.Servico.ItemServico[I].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
+        NFSe.Servico.ItemServico[I].Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.ItemServico[I].Discriminacao := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.ItemServico[I].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
+        NFSe.Servico.ItemServico[I].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
+        NFSe.Servico.ItemServico[I].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
 
-          AValorTotal := NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
-                         NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario;
+        AValorTotal := NFSe.Servico.ItemServico[I].Quantidade *
+                       NFSe.Servico.ItemServico[I].ValorUnitario;
 
-          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(AValorTotal, - 2);
-        end 
-        else
-            Break;
+        NFSe.Servico.ItemServico[I].ValorTotal := RoundTo(AValorTotal, - 2);
+
+        Inc(I);
       end;
     end; // fim Servicos
 
@@ -4105,30 +4108,29 @@ begin
     if (Leitor.rExtrai(2, 'Servicos') <> '') then
     begin
       // Total máximo de 12 serviços na prefeitura
-      for I := 1 to 12 do
+      I := 0;
+      while (Leitor.rExtrai(3, 'Servicos', '', I+1) <> '') do
       begin
-        if (Leitor.rExtrai(3, 'Servico', 'Servico', I) <> '') then
-        begin
-          NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
+        NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 
-          NFSe.Servico.ItemServico.Insert(I - 1, NFSe.Servico.ItemServico.New);
-          NFSe.Servico.ItemServico.Items[I - 1].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
-          NFSe.Servico.ItemServico.Items[I - 1].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
-          NFSe.Servico.ItemServico.Items[I - 1].Quantidade    := Leitor.rCampo(tcDe4, 'Quantidade');
-          NFSe.Servico.ItemServico.Items[I - 1].Unidade       := Leitor.rCampo(tcStr, 'Unidade');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
-          NFSe.Servico.ItemServico.Items[I - 1].Descricao     := Leitor.rCampo(tcStr, 'Descricao');
-          NFSe.Servico.ItemServico.Items[I - 1].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
-          NFSe.Servico.ItemServico.Items[I - 1].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
+        NFSe.Servico.ItemServico.New;
+        NFSe.Servico.ItemServico[I].CodServ       := Leitor.rCampo(tcStr, 'CodigoServico116');
+        NFSe.Servico.ItemServico[I].CodLCServ     := Leitor.rCampo(tcStr, 'CodigoServico116');
+        NFSe.Servico.ItemServico[I].Quantidade    := Leitor.rCampo(tcDe4, 'Quantidade');
+        NFSe.Servico.ItemServico[I].Unidade       := Leitor.rCampo(tcStr, 'Unidade');
+        NFSe.Servico.ItemServico[I].ValorUnitario := Leitor.rCampo(tcDe2, 'ValorServico');
+        NFSe.Servico.ItemServico[I].Descricao     := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.ItemServico[I].Discriminacao := Leitor.rCampo(tcStr, 'Descricao');
+        NFSe.Servico.ItemServico[I].Aliquota      := Leitor.rCampo(tcDe2, 'Aliquota');
+        NFSe.Servico.ItemServico[I].ValorServicos := Leitor.rCampo(tcDe2, 'ValorServico');
+        NFSe.Servico.ItemServico[I].ValorIss      := Leitor.rCampo(tcDe4, 'ValorIssqn');
 
-          AValorTotal := NFSe.Servico.ItemServico.Items[I - 1].Quantidade *
-                         NFSe.Servico.ItemServico.Items[I - 1].ValorUnitario;
+        AValorTotal := NFSe.Servico.ItemServico[I].Quantidade *
+                       NFSe.Servico.ItemServico[I].ValorUnitario;
 
-          NFSe.Servico.ItemServico.Items[I - 1].ValorTotal    := RoundTo(AValorTotal, - 2);
-        end 
-	    else
-          Break;
+        NFSe.Servico.ItemServico[I].ValorTotal := RoundTo(AValorTotal, - 2);
+
+        Inc(I);
       end;
     end; // fim Servicos
 
@@ -4216,25 +4218,16 @@ begin
       Servico.Descricao := Leitor.rCampo(tcStr, 'DescricaoServ');
 
 //    Itens do serviço prestado
-      i := 0;
-      while i <> -1 do
+      I := 0;
+      while (Leitor.rExtrai(1, 'ItemNfse', '', I+1) <> '') do
       begin
-        if (Leitor.rExtrai(1, 'ItemNfse','',i+1) <> '') then
-        begin
-          Nfse.Servico.ItemServico.Insert(i, NFSe.Servico.ItemServico.New);
-          with NFSe.Servico.ItemServico.Items[i] do
-          begin
-            Descricao := Leitor.rCampo(tcStr, 'DesSvc');
-            Quantidade := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc'));
-            ValorUnitario := StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
-            ValorTotal := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc')) * StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
-          end;
-          inc(i);
-        end
-        else
-        begin
-          i := -1;
-        end;
+        NFSe.Servico.ItemServico.New;
+        NFSe.Servico.ItemServico[I].Descricao := Leitor.rCampo(tcStr, 'DesSvc');
+        NFSe.Servico.ItemServico[I].Quantidade := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc'));
+        NFSe.Servico.ItemServico[I].ValorUnitario := StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
+        NFSe.Servico.ItemServico[I].ValorTotal := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc')) * StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
+
+        Inc(I);
       end;
 
       for i := 0 to Nfse.Servico.ItemServico.Count - 1 do
@@ -4729,16 +4722,16 @@ begin
       Nfse.Servico.ItemServico[Item].Aliquota    := Leitor.rCampo(tcDe2, 'pISS');
       Nfse.Servico.ItemServico[Item].ValorIss    := Leitor.rCampo(tcDe2, 'vISS');
       // Retenções
-      NFSe.Servico.ItemServico.Items[Item].ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
-      NFSe.Servico.ItemServico.Items[Item].ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
-      NFSe.Servico.ItemServico.Items[Item].ValorCofins := Leitor.rCampo(tcDe2, 'vRetCOFINS');
-      NFSe.Servico.ItemServico.Items[Item].ValorCsll   := Leitor.rCampo(tcDe2, 'vRetCSLL');
-      NFSe.Servico.ItemServico.Items[Item].ValorInss   := Leitor.rCampo(tcDe2, 'vRetINSS');
+      NFSe.Servico.ItemServico[Item].ValorIr     := Leitor.rCampo(tcDe2, 'vRetIR');
+      NFSe.Servico.ItemServico[Item].ValorPis    := Leitor.rCampo(tcDe2, 'vRetPISPASEP');
+      NFSe.Servico.ItemServico[Item].ValorCofins := Leitor.rCampo(tcDe2, 'vRetCOFINS');
+      NFSe.Servico.ItemServico[Item].ValorCsll   := Leitor.rCampo(tcDe2, 'vRetCSLL');
+      NFSe.Servico.ItemServico[Item].ValorInss   := Leitor.rCampo(tcDe2, 'vRetINSS');
     end;
     if (Leitor.rExtrai(2, 'ISSST') <> '') then
     begin
-      NFSe.Servico.ItemServico.Items[Item].AlicotaISSST := Leitor.rCampo(tcDe2, 'pISSST');
-      NFSe.Servico.ItemServico.Items[Item].ValorISSST := Leitor.rCampo(tcDe2, 'vISSST');
+      NFSe.Servico.ItemServico[Item].AlicotaISSST := Leitor.rCampo(tcDe2, 'pISSST');
+      NFSe.Servico.ItemServico[Item].ValorISSST := Leitor.rCampo(tcDe2, 'vISSST');
     end;
 
     inc(Item);

@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/07/2019
+-- pnfsNFSeR  --
+[*] Ajuste na leitura de XML de RPS ou NFS-e de alguns provedores
+    que estavam fora do padrão.
+   Por: Italo Jurisato Junior
 -- pnfsConversao/pnfsNFSeR  --
 [*] https://www.projetoacbr.com.br/forum/topic/52339-erro-retorno-nfse-sigcorp/
    Por: J Guto

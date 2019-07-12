@@ -760,7 +760,7 @@ begin
     EventoCTe.Evento.Clear;
     with EventoCTe.Evento.New do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.CTeChave), 7, 14);
+      infEvento.CNPJ := Conhecimentos.Items[i].CTe.Emit.CNPJ;
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.CTeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;

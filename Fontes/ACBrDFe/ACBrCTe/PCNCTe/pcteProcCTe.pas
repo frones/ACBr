@@ -73,6 +73,8 @@ type
     FxMotivo: String;
     FId: String;
     FVersao: String;
+    FcMsg: Integer;
+    FxMsg: String;
     FXML_CTe: String;
     FXML_prot: String;
   public
@@ -94,6 +96,8 @@ type
     property xMotivo: String            read FxMotivo            write FxMotivo;
     property Id: String                 read FId                 write FId;
     property Versao: String             read FVersao             write FVersao;
+    property cMsg: Integer              read FcMsg               write FcMsg;
+    property xMsg: String               read FxMsg               write FxMsg;
     // Usando na Montagem do cteProc
     property XML_CTe: String            read FXML_CTe            write FXML_CTe;
     property XML_prot: String           read FXML_prot           write FXML_prot;
@@ -240,6 +244,12 @@ begin
                     PreencherTAG('cStat',    XMLinfProt2.text) +
                     PreencherTAG('xMotivo',  XMLinfProt2.text) +
                   '</infProt>' +
+                  IIF( (PreencherTAG('cMsg', XMLinfProt2.text) <> ''),
+                  '<infFisco>' +
+                    PreencherTAG('cMsg', XMLinfProt2.text) +
+                    PreencherTAG('xMsg', XMLinfProt2.text) +
+                  '</infFisco>',
+                  '') +
                 '</protCTe>';
         end;
       end;
@@ -258,6 +268,12 @@ begin
                   '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                   '<xMotivo>' + FxMotivo + '</xMotivo>' +
                 '</infProt>' +
+                IIF( (cMsg > 0) or (xMsg <> ''),
+                '<infFisco>' +
+                  '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
+                  '<xMsg>' + FxMsg + '</xMsg>' +
+                '</infFisco>',
+                '') +
               '</protCTe>';
       end;
 

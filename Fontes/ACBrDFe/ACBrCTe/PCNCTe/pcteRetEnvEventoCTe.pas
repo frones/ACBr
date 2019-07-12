@@ -201,6 +201,7 @@ begin
            infEvento.detEvento.nProt      := Leitor.rCampo(tcStr, 'nProt');
            infEvento.detEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
            infEvento.detEvento.vICMS      := Leitor.rCampo(tcDe2, 'vICMS');
+           infEvento.detEvento.vICMSST    := Leitor.rCampo(tcDe2, 'vICMSST');
            infEvento.detEvento.vTPrest    := Leitor.rCampo(tcDe2, 'vTPrest');
            infEvento.detEvento.vCarga     := Leitor.rCampo(tcDe2, 'vCarga');
            infEvento.detEvento.toma       := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));

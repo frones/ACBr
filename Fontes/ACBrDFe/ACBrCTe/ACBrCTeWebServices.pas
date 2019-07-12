@@ -2724,6 +2724,7 @@ begin
             SchemaEventoCTe := schevEPECCTe;
             infEvento.detEvento.xJust   := FEvento.Evento[i].InfEvento.detEvento.xJust;
             infEvento.detEvento.vICMS   := FEvento.Evento[i].InfEvento.detEvento.vICMS;
+            infEvento.detEvento.vICMSST := FEvento.Evento[i].InfEvento.detEvento.vICMSST;
             infEvento.detEvento.vTPrest := FEvento.Evento[i].InfEvento.detEvento.vTPrest;
             infEvento.detEvento.vCarga  := FEvento.Evento[i].InfEvento.detEvento.vCarga;
             infEvento.detEvento.toma    := FEvento.Evento[i].InfEvento.detEvento.toma;

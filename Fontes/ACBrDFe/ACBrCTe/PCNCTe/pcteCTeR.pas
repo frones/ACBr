@@ -1513,6 +1513,8 @@ begin
     CTe.procCTe.digVal   := Leitor.rCampo(tcStr, 'digVal');
     CTe.procCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');
     CTe.procCTe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+    CTe.procCTe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+    CTe.procCTe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
   end;
 
   Result := true;

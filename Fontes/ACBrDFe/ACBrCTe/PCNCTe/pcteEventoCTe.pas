@@ -136,6 +136,7 @@ type
     FxOBS: String;    // Cancelamento
 
     FvICMS: Currency;  // EPEC
+    FvICMSST: Currency;
     FvTPrest: Currency;
     FvCarga: Currency;
     Ftoma: TpcteTomador;
@@ -177,6 +178,7 @@ type
     property xOBS: String       read FxOBS       write FxOBS;
 
     property vICMS: Currency     read FvICMS      write FvICMS;
+    property vICMSST: Currency   read FvICMSST    write FvICMSST;
     property vTPrest: Currency   read FvTPrest    write FvTPrest;
     property vCarga: Currency    read FvCarga     write FvCarga;
     property toma: TpcteTomador  read Ftoma       write Ftoma;

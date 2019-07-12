@@ -318,6 +318,12 @@ begin
               '<cStat>'+IntToStr(CTe.procCTe.cStat)+'</cStat>'+
               '<xMotivo>'+CTe.procCTe.xMotivo+'</xMotivo>'+
             '</infProt>'+
+            IIF( (CTe.procCTe.cMsg > 0) or (CTe.procCTe.xMsg <> ''),
+            '<infFisco>' +
+              '<cMsg>' + IntToStr(CTe.procCTe.cMsg) + '</cMsg>' +
+              '<xMsg>' + CTe.procCTe.xMsg + '</xMsg>' +
+            '</infFisco>',
+            '') +
           '</protCTe>';
 
     Gerador.wTexto(xProtCTe);
@@ -1214,7 +1220,7 @@ begin
 
   // Grupo a ser informado nas prestações de serviços de transporte interestaduais
   // para consumidor final, não contribuinte do ICMS.
-  if CTe.Imp.ICMSUFFim.pICMSInterPart <> 0 then
+  if CTe.Imp.ICMSUFFim.vBCUFFim <> 0 then
     GerarICMSUFFim;
 
   if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 67) then
@@ -1324,7 +1330,7 @@ begin
   Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
   // Na versão 3.00a não tem mais: pICMSInterPart
-  Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
+  Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 0, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vFCPUFFim     ', 01, 15, 1, CTe.Imp.ICMSUFFim.vFCPUFFim, DSC_PICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
   Gerador.wCampo(tcDe2, '#', 'vICMSUFIni    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFIni, DSC_VICMS);

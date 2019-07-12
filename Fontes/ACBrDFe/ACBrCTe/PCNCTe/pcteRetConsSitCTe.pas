@@ -202,6 +202,8 @@ begin
             protCTe.digVal   := Leitor.rCampo(tcStr, 'digVal');
             protCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');
             protCTe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+            protCTe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+            protCTe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
             FchCTe           := protCTe.chCTe;
           end;
         end;

@@ -244,6 +244,7 @@ begin
        Gerador.wCampo(tcStr, 'EP02', 'descEvento', 04, 004, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
        Gerador.wCampo(tcDe2, 'EP05', 'vICMS     ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vICMS, DSC_VICMS);
+       Gerador.wCampo(tcDe2, 'EP05', 'vICMSST   ', 01, 015, 0, Evento.Items[0].InfEvento.detEvento.vICMSST, DSC_VICMS);
        Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
        Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
 
@@ -468,6 +469,7 @@ begin
       infEvento.detEvento.nProt      := RetEventoCTe.InfEvento.detEvento.nProt;
       infEvento.detEvento.xJust      := RetEventoCTe.InfEvento.DetEvento.xJust;
       infEvento.detEvento.vICMS      := RetEventoCTe.InfEvento.DetEvento.vICMS;
+      infEvento.detEvento.vICMSST    := RetEventoCTe.InfEvento.DetEvento.vICMSST;
       infEvento.detEvento.vTPrest    := RetEventoCTe.InfEvento.DetEvento.vTPrest;
       infEvento.detEvento.vCarga     := RetEventoCTe.InfEvento.DetEvento.vCarga;
       infEvento.detEvento.toma       := RetEventoCTe.InfEvento.DetEvento.toma;
@@ -617,6 +619,7 @@ begin
           teEPEC:
             begin
               infEvento.detEvento.vICMS   := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMS', ''), 0);
+              infEvento.detEvento.vICMSST := StringToFloatDef(INIRec.ReadString(sSecao, 'vICMSST', ''), 0);
               infEvento.detEvento.vTPrest := StringToFloatDef(INIRec.ReadString(sSecao, 'vTPrest', ''), 0);
               infEvento.detEvento.vCarga  := StringToFloatDef(INIRec.ReadString(sSecao, 'vCarga', ''), 0);
               InfEvento.detEvento.modal   := StrToTpModal(ok, INIRec.ReadString(sSecao, 'modal', '01'));

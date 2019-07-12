@@ -250,6 +250,12 @@ begin
      (*********)'<cStat>' + IntToStr(BPe.procBPe.cStat) + '</cStat>' +
      (*********)'<xMotivo>' + BPe.procBPe.xMotivo + '</xMotivo>' +
      (******)'</infProt>' +
+             IIF( (BPe.procBPe.cMsg > 0) or (BPe.procBPe.xMsg <> ''),
+             '<infFisco>' +
+               '<cMsg>' + IntToStr(BPe.procBPe.cMsg) + '</cMsg>' +
+               '<xMsg>' + BPe.procBPe.xMsg + '</xMsg>' +
+             '</infFisco>',
+             '') +
      (****)'</protBPe>';
 
      Gerador.wTexto(xProtBPe);

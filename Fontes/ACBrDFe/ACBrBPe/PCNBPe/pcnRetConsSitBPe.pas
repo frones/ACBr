@@ -92,6 +92,7 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FcUF: Integer;
+    FchBPe: String;
     FprotBPe: TProcBPe;
     FprocEventoBPe: TRetEventoBPeCollection;
     FXMLprotBPe: String;
@@ -106,6 +107,7 @@ type
     property cStat: Integer                         read FcStat         write FcStat;
     property xMotivo: String                        read FxMotivo       write FxMotivo;
     property cUF: Integer                           read FcUF           write FcUF;
+    property chBPe: String                          read FchBPe         write FchBPe;
     property protBPe: TProcBPe                      read FprotBPe       write FprotBPe;
     property procEventoBPe: TRetEventoBPeCollection read FprocEventoBPe write FprocEventoBPe;
     property XMLprotBPe: String                     read FXMLprotBPe    write FXMLprotBPe;
@@ -166,6 +168,9 @@ begin
                  protBPe.digVal   := Leitor.rCampo(tcStr, 'digVal');
                  protBPe.cStat    := Leitor.rCampo(tcInt, 'cStat');
                  protBPe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+                 protBPe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+                 protBPe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
+                 FchBPe           := protBPe.chBPe;
                end;
              end;
            end;

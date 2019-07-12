@@ -426,6 +426,8 @@ begin
     BPe.procBPe.digVal   := Leitor.rCampo(tcStr, 'digVal');
     BPe.procBPe.cStat    := Leitor.rCampo(tcInt, 'cStat');
     BPe.procBPe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+    BPe.procBPe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+    BPe.procBPe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
   end;
 
   Result := true;

@@ -435,7 +435,7 @@ begin
     EventoBPe.Evento.Clear;
     with EventoBPe.Evento.New do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.BPeChave), 7, 14);
+      infEvento.CNPJ := Bilhetes.Items[i].BPe.Emit.CNPJ;
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.BPeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;

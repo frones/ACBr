@@ -241,10 +241,12 @@ begin
                         PreencherTAG('cStat', XMLinfProt.text) +
                         PreencherTAG('xMotivo', XMLinfProt.text) +
                        '</infProt>' +
+                       IIF( (PreencherTAG('cMsg', XMLinfProt.text) <> ''),
                        '<infFisco>' +
                         PreencherTAG('cMsg', XMLinfProt.text) +
                         PreencherTAG('xMsg', XMLinfProt.text) +
-                       '/<infFisco>' +
+                       '/<infFisco>',
+                       '') +
                       '</protBPe>';
         end;
       end;
@@ -268,10 +270,12 @@ begin
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +
                       '<xMotivo>' + FxMotivo + '</xMotivo>' +
                      '</infProt>' +
+                     IIF( (cMsg > 0) or (xMsg <> ''),
                      '<infFisco>' +
                       '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
                       '<xMsg>' + FxMsg + '</xMsg>' +
-                     '</infFisco>' +
+                     '</infFisco>',
+                     '') +
                     '</protBPe>';
       end;
 

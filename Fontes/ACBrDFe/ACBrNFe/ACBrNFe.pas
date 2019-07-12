@@ -642,7 +642,7 @@ begin
     EventoNFe.Evento.Clear;
     with EventoNFe.Evento.New do
     begin
-      infEvento.CNPJ := copy(OnlyNumber(WebServices.Consulta.NFeChave), 7, 14);
+      infEvento.CNPJ:= NotasFiscais.Items[i].NFe.Emit.CNPJCPF;
       infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.NFeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;

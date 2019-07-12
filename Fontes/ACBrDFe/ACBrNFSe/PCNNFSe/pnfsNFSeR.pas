@@ -795,8 +795,8 @@ begin
         CodLCServ := FormatFloat('0000', Item);
         CodLCServ := Copy(CodLCServ, 1, 2) + '.' + Copy(CodLCServ, 3, 2);
 
-        if codLCServ = '' then
-          codLCServ := CodLCServ;
+//        if codLCServ = '' then
+//          codLCServ := CodLCServ;
       end;
 
       Inc(i);
@@ -2378,8 +2378,8 @@ begin
 
         CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
 
-        if codLCServ = '' then
-          codLCServ := CodLCServ;
+//        if codLCServ = '' then
+//          codLCServ := CodLCServ;
 
         ValorServicosTotal := ValorServicosTotal + ValorServicos;
       end;

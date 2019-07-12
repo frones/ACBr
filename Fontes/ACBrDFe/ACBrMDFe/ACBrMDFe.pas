@@ -512,7 +512,7 @@ begin
     EventoMDFe.Evento.Clear;
     with EventoMDFe.Evento.New do
     begin
-      infEvento.CNPJCPF  := copy(OnlyNumber(WebServices.Consulta.MDFeChave), 7, 14);
+      infEvento.CNPJCPF  := Manifestos.Items[i].MDFe.Emit.CNPJCPF;
       infEvento.cOrgao   := StrToIntDef(copy(OnlyNumber(WebServices.Consulta.MDFeChave), 1, 2), 0);
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;

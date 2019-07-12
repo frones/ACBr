@@ -61,6 +61,8 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FVersao: String;
+    FcMsg: Integer;
+    FxMsg: String;
     FXML_MDFe: String;
     FXML_Prot: String;
   public
@@ -80,6 +82,8 @@ type
     property cStat: Integer              read FcStat               write FcStat;
     property xMotivo: String             read FxMotivo             write FxMotivo;
     property Versao: String              read FVersao              write FVersao;
+    property cMsg: Integer               read FcMsg                write FcMsg;
+    property xMsg: String                read FxMsg                write FxMsg;
     // Usando na Montagem do mdfeProc
     property XML_MDFe: String            read FXML_MDFe            write FXML_MDFe;
     property XML_Prot: String            read FXML_Prot            write FXML_Prot;
@@ -202,6 +206,12 @@ begin
                           PreencherTAG('cStat', XMLinfProt.text) +
                           PreencherTAG('xMotivo', XMLinfProt.text) +
                         '</infProt>' +
+                        IIF( (PreencherTAG('cMsg', XMLinfProt.text) <> ''),
+                        '<infFisco>' +
+                          PreencherTAG('cMsg', XMLinfProt.text) +
+                          PreencherTAG('xMsg', XMLinfProt.text) +
+                        '</infFisco>',
+                        '') +
                        '</protMDFe>';
          end;
        end;
@@ -219,6 +229,12 @@ begin
                        '<cStat>'+IntToStr(FcStat)+'</cStat>'+
                        '<xMotivo>'+FxMotivo+'</xMotivo>'+
                       '</infProt>'+
+                      IIF( (cMsg > 0) or (xMsg <> ''),
+                      '<infFisco>' +
+                        '<cMsg>' + IntToStr(FcMsg) + '</cMsg>' +
+                        '<xMsg>' + FxMsg + '</xMsg>' +
+                      '</infFisco>',
+                      '') +
                      '</protMDFe>';
        end;
 

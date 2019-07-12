@@ -221,6 +221,12 @@ begin
                '<cStat>'+IntToStr(MDFe.procMDFe.cStat)+'</cStat>'+
                '<xMotivo>'+MDFe.procMDFe.xMotivo+'</xMotivo>'+
              '</infProt>'+
+             IIF( (MDFe.procMDFe.cMsg > 0) or (MDFe.procMDFe.xMsg <> ''),
+             '<infFisco>' +
+               '<cMsg>' + IntToStr(MDFe.procMDFe.cMsg) + '</cMsg>' +
+               '<xMsg>' + MDFe.procMDFe.xMsg + '</xMsg>' +
+             '</infFisco>',
+             '') +
            '</protMDFe>';
 
      Gerador.wTexto(xProtMDFe);

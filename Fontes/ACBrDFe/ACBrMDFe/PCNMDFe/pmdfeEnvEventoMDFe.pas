@@ -124,6 +124,7 @@ end;
 function TEventoMDFe.GerarXML: Boolean;
 var
   sDoc: String;
+  Serie: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
@@ -140,6 +141,13 @@ begin
   Gerador.wCampo(tcStr, 'EP06', 'tpAmb ', 1, 1, 1, TpAmbToStr(Evento.Items[0].InfEvento.tpAmb), DSC_TPAMB);
 
   sDoc := OnlyNumber(Evento.Items[0].InfEvento.CNPJCPF);
+
+  // Verifica a Série do Documento, caso esteja no intervalo de 910-969
+  // o emitente é pessoa fisica, logo na chave temos um CPF.
+  Serie := ExtrairSerieChaveAcesso(Evento.Items[0].InfEvento.chMDFe);
+  if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) then
+    sDoc := Copy(sDoc, 4, 11);
+
 
   case Length(sDoc) of
     14: begin

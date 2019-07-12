@@ -951,6 +951,8 @@ begin
     MDFe.procMDFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
     MDFe.procMDFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
     MDFe.procMDFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+    MDFe.procMDFe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+    MDFe.procMDFe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
   end;
 
   Result := True;

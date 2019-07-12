@@ -158,6 +158,8 @@ begin
             protMDFe.digVal   := Leitor.rCampo(tcStr, 'digVal');
             protMDFe.cStat    := Leitor.rCampo(tcInt, 'cStat');
             protMDFe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+            protMDFe.cMsg     := Leitor.rCampo(tcInt, 'cMsg');
+            protMDFe.xMsg     := Leitor.rCampo(tcStr, 'xMsg');
             FchMDFe           := protMDFe.chMDFe;
           end;
         end;

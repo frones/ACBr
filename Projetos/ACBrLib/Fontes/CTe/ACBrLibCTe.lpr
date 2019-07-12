@@ -5,7 +5,7 @@ library ACBrLibCTe;
 uses
   Interfaces, sysutils, Classes, Forms, ACBrLibCTeClass, ACBrLibConfig,
   ACBrLibComum, ACBrLibConsts, ACBrLibCTeConfig, ACBrLibResposta,
-  ACBrLibCTeRespostas, ACBrLibCTeConsts;
+  ACBrLibDistribuicaoDFe, ACBrLibCTeRespostas, ACBrLibCTeConsts;
 
 {$R *.res}
 
@@ -16,44 +16,46 @@ var
 
 exports
   // Importadas de ACBrLibComum
-  CTe_Inicializar,
-  CTe_Finalizar,
-  CTe_Nome,
-  CTe_Versao,
-  CTe_UltimoRetorno,
-  CTe_ConfigLer,
-  CTe_ConfigGravar,
-  CTe_ConfigLerValor,
-  CTe_ConfigGravarValor,
+  CTE_Inicializar,
+  CTE_Finalizar,
+  CTE_Nome,
+  CTE_Versao,
+  CTE_UltimoRetorno,
+  CTE_ConfigLer,
+  CTE_ConfigGravar,
+  CTE_ConfigLerValor,
+  CTE_ConfigGravarValor,
 
   // Servicos
-  CTe_StatusServico,
-  CTe_Inutilizar,
-  CTe_Enviar,
-  CTe_Consultar,
-  CTe_Cancelar,
-  CTe_EnviarEvento,
-  CTe_DistribuicaoDFePorUltNSU,
-  CTe_DistribuicaoDFePorNSU,
-  CTe_DistribuicaoDFePorChave,
-  CTe_EnviarEmail,
-  CTe_EnviarEmailEvento,
-  CTe_Imprimir,
-  CTe_ImprimirPDF,
-  CTe_ImprimirEvento,
-  CTe_ImprimirEventoPDF,
-  CTe_ImprimirInutilizacao,
-  CTe_ImprimirInutilizacaoPDF,
+  CTE_StatusServico,
+  CTE_Inutilizar,
+  CTE_Enviar,
+  CTE_ConsultarRecibo,
+  CTE_Consultar,
+  CTE_Cancelar,
+  CTE_EnviarEvento,
+  CTE_ConsultaCadastro,
+  CTE_DistribuicaoDFePorUltNSU,
+  CTE_DistribuicaoDFePorNSU,
+  CTE_DistribuicaoDFePorChave,
+  CTE_EnviarEmail,
+  CTE_EnviarEmailEvento,
+  CTE_Imprimir,
+  CTE_ImprimirPDF,
+  CTE_ImprimirEvento,
+  CTE_ImprimirEventoPDF,
+  CTE_ImprimirInutilizacao,
+  CTE_ImprimirInutilizacaoPDF,
 
 
   // Arquivos
-  CTe_CarregarXML,
-  CTe_CarregarINI,
-  CTe_LimparLista,
-  CTe_Assinar,
-  CTe_Validar,
-  CTe_ValidarRegrasdeNegocios,
-  CTe_VerificarAssinatura;
+  CTE_CarregarXML,
+  CTE_CarregarINI,
+  CTE_LimparLista,
+  CTE_Assinar,
+  CTE_Validar,
+  CTE_ValidarRegrasdeNegocios,
+  CTE_VerificarAssinatura;
 
 begin
   {$IFDEF DEBUG}

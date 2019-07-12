@@ -19,11 +19,13 @@ object LibCTeDM: TLibCTeDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
     left = 96
     top = 32
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6

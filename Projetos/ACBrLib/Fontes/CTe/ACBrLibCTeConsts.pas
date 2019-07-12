@@ -67,11 +67,8 @@ const
   CSessaoRespInutilizacao = 'Inutilizacao';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespEnvio = 'Envio';
-  CSessaoRespRetorno = 'Retorno';
   CSessaoRespCancelamento = 'Cancelamento';
-  CSessaoRespConsultaCadastro = 'ConsultaCadastro';
   CSessaoRespEvento = 'Evento';
-  CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
 
   ErrValidacaoCTe = -11;
   ErrChaveCTe = -12;

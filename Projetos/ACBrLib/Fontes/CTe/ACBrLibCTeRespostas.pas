@@ -38,12 +38,14 @@ unit ACBrLibCTeRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes, contnrs,
+  pcteRetEnvEventoCTe, pcteEventoCTe,
+  ACBrCTe, ACBrLibResposta;
 
 type
 
   { TLibCTeResposta }
-  TLibCTeResposta = class(TACBrLibResposta)
+  TLibCTeResposta = class(TACBrLibResposta<TACBrCTe>)
   private
     FMsg: string;
     Fversao: string;
@@ -53,8 +55,11 @@ type
     FxMotivo: string;
     FcUF: integer;
     FdhRecbto: TDateTime;
+
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+
+    procedure Processar(const ACBrCTe: TACBrCTe); reintroduce; virtual; abstract;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -65,6 +70,7 @@ type
     property XMotivo: string read FxMotivo write FxMotivo;
     property CUF: integer read FcUF write FcUF;
     property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
+
   end;
 
   { TStatusServicoResposta }
@@ -75,6 +81,8 @@ type
     FxObs: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
 
   published
     property TMed: integer read FTMed write FTMed;
@@ -90,6 +98,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
+
   published
     property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
     property Xml: String read FXml write FXml;
@@ -104,6 +114,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
+
   published
     property ChCTe: String read FChCTe write FChCTe;
     property NProt: String read FNProt write FNProt;
@@ -111,7 +123,6 @@ type
   end;
 
   { TEnvioResposta }
-
   TEnvioResposta = class(TLibCTeResposta)
   private
     FtMed: integer;
@@ -119,43 +130,14 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
+
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
   end;
 
-  { TRetornoResposta }
-
-  TRetornoResposta = class(TLibCTeResposta)
-  private
-    FnRec: string;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property nRec: string read FnRec write FnRec;
-  end;
-
-  { TRetornoItemResposta }
-
-  TRetornoItemResposta = class(TLibCTeResposta)
-  private
-    FchCTe: string;
-    FnProt: string;
-    FdigVal: string;
-    Farquivo: string;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property chCTe: string read FchCTe write FchCTe;
-    property nProt: String read FnProt write FnProt;
-    property digVal: String read FdigVal write FdigVal;
-    property arquivo: String read Farquivo write Farquivo;
-  end;
-
   { TCancelamentoResposta }
-
   TCancelamentoResposta = class(TLibCTeResposta)
   private
     FchCTe: string;
@@ -169,6 +151,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
 
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
+
   published
     property chCTe: string read FchCTe write FchCTe;
     property nProt: string read FnProt write FnProt;
@@ -180,330 +164,293 @@ type
     property XML: string read Fxml write Fxml;
   end;
 
-  { TConsultaCadastroResposta }
-
-  TConsultaCadastroResposta = class(TLibCTeResposta)
+  { TEventoItemResposta }
+  TEventoItemResposta = class(TACBrLibResposta)
   private
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
-    FUF: string;
-    FdhCons: TDateTime;
+    FtpAmb: string;
+    FverAplic: string;
+    FcStat: integer;
+    FxMotivo: string;
+    Farquivo: String;
+    FchCTe: string;
+    FCNPJDest: string;
+    FcOrgao: integer;
+    FdhRegEvento: TDateTime;
+    FdigVal: String;
+    FemailDest: string;
+    FId: string;
+    FnProt: String;
+    FnSeqEvento: Integer;
+    FtpEvento: string;
+    FxEvento: string;
+    FXML: string;
+
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+
+    procedure Processar(const RetInfEvento: TRetInfEvento);
 
   published
-    property IE: string read FIE write FIE;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property CPF: string read FCPF write FCPF;
-    property UF: string read FUF write FUF;
-    property dhCons: TDateTime read FdhCons write FdhCons;
-  end;
-
-  { TConsultaCadastroItemResposta }
-
-  TConsultaCadastroItemResposta = class(TLibCTeResposta)
-  private
-    Farquivo: string;
-    FCEP: Integer;
-    FcMun: Integer;
-    FCNAE: Integer;
-    FcSit: Integer;
-    FdBaixa: TDateTime;
-    FdIniAtiv: TDateTime;
-    FdUltSit: TDateTime;
-    FIE: string;
-    FCNPJ: string;
-    FCPF: string;
-    FIEAtual: String;
-    FIEUnica: String;
-    Fnro: String;
-    FUF: String;
-    FxBairro: String;
-    FxCpl: String;
-    FxFant: String;
-    FxLgr: String;
-    FxMun: String;
-    FxNome: String;
-    FxRegApur: String;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
+    property tpAmb: string read FtpAmb write FtpAmb;
+    property VerAplic: string read FverAplic write FverAplic;
+    property CStat: integer read FcStat write FcStat;
+    property XMotivo: string read FxMotivo write FxMotivo;
+    property chCTe: string read FchCTe write FchCTe;
+    property nProt: String read FnProt write FnProt;
     property arquivo: String read Farquivo write Farquivo;
-    property IE: string read FIE write FIE;
-    property CNPJ: String read FCNPJ write FCNPJ;
-    property CPF: String read FCPF write FCPF;
-    property UF: String read FUF write FUF;
-    property cSit: Integer read FcSit write FcSit;
-    property xNome: String read FxNome write FxNome;
-    property xFant: String read FxFant write FxFant;
-    property xRegApur: String read FxRegApur write FxRegApur;
-    property CNAE: Integer read FCNAE write FCNAE;
-    property dIniAtiv: TDateTime read FdIniAtiv write FdIniAtiv;
-    property dUltSit: TDateTime read FdUltSit write FdUltSit;
-    property dBaixa: TDateTime read FdBaixa write FdBaixa;
-    property IEUnica: String read FIEUnica write FIEUnica;
-    property IEAtual: String read FIEAtual write FIEAtual;
-    property xLgr: String read FxLgr write FxLgr;
-    property nro: String read Fnro write Fnro;
-    property xCpl: String read FxCpl write FxCpl;
-    property xBairro: String read FxBairro write FxBairro;
-    property cMun: Integer read FcMun write FcMun;
-    property xMun: String read FxMun write FxMun;
-    property CEP: Integer read FCEP write FCEP;
+    property digVal: String read FdigVal write FdigVal;
+    property Id: string read FId write FId;
+    property cOrgao: integer read FcOrgao write FcOrgao;
+    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
+    property tpEvento: string read FtpEvento write FtpEvento;
+    property xEvento: string read FxEvento write FxEvento;
+    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
+    property CNPJDest: string read FCNPJDest write FCNPJDest;
+    property emailDest: string read FemailDest write FemailDest;
+    property XML: string read FXML write FXML;
+
   end;
 
   { TEventoResposta }
-
   TEventoResposta = class(TLibCTeResposta)
   private
     FidLote: Integer;
     FcOrgao: Integer;
+    FItens: TObjectList;
+
+    function GetItem(Index: Integer): TEventoItemResposta;
+
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+
+    destructor Destroy; override;
+
+    procedure Processar(const ACBrCTe: TACBrCTe); override;
+    function Gerar: String; override;
+
+    property Items[Index: Integer]: TEventoItemResposta read GetItem;
 
   published
     property idLote: Integer read FidLote write FidLote;
     property cOrgao: Integer read FcOrgao write FcOrgao;
-  end;
 
-  { TEventoItemResposta }
-
-  TEventoItemResposta = class(TLibCTeResposta)
-  private
-    Farquivo: String;
-    FchCTe: string;
-    FCNPJDest: string;
-    FcOrgao: integer;
-    FdhRegEvento: TDateTime;
-    FdigVal: String;
-    FemailDest: string;
-    FId: string;
-    FnProt: String;
-    FnSeqEvento: Integer;
-    FtpEvento: string;
-    FxEvento: string;
-    FXML: string;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property chCTe: string read FchCTe write FchCTe;
-    property nProt: String read FnProt write FnProt;
-    property arquivo: String read Farquivo write Farquivo;
-    property digVal: String read FdigVal write FdigVal;
-    property Id: string read FId write FId;
-    property cOrgao: integer read FcOrgao write FcOrgao;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property xEvento: string read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property emailDest: string read FemailDest write FemailDest;
-    property XML: string read FXML write FXML;
-  end;
-
-  { TDistribuicaoDFeResposta }
-
-  TDistribuicaoDFeResposta = class(TLibCTeResposta)
-  private
-    Farquivo: string;
-    FdhResp: TDateTime;
-    FindCont: string;
-    FmaxNSU: string;
-    FultNSU: string;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property dhResp: TDateTime read FdhResp write FdhResp;
-    property ultNSU: string read FultNSU write FultNSU;
-    property maxNSU: string read FmaxNSU write FmaxNSU;
-    property arquivo: string read Farquivo write Farquivo;
-    property indCont: string read FindCont write FindCont;
-  end;
-
-  { TDistribuicaoDFeItemResposta }
-
-  TDistribuicaoDFeItemResposta = class(TLibCTeResposta)
-  private
-    Farquivo: String;
-    FCNPJ: string;
-    FCNPJDest: string;
-    FcOrgao: integer;
-    FcOrgaoAutor: integer;
-    FcSitCTe: String;
-    FcteChvCte: String;
-    FcteDhemi: TDateTime;
-    FcteDhRebcto: TDateTime;
-    FcteModal: string;
-    FcteNProt: string;
-    FdescEvento: string;
-    FdhEmi: TDateTime;
-    FdhEvento: TDateTime;
-    FdhRegEvento: TDateTime;
-    FdigVal: String;
-    FemailDest: string;
-    FEmiCNPJ: string;
-    FEmiIE: string;
-    FEmixNome: string;
-    FId: string;
-    FIE: String;
-    FnProt: String;
-    FnSeqEvento: Integer;
-    FNSU: string;
-    FchCTe: string;
-    FCNPJCPF: string;
-    Fschema: String;
-    FtpEvento: string;
-    FtpNF: String;
-    FverEvento: string;
-    FvNF: Currency;
-    FxEvento: string;
-    FxJust: string;
-    FXML: string;
-    FxNome: string;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
-
-  published
-    property NSU: string read FNSU write FNSU;
-    property chCTe: string read FchCTe write FchCTe;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property IE: String read FIE write FIE;
-    property dhEmi: TDateTime read FdhEmi write FdhEmi;
-    property tpNF: String read FtpNF write FtpNF;
-    property vNF: Currency read FvNF write FvNF;
-    property digVal: String read FdigVal write FdigVal;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property cSitCTe: String read FcSitCTe write FcSitCTe;
-    property nProt: String read FnProt write FnProt;
-    property XML: string read FXML write FXML;
-    property arquivo: String read Farquivo write Farquivo;
-    property schema: String read Fschema write Fschema;
-    property dhEvento: TDateTime read FdhEvento write FdhEvento;
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property xEvento: string read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property cOrgao: integer read FcOrgao write FcOrgao;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property Id: string read FId write FId;
-    property verEvento: string read FverEvento write FverEvento;
-    property descEvento: string read FdescEvento write FdescEvento;
-    property xJust: string read FxJust write FxJust;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property EmiCNPJ: string read FEmiCNPJ write FEmiCNPJ;
-    property EmiIE: string read FEmiIE write FEmiIE;
-    property EmixNome: string read FEmixNome write FEmixNome;
-    property cteNProt: string read FcteNProt write FcteNProt;
-    property cteChvCte: String read FcteChvCte write FcteChvCte;
-    property cteDhemi: TDateTime read FcteDhemi write FcteDhemi;
-    property cteDhRebcto: TDateTime read FcteDhRebcto write FcteDhRebcto;
-    property cteModal: string read FcteModal write FcteModal;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property cOrgaoAutor: integer read FcOrgaoAutor write FcOrgaoAutor;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property emailDest: string read FemailDest write FemailDest;
   end;
 
 implementation
 
 uses
+  pcnConversao,
+  ACBrUtil,
   ACBrLibCTeConsts;
 
-{ TDistribuicaoDFeItemResposta }
-
-constructor TDistribuicaoDFeItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
-begin
-  inherited Create(ASessao, ATipo);
-end;
-
-{ TDistribuicaoDFeResposta }
-
-constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo);
-begin
-  inherited Create(CSessaoRespDistribuicaoDFe, ATipo);
-end;
-
 { TEventoItemResposta }
-
 constructor TEventoItemResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(ASessao, ATipo);
 end;
 
-{ TEventoResposta }
+procedure TEventoItemResposta.Processar(const RetInfEvento: TRetInfEvento);
+begin
+  FId := RetInfEvento.Id;
+  FtpAmb := TpAmbToStr(RetInfEvento.tpAmb);
+  FverAplic := RetInfEvento.verAplic;
+  FcOrgao := RetInfEvento.cOrgao;
+  FcStat := RetInfEvento.cStat;
+  FxMotivo := RetInfEvento.xMotivo;
+  FchCTe := RetInfEvento.chCTe;
+  FtpEvento := TpEventoToStr(RetInfEvento.tpEvento);
+  FxEvento := RetInfEvento.xEvento;
+  FnSeqEvento := RetInfEvento.nSeqEvento;
+  FCNPJDest := RetInfEvento.CNPJDest;
+  FemailDest := RetInfEvento.emailDest;
+  FdhRegEvento := RetInfEvento.dhRegEvento;
+  FnProt := RetInfEvento.nProt;
+  FArquivo := RetInfEvento.NomeArquivo;
+  FXML := RetInfEvento.XML;
+end;
 
+{ TEventoResposta }
 constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespEvento, ATipo);
+  FItens := TObjectList.Create(True);
 end;
 
-{ TConsultaCadastroItemResposta }
-
-constructor TConsultaCadastroItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+destructor TEventoResposta.Destroy;
 begin
-  inherited Create(ASessao, ATipo);
+  FItens.Clear;
+  FItens.Free;
+
+  inherited Destroy;
 end;
 
-{ TConsultaCadastroResposta }
-
-constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo);
+function TEventoResposta.Gerar: String;
+Var
+  i: Integer;
 begin
-  inherited Create(CSessaoRespConsultaCadastro, ATipo);
+  Result := Inherited Gerar;
+
+  for i := 0 to FItens.Count - 1  do
+  begin
+    Result := Result + sLineBreak + TEventoItemResposta(FItens.Items[i]).Gerar;
+  end;
+end;
+
+function TEventoResposta.GetItem(Index: Integer): TEventoItemResposta;
+begin
+  Result := TEventoItemResposta(FItens.Items[Index]);
+end;
+
+procedure TEventoResposta.Processar(const ACBrCTe: TACBrCTe);
+var
+  i: Integer;
+  Item: TEventoItemResposta;
+begin
+  with ACBrCTe.WebServices.EnvEvento.EventoRetorno do
+  begin
+    Self.VerAplic := VerAplic;
+    Self.tpAmb := TpAmbToStr(tpAmb);
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.idLote := IdLote;
+    Self.cOrgao := cOrgao;
+
+    with retEvento do
+    begin
+      for i := 0 to retEvento.Count - 1 do
+      begin
+        Item := TEventoItemResposta.Create('EVENTO' + Trim(IntToStrZero(i +1, 3)), Tipo);
+        Item.Processar(retEvento.Items[i].RetInfevento);
+        FItens.Add(Item);
+      end;
+    end;
+  end;
 end;
 
 { TCancelamentoResposta }
-
 constructor TCancelamentoResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespCancelamento, ATipo);
 end;
 
-{ TRetornoItemResposta }
-
-constructor TRetornoItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+procedure TCancelamentoResposta.Processar(const ACBrCTe: TACBrCTe);
 begin
-  inherited Create(ASessao, ATipo);
-end;
-
-{ TRetornoResposta }
-
-constructor TRetornoResposta.Create(const ATipo: TACBrLibRespostaTipo);
-begin
-  inherited Create(CSessaoRespRetorno, ATipo);
+  with ACBrCTe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento do
+    begin
+      Self.Versao := verAplic;
+      Self.TpAmb := TpAmbToStr(TpAmb);
+      Self.VerAplic := VerAplic;
+      Self.CStat := cStat;
+      Self.XMotivo := XMotivo;
+      Self.CUF := cOrgao;
+      Self.ChCTe := chCTe;
+      Self.DhRecbto := dhRegEvento;
+      Self.NProt := nProt;
+      Self.TpEvento := TpEventoToStr(tpEvento);
+      Self.xEvento := xEvento;
+      Self.nSeqEvento := nSeqEvento;
+      Self.CNPJDest := CNPJDest;
+      Self.emailDest := emailDest;
+      Self.XML := XML;
+    end;
 end;
 
 { TEnvioResposta }
-
 constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespEnvio, ATipo);
 end;
 
+procedure TEnvioResposta.Processar(const ACBrCTe: TACBrCTe);
+begin
+  with ACBrCTe.WebServices do
+  begin
+    Self.Versao := Enviar.verAplic;
+    Self.TpAmb := TpAmbToStr(Enviar.TpAmb);
+    Self.verAplic := Enviar.verAplic;
+    Self.CStat := Enviar.cStat;
+    Self.XMotivo := Enviar.xMotivo;
+    Self.CUF := Enviar.cUF;
+    Self.nRec := Enviar.Recibo;
+    Self.DhRecbto := Enviar.dhRecbto;
+    Self.Tmed := Enviar.TMed;
+    Self.Msg := Enviar.Msg;
+  end;
+end;
+
+{ TStatusServicoResposta }
 constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespStatus, ATipo);
 end;
 
+procedure TStatusServicoResposta.Processar(const ACBrCTe: TACBrCTe);
+begin
+  with ACBrCTe.WebServices do
+  begin
+    Self.Msg := StatusServico.Msg;
+    Self.Versao := StatusServico.versao;
+    Self.TpAmb := TpAmbToStr(StatusServico.TpAmb);
+    Self.VerAplic := StatusServico.VerAplic;
+    Self.CStat := StatusServico.CStat;
+    Self.XMotivo := StatusServico.XMotivo;
+    Self.CUF := StatusServico.CUF;
+    Self.DhRecbto := StatusServico.DhRecbto;
+    Self.TMed := StatusServico.TMed;
+    Self.DhRetorno := StatusServico.DhRetorno;
+    Self.XObs := StatusServico.XObs;
+  end;
+end;
+
+{ TInutilizarCTeResposta }
 constructor TInutilizarCTeResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespInutilizacao, ATipo);
 end;
 
+procedure TInutilizarCTeResposta.Processar(const ACBrCTe: TACBrCTe);
+begin
+   with ACBrCTe.WebServices do
+   begin
+     Self.Msg := Inutilizacao.Msg;
+     Self.Versao := Inutilizacao.versao;
+     Self.TpAmb := TpAmbToStr(Inutilizacao.TpAmb);
+     Self.VerAplic := Inutilizacao.VerAplic;
+     Self.CStat := Inutilizacao.CStat;
+     Self.XMotivo := Inutilizacao.XMotivo;
+     Self.CUF := Inutilizacao.cUF;
+     Self.DhRecbto := Inutilizacao.DhRecbto;
+     Self.NomeArquivo := Inutilizacao.NomeArquivo;
+     Self.Xml := Inutilizacao.XML_ProcInutCTe;
+   end;
+end;
+
+{ TConsultaCTeResposta }
 constructor TConsultaCTeResposta.Create(const ATipo: TACBrLibRespostaTipo);
 begin
   inherited Create(CSessaoRespConsulta, ATipo);
 end;
 
-{ TLibCTeResposta }
+procedure TConsultaCTeResposta.Processar(const ACBrCTe: TACBrCTe);
+begin
+   with ACBrCTe.WebServices do
+   begin
+     Self.Msg := Consulta.Msg;
+     Self.Versao := Consulta.versao;
+     Self.TpAmb := TpAmbToStr(Consulta.TpAmb);
+     Self.VerAplic := Consulta.VerAplic;
+     Self.CStat := Consulta.CStat;
+     Self.XMotivo := Consulta.XMotivo;
+     Self.CUF := Consulta.CUF;
+     Self.DhRecbto := Consulta.DhRecbto;
+     Self.ChCTe := Consulta.CTeChave;
+     Self.NProt := Consulta.Protocolo;
+     Self.DigVal := Consulta.protCTe.digVal;
+   end;
+end;
 
+{ TLibCTeResposta }
 constructor TLibCTeResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo);
 begin

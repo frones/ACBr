@@ -30,6 +30,7 @@ type
 
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -130,6 +131,28 @@ procedure TLibCTeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boole
 begin
   if Assigned(pLib) then
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
+end;
+
+procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
+var
+  pLibConfig: TLibCTeConfig;
+begin
+  pLibConfig := TLibCTeConfig(pLib.Config);
+
+  GravarLog('ConfigurarImpressao - Iniciado', logNormal);
+
+   if ACBrCTe1.Conhecimentos.Count <= 0 then
+     Exit;
+
+   pLibConfig.DACTeConfig.Assign(ACBrCTeDACTeRL1);
+
+   if NaoEstaVazio(NomeImpressora) then
+     ACBrCTeDACTeRL1.Impressora := NomeImpressora;
+
+   if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DACTeConfig.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.DACTeConfig.PathPDF));
+
+   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 
 procedure TLibCTeDM.Travar;

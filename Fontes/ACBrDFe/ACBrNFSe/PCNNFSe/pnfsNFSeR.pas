@@ -4180,36 +4180,36 @@ begin
     begin
       Numero := Leitor.rCampo(tcStr, 'NumNot');
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
-      NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVer');
+      NFSe.CodigoVerificacao       := Leitor.rCampo(tcStr, 'CodVer');
       PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RzSocialPr');
-      PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CNPJPr');
-      PrestadorServico.IdentificacaoPrestador.InscricaoEstadual := Leitor.rCampo(tcStr, 'IEPr');
+      PrestadorServico.IdentificacaoPrestador.Cnpj               := Leitor.rCampo(tcStr, 'CNPJPr');
+      PrestadorServico.IdentificacaoPrestador.InscricaoEstadual  := Leitor.rCampo(tcStr, 'IEPr');
       PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
-      PrestadorServico.Endereco.Endereco := Leitor.rCampo(tcStr, 'EndLogradouroPr');
-      PrestadorServico.Endereco.Numero :=  Leitor.rCampo(tcStr, 'EndNumeroPr');
-      PrestadorServico.Endereco.Bairro := Leitor.rCampo(tcStr, 'EndBairroPr');
+      PrestadorServico.Endereco.Endereco    := Leitor.rCampo(tcStr, 'EndLogradouroPr');
+      PrestadorServico.Endereco.Numero      :=  Leitor.rCampo(tcStr, 'EndNumeroPr');
+      PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'EndBairroPr');
       PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'EndComplPr');
-      PrestadorServico.Endereco.xMunicipio := Leitor.rCampo(tcStr, 'EndCidadePr');
-      PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'EndCEPPr');
-      PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'EndUFPr');
+      PrestadorServico.Endereco.xMunicipio  := Leitor.rCampo(tcStr, 'EndCidadePr');
+      PrestadorServico.Endereco.CEP         := Leitor.rCampo(tcStr, 'EndCEPPr');
+      PrestadorServico.Endereco.UF          := Leitor.rCampo(tcStr, 'EndUFPr');
       Servico.Valores.ValorServicos := Leitor.rCampo(tcStr, 'VlrUnt');
-      Servico.Valores.ValorPis := Leitor.rCampo(tcStr, 'VlrPIS');
-      Servico.Valores.ValorCofins := Leitor.rCampo(tcStr, 'VlrCofins');
-      Servico.Valores.ValorCofins := Leitor.rCampo(tcStr, 'VlrINSS');
-      Servico.Valores.ValorInss := Leitor.rCampo(tcStr, 'VlrIR');
+      Servico.Valores.ValorPis      := Leitor.rCampo(tcStr, 'VlrPIS');
+      Servico.Valores.ValorCofins   := Leitor.rCampo(tcStr, 'VlrCofins');
+      Servico.Valores.ValorInss     := Leitor.rCampo(tcStr, 'VlrINSS');
+      Servico.Valores.ValorIr       := Leitor.rCampo(tcStr, 'VlrIR');
       DataEmissao := Leitor.rCampo(tcDat, 'DtemiNfse');
-      Nfse.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'NomTmd');
-      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'NumDocTmd');
-      NFSe.TipoRecolhimento := Leitor.rCampo(tcStr, 'TipRec');
+      Nfse.Tomador.RazaoSocial                            := Leitor.rCampo(tcStr, 'NomTmd');
+      NFSe.Tomador.IdentificacaoTomador.CpfCnpj           := Leitor.rCampo(tcStr, 'NumDocTmd');
+      NFSe.TipoRecolhimento                               := Leitor.rCampo(tcStr, 'TipRec');
       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual := Leitor.rCampo(tcStr, 'InscricaoEstadual');
       Nfse.OutrasInformacoes := Leitor.rCampo(tcStr, 'Obs');
       with  Nfse.Tomador.Endereco do
       begin
-        Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
-        Bairro := Leitor.rCampo(tcStr, 'NomBaiTmd');
+        Endereco   := Leitor.rCampo(tcStr, 'DesEndTmd');
+        Bairro     := Leitor.rCampo(tcStr, 'NomBaiTmd');
         xMunicipio := Leitor.rCampo(tcStr, 'NomCidTmd');
-        UF := Leitor.rCampo(tcStr, 'CodEstTmd');
-        CEP := Leitor.rCampo(tcStr, 'CEPTmd');
+        UF         := Leitor.rCampo(tcStr, 'CodEstTmd');
+        CEP        := Leitor.rCampo(tcStr, 'CEPTmd');
       end;
 
       Competencia := Leitor.rCampo(tcStr, 'DtemiNfse');

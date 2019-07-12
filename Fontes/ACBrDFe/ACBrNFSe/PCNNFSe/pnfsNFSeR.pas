@@ -1456,7 +1456,8 @@ begin
     if FNivel > 0 then
     begin
       case FProvedor of
-        proTecnos: NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
+        proTecnos, 
+		proSigCorp: NFSe.Link := Leitor.rCampo(tcStr, 'LinkNota');
 
         proPublica: NFSe.Link := Leitor.rCampo(tcStr, 'LinkVisualizacaoNfse');
       end;

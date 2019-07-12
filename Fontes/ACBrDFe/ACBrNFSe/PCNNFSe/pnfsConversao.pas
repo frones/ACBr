@@ -18130,7 +18130,7 @@ begin
   XML := StrReplace( XML, 'tipos:' );
 
   // Provedor NFSeBrasil
-  if AProvedor = proNFSeBrasil then
+  if AProvedor in [proNFSeBrasil, proSigCorp] then
   begin
     XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
     XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );

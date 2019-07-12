@@ -44,6 +44,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/07/2019
+[*] DoACBrMDFeUnit
+Adicionado parametro para envio de MDFe em modo Síncrono
+
+11/07/2019
 [*] ACBrMonitor1
 Ajuste na validação de versão DFe para atualização em tela
 

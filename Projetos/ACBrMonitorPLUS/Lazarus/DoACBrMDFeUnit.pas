@@ -71,6 +71,7 @@ public
   procedure RespostaItensDistribuicaoDFeResEve(ItemID: integer = 0);
   procedure RespostaItensDistribuicaoDFeProEve(ItemID: integer = 0);
   procedure RespostaItensDistribuicaoDFeInfeve(ItemID: integer = 0);
+  procedure ImprimirMDFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
 
   property ACBrMDFe: TACBrMDFe read fACBrMDFe;
 end;
@@ -1006,6 +1007,42 @@ begin
     end;
   finally
     Resp.Free;
+  end;
+end;
+
+procedure TACBrObjetoMDFe.ImprimirMDFe(pImpressora: String; pPreview: String;
+  pCopias: Integer; pPDF: Boolean);
+var
+  ArqPDF : String;
+begin
+  with ACBrMDFe do
+  begin
+    if (Manifestos.Items[0].Confirmado) then
+    begin
+      if NaoEstaVazio(pImpressora) then
+        DAMDFE.Impressora := pImpressora;
+
+      if pCopias > 0 then
+        DAMDFE.NumCopias := pCopias;
+
+      if pPDF then
+      begin
+        Manifestos.Items[0].ImprimirPDF;
+        ArqPDF := OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID)+'-mdfe.pdf';
+
+        fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+                'PDF='+ PathWithDelim(ACBrMDFe.DAMDFE.PathPDF) + ArqPDF + sLineBreak ;
+      end;
+
+      try
+        DoAntesDeImprimir(( StrToBoolDef( pPreview, False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        Manifestos.Items[0].Imprimir;
+      finally
+        DoDepoisDeImprimir;
+      end;
+
+    end;
+
   end;
 end;
 
@@ -2148,6 +2185,7 @@ end;
           1 - NumeroLote: Integer com número do lote a ser adicionado
           2 - Imprime : 1 para imprimir
           3 - String como Nome Impressora
+          4 - Assincrino: Boolean
 }
 procedure TMetodoCriarEnviarMDFe.Executar;
 var
@@ -2156,12 +2194,14 @@ var
   ArqMDFe: string;
   Resp, AIni, AImpressora: string;
   ALote: Integer;
+  Assincrono: Boolean;
 begin
 
   AIni := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AImprime := StrToBoolDef(fpCmd.Params(2), False);
   AImpressora := fpCmd.Params(3);
+  Assincrono := StrToBoolDef( fpCmd.Params(4), True);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -2200,14 +2240,24 @@ begin
     else
       ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
+    ACBrMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
+
     ACBrMDFe.WebServices.Enviar.Executar;
     RespostaEnvio;
+    if (ACBrMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
+      ACBrMDFe.WebServices.Retorno.Executar;
 
-    ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
-    ACBrMDFe.WebServices.Retorno.Executar;
+      RespostaRetorno;
+      RespostaManifesto(AImprime, AImpressora);
+    end
+    else
+    begin
+      if AImprime then //Sincrono
+        ImprimirMDFe(AImpressora, '', 0, False);
+    end;
 
-    RespostaRetorno;
-    RespostaManifesto(AImprime, AImpressora);
   end;
 end;
 
@@ -2312,7 +2362,6 @@ begin
     ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
 
     ACBrMDFe.WebServices.Enviar.Executar;
-
     RespostaEnvio;
 
     ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
@@ -2331,19 +2380,21 @@ end;
           2 - Assina: 1 para assinar XML
           3 - Imprime: 1 Para True. Default 0
           4 - Nome Impressora: String com Nome da Impressora
+          5 - Assincrono : Boolean
 }
 procedure TMetodoEnviarMDFe.Executar;
 var
   CargaDFe: TACBrCarregarMDFe;
   APathorXML, AImpressora: String;
   ALote: Integer;
-  AAssina, AImprime: Boolean;
+  AAssina, AImprime, Assincrono : Boolean;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AAssina := StrToBoolDef(fpCmd.Params(2), False);
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
+  Assincrono := StrToBoolDef( fpCmd.Params(5), True);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -2362,15 +2413,26 @@ begin
       else
         ACBrMDFe.WebServices.Enviar.Lote := IntToStr(ALote);
 
+      ACBrMDFe.WebServices.Enviar.Sincrono:= not(Assincrono);
+
       ACBrMDFe.WebServices.Enviar.Executar;
-
       RespostaEnvio;
+      if (ACBrMDFe.WebServices.Enviar.Recibo <> '') then //Assincrono
+      begin
+        ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
+        ACBrMDFe.WebServices.Retorno.Executar;
 
-      ACBrMDFe.WebServices.Retorno.Recibo := ACBrMDFe.WebServices.Enviar.Recibo;
-      ACBrMDFe.WebServices.Retorno.Executar;
+        RespostaRetorno;
+        RespostaManifesto(AImprime, AImpressora);
 
-      RespostaRetorno;
-      RespostaManifesto(AImprime, AImpressora);
+      end
+      else
+      begin
+        if AImprime then //Sincrono
+          ImprimirMDFe(AImpressora, '', 0, False);
+      end;
+
+
     finally
       CargaDFe.Free;
     end;

@@ -130,6 +130,9 @@ function NFE_Cancelar(const eChave, eJustificativa, eCNPJ: PChar; ALote: Integer
 function NFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -167,8 +170,9 @@ implementation
 uses
   ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
-  ACBrLibNFeConfig, ACBrLibNFeRespostas, ACBrNFe, ACBrMail,
-  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
+  ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
+  ACBrNFe, ACBrMail, ACBrUtil,
+  pcnConversao, pcnAuxiliar, blcksock;
 
 { TACBrLibNFe }
 
@@ -1091,6 +1095,64 @@ begin
   end;
 end;
 
+function NFE_ConsultaCadastro(cUF, nDocumento: PChar; nIE: boolean;
+    const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  Resp: TConsultaCadastroResposta;
+  AUF, ADocumento: string;
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    AUF := string(cUF);
+    ADocumento := string(nDocumento);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_ConsultaCadastro(' + AUF + ',' + ADocumento + ',' + BoolToStr(nIE, True) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_ConsultaCadastro', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.UF   := AUF;
+        if nIE then
+          NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.IE := ADocumento
+        else
+        begin
+          if Length(ADocumento) > 11 then
+            NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.CNPJ := ADocumento
+          else
+            NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.CPF := ADocumento;
+        end;
+
+        NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.Executar;
+        Resp := TConsultaCadastroResposta.Create(pLib.Config.TipoResposta);
+        try
+          Resp.Processar(NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, StrPas(sResposta));
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function NFE_DistribuicaoDFePorUltNSU(const AcUFAutor: integer; eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -1567,7 +1629,7 @@ end;
 function NFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
-  Resposta: TLibNFeResposta;
+  Resposta: TLibImpressaoResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1576,7 +1638,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta);
+      Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, pLib.Config.TipoResposta);
       try
         NFeDM.ConfigurarImpressao('', true);
         NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;

@@ -231,7 +231,7 @@
         <PackageName Value="FCL"/>
       </Item8>
     </RequiredPackages>
-    <Units Count="18">
+    <Units Count="19">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -307,6 +307,10 @@
         <Filename Value="..\Comum\ACBrLibConsReciDFe.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit17>
+      <Unit18>
+        <Filename Value="..\Comum\ACBrLibConsultaCadastro.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

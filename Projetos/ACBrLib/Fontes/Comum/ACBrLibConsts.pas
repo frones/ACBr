@@ -187,6 +187,7 @@ const
 
   CSessaoRespRetorno = 'Retorno';
   CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
+  CSessaoRespConsultaCadastro = 'ConsultaCadastro';
 
 resourcestring
   SErrLibSemNome = 'Nome da Biblioteca não foi definido';

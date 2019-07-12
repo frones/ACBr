@@ -34,6 +34,7 @@ exports
   NFE_Consultar,
   NFE_Cancelar,
   NFE_EnviarEvento,
+  NFE_ConsultaCadastro,
   NFE_DistribuicaoDFePorUltNSU,
   NFE_DistribuicaoDFePorNSU,
   NFE_DistribuicaoDFePorChave,

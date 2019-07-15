@@ -39,7 +39,8 @@ uses
   Classes, SysUtils, ACBrUtil, ACBrLibNFeRespostas,
   ACBrNFe, ACBrMonitorConfig,
   ACBrMonitorConsts, ACBrDFeUtil, UtilUnit, DoACBrDFeUnit,
-  CmdUnit, ACBrNFeDANFeRLClass, ACBrPosPrinter, ACBrNFeDANFeESCPOS;
+  CmdUnit, ACBrNFeDANFeRLClass, ACBrPosPrinter, ACBrNFeDANFeESCPOS,
+  ACBrLibConsultaCadastro;
 
 type
 
@@ -1137,7 +1138,7 @@ begin
     ACBrNFe.WebServices.ConsultaCadastro.Executar;
     Resp := TConsultaCadastroResposta.Create(resINI);
     try
-      Resp.Processar(ACBrNFe);
+      Resp.Processar(ACBrNFe.WebServices.ConsultaCadastro.RetConsCad);
       fpCmd.Resposta:= Resp.Msg + sLineBreak + Resp.Gerar ;
 
     finally

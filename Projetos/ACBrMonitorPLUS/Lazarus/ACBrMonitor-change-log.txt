@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/07/2019
+[*] DoACBrNFeUnit
+Ajuste retorno do método ConsultaCadastro, baseados nas alterações das classes de Respostas da Lib
+
+12/07/2019
+[*] DoACBrCTeUnit
+Otimização nos retornos do CTe baseados nas alterações das classes de Respostas da Lib
+
 11/07/2019
 [*] DoACBrMDFeUnit
 Adicionado parametro para envio de MDFe em modo Síncrono

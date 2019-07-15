@@ -179,6 +179,7 @@ begin
 
   ModeloDF := DeGeralConfCTe.ModeloDF;
   FVersaoDF := DeGeralConfCTe.VersaoDF;
+  FGerarInfCTeSupl := DeGeralConfCTe.GerarInfCTeSupl;
 end;
 
 constructor TGeralConfCTe.Create(AOwner: TConfiguracoes);
@@ -188,6 +189,7 @@ begin
   FModeloDF := moCTe;
   FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
   FVersaoDF := ve300;
+  FGerarInfCTeSupl := fgtNunca;
 end;
 
 procedure TGeralConfCTe.GravarIni(const AIni: TCustomIniFile);
@@ -196,6 +198,7 @@ begin
 
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF));
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'GerarInfCTeSupl', Integer(GerarInfCTeSupl));
 end;
 
 procedure TGeralConfCTe.LerIni(const AIni: TCustomIniFile);
@@ -204,6 +207,7 @@ begin
 
   ModeloDF := TModeloCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'ModeloDF', Integer(ModeloDF)));
   VersaoDF := TVersaoCTe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  GerarInfCTeSupl := TForcarGeracaoTag(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'GerarInfCTeSupl', Integer(GerarInfCTeSupl)));
 end;
 
 procedure TGeralConfCTe.SetGerarInfCTeSupl(const Value: TForcarGeracaoTag);

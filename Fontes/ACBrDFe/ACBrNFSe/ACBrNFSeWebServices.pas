@@ -1918,7 +1918,10 @@ begin
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
-                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+                             ' xmlns="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+//           proNotaBlu: FTagI := '<' + FTagGrupo +
+//                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proFISSLex,
            proIPM,
@@ -1965,7 +1968,10 @@ begin
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
-                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+                             ' xmlns="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+//           proNotaBlu: FTagI := '<' + FTagGrupo +
+//                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proFISSLex,
            proIPM,
@@ -2011,7 +2017,10 @@ begin
 //                             ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proNotaBlu: FTagI := '<' + FTagGrupo +
-                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+                             ' xmlns="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+//           proNotaBlu: FTagI := '<' + FTagGrupo +
+//                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
            proGoverna,
            proFISSLex,

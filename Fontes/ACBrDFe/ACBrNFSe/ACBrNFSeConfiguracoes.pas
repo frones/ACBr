@@ -264,7 +264,7 @@ type
     function GetItem(Index: Integer): TDadosSenhaParamsCollectionItem;
     procedure SetItem(Index: Integer; Const Value: TDadosSenhaParamsCollectionItem);
   public
-    constructor Create(AOwner: TEmitenteConfNFSe);
+    constructor Create; reintroduce;
     function Add: TDadosSenhaParamsCollectionItem;
 //    function Add: TDadosSenhaParamsCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
 //    function New: TDadosSenhaParamsCollectionItem;
@@ -452,7 +452,7 @@ begin
   FWebSenha         := '';
   FWebFraseSecr     := '';
   FWebChaveAcesso   := '';
-  FDadosSenhaParams := TDadosSenhaParamsCollection.Create(Self);
+  FDadosSenhaParams := TDadosSenhaParamsCollection.Create;
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -1263,8 +1263,7 @@ begin
 //  Result := Self.New;
 end;
 
-constructor TDadosSenhaParamsCollection.Create(
-  AOwner: TEmitenteConfNFSe);
+constructor TDadosSenhaParamsCollection.Create;
 begin
   inherited Create(TDadosSenhaParamsCollectionItem);
 end;

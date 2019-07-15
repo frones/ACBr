@@ -64,7 +64,7 @@ type
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve300;
     property GerarInfMDFeSupl: TForcarGeracaoTag read FGerarInfMDFeSupl
-      write SetGerarInfMDFeSupl default fgtNunca;
+      write SetGerarInfMDFeSupl default fgtSempre;
   end;
 
   { TArquivosConfMDFe }

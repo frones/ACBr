@@ -170,6 +170,7 @@ begin
   inherited Assign(DeGeralConfMDFe);
 
   FVersaoDF := DeGeralConfMDFe.VersaoDF;
+  FGerarInfMDFeSupl := DeGeralConfMDFe.GerarInfMDFeSupl;
 end;
 
 constructor TGeralConfMDFe.Create(AOwner: TConfiguracoes);
@@ -177,6 +178,7 @@ begin
   inherited Create(AOwner);
 
   FVersaoDF := ve300;
+  FGerarInfMDFeSupl := fgtSempre;
 end;
 
 procedure TGeralConfMDFe.GravarIni(const AIni: TCustomIniFile);
@@ -184,6 +186,7 @@ begin
   inherited GravarIni(AIni);
 
   AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF));
+  AIni.WriteInteger(fpConfiguracoes.SessaoIni, 'GerarInfMDFeSupl', Integer(GerarInfMDFeSupl));
 end;
 
 procedure TGeralConfMDFe.LerIni(const AIni: TCustomIniFile);
@@ -191,6 +194,7 @@ begin
   inherited LerIni(AIni);
 
   VersaoDF := TVersaoMDFe(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'VersaoDF', Integer(VersaoDF)));
+  GerarInfMDFeSupl := TForcarGeracaoTag(AIni.ReadInteger(fpConfiguracoes.SessaoIni, 'GerarInfMDFeSupl', Integer(GerarInfMDFeSupl)));
 end;
 
 procedure TGeralConfMDFe.SetGerarInfMDFeSupl(const Value: TForcarGeracaoTag);

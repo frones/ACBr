@@ -825,7 +825,7 @@ begin
         LeitorAux := TLeitor.Create;
         leitorAux.Arquivo := copy(strAux, PosI, count);
         leitorAux.Grupo   := leitorAux.Arquivo;
-        strAux2 := leitorAux.rExtrai(1,'erro');
+//        strAux2 := leitorAux.rExtrai(1,'erro');
         strAux2 := Leitor.rCampo(tcStr, 'erro');
         FInfRec.FMsgRetorno.New;
         FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'erro')+#13;
@@ -847,7 +847,7 @@ begin
         LeitorAux := TLeitor.Create;
         leitorAux.Arquivo := copy(strAux, PosI, count);
         leitorAux.Grupo   := leitorAux.Arquivo;
-        strAux2 := leitorAux.rExtrai(1,'confirmacao');
+//        strAux2 := leitorAux.rExtrai(1,'confirmacao');
         strAux2 := Leitor.rCampo(tcStr, 'confirmacao');
         FInfRec.FMsgRetorno.New;
         FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'confirmacao')+#13;

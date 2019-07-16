@@ -116,11 +116,12 @@ type
       ProgressType: TfrxProgressType; Progress: Integer);
   private
     { Private declarations }
+    FACBrBoletoReport: TACBrBoletoFCFR;
     procedure SetDataSetsToFrxReport;
-    procedure ImprimeLogoMarca(const sCaminhoFoto, sfrxPicture: string);
+    procedure ImprimeLogoMarca(const sfrxPicture: string);
   public
     { Public declarations }
-
+    constructor Create( AOwner : TComponent); override;
   end;
 
 implementation
@@ -134,9 +135,9 @@ uses ACBrUtil, ACBrBancoBanestes;
 procedure TdmACBrBoletoFCFR.frxReportProgressStart(Sender: TfrxReport;
   ProgressType: TfrxProgressType; Progress: Integer);
 begin
-  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_1');
-  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_2');
-  ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString + '\' + cdsBanco.FieldByName('Numero').AsString + '.bmp', 'Logo_3');
+  ImprimeLogoMarca('Logo_1');
+  ImprimeLogoMarca('Logo_2');
+  ImprimeLogoMarca('Logo_3');
 end;
 
 function TACBrBoletoFCFR.GetACBrTitulo: TACBrTitulo;
@@ -144,23 +145,15 @@ begin
   Result := fACBrBoleto.ListadeBoletos[fIndice];
 end;
 
-procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(const sCaminhoFoto, sfrxPicture: string);
+procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(const sfrxPicture: string);
 var
-  strAux: String; // Variável String auxiliar
   frxPict: TfrxPictureView; // Componente para inserção de imagem na impressão.
 begin
-
-  // INSERE imagem do disco no relatorio
   frxPict := TfrxPictureView(Self.frxReport.FindObject(sfrxPicture));
   if Assigned(frxPict) then
   Begin
-    strAux := sCaminhoFoto;
-    if FileExists(strAux) then
-      frxPict.Picture.LoadFromFile(strAux)
-    ELSE
-      frxPict.Picture := nil;
+    FACBrBoletoReport.CarregaLogo(frxPict.Picture, FACBrBoletoReport.ACBrBoleto.Banco.Numero);
   End;
-
 end;
 
 procedure TdmACBrBoletoFCFR.SetDataSetsToFrxReport;
@@ -169,6 +162,13 @@ begin
   frxReport.EnabledDataSets.Add(frxBanco);
   frxReport.EnabledDataSets.Add(frxTitulo);
   frxReport.EnabledDataSets.Add(frxCedente);
+end;
+
+constructor TdmACBrBoletoFCFR.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  FACBrBoletoReport := TACBrBoletoFCFR(AOwner);
 end;
 
 procedure TdmACBrBoletoFCFR.DataModuleCreate(Sender: TObject);

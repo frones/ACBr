@@ -848,6 +848,7 @@ const
   CKeyTimeZoneStr =                  'TimeZoneStr';
   CKeyCamposFatObrig =               'CamposFatObrig';
   CKeyTagRejeicao938 =               'ForcarGerarTagRejeicao938';
+  CKeyTagQRCodeCTe =                 'TagQRCodeCTe';
 
   CKeyIdEmpregador =                 'IdEmpregador';
   CKeyIdTransmissor =                'IdTransmissor';

@@ -258,6 +258,7 @@ type
     cbFormaEmissaoBPe: TComboBox;
     cbFormaEmissaoMDFe: TComboBox;
     cbFormaEmissaoGNRe: TComboBox;
+    cbTagInfSuplCTe: TComboBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
     cbxSepararPorNome: TCheckBox;
@@ -269,6 +270,7 @@ type
     edtPathDownload: TEdit;
     edtPathSchemasDFe: TEdit;
     grbPathSchemas: TGroupBox;
+    GroupBox12: TGroupBox;
     GroupBox9: TGroupBox;
     Label227: TLabel;
     Label229: TLabel;
@@ -526,6 +528,7 @@ type
     Label237: TLabel;
     Label238: TLabel;
     Label239: TLabel;
+    Label240: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -1726,6 +1729,7 @@ var
   IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
   IFormaEmissaoMDFe, IFormaEmissaoBPe: TpcnTipoEmissao;
   IForcarTagICMSSubs: TForcarGeracaoTag;
+  IGerarTagInfComplCTe: TForcarGeracaoTag;
   iETQModelo : TACBrETQModelo ;
   iETQDPI: TACBrETQDPI;
   iETQUnidade: TACBrETQUnidade;
@@ -2164,6 +2168,11 @@ begin
   for IForcarTagICMSSubs := Low(TForcarGeracaoTag) to High(TForcarGeracaoTag) do
     cbTagRejeicao938.Items.Add(GetEnumName(TypeInfo(TForcarGeracaoTag), integer(IForcarTagICMSSubs)));
   cbTagRejeicao938.ItemIndex := 0;
+
+  cbTagInfSuplCTe.Items.Clear;
+  for IGerarTagInfComplCTe := Low(TForcarGeracaoTag) to High(TForcarGeracaoTag) do
+    cbTagInfSuplCTe.Items.Add(GetEnumName(TypeInfo(TForcarGeracaoTag), integer(IGerarTagInfComplCTe)));
+  cbTagInfSuplCTe.ItemIndex := 0;
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
   try
@@ -4651,6 +4660,7 @@ begin
       cbVersaoWSQRCode.ItemIndex       := cbVersaoWSQRCode.Items.IndexOf(VersaoQRCode);
       ckCamposFatObrigatorio.Checked   := CamposFatObrig;
       cbTagRejeicao938.ItemIndex       := TagRejeicao938;
+      cbTagInfSuplCTe.ItemIndex        := TagQRCodeCTe;
 
     end;
 
@@ -4885,7 +4895,7 @@ begin
     ACBrMDFe1.DAMDFe.Email             := edtEmailEmpresa.Text;
     ACBrMDFe1.DAMDFe.Fax               := edtFaxEmpresa.Text;
     ACBrMDFe1.DAMDFe.MostraPreview     := cbxMostrarPreview.Checked;
-    ACBrMDFe1.DAMDFe.Impressora        := cbxImpressora.Text;
+    ACBrMDFe1.DAMDFe.Impressora        := IfThen( NaoEstaVazio(cbxImpressora.Text), cbxImpressora.Text, ' ');
     ACBrMDFe1.DAMDFe.NumCopias         := edtNumCopia.Value;
     ACBrMDFe1.DAMDFe.MargemInferior    := fspeMargemInf.Value;
     ACBrMDFe1.DAMDFe.MargemSuperior    := fspeMargemSup.Value;
@@ -5805,6 +5815,7 @@ begin
         FormaEmissaoGNRe         := cbFormaEmissaoGNRe.ItemIndex;
         CamposFatObrig           := ckCamposFatObrigatorio.Checked;
         TagRejeicao938           := cbTagRejeicao938.ItemIndex;
+        TagQRCodeCTe             := cbTagInfSuplCTe.ItemIndex;
       end;
 
       with ESocial do
@@ -8875,7 +8886,10 @@ begin
     else
     begin
       ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
-      ACBrCTe1.DACTE.Impressora := cbxImpressora.Text;
+      if NaoEstaVazio(cbxImpressora.Text) then
+        ACBrCTe1.DACTE.Impressora := cbxImpressora.Text
+      else
+        ACBrCTe1.DACTE.Impressora := ' ';
     end;
 
     if (ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.cStat in [101, 151, 155]) then
@@ -9407,6 +9421,7 @@ begin
   begin
     TConfiguracoesCTe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoCTe.ItemIndex + 1));
     TConfiguracoesCTe(Configuracoes).Geral.VersaoDF     := StrToVersaoCTe(ok, cbVersaoWSCTe.Text);
+    TConfiguracoesCTe(Configuracoes).Geral.GerarInfCTeSupl := TForcarGeracaoTag(cbTagInfSuplCTe.ItemIndex);
 
     TConfiguracoesCTe(Configuracoes).Arquivos.IniServicos    := edtArquivoWebServicesCTe.Text;
     TConfiguracoesCTe(Configuracoes).Arquivos.EmissaoPathCTe := cbxEmissaoPathNFe.Checked;

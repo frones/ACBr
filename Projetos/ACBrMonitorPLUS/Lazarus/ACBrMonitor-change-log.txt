@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2019
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
+Adicionado flag opcional para Geração da Tag QRCode no XML do CTe
+
 12/07/2019
 [*] DoACBrNFeUnit
 Ajuste retorno do método ConsultaCadastro, baseados nas alterações das classes de Respostas da Lib

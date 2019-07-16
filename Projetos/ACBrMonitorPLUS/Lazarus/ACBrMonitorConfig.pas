@@ -252,6 +252,7 @@ type
     TimeZoneMode      : Integer;
     TimeZoneStr       : String;
     TagRejeicao938    : Integer;
+    TagQRCodeCTe      : Integer;
     Proxy             : TProxy;
     NFCe              : TNFCeWebService;
     NFe               : TNFe;
@@ -941,6 +942,7 @@ begin
       Ini.WriteString( CSecWebService, CKeyTimeZoneStr, TimeZoneStr );
       Ini.WriteBool( CSecWebService, CKeyCamposFatObrig, CamposFatObrig );
       Ini.WriteInteger( CSecWebService, CKeyTagRejeicao938, TagRejeicao938 );
+      Ini.WriteInteger( CSecWebService, CKeyTagQRCodeCTe, TagQRCodeCTe );
     end;
 
     with DFe.RespTecnico do
@@ -1603,6 +1605,7 @@ begin
       TimeZoneStr               := Ini.ReadString( CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
       CamposFatObrig            := Ini.ReadBool( CSecWebService, CKeyCamposFatObrig, True);
       TagRejeicao938            := Ini.ReadInteger( CSecWebService, CKeyTagRejeicao938, TagRejeicao938 );
+      TagQRCodeCTe              := Ini.ReadInteger( CSecWebService, CKeyTagQRCodeCTe, TagQRCodeCTe );
     end;
 
     with DFe.WebService.Proxy do
@@ -2250,6 +2253,7 @@ begin
     TimeZoneStr               := '';
     CamposFatObrig            := True;
     TagRejeicao938            := 0;
+    TagQRCodeCTe              := 0;
   end;
 
   with DFe.WebService.Proxy do

@@ -74,7 +74,7 @@ const
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS,
                         docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
-                        docEmail, docCNH, docPrefixoGTIN ) ;
+                        docEmail, docCNH, docPrefixoGTIN, docCAEPF ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -134,6 +134,7 @@ type
     
     Procedure ValidarCPF  ;
     Procedure ValidarCNPJ ;
+    Procedure ValidarCAEPF ;
     Procedure ValidarUF(const UF : String) ;
     Procedure ValidarIE ;
     Procedure ValidarCheque ;
@@ -181,6 +182,7 @@ type
 
 function ValidarCPF( const Documento : String ) : String ;
 function ValidarCNPJ( const Documento : String ) : String ;
+function ValidarCAEPF( const Documento : String ) : String ;
 function ValidarCNPJouCPF( const Documento : String ) : String ;
 function ValidarIE(const AIE, AUF: String): String ;
 function ValidarSuframa( const Documento : String ) : String ;
@@ -196,6 +198,7 @@ function ValidarUF(const AUF: String): String;
 Function FormatarFone( const AValue : String; const DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
 Function FormatarCNPJ( const AValue : String )   : String ;
+Function FormatarCAEPF( const AValue : String )   : String ;
 function FormatarCNPJouCPF(const AValue: String)    : String;
 function FormatarPlaca(const AValue: string): string;
 Function FormatarIE( const AValue: String; const UF : String ) : String ;
@@ -230,6 +233,11 @@ end;
 function ValidarCNPJ(const Documento : String) : String ;
 begin
   Result := ValidarDocumento( docCNPJ, Documento );
+end;
+
+function ValidarCAEPF(const Documento : String) : String ;
+begin
+   Result := ValidarDocumento( docCAEPF, Documento );
 end;
 
 function ValidarIE(const AIE, AUF: String): String;
@@ -414,6 +422,14 @@ begin
   S := PadLeft( OnlyNumber(AValue), 14, '0') ;
   Result := copy(S,1,2) + '.' + copy(S,3,3) + '.' +
             copy(S,6,3) + '/' + copy(S,9,4) + '-' + copy(S,13,2) ;
+end;
+
+function FormatarCAEPF(const AValue: String): String;
+Var S : String ;
+begin
+  S := PadLeft( OnlyNumber(AValue), 14, '0') ;
+  Result := copy(S,1,3) + '.' + copy(S,4,3) + '.' +
+            copy(S,7,3) + '/' + copy(S,10,3) + '-' + copy(S,13,2) ;
 end;
 
 function FormatarCNPJouCPF(const AValue: String): String;
@@ -685,6 +701,7 @@ begin
         case fsTipoDocto of
           docCPF           : NomeDocto := 'CPF'  ;
           docCNPJ          : NomeDocto := 'CNPJ' ;
+          docCAEPF         : NomeDocto := 'CAEPF' ;
           docUF            : NomeDocto := 'UF' ;
           docInscEst       : NomeDocto := 'Inscrição Estadual' ;
           docNumCheque     : NomeDocto := 'Número de Cheque' ;
@@ -707,6 +724,7 @@ begin
      case fsTipoDocto of
        docCPF           : ValidarCPF  ;
        docCNPJ          : ValidarCNPJ ;
+       docCAEPF         : ValidarCAEPF ;
        docUF            : ValidarUF( fsDocto ) ;
        docInscEst       : ValidarIE ;
        docNumCheque     : ValidarCheque ;
@@ -743,6 +761,7 @@ begin
   case fsTipoDocto of
     docCPF      : Result := FormatarCPF( Result ) ;
     docCNPJ     : Result := FormatarCNPJ( Result ) ;
+    docCAEPF    : Result := FormatarCAEPF( Result ) ;
     docInscEst  : Result := FormatarIE( Result, fsComplemento ) ;
     docNumCheque: Result := FormatarCheque( Result ) ;
     docPIS      : Result := FormatarPIS( Result ) ;
@@ -1831,6 +1850,44 @@ begin
    if fsExibeDigitoCorreto then
      fsMsgErro := fsMsgErro + ' Dígito calculado: ' + fsDigitoCalculado ;
   end;
+end;
+
+procedure TACBrValidador.ValidarCAEPF;
+Var DV1, DV2 : String ;
+begin
+  if fsAjustarTamanho then
+     fsDocto := PadLeft( fsDocto, 14, '0') ;
+
+  if (Length( fsDocto ) <> 14) or ( not StrIsNumber( fsDocto ) ) then
+  begin
+     fsMsgErro := 'CAEPF deve ter 14 dígitos. (Apenas números)' ;
+     exit
+  end ;
+
+  if fsDocto = StringOfChar('0',14) then  // Prevenção contra 00000000000000
+  begin
+     fsMsgErro := 'CAEPF inválido.' ;
+     exit ;
+  end ;
+
+  Modulo.CalculoPadrao ;
+  Modulo.Documento := copy(fsDocto, 1, 12) ;
+  Modulo.Calcular ;
+  DV1 := IntToStr( Modulo.DigitoFinal ) ;
+
+  Modulo.Documento := copy(fsDocto, 1, 12)+DV1 ;
+  Modulo.Calcular ;
+  DV2 := IntToStr( Modulo.DigitoFinal ) ;
+
+  fsDigitoCalculado := DV1+DV2 ;
+
+  if (DV1 <> fsDocto[13]) or (DV2 <> fsDocto[14]) then
+  begin
+     fsMsgErro := 'CAEPF inválido.' ;
+
+     if fsExibeDigitoCorreto then
+        fsMsgErro := fsMsgErro +  '.. Digito calculado: '+fsDigitoCalculado ;
+  end ;
 end;
 
 { Rotina extraida do site:   www.tcsystems.com.br   }

@@ -1,10 +1,9 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 355
-  Height = 627
-  Top = 144
+  Left = 234
+  Height = 788
+  Top = 0
+  Width = 839
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 627
-  ClientWidth = 810
   Font.Height = -18
   inherited RLNFe: TRLReport
     Top = 0
@@ -7704,9 +7703,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
           Left = 0
           Height = 12
           Top = 0
-          Width = 742
-          Align = faClient
-          Alignment = taCenter
+          Width = 740
+          AutoSize = False
           Caption = '  '
           RealBounds.Left = 0
           RealBounds.Top = 0

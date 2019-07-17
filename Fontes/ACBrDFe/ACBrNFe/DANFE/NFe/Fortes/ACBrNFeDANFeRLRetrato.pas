@@ -2033,6 +2033,13 @@ begin
     txtAliqICMS.Caption := FormatFloatBr(Imposto.ICMS.PICMS);
     txtAliqIPI.Caption := FormatFloatBr(Imposto.IPI.PIPI);
   end;
+
+  if fpDANFe.AlternaCoresProdutos then
+  begin
+    FundoItem.Height  := rlbItens.Height;
+    FundoItem.Color   := fpCorDestaqueProdutos;
+    FundoItem.Visible := not (FundoItem.Visible);
+  end;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbItensAfterPrint(Sender: TObject);

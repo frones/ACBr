@@ -6441,10 +6441,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         object FundoItem: TRLLabel
           Left = 0
           Top = 0
-          Width = 742
+          Width = 740
           Height = 12
-          Align = faClient
-          Alignment = taCenter
+          AutoSize = False
           Caption = '  '
           Transparent = False
           Visible = False

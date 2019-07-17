@@ -54,12 +54,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/03/2019
+--- EventosNFCe.fr3 ---
+[*] Reestruturação para ficar funcional e mais parecido com o modelo em Fortes Report. 
+https://www.projetoacbr.com.br/forum/topic/48283-altera%C3%A7%C3%A3o-danfe-nfc-e-cancelamento/
+      Por : brajan
+
+11/03/2019
 --- DanfePaisagem_2019.fr3 ---
 [*] Ajuste no canhoto a esquerda
 https://www.projetoacbr.com.br/forum/topic/49889-corre%C3%A7%C3%A3o-erro-impress%C3%A3o-modelo-paisagem-fast/?tab=comments#comment-329087
       Por : Pedro Braga	
-
-
 
 07/02/2019
 --- DanfePaisagem_2019.fr3 - DanfeRetrato_2019.fr3

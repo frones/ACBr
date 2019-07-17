@@ -42,7 +42,7 @@ interface
 uses
   SysUtils, Classes, DB, DBClient, ACBrMDFeDAMDFeClass, pcnConversao,
   pmdfeMDFe, frxClass, ACBrDFeUtil, pmdfeEnvEventoMDFe, frxDBSet,
-  frxExportPDF, frxBarcode;
+  frxExportPDF, frxBarcode, Graphics, ACBrDelphiZXingQRCode;
 
 type
   EACBrMDFeDAMDFEFR = class(Exception);
@@ -127,6 +127,7 @@ type
     function  PrepareReport(MDFe: TMDFe = nil): Boolean;
     function  PrepareReportEvento: Boolean;
     procedure CriarDataSetsFrx;
+    procedure frxReportBeforePrint(Sender: TfrxReportComponent);
   public
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
@@ -144,6 +145,7 @@ type
     procedure CarregaDadosEventos;
     procedure SetDataSetsToFrxReport;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
@@ -230,6 +232,8 @@ begin
     ScriptLanguage := 'PascalScript';
     StoreInDFM     := False;
     OnGetValue := frxReportGetValue;
+    OnBeforePrint := frxReportBeforePrint;
+    OnReportPrint := 'frxReportOnReportPrint';
     PreviewOptions.Buttons :=[pbExport, pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
   end;
 
@@ -382,6 +386,7 @@ begin
     Add('Imagem', ftString, 256);
     Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
+    Add('QrCodeCarregado', ftGraphic, 1000);
     CreateDataSet;
   end;
 
@@ -691,6 +696,18 @@ begin
   inherited Destroy;
 end;
 
+procedure TACBrMDFeDAMDFEFR.frxReportBeforePrint(Sender: TfrxReportComponent);
+var
+  qrCode: String;
+begin
+  if Assigned(FMDFe) then
+  begin
+    qrCode := FMDFe.infMDFeSupl.qrCodMDFe;
+  if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
+     PintarQRCode(qrCode, TfrxPictureView(Sender).Picture);
+  end;
+end;
+
 procedure TACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value: Variant);
 begin
   if VarName = 'CANCELADO' then
@@ -811,6 +828,42 @@ begin
       frxPDFExport.ShowDialog := OldShowDialog;
       FPArquivoPDF := frxPDFExport.FileName;
     end;
+  end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.PintarQRCode(const QRCodeData: String;
+  APict: TPicture);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  QRCode       := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.QuietZone := 1;
+    QRCode.Data      := widestring(QRCodeData);
+
+    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    APict.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
   end;
 end;
 

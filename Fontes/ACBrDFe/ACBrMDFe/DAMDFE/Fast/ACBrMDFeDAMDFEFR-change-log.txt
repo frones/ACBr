@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2019
+-- ACBrMDFeDAMDFEFR --
+[*] Impressão do QRCode no DAMDFE Retrato em FastReport.
+    https://www.projetoacbr.com.br/forum/topic/52490-damdf-e-com-qr-code/
+  Por: JeannyPaiva
+
 21/01/2019
 -- ACBrMDFeDACTEFR --
 [*] https://www.projetoacbr.com.br/forum/topic/48867-propriedade-arquivopdf-fastreport/

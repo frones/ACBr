@@ -266,8 +266,8 @@ begin
   // Passo 1
   sEntrada := 'chMDFe=' + idMDFe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
 
-  // Passo 2 calcular o SHA-1 da string idMDFe se o Tipo de Emissão for EPEC ou FSDA
-  if TipoEmissao in [teDPEC, teFSDA] then
+  // Passo 2 calcular o SHA-1 da string idMDFe se emissão em contingência
+  if TipoEmissao = teContingencia then
     sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idMDFe));
 
   Result := urlUF + sEntrada;

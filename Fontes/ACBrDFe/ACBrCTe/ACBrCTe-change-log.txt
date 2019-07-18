@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2019
+-- ACBrCTe --
+[-] Correção feita conforme a que foi feita para o MDF-e.
+  Por: Italo Jurisato Junior
+
 15/07/2019
 -- ACBrCTeConfiguracoes --
 [*] Ajustes para a configuração "GerarInfCTeSupl".

@@ -159,7 +159,7 @@ implementation
 
 uses
   strutils, dateutils, math,
-  pcnAuxiliar, synacode;
+  pcnAuxiliar, synacode, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$IFDEF CPU64}
@@ -260,7 +260,7 @@ function TACBrCTe.GetURLQRCode(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
   const AChaveCTe: String; const Versao: Double): String;
 var
-  idCTe, sEntrada, urlUF: String;
+  idCTe, sEntrada, urlUF, Passo2, sign: String;
   VersaoDFe: TVersaoCTe;
   ok: Boolean;
 begin
@@ -278,7 +278,14 @@ begin
 
   // Passo 2 calcular o SHA-1 da string idCTe se o Tipo de Emissão for EPEC ou FSDA
   if TipoEmissao in [teDPEC, teFSDA] then
-    sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idCTe));
+  begin
+    // Tipo de Emissão em Contingência
+    SSL.CarregarCertificadoSeNecessario;
+    sign := SSL.CalcHash(idCTe, dgstSHA1, outBase64, True);
+    Passo2 := '&sign=' + sign;
+
+    sEntrada := sEntrada + Passo2;
+  end;
 
   Result := urlUF + sEntrada;
 end;

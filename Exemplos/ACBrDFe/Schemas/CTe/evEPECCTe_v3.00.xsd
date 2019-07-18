@@ -30,6 +30,11 @@
 						<xs:documentation>Valor do ICMS</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element name="vICMSST" type="TDec_1302" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Valor do ICMS ST</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:element name="vTPrest" type="TDec_1302">
 					<xs:annotation>
 						<xs:documentation>Valor Total da Prestação do Serviço</xs:documentation>

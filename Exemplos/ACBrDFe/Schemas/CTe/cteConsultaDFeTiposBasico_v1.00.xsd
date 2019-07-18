@@ -2,10 +2,9 @@
 <!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/cte" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/cte" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="tiposGeralCTe_v3.00.xsd"/>
-	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
-	<xs:complexType name="TConsSitCTe">
+	<xs:complexType name="TCTeConsultaDFe">
 		<xs:annotation>
-			<xs:documentation>Tipo Pedido de Consulta da Situação Atual do Conhecimento de Transporte eletrônico</xs:documentation>
+			<xs:documentation>Tipo Pedido de Consulta do Conhecimento de Transporte eletrônico</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="tpAmb" type="TAmb">
@@ -28,13 +27,13 @@
 		</xs:sequence>
 		<xs:attribute name="versao" use="required">
 			<xs:simpleType>
-				<xs:restriction base="TVerConsSitCTe"/>
+				<xs:restriction base="TVerCTeConsultaDFe"/>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="TRetConsSitCTe">
+	<xs:complexType name="TRetCTeConsultaDFe">
 		<xs:annotation>
-			<xs:documentation>Tipo Retorno de Pedido de Consulta da Situação Atual do Conhecimento de Transporte eletrônico</xs:documentation>
+			<xs:documentation>Tipo Retorno de Pedido de Consulta do Conhecimento de Transporte eletrônico</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="tpAmb" type="TAmb">
@@ -46,34 +45,41 @@
 			</xs:element>
 			<xs:element name="verAplic" type="TVerAplic">
 				<xs:annotation>
-					<xs:documentation>Versão do Aplicativo que processou o CT-e</xs:documentation>
+					<xs:documentation>Versão do Aplicativo que processou a consulta do CT-e</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="cStat" type="TStat">
 				<xs:annotation>
-					<xs:documentation>Código do status da mensagem enviada.</xs:documentation>
+					<xs:documentation>Código do status da consulta do CT-e</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="xMotivo" type="TMotivo">
 				<xs:annotation>
-					<xs:documentation>Descrição literal do status do serviço solicitado.</xs:documentation>
+					<xs:documentation>Descrição literal do status da consulta do CT-e</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="cUF" type="TCodUfIBGE">
-				<xs:annotation>
-					<xs:documentation>código da UF de atendimento</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="protCTe" minOccurs="0">
+			<xs:element name="CTeDFe" type="TCTeDFe" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="versao" type="TVerCTeConsultaDFe" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TCTeDFe">
+		<xs:annotation>
+			<xs:documentation>Tipo Documento Fiscal Eletrônico CT-e</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="procCTe">
 				<xs:complexType>
-					<xs:sequence>
+					<xs:sequence minOccurs="2" maxOccurs="2">
 						<xs:any processContents="skip">
 							<xs:annotation>
-								<xs:documentation>Retornar protCTe da versão correspondente do CT-e autorizado</xs:documentation>
+								<xs:documentation>Autorização de Uso do CT-e</xs:documentation>
 							</xs:annotation>
 						</xs:any>
 					</xs:sequence>
 					<xs:attribute name="versao" use="required">
+						<xs:annotation>
+							<xs:documentation>Versão do proc</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:whiteSpace value="preserve"/>
@@ -84,18 +90,46 @@
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
+					<xs:attribute name="ipTransmissor" type="TIPv4" use="optional"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="procEventoCTe" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="procCancCTe" minOccurs="0">
 				<xs:complexType>
-					<xs:sequence>
-						<xs:any>
+					<xs:sequence minOccurs="2" maxOccurs="2">
+						<xs:any processContents="skip">
 							<xs:annotation>
-								<xs:documentation>Retornar procEventoCTe da versão correspondente do evento CT-e autorizado</xs:documentation>
+								<xs:documentation>Solicitação de Cancelamento do CT-e</xs:documentation>
 							</xs:annotation>
 						</xs:any>
 					</xs:sequence>
 					<xs:attribute name="versao" use="required">
+						<xs:annotation>
+							<xs:documentation>Versão do procCancCTe</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:whiteSpace value="preserve"/>
+								<xs:enumeration value="1.03"/>
+								<xs:enumeration value="1.04"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="ipTransmissor" type="TIPv4" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="procEventoCTe" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence minOccurs="2" maxOccurs="2">
+						<xs:any processContents="skip">
+							<xs:annotation>
+								<xs:documentation>Demais eventos vinculados ao CT-e</xs:documentation>
+							</xs:annotation>
+						</xs:any>
+					</xs:sequence>
+					<xs:attribute name="versao" use="required">
+						<xs:annotation>
+							<xs:documentation>Versão do procEventoCTe</xs:documentation>
+						</xs:annotation>
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
 								<xs:whiteSpace value="preserve"/>
@@ -105,17 +139,17 @@
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>
+					<xs:attribute name="ipTransmissor" type="TIPv4" use="optional"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
-		<xs:attribute name="versao" type="TVerConsSitCTe" use="required"/>
 	</xs:complexType>
-	<xs:simpleType name="TVerConsSitCTe">
+	<xs:simpleType name="TVerCTeConsultaDFe">
 		<xs:annotation>
-			<xs:documentation> Tipo Versão do Consulta situação de CT-e - 2.00</xs:documentation>
+			<xs:documentation> Tipo Versão do Consulta DFe de CT-e - 1.00</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="3\.00"/>
+			<xs:pattern value="1\.00"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

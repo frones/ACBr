@@ -89,8 +89,8 @@
 				</xs:element>
 				<xs:element name="detCont" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>Grupo de informações de detalhamento dos conteiners
-(Somente para Redespacho Intermediario e serviço vinculado)</xs:documentation>
+						<xs:documentation>Grupo de informações de detalhamento dos conteiners 
+(Somente para Redespacho Intermediário e Serviço Vinculado a Multimodal)</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>

@@ -33,14 +33,13 @@
 					<xs:element name="TAF" type="TTermoAutFreta">
 						<xs:annotation>
 							<xs:documentation>Termo de Autorização de Fretamento – TAF</xs:documentation>
-							<xs:documentation>de acordo com a Resolução ANTT nº 4.777/2015</xs:documentation>
+							<xs:documentation>Registro obrigatório do emitente do CT-e OS junto à ANTT, de acordo com a Resolução ANTT nº 4.777/2015</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 					<xs:element name="NroRegEstadual" type="TNroRegEstadual">
 						<xs:annotation>
 							<xs:documentation>Número do Registro Estadual </xs:documentation>
-							<xs:documentation>Registro obrigatório do emitente do CT-e junto à ANTT para exercer a atividade de transportador rodoviário de cargas por conta de terceiros e mediante remuneração.
-						</xs:documentation>
+							<xs:documentation>Registro obrigatório do emitente do CT-e OS junto à Agência Reguladora  Estadual.					</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:choice>
@@ -100,8 +99,7 @@ Só preenchido quando o veículo não pertencer à empresa emitente do CT-e OS</
 											<xs:element name="NroRegEstadual" type="TNroRegEstadual">
 												<xs:annotation>
 													<xs:documentation>Número do Registro Estadual </xs:documentation>
-													<xs:documentation>Registro obrigatório do emitente do CT-e junto à ANTT para exercer a atividade de transportador rodoviário de cargas por conta de terceiros e mediante remuneração.
-						</xs:documentation>
+													<xs:documentation>Registro obrigatório do emitente do CT-e OS junto à Agência Reguladora  Estadual						</xs:documentation>
 												</xs:annotation>
 											</xs:element>
 										</xs:choice>

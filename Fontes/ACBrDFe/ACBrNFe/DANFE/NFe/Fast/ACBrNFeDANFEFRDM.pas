@@ -428,7 +428,6 @@ begin
         FieldDefs.Add('ValorUnitario'   , ftString, 50);
         FieldDefs.Add('Valorliquido'    , ftString, 18);
         FieldDefs.Add('ValorAcrescimos' , ftString, 18);
-        FieldDefs.Add('vPMC', ftString, 18);
 
         CreateDataSet;
      end;
@@ -1097,15 +1096,6 @@ begin
         FieldByName('vBcISSQN').AsString          := FormatFloatBr( Imposto.ISSQN.vBC       ,'###,###,##0.00');
         FieldByName('Valorliquido').AsString      := FormatFloatBr( Prod.vProd - Prod.vDesc ,'###,###,##0.00');
         FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
-
-        if(FNFe.Det.Items[inItem].Prod.med.Count > 0)then
-        begin
-           FieldByName('vPMC').AsString := FormatFloatBr(FNFe.Det.Items[inItem].Prod.med.Items[0].vPMC,'###,###,##0.00');
-        end
-        else
-        begin
-           FieldByName('vPMC').AsString := '0.00';
-        end;
 
         Post;
       end;

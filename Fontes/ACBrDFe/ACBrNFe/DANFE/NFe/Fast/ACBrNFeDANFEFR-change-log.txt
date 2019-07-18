@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2019
+-- ACBrNFeDANFEFRDM --
+[*] Remoção de código duplicado , a informação de vPMC se encontra em detalhamento de medicamentos.
+        por: Henrique Leonardo (hleorj)
+
 16/04/2019
 -- ACBrNFeDANFEFRDM --
 [*] Correção na verificação da condição para impressão dos dados de entrega e retirada.

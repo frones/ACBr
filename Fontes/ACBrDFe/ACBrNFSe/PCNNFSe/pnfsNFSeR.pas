@@ -4109,7 +4109,8 @@ begin
     begin
       // Total máximo de 12 serviços na prefeitura
       I := 0;
-      while (Leitor.rExtrai(3, 'Servicos', '', I+1) <> '') do
+//      while (Leitor.rExtrai(3, 'Servicos', '', I+1) <> '') do
+      while (Leitor.rExtrai(3, 'Servico', '', I+1) <> '') do
       begin
         NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));
 

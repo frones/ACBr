@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/07/2019
+-- ACBrCTeConhecimentos --
+[-] Correção na leitura do arquivo INI.
+  Por: Italo Jurisato Junior
 -- ACBrCTe --
 [-] Correção feita conforme a que foi feita para o MDF-e.
   Por: Italo Jurisato Junior

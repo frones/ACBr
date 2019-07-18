@@ -2753,7 +2753,7 @@ begin
           tomaICMS.refNF.modelo   := INIRec.ReadString( 'infCteSub','mod','');
           tomaICMS.refNF.serie    := INIRec.ReadInteger( 'infCteSub','serie',0);
           tomaICMS.refNF.subserie := INIRec.ReadInteger( 'infCteSub','subserie',0);
-          tomaICMS.refNF.nro      := INIRec.ReadInteger( 'infCteSub','CNPJ',0);
+          tomaICMS.refNF.nro      := INIRec.ReadInteger( 'infCteSub','nro',0);
           tomaICMS.refNF.valor    :=  StringToFloatDef(INIRec.ReadString('infCteSub','valor','') ,0);
           tomaICMS.refNF.dEmi     := StringToDateTime(INIRec.ReadString( 'infCteSub','dEmi','0'));
           tomaICMS.refCte         := INIRec.ReadString( 'infCteSub','refCte','');

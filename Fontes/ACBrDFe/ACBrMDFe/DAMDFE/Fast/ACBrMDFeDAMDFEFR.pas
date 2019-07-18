@@ -272,6 +272,10 @@ begin
     Add('dhIniViagem', ftDateTime);
     Add('Lacres', ftMemo);
 	  Add('vCarga', ftCurrency);
+
+    // Outros
+    Add('URL', ftString, 1000);
+
     CreateDataSet;
   end;
 
@@ -1198,6 +1202,8 @@ begin
         FieldByName('qCarga').AsCurrency := qCarga;
 	    FieldByName('vCarga').AsCurrency := vCarga;
     end;
+
+    FieldByName('URL').AsString := TACBrMDFe(ACBrMDFe).GetURLConsulta(FMDFe.Ide.cUF, FMDFe.Ide.tpAmb, FMDFe.infMDFe.versao);
 
     // Incluido por Paulo Hostert em 18/11/2014.
     wObs := FMDFe.infAdic.infCpl;

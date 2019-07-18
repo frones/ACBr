@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2019
+-- ACBrMDFeDAMDFEFR --
+[*] Ajustes para impressão do DAMDFE Retrato em FastReport conforme layout 3.00a.
+    https://www.projetoacbr.com.br/forum/topic/52490-damdf-e-com-qr-code/?tab=comments#comment-345571
+  Por: JeannyPaiva / BigWings
+
 17/07/2019
 -- ACBrMDFeDAMDFEFR --
 [*] Impressão do QRCode no DAMDFE Retrato em FastReport.

@@ -418,10 +418,6 @@ begin
         FieldDefs.Add('pMVAST'    , ftString, 18);
         FieldDefs.Add('pICMSST'   , ftString, 18);
         FieldDefs.Add('vICMSST'   , ftString, 18);
-        FieldDefs.Add('nLote'     , ftString, 20);
-        FieldDefs.Add('qLote'     , ftFloat);
-        FieldDefs.Add('dFab'      , ftDateTime);
-        FieldDefs.Add('dVal'      , ftDateTime);
         FieldDefs.Add('DescricaoProduto', ftString, 2000);
         FieldDefs.Add('Unidade'   , ftString, 14);
         FieldDefs.Add('Quantidade', ftString, 50);

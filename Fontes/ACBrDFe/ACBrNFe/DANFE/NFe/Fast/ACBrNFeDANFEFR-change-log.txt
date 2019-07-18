@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+18/07/2019
+-- ACBrNFeDANFEFRDM --
+[*] Remoção de campos desnecessários. Os devidos campos são tratados no detalhamento de medicamentos.
+        por: Henrique Leonardo (hleorj)
+
 18/07/2019
 -- ACBrNFeDANFEFRDM --
 [*] Remoção de código duplicado , a informação de vPMC se encontra em detalhamento de medicamentos.

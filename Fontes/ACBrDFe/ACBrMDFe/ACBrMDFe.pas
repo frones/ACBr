@@ -146,7 +146,7 @@ implementation
 
 uses
   strutils, dateutils, math,
-  pcnAuxiliar, synacode;
+  pcnAuxiliar, synacode, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$IFDEF CPU64}
@@ -250,7 +250,7 @@ function TACBrMDFe.GetURLQRCode(const CUF: integer;
   const AChaveMDFe: String; const Versao: Double): String;
 var
   idMDFe,
-  sEntrada, urlUF: String;
+  sEntrada, urlUF, Passo2, sign: String;
   VersaoDFe: TVersaoMDFe;
   ok: Boolean;
 begin
@@ -268,7 +268,16 @@ begin
 
   // Passo 2 calcular o SHA-1 da string idMDFe se emissão em contingência
   if TipoEmissao = teContingencia then
-    sEntrada := sEntrada + '&sign=' + AsciiToHex(SHA1(idMDFe));
+  begin
+    // Tipo de Emissão em Contingência
+    SSL.CarregarCertificadoSeNecessario;
+    sign := SSL.CalcHash(idMDFe, dgstSHA1, outBase64, True);
+    Passo2 := '&sign='+sign;
+
+    sEntrada := sEntrada + Passo2;
+  end;
+
+
 
   Result := urlUF + sEntrada;
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2019
+-- ACBrMDFe --
+[-] https://www.projetoacbr.com.br/forum/topic/52494-482-%E2%80%93-par%C3%A2metro-sign-n%C3%A3o-informado-no-qr-code-para-emiss%C3%A3o-em-conting%C3%AAncia/?do=findComment&comment=345426
+  Por: Asterix
+
 17/07/2019
 -- ACBrMDFe --
 [-] Correção na geração do QRCode quando emissão em contingência.

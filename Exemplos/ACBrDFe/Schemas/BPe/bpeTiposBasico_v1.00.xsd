@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas.softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/bpe" targetNamespace="http://www.portalfiscal.inf.br/bpe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralBPe_v1.00.xsd"/>
@@ -995,16 +995,6 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 </xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="pICMSInterPart" type="TDec_0302">
-													<xs:annotation>
-														<xs:documentation>Percentual provisório de partilha entre os estados</xs:documentation>
-														<xs:documentation>Percentual de partilha para a UF do destinatário:
-- 40% em 2016;
-- 60% em 2017;
-- 80% em 2018;
-- 100% a partir de 2019.</xs:documentation>
-													</xs:annotation>
-												</xs:element>
 												<xs:element name="vFCPUFFim" type="TDec_1302">
 													<xs:annotation>
 														<xs:documentation>Valor do ICMS relativo ao Fundo de Combate á Pobreza (FCP) da UF fim da viagem</xs:documentation>
@@ -1912,7 +1902,10 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 				<xs:element name="hashCSRT">
 					<xs:annotation>
 						<xs:documentation>Hash do token do código de segurança do responsável técnico</xs:documentation>
-						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)</xs:documentation>
+						<xs:documentation>O hashCSRT é o resultado das funções SHA-1 e base64 do token CSRT fornecido pelo fisco + chave de acesso do DF-e. (Implementação em futura NT)
+
+
+Observação: 28 caracteres são representados no schema como 20 bytes do tipo base64Binary</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:base64Binary">

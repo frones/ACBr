@@ -4,6 +4,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Top = 0
   Width = 839
   Caption = 'frlDANFeRLRetrato'
+  ClientHeight = 788
+  ClientWidth = 839
   Font.Height = -18
   inherited RLNFe: TRLReport
     Top = 0

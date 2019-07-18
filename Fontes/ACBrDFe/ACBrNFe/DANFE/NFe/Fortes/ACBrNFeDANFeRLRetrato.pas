@@ -2038,15 +2038,13 @@ begin
   begin
     FundoItem.Height  := rlbItens.Height;
     FundoItem.Color   := fpCorDestaqueProdutos;
-    FundoItem.Visible := not (FundoItem.Visible);
+    FundoItem.Visible := odd(FNumItem);
   end;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 begin
-  //// Alterna produtos com fundo colorido e fundo branco
-  FundoItem.Color := fpCorDestaqueProdutos;
-  FundoItem.Visible := not (FundoItem.Visible) and fpDANFe.AlternaCoresProdutos;
+  //Código removido
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirCabecalhoItens;

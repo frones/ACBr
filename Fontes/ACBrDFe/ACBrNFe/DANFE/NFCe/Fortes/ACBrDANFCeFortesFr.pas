@@ -1289,7 +1289,7 @@ begin
       else
         RLLayout := rlVenda;
 
-      Resumido := DanfeResumido;
+      Resumido := DanfeResumido or (not Self.ImprimeItens);
 
       if (NumCopias > 0) and (RLPrinter.Copies <> NumCopias) then
       begin

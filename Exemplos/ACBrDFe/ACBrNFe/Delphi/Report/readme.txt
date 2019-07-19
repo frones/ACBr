@@ -1,3 +1,6 @@
+Os arquivos na pasta obsoletos são arquivos que não recebem manutenção. São mantidos para compatibilidade ou testes.
+Evite o uso desses arquivos.
+
 Danfe.fr3 
 ---------
 Não deve ser mais usado, mantido para compatibilidade.

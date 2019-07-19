@@ -942,7 +942,7 @@ begin
       FieldByName('VOutro').AsFloat       := VOutro;
       FieldByName('VNF').AsFloat          := VNF;
       FieldByName('VTotTrib').AsFloat     := VTotTrib;
-      FieldByName('ValorApagar').AsFloat  := VProd - VDesc - vICMSDeson + VOutro;
+      FieldByName('ValorApagar').AsFloat  := VNF;
       FieldByName('VFCP').AsFloat         := VFCP;
       FieldByName('VFCPST').AsFloat       := VFCPST;
       FieldByName('VFCPSTRet').AsFloat    := vFCPSTRet;
@@ -1144,7 +1144,7 @@ begin
             FieldByName('Consumidor').AsString := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
           else
             FieldByName('Consumidor').AsString :=
-              IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
+              IfThen(Length(CNPJCPF) = 11, 'CONSUMIDOR CPF: ', 'CONSUMIDOR CNPJ: ') + Trim(FieldByName('CNPJCPF').AsString) + ' ' + trim(FieldByName('XNome').AsString);
         end;
 
         if NaoEstaVazio(Trim(FieldByName('XLgr').AsString)) then
@@ -1372,15 +1372,15 @@ begin
     if (FNFe.Ide.Modelo = 65) then
     begin
       FieldByName('DEmi').AsString := FormatDateTimeBr(FNFe.Ide.DEmi);
+
+      if (FNFe.Ide.tpEmis <> teNormal) and EstaVazio(FNFe.procNFe.nProt) then
+        FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+LineBreak+'Pendente de autorização');
+
       if FNFe.Ide.TpAmb = taHomologacao then
-          FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL')
-      else
-      begin
-        if (FNFe.Ide.tpEmis <> teNormal) and EstaVazio(FNFe.procNFe.nProt) then
-          FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+LineBreak+'Pendente de autorização')
-        else
-          FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
-      end;
+        FieldByName('MensagemFiscal').AsString := FieldByName('MensagemFiscal').AsString+LineBreak+LineBreak+ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+
+      if EstaVazio(FieldByName('MensagemFiscal').AsString) then
+        FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
 
       if EstaVazio(FNFe.infNFeSupl.urlChave) then
         FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(FNFe.Ide.cUF, FNFe.Ide.tpAmb, FNFe.infNFe.Versao)

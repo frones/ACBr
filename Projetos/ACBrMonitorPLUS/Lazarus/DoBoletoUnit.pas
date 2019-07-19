@@ -771,6 +771,7 @@ begin
     Agencia       := fACBrBoleto.Cedente.Agencia;
     DigitoAgencia := fACBrBoleto.Cedente.AgenciaDigito;
     CodCedente    := fACBrBoleto.Cedente.CodigoCedente;
+    DigitoAgenciaConta := fACBrBoleto.Cedente.DigitoVerificadorAgenciaConta;
   end;
 
   MonitorConfig.SalvarArquivo;

@@ -626,11 +626,12 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Width = 249
                 Height = 33
                 Caption = ' Averbar '
-                Columns = 2
+                Columns = 3
                 ItemIndex = 0
                 Items.Strings = (
                   'NF-e'
-                  'CT-e')
+                  'CT-e'
+                  'MDF-e')
                 TabOrder = 11
               end
               object cbSeguradora: TComboBox

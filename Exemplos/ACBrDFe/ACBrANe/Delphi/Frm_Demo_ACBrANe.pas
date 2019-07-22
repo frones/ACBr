@@ -401,6 +401,7 @@ begin
     case rgAverbar.ItemIndex of
       0: ACBrANe1.Configuracoes.Geral.TipoDoc := tdNFe;
       1: ACBrANe1.Configuracoes.Geral.TipoDoc := tdCTe;
+      2: ACBrANe1.Configuracoes.Geral.TipoDoc := tdMDFe;
     end;
 
     ACBrANe1.SSL.DescarregarCertificado;

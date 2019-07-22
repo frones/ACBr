@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/07/2019
+-- pnfsNFSeR/pnfsNFSeW_IPM  --
+[*] Criado o campo TipoUnidade que pode receber os valores: tuHora e tuQtde
+   Por: Italo Jurisato Junior
 -- pnfsNFSeR/pnfsLerListaNFSe  --
 [*] https://www.projetoacbr.com.br/forum/topic/52556-ajustes-provedor-agili/
    Por: Marcio Lopes

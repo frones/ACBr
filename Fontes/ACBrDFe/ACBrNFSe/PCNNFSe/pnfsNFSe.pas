@@ -277,6 +277,7 @@ type
     FpRetPISPASEP: currency;
     FpRetCOFINS: currency;
     FvRed: currency;
+    FTipoUnidade: TUnidade;
 
   public
     constructor Create;
@@ -322,6 +323,7 @@ type
     property pRetCSLL: currency read FpRetCSLL write FpRetCSLL;
     property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
     property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
+    property TipoUnidade: TUnidade read FTipoUnidade write FTipoUnidade;
   end;
 
  TDeducaoCollection = class(TObjectList)
@@ -514,6 +516,8 @@ type
     FRazaoSocial: String;
     FEndereco: TEndereco;
     FContato: TContato;
+    FAtualizaTomador: TnfseSimNao;
+    FTomadorExterior: TnfseSimNao;
   public
     constructor Create;
     destructor Destroy; override;
@@ -522,6 +526,8 @@ type
     property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
     property Endereco: TEndereco read FEndereco write FEndereco;
     property Contato: TContato read FContato write FContato;
+    property AtualizaTomador: TnfseSimNao read FAtualizaTomador write FAtualizaTomador;
+    property TomadorExterior: TnfseSimNao read FTomadorExterior write FTomadorExterior;
   end;
 
  TIdentificacaoIntermediarioServico = class(TObject)

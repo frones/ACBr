@@ -3343,7 +3343,7 @@ end;
 function TNFSeR.LerNFSe_IPM: Boolean;
 var
   I: Integer;
-  vOk: Boolean;
+  Ok: Boolean;
 begin
   Leitor.Grupo := Leitor.Arquivo;
   VersaoXML    := '1';
@@ -3427,12 +3427,13 @@ begin
       begin
         with NFSe.Servico.ItemServico.New do
         begin
-          NFSe.NaturezaOperacao               := StrToNaturezaOperacao( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'tributa_municipio_prestador' ), [ '1', '0' ] ) + 1 ) );
+          NFSe.NaturezaOperacao               := StrToNaturezaOperacao( Ok, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'tributa_municipio_prestador' ), [ '1', '0' ] ) + 1 ) );
 
           NFSe.Servico.CodigoMunicipio        := Leitor.rCampo( tcStr, 'codigo_local_prestacao_servico' );
           NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'situacao_tributaria');
           NFSe.Servico.ItemListaServico       := PadLeft( Leitor.rCampo( tcStr, 'codigo_item_lista_servico' ), 4, '0' );
 
+          TipoUnidade                         := StrToTUnidade(Ok, Leitor.rCampo( tcStr, 'unidade_codigo' ));
           Quantidade                          := Leitor.rCampo( tcDe3, 'unidade_quantidade' );
           ValorUnitario                       := Leitor.rCampo( tcDe2, 'unidade_valor_unitario' );
 
@@ -3448,7 +3449,7 @@ begin
           NFSe.Servico.Valores.BaseCalculo    := NFSe.Servico.Valores.BaseCalculo + BaseCalculo;
           NFSe.Servico.Valores.ValorIss       := NFSe.Servico.Valores.ValorIss + ValorIss;
 
-          NFSe.Servico.Valores.IssRetido      := StrToSituacaoTributaria( vOk, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'situacao_tributaria' ), [ '1', '0', '2' ] ) + 1 ) );
+          NFSe.Servico.Valores.IssRetido      := StrToSituacaoTributaria( Ok, IntToStr( AnsiIndexStr( Leitor.rCampo( tcStr, 'situacao_tributaria' ), [ '1', '0', '2' ] ) + 1 ) );
         end;
         Inc( I );
       end;

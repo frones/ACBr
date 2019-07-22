@@ -2307,7 +2307,7 @@ var
   ok: Boolean;
   i: Integer;
   codCNAE: Variant;
-  codLCServ: string;
+  LcodLCServ: string;
   ValorServicosTotal: Currency;
 
   function _StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
@@ -2351,7 +2351,7 @@ var
   end;
 
 begin
-  codLCServ := '';
+  LcodLCServ := '';
 
   ValorServicosTotal := 0;
   if (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') or
@@ -2377,6 +2377,8 @@ begin
           codCNAE := Leitor.rCampo(tcStr, 'CodigoCnae');
 
         CodLCServ := Leitor.rCampo(tcStr, 'ItemLei116');
+
+        LcodLCServ := CodLCServ;
 
 //        if codLCServ = '' then
 //          codLCServ := CodLCServ;
@@ -2552,7 +2554,7 @@ begin
 
     NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoAtividadeEconomica');
     NFSe.Servico.CodigoCnae := codCNAE;
-    NFSe.Servico.ItemListaServico := codLCServ;
+    NFSe.Servico.ItemListaServico := LcodLCServ;
 
     if TabServicosExt then
       NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
@@ -4109,7 +4111,6 @@ begin
     begin
       // Total máximo de 12 serviços na prefeitura
       I := 0;
-//      while (Leitor.rExtrai(3, 'Servicos', '', I+1) <> '') do
       while (Leitor.rExtrai(3, 'Servico', '', I+1) <> '') do
       begin
         NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico116'));

@@ -519,7 +519,7 @@ begin
 //              if NFSe.XML = '' then
 //                FNFSe.XML := SeparaDados(Leitor.Grupo, 'tbnfd', True);
 
-              if Provedor = proSMARAPD then
+              if Provedor in [ proSMARAPD, proAGILI ] then
                 FNFSe.XML := Leitor.Grupo;
 
               if (Provedor = proAssessorPublico) and (NFSe.XML = '') then

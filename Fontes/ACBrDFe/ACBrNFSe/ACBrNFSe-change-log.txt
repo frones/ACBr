@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2019
+-- pnfsNFSeR/pnfsLerListaNFSe  --
+[*] https://www.projetoacbr.com.br/forum/topic/52556-ajustes-provedor-agili/
+   Por: Marcio Lopes
+
 18/07/2019
 -- pnfsNFSeR  --
 [*] https://www.projetoacbr.com.br/forum/topic/52391-erro-de-invalid-pointer-operation-no-acbrnfse/?do=findComment&comment=345397

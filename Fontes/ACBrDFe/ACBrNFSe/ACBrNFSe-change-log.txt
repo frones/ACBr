@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2019
+-- Diversos  --
+[+] Implementação do provedor iiBrasil
+   Por: Italo Jurisato Junior
+
 22/07/2019
 -- pnfsNFSeR/pnfsNFSeW_IPM  --
 [*] Criado o campo TipoUnidade que pode receber os valores: tuHora e tuQtde

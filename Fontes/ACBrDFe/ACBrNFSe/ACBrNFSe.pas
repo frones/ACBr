@@ -135,6 +135,8 @@ type
     function GerarNomeArqSchema(const ALayOut: TLayOutNFSe;
       VersaoServico: Double): String;
 
+    function GerarIntegridade: string;
+
     property WebServices: TWebServices read FWebServices write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
     property Status: TStatusACBrNFSe read FStatus;
@@ -151,7 +153,7 @@ type
 implementation
 
 uses
-  strutils, dateutils;
+  strutils, dateutils, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$IFDEF CPU64}
@@ -518,6 +520,13 @@ begin
     end;
     SetStatus( stNFSeIdle );
   end;
+end;
+
+function TACBrNFSe.GerarIntegridade: string;
+begin
+  SSL.CarregarCertificadoSeNecessario;
+  Result := SSL.CalcHash(Configuracoes.Geral.Emitente.WebChaveAcesso,
+                         dgstSHA512, outBase64, True);
 end;
 
 function TACBrNFSe.ConsultarSituacao(const AProtocolo: String; const ANumLote: String): Boolean;

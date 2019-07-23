@@ -1881,6 +1881,9 @@ begin
                                     'xsi:schemaLocation="http://localhost:8080/WsNFe2/lote '+
                                     'http://localhost:8080/WsNFe2/xsd/ReqEnvioLoteRPS.xsd">';
 
+           proSaatri: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
+                                ' xmsns:xsd="http://www.w3.org/2001/XMLSchema">';
 
            proGoverna,
            proInfisc,
@@ -2393,9 +2396,15 @@ begin
     // Agili, Agiliv2, CTA, Governa, proEGoverneISS
     ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
     if (ChaveAcessoPrefeitura = '') and
-       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS, proGiap]) then
+       (Provedor in [proAgili, proAgiliv2, proCTA, proGoverna, proEgoverneISS,
+                     proGiap, proiiBrasilv2]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
+
+    // Necessário para o provedor iiBrasil
+    if Provedor = proiiBrasilv2 then
+      Integridade := TACBrNFSe(FPDFeOwner).GerarIntegridade;
+
   end;
 end;
 

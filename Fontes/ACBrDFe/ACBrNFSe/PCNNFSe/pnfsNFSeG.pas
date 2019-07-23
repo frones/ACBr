@@ -132,6 +132,9 @@ type
     FHashIdent: String;
     FIdCanc: String;
 
+    // Provedor iiBrasil
+    FIntegridade: String;
+
     procedure SetAtributos;
     function GetIdEntidadeEquiplano(const IBGE: Integer): String;
     procedure SetCNPJ(const Value: String);
@@ -238,6 +241,9 @@ type
 
     // Layout - EL
     property HashIdent: String read FHashIdent write FHashIdent;
+
+    // Provedor iiBrasil
+    property Integridade: String read FIntegridade write FIntegridade;
 
     property IdLote: String read FIdLote write FIdLote;
     property IdCanc: String read FIdCanc write FIdCanc;
@@ -1337,6 +1343,9 @@ begin
 
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupoNFSe('/Prestador');
+
+      if Provedor = proiiBrasilv2 then
+        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
     end;
   end;
 
@@ -1945,6 +1954,13 @@ begin
              // Nao Possui
            end;
 
+    proiiBrasilv2:
+      begin
+        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
+
+        Gerador.ArquivoFormatoXML := Notas + Gerador.ArquivoFormatoXML;
+      end;
+
     proISSDSF: begin
                  // Nao Possui
                end;
@@ -2019,7 +2035,7 @@ begin
                   proBetim, proBHISS, proDBSeller, proEquiplano, profintelISS,
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
                   proISSIntel, proISSNet, proLexsom, proNatal,
-                  proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
+                  proTinus, proProdemge, proPublica, proRecife, proRJ, //proSaatri,
                   proFreire, proSimplISS, proThema, proTiplan, proWebISS,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
                   proNFSEBrasil] then

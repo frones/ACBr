@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2019
+-- Diversos --
+[*] Finalizado a implementação do Evento Comprovante de Entrega e alterado
+    a condição para gerar o grupo <ICMSUFFim>.
+   Por: Italo Jurisato Junior
+
 18/07/2019
 -- ACBrCTeConhecimentos --
 [-] Correção na leitura do arquivo INI.

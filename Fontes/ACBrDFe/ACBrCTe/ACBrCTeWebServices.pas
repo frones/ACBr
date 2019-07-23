@@ -2784,6 +2784,26 @@ begin
               end;
             end;
           end;
+
+          teComprEntrega:
+          begin
+            SchemaEventoCTe := schevCECTe;
+            infEvento.detEvento.nProt     := FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.dhEntrega := FEvento.Evento[i].InfEvento.detEvento.dhEntrega;
+            infEvento.detEvento.nDoc      := FEvento.Evento[i].InfEvento.detEvento.nDoc;
+            infEvento.detEvento.xNome     := FEvento.Evento[i].InfEvento.detEvento.xNome;
+            infEvento.detEvento.latitude  := FEvento.Evento[i].InfEvento.detEvento.latitude;
+            infEvento.detEvento.longitude := FEvento.Evento[i].InfEvento.detEvento.longitude;
+
+            infEvento.detEvento.hashEntrega   := FEvento.Evento[i].InfEvento.detEvento.hashEntrega;
+            infEvento.detEvento.dhHashEntrega := FEvento.Evento[i].InfEvento.detEvento.dhHashEntrega;
+
+            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infEntrega.Count - 1 do
+            begin
+              with EventoCTe.Evento[i].InfEvento.detEvento.infEntrega.New do
+                chNFe := FEvento.Evento[i].InfEvento.detEvento.infEntrega[j].chNFe;
+            end;
+          end;
         end;
       end;
     end;
@@ -2859,6 +2879,13 @@ begin
           AXMLEvento := '<evGTV xmlns="' + ACBRCTE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evGTV>', '</evGTV>')) +
                         '</evGTV>';
+        end;
+
+      schevCECTe:
+        begin
+          AXMLEvento := '<evCECTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCECTe>', '</evCECTe>')) +
+                        '</evCECTe>';
         end;
     end;
 

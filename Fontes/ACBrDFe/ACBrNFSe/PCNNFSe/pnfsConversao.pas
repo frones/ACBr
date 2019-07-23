@@ -113,7 +113,8 @@ type
                     proIPM, proBelford, proISSJoinville, proAsten, proELv2,
                     proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart,
                     proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-					proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia);
+                    proGiap, proAssessorPublico, proSigIss, proElotech,
+                    proSilTecnologia, proiiBrasilv2);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -157,6 +158,8 @@ type
   TTributacao = ( ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
                   ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
                   ttTributavelFixo, ttTributavelSN, ttMEI );
+
+  TUnidade = ( tuHora, tuQtde );
 
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
@@ -270,6 +273,9 @@ function TributacaoToStr(const t: TTributacao): String;
 function StrToTributacao(out ok: boolean; const s: String): TTributacao;
 
 function RemoverAtributos(const AXML: String; AProvedor: TnfseProvedor): String;
+
+function TUnidadeToStr(const t: TUnidade): String;
+function StrToTUnidade(out ok: boolean; const s: String): TUnidade;
 
 implementation
 
@@ -516,7 +522,7 @@ begin
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
-		 'SigIss', 'Elotech', 'SilTecnologia'],
+         'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -534,7 +540,8 @@ begin
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-		 proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia]);
+         proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
+         proiiBrasilv2]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -556,7 +563,7 @@ begin
          'SH3', 'SIAPNet', 'IPM', 'Belford', 'ISSJoinville', 'Asten', 'ELv2',
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
-		 'SigIss', 'Elotech', 'SilTecnologia'],
+         'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -574,7 +581,8 @@ begin
          proSafeWeb, proSH3, proSIAPNet, proIPM, proBelford, proISSJoinville,
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-		 proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia]);
+         proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
+         proiiBrasilv2]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18448,7 +18456,8 @@ begin
     proActconv201, proActconv202, proVersaTecnologia, proSigep, proSafeWeb,
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp: Result := loABRASFv2;
+    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp,
+    proiiBrasilv2: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;
@@ -18639,6 +18648,20 @@ begin
   XML := StringReplace( AXML, ' xml:lang="pt-BR"', '', [rfReplaceAll] );
 
   result := XML;
+end;
+
+function TUnidadeToStr(const t: TUnidade): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['1', '2'],
+                           [tuHora, tuQtde]);
+end;
+
+function StrToTUnidade(out ok: boolean; const s: String): TUnidade;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['1', '2'],
+                           [tuHora, tuQtde]);
 end;
 
 end.

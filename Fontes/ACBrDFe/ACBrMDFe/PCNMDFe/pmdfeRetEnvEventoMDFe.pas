@@ -198,6 +198,23 @@ begin
            infEvento.detEvento.xJust      := Leitor.rCampo(tcStr, 'xJust');
            infEvento.detEvento.xNome      := Leitor.rCampo(tcStr, 'xNome');
            infEvento.detEvento.CPF        := Leitor.rCampo(tcStr, 'CPF');
+
+           infEvento.detEvento.cMunCarrega := Leitor.rCampo(tcInt, 'cMunCarrega');
+           infEvento.detEvento.xMunCarrega := Leitor.rCampo(tcStr, 'xMunCarrega');
+
+           // Carrega os dados da informação de Documentos
+           i := 0;
+           while Leitor.rExtrai(4, 'infDoc', '', i + 1) <> '' do
+           begin
+             with infEvento.detEvento.infDoc.New do
+             begin
+               cMunDescarga := Leitor.rCampo(tcInt, 'cMunDescarga');
+               xMunDescarga := Leitor.rCampo(tcStr, 'xMunDescarga');
+               chNFe        := Leitor.rCampo(tcStr, 'chNFe');
+             end;
+
+             inc(i);
+           end;
          end;
       end;
 

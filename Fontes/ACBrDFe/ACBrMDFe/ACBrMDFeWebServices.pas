@@ -812,9 +812,15 @@ begin
              ' excedido. Quantidade atual: ' + IntToStr(FManifestos.Count)));
 
     if FManifestos.Count > 0 then
+    begin
+      if not ValidarCodigoDFe(FManifestos.Items[0].MDFe.Ide.cMDF, FManifestos.Items[0].MDFe.Ide.nMDF) then
+        GerarException(ACBrStr('Valor de cMDF é inválido da Manifesto: ' +
+          IntToStr(FManifestos.Items[0].MDFe.Ide.nMDF)));
+
       FPDadosMsg := '<MDFe' +
         RetornarConteudoEntre(FManifestos.Items[0].XMLAssinado, '<MDFe', '</MDFe>') +
         '</MDFe>';
+    end;
 
     FMsgUnZip := FPDadosMsg;
 
@@ -825,8 +831,14 @@ begin
     vMDFe := '';
 
     for I := 0 to FManifestos.Count - 1 do
+    begin
+      if not ValidarCodigoDFe(FManifestos.Items[i].MDFe.Ide.cMDF, FManifestos.Items[i].MDFe.Ide.nMDF) then
+        GerarException(ACBrStr('Valor de cMDF é inválido do Manifesto: ' +
+          IntToStr(FManifestos.Items[i].MDFe.Ide.nMDF)));
+
       vMDFe := vMDFe + '<MDFe' + RetornarConteudoEntre(
         FManifestos.Items[I].XMLAssinado, '<MDFe', '</MDFe>') + '</MDFe>';
+    end;
 
     FPDadosMsg := '<enviMDFe xmlns="' + ACBRMDFE_NAMESPACE + '" versao="' +
       FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
@@ -2039,7 +2051,7 @@ end;
 procedure TMDFeEnvEvento.DefinirDadosMsg;
 var
   EventoMDFe: TEventoMDFe;
-  I, F: Integer;
+  I, J, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   FErroValidacao: String;
   EventoEhValido: Boolean;
@@ -2069,6 +2081,7 @@ begin
             infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
             infEvento.detEvento.xJust := FEvento.Evento[i].InfEvento.detEvento.xJust;
           end;
+
           teEncerramento:
           begin
             SchemaEventoMDFe := schevEncMDFe;
@@ -2077,11 +2090,30 @@ begin
             infEvento.detEvento.cUF   := FEvento.Evento[i].InfEvento.detEvento.cUF;
             infEvento.detEvento.cMun  := FEvento.Evento[i].InfEvento.detEvento.cMun;
           end;
+
           teInclusaoCondutor:
           begin
             SchemaEventoMDFe := schevIncCondutorMDFe;
             infEvento.detEvento.xNome := FEvento.Evento[i].InfEvento.detEvento.xNome;
             infEvento.detEvento.CPF   := FEvento.Evento[i].InfEvento.detEvento.CPF;
+          end;
+
+          teInclusaoDFe:
+          begin
+            SchemaEventoMDFe := schevInclusaoDFeMDFe;
+            infEvento.detEvento.nProt       := FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.cMunCarrega := FEvento.Evento[i].InfEvento.detEvento.cMunCarrega;
+            infEvento.detEvento.xMunCarrega := FEvento.Evento[i].InfEvento.detEvento.xMunCarrega;
+
+            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infDoc.Count - 1 do
+            begin
+              with EventoMDFe.Evento[i].InfEvento.detEvento.infDoc.New do
+              begin
+                cMunDescarga := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].cMunDescarga;
+                xMunDescarga := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].xMunDescarga;
+                chNFe        := FEvento.Evento[i].InfEvento.detEvento.infDoc[j].chNFe;
+              end;
+            end;
           end;
         end;
       end;
@@ -2136,6 +2168,13 @@ begin
           AXMLEvento := '<evIncCondutorMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evIncCondutorMDFe>', '</evIncCondutorMDFe>')) +
                         '</evIncCondutorMDFe>';
+        end;
+
+      schevInclusaoDFeMDFe:
+        begin
+          AXMLEvento := '<evIncDFeMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evIncDFeMDFe>', '</evIncDFeMDFe>')) +
+                        '</evIncDFeMDFe>';
         end;
     end;
 

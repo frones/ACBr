@@ -41,7 +41,7 @@ unit pmdfeEventoMDFe;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, Contnrs,
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
@@ -88,6 +88,28 @@ type
     property TipoEvento: String      read getTipoEvento;
   end;
 
+  TInfDocCollectionItem = class(TObject)
+  private
+    FcMunDescarga: Integer;
+    FxMunDescarga: String;
+    FchNFe: String;
+
+  public
+    property cMunDescarga: Integer read FcMunDescarga write FcMunDescarga;
+    property xMunDescarga: String  read FxMunDescarga write FxMunDescarga;
+    property chNFe: String         read FchNFe        write FchNFe;
+  end;
+
+  TInfDocCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TInfDocCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfDocCollectionItem);
+  public
+    function Add: TInfDocCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfDocCollectionItem;
+    property Items[Index: Integer]: TInfDocCollectionItem read GetItem write SetItem; default;
+  end;
+
   TDetEvento = class
   private
     FdescEvento: String;
@@ -98,7 +120,14 @@ type
     FxJust: String;    // Cancelamento
     FxNome: String;    // Inclusao de Condutor
     FCPF: String;      // Inclusao de Condutor
+    // Inclusao de DF-e
+    FcMunCarrega: Integer;
+    FxMunCarrega: String;
+    FinfDoc: TInfDocCollection;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property descEvento: String read FdescEvento write FdescEvento;
     property nProt: String      read FnProt      write FnProt;
     property dtEnc: TDateTime   read FdtEnc      write FdtEnc;
@@ -107,6 +136,10 @@ type
     property xJust: String      read FxJust      write FxJust;
     property xNome: String      read FxNome      write FxNome;
     property CPF: String        read FCPF        write FCPF;
+    // Inclusão de DF-e
+    property cMunCarrega: Integer      read FcMunCarrega write FcMunCarrega;
+    property xMunCarrega: String       read FxMunCarrega write FxMunCarrega;
+    property infDoc: TInfDocCollection read FinfDoc      write FinfDoc;
   end;
 
   { TRetInfEvento }
@@ -196,6 +229,7 @@ begin
     teRegistroPassagemBRId         : Desc := 'Registro de Passagem BRId';
     teEncerramento                 : Desc := 'Encerramento';
     teInclusaoCondutor             : Desc := 'Inclusao Condutor';
+    teInclusaoDFe                  : Desc := 'Inclusao DF-e';
     teRegistroCTe                  : Desc := 'CT-e Autorizado para NF-e';
     teRegistroPassagemNFeCancelado : Desc := 'Registro de Passagem para NF-e Cancelado';
     teRegistroPassagemNFeRFID      : Desc := 'Registro de Passagem para NF-e RFID';
@@ -239,6 +273,7 @@ begin
     teRegistroPassagemBRId     : Result := 'REGISTRO DE PASSAGEM BRId';
     teEncerramento             : Result := 'ENCERRAMENTO';
     teInclusaoCondutor         : Result := 'INCLUSAO CONDUTOR';
+    teInclusaoDFe              : Result := 'INCLUSAO DF-e';
     teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
     teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
     teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
@@ -253,6 +288,46 @@ begin
   else
     Result := 'Não Definido';
   end;
+end;
+
+{ TInfDocCollection }
+
+function TInfDocCollection.Add: TInfDocCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TInfDocCollection.GetItem(Index: Integer): TInfDocCollectionItem;
+begin
+  Result := TInfDocCollectionItem(inherited GetItem(Index));
+end;
+
+function TInfDocCollection.New: TInfDocCollectionItem;
+begin
+  Result := TInfDocCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TInfDocCollection.SetItem(Index: Integer;
+  Value: TInfDocCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TDetEvento }
+
+constructor TDetEvento.Create;
+begin
+  inherited Create;
+
+  FinfDoc  := TInfDocCollection.Create;
+end;
+
+destructor TDetEvento.Destroy;
+begin
+  FinfDoc.Free;
+
+  inherited;
 end;
 
 end.

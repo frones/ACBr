@@ -62,7 +62,7 @@ type
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
-                     schdistDFeInt, schconsMDFeNaoEnc);
+                     schdistDFeInt, schconsMDFeNaoEnc, schevInclusaoDFeMDFe);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,

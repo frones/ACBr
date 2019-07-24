@@ -124,7 +124,7 @@ end;
 function TEventoMDFe.GerarXML: Boolean;
 var
   sDoc: String;
-  Serie: Integer;
+  i, Serie: Integer;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoMDFe ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
@@ -185,6 +185,7 @@ begin
        Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 015, 255, 1, Evento.Items[0].InfEvento.detEvento.xJust);
        Gerador.wGrupo('/evCancMDFe');
      end;
+
    teEncerramento:
      begin
        Gerador.wGrupo('evEncMDFe');
@@ -195,6 +196,7 @@ begin
        Gerador.wCampo(tcInt, 'EP06', 'cMun      ', 07, 07, 1, Evento.Items[0].InfEvento.detEvento.cMun);
        Gerador.wGrupo('/evEncMDFe');
      end;
+
    teInclusaoCondutor:
      begin
        Gerador.wGrupo('evIncCondutorMDFe');
@@ -204,6 +206,26 @@ begin
        Gerador.wCampo(tcStr, 'EP05', 'CPF       ', 11, 11, 1, Evento.Items[0].InfEvento.detEvento.CPF);
        Gerador.wGrupo('/condutor');
        Gerador.wGrupo('/evIncCondutorMDFe');
+     end;
+
+   teInclusaoDFe:
+     begin
+       Gerador.wGrupo('evIncDFeMDFe');
+       Gerador.wCampo(tcStr, 'HP02', 'descEvento ', 05, 12, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'HP03', 'nProt      ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
+       Gerador.wCampo(tcInt, 'HP04', 'cMunCarrega', 07, 07, 1, Evento.Items[0].InfEvento.detEvento.cMunCarrega);
+       Gerador.wCampo(tcStr, 'HP05', 'xMunCarrega', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.xMunCarrega);
+
+       for i := 0 to Evento.Items[0].FInfEvento.detEvento.infDoc.Count - 1 do
+       begin
+         Gerador.wGrupo('infDoc');
+         Gerador.wCampo(tcInt, 'HP07', 'cMunDescarga', 07, 07, 1, Evento.Items[0].InfEvento.detEvento.infDoc.Items[i].cMunDescarga);
+         Gerador.wCampo(tcStr, 'HP08', 'xMunDescarga', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.infDoc.Items[i].xMunDescarga);
+         Gerador.wCampo(tcStr, 'HP09', 'chNFe       ', 44, 44, 1, Evento.Items[0].InfEvento.detEvento.infDoc.Items[i].chNFe);
+         Gerador.wGrupo('/infDoc');
+       end;
+
+       Gerador.wGrupo('/evIncDFeMDFe');
      end;
   end;
   Gerador.wGrupo('/detEvento');
@@ -242,6 +264,7 @@ end;
 function TEventoMDFe.LerXMLFromString(const AXML: String): Boolean;
 var
   RetEventoMDFe: TRetEventoMDFe;
+  i: Integer;
 begin
   RetEventoMDFe := TRetEventoMDFe.Create;
   try
@@ -268,29 +291,41 @@ begin
         infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
         infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
 
+        infEvento.detEvento.cMunCarrega := RetEventoMDFe.InfEvento.detEvento.cMunCarrega;
+        infEvento.detEvento.xMunCarrega := RetEventoMDFe.InfEvento.detEvento.xMunCarrega;
+
         signature.URI             := RetEventoMDFe.signature.URI;
         signature.DigestValue     := RetEventoMDFe.signature.DigestValue;
         signature.SignatureValue  := RetEventoMDFe.signature.SignatureValue;
         signature.X509Certificate := RetEventoMDFe.signature.X509Certificate;
 
         if RetEventoMDFe.retEvento.Count > 0 then
-         begin
-           FRetInfEvento.Id          := RetEventoMDFe.retEvento.Items[0].RetInfEvento.Id;
-           FRetInfEvento.tpAmb       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpAmb;
-           FRetInfEvento.verAplic    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.verAplic;
-           FRetInfEvento.cOrgao      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cOrgao;
-           FRetInfEvento.cStat       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cStat;
-           FRetInfEvento.xMotivo     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xMotivo;
-           FRetInfEvento.chMDFe      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.chMDFe;
-           FRetInfEvento.tpEvento    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpEvento;
-           FRetInfEvento.xEvento     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xEvento;
-           FRetInfEvento.nSeqEvento  := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nSeqEvento;
-           FRetInfEvento.CNPJDest    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.CNPJDest;
-           FRetInfEvento.emailDest   := RetEventoMDFe.retEvento.Items[0].RetInfEvento.emailDest;
-           FRetInfEvento.dhRegEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.dhRegEvento;
-           FRetInfEvento.nProt       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nProt;
-           FRetInfEvento.XML         := RetEventoMDFe.retEvento.Items[0].RetInfEvento.XML;
-         end;
+        begin
+          FRetInfEvento.Id          := RetEventoMDFe.retEvento.Items[0].RetInfEvento.Id;
+          FRetInfEvento.tpAmb       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpAmb;
+          FRetInfEvento.verAplic    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.verAplic;
+          FRetInfEvento.cOrgao      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cOrgao;
+          FRetInfEvento.cStat       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.cStat;
+          FRetInfEvento.xMotivo     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xMotivo;
+          FRetInfEvento.chMDFe      := RetEventoMDFe.retEvento.Items[0].RetInfEvento.chMDFe;
+          FRetInfEvento.tpEvento    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.tpEvento;
+          FRetInfEvento.xEvento     := RetEventoMDFe.retEvento.Items[0].RetInfEvento.xEvento;
+          FRetInfEvento.nSeqEvento  := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nSeqEvento;
+          FRetInfEvento.CNPJDest    := RetEventoMDFe.retEvento.Items[0].RetInfEvento.CNPJDest;
+          FRetInfEvento.emailDest   := RetEventoMDFe.retEvento.Items[0].RetInfEvento.emailDest;
+          FRetInfEvento.dhRegEvento := RetEventoMDFe.retEvento.Items[0].RetInfEvento.dhRegEvento;
+          FRetInfEvento.nProt       := RetEventoMDFe.retEvento.Items[0].RetInfEvento.nProt;
+          FRetInfEvento.XML         := RetEventoMDFe.retEvento.Items[0].RetInfEvento.XML;
+        end;
+
+        for i := 0 to RetEventoMDFe.InfEvento.detEvento.infDoc.Count -1 do
+        begin
+          infEvento.detEvento.infDoc.New;
+
+          infEvento.detEvento.infDoc[i].cMunDescarga := RetEventoMDFe.InfEvento.detEvento.infDoc[i].cMunDescarga;
+          infEvento.detEvento.infDoc[i].xMunDescarga := RetEventoMDFe.InfEvento.detEvento.infDoc[i].xMunDescarga;
+          infEvento.detEvento.infDoc[i].chNFe        := RetEventoMDFe.InfEvento.detEvento.infDoc[i].chNFe;
+        end;
       end;
   finally
      RetEventoMDFe.Free;
@@ -302,7 +337,8 @@ begin
   case tpEvento of
     teCancelamento:     Result := Evento.Items[0].InfEvento.chMDFe + '-can-eve.xml';
     teEncerramento:     Result := Evento.Items[0].InfEvento.chMDFe + '-ped-eve.xml';
-    teInclusaoCondutor: Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml';
+    teInclusaoCondutor,
+    teInclusaoDFe:      Result := Evento.Items[0].InfEvento.chMDFe + '-inc-eve.xml';
   else
     raise EventoException.Create('Obter nome do arquivo de Evento não Implementado!');
   end;
@@ -310,7 +346,7 @@ end;
 
 function TEventoMDFe.LerFromIni(const AIniString: String): Boolean;
 var
-  I: Integer;
+  I, J: Integer;
   sSecao, sFim: String;
   INIRec: TMemIniFile;
   Ok: Boolean;
@@ -348,6 +384,30 @@ begin
         InfEvento.detEvento.cMun  := INIRec.ReadInteger(sSecao, 'cMun', 0);
         infEvento.detEvento.xNome := INIRec.ReadString(sSecao, 'xNome', '');
         infEvento.detEvento.CPF   := INIRec.ReadString(sSecao, 'CPF', '');
+
+        infEvento.detEvento.cMunCarrega := INIRec.ReadInteger(sSecao, 'cMunCarrega', 0);
+        infEvento.detEvento.xMunCarrega := INIRec.ReadString(sSecao, 'xMunCarrega', '');
+
+        Self.Evento.Items[I-1].InfEvento.detEvento.infDoc.Clear;
+
+        J := 1;
+        while true do
+        begin
+          // J varia de 0000 até 2000
+          sSecao := 'infDoc' + IntToStrZero(J, 4);
+          sFim   := INIRec.ReadString(sSecao, 'chNFe', 'FIM');
+          if (sFim = 'FIM') or (Length(sFim) <= 0) then
+            break;
+
+          with Self.Evento.Items[I-1].InfEvento.detEvento.infDoc.New do
+          begin
+            cMunDescarga := INIRec.ReadInteger(sSecao, 'cMunDescarga', 0);
+            xMunDescarga := INIRec.ReadString(sSecao, 'xMunDescarga', '');
+            chNFe        := sFim;
+          end;
+
+          Inc(J);
+        end;
       end;
       Inc(I);
     end;

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2019
+-- ACBrMDFeWebServices --
+[*] Ajustes feito para que a validação do código que compõe a chave seja
+    realizado somente no envio e não na geração do XML.
+   Por: Italo Jurisato Junior
+-- Diversos --
+[+] Implementado o evento de Inclusão de DF-e no MDF-e com indicação de 
+    carregamento posterior.
+   Por: Italo Jurisato Junior
+
 18/07/2019
 -- ACBrMDFe --
 [-] https://www.projetoacbr.com.br/forum/topic/52494-482-%E2%80%93-par%C3%A2metro-sign-n%C3%A3o-informado-no-qr-code-para-emiss%C3%A3o-em-conting%C3%AAncia/?do=findComment&comment=345426

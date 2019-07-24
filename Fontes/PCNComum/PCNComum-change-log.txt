@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2019
+[+] pcnAuxiliar
+    Incluido a função para validar o código do documento que é usado na chave.
+    -- ValidarCodigoDFe --
+   Por: Italo Jurisato Junior
+
 14/06/2019
 [*] pcnConversao / pcnRetDistDFeInt
     Correção na conversão do tipo do evento lido do XML para o respectivo 

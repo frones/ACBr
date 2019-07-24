@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2019
+-- ACBrDFeUtil --
+[*] Removido da a função ValidarCodigoDFe bem como a sua chamada ao 
+    gerar a chave de acesso.
+  Por: Italo Jurisato Junior
+
 27/06/2019
 -- ACBrDFeConfiguracoes --
 [+] Implementado a classe que contem as propriedades de Download utilizadas

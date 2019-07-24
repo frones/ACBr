@@ -675,9 +675,15 @@ begin
              ' excedido. Quantidade atual: ' + IntToStr(FBilhetes.Count)));
 
   if FBilhetes.Count > 0 then
+  begin
+    if not ValidarCodigoDFe(FBilhetes.Items[0].BPe.Ide.cBP, FBilhetes.Items[0].BPe.Ide.nBP) then
+      GerarException(ACBrStr('Valor de cBP é inválido do Bilhete: ' +
+        IntToStr(FBilhetes.Items[0].BPe.Ide.nBP)));
+
     FPDadosMsg := '<BPe' +
        RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPe', '</BPe>') +
        '</BPe>';
+  end;
 
   FMsgUnZip := FPDadosMsg;
 

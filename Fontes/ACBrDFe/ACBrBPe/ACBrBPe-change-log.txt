@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2019
+-- ACBrBPeWebServices --
+[*] Ajustes feito para que a validação do código que compõe a chave seja
+    realizado somente no envio e não na gerão do XML.
+   Por: Italo Jurisato Junior
+
 12/07/2019
 -- Diversos --
 [*] Ajustes na leitura do grupo infFisco que pode ser retornado junto com as

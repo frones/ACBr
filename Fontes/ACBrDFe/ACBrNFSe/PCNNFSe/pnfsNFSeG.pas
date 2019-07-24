@@ -398,6 +398,7 @@ begin
     4120606: Result :=  '28'; // Prudentopolis/PR
     4122008: Result :=  '19'; // Rio Azul/PR
     4123501: Result :=  '54'; // Santa Helena/PR
+    4125209: Result := '163'; // São Jorge D Oeste/PR
     4126306: Result :=  '61'; // Senges/PR
     4127106: Result := '260'; // Telemaco Borba/PR
     4127700: Result := '136'; // Toledo/PR

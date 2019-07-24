@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2019
+-- pnfsNFSeR  --
+[+] Acrescentado a cidade:  São Jorge D Oeste
+   Por: Paulo C. Silvestrin
+
 23/07/2019
 -- Diversos  --
 [+] Implementação do provedor iiBrasil

@@ -1120,13 +1120,15 @@ begin
            ['DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1','0','','','','',''] ) ;
       end
      else
-      if Length(fsDocto) = 13 then
-      begin
-        Tamanho := 13 ;
-        xTP := 2   ;   yROT := 'E'   ;   yMD  := 11   ;   yTP  := 1 ;
-        vDigitos := VarArrayOf(
-          ['DVY','DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1','0','']);
-      end ;
+     begin
+       Tamanho  := 13;
+       xTP      := 2;
+       yROT     := 'E';
+       yMD      := 11;
+       yTP      := 1 ;
+       vDigitos := VarArrayOf(
+         ['DVY','DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1','0','']);
+     end ;
   end ;
 
   if fsComplemento = 'AL' then
@@ -1139,18 +1141,15 @@ begin
 
   if fsComplemento = 'AP' then
   begin
-     if Length(fsDocto) = 9 then
-      begin
-        Tamanho := 9 ;
-        xROT := 'CE' ;
-        vDigitos   := VarArrayOf(
-           ['DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'3','0','','','','',''] ) ;
+    Tamanho := 9 ;
+    xROT := 'CE' ;
+    vDigitos   := VarArrayOf(
+       ['DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'3','0','','','','',''] ) ;
 
-        if (fsDocto >= '030170010') and (fsDocto <= '030190229') then
-           FatorF := 1
-        else if fsDocto >= '030190230' then
-           xROT := 'E' ;
-      end ;
+    if (fsDocto >= '030170010') and (fsDocto <= '030190229') then
+       FatorF := 1
+    else if fsDocto >= '030190230' then
+       xROT := 'E' ;
   end ;
 
   if fsComplemento = 'AM' then
@@ -1204,15 +1203,12 @@ begin
 
   if fsComplemento = 'GO' then
   begin
-     if Length(fsDocto) = 9 then
-     begin
-        Tamanho  := 9 ;
-        vDigitos := VarArrayOf(
-           [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,1,5','1','','','','',''] ) ;
+    Tamanho  := 9 ;
+    vDigitos := VarArrayOf(
+       [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0,1,5','1','','','','',''] ) ;
 
-        if (fsDocto >= '101031050') and (fsDocto <= '101199979') then
-           FatorG := 1 ;
-     end ;
+    if (fsDocto >= '101031050') and (fsDocto <= '101199979') then
+       FatorG := 1 ;
   end ;
 
   if fsComplemento = 'MA' then
@@ -1272,22 +1268,25 @@ begin
 
   if fsComplemento = 'PE' then
   begin
-     if Length(fsDocto) = 14 then
-     begin
-        Tamanho := 14;
-        xTP := 7  ;   FatorF := 1;
-        vDigitos := VarArrayOf(
-          ['DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1-9','8','1']);
-     end
-     else
-      if Length(fsDocto) = 9 then
-      begin
-        Tamanho := 9;
-        xTP  :=  14   ;  xMD := 11;
-        yROT := 'E'  ;  yMD := 11  ;   yTP := 7;
-        vDigitos := VarArrayOf(
+    if Length(fsDocto) = 14 then
+    begin
+      //Antigo CACEPE
+      Tamanho := 14;
+      xTP     := 7;
+      FatorF  := 1;
+      vDigitos := VarArrayOf(
+        ['DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1-9','8','1']);
+    end
+    else
+    begin
+      Tamanho := 9;
+      xTP     := 14;
+      yROT    := 'E';
+      yMD     := 11;
+      yTP     := 7;
+      vDigitos := VarArrayOf(
         [ 'DVY','DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'','','','',''] );
-      end;
+    end;
   end;
 
   if fsComplemento = 'PI' then
@@ -1307,23 +1306,21 @@ begin
 
   if fsComplemento = 'RN' then
   begin
-      if Length(fsDocto) = 9 then
-      begin
-         Tamanho := 9 ;
-         xROT := 'BD' ;
-         vDigitos := VarArrayOf(
-            [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0','2','','','','',''] ) ;
-      end
-     else
-       if Length(fsDocto) = 10 then
-       begin
-         Tamanho := 10 ;
-         xROT := 'BD' ;
-         xTP := 11 ;
-         vDigitos := VarArrayOf(
-            [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0','2','','','',''] ) ;
-       end;
-
+    if Length(fsDocto) = 9 then
+    begin
+      Tamanho := 9 ;
+      xROT := 'BD' ;
+      vDigitos := VarArrayOf(
+         [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0','2','','','','',''] ) ;
+    end
+    else
+    begin
+      Tamanho  := 10 ;
+      xROT     := 'BD' ;
+      xTP      := 11 ;
+      vDigitos := VarArrayOf(
+         [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'0','2','','','',''] ) ;
+    end;
   end ;
 
   if fsComplemento = 'RS' then
@@ -1342,9 +1339,8 @@ begin
         xTP := 4 ;
         vDigitos := VarArrayOf(
           [ 'DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'1-9','','','','',''] ) ;
-     end ;
-
-     if Length(fsDocto) = 14 then
+     end 
+     else
      begin
         Tamanho  := 14 ;
         vDigitos := VarArrayOf(
@@ -1411,7 +1407,7 @@ begin
 
   OK := (Tamanho > 0) and (Length(fsDocto) = Tamanho) ;
   if not OK then
-     fsMsgErro := Format('Tamanho Inválido, esperado %d caracteres, foram digitados somente %d caracteres, verifique', [Tamanho, Length(fsDocto)]) ;
+     fsMsgErro := Format('Tamanho inválido: Esperado %d caracteres, mas foram digitados somente %d caracteres.', [Tamanho, Length(fsDocto)]) ;
 
   { Verificando os digitos nas posicoes são permitidos }
   fsDocto := PadLeft(fsDocto,14) ;

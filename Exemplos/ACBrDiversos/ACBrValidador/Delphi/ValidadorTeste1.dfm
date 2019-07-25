@@ -86,7 +86,9 @@ object frValidador: TfrValidador
       'docRenavam'
       'docEmail'
       'docCNH'
-      'docPrefixoGTIN')
+      'docPrefixoGTIN'
+      'docCAEPF'
+      'docPlacaMercosul')
   end
   object mMsgErro: TMemo
     Left = 8

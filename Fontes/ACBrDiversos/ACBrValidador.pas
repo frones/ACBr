@@ -74,7 +74,7 @@ const
 type
   TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS,
                         docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
-                        docEmail, docCNH, docPrefixoGTIN, docCAEPF ) ;
+                        docEmail, docCNH, docPrefixoGTIN, docCAEPF, docPlacaMercosul ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -147,6 +147,7 @@ type
     Procedure ValidarEmail;
     Procedure ValidarCNH ;
     Procedure ValidarPrefixoGTIN ;
+    Procedure ValidarPlaca ;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -194,6 +195,7 @@ function ValidarCEP(const ACEP, AUF: String): String; overload;
 function ValidarCEP(const ACEP: Integer; const AUF: String): String; overload;
 function ValidarCNH(const Documento: String) : String ;
 function ValidarUF(const AUF: String): String;
+function ValidarPlaca(const APlaca: String): String;
 
 Function FormatarFone( const AValue : String; const DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -325,6 +327,11 @@ begin
       Result := ValidarCNPJ( Documento ) ;
 end;
 
+function ValidarPlaca(const APlaca: String): String;
+begin
+  Result := ValidarDocumento( docPlacaMercosul, APlaca );
+end;
+
 { Retorna apenas números, e apenas se o conteúdo for CPF ou CNPJ, caso contrário
     retorna vazio }
 function OnlyCNPJorCPF(const Documento: String): String;
@@ -451,7 +458,7 @@ end;
 function FormatarPlaca(const AValue: string): string;
 Var S : String ;
 begin
- S := Trim(AValue);
+ S := UpperCase( Trim(AValue) );
  Result := Copy(S, 1, 3) + '-' + Copy(S, 4, 4);
 end;
 
@@ -714,6 +721,7 @@ begin
           docEmail         : NomeDocto := 'E-Mail';
           docCNH           : NomeDocto := 'Carteira Nacional de Habilitação' ;
           docPrefixoGTIN   : NomeDocto := 'Prefixo do Código GTIN' ;
+          docPlacaMercosul         : NomeDocto := 'Placa' ;
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -737,6 +745,7 @@ begin
        docEmail         : ValidarEmail ;
        docCNH           : ValidarCNH ;
        docPrefixoGTIN   : ValidarPrefixoGTIN ;
+       docPlacaMercosul         : ValidarPlaca ;
      else
       raise Exception.Create('Tipo de documento informado inválido!');
      end;
@@ -767,6 +776,7 @@ begin
     docPIS      : Result := FormatarPIS( Result ) ;
     docCEP      : Result := FormatarCEP( Result ) ;
     docSuframa  : Result := FormatarSUFRAMA( Result ) ;
+    docPlacaMercosul    : Result := FormatarPlaca( Result ) ;
   end;
 end;
 
@@ -1553,6 +1563,18 @@ begin
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+procedure TACBrValidador.ValidarPlaca;
+begin
+  // RegExp = [A-Z]{2,3}[0-9]{4}|[A-Z]{3,4}[0-9]{3}|[A-Z0-9]{7}
+
+  if (Length( fsDocto ) <> 7) or ( not StrIsAlphaNum( fsDocto ) ) then
+  begin
+     fsMsgErro := 'Placa deve ter 7 dígitos. (Somente letras e números)' ;
+     exit;
+  end ;
+
 end;
 
 procedure TACBrValidador.ValidarPrefixoGTIN;

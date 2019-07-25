@@ -86,6 +86,8 @@ object frValidador: TfrValidador
       'docEmail'
       'docCNH'
       'docPrefixoGTIN'
+      'docCAEPF'
+      'docPlacaMercosul'
     )
     OnChange = cbTipoDoctoChange
     Style = csDropDownList

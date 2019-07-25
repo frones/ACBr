@@ -221,6 +221,22 @@ type
     procedure ValidarListaEmailsMisturandoDelimitadores;
   end;
 
+
+  { TTestCaseACBrValidadorPlaca }
+
+  TTestCaseACBrValidadorPlaca = class(TTestCase)
+  private
+    fACBrValidador : TACBrValidador;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure FormatarPlaca;
+    procedure PlacasValidas;
+    procedure PlacasInvalidas;
+  end;
+
+
 implementation
 
 { TTestCaseACBrValidadorCEP }
@@ -1293,6 +1309,50 @@ begin
   CheckEquals('', ValidarEmail('pessoa.cadastrada.com.nome.de.email.muito.longo@minhaempresa.com.br'));
 end;
 
+{ TTestCaseACBrValidadorPlaca }
+
+procedure TTestCaseACBrValidadorPlaca.SetUp;
+begin
+  fACBrValidador := TACBrValidador.Create(nil);
+  fACBrValidador.TipoDocto := docPlaca;
+end;
+
+procedure TTestCaseACBrValidadorPlaca.TearDown;
+begin
+  inherited;
+  FreeAndNil(fACBrValidador);
+end;
+
+procedure TTestCaseACBrValidadorPlaca.FormatarPlaca;
+begin
+   CheckEquals('AAA-9999', ACBrValidador.FormatarPlaca('AAA9999'));
+   CheckEquals('AAA-9999', ACBrValidador.FormatarPlaca('aaa9999'));
+   CheckEquals('A99-A999', ACBrValidador.FormatarPlaca('a99a999'));
+   CheckEquals('A9A-A9A9', ACBrValidador.FormatarPlaca('A9AA9A9'));
+   CheckEquals('999-9999', ACBrValidador.FormatarPlaca('9999999'));
+   CheckEquals('AAA-AAAA', ACBrValidador.FormatarPlaca('AAAAAAA'));
+   CheckEquals('AAA-AAAA', ACBrValidador.FormatarPlaca('aaaaaaa'));
+end;
+
+procedure TTestCaseACBrValidadorPlaca.PlacasInvalidas;
+begin
+   CheckNotEquals('', ValidarPlaca('AA~9999'));
+   CheckNotEquals('', ValidarPlaca('^AA9999'));
+   CheckNotEquals('', ValidarPlaca('$%$$##$'));
+   CheckNotEquals('', ValidarPlaca('A'));
+   CheckNotEquals('', ValidarPlaca(''));
+   CheckNotEquals('', ValidarPlaca('AAAAAA'));
+   CheckNotEquals('', ValidarPlaca('999999'));
+end;
+
+procedure TTestCaseACBrValidadorPlaca.PlacasValidas;
+begin
+   CheckEquals('', ValidarPlaca('AAA9999'));
+   CheckEquals('', ValidarPlaca('A99A999'));
+   CheckEquals('', ValidarPlaca('AAAAAAA'));
+   CheckEquals('', ValidarPlaca('9999999'));
+end;
+
 initialization
 
   RegisterTest(TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
@@ -1302,6 +1362,7 @@ initialization
   RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
+  RegisterTest(TTestCaseACBrValidadorPlaca{$ifndef FPC}.Suite{$endif});
 
 end.
 

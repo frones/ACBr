@@ -271,7 +271,7 @@ begin
   Gerador.wCampo(tcInt, '#010', 'nMDF    ', 01, 09, 1, MDFe.ide.nMDF, DSC_NMDF);
   Gerador.wCampo(tcStr, '#011', 'cMDF    ', 08, 08, 1, IntToStrZero(ExtrairCodigoChaveAcesso(MDFe.infMDFe.ID), 8), DSC_CMDF);
   Gerador.wCampo(tcInt, '#012', 'cDV     ', 01, 01, 1, MDFe.Ide.cDV, DSC_CDV);
-  Gerador.wCampo(tcStr, '#013', 'modal   ', 02, 02, 1, ModalToStr(MDFe.Ide.modal), DSC_MODAL);
+  Gerador.wCampo(tcStr, '#013', 'modal   ', 01, 01, 1, ModalToStr(MDFe.Ide.modal), DSC_MODAL);
 
   if VersaoDF = ve100 then
     Gerador.wCampo(tcDatHor, '#014', 'dhEmi', 19, 19, 1, MDFe.ide.dhEmi, DSC_DEMI)

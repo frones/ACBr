@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2019
+-- pmdfeMDFeW --
+[*] Correção nos tamanhos mínimo e máximo na geração da tag "modal".
+  Por: BigWings
+
 24/07/2019
 -- ACBrMDFeWebServices --
 [*] Ajustes feito para que a validação do código que compõe a chave seja

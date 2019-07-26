@@ -104,6 +104,8 @@ type
   TpcteTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechada, tcGraneleira, tcPortaContainer, tcSider);
 
   TPosRecibo = (prCabecalho, prRodape, prEsquerda);
+  TPosReciboLayout = (prlPadrao, prlBarra);
+
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
   TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao,

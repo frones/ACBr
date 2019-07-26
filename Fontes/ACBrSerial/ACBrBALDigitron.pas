@@ -77,7 +77,7 @@ var
   wResposta: AnsiString;
   wDecimais: Integer;
 begin
-  Result := 0;
+  Result := -9;
 
   if (aResposta = EmptyStr) then
     Exit;
@@ -112,7 +112,7 @@ begin
       'N': Result := -2;   { Peso Negativo }
       'S': Result := -10;  { Sobrecarga de Peso }
     else
-      Result := 0;
+      Result := -9;
     end;
   end;
 end;

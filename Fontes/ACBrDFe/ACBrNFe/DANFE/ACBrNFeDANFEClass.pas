@@ -85,6 +85,7 @@ type
     FImprimeValor: TImprimirUnidQtdeValor;
     FImprimeDetalhamentoEspecifico: Boolean;
     FPosCanhoto: TPosRecibo;
+    FPosCanhotoLayout: TPosReciboLayout;
     FExibeResumoCanhoto: Boolean;
     FTextoResumoCanhoto: String;
     FExibeCampoFatura: Boolean;
@@ -122,6 +123,7 @@ type
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual default False;
     property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico default True;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
+    property PosCanhotoLayout: TPosReciboLayout read FPosCanhotoLayout write FPosCanhotoLayout default prlPadrao;
     property ExibeResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto default True;
     property TextoResumoCanhoto: String read FTextoResumoCanhoto write FTextoResumoCanhoto;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura default True;
@@ -187,6 +189,7 @@ begin
   FImprimeValor := iuComercial;
   FImprimeDetalhamentoEspecifico := True;
   FPosCanhoto := prCabecalho;
+  FPosCanhotoLayout := prlPadrao;
   FExibeResumoCanhoto := True;
   FTextoResumoCanhoto := '';
   FImprimeDescPorPercentual := False;

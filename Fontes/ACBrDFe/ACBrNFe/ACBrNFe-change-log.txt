@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+26/07/2019
+-- ACBrNFeDANFEClass --
+[+] Adicionada propriedade PosCanhotoLayout, para definir o tipo de canhoto de nfe a ser impresso.
+     (prlPadrao, prlBarra)
+  Por: Henrique Leonardo ( HLeoRj )
+
+
 24/07/2019
 -- ACBrNFeWebServices --
 [*] Ajustes feito para que a validação do código que compõe a chave seja

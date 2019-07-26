@@ -3,7 +3,7 @@ object frmPrincipal: TfrmPrincipal
   Top = 0
   BorderStyle = bsToolWindow
   Caption = 'Demo DANF-e em Fast Report'
-  ClientHeight = 485
+  ClientHeight = 499
   ClientWidth = 358
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -26,7 +26,7 @@ object frmPrincipal: TfrmPrincipal
   end
   object pnlbotoes: TPanel
     Left = 0
-    Top = 393
+    Top = 407
     Width = 358
     Height = 92
     Align = alBottom
@@ -79,7 +79,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 149
     Width = 358
-    Height = 244
+    Height = 258
     ActivePage = TabArquivos
     Align = alClient
     TabOrder = 1
@@ -89,7 +89,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 0
         Width = 350
-        Height = 216
+        Height = 230
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
@@ -99,11 +99,18 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Customiza'#231#227'o'
       ImageIndex = 1
       object Label9: TLabel
-        Left = 137
+        Left = 113
         Top = 150
         Width = 62
         Height = 13
         Caption = 'ImprimeValor'
+      end
+      object Label10: TLabel
+        Left = 113
+        Top = 177
+        Width = 91
+        Height = 13
+        Caption = 'PosCanhotoLayout'
       end
       object RbCanhoto: TRadioGroup
         Left = 0
@@ -124,7 +131,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 46
         Width = 105
-        Height = 170
+        Height = 184
         Align = alLeft
         Caption = 'Margem'
         TabOrder = 1
@@ -190,7 +197,7 @@ object frmPrincipal: TfrmPrincipal
         end
       end
       object rbTarjaNfeCancelada: TCheckBox
-        Left = 137
+        Left = 113
         Top = 104
         Width = 164
         Height = 17
@@ -199,20 +206,21 @@ object frmPrincipal: TfrmPrincipal
       end
       object CBImprimirUndQtVlComercial: TComboBox
         AlignWithMargins = True
-        Left = 137
-        Top = 169
+        Left = 205
+        Top = 146
         Width = 141
         Height = 21
         AutoCloseUp = True
+        ItemIndex = 0
         TabOrder = 6
-        Text = 'iuComercialETributavel'
+        Text = 'iuComercial'
         Items.Strings = (
           'iuComercial'
           'iuTributavel'
           'iuComercialETributavel')
       end
       object rbImprimirDadosDocReferenciados: TCheckBox
-        Left = 137
+        Left = 113
         Top = 81
         Width = 190
         Height = 17
@@ -220,7 +228,7 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 3
       end
       object ckImprimeCodigoEan: TCheckBox
-        Left = 137
+        Left = 113
         Top = 58
         Width = 190
         Height = 17
@@ -228,7 +236,7 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 2
       end
       object ckImprimeItens: TCheckBox
-        Left = 137
+        Left = 113
         Top = 127
         Width = 97
         Height = 17
@@ -236,12 +244,25 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 5
       end
       object ChkQuebraLinhaEmDetalhamentos: TCheckBox
-        Left = 137
-        Top = 196
+        Left = 113
+        Top = 200
         Width = 184
         Height = 17
         Caption = 'Quebra Linha Em Detalhamentos'
         TabOrder = 7
+      end
+      object cbPosCanhotoLayout: TComboBox
+        AlignWithMargins = True
+        Left = 205
+        Top = 173
+        Width = 141
+        Height = 21
+        AutoCloseUp = True
+        TabOrder = 8
+        Text = 'prlPadrao'
+        Items.Strings = (
+          'prlPadrao'
+          'prlBarra')
       end
     end
     object Decimais: TTabSheet
@@ -264,7 +285,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 0
         Top = 49
         Width = 350
-        Height = 167
+        Height = 181
         ActivePage = TabtdetInteger
         Align = alClient
         TabOrder = 1
@@ -402,45 +423,6 @@ object frmPrincipal: TfrmPrincipal
       'NFCe (ACBrNFeDANFCEFR)')
     TabOrder = 2
     OnClick = rgModeloClick
-  end
-  object ACBrNFe1: TACBrNFe
-    Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
-    Configuracoes.Geral.SSLCryptLib = cryCapicom
-    Configuracoes.Geral.SSLHttpLib = httpIndy
-    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
-    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.VersaoQRCode = veqr000
-    Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.RespTec.IdCSRT = 0
-    DANFE = ACBrNFeDANFEFR1
-    Left = 221
-    Top = 30
-  end
-  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
-    MostraSetup = True
-    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
-    MargemInferior = 0.800000000000000000
-    MargemSuperior = 0.800000000000000000
-    MargemEsquerda = 0.600000000000000000
-    MargemDireita = 0.510000000000000000
-    CasasDecimais.Formato = tdetInteger
-    CasasDecimais.qCom = 2
-    CasasDecimais.vUnCom = 2
-    CasasDecimais.MaskqCom = ',0.00'
-    CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrNFe = ACBrNFe1
-    TipoDANFE = tiSemGeracao
-    ExibeTotalTributosItem = True
-    EspessuraBorda = 1
-    ExpandirDadosAdicionaisAuto = False
-    IncorporarBackgroundPdf = True
-    IncorporarFontesPdf = True
-    BorderIcon = [biSystemMenu, biMinimize, biMaximize]
-    Left = 48
-    Top = 22
   end
   object OpenDialog1: TOpenDialog
     Filter = 'xml|*.xml'
@@ -4517,6 +4499,29 @@ object frmPrincipal: TfrmPrincipal
       end
     end
   end
+  object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
+    MostraSetup = True
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrNFe = ACBrNFe1
+    TipoDANFE = tiSemGeracao
+    ExibeTotalTributosItem = True
+    EspessuraBorda = 1
+    ExpandirDadosAdicionaisAuto = False
+    IncorporarBackgroundPdf = True
+    IncorporarFontesPdf = True
+    BorderIcon = [biSystemMenu, biMinimize, biMaximize]
+    Left = 48
+    Top = 22
+  end
   object ACBrNFeDANFCEFR1: TACBrNFeDANFCEFR
     MostraSetup = True
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -4532,5 +4537,21 @@ object frmPrincipal: TfrmPrincipal
     BorderIcon = [biSystemMenu, biMinimize, biMaximize]
     Left = 52
     Top = 76
+  end
+  object ACBrNFe1: TACBrNFe
+    Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpIndy
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
+    DANFE = ACBrNFeDANFEFR1
+    Left = 221
+    Top = 30
   end
 end

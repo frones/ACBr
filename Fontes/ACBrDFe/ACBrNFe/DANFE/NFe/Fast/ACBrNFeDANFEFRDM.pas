@@ -477,6 +477,7 @@ begin
         FieldDefs.Add('ImprimeDescAcrescItem', ftInteger);
         FieldDefs.Add('nProt', ftString, 30);
         FieldDefs.Add('dhRecbto', ftDateTime);
+        FieldDefs.Add('poscanhotolayout', ftString, 1);
         CreateDataSet;
      end;
    end;
@@ -1554,6 +1555,7 @@ begin
     Append;
 
     FieldByName('poscanhoto').AsString            := '';
+    FieldByName('poscanhotolayout').AsString         := '';
     FieldByName('ResumoCanhoto').AsString         := '';
     FieldByName('Mensagem0').AsString             := '';
     FieldByName('Contingencia_ID').AsString       := '';
@@ -1561,7 +1563,10 @@ begin
                                                      'www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora';
 
     if DANFEClassOwner is TACBrNFeDANFEClass then
-      FieldByName('poscanhoto').AsString := IntToStr( Ord(TACBrNFeDANFEClass(DANFEClassOwner).PosCanhoto))
+    begin
+      FieldByName('poscanhoto').AsString     := IntToStr( Ord(TACBrNFeDANFEClass(DANFEClassOwner).PosCanhoto));
+      FieldByName('poscanhotolayout').AsString  := IntToStr( Ord(TACBrNFeDANFEClass(DANFEClassOwner).PosCanhotoLayout));
+    end
     else if DANFEClassOwner is TACBrNFeDANFCEClass then
     begin
       if TACBrNFeDANFCEClass(DANFEClassOwner).ViaConsumidor then

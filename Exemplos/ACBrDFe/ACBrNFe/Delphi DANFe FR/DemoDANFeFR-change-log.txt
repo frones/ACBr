@@ -53,6 +53,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2019
+-- DemoDANFeFR --- 
+[+] Teste de Canhoto com chave de acesso e Canhoto padrão
+     Demonstra a utilização da Propriedade PosCanhotoLayout
+      Por : Henrique Leonardo
 
 31/05/2019
 -- DemoDANFeFR --- 

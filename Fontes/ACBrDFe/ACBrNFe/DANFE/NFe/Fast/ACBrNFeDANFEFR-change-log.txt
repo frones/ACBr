@@ -46,6 +46,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/07/2019
+-- ACBrNFeDANFEFRDM --
+[+] Implantação de tratamento para propriedade PosCanhotoLayout.
+        por: Henrique Leonardo (hleorj)
+
 18/07/2019
 -- ACBrNFeDANFEFRDM --
 [*] Remoção de campos desnecessários. Os devidos campos são tratados no detalhamento de medicamentos.

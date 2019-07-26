@@ -1,22 +1,22 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 234
   Top = 0
-  Width = 893
-  Height = 788
   Caption = 'frlDANFeRLRetrato'
   Font.Height = -18
   PixelsPerInch = 96
   TextHeight = 24
   inherited RLNFe: TRLReport
+    AlignWithMargins = True
     Top = 0
-    Background.Arrange = baDistributed
-    Background.Height = 96
-    Background.Width = 175
-    Font.Height = -20
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
+    AdjustableMargins = True
+    Background.Arrange = baDistributed
+    Background.Height = 96
+    Background.Width = 175
+    Font.Height = -20
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'
@@ -33,7 +33,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 26
-      Top = 1247
+      Top = 1335
       Width = 742
       Height = 41
       AutoSize = True
@@ -105,7 +105,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbCabecalhoItens: TRLBand
       Left = 26
-      Top = 1166
+      Top = 1254
       Width = 742
       Height = 31
       AutoSize = True
@@ -658,7 +658,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbEmitente: TRLBand
       Left = 26
-      Top = 99
+      Top = 187
       Width = 742
       Height = 182
       AutoExpand = False
@@ -856,10 +856,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 5
         Width = 132
         Height = 40
-        Alignment = taCenter
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        BarcodeType = bcCode128C
       end
       object rllChaveAcesso: TRLLabel
         Tag = 10
@@ -1161,10 +1161,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Top = 81
         Width = 144
         Height = 33
-        Alignment = taCenter
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        Alignment = taCenter
+        BarcodeType = bcCode128C
       end
       object rllPageNumber: TRLSystemInfo
         Left = 365
@@ -1208,7 +1208,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbDadosAdicionais: TRLBand
       Left = 26
-      Top = 1340
+      Top = 1428
       Width = 742
       Height = 169
       AlignToBottom = True
@@ -1250,7 +1250,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 124
+        Width = 126
         Height = 7
         Caption = 'INFORMA'#199#213'ES COMPLEMENTARES'
         Font.Charset = DEFAULT_CHARSET
@@ -1339,7 +1339,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbDestinatario: TRLBand
       Left = 26
-      Top = 281
+      Top = 369
       Width = 742
       Height = 108
       BandType = btTitle
@@ -1797,7 +1797,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbFatura: TRLBand
       Left = 26
-      Top = 659
+      Top = 747
       Width = 742
       Height = 252
       BandType = btTitle
@@ -4691,7 +4691,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbImposto: TRLBand
       Left = 26
-      Top = 911
+      Top = 999
       Width = 742
       Height = 79
       BandType = btTitle
@@ -5189,7 +5189,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbTransp: TRLBand
       Left = 26
-      Top = 990
+      Top = 1078
       Width = 742
       Height = 110
       BandType = btTitle
@@ -5793,7 +5793,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbISSQN: TRLBand
       Left = 26
-      Top = 1288
+      Top = 1376
       Width = 742
       Height = 52
       BandType = btFooter
@@ -5823,7 +5823,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 3
         Top = 23
-        Width = 81
+        Width = 82
         Height = 7
         Caption = 'INSCRI'#199#195'O MUNICIPAL'
         Font.Charset = DEFAULT_CHARSET
@@ -5969,7 +5969,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbAvisoContingencia: TRLBand
       Left = 26
-      Top = 1130
+      Top = 1218
       Width = 742
       Height = 36
       BandType = btColumnHeader
@@ -6008,58 +6008,63 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Transparent = False
       end
     end
-    object rlbReciboHeader: TRLBand
+    object rlbReciboHeaderBarra: TRLBand
       Left = 26
-      Top = 26
+      Top = 83
       Width = 742
-      Height = 57
-      AutoSize = True
+      Height = 88
+      AutoExpand = False
       BandType = btHeader
-      BeforePrint = rlbReciboHeaderBeforePrint
-      object rliCanhoto: TRLDraw
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      BeforePrint = rlbReciboHeaderBarraBeforePrint
+      object rlBarraiCanhoto: TRLDraw
+        AlignWithMargins = True
         Left = 0
         Top = 0
-        Width = 740
-        Height = 57
+        Width = 742
+        Height = 88
+        Align = faClient
       end
-      object rliCanhoto1: TRLDraw
-        Left = 0
-        Top = 25
-        Width = 603
-        Height = 1
-        DrawKind = dkLine
-        HoldStyle = hsHorizontally
-      end
-      object rliCanhoto2: TRLDraw
-        Left = 102
-        Top = 25
-        Width = 1
-        Height = 32
-        Angle = 90.000000000000000000
-        DrawKind = dkLine
-        HoldStyle = hsVertically
-      end
-      object rllRecebemosDe: TRLLabel
-        Tag = 1
-        Left = 4
-        Top = 4
-        Width = 350
-        Height = 7
-        Caption = 
-          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
-          ' INDICADO AO LADO'
+      object RLBarraRecebemosDe: TRLMemo
+        Tag = 20
+        Left = 3
+        Top = 1
+        Width = 417
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -7
-        Font.Name = 'Arial'
+        Font.Height = -9
+        Font.Name = 'Courier New'
         Font.Style = []
+        IntegralHeight = True
         ParentFont = False
       end
-      object rllDataRecebimento: TRLLabel
+      object RLBarraResumo: TRLMemo
+        Tag = 20
+        Left = 3
+        Top = 10
+        Width = 417
+        Height = 12
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Courier New'
+        Font.Style = []
+        IntegralHeight = True
+        ParentFont = False
+      end
+      object rlBarraDataRecebimento: TRLLabel
         Tag = 10
         Left = 3
-        Top = 28
-        Width = 88
+        Top = 32
+        Width = 87
         Height = 7
         Caption = 'DATA DE RECEBIMENTO'
         Font.Charset = DEFAULT_CHARSET
@@ -6069,10 +6074,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
-      object rllIdentificacao: TRLLabel
+      object rlBarraIdentificacao: TRLLabel
         Tag = 10
-        Left = 105
-        Top = 28
+        Left = 109
+        Top = 31
         Width = 172
         Height = 7
         Caption = 'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR'
@@ -6083,21 +6088,35 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
-      object rliCanhoto3: TRLDraw
-        Left = 602
-        Top = 0
-        Width = 1
-        Height = 57
-        Angle = 90.000000000000000000
-        DrawKind = dkLine
-        HoldStyle = hsVertically
+      object rlBarramDadosAdicionaisAuxiliar: TRLMemo
+        Left = 116
+        Top = 45
+        Width = 301
+        Height = 12
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Courier New'
+        Font.Style = []
+        IntegralHeight = True
+        ParentFont = False
+        Visible = False
       end
-      object rllNFe: TRLLabel
-        Left = 608
-        Top = 2
-        Width = 128
+      object RLBarraBarcode: TRLBarcode
+        Left = 540
+        Top = 31
+        Width = 122
+        Height = 38
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+        BarcodeType = bcCode128C
+      end
+      object rllBarraNFe: TRLLabel
+        Left = 458
+        Top = 3
+        Width = 45
         Height = 16
-        Alignment = taCenter
         AutoSize = False
         Caption = 'NF-e'
         Font.Charset = DEFAULT_CHARSET
@@ -6107,9 +6126,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
-      object rllNumNF0: TRLLabel
-        Left = 625
-        Top = 20
+      object rlBarraNumNF0: TRLLabel
+        Left = 529
+        Top = 3
         Width = 94
         Height = 16
         Alignment = taCenter
@@ -6121,9 +6140,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object rllSERIE0: TRLLabel
+      object rlBarraSERIE0: TRLLabel
         Left = 639
-        Top = 37
+        Top = 3
         Width = 68
         Height = 16
         Alignment = taCenter
@@ -6135,58 +6154,42 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
-      object rllResumo: TRLLabel
-        Left = 60
-        Top = 14
-        Width = 486
-        Height = 10
-        Alignment = taCenter
-        Caption = 
-          'DATA DE EMISS'#195'O: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXX' +
-          'XXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
-    end
-    object rlbDivisaoRecibo: TRLBand
-      Left = 26
-      Top = 83
-      Width = 742
-      Height = 16
-      BandType = btHeader
-      BeforePrint = rlbDivisaoReciboBeforePrint
-      object rliDivisao: TRLDraw
+      object rlBarraiCanhoto1: TRLDraw
         Left = 0
-        Top = 5
-        Width = 741
-        Height = 8
+        Top = 25
+        Width = 451
+        Height = 1
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        Borders.Color = clWhite
         DrawKind = dkLine
         HoldStyle = hsHorizontally
-        Pen.Style = psDot
       end
-    end
-    object rlmDadosAdicionaisAuxiliar: TRLMemo
-      Left = 136
-      Top = 64
-      Width = 457
-      Height = 12
-      Behavior = [beSiteExpander]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -9
-      Font.Name = 'Courier New'
-      Font.Style = []
-      IntegralHeight = True
-      ParentFont = False
-      Visible = False
+      object rlBarraiCanhoto2: TRLDraw
+        Left = 102
+        Top = 25
+        Width = 1
+        Height = 45
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rlBarraiCanhoto3: TRLDraw
+        Left = 451
+        Top = 0
+        Width = 1
+        Height = 70
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
     end
     object rlbFaturaReal: TRLBand
       Left = 26
-      Top = 613
+      Top = 701
       Width = 742
       Height = 46
       BandType = btTitle
@@ -6396,7 +6399,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbCanceladaDenegada: TRLBand
       Left = 26
-      Top = 1100
+      Top = 1188
       Width = 742
       Height = 30
       BandType = btColumnHeader
@@ -6420,7 +6423,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object subItens: TRLSubDetail
       Left = 26
-      Top = 1197
+      Top = 1285
       Width = 742
       Height = 50
       Borders.Sides = sdCustom
@@ -6924,7 +6927,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbEntrega: TRLBand
       Left = 26
-      Top = 501
+      Top = 589
       Width = 742
       Height = 112
       BandType = btTitle
@@ -7271,7 +7274,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     end
     object rlbRetirada: TRLBand
       Left = 26
-      Top = 389
+      Top = 477
       Width = 742
       Height = 112
       BandType = btTitle
@@ -7614,6 +7617,181 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+      end
+    end
+    object rlbReciboHeader: TRLBand
+      Left = 26
+      Top = 26
+      Width = 742
+      Height = 57
+      AutoSize = True
+      BandType = btHeader
+      object rliCanhoto: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 740
+        Height = 57
+      end
+      object rliCanhoto1: TRLDraw
+        Left = 0
+        Top = 25
+        Width = 603
+        Height = 1
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+      end
+      object rliCanhoto2: TRLDraw
+        Left = 102
+        Top = 25
+        Width = 1
+        Height = 32
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rllRecebemosDe: TRLLabel
+        Tag = 1
+        Left = 4
+        Top = 4
+        Width = 350
+        Height = 7
+        Caption = 
+          'RECEBEMOS DE %s OS PRODUTOS / SERVI'#199'OS CONSTANTES DA NOTA FISCAL' +
+          ' INDICADO AO LADO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllDataRecebimento: TRLLabel
+        Tag = 10
+        Left = 3
+        Top = 28
+        Width = 88
+        Height = 7
+        Caption = 'DATA DE RECEBIMENTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllIdentificacao: TRLLabel
+        Tag = 10
+        Left = 105
+        Top = 28
+        Width = 172
+        Height = 7
+        Caption = 'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rliCanhoto3: TRLDraw
+        Left = 602
+        Top = 0
+        Width = 1
+        Height = 57
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rllNFe: TRLLabel
+        Left = 608
+        Top = 2
+        Width = 128
+        Height = 16
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'NF-e'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllNumNF0: TRLLabel
+        Left = 625
+        Top = 20
+        Width = 94
+        Height = 16
+        Alignment = taCenter
+        Caption = 'N'#186' 000.000.000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object rllSERIE0: TRLLabel
+        Left = 639
+        Top = 37
+        Width = 68
+        Height = 16
+        Alignment = taCenter
+        Caption = 'S'#201'RIE 000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllResumo: TRLLabel
+        Left = 60
+        Top = 14
+        Width = 486
+        Height = 10
+        Alignment = taCenter
+        Caption = 
+          'DATA DE EMISS'#195'O: 00/00/0000  -  DEST./REM.: XXXXXXXXXXXXXXXXXXXX' +
+          'XXXXXXXXXXXXXXXXXXXXX  -  VALOR TOTAL: R$ 0.000,00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rlmDadosAdicionaisAuxiliar: TRLMemo
+        Left = 136
+        Top = 36
+        Width = 457
+        Height = 12
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Courier New'
+        Font.Style = []
+        IntegralHeight = True
+        ParentFont = False
+        Visible = False
+      end
+    end
+    object rlbDivisaoRecibo: TRLBand
+      Left = 26
+      Top = 171
+      Width = 742
+      Height = 16
+      BandType = btHeader
+      BeforePrint = rlbDivisaoReciboBeforePrint
+      object rliDivisao: TRLDraw
+        Left = 0
+        Top = 6
+        Width = 741
+        Height = 8
+        DrawKind = dkLine
+        HoldStyle = hsHorizontally
+        Pen.Style = psDot
       end
     end
   end

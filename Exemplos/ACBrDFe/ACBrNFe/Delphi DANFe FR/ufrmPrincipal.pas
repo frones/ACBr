@@ -46,8 +46,6 @@ uses
 
 type
   TfrmPrincipal = class(TForm)
-    ACBrNFe1: TACBrNFe;
-    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     imgLogo: TImage;
     pnlbotoes: TPanel;
     btnImprimir: TButton;
@@ -88,11 +86,15 @@ type
     Label9: TLabel;
     CBImprimirUndQtVlComercial: TComboBox;
     rbImprimirDadosDocReferenciados: TCheckBox;
-    ACBrNFeDANFCEFR1: TACBrNFeDANFCEFR;
     rgModelo: TRadioGroup;
     ckImprimeCodigoEan: TCheckBox;
     ckImprimeItens: TCheckBox;
     ChkQuebraLinhaEmDetalhamentos: TCheckBox;
+    Label10: TLabel;
+    cbPosCanhotoLayout: TComboBox;
+    ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
+    ACBrNFeDANFCEFR1: TACBrNFeDANFCEFR;
+    ACBrNFe1: TACBrNFe;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -265,6 +267,7 @@ begin
 
     ChkQuebraLinhaEmDetalhamentos.Checked := QuebraLinhaEmDetalhamentos;
 
+    cbPosCanhotoLayout.ItemIndex  := Integer(  PosCanhotoLayout );
   end;
 
   ckImprimeItens.Checked := ACBrNFeDANFCEFR1.ImprimeItens;
@@ -288,6 +291,9 @@ begin
   ACBrNFeDANFEFR1.ExibeDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
   // Mostra Quebra Linha Em Detalhamentos
   ACBrNFeDANFEFR1.QuebraLinhaEmDetalhamentos := ChkQuebraLinhaEmDetalhamentos.Checked;
+    // Mostra Layout do Canhoto
+  ACBrNFeDANFEFR1.PosCanhotoLayout := TPosReciboLayout(cbPosCanhotoLayout.ItemIndex);
+
 end;
 
 procedure TfrmPrincipal.ConfiguraNFCe;

@@ -456,7 +456,7 @@ begin
     teautorizadoRedespIntermed    : Desc := 'Autorizado Redespacho Intermediario';
     teAutorizadoSubcontratacao    : Desc := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Desc := 'Autorizado Servico Vinculado Multimodal';
-    teComprEntrega                : Desc := 'Comprovante de Entrega do CT-e';
+    teComprEntrega                : Desc := 'Comprovante de Entrega Eletronico do CT-e';
   else
     Result := '';
   end;
@@ -512,7 +512,7 @@ begin
     teautorizadoRedespIntermed    : Result := 'Autorizado Redespacho Intermediario';
     teAutorizadoSubcontratacao    : Result := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Result := 'Autorizado Servico Vinculado Multimodal';
-    teComprEntrega                : Result := 'Comprovante de Entrega do CT-e';
+    teComprEntrega                : Result := 'Comprovante de Entrega Eletronico do CT-e';
   else
     Result := 'Não Definido';
   end;

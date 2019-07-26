@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/52250-evento-comprovante-de-entrega-ct-e/?do=findComment&comment=346376
+   Por: Márcio B.
+
 24/07/2019
 -- ACBrCTeWebServices --
 [*] Ajustes feito para que a validação do código que compõe a chave seja

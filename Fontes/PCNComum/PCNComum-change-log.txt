@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2019
+[-] pcnConversao 
+    Estava faltando os códigos dos eventos: Comprovante de Entrega, 
+    Cancelamento do Comprovante de Entrega e Inclusão de DFe.
+   Por: Italo Jurisato Junior
+
 24/07/2019
 [+] pcnAuxiliar
     Incluido a função para validar o código do documento que é usado na chave.

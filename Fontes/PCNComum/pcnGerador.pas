@@ -623,7 +623,7 @@ begin
   if (ocorrencias = 1) and (EstaVazio) and (TamMin > 0) then
     alerta := ERR_MSG_VAZIO;
 
-  if (length(ConteudoProcessado) < TamMin) and (Alerta = '') and (length(ConteudoProcessado) > 1) then
+  if (length(ConteudoProcessado) < TamMin) and (Alerta = '') and (length(ConteudoProcessado) >= 1) then
     Alerta := ERR_MSG_MENOR;
 
   if length(ConteudoProcessado) > TamMax then

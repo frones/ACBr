@@ -44,6 +44,10 @@ Símbolo : Significado
     Acrescentado Enumerador TPosReciboLayout , para controlar o tipo de canhoto.
     Por: Henrique Leonardo ( HLeoRj )
 
+pcnGerador
+[-] Correção na validação do tamanho mínimo.
+  Por: BigWings
+
 26/07/2019
 [-] pcnConversao 
     Estava faltando os códigos dos eventos: Comprovante de Entrega, 

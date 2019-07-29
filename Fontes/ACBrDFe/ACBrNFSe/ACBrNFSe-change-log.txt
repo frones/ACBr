@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2019
+-- ACBrNFSe  --
+[*] Alterado o metodo GerarIntegridade para não precisar do 
+    Certificado Digital.
+   Por: Italo Jurisato Junior
+
 26/07/2019
 -- Diversos  --
 [*] Ajustes para diversos provedores funcionarem.

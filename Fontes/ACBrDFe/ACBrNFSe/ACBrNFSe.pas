@@ -524,9 +524,9 @@ end;
 
 function TACBrNFSe.GerarIntegridade: string;
 begin
-  SSL.CarregarCertificadoSeNecessario;
+//  SSL.CarregarCertificadoSeNecessario;
   Result := SSL.CalcHash(Configuracoes.Geral.Emitente.WebChaveAcesso,
-                         dgstSHA512, outBase64, True);
+                         dgstSHA512, outBase64, False);
 end;
 
 function TACBrNFSe.ConsultarSituacao(const AProtocolo: String; const ANumLote: String): Boolean;

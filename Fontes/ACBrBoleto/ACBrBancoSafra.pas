@@ -45,7 +45,7 @@ unit ACBrBancoSafra;
 
 interface
 
-uses Classes, SysUtils, StrUtils, ACBrBoleto;
+uses Classes, SysUtils, StrUtils, ACBrBoleto, DateUtils, Math;
 
 type
 
@@ -54,6 +54,15 @@ type
   private
   protected
     FNumeroRemessa: Integer;
+    FSequencia : Integer;
+    FQuantidadeCobrancaSimples,
+    FQuantidadeCobrancaVinculada,
+    FQuantidadeCobrancaCaucionada,
+    FQuantidadeCobrancaDescontada : Integer;
+    FValorCobrancaSimples,
+    FValorCobrancaVinculada,
+    FValorCobrancaCaucionada,
+    FValorCobrancaDescontada : Currency;
   public
     constructor Create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo): string; override;
@@ -77,6 +86,12 @@ type
       CodMotivo: integer): string; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
+
+    function GerarRegistroHeader240(NumeroRemessa: Integer): string; override;
+    function GerarRegistroTrailler240(ARemessa: TStringList): string; override;
+    function GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): string; override;
+    procedure LerRetorno240(ARetorno: TStringList); override;
+
   end;
 
 implementation
@@ -95,7 +110,7 @@ begin
   fpDigito                := 7;
   fpNome                  := 'Banco Safra';
   fpNumero                := 422;
-  fpTamanhoAgencia        := 4;
+  fpTamanhoAgencia        := 5;
   fpTamanhoConta          := 8;
   fpTamanhoCarteira       := 1;
   fpTamanhoMaximoNossoNum := 9;
@@ -285,6 +300,89 @@ begin
   end;
 end;
 
+function TACBrBancoSafra.GerarRegistroHeader240(NumeroRemessa: Integer): string;
+var
+  wLinha,
+  wLinha2: String;
+  dataCredito : String;
+begin
+  FSequencia := 0;
+  FQuantidadeCobrancaSimples := 0;
+  FQuantidadeCobrancaVinculada := 0;
+  FQuantidadeCobrancaCaucionada := 0;
+  FQuantidadeCobrancaDescontada := 0;
+  FValorCobrancaSimples := 0;
+  FValorCobrancaVinculada := 0;
+  FValorCobrancaCaucionada := 0;
+  FValorCobrancaDescontada := 0;
+  FNumeroRemessa := NumeroRemessa;
+
+  if ACBrBanco.ACBrBoleto.DataCreditoLanc = 0 then
+    dataCredito := '00000000'
+  else
+    dataCredito := FormatDateTime('ddmmyyyy', ACBrBanco.ACBrBoleto.DataCreditoLanc);
+
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    { Lote 0000 }
+    wLinha := IntToStrZero(ACBrBanco.Numero, 3)           + // 001-003 / Código do Banco na Compensação
+              '0000'                                      + // 004-007 / Lote de Serviço
+              '0'                                         + // 008-008 / Tipo de Registro
+              Space(9)                                    + // 009-017 / Campo sem Preenchimento
+              IfThen(TipoInscricao = pFisica, '1', '2')   + // 018-018 / Tipo de Inscrição da Empresa
+              PadLeft(Trim(OnlyNumber(CNPJCPF)), 14, '0') + // 019-032 / Número de Inscrição da Empresa
+              PadLeft(CodigoCedente, 20, '0')             + // 033-052 / Código do Convênio no Banco
+              PadLeft(Agencia, 5, '0')                    + // 053-057 / Agência Mantenedora da Conta
+              PadLeft(AgenciaDigito, 1)                   + // 058-058 / Dígito Verificador da Agência
+              PadLeft(Conta, 12, '0')                     + // 059-070 / Número da Conta Corrente
+              PadLeft(ContaDigito, 1)                     + // 071-071 / Dígito Verificador da Conta
+              ' '                                         + // 072-072 / Dígito Verificador da Ag/Conta
+              PadRight(Nome, 30)                          + // 073-102 / Nome da Empresa
+              PadRight('BANCO SAFRA S/A', 30)             + // 103-132 / Nome do Banco
+              Space(10)                                   + // 133-142 / Campo sem Preenchimento
+              '1'                                         + // 143-143 / Código Remessa/Retorno
+              FormatDateTime('ddmmyyyy', Now)             + // 144-151 / Data de Geração do Arquivo
+              FormatDateTime('hhnnss', Now)               + // 152-157 / Hora e Geração do Arquivo
+              IntToStrZero(NumeroRemessa, 6)              + // 158-163 / Número Sequencial do Arquivo
+              '087'                                       + // 164-166 / Nº da Versão do Layout do Arquivo
+              '00000'                                     + // 167-171 / Densidade de Gravação do Arquivo
+              Space(20)                                   + // 172-191 / Para uso Reservado do Banco
+              Space(20)                                   + // 192-211 / Para uso Reservado da Empresa
+              Space(29)                                   ; // 212-240 / Campo sem preenchimento
+
+    { Lote 0001 }
+    wLinha2 := IntToStrZero(ACBrBanco.Numero, 3)                                + // 001-003 / Código do Banco na Compensação
+               '0001'                                                           + // 004-007 / Lote de Serviço
+               '1'                                                              + // 008-008 / Tipo de Registro
+               'R'                                                              + // 009-009 / Tipo de Operação
+               '01'                                                             + // 010-011 / Tipo de Serviço
+               Space(2)                                                         + // 012-013 / Campo sem Preenchimento
+               '045'                                                            + // 014-016 / Nº da versão do layout do Lote
+               ' '                                                              + // 017-017 / Campo sem preenchimento
+               IfThen(TipoInscricao = pFisica, '1', '2')                        + // 018-018 / Tipo de Inscrição da Empresa
+               PadLeft(Trim(OnlyNumber(CNPJCPF)), 15, '0')                      + // 019-033 / Número de Inscrição da Empresa
+               PadLeft(CodigoCedente, 20, '0')                                  + // 034-053 / Código do Convênio no Banco
+               PadLeft(Agencia, 5, '0')                                         + // 054-058 / Agência Mantenedora da Conta
+               PadLeft(AgenciaDigito, 1)                                        + // 059-059 / Dígito Verificador da Agência
+               PadLeft(Conta, 12, '0')                                          + // 060-071 / Número da Conta Corrente
+               PadLeft(ContaDigito, 1)                                          + // 072-072 / Dígito Verificador da Conta
+               ' '                                                              + // 073-073 / Dígito Verificador da Ag/Conta
+               PadRight(Nome, 30)                                               + // 074-103 / Nome da Empresa
+               Space(40)                                                        + // 104-143 / Mensagem 1
+               Space(40)                                                        + // 144-183 / Mensagem 2
+               PadLeft(IntToStr(NumeroRemessa), 8, '0')                         + // 184-191 / Nº temessa
+               FormatDateTime('ddmmyyyy', Now)                                  + // 192-199 / Data de geração do arquivo
+               dataCredito                                                      + // 200-207 / Data do Crédito
+               Space(33)                                                        ; // 208-240 / Reservado (uso Banco)
+
+    Result := UpperCase(
+                wLinha +
+                #13#10 +
+                wLinha2
+              );
+  end;
+end;
+
 procedure TACBrBancoSafra.GerarRegistroHeader400(NumeroRemessa: integer;
   ARemessa: TStringList);
 var wLinha: String;
@@ -315,6 +413,42 @@ begin
 
 end;
 
+function TACBrBancoSafra.GerarRegistroTrailler240(
+  ARemessa: TStringList): string;
+var
+  wLinha,
+  wLinha2: String;
+begin
+  wLinha := IntToStrZero(ACBrBanco.Numero, 3)                       + // 001-003 / Código do Banco na compensação
+            '0001'                                                  + // 004-007 / Numero do lote remessa
+            '5'                                                     + // 008-008 / Tipo de registro
+            Space(9)                                                + // 009-017 / Reservado (uso Banco)
+            IntToStrZero(FSequencia + 2, 6)                         + // 018-023 / Quantidade de registros do lote
+            IntToStrZero(FQuantidadeCobrancaSimples, 6)             + // 024-029 / Quantidade de Títulos em Cobrança Simples
+            IntToStrZero(round(FValorCobrancaSimples * 100), 17)    + // 030-046 / Valor Total dos Títulos em Cobrança Simples
+            IntToStrZero(FQuantidadeCobrancaVinculada, 6)           + // 047-052 / Quantidade de Títulos em Cobrança Vinculada
+            IntToStrZero(round(FValorCobrancaVinculada * 100), 17)  + // 053-069 / Valor Total dos Títulos em Cobrança Vinculada
+            IntToStrZero(FQuantidadeCobrancaCaucionada, 6)          + // 070-075 / Quantidade de Títulos em Cobrança Caucionada
+            IntToStrZero(round(FValorCobrancaCaucionada * 100), 17) + // 076-092 / Valor Total dos Títulos em Cobrança Caucionada
+            IntToStrZero(FQuantidadeCobrancaDescontada, 6)          + // 093-098 / Quantidade de Títulos em Cobrança Descontada
+            IntToStrZero(round(FValorCobrancaDescontada * 100), 17) + // 099-115 / Valor Total dos Títulos em Cobrança Descontada
+            Space(8)                                                + // 116-123 / Número de Aviso do Lançamento
+            Space(117)                                              ; // 124-240 / Campo sem Preenchimento
+
+  wLinha2 := IntToStrZero(ACBrBanco.Numero, 3)   + // 001-003 / Código do Banco na compensação
+             '9999'                              + // 004-007 / Numero do lote remessa
+             '9'                                 + // 008-008 / Tipo de registro
+             space(9)                            + // 009-017 / Reservado (uso Banco)
+             '000001'                            + // 018-023 / Quantidade de lotes do arquivo
+             IntToStrZero(FSequencia + 4, 6) + // 024-029 / Quantidade de registros do arquivo
+             '000000'                            + // 030-035 / Quantidade de Contas p/ Conc. (Lotes)
+             Space(205)                          ; // 036-240 / Reservado (uso Banco)
+
+  Result:= wLinha +
+           #13#10 +
+           wLinha2;
+end;
+
 procedure TACBrBancoSafra.GerarRegistroTrailler400(ARemessa: TStringList);
 var
   wLinha: String;
@@ -327,7 +461,390 @@ begin
   IntToStrZero(ARemessa.Count + 1, 6);          // Número Sequencial do Registro do Arquivo
 
   ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+end;
 
+function TACBrBancoSafra.GerarRegistroTransacao240(
+  ACBrTitulo: TACBrTitulo): string;
+var
+  segmentoP,
+  segmentoQ,
+  segmentoR : string;
+  sCodMovimento,
+  sTipoInscricao,
+  aTipoInscricao,
+  sEndereco,
+  sEspecie,
+  sTipoCobranca,
+  sTipoCarteira,
+  sTipoDocto,
+  STipoJuros,
+  sDataMoraJuros,
+  sTipoDesconto,
+  sDataDesconto,
+  sDiasProtesto,
+  sDiasBaixaDevol : String;
+  ACodProtesto: Char;
+  function MontarInstrucoes1: string;
+  begin
+    with ACBrTitulo do
+    begin
+      if Mensagem.Count = 0 then
+      begin
+        Result := PadRight('', 80, ' '); // 2 registros
+        Exit;
+      end;
+
+      Result := '';
+      if Mensagem.Count >= 1 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[0], 40, ' '), 1, 40);
+      end;
+
+      if Mensagem.Count >= 2 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[1], 40, ' '), 1, 40)
+      end
+      else
+      begin
+        if (Result <> EmptyStr) then
+          Result := Result + PadRight('', 40, ' ')  // 1 registro
+        else
+          Result := Result + PadRight('', 80, ' '); // 2 registros
+        Exit;
+      end;
+    end;
+  end;
+
+  function MontarInstrucoes2: string;
+  begin
+    with ACBrTitulo do
+    begin
+      if (Mensagem.Count <= 2) then
+      begin
+        // Somente duas linhas, foi montado o MonarInstrucoes1
+        Result := PadRight('', 200, ' ');
+        Exit;
+      end;
+
+      Result := '';
+      if Mensagem.Count >= 3 then
+      begin
+        Result := Copy(PadRight(Mensagem[2], 40, ' '), 1, 40);
+      end;
+
+      if Mensagem.Count >= 4 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[3], 40, ' '), 1, 40)
+      end;
+
+      if Mensagem.Count >= 5 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[4], 40, ' '), 1, 40)
+      end;
+
+      if Mensagem.Count >= 6 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[5], 40, ' '), 1, 40)
+      end;
+
+      if Mensagem.Count >= 7 then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[6], 40, ' '), 1, 40)
+      end;
+
+      // Acertar a quantidade de caracteres
+      Result := PadRight(Result, 200);
+    end;
+  end;
+begin
+
+  segmentoP := '';
+  segmentoQ := '';
+  segmentoR := '';
+
+  with ACBrTitulo do
+  begin
+    case OcorrenciaOriginal.Tipo of
+       toRemessaBaixar                        : sCodMovimento := '02'; {Pedido de Baixa}
+       toRemessaConcederAbatimento            : sCodMovimento := '04'; {Concessão de Abatimento}
+       toRemessaCancelarAbatimento            : sCodMovimento := '05'; {Cancelamento de Abatimento concedido}
+       toRemessaAlterarVencimento             : sCodMovimento := '06'; {Alteração de vencimento}
+       toRemessaAlterarControleParticipante   : sCodMovimento := '07'; {Alteração Número Controle Cedente}
+       toRemessaAlterarNumeroControle         : sCodMovimento := '08'; {Alteração de seu número}
+       toRemessaProtestar                     : sCodMovimento := '09'; {Pedido de protesto}
+       toRemessaCancelarInstrucaoProtesto     : sCodMovimento := '18'; {Sustar protesto e manter na carteira}
+       toRemessaConcederDesconto              : sCodMovimento := '10'; {Concessão de Desconto}
+       toRemessaCancelarDesconto              : sCodMovimento := '11'; {Cancelamento de Desconto}
+       toRemessaAlterarOutrosDados            : sCodMovimento := '31'; {Alteração de outros dados}
+       toRemessaNaoProtestar                  : sCodMovimento := '98'; {Não Protestar (Antes de iniciar o ciclo de protesto )}
+    else
+       sCodMovimento := '01';                                          {Remessa}
+    end;
+
+    case Sacado.Pessoa of
+       pFisica  : sTipoInscricao := '1';
+       pJuridica: sTipoInscricao := '2';
+       pOutras  : sTipoInscricao := '9';
+    end;
+
+    if Sacado.SacadoAvalista.CNPJCPF <> '' then
+     begin
+      case Sacado.SacadoAvalista.Pessoa of
+        pFisica  : aTipoInscricao := '1';
+        pJuridica: aTipoInscricao := '2';
+        pOutras  : aTipoInscricao := '9';
+      end;
+     end
+    else
+      aTipoInscricao:= '0';
+
+    sEndereco := PadRight(Sacado.Logradouro + ' ' +
+                      Sacado.Numero + ' ' +
+                      Sacado.Complemento , 40, ' ');
+
+    if Trim(EspecieDoc) = 'DM' then      {DM - DUPLICATA MERCANTIL}
+      sEspecie := '02'
+    else if Trim(EspecieDoc) = 'DS' then {DS - DUPLICATA DE SERVICO}
+      sEspecie := '04'
+    else if Trim(EspecieDoc) = 'NP' then {NP - NOTA PROMISSORIA}
+      sEspecie := '12'
+    else if Trim(EspecieDoc) = 'NR' then {NR - NOTA PROMISSORIA RURAL}
+      sEspecie := '13'
+    else if Trim(EspecieDoc) = 'RC' then {RC - RECIBO}
+      sEspecie := '17'
+    else if Trim(EspecieDoc) = 'AP' then {AP – APOLICE DE SEGURO}
+      sEspecie := '20'
+    else if Trim(EspecieDoc) = 'CH' then {CH - CHEQUE}
+      sEspecie := '97'
+    else if Trim(EspecieDoc) = 'ND' then {ND - NOTA PROMISSORIA DIRETA}
+      sEspecie := '98'
+    else
+    begin
+      if not MatchText(EspecieDoc, ['02', '04', '12', '13', '17', '20', '97', '98']) then
+        raise Exception.Create('Espécie de documento informada incorretamente!');
+
+      sEspecie := EspecieDoc;
+    end;
+
+    case ACBrBoleto.Cedente.CaracTitulo of
+      tcSimples     :
+      begin
+        sTipoCobranca  := '1'; {Cobrança Simples (Sem Registro e Eletrônica com Registro)}
+        Inc(FQuantidadeCobrancaSimples);
+        FValorCobrancaSimples := FValorCobrancaSimples + ValorDocumento;
+      end;
+      tcCaucionada  :
+      begin
+        sTipoCobranca  := '3'; {Cobrança Caucionada (Eletrônica com Registro e Convencional com Registro)}
+        Inc(FQuantidadeCobrancaCaucionada);
+        FValorCobrancaCaucionada := FValorCobrancaCaucionada + ValorDocumento;
+      end;
+      tcDescontada  :
+      begin
+        sTipoCobranca  := '4'; {Cobrança Descontada (Eletrônica com Registro)}
+        Inc(FQuantidadeCobrancaDescontada);
+        FValorCobrancaDescontada := FValorCobrancaDescontada + ValorDocumento;
+      end;
+      tcVinculada   :
+      begin
+        sTipoCobranca  := '5'; {Cobrança Simples (Rápida com Registro)}
+        Inc(FQuantidadeCobrancaVinculada);
+        FValorCobrancaVinculada := FValorCobrancaVinculada + ValorDocumento;
+      end;
+      { TODO :
+          6 = Cobrança Caucionada (Rápida com Registro)
+          8 = Cobranca Cessao (Eletronica com Registro)
+      }
+    end;
+
+    case ACBrBoleto.Cedente.TipoCarteira of
+      tctSimples: sTipoCarteira := '2';
+      tctRegistrada: sTipoCarteira := '1';
+      else
+       sTipoCarteira := '2';
+    end;
+
+    case ACBrBoleto.Cedente.TipoDocumento of
+      Tradicional: sTipoDocto := '1';
+      Escritural: sTipoDocto := '2';
+    end;
+
+    if sTipoDocto = '' then
+      sTipoDocto := '1'; // Tradicional
+
+    if (ValorMoraJuros > 0) then
+    begin
+      STipoJuros := IfThen( (CodigoMora <> ''), CodigoMora, '1');    //1- Valor por dia  2- Taxa Mensal
+      if DataMoraJuros <> 0 then
+        sDataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
+      else
+        sDataMoraJuros := PadLeft('', 8, '0');
+    end
+    else
+    begin
+      sDataMoraJuros := PadLeft('', 8, '0');
+      STipoJuros := '3'; // Isento
+    end;
+
+    // 0 = ISENTO
+    // 1 = Valor fixo ate a data informada – Informar o valor no campo “valor de desconto a ser concedido.
+    // 2 = Percentual ate a data informada – Informar o percentual no campo “percentual de desconto a ser concedido
+    // 3 = Valor por antecipação por dia corrido - Informar o valor no campo “valor de desconto a ser concedido
+    // 4 = Valor por antecipação dia útil - Informar o valor no campo “valor de desconto a ser concedido
+    case ACBrTitulo.TipoDesconto of
+         tdNaoConcederDesconto: sTipoDesconto := '0';
+         tdValorFixoAteDataInformada: sTipoDesconto := '1';
+         tdPercentualAteDataInformada: sTipoDesconto := '2';
+    end;
+
+    if ValorDesconto > 0 then
+    begin
+      if DataDesconto <> 0 then
+        sDataDesconto := FormatDateTime('ddmmyyyy', DataDesconto)
+      else
+        sDataDesconto := PadLeft('', 8, '0');
+    end
+    else
+       sDataDesconto := PadLeft('', 8, '0');
+
+    {Código para Protesto}
+    case TipoDiasProtesto of
+       diCorridos       : ACodProtesto := '1';
+       diUteis          : ACodProtesto := '2';
+    else
+       ACodProtesto := '0';
+    end;
+
+    if ((DataProtesto <> 0) and (DiasDeProtesto > 0)) then
+    begin
+      if not MatchText(Instrucao1, ['0', '1', '2', '3', '9']) then
+        Instrucao1 := ACodProtesto;
+      // Dias para protesto
+      sDiasProtesto := PadLeft(IntToStr(DiasDeProtesto), 2, '0');
+    end
+    else
+    begin
+      Instrucao1 := '0';  // Não protestar
+      SDiasProtesto := '00';
+    end;
+
+    sDiasBaixaDevol := ifthen(DataBaixa > 0,
+                             IntToStrZero(DaysBetween(Vencimento,DataBaixa),3),
+                             '000');
+  end;
+
+  with ACBrBanco.ACBrBoleto.Cedente do
+  begin
+    Inc(FSequencia);
+    segmentoP := IntToStrZero(ACBrBanco.Numero, 3)                                     + // 001-003 / Código do Banco na Compensação
+                 '0001'                                                                + // 004-007 / Lote de Serviço
+                 '3'                                                                   + // 008-008 / Tipo de Registro
+                 IntToStrZero(FSequencia, 5)                                           + // 009-013 / Nº Sequencial do Registro de Lote
+                 'P'                                                                   + // 014-014 / Cód. Segmento do Regsitro Detalhe
+                 ' '                                                                   + // 015-015 / Campo sem Preenchimento
+                 '01'                                                                  + // 016-017 / Código de Movimento remessa
+                 PadLeft(Agencia, 5, '0')                                              + // 018-022 / Agência Mantenedora da Conta
+                 PadLeft(AgenciaDigito, 1)                                             + // 023-023 / Dígito Verificador da Agência
+                 PadLeft(Conta, 12, '0')                                               + // 024-035 / Número da Conta Corrente
+                 PadLeft(ContaDigito, 1)                                               + // 036-036 / Dígito Verificador da Conta
+                 ' '                                                                   + // 037-037 / Dígito Verificador da Agência/Conta
+                 PadRight(ACBrTitulo.NossoNumero, 20)                                  + // 038-057 / Identificação do Título no Banco NN com DV
+                 PadLeft(ACBrTitulo.Carteira, 1)                                       + // 058-058 / Código da Carteira
+                 sTipoCarteira                                                         + // 059-059 / Forma de Cadastro do título no banco
+                 sTipoDocto                                                            + // 060-060 / Tipo de Documento
+                 sTipoCobranca                                                         + // 061-061 / Identificação da Emissão do Bloqueto
+                 '2'                                                                   + // 062-062 / Identificação da Distribuição
+                 PadRight(ACBrTitulo.NossoNumero, 15)                                  + // 063-077 / Número do Documento de Cobrança
+                 FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                     + // 078-085 / Data de Vencimento do Título
+                 IntToStrZero(round(ACBrTitulo.ValorDocumento * 100), 15)              + // 086-100 / Valor Nominal do Título
+                 '00000'                                                               + // 101-105 / Agência Encarregada da Cobrança
+                 ' '                                                                   + // 106-106 / Dígito Verificador da Agência
+                 sEspecie                                                              + // 107-108 / Espécie do Título
+                 IfThen(ACBrTitulo.Aceite = atSim, 'A', 'N')                           + // 109-109 / Identificação de Título Aceito / Não Aceito
+                 FormatDateTime('ddmmyyyy', ACBrTitulo.DataDocumento)                  + // 110-117 / Data de Emissão do Título
+                 STipoJuros                                                            + // 118-118 / Código do Juros de Mora
+                 sDataMoraJuros                                                        + // 119-126 / Data do Juros de Mora
+                 ifthen((STipoJuros = '2'), FormatarMoraJurosRemessa(15, ACBrTitulo),
+                        IntToStrZero(round(ACBrTitulo.ValorMoraJuros * 100), 15))      + // 127-141 / Valor da mora/dia ou Taxa mensal
+                 sTipoDesconto                                                         + // 142-142 / Código do Desconto 1
+                 sDataDesconto                                                         + // 143-150 / Data do Desconto 1
+                 IntToStrZero(round(ACBrTitulo.ValorDesconto * 100), 15)               + // 151-165 / Valor ou Percentual do desconto concedido
+                 IntToStrZero(round(ACBrTitulo.ValorIOF * 100), 15)                    + // 166-180 / Valor do IOF a ser recolhido
+                 IntToStrZero(round(ACBrTitulo.ValorAbatimento * 100), 15)             + // 181-195 / Valor do abatimento
+                 PadRight(ACBrTitulo.SeuNumero, 25)                                    + // 196-220 / Identificação do título na empresa
+                 PadLeft(ACBrTitulo.Instrucao1, 1)                                     + // 221-221 / Código para protesto
+                 sDiasProtesto                                                         + // 222-223 / Número de dias para protesto
+                 PadLeft(ACBrTitulo.Instrucao2, 1)                                     + // 224-224 / Código para Baixa/Devolução
+                 sDiasBaixaDevol                                                       + // 225-227 / Número de Dias para Baixa/Devolução
+                 '09'                                                                  + // 228-229 / Código da moeda
+                 PadLeft('0', 10, '0')                                                 + // 230-239 / Nº do Contrato da Operação de Créd.
+                 ' '                                                                   ; // 240–240 / Uso livre banco/empresa
+
+    if sCodMovimento = '01' then
+    begin
+      Inc(FSequencia);
+      segmentoQ := IntToStrZero(ACBrBanco.Numero, 3)                              + // 001-003 / Código do Banco na compensação
+                   '0001'                                                         + // 004-007 / Numero do lote remessa
+                   '3'                                                            + // 008-008 / Tipo de registro
+                   IntToStrZero(FSequencia ,5)                                    + // 009-013 / Número seqüencial do registro no lote
+                   'Q'                                                            + // 014-014 / Cód. Segmento do registro detalhe
+                   ' '                                                            + // 015-015 / Reservado (uso Banco)
+                   sCodMovimento                                                  + // 016-017 / Código de movimento remessa
+                   sTipoInscricao                                                 + // 018-018 / Tipo de inscrição do sacado
+                   PadLeft(trim(OnlyNumber(ACBrTitulo.Sacado.CNPJCPF)),15,'0')    + // 019-033 / Número de inscrição do sacado
+                   PadRight(Trim(ACBrTitulo.Sacado.NomeSacado), 40)               + // 034-073 / Nome sacado
+                   sEndereco                                                      + // 074-113 / Endereço sacado
+                   PadRight(Trim(ACBrTitulo.Sacado.Bairro), 15)                   + // 114-128 / Bairro sacado
+                   PadLeft(Copy(OnlyNumber(ACBrTitulo.Sacado.CEP), 1, 5), 5, '0') + // 129-133 / Cep sacado
+                   PadLeft(Copy(OnlyNumber(ACBrTitulo.Sacado.CEP), 6, 3), 3, '0') + // 134-136 / Sufixo do Cep do sacado
+                   PadRight(Trim(ACBrTitulo.Sacado.Cidade), 15)                   + // 137-151 / Cidade do sacado
+                   PadRight(ACBrTitulo.Sacado.UF, 2)                              + // 152-153 / Unidade da federação do sacado
+                   aTipoInscricao                                                 + // 154-154 / Tipo de inscrição sacador/avalista
+                   PadLeft(ACBrTitulo.Sacado.SacadoAvalista.CNPJCPF, 15,'0')      + // 155-169 / Nº de inscrição sacador/avalista
+                   PadRight(ACBrTitulo.Sacado.SacadoAvalista.NomeAvalista,40,' ') + // 170-209 / Nome do sacador/avalista
+                   IntToStrZero(ACBrBanco.Numero, 3)                              + // 210–212 / Cód Bco.Corresp. Na Compensação
+                   PadRight(ACBrTitulo.NossoNumero, 20)                           + // 213–232 / Nosso Nº no Banco Correspondente
+                   Space(8)                                                       ; // 233–240 / Reservado (uso Banco)
+
+      Inc(FSequencia);
+      {SEGMENTO R}
+      segmentoR := IntToStrZero(ACBrBanco.Numero, 3)                                     + // 001 - 003 / Código do Banco na compensação
+                  '0001'                                                                + // 004 - 007 / Numero do lote remessa
+                  '3'                                                                   + // 008 - 008 / Tipo de registro
+                  IntToStrZero(FSequencia ,5)                                           + // 009 - 013 / Número seqüencial do registro no lote
+                  'R'                                                                   + // 014 - 014 / Cód. Segmento do registro detalhe
+                  Space(1)                                                              + // 015 - 015 / Reservado (uso Banco)
+                  sCodMovimento                                                         + // 016 - 017 / Código de movimento remessa
+                  '0'                                                                   + // 018 - 018 / Código do desconto 2
+                  PadLeft('', 8, '0')                                                   + // 019 - 026 / Data do desconto 2
+                  IntToStrZero(0, 15)                                                   + // 027 - 041 / Valor/Percentual a ser concedido
+                  Space(24)                                                             + // 042 – 065 / Reservado (uso Banco)
+                  IfThen((ACBrTitulo.PercentualMulta > 0),
+                         IfThen(ACBrTitulo.MultaValorFixo,'1','2'), '0')                + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
+                  IfThen((ACBrTitulo.PercentualMulta > 0),
+                          FormatDateTime('ddmmyyyy', ACBrTitulo.DataMulta), '00000000') + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+                  IfThen((ACBrTitulo.PercentualMulta > 0), IntToStrZero(round(ACBrTitulo.PercentualMulta * 100), 15),
+                         PadRight('', 15, '0'))                                         + // 075 - 089 / Valor/Percentual a ser aplicado
+                  Space(10)                                                             + // 090 - 099 / Reservado (uso Banco)
+                  MontarInstrucoes1                                                     + // 100 - 139 / Mensagem 3
+                                                                                          // 140 - 179 / Mensagem 4
+                  Space(61)                                                             ; // 180 - 240 / Reservado (uso Banco)
+    end;
+  end;
+
+  Result := segmentoP;
+
+  if not segmentoQ.IsEmpty then
+    Result := Result + #13#10 + segmentoQ;
+
+  if not segmentoR.IsEmpty then
+    Result := Result + #13#10 + segmentoR;
 end;
 
 procedure TACBrBancoSafra.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo;
@@ -441,7 +958,6 @@ begin
                 IntToStrZero(round(PercentualMulta * 100), 4) +                                // 212 a 215 o percentual referente à multa no formato 99v99
                 '000'),                                                                        // 216 a 218 zeros
                 IntToStrZero(round(ValorAbatimento * 100), 13)  )                            + // Valor Do Abatimento Concedido Ou Cancelado / Multa
-
               aTipoSacado                                                                    + // 219 a 220 - Código De Inscrição Do Sacado
               PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                                   + // 221 a 234 - Número de Inscrição do Sacado
               PadRight(Sacado.NomeSacado, 40, ' ')                                           + // 235 a 274 - Nome Do Sacado
@@ -462,6 +978,124 @@ begin
     aRemessa.Text := aRemessa.Text + wLinha;
   end;
 end;
+
+procedure TACBrBancoSafra.LerRetorno240(ARetorno: TStringList);
+var
+  Titulo: TACBrTitulo;
+  TempData, Linha, rCedente, rCNPJCPF: String;
+  ContLinha : Integer;
+  idxMotivo: Integer;
+  rConvenioCedente: String;
+begin
+   // informação do Header
+   // Verifica se o arquivo pertence ao banco
+   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> Numero then
+      raise Exception.create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                             'não' + 'é um arquivo de retorno do ' + Nome));
+
+   ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno[0],144,2)+'/'+
+                                                           Copy(ARetorno[0],146,2)+'/'+
+                                                           Copy(ARetorno[0],148,4),0, 'DD/MM/YYYY' );
+
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],158,6),0);
+
+   rCedente        := trim(copy(ARetorno[0], 73, 30));
+   rCNPJCPF        := OnlyNumber( copy(ARetorno[0], 19, 14) );
+   rConvenioCedente:= Trim(RemoveZerosEsquerda(Copy(ARetorno[0], 33, 9)));
+
+   ValidarDadosRetorno('', '', rCNPJCPF);
+   with ACBrBanco.ACBrBoleto do
+   begin
+     if LeCedenteRetorno then
+     begin
+       case StrToIntDef(copy(ARetorno[0], 18, 1), 0) of
+         01:
+           Cedente.TipoInscricao := pFisica;
+         else
+           Cedente.TipoInscricao := pJuridica;
+       end;
+
+       Cedente.Nome          := rCedente;
+       Cedente.CNPJCPF       := rCNPJCPF;
+       Cedente.Convenio      := rConvenioCedente;
+       Cedente.Agencia       := trim(copy(ARetorno[0], 53, 5));
+       Cedente.AgenciaDigito := trim(copy(ARetorno[0], 58, 1));
+       Cedente.Conta         := trim(copy(ARetorno[0], 59, 12));
+       Cedente.ContaDigito   := trim(copy(ARetorno[0], 71, 1));
+     end;
+
+     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+   end;
+
+   Linha := '';
+   Titulo := nil;
+
+   for ContLinha := 1 to ARetorno.Count - 2 do
+   begin
+      Linha := ARetorno[ContLinha];
+
+      if copy(Linha, 8, 1) <> '3' then // verifica se o registro (linha) é um registro detalhe (segmento J)
+         Continue;
+
+      if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
+         Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+
+      if Assigned(Titulo) then
+      with Titulo do
+      begin
+         if copy(Linha, 14, 1) = 'T' then
+          begin
+            SeuNumero := copy(Linha, 106, 25);
+            NumeroDocumento := copy(Linha, 59, 15);
+            Carteira := copy(Linha, 58, 1);
+
+            TempData := copy(Linha, 74, 2) + '/'+copy(Linha, 76, 2)+'/'+copy(Linha, 78, 4);
+            if TempData<>'00/00/0000' then
+              Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+
+            ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
+
+            NossoNumero := Copy(Linha, 38, TamanhoMaximoNossoNum);
+
+            ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
+
+            OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));
+
+            IdxMotivo := 214;
+
+            while (IdxMotivo < 223) do
+            begin
+               if (trim(Copy(Linha, IdxMotivo, 2)) <> '') then
+               begin
+                  MotivoRejeicaoComando.Add(Copy(Linha, IdxMotivo, 2));
+                  DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, StrToIntDef(Copy(Linha, IdxMotivo, 2), 0)));
+               end;
+               Inc(IdxMotivo, 2);
+            end;
+
+          end
+         else if copy(Linha, 14, 1) = 'U' then // segmento U
+          begin
+            ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
+            ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
+            ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
+            ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
+            ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
+            ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
+            ValorPago           := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+            ValorRecebido       := StrToFloatDef(copy(Linha, 93, 15), 0) / 100;
+            TempData := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
+            if TempData<>'00/00/0000' then
+              DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+            TempData := copy(Linha, 146, 2)+'/'+copy(Linha, 148, 2)+'/'+copy(Linha, 150, 4);
+            if TempData<>'00/00/0000' then
+              DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+          end;
+      end;
+   end;
+
+end;
+
 
 procedure TACBrBancoSafra.LerRetorno400(ARetorno: TStringList);
 var

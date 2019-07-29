@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+29/07/2019
+-- ACBrBancoSafra --
+[+] Adicionado Contribuição de Geração de Remessa e Retorno CNAB240
+https://www.projetoacbr.com.br/forum/topic/52257-contribui%C3%A7%C3%A3o-banco-safra-240-posi%C3%A7%C3%B5es/
+
 10/07/2019
 -- ACBrBancoSicredi --
 [-] Correção na leitura do retorno CNAB400 para considerar corretamente  a recusa A6.

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2019
+-- ACBrNFeDANFeRLRetrato
+[*] Compatibilização dos ajustes reff propriedade TPosReciboLayout para o .lfm no Lazarus
+	(por: José M S Junior )
+
 26/07/2019
 -- ACBrNFeDANFeRLRetrato
 [+] Implantação de rotinas para o controle da propriedade TPosReciboLayout.

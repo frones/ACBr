@@ -898,7 +898,7 @@ begin
     end;
 
     // Verificar se a MDF-e foi autorizado com sucesso
-    Result := (FMDFeRetornoSincrono.cStat = 104) and
+    Result := (FMDFeRetornoSincrono.cStat = 100) and
       (TACBrMDFe(FPDFeOwner).CstatProcessado(FMDFeRetornoSincrono.protMDFe.cStat));
 
     if Result then

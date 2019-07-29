@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2019
+-- ACBrMDFeWebServices --
+[*] No retorno do envio Sincrono estava sendo comparado o cStat com 104
+    sendo que o correto é 100 caso o MDF-e seja autorizado.
+   Por: Italo Jurisato Junior
+
 26/07/2019
 -- pmdfeMDFeW --
 [*] Correção nos tamanhos mínimo e máximo na geração da tag "modal".

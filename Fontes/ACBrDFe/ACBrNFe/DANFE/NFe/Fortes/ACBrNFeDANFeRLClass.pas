@@ -232,6 +232,7 @@ procedure TACBrNFeDANFeRL.ImprimirDANFECancelado(ANFe: TNFe = nil);
 begin
   Cancelada := True;
   ImprimirDANFE(ANFe);
+  Cancelada := False;
 end;
 
 procedure TACBrNFeDANFeRL.ImprimirDANFEPDF(ANFe: TNFe = nil);

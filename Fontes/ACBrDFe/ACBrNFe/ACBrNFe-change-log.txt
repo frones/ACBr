@@ -47,8 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
 29/07/2019
+-- ACBrNFeDANFeRLClass --
+[*] No método ImprimirDANFECancelado estava setando a propriedade Cancelada com o valor
+    True e depois da impressão não estava retornando para False.
+   Por: Italo Jurisato Junior
 -- ACBrDFeDANFeReport --
 [*] No método ImprimirDANFECancelado estava setando a propriedade Cancelada com o valor
     True e depois da impressão não estava retornando para False.

@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2019
+-- ACBrDFeUtil --
+[*] Se informado código menor ou igual a -2 a chave será gerado com 
+    código igual a zero, antes estage gerando uma excessão.
+  Por: Italo Jurisato Junior
+
 24/07/2019
 -- ACBrDFeUtil --
 [*] Removido da a função ValidarCodigoDFe bem como a sua chamada ao 

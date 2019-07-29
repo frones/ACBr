@@ -138,16 +138,17 @@ function GerarChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; const ACNPJ: St
 var
   vUF, vDataEmissao, vSerie, vNumero, vCodigo, vModelo, vCNPJ, vtpEmi: String;
 begin
-  // Se o usuario informar um código inferior ou igual a -2 a chave não será gerada //
-  if ACodigo <= -2 then
-    raise EACBrDFeException.Create('Código Numérico inválido, Chave não Gerada');
-
   // Se o usuario informar 0 ou -1; o código numerico sera gerado de maneira aleatória //
   if ACodigo = -1 then
     ACodigo := 0;
 
   if ACodigo = 0 then
     ACodigo := GerarCodigoDFe(ANumero);
+
+  // Se o usuario informar um código inferior ou igual a -2 a chave será gerada
+  // com o código igual a zero, mas poderá não ser autorizada pela SEFAZ.
+  if ACodigo <= -2 then
+    ACodigo := 0;
 
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);

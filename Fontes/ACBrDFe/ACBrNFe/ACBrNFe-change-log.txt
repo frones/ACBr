@@ -48,12 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/07/2019
+-- ACBrDFeDANFeReport --
+[*] No método ImprimirDANFECancelado estava setando a propriedade Cancelada com o valor
+    True e depois da impressão não estava retornando para False.
+   Por: Italo Jurisato Junior
+
 26/07/2019
 -- ACBrNFeDANFEClass --
 [+] Adicionada propriedade PosCanhotoLayout, para definir o tipo de canhoto de nfe a ser impresso.
      (prlPadrao, prlBarra)
   Por: Henrique Leonardo ( HLeoRj )
-
 
 24/07/2019
 -- ACBrNFeWebServices --

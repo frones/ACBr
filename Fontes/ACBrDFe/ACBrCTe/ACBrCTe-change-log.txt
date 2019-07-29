@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2019
+-- ACBrCTeWebServices --
+[*] Incluido os enumeradores dos eventos: Comprovante de Entrega e 
+    Cancelamento do Comprovante de Entrega na lista de eventos que
+    utilizam a SEFAZ-Autorizadora e não o Ambiente Nacional.
+   Por: Italo Jurisato Junior
+
 26/07/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/52250-evento-comprovante-de-entrega-ct-e/?do=findComment&comment=346376

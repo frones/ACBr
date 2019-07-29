@@ -2646,7 +2646,7 @@ begin
     os outros eventos como manifestação do destinatário serão tratados diretamente pela RFB }
 
   if (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento,
-      teMultiModal, tePrestDesacordo, teGTV]) then
+      teMultiModal, tePrestDesacordo, teGTV, teComprEntrega, teCancComprEntrega]) then
     FPLayout := LayCTeEvento
   else
     FPLayout := LayCTeEventoAN;

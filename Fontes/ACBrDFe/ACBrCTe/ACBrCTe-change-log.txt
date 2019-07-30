@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2019
+-- Diversos --
+[+] Implementação do evento de Cancelamento de Comprovante de Entrega
+   Por: Italo Jurisato Junior
+
 29/07/2019
 -- ACBrCTeWebServices --
 [*] Incluido os enumeradores dos eventos: Comprovante de Entrega e 

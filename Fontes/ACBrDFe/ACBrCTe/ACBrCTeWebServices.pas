@@ -2816,6 +2816,13 @@ begin
                 chNFe := FEvento.Evento[i].InfEvento.detEvento.infEntrega[j].chNFe;
             end;
           end;
+
+          teCancComprEntrega:
+          begin
+            SchemaEventoCTe := schevCancCECTe;
+            infEvento.detEvento.nProt   := FEvento.Evento[i].InfEvento.detEvento.nProt;
+            infEvento.detEvento.nProtCE := FEvento.Evento[i].InfEvento.detEvento.nProtCE;
+          end;
         end;
       end;
     end;
@@ -2898,6 +2905,13 @@ begin
           AXMLEvento := '<evCECTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evCECTe>', '</evCECTe>')) +
                         '</evCECTe>';
+        end;
+
+      schevCancCECTe:
+        begin
+          AXMLEvento := '<evCancCECTe xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evCancCECTe>', '</evCancCECTe>')) +
+                        '</evCancCECTe>';
         end;
     end;
 

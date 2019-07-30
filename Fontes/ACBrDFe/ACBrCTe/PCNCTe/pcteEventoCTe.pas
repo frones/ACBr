@@ -164,6 +164,8 @@ type
     FhashEntrega: String;
     FdhHashEntrega: TDateTime;
     FinfEntrega: TInfEntregaCollection;
+     // Cancelamento do Comprovante de Entrega
+    FnProtCE: String;
 
     procedure SetinfCorrecao(const Value: TInfCorrecaoCollection);
     procedure SetxCondUso(const Value: String);
@@ -206,6 +208,8 @@ type
 
     property infGTV: TInfGTVCollection         read FinfGTV     write FinfGTV;
     property infEntrega: TInfEntregaCollection read FinfEntrega write FinfEntrega;
+
+    property nProtCE: String read FnProtCE write FnProtCE;
   end;
 
   TInfCorrecaoCollection = class(TObjectList)
@@ -457,6 +461,7 @@ begin
     teAutorizadoSubcontratacao    : Desc := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Desc := 'Autorizado Servico Vinculado Multimodal';
     teComprEntrega                : Desc := 'Comprovante de Entrega Eletronico do CT-e';
+    teCancComprEntrega            : Desc := 'Cancelamento do Comprovante de Entrega Eletronico do CT-e';
   else
     Result := '';
   end;
@@ -513,6 +518,7 @@ begin
     teAutorizadoSubcontratacao    : Result := 'Autorizado Subcontratacao';
     teautorizadoServMultimodal    : Result := 'Autorizado Servico Vinculado Multimodal';
     teComprEntrega                : Result := 'Comprovante de Entrega Eletronico do CT-e';
+    teCancComprEntrega            : Result := 'Cancelamento do Comprovante de Entrega Eletronico do CT-e';
   else
     Result := 'Não Definido';
   end;

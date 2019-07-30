@@ -221,6 +221,8 @@ begin
            infEvento.detEvento.hashEntrega   := Leitor.rCampo(tcStr, 'hashEntrega');
            infEvento.detEvento.dhHashEntrega := Leitor.rCampo(tcDatHor, 'dhHashEntrega');
 
+           infEvento.detEvento.nProtCE := Leitor.rCampo(tcStr, 'nProtCE');
+
            // Carrega os dados da informação da Correção aplicada
            i := 0;
            while Leitor.rExtrai(4, 'infCorrecao', '', i + 1) <> '' do

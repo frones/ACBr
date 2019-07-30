@@ -182,7 +182,7 @@ type
     property GerarTagIPIparaNaoTributado: Boolean read FGerarTagIPIparaNaoTributado;
     property GerarTXTSimultaneamente: Boolean read FGerarTXTSimultaneamente write FGerarTXTSimultaneamente;
     property NormatizarMunicipios: Boolean read FNormatizarMunicipios write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura write FGerarTagAssinatura;
     property PathArquivoMunicipios: String read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: Boolean read FValidarInscricoes;
     property ValidarListaServicos: Boolean read FValidarListaServicos;
@@ -190,8 +190,6 @@ type
     // ForcarGerarTagRejeicao938 (NT 2018.005 v 1.20) -> Campo-Seq: N12-81 e N12a-50 | Campos: N26, N26a, N26b
     property ForcarGerarTagRejeicao938: TForcarGeracaoTag read FForcarGerarTagRejeicao938 write FForcarGerarTagRejeicao938;
   end;
-
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
@@ -227,8 +225,6 @@ begin
   inherited Destroy;
 end;
 
-////////////////////////////////////////////////////////////////////////////////
-
 function TNFeW.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(nfe.infNFe.ID) + '-nfe.xml';
@@ -236,7 +232,6 @@ end;
 
 function TNFeW.GerarXml: Boolean;
 var
-//  chave: String;
   Gerar: Boolean;
   xProtNFe : String;
   xCNPJCPF : string;

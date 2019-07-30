@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2019
+-- pcnNFeW --
+[*] A propriedade GerarTagAssinatura agora pode ser lida e escrita.
+  Por: Italo Jurisato Junior
+
 29/07/2019
 -- ACBrNFeDANFeRLClass --
 [*] No método ImprimirDANFECancelado estava setando a propriedade Cancelada com o valor

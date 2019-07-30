@@ -113,9 +113,9 @@ type
     FValidarListaServicos: boolean;
   published
     property AjustarTagNro: boolean                read FAjustarTagNro;
-    property NormatizarMunicipios: boolean         read FNormatizarMunicipios    write FNormatizarMunicipios;
-    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura;
-    property PathArquivoMunicipios: String         read FPathArquivoMunicipios   write FPathArquivoMunicipios;
+    property NormatizarMunicipios: boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
+    property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
     property ValidarInscricoes: boolean            read FValidarInscricoes;
     property ValidarListaServicos: boolean         read FValidarListaServicos;
   end;
@@ -149,7 +149,6 @@ end;
 
 function TMDFeW.GerarXml: boolean;
 var
-//  chave: String;
   Gerar, Ok: boolean;
   xProtMDFe: String;
 begin
@@ -343,7 +342,6 @@ procedure TMDFeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', '#025');
   Gerador.wCampoCNPJCPF('#026', '026a', MDFe.Emit.CNPJCPF);
-//  Gerador.wCampoCNPJ('#026', MDFe.Emit.CNPJ, CODIGO_BRASIL, True);
   Gerador.wCampo(tcStr, '#027', 'IE   ', 02, 14, 1, OnlyNumber(MDFe.Emit.IE), DSC_IE);
   if (FOpcoes.ValidarInscricoes)
    then if not ValidarIE(MDFe.Emit.IE, MDFe.Emit.enderEmit.UF) then

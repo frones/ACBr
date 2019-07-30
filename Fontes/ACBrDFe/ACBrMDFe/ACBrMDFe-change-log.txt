@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2019
+-- pmdfeMDFeW --
+[*] A propriedade GerarTagAssinatura agora pode ser lida e escrita.
+  Por: Italo Jurisato Junior
+
 29/07/2019
 -- ACBrMDFeWebServices --
 [*] No retorno do envio Sincrono estava sendo comparado o cStat com 104

@@ -6,7 +6,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 24
   inherited RLNFe: TRLReport
-    AlignWithMargins = True
     Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
@@ -6022,7 +6021,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Borders.DrawBottom = False
       BeforePrint = rlbReciboHeaderBarraBeforePrint
       object rlBarraiCanhoto: TRLDraw
-        AlignWithMargins = True
         Left = 0
         Top = 0
         Width = 742

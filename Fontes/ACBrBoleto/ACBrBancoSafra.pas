@@ -840,10 +840,10 @@ begin
 
   Result := segmentoP;
 
-  if not segmentoQ.IsEmpty then
+  if segmentoQ <> '' then
     Result := Result + #13#10 + segmentoQ;
 
-  if not segmentoR.IsEmpty then
+  if segmentoR <> '' then
     Result := Result + #13#10 + segmentoR;
 end;
 

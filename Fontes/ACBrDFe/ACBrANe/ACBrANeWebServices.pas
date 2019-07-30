@@ -422,6 +422,17 @@ begin
 end;
 
 procedure TANeAverbar.DefinirDadosMsg;
+
+function RemoverGrupoInfSuplementares(const XML, Grupo: string): string;
+var
+  IniGrupo, FimGrupo: Integer;
+begin
+  IniGrupo := Pos('<' + Grupo + '>', XML);
+  FimGrupo := Pos('</' + Grupo + '>', XML) + Length(Grupo) + 3;
+
+  Result := Copy(XML, 1, IniGrupo -1) + Copy(XML, FimGrupo, Length(XML));
+end;
+
 begin
   case FPConfiguracoesANe.Geral.Seguradora of
     tsELT:
@@ -434,7 +445,18 @@ begin
   else
     begin
       FPCabMsg   := '';
-      FPDadosMsg := FDocumentos.Items[0].XMLAssinado;
+
+      with FDocumentos.Items[0] do
+      begin
+        case FPConfiguracoesANe.Geral.TipoDoc of
+          tdCTe: FPDadosMsg := RemoverGrupoInfSuplementares(XMLAssinado, 'infCTeSupl');
+
+          tdMDFe: FPDadosMsg := RemoverGrupoInfSuplementares(XMLAssinado, 'infMDFeSupl');
+
+          tdNFe,
+          tdAddBackMail: FPDadosMsg := XMLAssinado;
+        end;
+      end;
     end;
   end;
 end;

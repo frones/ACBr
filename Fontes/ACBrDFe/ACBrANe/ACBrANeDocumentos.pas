@@ -175,6 +175,17 @@ procedure Documento.Assinar;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
+
+function RemoverGrupoInfSuplementares(const XML, Grupo: string): string;
+var
+  IniGrupo, FimGrupo: Integer;
+begin
+  IniGrupo := Pos('<' + Grupo + '>', XML);
+  FimGrupo := Pos('</' + Grupo + '>', XML) + Length(Grupo) + 3;
+
+  Result := Copy(XML, 1, IniGrupo -1) + Copy(XML, FimGrupo, Length(XML));
+end;
+
 begin
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -194,9 +205,14 @@ begin
     else
       begin
         case Configuracoes.Geral.TipoDoc of
-          tdCTe: FXMLOriginal := '<ANe>' + FXMLOriginal + '</ANe>';
+          tdCTe: FXMLOriginal := '<ANe>' +
+                   RemoverGrupoInfSuplementares(FXMLOriginal, 'infCTeSupl') + '</ANe>';
+
           tdNFe: FXMLOriginal := '<ANe>' + FXMLOriginal + '</ANe>';
-          tdMDFe: FXMLOriginal := '<ANe>' + FXMLOriginal + '</ANe>';
+
+          tdMDFe: FXMLOriginal := '<ANe>' +
+                    RemoverGrupoInfSuplementares(FXMLOriginal, 'infMDFeSupl') + '</ANe>';
+
           tdAddBackMail: FXMLOriginal := '<AddBackMail>' + FXMLOriginal + '</AddBackMail>';
         end;
       end;

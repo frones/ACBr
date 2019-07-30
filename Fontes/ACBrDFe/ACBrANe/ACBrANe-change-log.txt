@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2019
+-- Diversos --
+[*] Antes de enviar o CT-e para ser averbado ou o MDF-e para ser declarado
+    será removido do XML o grupo <infCTeSupl> e <infMDFeSupl>, pois com esses
+    grupos a AT&M esta rejeitando o XML.
+   Por: Italo Jurisato Junior
+
 24/06/2019
 -- Diversos --
 [*] Ajustes para gerar corretamente o pedido de averbação - 

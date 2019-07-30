@@ -2908,7 +2908,7 @@ begin
         proSP,
         ProNotaBlu: begin
                       if (FProvedor in [proCTA]) or
-                         ((FProvedor in [ProNotaBlu, proSP]) and (RetEnvLote.InfRec.InformacoesLote.QtdNotasProcessadas > 0)) then
+                         ((FProvedor in [ProNotaBlu, proSP]) and (RetEnvLote.InfRec.ListaChaveNFeRPS.Count > i)) then
                       begin
                         FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
                         FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;

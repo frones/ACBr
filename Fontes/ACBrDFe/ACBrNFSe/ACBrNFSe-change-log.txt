@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2019
+-- pnfsNFSeW_EGoverneISS --
+[*] https://www.projetoacbr.com.br/forum/topic/52707-egoverneiss-notificartomadorporemail/
+   Por: Julianamver
+-- ACBrNFSeWebServices  --
+[*] https://www.projetoacbr.com.br/forum/topic/52609-erro-ao-processar-o-retorno-ap%C3%B3s-reenviar-uma-nota-para-a-prefeitura-de-s%C3%A3o-paulo/
+   Por: Roger Perezin
+
 29/07/2019
 -- ACBrNFSe  --
 [*] Alterado o metodo GerarIntegridade para não precisar do 

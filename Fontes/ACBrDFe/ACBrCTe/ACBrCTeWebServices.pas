@@ -722,7 +722,7 @@ begin
     if FPConfiguracoesCTe.WebServices.AjustaAguardaConsultaRet then
       FPConfiguracoesCTe.WebServices.AguardarConsultaRet := FTMed * 1000;
 
-    Result := (FcStat = 107);
+    Result := (FcStat in [107, 113]);
 
   finally
     CTeRetorno.Free;

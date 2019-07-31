@@ -53,6 +53,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2019
+--- DANFeNFCe5_00.fr3 ---
+[*] Ajustes de alinhamento das informações adicionais, inclusão do valor dos serviços e outros acréscimos e descontos nos totais da nota e remoção de duplicidade da impressão do troco.
+  Por: BigWings
+
 26/07/2019
 --- DanfeRetrato_2019.fr3
 [*] Refatoração para apresentar o canhoto com chave de acesso.

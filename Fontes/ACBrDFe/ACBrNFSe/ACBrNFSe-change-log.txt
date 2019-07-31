@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 31/07/2019
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido o provedor iiBrasilv2 na lista de provedores cuja tag Aliquota tem apenas 2
+    casas decimais.
+   Por: Italo Jurisato Junior
 -- Diversos  --
 [*] Alteração na geração da tag Integridade do provedor iiBrasil.
    Por: Italo Jurisato Junior

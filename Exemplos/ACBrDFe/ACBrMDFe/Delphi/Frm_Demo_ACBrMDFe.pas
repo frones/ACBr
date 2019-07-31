@@ -1147,7 +1147,7 @@ begin
     infEvento.detEvento.nProt := vProtocolo;
     infEvento.detEvento.dtEnc := Date;
     infEvento.detEvento.cUF   := UFtoCUF( vUF );
-    infEvento.detEvento.cMun  := vCodMun.ToInteger;
+    infEvento.detEvento.cMun  := StrToInt(vCodMun);
   end;
 
   ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote

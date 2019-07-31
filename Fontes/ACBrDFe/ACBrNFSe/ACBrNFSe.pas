@@ -525,9 +525,19 @@ end;
 function TACBrNFSe.GerarIntegridade(const AXML: string): string;
 var
   XML: string;
+  i, j: Integer;
 begin
-  XML := StringReplace(AXML, '/[^\x20-\x7E]+/', '', [rfReplaceAll]);
-  XML := StringReplace(XML, '/[  ]+/', '', [rfReplaceAll]);
+//  XML := StringReplace(AXML, '/[^\x20-\x7E]+/', '', [rfReplaceAll]);
+//  XML := StringReplace(XML, '/[  ]+/', '', [rfReplaceAll]);
+
+  j := Length(AXML);
+  XML := '';
+  for i := 1 to J do
+  begin
+    if (AXML[i] in ['!'..'~'])  then
+      XML := XML + AXML[i];
+  end;
+
 //  SSL.CarregarCertificadoSeNecessario;
   Result := SSL.CalcHash(XML + Configuracoes.Geral.Emitente.WebChaveAcesso,
                          dgstSHA512, outBase64, False);

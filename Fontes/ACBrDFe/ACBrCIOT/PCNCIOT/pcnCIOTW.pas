@@ -77,7 +77,7 @@ implementation
 
 uses
   ACBrDFeException,
-  pcnCIOTW_eFrete;
+  pcnCIOTW_eFrete, pcnCIOTW_REPOM;
 
 
 { TCIOTWClass }
@@ -158,6 +158,7 @@ begin
 
   case AIntegradora of
     ieFrete: FCIOTWClass := TCIOTW_eFrete.Create(Self);
+    iREPOM:  FCIOTWClass := TCIOTW_REPOM.Create(Self);
   else
     FCIOTWClass := TCIOTWClass.Create(Self);
   end;

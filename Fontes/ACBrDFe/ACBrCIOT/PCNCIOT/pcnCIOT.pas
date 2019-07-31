@@ -57,7 +57,6 @@ type
     property Operacao: TpCIOTOperacao read FOperacao write FOperacao;
   end;
 
-
   TVeiculo = class(TPersistent)
   private
     FOwner: TComponent;
@@ -178,7 +177,6 @@ type
     procedure setMatrizCNPJ(const Value: string);
   public
     constructor Create(AOwner: TCIOT);
-//    constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
 
     property Owner: TComponent read FOwner;
@@ -221,8 +219,6 @@ type
     property DataRetificacao: TDateTime read FDataRetificacao write FDataRetificacao;
     property ProtocoloEncerramento: string read FProtocoloEncerramento write FProtocoloEncerramento;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
 //  TOperacoesTransporte = class(TOwnedCollection)
 //  private
@@ -428,7 +424,6 @@ type
 
   TMotorista = class(TPersistent)
   private
-//    FOwner: TComponent;
     FDataNascimento: TDateTime;
     FCPF: string;
     FCNH: string;
@@ -438,10 +433,8 @@ type
     FEndereco: TEndereco;
     procedure setCPF(const Value: string);
   public
-    constructor Create{(AOwner: TComponent)};
+    constructor Create;
     destructor Destroy; override;
-
-    {property Owner: TComponent read FOwner;}
 
     procedure Limpar;
   published
@@ -487,8 +480,6 @@ type
     property RNTRCAtivo: Boolean read FRNTRCAtivo write FRNTRCAtivo;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TTelefone = class(TPersistent)
   private
     FDDD: integer;
@@ -515,8 +506,6 @@ type
     property Fixo: TTelefone read FFixo write FFixo;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TCancelamento = class(TPersistent)
   private
     FMotivo: string;
@@ -532,8 +521,6 @@ type
     property IdPagamentoCliente: string read FIdPagamentoCliente write FIdPagamentoCliente;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TInformacoesBancarias = class(TPersistent)
   private
     FConta: string;
@@ -546,8 +533,6 @@ type
     property Conta: string read FConta write FConta;
     property InstituicaoBancaria: string read FInstituicaoBancaria write FInstituicaoBancaria;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
   TToleranciaDePerdaDeMercadoria = class(TPersistent)
   private
@@ -588,8 +573,6 @@ type
     property MargemPerda: TDiferencaFreteMargem read FMargemPerda write FMargemPerda;
   end;
 
-////////////////////////////////////////////////////////////////////////////////
-
   TPagamentoCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TPagamentoCollectionItem;
@@ -625,8 +608,6 @@ type
     property Valor: currency read FValor write FValor;
     property CnpjFilialAbastecimento: string read FCnpjFilialAbastecimento write FCnpjFilialAbastecimento;
   end;
-
-////////////////////////////////////////////////////////////////////////////////
 
   TViagemCollection = class(TCollection)
   private
@@ -759,9 +740,6 @@ type
     property ValorTotal: currency read FValorTotal write FValorTotal;
   end;
 
-
-////////////////////////////////////////////////////////////////////////////////
-
   TControleNegocial = class(TPersistent)
   private
     FOriRetorno: String;
@@ -840,7 +818,6 @@ type
     property MsgRetorno: String  read FMsgRetorno write FMsgRetorno;
     property DadosRet: TDadosRet read FDadosRet   write FDadosRet;
   end;
-
 
 implementation
 
@@ -1464,9 +1441,8 @@ end;
 
 { TMotorista }
 
-constructor TMotorista.Create({AOwner: TComponent});
+constructor TMotorista.Create;
 begin
-  {FOwner := AOwner; }
   FTelefones := TTelefones.Create;
   FEndereco := TEndereco.Create;
 end;

@@ -524,7 +524,7 @@ begin
     Ide.UFIni   := 'SP';
     Ide.UFFim   := 'SP';
 
-    with Ide.infMunCarrega.Add do
+    with Ide.infMunCarrega.New do
     begin
       cMunCarrega := 3503208;
       xMunCarrega := 'ARARAQUARA';
@@ -568,13 +568,13 @@ begin
 
     rodo.veicTracao.UF := edtEmitUF.Text;
 
-    with rodo.veicTracao.condutor.Add do
+    with rodo.veicTracao.condutor.New do
     begin
       xNome := 'JOAO';
       CPF   := '12345678912';
     end;
 
-    with rodo.veicReboque.Add do
+    with rodo.veicReboque.New do
     begin
       cInt    := '002';
       placa   := 'XYZ4567';
@@ -589,43 +589,43 @@ begin
       UF := edtEmitUF.Text;
     end;
 
-    with rodo.valePed.disp.Add do
+    with rodo.valePed.disp.New do
     begin
       CNPJForn := '12345678000199';
       CNPJPg   := '21543876000188';
       nCompra  := '789';
     end;
 
-    with infDoc.infMunDescarga.Add do
+    with infDoc.infMunDescarga.New do
     begin
       cMunDescarga := 3550308;
       xMunDescarga := 'SAO PAULO';
 
-      with infCTe.Add do
+      with infCTe.New do
       begin
         chCTe := '35110803911545000148570010000001011000001018';
 
         // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
 
-        with infUnidTransp.Add do
+        with infUnidTransp.New do
         begin
           //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
           tpUnidTransp := utRodoTracao;
           idUnidTransp := 'ABC1234'; // informar a placa se rodoviário
 
-          with lacUnidTransp.Add do
+          with lacUnidTransp.New do
           begin
             nLacre := '123';
           end;
 
           // Informações das Unidades de carga (Containeres/ULD/Outros)
-          with infUnidCarga.Add do
+          with infUnidCarga.New do
           begin
             // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
             tpUnidCarga := ucOutros;
             idUnidCarga := 'AB45'; // informar o numero da unidade da carga
 
-            with lacUnidCarga.Add do
+            with lacUnidCarga.New do
             begin
               nLacre := '123';
             end;
@@ -637,31 +637,31 @@ begin
         end;
       end; // fim do with
 
-      with infCTe.Add do
+      with infCTe.New do
       begin
         chCTe := '35110803911545000148570010000001021000001023';
 
         // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
 
-        with infUnidTransp.Add do
+        with infUnidTransp.New do
         begin
           //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
           tpUnidTransp := utRodoReboque;
           idUnidTransp := 'XYZ5678';
 
-          with lacUnidTransp.Add do
+          with lacUnidTransp.New do
           begin
             nLacre := '321';
           end;
 
           // Informações das Unidades de carga (Containeres/ULD/Outros)
-          with infUnidCarga.Add do
+          with infUnidCarga.New do
           begin
             // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
             tpUnidCarga := ucOutros;
             idUnidCarga := 'DD98';
 
-            with lacUnidCarga.Add do
+            with lacUnidCarga.New do
             begin
               nLacre := '321';
             end;
@@ -680,7 +680,7 @@ begin
     tot.cUnid  :=  uTon;
     tot.qCarga := 2.8000;
 
-    with lacres.Add do
+    with lacres.New do
     begin
       nLacre := '123';
     end;
@@ -1089,7 +1089,7 @@ begin
 
     ACBrMDFe1.EventoMDFe.Evento.Clear;
 
-    with ACBrMDFe1.EventoMDFe.Evento.Add do
+    with ACBrMDFe1.EventoMDFe.Evento.New do
     begin
       infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
       infEvento.CNPJCPF  := edtEmitCNPJ.Text;
@@ -1133,7 +1133,7 @@ begin
   ACBrMDFe1.Manifestos.Clear;
   ACBrMDFe1.EventoMDFe.Evento.Clear;
 
-  with ACBrMDFe1.EventoMDFe.Evento.Add do
+  with ACBrMDFe1.EventoMDFe.Evento.New do
   begin
     infEvento.chMDFe   := vChave;
     infEvento.CNPJCPF  := edtEmitCNPJ.Text;

@@ -133,7 +133,7 @@ type
     FIdCanc: String;
 
     // Provedor iiBrasil
-    FIntegridade: String;
+//    FIntegridade: String;
 
     procedure SetAtributos;
     function GetIdEntidadeEquiplano(const IBGE: Integer): String;
@@ -243,7 +243,7 @@ type
     property HashIdent: String read FHashIdent write FHashIdent;
 
     // Provedor iiBrasil
-    property Integridade: String read FIntegridade write FIntegridade;
+//    property Integridade: String read FIntegridade write FIntegridade;
 
     property IdLote: String read FIdLote write FIdLote;
     property IdCanc: String read FIdCanc write FIdCanc;
@@ -1345,8 +1345,8 @@ begin
       Gerador.Prefixo := Prefixo3;
       Gerador.wGrupoNFSe('/Prestador');
 
-      if Provedor = proiiBrasilv2 then
-        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
+//      if Provedor = proiiBrasilv2 then
+//        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
     end;
   end;
 
@@ -1955,12 +1955,12 @@ begin
              // Nao Possui
            end;
 
-    proiiBrasilv2:
-      begin
-        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
+//    proiiBrasilv2:
+//      begin
+//        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, Integridade);
 
-        Gerador.ArquivoFormatoXML := Notas + Gerador.ArquivoFormatoXML;
-      end;
+//        Gerador.ArquivoFormatoXML := Notas + Gerador.ArquivoFormatoXML;
+//      end;
 
     proISSDSF: begin
                  // Nao Possui

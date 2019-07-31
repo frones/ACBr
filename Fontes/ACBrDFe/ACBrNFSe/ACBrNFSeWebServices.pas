@@ -106,6 +106,7 @@ type
 
     FLoteNaoProc: Boolean;
     FNameSpaceCan: String;
+    FIntegridade: String;
 
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -165,6 +166,7 @@ type
     property IDLote: String          read FIDLote;
     property LoteNaoProc: Boolean    read FLoteNaoProc;
     property NameSpaceCan: String    read FNameSpaceCan;
+    property Integridade: String     read FIntegridade;
 
     property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -2400,11 +2402,6 @@ begin
                      proGiap, proiiBrasilv2]) then
       GerarException(ACBrStr('O provedor ' + FPConfiguracoesNFSe.Geral.xProvedor +
         ' necessita que a propriedade: Configuracoes.Geral.Emitente.WebChaveAcesso seja informada.'));
-
-    // Necessário para o provedor iiBrasil
-    if Provedor = proiiBrasilv2 then
-      Integridade := TACBrNFSe(FPDFeOwner).GerarIntegridade;
-
   end;
 end;
 
@@ -3490,6 +3487,7 @@ end;
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
 var
   I: Integer;
+  Gerador: TGerador;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
@@ -3533,6 +3531,23 @@ begin
     else begin
       for I := 0 to FNotasFiscais.Count - 1 do
         GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
+    end;
+
+    // Necessário para o provedor iiBrasil
+    if Provedor = proiiBrasilv2 then
+    begin
+      FIntegridade := TACBrNFSe(FPDFeOwner).GerarIntegridade(FvNotas);
+
+      Gerador := TGerador.Create;
+      try
+        Gerador.ArquivoFormatoXML := '';
+
+        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
+
+        FvNotas := FvNotas + Gerador.ArquivoFormatoXML;
+      finally
+        Gerador.Free;
+      end;
     end;
 
     InicializarTagITagF;
@@ -4086,6 +4101,7 @@ procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
+  Consulta: string;
 begin
   if (FNotasFiscais.Count <= 0) and (FProvedor in [proGoverna,proIssDSF]) then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
@@ -4191,7 +4207,26 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;
+    Consulta := GerarDadosMsg.Gera_DadosMsgConsNFSeRPS;
+
+    // Necessário para o provedor iiBrasil
+    if Provedor = proiiBrasilv2 then
+    begin
+      FIntegridade := TACBrNFSe(FPDFeOwner).GerarIntegridade(Consulta);
+
+      Gerador := TGerador.Create;
+      try
+        Gerador.ArquivoFormatoXML := '';
+
+        Gerador.wCampoNFSe(tcStr, '', 'Integridade', 01, 2000, 1, FIntegridade);
+
+        Consulta := Consulta + Gerador.ArquivoFormatoXML;
+      finally
+        Gerador.Free;
+      end;
+    end;
+
+    FPDadosMsg := FTagI + Consulta + FTagF;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally

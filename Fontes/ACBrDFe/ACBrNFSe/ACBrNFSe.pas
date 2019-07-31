@@ -135,7 +135,7 @@ type
     function GerarNomeArqSchema(const ALayOut: TLayOutNFSe;
       VersaoServico: Double): String;
 
-    function GerarIntegridade: string;
+    function GerarIntegridade(const AXML: string): string;
 
     property WebServices: TWebServices read FWebServices write FWebServices;
     property NotasFiscais: TNotasFiscais read FNotasFiscais write FNotasFiscais;
@@ -522,10 +522,14 @@ begin
   end;
 end;
 
-function TACBrNFSe.GerarIntegridade: string;
+function TACBrNFSe.GerarIntegridade(const AXML: string): string;
+var
+  XML: string;
 begin
+  XML := StringReplace(AXML, '/[^\x20-\x7E]+/', '', [rfReplaceAll]);
+  XML := StringReplace(XML, '/[  ]+/', '', [rfReplaceAll]);
 //  SSL.CarregarCertificadoSeNecessario;
-  Result := SSL.CalcHash(Configuracoes.Geral.Emitente.WebChaveAcesso,
+  Result := SSL.CalcHash(XML + Configuracoes.Geral.Emitente.WebChaveAcesso,
                          dgstSHA512, outBase64, False);
 end;
 

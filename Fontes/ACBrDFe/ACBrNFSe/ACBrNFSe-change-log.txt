@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2019
+-- Diversos  --
+[*] Alteração na geração da tag Integridade do provedor iiBrasil.
+   Por: Italo Jurisato Junior
+
 30/07/2019
 -- pnfsNFSeW_EGoverneISS --
 [*] https://www.projetoacbr.com.br/forum/topic/52707-egoverneiss-notificartomadorporemail/

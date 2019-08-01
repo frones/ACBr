@@ -393,10 +393,10 @@ begin
        Gerador.wGrupo('evCECTe');
        Gerador.wCampo(tcStr, 'EP02', 'descEvento   ', 33, 46, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'EP03', 'nProt        ', 15, 15, 1, Evento.Items[0].InfEvento.detEvento.nProt);
-       Gerador.wCampo(tcStr, 'EP04', 'nDoc         ', 02, 20, 1, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wCampo(tcStr, 'EP05', 'dhEntrega    ', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhEntrega) +
                                   GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
                                   Evento.Items[0].InfEvento.detEvento.dhEntrega), DSC_DEMI);
+       Gerador.wCampo(tcStr, 'EP04', 'nDoc         ', 02, 20, 1, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wCampo(tcStr, 'EP06', 'xNome        ', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.xNome);
        Gerador.wCampo(tcDe6, 'EP07', 'latitude     ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.latitude);
        Gerador.wCampo(tcDe6, 'EP08', 'longitude    ', 01, 06, 0, Evento.Items[0].InfEvento.detEvento.longitude);

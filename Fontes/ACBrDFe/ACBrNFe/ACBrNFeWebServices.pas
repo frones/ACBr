@@ -2836,7 +2836,10 @@ begin
     ConCadNFe.IE := FIE;
     ConCadNFe.CNPJ := FCNPJ;
     ConCadNFe.CPF := FCPF;
-    ConCadNFe.Versao := FPVersaoServico;
+    if UpperCase(FUF) = 'MT' then
+      ConCadNFe.Versao :=  '2.00'
+    else
+      ConCadNFe.Versao :=  FPVersaoServico;
     AjustarOpcoes( ConCadNFe.Gerador.Opcoes );
     ConCadNFe.GerarXML;
 

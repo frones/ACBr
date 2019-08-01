@@ -1195,7 +1195,7 @@ begin
           while true do
           begin
             // de 001 até 500
-            sSecao := 'ideEstabLot' + IntToStrZero(I, 2) + IntToStrZero(J, 3);
+            sSecao := 'ideEstabLot' + IntToStrZero(I, 3) + IntToStrZero(J, 3);
             sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
 
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1211,13 +1211,13 @@ begin
               K := 1;
               while true do
               begin
-                sSecao := 'itensRemun' + IntToStrZero(I, 2) +
+                sSecao := 'itensRemun' + IntToStrZero(I, 3) +
                             IntToStrZero(J, 3) + IntToStrZero(K, 1) +
                             IntToStrZero(1, 3);
 
                 Existe := INIRec.SectionExists(sSecao);
 
-                sSecao := 'detOper' + IntToStrZero(I, 2) +
+                sSecao := 'detOper' + IntToStrZero(I, 3) +
                             IntToStrZero(J, 3) + IntToStrZero(K, 1) +
                             IntToStrZero(1, 2);
 
@@ -1232,7 +1232,7 @@ begin
                   break;
 
                 // de 1 até 8
-                sSecao := 'remunPerApur' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                sSecao := 'remunPerApur' + IntToStrZero(I, 3) + IntToStrZero(J, 3) +
                              IntToStrZero(K, 1);
 
                 with remunPerApur.New do
@@ -1244,7 +1244,7 @@ begin
                   while true do
                   begin
                     // de 001 até 200
-                    sSecao := 'itensRemun' + IntToStrZero(I, 2) +
+                    sSecao := 'itensRemun' + IntToStrZero(I, 3) +
                                 IntToStrZero(J, 3) + IntToStrZero(K, 1) +
                                 IntToStrZero(L, 3);
                     sFim   := INIRec.ReadString(sSecao, 'codRubr', 'FIM');
@@ -1269,7 +1269,7 @@ begin
                   while true do
                   begin
                     // de 01 até 99
-                    sSecao := 'detOper' + IntToStrZero(I, 2) +
+                    sSecao := 'detOper' + IntToStrZero(I, 3) +
                                 IntToStrZero(J, 3) + IntToStrZero(K, 1) +
                                 IntToStrZero(L, 2);
                     sFim   := INIRec.ReadString(sSecao, 'cnpjOper', 'FIM');
@@ -1287,7 +1287,7 @@ begin
                       while true do
                       begin
                         // de 01 até 99
-                        sSecao := 'detPlano' + IntToStrZero(I, 2) +
+                        sSecao := 'detPlano' + IntToStrZero(I, 3) +
                                     IntToStrZero(J, 3) + IntToStrZero(K, 1) +
                                     IntToStrZero(L, 2) + IntToStrZero(M, 2);
                         sFim   := INIRec.ReadString(sSecao, 'nmDep', 'FIM');
@@ -1312,7 +1312,7 @@ begin
                     Inc(L);
                   end;
 
-                  sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
+                  sSecao := 'infoAgNocivo' + IntToStrZero(I, 3) +
                                     IntToStrZero(J, 3) + IntToStrZero(K, 1);
                   if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
                     infoAgNocivo.grauExp := eSStrToGrauExp(Ok, INIRec.ReadString(sSecao, 'grauExp', '1'));
@@ -1330,7 +1330,7 @@ begin
           while true do
           begin
             // de 1 até 8
-            sSecao := 'ideADC' + IntToStrZero(I, 2) + IntToStrZero(J, 1);
+            sSecao := 'ideADC' + IntToStrZero(I, 3) + IntToStrZero(J, 1);
             sFim   := INIRec.ReadString(sSecao, 'dtAcConv', 'FIM');
 
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
@@ -1349,7 +1349,7 @@ begin
               while true do
               begin
                 // de 001 até 180
-                sSecao := 'idePeriodo' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
+                sSecao := 'idePeriodo' + IntToStrZero(I, 3) + IntToStrZero(J, 1) +
                    IntToStrZero(K, 3);
                 sFim   := INIRec.ReadString(sSecao, 'perRef', 'FIM');
 
@@ -1364,7 +1364,7 @@ begin
                   while true do
                   begin
                     // de 001 até 500
-                    sSecao := 'ideEstabLot' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
+                    sSecao := 'ideEstabLot' + IntToStrZero(I, 3) + IntToStrZero(J, 1) +
                        IntToStrZero(K, 3) + IntToStrZero(L, 3);
                     sFim   := INIRec.ReadString(sSecao, 'nrInsc', 'FIM');
 
@@ -1381,7 +1381,7 @@ begin
                       while true do
                       begin
                         // de 1 até 8
-                        sSecao := 'remunPerAnt' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
+                        sSecao := 'remunPerAnt' + IntToStrZero(I, 3) + IntToStrZero(J, 1) +
                            IntToStrZero(K, 3) + IntToStrZero(L, 3) + IntToStrZero(M, 1);
                         sFim   := INIRec.ReadString(sSecao, 'matricula', 'FIM');
 
@@ -1397,7 +1397,7 @@ begin
                           while true do
                           begin
                             // de 001 até 200
-                            sSecao := 'itensRemun' + IntToStrZero(I, 2) +
+                            sSecao := 'itensRemun' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 1) + IntToStrZero(K, 3) +
                                         IntToStrZero(L, 3) + IntToStrZero(M, 1) +
                                         IntToStrZero(N, 3);
@@ -1419,7 +1419,7 @@ begin
                             Inc(N);
                           end;
 
-                          sSecao := 'infoAgNocivo' + IntToStrZero(I, 2) +
+                          sSecao := 'infoAgNocivo' + IntToStrZero(I, 3) +
                                         IntToStrZero(J, 1) + IntToStrZero(K, 3) +
                                         IntToStrZero(L, 3) + IntToStrZero(M, 1);
                           if INIRec.ReadString(sSecao, 'grauExp', '') <> '' then
@@ -1448,7 +1448,7 @@ begin
           while true do
           begin
             // de 01 até 99
-            sSecao := 'infoTrabInterm' + IntToStrZero(I, 2) + IntToStrZero(J, 2);
+            sSecao := 'infoTrabInterm' + IntToStrZero(I, 3) + IntToStrZero(J, 2);
             sFim   := INIRec.ReadString(sSecao, 'codConv', 'FIM');
 
             if (sFim = 'FIM') or (Length(sFim) <= 0) then

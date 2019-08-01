@@ -439,6 +439,10 @@ begin
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
 
+    GravaLog('Validar: 897-Código do documento: ' + IntToStr(NFe.Ide.nNF));
+    if not ValidarCodigoDFe(NFe.Ide.cNF, NFe.Ide.nNF) then
+      AdicionaErro('897-Rejeição: Código numérico em formato inválido ');
+
     GravaLog('Validar 226-IF');
     if copy(IntToStr(NFe.Emit.EnderEmit.cMun), 1, 2) <>
       IntToStr(Configuracoes.WebServices.UFCodigo) then //B02-10

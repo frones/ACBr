@@ -1095,14 +1095,8 @@ begin
 
   vNotas := '';
   for I := 0 to FNotasFiscais.Count - 1 do
-  begin
-    if not ValidarCodigoDFe(FNotasFiscais.Items[i].NFe.Ide.cNF, FNotasFiscais.Items[i].NFe.Ide.nNF) then
-      GerarException(ACBrStr('Valor de cNF é inválido da Nota: ' +
-        IntToStr(FNotasFiscais.Items[i].NFe.Ide.nNF)));
-
     vNotas := vNotas + '<NFe' + RetornarConteudoEntre(
       FNotasFiscais.Items[I].XMLAssinado, '<NFe', '</NFe>') + '</NFe>';
-  end;
 
   FPDadosMsg := '<enviNFe xmlns="'+ACBRNFE_NAMESPACE+'" versao="' +
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +

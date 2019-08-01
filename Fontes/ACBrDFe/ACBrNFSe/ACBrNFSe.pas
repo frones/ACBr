@@ -527,9 +527,6 @@ var
   XML: string;
   i, j: Integer;
 begin
-//  XML := StringReplace(AXML, '/[^\x20-\x7E]+/', '', [rfReplaceAll]);
-//  XML := StringReplace(XML, '/[  ]+/', '', [rfReplaceAll]);
-
   j := Length(AXML);
   XML := '';
   for i := 1 to J do
@@ -540,7 +537,8 @@ begin
 
 //  SSL.CarregarCertificadoSeNecessario;
   Result := SSL.CalcHash(XML + Configuracoes.Geral.Emitente.WebChaveAcesso,
-                         dgstSHA512, outBase64, False);
+                         dgstSHA512, outHexa, False);
+  Result := lowerCase(Result);
 end;
 
 function TACBrNFSe.ConsultarSituacao(const AProtocolo: String; const ANumLote: String): Boolean;

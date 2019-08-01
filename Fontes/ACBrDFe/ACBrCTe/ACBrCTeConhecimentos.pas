@@ -483,6 +483,10 @@ begin
       AdicionaErro(
         '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
 
+    GravaLog('Validar: 897-Código do documento: ' + IntToStr(CTe.Ide.nCT));
+    if not ValidarCodigoDFe(CTe.Ide.cCT, CTe.Ide.nCT) then
+      AdicionaErro('897-Rejeição: Código numérico em formato inválido ');
+
     GravaLog('Validar: 252-Ambiente');
     if (CTe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
       AdicionaErro('252-Rejeição: Ambiente informado diverge do Ambiente de recebimento '

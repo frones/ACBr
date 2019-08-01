@@ -901,14 +901,8 @@ begin
   begin
     // No modelo 57 podemos ter um lote contendo de 1 até 50 CT-e
     for I := 0 to FConhecimentos.Count - 1 do
-    begin
-      if not ValidarCodigoDFe(FConhecimentos.Items[i].CTe.Ide.cCT, FConhecimentos.Items[i].CTe.Ide.nCT) then
-        GerarException(ACBrStr('Valor de cCT é inválido do Conhecimento: ' +
-          IntToStr(FConhecimentos.Items[i].CTe.Ide.nCT)));
-
       vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
                 FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
-    end;
 
     FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
                      FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
@@ -923,14 +917,8 @@ begin
              ' excedido. Quantidade atual: ' + IntToStr(FConhecimentos.Count)));
 
     if FConhecimentos.Count > 0 then
-    begin
-      if not ValidarCodigoDFe(FConhecimentos.Items[0].CTe.Ide.cCT, FConhecimentos.Items[0].CTe.Ide.nCT) then
-        GerarException(ACBrStr('Valor de cCT é inválido do Conhecimento: ' +
-          IntToStr(FConhecimentos.Items[0].CTe.Ide.nCT)));
-
       FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
               FConhecimentos.Items[0].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
-    end;
   end;
 
   // Lote tem mais de 500kb ? //

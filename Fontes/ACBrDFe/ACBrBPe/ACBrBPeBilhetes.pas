@@ -388,6 +388,10 @@ begin
     if BPe.infBPe.Versao < 1.00 then
       AdicionaErro('701-Rejeição: Versão inválida');
 
+    GravaLog('Validar: 897-Código do documento: ' + IntToStr(BPe.Ide.nBP));
+    if not ValidarCodigoDFe(BPe.Ide.cBP, BPe.Ide.nBP) then
+      AdicionaErro('897-Rejeição: Código numérico em formato inválido ');
+
     for I:=0 to BPe.autXML.Count-1 do
     begin
       GravaLog('Validar: 325-' + IntToStr(I) + '-CPF download');

@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2019
+-- ACBrBPeBilhetes/ACBrBPeWebServices --
+[*] Removido a validação do código numerico da chave do método Enviar e 
+    incluido na Validação de Regras de Negócios.
+   Por: Italo Jurisato Junior
+
 24/07/2019
 -- ACBrBPeWebServices --
 [*] Ajustes feito para que a validação do código que compõe a chave seja

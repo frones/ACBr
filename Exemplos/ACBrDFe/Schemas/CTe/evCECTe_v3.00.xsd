@@ -11,13 +11,12 @@
 			<xs:sequence>
 				<xs:element name="descEvento">
 					<xs:annotation>
-						<xs:documentation>Descrição do Evento - “Comprovante de Entrega Eletrônico do CT-e”</xs:documentation>
+						<xs:documentation>Descrição do Evento - “Comprovante de Entrega do CT-e”</xs:documentation>
 					</xs:annotation>
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
 							<xs:whiteSpace value="preserve"/>
-							<xs:enumeration value="Comprovante de Entrega Eletrônico do CT-e"/>
-							<xs:enumeration value="Comprovante de Entrega Eletronico do CT-e"/>
+							<xs:enumeration value="Comprovante de Entrega do CT-e"/>
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:element>
@@ -25,6 +24,15 @@
 					<xs:annotation>
 						<xs:documentation>Número do Protocolo de autorização do CT-e</xs:documentation>
 					</xs:annotation>
+				</xs:element>
+				<xs:element name="dhEntrega">
+					<xs:annotation>
+						<xs:documentation>Data e hora de conclusão da entrega da NF-e</xs:documentation>
+						<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="TDateTimeUTC"/>
+					</xs:simpleType>
 				</xs:element>
 				<xs:element name="nDoc">
 					<xs:annotation>
@@ -35,15 +43,6 @@
 							<xs:minLength value="2"/>
 							<xs:maxLength value="20"/>
 						</xs:restriction>
-					</xs:simpleType>
-				</xs:element>
-				<xs:element name="dhEntrega">
-					<xs:annotation>
-						<xs:documentation>Data e hora de conclusão da entrega da NF-e</xs:documentation>
-						<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
-					</xs:annotation>
-					<xs:simpleType>
-						<xs:restriction base="TDateTimeUTC"/>
 					</xs:simpleType>
 				</xs:element>
 				<xs:element name="xNome">

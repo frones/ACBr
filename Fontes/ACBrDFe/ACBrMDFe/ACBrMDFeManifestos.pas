@@ -407,6 +407,10 @@ begin
   begin
     Erros := '';
 
+    GravaLog('Validar: 897-Código do documento: ' + IntToStr(MDFe.Ide.nMDF));
+    if not ValidarCodigoDFe(MDFe.Ide.cMDF, MDFe.Ide.nMDF) then
+      AdicionaErro('897-Rejeição: Código numérico em formato inválido ');
+
     GravaLog('Regra: G001 - Validar: 252-Ambiente');
     if (MDFe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
       AdicionaErro('252-Rejeição: Tipo do ambiente do MDF-e difere do ambiente do Web Service');

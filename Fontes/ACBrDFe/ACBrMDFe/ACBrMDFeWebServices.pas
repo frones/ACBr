@@ -812,15 +812,9 @@ begin
              ' excedido. Quantidade atual: ' + IntToStr(FManifestos.Count)));
 
     if FManifestos.Count > 0 then
-    begin
-      if not ValidarCodigoDFe(FManifestos.Items[0].MDFe.Ide.cMDF, FManifestos.Items[0].MDFe.Ide.nMDF) then
-        GerarException(ACBrStr('Valor de cMDF é inválido da Manifesto: ' +
-          IntToStr(FManifestos.Items[0].MDFe.Ide.nMDF)));
-
       FPDadosMsg := '<MDFe' +
         RetornarConteudoEntre(FManifestos.Items[0].XMLAssinado, '<MDFe', '</MDFe>') +
         '</MDFe>';
-    end;
 
     FMsgUnZip := FPDadosMsg;
 
@@ -831,14 +825,8 @@ begin
     vMDFe := '';
 
     for I := 0 to FManifestos.Count - 1 do
-    begin
-      if not ValidarCodigoDFe(FManifestos.Items[i].MDFe.Ide.cMDF, FManifestos.Items[i].MDFe.Ide.nMDF) then
-        GerarException(ACBrStr('Valor de cMDF é inválido do Manifesto: ' +
-          IntToStr(FManifestos.Items[i].MDFe.Ide.nMDF)));
-
       vMDFe := vMDFe + '<MDFe' + RetornarConteudoEntre(
         FManifestos.Items[I].XMLAssinado, '<MDFe', '</MDFe>') + '</MDFe>';
-    end;
 
     FPDadosMsg := '<enviMDFe xmlns="' + ACBRMDFE_NAMESPACE + '" versao="' +
       FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +

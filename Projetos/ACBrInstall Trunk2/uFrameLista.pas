@@ -135,6 +135,7 @@ type
     ACBr_Reinf_dpk: TCheckBox;
     ACBr_BPeDabpeESCPOS_dpk: TCheckBox;
     Label27: TLabel;
+    ACBr_CIOT_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -330,7 +331,8 @@ begin
       if (ACBr_NFe_dpk.Checked) or (ACBr_CTe_dpk.Checked) or
         (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) or
         (ACBr_BlocoX_dpk.Checked) or (ACBr_SATWS_dpk.Checked) or
-        (ACBr_BPe_dpk.Checked) or (ACBr_ANe_dpk.Checked) then
+        (ACBr_BPe_dpk.Checked) or (ACBr_ANe_dpk.Checked) or
+        (ACBr_CIOT_dpk.Checked) then
       begin
         ACBr_PCNComum_dpk.Checked := True;
         ACBr_OpenSSL_dpk.Checked := True;

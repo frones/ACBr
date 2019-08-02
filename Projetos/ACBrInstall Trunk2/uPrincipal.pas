@@ -119,7 +119,7 @@ type
     ckbRemoverCastWarnings: TCheckBox;
     ckbUsarArquivoConfig: TCheckBox;
     framePacotes1: TframePacotes;
-    ckbRemoverXMLSec: TCheckBox;
+    ckbRemoveXMLSec: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -490,6 +490,7 @@ begin
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
     ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL',False);
     ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom',False);
+    ckbRemoveXMLSec.Checked        := ArqIni.ReadBool('CONFIG','RemoveXMLSec',False);
     ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia',False);
     ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings',False);
     ckbUsarArquivoConfig.Checked   := True;
@@ -534,6 +535,7 @@ begin
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
     ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);
     ArqIni.WriteBool('CONFIG','RemoveCapicom', ckbRemoveCapicom.Checked);
+    ArqIni.WriteBool('CONFIG','RemoveXmlSec', ckbRemoveXMLSec.Checked);
     ArqIni.WriteBool('CONFIG','CargaDllTardia', ckbCargaDllTardia.Checked);
     ArqIni.WriteBool('CONFIG','RemoverCastWarnings', ckbRemoverCastWarnings.Checked);
 
@@ -1114,7 +1116,7 @@ begin
   DesligarDefineACBrInc('DFE_SEM_CAPICOM',  ckbRemoveCapicom.Checked);
   DesligarDefineACBrInc('USE_DELAYED',      ckbCargaDllTardia.Checked);
   DesligarDefineACBrInc('REMOVE_CAST_WARN', ckbRemoverCastWarnings.Checked);
-  DesligarDefineACBrInc('DFE_SEM_XMLSEC',   ckbRemoverXMLSec.Checked);
+  DesligarDefineACBrInc('DFE_SEM_XMLSEC',   ckbRemoveXMLSec.Checked);
 
 
   for iListaVer := 0 to clbDelphiVersion.Count -1 do

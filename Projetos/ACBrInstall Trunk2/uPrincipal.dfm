@@ -1314,7 +1314,7 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
         TabOrder = 12
       end
-      object ckbRemoverXMLSec: TCheckBox
+      object ckbRemoveXMLSec: TCheckBox
         Left = 195
         Top = 216
         Width = 379

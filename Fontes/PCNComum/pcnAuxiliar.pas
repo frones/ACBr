@@ -249,23 +249,10 @@ begin
     result := False;
 end;
 
-function HexToAscii(const Texto: string): String;
-var i : integer;
-   function HexToInt(Hex: string): integer;
-   begin
-     Result := StrToInt('$' + Hex);
-   end;
-begin
-  result := '';
-  for i := 1 to Length(texto) do begin
-    if i mod 2 <> 0 then
-       result := result + chr(HexToInt(copy(texto,i,2)));
-  end;
-end;
-
 function ReverterFiltroTextoXML(aTexto: String): String;
 var p1,p2:Integer;
     vHex,vStr:String;
+    vStrResult:AnsiString;
 begin
   aTexto := StringReplace(aTexto, '&amp;', '&', [rfReplaceAll]);
   aTexto := StringReplace(aTexto, '&lt;', '<', [rfReplaceAll]);
@@ -280,8 +267,9 @@ begin
     vHex:=Copy(aTexto,p1,p2-p1+1);
     vStr:=StringReplace(vHex,'&#x','',[rfReplaceAll]);
     vStr:=StringReplace(vStr,';','',[rfReplaceAll]);
-    vStr:=HexToAscii(vStr);
-    aTexto:=StringReplace(aTexto,vHex,vStr,[rfReplaceAll]);
+    if not TryHexToAscii(vStr, vStrResult) then
+      vStrResult := vStr;
+    aTexto:=StringReplace(aTexto,vHex,vStrResult,[rfReplaceAll]);
     p1:=Pos('&#x',aTexto);
   end;
   result := Trim(aTexto);

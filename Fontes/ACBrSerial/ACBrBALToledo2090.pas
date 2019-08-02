@@ -86,12 +86,11 @@ var
   wStrListDados: TStringList;
   wDecimais: Integer;
 begin
-  Result := 0;
+  Result := -9;
 
   if (aResposta = EmptyStr) then
     Exit;
 
-  Result    := 0;
   wResposta := '';
   wDecimais := 100;
 
@@ -130,7 +129,7 @@ begin
         2: Result := -10;            { Sobrecarga de Peso }
       end;
     except
-      Result := 0;
+      Result := -9;
     end;
   finally
     wStrListDados.Free;

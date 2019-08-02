@@ -81,7 +81,7 @@ var
   PesoBruto : Integer;
   STX : Integer ;
 begin
-  Result := 0;
+  Result := -9;
 
   if (aResposta = EmptyStr) then
     Exit;

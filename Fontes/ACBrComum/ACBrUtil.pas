@@ -174,6 +174,8 @@ function BEStrToInt(const ABEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
+function TryHexToAscii(const HextStr: String; out Value: AnsiString): Boolean;
+function HexToAsciiDef(const HexStr: String; const Default: AnsiString): AnsiString;
 
 function BinaryStringToString(const AString: AnsiString): AnsiString;
 function StringToBinaryString(const AString: AnsiString): AnsiString;
@@ -1078,15 +1080,31 @@ begin
   Result := '' ;
   Cmd    := Trim(HexStr);
   I      := 1 ;
-  L      := Length( HexStr ) ;
+  L      := Length(Cmd) ;
 
   while I < L do
   begin
-     B := StrToIntDef('$' + copy(Cmd, I, 2), 32) ;
+     B := StrToInt('$' + copy(Cmd, I, 2)) ;
      Result := Result + AnsiChr( B ) ;
      Inc( I, 2) ;
   end ;
 end ;
+
+function TryHexToAscii(const HextStr: String; out Value: AnsiString): Boolean;
+begin
+  try
+    Value := HexToAscii(HextStr);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+function HexToAsciiDef(const HexStr: String; const Default: AnsiString): AnsiString;
+begin
+  if not TryHexToAscii(HexStr, Result) then
+    Result := Default;
+end;
 
 {-----------------------------------------------------------------------------
   Converte uma String pela sua representação em HexaDecimal

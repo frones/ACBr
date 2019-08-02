@@ -115,7 +115,11 @@ begin
     Exit;
 
   if wResposta[1] = '1' then
-    Exit(-1); // instável
+  begin
+    // instável
+    Result := -1;
+    Exit; 
+  end;
 
   wResposta := Copy(wResposta, 19, 7); // peso líquido
 

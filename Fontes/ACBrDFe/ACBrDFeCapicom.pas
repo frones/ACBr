@@ -254,7 +254,7 @@ begin
           begin
             p := Pos('=', Propriedade);
             Propriedade := copy(Propriedade, p + 1, Length(Propriedade));
-            Result := OnlyNumber(HexToAscii(RemoveString(' ', Propriedade)));
+            Result := OnlyNumber(HexToAsciiDef(RemoveString(' ', Propriedade),' '));
             break;
           end;
         end;

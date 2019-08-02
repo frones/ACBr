@@ -277,7 +277,7 @@ Var
       Inc( LenHexa );
     end;
 
-    Result := IntToBEStr(Trunc(LenHexa/2), 4) + HexToAscii(HexaStr);
+    Result := IntToBEStr(Trunc(LenHexa/2), 4) + HexToAsciiDef(HexaStr, ' ');
   end;
 
   function EncodeBufferSSH(ABuffer: AnsiString): AnsiString;

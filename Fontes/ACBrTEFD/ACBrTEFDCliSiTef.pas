@@ -397,7 +397,7 @@ begin
          end;
        131 : fpInstituicao                 := LinStr;
        132 : fpCodigoBandeiraPadrao        := LinStr;
-       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
+       135 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := LinStr;
        136 : fpBin                         := Linha.Informacao.AsString;
        139 : fpValorEntradaCDC             := Linha.Informacao.AsFloat;

@@ -53,6 +53,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2019
+-- DANFeNFCe5_00.fr3 --
+[*] Correção para remover espaço em branco abaixo da nota na visualização e "picote" na impressão.
+    https://www.projetoacbr.com.br/forum/topic/52813-problemas-na-impress%C3%A3o-danfenfce5_00fr3/
+  Por: BigWings
+
 31/07/2019
 --- DANFeNFCe5_00.fr3 ---
 [*] Ajustes de alinhamento das informações adicionais, inclusão do valor dos serviços e outros acréscimos e descontos nos totais da nota e remoção de duplicidade da impressão do troco.
@@ -62,8 +68,6 @@ Símbolo : Significado
 --- DanfeRetrato_2019.fr3
 [*] Refatoração para apresentar o canhoto com chave de acesso.
       Por : Henrique Leonardo ( HLeorj )
-
-
 
 19/07/2019
 --- DANFeNFCe5_00.fr3 ---

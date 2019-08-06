@@ -1664,7 +1664,7 @@ begin
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
     with MonitorConfig.DFE.WebService do
-      Ambiente := NumAmbiente;
+      Ambiente := NumAmbiente -1;
 
     MonitorConfig.SalvarArquivo;
   end;

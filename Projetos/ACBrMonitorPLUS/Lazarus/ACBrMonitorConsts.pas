@@ -941,6 +941,7 @@ const
   CKeyDANFEExpandirLogo =              'ExpandirLogo';
   CKeyDANFEFonte =                     'Fonte';
   CKeyDANFELocalCanhoto =              'LocalCanhoto';
+  CKeyDANFELayoutCanhoto =             'LayoutCanhoto';
   CKeyDANFEQuebrarLinhasDetalheItens =     'QuebrarLinhasDetalheItens';
   CKeyDANFEImprimirDetalhamentoEspecifico ='ImprimirDetalhamentoEspecifico';
   CKeyDANFEImprimirDadosDocReferenciados = 'ImprimirDadosDocReferenciados';

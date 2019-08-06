@@ -302,6 +302,7 @@ type
     ExpandirLogo                     : Boolean;
     Fonte                            : Integer;
     LocalCanhoto                     : Integer;
+    LayoutCanhoto                    : Integer;
     QuebrarLinhasDetalheItens        : Boolean;
     ImprimirDetalhamentoEspecifico   : Boolean;
     ImprimirDadosDocReferenciados    : Boolean;
@@ -1074,6 +1075,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirLogo              , ExpandirLogo );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEFonte                  , Fonte );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFELocalCanhoto           , LocalCanhoto );
+      Ini.WriteInteger( CSecDANFE,  CKeyDANFELayoutCanhoto          , LayoutCanhoto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEQuebrarLinhasDetalheItens      , QuebrarLinhasDetalheItens );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
@@ -1722,6 +1724,7 @@ begin
       ExpandirLogo              :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEExpandirLogo                      , ExpandirLogo );
       Fonte                     :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEFonte                          , Fonte );
       LocalCanhoto              :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFELocalCanhoto                   , LocalCanhoto );
+      LayoutCanhoto             :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFELayoutCanhoto                  , LayoutCanhoto );
       QuebrarLinhasDetalheItens :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEQuebrarLinhasDetalheItens         , QuebrarLinhasDetalheItens );
       ImprimirDetalhamentoEspecifico := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       ImprimirDadosDocReferenciados := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
@@ -2362,6 +2365,7 @@ begin
     ExpandirLogo              :=  False;
     Fonte                     :=  0;
     LocalCanhoto              :=  0;
+    LayoutCanhoto             :=  1;
     QuebrarLinhasDetalheItens :=  False;
     ImprimirDetalhamentoEspecifico := True;
     ImprimirDadosDocReferenciados := True;

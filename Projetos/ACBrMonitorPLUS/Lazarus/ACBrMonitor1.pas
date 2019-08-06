@@ -579,6 +579,7 @@ type
     rgImprimeTributos: TRadioGroup;
     rgInfAdicProduto: TRadioGroup;
     rdgImprimeChave1LinhaSAT: TRadioGroup;
+    rgLayoutCanhoto: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
     sbSchemaDFe: TSpeedButton;
@@ -4789,6 +4790,7 @@ begin
       cbxExpandirLogo.Checked             := ExpandirLogo;
       rgTipoFonte.ItemIndex               := Fonte;
       rgLocalCanhoto.ItemIndex            := LocalCanhoto;
+      rgLayoutCanhoto.ItemIndex           := LayoutCanhoto;
       cbxQuebrarLinhasDetalhesItens.Checked:=QuebrarLinhasDetalheItens;
       cbxImpDetEspNFe.Checked             := ImprimirDetalhamentoEspecifico;
       cbxImpDocsReferenciados.Checked     := ImprimirDadosDocReferenciados;
@@ -4895,7 +4897,7 @@ begin
     ACBrMDFe1.DAMDFe.Email             := edtEmailEmpresa.Text;
     ACBrMDFe1.DAMDFe.Fax               := edtFaxEmpresa.Text;
     ACBrMDFe1.DAMDFe.MostraPreview     := cbxMostrarPreview.Checked;
-    ACBrMDFe1.DAMDFe.Impressora        := IfThen( NaoEstaVazio(cbxImpressora.Text), cbxImpressora.Text, ' ');
+    ACBrMDFe1.DAMDFe.Impressora        := cbxImpressora.Text;
     ACBrMDFe1.DAMDFe.NumCopias         := edtNumCopia.Value;
     ACBrMDFe1.DAMDFe.MargemInferior    := fspeMargemInf.Value;
     ACBrMDFe1.DAMDFe.MargemSuperior    := fspeMargemSup.Value;
@@ -5940,6 +5942,7 @@ begin
         ExpandirLogo               := cbxExpandirLogo.Checked;
         Fonte                      := rgTipoFonte.ItemIndex;
         LocalCanhoto               := rgLocalCanhoto.ItemIndex;
+        LayoutCanhoto              := rgLayoutCanhoto.ItemIndex;
         QuebrarLinhasDetalheItens  := cbxQuebrarLinhasDetalhesItens.Checked ;
         ImprimirDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
         ImprimirDadosDocReferenciados  := cbxImpDocsReferenciados.Checked;
@@ -8711,8 +8714,6 @@ begin
       ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
       if NaoEstaVazio(cbxImpressora.Text) then
         ACBrNFe1.DANFE.Impressora := cbxImpressora.Text
-      else
-        ACBrNFe1.DANFE.Impressora := ' ';
     end;
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
@@ -8766,6 +8767,7 @@ begin
       ACBrNFeDANFeRL1.Fonte.TamanhoFonteRazaoSocial := speFonteRazao.Value;
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+      ACBrNFeDANFeRL1.PosCanhotoLayout := TPosReciboLayout( rgLayoutCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.ImprimeValor := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
       ACBrNFeDANFeRL1.ImprimeDetalhamentoEspecifico := cbxImpDetEspNFe.Checked;
       ACBrNFeDANFeRL1.ExibeDadosDocReferenciados := cbxImpDocsReferenciados.Checked;
@@ -8874,23 +8876,9 @@ var
 begin
   if ACBrCTe1.Conhecimentos.Count > 0 then
   begin
-    if ACBrCTe1.Conhecimentos.Items[0].CTe.Ide.modelo = 67 then
-    begin
-//      if (rgModeloDANFeNFCE.ItemIndex = 0) or GerarPDF then
-//        ACBrCTe1.DANFE := ACBrNFeDANFCeFortes1
-//      else
-//        ACBrCTe1.DANFE := ACBrNFeDANFeESCPOS1;
-
-//      ACBrCTe1.DACTE.Impressora := cbxImpressoraNFCe.Text;
-    end
-    else
-    begin
-      ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
-      if NaoEstaVazio(cbxImpressora.Text) then
-        ACBrCTe1.DACTE.Impressora := cbxImpressora.Text
-      else
-        ACBrCTe1.DACTE.Impressora := ' ';
-    end;
+    ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
+    if NaoEstaVazio(cbxImpressora.Text) then
+      ACBrCTe1.DACTE.Impressora := cbxImpressora.Text;
 
     if (ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.cStat in [101, 151, 155]) then
        ACBrCTe1.DACTE.Cancelada := True

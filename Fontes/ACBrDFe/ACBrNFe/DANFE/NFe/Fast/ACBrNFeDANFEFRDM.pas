@@ -246,6 +246,7 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(nil);
   with FfrxPDFExport do
   begin
+     PrintOptimized := True;
      Background    := FIncorporarBackgroundPdf;
      EmbeddedFonts := FIncorporarFontesPdf;
      Subject       := 'Exportando DANFE para PDF';

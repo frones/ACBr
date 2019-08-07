@@ -60,7 +60,7 @@ end;
 
 {$IFDEF FPC}
 initialization
-   {$I ACBrCIOT.lrs}
+   //{$I ACBrCIOT.lrs}
 {$ENDIF}
 
 end.

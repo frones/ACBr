@@ -238,6 +238,7 @@ begin
   end;
 
   frxPDFExport := TfrxPDFExport.Create(FDAMDFEClassOwner);
+  frxPDFExport.PrintOptimized := True;
   frxPDFExport.ShowProgress := False;
 
   frxBarCodeObject := TfrxBarCodeObject.Create(Self);

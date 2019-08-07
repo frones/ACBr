@@ -64,7 +64,6 @@ uses
 type
 
   { TfrmDACTeRLRetrato }
-
   TfrmDACTeRLRetrato = class(TfrmDACTeRL)
     rlb_CTeOS_PrestacaoServico: TRLBand;
     rlb_Dados_Seguradora: TRLBand;
@@ -358,7 +357,6 @@ type
     rlsLinhaV06: TRLDraw;
     rlsLinhaV05: TRLDraw;
     rlsLinhaH04: TRLDraw;
-    rlsLinhaV07: TRLDraw;
     rlsLinhaV01: TRLDraw;
     rlsLinhaV11: TRLDraw;
     rlsLinhaH06: TRLDraw;
@@ -682,6 +680,9 @@ type
     rlChaveCteSerAnulSubst: TRLMemo;
     rlChaveCteAnulacao: TRLMemo;
     RLMemo1: TRLMemo;
+    rlsLinhaV07: TRLDraw;
+    imgQRCode: TRLImage;
+
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -725,27 +726,26 @@ type
       var PrintIt: Boolean);
   private
     Linhas: integer;
-    procedure Itens;
 
+    procedure Itens;
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
   public
     constructor Create(TheOwner: TComponent); override;
 
     procedure ProtocoloCTe(const sProtocolo: string);
-
   end;
 
 implementation
 
 uses
-  DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe;
+  DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe,
+  ACBrDelphiZXingQRCode;
 
 {$IFnDEF FPC}
   {$R *.dfm}
-
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
-
 
 var
   FProtocoloCTe: string;
@@ -1087,7 +1087,7 @@ begin
   else
   begin
     rlmDadosEmitente.Left := 7;
-    rlmDadosEmitente.Width := 321;
+    rlmDadosEmitente.Width := 302;
     rlmDadosEmitente.Alignment := taCenter;
   end;
 
@@ -2629,6 +2629,54 @@ begin
   end;
 
   RLCTe.Title := 'CT-e: ' + FormatFloat('000,000,000', fpCTe.Ide.nCT);
+
+  if not EstaVazio(Trim(fpCTe.infCTeSupl.qrCodCTe)) then
+    PintarQRCode( fpCTe.infCTeSupl.qrCodCTe, imgQRCode.Picture )
+  else
+  begin
+    rlsLinhaV07.Height     := 26;
+    rlsLinhaH03.Width      := 427;
+    RLDraw99.Width         := 427;
+    rlbCodigoBarras.Width  := 419;
+    rllVariavel1.Width     := 419;
+    RLLabel198.Width       := 419;
+    imgQRCode.Visible      := False;
+  end;
+end;
+
+procedure TfrmDACTeRLRetrato.PintarQRCode(const QRCodeData: String; APict: TPicture);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  QRCode       := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.QuietZone := 1;
+    QRCode.Data      := WideString(QRCodeData);
+
+    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    APict.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
+  end;
 end;
 
 end.

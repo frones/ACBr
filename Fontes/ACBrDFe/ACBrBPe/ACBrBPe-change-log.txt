@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2019
+-- ACBrBPeServicos --
+[*] https://www.projetoacbr.com.br/forum/topic/52867-erro-leitura-qrcode-de-mt/
+   Por: Luiz Carlos de Lima
+
 01/08/2019
 -- ACBrBPeBilhetes/ACBrBPeWebServices --
 [*] Removido a validação do código numerico da chave do método Enviar e 

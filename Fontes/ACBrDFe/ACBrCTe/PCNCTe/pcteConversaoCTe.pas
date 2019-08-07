@@ -58,7 +58,7 @@ type
   TLayOutCTe = (LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
                 LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
                 LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
-                LayCTeDistDFeInt, LayCTeRecepcaoOS);
+                LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc);
 
   TSchemaCTe = ( schErro, schCTe, schCTeOS, schcancCTe, schInutCTe, schEventoCTe,
            //      schresCTe, schresEvento, schprocCTe, schprocEventoCTe,
@@ -217,11 +217,11 @@ begin
     ['CTeRecepcao', 'CTeRetRecepcao', 'CTeCancelamento',
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
      'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN',
-     'CTeDistribuicaoDFe', 'CTeRecepcaoOS'],
+     'CTeDistribuicaoDFe', 'CTeRecepcaoOS', 'CTeRecepcaoSinc'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
       LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
-      LayCTeDistDFeInt, LayCTeRecepcaoOS ]);
+      LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc ]);
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -230,17 +230,18 @@ begin
     ['CTeRecepcao', 'CTeRetRecepcao', 'CTeCancelamento',
      'CTeInutilizacao', 'CTeConsultaProtocolo', 'CTeStatusServico',
      'CTeConsultaCadastro', 'RecepcaoEvento', 'RecepcaoEventoAN',
-     'CTeDistribuicaoDFe', 'CTeRecepcaoOS'],
+     'CTeDistribuicaoDFe', 'CTeRecepcaoOS', 'CTeRecepcaoSinc'],
     [ LayCTeRecepcao, LayCTeRetRecepcao, LayCTeCancelamento,
       LayCTeInutilizacao, LayCTeConsulta, LayCTeStatusServico,
       LayCTeCadastro, LayCTeEvento, LayCTeEventoAN,
-      LayCTeDistDFeInt, LayCTeRecepcaoOS ]);
+      LayCTeDistDFeInt, LayCTeRecepcaoOS, LayCTeRecepcaoSinc ]);
 end;
 
 function LayOutToSchema(const t: TLayOutCTe): TSchemaCTe;
 begin
   case t of
-    LayCTeRecepcao:      Result := schCTe;
+    LayCTeRecepcao,
+    LayCTeRecepcaoSinc:  Result := schCTe;
     LayCTeRecepcaoOS:    Result := schCTeOS;
     LayCTeRetRecepcao:   Result := schconsReciCTe;
     LayCTeCancelamento:  Result := schcancCTe;

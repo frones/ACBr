@@ -205,8 +205,6 @@ begin
         FnCTIni := Leitor.rCampo(tcInt, 'nCTIni');
         FnCTFin := Leitor.rCampo(tcInt, 'nCTFin');
         FxJust  := Leitor.rCampo(tcStr, 'xJust');;
-
-        Result := True;
       end;
 
       if Leitor.rExtrai(1, 'Signature') <> '' then
@@ -216,38 +214,38 @@ begin
         signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
         signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
       end;
+
+      // Lendo dados do retorno, se houver
+      RetornoInutCTe.Leitor.Arquivo := AXML;
+      Result := RetornoInutCTe.LerXml;
+
+      if ( FIDInutilizacao = '' ) then
+      begin
+        FIDInutilizacao := RetornoInutCTe.Id;
+        tpAmb           := RetornoInutCTe.tpAmb;
+      end;
+
+      with FRetInutCTe do
+      begin
+        ID       := RetornoInutCTe.Id;
+        tpAmb    := RetornoInutCTe.tpAmb;
+        verAplic := RetornoInutCTe.verAplic;
+        cStat    := RetornoInutCTe.cStat;
+        xMotivo  := RetornoInutCTe.xMotivo;
+        cUF      := RetornoInutCTe.cUF;
+        xJust    := RetornoInutCTe.xJust;
+
+        ano      := RetornoInutCTe.ano;
+        CNPJ     := RetornoInutCTe.CNPJ;
+        Modelo   := RetornoInutCTe.Modelo;
+        Serie    := RetornoInutCTe.Serie;
+        nCTIni   := RetornoInutCTe.nCTIni;
+        nCTFin   := RetornoInutCTe.nCTFin;
+        dhRecbto := RetornoInutCTe.dhRecbto;
+        nProt    := RetornoInutCTe.nProt;
+      end;
     except
       Result := False;
-    end;
-
-    // Lendo dados do retorno, se houver
-    RetornoInutCTe.Leitor.Arquivo := AXML;
-    Result := RetornoInutCTe.LerXml;
-
-    if ( FIDInutilizacao = '' ) then
-    begin
-      FIDInutilizacao := RetornoInutCTe.Id;
-      tpAmb           := RetornoInutCTe.tpAmb;
-    end;
-
-    with FRetInutCTe do
-    begin
-      ID       := RetornoInutCTe.Id;
-      tpAmb    := RetornoInutCTe.tpAmb;
-      verAplic := RetornoInutCTe.verAplic;
-      cStat    := RetornoInutCTe.cStat;
-      xMotivo  := RetornoInutCTe.xMotivo;
-      cUF      := RetornoInutCTe.cUF;
-      xJust    := RetornoInutCTe.xJust;
-
-      ano      := RetornoInutCTe.ano;
-      CNPJ     := RetornoInutCTe.CNPJ;
-      Modelo   := RetornoInutCTe.Modelo;
-      Serie    := RetornoInutCTe.Serie;
-      nCTIni   := RetornoInutCTe.nCTIni;
-      nCTFin   := RetornoInutCTe.nCTFin;
-      dhRecbto := RetornoInutCTe.dhRecbto;
-      nProt    := RetornoInutCTe.nProt;
     end;
   finally
     RetornoInutCTe.Free;

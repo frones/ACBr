@@ -91,7 +91,8 @@ type
     FxMotivo: String;
     FInfEvento: TInfEvento;
     FretEvento: TRetInfEventoCollection;
-    FXML: AnsiString;
+    FXML: String;
+//    FXML: AnsiString;
     Fsignature: Tsignature;
   public
     constructor Create;
@@ -108,7 +109,8 @@ type
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
     property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
-    property XML: AnsiString                    read FXML       write FXML;
+    property XML: String                        read FXML       write FXML;
+//    property XML: AnsiString                    read FXML       write FXML;
   end;
 
 implementation

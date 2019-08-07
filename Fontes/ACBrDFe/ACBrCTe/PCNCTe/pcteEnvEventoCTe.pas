@@ -108,7 +108,8 @@ type
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
-    FXML: AnsiString;
+    FXML: String;
+//    FXML: AnsiString;
     FVersaoDF: TVersaoCTe;
 
     procedure SetEvento(const Value: TInfEventoCollection);
@@ -126,7 +127,8 @@ type
     property idLote: Integer              read FidLote   write FidLote;
     property Evento: TInfEventoCollection read FEvento   write SetEvento;
     property Versao: String               read FVersao   write FVersao;
-    property XML: AnsiString              read FXML      write FXML;
+    property XML: String                  read FXML      write FXML;
+//    property XML: AnsiString              read FXML      write FXML;
     property VersaoDF: TVersaoCTe         read FVersaoDF write FVersaoDF;
   end;
 

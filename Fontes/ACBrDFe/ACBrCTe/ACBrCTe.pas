@@ -117,8 +117,10 @@ type
 
     procedure SetStatus(const stNewStatus: TStatusACBrCTe);
 
-    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;  overload;
-    function Enviar(const ALote: String; Imprimir: Boolean = True): Boolean;  overload;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True;
+      ASincrono: Boolean = False): Boolean;  overload;
+    function Enviar(const ALote: String; Imprimir: Boolean = True;
+      ASincrono: Boolean = False): Boolean;  overload;
 
     function Consultar( const AChave: String = ''): Boolean;
     function Cancelamento(const AJustificativa: String; ALote: Integer = 0): Boolean;
@@ -248,11 +250,11 @@ end;
 
 function TACBrCTe.GetURLConsulta(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
-var
-  VersaoDFe: TVersaoCTe;
-  ok: Boolean;
+//var
+//  VersaoDFe: TVersaoCTe;
+//  ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoCTe(ok, Versao);
+//  VersaoDFe := DblToVersaoCTe(ok, Versao);  // Deixado para usu futuro
   Result := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaCTe', 0);
 end;
 
@@ -261,10 +263,10 @@ function TACBrCTe.GetURLQRCode(const CUF: integer;
   const AChaveCTe: String; const Versao: Double): String;
 var
   idCTe, sEntrada, urlUF, Passo2, sign: String;
-  VersaoDFe: TVersaoCTe;
-  ok: Boolean;
+//  VersaoDFe: TVersaoCTe;
+//  ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoCTe(ok, Versao);
+//  VersaoDFe := DblToVersaoCTe(ok, Versao);  // Deixado para usu futuro
 
   urlUF := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
 
@@ -692,12 +694,14 @@ begin
   end;
 end;
 
-function TACBrCTe.Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;
+function TACBrCTe.Enviar(ALote: Integer; Imprimir: Boolean = True;
+      ASincrono: Boolean = False): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote), Imprimir);
+  Result := Enviar(IntToStr(ALote), Imprimir, ASincrono);
 end;
 
-function TACBrCTe.Enviar(const ALote: String; Imprimir: Boolean): Boolean;
+function TACBrCTe.Enviar(const ALote: String; Imprimir: Boolean = True;
+      ASincrono: Boolean = False): Boolean;
 var
   i: Integer;
 begin
@@ -707,9 +711,18 @@ begin
   if Conhecimentos.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum CT-e adicionado ao Lote'));
 
-  if Conhecimentos.Count > 50 then
-    GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 50 CT-e)' +
-      ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count)));
+  if ASincrono then
+  begin
+    if Conhecimentos.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 1 CT-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count)));
+  end
+  else
+  begin
+    if Conhecimentos.Count > 50 then
+      GerarException(ACBrStr('ERRO: Conjunto de CT-e transmitidos (máximo de 50 CT-e)' +
+        ' excedido. Quantidade atual: ' + IntToStr(Conhecimentos.Count)));
+  end;
 
   Conhecimentos.Assinar;
   Conhecimentos.Validar;
@@ -717,7 +730,7 @@ begin
   if Configuracoes.Geral.ModeloDF = moCTeOS then
     Result := WebServices.EnviaOS(ALote)
   else
-    Result := WebServices.Envia(ALote);
+    Result := WebServices.Envia(ALote, ASincrono);
 
   if DACTE <> nil then
   begin

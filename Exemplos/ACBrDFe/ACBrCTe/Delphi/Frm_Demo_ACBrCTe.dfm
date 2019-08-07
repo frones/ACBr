@@ -1214,7 +1214,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
     OnStatusChange = ACBrCTe1StatusChange
-    Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLLib = libCustom
     Configuracoes.Geral.SSLCryptLib = cryOpenSSL
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2

@@ -1689,18 +1689,7 @@ begin
   begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-//    ACBrCTe1.Conhecimentos.ImprimirPDF;
-  end;
-
-  OpenDialog1.Title := 'Selecione o CTe';
-  OpenDialog1.DefaultExt := '*-cte.xml';
-  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-  begin
-    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-//    ACBrCTe1.Conhecimentos.GerarPDF;
+    ACBrCTe1.Conhecimentos.ImprimirPDF;
   end;
 end;
 

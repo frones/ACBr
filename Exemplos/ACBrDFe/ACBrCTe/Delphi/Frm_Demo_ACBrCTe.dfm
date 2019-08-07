@@ -942,7 +942,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarClick
       end
       object btnValidarXML: TButton
-        Left = 9
+        Left = 192
         Top = 64
         Width = 177
         Height = 25
@@ -960,7 +960,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnStatusServClick
       end
       object btnCancCTe: TButton
-        Left = 9
+        Left = 375
         Top = 126
         Width = 177
         Height = 25
@@ -973,7 +973,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Top = 6
         Width = 177
         Height = 25
-        Caption = 'Criar e Enviar'
+        Caption = 'Criar e Enviar modo Ass'#237'ncrono'
         TabOrder = 2
         OnClick = btnCriarEnviarClick
       end
@@ -996,8 +996,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnGerarCTeClick
       end
       object btnConsCad: TButton
-        Left = 192
-        Top = 64
+        Left = 9
+        Top = 126
         Width = 177
         Height = 25
         Caption = 'Consulta Cadastro'
@@ -1032,8 +1032,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarReciboClick
       end
       object btnEnvEPEC: TButton
-        Left = 375
-        Top = 64
+        Left = 192
+        Top = 126
         Width = 177
         Height = 25
         Caption = 'Enviar EPEC'
@@ -1041,8 +1041,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnvEPECClick
       end
       object btnImprimirEvento: TButton
-        Left = 192
-        Top = 126
+        Left = 8
+        Top = 158
         Width = 177
         Height = 25
         Caption = 'Imprimir Evento'
@@ -1059,8 +1059,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnConsultarChaveClick
       end
       object btnEnviarEventoEmail: TButton
-        Left = 192
-        Top = 160
+        Left = 375
+        Top = 158
         Width = 177
         Height = 25
         Caption = 'Enviar Evento Email'
@@ -1068,8 +1068,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         OnClick = btnEnviarEventoEmailClick
       end
       object btnGerarPDFEvento: TButton
-        Left = 375
-        Top = 126
+        Left = 192
+        Top = 158
         Width = 177
         Height = 25
         Caption = 'Gerar PDF Evento'
@@ -1093,6 +1093,24 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Caption = 'Gerar PDF Inutiliza'#231#227'o'
         TabOrder = 18
         OnClick = btnGerarPDFInutClick
+      end
+      object btnValidarAssinatura: TButton
+        Left = 375
+        Top = 65
+        Width = 177
+        Height = 25
+        Caption = 'Validar Assinatura'
+        TabOrder = 19
+        OnClick = btnValidarAssinaturaClick
+      end
+      object btnCriarEnviarSincrono: TButton
+        Left = 9
+        Top = 65
+        Width = 177
+        Height = 25
+        Caption = 'Criar e Enviar modo S'#237'ncrono'
+        TabOrder = 20
+        OnClick = btnCriarEnviarSincronoClick
       end
     end
     object PageControl2: TPageControl
@@ -1202,7 +1220,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ModeloDF = moCTeOS
-    Configuracoes.Arquivos.PathSchemas = 'D:\Componentes\DelphiXE3\ACBR\Exemplos\ACBrDFe\Schemas\CTe\'
+    Configuracoes.Geral.GerarInfCTeSupl = fgtSomenteHomologacao
+    Configuracoes.Arquivos.PathSchemas = 'C:\ACBr\trunk2\Exemplos\ACBrDFe\Schemas\CTe\'
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

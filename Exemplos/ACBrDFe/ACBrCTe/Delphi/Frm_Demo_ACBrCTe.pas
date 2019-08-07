@@ -148,6 +148,8 @@ type
     cbSSLType: TComboBox;
     rgModeloDF: TRadioGroup;
     rgVersaoDF: TRadioGroup;
+    btnValidarAssinatura: TButton;
+    btnCriarEnviarSincrono: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -183,6 +185,8 @@ type
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
+    procedure btnValidarAssinaturaClick(Sender: TObject);
+    procedure btnCriarEnviarSincronoClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -446,7 +450,7 @@ begin
     Ide.cUF    := UFtoCUF(edtEmitUF.Text);
     // Atenção o valor de cCT tem que ser um numero aleatório conforme recomendação
     // da SEFAZ, mas neste exemplo vamos atribuir o mesmo numero do CT-e.
-    Ide.cCT    := StrToInt(NumCTe);
+    Ide.cCT    := 1; // Tem que ser um numero aleatório
     Ide.CFOP   := 5353;
     Ide.natOp  := 'PRESTACAO SERVICO';
     ide.forPag := fpAPagar; // fpAPagar ou fpPago
@@ -1324,6 +1328,7 @@ begin
     GerarCTeOS(vAux);
 
   ACBrCTe1.Conhecimentos.Items[0].GravarXML('','');
+  ACBrCTe1.Conhecimentos.Assinar;
 
   ShowMessage('Arquivo gerado em: ' + ACBrCTe1.Conhecimentos.Items[0].NomeArq);
 
@@ -1382,6 +1387,52 @@ begin
     GerarCTeOS(vAux);
 
   ACBrCTe1.Enviar(StrToInt(vNumLote));
+
+  MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
+
+  LoadXML(MemoResp, WBResposta);
+
+  PageControl2.ActivePageIndex := 5;
+
+  with MemoDados do
+  begin
+    Lines.Add('');
+    Lines.Add('Envio CTe');
+    Lines.Add('tpAmb: '     + TpAmbToStr(ACBrCTe1.WebServices.Retorno.tpAmb));
+    Lines.Add('verAplic: '  + ACBrCTe1.WebServices.Retorno.verAplic);
+    Lines.Add('cStat: '     + IntToStr(ACBrCTe1.WebServices.Retorno.cStat));
+    Lines.Add('xMotivo: '   + ACBrCTe1.WebServices.Retorno.xMotivo);
+    Lines.Add('cUF: '       + IntToStr(ACBrCTe1.WebServices.Retorno.cUF));
+    Lines.Add('xMsg: '      + ACBrCTe1.WebServices.Retorno.Msg);
+    Lines.Add('Recibo: '    + ACBrCTe1.WebServices.Retorno.Recibo);
+    Lines.Add('Protocolo: ' + ACBrCTe1.WebServices.Retorno.Protocolo);
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnCriarEnviarSincronoClick(Sender: TObject);
+var
+  vAux, vNumLote: String;
+begin
+  if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Conhecimento', vAux)) then
+    exit;
+
+  if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Lote', vNumLote)) then
+    exit;
+
+  ACBrCTe1.Conhecimentos.Clear;
+
+  if rgModeloDF.ItemIndex = 0 then
+    GerarCTe(vAux)
+  else
+    GerarCTeOS(vAux);
+
+  // Parâmetros do método Enviar:
+  // 1o = Número do Lote
+  // 2o = Se True imprime automaticamente o DACTE
+  // 3o = Se True o envio é no modo Síncrono, caso contrario Assíncrono.
+  // Obs: no modo Síncrono só podemos enviar UM CT-e por vez.
+  ACBrCTe1.Enviar(StrToInt(vNumLote), True, True);
 
   MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
   memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
@@ -1469,7 +1520,40 @@ begin
   ShowMessage('Opção não Implementada, no programa exemplo!');
 end;
 
+procedure TfrmDemo_ACBrCTe.btnValidarAssinaturaClick(Sender: TObject);
+var
+  Msg : String;
+begin
+  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.DefaultExt := '*-cte.XML';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.XML)|*-cte.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+    PageControl2.ActivePageIndex := 0;
+    MemoResp.Lines.Add('');
+    MemoResp.Lines.Add('');
+
+    if not ACBrCTe1.Conhecimentos.VerificarAssinatura(Msg) then
+      MemoResp.Lines.Add('Erro: '+Msg)
+    else
+    begin
+      MemoResp.Lines.Add('OK: Assinatura Válida');
+      ACBrCTe1.SSL.CarregarCertificadoPublico( ACBrCTe1.Conhecimentos.Items[0].CTe.signature.X509Certificate );
+      MemoResp.Lines.Add('Assinado por: '+ ACBrCTe1.SSL.CertRazaoSocial);
+      MemoResp.Lines.Add('CNPJ: '+ ACBrCTe1.SSL.CertCNPJ);
+      MemoResp.Lines.Add('Num.Série: '+ ACBrCTe1.SSL.CertNumeroSerie);
+
+      ShowMessage('ASSINATURA VÁLIDA');
+    end;
+  end;
+end;
+
 procedure TfrmDemo_ACBrCTe.btnValidarXMLClick(Sender: TObject);
+var
+  Erros: string;
 begin
   OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-cte.xml';
@@ -1481,8 +1565,10 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
     ACBrCTe1.Conhecimentos.Validar;
+    ACBrCTe1.Conhecimentos.ValidarRegrasdeNegocios(Erros);
 
     showmessage('Conhecimento de Transporte Eletrônico Valido');
+    showmessage(Erros);
   end;
 end;
 
@@ -1587,6 +1673,7 @@ begin
   begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+    ACBrCTe1.DACTE.Cancelada := True;
     ACBrCTe1.Conhecimentos.Imprimir;
   end;
 end;
@@ -1602,7 +1689,18 @@ begin
   begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-    ACBrCTe1.Conhecimentos.ImprimirPDF;
+//    ACBrCTe1.Conhecimentos.ImprimirPDF;
+  end;
+
+  OpenDialog1.Title := 'Selecione o CTe';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+//    ACBrCTe1.Conhecimentos.GerarPDF;
   end;
 end;
 

@@ -2020,10 +2020,10 @@ object Form1: TForm1
         Height = 232
         Top = 0
         Width = 725
-        ActivePage = tsDadosSAT
+        ActivePage = Impressao
         Align = alClient
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 4
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2952,7 +2952,7 @@ object Form1: TForm1
               Left = 96
               Height = 15
               Top = 0
-              Width = 28
+              Width = 27
               Caption = 'Topo'
               ParentColor = False
               ParentFont = False
@@ -3353,7 +3353,7 @@ object Form1: TForm1
                 Top = 29
                 Width = 45
                 Constraints.MaxWidth = 45
-                MinValue = 1
+                MaxValue = 999
                 OnChange = seKC1Change
                 ParentFont = False
                 TabOrder = 4
@@ -3378,7 +3378,7 @@ object Form1: TForm1
                 Top = 29
                 Width = 45
                 Constraints.MaxWidth = 45
-                MinValue = 1
+                MaxValue = 999
                 OnChange = seKC2Change
                 ParentFont = False
                 TabOrder = 3

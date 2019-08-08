@@ -177,7 +177,7 @@ begin
        begin
           Memo1.Lines.Add('Cod UF: '+IntToStr(CodUF) );
           Memo1.Lines.Add('UF: '+UF);
-          Memo1.Lines.Add('Cod.Município: '+IntToStr(CodMunicio) );
+          Memo1.Lines.Add('Cod.Município: '+IntToStr(CodMunicipio) );
           Memo1.Lines.Add('Município: '+Municipio );
           Memo1.Lines.Add('Área: '+FormatFloat('0.00', Area) );
           Memo1.Lines.Add( StringOfChar('-',20) );

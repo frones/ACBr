@@ -1143,6 +1143,8 @@ begin
 
   FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);
 
+  FPRetornoWS := RemoverIdentacao(FPRetornoWS);
+
   if (FProvedor in [proNFSeBrasil, proIPM]) then
     AuxXML := ParseText(FPRetornoWS, true, false)
   else

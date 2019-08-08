@@ -338,12 +338,12 @@ begin
     proBethav2,
     proIssDSF,
     proSIAPNet,
-    proSaatri,
     proGiss,
     proRLZ,
     proTinus,
     proSalvador: IdLote := 'lote' + NumeroLote;
 
+    proSaatri: IdLote := 'Lote_' + NumeroLote + '_' + CNPJ;
 
     proEL: begin
              IdLote := StringOfChar('0', 15) + OnlyNumber(NumeroRps) + SerieRps;

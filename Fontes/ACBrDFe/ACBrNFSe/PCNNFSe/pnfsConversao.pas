@@ -277,6 +277,8 @@ function RemoverAtributos(const AXML: String; AProvedor: TnfseProvedor): String;
 function TUnidadeToStr(const t: TUnidade): String;
 function StrToTUnidade(out ok: boolean; const s: String): TUnidade;
 
+function RemoverIdentacao(const AXML: String): String;
+
 implementation
 
 uses
@@ -18662,6 +18664,27 @@ begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
                            [tuHora, tuQtde]);
+end;
+
+function RemoverIdentacao(const AXML: String): String;
+var
+  XMLe, XMLs: String;
+begin
+  XMLe := AXML;
+  XMLs := '';
+
+  while XMLe <> XMLs do
+  begin
+    if XMLs <> '' then
+      XMLe := XMLs;
+
+    XMLs := StringReplace(XMLe, ' <', '<', [rfReplaceAll]);
+    XMLs := StringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
+    XMLs := StringReplace(XMLs, '> ', '>', [rfReplaceAll]);
+    XMLs := StringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
+  end;
+
+  Result := XMLs;
 end;
 
 end.

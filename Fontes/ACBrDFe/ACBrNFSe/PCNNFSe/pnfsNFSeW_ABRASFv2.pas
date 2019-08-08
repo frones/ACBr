@@ -680,7 +680,7 @@ begin
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
     proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, proCenti,
-    proBelford, proiiBrasilv2, proWebISSv2, proSaatri:
+    proBelford, proiiBrasilv2, proWebISSv2:
          Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
     proDeISS,
@@ -693,6 +693,7 @@ begin
         // alterado em 09/05/2018 por italo (incluido novamente o namespace)
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
 
+    proSaatri,
     proSiam:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');
 
@@ -726,6 +727,7 @@ begin
                                       OnlyNumber(NFSe.NumeroLote) +
                                       OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
 
+      proSaatri,
       proSiam:
           Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
@@ -937,6 +939,9 @@ begin
       //                                 FormatDateTime('yyyy', FNFSe.DataEmissao) +
                                        OnlyNumber(FNFSe.Prestador.Cnpj) +
                                        IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
+
+    proSaatri: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
+                      FNFSe.IdentificacaoRps.Serie + TipoRPSToStr(FNFSe.IdentificacaoRps.Tipo);
 
     proABase,
     proSiam,

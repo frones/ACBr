@@ -51,11 +51,11 @@ uses
   SysUtils, Classes, ACBrCTeDACTEClass,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
   pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe, ACBrUtil, StrUtils,
-  DB, MaskUtils;
+  DB, MaskUtils, ACBrDelphiZXingQRCode, Graphics;
 
 type
   EACBrCTeDACTEFR = class(Exception);
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrCTeDACTEFR = class(TACBrCTeDACTEClass)
@@ -72,7 +72,7 @@ type
     procedure CriarDataSetsFrx;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
-		function GetPreparedReportInutilizacao: TfrxReport;
+    function GetPreparedReportInutilizacao: TfrxReport;
 
     procedure SetDataSetsToFrxReport;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
@@ -96,12 +96,12 @@ type
     procedure CarregaMultiModal;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior;
-		procedure CarregaCTeAnuladoComplementado;
-		procedure CarregaProdutosPerigosos;
-		procedure CarregaVeiculosNovos;
-	  procedure CarregaInfServico;
+    procedure CarregaCTeAnuladoComplementado;
+    procedure CarregaProdutosPerigosos;
+    procedure CarregaVeiculosNovos;
+    procedure CarregaInfServico;
     procedure CarregaInfTribFed;
-	  procedure CarregaPercurso;
+    procedure CarregaPercurso;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
   protected
@@ -138,9 +138,9 @@ type
     cdsRodoMotorista        : TClientDataSet;
     cdsDocAnterior          : TClientDataSet;
     cdsAnuladoComple        : TClientDataSet;
-  	cdsEventos              : TClientDataSet;
-	  cdsProdutosPerigosos    : TClientDataSet;
-  	cdsVeiculosNovos        : TClientDataSet;
+    cdsEventos              : TClientDataSet;
+    cdsProdutosPerigosos    : TClientDataSet;
+    cdsVeiculosNovos        : TClientDataSet;
     cdsInutilizacao         : TClientDataSet;
     cdsInfServico           : TClientDataSet;
     cdsInfTribFed           : TClientDataSet;
@@ -170,9 +170,9 @@ type
     frxRodoMotorista        : TfrxDBDataset;
     frxDocAnterior          : TfrxDBDataset;
     frxAnuladoComple        : TfrxDBDataset;
-  	frxEventos              : TfrxDBDataset;
-	  frxProdutosPerigosos    : TfrxDBDataset;
-  	frxVeiculosNovos        : TfrxDBDataset;
+    frxEventos              : TfrxDBDataset;
+    frxProdutosPerigosos    : TfrxDBDataset;
+    frxVeiculosNovos        : TfrxDBDataset;
     frxInutilizacao         : TfrxDBDataset;
     frxInfServico           : TfrxDBDataset;
     frxInfTribFed           : TfrxDBDataset;
@@ -193,6 +193,7 @@ type
     property Evento: TEventoCTe read FEvento write FEvento;
     property Inutilizacao: TRetInutCTe read FInutilizacao write FInutilizacao;
     property DACTEClassOwner: TACBrCTeDACTEClass read FDACTEClassOwner;
+    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
   published
     property FastFile            : String read FFastFile write FFastFile;
@@ -262,7 +263,7 @@ end;
 procedure TACBrCTeDACTEFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
-	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick ];		
   frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
@@ -324,6 +325,7 @@ begin
     Add('xDetRetira', ftString, 160);
     Add('toma', ftString, 50);
     Add('refCTE', ftString, 44);
+    Add('URL', ftString, 1000);
     CreateDataSet;
   end;
 
@@ -1167,6 +1169,7 @@ var
   DetailData: TfrxDetailData;
   Memo      : TfrxMemoView;
   Shape     : TfrxShapeView;
+  qrCode    : string;
 begin
   case TipoEvento of
     teCCe:
@@ -1218,12 +1221,18 @@ begin
       end;
   end;
   if cdsModalRodoviario.FieldByName('LOTACAO').AsString = 'Não' then 
-	begin
+  begin
     Child := frxReport.FindObject('ChildRodoviarioLotacao') as TfrxChild;
-		if Child <> nil then
-	 	begin
-			Child.Visible := False;
-	 	end;
+    if Child <> nil then
+    begin
+      Child.Visible := False;
+    end;
+  end;
+  if Assigned(FCTe) then
+  begin
+    qrCode := FCTe.infCTeSupl.qrCodCTe;
+    if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
+       PintarQRCode(qrCode, TfrxPictureView(Sender).Picture);
   end;
 end;
 
@@ -1424,6 +1433,42 @@ begin
   cdsInfServico.EmptyDataSet;
   cdsInfTribFed.EmptyDataSet;
   cdsPercurso.EmptyDataSet;
+end;
+
+procedure TACBrCTeDACTEFR.PintarQRCode(const QRCodeData: String;
+  APict: TPicture);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  QRCode       := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Encoding  := qrUTF8NoBOM;
+    QRCode.QuietZone := 1;
+    QRCode.Data      := widestring(QRCodeData);
+
+    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    APict.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
+  end;
 end;
 
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
@@ -2266,6 +2311,7 @@ begin
       FieldByName('CCT').AsString   := IntToStr(CCT);
       FieldByName('CFOP').AsString  := IntToStr(CFOP);
       FieldByName('NatOp').AsString := NatOp;
+      FieldByName('URL').AsString := TACBrCTe(ACBrCTE).GetURLConsulta(cUF, tpAmb, FCTe.infCTe.versao);
 
       case forPag of
         fpPago  : FieldByName('forPag').AsString  := 'Pago';

@@ -11965,7 +11965,7 @@ var
       5007307: CodSiafi := '9145'; // Rio Negro/MS';
       5007406: CodSiafi := '9147'; // Rio Verde De Mato Grosso/MS';
       5007505: CodSiafi := '9149'; // Rochedo/MS';
-      5007554: CodSiafi := '9806'; // Santa Rita Do Pardo/MS';
+      5007554: CodSiafi := '9745'; // Santa Rita Do Pardo/MS';
       5007695: CodSiafi := '9809'; // Sao Gabriel Do Oeste/MS';
       5007703: CodSiafi := '9813'; // Sete Quedas/MS';
       5007802: CodSiafi := '9811'; // Selviria/MS';
@@ -17599,7 +17599,7 @@ begin
       9145: CodCidade := 5007307; // Rio Negro/MS  
       9147: CodCidade := 5007406; // Rio Verde De Mato Grosso/MS  
       9149: CodCidade := 5007505; // Rochedo/MS  
-      9806: CodCidade := 5007554; // Santa Rita Do Pardo/MS  
+      9745: CodCidade := 5007554; // Santa Rita Do Pardo/MS
       9809: CodCidade := 5007695; // Sao Gabriel Do Oeste/MS
       9813: CodCidade := 5007703; // Sete Quedas/MS  
       9811: CodCidade := 5007802; // Selviria/MS  

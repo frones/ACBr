@@ -39,8 +39,8 @@ unit ACBrDFeReport;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrBase,
+  Classes, SysUtils, Graphics,
+  ACBrBase, ACBrDelphiZXingQRCode,
   pcnConversao;
 
 type
@@ -193,12 +193,50 @@ type
     property CasasDecimais: TCasasDecimais read FCasasDecimais;
 
   end;
+  
+  procedure PintarQRCode(const QRCodeData: String; APict: TPicture; const AEncoding: TQRCodeEncoding);
 
 implementation
 
 uses
   Math,
   ACBrUtil;
+  
+procedure PintarQRCode(const QRCodeData: String; APict: TPicture;
+  const AEncoding: TQRCodeEncoding);
+var
+  QRCode: TDelphiZXingQRCode;
+  QRCodeBitmap: TBitmap;
+  Row, Column: Integer;
+begin
+  QRCode       := TDelphiZXingQRCode.Create;
+  QRCodeBitmap := TBitmap.Create;
+  try
+    QRCode.Encoding  := AEncoding;
+    QRCode.QuietZone := 1;
+    QRCode.Data      := widestring(QRCodeData);
+
+    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
+    QRCodeBitmap.Width  := QRCode.Columns;
+    QRCodeBitmap.Height := QRCode.Rows;
+
+    for Row := 0 to QRCode.Rows - 1 do
+    begin
+      for Column := 0 to QRCode.Columns - 1 do
+      begin
+        if (QRCode.IsBlack[Row, Column]) then
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+        else
+          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+      end;
+    end;
+
+    APict.Assign(QRCodeBitmap);
+  finally
+    QRCode.Free;
+    QRCodeBitmap.Free;
+  end;
+end; 
 
 { TCasasDecimais }
 constructor TCasasDecimais.Create(AOwner: TComponent);

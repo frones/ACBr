@@ -51,7 +51,7 @@ uses
   SysUtils, Classes, ACBrCTeDACTEClass,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
   pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe, ACBrUtil, StrUtils,
-  DB, MaskUtils, ACBrDelphiZXingQRCode, Graphics;
+  DB, MaskUtils;
 
 type
   EACBrCTeDACTEFR = class(Exception);
@@ -193,7 +193,6 @@ type
     property Evento: TEventoCTe read FEvento write FEvento;
     property Inutilizacao: TRetInutCTe read FInutilizacao write FInutilizacao;
     property DACTEClassOwner: TACBrCTeDACTEClass read FDACTEClassOwner;
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
   published
     property FastFile            : String read FFastFile write FFastFile;
@@ -211,7 +210,7 @@ var
 implementation
 
 uses
-  pcteConversaoCTe, ACBrDFeUtil, ACBrValidador;
+  pcteConversaoCTe, ACBrDFeUtil, ACBrDFeReport, ACBrDelphiZXingQRCode, ACBrValidador;
 
 function CollateBr(Str: string): string;
 var
@@ -1232,7 +1231,7 @@ begin
   begin
     qrCode := FCTe.infCTeSupl.qrCodCTe;
     if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
-       PintarQRCode(qrCode, TfrxPictureView(Sender).Picture);
+      PintarQRCode(qrCode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
   end;
 end;
 
@@ -1433,42 +1432,6 @@ begin
   cdsInfServico.EmptyDataSet;
   cdsInfTribFed.EmptyDataSet;
   cdsPercurso.EmptyDataSet;
-end;
-
-procedure TACBrCTeDACTEFR.PintarQRCode(const QRCodeData: String;
-  APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := widestring(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
 end;
 
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;

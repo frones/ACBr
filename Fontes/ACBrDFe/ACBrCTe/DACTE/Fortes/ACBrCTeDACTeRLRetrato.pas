@@ -728,7 +728,6 @@ type
     Linhas: integer;
 
     procedure Itens;
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
   public
     constructor Create(TheOwner: TComponent); override;
 
@@ -739,7 +738,7 @@ implementation
 
 uses
   DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe,
-  ACBrDelphiZXingQRCode;
+  ACBrDFeReport, ACBrDelphiZXingQRCode;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -2631,7 +2630,7 @@ begin
   RLCTe.Title := 'CT-e: ' + FormatFloat('000,000,000', fpCTe.Ide.nCT);
 
   if not EstaVazio(Trim(fpCTe.infCTeSupl.qrCodCTe)) then
-    PintarQRCode( fpCTe.infCTeSupl.qrCodCTe, imgQRCode.Picture )
+    PintarQRCode(fpCTe.infCTeSupl.qrCodCTe, imgQRCode.Picture, qrUTF8NoBOM)
   else
   begin
     rlsLinhaV07.Height     := 26;
@@ -2641,41 +2640,6 @@ begin
     rllVariavel1.Width     := 419;
     RLLabel198.Width       := 419;
     imgQRCode.Visible      := False;
-  end;
-end;
-
-procedure TfrmDACTeRLRetrato.PintarQRCode(const QRCodeData: String; APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := WideString(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
   end;
 end;
 

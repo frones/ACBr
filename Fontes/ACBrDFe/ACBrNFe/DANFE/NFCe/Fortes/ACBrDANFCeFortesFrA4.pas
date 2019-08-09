@@ -52,8 +52,7 @@ uses
      {$ENDIF}
   Messages, Variants, Graphics,
   Controls, Forms, Dialogs, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
-  RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador,
-  ACBrDelphiZXingQRCode;
+  RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;
@@ -264,7 +263,6 @@ type
     FFiltro: TACBrNFeDANFCeFortesA4Filtro;
     FResumido: Boolean;
     function CompoemEnderecoCFe: String ;
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
   protected
     property Filtro   : TACBrNFeDANFCeFortesA4Filtro read FFiltro write FFiltro default fiNenhum ;
     property Resumido : Boolean read FResumido write FResumido;
@@ -283,7 +281,7 @@ implementation
 {$ENDIF}
 
 uses RLPrinters, StrUtils,
-     ACBrDFeDANFeReport, ACBrDFeReportFortes;
+     ACBrDFeDANFeReport, ACBrDFeReportFortes, ACBrDFeREport, ACBrDelphiZXingQRCode;
 
 procedure Register;
 begin
@@ -360,42 +358,6 @@ procedure TfrmACBrDANFCeFortesFrA4.lSistemaBeforePrint(Sender: TObject;
 begin
   if trim(self.FACBrNFeDANFCeFortesA4.Sistema) <> '' then
     Text := self.FACBrNFeDANFCeFortesA4.Sistema ;
-end;
-
-procedure TfrmACBrDANFCeFortesFrA4.PintarQRCode(const QRCodeData: String;
-  APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := widestring(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.imgLogoBeforePrint(Sender: TObject;
@@ -513,7 +475,7 @@ begin
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
                                      signature.DigestValue,
                                      infNFe.Versao);
-    PintarQRCode( qrcode, imgQRCode.Picture );
+    PintarQRCode(qrcode, imgQRCode.Picture, qrUTF8NoBOM);
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
                            ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));

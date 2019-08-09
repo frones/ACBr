@@ -355,7 +355,6 @@ type
     fHeightDetItem: Integer;
     fResumido: Boolean;
 
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
 
@@ -372,7 +371,8 @@ procedure Register;
 implementation
 
 uses  math, RLTypes,
-     ACBrDelphiZXingQRCode, ACBrValidador, ACBrDFeUtil, ACBrUtil;
+     ACBrDelphiZXingQRCode, ACBrValidador, ACBrDFeUtil, ACBrUtil,
+     ACBrDFeReport;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -585,42 +585,6 @@ begin
   RecordAction := raUseIt ;
 end;
 
-procedure TACBrSATExtratoFortesFr.PintarQRCode(const QRCodeData: String; APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8BOM;
-    QRCode.QuietZone := 1;
-    QRCode.CorrectionLevel := qrclL;
-    QRCode.Data      := WideString(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
-end;
-
 function TACBrSATExtratoFortesFr.CompoemEnderecoCFe: String;
 var
   Endereco, CEP: String;
@@ -757,7 +721,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode( qrcode, imgQRCode.Picture );
+      PintarQRCode(qrcode, imgQRCode.Picture, qrUTF8BOM);
     end;
 
     mSwHouseSite.Lines.Clear;
@@ -1328,7 +1292,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode( qrcode, imgQRCodeCan.Picture );
+      PintarQRCode(qrcode, imgQRCodeCan.Picture, qrUTF8BOM);
     end;
   end;
 
@@ -1351,7 +1315,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode( qrcode, imgQRCodeCanc2.Picture );
+      PintarQRCode(qrcode, imgQRCodeCanc2.Picture, qrUTF8BOM);
     end;
   end;
 

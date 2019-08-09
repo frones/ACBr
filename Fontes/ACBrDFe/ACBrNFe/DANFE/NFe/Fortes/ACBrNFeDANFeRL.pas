@@ -85,7 +85,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrValidador, ACBrUtil;
+  ACBrValidador, ACBrUtil, ACBrDFeReport, ACBrDelphiZXingQRCode;
 
 {$IfNDef FPC}
  {$R *.dfm}

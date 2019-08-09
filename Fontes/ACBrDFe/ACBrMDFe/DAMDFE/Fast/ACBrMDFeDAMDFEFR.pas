@@ -42,7 +42,7 @@ interface
 uses
   SysUtils, Classes, DB, DBClient, ACBrMDFeDAMDFeClass, pcnConversao,
   pmdfeMDFe, frxClass, ACBrDFeUtil, pmdfeEnvEventoMDFe, frxDBSet,
-  frxExportPDF, frxBarcode, Graphics, ACBrDelphiZXingQRCode;
+  frxExportPDF, frxBarcode;
 
 type
   EACBrMDFeDAMDFEFR = class(Exception);
@@ -145,7 +145,6 @@ type
     procedure CarregaDadosEventos;
     procedure SetDataSetsToFrxReport;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
@@ -163,7 +162,7 @@ type
 
 implementation
 
-uses ACBrMDFe, ACBrUtil, StrUtils, pmdfeConversaoMDFe, ACBrValidador;
+uses ACBrMDFe, ACBrUtil, ACBrDFeReport, ACBrDelphiZXingQRCode, StrUtils, pmdfeConversaoMDFe, ACBrValidador;
 
 function CollateBr(Str: string): string;
 var
@@ -709,7 +708,7 @@ begin
   begin
     qrCode := FMDFe.infMDFeSupl.qrCodMDFe;
   if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
-     PintarQRCode(qrCode, TfrxPictureView(Sender).Picture);
+     PintarQRCode(qrCode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
   end;
 end;
 
@@ -719,6 +718,8 @@ begin
     Value := (DAMDFEClassOwner.Cancelada) or (FMDFe.procMDFe.cStat = 101);
   if VarName = 'ENCERRADO' then
     Value := DAMDFEClassOwner.Encerrado;
+  if VarName = 'PREVISAO' then
+    Value := False;
 end;
 
 function TACBrMDFeDAMDFEFR.GetPreparedReport: TfrxReport;
@@ -833,42 +834,6 @@ begin
       frxPDFExport.ShowDialog := OldShowDialog;
       FPArquivoPDF := frxPDFExport.FileName;
     end;
-  end;
-end;
-
-procedure TACBrMDFeDAMDFEFR.PintarQRCode(const QRCodeData: String;
-  APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := widestring(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
   end;
 end;
 

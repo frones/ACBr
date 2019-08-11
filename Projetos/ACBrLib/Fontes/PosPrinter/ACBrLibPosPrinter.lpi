@@ -18,14 +18,14 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="3"/>
-      <BuildNr Value="123"/>
+      <BuildNr Value="198"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
     </VersionInfo>
-    <BuildModes Count="5">
-      <Item1 Name="x86 - CDECL" Default="True"/>
-      <Item2 Name="x64 - CDECL">
+    <BuildModes Count="6">
+      <Item1 Name="Win32-i386-CDECL" Default="True"/>
+      <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -45,6 +45,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -66,7 +67,7 @@
           </Other>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="x86 - STDCALL">
+      <Item3 Name="Win32-i386-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -86,6 +87,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -107,7 +109,7 @@
           </Other>
         </CompilerOptions>
       </Item3>
-      <Item4 Name="x64 - STDCALL">
+      <Item4 Name="Win64-x86_64-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -127,6 +129,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -148,7 +151,48 @@
           </Other>
         </CompilerOptions>
       </Item4>
-      <Item5 Name="x86 - CDECL - DEBUG">
+      <Item5 Name="Linux-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\libacbrposprinter64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item5>
+      <Item6 Name="CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -167,7 +211,6 @@
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="i386"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -183,10 +226,11 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG"/>
+            <CustomOptions Value="-dDEBUG
+-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item5>
+      </Item6>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -265,6 +309,7 @@
     <CodeGeneration>
       <RelocatableUnit Value="True"/>
       <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
@@ -275,5 +320,8 @@
         <ExecutableType Value="Library"/>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dNOGUI"/>
+    </Other>
   </CompilerOptions>
 </CONFIG>

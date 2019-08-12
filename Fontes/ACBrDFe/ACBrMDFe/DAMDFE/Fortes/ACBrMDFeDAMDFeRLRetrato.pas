@@ -54,9 +54,23 @@ type
     rlb_4_Aquav: TRLBand;
     rlb_5_Ferrov: TRLBand;
     rlb_6_Observacao: TRLBand;
+    RLDraw1: TRLDraw;
+    rlLabel2: TRLLabel;
     rlLabel22: TRLLabel;
+    rlLabel25: TRLLabel;
+    rlLabel3: TRLLabel;
+    rlLabel33: TRLLabel;
+    rlLabel4: TRLLabel;
+    RLLabel6: TRLLabel;
+    rlLabel77: TRLLabel;
+    rllDescricao: TRLLabel;
+    rllEmissao: TRLLabel;
+    rllModelo: TRLLabel;
     rllMsgTeste: TRLLabel;
     rllDataHoraImpressao: TRLLabel;
+    rllNumMDFe: TRLLabel;
+    rllProtocolo: TRLLabel;
+    rllSerie: TRLLabel;
     rllSistema: TRLLabel;
     rlb_7_Documentos_Titulos: TRLBand;
     rlLabel141: TRLLabel;
@@ -66,6 +80,8 @@ type
     rlLabel109: TRLLabel;
     rlLabel106: TRLLabel;
     rlLabel100: TRLLabel;
+    rllUFCarrega: TRLLabel;
+    rllUFDescarrega: TRLLabel;
     rlmObservacao: TRLMemo;
     RLBand1: TRLBand;
     RLDraw2: TRLDraw;
@@ -81,6 +97,14 @@ type
     rlLabel5: TRLLabel;
     RLBand2: TRLBand;
     rllModal: TRLLabel;
+    RLPanel2: TRLPanel;
+    rlsLinhaV05: TRLDraw;
+    rlsLinhaV06: TRLDraw;
+    rlsLinhaV07: TRLDraw;
+    rlsLinhaV08: TRLDraw;
+    rlsLinhaV09: TRLDraw;
+    rlsLinhaV10: TRLDraw;
+    RLSystemInfo1: TRLSystemInfo;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
     LinhaQuantidade: TRLDraw;
@@ -91,9 +115,6 @@ type
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
     RLPanel1: TRLPanel;
-    RLPanel2: TRLPanel;
-    rllProtocolo: TRLLabel;
-    rllDescricao: TRLLabel;
     RLPanel3: TRLPanel;
     rllChave: TRLLabel;
     rlLabel1: TRLLabel;
@@ -162,27 +183,6 @@ type
     RLLabel32: TRLLabel;
     rlmRespAverbacao: TRLMemo;
     rlmRespSeguro: TRLLabel;
-    RLPanel6: TRLPanel;
-    rllModelo: TRLLabel;
-    rllSerie: TRLLabel;
-    rllNumMDFe: TRLLabel;
-    RLSystemInfo1: TRLSystemInfo;
-    rllEmissao: TRLLabel;
-    rllUFCarrega: TRLLabel;
-    rllUFDescarrega: TRLLabel;
-    rlLabel2: TRLLabel;
-    rlLabel3: TRLLabel;
-    rlLabel4: TRLLabel;
-    rlLabel25: TRLLabel;
-    rlLabel33: TRLLabel;
-    rlLabel77: TRLLabel;
-    RLLabel6: TRLLabel;
-    rlsLinhaV05: TRLDraw;
-    rlsLinhaV06: TRLDraw;
-    rlsLinhaV07: TRLDraw;
-    rlsLinhaV08: TRLDraw;
-    rlsLinhaV09: TRLDraw;
-    RLDraw1: TRLDraw;
     imgQRCode: TRLImage;
     rlsLinhaH02: TRLDraw;
     RLDraw53: TRLDraw;
@@ -203,7 +203,6 @@ type
     { Private declarations }
     FNumItem: Integer;
     FTotalPages: integer;
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
   end;
 
 implementation
@@ -211,7 +210,8 @@ implementation
 uses
   StrUtils, DateUtils,
   pmdfeMDFe,
-  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrDFeReportFortes, ACBrDelphiZXingQRCode;
+  ACBrUtil, ACBrDFeUtil, ACBrValidador, ACBrDFeReport, ACBrDFeReportFortes,
+  ACBrDelphiZXingQRCode;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -653,7 +653,7 @@ begin
   rlmChave2.AutoSize := rlmChave1.AutoSize;
 
   if not EstaVazio(Trim(fpMDFe.infMDFeSupl.qrCodMDFe)) then
-    PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture )
+    PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture, qrUTF8NoBOM )
   else
   begin
     RLDraw53.Visible  := False;
@@ -749,41 +749,6 @@ begin
     end;
   end;
   inherited;
-end;
-
-procedure TfrlDAMDFeRLRetrato.PintarQRCode(const QRCodeData: String; APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := WideString(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
 end;
 
 end.

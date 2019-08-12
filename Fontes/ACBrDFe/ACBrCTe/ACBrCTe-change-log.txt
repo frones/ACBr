@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2019
+-- ACBrCTeServicos --
+[*] Atualização da URL de consulta
+   Por: Italo Jurisato Junior
+
 07/08/2019
 -- Diversos --
 [*] Implementação do modo de envio Síncrono.

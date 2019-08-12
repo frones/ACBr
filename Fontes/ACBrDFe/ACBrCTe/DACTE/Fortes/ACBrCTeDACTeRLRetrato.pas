@@ -738,7 +738,7 @@ implementation
 
 uses
   DateUtils, ACBrUtil, ACBrDFeUtil, ACBrValidador, pcteConversaoCTe, ACBrCTe,
-  ACBrDFeReport, ACBrDelphiZXingQRCode;
+  ACBrDFeReport, ACBrDFeReportFortes, ACBrDelphiZXingQRCode;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -1061,6 +1061,7 @@ end;
 procedure TfrmDACTeRLRetrato.rlb_02_CabecalhoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
+  CarregouLogo: Boolean;
   strChaveContingencia: string;
   vStringStream: TStringStream;
 begin
@@ -1068,20 +1069,7 @@ begin
 
   if (fpDACTe.Logo <> '') then
   begin
-    if FilesExists(fpDACTe.Logo) then
-      rliLogo.Picture.LoadFromFile(fpDACTe.Logo)
-    else
-    begin
-      vStringStream := TStringStream.Create(fpDACTe.Logo);
-      try
-        try
-          rliLogo.Picture.Bitmap.LoadFromStream(vStringStream);
-        except
-        end;
-      finally
-        vStringStream.Free;
-      end;
-    end;
+    CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDACTe.Logo);
   end
   else
   begin
@@ -1099,17 +1087,8 @@ begin
     rliLogo.Left := 3;
     rliLogo.Height := 115;//91;
     rliLogo.Width := 324;//321
-  end;
-
-  rllModal.Caption := ACBrStr(TpModalToStrText(fpCTe.Ide.modal));
-  rllModelo.Caption := IntToStr(fpCTe.Ide.modelo);
-  rllSerie.Caption := IntToStr(fpCTe.Ide.serie);
-  rllNumCte.Caption := FormatFloat('000,000,000', fpCTe.Ide.nCT);
-  rllEmissao.Caption := FormatDateTimeBr(fpCTe.Ide.dhEmi);
-  rlbCodigoBarras.Caption := OnlyNumber(fpCTe.InfCTe.Id);
-  rllChave.Caption := FormatarChaveAcesso(OnlyNumber(fpCTe.InfCTe.Id));
-
-  if not fpDACTe.ExpandeLogoMarca then
+  end
+  else
   begin
     rlmEmitente.Enabled := True;
     rlmDadosEmitente.Enabled := True;
@@ -1139,6 +1118,14 @@ begin
         rlmDadosEmitente.Lines.Add('E-MAIL: ' + fpDACTe.Email);
     end;
   end;
+
+  rllModal.Caption := ACBrStr(TpModalToStrText(fpCTe.Ide.modal));
+  rllModelo.Caption := IntToStr(fpCTe.Ide.modelo);
+  rllSerie.Caption := IntToStr(fpCTe.Ide.serie);
+  rllNumCte.Caption := FormatFloat('000,000,000', fpCTe.Ide.nCT);
+  rllEmissao.Caption := FormatDateTimeBr(fpCTe.Ide.dhEmi);
+  rlbCodigoBarras.Caption := OnlyNumber(fpCTe.InfCTe.Id);
+  rllChave.Caption := FormatarChaveAcesso(OnlyNumber(fpCTe.InfCTe.Id));
 
   rllTipoCte.Caption := ACBrStr(tpCTToStrText(fpCTe.Ide.tpCTe));
   rllTipoServico.Caption := ACBrStr(TpServToStrText(fpCTe.Ide.tpServ));

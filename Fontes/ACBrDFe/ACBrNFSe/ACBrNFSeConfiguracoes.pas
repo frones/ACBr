@@ -706,7 +706,7 @@ begin
   FConfigSchemas.ServicoAbrirSessao := FPIniParams.ReadString('Schemas', 'ServicoAbrirSessao', '');
   FConfigSchemas.ServicoFecharSessao := FPIniParams.ReadString('Schemas', 'ServicoFecharSessao', '');
 
-  if FPIniParams.ReadString('SoapAction', 'Recepcionar', '') = '*******' then
+  if FPIniParams.ReadString('SoapAction', 'Recepcionar_' + CodIBGE, '') <> '' then
   begin
     FConfigSoapAction.Recepcionar := FPIniParams.ReadString('SoapAction', 'Recepcionar_' + CodIBGE , '*');
     FConfigSoapAction.ConsSit     := FPIniParams.ReadString('SoapAction', 'ConsSit_' + CodIBGE     , '*');
@@ -735,7 +735,7 @@ begin
     FConfigSoapAction.FecharSessao:= FPIniParams.ReadString('SoapAction', 'FecharSessao', '*');
   end;
   
-  if FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS', '') = '*******' then
+  if FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS_' + CodIBGE, '') <> '' then
   begin
     FConfigURL.HomRecepcaoLoteRPS    := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS_' + CodIBGE   , ''                           ), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
     FConfigURL.HomConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_H', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
@@ -764,7 +764,7 @@ begin
     FConfigURL.HomFecharSessao       := StringReplace(FPIniParams.ReadString('URL_H', 'FecharSessao'      , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   end;
 
-  if FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS', '') = '*******' then
+  if FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS_' + CodIBGE, '') <> '' then
   begin
     FConfigURL.ProRecepcaoLoteRPS    := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS_' + CodIBGE   , ''                           ), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProConsultaSitLoteRPS := StringReplace(FPIniParams.ReadString('URL_P', 'ConsultaSitLoteRPS_' + CodIBGE, FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);

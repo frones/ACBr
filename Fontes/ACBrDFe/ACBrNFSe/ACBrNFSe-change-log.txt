@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2019
+-- ACBrNFSeWebServices --
+[*] https://www.projetoacbr.com.br/forum/topic/52872-altera%C3%A7%C3%A3o-da-vers%C3%A3o-do-provedor-de-alem-paraiba-para-webissv2/
+   Por: Maiquel
+-- ACBrNFSeConfiguracoes --
+https://www.projetoacbr.com.br/forum/topic/52671-ajustes-provedor-centi-rio-verde-go/?do=findComment&comment=347595
+   Por: Danilo Ziza
+ 
 08/08/2019
 -- pnfsConversao --
 [+] Implementado uma função para remover a identação do XML.

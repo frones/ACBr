@@ -3,7 +3,7 @@ program ACBrLibETQTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibETQTestCase, ACBrLibETQStaticImport;
+  Interfaces, Forms, GuiTestRunner, ACBrLibETQTestCase;
 
 {$R *.res}
 

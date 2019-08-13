@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="3"/>
-      <BuildNr Value="257"/>
+      <BuildNr Value="259"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -238,7 +238,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\Testes\PosPrinter\bin\ACBrPosPrinter32"/>
+            <Filename Value="..\..\Testes\PosPrinter\bin\acbrposprinter32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -250,6 +250,9 @@
               <SyntaxMode Value="Delphi"/>
             </SyntaxOptions>
           </Parsing>
+          <CodeGeneration>
+            <TargetCPU Value="i386"/>
+          </CodeGeneration>
           <Linking>
             <Debugging>
               <UseHeaptrc Value="True"/>

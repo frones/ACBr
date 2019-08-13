@@ -20,9 +20,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrETQLIBName = 'ACBrETQ64.so';
+  CACBrETQLIBName = 'libacbretq64.so';
   {$Else}
-  CACBrETQLIBName = 'ACBrETQ32.so';
+  CACBrETQLIBName = 'libacbretq32.so';
 
   {$EndIf}
  {$EndIf}

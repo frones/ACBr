@@ -20,10 +20,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrPosPrinterLIBName = 'ACBrPosPrinter64.so';
+  CACBrPosPrinterLIBName = 'libacbrposprinter64.so';
   {$Else}
-  CACBrPosPrinterLIBName = 'ACBrPosPrinter32.so';
-
+  CACBrPosPrinterLIBName = 'libacbrposprinter32.so';
   {$EndIf}
  {$EndIf}
 

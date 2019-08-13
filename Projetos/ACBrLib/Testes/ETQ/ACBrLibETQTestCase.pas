@@ -116,7 +116,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, ETQ_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibETQNome), Bufflen);
   AssertEquals(copy(CLibETQNome,1,4), AStr);
 end;
 
@@ -194,7 +194,7 @@ procedure TTestACBrETQLib.Test_ETQ_CarregarImagem;
 begin
   // Carregar uma imagem
   AssertEquals('Erro ao carregar uma imagem', ErrOk,
-               ETQ_CarregarImagem('C:\Erp\logo.jpg', 'logo da empresa', False));
+               ETQ_CarregarImagem('..'+PathDelim+'LOGOACBR.bmp', 'logo da empresa', False));
 end;
 
 procedure TTestACBrETQLib.Test_ETQ_Imprimir;

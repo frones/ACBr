@@ -436,7 +436,12 @@ begin
   if (TACBrReinf(FACBrReinf).Configuracoes.Geral.TipoContribuinte in [tcOrgaoPublico, tcPessoaFisica]) then
     Gerador.wCampo(tcStr, '', 'nrInsc', 14, 14, 1, pEmp.NrInsc)
   else
-    Gerador.wCampo(tcStr, '', 'nrInsc', 8, 8, 1, Copy(pEmp.NrInsc, 1, 8));
+  begin
+    if (pEmp.TpInsc = tiCPF) then
+      Gerador.wCampo(tcStr, '', 'nrInsc', 11, 11, 1, pEmp.NrInsc)
+    else
+      Gerador.wCampo(tcStr, '', 'nrInsc', 8, 8, 1, Copy(pEmp.NrInsc, 1, 8));
+  end;
 
   if GeraGrupo then
     Gerador.wGrupo('/ideContri');

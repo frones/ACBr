@@ -354,7 +354,9 @@ begin
   Gerador.wCampo(tcStr, '', 'indEscrituracao',    1,   1, 1, indEscrituracaoToStr(Self.infoContribuinte.infoCadastro.indEscrituracao));
   Gerador.wCampo(tcStr, '', 'indDesoneracao',     1,   1, 1, indDesoneracaoToStr(Self.infoContribuinte.infoCadastro.indDesoneracao));
   Gerador.wCampo(tcStr, '', 'indAcordoIsenMulta', 1,   1, 1, indAcordoIsenMultaToStr(Self.infoContribuinte.infoCadastro.indAcordoIsenMulta));
-  Gerador.wCampo(tcStr, '', 'indSitPJ',           1,   1, 0, indSitPJToStr(Self.infoContribuinte.infoCadastro.indSitPJ));
+
+  if ( Self.FideContri.TpInsc = tiCNPJ ) then
+    Gerador.wCampo(tcStr, '', 'indSitPJ',         1,   1, 0, indSitPJToStr(Self.infoContribuinte.infoCadastro.indSitPJ));
 
   GerarContato;
   GerarSoftwareHouse;

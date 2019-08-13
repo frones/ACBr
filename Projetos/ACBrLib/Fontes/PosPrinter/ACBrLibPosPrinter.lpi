@@ -18,12 +18,12 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="3"/>
-      <BuildNr Value="204"/>
+      <BuildNr Value="257"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
     </VersionInfo>
-    <BuildModes Count="6">
+    <BuildModes Count="7">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>
       <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
@@ -192,7 +192,48 @@
           </Other>
         </CompilerOptions>
       </Item5>
-      <Item6 Name="CDECL-DEBUG">
+      <Item6 Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\Linux\libacbrposprinter32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item6>
+      <Item7 Name="CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -222,7 +263,7 @@
 -dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item6>
+      </Item7>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>

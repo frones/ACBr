@@ -128,6 +128,8 @@ const
   CChaveLogoVisible = 'LogoVisible';
   CChavePrinterName = 'Impressora';
   CChaveImprimeChaveEmUmaLinha = 'ImprimeChaveEmUmaLinha';
+  CChaveImprimeQRCodeLateral = 'ImprimeQRCodeLateral';
+  CChaveImprimeLogoLateral = 'ImprimeLogoLateral';
 
   CSessaoRespostaSat = 'RespostaSat';
   CSessaoCFe = 'CFE';

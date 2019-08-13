@@ -61,6 +61,8 @@ type
     FLogoCenter: Boolean;
     FLogoVisible: Boolean;
     FImprimeChaveEmUmaLinha: TAutoSimNao;
+    FImprimeQRCodeLateral: Boolean;
+    FImprimeLogoLateral: Boolean;
 
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
@@ -87,8 +89,9 @@ type
     property LogoAutoSize: Boolean read FLogoAutoSize write FLogoAutoSize;
     property LogoCenter: Boolean read FLogoCenter write FLogoCenter;
     property LogoVisible: Boolean read FLogoVisible write FLogoVisible;
-    property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
-      write FImprimeChaveEmUmaLinha default rAuto;
+    property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha write FImprimeChaveEmUmaLinha;
+    property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral;
+    property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral;
 
   end;
 
@@ -285,6 +288,8 @@ begin
   FLogoCenter := True;
   FLogoVisible := True;
   FImprimeChaveEmUmaLinha := rAuto;
+  FImprimeQRCodeLateral := True;
+  FImprimeLogoLateral := True;
 end;
 
 procedure TExtratoConfig.LerIniChild(const AIni: TCustomIniFile);
@@ -305,8 +310,9 @@ begin
   FLogoAutoSize := AIni.ReadBool(FSessao, CChaveLogoAutoSize, FLogoAutoSize);
   FLogoCenter := AIni.ReadBool(FSessao, CChaveLogoCenter, FLogoCenter);
   FLogoVisible := AIni.ReadBool(FSessao, CChaveLogoVisible, FLogoVisible);
-  FImprimeChaveEmUmaLinha := TAutoSimNao(AIni.ReadInteger(FSessao, CChaveImprimeChaveEmUmaLinha,
-    Integer(FImprimeChaveEmUmaLinha)));
+  FImprimeChaveEmUmaLinha := TAutoSimNao(AIni.ReadInteger(FSessao, CChaveImprimeChaveEmUmaLinha, Integer(FImprimeChaveEmUmaLinha)));
+  FImprimeQRCodeLateral := AIni.ReadBool(FSessao, CChaveImprimeQRCodeLateral, FImprimeQRCodeLateral);
+  FImprimeLogoLateral := AIni.ReadBool(FSessao, CChaveImprimeLogoLateral, FImprimeLogoLateral);
 end;
 
 procedure TExtratoConfig.GravarIniChild(const AIni: TCustomIniFile);
@@ -329,6 +335,8 @@ begin
   AIni.WriteBool(FSessao, CChaveLogoCenter, FLogoCenter);
   AIni.WriteBool(FSessao, CChaveLogoVisible, FLogoVisible);
   AIni.WriteInteger(FSessao, CChaveImprimeChaveEmUmaLinha, Integer(FImprimeChaveEmUmaLinha));
+  AIni.WriteBool(FSessao, CChaveImprimeQRCodeLateral, FImprimeQRCodeLateral);
+  AIni.WriteBool(FSessao, CChaveImprimeLogoLateral, FImprimeLogoLateral);
 end;
 
 procedure TExtratoConfig.AssignChild(const DFeReport: TACBrSATExtratoClass);

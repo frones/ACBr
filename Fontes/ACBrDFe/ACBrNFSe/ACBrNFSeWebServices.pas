@@ -1930,15 +1930,12 @@ begin
 //           proNotaBlu: FTagI := '<' + FTagGrupo +
 //                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proAssessorPublico,
            proFISSLex,
            proIPM,
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proAssessorPublico: FTagI := '<soapenv:Envelope '+
-                                'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">'+
-                                '<soapenv:Header/>'+
-                                '<soapenv:Body>';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1980,15 +1977,12 @@ begin
 //           proNotaBlu: FTagI := '<' + FTagGrupo +
 //                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proAssessorPublico,
            proFISSLex,
            proIPM,
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proAssessorPublico: FTagI := '<soapenv:Envelope '+
-                                'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">'+
-                                '<soapenv:Header/>'+
-                                '<soapenv:Body>';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2029,16 +2023,13 @@ begin
 //           proNotaBlu: FTagI := '<' + FTagGrupo +
 //                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
 
+           proAssessorPublico,
            proGoverna,
            proFISSLex,
            proIPM,
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proAssessorPublico: FTagI := '<soapenv:Envelope '+
-                                'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">'+
-                                '<soapenv:Header/>'+
-                                '<soapenv:Body>';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2125,16 +2116,13 @@ begin
                         FTagI := '<p1:' + FTagGrupo + FNameSpaceCan + '>';
                       end;
 
+           proAssessorPublico,
            proBetha,
            proGoverna,
            proSMARAPD,
            proGiap,
            proIPM: FTagI := '';
 
-           proAssessorPublico: FTagI := '<soapenv:Envelope '+
-                                'xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">'+
-                                '<soapenv:Header/>'+
-                                '<soapenv:Body>';
          else
            begin
              FNameSpaceCan := FNameSpaceDad;
@@ -2173,9 +2161,7 @@ begin
        begin
          case FProvedor of
            proAssessorPublico:
-             FTagI := '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nfse="nfse">'+
-                      '<soapenv:Header/>'+
-                      '<soapenv:Body>';
+             FTagI := '';
          else
            FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
          end;	 
@@ -2239,52 +2225,36 @@ begin
 
     LayNfseConsultaSitLoteRps:
        begin
-         case FProvedor of
-           proAssessorPublico: FTagF := '</soapenv:Body></soapenv:Envelope>';
-         else
-           FTagF := '</' + FTagGrupo + '>';
-         end;
+         FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
     LayNfseConsultaLote:
        begin
-         case FProvedor of
-           proAssessorPublico: FTagF := '</soapenv:Body></soapenv:Envelope>';
-         else
-           FTagF := '</' + FTagGrupo + '>';
-         end;
+         FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
     LayNfseConsultaNfseRps:
        begin
-         case FProvedor of
-           proAssessorPublico: FTagF := '</soapenv:Body></soapenv:Envelope>';
-         else
-           FTagF := '</' + FTagGrupo + '>';
-         end;
+         FTagF := '</' + FTagGrupo + '>';
 
          if FProvedor in [proDBSeller] then
            FTagF := FTagF + '</ConsultarNfsePorRps>';
 
-         if FProvedor in [proGoverna, proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proGoverna, proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
     LayNfseConsultaNfse:
        begin
-         case FProvedor of
-           proAssessorPublico: FTagF := '</soapenv:Body></soapenv:Envelope>';
-         else
-           FTagF := '</' + FTagGrupo + '>';
-         end;
+         FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proFISSLex, proSMARAPD, proIPM, proGiap] then
+         if FProvedor in [proAssessorPublico, proFISSLex, proSMARAPD, proIPM, proGiap] then
            FTagF := '';
        end;
 
@@ -2318,7 +2288,7 @@ begin
     LayNfseRecepcaoLoteSincrono:
        begin
          if FProvedor = proAssessorPublico then
-           FTagF := '</soapenv:Body></soapenv:Envelope>'
+           FTagF := ''
          else
            FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
        end;

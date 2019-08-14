@@ -619,7 +619,7 @@ begin
     begin
       Gerador.wGrupo('infTravessia', '#106');
       Gerador.wCampo(tcStr, '#107', 'tpVeiculo ', 02, 02, 1, tpVeiculoToStr(BPe.infViagem[i].infTravessia.tpVeiculo), DSC_TPVEICULO);
-      Gerador.wCampo(tcStr, '#108', 'sitVeiculo', 02, 02, 1, SitVeiculoToStr(BPe.infViagem[i].infTravessia.sitVeiculo), DSC_SITVEICULO);
+      Gerador.wCampo(tcStr, '#108', 'sitVeiculo', 01, 01, 1, SitVeiculoToStr(BPe.infViagem[i].infTravessia.sitVeiculo), DSC_SITVEICULO);
       Gerador.wGrupo('/infTravessia');
     end;
 

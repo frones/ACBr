@@ -448,14 +448,14 @@ end;
 function SitVeiculoToStr(const t: TSitVeiculo): String;
 begin
   result := EnumeradoToStr(t,
-                           ['01', '02', '03'],
+                           ['1', '2', '3'],
                            [svVazio, svCarregado, svNaoSeAplica]);
 end;
 
 function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 begin
   result := StrToEnumerado(ok, s,
-                           ['01', '02', '03'],
+                           ['1', '2', '3'],
                            [svVazio, svCarregado, svNaoSeAplica]);
 end;
 

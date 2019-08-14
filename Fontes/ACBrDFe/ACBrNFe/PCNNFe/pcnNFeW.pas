@@ -930,7 +930,7 @@ begin
 
     if nfe.infNFe.Versao >= 3 then
     begin
-      Gerador.wCampo(tcStr, 'I23a', 'tpViaTransp ', 02, 02, 1, TipoViaTranspToStr(nfe.Det[i].Prod.DI[j].tpViaTransp), DSC_TPVIATRANSP);
+      Gerador.wCampo(tcStr, 'I23a', 'tpViaTransp ', 01, 02, 1, TipoViaTranspToStr(nfe.Det[i].Prod.DI[j].tpViaTransp), DSC_TPVIATRANSP);
 
       if nfe.Det[i].Prod.DI[j].tpViaTransp = tvMaritima then
         Gerador.wCampo(tcDe2, 'I23b', 'vAFRMM', 00, 15, 1, nfe.Det[i].Prod.DI[j].vAFRMM, DSC_VAFRMM)

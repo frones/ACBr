@@ -382,13 +382,22 @@ end;
 
 function TACBrNFe.GerarNomeArqSchemaEvento(ASchemaEventoNFe: TSchemaNFe;
   VersaoServico: Double): String;
+var
+  xComplemento: string;
 begin
   if VersaoServico = 0.0 then
     Result := ''
   else
+  begin
+    if ASchemaEventoNFe = schEnvEPEC then
+      xComplemento := GetNomeModeloDFe
+    else
+      xComplemento := '';
+
     Result := PathWithDelim( Configuracoes.Arquivos.PathSchemas ) +
-              SchemaEventoToStr(ASchemaEventoNFe) + '_v' +
+              SchemaEventoToStr(ASchemaEventoNFe) + xComplemento + '_v' +
               FloatToString(VersaoServico, '.', '0.00') + '.xsd';
+  end;
 end;
 
 function TACBrNFe.GerarChaveContingencia(FNFe: TNFe): String;

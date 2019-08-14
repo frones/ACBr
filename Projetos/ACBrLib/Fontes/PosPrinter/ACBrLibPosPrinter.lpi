@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="3"/>
-      <BuildNr Value="259"/>
+      <BuildNr Value="265"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -256,6 +256,7 @@
           <Linking>
             <Debugging>
               <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
             </Debugging>
             <Options>
               <ExecutableType Value="Library"/>

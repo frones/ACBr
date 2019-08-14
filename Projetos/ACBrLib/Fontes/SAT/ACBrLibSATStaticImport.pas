@@ -20,9 +20,9 @@ const
   {$EndIf}
  {$Else}
   {$IfDef CPU64}
-  CACBrSATLIBName = 'ACBrSAT64.so';
+  CACBrSATLIBName = 'libacbrsat64.so';
   {$Else}
-  CACBrSATLIBName = 'ACBrSAT32.so';
+  CACBrSATLIBName = 'libacbrsat32.so';
 
   {$EndIf}
  {$EndIf}

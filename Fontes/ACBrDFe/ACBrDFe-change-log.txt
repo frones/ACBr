@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/08/2019
+-- ACBrDFeXsXmlSec --
+[*] Acrescentado o parâmetro docElement no método:
+    TDFeSSLXmlSignXmlSec.XmlSecSign.
+  Por: Italo Jurisato Junior
+
 29/07/2019
 -- ACBrDFeUtil --
 [*] Se informado código menor ou igual a -2 a chave será gerado com 

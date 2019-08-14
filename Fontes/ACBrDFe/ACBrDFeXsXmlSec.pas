@@ -107,7 +107,8 @@ type
     procedure CreateCtx;
     procedure DestroyCtx;
     function XmlSecSign(aDoc: xmlDocPtr;
-      const SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
+      const SignatureNode, SelectionNamespaces: string;
+      const InfElement, URI, IdSignature, docElement: String): String;
   protected
     procedure VerificarValoresPadrao(var SignatureNode: String;
       var SelectionNamespaces: String); override;
@@ -420,7 +421,8 @@ begin
 end;
 
 function TDFeSSLXmlSignXmlSec.XmlSecSign(aDoc: xmlDocPtr;
- const SignatureNode, SelectionNamespaces: string; const InfElement, URI, IdSignature : String): String;
+  const SignatureNode, SelectionNamespaces: string;
+  const InfElement, URI, IdSignature, docElement: String): String;
 var
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
@@ -434,7 +436,7 @@ begin
     // Inserindo Template da Assinatura digital //
     SignNode := LibXmlFindSignatureNode(aDoc, SignatureNode, SelectionNamespaces, infElement);
     if (SignNode = nil) then
-      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst));
+      SignNode := AdicionarNode(aDoc, SignatureElement(URI, True, IdSignature, FpDFeSSL.SSLDgst), docElement);
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
@@ -506,7 +508,8 @@ begin
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-    XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement, URI, IdSignature);
+    XmlAss := XmlSecSign(doc, SignatureNode, SelectionNamespaces, InfElement,
+                         URI, IdSignature, docElement);
 
     // DEBUG
     // WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);

@@ -278,6 +278,8 @@ begin
 end;
 
 function TretEnvLote.LerXml: Boolean;
+var
+  i: Integer;
 begin
   if Provedor = proISSCuritiba then
     Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
@@ -286,26 +288,43 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
- case Provedor of
-   proCONAM:      Result := LerXml_proCONAM;
-   proEL:         Result := LerXml_proEL;
-   proEquiplano:  Result := LerXml_proEquiplano;
-   proGoverna:    Result := LerXml_proGoverna;
-   proInfisc,
-   proInfiscv11:  Result := LerXml_proInfisc;
-   proISSDSF:     Result := LerXml_proISSDSF;
-   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
-   proSP,
-   proNotaBlu:    Result := LerXml_proSP;
-   proFriburgo:   Result := LerXML_proFriburgo;
-   proCTA:        Result := LerXml_proCTA;
-   proSMARAPD:    Result := LerXML_proSmarapd;
-   proIPM:        Result := LerXML_proIPM;
-   proGiap:       Result := LerXML_proGiap;
-   proAssessorPublico : Result := LerXML_proAssessorPublica;
- else
-   Result := LerXml_ABRASF;
- end;
+  case Provedor of
+    proCONAM:      Result := LerXml_proCONAM;
+    proEL:         Result := LerXml_proEL;
+    proEquiplano:  Result := LerXml_proEquiplano;
+    proGoverna:    Result := LerXml_proGoverna;
+    proInfisc,
+    proInfiscv11:  Result := LerXml_proInfisc;
+    proISSDSF:     Result := LerXml_proISSDSF;
+    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
+    proSP,
+    proNotaBlu:    Result := LerXml_proSP;
+    proFriburgo:   Result := LerXML_proFriburgo;
+    proCTA:        Result := LerXml_proCTA;
+    proSMARAPD:    Result := LerXML_proSmarapd;
+    proIPM:        Result := LerXML_proIPM;
+    proGiap:       Result := LerXML_proGiap;
+    proAssessorPublico : Result := LerXML_proAssessorPublica;
+  else
+    Result := LerXml_ABRASF;
+  end;
+
+  i := 0;
+  while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
+  begin
+    InfRec.FMsgRetorno.New;
+    InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
+    if InfRec.FMsgRetorno[i].FCodigo = '' then
+      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Code');
+
+    InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
+    if InfRec.FMsgRetorno[i].FMensagem = '' then
+      InfRec.FMsgRetorno[i].FMensagem   := Leitor.rCampo(tcStr, 'Reason');
+
+    InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Detail');
+
+    inc(i);
+  end;
 end;
 
 function TretEnvLote.LerXml_ABRASF: Boolean;
@@ -377,7 +396,7 @@ begin
 
       inc(i);
     end;
-
+    {
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do
     begin
@@ -394,7 +413,7 @@ begin
 
       inc(i);
     end;
-
+    }
   except
     Result := False;
   end;

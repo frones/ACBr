@@ -756,8 +756,8 @@ begin
 
      proAssessorPublico:
        begin
-         Gerador.Prefixo := 'nfse:';
-         Gerador.wGrupoNFSe('Nfse.Execute');
+//         Gerador.Prefixo := 'nfse:';
+         Gerador.wGrupoNFSe('Nfse.Execute xmlns="nfse"');
          Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '1', '');
          Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
          Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
@@ -916,8 +916,8 @@ begin
 //                                     '<SEQUENCIA>'+NUMERO DA NOTA+'</SEQUENCIA>'+
                    '</IDENTIFICACAO></NFSE>';
 
-        Gerador.Prefixo := 'nfse:';
-        Gerador.wGrupoNFSe('Nfse.Execute');
+//         Gerador.Prefixo := 'nfse:';
+        Gerador.wGrupoNFSe('Nfse.Execute xmlns="nfse"');
         Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '3', '');
         Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
         Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
@@ -1093,8 +1093,8 @@ begin
 //                                     '<SEQUENCIA>'+NUMERO DA NOTA+'</SEQUENCIA>'+
                    '</IDENTIFICACAO></NFSE>';
 
-        Gerador.Prefixo := 'nfse:';
-        Gerador.wGrupoNFSe('Nfse.Execute');
+//         Gerador.Prefixo := 'nfse:';
+        Gerador.wGrupoNFSe('Nfse.Execute xmlns="nfse"');
         Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '3', '');
         Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
         Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');

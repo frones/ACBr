@@ -1889,6 +1889,7 @@ begin
                                 ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
                                 ' xmsns:xsd="http://www.w3.org/2001/XMLSchema">';
 
+           proAssessorPublico,
            proGoverna,
            proInfisc,
            proInfiscv11,
@@ -2054,6 +2055,7 @@ begin
            proTinus,
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
 
+           proAssessorPublico,
            proFISSLex,
            proIPM,
            proGiap,
@@ -2149,6 +2151,7 @@ begin
            proTinus,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
+           proAssessorPublico,
            proSMARAPD,
            proGiap,
            proIPM: FTagI := '';
@@ -2183,6 +2186,7 @@ begin
                                  ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
                                         FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
+           proAssessorPublico,
            proSMARAPD,
            proGiap,
            proIPM: FTagI := '';
@@ -2213,6 +2217,7 @@ begin
     LayNfseRecepcaoLote:
        begin
          case FProvedor of
+           proAssessorPublico,
            proInfisc,
            proInfiscv11,
            proGoverna,
@@ -2261,6 +2266,7 @@ begin
     LayNfseCancelaNfse:
        begin
          case FProvedor of
+           proAssessorPublico,
            proBetha,
            proGoverna,
            proIPM,
@@ -2279,6 +2285,7 @@ begin
     LayNfseGerar:
        begin
          case FProvedor of
+           proAssessorPublico,
            proIPM: FTagF := '';
          else
            FTagF := '</' + FTagGrupo + '>';
@@ -2299,6 +2306,7 @@ begin
            proAgili,
            proAgiliv2: FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
 
+           proAssessorPublico,
            proSMARAPD,
            proGiap,
            proIPM: FTagF := '';

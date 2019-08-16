@@ -9692,8 +9692,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Height = -13
                     ItemIndex = 0
                     Items.Strings = (
-                      'Barras'
                       'Padrão'
+                      'Barras'
                     )
                     ParentFont = False
                     TabOrder = 9
@@ -13470,7 +13470,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/PosPrinter.htm'
           Caption = 'PosPrinter'
           ClientHeight = 378
-          ClientWidth = 1051
+          ClientWidth = 1015
           Font.Height = -13
           ImageIndex = 1
           ParentFont = False
@@ -13478,11 +13478,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 0
             Height = 378
             Top = 0
-            Width = 1051
+            Width = 1015
             Align = alClient
             Caption = 'Configuração'
             ClientHeight = 356
-            ClientWidth = 1047
+            ClientWidth = 1011
             Font.Height = -13
             ParentFont = False
             TabOrder = 0
@@ -16194,7 +16194,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

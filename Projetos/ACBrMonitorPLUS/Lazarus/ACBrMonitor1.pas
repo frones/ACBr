@@ -1710,6 +1710,8 @@ var
   iMDF: TVersaoMDFe;
   iCTE: TVersaoCTe;
   iNFe: TpcnVersaoDF;
+  IPosReciboLayout: TPosReciboLayout;
+  SPosReciboLayout: String;
   IBanco: TACBrTipoCobranca;
   iSAT: TACBrSATModelo;
   iTipo: TpcnTipoAmbiente;
@@ -1862,6 +1864,16 @@ begin
   FalseBoolStrs[0] := 'False';
   FalseBoolStrs[1] := 'F';
   FalseBoolStrs[2] := 'Falso';
+
+  { Criando Lista Layout Canhoto }
+  rgLayoutCanhoto.Items.Clear;
+  IPosReciboLayout := Low(TPosReciboLayout);
+  while IPosReciboLayout <= High(TPosReciboLayout) do
+  begin
+    SPosReciboLayout:= GetEnumName(TypeInfo(TPosReciboLayout), integer(IPosReciboLayout));
+    rgLayoutCanhoto.Items.Add(copy(SPosReciboLayout,4, Length(SPosReciboLayout))); // Removendo "prl" do modelo.
+    Inc(IPosReciboLayout);
+  end;
 
   { Criando lista de Bancos disponiveis }
   cbxBOLBanco.Items.Clear;

@@ -2365,7 +2365,7 @@ begin
     ExpandirLogo              :=  False;
     Fonte                     :=  0;
     LocalCanhoto              :=  0;
-    LayoutCanhoto             :=  1;
+    LayoutCanhoto             :=  0;
     QuebrarLinhasDetalheItens :=  False;
     ImprimirDetalhamentoEspecifico := True;
     ImprimirDadosDocReferenciados := True;

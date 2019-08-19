@@ -16,10 +16,11 @@
     </General>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="2019"/>
       <MinorVersionNr Value="6"/>
       <RevisionNr Value="9"/>
-      <BuildNr Value="1"/>
+      <BuildNr Value="7"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr"/>
@@ -407,20 +408,4 @@
       <CustomOptions Value="-dNOGUI"/>
     </Other>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="4">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-      <Item4>
-        <Name Value="EAssertionFailedError"/>
-      </Item4>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

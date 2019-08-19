@@ -19,7 +19,7 @@
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="90"/>
+      <BuildNr Value="120"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrETQ - Biblioteca para impressão de Etiquetas" InternalName="ACBrLibETQ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ETQ" ProductVersion="0.0.1.30"/>
@@ -234,7 +234,7 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="CDECL-DEBUG">
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -263,7 +263,8 @@
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG"/>
+            <CustomOptions Value="-dNOGUI
+-dDEBUG"/>
           </Other>
         </CompilerOptions>
       </Item7>
@@ -360,6 +361,10 @@
       <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
       <LinkSmart Value="True"/>
       <Options>
         <ExecutableType Value="Library"/>

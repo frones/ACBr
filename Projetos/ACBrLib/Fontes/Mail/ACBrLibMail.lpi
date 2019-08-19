@@ -17,17 +17,16 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="2019"/>
       <MinorVersionNr Value="1"/>
-      <RevisionNr Value="7"/>
-      <BuildNr Value="5"/>
+      <RevisionNr Value="8"/>
+      <BuildNr Value="11"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrMail - Biblioteca para envio de email" InternalName="ACBrLibMail" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="Mail" ProductVersion="2019.1.7.1"/>
     </VersionInfo>
-    <BuildModes Count="5">
-      <Item1 Name="x86 - CDECL" Default="True"/>
-      <Item2 Name="x64 - CDECL">
+    <BuildModes Count="7">
+      <Item1 Name="Win32-i386-CDECL" Default="True"/>
+      <Item2 Name="Win64-x86_64-CDECL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -47,6 +46,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -68,7 +68,7 @@
           </Other>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="x86 - STDCALL">
+      <Item3 Name="Win32-i386-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -88,6 +88,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -109,7 +110,7 @@
           </Other>
         </CompilerOptions>
       </Item3>
-      <Item4 Name="x64 - STDCALL">
+      <Item4 Name="Win64-x86_64-STDCALL">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -129,6 +130,7 @@
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -150,7 +152,89 @@
           </Other>
         </CompilerOptions>
       </Item4>
-      <Item5 Name="x86 - CDECL - DEBUG">
+      <Item5 Name="Linux-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\linux\libacbrmail64"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item5>
+      <Item6 Name="Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\linux\libacbrmail32"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
+            <OtherUnitFiles Value="..\Comum"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dNOGUI"/>
+          </Other>
+        </CompilerOptions>
+      </Item6>
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -168,27 +252,23 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <TargetCPU Value="i386"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
             </Debugging>
-            <LinkSmart Value="True"/>
             <Options>
               <ExecutableType Value="Library"/>
             </Options>
           </Linking>
           <Other>
-            <CustomOptions Value="-dDEBUG"/>
+            <CustomOptions Value="-dDEBUG
+-dNOGUI"/>
           </Other>
         </CompilerOptions>
-      </Item5>
+      </Item7>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -261,10 +341,20 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
-      <RelocatableUnit Value="True"/>
+      <SmartLinkUnit Value="True"/>
       <TargetCPU Value="i386"/>
+      <TargetOS Value="win32"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
+      <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <ExecutableType Value="Library"/>
       </Options>

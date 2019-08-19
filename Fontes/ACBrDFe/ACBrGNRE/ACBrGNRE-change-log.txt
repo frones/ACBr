@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2019
+[*] pgnreGNREW
+    Alterado a forma de gerar o atributo tipo do tag documentoOrigem.
+   Por: Italo Jurisato Junior
+
 11/07/2019
 [+] ACBrGNReGuiasa
 Adicionado campo TipoGNRe na leitura .ini (LerArqIni)

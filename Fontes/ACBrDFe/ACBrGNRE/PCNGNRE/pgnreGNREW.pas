@@ -333,7 +333,7 @@ begin
   Gerador.wCampo(tcInt, '', 'receita            ', 06, 06, 1, GNRE.c02_receita, '');
   Gerador.wCampo(tcInt, '', 'detalhamentoReceita', 06, 06, 0, GNRE.c25_detalhamentoReceita, '');
   Gerador.wCampo(tcStr, '', 'documentoOrigem    ', 01, 18, 1, GNRE.c04_docOrigem, '',
-                         True, 'tipo="' + IntToStr(GNRE.c28_tipoDocOrigem) + '"');
+                         True, 'tipo="' + FormatFloat('00', GNRE.c28_tipoDocOrigem) + '"');
   Gerador.wCampo(tcInt, '', 'produto            ', 01, 04, 0, GNRE.c26_produto, '');
 
   if (GNRE.referencia.periodo >= 0) or (GNRE.referencia.mes <> '') or

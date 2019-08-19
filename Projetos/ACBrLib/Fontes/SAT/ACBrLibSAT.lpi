@@ -17,9 +17,7 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="2019"/>
-      <MinorVersionNr Value="6"/>
-      <RevisionNr Value="9"/>
+      <MinorVersionNr Value="1"/>
       <BuildNr Value="7"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>

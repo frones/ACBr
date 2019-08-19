@@ -62,7 +62,7 @@ type
 
 	{$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}	
+  {$ENDIF RTL230_UP}
   TACBrNFeDANFEFR = class( TACBrNFeDANFEClass )
   private
     FdmDanfe: TACBrNFeFRClass;
@@ -118,8 +118,8 @@ type
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
-    property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf;
-    property IncorporarFontesPdf: Boolean read GetIncorporarFontesPdf write SetIncorporarFontesPdf;
+    property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf default True;
+    property IncorporarFontesPdf: Boolean read GetIncorporarFontesPdf write SetIncorporarFontesPdf default True;
     property PrintMode: TfrxPrintMode read GetPrintMode write SetPrintMode default pmDefault;
     property PrintOnSheet: Integer read GetPrintOnSheet write SetPrintOnSheet default 0;
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
@@ -154,6 +154,10 @@ type
     procedure SetExibeCaptionButton(const Value: Boolean);
     procedure SetZoomModePadrao(const Value: TfrxZoomMode);
     procedure SetBorderIcon(const Value: TBorderIcons);
+    function GetIncorporarBackgroundPdf: Boolean;
+    function GetIncorporarFontesPdf: Boolean;
+    procedure SetIncorporarBackgroundPdf(const Value: Boolean);
+    procedure SetIncorporarFontesPdf(const Value: Boolean);
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -180,6 +184,8 @@ type
     property BorderIcon: TBorderIcons read GetBorderIcon write SetBorderIcon;
     property ExibeCaptionButton: Boolean read GetExibeCaptionButton write SetExibeCaptionButton default False;
     property ZoomModePadrao: TfrxZoomMode read GetZoomModePadrao write SetZoomModePadrao default ZMDEFAULT;
+    property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf default True;
+    property IncorporarFontesPdf: Boolean read GetIncorporarFontesPdf write SetIncorporarFontesPdf default True;
   end;
 
 implementation
@@ -402,6 +408,16 @@ begin
   Result := FdmDanfe.FastFileInutilizacao;
 end;
 
+function TACBrNFeDANFCEFR.GetIncorporarBackgroundPdf: Boolean;
+begin
+  Result := FdmDanfe.IncorporarBackgroundPdf;
+end;
+
+function TACBrNFeDANFCEFR.GetIncorporarFontesPdf: Boolean;
+begin
+  Result := FdmDanfe.IncorporarFontesPdf;
+end;
+
 function TACBrNFeDANFCEFR.GetPreparedReport: TfrxReport;
 begin
   Result := FdmDanfe.GetPreparedReport;
@@ -493,6 +509,17 @@ end;
 procedure TACBrNFeDANFCEFR.SetFastFileInutilizacao(const Value: String);
 begin
   FdmDanfe.FastFileInutilizacao := Value;
+end;
+
+procedure TACBrNFeDANFCEFR.SetIncorporarBackgroundPdf(
+  const Value: Boolean);
+begin
+  FdmDanfe.IncorporarBackgroundPdf := Value;
+end;
+
+procedure TACBrNFeDANFCEFR.SetIncorporarFontesPdf(const Value: Boolean);
+begin
+  FdmDanfe.IncorporarFontesPdf := Value;
 end;
 
 procedure TACBrNFeDANFCEFR.SetPrintMode(const Value: TfrxPrintMode);

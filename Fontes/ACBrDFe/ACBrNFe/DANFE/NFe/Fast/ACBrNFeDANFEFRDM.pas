@@ -174,7 +174,6 @@ type
     procedure CarregaDadosNFe;
     procedure CarregaDadosEventos;
     procedure CarregaDadosInutilizacao;
-    procedure PintarQRCode(const QRCodeData: String; APict: TPicture);
 
     property FastFile: String read FFastFile write FFastFile;
     property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
@@ -1076,7 +1075,7 @@ begin
           FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
           FieldByName('Quantidade').AsString    := FDANFEClassOwner.FormatarQuantidade( FieldByName('QCom').AsFloat );
           FieldByName('ValorUnitario').AsString := FDANFEClassOwner.FormatarValorUnitario( FieldByName('VUnCom').AsFloat );
-          FieldByName('vDesc').AsString           := FormatFloatBr( Prod.vDesc,'###,###,##0.00');
+          FieldByName('vDesc').AsString         := FormatFloatBr( Prod.vDesc,'###,###,##0.00');
         end;
 
         FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
@@ -1316,7 +1315,10 @@ begin
       Append;
       with FNFe.Pag[i] do
       begin
-        FieldByName('tPag').AsString  := FormaPagamentoToDescricao( tPag );
+        if FDANFEClassOwner is TACBrNFeDANFCEClass then
+          FieldByName('tPag').AsString := TACBrNFeDANFCEClass(FDANFEClassOwner).ManterDescricaoPagamentos(FNFe.pag[i])
+        else
+          FieldByName('tPag').AsString := FormaPagamentoToDescricao(tPag);
         FieldByName('vPag').AsFloat   := vPag;
         // ver tpIntegra
         FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
@@ -1974,41 +1976,6 @@ begin
    end;
 end;
 
-procedure TACBrNFeFRClass.PintarQRCode(const QRCodeData: String; APict: TPicture);
-var
-  QRCode: TDelphiZXingQRCode;
-  QRCodeBitmap: TBitmap;
-  Row, Column: Integer;
-begin
-  QRCode       := TDelphiZXingQRCode.Create;
-  QRCodeBitmap := TBitmap.Create;
-  try
-    QRCode.Encoding  := qrUTF8NoBOM;
-    QRCode.QuietZone := 1;
-    QRCode.Data      := widestring(QRCodeData);
-
-    //QRCodeBitmap.SetSize(QRCode.Rows, QRCode.Columns);
-    QRCodeBitmap.Width  := QRCode.Columns;
-    QRCodeBitmap.Height := QRCode.Rows;
-
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
-      begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
-      end;
-    end;
-
-    APict.Assign(QRCodeBitmap);
-  finally
-    QRCode.Free;
-    QRCodeBitmap.Free;
-  end;
-end;
-
 function TACBrNFeFRClass.PrepareReport(ANFE: TNFe): Boolean;
 var
   I: Integer;
@@ -2259,7 +2226,7 @@ begin
                 qrcode := NFe.infNFeSupl.qrCode;
 
               if Assigned(Sender) and (Sender.Name = 'ImgQrCode') then
-                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture);
+                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
 
               CpDescrProtocolo := frxReport.FindObject('Memo25');
               if Assigned(CpDescrProtocolo) then

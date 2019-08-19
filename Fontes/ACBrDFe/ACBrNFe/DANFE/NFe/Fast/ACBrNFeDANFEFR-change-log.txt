@@ -45,6 +45,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/08/2019
+-- ACBrNFeDANFCEFR --
+[+] Adição das propriedades "IncorporaBackgroundPdf" e "IncorporarFontesPdf".
+    https://www.projetoacbr.com.br/forum/topic/53103-pdf-de-nfc-e-gerado-com-tamanho-muito-grande/
+  Por: tdpsistemas
+
+-- ACBrNFeDANFERDM --
+[*] Remoção de implementação do método duplicado "PintarQRCode" já existente 
+    em ACBrDFeReport.pas.
+[*] Formatação da descrição da forma de pagamento conforme configuração da
+    propriedade "DescricaoPagamentos".
+  Por: BigWings
 
 26/07/2019
 -- ACBrNFeDANFEFRDM --

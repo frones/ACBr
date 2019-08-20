@@ -118,11 +118,7 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$IFDEF CPU64}
-  {$R ACBrANeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
- {$ELSE}
-  {$R ACBrANeServicos.rc}
- {$ENDIF}
+ {$R ACBrANeServicos.rc}
 {$ELSE}
  {$R ACBrANeServicos.res}
 {$ENDIF}

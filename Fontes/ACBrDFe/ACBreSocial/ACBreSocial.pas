@@ -135,11 +135,7 @@ type
 implementation
 
 {$IFDEF FPC}
- {$IFDEF CPU64}
-  {$R ACBreSocialServicos.res}  // Dificuldades de compilar Recurso em 64 bits
- {$ELSE}
-  {$R ACBreSocialServicos.rc}
- {$ENDIF}
+ {$R ACBreSocialServicos.rc}
 {$ELSE}
  {$R ACBreSocialServicos.res}
 {$ENDIF}

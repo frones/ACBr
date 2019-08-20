@@ -120,11 +120,7 @@ type
 implementation
 
 {$IFDEF FPC}
- {$IFDEF CPU64}
-  {$R ACBrReinfServicos.res}  // Dificuldades de compilar Recurso em 64 bits
- {$ELSE}
-  {$R ACBrReinfServicos.rc}
- {$ENDIF}
+ {$R ACBrReinfServicos.rc}
 {$ELSE}
  {$R ACBrReinfServicos.res}
 {$ENDIF}

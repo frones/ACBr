@@ -149,11 +149,7 @@ uses
   pcnAuxiliar, synacode, ACBrDFeSSL;
 
 {$IFDEF FPC}
- {$IFDEF CPU64}
-  {$R ACBrMDFeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
- {$ELSE}
-  {$R ACBrMDFeServicos.rc}
- {$ENDIF}
+ {$R ACBrMDFeServicos.rc}
 {$ELSE}
  {$R ACBrMDFeServicos.res}
 {$ENDIF}

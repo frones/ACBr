@@ -156,11 +156,7 @@ uses
   strutils, dateutils, ACBrDFeSSL;
 
 {$IFDEF FPC}
- {$IFDEF CPU64}
-  {$R ACBrNFSeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
- {$ELSE}
-  {$R ACBrNFSeServicos.rc}
- {$ENDIF}
+ {$R ACBrNFSeServicos.rc}
 {$ELSE}
  {$R ACBrNFSeServicos.res}
 {$ENDIF}

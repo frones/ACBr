@@ -4648,10 +4648,12 @@ begin
       ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
 
       // Necessário para o provedor ISSDSF
-      NumeroLote := FNumeroLote;
       Transacao  := FNotasFiscais.Transacao;
-      NumeroLote := FNotasFiscais.NumeroLote;
       Notas      := FvNotas;
+
+      NumeroLote := FNotasFiscais.NumeroLote;
+      if NumeroLote = '' then
+        NumeroLote := FNumeroLote;
 
       if FProvedor = proEGoverneISS then
         Transacao := (SimNaoToStr(FNotasFiscais.Items[0].NFSe.Producao) = '2');

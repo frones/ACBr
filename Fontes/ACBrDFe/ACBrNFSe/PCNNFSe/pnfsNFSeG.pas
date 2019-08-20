@@ -1604,7 +1604,7 @@ end;
 
 function TNFSeG.Gera_DadosMsgCancelarNFSe: String;
 var
-  TagI, TagF: string;
+  TagI, TagF, strTemp: string;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -1828,6 +1828,22 @@ begin
         Gerador.wGrupoNFSe('motivocancelamento>' + MotivoCanc + '</motivocancelamento');
         Gerador.wGrupoNFSe('datacancelamento>' + FormatDateTime('dd/mm/yyyy', now) + '</datacancelamento');
         Gerador.wGrupoNFSe('/nfd');
+      end;
+
+    proAssessorPublico:
+      begin
+        strTemp := '<NFSE><IDENTIFICACAO>' +
+                   '<INSCRICAO>' + IM + '</INSCRICAO>' +
+                   '<LOTE>' + NumeroLote + '</LOTE>' +
+                   '<SEQUENCIA>' + NumeroNfse + '</SEQUENCIA>' +
+                   '</IDENTIFICACAO></NFSE>';
+
+        Gerador.wGrupoNFSe('Nfse.Execute xmlns="nfse"');
+        Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '2', '');
+        Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
+        Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, strTemp, '');
+        Gerador.wGrupoNFSe('/Nfse.Execute');
       end;
   else
     begin

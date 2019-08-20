@@ -1905,20 +1905,9 @@ begin
                 '</' + Prefixo3 + 'Pedido>';
       end;
 
-    proEquiplano,
-    proGinfes,
-    proGoverna,
-    proEGoverneISS,
-    proISSDSF,
-    proCTA,
-    proCONAM,
-    proEL,
-    proInfisc,
-    proInfiscv11,
-    proSP,
-    proNotaBlu,
-    proSMARAPD,
-    proGiap,
+    proAssessorPublico, proEquiplano, proGinfes, proGoverna, proEGoverneISS,
+    proISSDSF, proCTA, proCONAM, proEL, proInfisc, proInfiscv11, proSP,
+    proNotaBlu, proSMARAPD, proGiap,
     proIPM:
       begin
         TagI := '';

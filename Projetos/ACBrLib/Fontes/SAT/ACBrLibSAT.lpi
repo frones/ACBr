@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="ACBrLibSat"/>
+      <Title Value="ACBrLibSAT"/>
       <ResourceType Value="res"/>
     </General>
     <VersionInfo>
@@ -233,7 +233,7 @@
           </Other>
         </CompilerOptions>
       </Item6>
-      <Item7 Name="CDECL-DEBUG">
+      <Item7 Name="i386-CDECL-DEBUG">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>

@@ -82,7 +82,10 @@ type
                  cstRep41, cstVazio, cstICMSOutraUF, cstICMSSN, cstRep60); //80 e 81 apenas para CTe
   TpcnCSOSNIcms = (csosnVazio,csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500,csosn900 );
   TpcnDeterminacaoBaseIcms = (dbiMargemValorAgregado, dbiPauta, dbiPrecoTabelado, dbiValorOperacao, dbiNenhum);
-  TpcnDeterminacaoBaseIcmsST = (dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta);
+  TpcnDeterminacaoBaseIcmsST = (dbisPrecoTabelado, dbisListaNegativa,
+                                dbisListaPositiva, dbisListaNeutra,
+                                dbisMargemValorAgregado, dbisPauta,
+                                dbisValordaOperacao);
   TpcnMotivoDesoneracaoICMS = (mdiTaxi, mdiDeficienteFisico, mdiProdutorAgropecuario, mdiFrotistaLocadora, mdiDiplomaticoConsular,
                                mdiAmazoniaLivreComercio, mdiSuframa, mdiVendaOrgaosPublicos, mdiOutros, mdiDeficienteCondutor,
                                mdiDeficienteNaoCondutor, mdiOrgaoFomento, mdiOlimpiadaRio2016, mdiSolicitadoFisco );
@@ -847,8 +850,10 @@ end;
 function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 begin
   result := EnumeradoToStr(t, ['0 – Preço tabelado ou máximo sugerido', '1 - Lista Negativa (valor)',
-   '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)', '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)'],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
+   '2 - Lista Positiva (valor)', '3 - Lista Neutra (valor)',
+   '4 - Margem Valor Agregado (%)', '5 - Pauta (valor)', '6 - Valor da Operação'],
+    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
 end;
 
 function modBCSTToStr(const t: TpcnDeterminacaoBaseIcmsST): string;
@@ -859,14 +864,17 @@ begin
   // 3 - Lista Neutra (valor);
   // 4 - Margem Valor Agregado (%);
   // 5 - Pauta (valor);
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
+  // 6 - Valor da Operação
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '6'],
+    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
 end;
 
 function StrTomodBCST(out ok: boolean; const s: string): TpcnDeterminacaoBaseIcmsST;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
-    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra, dbisMargemValorAgregado, dbisPauta]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '6'],
+    [dbisPrecoTabelado, dbisListaNegativa, dbisListaPositiva, dbisListaNeutra,
+     dbisMargemValorAgregado, dbisPauta, dbisValordaOperacao]);
 end;
 
 // N28 - Motivo da desoneração do ICMS ***************************

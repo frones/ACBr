@@ -41,7 +41,7 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  Classes, StrUtils, SysUtils, synacode,
+  Classes, StrUtils, SysUtils, synacode, synautil,
   {IniFiles,} ACBrDFeSSL, pcnAuxiliar;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
@@ -73,6 +73,8 @@ function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
 function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
 
 function CalcularHashCSRT(const ACSRT, AChave: String): string;
+function CalcularHashDados(const ADados: TStream; AChave: String): string;
+function CalcularHashArquivo(const APathArquivo: String; AChave: String): string;
 
 implementation
 
@@ -479,8 +481,42 @@ begin
   Result := EncodeBase64(SHA1(ACSRT + AChave));
 end;
 
+function CalcularHashDados(const ADados: TStream; AChave: String): string;
+var
+  sAux: AnsiString;
+begin
+  if (ADados.Size = 0) then
+    raise EACBrDFeException.Create('Dados não especificados');
+
+  ADados.Position := 0;
+  sAux := ReadStrFromStream(ADados, ADados.Size);
+  sAux := EncodeBase64(sAux);
+
+  Result := EncodeBase64(SHA1(AnsiString(AChave) + sAux));
+end;
+
+function CalcularHashArquivo(const APathArquivo: String; AChave: String
+  ): string;
+var
+  FS: TFileStream;
+begin
+  if (APathArquivo = '') then
+    raise EACBrDFeException.Create('Path Arquivo não especificados');
+
+  if not FileExists(APathArquivo) then
+    raise EACBrDFeException.Create('Arquivo:  '+APathArquivo+'não encontrado');
+
+  FS := TFileStream.Create(APathArquivo, fmOpenRead);
+  try
+    Result := CalcularHashDados(FS, AChave);
+  finally
+    FS.Free;
+  end;
+end;
+
 initialization
 
   Randomize;
 
 end.
+

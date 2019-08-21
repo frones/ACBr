@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+21/08/2019
+-- ACBrBancoBrasil --
+[+] Adicionado Códigos de Ocorrencia de Negtivação
+https://www.projetoacbr.com.br/forum/topic/51515-negativa%C3%A7%C3%A3o-serasa-banco-do-brasil-cnab-240/
+
 29/07/2019
 -- ACBrBancoSafra --
 [+] Adicionado Contribuição de Geração de Remessa e Retorno CNAB240

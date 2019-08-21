@@ -63,7 +63,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..290] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..292] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -354,7 +354,9 @@ const
     'Retorno Confirmação de Exclusão de Negativação',
     'Retorno Exlusão de Negativação Rejeitada',
     'Retorno Exclusão e Negativação por Outros Motivos',
-    'Retorno Ocorrência Informacional por Outros Motivos'
+    'Retorno Ocorrência Informacional por Outros Motivos',
+    'Retorno Inclusão de Negativação',
+    'Retorno Exclusão de Negativação'
 );
 
 type
@@ -703,7 +705,9 @@ type
     toRetornoConfExclusaoNegativacao,
     toRetornoExclusaoNegativacaoRejeitada,
     toRetornoExcusaoNegativacaoOutrosMotivos,
-    toRetornoOcorrenciaInfOutrosMotivos
+    toRetornoOcorrenciaInfOutrosMotivos,
+    toRetornoInclusaoNegativacao,
+    toRetornoExclusaoNegativacao
   );
 
   {TACBrOcorrencia}

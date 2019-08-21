@@ -99,6 +99,7 @@ type
     function SaveFileTXT_ACJEF(const Arquivo: String): boolean; // Método que escreve o arquivo texto no caminho passado como parâmetro
 
     function ProcessarArquivo_AFD(const Arquivo: String): TPonto_AFD;
+    function ProcessarArquivo_AFDT(const Arquivo: String): TPonto_AFDT;
 
     property Ponto_AFD: TPonto_AFD read FPonto_AFD write FPonto_AFD;
     property Ponto_AFDT: TPonto_AFDT read FPonto_AFDT write FPonto_AFDT;
@@ -430,6 +431,69 @@ begin
         Campo04 := StrToInt(Copy(LerArquivo[i], 28, 9));
         Campo05 := StrToInt(Copy(LerArquivo[i], 37, 9));
         Campo06 := Copy(LerArquivo[i], 46, 1);
+      end;
+    end;
+
+  end;
+end;
+
+function TACBrPonto.ProcessarArquivo_AFDT(const Arquivo: String): TPonto_AFDT;
+var
+  LerArquivo: TStringList;
+  i: Integer;
+begin
+  Result := TPonto_AFDT.Create;
+
+  LerArquivo := TStringList.Create;
+  LerArquivo.LoadFromFile(Arquivo);
+  for i := 0 to LerArquivo.Count - 1 do
+  begin
+    // cabecalho
+    if Copy(LerArquivo[i], 10, 1) = '1' then
+    begin
+      with Result.Cabecalho.Create do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9); // Sequencial
+        Campo02 := Copy(LerArquivo[i], 10, 1); // Tipo do registro
+        Campo03 := Copy(LerArquivo[i], 11, 1); // Identificador do empregador
+        Campo04 := Copy(LerArquivo[i], 12, 14); // CNPJ/CPF
+        Campo05 := Copy(LerArquivo[i], 26, 12); // CEI
+        Campo06 := Copy(LerArquivo[i], 38, 150); // Razão
+        Campo07 := Copy(LerArquivo[i], 188, 8); // Data inicial
+        Campo08 := Copy(LerArquivo[i], 196, 8); // Data final
+        Campo09 := Copy(LerArquivo[i], 204, 8); // Data da geração
+        Campo10 := Copy(LerArquivo[i], 212, 4); // Hora da geração
+      end;
+    end
+
+    // registro tipo 2
+    else if Copy(LerArquivo[i], 10, 1) = '2' then
+    begin
+      with Result.Registro2.New do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9); // Seqüencial do registro no arquivo.
+        Campo02 := Copy(LerArquivo[i], 10, 1); // Tipo do registro, “2”.
+        Campo03 := Copy(LerArquivo[i], 11, 8); // Data da marcação do ponto, no formato “ddmmaaaa”.
+        Campo04 := Copy(LerArquivo[i], 19, 4); // Horário da marcação do ponto, no formato “hhmm”.
+        Campo05 := Copy(LerArquivo[i], 23, 12); // Número do PIS do empregado.
+        Campo06 := Copy(LerArquivo[i], 35, 17); // Número de fabricação do REP onde foi feito o registro.
+        Campo07 := Copy(LerArquivo[i], 52, 1);
+        // Tipo de marcação, “E” para ENTRADA, “S” para SAÍDA ou “D” para registro a ser DESCONSIDERADO.
+        Campo08 := Copy(LerArquivo[i], 53, 2);
+        // Número seqüencial por empregado e jornada para o conjunto Entrada/Saída. Vide observação.
+        Campo09 := Copy(LerArquivo[i], 55, 1);
+        // Tipo de registro: “O” para registro eletrônico ORIGINAL, “I” para registro INCLUÍDO por digitação, “P” para intervalo PRÉ-ASSINALADO.
+        Campo10 := Copy(LerArquivo[i], 56, 100); // Motivo: Campo a ser preenchido se o campo 7 for “D” ou se o campo 9 for “I”.
+      end;
+    end
+
+    // trailer
+    else if Copy(LerArquivo[i], 1, 9) = '999999999' then
+    begin
+      with Result.Trailer.Create do
+      begin
+        Campo01 := Copy(LerArquivo[i], 1, 9);
+        Campo02 := Copy(LerArquivo[i], 10, 1);
       end;
     end;
 

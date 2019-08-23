@@ -762,8 +762,13 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFE(NFE: TNFe);
 begin
-  AtivarPosPrinter;
-  MontarEnviarDANFE(NFE, False);
+  IF Cancelada then
+    ImprimirDANFECancelado(NFE)
+  else
+  begin
+    AtivarPosPrinter;
+    MontarEnviarDANFE(NFE, False);
+  end;
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirDANFEResumido(NFE: TNFe);
@@ -824,7 +829,6 @@ begin
 
   FPosPrinter.Buffer.Add('</linha_simples>');
 end;
-
 
 procedure TACBrNFeDANFeESCPOS.GerarObservacoesEvento;
 begin

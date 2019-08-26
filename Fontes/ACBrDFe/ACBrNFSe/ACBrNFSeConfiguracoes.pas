@@ -828,7 +828,7 @@ begin
   FConfigEnvelope.Recepcionar.DocElemento := FPIniParams.ReadString('Recepcionar', 'DocElemento', '');
   FConfigEnvelope.Recepcionar.InfElemento := FPIniParams.ReadString('Recepcionar', 'InfElemento', '');
 
-  if (FProvedor = proNotaBlu) Then
+  if (FProvedor in [proNotaBlu, proSP]) Then
   begin
     Texto := '';
     I := 1;

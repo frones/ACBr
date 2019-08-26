@@ -3400,12 +3400,19 @@ begin
     begin
       NFSe.Prestador.Cnpj                               := Leitor.rCampo( tcStr, 'cpfcnpj' );
       NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo( tcStr, 'cpfcnpj' );
+      NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := PadLeft(NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj, 14, '0');
       NFSe.PrestadorServico.Endereco.CodigoMunicipio    := Leitor.rCampo( tcStr, 'cidade' );
     end;
 
     if( Leitor.rExtrai( 2, 'tomador' ) <> '' )then
     begin
-      NFSe.Tomador.IdentificacaoTomador.CpfCnpj           := Leitor.rCampo( tcStr, 'cpfcnpj' );
+      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo( tcStr, 'cpfcnpj' );
+
+      if Leitor.rCampo( tcStr, 'tipo' ) = 'J' then
+        NFSe.Tomador.IdentificacaoTomador.CpfCnpj := PadLeft(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, 14, '0')
+      else
+        NFSe.Tomador.IdentificacaoTomador.CpfCnpj := PadLeft(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, 11, '0');
+
       NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual := Leitor.rCampo( tcStr, 'ie' );
 
       NFSe.Tomador.RazaoSocial                  := Leitor.rCampo( tcStr, 'nome_razao_social' );

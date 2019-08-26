@@ -525,17 +525,19 @@ begin
       Gerador.wCampo(tcStr, '#33', 'RNTRC ', 08, 08, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.RNTRC), DSC_RNTRC);
       Gerador.wCampo(tcStr, '#34', 'xNome ', 02, 60, 1, MDFe.Rodo.veicReboque[i].Prop.xNome, DSC_XNOME);
 
-      if MDFe.Rodo.veicReboque[i].Prop.IE <> ''
-       then begin
-        if MDFe.Rodo.veicReboque[i].Prop.IE = 'ISENTO'
-         then Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, MDFe.Rodo.veicTracao.Prop.IE, DSC_IE)
-         else Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
+      if MDFe.Rodo.veicReboque[i].Prop.IE <> '' then 
+	  begin
+        if MDFe.Rodo.veicReboque[i].Prop.IE = 'ISENTO' then 
+		  Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, MDFe.Rodo.veicReboque[i].Prop.IE, DSC_IE)
+        else 
+		  Gerador.wCampo(tcStr, '#35', 'IE ', 02, 14, 1, OnlyNumber(MDFe.Rodo.veicReboque[i].Prop.IE), DSC_IE);
+		  
         if (FOpcoes.ValidarInscricoes)
          then if not ValidarIE(MDFe.Rodo.veicReboque[i].Prop.IE, MDFe.Rodo.veicReboque[i].Prop.UF) then
           Gerador.wAlerta('#35', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-       end
-       else
-         Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, '', DSC_IE);
+      end
+      else
+        Gerador.wCampo(tcStr, '#35', 'IE ', 00, 14, 1, '', DSC_IE);
 
       Gerador.wCampo(tcStr, '#36', 'UF     ', 02, 02, 1, MDFe.Rodo.veicReboque[i].Prop.UF, DSC_CUF);
       if not ValidarUF(MDFe.Rodo.veicReboque[i].Prop.UF) then

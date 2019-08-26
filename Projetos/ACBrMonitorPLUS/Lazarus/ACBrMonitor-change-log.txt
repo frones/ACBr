@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2019
+[*] DoACBrNFe
+Ajuste no método de impressão de inutilização utilizando Fortes Report
+
 15/08/2019
 [*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConst
 Adicionado validação da classe para preencher tipo do layout de canhoto em tela

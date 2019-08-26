@@ -2315,6 +2315,8 @@ begin
       begin
         DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
         try
+          if ACBrNFe.NotasFiscais.Count > 0 then
+            ACBrNFe.NotasFiscais.Clear;
           ACBrNFe.DANFE:= DanfeRL;
           DoConfiguraDANFe(False, Trim(APreview) );
 
@@ -2361,6 +2363,8 @@ begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     ACBrNFe.InutNFe.ID := '';
+    if ACBrNFe.NotasFiscais.Count > 0 then
+      ACBrNFe.NotasFiscais.Clear;
     CargaDFeInut := TACBrCarregarNFeInut.Create(ACBrNFe, AXMLInut);
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try

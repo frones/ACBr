@@ -21,15 +21,15 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
-      <MinorVersionNr Value="2"/>
+      <MinorVersionNr Value="4"/>
       <BuildNr Value="76"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
-      <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion="1.2.0.1"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrMonitor - Permite o uso dos componentes do Projeto ACBr, por comunicação TXT ou Socket"/>
     </VersionInfo>
-    <BuildModes Count="2">
+    <BuildModes Count="4">
       <Item1 Name="Debug" Default="True"/>
-      <Item2 Name="Release">
+      <Item2 Name="Release-Win32-i386">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -41,6 +41,15 @@
             <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\BPe"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
@@ -56,14 +65,83 @@
           </Linking>
         </CompilerOptions>
       </Item2>
+      <Item3 Name="Release-Linux-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="ACBrMonitor"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\BPe"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="Release-Linux-i386">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="ACBrMonitor"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\..\ACBrLib\Fontes\MDFe;..\..\ACBrLib\Fontes\Comum;..\..\ACBrLib\Fontes\eSocial;..\..\ACBrLib\Fontes\Reinf;..\..\ACBrLib\Fontes\NFe;..\..\ACBrLib\Fontes\CTe;..\..\ACBrLib\Fontes\SAT;..\..\ACBrLib\Fontes\CEP;..\..\ACBrLib\Fontes\IBGE;..\..\ACBrLib\Fontes\Sedex;..\..\ACBrLib\Fontes\GNRe;..\..\ACBrLib\Fontes\BPe"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item4>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
-      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
@@ -448,6 +526,10 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

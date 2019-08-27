@@ -342,7 +342,7 @@ begin
     Gerador.wGrupo('referencia');
 
     Gerador.wCampo(tcInt, '', 'periodo', 1, 1, 0, GNRE.referencia.periodo, '');
-    Gerador.wCampo(tcStr, '', 'mes    ', 2, 2, 0, GNRE.referencia.mes, '');
+    Gerador.wCampo(tcInt, '', 'mes    ', 2, 2, 0, GNRE.referencia.mes, '');
     Gerador.wCampo(tcInt, '', 'ano    ', 4, 4, 0, GNRE.referencia.ano, '');
     Gerador.wCampo(tcInt, '', 'parcela', 1, 3, 0, GNRE.referencia.parcela, '');
 
@@ -350,7 +350,28 @@ begin
   end;
 
   Gerador.wCampo(tcDat, '', 'dataVencimento', 10, 10, 1, GNRE.c14_dataVencimento, '');
-//    <valor tipo="..." >...</valor>
+
+{
+11 - Valor Principal ICMS
+12 - Valor Principal Fundo de Pobreza (FP)
+21 - Valor Total ICMS
+22 - Valor Total FP
+31 - Valor Multa ICMS
+32 - Valor Multa FP
+41 - Valor Juros ICMS
+42 - Valor Juros FP
+51 - Valor Atualização Monetaria ICMS
+52 - Valor Atualização Monetaria FP
+}
+  if GNRE.c06_valorPrincipal > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.c06_valorPrincipal, '',
+                         True, 'tipo="11"');
+
+  if GNRE.c10_valorTotal > 0 then
+    Gerador.wCampo(tcDe2, '', 'valor', 01, 15, 1, GNRE.c10_valorTotal, '',
+                         True, 'tipo="21"');
+
+  //    <valor tipo="..." >...</valor>
   Gerador.wCampo(tcStr, '', 'convenio      ', 01, 30, 0, GNRE.c15_convenio, '');
 
   if GNRE.c35_idContribuinteDestinatario <> '' then
@@ -404,16 +425,13 @@ begin
   end;
 
   Gerador.wGrupo('/item');
+
   Gerador.wGrupo('/itensGNRE');
 
-  Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, GNRE.c10_valorTotal, '');
+  Gerador.wCampo(tcDe2, '', 'valorGNRE        ', 01, 15, 1, GNRE.c10_valorTotal, '');
+  Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
+  Gerador.wCampo(tcStr, '', 'identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');
 
-  {
-  Gerador.wCampo(tcDe2, '', 'c06_valorPrincipal   ', 01, 15, 0, GNRE.c06_valorPrincipal, '');
-  Gerador.wCampo(tcDe2, '', 'c10_valorTotal       ', 01, 15, 0, GNRE.c10_valorTotal, '');
-  Gerador.wCampo(tcDat, '', 'c33_dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
-  Gerador.wCampo(tcStr, '', 'c42_identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');
-  }
   Gerador.wGrupo('/TDadosGNRE');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

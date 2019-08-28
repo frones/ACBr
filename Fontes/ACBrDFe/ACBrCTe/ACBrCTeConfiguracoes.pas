@@ -71,7 +71,7 @@ type
     property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve300;
     property GerarInfCTeSupl: TForcarGeracaoTag read FGerarInfCTeSupl
-      write SetGerarInfCTeSupl default fgtNunca;
+      write SetGerarInfCTeSupl default fgtSempre;
   end;
 
   { TArquivosConfCTe }
@@ -189,7 +189,7 @@ begin
   FModeloDF := moCTe;
   FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
   FVersaoDF := ve300;
-  FGerarInfCTeSupl := fgtNunca;
+  FGerarInfCTeSupl := fgtSempre;
 end;
 
 procedure TGeralConfCTe.GravarIni(const AIni: TCustomIniFile);

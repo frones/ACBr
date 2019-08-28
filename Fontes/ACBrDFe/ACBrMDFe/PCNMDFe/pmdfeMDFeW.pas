@@ -1153,7 +1153,10 @@ begin
 
     Gerador.wGrupo('infResp', '#119');
     Gerador.wCampo(tcStr, '#120', 'respSeg', 01, 01, 1, RspSeguroMDFeToStr(MDFe.seg[i].respSeg), DSC_RESPSEG);
-    Gerador.wCampoCNPJCPF('#121', '#122', MDFe.seg[i].CNPJCPF, False);
+
+    if MDFe.seg[i].respSeg = rsTomadorServico then
+      Gerador.wCampoCNPJCPF('#121', '#122', MDFe.seg[i].CNPJCPF, False);
+
     Gerador.wGrupo('/infResp');
 
     if MDFe.seg[i].xSeg <> '' then

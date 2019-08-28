@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2019
+-- pmdfeMDFeW --
+[*] O CNPJ/CPF do Responsável pelo seguro só será gerado se o Responsável
+    for o tomador.
+  Por: Italo Jurisato Junior
+
 26/08/2019
 -- pmdfeMDFeW --
 [*] https://www.projetoacbr.com.br/forum/topic/53186-erroposs%C3%ADvel-corre%C3%A7%C3%A3o-mdfe-proprietario-do-veic-de-tra%C3%A7%C3%A3o-pr%C3%B3prio-e-reboque-isento/

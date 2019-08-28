@@ -274,7 +274,7 @@ begin
     PreviewOptions.Buttons :=[pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
   end;
 
-  frxPDFExport := TfrxPDFExport.Create(nil);
+  frxPDFExport := TfrxPDFExport.Create(Self);
   with frxPDFExport do
   begin
     Background     := True;
@@ -283,7 +283,7 @@ begin
     ShowProgress   := False;
   end;
   // CDS
-  cdsIdentificacao := TClientDataSet.Create(nil);
+  cdsIdentificacao := TClientDataSet.Create(Self);
   with cdsIdentificacao, FieldDefs do
   begin
     Close;
@@ -328,7 +328,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsEmitente := TClientDataSet.Create(nil);
+  cdsEmitente := TClientDataSet.Create(Self);
   with cdsEmitente, FieldDefs do
   begin
     Close;
@@ -355,7 +355,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsDestinatario := TClientDataSet.Create(nil);
+  cdsDestinatario := TClientDataSet.Create(Self);
   with cdsDestinatario, FieldDefs do
   begin
     Close;
@@ -379,7 +379,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsDadosNotasFiscais := TClientDataSet.Create(nil);
+  cdsDadosNotasFiscais := TClientDataSet.Create(Self);
   with cdsDadosNotasFiscais, FieldDefs do
   begin
     Close;
@@ -393,7 +393,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsParametros := TClientDataSet.Create(nil);
+  cdsParametros := TClientDataSet.Create(Self);
   with cdsParametros, FieldDefs do
   begin
     Close;
@@ -419,7 +419,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsInformacoesAdicionais := TClientDataSet.Create(nil);
+  cdsInformacoesAdicionais := TClientDataSet.Create(Self);
   with cdsInformacoesAdicionais, FieldDefs do
   begin
     Close;
@@ -434,7 +434,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsVolumes := TClientDataSet.Create(nil);
+  cdsVolumes := TClientDataSet.Create(Self);
   with cdsVolumes, FieldDefs do
   begin
     Close;
@@ -453,7 +453,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsTomador := TClientDataSet.Create(nil);
+  cdsTomador := TClientDataSet.Create(Self);
   with cdsTomador, FieldDefs do
   begin
     Close;
@@ -477,7 +477,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsExpedidor := TClientDataSet.Create(nil);
+  cdsExpedidor := TClientDataSet.Create(Self);
   with cdsExpedidor, FieldDefs do
   begin
     Close;
@@ -504,7 +504,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsRecebedor := TClientDataSet.Create(nil);
+  cdsRecebedor := TClientDataSet.Create(Self);
   with cdsRecebedor, FieldDefs do
   begin
     Close;
@@ -532,7 +532,7 @@ begin
 
   end;
 
-  cdsRemetente := TClientDataSet.Create(nil);
+  cdsRemetente := TClientDataSet.Create(Self);
   with cdsRemetente, FieldDefs do
   begin
     Close;
@@ -559,7 +559,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsCalculoImposto := TClientDataSet.Create(nil);
+  cdsCalculoImposto := TClientDataSet.Create(Self);
   with cdsCalculoImposto, FieldDefs do
   begin
     Close;
@@ -576,7 +576,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsComponentesPrestacao := TClientDataSet.Create(nil);
+  cdsComponentesPrestacao := TClientDataSet.Create(Self);
   with cdsComponentesPrestacao, FieldDefs do
   begin
     Close;
@@ -588,7 +588,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsSeguro := TClientDataSet.Create(nil);
+  cdsSeguro := TClientDataSet.Create(Self);
   with cdsSeguro, FieldDefs do
   begin
     Close;
@@ -600,7 +600,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalRodoviario := TClientDataSet.Create(nil);
+  cdsModalRodoviario := TClientDataSet.Create(Self);
   with cdsModalRodoviario, FieldDefs do
   begin
     Close;
@@ -613,7 +613,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsRodoVeiculos := TClientDataSet.Create(nil);
+  cdsRodoVeiculos := TClientDataSet.Create(Self);
   with cdsRodoVeiculos, FieldDefs do
   begin
     Close;
@@ -629,7 +629,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsRodoValePedagio := TClientDataSet.Create(nil);
+  cdsRodoValePedagio := TClientDataSet.Create(Self);
   with cdsRodoValePedagio, FieldDefs do
   begin
     Close;
@@ -641,7 +641,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsRodoMotorista := TClientDataSet.Create(nil);
+  cdsRodoMotorista := TClientDataSet.Create(Self);
   with cdsRodoMotorista, FieldDefs do
   begin
     Close;
@@ -651,7 +651,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalAquaviario := TClientDataSet.Create(nil);
+  cdsModalAquaviario := TClientDataSet.Create(Self);
   with cdsModalAquaviario, FieldDefs do
   begin
     Close;
@@ -673,7 +673,7 @@ begin
   end;
 
 
-  cdsModalAereo := TClientDataSet.Create(nil);
+  cdsModalAereo := TClientDataSet.Create(Self);
   with cdsModalAereo, FieldDefs do
   begin
     Close;
@@ -695,7 +695,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsMultiModal := TClientDataSet.Create(nil);
+  cdsMultiModal := TClientDataSet.Create(Self);
   with cdsMultiModal, FieldDefs do
   begin
     Close;
@@ -705,7 +705,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsDocAnterior := TClientDataSet.Create(nil);
+  cdsDocAnterior := TClientDataSet.Create(Self);
   with cdsDocAnterior, FieldDefs do
   begin
     Close;
@@ -723,7 +723,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsAnuladoComple := TClientDataSet.Create(nil);
+  cdsAnuladoComple := TClientDataSet.Create(Self);
   with cdsAnuladoComple, FieldDefs do
   begin
     Close;
@@ -732,7 +732,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsEventos := TClientDataSet.Create(nil);
+  cdsEventos := TClientDataSet.Create(Self);
   with cdsEventos, FieldDefs do
   begin
     Close;
@@ -765,7 +765,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsProdutosPerigosos := TClientDataSet.Create(nil);
+  cdsProdutosPerigosos := TClientDataSet.Create(Self);
   with cdsProdutosPerigosos, FieldDefs do
   begin
    	Close;
@@ -780,7 +780,7 @@ begin
 
 		CreateDataSet;
   end;
-  cdsVeiculosNovos := TClientDataSet.Create(nil);
+  cdsVeiculosNovos := TClientDataSet.Create(Self);
   with cdsVeiculosNovos, FieldDefs do
   begin
    	Close;
@@ -796,7 +796,7 @@ begin
   end;
 
   //Inutilização
-  cdsInutilizacao := TClientDataSet.Create(nil);
+  cdsInutilizacao := TClientDataSet.Create(Self);
   with cdsInutilizacao, FieldDefs do
   begin
    	Close;
@@ -820,7 +820,7 @@ begin
 		CreateDataSet;
   end;
 
-  cdsInfServico := TClientDataSet.Create(nil);
+  cdsInfServico := TClientDataSet.Create(Self);
   with cdsInfServico, FieldDefs do
   begin
    	Close;
@@ -830,7 +830,7 @@ begin
 		CreateDataSet;
   end;
 
-  cdsInfTribFed := TClientDataSet.Create(nil);
+  cdsInfTribFed := TClientDataSet.Create(Self);
   with cdsInfTribFed, FieldDefs do
   begin
     Close;
@@ -843,7 +843,7 @@ begin
 		CreateDataSet;
   end;
 
-  cdsPercurso := TClientDataSet.Create(nil);
+  cdsPercurso := TClientDataSet.Create(Self);
   with cdsPercurso, FieldDefs do
   begin
    	Close;
@@ -853,7 +853,7 @@ begin
   end;
 
   // frxDB
-  frxIdentificacao := TfrxDBDataset.Create(nil);
+  frxIdentificacao := TfrxDBDataset.Create(Self);
   with frxIdentificacao do
   begin
     UserName       := 'Identificacao';
@@ -861,7 +861,7 @@ begin
     DataSet        := cdsIdentificacao;
   end;
 
-  frxEmitente := TfrxDBDataset.Create(nil);
+  frxEmitente := TfrxDBDataset.Create(Self);
   with frxEmitente do
   begin
     UserName       := 'Emitente';
@@ -869,7 +869,7 @@ begin
     DataSet        := cdsEmitente;
   end;
 
-  frxDestinatario := TfrxDBDataset.Create(nil);
+  frxDestinatario := TfrxDBDataset.Create(Self);
   with frxDestinatario do
   begin
     UserName       := 'Destinatario';
@@ -877,7 +877,7 @@ begin
     DataSet        := cdsDestinatario;
   end;
 
-  frxDadosNotasFiscais := TfrxDBDataset.Create(nil);
+  frxDadosNotasFiscais := TfrxDBDataset.Create(Self);
   with frxDadosNotasFiscais do
   begin
     UserName       := 'DadosNotasFiscais';
@@ -885,7 +885,7 @@ begin
     DataSet        := cdsDadosNotasFiscais;
   end;
 
-  frxParametros := TfrxDBDataset.Create(nil);
+  frxParametros := TfrxDBDataset.Create(Self);
   with frxParametros do
   begin
     UserName       := 'Parametros';
@@ -893,7 +893,7 @@ begin
     DataSet        := cdsParametros;
   end;
 
-  frxVolumes := TfrxDBDataset.Create(nil);
+  frxVolumes := TfrxDBDataset.Create(Self);
   with frxVolumes do
   begin
     UserName       := 'Volumes';
@@ -901,7 +901,7 @@ begin
     DataSet        := cdsVolumes;
   end;
 
-  frxInformacoesAdicionais := TfrxDBDataset.Create(nil);
+  frxInformacoesAdicionais := TfrxDBDataset.Create(Self);
   with frxInformacoesAdicionais do
   begin
     UserName       := 'InformacoesAdicionais';
@@ -909,7 +909,7 @@ begin
     DataSet        := cdsInformacoesAdicionais;
   end;
 
-  frxTomador := TfrxDBDataset.Create(nil);
+  frxTomador := TfrxDBDataset.Create(Self);
   with frxTomador do
   begin
     UserName       := 'Tomador';
@@ -917,7 +917,7 @@ begin
     DataSet        := cdsTomador;
   end;
 
-  frxExpedidor := TfrxDBDataset.Create(nil);
+  frxExpedidor := TfrxDBDataset.Create(Self);
   with frxExpedidor do
   begin
     UserName       := 'Expedidor';
@@ -925,7 +925,7 @@ begin
     DataSet        := cdsExpedidor;
   end;
 
-  frxRecebedor := TfrxDBDataset.Create(nil);
+  frxRecebedor := TfrxDBDataset.Create(Self);
   with frxRecebedor do
   begin
     UserName       := 'Recebedor';
@@ -933,7 +933,7 @@ begin
     DataSet        := cdsRecebedor;
   end;
 
-  frxRemetente := TfrxDBDataset.Create(nil);
+  frxRemetente := TfrxDBDataset.Create(Self);
   with frxRemetente do
   begin
     UserName       := 'Remetente';
@@ -941,7 +941,7 @@ begin
     DataSet        := cdsRemetente;
   end;
 
-  frxCalculoImposto := TfrxDBDataset.Create(nil);
+  frxCalculoImposto := TfrxDBDataset.Create(Self);
   with frxCalculoImposto do
   begin
     UserName       := 'CalculoImposto';
@@ -949,7 +949,7 @@ begin
     DataSet        := cdsCalculoImposto;
   end;
 
-  frxComponentesPrestacao := TfrxDBDataset.Create(nil);
+  frxComponentesPrestacao := TfrxDBDataset.Create(Self);
   with frxComponentesPrestacao do
   begin
     UserName       := 'ComponentesPrestacao';
@@ -957,7 +957,7 @@ begin
     DataSet        := cdsComponentesPrestacao;
   end;
 
-  frxSeguro := TfrxDBDataset.Create(nil);
+  frxSeguro := TfrxDBDataset.Create(Self);
   with frxSeguro do
   begin
     UserName       := 'Seguro';
@@ -965,7 +965,7 @@ begin
     DataSet        := cdsSeguro;
   end;
 
-  frxModalRodoviario := TfrxDBDataset.Create(nil);
+  frxModalRodoviario := TfrxDBDataset.Create(Self);
   with frxModalRodoviario do
   begin
     UserName       := 'ModalRodoviario';
@@ -973,7 +973,7 @@ begin
     DataSet        := cdsModalRodoviario;
   end;
 
-  frxModalAquaviario := TfrxDBDataset.Create(nil);
+  frxModalAquaviario := TfrxDBDataset.Create(Self);
   with frxModalAquaviario do
   begin
     UserName       := 'ModalAquaviario';
@@ -981,7 +981,7 @@ begin
     DataSet        := cdsModalAquaviario;
   end;
 
-  frxModalAereo := TfrxDBDataset.Create(nil);
+  frxModalAereo := TfrxDBDataset.Create(Self);
   with frxModalAereo do
   begin
     UserName       := 'ModalAereo';
@@ -989,7 +989,7 @@ begin
     DataSet := cdsModalAereo;
   end;
 
-  frxMultiModal := TfrxDBDataset.Create(nil);
+  frxMultiModal := TfrxDBDataset.Create(Self);
   with frxMultiModal do
   begin
     UserName       := 'MultiModal';
@@ -997,7 +997,7 @@ begin
     DataSet := cdsMultiModal;
   end;
 
-  frxRodoVeiculos := TfrxDBDataset.Create(nil);
+  frxRodoVeiculos := TfrxDBDataset.Create(Self);
   with frxRodoVeiculos do
   begin
     UserName       := 'Veiculos';
@@ -1005,7 +1005,7 @@ begin
     DataSet        := cdsRodoVeiculos;
   end;
 
-  frxRodoValePedagio := TfrxDBDataset.Create(nil);
+  frxRodoValePedagio := TfrxDBDataset.Create(Self);
   with frxRodoValePedagio do
   begin
     UserName       := 'ValePedagio';
@@ -1013,7 +1013,7 @@ begin
     DataSet        := cdsRodoValePedagio;
   end;
 
-  frxRodoMotorista := TfrxDBDataset.Create(nil);
+  frxRodoMotorista := TfrxDBDataset.Create(Self);
   with frxRodoMotorista do
   begin
     UserName       := 'Motorista';
@@ -1021,7 +1021,7 @@ begin
     DataSet        := cdsRodoMotorista;
   end;
 
-  frxDocAnterior := TfrxDBDataset.Create(nil);
+  frxDocAnterior := TfrxDBDataset.Create(Self);
   with frxDocAnterior do
   begin
     UserName       := 'DocAnterior';
@@ -1029,7 +1029,7 @@ begin
     DataSet        := cdsDocAnterior;
   end;
 
-  frxAnuladoComple := TfrxDBDataset.Create(nil);
+  frxAnuladoComple := TfrxDBDataset.Create(Self);
   with frxAnuladoComple do
   begin
     UserName       := 'AnuladoComple';
@@ -1037,7 +1037,7 @@ begin
     DataSet        := cdsAnuladoComple;
   end;
 
-  frxEventos := TfrxDBDataset.Create(nil);
+  frxEventos := TfrxDBDataset.Create(Self);
   with frxEventos do
   begin
     UserName       := 'Eventos';
@@ -1045,49 +1045,49 @@ begin
     DataSet        := cdsEventos;
   end;
 
-  frxProdutosPerigosos := TfrxDBDataset.Create(nil);
+  frxProdutosPerigosos := TfrxDBDataset.Create(Self);
   with frxProdutosPerigosos do
   begin
 		UserName       := 'ProdutosPerigosos';
   	OpenDataSource := False;
 		DataSet        := cdsProdutosPerigosos;
   end;
-  frxVeiculosNovos := TfrxDBDataset.Create(nil);
+  frxVeiculosNovos := TfrxDBDataset.Create(Self);
   with frxVeiculosNovos do
   begin
 		UserName       := 'VeiculosNovos';
      	OpenDataSource := False;
 		DataSet        := cdsVeiculosNovos;
   end;
-  frxInutilizacao  := TfrxDBDataset.Create(nil);
+  frxInutilizacao  := TfrxDBDataset.Create(Self);
   with frxInutilizacao do
   begin
 		UserName       := 'Inutilizacao';
     OpenDataSource := False;
 		DataSet        := cdsInutilizacao;
   end;
-  frxInfServico := TfrxDBDataset.Create(nil);
+  frxInfServico := TfrxDBDataset.Create(Self);
   with frxInfServico do
   begin
 		UserName       := 'InfServico';
     OpenDataSource := False;
 		DataSet        := cdsInfServico;
   end;
-  frxInfTribFed := TfrxDBDataset.Create(nil);
+  frxInfTribFed := TfrxDBDataset.Create(Self);
   with frxInfTribFed do
   begin
 		UserName       := 'InfTribFed';
     OpenDataSource := False;
 		DataSet        := cdsInfTribFed;
   end;
-  frxPercurso := TfrxDBDataset.Create(nil);
+  frxPercurso := TfrxDBDataset.Create(Self);
   with frxPercurso do
   begin
     UserName       := 'Percurso';
     OpenDataSource := False;
     DataSet        := cdsPercurso;
   end;
-  frxBarCodeObject := TfrxBarCodeObject.Create(nil);
+  frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 end;
 
 destructor TACBrCTeDACTEFR.Destroy;

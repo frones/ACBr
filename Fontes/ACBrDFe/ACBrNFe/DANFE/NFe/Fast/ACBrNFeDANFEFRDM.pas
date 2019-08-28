@@ -227,7 +227,7 @@ begin
 
   FDANFEClassOwner := TACBrDFeDANFeReport(AOwner);
 
-  FfrxReport := TfrxReport.Create( nil);
+  FfrxReport := TfrxReport.Create(AOwner);
   //Antes de alterar a linha abaixo, queira verificar o seguinte tópico:
   //https://www.projetoacbr.com.br/forum/topic/51505-travamento-preview-de-v%C3%A1rias-danfes/
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
@@ -242,7 +242,7 @@ begin
      OnReportPrint := 'frxReportOnReportPrint';
   end;
 
-  FfrxPDFExport := TfrxPDFExport.Create(nil);
+  FfrxPDFExport := TfrxPDFExport.Create(AOwner);
   with FfrxPDFExport do
   begin
      PrintOptimized := True;
@@ -255,8 +255,8 @@ begin
   // cdsIdentificacao
   if not Assigned(cdsIdentificacao) then
   begin
-     cdsIdentificacao := TClientDataSet.Create(nil);
-     FfrxIdentificacao := TfrxDBDataset.Create(nil);
+     cdsIdentificacao := TClientDataSet.Create(AOwner);
+     FfrxIdentificacao := TfrxDBDataset.Create(AOwner);
      with FfrxIdentificacao do
      begin
         DataSet := cdsIdentificacao;
@@ -298,8 +298,8 @@ begin
    // cdsEmitente
    if not Assigned(cdsEmitente) then
    begin
-     cdsEmitente := TClientDataSet.Create(nil);
-     FfrxEmitente := TfrxDBDataset.Create(nil);
+     cdsEmitente := TClientDataSet.Create(AOwner);
+     FfrxEmitente := TfrxDBDataset.Create(AOwner);
      with FfrxEmitente do
      begin
         DataSet := cdsEmitente;
@@ -337,8 +337,8 @@ begin
    // cdsDestinatario
    if not Assigned(cdsDestinatario) then
    begin
-     cdsDestinatario := TClientDataSet.Create(nil);
-     FfrxDestinatario := TfrxDBDataset.Create(nil);
+     cdsDestinatario := TClientDataSet.Create(AOwner);
+     FfrxDestinatario := TfrxDBDataset.Create(AOwner);
      with FfrxDestinatario do
      begin
         DataSet := cdsDestinatario;
@@ -371,8 +371,8 @@ begin
    // cdsDadosProdutos
    if not Assigned(cdsDadosProdutos) then
    begin
-     cdsDadosProdutos   := TClientDataSet.Create(nil);
-     FfrxDadosProdutos  := TfrxDBDataset.Create(nil);
+     cdsDadosProdutos   := TClientDataSet.Create(AOwner);
+     FfrxDadosProdutos  := TfrxDBDataset.Create(AOwner);
      with FfrxDadosProdutos do
      begin
         DataSet := cdsDadosProdutos;
@@ -432,8 +432,8 @@ begin
    // cdsParametros
    if not Assigned(cdsParametros) then
    begin
-     cdsParametros  := TClientDataSet.Create(nil);
-     FfrxParametros := TfrxDBDataset.Create(nil);
+     cdsParametros  := TClientDataSet.Create(AOwner);
+     FfrxParametros := TfrxDBDataset.Create(AOwner);
      with FfrxParametros do
      begin
         DataSet         := cdsParametros;
@@ -485,8 +485,8 @@ begin
    // cdsDuplicatas
    if not Assigned(cdsDuplicatas) then
    begin
-     cdsDuplicatas := TClientDataSet.Create(nil);
-     FfrxDuplicatas := TfrxDBDataset.Create(nil);
+     cdsDuplicatas := TClientDataSet.Create(AOwner);
+     FfrxDuplicatas := TfrxDBDataset.Create(AOwner);
      with FfrxDuplicatas do
      begin
         DataSet := cdsDuplicatas;
@@ -508,8 +508,8 @@ begin
    // cdsCalculoImposto
    if not Assigned(cdsCalculoImposto) then
    begin
-     cdsCalculoImposto := TClientDataSet.Create(nil);
-     FfrxCalculoImposto := TfrxDBDataset.Create(nil);
+     cdsCalculoImposto := TClientDataSet.Create(AOwner);
+     FfrxCalculoImposto := TfrxDBDataset.Create(AOwner);
      with FfrxCalculoImposto do
      begin
         DataSet := cdsCalculoImposto;
@@ -552,8 +552,8 @@ begin
    // cdsTransportador
    if not Assigned(cdsTransportador) then
    begin
-     cdsTransportador := TClientDataSet.Create(nil);
-     FfrxTransportador := TfrxDBDataset.Create(nil);
+     cdsTransportador := TClientDataSet.Create(AOwner);
+     FfrxTransportador := TfrxDBDataset.Create(AOwner);
      with FfrxTransportador do
      begin
         DataSet := cdsTransportador;
@@ -578,8 +578,8 @@ begin
    // cdsVeiculo
    if not Assigned(cdsVeiculo) then
    begin
-     cdsVeiculo := TClientDataSet.Create(nil);
-     FfrxVeiculo := TfrxDBDataset.Create(nil);
+     cdsVeiculo := TClientDataSet.Create(AOwner);
+     FfrxVeiculo := TfrxDBDataset.Create(AOwner);
      with FfrxVeiculo do
      begin
         DataSet := cdsVeiculo;
@@ -600,8 +600,8 @@ begin
    // cdsVolumes
    if not Assigned(cdsVolumes) then
    begin
-     cdsVolumes := TClientDataSet.Create(nil);
-     FfrxVolumes := TfrxDBDataset.Create(nil);
+     cdsVolumes := TClientDataSet.Create(AOwner);
+     FfrxVolumes := TfrxDBDataset.Create(AOwner);
      with FfrxVolumes do
      begin
         DataSet := cdsVolumes;
@@ -625,8 +625,8 @@ begin
    // csdEvento
    if not Assigned(cdsEventos) then
    begin
-      cdsEventos := TClientDataSet.Create(nil);
-      FfrxEventos := TfrxDBDataset.Create(nil);
+      cdsEventos := TClientDataSet.Create(AOwner);
+      FfrxEventos := TfrxDBDataset.Create(AOwner);
       with FfrxEventos do
       begin
          DataSet := cdsEventos;
@@ -639,8 +639,8 @@ begin
    // cdsISSQN
    if not Assigned(cdsISSQN) then
    begin
-      cdsISSQN := TClientDataSet.Create(nil);
-      FfrxISSQN := TfrxDBDataset.Create(nil);
+      cdsISSQN := TClientDataSet.Create(AOwner);
+      FfrxISSQN := TfrxDBDataset.Create(AOwner);
       with FfrxISSQN do
       begin
          DataSet := cdsISSQN;
@@ -663,8 +663,8 @@ begin
    // cdsFatura
    if not Assigned(cdsFatura) then
    begin
-      cdsFatura   := TClientDataSet.Create(nil);
-      FfrxFatura  := TfrxDBDataset.Create(nil);
+      cdsFatura   := TClientDataSet.Create(AOwner);
+      FfrxFatura  := TfrxDBDataset.Create(AOwner);
       with FfrxFatura do
       begin
          DataSet        := cdsFatura;
@@ -688,8 +688,8 @@ begin
    // cdsLocalRetirada
    if not Assigned(cdsLocalRetirada) then
    begin
-      cdsLocalRetirada := TClientDataSet.Create(nil);
-      FfrxLocalRetirada := TfrxDBDataset.Create(nil);
+      cdsLocalRetirada := TClientDataSet.Create(AOwner);
+      FfrxLocalRetirada := TfrxDBDataset.Create(AOwner);
       with FfrxLocalRetirada do
       begin
          DataSet := cdsLocalRetirada;
@@ -721,8 +721,8 @@ begin
    // cdsLocalEntrega
    if not Assigned(cdsLocalEntrega) then
    begin
-      cdsLocalEntrega := TClientDataSet.Create(nil);
-      FfrxLocalEntrega := TfrxDBDataset.Create(nil);
+      cdsLocalEntrega := TClientDataSet.Create(AOwner);
+      FfrxLocalEntrega := TfrxDBDataset.Create(AOwner);
       with FfrxLocalEntrega do
       begin
          DataSet := cdsLocalEntrega;
@@ -754,8 +754,8 @@ begin
    // cdsInformacoesAdicionais
    if not Assigned(cdsInformacoesAdicionais) then
    begin
-      cdsInformacoesAdicionais := TClientDataSet.Create(nil);
-      FfrxInformacoesAdicionais := TfrxDBDataset.Create(nil);
+      cdsInformacoesAdicionais := TClientDataSet.Create(AOwner);
+      FfrxInformacoesAdicionais := TfrxDBDataset.Create(AOwner);
       with FfrxInformacoesAdicionais do
       begin
          DataSet := cdsInformacoesAdicionais;
@@ -775,8 +775,8 @@ begin
    // cdsPagamento
    if not Assigned(cdsPagamento) then
    begin
-      cdsPagamento := TClientDataSet.Create(nil);
-      FfrxPagamento := TfrxDBDataset.Create(nil);
+      cdsPagamento := TClientDataSet.Create(AOwner);
+      FfrxPagamento := TfrxDBDataset.Create(AOwner);
       with FfrxPagamento do
       begin
          DataSet := cdsPagamento;
@@ -800,8 +800,8 @@ begin
    //cdsInutilização
    if not Assigned(cdsInutilizacao) then
    begin
-      cdsInutilizacao := TClientDataSet.Create(nil);
-      FfrxInutilizacao := TfrxDBDataset.Create(nil);
+      cdsInutilizacao := TClientDataSet.Create(AOwner);
+      FfrxInutilizacao := TfrxDBDataset.Create(AOwner);
       with FfrxInutilizacao do
       begin
          DataSet := cdsInutilizacao;

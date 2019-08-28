@@ -191,7 +191,7 @@ begin
   Fc27_tipoIdentificacaoEmitente := 0;
   Fc03_idContribuinteEmitente := '';
   Fc28_tipoDocOrigem := 0;
-  Fc04_docOrigem := '';
+  Fc04_docOrigem := '0';
   Fc06_valorPrincipal := 0;
   Fc10_valorTotal := 0;
   Fc14_dataVencimento := 0;

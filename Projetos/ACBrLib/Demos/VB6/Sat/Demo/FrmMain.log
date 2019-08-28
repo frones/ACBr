@@ -1,0 +1,13 @@
+Line 45: Class MSComDlg.CommonDialog of control CommonDialog1 was not a loaded control class.
+Line 108: Class TabDlg.SSTab of control SSTTab0 was not a loaded control class.
+Line 480: Class MSComCtl2.UpDown of control nudLinhasPular was not a loaded control class.
+Line 500: Class MSMask.MaskEdBox of control MasLinhasPular was not a loaded control class.
+Line 515: Class MSComCtl2.UpDown of control nudBuffer was not a loaded control class.
+Line 535: Class MSMask.MaskEdBox of control MasBuffer was not a loaded control class.
+Line 550: Class MSComCtl2.UpDown of control nudEspacos was not a loaded control class.
+Line 570: Class MSMask.MaskEdBox of control MaskEspacos was not a loaded control class.
+Line 585: Class MSMask.MaskEdBox of control MasColunas was not a loaded control class.
+Line 600: Class MSComCtl2.UpDown of control nudColunas was not a loaded control class.
+Line 883: Class MSComCtl2.UpDown of control nudPaginaCodigo was not a loaded control class.
+Line 946: Class MSComCtl2.UpDown of control nudCopias was not a loaded control class.
+Line 968: Class MSComCtl2.UpDown of control nudPorta was not a loaded control class.

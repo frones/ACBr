@@ -1,0 +1,27 @@
+[History]
+1=#P0#=mb	#P1#=Send	#P2#=ACBrLibMailDemo/ACBrMail/Send	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181119115332	#P7#=0	#P8#=3	.
+2=#P0#=mb	#P1#=CreateMail	#P2#=ACBrLibMailDemo/ACBrMailUtils/CreateMail	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129110118	#P7#=0	#P8#=-1	.
+3=#P0#=mb	#P1#=processResult	#P2#=ACBrLibMailDemo/ACBrMail/processResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830161759	#P7#=0	#P8#=1	.
+4=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibMailDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180830161655	#P7#=0	#P8#=14	.
+5=#P0#=mb	#P1#=cmdEnviar_Click	#P2#=ACBrLibMailDemo/FrmMain/cmdEnviar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180830161643	#P7#=0	#P8#=6	.
+6=#P0#=mb	#P1#=cmdSalvar_Click	#P2#=ACBrLibMailDemo/FrmMain/cmdSalvar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180830161620	#P7#=0	#P8#=6	.
+7=#P0#=mb	#P1#=ConfigGravarValor	#P2#=ACBrLibMailDemo/ACBrMail/ConfigGravarValor	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830161255	#P7#=0	#P8#=0	.
+8=#P0#=mb	#P1#=Form_Unload	#P2#=ACBrLibMailDemo/FrmMain/Form_Unload	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180830161019	#P7#=0	#P8#=-1	.
+9=#P0#=mb	#P1#=Clear	#P2#=ACBrLibMailDemo/ACBrMail/Clear	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830160131	#P7#=0	#P8#=7	.
+10=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibMailDemo/ACBrMail/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830160113	#P7#=0	#P8#=3	.
+11=#P0#=mb	#P1#=SaveToFile	#P2#=ACBrLibMailDemo/ACBrMail/SaveToFile	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830160107	#P7#=0	#P8#=7	.
+12=#P0#=mb	#P1#=AddBody	#P2#=ACBrLibMailDemo/ACBrMail/AddBody	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830160000	#P7#=0	#P8#=0	.
+13=#P0#=mb	#P1#=AddAltBody	#P2#=ACBrLibMailDemo/ACBrMail/AddAltBody	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830152006	#P7#=0	#P8#=5	.
+14=#P0#=mb	#P1#=ClearAttachment	#P2#=ACBrLibMailDemo/ACBrMail/ClearAttachment	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830145551	#P7#=0	#P8#=1	.
+15=#P0#=mb	#P1#=MAIL_ClearAttachment	#P2#=ACBrLibMailDemo/ACBrMail/MAIL_ClearAttachment	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830145437	#P7#=0	#P8#=230	.
+16=#P0#=mb	#P1#=AddAttachment	#P2#=ACBrLibMailDemo/ACBrMail/AddAttachment	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830145432	#P7#=0	#P8#=4	.
+17=#P0#=mb	#P1#=AddBCC	#P2#=ACBrLibMailDemo/ACBrMail/AddBCC	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830144037	#P7#=0	#P8#=-1	.
+18=#P0#=mb	#P1#=AddCC	#P2#=ACBrLibMailDemo/ACBrMail/AddCC	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830143936	#P7#=0	#P8#=0	.
+19=#P0#=mb	#P1#=AddAddress	#P2#=ACBrLibMailDemo/ACBrMail/AddAddress	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830143714	#P7#=0	#P8#=2	.
+20=#P0#=mb	#P1#=SetSubject	#P2#=ACBrLibMailDemo/ACBrMail/SetSubject	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830143639	#P7#=0	#P8#=7	.
+21=#P0#=mb	#P1#=MAIL_AddAddress	#P2#=ACBrLibMailDemo/ACBrMail/MAIL_AddAddress	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830143636	#P7#=0	#P8#=193	.
+22=#P0#=mb	#P1#=Versao	#P2#=ACBrLibMailDemo/ACBrMail/Versao	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830143128	#P7#=0	#P8#=0	.
+23=#P0#=mb	#P1#=ConfigLerValor	#P2#=ACBrLibMailDemo/ACBrMail/ConfigLerValor	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830112849	#P7#=0	#P8#=1	.
+24=#P0#=mb	#P1#=Nome	#P2#=ACBrLibMailDemo/ACBrMail/Nome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830105506	#P7#=0	#P8#=3	.
+25=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibMailDemo/ACBrMail/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830105432	#P7#=0	#P8#=0	.
+26=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibMailDemo/ACBrMail/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180830105413	#P7#=0	#P8#=1	.

@@ -1,0 +1,19 @@
+[History]
+1=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190822111553	#P7#=0	#P8#=7	.
+2=#P0#=mb	#P1#=DirExists	#P2#=ACBrLibPosPrinterDemo/ACBrComum/DirExists	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129110440	#P7#=0	#P8#=0	.
+3=#P0#=mb	#P1#=CreatePosPrinter	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinterUtils/CreatePosPrinter	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129110434	#P7#=0	#P8#=6	.
+4=#P0#=mb	#P1#=cmdAddTags_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdAddTags_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420123136	#P7#=0	#P8#=24	.
+5=#P0#=mb	#P1#=cmdCheckStatus_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdCheckStatus_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420102031	#P7#=0	#P8#=8	.
+6=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420102015	#P7#=0	#P8#=-1	.
+7=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibPosPrinterDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180420101957	#P7#=0	#P8#=17	.
+8=#P0#=mb	#P1#=cmdAtivar_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdAtivar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420101933	#P7#=0	#P8#=2	.
+9=#P0#=mb	#P1#=cmdInformações_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdInformações_Click	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180420005502	#P7#=0	#P8#=0	.
+10=#P0#=mb	#P1#=MasLinhasPular_Change	#P2#=ACBrLibPosPrinterDemo/FrmMain/MasLinhasPular_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420002058	#P7#=0	#P8#=1	.
+11=#P0#=mb	#P1#=MasBuffer_Change	#P2#=ACBrLibPosPrinterDemo/FrmMain/MasBuffer_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420002038	#P7#=0	#P8#=1	.
+12=#P0#=mb	#P1#=MaskEspacos_Change	#P2#=ACBrLibPosPrinterDemo/FrmMain/MaskEspacos_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420002016	#P7#=0	#P8#=1	.
+13=#P0#=mb	#P1#=MasColunas_Change	#P2#=ACBrLibPosPrinterDemo/FrmMain/MasColunas_Change	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420002000	#P7#=0	#P8#=0	.
+14=#P0#=mb	#P1#=SaveConfig	#P2#=ACBrLibPosPrinterDemo/FrmMain/SaveConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190822095745	#P7#=0	#P8#=8	.
+15=#P0#=mb	#P1#=Form_Terminate	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Terminate	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180420000017	#P7#=0	#P8#=3	.
+16=#P0#=mb	#P1#=cmdArqLog_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdArqLog_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180419234852	#P7#=0	#P8#=8	.
+17=#P0#=mb	#P1#=cmdImprimir_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdImprimir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180419233348	#P7#=0	#P8#=1	.
+18=#P0#=mb	#P1#=cmdClear_Click	#P2#=ACBrLibPosPrinterDemo/FrmMain/cmdClear_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180419144159	#P7#=0	#P8#=1	.

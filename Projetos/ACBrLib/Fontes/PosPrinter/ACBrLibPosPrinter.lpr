@@ -36,6 +36,10 @@ exports
   POS_ImprimirLinha,
   POS_ImprimirCmd,
   POS_ImprimirTags,
+  POS_ImprimirImagemArquivo,
+  POS_GravarLogoArquivo,
+  POS_ImprimirLogo,
+  POS_ApagarLogo,
 
   //Diversos
   POS_TxRx,

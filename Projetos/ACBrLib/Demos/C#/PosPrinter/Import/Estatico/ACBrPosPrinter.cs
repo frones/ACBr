@@ -60,6 +60,18 @@ namespace ACBrLibPosPrinter
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int POS_ImprimirTags();
+		
+		[DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int POS_ImprimirImagemArquivo(string APath);
+		
+		[DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int POS_GravarLogoArquivo(string APath, int nAKC1, int nAKC2);
+
+		[DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int POS_ImprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY);
+
+		[DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int POS_ApagarLogo(int nAKC1, int nAKC2);
 
         [DllImport(ACBr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int POS_TxRx(string aString, byte bytesToRead, int aTimeOut, bool waitForTerminator, StringBuilder buffer, ref int bufferSize);

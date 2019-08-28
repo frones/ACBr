@@ -46,21 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\Shared\Helpers.cs">
+      <Link>Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Shared\ItemData.cs">
+      <Link>ItemData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Shared\UIExtensions.cs">
+      <Link>UIExtensions.cs</Link>
+    </Compile>
     <Compile Include="FrmSerial.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmSerial.Designer.cs">
       <DependentUpon>FrmSerial.cs</DependentUpon>
     </Compile>
-    <Compile Include="UIExtensions.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers.cs" />
-    <Compile Include="ItemData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
@@ -103,7 +109,7 @@
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Import\ACBrLibPosPrinter.csproj">
+    <ProjectReference Include="..\..\Import\Dinamico\ACBrLibPosPrinter.csproj">
       <Project>{f44a03bc-e5aa-45da-a2b1-5d000d513152}</Project>
       <Name>ACBrLibPosPrinter</Name>
     </ProjectReference>

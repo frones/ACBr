@@ -102,6 +102,15 @@ function POS_ImprimirLinha(eString: PChar): longint;
 function POS_ImprimirCmd(eComando: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_ImprimirTags: longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ImprimirImagemArquivo(aPath: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ApagarLogo(nAKC1, nAKC2: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+
 {%endregion}
 
 {%region Diversos}
@@ -413,6 +422,141 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function POS_ImprimirImagemArquivo(aPath: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Path: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    Path := AnsiString(aPath);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('POS_ImprimirImagemArquivo(' + Path + ')', logCompleto, True)
+    else
+      pLib.GravarLog('POS_ImprimirImagemArquivo', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+      try
+        PosDM.ACBrPosPrinter1.ImprimirImagemArquivo(Path);
+        Result := SetRetorno(ErrOK);
+      finally
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function POS_GravarLogoArquivo(aPath: PChar; nAKC1, nAKC2: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Path: AnsiString;
+begin
+  try
+    VerificarLibInicializada;
+
+    Path := AnsiString(aPath);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('POS_GravarLogoArquivo(' + Path + ',' +
+                                                IntToStr(nAKC1) + ',' +
+                                                IntToStr(nAKC2) +')', logCompleto, True)
+    else
+      pLib.GravarLog('POS_GravarLogoArquivo', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+      try
+        PosDM.ACBrPosPrinter1.GravarLogoArquivo(Path, nAKC1, nAKC2);
+        Result := SetRetorno(ErrOK);
+      finally
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('POS_ImprimirLogo(' + IntToStr(nAKC1) + ','
+                                         + IntToStr(nAKC2) + ','
+                                         + IntToStr(nFatorX) + ','
+                                         + IntToStr(nFatorY) + ')', logCompleto, True)
+    else
+      pLib.GravarLog('POS_ImprimirLogo', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+      try
+        PosDM.ACBrPosPrinter1.ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY);
+        Result := SetRetorno(ErrOK);
+      finally
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function POS_ApagarLogo(nAKC1, nAKC2: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('POS_ApagarLogo(' + IntToStr(nAKC1) + ','
+                                       + IntToStr(nAKC2) + ')', logCompleto, True)
+    else
+      pLib.GravarLog('POS_ApagarLogo', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+      try
+        PosDM.ACBrPosPrinter1.ApagarLogo(nAKC1, nAKC2);
+        Result := SetRetorno(ErrOK);
+      finally
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%region Diversos}

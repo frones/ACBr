@@ -9,6 +9,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ACBrLib;
 using ACBrLib.Core;
 using ACBrLib.Core.PosPrinter;
 using ACBrLib.Core.Serial;
@@ -218,7 +219,7 @@ namespace ACBrLibPosPrinter.Demo
             txtImpressao.Clear();
 
             txtImpressao.AppendLine(posPrinter.RetornarTags());
-            posPrinter.ImprimirTags();
+            //posPrinter.ImprimirTags();
         }
 
         private void btnTagAlinhamento_Click(object sender, EventArgs e)
@@ -304,7 +305,7 @@ namespace ACBrLibPosPrinter.Demo
         {
             txtImpressao.AppendLine("</zera>");
             txtImpressao.AppendLine("</ce>");
-            txtImpressao.AppendLine("<logo_imprimir>" + (posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter, "IgnorarLogo") ? "0" : "1") + "</logo_imprimir>");
+            txtImpressao.AppendLine("<logo_imprimir>" + (posPrinter.ConfigLerValor<bool>(ACBrSessao.PosPrinter_Logo, "IgnorarLogo") ? "0" : "1") + "</logo_imprimir>");
             txtImpressao.AppendLine("<logo_kc1>" + nudLogoKC1.Text + "</logo_kc1>");
             txtImpressao.AppendLine("<logo_kc2>" + nudLogoKC2.Text + "</logo_kc2>");
             txtImpressao.AppendLine("<logo_fatorx>" + nudLogoFatorX.Text + "</logo_fatorx>");

@@ -68,6 +68,14 @@ public final class ACBrPosPrinter {
         int POS_ImprimirCmd(String aString);
 
         int POS_ImprimirTags();
+        
+        int POS_ImprimirImagemArquivo(String APath);
+        
+        int POS_GravarLogoArquivo(String APath, int nAKC1, int nAKC2);
+        
+        int POS_ImprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY);
+        
+        int POS_ApagarLogo(int nAKC1, int nAKC2);
 
         int POS_TxRx(String aString, byte bytesToRead, int aTimeOut, boolean waitForTerminator, ByteBuffer buffer, IntByReference bufferSize);
 
@@ -278,6 +286,38 @@ public final class ACBrPosPrinter {
 
     public void imprimirTags() throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ImprimirTags();
+        checkResult(ret);
+    }
+    
+    public void imprimirImagemArquivo(String aPath) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_ImprimirImagemArquivo(toUTF8(aPath));
+        checkResult(ret);
+    }
+    
+    public void gravarLogoArquivo(String aPath) throws Exception {
+        gravarLogoArquivo(aPath, -1, -1);
+    }
+    
+    public void gravarLogoArquivo(String aPath, int nAKC1, int nAKC2) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_GravarLogoArquivo(toUTF8(aPath), nAKC1, nAKC2);
+        checkResult(ret);
+    }
+    
+    public void imprimirLogo() throws Exception {
+        imprimirLogo(-1, -1, -1, -1);
+    }
+    
+    public void imprimirLogo(int nAKC1, int nAKC2, int nFatorX, int nFatorY) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY);
+        checkResult(ret);
+    }
+    
+    public void apagarLogo() throws Exception {
+        apagarLogo(-1, -1);
+    }
+    
+    public void apagarLogo(int nAKC1, int nAKC2) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_ApagarLogo(nAKC1, nAKC2);
         checkResult(ret);
     }
 

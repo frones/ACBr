@@ -80,6 +80,20 @@ Private Declare Function POS_ImprimirCMD _
                    
 Private Declare Function POS_ImprimirTags Lib "ACBrPosPrinter32.dll" () As Long
 
+Private Declare Function POS_ImprimirImagemArquivo Lib "ACBrPosPrinter32.dll" (ByVal aPath As String) As Long
+
+Private Declare Function POS_GravarLogoArquivo Lib "ACBrPosPrinter32.dll" (ByVal aPath As String, _
+                                                                           ByVal nAKC1 As Long, _
+                                                                           ByVal nAKC2 As Long) As Long
+                                                                           
+Private Declare Function POS_ImprimirLogo Lib "ACBrPosPrinter32.dll" (ByVal nAKC1 As Long, _
+                                                                           ByVal nAKC2 As Long, _
+                                                                           ByVal nFatorX As Long, _
+                                                                           ByVal nFatorY As Long) As Long
+                                                                           
+Private Declare Function POS_ApagarLogo Lib "ACBrPosPrinter32.dll" (ByVal nAKC1 As Long, _
+                                                                      ByVal nAKC2 As Long) As Long
+
 Private Declare Function POS_TxRx _
                 Lib "ACBrPosPrinter32.dll" (ByVal aString As String, _
                                             ByVal bytesToRead As Byte, _
@@ -260,6 +274,44 @@ Public Sub ImprimirTags()
     Dim retorno As Long
 
     retorno = POS_ImprimirTags
+    CheckResult (retorno)
+End Sub
+
+Public Sub ImprimirImagemArquivo(ByVal aPath As String)
+
+    Dim retorno As Long
+
+    retorno = POS_ImprimirImagemArquivo(aPath)
+    CheckResult (retorno)
+End Sub
+
+Public Sub GravarLogoArquivo(ByVal aPath As String, _
+                             Optional ByVal nAKC1 As Long = -1, _
+                             Optional ByVal nAKC2 As Long = -1)
+
+    Dim retorno As Long
+
+    retorno = POS_GravarLogoArquivo(aPath, nAKC1, nAKC2)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ImprimirLogo(Optional ByVal nAKC1 As Long = -1, _
+                            Optional ByVal nAKC2 As Long = -1, _
+                            Optional ByVal nFatorX As Long = -1, _
+                            Optional ByVal nFatorY As Long = -1)
+
+    Dim retorno As Long
+
+    retorno = POS_ImprimirLogo(nAKC1, nAKC2, nFatorX, nFatorY)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ApagarLogo(Optional ByVal nAKC1 As Long = -1, _
+                            Optional ByVal nAKC2 As Long = -1)
+
+    Dim retorno As Long
+
+    retorno = POS_ApagarLogo(nAKC1, nAKC2)
     CheckResult (retorno)
 End Sub
 

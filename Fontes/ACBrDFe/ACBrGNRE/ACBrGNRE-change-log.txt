@@ -44,7 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-27/08/2019
+28/08/2019
+[+] pgnreRetConsResLoteGNRE
+    Implementado a leitura do retorno do GNRE versão 2.00
+   Por: Italo Jurisato Junior
 [*] pgnreGNRE/pgnreGNREW
     https://www.projetoacbr.com.br/forum/topic/53172-gnre-200/?do=findComment&comment=349758
    Por: Daniel De Paula Romanini

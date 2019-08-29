@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2019
+-- ACBrNFeDANFERDM --
+[*] Correção para impressão do troco no DANFE NFCe em FastReport.
+    https://www.projetoacbr.com.br/forum/topic/53309-danfenfce500fr3nao-imprime-o-troco/
+  Por: BigWings
+
 28/08/2019
 -- ACBrNFeDANFERDM --
 [*] https://www.projetoacbr.com.br/forum/topic/53285-fast-report-duplicando-datasets-com-solu%C3%A7%C3%A3o/

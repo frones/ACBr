@@ -1305,6 +1305,7 @@ end;
 procedure TACBrNFeFRClass.CarregaPagamento;
 var
   i: Integer;
+  vTroco: Currency;
 begin
   with cdsPagamento do
   begin
@@ -1329,11 +1330,15 @@ begin
     end;
 
     // acrescenta o troco
-    if (FDANFEClassOwner is TACBrNFeDANFCEClass) and (TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco > 0) then
+    vTroco := FNFe.pag.vTroco;
+    if (vTroco = 0) and (FDANFEClassOwner is TACBrNFeDANFCEClass) then
+      vTroco := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
+
+    if vTroco > 0 then
     begin
       Append;
       FieldByName('tPag').AsString  := 'Troco R$';
-      FieldByName('vPag').AsFloat   := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
+      FieldByName('vPag').AsFloat   := vTroco;
       Post;
     end;
   end;

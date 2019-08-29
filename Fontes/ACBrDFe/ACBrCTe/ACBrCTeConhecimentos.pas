@@ -1921,7 +1921,7 @@ begin
       if INIRec.ReadString('ICMSOutraUF', 'CST','') <> '' then
       begin
         Imp.ICMS.ICMSOutraUF.CST           := StrToCSTICMS(OK,INIRec.ReadString('ICMSOutraUF','CST','90'));
-        imp.ICMS.SituTrib                  := Imp.ICMS.ICMSOutraUF.CST;
+        imp.ICMS.SituTrib                  := cstICMSOutraUF;
         Imp.ICMS.ICMSOutraUF.pRedBCOutraUF := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','pRedBCOutraUF','') ,0);
         Imp.ICMS.ICMSOutraUF.vBCOutraUF    := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','vBCOutraUF','') ,0);
         Imp.ICMS.ICMSOutraUF.pICMSOutraUF  := StringToFloatDef( INIRec.ReadString('ICMSOutraUF','pICMSOutraUF','') ,0);

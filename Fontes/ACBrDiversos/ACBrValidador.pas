@@ -1729,12 +1729,10 @@ begin
   begin
     CodigoNormalizado := PadLeft(Trim(Documento), 14, '0');
 
-  if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
-     sPrefixo := copy(CodigoNormalizado, 7, 3)
-   else if StrToInt(Copy(CodigoNormalizado, 1, 2)) = 0 then //gtin12
-     sPrefixo := copy(CodigoNormalizado, 3, 3)
-   else
-     sPrefixo := copy(CodigoNormalizado, 2, 3);
+    if (StrToInt(Copy(CodigoNormalizado, 1, 6)) = 0) then //gtin8
+      sPrefixo := copy(CodigoNormalizado, 7, 3)
+    else
+      sPrefixo := copy(CodigoNormalizado, 2, 3);
 
     iPrefixo := StrtoIntDef(sPrefixo, 0);
     if iPrefixo = 0 then

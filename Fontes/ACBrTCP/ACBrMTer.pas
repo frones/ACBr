@@ -488,12 +488,15 @@ begin
 end;
 
 procedure TACBrMTerConexao.OnKeepAlive(Sender: TObject);
+var
+  Secs: Int64;
 begin
   fTimerKeepAlive.Enabled := False;
   if fDesativado then
     Exit;
 
-  if SecondsBetween(fUltimoComando.EnviadoEm, Now) > fConexoes.ACBrMTer.KeepAlive then
+  Secs := SecondsBetween(fUltimoComando.EnviadoEm, Now);
+  if Secs >= fConexoes.ACBrMTer.KeepAlive then
     VerificarOnLine
   else
     LigarKeepAlive;

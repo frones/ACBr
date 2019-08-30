@@ -114,8 +114,10 @@ type
     fTimerFilaComandos: TACBrThreadTimer;
     fTimerTimeOut: TACBrThreadTimer;
     fTimerWaitBuffer: TACBrThreadTimer;
+    fTimerKeepAlive: TACBrThreadTimer;
     fACBrBAL: TACBrBAL;
     fConectado: Boolean;
+    fDesativado: Boolean;
     fIP: String;
     fSerialBalanca: Integer;
     fConexoes: TACBrMTerConexoes;
@@ -126,6 +128,7 @@ type
     procedure OnTimeOutResposta(Sender: TObject);
     procedure OnProcessarComandoDaFila(Sender: TObject);
     procedure OnBufferWaitDone(Sender: TObject);
+    procedure OnKeepAlive(Sender: TObject);
 
     procedure LigarEsperaDeResposta;
   protected
@@ -135,13 +138,15 @@ type
     constructor Create(aOwner: TACBrMTerConexoes; const AIP: String);
     destructor Destroy; override;
     procedure Clear;
+    procedure Desativar;
 
     procedure LigarFilaDeComandos;
+    procedure LigarKeepAlive;
     procedure AdicionarBufferResposta(ABuffer: AnsiString);
     procedure SolicitarPeso(aSerial: Integer);
     procedure VerificarOnLine;
 
-    property Conectado: Boolean read fConectado write fConectado;
+    property Conectado: Boolean read fConectado;
     property IP: String read fIP;
     property Comandos: TACBrMTerComandos read fComandos;
     property EsperandoResposta: Boolean read GetEsperandoResposta;
@@ -200,6 +205,7 @@ type
     fTerminadorBalanca: AnsiString;
     fTerminadorBalancaAsc: AnsiString;
     fWaitInterval: Integer;
+    fKeepAlive: Integer;
     function GetAtivo: Boolean;
     function GetIP: String;
     function GetModeloStr: String;
@@ -284,6 +290,7 @@ type
     property Modelo        : TACBrMTerModelo   read fModelo         write SetModelo default mtrNenhum;
     property DisplayLinhas : Integer           read fDisplayLinhas  write fDisplayLinhas default 4;
     property DisplayColunas: Integer           read fDisplayColunas write fDisplayColunas default 20;
+    property KeepAlive     : Integer           read fKeepAlive      write fKeepAlive default 0;
 
     property OnConecta     : TACBrMTerConecta      read fOnConecta      write fOnConecta;
     property OnDesconecta  : TACBrMTerDesconecta   read fOnDesconecta   write fOnDesconecta;
@@ -332,6 +339,7 @@ begin
   fComandos := TACBrMTerComandos.Create(True);
   fUltimoComando := TACBrMTerComandoEnviado.Create;
   fConectado := True;
+  fDesativado := False;
   fACBrBAL := Nil;
 
   fTimerTimeOut := TACBrThreadTimer.Create;
@@ -348,21 +356,25 @@ begin
   fTimerWaitBuffer.Enabled := False;
   fTimerWaitBuffer.OnTimer := OnBufferWaitDone;
 
+  fTimerKeepAlive := TACBrThreadTimer.Create;
+  fTimerKeepAlive.Enabled := False;
+  fTimerKeepAlive.Interval := fConexoes.ACBrMTer.KeepAlive * 1000;
+  fTimerKeepAlive.OnTimer := OnKeepAlive;
+
   Clear;
 end;
 
 destructor TACBrMTerConexao.Destroy;
 begin
-  fConectado := False;
-  fTimerTimeOut.Enabled := False;
-  fTimerWaitBuffer.Enabled := False;
-  fTimerFilaComandos.Enabled := False;
+  Desativar;
 
-  fComandos.Free;
-  fUltimoComando.Free;
   fTimerTimeOut.Free;
   fTimerFilaComandos.Free;
   fTimerWaitBuffer.Free;
+  fTimerKeepAlive.Free;
+
+  fComandos.Free;
+  fUltimoComando.Free;
 
   if Assigned(fACBrBAL) then
     fACBrBAL.Free;
@@ -375,6 +387,16 @@ begin
   fUltimoComando.Clear;
   fSerialBalanca := 0;
   fComandos.Clear;
+end;
+
+procedure TACBrMTerConexao.Desativar;
+begin
+  fDesativado := True;
+  fConectado := False;
+  fTimerTimeOut.Enabled := False;
+  fTimerWaitBuffer.Enabled := False;
+  fTimerFilaComandos.Enabled := False;
+  fTimerKeepAlive.Enabled := False;
 end;
 
 function TACBrMTerConexao.GetACBrBALConexao: TACBrBAL;
@@ -420,8 +442,11 @@ procedure TACBrMTerConexao.VerificarOnLine;
 var
   LenFila: Integer;
 begin
-  LenFila := fComandos.Count;
   fConectado := False;
+  if fDesativado then
+    Exit;
+
+  LenFila := fComandos.Count;
   fConexoes.ACBrMTer.MTer.ComandoOnline(fComandos);
 
   if (fComandos.Count > LenFila) then
@@ -448,6 +473,30 @@ procedure TACBrMTerConexao.LigarFilaDeComandos;
 begin
   fTimerFilaComandos.Enabled := (not fTimerTimeOut.Enabled) and
                                 (fComandos.Count > 0);
+
+  if not fTimerFilaComandos.Enabled then
+    LigarKeepAlive;
+end;
+
+procedure TACBrMTerConexao.LigarKeepAlive;
+begin
+  fTimerKeepAlive.Enabled := False;
+  if fDesativado or (fConexoes.ACBrMTer.KeepAlive <= 0) then
+    Exit;
+
+  fTimerKeepAlive.Enabled := True;
+end;
+
+procedure TACBrMTerConexao.OnKeepAlive(Sender: TObject);
+begin
+  fTimerKeepAlive.Enabled := False;
+  if fDesativado then
+    Exit;
+
+  if SecondsBetween(fUltimoComando.EnviadoEm, Now) > fConexoes.ACBrMTer.KeepAlive then
+    VerificarOnLine
+  else
+    LigarKeepAlive;
 end;
 
 procedure TACBrMTerConexao.OnProcessarComandoDaFila(Sender: TObject);
@@ -455,9 +504,14 @@ var
   ACmd: TACBrMTerComando;
 begin
   fTimerFilaComandos.Enabled := False;
+  if fDesativado then
+    Exit;
 
   if (fComandos.Count < 1) then
+  begin
+    LigarKeepAlive;
     Exit;
+  end;
 
   repeat
     ACmd := fComandos[0];     // Lê comando da Fila
@@ -512,6 +566,8 @@ var
 
 begin
   fTimerWaitBuffer.Enabled := False;
+  if fDesativado then
+    Exit;
 
   ExtrairResposta;
   while (LenResp > 0) do
@@ -568,7 +624,6 @@ begin
   LigarFilaDeComandos;
 end;
 
-
 procedure TACBrMTerConexao.LigarEsperaDeResposta;
 begin
   fTimerTimeOut.Enabled := (fUltimoComando.TimeOut <> 0);
@@ -584,6 +639,8 @@ end;
 procedure TACBrMTerConexao.OnTimeOutResposta(Sender: TObject);
 begin
   fTimerTimeout.Enabled := False;
+  if fDesativado then
+    Exit;
 
   with fUltimoComando do
   begin
@@ -635,7 +692,10 @@ var
 begin
   AConexao := GetConexao(AIP);
   if Assigned(AConexao) then
+  begin
+    AConexao.Desativar;
     inherited Remove(AConexao);
+  end;
 end;
 
 function TACBrMTerConexoes.GetConexao(aIP: String): TACBrMTerConexao;
@@ -1057,6 +1117,7 @@ begin
   fTerminadorBalancaAsc := #3;
   fWaitInterval := 100;
   fPassWordChar := '*';
+  fKeepAlive := 0;
 
   fConexoes := TACBrMTerConexoes.Create(Self);
 

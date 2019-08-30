@@ -93,7 +93,8 @@ type
 implementation
 
 uses
-  math;
+  math,
+  ACBrMTer;
 
 { TACBrMTerPMTG }
 
@@ -122,6 +123,13 @@ begin
   inherited Create(aOwner);
 
   fpModeloStr := 'PMTG';
+
+  with TACBrMTer(aOwner) do
+  begin
+    if (KeepAlive = 0) then   // KeepAlive liga por padrão, para o Gertec
+      KeepAlive := 15;  // Verifica OnLine a cada 15 segundos
+  end;
+
 end;
 
 procedure TACBrMTerPMTG.ComandoBackSpace(Comandos: TACBrMTerComandos);

@@ -37,6 +37,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+30/08/2019
+-- ACBrCEP --
+[*] Melhoria na mensagem de erro, de método não implementado
+    https://www.projetoacbr.com.br/forum/topic/53251-não-está-funcionando-a-pesquisa-do-cep-por-endereco/
+    (por: DSA)
+
+21/08/2019
+-- ACBrMTER --
+[+] Adicionada a Propriedade "KeepAlive : Integer default 0"
+    Se o valor for diferente de 0, o ACBrMTER irá verificar se a conexão com o
+    Microterminal ainda está ativa, a cada N segundos
+    https://www.projetoacbr.com.br/forum/topic/53139-problemas-mter-micros-terminais-gertec-antigos-solu%C3%A7%C3%A3o/
+[*] Melhoria na detecção de Queda de Conexão, para evitar erros de A.V.
+    (por: DSA)
+
 17/06/2019
 -- ACBrMTER --
 [+] Adicionado o método TACBrMTer.Desconectar(const aIP: String);

@@ -162,7 +162,7 @@ type
       fOwner : TACBrCEP ;
       fpURL : String ;
 
-      procedure ErrorAbstract ;
+      procedure ErrorAbstract(NomeProcedure: String);
     protected
       procedure TestarChave;
       procedure TestarUsuario;
@@ -472,9 +472,10 @@ end ;
 
 { TACBrCEPWSClass *************************************************************}
 
-procedure TACBrCEPWSClass.ErrorAbstract ;
+procedure TACBrCEPWSClass.ErrorAbstract(NomeProcedure: String);
 begin
-  raise EACBrCEPException.Create( 'Nenhum WebService selecionado' )
+  raise EACBrCEPException.create(ACBrStr(Format('WebService %s não implementa o método: %s',
+                                          [Self.ClassName, NomeProcedure] ))) ;
 end ;
 
 procedure TACBrCEPWSClass.TestarChave;
@@ -498,15 +499,15 @@ begin
   fpURL  := '';
 end ;
 
-Procedure TACBrCEPWSClass.BuscarPorCEP(const ACEP : String) ;
+procedure TACBrCEPWSClass.BuscarPorCEP(const ACEP: String);
 begin
-  ErrorAbstract ;
+  ErrorAbstract( 'BuscarPorCEP' );
 end ;
 
-Procedure TACBrCEPWSClass.BuscarPorLogradouro(const AMunicipio, ATipo_Logradouro,
-   ALogradouro, AUF, ABairro : String ) ;
+procedure TACBrCEPWSClass.BuscarPorLogradouro(const AMunicipio,
+  ATipo_Logradouro, ALogradouro, AUF, ABairro: String);
 begin
-  ErrorAbstract ;
+  ErrorAbstract( 'BuscarPorLogradouro' );
 end ;
 
 { TACBrWSBuscarCEP - http://www.buscarcep.com.br *******************************}

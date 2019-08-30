@@ -1,14 +1,14 @@
 object Form1: TForm1
-  Left = 1112
+  Left = 833
   Height = 408
-  Top = 601
+  Top = 349
   Width = 774
   Caption = 'Form1'
   ClientHeight = 408
   ClientWidth = 774
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.0.4'
+  LCLVersion = '2.0.2.0'
   object pnConectados: TPanel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = pnConfig
@@ -386,6 +386,15 @@ object Form1: TForm1
           OnClick = btLimparLinha1Click
           TabOrder = 19
         end
+        object bDesconectarIP: TButton
+          Left = 41
+          Height = 25
+          Top = 352
+          Width = 108
+          Caption = 'Desconectar'
+          OnClick = bDesconectarIPClick
+          TabOrder = 20
+        end
       end
       object tsFluxoVendas: TTabSheet
         Caption = 'Fluxo de Vendas'
@@ -670,7 +679,7 @@ object Form1: TForm1
           MaxValue = 5000
           OnChange = seWaitChange
           TabOrder = 7
-          Value = 200
+          Value = 100
         end
       end
       object tsBalanca: TTabSheet
@@ -732,9 +741,9 @@ object Form1: TForm1
   object ACBrMTer1: TACBrMTer
     ArqLog = '_ACBrMTer.log'
     Balanca = ACBrBAL1
-    EchoMode = mdeNormal
+    EchoMode = mdePassword
     IP = '0.0.0.0'
-    PasswordChar = #0
+    PasswordChar = '*'
     Port = '6550'
     TerminadorBalanca = '#3'
     OnConecta = ACBrMTer1Conecta

@@ -30,6 +30,7 @@ type
     btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
     btSolicitarPeso: TButton;
+    bDesconectarIP: TButton;
     cbBalanca: TComboBox;
     cbEchoMode: TComboBox;
     cbModelo: TComboBox;
@@ -95,6 +96,7 @@ type
       const RepostaOnLine: AnsiString);
     procedure ACBrMTer1RecebePeso(const IP: AnsiString;
       const PesoRecebido: Double);
+    procedure bDesconectarIPClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
     procedure btBeepClick(Sender: TObject);
@@ -185,6 +187,17 @@ begin
   mOutput.Lines.Add('IP: '+IP+' - Peso: '+ FormatFloat('##0.000', PesoRecebido));
 end;
 
+procedure TForm1.bDesconectarIPClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  VerificaSelecionado;
+
+  for I := 0 to clbConectados.Count - 1 do
+    if clbConectados.Checked[I] then
+      ACBrMTer1.Desconectar(clbConectados.Items[I]);
+end;
+
 procedure TForm1.BitBtn1Click(Sender: TObject);
 begin
   AtualizarConexoes;
@@ -209,7 +222,7 @@ begin
 
   for I := 0 to clbConectados.Count - 1 do
     if clbConectados.Checked[I] then
-      ACBrMTer1.Beep(clbConectados.Items[I], 500);
+      ACBrMTer1.Desconectar(clbConectados.Items[I]);
 end;
 
 procedure TForm1.btAtivarDesativarClick(Sender: TObject);

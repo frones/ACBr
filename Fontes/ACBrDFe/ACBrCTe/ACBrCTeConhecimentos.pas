@@ -1934,7 +1934,14 @@ begin
         Imp.ICMS.ICMSSN.indSN := INIRec.ReadInteger('ICMSSN', 'indSN',1);
       end;
 
-      if StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0) <> 0 then
+      if (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vBCUFFim', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pFCPUFFim', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSUFFim', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInter', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vFCPUFFim', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFFim', ''), 0) <> 0) or
+         (StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFIni', ''), 0) <> 0) then
       begin
         Imp.ICMSUFFim.vBCUFFim       := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vBCUFFim', ''), 0 );
         Imp.ICMSUFFim.pFCPUFFim      := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pFCPUFFim', ''), 0 );

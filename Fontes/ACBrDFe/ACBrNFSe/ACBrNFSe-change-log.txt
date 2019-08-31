@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/53247-cnpj-com-mascara-no-componente-notablu/
+   Por: Douglas wf
+[*] https://www.projetoacbr.com.br/forum/topic/46214-corre%C3%A7%C3%B5es-para-o-provedor-abase/?do=findComment&comment=349796
+   Por: Rômulo da Costa de Souza
+-- pnfsNFSeW_ABRASFv2 --
+[*] https://www.projetoacbr.com.br/forum/topic/53311-tag/
+   Por: Willian Bettoni
+
 26/08/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/53183-ipm-xml-corta-os-zeros-na-frente-do-cnpj/

@@ -150,10 +150,10 @@ begin
     else
       Gerador.wGrupoNFSe('Tomador');
 
-    if ((NFSe.Tomador.Endereco.UF <> 'EX') and (NFSe.Tomador.Endereco.UF <> '')) or
-       (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+    if ((NFSe.Tomador.Endereco.UF <> 'EX') and (NFSe.Tomador.Endereco.UF <> '')) and
+       ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
-       (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '') then
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') then

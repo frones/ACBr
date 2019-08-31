@@ -1767,14 +1767,14 @@ begin
     begin
       NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
 
-      NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
+      NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cnpj'));
 
       if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
         if Leitor.rExtrai(FNivel +3, 'CpfCnpj') <> '' then
         begin
-          NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cpf');
+          NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cpf'));
           if NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj = '' then
-            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
+            NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cnpj'));
         end;
     end;
 
@@ -1828,11 +1828,11 @@ begin
       if Leitor.rExtrai(FNivel +3, 'CpfCnpj') <> '' then
       begin
         if Leitor.rCampo(tcStr, 'Cpf') <> '' then
-          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cpf')
+          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cpf'))
         else if Leitor.rCampo(tcStr, 'Cnpj') <> '' then
-          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj')
+          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cnpj'))
         else
-          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpj');
+          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := OnlyNumber(Leitor.rCampo(tcStr, 'CpfCnpj'));
       end;
     end;
 
@@ -1850,9 +1850,9 @@ begin
     if Leitor.rExtrai(FNivel +2, 'CpfCnpj') <> '' then
     begin
       if Leitor.rCampo(tcStr, 'Cpf')<>'' then
-        NFSe.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'Cpf')
+        NFSe.IntermediarioServico.CpfCnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cpf'))
       else
-        NFSe.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj');
+        NFSe.IntermediarioServico.CpfCnpj := OnlyNumber(Leitor.rCampo(tcStr, 'Cnpj'));
     end;
   end;
 
@@ -2057,7 +2057,7 @@ begin
   NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
   NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'));
 
-  if (Leitor.rExtrai(NivelTemp, 'Rps') <> '') then
+  if (FProvedor <> proABase) and (Leitor.rExtrai(NivelTemp, 'Rps') <> '') then
   begin
     if FProvedor = proSigCorp then
     begin

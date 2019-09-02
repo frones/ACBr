@@ -34,51 +34,102 @@
 {******************************************************************************
 |* Historico
 |*
-|* 10/07/2019:  Jean Carlos dos Santos
+|* 11/02/2019:  Daniel Simões de Almeida
 |*   Inicio do desenvolvimento
 ******************************************************************************}
 
 {$I ACBr.inc}
 
-unit ACBrEscPosStar;
+unit ACBrEscZJiang;
 
 interface
 
 uses
-  Classes, SysUtils, ACBrPosPrinter, ACBrEscPosEpson;
+  Classes, SysUtils,
+  ACBrPosPrinter, ACBrEscPosEpson;
 
 type
 
-  { TACBrEscPosStar }
+  { TACBrEscCustomPos }
 
-  TACBrEscPosStar = class(TACBrEscPosEpson)
+  { TACBrEscZJiang }
 
+  TACBrEscZJiang = class(TACBrEscPosEpson)
+  protected
+    procedure VerificarKeyCodes; override;
   public
     constructor Create(AOwner: TACBrPosPrinter);
+
+    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
   end;
 
 implementation
 
 uses
+  strutils, math,
   ACBrUtil, ACBrConsts;
 
-{ TACBrEscPosStar }
+{ TACBrEscZJiang }
 
-constructor TACBrEscPosStar.Create(AOwner: TACBrPosPrinter);
+constructor TACBrEscZJiang.Create(AOwner: TACBrPosPrinter);
 begin
   inherited Create(AOwner);
 
-  fpModeloStr := 'EscPosStar';
+  fpModeloStr := 'EscZJiang';
 
-  with Cmd  do
+  {(*}
+    with Cmd  do
+    begin
+      CorteTotal        := GS  + 'V' + #1;        // Only the partial cut is available; there is no full cut
+      Beep              := ESC + 'B' + #1 + #4;   // n - Refers to the number of buzzer times,
+      LigaModoPagina    := '';
+      DesligaModoPagina := '';
+      ImprimePagina     := '';
+    end;
+    {*)}
+
+    TagsNaoSuportadas.Add( cTagModoPaginaLiga );
+    TagsNaoSuportadas.Add( cTagModoPaginaDesliga );
+    TagsNaoSuportadas.Add( cTagModoPaginaImprimir );
+    TagsNaoSuportadas.Add( cTagModoPaginaDirecao );
+    TagsNaoSuportadas.Add( cTagModoPaginaPosEsquerda );
+    TagsNaoSuportadas.Add( cTagModoPaginaPosTopo );
+    TagsNaoSuportadas.Add( cTagModoPaginaLargura );
+    TagsNaoSuportadas.Add( cTagModoPaginaAltura );
+    TagsNaoSuportadas.Add( cTagModoPaginaEspaco );
+    TagsNaoSuportadas.Add( cTagModoPaginaConfigurar );
+end;
+
+procedure TACBrEscZJiang.VerificarKeyCodes;
+begin
+  with fpPosPrinter.ConfigLogo do
   begin
-    LigaItalico    := '';
-    DesligaItalico := '';
-    Beep           := ESC + GS + BELL + #1 + #2 + #5;
+    if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
+      raise EPosPrinterException.Create(fpModeloStr+' apenas aceitas KeyCode1=1, KeyCode2=0');
   end;
+end;
 
-  TagsNaoSuportadas.Add( cTagLigaItalico );
-  TagsNaoSuportadas.Add( cTagDesligaItalico );
+function TACBrEscZJiang.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
+var
+  EC: AnsiChar;
+begin
+  with fpPosPrinter.ConfigQRCode do
+  begin
+     case ErrorLevel of
+       1: EC := 'M';
+       2: EC := 'Q';
+       3: EC := 'H';
+     else
+       EC := 'L';
+     end;
+
+     Result := ESC + 'Z' +                          // Coamndo de QRCode
+               #0 +                             // m means specified version.(1~40,0:Auto size)
+               EC +                             // n specifies the EC level.(L:7%,M:15%,Q:25%,H:30%)
+               AnsiChr(min(8,LarguraModulo)) +  // k specified component type.(1~8)
+               IntToLEStr(length(ACodigo))   +  // dL + dH
+               ACodigo;
+  end;
 end;
 
 end.

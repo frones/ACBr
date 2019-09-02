@@ -556,8 +556,12 @@ begin
           Conhecimentos.Items[j].CTe.infCTe.Id) then
         begin
           //RespostaItensCTe(J, I, True);
+          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[CTe_Arq' + Trim(IntToStr(
+                         fACBrCTe.Conhecimentos.Items[J].CTe.ide.nCT)) +']' + sLineBreak +
+                         'Arquivo=' + fACBrCTe.Conhecimentos.Items[J].NomeArq;
 
           DoConfiguraDACTe(False, BoolToStr(pPreview,'1',''));
+
           if NaoEstaVazio(pImpressora) then
             DACTe.Impressora := pImpressora;
 
@@ -570,7 +574,7 @@ begin
             ArqPDF := OnlyNumber(ACBrCTe.Conhecimentos.Items[I].CTe.infCTe.ID)+'-cte.pdf';
 
             fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-              'PDF='+ PathWithDelim(ACBrCTe.DACTE.PathPDF) + ArqPDF ;
+              'PDF='+ PathWithDelim(ACBrCTe.DACTE.PathPDF) + ArqPDF + sLineBreak;
           end;
 
           if (Conhecimentos.Items[i].Confirmado) and (pImprimir) then
@@ -1431,7 +1435,7 @@ begin
     if (Alertas <> '') then
       Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
 
-    fpCmd.Resposta := Resp;
+    fpCmd.Resposta := Resp + sLineBreak ;
 
     if (ALote = 0) then
       ACBrCTe.WebServices.Enviar.Lote := '1'

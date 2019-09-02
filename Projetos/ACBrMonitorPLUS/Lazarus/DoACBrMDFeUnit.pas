@@ -2233,7 +2233,7 @@ begin
     if (Alertas <> '') then
       Resp := Resp + sLineBreak + 'Alertas:' + Alertas;
 
-    fpCmd.Resposta := Resp;
+    fpCmd.Resposta := Resp + sLineBreak;
 
     if (ALote = 0) then
       ACBrMDFe.WebServices.Enviar.Lote := '1'

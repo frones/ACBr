@@ -1325,7 +1325,7 @@ begin
   // para consumidor final, não contribuinte do ICMS.
 
   if (CTe.Imp.ICMSUFFim.vBCUFFim <> 0) or (CTe.Imp.ICMSUFFim.pFCPUFFim <> 0) or
-     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or (CTe.Imp.ICMSUFFim.pICMSInter <> 0) or
+     (CTe.Imp.ICMSUFFim.pICMSUFFim <> 0) or //(CTe.Imp.ICMSUFFim.pICMSInter <> 0) or
      (CTe.Imp.ICMSUFFim.vFCPUFFim <> 0) or (CTe.Imp.ICMSUFFim.vICMSUFFim <> 0) or
      (CTe.Imp.ICMSUFFim.vICMSUFIni <> 0) then
   begin
@@ -1335,7 +1335,7 @@ begin
     Gerador.wCampo(tcDe2, '#', 'pICMSUFFim    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSUFFim, DSC_PICMS);
     Gerador.wCampo(tcDe2, '#', 'pICMSInter    ', 01, 05, 1, CTe.Imp.ICMSUFFim.pICMSInter, DSC_PICMS);
     // Na versão 3.00a não tem mais: pICMSInterPart
-    Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 0, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
+//    Gerador.wCampo(tcDe2, '#', 'pICMSInterPart', 01, 05, 0, CTe.Imp.ICMSUFFim.pICMSInterPart, DSC_PICMS);
     Gerador.wCampo(tcDe2, '#', 'vFCPUFFim     ', 01, 15, 1, CTe.Imp.ICMSUFFim.vFCPUFFim, DSC_PICMS);
     Gerador.wCampo(tcDe2, '#', 'vICMSUFFim    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFFim, DSC_VICMS);
     Gerador.wCampo(tcDe2, '#', 'vICMSUFIni    ', 01, 15, 1, CTe.Imp.ICMSUFFim.vICMSUFIni, DSC_VICMS);

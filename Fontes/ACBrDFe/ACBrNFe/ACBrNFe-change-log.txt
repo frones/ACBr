@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2019
+-- ACBrNFeServicos --
+[*] Excluido a chamada para a SVAN e deixando apenas a chamada para a SVRS 
+    para a SEFAZ-PA, pois a partir de 02/09/2019
+    vai deixar de usar a SVAN e passar a utilizar a SVRS.
+   Por: Italo Jurisato Junior
+
 23/08/2019
 -- ACBrNFeDANFeESCPOS --
 [-] Ajustado o metodo ImprimirDANFE para chamar o metodo ImprimirDANFECancelado quando a propriedade Cancelada for true.

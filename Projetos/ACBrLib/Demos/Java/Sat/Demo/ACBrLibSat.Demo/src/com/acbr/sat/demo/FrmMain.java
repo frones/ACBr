@@ -1008,16 +1008,16 @@ public class FrmMain extends javax.swing.JFrame {
             ret = acbrSat.configLerValor(ACBrSessao.Extrato, "Impressora");
             cmbImpressora.setSelectedItem(ret);
 
-            ret = acbrSat.configLerValor(ACBrSessao.Emissor, "Site");
+            ret = acbrSat.configLerValor(ACBrSessao.Emissor, "WebSite");
             txtSite.setText(ret);
             
-            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "MostrarPreview");            
+            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "MostraPreview");            
             chkPreview.setSelected(!"0".equals(ret));
             
-            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "MostrarSetup");
+            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "MostraSetup");
             chkSetup.setSelected(!"0".equals(ret));
 
-            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "UsaCodigoEanImpressao");
+            ret = acbrSat.configLerValor(ACBrSessao.Extrato, "ImprimeCodigoEan");
             chkUsaCodigoEanImpressao.setSelected(!"0".equals(ret));
             
             ret = acbrSat.configLerValor(ACBrSessao.Extrato, "ImprimeEmUmaLinha");
@@ -1101,10 +1101,10 @@ public class FrmMain extends javax.swing.JFrame {
             acbrSat.configGravarValor(ACBrSessao.Extrato, "Copias", nudCopias.getValue());
             acbrSat.configGravarValor(ACBrSessao.Sistema, "nome", txtSoftwareHouse.getText());
             acbrSat.configGravarValor(ACBrSessao.Extrato, "Impressora", cmbImpressora.getSelectedItem().toString());
-            acbrSat.configGravarValor(ACBrSessao.Emissor, "Site", txtSite.getText());            
-            acbrSat.configGravarValor(ACBrSessao.Extrato, "MostrarPreview", chkPreview.isSelected() ? "1" : "0");
-            acbrSat.configGravarValor(ACBrSessao.Extrato, "MostrarSetup", chkSetup.isSelected() ? "1" : "0");
-            acbrSat.configGravarValor(ACBrSessao.Extrato, "UsaCodigoEanImpressao", chkUsaCodigoEanImpressao.isSelected() ? "1" : "0");            
+            acbrSat.configGravarValor(ACBrSessao.Emissor, "WebSite", txtSite.getText());            
+            acbrSat.configGravarValor(ACBrSessao.Extrato, "MostraPreview", chkPreview.isSelected() ? "1" : "0");
+            acbrSat.configGravarValor(ACBrSessao.Extrato, "MostraSetup", chkSetup.isSelected() ? "1" : "0");
+            acbrSat.configGravarValor(ACBrSessao.Extrato, "ImprimeCodigoEan", chkUsaCodigoEanImpressao.isSelected() ? "1" : "0");            
             acbrSat.configGravarValor(ACBrSessao.Extrato, "ImprimeEmUmaLinha", chkImprimeEmUmaLinha.isSelected() ? "1" : "0");            
             acbrSat.configGravarValor(ACBrSessao.PosPrinter, "Modelo", ((ACBrPosPrinterModelo)cbbModelo.getSelectedItem()).asInt());
             acbrSat.configGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.getSelectedItem().toString());

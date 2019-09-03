@@ -561,6 +561,8 @@ Private Sub Form_Load()
     ComModelo.AddItem "EscVox", ACBrPosPrinterModelo.EscVox
     ComModelo.AddItem "EscDiebold", ACBrPosPrinterModelo.EscDiebold
     ComModelo.AddItem "EscEpsonP2", ACBrPosPrinterModelo.EscEpsonP2
+    ComModelo.AddItem "CustomPos", ACBrPosPrinterModelo.CustomPos
+    ComModelo.AddItem "EscPosStar", ACBrPosPrinterModelo.EscPosStar
     
     ComModelo.ListIndex = ACBrPosPrinterModelo.Texto
     

@@ -1,6 +1,0 @@
-[History]
-1=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibMailDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180822223226	#P7#=0	#P8#=0	.
-2=#P0#=mb	#P1#=cmdEnviar_Click	#P2#=ACBrLibMailDemo/FrmMain/cmdEnviar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20181119114928	#P7#=0	#P8#=18	.
-3=#P0#=mb	#P1#=cmdSalvar_Click	#P2#=ACBrLibMailDemo/FrmMain/cmdSalvar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180822223014	#P7#=0	#P8#=29	.
-4=#P0#=mb	#P1#=Form_Unload	#P2#=ACBrLibMailDemo/FrmMain/Form_Unload	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20180822221912	#P7#=0	#P8#=2	.
-5=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibMailDemo/ACBrMail/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20180822221249	#P7#=0	#P8#=-5	.

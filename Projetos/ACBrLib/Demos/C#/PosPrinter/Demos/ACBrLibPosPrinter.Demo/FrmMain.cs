@@ -229,20 +229,20 @@ namespace ACBrLibPosPrinter.Demo
             txtImpressao.AppendLine("TEXTO NORMAL");
             txtImpressao.AppendLine("</ae>ALINHADO A ESQUERDA");
             txtImpressao.AppendLine("1 2 3 TESTANDO");
-            txtImpressao.AppendLine("<n>FONTE NEGRITO</N>");
+            txtImpressao.AppendLine("<n>FONTE NEGRITO</n>");
             txtImpressao.AppendLine("<e>FONTE EXPANDIDA</e>");
             txtImpressao.AppendLine("<a>FONTE ALT.DUPLA</a>");
-            txtImpressao.AppendLine("<c>FONTE CONDENSADA</e>");
+            txtImpressao.AppendLine("<c>FONTE CONDENSADA</c>");
             txtImpressao.AppendLine("<in>FONTE INVERTIDA</in>");
-            txtImpressao.AppendLine("<S>FONTE SUBLINHADA</s>");
+            txtImpressao.AppendLine("<s>FONTE SUBLINHADA</s>");
             txtImpressao.AppendLine("<i>FONTE ITALICO</i>");
 
             txtImpressao.AppendLine("</fn></ce>ALINHADO NO CENTRO");
             txtImpressao.AppendLine("1 2 3 TESTANDO");
-            txtImpressao.AppendLine("<n>FONTE NEGRITO</N>");
+            txtImpressao.AppendLine("<n>FONTE NEGRITO</n>");
             txtImpressao.AppendLine("<e>FONTE EXPANDIDA</e>");
             txtImpressao.AppendLine("<a>FONTE ALT.DUPLA</a>");
-            txtImpressao.AppendLine("<c>FONTE CONDENSADA</e>");
+            txtImpressao.AppendLine("<c>FONTE CONDENSADA</c>");
             txtImpressao.AppendLine("<in>FONTE INVERTIDA</in>");
             txtImpressao.AppendLine("<S>FONTE SUBLINHADA</s>");
             txtImpressao.AppendLine("<i>FONTE ITALICO</i>");

@@ -1,0 +1,18 @@
+[History]
+1=#P0#=mb	#P1#=btnEnviarEmail_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnEnviarEmail_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515145207	#P7#=0	#P8#=15	.
+2=#P0#=mb	#P1#=btnInutilizar_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnInutilizar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515144928	#P7#=0	#P8#=11	.
+3=#P0#=mb	#P1#=btnCancelarNFe_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnCancelarNFe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515144507	#P7#=0	#P8#=2	.
+4=#P0#=mb	#P1#=btnConsultarRecibo_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnConsultarRecibo_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515144149	#P7#=0	#P8#=5	.
+5=#P0#=mb	#P1#=btnConsultaChave_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnConsultaChave_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515144132	#P7#=0	#P8#=5	.
+6=#P0#=mb	#P1#=btnConsultaXml_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnConsultaXml_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515143816	#P7#=0	#P8#=2	.
+7=#P0#=mb	#P1#=btnImprimir_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnImprimir_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515143608	#P7#=0	#P8#=11	.
+8=#P0#=mb	#P1#=btnEnviar_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnEnviar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515142603	#P7#=0	#P8#=5	.
+9=#P0#=mb	#P1#=btnStatusServ_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnStatusServ_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515142136	#P7#=0	#P8#=14	.
+10=#P0#=mb	#P1#=btnSelecionarCertificado_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnSelecionarCertificado_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515140148	#P7#=0	#P8#=4	.
+11=#P0#=mb	#P1#=btnSelectSchema_Click	#P2#=ACBrLibNFeDemo/FrmMain/btnSelectSchema_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515135148	#P7#=0	#P8#=0	.
+12=#P0#=mb	#P1#=LoadConfig	#P2#=ACBrLibNFeDemo/FrmMain/LoadConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190515133754	#P7#=0	#P8#=8	.
+13=#P0#=mb	#P1#=cmdSalvar_Click	#P2#=ACBrLibNFeDemo/FrmMain/cmdSalvar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515133632	#P7#=0	#P8#=1	.
+14=#P0#=mb	#P1#=SalvarConfig	#P2#=ACBrLibNFeDemo/FrmMain/SalvarConfig	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190515133348	#P7#=0	#P8#=0	.
+15=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibNFeDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20190515103545	#P7#=0	#P8#=6	.
+16=#P0#=mb	#P1#=CheckResult	#P2#=ACBrLibNFeDemo/ACBrNFe/CheckResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190515101144	#P7#=-2147483640	#P8#=16	.
+17=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibNFeDemo/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20190515010431	#P7#=0	#P8#=0	.

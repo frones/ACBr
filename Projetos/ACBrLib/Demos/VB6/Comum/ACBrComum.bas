@@ -43,6 +43,7 @@ Public Enum ACBrPosPrinterModelo
     EscEpsonP2 = 6
     CustomPos = 7
     EscPosStar = 8
+	EscZJiang = 9
 End Enum
 
 Public Enum ACBrPosTipoStatus

@@ -10,6 +10,7 @@
         EscDiebold,
         EscEpsonP2,
         CustomPos,
-        EscPosStar
+        EscPosStar,
+        EscZJiang
     }
 }

@@ -44,7 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
+    <ProjectReference Include="..\..\..\Shared\ACBrLib.Core\ACBrLib.Core.csproj">
       <Project>{9b79e20d-34e2-4442-886c-242ac657e3ac}</Project>
       <Name>ACBrLib.Core</Name>
     </ProjectReference>

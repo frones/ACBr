@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/09/2019
+-- ACBrDFeXsLibXml2 --
+[-] Corrigido erro ao assinar xml do provedor Ginfes.
+   (Por: Rafael Teno Dias)
+
 21/09/2019
 -- ACBrDFeUtil --
 [+] Incluido as funções: CalcularHashDados e CalcularHashArquivo, 

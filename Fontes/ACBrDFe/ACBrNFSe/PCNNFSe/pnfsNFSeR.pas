@@ -1220,6 +1220,8 @@ begin
     NFSe.Servico.Valores.ValorServicos   := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.ValorDeducoes   := Leitor.rCampo(tcDe2, 'ValorDeducoes');
     NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'AliquotaServicos');
+    if (FProvedor in [proSP]) then
+      NFSe.Servico.Valores.Aliquota      := (NFSe.Servico.Valores.Aliquota * 100);
     NFSe.Servico.Valores.IssRetido       := StrToEnumerado( ok, Leitor.rCampo(tcStr, 'ISSRetido'), ['false','true'], [ stNormal, stRetencao]);
     NFSe.Servico.Valores.ValorPis        := Leitor.rCampo(tcDe2, 'ValorPIS');
     NFSe.Servico.Valores.ValorCofins     := Leitor.rCampo(tcDe2, 'ValorCOFINS');
@@ -3217,6 +3219,8 @@ begin
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.ValoresNfse.BaseCalculo      := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.ValoresNfse.Aliquota         := Leitor.rCampo(tcDe2, 'AliquotaServicos');
+    if (FProvedor in [proSP]) then
+      NFSe.ValoresNfse.Aliquota       := (NFSe.ValoresNfse.Aliquota * 100);
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorISS');
 
     NFSe.Servico.ItemListaServico := Leitor.rCampo(tcStr, 'CodigoServico');
@@ -3228,6 +3232,8 @@ begin
     NFSe.Servico.Valores.ValorServicos    := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe2, 'AliquotaServicos');
+    if (FProvedor in [proSP]) then
+      NFSe.Servico.Valores.Aliquota       := (NFSe.Servico.Valores.Aliquota * 100);
     NFSe.Servico.Valores.ValorIss         := Leitor.rCampo(tcDe2, 'ValorISS');
 
     // Tributos Federais - PIS, COFINS, INSS, IR e CSLL

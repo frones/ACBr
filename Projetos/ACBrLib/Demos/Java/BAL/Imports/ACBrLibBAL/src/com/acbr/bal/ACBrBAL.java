@@ -12,7 +12,7 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrBAL extends ACBrLibBase {
+public final class ACBrBAL extends ACBrLibBase implements AutoCloseable {
     private interface ACBrBALLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrBALLib INSTANCE = LibraryLoader.getInstance();
@@ -81,6 +81,12 @@ public final class ACBrBAL extends ACBrLibBase {
     
     public ACBrBAL(String eArqConfig, String eChaveCrypt) throws Exception{
         int ret = ACBrBALLib.INSTANCE.BAL_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
+        checkResult(ret);
+    }
+    
+    @Override
+    public void close() throws Exception {
+        int ret = ACBrBALLib.INSTANCE.BAL_Finalizar();
         checkResult(ret);
     }
     
@@ -194,6 +200,5 @@ public final class ACBrBAL extends ACBrLibBase {
     @Override
     protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrBALLib.INSTANCE.BAL_UltimoRetorno(buffer, bufferLen);
-    }
-       
+    }       
 }

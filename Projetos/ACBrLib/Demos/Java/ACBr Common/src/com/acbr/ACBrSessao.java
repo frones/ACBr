@@ -15,6 +15,8 @@ public enum  ACBrSessao {
     PosPrinter_Gaveta,
     PosPrinter_MPagina,
     ETQ,
+    BAL,
+    BAL_Device,
     SAT,
     SATConfig,
     SATConfigArquivos,
@@ -23,5 +25,10 @@ public enum  ACBrSessao {
     DFe,
     NFe,
     DANFE,
-    DANFECe   
+    DANFECe,
+    BoletoConfig,
+    BoletoCedenteConfig,
+    BoletoBancoConfig,
+    BoletoDiretorioConfig,
+    BoletoBancoFCFortesConfig,
 }

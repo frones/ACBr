@@ -1,5 +1,6 @@
   package com.acbr.posprinter;
 
+import com.acbr.ACBrLibBase;
 import com.acbr.ACBrSessao;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -8,11 +9,10 @@ import com.sun.jna.ptr.IntByReference;
 import java.io.File;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.Set;
 
-public final class ACBrPosPrinter {
+public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  {
 
     public interface PosPrinterLib extends Library {
 
@@ -99,9 +99,6 @@ public final class ACBrPosPrinter {
 
     }
 
-    private final static int STR_BUFFER_LEN = 256;
-    private final static Charset UTF8 = Charset.forName("UTF-8");
-
     public ACBrPosPrinter() throws Exception {
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
@@ -117,6 +114,12 @@ public final class ACBrPosPrinter {
         checkResult(ret);
     }
 
+    @Override
+    public void close() throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_Finalizar();
+        checkResult(ret);
+    }
+    
     @Override
     protected void finalize() throws Throwable {
         try {
@@ -335,36 +338,8 @@ public final class ACBrPosPrinter {
         return processResult(buffer, bufferLen);
     }
 
-    private static String toUTF8(String value) {
-        return new String(value.getBytes(UTF8));
-    }
-
-    private static String fromUTF8(ByteBuffer buffer, int len) {
-        return new String(buffer.array(), 0, len, UTF8);
-    }
-
-    private static void checkResult(int result) throws Exception {
-        if (result == 0) {
-            return;
-        }
-
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
+    @Override
+    protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         PosPrinterLib.INSTANCE.POS_UltimoRetorno(buffer, bufferLen);
-        throw new Exception(processResult(buffer, bufferLen));
-    }
-
-    private static String processResult(ByteBuffer buffer, IntByReference bufferLen) {
-        if (bufferLen.getValue() <= STR_BUFFER_LEN) {
-            return fromUTF8(buffer, bufferLen.getValue());
-        }
-
-        if (bufferLen.getValue() > STR_BUFFER_LEN) {
-            buffer = ByteBuffer.allocate(bufferLen.getValue());
-            PosPrinterLib.INSTANCE.POS_UltimoRetorno(buffer, bufferLen);
-        }
-
-        return fromUTF8(buffer, bufferLen.getValue());
     }
 }

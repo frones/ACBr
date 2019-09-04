@@ -14,7 +14,10 @@
         PosPrinter_QRCode,
         PosPrinter_Logo,
         PosPrinter_Gaveta,
+        PosPrinter_MPagina,
         ETQ,
+        BAL,
+        BAL_Device,
         SAT,
         SATConfig,
         SATConfigArquivos,
@@ -23,7 +26,11 @@
         DFe,
         NFe,
         DANFE,
-        DANFENFe,
-        DANFENFCe
+        DANFECe,
+        CSessaoBolConfig,
+        BoletoCedenteConfig,
+        BoletoBancoConfig,
+        BoletoDiretorioConfig,
+        BoletoBancoFCFortesConfig,
     }
 }

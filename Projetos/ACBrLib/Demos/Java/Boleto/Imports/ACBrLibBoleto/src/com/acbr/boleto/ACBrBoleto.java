@@ -10,8 +10,8 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrBoleto extends ACBrLibBase {
-   
+public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
+       
     private interface ACBrBoletoLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
         public final static ACBrBoletoLib INSTANCE = LibraryLoader.getInstance();       
@@ -111,6 +111,12 @@ public final class ACBrBoleto extends ACBrLibBase {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
         checkResult(ret);
     }   
+    
+    @Override
+    public void close() throws Exception {
+        int ret = ACBrBoletoLib.INSTANCE.Boleto_Finalizar();
+        checkResult(ret);
+    }
     
     @Override
     protected void finalize() throws Throwable {

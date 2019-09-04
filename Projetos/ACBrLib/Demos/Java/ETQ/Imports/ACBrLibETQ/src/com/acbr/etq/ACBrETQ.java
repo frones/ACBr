@@ -1,5 +1,6 @@
 package com.acbr.etq;
 
+import com.acbr.ACBrLibBase;
 import com.acbr.ACBrSessao;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -7,11 +8,10 @@ import com.sun.jna.Platform;
 import com.sun.jna.ptr.IntByReference;
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
-public final class ACBrETQ {
-
+public final class ACBrETQ extends ACBrLibBase implements AutoCloseable  {
+    
     interface ACBrETQLib extends Library {
 
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
@@ -84,9 +84,6 @@ public final class ACBrETQ {
         int ETQ_ImprimirImagem(int MultiplicadorImagem, int Vertical, int Horizontal, String eNomeImagem);
     }
 
-    private static Charset UTF8 = Charset.forName("UTF-8");
-    private static final int STR_BUFFER_LEN = 256;
-
     public ACBrETQ() throws Exception {
         File iniFile = Paths.get(System.getProperty("user.dir"), "ACBrLib.ini").toFile();
         if (!iniFile.exists()) {
@@ -99,6 +96,12 @@ public final class ACBrETQ {
 
     public ACBrETQ(String eArqConfig, String eChaveCrypt) throws Exception {
         int ret = ACBrETQLib.INSTANCE.ETQ_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
+        checkResult(ret);
+    }
+    
+    @Override
+    public void close() throws Exception {
+        int ret = ACBrETQLib.INSTANCE.ETQ_Finalizar();
         checkResult(ret);
     }
 
@@ -259,36 +262,8 @@ public final class ACBrETQ {
         checkResult(ret);
     }
 
-    private static String toUTF8(String value) {
-        return new String(value.getBytes(UTF8));
-    }
-
-    private static String fromUTF8(ByteBuffer buffer, int len) {
-        return new String(buffer.array(), 0, len, UTF8);
-    }
-
-    private static void checkResult(int result) throws Exception {
-        if (result == 0) {
-            return;
-        }
-
-        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
-        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
-
+    @Override
+    protected void UltimoRetorno(ByteBuffer buffer, IntByReference bufferLen) {
         ACBrETQLib.INSTANCE.ETQ_UltimoRetorno(buffer, bufferLen);
-        throw new Exception(processResult(buffer, bufferLen));
-    }
-
-    private static String processResult(ByteBuffer buffer, IntByReference bufferLen) {
-        if (bufferLen.getValue() <= STR_BUFFER_LEN) {
-            return fromUTF8(buffer, bufferLen.getValue());
-        }
-
-        if (bufferLen.getValue() > STR_BUFFER_LEN) {
-            buffer = ByteBuffer.allocate(bufferLen.getValue());
-            ACBrETQLib.INSTANCE.ETQ_UltimoRetorno(buffer, bufferLen);
-        }
-
-        return fromUTF8(buffer, bufferLen.getValue());
     }
 }

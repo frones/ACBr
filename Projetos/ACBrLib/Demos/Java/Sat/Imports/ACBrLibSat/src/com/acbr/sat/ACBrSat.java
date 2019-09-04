@@ -10,7 +10,7 @@ import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 
-public final class ACBrSat extends ACBrLibBase {
+public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
       
     private interface ACBrSatLib extends Library {
         static String JNA_LIBRARY_NAME = LibraryLoader.getLibraryName();
@@ -111,6 +111,12 @@ public final class ACBrSat extends ACBrLibBase {
 
     public ACBrSat(String eArqConfig, String eChaveCrypt) throws Exception {
         int ret = ACBrSatLib.INSTANCE.SAT_Inicializar(toUTF8(eArqConfig), toUTF8(eChaveCrypt));
+        checkResult(ret);
+    }
+    
+    @Override
+    public void close() throws Exception {
+        int ret = ACBrSatLib.INSTANCE.SAT_Finalizar();
         checkResult(ret);
     }
     

@@ -581,7 +581,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Left = 539
           Height = 52
           Top = 141
-          Width = 102
+          Width = 197
           AutoSize = False
           Behavior = [beSiteExpander]
           Color = clWhite
@@ -613,60 +613,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
-        end
-        object RLDraw17: TRLDraw
-          Left = 642
-          Height = 88
-          Top = 120
-          Width = 4
-          Angle = 90
-          DrawKind = dkLine
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object RLLabel32: TRLLabel
-          Left = 646
-          Height = 14
-          Top = 123
-          Width = 96
-          Caption = 'Núm. da Averbação '
-          Color = clWhite
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Times New Roman'
-          ParentColor = False
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object rlmRespAverbacao: TRLMemo
-          Left = 646
-          Height = 52
-          Top = 141
-          Width = 90
-          AutoSize = False
-          Behavior = [beSiteExpander]
-          Color = clWhite
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Times New Roman'
-          Lines.Strings = (
-            '1 Linha'
-            '2 Linha'
-            '3 Linha'
-            '4 Linha'
-          )
-          ParentColor = False
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-          Transparent = False
         end
         object rlmRespSeguro: TRLLabel
           Left = 443

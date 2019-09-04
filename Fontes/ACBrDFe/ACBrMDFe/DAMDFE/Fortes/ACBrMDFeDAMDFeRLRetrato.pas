@@ -103,7 +103,6 @@ type
     rlsLinhaV07: TRLDraw;
     rlsLinhaV08: TRLDraw;
     rlsLinhaV09: TRLDraw;
-    rlsLinhaV10: TRLDraw;
     RLSystemInfo1: TRLSystemInfo;
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
@@ -179,9 +178,6 @@ type
     RLLabel30: TRLLabel;
     rlmRespApolice: TRLMemo;
     RLDraw16: TRLDraw;
-    RLDraw17: TRLDraw;
-    RLLabel32: TRLLabel;
-    rlmRespAverbacao: TRLMemo;
     rlmRespSeguro: TRLLabel;
     imgQRCode: TRLImage;
     rlsLinhaH02: TRLDraw;
@@ -346,8 +342,8 @@ end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
-  i, j: integer;
-  averbacao: string;
+  i{, j}: integer;
+//  averbacao: string;
 begin
   inherited;
   rlb_2_Rodo.Enabled := (fpMDFe.Ide.modal = moRodoviario);
@@ -414,7 +410,7 @@ begin
 
   rlmRespSeguradora.Lines.Clear;
   rlmRespApolice.Lines.Clear;
-  rlmRespAverbacao.Lines.Clear;
+//  rlmRespAverbacao.Lines.Clear;
 
   rlmRespSeguro.Caption:= '';
 
@@ -426,6 +422,8 @@ begin
     rlmRespSeguradora.Lines.Add(fpMDFe.seg.Items[i].xSeg);
     rlmRespApolice.Lines.Add(fpMDFe.seg.Items[i].nApol);
 
+    { Remoção de averbação até ajuste de layout.
+      Veja: https://www.projetoacbr.com.br/forum/topic/53091-impress%C3%A3o-da-mdfe-300a/
     averbacao := '';
     for j := 0 to fpMDFe.seg.Items[i].aver.Count - 1 do
     begin
@@ -434,7 +432,7 @@ begin
       else
         averbacao := averbacao +'; '+ fpMDFe.seg.Items[i].aver.Items[j].nAver;
     end;
-    rlmRespAverbacao.Lines.Add(averbacao);
+    rlmRespAverbacao.Lines.Add(averbacao);}
   end;
 end;
 

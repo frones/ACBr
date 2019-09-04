@@ -2,6 +2,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 146
   Top = 55
   Caption = 'Manifesto - Retrato'
+  ClientWidth = 848
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -447,7 +448,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         end
         object rlmRespSeguradora: TRLMemo
           Left = 319
-          Top = 141
+          Top = 143
           Width = 214
           Height = 52
           AutoSize = False
@@ -485,7 +486,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object rlmRespApolice: TRLMemo
           Left = 539
           Top = 141
-          Width = 102
+          Width = 198
           Height = 52
           AutoSize = False
           Behavior = [beSiteExpander]
@@ -511,51 +512,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 88
           Angle = 90.000000000000000000
           DrawKind = dkLine
-        end
-        object RLDraw17: TRLDraw
-          Left = 642
-          Top = 120
-          Width = 4
-          Height = 88
-          Angle = 90.000000000000000000
-          DrawKind = dkLine
-        end
-        object RLLabel32: TRLLabel
-          Left = 646
-          Top = 123
-          Width = 96
-          Height = 14
-          Caption = 'N'#250'm. da Averba'#231#227'o '
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Times New Roman'
-          Font.Style = []
-          ParentColor = False
-          ParentFont = False
-        end
-        object rlmRespAverbacao: TRLMemo
-          Left = 646
-          Top = 141
-          Width = 90
-          Height = 52
-          AutoSize = False
-          Behavior = [beSiteExpander]
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Times New Roman'
-          Font.Style = []
-          Lines.Strings = (
-            '1 Linha'
-            '2 Linha'
-            '3 Linha'
-            '4 Linha')
-          ParentColor = False
-          ParentFont = False
-          Transparent = False
         end
         object rlmRespSeguro: TRLLabel
           Left = 443

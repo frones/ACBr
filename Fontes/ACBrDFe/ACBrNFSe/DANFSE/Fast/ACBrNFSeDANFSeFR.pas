@@ -784,7 +784,7 @@ begin
 			else
 		  	FieldByName('NumeroNFSe').AsString := ANFSe.Numero;
 
-			if(Provedor in [proGINFES, proBetha] ) then  // Felipe - Otimizy Sistemas
+			if(Provedor in [proGINFES, proBetha, proDSFSJC] ) then  // Felipe - Otimizy Sistemas
 				FieldByName('DataEmissao').AsString := FormatDateTimeBr(ANFSe.DataEmissao)
 			else
 				FieldByName('DataEmissao').AsString := FormatDateBr(DataEmissao);

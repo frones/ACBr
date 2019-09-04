@@ -2095,6 +2095,14 @@ begin
                        FTagI := '<' + FTagGrupo + FNameSpaceCan + '>';
                      end;
 
+           proDSFSJC: begin
+                           FNameSpaceCan := ' xmlns="http:/www.abrasf.org.br/nfse.xsd"' +
+                                     ' xmlns:ns3="http:/www.abrasf.org.br/nfse.xsd"' +
+                                     ' xmlns:ns4="http:/www.abrasf.org.br/nfse.xsd"';
+
+                           FTagI := '<' + FTagGrupo + FNameSpaceCan + '>';
+                      end;
+
            proCONAM,
            proEL,
            proInfisc,
@@ -2823,6 +2831,10 @@ begin
     // Italo 25/06/2019 incluido para resolver o problema da cidade: Soledade/RS
     proPronim:
       FPDadosMsg := StringReplace(FPDadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
+
+    // Italo 04/09/2019
+    proDSFSJC:
+      FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
   end;
 
   // Lote tem mais de 500kb ? //
@@ -4488,12 +4500,12 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    if (FTagGrupo <> '') and (FProvedor <> proGinfes) then
+    if (FTagGrupo <> '') and (FProvedor <> proGinfes) and (FProvedor <> proDSFSJC) then
       FTagGrupo := FPrefixo3 + FTagGrupo;
 
     // Removido o provedor proISSDSF para que será incluido o profixo em
     // FdocElemento
-    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes]) then
+    if (FdocElemento <> '') and not (FProvedor in [proBetha, proGinfes, proDSFSJC]) then
       FdocElemento := FPrefixo3 + FdocElemento;
 
     if FNotasFiscais.Count > 0 then

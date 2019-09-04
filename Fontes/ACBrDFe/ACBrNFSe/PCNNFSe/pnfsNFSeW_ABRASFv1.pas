@@ -252,7 +252,7 @@ begin
   Gerador.wGrupoNFSe('Valores');
   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, DSC_VSERVICO);
 
-  if FProvedor in [proRecife, proPronim, proISSNET, proNFSeBrasil, proGinfes, proThema] then
+  if FProvedor in [proRecife, proPronim, proISSNET, proNFSeBrasil, proGinfes, proThema, proDSFSJC] then
   begin
     Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, DSC_VDEDUCISS);
 
@@ -296,7 +296,8 @@ begin
 
   case FProvedor of
     proThema,
-    proGINFES:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
+    proGINFES,
+    proDSFSJC:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proRJ,
     proPublica,

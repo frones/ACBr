@@ -2028,7 +2028,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan] then
+                  proTinus, proTiplan, proDSFSJC] then
     Result := '';
 end;
 
@@ -2091,7 +2091,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan] then
+                  proTinus, proTiplan, proDSFSJC] then
     Result := '';
 end;
 
@@ -2126,7 +2126,7 @@ begin
                   proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
                   proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
                   proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
-                  proTinus, proTiplan] then
+                  proTinus, proTiplan, proDSFSJC] then
     Result := '';
 end;
 

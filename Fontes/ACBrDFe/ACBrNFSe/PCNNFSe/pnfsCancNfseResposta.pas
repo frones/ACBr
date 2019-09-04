@@ -338,6 +338,55 @@ begin
                      end;
                    end;
                  end;
+      proDSFSJC: begin
+                   if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+                   begin
+                     if (Leitor.rExtrai(2, 'RetCancelamento') <> '') then
+                     begin
+                       if (Leitor.rExtrai(3, 'NfseCancelamento') <> '') then
+                       begin
+                         if (Leitor.rExtrai(4, 'Confirmacao') <> '') then
+                         begin
+                           if (Leitor.rExtrai(5, 'Pedido') <> '') then
+                           begin
+                             if (Leitor.rExtrai(6, 'InfPedidoCancelamento') <> '') then
+                             begin
+                               if (Leitor.rExtrai(7, 'IdentificacaoNfse') <> '') then
+                               begin
+                                 InfCanc.FPedido.IdentificacaoNfse.Numero             := Leitor.rCampo(tcStr, 'Numero');
+                                 InfCanc.FPedido.IdentificacaoNfse.Cnpj               := Leitor.rCampo(tcStr, 'Cnpj');
+                                 InfCanc.FPedido.IdentificacaoNfse.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+                                 InfCanc.FPedido.IdentificacaoNfse.CodigoMunicipio    := Leitor.rCampo(tcStr, 'CodigoMunicipio');                               end;
+                             end;
+                           end;
+                         end;
+                       end;
+                       if (Leitor.rExtrai(4, 'Confirmacao') <> '') then
+                       begin
+                         infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
+                         if infCanc.DataHora > 0 then
+                           InfCanc.Sucesso  := 'S';
+                       end;
+                     end;
+                   end;
+
+                   if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+                   begin
+                     if (Leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
+                     begin
+                       i := 0;
+                       while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+                       begin
+                         InfCanc.FMsgRetorno.New;
+                         InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+                         InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+                         InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+                         Inc(i);
+                       end;
+                     end;
+                   end;
+                 end;
       proISSNET: begin
                    if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
                    begin

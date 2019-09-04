@@ -67,7 +67,7 @@ function ValidaNVE(const AValue: string): Boolean;
 function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
     const IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
-function ExtraiURI(const AXML: String; IdAttr: String = ''): String;
+function EncontrarURI(const AXML: String; docElement: String = ''; IdAttr: String = ''): String;
 function ObterNomeMunicipio(const AxUF: String; const AcMun: Integer;
                               const APathArqMun: String): String;
 function ObterCodigoMunicipio(const AxMun, AxUF, APathArqMun: String ): Integer;
@@ -380,15 +380,21 @@ begin
   {*)}
 end;
 
-function ExtraiURI(const AXML: String; IdAttr: String): String;
+function EncontrarURI(const AXML: String; docElement: String; IdAttr: String
+  ): String;
 var
   I, J: integer;
 begin
   Result := '';
-  if IdAttr = '' then
+  if (IdAttr = '') then
     IdAttr := 'Id';
 
-  I := PosEx(IdAttr+'=', AXML);
+  if (docElement <> '') then
+    I := Pos('<'+docElement, AXML)
+  else
+    I := 0;
+
+  I := PosEx(IdAttr+'=', AXML, I);
   if I = 0 then       // XML não tem URI
     Exit;
 

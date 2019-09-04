@@ -171,7 +171,7 @@ begin
   else
     aXML := ConteudoXML;
 
-  URI := ExtraiURI(aXML, IdAttr);
+  URI := EncontrarURI(aXML, docElement, IdAttr);
 
   // DEBUG
   //WriteToTXT('C:\TEMP\XmlOriginal.xml', aXML, False, False, True);
@@ -556,7 +556,7 @@ function TDFeSSLXmlSignLibXml2.LibXmlFindSignatureNode(aDoc: xmlDocPtr;
   const SignatureNode: String; const SelectionNamespaces: String; infElement: String
   ): xmlNodePtr;
 var
-  rootNode, infNode, SignNode: xmlNodePtr;
+  rootNode, infNode, infNodeParent, SignNode: xmlNodePtr;
   vSignatureNode, vSelectionNamespaces, vinfElement: String;
 begin
   Result := nil;
@@ -569,6 +569,9 @@ begin
   vSignatureNode       := SignatureNode;
   vSelectionNamespaces := SelectionNamespaces;
   VerificarValoresPadrao(vSignatureNode, vSelectionNamespaces);
+  infNode := nil;
+  infNodeParent := nil;
+  SignNode := nil;
 
   { Se infElement possui prefixo o mesmo tem que ser removido }
   vinfElement := copy(infElement, Pos(':', infElement) + 1, Length(infElement));
@@ -580,33 +583,37 @@ begin
     { Procura vinfElement em todos os nós, filhos de Raiz, usando LibXml }
     infNode := LibXmlLookUpNode(rootNode, vinfElement);
 
-    { Não achei o vinfElement em nenhum nó :( }
-    if (infNode = nil) then
-      Exit;
-
-    { Vamos agora, achar o pai desse Elemento, pois com ele encontraremos a assinatura }
-    if (infNode^.Name = vinfElement) and
-       Assigned(infNode^.parent) and
-       (infNode^.parent^.Name <> '') then
+    if (infNode <> nil) then
     begin
-      infNode := infNode^.parent;
+      { Vamos achar o pai desse Elemento, pois com ele encontraremos a assinatura no final }
+      if (infNode^.Name = vinfElement) and
+         Assigned(infNode^.parent) and
+         (infNode^.parent^.Name <> '') then
+      begin
+        infNodeParent := infNode^.parent;
+      end;
     end;
   end
-  else
+
+  { Procurando pelo nó de assinatura...}
+
+  { Primeiro vamos verificar manualmente se é o último nó do Parent do infNode atual };
+  if (infNodeParent <> nil) then
   begin
-    { vinfElement não foi informado... vamos usar o nó raiz, para pesquisar pela assinatura }
-    infNode := rootNode;
+    SignNode := infNodeParent^.last;
+    while (SignNode <> nil) and (SignNode <> infNode) and
+      (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
+    begin
+      SignNode := SignNode^.prev;
+    end;
+
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+      SignNode := nil;
   end;
 
-  if (infNode = nil) then
-    Exit;
-
-  { Procurando pelo nó de assinatura...
-    Primeiro vamos verificar manualmente se é o último no do nosso infNode atual };
-  SignNode := infNode^.last;
-  if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+  { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
+  if (SignNode = nil) and (infNode <> nil) then
   begin
-    { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
     SignNode := infNode^.next;
     while (SignNode <> nil)  and
       (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
@@ -614,17 +621,20 @@ begin
       SignNode := SignNode^.next;
     end;
 
-    { Se ainda não achamos, vamos procurar novamente a partir do elemento Raiz }
-    if (SignNode = nil) then
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+      SignNode := nil;
+  end;
+
+  { Se ainda não achamos, vamos procurar novamente a partir do elemento Raiz }
+  if (SignNode = nil) then
+  begin
+    SignNode := rootNode^.last;
+    if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
     begin
-      SignNode := rootNode^.last;
-      if not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces) then
+      SignNode := rootNode^.next;
+      while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
       begin
-        SignNode := rootNode^.next;
-        while (SignNode <> nil)  and (not LibXmlNodeWasFound(SignNode, vSignatureNode, vSelectionNamespaces)) do
-        begin
-          SignNode := SignNode^.next;
-        end;
+        SignNode := SignNode^.next;
       end;
     end;
   end;

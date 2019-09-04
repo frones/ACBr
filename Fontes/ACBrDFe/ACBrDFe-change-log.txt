@@ -44,6 +44,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2019
+-- ACBrDFeUtil, ACBrDFeSSL --
+[*] Método ExtraiURI, renomeado para EncontrarURI, e otimizado para considerar
+    a URI dentro de docElement
+
+-- ACBrDFeXsLibXml2 --
+[*] Melhoria no método "LibXmlFindSignatureNode", para encontrar a assinatura em
+    XMLs com identação ou espaços
+
+-- ACBrDFeXsXmlSec --
+[-] Correção de variável não definidano no método "Assinar"
+[-] Correção em "VerificarAssinatura", para considerar corretamente os parâmetros
+    "SignatureNode" e "SelectionNamespaces"
+    (por: DSA)
+
 03/09/2019
 -- ACBrDFeXsLibXml2 --
 [-] Corrigido erro ao assinar xml do provedor Ginfes.

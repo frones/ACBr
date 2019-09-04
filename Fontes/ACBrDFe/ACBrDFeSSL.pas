@@ -862,7 +862,7 @@ var
   URI, TagEndDocElement: String;
   I: Integer;
 begin
-  URI := ExtraiURI(ConteudoXML, IdAttr);
+  URI := EncontrarURI(ConteudoXML, docElement, IdAttr);
 
   TagEndDocElement := '</' + docElement + '>';
   I := PosLast(TagEndDocElement, ConteudoXML);

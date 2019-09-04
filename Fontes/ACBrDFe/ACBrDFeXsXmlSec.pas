@@ -477,6 +477,7 @@ begin
 
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
   XmlAss := '';
+  IdAttr_temp := IfEmptyThen(IdAttr, 'Id');
 
   // Verificando se possui a Declaração do XML, se não possuir, adiciona para OpenSSL compreender o Encoding
   TemDeclaracao := XmlEhUTF8(ConteudoXML);
@@ -485,17 +486,15 @@ begin
   else
     AXml := ConteudoXML;
 
-  if InfElement <> '' then
+  if (InfElement <> '') then
   begin
-    IdAttr_temp := IfEmptyThen(IdAttr, 'Id');
-
     DTD := StringReplace(cDTD, '&infElement&', InfElement, []);
     DTD := StringReplace(DTD, '&IdAttribute&', IdAttr_temp, []);
 
     AXml := InserirDTD(AXml, DTD);
   end;
 
-  URI := ExtraiURI(aXML, IdAttr_temp);
+  URI := EncontrarURI(aXML, docElement, IdAttr_temp);
 
 
   { load template }
@@ -691,8 +690,8 @@ begin
     end;
 
     { Achando o nó da Assinatura }
-    SignNode := LibXmlFindSignatureNode(doc, SignatureNode, SelectionNamespaces, InfElement);
-    if (SignNode = nil) or (SignNode.Name <> SignatureNode) then
+    SignNode := LibXmlFindSignatureNode(doc, asSignatureNode, asSelectionNamespaces, InfElement);
+    if (SignNode = nil) or (SignNode.Name <> asSignatureNode) then
     begin
        MsgErro := ACBrStr(cErrFindSignNode);
        Exit;

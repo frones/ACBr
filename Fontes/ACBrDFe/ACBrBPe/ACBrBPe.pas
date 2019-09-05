@@ -247,8 +247,8 @@ end;
 function TACBrBPe.CstatConfirmada(AValue: Integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
-    else
+    100, 102, 110, 150, 301, 302, 303: Result := True;
+  else
       Result := False;
   end;
 end;
@@ -256,8 +256,8 @@ end;
 function TACBrBPe.CstatProcessado(AValue: Integer): Boolean;
 begin
   case AValue of
-    100, 110, 150, 301, 302, 303: Result := True;
-    else
+    100, 102, 110, 150, 301, 302, 303: Result := True;
+  else
       Result := False;
   end;
 end;

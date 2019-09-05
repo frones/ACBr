@@ -745,7 +745,7 @@ begin
   end;
 
   // Verificar se o BP-e foi autorizado com sucesso
-  Result := (FBPeRetorno.cStat = 100) and
+  Result := TACBrBPe(FPDFeOwner).CstatConfirmada(FBPeRetorno.cStat) and
       (TACBrBPe(FPDFeOwner).CstatProcessado(FBPeRetorno.protBPe[0].cStat));
 
   if Result then

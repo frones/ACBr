@@ -150,7 +150,7 @@ begin
       FcUF      := leitor.rCampo(tcInt, 'cUF');
 
       case FcStat of
-        100,101,104,110,150,151,155,301,302,303:
+        100,101,102,104,110,150,151,155,301,302,303:
            begin
              if (Leitor.rExtrai(1, 'protBPe') <> '') then
              begin

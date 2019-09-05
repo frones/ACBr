@@ -1212,6 +1212,12 @@ begin
             NumeroDocumento             := copy(Linha,59,11);
             codOcorrencia               := copy(Linha,16,2);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(codOcorrencia,0));
+            case StrToIntDef(Copy(Linha,133,01),0) of
+              00:Sacado.Pessoa:=pOutras;
+              01:Sacado.Pessoa:=pFisica;
+              02:Sacado.Pessoa:=pJuridica;
+            end;
+            Sacado.CNPJCPF              := copy(Linha,134,15);
 	    Sacado.NomeSacado           := copy(Linha,149,40);
             //05 = Liquidação Sem Registro
             TempData := Copy(Linha,74,2) + '/' + Copy(Linha,76,2) + '/' + Copy(Linha,80,2);

@@ -50,10 +50,14 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+05/09/2019
+-- ACBrBancoCaixa --
+[*] Adicionado Leitura do CNPJCPF do Sacado no Retorno CNAB240
+https://www.projetoacbr.com.br/forum/topic/53176-campo-cnpjcpf-na-leitura-de-retorno-cef/
+
 04/09/2019
 -- ACBrBancoSicred --
-[*] Correção na geração do Código de Barras, Nosso Número, Código Cedente.
-Ajustes leitura de Descrição de Ocorrências tratando conversões inválidas
+[*] Ajustes leitura de Descrição de Ocorrências tratando conversões inválidas
 
 04/09/2019
 -- ACBrBancoSafra --

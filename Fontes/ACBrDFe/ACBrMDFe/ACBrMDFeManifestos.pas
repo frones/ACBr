@@ -894,7 +894,7 @@ begin
         rodo.veicTracao.prop.CNPJCPF := INIRec.ReadString('veicTracao', 'CNPJCPF', '');
         rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNTRC', '');
         rodo.veicTracao.prop.xNome   := INIRec.ReadString('veicTracao', 'xNome', '');
-        rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', '');
+        rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', 'ISENTO');
         rodo.veicTracao.prop.UF      := INIRec.ReadString('veicTracao', 'UFProp', '');
         rodo.veicTracao.prop.tpProp  := StrToTpProp(OK, INIRec.ReadString('veicTracao', 'tpProp', '0'));
       end;

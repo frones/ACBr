@@ -894,7 +894,7 @@ begin
   (**)GerarDetProdDI(i);
   (**)GerarDetProddetExport(i);
   Gerador.wCampo(tcStr, 'I30', 'xPed    ', 01, 15, 0, nfe.Det[i].Prod.xPed, DSC_XPED);
-  Gerador.wCampo(tcStr, 'I31', 'nItemPed', 06, 06, 0, OnlyNumber(nfe.Det[i].Prod.nItemPed), DSC_NITEMPED);
+  Gerador.wCampo(tcStr, 'I31', 'nItemPed', 01, 06, 0, OnlyNumber(nfe.Det[i].Prod.nItemPed), DSC_NITEMPED);
   Gerador.wCampo(tcStr, 'I70', 'nFCI    ', 36, 36, 0, nfe.Det[i].Prod.nFCI, DSC_NFCI);
   if NFe.infNFe.Versao >= 4 then
     (**)GerarDetProdRastro(i);

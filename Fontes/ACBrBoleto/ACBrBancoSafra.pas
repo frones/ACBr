@@ -321,7 +321,6 @@ begin
     dataCredito := '00000000'
   else
     dataCredito := FormatDateTime('ddmmyyyy', ACBrBanco.ACBrBoleto.DataCreditoLanc);
-
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
     { Lote 0000 }
@@ -332,7 +331,7 @@ begin
               IfThen(TipoInscricao = pFisica, '1', '2')   + // 018-018 / Tipo de Inscrição da Empresa
               PadLeft(Trim(OnlyNumber(CNPJCPF)), 14, '0') + // 019-032 / Número de Inscrição da Empresa
               PadLeft(CodigoCedente, 20, '0')             + // 033-052 / Código do Convênio no Banco
-              PadLeft(Agencia, 5, '0')                    + // 053-057 / Agência Mantenedora da Conta
+              PadRight(Agencia, 5, '0')                    + // 053-057 / Agência Mantenedora da Conta
               PadLeft(AgenciaDigito, 1)                   + // 058-058 / Dígito Verificador da Agência
               PadLeft(Conta, 12, '0')                     + // 059-070 / Número da Conta Corrente
               PadLeft(ContaDigito, 1)                     + // 071-071 / Dígito Verificador da Conta
@@ -345,7 +344,7 @@ begin
               FormatDateTime('hhnnss', Now)               + // 152-157 / Hora e Geração do Arquivo
               IntToStrZero(NumeroRemessa, 6)              + // 158-163 / Número Sequencial do Arquivo
               '087'                                       + // 164-166 / Nº da Versão do Layout do Arquivo
-              '00000'                                     + // 167-171 / Densidade de Gravação do Arquivo
+              '01600'                                     + // 167-171 / Densidade de Gravação do Arquivo
               Space(20)                                   + // 172-191 / Para uso Reservado do Banco
               Space(20)                                   + // 192-211 / Para uso Reservado da Empresa
               Space(29)                                   ; // 212-240 / Campo sem preenchimento
@@ -362,7 +361,7 @@ begin
                IfThen(TipoInscricao = pFisica, '1', '2')                        + // 018-018 / Tipo de Inscrição da Empresa
                PadLeft(Trim(OnlyNumber(CNPJCPF)), 15, '0')                      + // 019-033 / Número de Inscrição da Empresa
                PadLeft(CodigoCedente, 20, '0')                                  + // 034-053 / Código do Convênio no Banco
-               PadLeft(Agencia, 5, '0')                                         + // 054-058 / Agência Mantenedora da Conta
+               PadRight(Agencia, 5, '0')                                        + // 054-058 / Agência Mantenedora da Conta
                PadLeft(AgenciaDigito, 1)                                        + // 059-059 / Dígito Verificador da Agência
                PadLeft(Conta, 12, '0')                                          + // 060-071 / Número da Conta Corrente
                PadLeft(ContaDigito, 1)                                          + // 072-072 / Dígito Verificador da Conta
@@ -741,6 +740,7 @@ begin
 
   with ACBrBanco.ACBrBoleto.Cedente do
   begin
+
     Inc(FSequencia);
     segmentoP := IntToStrZero(ACBrBanco.Numero, 3)                                     + // 001-003 / Código do Banco na Compensação
                  '0001'                                                                + // 004-007 / Lote de Serviço
@@ -749,7 +749,7 @@ begin
                  'P'                                                                   + // 014-014 / Cód. Segmento do Regsitro Detalhe
                  ' '                                                                   + // 015-015 / Campo sem Preenchimento
                  '01'                                                                  + // 016-017 / Código de Movimento remessa
-                 PadLeft(Agencia, 5, '0')                                              + // 018-022 / Agência Mantenedora da Conta
+                 PadRight(Agencia, 5, '0')                                              + // 018-022 / Agência Mantenedora da Conta
                  PadLeft(AgenciaDigito, 1)                                             + // 023-023 / Dígito Verificador da Agência
                  PadLeft(Conta, 12, '0')                                               + // 024-035 / Número da Conta Corrente
                  PadLeft(ContaDigito, 1)                                               + // 036-036 / Dígito Verificador da Conta
@@ -763,7 +763,7 @@ begin
                  PadRight(ACBrTitulo.NossoNumero, 15)                                  + // 063-077 / Número do Documento de Cobrança
                  FormatDateTime('ddmmyyyy', ACBrTitulo.Vencimento)                     + // 078-085 / Data de Vencimento do Título
                  IntToStrZero(round(ACBrTitulo.ValorDocumento * 100), 15)              + // 086-100 / Valor Nominal do Título
-                 '00000'                                                               + // 101-105 / Agência Encarregada da Cobrança
+                 PadRight(Agencia, 5, '0')                                             + // 101-105 / Agência Encarregada da Cobrança
                  ' '                                                                   + // 106-106 / Dígito Verificador da Agência
                  sEspecie                                                              + // 107-108 / Espécie do Título
                  IfThen(ACBrTitulo.Aceite = atSim, 'A', 'N')                           + // 109-109 / Identificação de Título Aceito / Não Aceito
@@ -861,7 +861,7 @@ begin
     else
       tipoInscricao := '02';
 
-    aAgencia := PadLeft(ACBrBoleto.Cedente.Agencia, 4, '0') +
+    aAgencia := PadLeft(RightStr( ACBrBoleto.Cedente.Agencia, 4), 4, '0') +
                 PadLeft(ACBrBoleto.Cedente.AgenciaDigito, 1, '0');
 
     aConta := PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') +
@@ -925,7 +925,7 @@ begin
               PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')                       + //   4 a  17 - Número da Inscrição da Empresa
               aAgencia + aConta                                                              + //  18 a  31 - Identificação da Empresa no Banco
               Space(6)                                                                       + //  32 a  37 - "Brancos"
-              Space(25)                                                                      + //  38 a  62 - Uso exclusivo da Empresa
+              PadRight(SeuNumero,25)                                                         + //  38 a  62 - Uso exclusivo da Empresa
               IfThen(NossoNumero = '000000000', '000000000',
                                  PadLeft(RightStr(NossoNumero,8),8,'0') +
                                  CalcularDigitoVerificador(ACBrTitulo)) +                      //  63 a  71 - Número do título no banco
@@ -936,7 +936,7 @@ begin
               IntToStrZero(StrToIntDef(Instrucao3,0), 2)                                     + // 106 a 107 - Terceira Instrução de Cobrança. Utilizar somente quando Instrução2 é igual a 10
               Carteira                                                                       + // 108 a 108 - Identificação do Tipo de Carteira
               Ocorrencia                                                                     + // 109 a 110 - Identificação do Tipo de Ocorrência
-              PadRight(SeuNumero, 10)                                                        + // 111 a 120 - Identificação do Título da Empresa
+              PadRight(NumeroDocumento, 10)                                                        + // 111 a 120 - Identificação do Título da Empresa
               FormatDateTime('ddmmyy', Vencimento)                                           + // 121 a 126 - Data de Vencimento do Título
               IntToStrZero(Round(ValorDocumento * 100), 13)                                  + // 127 a 139 - Valor Nominal do Título
               IntToStr(ACBrBoleto.Banco.Numero)                                              + // 140 a 142 - Código do Banco encarregado da cobraça
@@ -1110,7 +1110,7 @@ begin
 
   rCodEmpresa    := trim(Copy(ARetorno[0], 27, 14));
   rCedente       := trim(Copy(ARetorno[0], 47, 30));
-  rAgencia       := trim(Copy(ARetorno[1], 18, ACBrBanco.TamanhoAgencia));
+  rAgencia       := trim(Copy(ARetorno[1], 18, 4));
   rDigitoAgencia := trim(Copy(ARetorno[1], 22, 1));
   rConta         := trim(Copy(ARetorno[1], 23, ACBrBanco.TamanhoConta));
   rDigitoConta   := Copy(ARetorno[1], 31, 1);
@@ -1167,7 +1167,7 @@ begin
 
     with Titulo do
     begin
-
+      SeuNumero      := Copy(Linha,38,62);
       NossoNumero    := Copy(Linha, 63, 8);
       CodOcorrencia  := StrToIntDef(copy(Linha, 109, 2),0);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
@@ -1184,7 +1184,7 @@ begin
         DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(
           toRetornoRegistroRecusado, StrToIntDef(copy(Linha, 105, 3),0)));
       end;
-      SeuNumero := copy(Linha, 117, 10);
+      NumeroDocumento := copy(Linha, 117, 10);
 
       if Copy(Linha, 147, 2) <> '00' then
         Vencimento := StringToDateTimeDef(copy(Linha, 147, 2) + '/' +
@@ -1215,7 +1215,7 @@ function TACBrBancoSafra.MontarCampoCodigoCedente(
 begin
   with ACBrTitulo.ACBrBoleto.Cedente do
   begin
-    Result := PadLeft(Agencia, 4, '0') + PadLeft(AgenciaDigito, 1, '0') + '/' + PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') + PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
+    Result := PadLeft(RightStr(Agencia,4), 4, '0') + PadLeft(AgenciaDigito, 1, '0') + ' / ' + PadLeft(ACBrBoleto.Cedente.Conta, 8, '0') + PadLeft(ACBrBoleto.Cedente.ContaDigito, 1, '0');
   end;
 end;
 
@@ -1223,27 +1223,37 @@ function TACBrBancoSafra.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): 
 begin
   with ACBrTitulo do
   begin
-    Result := PadLeft(RightStr(NossoNumero,8),8,'0') + '-' + CalcularDigitoVerificador(ACBrTitulo);
+    Result := PadLeft(RightStr(NossoNumero,9),9,'0');
   end;
 end;
 
 function TACBrBancoSafra.MontarCodigoBarras(const ACBrTitulo: TACBrTitulo): string;
 var
-  CodigoBarras, FatorVencimento, DigitoCodBarras: string;
+  CodigoBarras, FatorVencimento, DigitoCodBarras ,
+  valorDocumento, agencia, agenciaDigito, conta,
+  ContaDigito, NossoNumero: string;
 begin
   with ACBrTitulo.ACBrBoleto do
   begin
-    FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
+    FatorVencimento  := CalcularFatorVencimento(ACBrTitulo.Vencimento);
+    valorDocumento   := IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10);
+    agencia          := PadLeft(RightStr(Cedente.Agencia,4), 4, '0');
+    agenciaDigito    := PadLeft(Cedente.AgenciaDigito, 1, '0');
+    conta            := Cedente.Conta;
+    ContaDigito      := PadLeft(Cedente.ContaDigito, 1, '0');
+    NossoNumero      := PadLeft(RightStr(ACBrTitulo.NossoNumero,9),9,'0');
 
     CodigoBarras := IntToStr(Banco.Numero) + '9' + FatorVencimento +
-                    IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
-                    '7' + Cedente.Agencia + Cedente.AgenciaDigito + Cedente.Conta + Cedente.ContaDigito +
-                    PadLeft(RightStr(ACBrTitulo.NossoNumero,8),8,'0') + CalcularDigitoVerificador(ACBrTitulo) + '2';
+                    valorDocumento +
+                    '7' + agencia + trim(agenciaDigito) + trim(conta) + ContaDigito +
+                    NossoNumero +  '2';
+
 
     DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
   end;
 
   Result := IntToStr(Numero) + '9' + DigitoCodBarras + Copy(CodigoBarras, 5, 39);
+
 end;
 
 function TACBrBancoSafra.TipoOCorrenciaToCod(

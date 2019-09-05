@@ -1219,36 +1219,41 @@ begin
             35 : Result:= 'K1-Título apresentado em duplicidade';
             36 : Result:= 'G4-Título aceito: Falta título (cooperativa/ag. beneficiária deverá enviá-lo)';
           else
-            case StrToInt(CodMotivo) of
-              01: Result:= '01-Código do Banco inválido';
-              02: Result:= '02-Código do registro detalhe inválido';
-              03: Result:= '03-Código da ocorrência inválido';
-              04: Result:= '04-Código de ocorrência não permitida para a carteira';
-              05: Result:= '05-Código de ocorrência não numérico';
-              07: Result:= '07-Agência\Conta\dígito inválidos';
-              08: Result:= '08-Nosso número inválido';
-              10: Result:= '10-Carteira inválida';
-              15: Result:= '15-Agência\Carteira\Conta\nosso número inválidos';
-              16: Result:= '16-Data de vencimento inválida';
-              17: Result:= '17-Data de vencimento anterior à data de emissão';
-              21: Result:= '21-Espécie do título inválida';
-              22: Result:= '22-Espécie não permitida para a carteira';
-              24: Result:= '24-Data de emissão inválida';
-              29: Result:= '29-Valor do desconto maior/igual ao valor do título';
-              31: Result:= '31-Concessão de desconto - existe desconto anterior';
-              33: Result:= '33-Valor do abatimento inválido';
-              34: Result:= '34-Valor do abatimento maior/igual ao valor do título';
-              36: Result:= '36-Concessão de abatimento - existe abatimento anterior';
-              38: Result:= '38-Prazo para protesto inválido';
-              39: Result:= '39-Pedido de protesto não permitido para o título';
-              40: Result:= '40-Título com ordem de protesto emitido';
-              41: Result:= '41-Pedido cancelamento/sustação sem instrução de protesto';
-              45: Result:= '45-Nome do sacado inválido';
-              46: Result:= '46-Tipo/número de inscrição do sacado inválidos';
-              47: Result:= '47-Endereço do sacado não informado';
-              60: Result:= '60-Movimento para título não cadastrado';
-            else
-              Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+            try
+              case StrToInt(CodMotivo) of
+                01: Result:= '01-Código do Banco inválido';
+                02: Result:= '02-Código do registro detalhe inválido';
+                03: Result:= '03-Código da ocorrência inválido';
+                04: Result:= '04-Código de ocorrência não permitida para a carteira';
+                05: Result:= '05-Código de ocorrência não numérico';
+                07: Result:= '07-Agência\Conta\dígito inválidos';
+                08: Result:= '08-Nosso número inválido';
+                10: Result:= '10-Carteira inválida';
+                15: Result:= '15-Agência\Carteira\Conta\nosso número inválidos';
+                16: Result:= '16-Data de vencimento inválida';
+                17: Result:= '17-Data de vencimento anterior à data de emissão';
+                21: Result:= '21-Espécie do título inválida';
+                22: Result:= '22-Espécie não permitida para a carteira';
+                24: Result:= '24-Data de emissão inválida';
+                29: Result:= '29-Valor do desconto maior/igual ao valor do título';
+                31: Result:= '31-Concessão de desconto - existe desconto anterior';
+                33: Result:= '33-Valor do abatimento inválido';
+                34: Result:= '34-Valor do abatimento maior/igual ao valor do título';
+                36: Result:= '36-Concessão de abatimento - existe abatimento anterior';
+                38: Result:= '38-Prazo para protesto inválido';
+                39: Result:= '39-Pedido de protesto não permitido para o título';
+                40: Result:= '40-Título com ordem de protesto emitido';
+                41: Result:= '41-Pedido cancelamento/sustação sem instrução de protesto';
+                45: Result:= '45-Nome do sacado inválido';
+                46: Result:= '46-Tipo/número de inscrição do sacado inválidos';
+                47: Result:= '47-Endereço do sacado não informado';
+                60: Result:= '60-Movimento para título não cadastrado';
+              else
+                Result:= PadLeft(CodMotivo,2,'0') +' - Outros Motivos';
+              end;
+
+            except
+              Result:= PadLeft(CodMotivo,2,'0') +' - Motivos não identificados';
             end;
           end;
         toRetornoEntradaNegativacaoRejeitada,

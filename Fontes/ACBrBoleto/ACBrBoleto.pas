@@ -1107,9 +1107,10 @@ type
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
     fSeuNumero         : String;
-    fTipoDiasProtesto: TACBrTipoDiasIntrucao;
+    fTipoDiasProtesto  : TACBrTipoDiasIntrucao;
+    fTipoDiasNegativacao: TACBrTipoDiasIntrucao;
     fTipoImpressao     : TACBrTipoImpressao;
-    fTotalParcelas: Integer;
+    fTotalParcelas     : Integer;
     fValorDescontoAntDia: Currency;
     fVencimento        : TDateTime;
     fDataDocumento     : TDateTime;
@@ -1144,6 +1145,8 @@ type
     fDataMulta            : TDateTime;
     fDataProtesto         : TDateTime;
     fDiasDeProtesto       : Integer;
+    fDataNegativacao      : TDateTime;
+    fDiasDeNegativacao    : Integer;
     fDataBaixa            : TDateTime;
     fDataLimitePagto      : TDateTime;
     fValorDespesaCobranca : Currency;
@@ -1176,15 +1179,19 @@ type
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
     procedure SetDiasDeProtesto(AValue: Integer);
+    procedure SetDiasDeNegativacao(AValue: Integer);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
     procedure SetTipoDiasProtesto(AValue: TACBrTipoDiasIntrucao);
+    procedure SetTipoDiasNegativacao(AValue: TACBrTipoDiasIntrucao);
     procedure SetTotalParcelas ( const AValue: Integer );
     procedure SetCodigoGeracao (const AValue: String);
     procedure SetDataProtesto(AValue: TDateTime);
+    procedure SetDataNegativacao(AValue: TDateTime);
     procedure SetVencimento(AValue: TDateTime);
     procedure setValorDocumento(const AValue: Currency);
     procedure AtualizaDadosProtesto();
+    procedure AtualizaDadosNegativacao();
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
@@ -1231,17 +1238,19 @@ type
      property MotivoRejeicaoComando          : TStrings    read fMotivoRejeicaoComando  write fMotivoRejeicaoComando;
      property DescricaoMotivoRejeicaoComando : TStrings    read fDescricaoMotivoRejeicaoComando  write fDescricaoMotivoRejeicaoComando;
 
-     property DataOcorrencia                 : TDateTime read fDataOcorrencia  write fDataOcorrencia;
-     property DataCredito                    : TDateTime read fDataCredito     write fDataCredito;
-     property DataAbatimento                 : TDateTime read fDataAbatimento  write fDataAbatimento;
-     property DataDesconto                   : TDateTime read fDataDesconto    write fDataDesconto;
-     property DataDesconto2                  : TDateTime read fDataDesconto2   write fDataDesconto2;
-     property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
-     property DataMulta                      : TDateTime read fDataMulta       write fDataMulta;
-     property DataProtesto                   : TDateTime read fDataProtesto    write SetDataProtesto;
-     property DiasDeProtesto                 : Integer   read fDiasDeProtesto  write SetDiasDeProtesto;
-     property DataBaixa                      : TDateTime read fDataBaixa       write fDataBaixa;
-     property DataLimitePagto                : TDateTime read fDataLimitePagto write fDataLimitePagto;
+     property DataOcorrencia                 : TDateTime read fDataOcorrencia    write fDataOcorrencia;
+     property DataCredito                    : TDateTime read fDataCredito       write fDataCredito;
+     property DataAbatimento                 : TDateTime read fDataAbatimento    write fDataAbatimento;
+     property DataDesconto                   : TDateTime read fDataDesconto      write fDataDesconto;
+     property DataDesconto2                  : TDateTime read fDataDesconto2     write fDataDesconto2;
+     property DataMoraJuros                  : TDateTime read fDataMoraJuros     write fDataMoraJuros;
+     property DataMulta                      : TDateTime read fDataMulta         write fDataMulta;
+     property DataProtesto                   : TDateTime read fDataProtesto      write SetDataProtesto;
+     property DiasDeProtesto                 : Integer   read fDiasDeProtesto    write SetDiasDeProtesto;
+     property DataNegativacao                : TDateTime read fDataNegativacao   write SetDataNegativacao;
+     property DiasDeNegativacao              : Integer   read fDiasDeNegativacao write SetDiasDeNegativacao;
+     property DataBaixa                      : TDateTime read fDataBaixa         write fDataBaixa;
+     property DataLimitePagto                : TDateTime read fDataLimitePagto   write fDataLimitePagto;
 
      property ValorDespesaCobranca : Currency read fValorDespesaCobranca  write fValorDespesaCobranca;
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;
@@ -1262,6 +1271,7 @@ type
      property TextoLivre : String read fTextoLivre write fTextoLivre;
      property CodigoMora : String read fCodigoMora write SetCodigoMora;
      property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write SetTipoDiasProtesto;
+     property TipoDiasNegativacao  : TACBrTipoDiasIntrucao read fTipoDiasNegativacao write SetTipoDiasNegativacao;
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
      property LinhaDigitada : String read fpLinhaDigitada;
      property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
@@ -1660,6 +1670,16 @@ begin
   AtualizaDadosProtesto();
 end;
 
+procedure TACBrTitulo.SetDiasDeNegativacao(AValue: Integer);
+begin
+  if (fDiasDeNegativacao = AValue) then
+    Exit;
+
+  fDiasDeNegativacao := AValue;
+  fDataNegativacao := 0;
+  AtualizaDadosNegativacao();
+end;
+
 procedure TACBrTitulo.SetCodigoGeracao(const AValue: String);
 begin
   if fCodigoGeracao = AValue then
@@ -1685,6 +1705,20 @@ begin
   AtualizaDadosProtesto();
 end;
 
+procedure TACBrTitulo.SetDataNegativacao(AValue: TDateTime);
+begin
+  if (fDataNegativacao = AValue) then
+    Exit;
+
+   if (fTipoDiasNegativacao = diUteis) then
+     fDataNegativacao:= IncWorkingDay(AValue,0)
+   else
+     fDataNegativacao := Avalue;
+
+  fDiasDeNegativacao := 0;
+  AtualizaDadosNegativacao();
+end;
+
 procedure TACBrTitulo.SetVencimento(AValue: TDateTime);
 begin
   if (fVencimento = AValue) then
@@ -1692,6 +1726,7 @@ begin
 
   fVencimento := AValue;
   AtualizaDadosProtesto();
+  AtualizaDadosNegativacao();
 end;
 
 procedure TACBrTitulo.SetTipoDiasProtesto(AValue: TACBrTipoDiasIntrucao);
@@ -1704,6 +1739,18 @@ begin
     fDataProtesto := 0;
 
   AtualizaDadosProtesto();
+end;
+
+procedure TACBrTitulo.SetTipoDiasNegativacao(AValue: TACBrTipoDiasIntrucao);
+begin
+  if fTipoDiasNegativacao = AValue then
+    Exit;
+
+  fTipoDiasNegativacao := AValue;
+  if fDiasDeNegativacao > 0 then
+    fDataNegativacao := 0;
+
+  AtualizaDadosNegativacao();
 end;
 
 procedure TACBrTitulo.AtualizaDadosProtesto;
@@ -1724,6 +1771,27 @@ begin
       fDataProtesto := IncWorkingDay(fVencimento,fDiasDeProtesto)
     else
       fDataProtesto := IncDay(fVencimento,fDiasDeProtesto);
+  end;
+end;
+
+procedure TACBrTitulo.AtualizaDadosNegativacao;
+begin
+  if fVencimento <= 0 then
+    Exit;
+
+  if (fDataNegativacao > 0) then
+  begin
+    if (fTipoDiasNegativacao = diUteis) then
+      fDiasDeNegativacao := WorkingDaysBetween(fVencimento, fDataNegativacao)
+    else
+      fDiasDeNegativacao := DaysBetween(fVencimento, fDataNegativacao);
+  end
+  else if (fDiasDeNegativacao > 0) then
+  begin
+    if (fTipoDiasNegativacao = diUteis) then
+      fDataNegativacao := IncWorkingDay(fVencimento,fDiasDeNegativacao)
+    else
+      fDataNegativacao := IncDay(fVencimento,fDiasDeNegativacao);
   end;
 end;
 
@@ -1791,6 +1859,8 @@ begin
    fDataMulta            := 0;
    fDataProtesto         := 0;
    fDiasDeProtesto       := 0;
+   fDataNegativacao      := 0;
+   fDiasDeNegativacao    := 0;
    fDataBaixa            := 0;
    fDataLimitePagto      := 0;
    fValorDespesaCobranca := 0;
@@ -2060,6 +2130,13 @@ begin
             AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dias corridos após o vencimento'))
          else
             AStringList.Add(ACBrStr('Protestar no '+IntToStr(max(DiasDeProtesto,1)) + 'º dia útil após o vencimento'));
+      end;
+      if DataNegativacao <> 0 then
+      begin
+         if TipoDiasNegativacao = diCorridos then
+            AStringList.Add(ACBrStr('Negativar em ' + IntToStr(DaysBetween(Vencimento, DataNegativacao))+ ' dias corridos após o vencimento'))
+         else
+            AStringList.Add(ACBrStr('Negativar no '+IntToStr(max(DiasDeNegativacao,1)) + 'º dia útil após o vencimento'));
       end;
 
       if ValorAbatimento <> 0 then
@@ -3141,6 +3218,7 @@ begin
             OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
                   IniBoletos.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
             TipoDiasProtesto := TACBrTipoDiasIntrucao(IniBoletos.ReadInteger(Sessao,'TipoDiasProtesto',0));
+            TipoDiasNegativacao := TACBrTipoDiasIntrucao(IniBoletos.ReadInteger(Sessao,'TipoDiasNegativacao',0));
             TipoImpressao := TACBrTipoImpressao(IniBoletos.ReadInteger(Sessao,'TipoImpressao',1));
             TipoDesconto := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto',0));
             TipoDesconto2 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto2',0));
@@ -3154,10 +3232,13 @@ begin
             DataAbatimento      := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataAbatimento','')),0);
             DataDesconto        := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataDesconto','')),0);
             DataMoraJuros       := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMoraJuros','')),0);
-  	    DataMulta           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMulta','')),0);
+  	        DataMulta           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataMulta','')),0);
             DiasDeProtesto      := IniBoletos.ReadInteger(Sessao,'DiasDeProtesto',0);
             if (DiasDeProtesto = 0) then
-              DataProtesto        := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataProtesto','')),0);
+              DataProtesto      := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataProtesto','')),0);
+            DiasDeNegativacao   := IniBoletos.ReadInteger(Sessao,'DiasDeNegativacao',0);
+            if (DiasDeNegativacao = 0) then
+              DataNegativacao   := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataNegativacao','')),0);
             DataBaixa           := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataBaixa','')),0);
             DataLimitePagto     := StrToDateDef(Trim(IniBoletos.ReadString(Sessao,'DataLimitePagto','')),0);
             LocalPagamento      := IfThen(Trim(wLocalPagto) <> '',wLocalPagto,LocalPagamento);

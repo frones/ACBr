@@ -51,6 +51,7 @@ type
    protected
    private
       FNumeroSequencialRegistroNoLote: Int64;
+      fpValorTotalDocs: Double;
    public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
@@ -91,6 +92,7 @@ begin
    fpCodigosMoraAceitos:= '012';
    fpLayoutVersaoArquivo := 81;
    fpLayoutVersaoLote    := 40;
+   fpValorTotalDocs := 0;
 end;
 
 function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -933,6 +935,7 @@ begin
       else
         strCarteiraEnvio := '1';
 
+      fpValorTotalDocs:= fpValorTotalDocs  + ValorDocumento;
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                             + //1 a 3 - Código do banco
                '0001'                                                        + //4 a 7 - Lote de serviço
                '3'                                                           +
@@ -1135,7 +1138,7 @@ begin
            Space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB
            IntToStrZero(((4 * (ARemessa.Count-1))+2), 6)              + //Quantidade de Registro da Remessa
            IntToStrZero(ARemessa.Count-1, 6)                          + // Quantidade de títulos em cobrança simples
-           PadLeft('',17, '0')                                        + //Valor dos títulos em cobrança simples
+           IntToStrZero( round( fpValorTotalDocs * 100), 17)          + //Valor dos títulos em cobrança simples
            PadLeft('', 6, '0')                                        + //Quantidade títulos em cobrança vinculada
            PadLeft('',17, '0')                                        + //Valor dos títulos em cobrança vinculada
            PadLeft('',46, '0')                                        + //Complemento
@@ -1151,7 +1154,7 @@ begin
            IntToStrZero(((4 * (ARemessa.Count-1))+4), 6)              + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
            PadLeft('', 6, '0')                                        + //Complemento
            space(205);
-
+   fpValorTotalDocs := 0;
 end;
 
 function TACBrBancoob.CodMotivoRejeicaoToDescricao(

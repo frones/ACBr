@@ -51,6 +51,10 @@ Símbolo : Significado
 ver: 0.1.0
 
 06/09/2019
+-- ACBrBancoBancoob --
+[+] Adicionado Totalizador do Valor dos Títulos no Registro Trailer do CNAB240
+
+06/09/2019
 -- ACBrBancoSicred / ACBrBoleto --
 [+] Adicionado propriedade DataNegativacao e DiasNegativacao seguindo critérios do layout atualizado Sicred
 https://www.projetoacbr.com.br/forum/topic/51806-boletos-sicredi-negativa%C3%A7%C3%A3o-cnab400/

@@ -980,6 +980,14 @@ begin
      end;
 
      AMensagem   := '';
+     if (Sacado.SacadoAvalista.CNPJCPF <> '') then
+     begin
+       if Sacado.SacadoAvalista.Pessoa = pJuridica then
+         AMensagem := Copy(Sacado.SacadoAvalista.NomeAvalista, 1, 21) + ' CNPJ' + Sacado.SacadoAvalista.CNPJCPF
+       else
+         AMensagem := Copy(Sacado.SacadoAvalista.NomeAvalista, 1, 25) + ' CPF' + Sacado.SacadoAvalista.CNPJCPF;
+     end;
+
      if Mensagem.Text <> '' then
        AMensagem   := Mensagem.Strings[0];
 
@@ -1011,8 +1019,14 @@ begin
          wLinha:= wLinha + PadLeft( ANossoNumero,11)+ ADigitoNossoNumero;
 
 
-       wLinha:= wLinha +
-                '0000' + Space(7) + aModalidade;                // Zeros + Brancos + Prefixo do titulo + Variação da carteira
+       wLinha:= wLinha + '0000' + Space(3);                // Zeros + Brancos + Prefixo do titulo + Variação da carteira
+
+       if (Sacado.SacadoAvalista.CNPJCPF <> '') then//Indica se Mensagem ou Avalista
+         wLinha := wLinha + 'A'//Avalista
+       else
+         wLinha := wLinha + Space(1);//Mensagem
+
+       wLinha:= wLinha + Space(3) + aModalidade;                // Zeros + Brancos + Prefixo do titulo + Variação da carteira
 
        if TamConvenioMaior6  then
          wLinha:= wLinha + IntToStrZero(0,7)                    // Zero + Zeros + Zero + Zeros

@@ -9,12 +9,6 @@ uses
 
 {$R *.res}
 
-{$IFDEF FPC_CROSSCOMPILING}
-  {$IFDEF LINUX}
-    {$linklib libc_nonshared.a}
-  {$ENDIF}
-{$ENDIF}
-
 {$IFDEF DEBUG}
 var
    HeapTraceFile : String ;

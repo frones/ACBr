@@ -376,9 +376,11 @@ begin
       lMensagemFiscal1.Visible := NaoEstaVazio(Trim(lMensagemFiscal1.Lines.Text));
 
       lNumeroSerie1.Lines.Text := ACBrStr(
-        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
-        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
-        DateTimeToStr(Ide.dEmi)+Via );
+        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' + sLineBreak +
+        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' + sLineBreak +
+        DateTimeToStr(Ide.dEmi) + sLineBreak +
+        Via
+      );
     end
     else
     begin
@@ -403,7 +405,7 @@ begin
       lNumeroSerie.Caption := ACBrStr(
         'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
-        DateTimeToStr(Ide.dEmi)+Via );
+        DateTimeToStr(Ide.dEmi)+ Via );
     end;
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');

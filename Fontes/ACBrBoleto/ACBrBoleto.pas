@@ -63,7 +63,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..292] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..293] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -356,7 +356,8 @@ const
     'Retorno Exclusão e Negativação por Outros Motivos',
     'Retorno Ocorrência Informacional por Outros Motivos',
     'Retorno Inclusão de Negativação',
-    'Retorno Exclusão de Negativação'
+    'Retorno Exclusão de Negativação',
+    'Retorno Em Transito'
 );
 
 type
@@ -707,7 +708,8 @@ type
     toRetornoExcusaoNegativacaoOutrosMotivos,
     toRetornoOcorrenciaInfOutrosMotivos,
     toRetornoInclusaoNegativacao,
-    toRetornoExclusaoNegativacao
+    toRetornoExclusaoNegativacao,
+    toRetornoEmTransito
   );
 
   {TACBrOcorrencia}
@@ -3079,7 +3081,7 @@ var
   wTipoInscricao, wRespEmissao, wLayoutBoleto: Integer;
   wNumeroBanco, wIndiceACBr, wCNAB, wNumeroCorrespondente,
   wVersaoLote, wVersaoArquivo: Integer;
-  wLocalPagto, MemFormatada: String;
+  wLocalPagto, MemFormatada, MemDetalhamento: String;
   Sessao, sFim: String;
   I: Integer;
 begin
@@ -3210,6 +3212,9 @@ begin
 
           MemFormatada := IniBoletos.ReadString(Sessao,'Mensagem','') ;
           MemFormatada := StringReplace( MemFormatada,'|',sLineBreak, [rfReplaceAll] );
+
+          MemDetalhamento := IniBoletos.ReadString(Sessao,'Detalhamento','') ;
+          MemDetalhamento := StringReplace( MemDetalhamento,'|',sLineBreak, [rfReplaceAll] );
           with Titulo do
           begin
             Aceite        := TACBrAceiteTitulo(IniBoletos.ReadInteger(Sessao,'Aceite',1));
@@ -3259,6 +3264,7 @@ begin
             Sacado.Email        := IniBoletos.ReadString(Sessao,'Sacado.Email',Sacado.Email);
             EspecieMod          := IniBoletos.ReadString(Sessao,'EspecieMod',EspecieMod);
             Mensagem.Text       := MemFormatada;
+            Detalhamento.Text   := MemDetalhamento;
             Instrucao1          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao1',Instrucao1),2);
             Instrucao2          := PadLeft(IniBoletos.ReadString(Sessao,'Instrucao2',Instrucao2),2);
             TotalParcelas       := IniBoletos.ReadInteger(Sessao,'TotalParcelas',TotalParcelas);

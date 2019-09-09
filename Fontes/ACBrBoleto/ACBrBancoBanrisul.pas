@@ -734,7 +734,7 @@ begin
   rConvenio      := trim(Copy(ARetorno.Strings[1], 34, 13));
   rAgencia       := trim(Copy(ARetorno.Strings[1], 55,  4));
   rAgenciaDigito := trim(Copy(ARetorno.Strings[1], 59,  1));
-  rConta         := trim(Copy(ARetorno.Strings[1], 64,  7));
+  rConta         := trim(Copy(ARetorno.Strings[1], 65,  7));
   rContaDigito   := trim(Copy(ARetorno.Strings[1], 72,  1));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 158, 6), 0);
@@ -749,7 +749,7 @@ begin
                                                                Copy(ARetorno.Strings[1], 204, 4),
                                                                0, 'dd/mm/yyyy');
 
-  rCNPJCPF := FormatarCNPJouCPF(OnlyNumber(copy(ARetorno[0], 19, 14)));
+  rCNPJCPF := OnlyNumber(copy(ARetorno[0], 19, 14));
 
   try
     ValidarDadosRetorno(rAgencia, rConta, OnlyNumber(rCNPJCPF));
@@ -829,7 +829,10 @@ begin
                                                         Copy(FSegU, 148, 2) +'/'+
                                                         Copy(FSegU, 150, 4), 0, 'dd/mm/yyyy');
 
-            OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(FSegT, 16, 2), 0));
+            if(Copy(FSegT, 16, 2) = 'AB')then
+              OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(999)
+            else
+              OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(FSegT, 16, 2), 0));
 
             IdxMotivo := 214;
             while (IdxMotivo < 223) do
@@ -882,7 +885,11 @@ begin
   rAgenciaDigito := ''; //Não possui essa info
   rConta         := trim(Copy(ARetorno.Strings[0], 31, 9));
   rContaDigito   := ''; //Não possui essa info
-
+  if Length(OnlyNumber(trim(Copy(ARetorno.Strings[0], 27, 4)) + trim(Copy(ARetorno.Strings[0], 31, 9)))) = 12 then//significa que a agencia tem somente 3 digitos + 9 digitos para a conta
+  begin
+    rAgencia       := PadLeft(trim(Copy(ARetorno.Strings[0], 27, 3)), 4, '0');
+    rConta         := trim(Copy(ARetorno.Strings[0], 30, 9));
+  end;
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
@@ -1181,15 +1188,16 @@ begin
     Exit;
 
   case CodOcorrencia of
-    02: Result := toRetornoRegistroConfirmado;
-    03: Result := toRetornoRegistroRecusado;
-    06: Result := toRetornoLiquidado;
-    12: Result := toRetornoAbatimentoConcedido;
-    13: Result := toRetornoAbatimentoCancelado;
-    14: Result := toRetornoVencimentoAlterado;
-    19: Result := toRetornoRecebimentoInstrucaoProtestar;
-    20: Result := toRetornoInstrucaoCancelada;
-    23: Result := toRetornoEntradaEmCartorio;
+    02:  Result := toRetornoRegistroConfirmado;
+    03:  Result := toRetornoRegistroRecusado;
+    06:  Result := toRetornoLiquidado;
+    12:  Result := toRetornoAbatimentoConcedido;
+    13:  Result := toRetornoAbatimentoCancelado;
+    14:  Result := toRetornoVencimentoAlterado;
+    19:  Result := toRetornoRecebimentoInstrucaoProtestar;
+    20:  Result := toRetornoInstrucaoCancelada;
+    23:  Result := toRetornoEntradaEmCartorio;
+    999: Result := toRetornoEmTransito;
   else
     Result := toRetornoOutrasOcorrencias;
   end;
@@ -1241,6 +1249,7 @@ begin
         27: Result:= '27–Confirmação do Pedido de Alteração de Outros Dados';
         28: Result:= '28–Débito de Tarifas/Custo';
         30: Result:= '30–Alteração de Dados Rejeitada';
+        999: Result := 'AB – Cobrança a Creditar (em trânsito)*';
       end;
     end
     else
@@ -1357,6 +1366,7 @@ begin
    toRetornoRecebimentoInstrucaoProtestar                  : Result:= '19';
    toRetornoInstrucaoCancelada                             : Result:= '20';
    toRetornoEntradaEmCartorio                              : Result:= '23';
+   toRetornoEmTransito                                     : Result:= '999';
   else
    Result := '02';
   end;

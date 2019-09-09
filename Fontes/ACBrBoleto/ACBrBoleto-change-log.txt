@@ -50,6 +50,13 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+09/09/2019
+-- ACBrBancoBanrisul --
+[*] Adicionado validador agencia conta no retorno CNAB400
+    Adicionado Ocorrência de remessa para CNAB240 e ajustes na leitura de retorno
+https://www.projetoacbr.com.br/forum/topic/48709-erro-com-retorno-banrisul/
+https://www.projetoacbr.com.br/forum/topic/53318-leitura-retorno-acbrboleto-banrisul/
+
 06/09/2019
 -- ACBrBancoBancoob --
 [+] Adicionado Totalizador do Valor dos Títulos no Registro Trailer do CNAB240

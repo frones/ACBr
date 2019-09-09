@@ -1,7 +1,7 @@
 object frRelatorio: TfrRelatorio
-  Left = 615
+  Left = 647
   Height = 330
-  Top = 1278
+  Top = 296
   Width = 300
   HorzScrollBar.Page = 299
   HorzScrollBar.Range = 298
@@ -17,7 +17,7 @@ object frRelatorio: TfrRelatorio
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '2.0.4.0'
   object sbFPG: TSpeedButton
     Left = 128
     Height = 22

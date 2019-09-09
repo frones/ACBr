@@ -51,6 +51,11 @@ Símbolo : Significado
 ver: 0.1.0
 
 09/09/2019
+-- ACBrBancoBancoob --
+[*] Ajuste na leitura de ocorrencia de retorno CNAB240
+[*] Correção na descrição de ocorrencias na leitura Retorno.
+
+09/09/2019
 -- ACBrBancoBanrisul --
 [*] Adicionado validador agencia conta no retorno CNAB400
     Adicionado Ocorrência de remessa para CNAB240 e ajustes na leitura de retorno

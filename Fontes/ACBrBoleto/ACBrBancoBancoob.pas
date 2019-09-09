@@ -437,6 +437,7 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
+  codOcorrencia: String;
 begin
  
    if (copy(ARetorno.Strings[0],1,3) <> '756') then
@@ -526,7 +527,8 @@ begin
           begin
             SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,15);
-            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
+            codOcorrencia               := copy(Linha,16,2);
+            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(codOcorrencia,0));
 
             //05 = Liquidação Sem Registro
             Vencimento := StringToDateTimeDef( Copy(Linha,74,2)+'/'+
@@ -537,8 +539,13 @@ begin
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
             NossoNumero          := Copy(Linha,40,7);
             Carteira             := Copy(Linha,58,1);
-            CodigoLiquidacao     := Copy(Linha,214,02);
+
+            if (CodOcorrencia  = '06' ) or (CodOcorrencia  = '09' ) or
+               (CodOcorrencia  = '17' ) then
+            begin
+              CodigoLiquidacao     := Copy(Linha,214,02);
             //CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
+            end;
             
             if (Copy(Linha,133,1) = '1') then
              begin 
@@ -1311,7 +1318,7 @@ begin
 
     //Códigos de liquidação / baixa de '01' a '15' associados aos códigos de movimento '06', '04'. '09' e '17'
     toRetornoLiquidado, toRetornoTransferenciaCarteira, toRetornoBaixaSimples,
-    toRetornoLiquidadoAposBaixaOuNaoRegistro:
+    toRetornoLiquidadoAposBaixaOuNaoRegistro, toRetornoBaixaPorProtesto:  
       case CodMotivo of
         //Liquidação
         01: Result := 'Por Saldo';
@@ -1432,7 +1439,7 @@ begin
       toRetornoEnderecoSacadoAlterado                       : Result :='22';
       toRetornoEncaminhadoACartorio                         : Result :='23';
       toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente  : Result :='24';
-      toRetornoRecebimentoInstrucaoDispensarJuros           : Result :='25';
+      toRetornoBaixaPorProtesto                             : Result :='25';
       toRetornoInstrucaoRejeitada                           : Result :='26';
       toRetornoDadosAlterados                               : Result :='27';
       toRetornoManutencaoTituloVencido                      : Result :='28';
@@ -1473,7 +1480,7 @@ begin
       22: Result:='22-ALTERAÇÃO DE ENDEREÇO SACADO' ;
       23: Result:='23-ENCAMINHADO A PROTESTO' ;
       24: Result:='24-SUSTAR PROTESTO' ;
-      25: Result:='25-DISPENSAR JUROS' ;
+      25: Result:='25-BAIXADO E PROTESTADO' ; 
       26: Result:='26-INSTRUÇÃO REJEITADA' ;
       27: Result:='27-CONFIRMAÇÃO ALTERAÇÃO DADOS' ;
       28: Result:='28-MANUTENÇÃO TÍTULO VENCIDO' ;

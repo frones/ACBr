@@ -2028,6 +2028,7 @@ begin
   frxReport.PreviewOptions.ShowCaptions := FExibeCaptionButton;
   frxReport.PreviewOptions.ZoomMode     := FZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
+  frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then
@@ -2109,6 +2110,7 @@ begin
   frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
   frxReport.PreviewOptions.ZoomMode     := ZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
+  frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then
@@ -2170,6 +2172,7 @@ begin
   frxReport.PreviewOptions.ShowCaptions := ExibeCaptionButton;
   frxReport.PreviewOptions.ZoomMode     := ZoomModePadrao;
   frxReport.OnPreview := frxReportPreview;
+  frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then

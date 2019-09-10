@@ -1310,6 +1310,7 @@ begin
          72: Result := '72-Débito não agendado - Código de moeda diferente de R$';
          73: Result := '73-Débito não agendado - Data de vencimento inválida';
          75: Result := '75-Débito não agendado - Tipo do número de inscrição do sacado debitado inválido';
+         76: Result := '76-Pagador Eletrônico DDA (NOVO)- Esse motivo somente será disponibilizado no arquivo retorno para as empresas cadastradas nessa condição';
          86: Result := '86-Seu número do documento inválido';
          89: Result := '89-Email sacado nao enviado - Titulo com debito automatico';
          90: Result := '90-Email sacado nao enviado - Titulo com cobranca sem registro';

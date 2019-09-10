@@ -71,6 +71,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
+    function CodigoLiquidacao_Descricao( CodLiquidacao : String) : String;
    end;
 
 implementation
@@ -1097,6 +1098,7 @@ begin
       Carteira                    := copy(Linha,83,3);
 
       OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
+      Sacado.NomeSacado           := copy(Linha,325,30);
 
       if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
                                      toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
@@ -1171,6 +1173,11 @@ begin
        Carteira             := Copy(Linha,83,3);
        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
        CodigoLiquidacao     := Copy(Linha,393,2);
+       CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( CodigoLiquidacao );
+       // informações do local de pagamento
+       Liquidacao.Banco      := StrToIntDef(Copy(Linha,166,3), -1);
+       Liquidacao.Agencia    := Copy(Linha,169,4);
+       Liquidacao.Origem     := '';
 
        if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
          DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
@@ -1977,6 +1984,61 @@ begin
   else
      Result:= toRemessaRegistrar;                           {Remessa}
   end;
+end;
+
+function TACBrBancoItau.CodigoLiquidacao_Descricao(CodLiquidacao: String): String;
+begin
+  CodLiquidacao := Trim(CodLiquidacao);
+  if AnsiSameText(CodLiquidacao, 'AA') then
+    Result := 'CAIXA ELETRÔNICO BANCO ITAÚ'
+  else if AnsiSameText(CodLiquidacao, 'AC') then
+    Result := 'PAGAMENTO EM CARTÓRIO AUTOMATIZADO'
+  else if AnsiSameText(CodLiquidacao, 'AO') then
+    Result := 'ACERTO ONLINE'
+  else if AnsiSameText(CodLiquidacao, 'BC') then
+    Result := 'BANCOS CORRESPONDENTES'
+  else if AnsiSameText(CodLiquidacao, 'BF') then
+    Result := 'ITAÚ BANKFONE'
+  else if AnsiSameText(CodLiquidacao, 'BL') then
+    Result := 'ITAÚ BANKLINE'
+  else if AnsiSameText(CodLiquidacao, 'B0') then
+    Result := 'OUTROS BANCOS – RECEBIMENTO OFF-LINE'
+  else if AnsiSameText(CodLiquidacao, 'B1') then
+    Result := 'OUTROS BANCOS – PELO CÓDIGO DE BARRAS'
+  else if AnsiSameText(CodLiquidacao, 'B2') then
+    Result := 'OUTROS BANCOS – PELA LINHA DIGITÁVEL'
+  else if AnsiSameText(CodLiquidacao, 'B3') then
+    Result := 'OUTROS BANCOS – PELO AUTO ATENDIMENTO'
+  else if AnsiSameText(CodLiquidacao, 'B4') then
+    Result := 'OUTROS BANCOS – RECEBIMENTO EM CASA LOTÉRICA'
+  else if AnsiSameText(CodLiquidacao, 'B5') then
+    Result := 'OUTROS BANCOS – CORRESPONDENTE'
+  else if AnsiSameText(CodLiquidacao, 'B6') then
+    Result := 'OUTROS BANCOS – TELEFONE'
+  else if AnsiSameText(CodLiquidacao, 'B7') then
+    Result := 'OUTROS BANCOS – ARQUIVO ELETRÔNICO'
+  else if AnsiSameText(CodLiquidacao, 'CC') then
+    Result := 'AGÊNCIA ITAÚ – COM CHEQUE DE OUTRO BANCO ou (CHEQUE ITAÚ)'
+  else if AnsiSameText(CodLiquidacao, 'CI') then
+    Result := 'CORRESPONDENTE ITAÚ'
+  else if AnsiSameText(CodLiquidacao, 'CK') then
+    Result := 'SISPAG – SISTEMA DE CONTAS A PAGAR ITAÚ'
+  else if AnsiSameText(CodLiquidacao, 'CP') then
+    Result := 'AGÊNCIA ITAÚ – POR DÉBITO EM CONTA CORRENTE, CHEQUE ITAÚ OU DINHEIRO'
+  else if AnsiSameText(CodLiquidacao, 'DG') then
+    Result := 'AGÊNCIA ITAÚ – CAPTURADO EM OFF-LINE'
+  else if AnsiSameText(CodLiquidacao, 'LC') then
+    Result := 'PAGAMENTO EM CARTÓRIO DE PROTESTO COM CHEQUE'
+  else if AnsiSameText(CodLiquidacao, 'EA') then
+    Result := 'TERMINAL DE CAIXA'
+  else if AnsiSameText(CodLiquidacao, 'Q0') then
+    Result := 'AGENDAMENTO – PAGAMENTO AGENDADO VIA BANKLINE OU OUTRO CANAL ELETRÔNICO E LIQUIDADO NA DATA INDICADA'
+  else if AnsiSameText(CodLiquidacao, 'RA') then
+    Result := 'DIGITAÇÃO – REALIMENTAÇÃO AUTOMÁTICA'
+  else if AnsiSameText(CodLiquidacao, 'ST') then
+    Result := 'PAGAMENTO VIA SELTEC'
+  else
+    Result := '';
 end;
 
 end.

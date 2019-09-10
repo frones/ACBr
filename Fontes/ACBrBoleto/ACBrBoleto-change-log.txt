@@ -51,6 +51,30 @@ Símbolo : Significado
 ver: 0.1.0
 
 09/09/2019
+-- ACBrBancoBradesco --
+[*] Adicionado ocorrencia de pagamento Eletronico DDA
+https://www.projetoacbr.com.br/forum/topic/52645-contribui%C3%A7%C3%A3o-acbrbancobradescopas/
+
+09/09/2019
+-- ACBrBancoItau --
+[*] Complementaçoes Leitura CNAB240 com dados de liquidação e informação Sacado.
+https://www.projetoacbr.com.br/forum/topic/51538-contribui%C3%A7%C3%A3o-complementa%C3%A7%C3%B5es-na-leitura-do-retorno-cnab-400-ita%C3%BA/
+
+09/09/2019
+-- ACBrBancoBanese --
+[*] Ajustes na geração do Nosso número baseado no manual.
+https://www.projetoacbr.com.br/forum/topic/52552-cobran%C3%A7a-banese-corre%C3%A7%C3%B5es/
+
+09/09/2019
+-- ACBrBancoSicred --
+[*] Adicionado informação de descontos CNAB400
+https://www.projetoacbr.com.br/forum/topic/52433-desconto-2-sicredi/
+
+09/09/2019
+-- ACBrBancoCecred --
+[*] Ajuste na leitura da Conta Corrente de retorno CNAB240
+
+09/09/2019
 -- ACBrBancoBancoob --
 [*] Ajuste na leitura de ocorrencia de retorno CNAB240
 [*] Correção na descrição de ocorrencias na leitura Retorno.

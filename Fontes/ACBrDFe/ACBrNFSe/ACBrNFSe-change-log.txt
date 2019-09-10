@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/09/2019
+-- Diversos --
+[*] Ajustes necessários para o provedor DSFSJC.
+   Por: Italo Jurisato Junior
+
 04/09/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/53296-mudan%C3%A7a-de-provedor-em-s%C3%A3o-jos%C3%A9-dos-campos/?do=findComment&comment=350581

@@ -296,8 +296,7 @@ begin
 
   case FProvedor of
     proThema,
-    proGINFES,
-    proDSFSJC:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
+    proGINFES:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota / 100), DSC_VALIQ);
 
     proRJ,
     proPublica,
@@ -307,7 +306,8 @@ begin
     proGovBR,
     proPronim,
     proISSNet,
-    proWebISS:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proWebISS,
+    proDSFSJC:  Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     proNFSEBrasil: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota * 100), DSC_VALIQ);
 

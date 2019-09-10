@@ -1038,7 +1038,7 @@ end;
 procedure TACBrBancoCecred.LerRetorno240(ARetorno: TStringList);
 var
   Titulo: TACBrTitulo;
-  TempData, Linha, rCedente, rCNPJCPF: String;
+  TempData, Linha, rCedente, rCNPJCPF, rConta: String;
   ContLinha : Integer;
   idxMotivo: Integer;
 begin
@@ -1056,6 +1056,7 @@ begin
 
    rCedente := trim(copy(ARetorno[0], 73, 30));
    rCNPJCPF := OnlyNumber( copy(ARetorno[0], 19, 14) );
+   rConta := OnlyNumber( copy(ARetorno[0], 67, 4) );
 
    ValidarDadosRetorno('', '', rCNPJCPF);
    with ACBrBanco.ACBrBoleto do
@@ -1064,6 +1065,7 @@ begin
      begin
        Cedente.Nome    := rCedente;
        Cedente.CNPJCPF := rCNPJCPF;
+       Cedente.Conta   := rConta;
 
        if StrToIntDef(copy(ARetorno[0], 18, 1), 0) = 1 then
          Cedente.TipoInscricao := pFisica

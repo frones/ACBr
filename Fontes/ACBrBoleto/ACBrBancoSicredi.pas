@@ -524,6 +524,23 @@ begin
                     IntToStrZero( ARemessa.Count + 1, 6);                            // 395 a 400 - Número sequencial do registro
           ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
         end;
+
+        if (ValorDesconto2 > 0) and (DataDesconto2 > 0) then
+        begin
+          wLinha := '7'                                                            + // 001 a 001 - Identificação do registro detalhe (7)
+                    PadLeft(wNossoNumeroCompleto, 15, ' ')                         + // 002 a 016 - Nosso número Sicredi
+                    PadRight(NumeroDocumento, 10)                                  + // 017 a 026 - Seu número
+                    PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                   + // 027 a 040 - CPF/CNPJ do pagador
+                    PadLeft(Sacado.SacadoAvalista.CNPJCPF, 14, '0')                + // 041 a 054 - CPF/CNPJ do Sacador Avalista
+                    IfThen(DataDesconto2 < EncodeDate(2000, 01, 01), '000000',
+                         FormatDateTime('ddmmyy', DataDesconto2))                  + // 055 a 060 - Data limite para desconto 2
+                    IntToStrZero( Round( ValorDesconto2 * 100 ), 13)               + // 061 a 073 - Valor do desconto 2
+                    '000000'                                                       + // 074 a 079 - Data limite para desconto 3
+                    '0000000000000'                                                + // 080 a 092 - Valor do desconto 3
+                    Space(302)                                                     + // 093 a 394 - Filler ( Deixar em Branco (sem preenchimento) )
+                    IntToStrZero( ARemessa.Count + 1, 6);                            // 395 a 400 - Número sequencial do registro
+          ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+        end;
       end;
    end;
 end;

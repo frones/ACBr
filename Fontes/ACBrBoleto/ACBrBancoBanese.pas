@@ -88,7 +88,7 @@ implementation
 
 
 uses StrUtils, Variants,
-  {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, ACBrUtil, FileCtrl {$ENDIF},
+  {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
   ACBrUtil;
 
 
@@ -137,7 +137,7 @@ begin
   D - duplo dígito (2 posições)
   }
 
-  ANossoNumero    := Copy(Trim(ACBrTitulo.NossoNumero), 1, ACBrTitulo.ACBrBoleto.Banco.TamanhoMaximoNossoNum);
+  ANossoNumero    := MontarCampoNossoNumero(ACBrTitulo);
   AContaComDigito := IntToStrZero(StrToIntDef(Trim(ACBrTitulo.ACBrBoleto.Cedente.Conta),0),8)+ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
   AContaComDigito := Copy(Trim(AContaComDigito), 1, ACBrTitulo.ACBrBoleto.Banco.TamanhoConta);
 
@@ -199,25 +199,19 @@ begin
       nResult := 11 - nResult;
 
 
-  
+
   cLivreAsbace := cLivreAsbace + IntToStr(nResult);
   result := cLivreAsbace;
 end;
 
 
-
 function TACBrBancoBanese.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
-var
-   ADigitoNossoNumero : string;
 begin
-
    Modulo.CalculoPadrao;
-   Modulo.MultiplicadorFinal  := 13;
-   Modulo.Documento           := ACBrTitulo.NossoNumero;
+   Modulo.Documento:= PadLeft(ACBrTitulo.ACBrBoleto.Cedente.Agencia, 3, '0') +
+                      RightStr(ACBrTitulo.NossoNumero, 8);
    Modulo.Calcular;
-   AdigitoNossoNumero         :=IntToStr(Modulo.DigitoFinal);
-   Result:= AdigitoNossoNumero;
-
+   Result:= IntToStr(Modulo.DigitoFinal);
 end;
 
 
@@ -228,9 +222,7 @@ begin
   with ACBrTitulo.ACBrBoleto do
   begin
     fASBACE := CalcularCampoASBACE(ACBrTitulo);
-
     FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
-
 
     CodigoBarras := IntToStrZero(Numero,3) + '9';
     CodigoBarras := CodigoBarras + FatorVencimento;
@@ -245,8 +237,7 @@ end;
 function TACBrBancoBanese.MontarCampoNossoNumero (
    const ACBrTitulo: TACBrTitulo ) : String;
 begin
-   ACBrTitulo.NossoNumero     := IntToStrZero( StrToIntDef((Trim(ACBrTitulo.NossoNumero)+Trim(CalcularDigitoVerificador(ACBrTitulo))),0) ,Self.TamanhoMaximoNossoNum);
-   Result := ACBrTitulo.NossoNumero;
+  result:= IntToStrZero( StrToIntDef((Trim(ACBrTitulo.NossoNumero)+Trim(CalcularDigitoVerificador(ACBrTitulo))),0) ,Self.TamanhoMaximoNossoNum);
 end;
 
 function TACBrBancoBanese.MontarCampoCodigoCedente (

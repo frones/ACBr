@@ -430,6 +430,10 @@ begin
     FieldDefs.Add('Fluxo_xOrig', ftString, 15);
     FieldDefs.Add('Fluxo_xDest', ftString, 15);
     FieldDefs.Add('Fluxo_xRota', ftString, 15);
+    FieldDefs.Add('Entrega_tpPer', ftString, 50);
+    FieldDefs.Add('Entrega_dProg', ftString, 10);
+    FieldDefs.Add('Entrega_dIni',  ftString, 10);
+    FieldDefs.Add('Entrega_dFim',  ftString, 10);
 
     CreateDataSet;
   end;
@@ -2448,6 +2452,34 @@ begin
       FieldByName('Fluxo_xDest').AsString := fluxo.xDest;
       FieldByName('Fluxo_xRota').AsString := fluxo.xRota;
 
+      with Entrega do
+      begin
+        case TipoData of
+          tdSemData, tdNaoInformado:
+          begin
+            FieldByName('Entrega_tpPer').AsString := '';
+            FieldByName('Entrega_dProg').AsString := '';
+            FieldByName('Entrega_dIni').AsString  := '';
+            FieldByName('Entrega_dFim').AsString  := '';
+          end;
+
+          tdNaData, tdAteData, tdApartirData:
+          begin
+            FieldByName('Entrega_tpPer').AsString := IfThen(TipoData = tdNaData, 'NA DATA', IfThen(TipoData = tdAteData, 'ATE A DATA', 'A PARTIR DE'));
+            FieldByName('Entrega_dProg').AsString := FormatDateTime('dd/mm/yyyy', comData.dProg);
+            FieldByName('Entrega_dIni').AsString  := '';
+            FieldByName('Entrega_dFim').AsString  := '';
+          end;
+
+          tdNoPeriodo:
+          begin
+            FieldByName('Entrega_tpPer').AsString := 'NO PERIODO';
+            FieldByName('Entrega_dProg').AsString := '';
+            FieldByName('Entrega_dIni').AsString  := FormatDateTime('dd/mm/yyyy', noPeriodo.dIni);
+            FieldByName('Entrega_dFim').AsString  := FormatDateTime('dd/mm/yyyy', noPeriodo.dFim);
+          end;
+        end;
+      end;
     end;
     FieldByName('OBS').AsString := BufferObs;
 

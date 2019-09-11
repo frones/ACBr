@@ -1016,7 +1016,7 @@ type
     property Telefone    : String  read fTelefone    write fTelefone;
     property DigitoVerificadorAgenciaConta  : String read fDigitoVerificadorAgenciaConta write fDigitoVerificadorAgenciaConta;
     property IdentDistribuicao: TACBrIdentDistribuicao read fIdentDistribuicao  write fIdentDistribuicao default tbClienteDistribui;
- property Operacao: string read fOperacao write fOperacao;
+    property Operacao: string read fOperacao write fOperacao;
   end;
 
 
@@ -1464,7 +1464,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil;
+     ACBrBancoCresol, ACBrBancoCitiBank{, ACBrBancoABCBrasil};
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2439,7 +2439,7 @@ begin
      cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
      cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresol.create(Self);         {133 + 237}
      cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
-     cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
+     //cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
 
    else
      fBancoClass := TACBrBancoClass.create(Self);

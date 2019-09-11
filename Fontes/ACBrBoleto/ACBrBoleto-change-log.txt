@@ -55,6 +55,7 @@ ver: 0.1.0
 [+] Adicionado banco ABC
 [+] Implementações banco SAFRA
 [*] aumento do tamanho do campo de mensagem
+    - contribuição: Fernando Moreira
 
 09/09/2019
 -- ACBrBancoBradesco --

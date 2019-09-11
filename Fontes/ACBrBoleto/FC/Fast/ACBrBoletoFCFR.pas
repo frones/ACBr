@@ -246,7 +246,7 @@ begin
     FieldDefs.Add('DataAbatimento', ftDateTime);
     FieldDefs.Add('DataProtesto', ftDateTime);
     FieldDefs.Add('PercentualMulta', ftFloat);
-    FieldDefs.Add('Mensagem', ftString, 300);
+    FieldDefs.Add('Mensagem', ftString, 400);
     FieldDefs.Add('OcorrenciaOriginal', ftInteger);
     FieldDefs.Add('Instrucao1', ftString, 300);
     FieldDefs.Add('Instrucao2', ftString, 300);

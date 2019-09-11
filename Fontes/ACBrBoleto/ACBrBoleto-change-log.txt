@@ -50,6 +50,12 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+11/09/2019
+-- ACBrBoleto --
+[+] Adicionado banco ABC
+[+] Implementações banco SAFRA
+[*] aumento do tamanho do campo de mensagem
+
 09/09/2019
 -- ACBrBancoBradesco --
 [*] Adicionado ocorrencia de pagamento Eletronico DDA

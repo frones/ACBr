@@ -423,6 +423,10 @@ type
     FcUF: Integer;
     FInscricaoEstadual: String;
     FChaveAcesso: String;
+    FUsuario: Integer;
+    FCNPJ_Prefeitura: String;
+    FValorReceitaBruta: Currency;
+    FDataInicioAtividade: TDateTime;
   public
     property Cnpj: String read FCnpj write FCnpj;
     property InscricaoMunicipal: String read FInscricaoMunicipal write FInscricaoMunicipal;
@@ -433,6 +437,11 @@ type
     property InscricaoEstadual: String read FInscricaoEstadual write FInscricaoEstadual;
     //Chave de Acesso usada no Provedor Governa
     property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
+    // usado pelo provedor WebFisco
+    property Usuario: Integer read FUsuario write FUsuario;
+    property CNPJ_Prefeitura: String read FCNPJ_Prefeitura write FCNPJ_Prefeitura;
+    property ValorReceitaBruta: Currency read FValorReceitaBruta write FValorReceitaBruta;
+    property DataInicioAtividade: TDateTime read FDataInicioAtividade write FDataInicioAtividade;
   end;
 
  TEndereco = class(TObject)

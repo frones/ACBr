@@ -1464,7 +1464,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol, ACBrBancoCitiBank{, ACBrBancoABCBrasil};
+     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2439,7 +2439,7 @@ begin
      cobBanese              : fBancoClass := TACBrBancoBanese.Create(Self);         {047}
      cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresol.create(Self);         {133 + 237}
      cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
-     //cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
+     cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
 
    else
      fBancoClass := TACBrBancoClass.create(Self);

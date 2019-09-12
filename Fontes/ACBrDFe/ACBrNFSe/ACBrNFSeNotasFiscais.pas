@@ -683,6 +683,9 @@ begin
     else
       IdAttr := '';
 
+    if Self.FConfiguracoes.Geral.Provedor = proSimplISSv2 then
+      IdAttr := 'id';
+
     if Assina then
     begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,

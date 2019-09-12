@@ -247,6 +247,7 @@ destructor TNFSeWClass.Destroy;
 begin
   FOpcoes.Free;
   FGerador.Free;
+
   inherited Destroy;
 end;
 

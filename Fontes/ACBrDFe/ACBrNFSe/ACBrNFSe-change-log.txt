@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2019
+-- Diversos --
+[*] Inicio da implementação do provedor SimplISSv2 a ser utilizado pela 
+    cidade de Blumenau.
+   Por: Italo Jurisato Junior
+
 11/09/2019
 -- Diversos --
 [*] Inicio da implementação do provedor WebFisco.

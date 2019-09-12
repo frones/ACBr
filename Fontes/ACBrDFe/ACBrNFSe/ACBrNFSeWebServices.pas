@@ -1073,6 +1073,11 @@ begin
                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
+      proWEBFISCO: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
+                                  ' xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"';
+
+//      proSimplISSv2: FNameSpaceDad := '';
+
       else begin
         if (FSeparador = '') then
         begin
@@ -1838,6 +1843,8 @@ begin
                               FvNotas := FvNotas + '</NOTAS>';
                               FvNotas := FvNotas + '</NFSE>';
                             end;
+
+        proWEBFISCO: FvNotas := RetornarConteudoEntre(RPS, '<EnvNfe>', '</EnvNfe>');
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -1877,7 +1884,8 @@ begin
            proEL,
            proFISSLex,
            proGiap,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
                                     'xmlns:tipos="http://localhost:8080/WsNFe2/tp" '+
@@ -1920,7 +1928,8 @@ begin
            proInfisc,
            proInfiscv11,
            proTinus,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -1967,7 +1976,8 @@ begin
 
            proEL,
            proTinus,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2010,7 +2020,8 @@ begin
 
            proEL,
            proTinus,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2051,6 +2062,7 @@ begin
            proInfisc,
            proInfiscv11,
            proSimplISS,
+           proSimplISSv2,
            proSP, 
            proTinus,
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
@@ -2109,7 +2121,8 @@ begin
            proInfiscv11,
            proPronimv2,
            proTinus,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2157,7 +2170,8 @@ begin
 
            proEGoverneISS,
            proTinus,
-           proSimplISS: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS,
+           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
 
            proAssessorPublico,
            proSMARAPD,

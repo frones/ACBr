@@ -50,7 +50,6 @@ type
 
   TNFSeW_WEBFISCO = class(TNFSeWClass)
   private
-    FOpcoes: TGeradorOpcoes;
   protected
     procedure GerarNotas;
   public
@@ -58,8 +57,6 @@ type
 
     function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
-
-    property Opcoes: TGeradorOpcoes read FOpcoes write FOpcoes;
   end;
 
 implementation
@@ -79,21 +76,21 @@ constructor TNFSeW_WEBFISCO.Create(ANFSeW: TNFSeW);
 begin
   inherited Create(ANFSeW);
 
-  FOpcoes := TGeradorOpcoes.Create;
-  FOpcoes.TagVaziaNoFormatoResumido := False;
 end;
 
 procedure TNFSeW_WEBFISCO.GerarNotas;
 Var
   cSimples: Boolean;
 begin
+  Gerador.Opcoes.TagVaziaNoFormatoResumido := False;
+
   cSimples := (NFSe.OptanteSimplesNacional = snSim);
   //............................................................................
 
   Gerador.wGrupo('EnvNfe');
 
-  Gerador.wCampoNFSe(tcInt, '', 'usuario', 1,  6, 1, NFSe.Prestador.Usuario, '');
-  Gerador.wCampoNFSe(tcInt, '', 'pass'   , 1,  6, 1, NFSe.Prestador.Senha, '');
+//  Gerador.wCampoNFSe(tcInt, '', 'usuario', 1,  6, 1, NFSe.Prestador.Usuario, '');
+//  Gerador.wCampoNFSe(tcInt, '', 'pass'   , 1,  6, 1, NFSe.Prestador.Senha, '');
   Gerador.wCampoNFSe(tcStr, '', 'prf'    , 1, 18, 1, NFSe.Prestador.CNPJ_Prefeitura, '');
   Gerador.wCampoNFSe(tcStr, '', 'usr'    , 1, 18, 1, NFSe.Prestador.Cnpj, '');
   Gerador.wCampoNFSe(tcStr, '', 'ctr'    , 1,  8, 1, NFSe.IdentificacaoRps.Numero, '');

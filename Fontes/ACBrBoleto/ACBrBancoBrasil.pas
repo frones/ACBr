@@ -1069,7 +1069,7 @@ begin
                 IfThen((PercentualMulta > 0),
                        IfThen(MultaValorFixo,'1','2'), '9')      + //Cod. 1-Cobrar Multa Valor Fixo / 2-Percentual / 9-Não cobrar multa
                 IfThen(PercentualMulta > 0,
-                       FormatDateTime('ddmmyy', DataMoraJuros),
+                       FormatDateTime('ddmmyy', DataMulta),
                                       '000000')                  + //Data Multa
                 IntToStrZero( round( PercentualMulta * 100), 12) + //Perc. Multa
                 Space(372)                                       + //Brancos

@@ -51,6 +51,10 @@ Símbolo : Significado
 ver: 0.1.0
 
 12/09/2019
+-- ACBrBancoSafra --
+[*] Reversão dos fontes com ultimos ajustes realizados.
+
+12/09/2019
 -- ACBrBancoBrasil --
 [*] Ajuste geração remessa CNAB400 alterado leitura do campo Multa de: DataMoraJuros para DataMulta
 https://www.projetoacbr.com.br/forum/topic/52866-corre%C3%A7%C3%A3o-campo-datamulta-no-banco-do-brasil-cnab400/

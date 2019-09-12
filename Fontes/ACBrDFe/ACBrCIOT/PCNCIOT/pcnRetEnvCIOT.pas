@@ -22,8 +22,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function LerRetorno_eFrete: Boolean;
-    function LerRetorno_Repom: Boolean;
+    function LerRetorno_eFrete  : Boolean;
+    function LerRetorno_Repom   : Boolean;
+    function LerRetorno_Pamcard : Boolean;
 
     function LerXml: Boolean;
   published
@@ -62,6 +63,18 @@ begin
   end;
 end;
 
+function TRetornoEnvio.LerRetorno_Pamcard: Boolean;
+begin
+   Result := True;
+  try
+
+    //.................. Implementar
+
+  except
+    Result := False;
+  end;
+end;
+
 function TRetornoEnvio.LerRetorno_Repom: Boolean;
 begin
   Result := True;
@@ -79,8 +92,9 @@ begin
   Leitor.Grupo := Leitor.Arquivo;
 
   case Integradora of
-    ieFrete: Result := LerRetorno_eFrete;
-    iRepom:  Result := LerRetorno_Repom;
+    ieFrete  :  Result := LerRetorno_eFrete;
+    iRepom   :  Result := LerRetorno_Repom;
+    iPamcard :  Result := LerRetorno_Pamcard;
   else
     Result := False;
   end;

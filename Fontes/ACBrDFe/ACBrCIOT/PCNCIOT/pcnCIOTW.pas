@@ -77,7 +77,7 @@ implementation
 
 uses
   ACBrDFeException,
-  pcnCIOTW_eFrete, pcnCIOTW_REPOM;
+  pcnCIOTW_eFrete, pcnCIOTW_REPOM, pcnCIOTW_Pamcard;
 
 
 { TCIOTWClass }
@@ -157,8 +157,9 @@ begin
     FreeAndNil(FCIOTWClass);
 
   case AIntegradora of
-    ieFrete: FCIOTWClass := TCIOTW_eFrete.Create(Self);
-    iREPOM:  FCIOTWClass := TCIOTW_REPOM.Create(Self);
+    ieFrete:  FCIOTWClass := TCIOTW_eFrete.Create(Self);
+    iREPOM:   FCIOTWClass := TCIOTW_REPOM.Create(Self);
+    iPamcard: FCIOTWClass := TCIOTW_Pamcard.Create(Self);
   else
     FCIOTWClass := TCIOTWClass.Create(Self);
   end;

@@ -10,7 +10,7 @@ uses
 
 type
   TVersaoCIOT = (ve500);
-  TCIOTIntegradora = (iNone, ieFrete, iRepom);
+  TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard);
   TpCIOTTipoViagem = (Indefinido, Padrao, TAC_Agregado, Frota);
   TpCIOTUnidadeDeMedidaDaMercadoria = (umIndefinido, umTonelada, umKg);
   TpCIOTViagemTipoDeCalculo = (SemQuebra, QuebraSomenteUltrapassado, QuebraIntegral);
@@ -219,8 +219,8 @@ end;
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 begin
   Result := StrToEnumerado(ok, s,
-                          ['ieFrete', 'iRepom'],
-                          [ieFrete, iRepom] );
+                          ['ieFrete', 'iRepom', 'iPamcard'],
+                          [ieFrete, iRepom, iPamcard] );
 end;
 
 end.

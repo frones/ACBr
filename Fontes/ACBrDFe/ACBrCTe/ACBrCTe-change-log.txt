@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2019
+-- ACBrCTeServicos --
+[*] Atualização das URLs de Consulta ao Cadastro da SEFAZ-MS e
+    QR-Code da SEFAZ-PR.
+  Por: Italo Jurisato Junior
+
 02/09/2019
 -- pcteCTeW --
 [*] Comentado a linha que gera no XML a tag pICMSInterPart.

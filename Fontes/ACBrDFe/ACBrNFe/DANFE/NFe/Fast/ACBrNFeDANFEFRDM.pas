@@ -1994,6 +1994,7 @@ var
   I: Integer;
   wProjectStream: TStringStream;
   Page: TfrxReportPage;
+  MultiplicadorMargem: Integer;
 begin
   Result := False;
 
@@ -2063,20 +2064,28 @@ begin
 
   if Assigned(NFe) then
   begin
+
+    // Informar margem para NFe em cm, NFCe em mm
+    if NFe.Ide.modelo = 55 then
+	  MultiplicadorMargem := 10
+	else
+	  MultiplicadorMargem := 1;
+
     for i := 0 to (frxReport.PreviewPages.Count - 1) do
     begin
       Page := frxReport.PreviewPages.Page[i];
       if (DANFEClassOwner.MargemSuperior > 0) then
-        Page.TopMargin    := DANFEClassOwner.MargemSuperior;
+        Page.TopMargin    := DANFEClassOwner.MargemSuperior * MultiplicadorMargem;
       if (DANFEClassOwner.MargemInferior > 0) then
-        Page.BottomMargin := DANFEClassOwner.MargemInferior;
+        Page.BottomMargin := DANFEClassOwner.MargemInferior * MultiplicadorMargem;
       if (DANFEClassOwner.MargemEsquerda > 0) then
-        Page.LeftMargin   := DANFEClassOwner.MargemEsquerda;
+        Page.LeftMargin   := DANFEClassOwner.MargemEsquerda * MultiplicadorMargem;
       if (DANFEClassOwner.MargemDireita > 0) then
-        Page.RightMargin  := DANFEClassOwner.MargemDireita;
+        Page.RightMargin  := DANFEClassOwner.MargemDireita * MultiplicadorMargem;
       frxReport.PreviewPages.ModifyPage(i, Page);
     end;
   end;
+
 end;
 
 function TACBrNFeFRClass.PrepareReportEvento: Boolean;

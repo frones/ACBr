@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2019
+-- ACBrLibNFeClass --
+[-] Corrigido erro ao salvar a ultima resposta.
+    Por: Rafael Dias
+
 21/05/2019
 -- ACBrLibNFeRespostas --
 [-] Adicionado campo Protocolo na resposta do método InutilizarNFe

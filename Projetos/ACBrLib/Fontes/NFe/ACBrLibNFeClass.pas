@@ -939,7 +939,7 @@ begin
           end;
 
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
         NFeDM.Destravar;
@@ -1020,7 +1020,7 @@ begin
           end;
 
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          Result := SetRetorno(ErrOK, Resposta);
         end
         else
           Result := SetRetornoWebService(NFeDM.ACBrNFe1.SSL.HTTPResultCode, 'Cancelar');
@@ -1078,7 +1078,7 @@ begin
             end;
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'Enviar Evento');
@@ -1139,7 +1139,7 @@ begin
         end;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         NFeDM.Destravar;
       end;
@@ -1197,7 +1197,7 @@ begin
             end;
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorUltNSU');
@@ -1261,7 +1261,7 @@ begin
             end;
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorNSU');
@@ -1328,7 +1328,7 @@ begin
             end;
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorChaveNFe');

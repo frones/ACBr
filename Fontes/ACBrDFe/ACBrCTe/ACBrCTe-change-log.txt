@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2019
+-- ACBrCTeServicos --
+[*] Atualização das URLs de QR-Code.
+  Por: Italo Jurisato Junior
+
 12/09/2019
 -- ACBrCTeServicos --
 [*] Atualização das URLs de Consulta ao Cadastro da SEFAZ-MS e

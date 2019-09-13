@@ -179,13 +179,19 @@ begin
     Gerador.wCampo(tcInt, 'HP08', 'cOrgao', 001, 002, 1, FEvento.Items[i].FInfEvento.cOrgao);
     Gerador.wCampo(tcStr, 'HP09', 'tpAmb', 001, 001,  1, TpAmbToStr(Evento.Items[i].InfEvento.tpAmb), DSC_TPAMB);
 
-    sDoc := OnlyNumber( Evento.Items[i].InfEvento.CNPJ );
+    sDoc := OnlyNumber(Evento.Items[i].InfEvento.CNPJ);
+    if EstaVazio(sDoc) then
+      sDoc := ExtrairCNPJChaveAcesso(Evento.Items[i].InfEvento.chNFe);
 
     // Verifica a Série do Documento, caso esteja no intervalo de 910-969
     // o emitente é pessoa fisica, logo na chave temos um CPF.
     Serie := ExtrairSerieChaveAcesso(Evento.Items[i].InfEvento.chNFe);
-    if (Length(sDoc) = 14) and (Serie >= 910) and (Serie <= 969) then
+    if (Length(sDoc) = 14)
+      and (Serie >= 910) and (Serie <= 969)
+      and not (Evento.Items[i].InfEvento.tpEvento in [teManifDestConfirmacao..teManifDestOperNaoRealizada]) then
+    begin
       sDoc := Copy(sDoc, 4, 11);
+    end;
 
     case Length( sDoc ) of
      14: begin

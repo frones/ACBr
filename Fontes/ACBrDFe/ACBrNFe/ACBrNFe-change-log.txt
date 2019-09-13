@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2019
+-- pcnEnvEventoNFe --
+[*] Correção para não tentar extrair CPF da chave de acesso no envio de evento
+    caso o evento seja uma manifestação.
+  Por: BigWings
+
 02/09/2019
 -- ACBrNFeServicos --
 [*] Excluido a chamada para a SVAN e deixando apenas a chamada para a SVRS 

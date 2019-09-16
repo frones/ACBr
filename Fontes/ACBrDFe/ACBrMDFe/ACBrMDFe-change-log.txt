@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2019
+-- pmdfeEnvEventoMDFe --
+[*] Alterado o tamanho máximo da descrição do evento.
+   Por: Gleryston Matos
+
 05/09/2019
 -- ACBrMDFeManifestos --
 [*] Alterado o valor padrão do campo IE do proprietario do veiculo para

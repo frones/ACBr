@@ -389,7 +389,7 @@
             <xsd:element name="IntermediarioServico" type="tcIdentificacaoIntermediarioServico" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="ConstrucaoCivil" type="tcDadosConstrucaoCivil" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag"/>
+        <xsd:attribute name="id" type="tsIdTag"/>
     </xsd:complexType>
     <xsd:complexType name="tcRps">
         <xsd:sequence>
@@ -520,7 +520,7 @@
                 </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
-        <xsd:attribute name="Id" type="tsIdTag"/>
+        <xsd:attribute name="id" type="tsIdTag"/>
     </xsd:complexType>
 
     <xsd:element name="EnviarLoteRpsResposta">

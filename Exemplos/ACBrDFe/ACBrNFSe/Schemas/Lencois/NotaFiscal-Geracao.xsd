@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema id="NotaFiscal-Geracao"
+    targetNamespace="NotaFiscal-Geracao.xsd"
+    elementFormDefault="qualified"
+    xmlns="NotaFiscal-Geracao.xsd"
+    xmlns:mstns="NotaFiscal-Geracao.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="Nota">
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- DEFINIÇÃO DA VERSÃO DO WEBSERVICE -->
+        <xs:element id="Versao" name="Versao" type="xs:decimal" nillable="false"></xs:element>
+
+        <!-- INSCRIÇÃO MUNICIPAL UTILIZADA PELO PRESTADOR DE SERVICOS -->
+        <xs:element id="InscricaoMunicipal" name="InscricaoMunicipal" type="xs:positiveInteger" nillable="false">
+          <xs:annotation>
+            <xs:documentation xml:lang="pt-br">
+              Inscrição municipal do Prestador de Serviços sem dígito.
+              Ex.: 12345-6, o código da inscrição será 12345.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- NUMERO DO PROCEDIMENTO DE SERVIÇO DA NOTA FISCAL -->
+        <xs:element id="PASNF" name="PASNF" nillable="false">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element id="Numero"  name="Numero" type="xs:positiveInteger" nillable="false">
+                <xs:annotation>
+                  <xs:documentation xml:lang="pt-br">
+                    Número sequencial de Solicitação de Nota Fiscal (controle).
+                    Este número será retornado pelo sistema para controle do contribuinte.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element id="Data" name="Data" type="xs:date" nillable="false">
+                <xs:annotation>
+                  <xs:documentation xml:lang="pt-br">
+                    Data da geração do da Solicitação (Origem do Serviço).
+                    Validação:
+                    - Prazo máximo para conversão é de 10 dias corridos;
+                    - Data de geração deverá ser igual ou inferior a data atual;
+                    - As datas de PAS devem seguir a ordem cronológica da emissão dos PAS;
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <!--DADOS DO TOMADOR DE SERVIÇOS-->
+        <xs:element id="Tomador" name="Tomador" nillable="true">
+          <xs:annotation>
+            <xs:documentation>
+              Campo opcional.
+              A falta de informação de dados do tomador será considerada NOTA AO CONSUMIDOR;
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPF_CNPJ" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>
+                    CPF ou CNPJ do tomador de serviços.
+                    Informação opcional
+                  </xs:documentation>
+                </xs:annotation>
+
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="14"></xs:maxLength>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nome" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>
+                    Nome/Razão Social do tomador de serviços.
+                    Informação opcional
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="70"></xs:maxLength>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element id="Endereco" name="Endereco" nillable="true">
+                <xs:annotation>
+                  <xs:documentation>
+                    Endereço do Tomador de Serviços
+                    Informação Opcional
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Logradouro" nillable="true">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Nome do logradouro informado pelo tomador
+                          Informação opcional
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="95"></xs:maxLength>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Numero" nillable="true">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Número da casa e/ou estabelecimento informado pelo tomador.
+                          Informação opcional
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="15"></xs:maxLength>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Complemento" nillable="true">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Complemento do endereço, caso necessário
+                          Informação opcional
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="20"></xs:maxLength>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Bairro" nillable="true">
+                      <xs:annotation>
+                        <xs:documentation>
+                          CPF ou CNPJ do tomador de serviços.
+                          Informação opcional
+                        </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="75"></xs:maxLength>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Municipio" type="xs:integer" nillable="true" default="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Código do municipio.
+                          Ref. Tabela IBGE
+                          Informação opcional
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Email" nillable="false">
+                <xs:annotation>
+                  <xs:documentation>
+                    E-mail do tomador de serviços, este campo é necessário caso a opção de envio de email automático esteja selecionada.
+                    Informação opcional
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50"></xs:maxLength>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Particular" nillable="false" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Define se a Nota Fiscal emitida foi para consumidor ou contribuinte.
+                    Este opção é destinada para pessoas físicas que possuem inscrição de autônomo no município.
+                    0 - Contribuinte
+                    1 - Consumidor
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0" id="Contribuinte"></xs:enumeration>
+                    <xs:enumeration value="1" id="Consumidor"></xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <!-- DADOS DA NOTA FISCAL 
+        <xs:element name="LocalExecucao" nillable="true" default="1">
+          <xs:annotation>
+            <xs:documentation>
+              Indica se o serviço foi realizado no município de Lençóis Paulista ou fora.
+              Não é necessário especificação da cidade onde foi realizado o serviço
+              1: No Município
+              0: Fora do Município
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:enumeration value="1" id="NoMunicipio"></xs:enumeration>
+              <xs:enumeration value="0" id="ForaMunicipio"></xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>-->
+
+        <xs:element name="CidadeExecucao" nillable="false" default="3526803" type="xs:positiveInteger">
+          <xs:annotation>
+            <xs:documentation>
+              Código no IBGE do Município onde o serviço foi realizado.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- DESCRICAO DOS SERVICOS -->
+        <xs:element name="Descricao" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              Descrição dos serviços realizados (corpo da NFS-e)
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="1000"></xs:maxLength>
+              <xs:whiteSpace value="preserve"></xs:whiteSpace>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <!-- VALORES -->
+        <xs:element name="ValorTotal" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              Valor total dos serviços realizados
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minExclusive value="0"></xs:minExclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <xs:element name="ValorDeducao" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor das Deduções - Caso seja aplicável
+              OBS: Para utilizar valores de dedução, é necessário amparo legal. Dedução não é desconto!
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0.00"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Aliquota" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Alíquota vigente (Apenas para empresas optantes pelo Simples Nacional)
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="6"></xs:fractionDigits>
+              <xs:minInclusive value="0.00"></xs:minInclusive>
+              <xs:maxInclusive value ="6.00"></xs:maxInclusive>
+              <xs:totalDigits value="7"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ValorPIS" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor de PIS gerado pela emissão da NFSe.
+              Este valor corresponde aos valores de impostos gerados informandos de acordo com a lei 12.741/2012.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ValorCOFINS" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor de CONFIS gerado pela emissão da NFSe.
+              Este valor corresponde aos valores de impostos gerados informandos de acordo com a lei 12.741/2012.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RetencaoIRRF" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor do IRRF retido pelo tomador de serviços da NFSe.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RetencaoINSS" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor do INSS retido pelo tomador de serviços da NFSe.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RetencaoPIS" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor do PIS retido pelo tomador de serviços da NFSe.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RetencaoCOFINS" nillable="false" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor do COFINS retido pelo tomador de serviços da NFSe.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="RetencaoCSLL" nillable="false"  default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Valor do CSLL retido pelo tomador de serviços da NFSe.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:decimal">
+              <xs:fractionDigits value="2"></xs:fractionDigits>
+              <xs:minInclusive value="0"></xs:minInclusive>
+              <xs:totalDigits value="15"></xs:totalDigits>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <!-- DEFINE SE ENVIO DE E-MAIL SERÁ AUTOMATICO VIA NFSE -->
+        <xs:element name="EnviarEmail" id="EnviarEmail" type="xs:integer" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Informa se o sistema enviará NFS-e automaticamente ao TOMADOR.
+              IMPORTANTE: Esta opção somente estará ativa se o Prestador e o Tomador tiverem e-mail registrados.
+              1: Enviar
+              0: Não Enviar
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- DEFINE MODELO DE TRIBUTACAO-->
+        <xs:element name="TributacaoISS" id="TributacaoISS" default="0">
+          <xs:annotation>
+            <xs:documentation>
+              Forma de tributação especial de ISS
+              0:  Tributação comum
+              10: Nota Fiscal tributada por informação do prestador
+              11: Nota Fiscal não tributada por informação do prestador
+              OBS: A opção de tributação ocorre apenas em casos especiais em que a legislação permita.
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:enumeration value="0"></xs:enumeration>
+              <xs:enumeration value="10"></xs:enumeration>
+              <xs:enumeration value="11"></xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <xs:element name="RecolhimentoFora" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              Dados do recolhimento em caso de recolhimento fora do município
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+
+              <xs:element id="Aliquota" name="Aliquota" default="0">
+                <xs:annotation>
+                  <xs:documentation>
+                    Alíquota aplicada em caso de recolhimento fora do município.
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:decimal">
+                    <xs:fractionDigits value="6"></xs:fractionDigits>
+                    <xs:minInclusive value="0.00"></xs:minInclusive>
+                    <xs:totalDigits value="7"></xs:totalDigits>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element id="Obrigacao" name="Obrigacao">
+                <xs:annotation>
+                  <xs:documentation>
+                    Obrigação de recolhomento do ISS fora do município.
+                    0: Prestador
+                    1: Tomador
+                  </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:enumeration value="0"></xs:enumeration>
+                    <xs:enumeration value="1"></xs:enumeration>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

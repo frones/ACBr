@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema id="NotaFiscal-Cancelamento"
+    targetNamespace="NotaFiscal-Cancelamento.xsd"
+    elementFormDefault="qualified"
+    xmlns="NotaFiscal-Cancelamento.xsd"
+    xmlns:mstns="NotaFiscal-Cancelamento.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+             
+  <xs:element name="Nota">
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- DEFINIÇÃO DA VERSÃO DO WEBSERVICE -->
+        <xs:element id="Versao" name="Versao" type="xs:decimal" nillable="false"></xs:element>
+        
+        <!-- INSCRIÇÃO MUNICIPAL UTILIZADA PELO PRESTADOR DE SERVICOS -->
+        <xs:element id="InscricaoMunicipal" name="InscricaoMunicipal" type="xs:positiveInteger" nillable="false">
+          <xs:annotation>
+            <xs:documentation xml:lang="pt-br">
+              Inscrição municipal do Prestador de Serviços sem dígito.
+              Ex.: 12345-6, o código da inscrição será 12345.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- NUMERO DO RPS GERADOR DA NOTA FISCAL -->
+        <xs:element id="PASNF" name="PASNF" nillable="false">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element id="Numero"  name="Numero" type="xs:positiveInteger" nillable="false">
+                <xs:annotation>
+                  <xs:documentation xml:lang="pt-br">
+                    Número sequencial de Solicitação de Nota Fiscal (controle).
+                    Este número será retornado pelo sistema para controle do contribuinte.
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element id="Data" name="Data" type="xs:date" nillable="false">
+                <xs:annotation>
+                  <xs:documentation xml:lang="pt-br">
+                    Data da geração do da Solicitação (Origem do Serviço).
+                    Validação:
+                    - Prazo máximo para conversão é de 10 dias corridos;
+                    - Data de geração deverá ser igual ou inferior a data atual;
+                    - As datas de PAS devem seguir a ordem cronológica da emissão dos PAS;
+                  </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+        <!-- NÚMERO DA NOTA FISCAL A SER CANCELADA -->
+        <xs:element id="NotaNumero" name="NotaNumero" type="xs:positiveInteger" nillable="false">
+          <xs:annotation>
+            <xs:documentation xml:lang="pt-br">
+              Número da Nota Fiscal
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <!-- CÓDIGO DE VALIDAÇÃO DA NOTA FISCAL -->
+        <xs:element id="CodigoValidacao" name="CodigoValidacao" nillable="false">
+          <xs:annotation>
+            <xs:documentation xml:lang="pt-br">
+              Código de Validação da Nota Fiscal
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="15"></xs:maxLength>
+              <xs:whiteSpace value="preserve"></xs:whiteSpace>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        
+        <!-- DESCRIÇÃO DOS MOTIVOS DE CANCELAMENTO -->
+        <xs:element name="DescricaoCancelamento" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              Descrição dos motivos do cancelamento
+            </xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="300"></xs:maxLength>
+              <xs:whiteSpace value="preserve"></xs:whiteSpace>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+
+        <!-- CÓDIGO DO MOTIVO DO CANCELAMENTO -->
+        <xs:element id="CodigoCancelamento" name="CodigoCancelamento" type="xs:positiveInteger" nillable="false">
+          <xs:annotation>
+            <xs:documentation>
+              Código do Cancelamento
+              Consulta de códigos está disponível no manual do webservice
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+       
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1129,7 +1129,10 @@ begin
     AXML := StringReplace(AXML, '&amp;', '', [rfReplaceAll]);
 
   if FPConfiguracoesNFSe.Geral.ConfigRemover.TagQuebradeLinhaUnica then
+  begin
     AXML := StringReplace(AXML, 'lt;brgt;', '', [rfReplaceAll]);
+    AXML := StringReplace(AXML, '</>', '', [rfReplaceAll]);
+  end;
 
   Result := AXML;
 end;
@@ -1824,6 +1827,7 @@ begin
                          FvNotas := FvNotas + '<Rps>' + StringReplace(SRpsTmp, '<InfRps>', '', [rfReplaceAll]) + '</Rps>';
                        end;
 
+        proLencois,
         proSMARAPD,
         proIPM: FvNotas := RPS;
 
@@ -2170,6 +2174,7 @@ begin
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proAssessorPublico,
+           proLencois,
            proSMARAPD,
            proGiap,
            proIPM: FTagI := '';

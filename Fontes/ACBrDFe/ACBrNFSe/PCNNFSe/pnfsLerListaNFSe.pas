@@ -299,6 +299,8 @@ begin
     Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'GerarNfseResponse') <> '');
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'GerarNotaFiscalResult') <> '');
 
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RecepcionarLoteRpsResult') <> '');
@@ -847,6 +849,8 @@ begin
         ListaNfse.FMsgRetorno.New;
         ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        ListaNfse.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'AvisoTecnico');
+
         // Roberto Godinho - Provedor CTA pode retornar erros de schema substituindo a TAG <descricao> por <erro>
         // se não tratado resulta em exception vazio.
         if ListaNfse.FMsgRetorno[i].FMensagem = '' then

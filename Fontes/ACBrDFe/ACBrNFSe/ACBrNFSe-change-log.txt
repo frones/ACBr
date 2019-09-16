@@ -49,6 +49,9 @@ Símbolo : Significado
 
 16/09/2019
 -- Diversos --
+[+] Inicio da implementação do provedor Lencois.
+   Por: Innovae Brasil Engenharia
+-- Diversos --
 [*] Alterações visando o provedor SimplISSv2.
    Por: Italo Jurisato Junior
 

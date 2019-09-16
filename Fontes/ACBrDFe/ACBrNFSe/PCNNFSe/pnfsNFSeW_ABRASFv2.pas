@@ -116,17 +116,12 @@ procedure TNFSeW_ABRASFv2.GerarPrestador;
 begin
   Gerador.wGrupoNFSe('Prestador');
 
-  if FProvedor = proSimplISSv2 then
-    Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), DSC_CNPJ)
+  Gerador.wGrupoNFSe('CpfCnpj');
+  if length(OnlyNumber(NFSe.Prestador.Cnpj)) <= 11 then
+    Gerador.wCampoNFSe(tcStr, '#34', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Prestador.Cnpj), DSC_CPF)
   else
-  begin
-    Gerador.wGrupoNFSe('CpfCnpj');
-    if length(OnlyNumber(NFSe.Prestador.Cnpj)) <= 11 then
-      Gerador.wCampoNFSe(tcStr, '#34', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Prestador.Cnpj), DSC_CPF)
-    else
-      Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), DSC_CNPJ);
-    Gerador.wGrupoNFSe('/CpfCnpj');
-  end;
+    Gerador.wCampoNFSe(tcStr, '#34', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Prestador.Cnpj), DSC_CNPJ);
+  Gerador.wGrupoNFSe('/CpfCnpj');
 
   if (FProvedor = proTecnos) then
     Gerador.wCampoNFSe(tcStr, '#35', 'RazaoSocial', 01, 15, 1, NFSe.PrestadorServico.RazaoSocial, DSC_XNOME);
@@ -202,16 +197,8 @@ begin
 
       Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
 
-      if Fprovedor = proSimplISSv2 then
-      begin
-        Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
-        Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
-      end
-      else
-      begin
-        Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
-        Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
-      end;
+      Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
+      Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
       if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
                             proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep,
@@ -410,9 +397,9 @@ begin
 
   if FProvedor = proSimplISSv2 then
   begin
-    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIssRetido    ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, DSC_VINSS);
-    Gerador.wCampoNFSe(tcDe2, '#22', 'ValorTotalTributos', 01, 15, 1, 0.0, DSC_VINSS);
-    Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes   ', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES);
+    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIssRetido ', 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, DSC_VINSS);
+    Gerador.wCampoNFSe(tcDe2, '#22', 'ValTotTributos ', 01, 15, 0, 0.0, DSC_VINSS);
+    Gerador.wCampoNFSe(tcDe2, '#23', 'OutrasRetencoes', 01, 15, 0, NFSe.Servico.Valores.OutrasRetencoes, DSC_OUTRASRETENCOES);
   end;
 
   if FProvedor in [proActcon, proAgili, proTecnos] then
@@ -473,9 +460,6 @@ begin
   if FProvedor in [profintelISS] then
     Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS);
 
-  if FProvedor = proSimplISSv2 then
-    Gerador.wCampoNFSe(tcDe2, '#24', 'ValorLiquidoNfse', 01, 15, 0, NFSe.Servico.Valores.ValorLiquidoNfse, DSC_VBCISS);
-
   case FProvedor of
     proABase,
     proActcon,
@@ -521,9 +505,6 @@ begin
     end;
   end;
 
-  if FProvedor = proSimplISSv2 then
-    Gerador.wCampoNFSe(tcDe2, '#24', 'ValorCredito', 01, 15, 1, 0.0, DSC_VBCISS);
-
   Gerador.wGrupoNFSe('/Valores');
 
   if not (FProvedor in [proGoiania, proSigep]) then
@@ -553,13 +534,10 @@ begin
       Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 0, NFSe.Servico.ItemListaServico, DSC_CLISTSERV);
     end;
 
-    if FProvedor <> proSimplISSv2 then
-    begin
-      if FProvedor in [proVersaTecnologia, proDesenvolve]  then
-        Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE)
-      else
-        Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 0, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
-    end;
+    if FProvedor in [proVersaTecnologia, proDesenvolve]  then
+      Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE)
+    else
+      Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 0, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
   end;
 
   case FProvedor of
@@ -572,16 +550,10 @@ begin
     Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 20, 0, OnlyNumber(NFSe.Servico.CodigoTributacaoMunicipio), DSC_CSERVTRIBMUN);
   end;
 
-  if FProvedor = proSimplISSv2 then
-    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 07, 0, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
-
   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
     StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase]), DSC_DISCR);
 
-  if FProvedor = proSimplISSv2 then
-    Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioServisoPrestado', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN)
-  else
-    Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN);
+  Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio', 01, 07, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN);
 
   if FProvedor <> proSigep then
   begin
@@ -846,8 +818,8 @@ begin
         proPronimv2, proVersaTecnologia, proWebISSv2, proActconv202, proBelford,
         proSH3, proSIAPNet, proISSJoinville, proSmarAPDABRASF, proELv2, proAsten,
         proTiplanv2, proDeISS, proTcheInfov2, proDataSmart, proDesenvolve,
-        proRLZ, proGiss, proSigCorp,
-        proiiBrasilv2: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proRLZ, proGiss, proSigCorp, proiiBrasilv2,
+        proSimplISSv2: Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos, 
 	    	proCenti: Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -857,22 +829,19 @@ begin
     end
     else
     begin
-      if FProvedor <> proSimplISSv2 then
+      if FProvedor in [proABase, proActcon, proBethav2, proCoplan, proEReceita,
+         proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
+         proNEAInformatica, proNotaInteligente, proPronimv2, proProdata, proPVH,
+         proSaatri, proSiam, proSisPMJP, proSystemPro, proVirtual, proVitoria,
+         proVersaTecnologia, proWebISSv2, proActconv202, proSH3, proSIAPNet,
+         proBelford, proISSJoinville, proSmarAPDABRASF, proAsten, proELv2,
+         proGiss, proTiplanv2, proDeISS, proTcheInfov2, proDataSmart,
+         proDesenvolve, proRLZ, proSigCorp, proiiBrasilv2, proSimplISSv2] then
+        Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
+      else
       begin
-        if FProvedor in [proABase, proActcon, proBethav2, proCoplan, proEReceita,
-           proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
-           proNEAInformatica, proNotaInteligente, proPronimv2, proProdata, proPVH,
-           proSaatri, proSiam, proSisPMJP, proSystemPro, proVirtual, proVitoria,
-           proVersaTecnologia, proWebISSv2, proActconv202, proSH3, proSIAPNet,
-           proBelford, proISSJoinville, proSmarAPDABRASF, proAsten, proELv2,
-           proGiss, proTiplanv2, proDeISS, proTcheInfov2, proDataSmart,
-           proDesenvolve, proRLZ, proSigCorp, proiiBrasilv2] then
-          Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
-        else
-        begin
-          if not (FProvedor in [proCenti, proGoiania, proSigep]) then
-            Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
-        end;
+        if not (FProvedor in [proCenti, proGoiania, proSigep]) then
+          Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
       end;
     end;
 

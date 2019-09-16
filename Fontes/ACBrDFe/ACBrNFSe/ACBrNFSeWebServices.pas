@@ -1076,8 +1076,6 @@ begin
       proWEBFISCO: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:enc="http://schemas.xmlsoap.org/soap/encoding/"';
 
-//      proSimplISSv2: FNameSpaceDad := '';
-
       else begin
         if (FSeparador = '') then
         begin
@@ -1884,8 +1882,7 @@ begin
            proEL,
            proFISSLex,
            proGiap,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
                                     'xmlns:tipos="http://localhost:8080/WsNFe2/tp" '+
@@ -2170,8 +2167,7 @@ begin
 
            proEGoverneISS,
            proTinus,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proAssessorPublico,
            proSMARAPD,
@@ -2849,6 +2845,9 @@ begin
     // Italo 04/09/2019
     proDSFSJC:
       FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
+
+    proSimplISSv2:
+      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', 'EnviarLoteRpsEnvio', [rfReplaceAll]);
   end;
 
   // Lote tem mais de 500kb ? //
@@ -3598,18 +3597,24 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
-   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-      TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
-                          FPConfiguracoes.Arquivos.PathSchemas +
-                          FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
+                           FPConfiguracoes.Arquivos.PathSchemas +
+                           FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
 
-   if FProvedor = proRecife then
-     FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd' ,
-       'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd', [rfReplaceAll]);
+    case FProvedor of
+      proRecife:
+        begin
+          FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd' ,
+             'http://nfse.recife.pe.gov.br/WSNacional/XSD/1/nfse_recife_v01.xsd', [rfReplaceAll]);
 
-   if FProvedor = proRecife then
-     FPDadosMsg := StringReplace(FPDadosMsg, '<InfRps' ,
-       '<InfRps' + FNameSpaceDad + ' ', [rfReplaceAll]);
+          FPDadosMsg := StringReplace(FPDadosMsg, '<InfRps' ,
+             '<InfRps' + FNameSpaceDad + ' ', [rfReplaceAll]);
+        end;
+
+      proSimplISSv2:
+        FPDadosMsg := StringReplace(FPDadosMsg, 'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', 'GerarNfseEnvio', [rfReplaceAll]);
+    end;
   end
   else
   begin

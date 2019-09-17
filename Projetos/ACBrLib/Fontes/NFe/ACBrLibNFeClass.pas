@@ -561,7 +561,7 @@ begin
         Erros := '';
         NFeDM.ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Erros);
       finally
         NFeDM.Destravar;
       end;
@@ -591,7 +591,7 @@ begin
         Erros := '';
         NFeDM.ACBrNFe1.NotasFiscais.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Erros);
       finally
         NFeDM.Destravar;
       end;
@@ -612,7 +612,8 @@ end;
 function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: TStatusServicoResposta;
+  Resp: TStatusServicoResposta;
+  Resposta: String;
 begin
   try
     VerificarLibInicializada;
@@ -621,21 +622,22 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta);
+      Resp := TStatusServicoResposta.Create(pLib.Config.TipoResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
           if WebServices.StatusServico.Executar then
           begin
-            Resposta.Processar(NFeDM.ACBrNFe1);
-            MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Resp.Processar(NFeDM.ACBrNFe1);
+            Resposta := Resp.Gerar;
+            MoverStringParaPChar(Resposta, sResposta, esTamanho);
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
         end;
       finally
-        Resposta.Free;
+        Resp.Free;
         NFeDM.Destravar;
       end;
     end;
@@ -653,7 +655,8 @@ function NFE_Consultar(const eChaveOuNFe: PChar; const sResposta: PChar; var esT
 var
   EhArquivo: boolean;
   ChaveOuNFe: string;
-  Resposta: TConsultaNFeResposta;
+  Resp: TConsultaNFeResposta;
+  Resposta: string;
 begin
   try
     VerificarLibInicializada;
@@ -688,21 +691,22 @@ begin
           NFeDM.ACBrNFe1.NotasFiscais.Items[NFeDM.ACBrNFe1.NotasFiscais.Count - 1].NFe.infNFe.ID,
           'NFe','',[rfIgnoreCase]);
 
-      Resposta := TConsultaNFeResposta.Create(pLib.Config.TipoResposta);
+      Resp := TConsultaNFeResposta.Create(pLib.Config.TipoResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
           if WebServices.Consulta.Executar then
           begin
-            Resposta.Processar(NFeDM.ACBrNFe1);
-            MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
+            Resp.Processar(NFeDM.ACBrNFe1);
+            Resposta := Resp.Gerar;
+            MoverStringParaPChar(Resposta, sResposta, esTamanho);
+            Result := SetRetorno(ErrOK, Resposta);
           end
           else
             Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
         end;
       finally
-        Resposta.Free;
+        Resp.Free;
         NFeDM.Destravar;
       end;
     end;
@@ -720,8 +724,8 @@ function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: TInutilizarNFeResposta;
-  CNPJ, Justificativa: string;
+  Resp: TInutilizarNFeResposta;
+  Resposta, CNPJ, Justificativa: string;
 begin
   try
     VerificarLibInicializada;
@@ -744,7 +748,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta);
+      Resp := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
@@ -760,16 +764,17 @@ begin
 
             if Inutilizacao.Executar then
             begin
-              Resposta.Processar(NFeDM.ACBrNFe1);
-              MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-              Result := SetRetorno(ErrOK, StrPas(sResposta));
+              Resp.Processar(NFeDM.ACBrNFe1);
+              Resp := Resp.Gerar
+              MoverStringParaPChar(Resp, sResposta, esTamanho);
+              Result := SetRetorno(ErrOK, Resp);
             end
             else
               Result := SetRetornoWebService(SSL.HTTPResultCode, Inutilizacao.XMotivo);
           end;
         end;
       finally
-        Resposta.Free;
+        Resp.Free;
         NFeDM.Destravar;
       end;
     end;
@@ -889,7 +894,7 @@ begin
           end;
 
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
         NFeDM.Destravar;

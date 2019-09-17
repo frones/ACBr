@@ -765,9 +765,9 @@ begin
             if Inutilizacao.Executar then
             begin
               Resp.Processar(NFeDM.ACBrNFe1);
-              Resp := Resp.Gerar
-              MoverStringParaPChar(Resp, sResposta, esTamanho);
-              Result := SetRetorno(ErrOK, Resp);
+              Resposta := Resp.Gerar;
+              MoverStringParaPChar(Resposta, sResposta, esTamanho);
+              Result := SetRetorno(ErrOK, Resposta);
             end
             else
               Result := SetRetornoWebService(SSL.HTTPResultCode, Inutilizacao.XMotivo);

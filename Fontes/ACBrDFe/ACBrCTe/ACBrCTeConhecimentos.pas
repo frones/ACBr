@@ -155,7 +155,7 @@ type
     function  Add: Conhecimento;
     function Insert(Index: Integer): Conhecimento;
 
-    property Items[Index: Integer]: Conhecimento read GetItem write SetItem;
+    property Items[Index: Integer]: Conhecimento read GetItem write SetItem; default;
 
     function GetNamePath: String; override;
     // Incluido o Parametro AGerarCTe que determina se após carregar os dados do CTe

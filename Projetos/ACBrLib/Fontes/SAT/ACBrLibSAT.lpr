@@ -50,6 +50,7 @@ exports
   SAT_ImprimirExtratoCancelamento,
   SAT_GerarPDFExtratoVenda,
   SAT_GerarPDFCancelamento,
+  SAT_GerarImpressaoFiscalMFe,
   SAT_EnviarEmail;
 
 begin

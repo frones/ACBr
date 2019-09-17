@@ -113,6 +113,7 @@
             this.btnCancelarCFe = new System.Windows.Forms.Button();
             this.btnEmail = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnImpMFe = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -1046,11 +1047,22 @@
             this.button1.Text = "Imprimir CFe Canc.";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // btnImpMFe
+            // 
+            this.btnImpMFe.Location = new System.Drawing.Point(130, 368);
+            this.btnImpMFe.Name = "btnImpMFe";
+            this.btnImpMFe.Size = new System.Drawing.Size(112, 23);
+            this.btnImpMFe.TabIndex = 42;
+            this.btnImpMFe.Text = "Gerar Imp. MFe";
+            this.btnImpMFe.UseVisualStyleBackColor = true;
+            this.btnImpMFe.Click += new System.EventHandler(this.btnImpMFe_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 417);
+            this.Controls.Add(this.btnImpMFe);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.btnCancelarCFe);
@@ -1181,6 +1193,7 @@
         private System.Windows.Forms.Button btnCancelarCFe;
         private System.Windows.Forms.Button btnEmail;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnImpMFe;
     }
 }
 

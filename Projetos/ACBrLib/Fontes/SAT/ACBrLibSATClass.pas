@@ -1160,15 +1160,14 @@ end;
 function SAT_GerarImpressaoFiscalMFe(eArqXMLVenda: PChar; const sResposta: PChar;
   var esTamanho: longint): longint;{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  ArquivoXml, NomeImpressora, Resposta: String;
+  ArquivoXml,  Resposta: String;
 begin
    try
     VerificarLibInicializada;
     ArquivoXml := String(eArqXMLVenda);
-    //NomeImpressora := String(eNomeImpressora);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ',' + NomeImpressora + ' )', logCompleto, True)
+      pLib.GravarLog('SAT_GerarImpressaoFiscalMFe(' + ArquivoXml + ' )', logCompleto, True)
     else
       pLib.GravarLog('SAT_GerarImpressaoFiscalMFe', logNormal);
 
@@ -1178,14 +1177,11 @@ begin
 
       try
         Resposta := '';
-        SatDM.ConfigurarImpressao();
+
         SatDM.CarregarDadosVenda(ArquivoXml);
-        if TLibSATConfig(Config).Extrato.TipoExtrato = teEscPos then
-        begin
-          Resposta := TACBrSATExtratoESCPOS(SatDM.ACBrSAT1.Extrato).GerarImpressaoFiscalMFe();
-          MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        end;
-        SatDM.ACBrSAT1.Extrato := nil;
+        Resposta := SatDM.ACBrSATExtratoESCPOS1.GerarImpressaoFiscalMFe(SatDM.ACBrSAT1.CFe);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+
         Result := SetRetorno(ErrOK, Resposta);
       finally
         SatDM.Destravar;

@@ -149,7 +149,6 @@ Private Declare Function SAT_GerarPDFExtratoVenda _
                                       
 Private Declare Function SAT_GerarImpressaoFiscalMFe _
                 Lib "ACBrSAT32.dll" (ByVal eArquivoXml As String, _
-                                      ByVal eNomeArquivo As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                                       
@@ -521,7 +520,7 @@ Public Function GerarPDFExtratoVenda(ByVal eArquivoXml As String, Optional ByVal
     GerarPDFExtratoVenda = processResult(buffer, bufferLen)
 End Function
 
-Public Function GerarImpressaoFiscalMFe(ByVal eArquivoXml As String, ByVal eNomeArquivo As String) As String
+Public Function GerarImpressaoFiscalMFe(ByVal eArquivoXml As String) As String
 
     Dim retorno   As Long
     Dim buffer    As String
@@ -531,7 +530,7 @@ Public Function GerarImpressaoFiscalMFe(ByVal eArquivoXml As String, ByVal eNome
     
     buffer = String$(bufferLen, " ")
     
-    retorno = SAT_GerarImpressaoFiscalMFe(eArquivoXml, eNomeArquivo, buffer, bufferLen)
+    retorno = SAT_GerarImpressaoFiscalMFe(eArquivoXml, buffer, bufferLen)
     CheckResult (retorno)
     
     GerarImpressaoFiscalMFe = processResult(buffer, bufferLen)

@@ -318,7 +318,7 @@ METHOD GerarImpressaoFiscalMFe(eArqXMLVenda) CLASS ACBrSat
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "SAT_CancelarCFe", hb_StrToUTF8(eArqXMLVenda), @buffer, @bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "SAT_GerarImpressaoFiscalMFe", hb_StrToUTF8(eArqXMLVenda), @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 

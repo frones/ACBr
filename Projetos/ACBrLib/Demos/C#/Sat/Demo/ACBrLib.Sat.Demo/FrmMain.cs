@@ -163,9 +163,18 @@ namespace ACBrLib.Sat.Demo
         {
             var xmlPath = Helpers.OpenFile("Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
             if (string.IsNullOrEmpty(xmlPath)) return;
-            
+
             acbrSat.ImprimirExtratoVenda(xmlPath, cbbImpressora.Text);
             rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
+        }
+
+        private void btnImpMFe_Click(object sender, EventArgs e)
+        {
+            var xmlPath = Helpers.OpenFile("Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(xmlPath)) return;
+
+            var impressao = acbrSat.GerarImpressaoFiscalMFe(xmlPath);
+            rtbRespostas.AppendLine(impressao);
         }
 
         private void btnEmail_Click(object sender, EventArgs e)

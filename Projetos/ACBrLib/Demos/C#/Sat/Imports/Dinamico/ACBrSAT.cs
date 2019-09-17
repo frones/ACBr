@@ -109,7 +109,7 @@ namespace ACBrLib.Sat
             public delegate int SAT_GerarPDFExtratoVenda(string eArquivoXml, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int SAT_GerarImpressaoFiscalMFe(string eArquivoXml, string eNomeArquivo, StringBuilder buffer, ref int bufferSize);
+            public delegate int SAT_GerarImpressaoFiscalMFe(string eArquivoXml, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int SAT_ImprimirExtratoCancelamento(string eArqXMLVenda, string eArqXMLCancelamento, string eNomeImpressora);
@@ -435,13 +435,13 @@ namespace ACBrLib.Sat
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string GerarImpressaoFiscalMFe(string eArquivoXml, string eNomeArquivo)
+        public string GerarImpressaoFiscalMFe(string eArquivoXml)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.SAT_GerarImpressaoFiscalMFe>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), ToUTF8(eNomeArquivo), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml), buffer, ref bufferLen));
 
             CheckResult(ret);
 

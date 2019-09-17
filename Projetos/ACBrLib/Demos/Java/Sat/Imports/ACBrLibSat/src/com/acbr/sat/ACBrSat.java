@@ -93,7 +93,7 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
 
     int SAT_GerarPDFExtratoVenda(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
 
-    int SAT_GerarImpressaoFiscalMFe(String eArquivoXml, String eNomeArquivo, ByteBuffer buffer, IntByReference bufferSize);
+    int SAT_GerarImpressaoFiscalMFe(String eArquivoXml, ByteBuffer buffer, IntByReference bufferSize);
 
     int SAT_EnviarEmail(String eArquivoXml, String ePara, String eAssunto, String eNomeArquivo,
             String sMensagem, String sCC, String eAnexos);
@@ -363,11 +363,11 @@ public final class ACBrSat extends ACBrLibBase implements AutoCloseable {
         return processResult(buffer, bufferLen);
     }
     
-    public String GerarImpressaoFiscalMFe(String eArquivoXml, String eNomeArquivo) throws Exception {
+    public String GerarImpressaoFiscalMFe(String eArquivoXml) throws Exception {
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-        int ret = ACBrSatLib.INSTANCE.SAT_GerarImpressaoFiscalMFe(toUTF8(eArquivoXml), toUTF8(eNomeArquivo), buffer, bufferLen);
+        int ret = ACBrSatLib.INSTANCE.SAT_GerarImpressaoFiscalMFe(toUTF8(eArquivoXml), buffer, bufferLen);
         checkResult(ret);
         
         return processResult(buffer, bufferLen);

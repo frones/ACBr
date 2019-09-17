@@ -41,6 +41,7 @@
 |*    importação. Isso se faz necessário pois em arquivos SPED que já foram
 |*    assinados existem linhas após a finalização do arquivo (Bloco 9999) e estas
 |*    linhas devem ser ignoradas na importação para não ocasionarem erro
+|* 15/09/2019: Marcelo Silva | Apollo Sistemas - Início do bloco 1
 *******************************************************************************}
 
 unit ACBrEFDImportar;
@@ -59,8 +60,8 @@ uses
   ACBrEFDBloco_C_Importar,
   ACBrEFDBloco_D_Importar,
   ACBrEFDBloco_E_Importar,
-  ACBrEFDBloco_H_Importar;
-//  ACBrEFDBloco_1_Importar;
+  ACBrEFDBloco_H_Importar,
+  ACBrEFDBloco_1_Importar;
 
 const
   CACBrSpedFiscalImportar_Versao = '1.00';
@@ -86,7 +87,7 @@ type
     procedure ProcessaBlocoD(const Delimiter: TStrings);
     procedure ProcessaBlocoE(const Delimiter: TStrings);
     procedure ProcessaBlocoH(const Delimiter: TStrings);
-//    procedure ProcessaBloco1(const Delimiter: TStrings);
+    procedure ProcessaBloco1(const Delimiter: TStrings);
   public
     procedure Importar;
   published
@@ -155,9 +156,9 @@ begin
         else if (Bloco = 'E') then
           ProcessaBlocoE(Delimitador)
         else if (Bloco = 'H') then
-          ProcessaBlocoH(Delimitador);
-  //      else if (Bloco = '1') then
-  //        ProcessaBloco1(Delimitador);
+          ProcessaBlocoH(Delimitador)
+        else if (Bloco = '1') then
+          ProcessaBloco1(Delimitador);
       end;
     end;
   finally
@@ -226,7 +227,6 @@ begin
   end;
 end;
 
-{
 procedure TACBrSpedFiscalImportar.ProcessaBloco1(const Delimiter: TStrings);
 var
   ImportarBloco1: TACBrSpedFiscalImportar_Bloco1;
@@ -238,7 +238,7 @@ begin
     ImportarBloco1.Free;
   end;
 end;
-}
+
 procedure TACBrSpedFiscalImportar.ProcessaBloco(Bloco: TACBrSpedFiscalImportar_Base; const Delimiter: TStrings);
 begin
   Bloco.AntesInserirValor := FAntesDeInserirColuna;

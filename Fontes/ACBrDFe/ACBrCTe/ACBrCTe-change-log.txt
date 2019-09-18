@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/09/2019
+-- ACBrCTeServicos --
+[*] Atualização das URLs de QR-Code de MG.
+  Por: Italo Jurisato Junior
+
 17/09/2019
 -- ACBrCTeServicos --
 [*] Atualização das URLs de QR-Code de MS.

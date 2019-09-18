@@ -232,9 +232,7 @@ procedure NotaFiscal.Assinar(Assina: Boolean);
 var
   XMLStr, DocElemento, InfElemento, IdAttr: String;
   XMLUTF8: AnsiString;
-//  Leitor: TLeitor;
   Ok: Boolean;
-//  i: Integer;
 begin
   // Verifica se foi informado o Numero de Série do Certificado.
   if ( TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.NumeroSerie <> '' ) then
@@ -286,8 +284,6 @@ begin
       proIPM:         InfElemento := 'nfse';
       proSMARAPD:     InfElemento := 'nfd';
       proGiap:        InfElemento := 'notaFiscal';
-//    else
-//      InfElemento := InfElemento;
     end;
 
     if Configuracoes.Geral.ConfigAssinar.URI then
@@ -296,7 +292,8 @@ begin
       IdAttr := '';
 
     if Assina then
-      FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento, '', '', '', IdAttr)
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento,
+                                  '', '', '', IdAttr)
     else
       FXMLAssinado := XMLOriginal;
 
@@ -661,6 +658,7 @@ begin
   begin
     if Self.FConfiguracoes.Geral.Provedor in [proSP, proNotaBlu] then
       Self.Items[i].AssinaturaAdicional;
+
     Self.Items[i].Assinar(Assina);
   end;
 end;

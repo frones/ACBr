@@ -314,7 +314,8 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP, proWebISS, proSystemPro, proMetropolisWeb] then
+                    proSJP, proWebISS, proSystemPro, proMetropolisWeb,
+                    proSimplISSv2] then
       FaVersao := '';
   end
   else
@@ -369,6 +370,8 @@ begin
     case Provedor of
       proGovBR,
       proPronim: FaIdentificador := '';
+
+      proSimplISSv2: FaIdentificador := ' id="' + IdLote + '"';
     else
       FaIdentificador := ' ' + Identificador + '="' + IdLote + '"';
     end;
@@ -790,7 +793,10 @@ begin
       Gerador.Prefixo := Prefixo4;
       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
-      GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
+      if Provedor = proSimplISSv2 then
+        GerarGrupoCNPJCPF(Cnpj, False)
+      else
+        GerarGrupoCNPJCPF(Cnpj, (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]));
 
       if (Provedor <> proBetha) or (IM <> '') then
         Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');

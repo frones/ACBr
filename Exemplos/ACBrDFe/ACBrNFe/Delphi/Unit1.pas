@@ -10,7 +10,8 @@ uses
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrMail, ACBrNFeDANFeRLClass,
-  ACBrDANFCeFortesFr, ACBrPosPrinter, Spin, ACBrDFeReport, ACBrDFeDANFeReport;
+  ACBrDANFCeFortesFr, ACBrPosPrinter, Spin, ACBrDFeReport, ACBrDFeDANFeReport,
+  ACBrIntegrador;
 
 type
 
@@ -233,6 +234,7 @@ type
     lSSLLib1: TLabel;
     cbSSLType: TComboBox;
     SpeedButton1: TSpeedButton;
+    ACBrIntegrador1: TACBrIntegrador;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -775,6 +777,21 @@ begin
  MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
  MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
  MemoDados.Lines.Add('xObs: '     +ACBrNFe1.WebServices.StatusServico.xObs);
+
+ if (ACBrNFe1.Integrador= ACBrIntegrador1) then
+ begin
+   if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
+   begin
+     MemoDados.Lines.Add('[Integrador]');
+     MemoDados.Lines.Add('Codigo='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo );
+     MemoDados.Lines.Add('Valor='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor );
+
+     ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
+     ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
+
+   end;
+ end;
+
 end;
 
 procedure TForm1.btnConsultarClick(Sender: TObject);
@@ -3314,7 +3331,7 @@ begin
      exit;
    end;
 
-  if (Trim(vSincrono) = '1') then
+  if (ACBrNFe1.Integrador= ACBrIntegrador1) or (Trim(vSincrono) = '1') then
     Sincrono := True
   else
     Sincrono := False;  
@@ -3322,7 +3339,8 @@ begin
   ACBrNFe1.NotasFiscais.Clear;
 
   ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
-  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve310;
+  ACBrNFe1.Configuracoes.Geral.VersaoDF := ve400;
+  ACBrNFe1.Configuracoes.Geral.VersaoQRCode := veqr200;
   GerarNFCe(vAux);
 
   ACBrNFe1.Enviar(vNumLote,True,Sincrono);
@@ -3362,6 +3380,21 @@ begin
     //MemoDados.Lines.Add('xMsg: '+ ACBrNFe1.WebServices.Enviar.xMsg);
     MemoDados.Lines.Add('Recibo: '+ ACBrNFe1.WebServices.Enviar.Recibo);
     //MemoDados.Lines.Add('Protocolo: '+ ACBrNFe1.WebServices.Enviar.Protocolo);
+
+    if (ACBrNFe1.Integrador= ACBrIntegrador1) then
+    begin
+      if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
+      begin
+        MemoResp.Lines.Add('[Integrador]');
+        MemoResp.Lines.Add('Codigo='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo );
+        MemoResp.Lines.Add('Valor='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor );
+
+        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
+        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
+
+      end;
+    end;
+
   end;
 
   ACBrNFe1.NotasFiscais.Clear;

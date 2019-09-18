@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 345
+  Left = 2752
   Height = 643
-  Top = 162
+  Top = 308
   Width = 870
   ActiveControl = btnSalvarConfig
   Caption = 'ACBrNFe - Demonstração'
@@ -13,7 +13,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
+  LCLVersion = '2.0.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 643
@@ -2403,11 +2403,11 @@ object Form1: TForm1
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.AtualizarXMLCancelado = True
     Configuracoes.Geral.VersaoQRCode = veqr200
-    Configuracoes.Arquivos.PathSchemas = '/home/celso/pascal/comp/ACBr/Exemplos/ACBrDFe/Schemas/NFe/'
-    Configuracoes.Arquivos.IniServicos = 'C:\Pascal\Comp\ACBr\trunk2\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini'
+    Configuracoes.Arquivos.PathSalvar = 'c:\temp\'
+    Configuracoes.Arquivos.PathSchemas = 'C:\ACBr\Exemplos\ACBrDFe\Schemas\NFe\'
+    Configuracoes.Arquivos.IniServicos = 'C:\ACBr\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini'
     Configuracoes.Arquivos.AdicionarLiteral = True
     Configuracoes.Arquivos.SepararPorCNPJ = True
     Configuracoes.Arquivos.SepararPorModelo = True
@@ -2415,6 +2415,7 @@ object Form1: TForm1
     Configuracoes.Arquivos.SepararPorMes = True
     Configuracoes.Arquivos.EmissaoPathNFe = True
     Configuracoes.Arquivos.SalvarEvento = True
+    Configuracoes.Arquivos.PathNFe = 'c:\temp\'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
@@ -2529,6 +2530,13 @@ object Form1: TForm1
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     left = 592
+    top = 376
+  end
+  object ACBrIntegrador1: TACBrIntegrador
+    ArqLOG = 'C:\Integrador\logs'
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    left = 496
     top = 376
   end
 end

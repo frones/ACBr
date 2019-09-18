@@ -16,6 +16,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    ACBrIntegrador1: TACBrIntegrador;
     ACBrMail1: TACBrMail;
     ACBrNFe2: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
@@ -1025,6 +1026,20 @@ begin
  MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrNFe1.WebServices.StatusServico.TMed));
  MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe1.WebServices.StatusServico.dhRetorno));
  MemoDados.Lines.Add('xObs: '     +ACBrNFe1.WebServices.StatusServico.xObs);
+
+ if (ACBrNFe1.Integrador= ACBrIntegrador1) then
+ begin
+   if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
+   begin
+     MemoDados.Lines.Add('[Integrador]');
+     MemoDados.Lines.Add('Codigo='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo );
+     MemoDados.Lines.Add('Valor='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor );
+
+     ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
+     ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
+
+   end;
+ end;
 end;
 
 procedure TForm1.btnConsultarClick(Sender: TObject);
@@ -2786,7 +2801,7 @@ procedure TForm1.GerarNFCe(NumNFe: String);
 begin
 
   with ACBrNFe1.NotasFiscais.Add.NFe do
-   begin
+  begin
 
      //Ide.cNF       := ; //Caso não seja preenchido será gerado um número aleatório pelo componente
      Ide.natOp     := 'VENDA';
@@ -3084,8 +3099,8 @@ begin
          xCampo := 'ObsFisco';
          xTexto := 'Texto';
        end; }
-   end;
-
+  end;
+  ACBrNFe1.NotasFiscais.GerarNFe;
 end;
 
 procedure TForm1.btnConsultarChaveClick(Sender: TObject);
@@ -3359,25 +3374,24 @@ begin
     CC:=TstringList.Create;
     CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
     CC.Add('anfm@zipmail.com.br');    //especifique um email válido
-    //TODO:
-    ////ACBrNFe1.EnviarEmailEvento(edtSmtpHost.Text
-    ////                         , edtSmtpPort.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , edtSmtpPass.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , Para
-    ////                         , edtEmailAssunto.Text
-    ////                         , mmEmailMsg.Lines
-    ////                         , cbEmailSSL.Checked // SSL - Conexão Segura
-    ////                         , True //Enviar PDF junto
-    ////                         , CC //Lista com emails que serão enviado cópias - TStrings
-    ////                         , Evento // Lista de anexos - TStrings
-    ////                         , False  //Pede confirmação de leitura do email
-    ////                         , False  //Aguarda Envio do Email(não usa thread)
-    ////                         , 'ACBrNFe2' // Nome do Rementente
-    ////                         , cbEmailSSL.Checked ); // Auto TLS
+    {ACBrNFe1.EnviarEmailEvento(edtSmtpHost.Text
+                             , edtSmtpPort.Text
+                             , edtSmtpUser.Text
+                             , edtSmtpPass.Text
+                             , edtSmtpUser.Text
+                             , Para
+                             , edtEmailAssunto.Text
+                             , mmEmailMsg.Lines
+                             , cbEmailSSL.Checked // SSL - Conexão Segura
+                             , True //Enviar PDF junto
+                             , CC //Lista com emails que serão enviado cópias - TStrings
+                             , Evento // Lista de anexos - TStrings
+                             , False  //Pede confirmação de leitura do email
+                             , False  //Aguarda Envio do Email(não usa thread)
+                             , 'ACBrNFe2' // Nome do Rementente
+                             , cbEmailSSL.Checked ); // Auto TLS
     CC.Free;
-    Evento.Free;
+    Evento.Free; }
   end;
 end;
 
@@ -3411,7 +3425,7 @@ begin
      exit;
    end;
 
-  if (Trim(vSincrono) = '1') then
+  if (ACBrNFe1.Integrador= ACBrIntegrador1) or (Trim(vSincrono) = '1') then
     Sincrono := True
   else
     Sincrono := False;  
@@ -3420,11 +3434,10 @@ begin
 
   ACBrNFe1.Configuracoes.Geral.ModeloDF := moNFCe;
   ACBrNFe1.Configuracoes.Geral.VersaoDF := ve400;
-  ACBrNFe1.Configuracoes.Geral.VersaoQRCode := veqr000;
+  ACBrNFe1.Configuracoes.Geral.VersaoQRCode := veqr200;
   GerarNFCe(vAux);
 
   ACBrNFe1.Enviar(vNumLote,True,Sincrono);
-
   if not Sincrono then
   begin
     MemoResp.Lines.Text := ACBrNFe1.WebServices.Retorno.RetWS;
@@ -3460,6 +3473,22 @@ begin
     //MemoDados.Lines.Add('xMsg: '+ ACBrNFe1.WebServices.Enviar.xMsg);
     MemoDados.Lines.Add('Recibo: '+ ACBrNFe1.WebServices.Enviar.Recibo);
     //MemoDados.Lines.Add('Protocolo: '+ ACBrNFe1.WebServices.Enviar.Protocolo);
+
+    if (ACBrNFe1.Integrador= ACBrIntegrador1) then
+    begin
+      if (ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo <> '') then
+      begin
+        MemoResp.Lines.Add('[Integrador]');
+        MemoResp.Lines.Add('Codigo='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo );
+        MemoResp.Lines.Add('Valor='+ ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor );
+
+        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Codigo:= '';
+        ACBrIntegrador1.ComandoIntegrador.IntegradorResposta.Valor:= '';
+
+      end;
+    end;
+
+
   end;
 
   ACBrNFe1.NotasFiscais.Clear;

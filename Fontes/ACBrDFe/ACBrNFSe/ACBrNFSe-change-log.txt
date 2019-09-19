@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/09/2019
+-- Diversos --
+[*] Mais alterações visando o provedor SimplISSv2.
+   Por: Italo Jurisato Junior
+
 18/09/2019
 -- Diversos --
 [*] Alterações visando o provedor SimplISSv2.

@@ -37,6 +37,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Height = 41
       AutoSize = True
       BandType = btSummary
+      BeforePrint = rlbContinuacaoInformacoesComplementaresBeforePrint
       object rlmContinuacaoDadosAdicionais: TRLMemo
         Tag = 20
         Left = 8

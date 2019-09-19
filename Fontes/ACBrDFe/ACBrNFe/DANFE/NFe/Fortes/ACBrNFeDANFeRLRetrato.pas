@@ -646,6 +646,8 @@ type
     rlbDivisaoRecibo: TRLBand;
     rliDivisao: TRLDraw;
 
+    procedure rlbContinuacaoInformacoesComplementaresBeforePrint(
+      Sender: TObject; var PrintIt: Boolean);
     procedure rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbReciboHeaderBarraBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -735,6 +737,12 @@ end;
 procedure TfrlDANFeRLRetrato.rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   PrintIt := (RLNFe.PageNumber = 1);
+end;
+
+procedure TfrlDANFeRLRetrato.rlbContinuacaoInformacoesComplementaresBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  if(RLNFe.PageNumber = 1) then RLNFe.NewPageNeeded := True;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);

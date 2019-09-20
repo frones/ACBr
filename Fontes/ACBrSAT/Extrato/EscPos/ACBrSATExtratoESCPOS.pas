@@ -172,7 +172,7 @@ begin
     SL := TStringList.Create;
     try
       SL.Text := TextoLateral;
-      LinhasTextoLateral := SL.Count;
+      LinhasTextoLateral := max(SL.Count-1,0);
       Altura := max(FPosPrinter.CalcularAlturaTexto(LinhasTextoLateral),230);
     finally
       SL.Free;

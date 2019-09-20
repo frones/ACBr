@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2019
+-- ACBrSATExtratoESCPOS --
+[-] Correção para impressão de Logo Lateral, em Epson TM-T20 e TM-T20X
+    (por: DSA)
+
 27/05/2019
 -- ACBrSAT --
 [*] Ajuste para envio de e-mail de CFe em modo Attachment

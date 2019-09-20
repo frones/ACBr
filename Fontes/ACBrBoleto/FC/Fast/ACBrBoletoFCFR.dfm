@@ -13,7 +13,6 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     Background = True
     HTMLTags = True
     Quality = 95
-    Transparency = False
     Author = 'FastReport'
     Subject = 'Exportando DANFE para PDF'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -23,7 +22,6 @@ object dmACBrBoletoFCFR: TdmACBrBoletoFCFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
-    PdfA = False
     Left = 48
     Top = 92
   end

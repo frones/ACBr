@@ -278,11 +278,16 @@ begin
 
     case Configuracoes.Geral.Provedor of
       proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
+
       pro4R:          InfElemento := 'Rps';
+
       proCTA,
       proNotaBlu:     InfElemento := 'RPS';
+
       proIPM:         InfElemento := 'nfse';
+
       proSMARAPD:     InfElemento := 'nfd';
+
       proGiap:        InfElemento := 'notaFiscal';
     end;
 
@@ -471,6 +476,7 @@ begin
     FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
     FNFSeW.NFSeWClass.VersaoDados   := Configuracoes.Geral.ConfigXML.VersaoDados;
+    FNFSeW.NFSeWClass.Ambiente      := Configuracoes.WebServices.Ambiente;
 
     FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;

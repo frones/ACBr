@@ -40,7 +40,7 @@ uses
 
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  synacode, pcnGerador, pnfsNFSe, pnfsConversao;
+  synacode, pcnGerador, pnfsNFSe, pcnConversao, pnfsConversao;
 
 type
 
@@ -69,6 +69,7 @@ type
     FServicoEnviar: String;
     FQuebradeLinha: String;
     FVersaoDados: String;
+    FAmbiente: TpcnTipoAmbiente;
 
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
@@ -92,6 +93,7 @@ type
     property ServicoEnviar: String   read FServicoEnviar write FServicoEnviar;
     property QuebradeLinha: String   read FQuebradeLinha write FQuebradeLinha;
     property VersaoDados: String     read FVersaoDados   write FVersaoDados;
+    property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente default taHomologacao;
   end;
 
   { TNFSeW }

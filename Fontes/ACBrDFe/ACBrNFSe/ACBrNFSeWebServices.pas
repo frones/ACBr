@@ -1853,7 +1853,8 @@ begin
                               FvNotas := FvNotas + '</NFSE>';
                             end;
 
-        proWEBFISCO: FvNotas := RetornarConteudoEntre(RPS, '<EnvNfe>', '</EnvNfe>');
+//        proWEBFISCO: FvNotas := RetornarConteudoEntre(RPS, '<EnvNfe>', '</EnvNfe>');
+        proWEBFISCO: FvNotas := RPS;
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -2184,6 +2185,7 @@ begin
            proLencois,
            proSMARAPD,
            proGiap,
+           proWEBFISCO,
            proIPM: FTagI := '';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
@@ -2316,6 +2318,7 @@ begin
        begin
          case FProvedor of
            proAssessorPublico,
+           proWEBFISCO,
            proIPM: FTagF := '';
          else
            FTagF := '</' + FTagGrupo + '>';

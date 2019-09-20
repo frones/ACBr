@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2019
+-- Diversos --
+[*] Alterações visando o provedor WebFisco.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/53711-nfse-goi%C3%A2nia-go-com-iss-retido/
+   Por: Igor Cibiac
+
 19/09/2019
 -- Diversos --
 [*] Mais alterações visando o provedor SimplISSv2.

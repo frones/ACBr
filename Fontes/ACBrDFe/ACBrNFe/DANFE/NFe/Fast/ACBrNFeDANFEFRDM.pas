@@ -136,6 +136,7 @@ type
     FBorderIcon : TBorderIcons;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
+    FOtimizaImpressaoPdf: Boolean;
 
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure frxReportPreview(Sender: TObject);
@@ -186,6 +187,7 @@ type
     property BorderIcon: TBorderIcons read FBorderIcon write FBorderIcon;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+    property OtimizaImpressaoPdf: Boolean read FOtimizaImpressaoPdf write FOtimizaImpressaoPdf;
 
     function PrepareReport(ANFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
@@ -224,6 +226,7 @@ begin
   FBorderIcon := [biSystemMenu,biMaximize,biMinimize];
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
+  FOtimizaImpressaoPdf := True;
 
   FDANFEClassOwner := TACBrDFeDANFeReport(AOwner);
 
@@ -245,9 +248,9 @@ begin
   FfrxPDFExport := TfrxPDFExport.Create(AOwner);
   with FfrxPDFExport do
   begin
-     PrintOptimized := True;
      Background    := FIncorporarBackgroundPdf;
      EmbeddedFonts := FIncorporarFontesPdf;
+     PrintOptimized := FOtimizaImpressaoPdf;
      Subject       := 'Exportando DANFE para PDF';
      ShowProgress  := False;
   end;
@@ -2355,6 +2358,7 @@ begin
     frxPDFExport.Keywords      := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
     frxPDFExport.Background    := IncorporarBackgroundPdf;
+    frxPDFExport.PrintOptimized := OtimizaImpressaoPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try
@@ -2413,6 +2417,7 @@ begin
     frxPDFExport.Keywords      := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
     frxPDFExport.Background    := IncorporarBackgroundPdf;
+    frxPDFExport.PrintOptimized := OtimizaImpressaoPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try
@@ -2461,6 +2466,7 @@ begin
     frxPDFExport.Keywords      := TITULO_PDF;
     frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
     frxPDFExport.Background    := IncorporarBackgroundPdf;
+    frxPDFExport.PrintOptimized := OtimizaImpressaoPdf;
 
     fsShowDialog := frxPDFExport.ShowDialog;
     try

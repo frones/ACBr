@@ -1709,7 +1709,7 @@ begin
                        '</' + FPrefixo4 + 'Rps>';
 
              proSimplISSv2: FvNotas := FvNotas +
-                       '<' + FPrefixo4 + 'Rps ' +
+                       '<' + FPrefixo4 + 'Rps' +
                           RetornarConteudoEntre(RPS,
                             '<' + FPrefixo4 + 'Rps', '</Signature>') +
                           '</Signature>'+
@@ -3629,6 +3629,9 @@ begin
 
       proSimplISSv2:
         FPDadosMsg := StringReplace(FPDadosMsg, 'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', 'GerarNfseEnvio', [rfReplaceAll]);
+
+      proNotaBlu:
+        FPDadosMsg := StringReplace(FPDadosMsg, 'EnvioRps xmlns=""', 'EnvioRps', [rfReplaceAll]);
     end;
   end
   else

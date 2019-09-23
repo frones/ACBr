@@ -715,8 +715,8 @@ begin
 
     proDeISS,
     proRLZ,
-    proSigCorp{,
-    proSimplISSv2}:
+    proSigCorp,
+    proSimplISSv2:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="dec' + NFSe.InfID.ID + '"');
 
     proISSDigital:
@@ -750,7 +750,7 @@ begin
       proABase, proDigifred, proBethav2, proEReceita, proFiorilli, proGovDigital,
       proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
       proCoplan, proSIAPNet, proSystemPro, proPronimv2, proTecnos, proTiplanv2,
-      proSigep, proDesenvolve, proCenti, proSimplISSv2:
+      proSigep, proDesenvolve, proCenti:
           Gerador.wGrupoNFSe('Rps');
 
       proISSDigital:

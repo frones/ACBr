@@ -962,7 +962,8 @@ begin
       try
         if (Leitor.rExtrai(1, 'RetornoConsulta') <> '') or
            (Leitor.rExtrai(1, 'RetornoConsultaLote') <> '') or
-           (Leitor.rExtrai(1, 'RetornoEnvioRPS') <> '') then
+           (Leitor.rExtrai(1, 'RetornoEnvioRPS') <> '') or
+           (Leitor.rExtrai(1, 'EnvioRPSResult') <> '') then
         begin
           ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 

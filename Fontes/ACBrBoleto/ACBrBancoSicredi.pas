@@ -1895,8 +1895,7 @@ begin
                TipoDescontoToString(ACBrTitulo.TipoDesconto2)              + // 42 tipo de desconto 3
                PadLeft('0', 8, '0')                                        + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                       + // 51-65 Valor ou percentual a ser concedido
-               IfThen((PercentualMulta > 0),
-                       IfThen(MultaValorFixo,'1','2'), '0')                + // 66 Código da multa - 1 valor fixo / 2 valor percentual / 0 Sem Multa
+               '2'                                                         + // 66 Código da multa - 2 valor percentual
                IfThen((DataMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMulta),
                                       '00000000')                          + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar

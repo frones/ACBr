@@ -50,6 +50,10 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+23/09/2019
+-- ACBrBancoSafra --
+[*] Ajustes geração remessa CNAB240 (código Multa)
+
 12/09/2019
 -- ACBrBancoSafra --
 [*] Reversão dos fontes com ultimos ajustes realizados.

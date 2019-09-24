@@ -48,10 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/09/2019
+-- pnfsLerListaNFSe --
+[*] Leitura do retorno ao executar o método Gerar - provedor NotaBlu.
+   Por: Italo Jurisato Junior
 -- pnfsConsSitLoteRpsResposta --
 [*] https://www.projetoacbr.com.br/forum/topic/53760-ajuste-no-processamento-de-retorno-de-lote-do-provedor-infisc/
    Por: Marcio st
-
 -- Diversos --
 [+] Implementação do provedor geNFe.
    Por: Italo Jurisato Junior

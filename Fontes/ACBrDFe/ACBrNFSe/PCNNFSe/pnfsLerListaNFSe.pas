@@ -968,7 +968,29 @@ begin
           ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
           i := 0;
-          while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
+          while (Leitor.rExtrai(2, 'ChaveNFeRPS', '', i + 1) <> '') do
+          begin
+            ListaNFSe.FMsgRetorno.New;
+
+            if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+            end;
+
+            if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+            end;
+
+            Inc(i);
+          end;
+
+          i := 0;
+          while (Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '') do
           begin
             ListaNFSe.FMsgRetorno.New;
             ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');

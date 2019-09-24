@@ -153,7 +153,7 @@ var
 begin
   if SuportaLogoLateral then
   begin
-    MetadeColunas := Trunc(FPosPrinter.ColunasFonteCondensada/2);
+    MetadeColunas := Trunc(FPosPrinter.ColunasFonteCondensada/2)-2;
     TextoLateral := '';
     if (Trim(CFe.Emit.xFant) <> '') then
       TextoLateral := TextoLateral + CFe.Emit.xFant + sLineBreak;
@@ -172,7 +172,7 @@ begin
     SL := TStringList.Create;
     try
       SL.Text := TextoLateral;
-      LinhasTextoLateral := max(SL.Count-1,0);
+      LinhasTextoLateral := SL.Count;
       Altura := max(FPosPrinter.CalcularAlturaTexto(LinhasTextoLateral),230);
     finally
       SL.Free;
@@ -180,7 +180,7 @@ begin
 
     FPosPrinter.Buffer.Add('</zera><mp>' +
                            FPosPrinter.ConfigurarRegiaoModoPagina(0,0,Altura,CLarguraRegiaoEsquerda)+
-                           StringOfChar(LF, LinhasTextoLateral)+ '</logo>');
+                           StringOfChar(LF, max(LinhasTextoLateral-1,0))+ '</logo>');
     FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda,0,Altura,325) +
                            '</ae><c>'+TextoLateral +
                            '</mp>');

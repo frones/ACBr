@@ -35,7 +35,7 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     ACBrSPEDContabil1: TACBrSPEDContabil;
-    procedure ACBrSPEDContabil1Error(const MsnError: AnsiString);
+    procedure ACBrSPEDContabil1Error(const MsnError: string);
     procedure btnB_0Click(Sender: TObject);
     procedure btnB_IClick(Sender: TObject);
     procedure btnB_JClick(Sender: TObject);
@@ -58,7 +58,7 @@ implementation
  {$R *.dfm}
 {$ENDIF}
 
-procedure TFrmSPEDContabil.ACBrSPEDContabil1Error(const MsnError: AnsiString);
+procedure TFrmSPEDContabil.ACBrSPEDContabil1Error(const MsnError: string);
 begin
    memoError.Lines.Add(MsnError);
 end;

@@ -118,12 +118,11 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 341
     end
     object edtFile: TEdit
       Left = 22
       Top = 28
-      Width = 292
+      Width = 288
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -158,7 +157,6 @@ object FrmSPEDContabil: TFrmSPEDContabil
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      ExplicitWidth = 450
     end
     object btnB_0: TButton
       Left = 15

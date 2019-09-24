@@ -417,6 +417,14 @@ begin
       begin
         chave := Leitor.rCampo(tcStr, 'chvAcessoNFSe');
 
+        if Leitor.rCampo(tcStr, 'sit') <> '' then
+        begin
+          InfSit.FSituacao := Leitor.rCampo(tcStr, 'sit');
+
+          if InfSit.FSituacao = '100' then
+            InfSit.FSituacao := '4';
+        end;
+
         j := 0;
         if (leitor.rExtrai(1, 'motivos') <> '') then
         begin
@@ -454,15 +462,16 @@ begin
       else
         sMotCod := '';
 
-      InfSit.FMsgRetorno.New;
-      InfSit.FMsgRetorno[0].FCodigo        := sMotCod;
-      InfSit.FMsgRetorno[0].FMensagem      := sMotDes;
-      InfSit.FMsgRetorno[0].FCorrecao      := '';
-      InfSit.FMsgRetorno[0].FchvAcessoNFSe := '';
-      InfSit.FMsgRetorno[0].Fsit           := situacao;
+      if sMotDes <> '' then
+      begin
+        InfSit.FMsgRetorno.New;
+        InfSit.FMsgRetorno[InfSit.FMsgRetorno.Count - 1].FCodigo        := sMotCod;
+        InfSit.FMsgRetorno[InfSit.FMsgRetorno.Count - 1].FMensagem      := sMotDes;
+        InfSit.FMsgRetorno[InfSit.FMsgRetorno.Count - 1].FCorrecao      := '';
+        InfSit.FMsgRetorno[InfSit.FMsgRetorno.Count - 1].FchvAcessoNFSe := '';
+        InfSit.FMsgRetorno[InfSit.FMsgRetorno.Count - 1].Fsit           := situacao;
+      end;
     end;
-
-
 
     Result := True;
   except

@@ -2796,11 +2796,17 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar.Envelope;
 
-  if (FProvedor = proThema) and (FNotasFiscais.Count < 4) then
-  begin
-    FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
-    FPSoapAction := StringReplace(FPSoapAction, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+  case FProvedor of
+    proThema:
+      begin
+        if (FNotasFiscais.Count < 4) then
+        begin
+          FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+          FPSoapAction := StringReplace(FPSoapAction, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+        end;
+      end;
   end;
+
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
@@ -2859,10 +2865,12 @@ begin
 
     // Italo 04/09/2019
     proDSFSJC:
-      FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd', 'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
+      FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd',
+                                              'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
 
     proSimplISSv2:
-      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', 'EnviarLoteRpsEnvio', [rfReplaceAll]);
+      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"',
+                                              'EnviarLoteRpsEnvio', [rfReplaceAll]);
   end;
 
   // Lote tem mais de 500kb ? //

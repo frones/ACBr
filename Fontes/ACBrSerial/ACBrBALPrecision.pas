@@ -136,9 +136,10 @@ begin
       Baud Rate = 1200, Data Bits = 8, Parity = None, Stop Bits = 1,
       Handshaking = None
       ----------------------}
-
 //  inherited;
 
+  //O "Exit" abaixo é apenas para remover o warning no FixInsight.
+  Exit;
 end;
 
 end.

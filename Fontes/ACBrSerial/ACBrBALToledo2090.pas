@@ -38,7 +38,7 @@ unit ACBrBALToledo2090;
 interface
 
 uses
-  ACBrBALClass, Classes;
+  Classes, ACBrBALClass;
 
 type
 
@@ -64,7 +64,7 @@ uses
    ACBrD5, Windows
   {$ENDIF};
 
-{ TACBrBALToledo }
+{ TACBrBALToledo2090 }
 
 constructor TACBrBALToledo2090.Create(AOwner: TComponent);
 begin

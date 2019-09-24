@@ -90,7 +90,7 @@ end;
 function TACBrBALWeightechWT1000.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
   wResposta: String;
-  wQtd, wPos: integer;
+  wPos: integer;
 begin
   Result    := 0;
   wResposta := aResposta;

@@ -107,11 +107,11 @@ end;
 
 function TACBrBALMarelCG62XL.InterpretarRepostaPeso(const aResposta: AnsiString): Double;
 var
-  wPosIni: Integer;
+//  wPosIni: Integer;
   wResposta: AnsiString;
 begin
   Result  := -9;
-  wPosIni := PosLast(STX, aResposta);
+//  wPosIni := PosLast(STX, aResposta);
 
   wResposta := InterpretarProtocoloEth(aResposta);
 

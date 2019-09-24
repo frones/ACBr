@@ -56,6 +56,7 @@ public
   function GerarCTeIni(XML: string): string;
   procedure RespostaConhecimentos(pImprimir: Boolean; pImpressora: String;
             pPreview: Boolean; pCopias: Integer; pPDF: Boolean);
+  procedure ImprimirCTe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
 
   property ACBrCTe: TACBrCTe read fACBrCTe;
 end;
@@ -594,6 +595,43 @@ begin
   end;
 end;
 
+procedure TACBrObjetoCTe.ImprimirCTe(pImpressora: String; pPreview: String;
+  pCopias: Integer; pPDF: Boolean);
+var
+  ArqPDF : String;
+begin
+  with fACBrCTe do
+  begin
+    if (Conhecimentos.Items[0].Confirmado) then
+    begin
+      DoConfiguraDACTe(pPDF, Trim(pPreview) );
+      if NaoEstaVazio(pImpressora) then
+        DACTE.Impressora := pImpressora;
+
+      if pCopias > 0 then
+        DACTE.NumCopias := pCopias;
+
+      if pPDF then
+      begin
+        Conhecimentos.Items[0].ImprimirPDF;
+        ArqPDF := OnlyNumber(ACBrCTe.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.pdf';
+
+        fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+                'PDF='+ PathWithDelim(ACBrCTe.DACTE.PathPDF) + ArqPDF + sLineBreak ;
+      end;
+
+      try
+        DoAntesDeImprimir(( StrToBoolDef( pPreview, False) ) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));
+        Conhecimentos.Items[0].Imprimir;
+      finally
+        DoDepoisDeImprimir;
+      end;
+
+    end;
+
+  end;
+end;
+
 function TACBrObjetoCTe.GerarCTeIni(XML: string): string;
 var
   INIRec: TMemIniFile;
@@ -1052,7 +1090,11 @@ begin
             slReplay);
             // Lista de slReplay - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
@@ -1383,6 +1425,7 @@ end;
           4 - MostrarPreview: 1 para mostrar preview (Default)
           5 - Numero de Copias: Inteiro com número de cópias (Default)
           6 - ImprimirPDF: 1 para imprimir PDF (Default)
+          7 - Assincrono: Boolean
 }
 procedure TMetodoCriarEnviarCTe.Executar;
 var
@@ -1394,6 +1437,7 @@ var
   APreview: Boolean;
   ACopias: Integer;
   APDF: Boolean;
+  Assincrono: Boolean;
   RespEnvio: TEnvioResposta;
   RespRetorno: TRetornoResposta;
 begin
@@ -1404,6 +1448,7 @@ begin
   APreview := StrToBoolDef(fpCmd.Params(4), False);
   ACopias := StrToIntDef(fpCmd.Params(5), 0);
   APDF := StrToBoolDef(fpCmd.Params(6), False);
+  Assincrono := StrToBoolDef( fpCmd.Params(7), True);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
@@ -1442,6 +1487,8 @@ begin
     else
       ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
 
+    ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
+
     ACBrCTe.WebServices.Enviar.Executar;
     RespEnvio := TEnvioResposta.Create(resINI);
     try
@@ -1451,22 +1498,28 @@ begin
        RespEnvio.Free;
     end;
 
-    ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
-    ACBrCTe.WebServices.Retorno.Executar;
-    RespRetorno := TRetornoResposta.Create('CTe', resINI);
-    try
-      RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
-                            ACBrCTe.WebServices.Retorno.Recibo,
-                            ACBrCTe.WebServices.Retorno.Msg,
-                            ACBrCTe.WebServices.Retorno.Protocolo,
-                            ACBrCTe.WebServices.Retorno.ChaveCTe);
-      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                     + sLineBreak + RespRetorno.Gerar;
-    finally
-      RespRetorno.Free;
-    end;
+    if (ACBrCTe.WebServices.Enviar.Recibo <> '') then //Assincrono
+    begin
+      ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
+      ACBrCTe.WebServices.Retorno.Executar;
+      RespRetorno := TRetornoResposta.Create('CTe', resINI);
+      try
+        RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
+                              ACBrCTe.WebServices.Retorno.Recibo,
+                              ACBrCTe.WebServices.Retorno.Msg,
+                              ACBrCTe.WebServices.Retorno.Protocolo,
+                              ACBrCTe.WebServices.Retorno.ChaveCTe);
+        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+                       + sLineBreak + RespRetorno.Gerar;
+      finally
+        RespRetorno.Free;
+      end;
+      RespostaConhecimentos(AImprime, AImpressora, APreview, ACopias, APDF);
+    end
+    else
+    if AImprime then //Sincrono
+      ImprimirCTe(AImpressora, BoolToStr(APreview,'1',''), ACopias, False);
 
-    RespostaConhecimentos(AImprime, AImpressora, APreview, ACopias, APDF);
   end;
 end;
 
@@ -1618,6 +1671,7 @@ end;
           2 - Assina: 1 para assinar XML
           3 - Imprime: 1 Para True. Default 0
           4 - Nome Impressora: String com Nome da Impressora
+          5 - Assincrono : Boolean
 }
 procedure TMetodoEnviarCTe.Executar;
 var
@@ -1627,12 +1681,14 @@ var
   AAssina, AImprime: Boolean;
   RespEnvio: TEnvioResposta;
   RespRetorno: TRetornoResposta;
+  Assincrono : Boolean;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
   AAssina := StrToBoolDef(fpCmd.Params(2), False);
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
+  Assincrono := StrToBoolDef( fpCmd.Params(5), True);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
@@ -1651,6 +1707,8 @@ begin
       else
         ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALote);
 
+      ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
+
       ACBrCTe.WebServices.Enviar.Executar;
       RespEnvio := TEnvioResposta.Create(resINI);
       try
@@ -1662,20 +1720,28 @@ begin
 
       ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
       ACBrCTe.WebServices.Retorno.Executar;
-      RespRetorno := TRetornoResposta.Create('CTe', resINI);
-      try
-        RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
-                              ACBrCTe.WebServices.Retorno.Recibo,
-                              ACBrCTe.WebServices.Retorno.Msg,
-                              ACBrCTe.WebServices.Retorno.Protocolo,
-                              ACBrCTe.WebServices.Retorno.ChaveCTe);
-        fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
-                       + sLineBreak + RespRetorno.Gerar;
-      finally
-        RespRetorno.Free;
-      end;
+      if (ACBrCTe.WebServices.Enviar.Recibo <> '') then //Assincrono
+      begin
+        ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
+        ACBrCTe.WebServices.Retorno.Executar;
+        RespRetorno := TRetornoResposta.Create('CTe', resINI);
+        try
+          RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
+                                ACBrCTe.WebServices.Retorno.Recibo,
+                                ACBrCTe.WebServices.Retorno.Msg,
+                                ACBrCTe.WebServices.Retorno.Protocolo,
+                                ACBrCTe.WebServices.Retorno.ChaveCTe);
+          fpCmd.Resposta := fpCmd.Resposta + sLineBreak + RespRetorno.Msg
+                         + sLineBreak + RespRetorno.Gerar;
+        finally
+          RespRetorno.Free;
+        end;
+        RespostaConhecimentos(AImprime, AImpressora, False, 0, False);
+      end
+      else
+      if AImprime then //Sincrono
+        ImprimirCTe(AImpressora, '', 0, False);
 
-      RespostaConhecimentos(AImprime, AImpressora, False, 0, False);
     finally
       CargaDFe.Free;
     end;
@@ -2009,13 +2075,14 @@ end;
 }
 procedure TMetodoGetPathEvento.Executar;
 var
-  CodEvento: Integer;
+  CodEvento: String;
+  ok: Boolean;
 begin
-  CodEvento := StrToInt(fpCmd.Params(0));
+  CodEvento := fpCmd.Params(0);
 
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(TpcnTpEvento(CodEvento));
+    fpCmd.Resposta := ACBrCTe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoCTe(ok ,CodEvento));
   end;
 end;
 
@@ -2347,7 +2414,11 @@ begin
             '',
             slReplay); // Lista de slReplay - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
@@ -2452,7 +2523,11 @@ begin
             '',
             slReplay); // Lista de slreplay - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);

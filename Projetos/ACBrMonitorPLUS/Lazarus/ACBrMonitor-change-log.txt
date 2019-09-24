@@ -43,6 +43,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2019
+[*] DoACBrCTe
+Adicionado funcionalidades para envio Síncrono do CT-e
+
+23/09/2019
+[*] DoACBrMDFe, DoACBrCTe, DoACBrNFe
+Ajustes e padronização dos métodos de Retorno de Path (GetPath / GetPathCanc / GetPathCCe / GetPathEvento)
+
+20/09/2019
+[*] DoACBrMDFe
+Padronização do retorno no método de Envio, retornando o Path do XML autorizado
+
+20/09/2019
+[*] DoACBrMDFe, DoACBrCTe
+Padronização do retorno no método de Consulta com path do XML atualizado quando existir
+
+20/09/2019
+[*] DoACBrMDFe
+Adicionado parametros de "Preview", "Cópias", "PDF" nos métodos que contém recursos de Impressão
+
+20/09/2019
+[*] ACBrMonitor1, DoEmailUnit, DoACBrNFeUnit
+Ajustes no retorno de envio de email, utilizando processamento paralelo
+
 30/08/2019
 [*] DoACBrCTe / DoACBrMDFe
 Ajustes no retorno de envio de documentos, padronizado conforme NFe.

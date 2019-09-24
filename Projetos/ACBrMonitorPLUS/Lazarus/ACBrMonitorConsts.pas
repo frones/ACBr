@@ -341,6 +341,7 @@ const
   CMetodoLerini =                      'lerini';
   CMetodoSetcertificado =              'setcertificado';
   CMetodoDistribuicaoDFeporChaveMDFe = 'distribuicaodfeporchavemdfe';
+  CMetodoGetPathMDFe =                 'getpathmdfe';
   CMetodoRestaurar =                   'restaurar';
   CMetodoOcultar =                     'ocultar';
   CMetodoEncerrarmonitor =             'encerrarmonitor';

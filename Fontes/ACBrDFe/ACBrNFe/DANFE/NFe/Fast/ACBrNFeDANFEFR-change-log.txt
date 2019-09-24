@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/09/2019
+-- ACBrNFeDANFERDM --
+[*] Ajuste de compatibilidade para impressão do QrCode nos .fr3 antigos.
+  Por: BigWings
+
 21/09/2019
 -- ACBrNFeDANFEFR, ACBrNFeDANFERDM --
 [+] Inclusão da propriedade "OtimizaImpressaoPdf" para controlar a qualidade

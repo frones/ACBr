@@ -2254,10 +2254,7 @@ begin
               else
                 qrcode := NFe.infNFeSupl.qrCode;
 
-              if Assigned(Sender) and (Sender.Name = 'ImgQrCode1') then
-                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
-
-              if Assigned(Sender) and (Sender.Name = 'ImgQrCode2') then
+              if Assigned(Sender) and (LeftStr(Sender.Name, 9) = 'ImgQrCode') then
                 PintarQRCode(qrcode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
 
               CpDescrProtocolo := frxReport.FindObject('Memo25');

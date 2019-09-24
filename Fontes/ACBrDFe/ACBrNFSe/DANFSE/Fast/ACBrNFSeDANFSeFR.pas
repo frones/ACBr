@@ -39,7 +39,7 @@ unit ACBrNFSeDANFSeFR;
 interface
 
 uses
-  SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,  
+  SysUtils, Classes, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,
   DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
 
 type
@@ -66,7 +66,7 @@ type
     procedure CarregaLogoPrefeitura;
     procedure CarregaImagemPrestadora;
 
-    function ManterDocumento(sCpfCnpj: String): string;
+    function ManterDocumento(const sCpfCnpj: String): string;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
 		procedure SetDataSetsToFrxReport;
   public
@@ -105,7 +105,7 @@ type
 implementation
 
 uses
-  ACBrNFSe, ACBrUtil, StrUtils, Dialogs, ACBrDFeUtil, Math;
+  ACBrNFSe, ACBrUtil, StrUtils, ACBrDFeUtil, Math;
 
 constructor TACBrNFSeDANFSeFR.Create(AOwner: TComponent);
 begin
@@ -879,10 +879,11 @@ begin
           FieldByName('CodigoMunicipio').AsString  := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
           FieldByName('ExigibilidadeISS').AsString := ExigibilidadeISSDescricao(ExigibilidadeISS);
 
-          if proEL = proEL then
-            FieldByName('MunicipioIncidencia').AsString := 'No Município'
-          else
-            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+//          if proEL = proEL then
+//            FieldByName('MunicipioIncidencia').AsString := 'No Município'
+//          else
+//            FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+          FieldByName('MunicipioIncidencia').AsString := 'No Município';
 
           if Valores.IssRetido = stRetencao then
             FieldByName('TipoRecolhimento').AsString := 'Retido'
@@ -1162,7 +1163,7 @@ begin
   end;
 end;
 
-function TACBrNFSeDANFSeFR.ManterDocumento(sCpfCnpj: String): string;
+function TACBrNFSeDANFSeFR.ManterDocumento(const sCpfCnpj: String): string;
 begin
   Result := sCpfCnpj;
   if NaoEstaVazio(Result) then

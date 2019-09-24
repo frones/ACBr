@@ -1251,7 +1251,11 @@ begin
             slReplay);
             // Lista de ReplayTo - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
@@ -2423,12 +2427,13 @@ end;
 }
 procedure TMetodoGetPathEvento.Executar;
 var
-  CodEvento: Integer;
+  CodEvento: String;
+  ok: Boolean;
 begin
-  CodEvento := StrToInt(fpCmd.Params(0));
+  CodEvento := fpCmd.Params(0);
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
-    fpCmd.Resposta := ACBrNFe.Configuracoes.Arquivos.GetPathEvento(TpcnTpEvento(CodEvento));
+    fpCmd.Resposta := ACBrNFe.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoNFe(ok ,CodEvento));
   end;
 end;
 
@@ -2759,7 +2764,11 @@ begin
             '',
             slReplay); // Lista com Endereços Replay - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
@@ -2863,7 +2872,11 @@ begin
             '',
             slReplay); // Lista de slReplay - TStrings
 
-          fpCmd.Resposta := 'Email enviado com sucesso';
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
         except
           on E: Exception do
             raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);

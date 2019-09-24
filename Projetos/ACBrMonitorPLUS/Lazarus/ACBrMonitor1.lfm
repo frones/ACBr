@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 410
+  Left = 401
   Height = 723
-  Top = 154
+  Top = 220
   Width = 1228
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1023
-        ActivePage = tsMonitor
+        ActivePage = tsBAL
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 8
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -2991,7 +2991,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           HelpKeyword = 'ACBrMonitor/LeitorSerial.htm'
           Caption = 'Leitor Serial'
           ClientHeight = 378
-          ClientWidth = 1068
+          ClientWidth = 1015
           Font.Height = -13
           ImageIndex = 10
           OnShow = tsLCBShow
@@ -3000,7 +3000,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 331
             Height = 137
             Top = 15
-            Width = 431
+            Width = 378
             Anchors = [akTop, akLeft, akRight]
             Shape = bsFrame
           end
@@ -3124,7 +3124,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 347
             Height = 25
             Top = 101
-            Width = 402
+            Width = 349
             Anchors = [akTop, akLeft, akRight]
             Font.Height = -13
             OnChange = edLCBPreExcluirChange
@@ -3139,7 +3139,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 25
             Hint = 'IMPORTANTE: Informar o sufixo correto é importante '#13#10'para ler corretamente um código de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o código '#13#10'do Sufixo no Final do campo "Ultima Leitura"'
             Top = 35
-            Width = 402
+            Width = 349
             Anchors = [akTop, akLeft, akRight]
             Font.Height = -13
             ItemHeight = 17
@@ -3301,7 +3301,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 34
             Hint = 'Última Leitura'
             Top = 160
-            Width = 628
+            Width = 575
             Anchors = [akTop, akLeft, akRight]
             BevelInner = bvLowered
             Caption = 'Última leitura'
@@ -8225,7 +8225,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 78
                       Height = 15
                       Top = 45
-                      Width = 57
+                      Width = 56
                       Caption = 'Versão CTe'
                       Font.CharSet = ANSI_CHARSET
                       Font.Color = clBlack
@@ -16240,6 +16240,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     DefaultCharset = UTF_8
     IDECharset = UTF_8
     OnMailProcess = ACBrMail1MailProcess
+    OnMailException = ACBrMail1MailException
     left = 526
     top = 600
   end

@@ -1221,6 +1221,8 @@ type
     procedure ACBrEAD1GetChavePrivada(var Chave: ansistring);
     procedure ACBrEAD1GetChavePublica(var Chave: ansistring);
     procedure ACBrGIF1Click(Sender: TObject);
+    procedure ACBrMail1MailException(const AMail: TACBrMail;
+      const E: Exception; var ThrowIt: Boolean);
     procedure ACBrMail1MailProcess(const AMail: TACBrMail;
       const aStatus: TMailStatus);
     procedure ACBrNFe1GerarLog(const ALogLine: string; var Tratado: boolean);
@@ -2301,6 +2303,17 @@ begin
   OpenURL('http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html');
 end;
 
+procedure TFrmACBrMonitor.ACBrMail1MailException(const AMail: TACBrMail;
+  const E: Exception; var ThrowIt: Boolean);
+begin
+  if ACBrMail1.UseThread then
+  begin
+    ThrowIt := False;
+    Resposta('', 'ERRO: ' + 'Erro ao Enviar email: ('+ E.Message + ')');
+  end;
+
+end;
+
 procedure TFrmACBrMonitor.ACBrMail1MailProcess(const AMail: TACBrMail;
   const aStatus: TMailStatus);
 begin
@@ -2332,6 +2345,7 @@ begin
         AddLinesLog(ACBrMail1.GetLastSmtpError)
       else
         AddLinesLog('Email: Enviado com sucesso');
+
     end;
   end;
 end;

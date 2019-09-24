@@ -46,6 +46,7 @@ type
 TACBrObjetoEMail = class(TACBrObjetoDFe)
 private
   fACBrEMail: TACBrMail;
+
 public
   constructor Create(AConfig: TMonitorConfig; ACBrEMail: TACBrMail); reintroduce;
   procedure Executar(ACmd: TACBrCmd); override;
@@ -58,6 +59,7 @@ public
   procedure ChecarEmailNovo;
 
   property ACBrEMail: TACBrMail read fACBrEMail;
+
 end;
 
 { TMetodoNovo}
@@ -638,7 +640,11 @@ begin
 
       fACBrEMail.Send;
 
-      fpCmd.Resposta := 'E-mail enviado com sucesso!';
+      if not(fACBrEMail.UseThread) then
+        fpCmd.Resposta := 'E-mail enviado com sucesso!'
+      else
+        fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
     except
       on E: Exception do
       begin

@@ -11,6 +11,7 @@
         EscEpsonP2,
         CustomPos,
         EscPosStar,
-        EscZJiang
+        EscZJiang,
+		EscGPrinter
     }
 }

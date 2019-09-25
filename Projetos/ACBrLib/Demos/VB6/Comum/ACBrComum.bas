@@ -44,6 +44,7 @@ Public Enum ACBrPosPrinterModelo
     CustomPos = 7
     EscPosStar = 8
 	EscZJiang = 9
+	EscGPrinter = 10
 End Enum
 
 Public Enum ACBrPosTipoStatus

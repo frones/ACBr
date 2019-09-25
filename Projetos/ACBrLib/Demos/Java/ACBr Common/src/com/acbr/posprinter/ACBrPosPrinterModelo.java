@@ -13,7 +13,8 @@ public enum  ACBrPosPrinterModelo {
     EscEpsonP2(6),
     CustomPos(7),
     EscPosStar(8),
-	EscZJiang(9);
+	EscZJiang(9),
+	EscGPrinter(10);
     
     private static final Map<Integer, ACBrPosPrinterModelo> map;
     private final int enumValue; 

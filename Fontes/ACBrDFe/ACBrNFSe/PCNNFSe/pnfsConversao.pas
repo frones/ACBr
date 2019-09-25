@@ -114,7 +114,7 @@ type
                     proTiplanv2, proGiss, proDeISS, proTcheInfov2, proDataSmart,
                     proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
                     proGiap, proAssessorPublico, proSigIss, proElotech,
-                    proSilTecnologia, proiiBrasilv2, proWEBFISCO, proDSFSJC,
+                    proSilTecnologia, proiiBrasilv2, proWebFisco, proDSFSJC,
                     proSimplISSv2, proLencois, progeNFe );
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
@@ -131,7 +131,7 @@ type
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
                 loInfisc, loISSDSF, loGoverna, loSP, loCONAM, loAgili, loSMARAPD, 
-                loIPM, loGiap, loAssessorPublico, loSigIss, loElotech, loWEBFISCO,
+                loIPM, loGiap, loAssessorPublico, loSigIss, loElotech, loWebFisco,
                 loLencois);
 
   TnfseFrete = ( tfPrestador, tfTomador );
@@ -546,7 +546,7 @@ begin
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
          proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
-         proiiBrasilv2, proWEBFISCO, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
+         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -588,7 +588,7 @@ begin
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
          proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
-         proiiBrasilv2, proWEBFISCO, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
+         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18485,7 +18485,7 @@ begin
     proAssessorPublico: Result := loAssessorPublico;
     proSigIss:      Result := loSigIss;
     proElotech:     Result := loElotech;
-    proWEBFISCO:    Result := loWEBFISCO;
+    proWebFisco:    Result := loWebFisco;
     proLencois:     Result := loLencois;
 else
     Result := loNone;

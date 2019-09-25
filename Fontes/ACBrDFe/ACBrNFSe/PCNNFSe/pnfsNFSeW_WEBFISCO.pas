@@ -29,7 +29,7 @@
 
 {$I ACBr.inc}
 
-unit pnfsNFSeW_WEBFISCO;
+unit pnfsNFSeW_WebFisco;
 
 interface
 
@@ -46,9 +46,9 @@ uses
   pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
-  { TNFSeW_WEBFISCOPublico }
+  { TNFSeW_WebFisco }
 
-  TNFSeW_WEBFISCO = class(TNFSeWClass)
+  TNFSeW_WebFisco = class(TNFSeWClass)
   private
   protected
     procedure GerarNotas;
@@ -66,19 +66,19 @@ uses
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }
-{ layout do provedor WEBFISCO.                                          }
+{ layout do provedor WebFisco.                                          }
 { Sendo assim só será criado uma nova unit para um novo layout.                }
 {==============================================================================}
 
-{ TNFSeW_WEBFISCO }
+{ TNFSeW_WebFisco }
 
-constructor TNFSeW_WEBFISCO.Create(ANFSeW: TNFSeW);
+constructor TNFSeW_WebFisco.Create(ANFSeW: TNFSeW);
 begin
   inherited Create(ANFSeW);
 
 end;
 
-procedure TNFSeW_WEBFISCO.GerarNotas;
+procedure TNFSeW_WebFisco.GerarNotas;
 Var
   cSimples: Boolean;
   xAtrib: string;
@@ -96,7 +96,7 @@ begin
   begin
     Gerador.wCampoNFSe(tcInt, '', 'usuario', 1,  6, 1, NFSe.Prestador.Usuario, '', True, xAtrib);
     Gerador.wCampoNFSe(tcInt, '', 'pass'   , 1,  6, 1, NFSe.Prestador.Senha, '', True, xAtrib);
-    Gerador.wCampoNFSe(tcStr, '', 'prf'    , 1, 18, 1,  NFSe.Prestador.CNPJ_Prefeitura, '', True, xAtrib);
+    Gerador.wCampoNFSe(tcStr, '', 'prf'    , 1, 18, 1, NFSe.Prestador.CNPJ_Prefeitura, '', True, xAtrib);
     Gerador.wCampoNFSe(tcStr, '', 'usr'    , 1, 18, 1, NFSe.Prestador.Cnpj, '', True, xAtrib);
   end
   else
@@ -275,7 +275,7 @@ begin
   Gerador.wGrupo('/EnvNfe');
 end;
 
-function TNFSeW_WEBFISCO.GerarXml: Boolean;
+function TNFSeW_WebFisco.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
 
@@ -289,7 +289,7 @@ begin
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
-function TNFSeW_WEBFISCO.ObterNomeArquivo: String;
+function TNFSeW_WebFisco.ObterNomeArquivo: String;
 begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;

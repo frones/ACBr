@@ -1235,6 +1235,23 @@ begin
       end;
     end;
 
+    if FProvedor = proWebFisco then
+    begin
+      i := 0;
+      while Leitor.rExtrai(1, 'item xsi:type="tns:EnvNfe"', '', i + 1 ) <> '' do
+      begin
+        ListaNfse.FMsgRetorno.New;
+        ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo( tcStr, 'okk xsi:type="xsd:string"' );
+
+        if ListaNfse.FMsgRetorno[i].FMensagem = 'OK' then
+          ListaNfse.FMsgRetorno[i].FCodigo   := 'A0000'
+        else
+          ListaNfse.FMsgRetorno[i].FCodigo   := 'Erro';
+
+        Inc(i);
+      end;
+    end;
+
   except
     Result := False;
   end;

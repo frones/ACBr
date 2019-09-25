@@ -201,7 +201,7 @@ begin
     loSMARAPD:     FNFSeWClass := TNFSeW_SMARAPD.Create(Self);
     loIPM:         FNFSeWClass := TNFSeW_IPM.Create(Self);
     loAssessorPublico : FNFSeWClass := TNFSeW_AssesorPublico.Create(Self);
-    loWEBFISCO:    FNFSeWClass := TNFSeW_WEBFISCO.Create(Self);
+    loWebFisco:    FNFSeWClass := TNFSeW_WebFisco.Create(Self);
     loLencois:     FNFSeWClass := TNFSeW_Lencois.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);

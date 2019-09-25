@@ -161,7 +161,7 @@ type
 
   TACBrPosPrinterModelo = (ppTexto, ppEscPosEpson, ppEscBematech, ppEscDaruma,
                            ppEscVox, ppEscDiebold, ppEscEpsonP2, ppCustomPos,
-                           ppEscPosStar, ppEscZJiang);
+                           ppEscPosStar, ppEscZJiang, ppEscGPrinter);
 
   { TACBrPosPrinterClass }
 
@@ -485,6 +485,7 @@ uses
   synacode,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
   ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang,
+  ACBrEscGPrinter,
   ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
 
 { TACBrConfigModoPagina }
@@ -1135,7 +1136,8 @@ begin
     ppEscEpsonP2 : FPosPrinterClass := TACBrEscEpsonP2.Create(self);
     ppCustomPos : FPosPrinterClass := TACBrEscCustomPos.Create(self);
     ppEscPosStar: FPosPrinterClass := TACBrEscPosStar.Create(Self);
-    ppEscZJiang: FPosPrinterClass := TACBrEscZJiang.Create(Self);
+    ppEscZJiang: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
+    ppEscGPrinter: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   end;

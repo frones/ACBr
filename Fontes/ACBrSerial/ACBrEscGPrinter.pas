@@ -40,7 +40,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrEscZJiang;
+unit ACBrEscGPrinter;
 
 interface
 
@@ -52,15 +52,13 @@ type
 
   { TACBrEscCustomPos }
 
-  { TACBrEscZJiang }
+  { TACBrEscGPrinter }
 
-  TACBrEscZJiang = class(TACBrEscPosEpson)
+  TACBrEscGPrinter = class(TACBrEscPosEpson)
   protected
     procedure VerificarKeyCodes; override;
   public
     constructor Create(AOwner: TACBrPosPrinter);
-
-    function ComandoQrCode(const ACodigo: AnsiString): AnsiString; override;
   end;
 
 implementation
@@ -69,66 +67,28 @@ uses
   strutils, math,
   ACBrUtil, ACBrConsts;
 
-{ TACBrEscZJiang }
+{ TACBrEscGPrinter }
 
-constructor TACBrEscZJiang.Create(AOwner: TACBrPosPrinter);
+constructor TACBrEscGPrinter.Create(AOwner: TACBrPosPrinter);
 begin
   inherited Create(AOwner);
 
-  fpModeloStr := 'EscZJiang';
+  fpModeloStr := 'EscGPrinter';
 
   {(*}
-    with Cmd  do
-    begin
-      CorteTotal        := GS  + 'V' + #1;        // Only the partial cut is available; there is no full cut
-      Beep              := ESC + 'B' + #1 + #3;   // n - Refers to the number of buzzer times,
-      LigaModoPagina    := '';
-      DesligaModoPagina := '';
-      ImprimePagina     := '';
-    end;
-    {*)}
-
-    TagsNaoSuportadas.Add( cTagModoPaginaLiga );
-    TagsNaoSuportadas.Add( cTagModoPaginaDesliga );
-    TagsNaoSuportadas.Add( cTagModoPaginaImprimir );
-    TagsNaoSuportadas.Add( cTagModoPaginaDirecao );
-    TagsNaoSuportadas.Add( cTagModoPaginaPosEsquerda );
-    TagsNaoSuportadas.Add( cTagModoPaginaPosTopo );
-    TagsNaoSuportadas.Add( cTagModoPaginaLargura );
-    TagsNaoSuportadas.Add( cTagModoPaginaAltura );
-    TagsNaoSuportadas.Add( cTagModoPaginaEspaco );
-    TagsNaoSuportadas.Add( cTagModoPaginaConfigurar );
+  with Cmd  do
+  begin
+    Beep := ESC + 'B' + #1 + #3;   // n - Refers to the number of buzzer times,
+  end;
+  {*)}
 end;
 
-procedure TACBrEscZJiang.VerificarKeyCodes;
+procedure TACBrEscGPrinter.VerificarKeyCodes;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
     if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
       raise EPosPrinterException.Create(fpModeloStr+' apenas aceitas KeyCode1=1, KeyCode2=0');
-  end;
-end;
-
-function TACBrEscZJiang.ComandoQrCode(const ACodigo: AnsiString): AnsiString;
-var
-  EC: AnsiChar;
-begin
-  with fpPosPrinter.ConfigQRCode do
-  begin
-     case ErrorLevel of
-       1: EC := 'M';
-       2: EC := 'Q';
-       3: EC := 'H';
-     else
-       EC := 'L';
-     end;
-
-     Result := ESC + 'Z' +                          // Coamndo de QRCode
-               #0 +                             // m means specified version.(1~40,0:Auto size)
-               EC +                             // n specifies the EC level.(L:7%,M:15%,Q:25%,H:30%)
-               AnsiChr(min(8,LarguraModulo)) +  // k specified component type.(1~8)
-               IntToLEStr(length(ACodigo))   +  // dL + dH
-               ACodigo;
   end;
 end;
 

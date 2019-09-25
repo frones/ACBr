@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/09/2019
+-- ACBrPosPrinter, ACBrEscGPrinter --
+[+] Adicionado novo modelo: ppEscGPrinter
+    Muito utilizado por diversos fabricantes, e bastante compatível com Epson Esc/Pos
+    (por: DSA)
+
 Data: 21/05/2019
 -- ACBrPosPrinter --
 [-] Restaurando suporte a Hooks Epson e Elgin, removidos acidentalmente no commit: 16570

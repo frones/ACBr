@@ -336,6 +336,7 @@ begin
                   IdLote := NumeroLote;
               end;
 
+    proActcon,
     proBethav2,
     proIssDSF,
     proSIAPNet,

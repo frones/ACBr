@@ -49,6 +49,9 @@ Símbolo : Significado
 
 26/09/2019
 -- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/53852-altera%C3%A7%C3%A3o-para-envio-e-retorno-provedor-pvh-e-iibrasil/
+   Por: André Guimarães
+-- Diversos --
 [*] Alterações visando o provedor SimplISSv2.
    Por: Ernesto Ricardo / Moacir Ezequiel Lamego
 

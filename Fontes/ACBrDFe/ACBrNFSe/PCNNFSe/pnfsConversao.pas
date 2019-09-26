@@ -883,6 +883,7 @@ var
         25300: Cidade := 'Goiânia/GO';
         33800: Cidade := 'Aparecida de Goiânia/GO';
        530020: Cidade := 'Brazlandia/DF';
+        28800: Cidade := 'Trindade/GO';
    end;
  end;
 
@@ -6659,6 +6660,7 @@ var
         25300: CodSiafi := ''; // Goiânia/GO
         33800: CodSiafi := ''; // Aparecida de Goiânia/GO
        530020: CodSiafi := ''; // Brazlandia/DF
+        28800: CodSiafi := ''; // Trindade/GO
    end;
  end;
 

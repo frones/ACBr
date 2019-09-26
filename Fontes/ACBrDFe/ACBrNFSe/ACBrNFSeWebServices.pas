@@ -772,12 +772,10 @@ begin
 
     proActcon:
       begin
-      {
         if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
           FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
         else
           FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'nfseserv', [rfReplaceAll]);
-      }
       end;
   end;
 end;
@@ -853,6 +851,7 @@ begin
       CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
     CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpaceTemp, [rfReplaceAll]);
+    CabMsg := StringReplace(CabMsg, '%NameSpaceXML%', NameSpace, [rfReplaceAll]);
     CabMsg := StringReplace(CabMsg, '%VersaoAtrib%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoAtrib, [rfReplaceAll]);
     CabMsg := StringReplace(CabMsg, '%VersaoDados%', FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados, [rfReplaceAll]);
 
@@ -1556,7 +1555,8 @@ begin
 
     proISSDSF: Result := Alerta203 or (FDataRecebimento <> 0);
 
-    proEgoverneISS: Result := ProcSucesso;
+    proEgoverneISS, 
+    proiiBrasilv2: Result := ProcSucesso;
   else
     Result := (FDataRecebimento <> 0);
   end;

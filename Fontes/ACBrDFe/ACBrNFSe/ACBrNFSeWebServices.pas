@@ -1500,6 +1500,16 @@ begin
     ProcSucesso := False;
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
     begin
+      if fProvedor = proNotaBlu then
+      begin
+        FNotasFiscais.Items[0].NFSe.Numero := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.Numero;
+        FNotasFiscais.Items[0].NFSe.CodigoVerificacao := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.CodigoVerificacao;
+        FNotasFiscais.Items[0].NFSe.SeriePrestacao := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.SerieRPS;
+        FNotasFiscais.Items[0].NFSe.NumeroLote := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.NumeroRPS;
+        FNotasFiscais.Items[0].Confirmada := True;
+        FProtocolo := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.CodigoVerificacao;
+      end;
+
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
          (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin

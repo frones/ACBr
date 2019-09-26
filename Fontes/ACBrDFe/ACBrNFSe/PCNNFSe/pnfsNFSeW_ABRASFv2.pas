@@ -516,7 +516,7 @@ begin
     Gerador.wCampoNFSe(tcStr, '#20', 'IssRetido', 01, 01, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), DSC_INDISSRET);
 
   if ((NFSe.Servico.Valores.IssRetido <> stNormal) and not (FProvedor in [proGoiania, proSigep])) or
-     (FProvedor in [proProdata, proVirtual, proVersaTecnologia, proSimplISSv2]) then
+     (FProvedor in [proProdata, proVirtual, proVersaTecnologia]) then
     Gerador.wCampoNFSe(tcStr, '#21', 'ResponsavelRetencao', 01, 01, 1, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), DSC_INDRESPRET);
 
   if FProvedor <> proGoiania then
@@ -864,7 +864,7 @@ begin
   GerarIntermediarioServico;
   GerarConstrucaoCivil;
 
-  if not (FProvedor in [proSigep, proiiBrasilv2]) then
+  if not (FProvedor in [proSigep, proiiBrasilv2, proSimplISSv2]) then
     if NFSe.RegimeEspecialTributacao <> retNenhum then
       Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN);
 

@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/09/2019
+-- Diversos --
+[*] Alterações visando o provedor SimplISSv2.
+   Por: Ernesto Ricardo / Moacir Ezequiel Lamego
+
+26/09/2019
 -- ACBrNFSeWebServices --
 [*] https://www.projetoacbr.com.br/forum/topic/53835-provedor-saatri-erro-durante-o-processo-de-validacao/
    Por: Henrique Sandri Zimermam

@@ -976,6 +976,10 @@ begin
             begin
               ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
               ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+
+              if ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero = '' then
+                ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
+
               ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
             end;
 

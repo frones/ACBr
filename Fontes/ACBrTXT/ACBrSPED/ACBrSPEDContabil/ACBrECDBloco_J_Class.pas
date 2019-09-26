@@ -360,36 +360,45 @@ begin
                   LFill(IND_GRP_DRE) +
                   LFill(NOTAS_EXP_REF)
                   );
+           end 
+           else
+           /// Layout 6 a partir da escrituração ano calendário 2017
+           if DT_INI >= EncodeDate(2017,01,01) then
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1) +
+                  LFill(VL_CTA_ULT_DRE, 19, 2, True) +
+                  LFill(IND_VL_ULT_DRE, 1, True) +
+                  LFill(NOTAS_EXP_REF)
+                  );
            end
-             else
-             begin
-               /// Layout 6 a partir da escrituração ano calendário 2017
-               if DT_INI >= EncodeDate(2017,01,01) then
-               begin
-                 Add( LFill('J150') +
-                      LFill(COD_AGL) +
-                      LFill(NIVEL_AGL) +
-                      LFill(DESCR_COD_AGL) +
-                      LFill(VL_CTA, 19, 2) +
-                      LFill(IND_VL, 1) +
-                      LFill(VL_CTA_ULT_DRE, 19, 2, True) +
-                      LFill(IND_VL_ULT_DRE, 1, True) +
-                      LFill(NOTAS_EXP_REF)
-                      );
-               end
-                 else
-                 begin
-                   Add( LFill('J150') +
-                        LFill(COD_AGL) +
-                        LFill(NIVEL_AGL) +
-                        LFill(DESCR_COD_AGL) +
-                        LFill(VL_CTA, 19, 2) +
-                        LFill(IND_VL, 1) +
-                        LFill(VL_CTA_ULT_DRE, 19, 2, True) +
-                        LFill(IND_VL_ULT_DRE, 1, True)
-                        );
-                 end;
-            end;
+           else
+           if DT_INI >= EncodeDate(2015,01,01) then
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1) +
+                  LFill(VL_CTA_ULT_DRE, 19, 2, True) +
+                  LFill(IND_VL_ULT_DRE, 1, True)
+                  );
+           end
+           else
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1)
+                  );
+           end;
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;

@@ -750,29 +750,14 @@ begin
       NFeDM.Travar;
       Resp := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta);
       try
-        with NFeDM.ACBrNFe1 do
-        begin
-          with WebServices do
-          begin
-            Inutilizacao.CNPJ := CNPJ;
-            Inutilizacao.Justificativa := Justificativa;
-            Inutilizacao.Modelo := Modelo;
-            Inutilizacao.Serie := Serie;
-            Inutilizacao.Ano := Ano;
-            Inutilizacao.NumeroInicial := NumeroInicial;
-            Inutilizacao.NumeroFinal := NumeroFinal;
 
-            if Inutilizacao.Executar then
-            begin
-              Resp.Processar(NFeDM.ACBrNFe1);
-              Resposta := Resp.Gerar;
-              MoverStringParaPChar(Resposta, sResposta, esTamanho);
-              Result := SetRetorno(ErrOK, Resposta);
-            end
-            else
-              Result := SetRetornoWebService(SSL.HTTPResultCode, Inutilizacao.XMotivo);
-          end;
-        end;
+        NFeDM.ACBrNFe1.WebServices.Inutiliza(CNPJ, Justificativa, Ano,
+                                             Modelo, Serie, NumeroInicial, NumeroFinal);
+
+        Resp.Processar(NFeDM.ACBrNFe1);
+        Resposta := Resp.Gerar;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         Resp.Free;
         NFeDM.Destravar;
@@ -1192,10 +1177,10 @@ begin
           begin
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.Processar(NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
+              Resp.Processar(WebServices.DistribuicaoDFe.retDistDFeInt,
+                             WebServices.DistribuicaoDFe.Msg,
+                             WebServices.DistribuicaoDFe.NomeArq,
+                             WebServices.DistribuicaoDFe.ListaArqs);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;

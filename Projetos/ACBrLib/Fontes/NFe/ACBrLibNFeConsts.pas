@@ -42,7 +42,7 @@ uses
 
 const
   CLibNFeNome = 'ACBrLibNFe';
-  CLibNFeVersao = '0.0.1';
+  CLibNFeVersao = '0.1.1';
 
   CSessaoDANFE = 'DANFE';
   CChaveTipoDANFE = 'TipoDANFE';

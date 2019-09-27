@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2019
+-- ACBrLibNFeClass --
+[-] Correção do metodo inutilização.
+    Por: Rafael Dias
+
 13/09/2019
 -- ACBrLibNFeClass --
 [-] Corrigido erro ao salvar a ultima resposta.

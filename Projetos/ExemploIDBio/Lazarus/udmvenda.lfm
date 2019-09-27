@@ -1,0 +1,45 @@
+object dmVenda: TdmVenda
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 178
+  HorizontalOffset = 1037
+  VerticalOffset = 103
+  Width = 264
+  PPI = 96
+  object tblVenda: TMemDataset
+    FieldDefs = <    
+      item
+        Name = 'NumItem'
+        DataType = ftAutoInc
+        Size = 2
+      end    
+      item
+        Name = 'Código'
+        DataType = ftLargeint
+      end    
+      item
+        Name = 'Descricao'
+        DataType = ftString
+        Size = 20
+      end    
+      item
+        Name = 'Qtde'
+        DataType = ftFloat
+      end    
+      item
+        Name = 'ValorUnit'
+        DataType = ftFloat
+      end    
+      item
+        Name = 'ValorItem'
+        DataType = ftFloat
+      end    
+      item
+        Name = 'ItemCancelado'
+        DataType = ftBoolean
+      end>
+    OnNewRecord = tblVendaNewRecord
+    left = 29
+    top = 8
+  end
+end

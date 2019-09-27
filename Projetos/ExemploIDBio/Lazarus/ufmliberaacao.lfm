@@ -1,0 +1,59 @@
+object fmLiberaAcao: TfmLiberaAcao
+  Left = 420
+  Height = 188
+  Top = 282
+  Width = 485
+  Caption = 'fmLiberaAcao'
+  ClientHeight = 188
+  ClientWidth = 485
+  OnShow = FormShow
+  LCLVersion = '2.0.4.0'
+  object lblMensagem: TLabel
+    Left = 80
+    Height = 32
+    Top = 16
+    Width = 314
+    Caption = 'Por favor, coloque sua digital.'
+    Font.Height = -24
+    ParentColor = False
+    ParentFont = False
+  end
+  object Button1: TButton
+    Left = 264
+    Height = 48
+    Top = 120
+    Width = 171
+    Cancel = True
+    Caption = 'Cancelar'
+    Font.Color = clRed
+    Font.Height = -24
+    ModalResult = 2
+    ParentFont = False
+    TabOrder = 0
+  end
+  object btnReinicia: TButton
+    Left = 40
+    Height = 49
+    Top = 120
+    Width = 155
+    Caption = 'Reiniciar'
+    Font.Height = -21
+    OnClick = btnReiniciaClick
+    ParentFont = False
+    TabOrder = 1
+  end
+  object tmrValida: TTimer
+    Enabled = False
+    Interval = 50
+    OnTimer = tmrValidaTimer
+    left = 384
+    top = 72
+  end
+  object tmrFechaForm: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = tmrFechaFormTimer
+    left = 432
+    top = 16
+  end
+end

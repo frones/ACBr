@@ -1,0 +1,16 @@
+Esse é o exemplo desenvolvido por nós utilizado pela Control iD no 2o. Dia do ACBr - 2019
+
+Ele simula um caixa, cuja função de cancelar item precisa de identificação.
+Venda itens digitando o código (qualquer número) e pressionando enter.
+Cancele itens por selecionar o item desejado e apertar F11.
+
+Você grava uma digital de autorização por meio do menu principal.
+Nesse exemplo, o template da digital é armazenada em um arquivo "Digital.txt", apenas para exemplificar que pode ser armazenado.
+No entanto, como falado nas palestras, há uma versão do iD Bio que pode armazenar digitais nele e te retornar um índice que serviria como código pra você.
+Em caso de muitas digitais, é muito melhor então você armazenar as digitais num banco de dados e subir para os aparelhos nas estações ao iniciar a sua aplicação.
+
+Outras informações podem ser conseguidas na documentação do iD Bio.
+
+Requisitos para essa aplicação:
+   * você precisa da libcidbio.dll
+   * você precisa de um aparelho iDBio

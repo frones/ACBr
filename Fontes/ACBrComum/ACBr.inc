@@ -63,10 +63,16 @@
 {.$DEFINE DFE_SEM_MSXML}
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
 {.$DEFINE DFE_SEM_INDY}
+// Descomente a linha abaixo, se você não deseja utilizar a libxml2 para ler e gerar os arquivos xml
+{$DEFINE DFE_ACBR_LIBXML2}
 
 {$IfDef DFE_SEM_OPENSSL}
   {$Define DFE_SEM_XMLSEC}
   {$Define DFE_SEM_LIBXML2}
+{$EndIf}
+
+{$IfDef DFE_SEM_LIBXML2}
+  {$UnDef DFE_ACBR_LIBXML2}
 {$EndIf}
 
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)

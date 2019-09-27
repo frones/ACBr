@@ -100,53 +100,12 @@ type
       const IdAttr: String = ''): boolean; override;
   end;
 
-procedure LibXmlInit();
-procedure LibXmlShutDown();
-
 implementation
 
 uses
   synacode,
-  ACBrUtil, ACBrDFeUtil, ACBrConsts, ACBrDFeException;
-
-var
-  LibXMLLoaded: boolean;
-
-  { TDFeSSLXmlSignLibXml2 }
-
-procedure LibXmlInit;
-begin
-  if (LibXMLLoaded) then
-    Exit;
-
-  // --Inicializar funções das units do libxml2
-  libxml2.Init;
-
-  { Init libxml and libxslt libraries }
-  xmlInitThreads();
-  xmlInitParser();
-  xmlXPathInit();
-  xmlSubstituteEntitiesDefault(1);
-  __xmlLoadExtDtdDefaultValue^ := XML_DETECT_IDS or XML_COMPLETE_ATTRS;
-  __xmlIndentTreeOutput^ := 1;
-  __xmlSaveNoEmptyTags^ := 1;
-
-  LibXMLLoaded := True;
-end;
-
-procedure LibXmlShutDown();
-begin
-  if (not LibXMLLoaded) then
-    Exit;
-
-  { Shutdown libxslt/libxml }
-  xmlCleanupParser();
-  xmlCleanupThreads();
-  xmlCleanupMemory();
-  xmlCleanupGlobals();
-
-  LibXMLLoaded := False;
-end;
+  ACBrLibXml2, ACBrUtil, ACBrDFeUtil, 
+  ACBrConsts, ACBrDFeException;
 
 function TDFeSSLXmlSignLibXml2.Assinar(const ConteudoXML, docElement,
   infElement: String; const SignatureNode: String; const SelectionNamespaces: String;
@@ -732,13 +691,5 @@ begin
       xmlFreeDoc(memDoc);
   end;
 end;
-
-initialization
-
-LibXMLLoaded := False;
-
-finalization
-
-LibXmlShutDown;
 
 end.

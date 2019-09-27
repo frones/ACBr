@@ -53,8 +53,13 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
-  ACBrNFeConfiguracoes,
-  pcnNFe, pcnNFeR, pcnNFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
+  ACBrNFeConfiguracoes, pcnNFe,
+  {$IfDef DFE_ACBR_LIBXML2}
+    ACBrNFeXmlReader, ACBrNFeXmlWriter,
+  {$Else}
+     pcnNFeR, pcnNFeW,
+  {$EndIf}
+   pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
 
@@ -63,8 +68,13 @@ type
   NotaFiscal = class(TCollectionItem)
   private
     FNFe: TNFe;
+{$IfDef DFE_ACBR_LIBXML2}
+    FNFeW: TNFeXmlWriter;
+    FNFeR: TNFeXmlReader;
+{$Else}
     FNFeW: TNFeW;
     FNFeR: TNFeR;
+{$EndIf}
 
     FConfiguracoes: TConfiguracoesNFe;
     FXMLAssinado: String;
@@ -197,8 +207,14 @@ constructor NotaFiscal.Create(Collection2: TCollection);
 begin
   inherited Create(Collection2);
   FNFe := TNFe.Create;
-  FNFeW := TNFeW.Create(FNFe);
-  FNFeR := TNFeR.Create(FNFe);
+  {$IfDef DFE_ACBR_LIBXML2}
+    FNFeW := TNFeXmlWriter.Create(FNFe);
+    FNFeR := TNFeXmlReader.Create(FNFe);
+{$Else}
+    FNFeW := TNFeW.Create(FNFe);
+    FNFeR := TNFeR.Create(FNFe);
+{$EndIf}
+
   FConfiguracoes := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).Configuracoes;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
@@ -1472,11 +1488,16 @@ begin
 end;
 
 function NotaFiscal.LerXML(const AXML: String): Boolean;
+{$IfNDef DFE_ACBR_LIBXML2}
 var
   XMLStr: String;
+{$EndIf}
 begin
   XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
+{$IfDef DFE_ACBR_LIBXML2}
+  FNFeR.Arquivo := XMLOriginal;
+{$Else}
   { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
     Isso é necessário, para que as propriedades fiquem com a acentuação correta }
   XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
@@ -1491,8 +1512,8 @@ begin
   XMLStr := StringReplace(XMLStr, ' xmlns="http://www.portalfiscal.inf.br/nfe"', '', [rfReplaceAll]);
 
   FNFeR.Leitor.Arquivo := XMLStr;
+{$EndIf}
   FNFeR.LerXml;
-
   Result := True;
 end;
 
@@ -3480,6 +3501,17 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     IdAnterior := NFe.infNFe.ID;
+{$IfDef DFE_ACBR_LIBXML2}
+    FNFeW.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
+    FNFeW.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FNFeW.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
+    FNFeW.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FNFeW.Opcoes.NormatizarMunicipios  := Configuracoes.Arquivos.NormatizarMunicipios;
+    FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
+    FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
+    // Ainda não adicionado no gerador pois o mesmo foi feito antes desta NT
+    //FNFeW.Opcoes.ForcarGerarTagRejeicao938 := Configuracoes.Geral.ForcarGerarTagRejeicao938;
+{$Else}
     FNFeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
@@ -3488,6 +3520,7 @@ begin
     FNFeW.Opcoes.PathArquivoMunicipios := Configuracoes.Arquivos.PathArquivoMunicipios;
     FNFeW.Opcoes.CamposFatObrigatorios := Configuracoes.Geral.CamposFatObrigatorios;
     FNFeW.Opcoes.ForcarGerarTagRejeicao938 := Configuracoes.Geral.ForcarGerarTagRejeicao938;
+{$EndIf}
 
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
 
@@ -3495,20 +3528,30 @@ begin
     FNFeW.CSRT   := Configuracoes.RespTec.CSRT;
   end;
 
+{$IfNDef DFE_ACBR_LIBXML2}
   FNFeW.Opcoes.GerarTXTSimultaneamente := False;
+{$EndIf}
 
   FNFeW.GerarXml;
   //DEBUG
   //WriteToTXT('c:\temp\Notafiscal.xml', FNFeW.Gerador.ArquivoFormatoXML, False, False);
 
+{$IfDef DFE_ACBR_LIBXML2}
+  XMLOriginal := FNFeW.Document.Xml;  // SetXMLOriginal() irá converter para UTF8
+{$Else}
   XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+{$EndIf}
 
   { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
     nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
+{$IfDef DFE_ACBR_LIBXML2}
+  FAlertas := ACBrStr( FNFeW.ListaDeAlertas.Text );
+{$Else}
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
+{$EndIf}
   Result := FXMLOriginal;
 end;
 
@@ -3516,6 +3559,8 @@ function NotaFiscal.GerarTXT: String;
 var
   IdAnterior : String;
 begin
+  Result := '';
+{$IfNDef DFE_ACBR_LIBXML2}
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     IdAnterior                             := NFe.infNFe.ID;
@@ -3539,6 +3584,7 @@ begin
 
   FAlertas := FNFeW.Gerador.ListaDeAlertas.Text;
   Result   := FNFeW.Gerador.ArquivoFormatoTXT;
+{$EndIf}
 end;
 
 function NotaFiscal.CalcularNomeArquivo: String;

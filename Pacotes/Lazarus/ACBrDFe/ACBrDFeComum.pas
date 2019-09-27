@@ -9,7 +9,8 @@ interface
 
 uses
   ACBrDFeConfiguracoes, ACBrDFeWebService, ACBrDFeUtil, ACBrDFe, ACBrDFeSSL, 
-  ACBrDFeException, ACBrDFeRegUtil, ACBrDFeReport;
+  ACBrDFeException, ACBrDFeRegUtil, ACBrDFeReport, ACBrLibXml2, ACBrXmlReader, 
+  ACBrXmlWriter;
 
 implementation
 

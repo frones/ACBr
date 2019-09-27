@@ -2491,6 +2491,16 @@ begin
     VUNIT.Lines.Add(FloatToString(fpCTe.infCTeNorm.veicNovos.Items[i].vUnit, ','));
     VFRETE.Lines.Add(FloatToString(fpCTe.infCTeNorm.veicNovos.Items[i].vFrete, ','));
   end;
+
+  RLDraw228.Height := CHASSI.Top + CHASSI.Height + 5;
+  for I := 0 to (TRLBand(Sender).ControlCount - 1) do
+  begin
+    if TRLBand(Sender).Controls[I] is TRLDraw then
+    begin
+      if TRLDraw(TRLBand(Sender).Controls[I]).DrawKind = dkLine then
+        TRLDraw(TRLBand(Sender).Controls[I]).Height := RLDraw228.Height - RLDraw229.Top - 1;
+    end;
+  end;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_CTeOS_PrestacaoServicoBeforePrint(Sender: TObject;

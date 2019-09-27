@@ -9,8 +9,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
-    Left = 8
-    Top = 8
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -546,7 +544,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_09_Obs: TRLBand
       Left = 26
-      Top = 1446
+      Top = 1348
       Width = 742
       Height = 70
       BandType = btHeader
@@ -1337,7 +1335,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_10_ModRodFracionado: TRLBand
       Left = 26
-      Top = 1560
+      Top = 1524
       Width = 742
       Height = 44
       BandType = btHeader
@@ -1576,7 +1574,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_11_ModRodLot103: TRLBand
       Left = 26
-      Top = 1604
+      Top = 1568
       Width = 742
       Height = 108
       BandType = btHeader
@@ -4381,7 +4379,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_17_Sistema: TRLBand
       Left = 26
-      Top = 2090
+      Top = 2054
       Width = 742
       Height = 16
       BandType = btHeader
@@ -4437,7 +4435,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_16_DadosExcEmitente: TRLBand
       Left = 26
-      Top = 2022
+      Top = 1986
       Width = 742
       Height = 68
       AutoSize = True
@@ -5403,7 +5401,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_12_ModAereo: TRLBand
       Left = 26
-      Top = 1819
+      Top = 1783
       Width = 742
       Height = 97
       BandType = btHeader
@@ -5915,7 +5913,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_13_ModAquaviario: TRLBand
       Left = 26
-      Top = 1916
+      Top = 1880
       Width = 742
       Height = 92
       BandType = btHeader
@@ -6272,7 +6270,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_14_ModFerroviario: TRLBand
       Left = 26
-      Top = 2008
+      Top = 1972
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6282,7 +6280,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_15_ModDutoviario: TRLBand
       Left = 26
-      Top = 2015
+      Top = 1979
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6567,7 +6565,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_11_ModRodLot104: TRLBand
       Left = 26
-      Top = 1712
+      Top = 1676
       Width = 742
       Height = 107
       BandType = btHeader
@@ -7052,7 +7050,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_18_Recibo: TRLBand
       Left = 26
-      Top = 2106
+      Top = 2070
       Width = 742
       Height = 97
       BandType = btHeader
@@ -7653,9 +7651,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_VeiculosNovos: TRLBand
       Left = 26
-      Top = 1348
+      Top = 1418
       Width = 742
-      Height = 98
+      Height = 62
+      AutoSize = True
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -7664,7 +7663,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 0
         Top = 1
         Width = 741
-        Height = 97
+        Height = 61
         Brush.Style = bsClear
       end
       object RLLabel222: TRLLabel
@@ -7777,7 +7776,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 123
         Top = 16
         Width = 1
-        Height = 81
+        Height = 46
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7786,7 +7785,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 332
         Top = 16
         Width = 1
-        Height = 81
+        Height = 46
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7795,7 +7794,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 500
         Top = 16
         Width = 1
-        Height = 81
+        Height = 46
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7804,7 +7803,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 620
         Top = 16
         Width = 1
-        Height = 81
+        Height = 46
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7813,8 +7812,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 5
         Top = 33
         Width = 116
-        Height = 63
-        AutoSize = False
+        Height = 16
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -7831,8 +7829,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 128
         Top = 33
         Width = 201
-        Height = 63
-        AutoSize = False
+        Height = 16
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -7849,8 +7846,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 336
         Top = 33
         Width = 161
-        Height = 63
-        AutoSize = False
+        Height = 16
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -7867,8 +7863,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 509
         Top = 33
         Width = 108
-        Height = 63
-        AutoSize = False
+        Height = 16
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -7885,8 +7880,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 625
         Top = 33
         Width = 112
-        Height = 63
-        AutoSize = False
+        Height = 16
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -8445,7 +8439,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_Dados_Seguradora: TRLBand
       Left = 26
-      Top = 1516
+      Top = 1480
       Width = 742
       Height = 44
       BandType = btHeader

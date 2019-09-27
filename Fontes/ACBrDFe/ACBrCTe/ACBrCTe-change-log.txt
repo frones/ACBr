@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] https://www.projetoacbr.com.br/forum/topic/53135-ajuste-na-impress%C3%A3o-do-dacte/
+  Por: Maikon Pazazzolo
+
 19/09/2019
 -- ACBrCTeServicos --
 [*] Atualização das URLs de QR-Code da SVC-SP.

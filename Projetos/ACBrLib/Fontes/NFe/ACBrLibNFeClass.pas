@@ -750,14 +750,25 @@ begin
       NFeDM.Travar;
       Resp := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta);
       try
+        with NFeDM.ACBrNFe1 do
+        begin
+          with WebServices do
+          begin
+            Inutilizacao.CNPJ := CNPJ;
+            Inutilizacao.Justificativa := Justificativa;
+            Inutilizacao.Modelo := Modelo;
+            Inutilizacao.Serie := Serie;
+            Inutilizacao.Ano := Ano;
+            Inutilizacao.NumeroInicial := NumeroInicial;
+            Inutilizacao.NumeroFinal := NumeroFinal;
 
-        NFeDM.ACBrNFe1.WebServices.Inutiliza(CNPJ, Justificativa, Ano,
-                                             Modelo, Serie, NumeroInicial, NumeroFinal);
-
-        Resp.Processar(NFeDM.ACBrNFe1);
-        Resposta := Resp.Gerar;
-        MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+            Inutilizacao.Executar;
+            Resp.Processar(NFeDM.ACBrNFe1);
+            Resposta := Resp.Gerar;
+            MoverStringParaPChar(Resposta, sResposta, esTamanho);
+            Result := SetRetorno(ErrOK, Resposta);
+          end;
+        end;
       finally
         Resp.Free;
         NFeDM.Destravar;

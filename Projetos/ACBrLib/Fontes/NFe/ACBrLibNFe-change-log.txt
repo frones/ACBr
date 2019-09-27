@@ -48,6 +48,8 @@ Símbolo : Significado
 -- ACBrLibNFeClass --
 [-] Correção do metodo inutilização.
     Por: Rafael Dias
+[-] Correção do metodo cancelar.
+    Por: Rafael Dias
 
 13/09/2019
 -- ACBrLibNFeClass --

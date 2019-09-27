@@ -1009,22 +1009,18 @@ begin
       end;
 
       try
-        if NFeDM.ACBrNFe1.EnviarEvento(ALote) then
-        begin
-          Resp := TCancelamentoResposta.Create(resINI);
-          try
-            Resp.Processar(NFeDM.ACBrNFe1);
-            Resposta := Resp.XMotivo + sLineBreak;
-            Resposta := Resposta + Resp.Gerar;
-          finally
-            Resp.Free;
-          end;
+        NFeDM.ACBrNFe1.EnviarEvento(ALote);
 
-          MoverStringParaPChar(Resposta, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, Resposta);
-        end
-        else
-          Result := SetRetornoWebService(NFeDM.ACBrNFe1.SSL.HTTPResultCode, 'Cancelar');
+        Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta);
+        try
+          Resp.Processar(NFeDM.ACBrNFe1);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
+        end;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       except
         raise EACBrLibException.Create(ErrRetorno, NFeDM.ACBrNFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
       end;

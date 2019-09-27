@@ -39,8 +39,7 @@ interface
 
 uses
   SysUtils, Classes, contnrs,
-  pcnEventoNFe, pcnRetEnvEventoNFe,
-  pcnRetConsReciDFe, pcnRetConsCad, pcnRetConsSitNFe,
+  pcnEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe,
   ACBrLibResposta, ACBrNFe;
 
 type

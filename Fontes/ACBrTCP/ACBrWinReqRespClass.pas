@@ -62,6 +62,7 @@ type
     FEncodeDataToUTF8: Boolean;
     FSOAPAction: String;
     FMimeType: String;
+    FMethod: String;
     // (ex.: 'application/soap+xml' ou 'text/xml' - que é o Content-Type)
     FCharsets: String; //  (ex.: 'ISO-8859-1,utf-8' - que é o Accept-Charset)
     FData: AnsiString;
@@ -86,6 +87,7 @@ type
     property CertContext: PCCERT_CONTEXT read FCertContext write FCertContext;
     property SOAPAction: String read FSOAPAction write FSOAPAction;
     property MimeType: String read FMimeType write FMimeType;
+    property Method: String read FMethod write FMethod;
     property Charsets: String read FCharsets write FCharsets;
     property Url: String read FUrl write FUrl;
     property Data: AnsiString read FData write FData;
@@ -129,6 +131,7 @@ begin
   FTimeOut := 0;
   FEncodeDataToUTF8 := False;
   FSSLType := LT_all;
+  FMethod := 'POST';
 
   FpHTTPResultCode := 0;
   FpInternalErrorCode := 0;

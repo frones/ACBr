@@ -123,7 +123,7 @@ var
   aBuffer: array[0..4096] of AnsiChar;
   BytesRead, BytesWrite: cardinal;
   UseSSL, UseCertificate: Boolean;
-  ANone, AURI, AHost, AProt, APort, AMethod, AHeader, AMimeType: String;
+  ANone, AURI, AHost, AProt, APort, AHeader: String;
   wHeader: WideString;
   ConnectPort: WORD;
   AccessType, RequestFlags, flags, flagsLen: DWORD;
@@ -142,8 +142,6 @@ begin
   AHost := '';
   APort := '';
   ANone := '';
-  AMethod := 'POST';
-  AMimeType := Self.MimeType;
 
   AURI := ParseURL(Url, AProt, ANone, ANone, AHost, APort, ANone, ANone);
 
@@ -267,7 +265,7 @@ begin
     {$EndIf}
     CheckNotAborted;
     fRequest := WinHttpOpenRequest( fConnection,
-                                    LPCWSTR(WideString(AMethod)),
+                                    LPCWSTR(WideString(Method)),
                                     LPCWSTR(WideString(AURI)),
                                     Nil,
                                     WINHTTP_NO_REFERER,
@@ -309,7 +307,7 @@ begin
       AHost := AHost +':'+ APort;
 
     AHeader := 'Host: ' + AHost + sLineBreak +
-              'Content-Type: ' + AMimeType + '; charset='+Charsets + SLineBreak +
+              'Content-Type: ' + MimeType + '; charset='+Charsets + SLineBreak +
               'Accept-Charset: ' + Charsets + SLineBreak;
 
     if Self.SOAPAction <> '' then
@@ -339,7 +337,7 @@ begin
     {$EndIf}
     BytesWrite := 0;
     CheckNotAborted;
-    if not WinHttpWriteData(fRequest, PAnsiChar(Self.Data), Length(Self.Data), @BytesWrite) then
+    if (Length(Self.Data) > 0) and not WinHttpWriteData(fRequest, PAnsiChar(Self.Data), Length(Self.Data), @BytesWrite) then
     begin
       UpdateErrorCodes(fRequest);
       raise EACBrWinReqResp.Create('Falha Enviando Dados. Erro:' + GetWinInetError(FpInternalErrorCode));

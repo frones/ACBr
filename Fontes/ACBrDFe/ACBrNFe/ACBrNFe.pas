@@ -296,7 +296,7 @@ end;
 function TACBrNFe.CstatCancelada(AValue: integer): Boolean;
 begin
   case AValue of
-    101, 151, 155: Result := True;
+    101, 135, 151, 155: Result := True;
     else
       Result := False;
   end;

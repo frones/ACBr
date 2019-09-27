@@ -64,7 +64,7 @@
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
 {.$DEFINE DFE_SEM_INDY}
 // Descomente a linha abaixo, se você não deseja utilizar a libxml2 para ler e gerar os arquivos xml
-{$DEFINE DFE_ACBR_LIBXML2}
+{.$DEFINE DFE_ACBR_LIBXML2}
 
 {$IfDef DFE_SEM_OPENSSL}
   {$Define DFE_SEM_XMLSEC}

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2019
+-- pcnNFeW --
+[*] Alterado de opcional para obrigatório algumas tags do cst 51.
+  Por: Italo Jurisato Junior
+
 13/09/2019
 -- pcnEnvEventoNFe --
 [*] Correção para não tentar extrair CPF da chave de acesso no envio de evento

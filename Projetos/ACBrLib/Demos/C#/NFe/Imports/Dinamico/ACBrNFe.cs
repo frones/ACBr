@@ -579,25 +579,13 @@ namespace ACBrLib.NFe
 
             switch (ret)
             {
-                case -10:
-                    throw new ApplicationException(FromUTF8(buffer));
-
                 case -6:
                     throw new DirectoryNotFoundException(FromUTF8(buffer));
 
                 case -5:
                     throw new FileNotFoundException(FromUTF8(buffer));
 
-                case -4:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -3:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -2:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -1:
+                default:
                     throw new ApplicationException(FromUTF8(buffer));
             }
         }

@@ -382,6 +382,9 @@ function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
 function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
 procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
+function StringIsINI(AString: String): Boolean;
+function StringIsAFile(AString: String): Boolean;
+function StringIsXML(AString: String): Boolean;
 
 {$IfDef FPC}
 var ACBrANSIEncoding: String;
@@ -4305,15 +4308,52 @@ var
 begin
   SL := TStringList.Create;
   try
-    if (pos(LF, IniArquivoOuString) = 0) and FilesExists(IniArquivoOuString) then
-      SL.LoadFromFile(IniArquivoOuString)
+    if StringIsINI(IniArquivoOuString) then
+      SL.Text := StringToBinaryString( IniArquivoOuString )
     else
-      SL.Text := StringToBinaryString( IniArquivoOuString );
+    begin
+      if not StringIsAFile(IniArquivoOuString) then
+        raise Exception.Create(ACBrStr('String INI informada não é válida.'))
+      else
+      begin
+        if FileExists(IniArquivoOuString) then
+          SL.LoadFromFile(IniArquivoOuString)
+        else
+          raise Exception.CreateFmt(ACBrStr('Arquivo: %s não encontrado.'), [IniArquivoOuString] );
+      end;
+    end;
 
     AMemIni.SetStrings(SL);
   finally
     SL.Free;
   end;
+end;
+
+{------------------------------------------------------------------------------
+   Valida se é um arquivo contém caracteres existentes em um ini
+ ------------------------------------------------------------------------------}
+function StringIsINI(AString: String): Boolean;
+begin
+  Result :=(pos('[', AString) > 0) and (pos(']', AString) > 0) and (pos('=', AString) > 0);
+end;
+
+{------------------------------------------------------------------------------
+   Valida as características básicas de um File válido
+ ------------------------------------------------------------------------------}
+function StringIsAFile(AString: String): Boolean;
+begin
+  Result := (AString <> '') and
+            (not StringIsXML(AString)) and
+            (not StringIsINI(AString)) and
+            (Length(AString) < 255) ;
+end;
+
+{------------------------------------------------------------------------------
+   Valida se é um arquivo contém caracteres existentes em um xml
+ ------------------------------------------------------------------------------}
+function StringIsXML(AString: String): Boolean;
+begin
+   Result :=(pos('<', AString) > 0) and (pos('>', AString) > 0);
 end;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;

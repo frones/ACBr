@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ACBrLib.Core
 {
@@ -147,6 +149,7 @@ namespace ACBrLib.Core
         protected readonly Dictionary<Type, string> methodList;
         protected readonly Dictionary<string, Delegate> methodCache;
         protected readonly string className;
+        protected const int BUFFER_LEN = 256;
 
         #endregion Fields
 
@@ -308,6 +311,45 @@ namespace ACBrLib.Core
         protected virtual ApplicationException ProcessException(Exception exception)
         {
             return new ApplicationException(exception.Message, exception);
+        }
+
+        protected static string ToUTF8(string value)
+        {
+            return string.IsNullOrEmpty(value) ? value : Encoding.Default.GetString(Encoding.UTF8.GetBytes(value));
+        }
+
+        protected static string FromUTF8(StringBuilder value)
+        {
+            if (value == null) return null;
+            return value.Length == 0
+                ? string.Empty
+                : Encoding.UTF8.GetString(Encoding.Default.GetBytes(value.ToString()));
+        }
+
+        protected abstract string GetUltimoRetorno();
+
+        protected string ProcessResult(StringBuilder buffer, int bufferLen)
+        {
+            return bufferLen > BUFFER_LEN ? GetUltimoRetorno() : FromUTF8(buffer);
+        }
+
+        protected void CheckResult(int ret)
+        {
+            if (ret >= 0) return;
+
+            var ultimoRetorno = GetUltimoRetorno();
+
+            switch (ret)
+            {
+                case -6:
+                    throw new DirectoryNotFoundException(ultimoRetorno);
+
+                case -5:
+                    throw new FileNotFoundException(ultimoRetorno);
+
+                default:
+                    throw new ApplicationException(ultimoRetorno);
+            }
         }
 
         #endregion Methods

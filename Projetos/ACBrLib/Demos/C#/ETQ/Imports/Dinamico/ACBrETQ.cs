@@ -305,55 +305,19 @@ namespace ACBrLib.ETQ
             AddMethod<Delegates.ETQ_ImprimirImagem>("ETQ_ImprimirImagem");
         }
 
-        private static string ToUTF8(string value)
+        protected override string GetUltimoRetorno()
         {
-            return string.IsNullOrEmpty(value) ? value : Encoding.Default.GetString(Encoding.UTF8.GetBytes(value));
-        }
-
-        private static string FromUTF8(StringBuilder value)
-        {
-            if (value == null) return null;
-            return value.Length == 0 ? string.Empty : Encoding.UTF8.GetString(Encoding.Default.GetBytes(value.ToString()));
-        }
-
-        private void CheckResult(int ret)
-        {
-            if (ret >= 0) return;
-
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
             var ultimoRetorno = GetMethod<Delegates.ETQ_UltimoRetorno>();
 
             ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-            if (bufferLen > BUFFER_LEN)
-            {
-                buffer.Capacity = bufferLen;
-                ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-            }
+            if (bufferLen <= BUFFER_LEN) return FromUTF8(buffer);
 
-            switch (ret)
-            {
-                case -10:
-                    throw new ApplicationException(FromUTF8(buffer));
+            buffer.Capacity = bufferLen;
+            ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
 
-                case -6:
-                    throw new DirectoryNotFoundException(FromUTF8(buffer));
-
-                case -5:
-                    throw new FileNotFoundException(FromUTF8(buffer));
-
-                case -4:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -3:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -2:
-                    throw new ApplicationException(FromUTF8(buffer));
-
-                case -1:
-                    throw new ApplicationException(FromUTF8(buffer));
-            }
+            return FromUTF8(buffer);
         }
 
         #endregion Private Methods

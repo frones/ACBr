@@ -156,7 +156,7 @@ type
       out cMun: integer; cPais: integer; const vxUF, vxMun: string; vcMun: integer);
 
   protected
-    function CreateOptions: TNFeXmlWriterOptions; override;
+    function CreateOptions: TACBrXmlWriterOptions; override;
 
   public
     constructor Create(AOwner: TNFe); reintroduce;
@@ -201,7 +201,7 @@ begin
   inherited Destroy;
 end;
 
-function TNFeXmlWriter.CreateOptions: TNFeXmlWriterOptions;
+function TNFeXmlWriter.CreateOptions: TACBrXmlWriterOptions;
 begin
   Result := TNFeXmlWriterOptions.Create();
 end;

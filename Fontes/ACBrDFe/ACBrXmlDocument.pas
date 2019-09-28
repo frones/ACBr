@@ -304,7 +304,7 @@ type
 implementation
 
 uses
-  TypInfo, ACBrUtil, ACBrLibXml2;
+  TypInfo, ACBrUtil, ACBrLibXml2, synautil;
 
 { XmlNode }
 constructor TACBrXmlNode.Create(xmlDoc: TACBrXmlDocument; xmlNode: xmlNodePtr);
@@ -689,7 +689,7 @@ begin
     curNode := FParent.FXmlNode.children;
     while curNode <> nil do
     begin
-      if curNode^.type_ = xmlElementType.XML_ELEMENT_NODE then
+      if curNode^.type_ = XML_ELEMENT_NODE then
         Insert(TACBrXmlNode.Create(FParent.Document, curNode));
 
       curNode := curNode^.Next;
@@ -724,11 +724,14 @@ end;
 
 function TACBrXMLNodeList.Find(const Name: string):TACBrXmlNode;
 Var
+  i, ACount: integer;
   Node: TACBrXmlNode;
 begin
   Result := nil;
-  for Node in Self do
+  ACount := Count - 1;
+  for i := 0 to ACount do
   begin
+    Node := TACBrXmlNode(FItens[i]);
     if Node.Name <> Name then continue;
 
     Result := Node;
@@ -739,19 +742,21 @@ end;
 function TACBrXMLNodeList.FindAll(const Name: string):TACBrXmlNodeArray;
 Var
   Node: TACBrXmlNode;
-  i: Integer;
+  i, j, ACount: integer;
 begin
   Result := nil;
   SetLength(Result, 0);
 
-  i := 0;
-  for Node in Self do
+  j := 0;
+  ACount := Count - 1;
+  for i := 0 to ACount do
   begin
+    Node := TACBrXmlNode(FItens[i]);
     if Node.Name <> Name then continue;
 
-    SetLength(Result, i+1);
-    Result[i] := Node;
-    inc(i);
+    SetLength(Result, j+1);
+    Result[j] := Node;
+    inc(j);
   end;
 end;
 
@@ -819,10 +824,10 @@ begin
   SetLength(FItens, 0);
   if FParent.FXmlNode.properties <> nil then
   begin
-    curAtt := FParent.FXmlNode.properties;
+    curAtt := xmlAttrPtr(FParent.FXmlNode.properties);
     while curAtt <> nil do
     begin
-      if curAtt^.type_ = xmlElementType.XML_ATTRIBUTE_NODE then
+      if curAtt^.type_ = XML_ATTRIBUTE_NODE then
         Insert(TACBrXmlAttribute.Create(FParent, curAtt));
 
       curAtt := curAtt^.Next;
@@ -852,11 +857,14 @@ end;
 
 function TACBrXMLAttributeList.GetItem(AName: string): TACBrXmlAttribute;
 Var
+  i, ACount: integer;
   Att: TACBrXmlAttribute;
 begin
   Result := nil;
-  for Att in Self do
+  ACount := Count - 1;
+  for i := 0 to ACount do
   begin
+    Att := TACBrXmlAttribute(FItens[i]);
     if Att.Name <> AName then continue;
 
     Result := Att;
@@ -1034,7 +1042,7 @@ end;
 
 procedure TACBrXmlDocument.SaveToStream(AStream: TStream);
 begin
-  AStream.WriteAnsiString(Xml);
+  WriteStrToStream(AStream, ansistring(Xml));
 end;
 
 procedure TACBrXmlDocument.LoadFromFile(AFilename: string);
@@ -1091,7 +1099,7 @@ procedure TACBrXmlDocument.LoadFromStream(AStream: TStream);
 Var
   Xml: String;
 begin
-  Xml := AStream.ReadAnsiString;
+  Xml := ReadStrFromStream(AStream, AStream.Size);
   LoadFromXml(Xml);
 end;
 

@@ -167,7 +167,7 @@ Uses
   strutils, math,
   ACBrUtil, ACBrConsts,
   synautil, synacode,
-  ACBrDFeUtil;
+  ACBrDFeUtil, ACBrLibXML2;
 
 var
   XMLSecLoaded: String;

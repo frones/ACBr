@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrLibXml2, ACBrXmlReader,
+  ACBrXmlDocument, ACBrXmlReader,
   pcnNFe;
 
 type

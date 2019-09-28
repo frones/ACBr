@@ -2,8 +2,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 527
   Top = 194
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 634
-  ClientWidth = 810
   Font.Height = -18
   inherited RLNFe: TRLReport
     Top = 0
@@ -45,6 +43,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      BeforePrint = rlbContinuacaoInformacoesComplementaresBeforePrint
       object rlmContinuacaoDadosAdicionais: TRLMemo
         Tag = 20
         Left = 8

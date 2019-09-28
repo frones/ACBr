@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils,
   pcnConversao, pcnSignature,
-  ACBrLibXml2;
+  ACBrXmlDocument;
 
 resourcestring
   ERR_MSG_MAIOR = 'Tamanho maior que o máximo permitido';

@@ -40,7 +40,7 @@ interface
 uses
   Classes, SysUtils,
   pcnConversao,
-  ACBrLibXml2;
+  ACBrXmlDocument;
 
 type
   TACBrXmlReader = class

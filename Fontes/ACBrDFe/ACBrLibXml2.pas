@@ -966,7 +966,7 @@ var
   xmlNode: xmlNodePtr;
 begin
   LibXmlInit;
-  FSaveOptions := [xmlNone, xmlFormat, xmlAsXml];
+  FSaveOptions := [xmlFormat, xmlAsXml];
   xmlDocInternal := xmlNewDoc(PAnsichar(ansistring('1.0')));
 
   if AName <> EmptyStr then

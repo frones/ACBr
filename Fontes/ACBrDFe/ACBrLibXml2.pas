@@ -43,8 +43,6 @@ interface
 uses
   Classes, SysUtils, libxml2;
 
-type  
-
 procedure LibXmlInit();
 procedure LibXmlShutDown();
 

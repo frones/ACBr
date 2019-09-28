@@ -1030,8 +1030,8 @@ end;
 
 procedure TACBrXmlDocument.SetRootElement(ARootNode: TACBrXmlNode);
 begin
-  if xmlRootElement <> nil then
-    xmlRootElement.Destroy;
+  if (xmlRootElement <> nil) or Assigned(xmlRootElement) then
+    FreeAndNil(xmlRootElement);
 
   xmlRootElement := ARootNode;
   xmlDocSetRootElement(xmlDocInternal, xmlRootElement.FXmlNode);
@@ -1039,7 +1039,7 @@ end;
 
 procedure TACBrXmlDocument.Clear();
 begin
-  if xmlRootElement <> nil then xmlRootElement.Free;
+  if xmlRootElement <> nil then FreeAndNil(xmlRootElement);
 end;
 
 function TACBrXmlDocument.CreateElement(AName: string; ANamespace: string): TACBrXmlNode;

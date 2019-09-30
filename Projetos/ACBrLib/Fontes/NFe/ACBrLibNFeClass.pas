@@ -1163,20 +1163,27 @@ begin
     begin
       NFeDM.Travar;
 
-      if not ValidarCNPJ(ACNPJCPF) then
-        raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
+      try
+        if not ValidarCNPJ(ACNPJCPF) then
+          raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
-      with NFeDM.ACBrNFe1 do
-      begin
-        try
-          if DistribuicaoDFePorUltNSU(AcUFAutor, ACNPJCPF, AultNSU) then
-          begin
+        with NFeDM do
+        begin
+          try
+            ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+            ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+            ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU   := AultNSU;
+            ACBrNFe1.WebServices.DistribuicaoDFe.NSU      := '';
+            ACBrNFe1.WebServices.DistribuicaoDFe.chNFe    := '';
+
+            ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
+
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.Processar(WebServices.DistribuicaoDFe.retDistDFeInt,
-                             WebServices.DistribuicaoDFe.Msg,
-                             WebServices.DistribuicaoDFe.NomeArq,
-                             WebServices.DistribuicaoDFe.ListaArqs);
+              Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;
@@ -1184,15 +1191,13 @@ begin
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
             Result := SetRetorno(ErrOK, Resposta);
-          end
-          else
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorUltNSU');
-        except
-          raise EACBrLibException.Create(ErrRetorno, WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          except
+            raise EACBrLibException.Create(ErrRetorno, ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          end;
         end;
+      finally
+        NFeDM.Destravar;
       end;
-
-      NFeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1227,20 +1232,27 @@ begin
     begin
       NFeDM.Travar;
 
-      if not ValidarCNPJ(ACNPJCPF) then
-        raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
+      try
+        if not ValidarCNPJ(ACNPJCPF) then
+          raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
-      with NFeDM.ACBrNFe1 do
-      begin
-        try
-          if DistribuicaoDFePorNSU(AcUFAutor, ACNPJCPF, ANSU) then
-          begin
+        with NFeDM do
+        begin
+          try
+            ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+            ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+            ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU   := '';
+            ACBrNFe1.WebServices.DistribuicaoDFe.NSU      := ANSU;
+            ACBrNFe1.WebServices.DistribuicaoDFe.chNFe    := '';
+
+            ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
+
             Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
             try
-              Resp.Processar(NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
+              Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
+                             ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
               Resposta := Resp.Gerar;
             finally
               Resp.Free;
@@ -1248,15 +1260,13 @@ begin
 
             MoverStringParaPChar(Resposta, sResposta, esTamanho);
             Result := SetRetorno(ErrOK, Resposta);
-          end
-          else
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorNSU');
-        except
-          raise EACBrLibException.Create(ErrRetorno, WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          except
+            raise EACBrLibException.Create(ErrRetorno, ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          end;
         end;
+      finally
+        NFeDM.Destravar;
       end;
-
-      NFeDM.Destravar;
     end;
   except
     on E: EACBrLibException do
@@ -1291,39 +1301,44 @@ begin
     begin
       NFeDM.Travar;
 
+      try
       if not ValidarCNPJ(ACNPJCPF) then
         raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJCPF]));
 
       if not ValidarChave(AchNFe) then
         raise EACBrLibException.Create(ErrChaveNFe, Format(SErrChaveInvalida, [AchNFe]));
 
-      with NFeDM.ACBrNFe1 do
+      with NFeDM do
       begin
         try
-          if DistribuicaoDFePorChaveNFe(AcUFAutor, ACNPJCPF, AchNFe) then
-          begin
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
-            try
-              Resp.Processar(NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
-                            NFeDM.ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
-              Resposta := Resp.Gerar;
-            finally
-              Resp.Free;
-            end;
+          ACBrNFe1.WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
+          ACBrNFe1.WebServices.DistribuicaoDFe.CNPJCPF  := ACNPJCPF;
+          ACBrNFe1.WebServices.DistribuicaoDFe.ultNSU   := '';
+          ACBrNFe1.WebServices.DistribuicaoDFe.NSU      := '';
+          ACBrNFe1.WebServices.DistribuicaoDFe.chNFe    := AchNFe;
 
-            MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, Resposta);
-          end
-          else
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'DistribuicaoDFePorChaveNFe');
+          ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
+
+          Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
+          try
+            Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
+                           ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
+                           ACBrNFe1.WebServices.DistribuicaoDFe.NomeArq,
+                           ACBrNFe1.WebServices.DistribuicaoDFe.ListaArqs);
+            Resposta := Resp.Gerar;
+          finally
+            Resp.Free;
+          end;
+
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
         except
-          raise EACBrLibException.Create(ErrRetorno, WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
+          raise EACBrLibException.Create(ErrRetorno, ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo);
         end;
       end;
-
-      NFeDM.Destravar;
+      finally
+        NFeDM.Destravar;
+      end;
     end;
   except
     on E: EACBrLibException do

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2019
+-- ACBrLibNFeClass --
+[*] Melhorias nos metodos distribuição DFe.
+    Por: Rafael Dias
+
 27/09/2019
 -- ACBrLibNFeClass --
 [-] Correção do metodo inutilização.

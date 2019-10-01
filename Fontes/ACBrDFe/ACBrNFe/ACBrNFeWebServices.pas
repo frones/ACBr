@@ -2653,6 +2653,8 @@ begin
 
     VerificarSemResposta;
 
+    RemoverNameSpace;
+
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXml;
 

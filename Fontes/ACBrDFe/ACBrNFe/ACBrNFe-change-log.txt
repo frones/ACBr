@@ -49,6 +49,10 @@ Símbolo : Significado
 
 01/10/2019
 -- ACBrNFeWebServices --
+[*] Incluido a chamada para remover os namespaces individos no método
+    Inutilização.
+   Por: Italo Jurisato Junior
+-- ACBrNFeWebServices --
 [*] Possível correção para o problema que esta ocorrendo na SEFAZ-MG,
     estão incluido indevidamente o namespace em todas as tags de retorno.
    Por: Italo Jurisato Junior

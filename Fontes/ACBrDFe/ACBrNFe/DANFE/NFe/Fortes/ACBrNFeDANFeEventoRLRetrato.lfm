@@ -826,7 +826,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     end
     object rlbJustificativa: TRLBand[3]
       Left = 26
-      Height = 31
+      Height = 47
       Top = 333
       Width = 742
       BandType = btTitle
@@ -851,13 +851,14 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rllJustificativa: TRLLabel
+      object rlmJustificativa: TRLMemo
         Tag = 70
         Left = 7
-        Height = 14
+        Height = 30
         Top = 13
         Width = 722
         AutoSize = False
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Arial'
@@ -870,7 +871,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       end
       object RLDraw1: TRLDraw
         Left = 0
-        Height = 31
+        Height = 46
         Top = 0
         Width = 1
         Angle = 90
@@ -883,7 +884,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       end
       object RLDraw2: TRLDraw
         Left = 739
-        Height = 31
+        Height = 46
         Top = 0
         Width = 1
         Angle = 90
@@ -897,7 +898,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
       object RLDraw6: TRLDraw
         Left = 0
         Height = 1
-        Top = 30
+        Top = 45
         Width = 740
         Angle = 0
         DrawKind = dkLine
@@ -911,7 +912,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     object rlbDestinatario: TRLBand[4]
       Left = 26
       Height = 127
-      Top = 491
+      Top = 507
       Width = 742
       BandType = btTitle
       RealBounds.Left = 0
@@ -1367,7 +1368,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     object rlbEmitente: TRLBand[5]
       Left = 26
       Height = 127
-      Top = 364
+      Top = 380
       Width = 742
       BandType = btTitle
       RealBounds.Left = 0
@@ -1823,7 +1824,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     object rlbUsuario: TRLBand[6]
       Left = 26
       Height = 12
-      Top = 912
+      Top = 928
       Width = 742
       AlignToBottom = True
       AutoExpand = False
@@ -1869,7 +1870,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     object rlbCondUso: TRLBand[7]
       Left = 26
       Height = 223
-      Top = 618
+      Top = 634
       Width = 742
       BandType = btTitle
       RealBounds.Left = 0
@@ -2038,7 +2039,7 @@ inherited frlDANFeEventoRLRetrato: TfrlDANFeEventoRLRetrato
     object rlbCorrecao: TRLBand[9]
       Left = 26
       Height = 71
-      Top = 841
+      Top = 857
       Width = 742
       BandType = btSummary
       Borders.Sides = sdCustom

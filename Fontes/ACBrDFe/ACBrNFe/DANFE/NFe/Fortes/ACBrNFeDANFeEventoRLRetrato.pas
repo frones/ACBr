@@ -123,13 +123,12 @@ type
     rllSistema: TRLLabel;
     rlbJustificativa: TRLBand;
     RLLabel3: TRLLabel;
-    rllJustificativa: TRLLabel;
+    rlmJustificativa: TRLMemo;
     RLDraw1: TRLDraw;
     RLDraw2: TRLDraw;
     RLDraw6: TRLDraw;
     rlbCorrecao: TRLBand;
     RLLabel6: TRLLabel;
-    RLDraw7: TRLDraw;
     rlmCorrecao: TRLMemo;
     RLLabel1: TRLLabel;
     RLDraw8: TRLDraw;
@@ -335,13 +334,13 @@ begin
       teCancelamento:
       begin
         rllTitulo.Caption := 'CANCELAMENTO DE NF-E';
-        rllJustificativa.Caption := InfEvento.detEvento.xJust;
+        rlmJustificativa.Lines.Text := InfEvento.detEvento.xJust;
       end;
 
       teCancSubst:
       begin
         rllTitulo.Caption := ACBrStr('CANCELAMENTO DE NF-E POR SUBSTITUIÇÃO');
-        rllJustificativa.Caption := InfEvento.detEvento.xJust + sLineBreak +
+        rlmJustificativa.Lines.Text := InfEvento.detEvento.xJust + sLineBreak +
                                     InfEvento.detEvento.chNFeRef;
       end;
 
@@ -363,7 +362,7 @@ begin
       teManifDestOperNaoRealizada:
       begin
         rllTitulo.Caption := ACBrStr('OPERAÇÃO NÃO REALIZADA');
-        rllJustificativa.Caption := InfEvento.detEvento.xJust;
+        rlmJustificativa.Lines.Text := InfEvento.detEvento.xJust;
       end;
 
       teEPECNFe:

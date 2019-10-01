@@ -416,7 +416,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        NFeDM.ACBrNFe1.EventoNFe.LerFromIni(ArquivoOuINI);
+        NFeDM.ACBrNFe1.EventoNFe.LerFromIni(ArquivoOuINI, False);
         Result := SetRetornoEventoCarregados(NFeDM.ACBrNFe1.EventoNFe.Evento.Count);
       finally
         NFeDM.Destravar;
@@ -1033,8 +1033,9 @@ function NFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
+  i, j: integer;
   Resp: TEventoResposta;
-  Resposta: String;
+  Resposta, chNfe: String;
 begin
   try
     VerificarLibInicializada;
@@ -1049,15 +1050,75 @@ begin
       NFeDM.Travar;
 
       try
+        with NFeDM.ACBrNFe1 do
+        begin
+          if EventoNFe.Evento.Count = 0 then
+            raise EACBrLibException.Create(ErrEnvioEvento, 'ERRO: Nenhum Evento adicionado ao Lote');
 
-        if NFeDM.ACBrNFe1.EventoNFe.Evento.Count = 0 then
-          raise EACBrLibException.Create(ErrEnvioEvento, Format(SInfEventosCarregados,
-                                                                [NFeDM.ACBrNFe1.EventoNFe.Evento.Count]));
+          if EventoNFe.Evento.Count > 20 then
+            raise EACBrLibException.Create(ErrEnvioEvento, 'ERRO: Conjunto de Eventos transmitidos (máximo de 20) ' +
+                                                           'excedido. Quantidade atual: ' +
+                                                           IntToStr(EventoNFe.Evento.Count));
+          if (idLote = 0) then
+            idLote := 1;
 
-        if (idLote = 0) then
-          idLote := 1;
+          WebServices.EnvEvento.idLote := idLote;
 
-        NFeDM.ACBrNFe1.EnviarEvento(idLote);
+          {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
+          for i := 0 to EventoNFe.Evento.Count - 1 do
+          begin
+            if EventoNFe.Evento.Items[i].InfEvento.nSeqEvento = 0 then
+              EventoNFe.Evento.Items[i].infEvento.nSeqEvento := 1;
+
+            EventoNFe.Evento.Items[i].InfEvento.tpAmb := Configuracoes.WebServices.Ambiente;
+
+            if NotasFiscais.Count > 0 then
+            begin
+              chNfe := OnlyNumber(EventoNFe.Evento.Items[i].InfEvento.chNfe);
+
+              // Se tem a chave da NFe no Evento, procure por ela nas notas carregadas //
+              if NaoEstaVazio(chNfe) then
+              begin
+                For j := 0 to NotasFiscais.Count - 1 do
+                begin
+                  if chNfe = NotasFiscais.Items[j].NumID then
+                  Break;
+                end ;
+
+                if j = NotasFiscais.Count then
+                  raise EACBrLibException.Create(ErrEnvioEvento, 'Não existe NFe com a chave ['+chNfe+'] carregada');
+              end
+              else
+              j := 0;
+
+              if trim(EventoNFe.Evento.Items[i].InfEvento.CNPJ) = '' then
+                EventoNFe.Evento.Items[i].InfEvento.CNPJ := NotasFiscais.Items[j].NFe.Emit.CNPJCPF;
+
+              if chNfe = '' then
+                EventoNFe.Evento.Items[i].InfEvento.chNfe := NotasFiscais.Items[j].NumID;
+
+              if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+              begin
+                if EventoNFe.Evento.Items[i].infEvento.tpEvento = teCancelamento then
+                begin
+                  EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := NotasFiscais.Items[j].NFe.procNFe.nProt;
+
+                  if trim(EventoNFe.Evento.Items[i].infEvento.detEvento.nProt) = '' then
+                  begin
+                    WebServices.Consulta.NFeChave := EventoNFe.Evento.Items[i].InfEvento.chNfe;
+
+                    if not WebServices.Consulta.Executar then
+                      raise EACBrLibException.Create(ErrEnvioEvento, WebServices.Consulta.Msg);
+
+                    EventoNFe.Evento.Items[i].infEvento.detEvento.nProt := WebServices.Consulta.Protocolo;
+                  end;
+                end;
+              end;
+            end;
+          end;
+
+          WebServices.EnvEvento.Executar;
+        end;
 
         try
           Resp := TEventoResposta.Create(pLib.Config.TipoResposta);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2019
+-- ACBrLibNFeClass --
+[-] Correção no metodo NFE_CarregarEventoINI.
+    Por: Rafael Dias
+
 29/09/2019
 -- ACBrLibNFeClass --
 [*] Melhorias nos metodos distribuição DFe.

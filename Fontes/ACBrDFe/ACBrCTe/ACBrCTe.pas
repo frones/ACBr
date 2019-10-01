@@ -75,6 +75,7 @@ type
     function GetConfiguracoes: TConfiguracoesCTe;
     function Distribuicao(AcUFAutor: integer; const ACNPJCPF, AultNSU, ANSU,
       AchCTe: String): Boolean;
+    function GetUFFormaEmissao: string;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
   	procedure SetDACTE(const Value: TACBrCTeDACTEClass);
@@ -244,6 +245,51 @@ begin
   Result := ModeloCTeToPrefixo( Configuracoes.Geral.ModeloDF );
 end;
 
+function TACBrCTe.GetUFFormaEmissao: string;
+begin
+  case Configuracoes.Geral.FormaEmissao of
+    teNormal: Result := Configuracoes.WebServices.UF;
+    teDPEC: begin
+              case Configuracoes.WebServices.UFCodigo of
+                11, // Rondônia
+                12, // Acre
+                13, // Amazonas
+                14, // Roraima
+                15, // Pará
+                16, // Amapá
+                17, // Tocantins
+                21, // Maranhão
+                22, // Piauí
+                23, // Ceará
+                24, // Rio Grande do Norte
+                25, // Paraibá
+                27, // Alagoas
+                28, // Sergipe
+                29, // Bahia
+                31, // Minas Gerais
+                32, // Espirito Santo
+                33, // Rio de Janeiro
+                41, // Paraná
+                42, // Santa Catarina
+                43, // Rio Grande do Sul
+                52, // Goiás
+                53: // Distrito Federal
+                    Result := 'SVC-SP';
+                26, // Pernanbuco
+                35, // São Paulo
+                50, // Mato Grosso do Sul
+                51: // Mato Grosso
+                    Result := 'SVC-RS';
+              end;
+            end;
+    teSVCAN: Result := 'SVC-AN';
+    teSVCRS: Result := 'SVC-RS';
+    teSVCSP: Result := 'SVC-SP';
+  else
+    Result := Configuracoes.WebServices.UF;
+  end;
+end;
+
 function TACBrCTe.GetURLConsulta(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
 //var
@@ -264,7 +310,7 @@ var
 begin
 //  VersaoDFe := DblToVersaoCTe(ok, Versao);  // Deixado para usu futuro
 
-  urlUF := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('CTe', GetUFFormaEmissao, TipoAmbiente, 'URL-QRCode', 0);
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';
@@ -334,54 +380,10 @@ end;
 
 procedure TACBrCTe.LerServicoDeParams(LayOutServico: TLayOutCTe;
   var Versao: Double; var URL: String);
-var
-  AUF: String;
 begin
-  case Configuracoes.Geral.FormaEmissao of
-    teNormal: AUF := Configuracoes.WebServices.UF;
-    teDPEC: begin
-              case Configuracoes.WebServices.UFCodigo of
-                11, // Rondônia
-                12, // Acre
-                13, // Amazonas
-                14, // Roraima
-                15, // Pará
-                16, // Amapá
-                17, // Tocantins
-                21, // Maranhão
-                22, // Piauí
-                23, // Ceará
-                24, // Rio Grande do Norte
-                25, // Paraibá
-                27, // Alagoas
-                28, // Sergipe
-                29, // Bahia
-                31, // Minas Gerais
-                32, // Espirito Santo
-                33, // Rio de Janeiro
-                41, // Paraná
-                42, // Santa Catarina
-                43, // Rio Grande do Sul
-                52, // Goiás
-                53: // Distrito Federal
-                    AUF := 'SVC-SP';
-                26, // Pernanbuco
-                35, // São Paulo
-                50, // Mato Grosso do Sul
-                51: // Mato Grosso
-                    AUF := 'SVC-RS';
-              end;
-            end;
-    teSVCAN: AUF := 'SVC-AN';
-    teSVCRS: AUF := 'SVC-RS';
-    teSVCSP: AUF := 'SVC-SP';
-  else
-    AUF := Configuracoes.WebServices.UF;
-  end;
-
   Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
-  LerServicoDeParams(GetNomeModeloDFe, AUF,
+  LerServicoDeParams(GetNomeModeloDFe, GetUFFormaEmissao,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
     Versao, URL);
 end;

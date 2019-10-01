@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="113"/>
+      <BuildNr Value="119"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr"/>

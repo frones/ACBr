@@ -718,7 +718,7 @@ begin
       Ide.serie   := INIRec.ReadInteger('ide', 'serie', 1);
       Ide.nMDF    := INIRec.ReadInteger('ide', 'nMDF', 0);
       Ide.cMDF    := INIRec.ReadInteger('ide', 'cMDF', 0);
-      Ide.modal   := StrToModal(OK, INIRec.ReadString('ide', 'modal', '01'));
+      Ide.modal   := StrToModal(OK, INIRec.ReadString('ide', 'modal', '1'));
       Ide.dhEmi   := StringToDateTime(INIRec.ReadString('ide', 'dhEmi', '0'));
       Ide.tpEmis  := StrToTpEmis(OK, INIRec.ReadString('ide', 'tpEmis', IntToStr(FConfiguracoes.Geral.FormaEmissaoCodigo)));
       Ide.procEmi := StrToProcEmi(OK, INIRec.ReadString('ide', 'procEmi', '0'));
@@ -931,6 +931,8 @@ begin
           tara    := INIRec.ReadInteger(sSecao, 'tara', 0);
           capKG   := INIRec.ReadInteger(sSecao, 'capKG', 0);
           capM3   := INIRec.ReadInteger(sSecao, 'capM3', 0);
+          tpCar   := StrToTpCarroceria(OK, INIRec.ReadString(sSecao, 'tpCar', '00'));
+          UF      := INIRec.ReadString(sSecao, 'UF', '');
 
           // Dados do proprietário do veículo Reboque (Opcional) - Nível 2 - Versão 3.00
 
@@ -943,30 +945,6 @@ begin
             prop.UF      := INIRec.ReadString(sSecao, 'UFProp', '');
             prop.tpProp  := StrToTpProp(OK, INIRec.ReadString(sSecao, 'tpProp', '0'));
           end;
-
-          tpCar := StrToTpCarroceria(OK, INIRec.ReadString(sSecao, 'tpCar', '00'));
-          UF    := INIRec.ReadString(sSecao, 'UF', '');
-        end;
-
-        Inc(I);
-      end;
-
-      // Dados do Vale Pedário (Opcional) - Nível 1
-
-      I := 1;
-      while true do
-      begin
-        sSecao := 'valePed' + IntToStrZero(I, 3);
-        sFim   := INIRec.ReadString(sSecao, 'CNPJForn', 'FIM');
-
-        if sFim = 'FIM' then
-          break;
-
-        with rodo.valePed.disp.New do
-        begin
-          CNPJForn := sFim;
-          CNPJPg   := INIRec.ReadString(sSecao, 'CNPJPg', '');
-          nCompra  := INIRec.ReadString(sSecao, 'nCompra', '');
         end;
 
         Inc(I);
@@ -1264,8 +1242,8 @@ begin
                     begin
                       tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
                       idUnidCarga := sFim;
-
                       qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+
                       M := 1;
                       while true do
                       begin
@@ -1516,6 +1494,7 @@ begin
                 end;
 
                end;
+
                Inc(J);
              end;
            end;
@@ -1528,15 +1507,11 @@ begin
       while true do
       begin
         sSecao := 'seg' + IntToStrZero(I, 3);
-//        sFim   := INIRec.ReadString(sSecao, 'CNPJ', 'FIM');
 
         if (INIRec.ReadString(sSecao, 'xSeg', '') = '') and
            (INIRec.ReadString(sSecao, 'nApol', '') = '') and
            not INIRec.SectionExists('aver' + IntToStrZero(I, 3) + '001') then
           Break;
-
-//        if sFim = 'FIM' then
-//          break;
 
         with seg.New do
         begin

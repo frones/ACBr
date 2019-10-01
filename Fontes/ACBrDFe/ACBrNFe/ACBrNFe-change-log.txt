@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/10/2019
+-- ACBrNFeWebServices --
+[*] Possível correção para o problema que esta ocorrendo na SEFAZ-MG,
+    estão incluido indevidamente o namespace em todas as tags de retorno.
+   Por: Italo Jurisato Junior
+
 27/09/2019
 -- pcnNFeW --
 [*] Alterado de opcional para obrigatório algumas tags do cst 51.

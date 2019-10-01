@@ -70,6 +70,7 @@ type
     function GerarVersaoDadosSoap: String; override;
     procedure EnviarDados; override;
     procedure FinalizarServico; override;
+    procedure RemoverNameSpace;
 
   public
     constructor Create(AOwner: TACBrDFe); override;
@@ -670,6 +671,12 @@ begin
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;
 
+procedure TNFeWebService.RemoverNameSpace;
+begin
+  FPRetWS := StringReplace(FPRetWS, ' xmlns="http://www.portalfiscal.inf.br/nfe"',
+                                    '', [rfReplaceAll, rfIgnoreCase]);
+end;
+
 procedure TNFeWebService.DefinirURL;
 var
   Versao: Double;
@@ -832,6 +839,8 @@ begin
                                'nfeResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
+
+  RemoverNameSpace;
 
   NFeRetorno := TRetConsStatServ.Create('');
   try
@@ -1128,6 +1137,8 @@ begin
                                'nfeRecepcaoLote2Result'],FPRetornoWS );
 
   VerificarSemResposta;
+
+  RemoverNameSpace;
 
   if ((FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or (FVersaoDF >= ve310)) and FSincrono then
   begin
@@ -1549,6 +1560,8 @@ begin
 
   VerificarSemResposta;
 
+  RemoverNameSpace;
+
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
 
@@ -1902,6 +1915,8 @@ begin
 
   VerificarSemResposta;
 
+  RemoverNameSpace;
+
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
 
@@ -2119,6 +2134,8 @@ begin
                                  'nfeResultMsg'],FPRetornoWS );
 
     VerificarSemResposta;
+
+    RemoverNameSpace;
 
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXML;
@@ -2858,6 +2875,8 @@ begin
 
   VerificarSemResposta;
 
+  RemoverNameSpace;
+
   FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsCad.LerXml;
 
@@ -3284,6 +3303,8 @@ begin
 
   VerificarSemResposta;
 
+  RemoverNameSpace;
+
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
@@ -3494,6 +3515,8 @@ begin
 
   VerificarSemResposta;
 
+  RemoverNameSpace;
+
   FretAdmCSCNFCe.Leitor.Arquivo := ParseText(FPRetWS);
   FretAdmCSCNFCe.LerXml;
 
@@ -3621,6 +3644,8 @@ begin
                                'nfeResultMsg'],FPRetornoWS );
 
   VerificarSemResposta;
+
+  RemoverNameSpace;
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
@@ -3798,6 +3823,8 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
 
   VerificarSemResposta;
+
+  RemoverNameSpace;
 
   Result := True;
 end;

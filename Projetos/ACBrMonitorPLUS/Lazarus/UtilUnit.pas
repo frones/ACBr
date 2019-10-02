@@ -42,6 +42,7 @@ function Converte(cmd: String): String;
 Procedure GravaINICrypt(INI : TIniFile; Section, Ident, AString, Pass : String );
 Function LeINICrypt(INI : TIniFile; Section, Ident, Pass : String) : String ;
 function VersaoACBr(): String;
+Function VerificaArquivoDesatualizado(APath: String):Boolean;
 
 implementation
 
@@ -114,5 +115,22 @@ begin
      SStream.Free ;
   end ;
 end ;
+
+Function VerificaArquivoDesatualizado(APath: String):Boolean;
+var
+  PathLocal: String;
+  NomeArquivo: String;
+  date: String;
+begin
+  result:= False;
+  if FileExists(APath) then
+  begin
+    NomeArquivo:= ExtractFileName(APath);
+    PathLocal:= PathWithDelim( ExtractFilePath( ParamStr(0) ) ) + NomeArquivo;
+    if FileExists(PathLocal) and ( APath <> PathLocal ) then
+      result:= (FileDateToDateTime( FileAge( APath ) )) < (FileDateToDateTime( FileAge( PathLocal ) ));
+  end;
+
+end;
 
 end.

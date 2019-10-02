@@ -44,6 +44,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/10/2019
+[+] ACBrMonitor1, UtilUnit
+Adicionado um alerta quando usuário está utilizando arquivos de Servicos.ini dos DFes desatualizados.
+
+02/10/2019
+[+] ACBrMonitor1, MonitorConfig, ACBrMonitorConsts
+Adicionado opção de Impressão de Logo Lateral para NFCe
+
+02/10/2019
 [*] DoACBrMDFe
 Ajuste na função de geração arquivo .ini
 

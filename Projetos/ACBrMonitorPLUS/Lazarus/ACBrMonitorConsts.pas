@@ -907,6 +907,7 @@ const
   CKeyNFCeUsarIntegrador =             'UsarIntegrador';
   CKeyNFCEImprimeTributos =            'ImprimeTributos';
   CKeyNFCeExibeTotalTributosItem =     'ExibeTotalTributosItem';
+  CKeyNFCeLogoLateral =                'LogoLateral';
 
   CSecDANFE =                          'DANFE';
   CKeyDANFEModelo =                    'Modelo';

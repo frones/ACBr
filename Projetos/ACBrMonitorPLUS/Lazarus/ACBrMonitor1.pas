@@ -261,6 +261,7 @@ type
     cbTagInfSuplCTe: TComboBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
+    cbxImprimirLogoLateralNFCe: TCheckBox;
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
     edtBOLDigitoAgConta: TEdit;
@@ -1535,6 +1536,7 @@ type
     procedure PathClick(Sender: TObject);
     procedure ACT_ButtonMouseEnter(Sender: TObject);
     procedure ACT_ButtonMouseLeave(Sender: TObject);
+    procedure AlertaValidaArquivo(APath:String);
   private
     ACBrMonitorINI: string;
     Inicio, fsMonitorarPasta: boolean;
@@ -4628,12 +4630,19 @@ begin
     sedLogLinhasComp.Value             := Linhas_Log_Comp;
     ArqLogCompTXT                      := AcertaPath(edLogComp.Text);
     edtArquivoWebServicesNFe.Text      := ArquivoWebServices;
+    AlertaValidaArquivo(ArquivoWebServices);
     edtArquivoWebServicesCTe.Text      := ArquivoWebServicesCTe;
+    AlertaValidaArquivo(ArquivoWebServicesCTe);
     edtArquivoWebServicesMDFe.Text     := ArquivoWebServicesMDFe;
+    AlertaValidaArquivo(ArquivoWebServicesMDFe);
     edtArquivoWebServicesBPe.Text      := ArquivoWebServicesBPe;
+    AlertaValidaArquivo(ArquivoWebServicesBPe);
     edtArquivoWebServicesGNRe.Text     := ArquivoWebServicesGNRe;
+    AlertaValidaArquivo(ArquivoWebServicesGNRe);
     edtArquivoWebServiceseSocial.Text  := ArquivoWebServiceseSocial;
+    AlertaValidaArquivo(ArquivoWebServiceseSocial);
     edtArquivoWebServicesReinf.Text    := ArquivoWebServicesReinf;
+    AlertaValidaArquivo(ArquivoWebServicesReinf);
     cbValidarDigest.Checked            := ValidarDigest;
     edtTimeoutWebServices.Value        := TimeoutWebService;
     cbModoEmissao.Checked              := IgnorarComandoModoEmissao;
@@ -4756,6 +4765,7 @@ begin
       cbxImprimirNomeFantasiaNFCe.Checked := ImprimeNomeFantasia;
       cbxExibeTotalTributosItem.Checked   := ExibeTotalTributosItem;
       rgImprimeTributos.ItemIndex         := ImprimeTributos;
+      cbxImprimirLogoLateralNFCe.Checked  := LogoLateral;
     end;
 
     with Impressao.NFCe.Emissao.DANFCe do
@@ -5908,6 +5918,7 @@ begin
         ImprimeNomeFantasia       := cbxImprimirNomeFantasiaNFCe.Checked;
         ExibeTotalTributosItem    := cbxExibeTotalTributosItem.Checked;
         ImprimeTributos           := rgImprimeTributos.ItemIndex;
+        LogoLateral               := cbxImprimirLogoLateralNFCe.Checked;
       end;
 
       with Impressao.NFCe.Emissao.DANFCe do
@@ -8836,6 +8847,7 @@ begin
       ACBrNFeDANFCeFortes1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
       ACBrNFeDANFCeFortes1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
       ACBrNFeDANFCeFortes1.NumCopias             := edtNumCopiaNFCe.Value;
+      ACBrNFEDANFCeFortes1.ImprimeLogoLateral    := cbxImprimirLogoLateralNFCe.Checked;
 
       ACBrNFeDANFCeFortes1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
@@ -8863,6 +8875,7 @@ begin
       ACBrNFeDANFeESCPOS1.ExibeTotalTributosItem:= cbxExibeTotalTributosItem.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeTributos       := TpcnTributos(rgImprimeTributos.ItemIndex);
       ACBrNFeDANFeESCPOS1.NumCopias             := edtNumCopiaNFCe.Value;
+      ACBrNFeDANFeESCPOS1.ImprimeLogoLateral    := cbxImprimirLogoLateralNFCe.Checked;
 
       ACBrNFeDANFeESCPOS1.DescricaoPagamentos   := [];
       for tDescPagto:= Low(tDescPagto) to High(tDescPagto) do
@@ -10143,6 +10156,16 @@ begin
     else
        TPanel(Sender).Color := TCores.SubButtons;
   end;
+end;
+
+procedure TFrmACBrMonitor.AlertaValidaArquivo(APath: String);
+begin
+  if not( FileExists(APath) ) then
+    AddLinesLog('ATENÇÃO: Arquivo ' + APath + ' não encontrado!!!')
+  else if VerificaArquivoDesatualizado(APath) then
+    AddLinesLog('ATENÇÃO: Arquivo ' + ExtractFileName(APath)
+              + ' disponível em: ' + ExtractFileDir(APath) + ' está desatualizado!!!');
+
 end;
 
 function TFrmACBrMonitor.IsVisible: Boolean;

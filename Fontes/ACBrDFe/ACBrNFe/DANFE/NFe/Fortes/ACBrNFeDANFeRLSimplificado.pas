@@ -44,7 +44,7 @@ uses
   {$ELSE}
   Graphics, Controls, Forms,
   {$ENDIF}
-  RLReport, RLBarcode, ACBrNFeDANFeRL;
+  RLReport, RLBarcode, ACBrNFeDANFeRL, RLFilters, RLPDFFilter, math;
 
 type
 
@@ -96,6 +96,73 @@ type
     rlmPagValor: TRLMemo;
     rlb06b_Tributos: TRLBand;
     rllTributos: TRLLabel;
+    rlcfop: TRLLabel;
+    rlmProdutoCFOP: TRLLabel;
+    rlmProdutoCST: TRLLabel;
+    rlCST: TRLLabel;
+    rlbFaturaReal: TRLBand;
+    RLLabel10: TRLLabel;
+    rlbFatura: TRLBand;
+    RLLabel19: TRLLabel;
+    rllFatNum1: TRLLabel;
+    rllFatNum2: TRLLabel;
+    rllFatNum3: TRLLabel;
+    rllFatData1: TRLLabel;
+    rllFatData2: TRLLabel;
+    rllFatData3: TRLLabel;
+    rllFatValor1: TRLLabel;
+    rllFatValor2: TRLLabel;
+    rllFatValor3: TRLLabel;
+    rllFatNum4: TRLLabel;
+    rllFatData4: TRLLabel;
+    rllFatValor4: TRLLabel;
+    rllFatNum5: TRLLabel;
+    rllFatData5: TRLLabel;
+    rllFatValor5: TRLLabel;
+    rllFatNum6: TRLLabel;
+    rllFatData6: TRLLabel;
+    rllFatValor6: TRLLabel;
+    rllFatNum7: TRLLabel;
+    rllFatData7: TRLLabel;
+    rllFatValor7: TRLLabel;
+    rllFatNum8: TRLLabel;
+    rllFatData8: TRLLabel;
+    rllFatValor8: TRLLabel;
+    rllFatNum9: TRLLabel;
+    rllFatData9: TRLLabel;
+    rllFatValor9: TRLLabel;
+    rllFatNum10: TRLLabel;
+    rllFatData10: TRLLabel;
+    rllFatValor10: TRLLabel;
+    rllFatNum11: TRLLabel;
+    rllFatData11: TRLLabel;
+    rllFatValor11: TRLLabel;
+    rllFatNum12: TRLLabel;
+    rllFatData12: TRLLabel;
+    rllFatValor12: TRLLabel;
+    rllFatNum13: TRLLabel;
+    rllFatData13: TRLLabel;
+    rllFatValor13: TRLLabel;
+    rllFatNum14: TRLLabel;
+    rllFatData14: TRLLabel;
+    rllFatValor14: TRLLabel;
+    rllFatNum15: TRLLabel;
+    rllFatData15: TRLLabel;
+    rllFatValor15: TRLLabel;
+    rllCabFatura1: TRLLabel;
+    rllCabFatura2: TRLLabel;
+    rllCabFatura3: TRLLabel;
+    RLDraw69: TRLDraw;
+    RlbDadoPagamento: TRLLabel;
+    RlbDadoNumero: TRLLabel;
+    RlbDadoValorOriginal: TRLLabel;
+    RlbDadoValorDesconto: TRLLabel;
+    RlbDadoValorLiquido: TRLLabel;
+    RLLabelPag: TRLLabel;
+    RLLabelNUmero: TRLLabel;
+    RLLabelValor: TRLLabel;
+    C: TRLLabel;
+    RLLabelLIQ: TRLLabel;
     procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLb04_DestinatarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -109,6 +176,10 @@ type
   private
     FNumItem: Integer;
     FTotalPages: Integer;
+    procedure InicializarDados;
+    procedure AdicionarFaturaReal;
+    procedure AdicionarFatura;
+    function ManterDuplicatas: Integer;
   public
     procedure ProtocoloNFE(const sProtocolo: String);
   end;
@@ -154,6 +225,7 @@ begin
 
   RLNFe.Title := 'NF-e: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF);
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
+  InicializarDados;
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -168,15 +240,20 @@ begin
     rliLogo.Width := 284;
     rliLogo.Stretch := True;
     rlmEmitente.Enabled := False;
+    RLb02_Emitente.Height:= 188;
+    RLmEmitente.Top:= rlilogo.Top + rlilogo.Height + 3;
   end;
 
   if not TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo) then
   begin
     //TODO: implementar algum tratamento para logo vazio? Ex.: Veja: TfrlDANFeRLRetrato.InicializarDados
+     RLb02_Emitente.Height:= 80;
+     RLmEmitente.Top:= rlilogo.Top;
   end;
 
-  if not fpDANFe.ExpandeLogoMarca then
-  begin
+
+//  if not fpDANFe.ExpandeLogoMarca then
+//  begin
     rlmEmitente.Enabled := True;
     rlmEmitente.Lines.Clear;
 
@@ -193,7 +270,7 @@ begin
 
       rlmEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) + ' IE: ' + IE);
     end;
-  end;
+ // end;
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -307,6 +384,117 @@ begin
     '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)';
 end;
 
+procedure TfrlDANFeRLSimplificado.AdicionarFatura;
+var
+  x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha, iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
+begin
+  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
+
+
+  if (fpNFe.Cobr.Dup.Count > 0) then
+  begin
+    for x := 1 to 15 do
+    begin
+      TRLLabel(FindComponent('rllFatNum' + IntToStr(x))).Caption := '';
+      TRLLabel(FindComponent('rllFatData' + IntToStr(x))).Caption := '';
+      TRLLabel(FindComponent('rllFatValor' + IntToStr(x))).Caption := '';
+    end;
+
+    TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
+
+    iQuantDup := ManterDuplicatas;
+
+    {=============== Ajusta o tamanho do quadro das faturas ===============}
+
+    rlbFatura.Height := iQuantDup * 22;
+  end;
+
+end;
+
+procedure TfrlDANFeRLSimplificado.AdicionarFaturaReal;
+begin
+     rlbFaturaReal.Visible := fpDANFe.ExibeCampoFatura;
+
+
+  if (fpNFe.infNFe.Versao >= 4) then
+  begin
+    RlbDadoPagamento.Caption := ACBrStr('Fatura');
+    rlbFaturaReal.Visible := NaoEstaVazio(fpNFe.Cobr.Fat.nFat) and fpDANFe.ExibeCampoFatura;
+  end
+  else
+  begin
+    case fpNFe.Ide.indPag of
+      ipVista:
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A VISTA');
+      ipPrazo:
+        RlbDadoPagamento.Caption := ACBrStr('PAGAMENTO A PRAZO');
+      ipOutras:
+      begin
+        RlbDadoPagamento.Caption := 'OUTROS';
+        rlbFaturaReal.Visible := NaoEstaVazio(fpNFe.Cobr.Fat.nFat) and fpDANFe.ExibeCampoFatura;
+      end;
+    end;
+  end;
+
+  if NaoEstaVazio(fpNFe.Cobr.Fat.nFat) then
+  begin
+//    RLLabelNUmero.Caption := ACBrStr('NÚMERO');
+//    RLLabelValor.Caption := ACBrStr('VALOR ORIGINAL');
+//    RLLabelDupl.Caption := ACBrStr('VALOR DESCONTO');
+//    RLLabelLIQ.Caption := ACBrStr('VALOR LÍQUIDO');
+//
+//    // Define a Coluna dos label's
+//    RLLabelNUmero.Left := 264;
+//    RLLabelValor.Left := 439;
+//    RLLabelDupl.Left := 541;
+//    RLLabelLIQ.Left := 652;
+    with fpNFe.Cobr.Fat do
+    begin
+      RlbDadoNumero.Caption := nFat;
+      RlbDadoValorOriginal.Caption := FormatFloatBr(vOrig);
+      RlbDadoValorDesconto.Caption := FormatFloatBr(vDesc);
+      RlbDadoValorLiquido.Caption := FormatFloatBr(vLiq);
+    end;
+  end
+  else
+  begin
+    RLLabelNUmero.Caption := '';
+    RLLabelValor.Caption := '';
+//    RLLabelDupl.Caption := '';
+    RLLabelLIQ.Caption := '';
+    RlbDadoNumero.Caption := '';
+    RlbDadoValorOriginal.Caption := '';
+    RlbDadoValorDesconto.Caption := '';
+    RlbDadoValorLiquido.Caption := '';
+  end;
+end;
+
+procedure TfrlDANFeRLSimplificado.InicializarDados;
+begin
+     AdicionarFaturaReal;
+     AdicionarFatura;
+end;
+
+function TfrlDANFeRLSimplificado.ManterDuplicatas: Integer;
+var
+  x: Integer;
+begin
+  with fpNFe.Cobr do
+  begin
+    Result := min(Dup.Count, 15);
+
+    for x := 0 to (Result - 1) do
+    begin
+      with Dup[x] do
+      begin
+        TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption := NDup;
+        TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
+        TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup);
+      end;
+    end;
+  end;
+end;
+
 procedure TfrlDANFeRLSimplificado.ProtocoloNFE(const sProtocolo: String);
 begin
   fpDANFe.Protocolo := sProtocolo;
@@ -358,6 +546,17 @@ begin
     rlmProdutoCodigo.Caption := fpDANFe.ManterCodigo(Prod.cEAN, Prod.CProd);
     rlmProdutoDescricao.Caption := ManterinfAdProd(Prod.XProd, infAdProd);
     rlmProdutoQTDE.Caption := fpDANFe.FormatarQuantidade(Prod.qCom);
+    rlmProdutoCFOP.Caption := prod.cfop;
+    case fpNFe.Emit.CRT of
+      crtRegimeNormal, crtSimplesExcessoReceita: begin
+        rlmProdutoCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
+        rlCST.Caption:= 'Cst';
+        end;
+      crtSimplesNacional: begin
+        rlmProdutoCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
+        rlCST.Caption:= 'Csosn';
+        end;
+    end;
     rlmProdutoValor.Caption := fpDANFe.FormatarValorUnitario(Prod.vUnCom);
     rlmProdutoUnidade.Caption := Prod.UCom;
     rlmProdutoTotal.Caption := FormatFloatBr(Prod.vProd);

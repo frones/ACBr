@@ -5118,7 +5118,10 @@ begin
 
     AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
-    FPDadosMsg := {FTagI + }GerarDadosMsg.Gera_DadosMsgSubstituirNFSe{ + FTagF};
+    if Provedor in [proSystemPro] then
+       FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF
+    else
+       FPDadosMsg := GerarDadosMsg.Gera_DadosMsgSubstituirNFSe;
 
     FIDLote := GerarDadosMsg.IdLote;
   finally
@@ -5139,7 +5142,6 @@ begin
     FNotasFiscais.ValidarLote(FPDadosMsg,
                               FPConfiguracoes.Arquivos.PathSchemas +
                               FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir);
-
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir.IncluiEncodingDados);
 

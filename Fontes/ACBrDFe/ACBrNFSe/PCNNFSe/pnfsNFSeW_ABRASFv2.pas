@@ -937,7 +937,7 @@ begin
   if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '') then
     Atributo := ' Id="' + (NFSe.IdentificacaoRps.Numero) + '"';
 
-  if (FProvedor in [proNotaInteligente, proPronimv2, proTiplanv2, proiiBrasilv2]) then
+  if (FProvedor in [proNotaInteligente, proPronimv2, proTiplanv2, proiiBrasilv2, proSimplISSv2]) then
     Gerador.wGrupo('Rps')
   else
     Gerador.wGrupo('Rps' + Atributo);

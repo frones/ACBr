@@ -1922,6 +1922,9 @@ begin
            proInfiscv11,
            proIPM,
            proSMARAPD: FTagI := '';
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1947,8 +1950,7 @@ begin
            proInfisc,
            proInfiscv11,
            proTinus,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -1965,6 +1967,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1995,8 +2000,7 @@ begin
 
            proEL,
            proTinus,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2013,6 +2017,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2039,8 +2046,7 @@ begin
 
            proEL,
            proTinus,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2061,6 +2067,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2081,7 +2090,6 @@ begin
            proInfisc,
            proInfiscv11,
            proSimplISS,
-           proSimplISSv2,
            proSP, 
            proTinus,
            proNotaBlu: FTagI := '<' + FTagGrupo + '>';
@@ -2091,6 +2099,10 @@ begin
            proIPM,
            proGiap,
            proSMARAPD: FTagI := '';
+
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2140,8 +2152,7 @@ begin
            proInfiscv11,
            proPronimv2,
            proTinus,
-           proSimplISS,
-           proSimplISSv2: FTagI := '<' + FTagGrupo + '>';
+           proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns="http://www.prefeitura.sp.gov.br/nfe">';
@@ -2165,6 +2176,9 @@ begin
            proGiap,
            proIPM: FTagI := '';
 
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            begin
              FNameSpaceCan := FNameSpaceDad;
@@ -2197,6 +2211,10 @@ begin
            proGiap,
            proWEBFISCO,
            proIPM: FTagI := '';
+
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2207,6 +2225,10 @@ begin
          case FProvedor of
            proAssessorPublico:
              FTagI := '';
+
+           proSimplISSv2: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad +
+                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
          end;	 
@@ -2879,7 +2901,9 @@ begin
                                               'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
 
     proSimplISSv2:
-      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"',
+      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
+                                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+                                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
                                               'EnviarLoteRpsEnvio', [rfReplaceAll]);
   end;
 
@@ -3646,7 +3670,11 @@ begin
         end;
 
       proSimplISSv2:
-        FPDadosMsg := StringReplace(FPDadosMsg, 'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', 'GerarNfseEnvio', [rfReplaceAll]);
+          FPDadosMsg := StringReplace(FPDadosMsg,
+                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
+                                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
+                                      'GerarNfseEnvio', [rfReplaceAll]);
 
       proNotaBlu:
         FPDadosMsg := StringReplace(FPDadosMsg, 'EnvioRps xmlns=""', 'EnvioRps', [rfReplaceAll]);

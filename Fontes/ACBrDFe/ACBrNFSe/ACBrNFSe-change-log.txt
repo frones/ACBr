@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/53667-erro-ao-enviar-lote-para-blumenausc/?do=findComment&comment=354382
+   Por: Ernesto Ricardo
+
 26/09/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/53852-altera%C3%A7%C3%A3o-para-envio-e-retorno-provedor-pvh-e-iibrasil/

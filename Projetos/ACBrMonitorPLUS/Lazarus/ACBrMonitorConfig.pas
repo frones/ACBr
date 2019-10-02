@@ -2233,7 +2233,7 @@ begin
 
   with DFe.WebService do
   begin
-    Versao                    := '3.10';
+    Versao                    := '4.00';
     VersaoCTe                 := '3.00';
     VersaoMDFe                := '3.00';
     VersaoeSocial             := '02_04_02';

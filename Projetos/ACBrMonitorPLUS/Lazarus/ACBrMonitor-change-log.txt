@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2019
+[*] DoACBrMDFe
+Ajuste na função de geração arquivo .ini
+
 23/09/2019
 [*] DoACBrCTe
 Adicionado funcionalidades para envio Síncrono do CT-e

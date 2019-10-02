@@ -1362,7 +1362,7 @@ begin
             end;
             for y := 1 to Rodo.veicTracao.condutor.Count - 1 do
             begin
-              sSecao := 'condutor' + IntToStrZero(y + 1, 3);
+              sSecao := 'moto' + IntToStrZero(y + 1, 3);
               IniRec.WriteString(
                 sSecao, 'CPF', Rodo.veicTracao.condutor.Items[y].CPF);
               IniRec.WriteString(

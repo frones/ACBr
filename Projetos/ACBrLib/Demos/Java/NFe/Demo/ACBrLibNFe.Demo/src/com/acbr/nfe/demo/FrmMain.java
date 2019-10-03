@@ -1017,10 +1017,10 @@ public class FrmMain extends javax.swing.JFrame {
                         
             cmbSSlType.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "SSLType"))); 
             nudTimeOut.setValue(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "Timeout")));
-            txtProxyServidor.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "Proxy.Host"));
-            nudProxyPorta.setValue(acbrNFe.configLerValor(ACBrSessao.DFe, "Proxy.Port"));
-            txtProxyUsuario.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "Proxy.User"));
-            txtProxySenha.setText(acbrNFe.configLerValor(ACBrSessao.DFe, "Proxy.Pass"));
+            txtProxyServidor.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Servidor"));
+            nudProxyPorta.setValue(acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta"));
+            txtProxyUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Usuario"));
+            txtProxySenha.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Senha"));
             txtNome.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Nome"));
             txtEmail.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Conta"));
             txtUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Usuario"));
@@ -1093,20 +1093,20 @@ public class FrmMain extends javax.swing.JFrame {
                     "Timeout", 
                     nudTimeOut.getValue().toString());            
             
-            acbrNFe.configGravarValor(ACBrSessao.DFe, 
-                    "Proxy.Host", 
+            acbrNFe.configGravarValor(ACBrSessao.Proxy, 
+                    "Servidor", 
                     txtProxyServidor.getText());            
             
-            acbrNFe.configGravarValor(ACBrSessao.DFe, 
-                    "Proxy.Port", 
+            acbrNFe.configGravarValor(ACBrSessao.Proxy, 
+                    "Porta", 
                     nudProxyPorta.getValue().toString());
                         
-            acbrNFe.configGravarValor(ACBrSessao.DFe, 
-                    "Proxy.User", 
+            acbrNFe.configGravarValor(ACBrSessao.Proxy, 
+                    "Usuario", 
                     txtProxyUsuario.getText());
 
-            acbrNFe.configGravarValor(ACBrSessao.DFe, 
-                    "Proxy.Pass", 
+            acbrNFe.configGravarValor(ACBrSessao.Proxy, 
+                    "Senha", 
                     txtProxySenha.getPassword());            
             
             acbrNFe.configGravarValor(ACBrSessao.Email, 

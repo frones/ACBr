@@ -60,6 +60,8 @@ type
   TdocZipCollection     = class;
   TdocZipCollectionItem = class;
   TRetDistDFeInt        = class;
+  TitensAverbadosCollection     = class;
+  TitensAverbadosCollectionItem = class;
 
   TDetEventoCTe = class
   private
@@ -87,6 +89,35 @@ type
     property xNome: String read FxNome write FxNome;
   end;
 
+  TitensAverbadosCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TitensAverbadosCollectionItem;
+    procedure SetItem(Index: Integer; Value: TitensAverbadosCollectionItem);
+  public
+    function New: TitensAverbadosCollectionItem;
+    property Items[Index: Integer]: TitensAverbadosCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TitensAverbadosCollectionItem = class(TObject)
+  private
+    FdhEmbarque: TDateTime;
+    FdhAverbacao: TDateTime;
+    FnDue: String;
+    FnItem: Integer;
+    FnItemDue: Integer;
+    FqItem: Integer;
+    FmotAlteracao: Integer;
+
+  public
+    property dhEmbarque: TDateTime  read FdhEmbarque   write FdhEmbarque;
+    property dhAverbacao: TDateTime read FdhAverbacao  write FdhAverbacao;
+    property nDue: String           read FnDue         write FnDue;
+    property nItem: Integer         read FnItem        write FnItem;
+    property nItemDue: Integer      read FnItemDue     write FnItemDue;
+    property qItem: Integer         read FqItem        write FqItem;
+    property motAlteracao: Integer  read FmotAlteracao write FmotAlteracao;
+  end;
+
   TprocEvento_DetEvento = class
   private
     FVersao: String;
@@ -94,9 +125,14 @@ type
     FnProt: String;
     FxJust: String;
     FxCorrecao: String;
+    FtpAutor: Integer;
+    FverAplic: String;
 
     FCTe: TDetEventoCTe;
     Femit: TDetEventoEmit;
+    FitensAverbados: TitensAverbadosCollection;
+
+    procedure SetitensAverbados(const Value: TitensAverbadosCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -106,9 +142,12 @@ type
     property nProt: String      read FnProt      write FnProt;
     property xJust: String      read FxJust      write FxJust;
     property xCorrecao: String  read FxCorrecao  write FxCorrecao;
+    property tpAutor: Integer   read FtpAutor    write FtpAutor;
+    property verAplic: String   read FverAplic   write FverAplic;
 
     property CTe: TDetEventoCTe   read FCTe  write FCTe;
     property emit: TDetEventoEmit read Femit write Femit;
+    property itensAverbados: TitensAverbadosCollection read FitensAverbados write SetitensAverbados;
   end;
 
   TprocEvento_RetInfEvento = class
@@ -275,8 +314,6 @@ type
     property XML: String             read FXML        write FXML;
   end;
 
-
-
   TRetDistDFeInt = class
   private
     FLeitor: TLeitor;
@@ -317,6 +354,26 @@ uses
   pcnAuxiliar,
   ACBrUtil, pcnGerador;
 
+{ TitensAverbadosCollection }
+
+function TitensAverbadosCollection.GetItem(
+  Index: Integer): TitensAverbadosCollectionItem;
+begin
+  Result := TitensAverbadosCollectionItem(inherited GetItem(Index));
+end;
+
+function TitensAverbadosCollection.New: TitensAverbadosCollectionItem;
+begin
+  Result := TitensAverbadosCollectionItem.Create;
+  Add(Result);
+end;
+
+procedure TitensAverbadosCollection.SetItem(Index: Integer;
+  Value: TitensAverbadosCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
 { TprocEvento_DetEvento }
 
 constructor TprocEvento_DetEvento.Create;
@@ -332,6 +389,12 @@ begin
   emit.Free;
 
   inherited;
+end;
+
+procedure TprocEvento_DetEvento.SetitensAverbados(
+  const Value: TitensAverbadosCollection);
+begin
+  FitensAverbados := Value;
 end;
 
 { TprocEvento }
@@ -416,7 +479,7 @@ end;
 function TRetDistDFeInt.LerXml: boolean;
 var
   ok: boolean;
-  i: Integer;
+  i, j: Integer;
   StrAux, StrDecod: AnsiString;
   oLeitorInfZip: TLeitor;
 begin
@@ -571,6 +634,8 @@ begin
               FdocZip.Items[i].FprocEvento.detEvento.FxJust      := ParseText(oLeitorInfZip.rCampo(tcStr, 'xJust'));
               FdocZip.Items[i].FprocEvento.detEvento.FxCorrecao  := ParseText(oLeitorInfZip.rCampo(tcStr, 'xCorrecao'));
               FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := ParseText(oLeitorInfZip.rCampo(tcStr, 'descEvento'));
+              FdocZip.Items[i].FprocEvento.detEvento.FtpAutor    := oLeitorInfZip.rCampo(tcInt, 'tpAutor');
+              FdocZip.Items[i].FprocEvento.detEvento.FverAplic   := oLeitorInfZip.rCampo(tcStr, 'verAplic');
 
               if (oLeitorInfZip.rExtrai(3, 'CTe') <> '') then
               begin
@@ -586,6 +651,21 @@ begin
                 FdocZip.Items[i].FprocEvento.detEvento.Femit.FCNPJ  := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
                 FdocZip.Items[i].FprocEvento.detEvento.Femit.FIE    := oLeitorInfZip.rCampo(tcStr, 'IE');
                 FdocZip.Items[i].FprocEvento.detEvento.Femit.FxNome := ParseText(oLeitorInfZip.rCampo(tcStr, 'xNome'));
+              end;
+
+              j := 0;
+              while Leitor.rExtrai(3, 'itensAverbados', '', j + 1) <> '' do
+              begin
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.New;
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FdhEmbarque   := oLeitorInfZip.rCampo(tcDatHor, 'dhEmbarque');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FdhAverbacao  := oLeitorInfZip.rCampo(tcDatHor, 'dhAverbacao');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FnDue         := oLeitorInfZip.rCampo(tcStr, 'nDue');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FnItem        := oLeitorInfZip.rCampo(tcInt, 'nItem');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FnItemDue     := oLeitorInfZip.rCampo(tcInt, 'nItemDue');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FqItem        := oLeitorInfZip.rCampo(tcInt, 'qItem');
+                FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FmotAlteracao := oLeitorInfZip.rCampo(tcInt, 'motAlteracao');
+
+                inc(j);
               end;
             end;
 

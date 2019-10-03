@@ -600,12 +600,12 @@ begin
   Result := StrToEnumerado(ok, s,
             ['-99999', '110110', '110111', '110112', '110140', '111500',
              '111501', '111502', '111503', '210200', '210210', '210220',
-             '210240', '610600', '610614'],
+             '210240', '610600', '610614', '790700'],
             [teNaoMapeado, teCCe, teCancelamento, teCancSubst, teEPECNFe,
              tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
              teManifDestConfirmacao, teManifDestCiencia,
              teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-             teRegistroCTe, teMDFeAutorizadoComCTe ]);
+             teRegistroCTe, teMDFeAutorizadoComCTe, teAverbacaoExportacao ]);
 end;
 
 initialization

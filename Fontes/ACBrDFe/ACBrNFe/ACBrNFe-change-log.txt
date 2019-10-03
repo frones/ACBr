@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2019
+-- pcnConversaoNFe --
+[*] Incluido o tipo de evento: Averbação para Exportação.
+   Por: Italo Jurisato Junior
+
 01/10/2019
 -- ACBrNFeWebServices --
 [*] Incluido a chamada para remover os namespaces individos no método

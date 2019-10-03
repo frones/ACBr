@@ -237,8 +237,6 @@ type
     FBoletoConfig: TBoletoConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -267,15 +265,6 @@ uses
 
 { TLibBoletoConfig }
 
-function TLibBoletoConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibBoletoNome, '0');
-  Result := (CompareVersions(CLibBoletoVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibBoletoConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -292,14 +281,11 @@ procedure TLibBoletoConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibBoletoNome, CLibBoletoVersao);
-
   FBoletoDiretorioConfig.GravarIni(Ini);
   FBoletoBancoConfig.GravarIni(Ini);
   FBoletoCedenteConfig.GravarIni(Ini);
   FBoletoFCFortesConfig.GravarIni(Ini);
   FBoletoConfig.GravarIni(Ini);
-
 end;
 
 procedure TLibBoletoConfig.ClasseParaComponentes;

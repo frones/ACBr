@@ -38,7 +38,7 @@ unit ACBrLibComum;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, fileinfo,
   ACBrLibConfig;
 
 type
@@ -67,11 +67,17 @@ type
   private
     FLogNome: String;
     FLogData: TDate;
+    FNome: String;
+    FDescricao: String;
+    FVersao: String;
+
+    function GetNome: String;
+    function GetDescricao: String;
+    function GetVersao: String;
 
   protected
-    fpNome: String;
-    fpVersao: String;
     fpConfig: TLibConfig;
+    fpFileVerInfo: TFileVersionInfo;  // Informações da Aplicação e Versão, definida em Opções do Projeto
 
     procedure Inicializar; virtual;
     procedure CriarConfiguracao(ArqConfig: String = ''; ChaveCrypt: AnsiString = ''); virtual;
@@ -87,8 +93,9 @@ type
 
     property Config: TLibConfig read fpConfig;
 
-    property Nome: String read fpNome;
-    property Versao: String read fpVersao;
+    property Nome: String read GetNome;
+    property Versao: String read GetVersao;
+    property Descricao: String read GetDescricao;
   end;
 
   TACBrLibClass = class of TACBrLib;
@@ -166,17 +173,48 @@ begin
 
   FLogData := -1;
   FLogNome := '';
+  FNome := '';
+  FVersao := '';
+  FDescricao := '';
 
-  fpNome := CLibNome;
-  fpVersao := CLibVersao;
+  fpFileVerInfo := TFileVersionInfo.Create(Nil);
+  fpFileVerInfo.ReadFileInfo;
 
   CriarConfiguracao(ArqConfig, ChaveCrypt);
 end;
 
 destructor TACBrLib.Destroy;
 begin
+  fpFileVerInfo.Free;
   Finalizar;
   inherited Destroy;
+end;
+
+function TACBrLib.GetVersao: String;
+begin
+  if (FVersao = '') then
+    if Assigned(fpFileVerInfo) then
+      FVersao := fpFileVerInfo.VersionStrings.Values['FileVersion'];
+
+  Result := FVersao;
+end;
+
+function TACBrLib.GetNome: String;
+begin
+  if (FNome = '') then
+    if Assigned(fpFileVerInfo) then
+      FNome := fpFileVerInfo.VersionStrings.Values['InternalName'];
+
+  Result := FNome;
+end;
+
+function TACBrLib.GetDescricao: String;
+begin
+  if (FDescricao = '') then
+    if Assigned(fpFileVerInfo) then
+      FDescricao := fpFileVerInfo.VersionStrings.Values['FileDescription'];
+
+  Result := FDescricao;
 end;
 
 procedure TACBrLib.Inicializar;
@@ -225,7 +263,7 @@ begin
     else
       APath := ApplicationPath;
 
-    FLogNome := APath + fpNome + '-' + DtoS(FLogData) + '.log';
+    FLogNome := APath + Self.Nome + '-' + DtoS(FLogData) + '.log';
   end;
 
   Result := FLogNome;
@@ -235,7 +273,7 @@ procedure TACBrLib.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolea
 var
   NomeArq: String;
 begin
-  if (FLogData < 0) or (fpNome = '') or
+  if (FLogData < 0) or (Self.Nome = '') or
     (not Assigned(fpConfig)) or (NivelLog > fpConfig.Log.Nivel) then
     Exit;
 

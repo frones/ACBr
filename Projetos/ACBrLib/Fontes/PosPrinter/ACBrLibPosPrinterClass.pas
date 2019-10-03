@@ -138,16 +138,13 @@ function POS_GetPosPrinter: Pointer;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibPosPrinterConsts, ACBrLibConfig, ACBrLibPosPrinterConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibPosPrinterConfig;
 
 { TACBrLibPosPrinter }
 
 constructor TACBrLibPosPrinter.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibPosPrinterNome;
-  fpVersao := CLibPosPrinterVersao;
-
   FPosDM := TLibPosPrinterDM.Create(nil);
 end;
 

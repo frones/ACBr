@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibBoletoNome = 'ACBrLibBoleto';
+
 type
 
   { ACBrLibBoletoTest }
@@ -60,6 +63,7 @@ uses
 
 procedure TACBrLibBoletoTest.Test_Boleto_Inicializar_Com_DiretorioInvalido;
 begin
+  Boleto_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, Boleto_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -139,14 +143,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, Boleto_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibBoletoVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, Boleto_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibBoletoVersao), Bufflen);
-  AssertEquals(CLibBoletoVersao, AStr);
-
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ConfigLerValor;
@@ -157,9 +160,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, Boleto_ConfigLerValor(CSessaoVersao, CLibBoletoNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, Boleto_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibBoletoVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TACBrLibBoletoTest.Test_Boleto_ConfigGravarValor;

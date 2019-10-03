@@ -179,9 +179,6 @@ uses
 constructor TACBrLibNFe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibNFeNome;
-  fpVersao := CLibNFeVersao;
-
   FNFeDM := TLibNFeDM.Create(nil);
 end;
 

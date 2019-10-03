@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibSATNome = 'ACBrLibSAT';
-  CLibSATVersao = '0.0.2';
-
   CSessaoSAT = 'SAT';
   CChaveNomeDLL = 'NomeDLL';
   CChaveCodigoDeAtivacao = 'CodigoDeAtivacao';

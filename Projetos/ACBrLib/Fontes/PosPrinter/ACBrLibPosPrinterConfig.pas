@@ -48,8 +48,6 @@ type
     FDeviceConfig: TDeviceConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -68,7 +66,7 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterClass, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrLibComum,
+  ACBrLibPosPrinterClass, ACBrLibConsts, ACBrLibComum,
   ACBrUtil;
 
 { TLibPosPrinterConfig }
@@ -87,15 +85,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibPosPrinterConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibPosPrinterNome, '0');
-  Result := (CompareVersions(CLibPosPrinterVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibPosPrinterConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -106,8 +95,6 @@ end;
 procedure TLibPosPrinterConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibPosPrinterNome, CLibPosPrinterVersao);
 
   FDeviceConfig.GravarIni(Ini);
 end;

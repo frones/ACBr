@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="119"/>
+      <BuildNr Value="120"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrLibSAT - Biblioteca para comunicação com equipamentos SAT ﻿usando ACBrSAT" InternalName="ACBrLibSAT" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr"/>
@@ -274,13 +274,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\SAT\bin\ACBrLibSATTest.exe"/>
           </local>
         </Mode0>
       </Modes>

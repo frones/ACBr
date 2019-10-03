@@ -1129,9 +1129,6 @@ constructor TACBrLibBoleto.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited
   Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibBoletoNome;
-  fpVersao := CLibBoletoVersao;
-
   FBoletoDM := TLibBoletoDM.Create(nil);
 end;
 

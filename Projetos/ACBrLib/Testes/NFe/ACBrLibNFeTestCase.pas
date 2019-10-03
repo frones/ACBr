@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibNFeNome = 'ACBrLibNFE';
+
 type
 
   { TTestACBrNFeLib }
@@ -33,6 +36,7 @@ uses
 
 procedure TTestACBrNFeLib.Test_NFE_Inicializar_Com_DiretorioInvalido;
 begin
+  NFE_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, NFE_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -111,13 +115,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, NFE_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibNFeVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, NFE_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibNFeVersao), Bufflen);
-  AssertEquals(CLibNFeVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrNFeLib.Test_NFE_ConfigLerValor;
@@ -128,9 +132,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, NFE_ConfigLerValor(CSessaoVersao, CLibNFeNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, NFE_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibNFeVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 initialization

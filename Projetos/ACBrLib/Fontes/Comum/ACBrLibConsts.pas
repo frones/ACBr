@@ -41,9 +41,8 @@ uses
   Classes, SysUtils;
 
 const
-  CLibNome = 'ACBrLib';
-  CLibVersao = '0.0.2';
-
+  CACBrLib = 'ACBrLib';
+  CACBrLibVersaoConfig = '0.0.2';
   CLibChaveCrypt = 'tYk*5W@';
 
   {$IfDef MSWINDOWS}

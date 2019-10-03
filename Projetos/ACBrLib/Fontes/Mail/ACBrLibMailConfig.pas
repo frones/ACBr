@@ -46,9 +46,6 @@ type
   { TLibMailConfig }
   TLibMailConfig = class(TLibConfig)
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
-    procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
 
     procedure Travar; override;
@@ -62,7 +59,7 @@ type
 implementation
 
 uses
-  ACBrLibMailClass, ACBrLibMailConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibMailClass, ACBrLibComum, ACBrUtil;
 
 { TLibMailConfig }
 
@@ -74,22 +71,6 @@ end;
 destructor TLibMailConfig.Destroy;
 begin
   inherited Destroy;
-end;
-
-function TLibMailConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibMailNome, '0');
-  Result := (CompareVersions(CLibMailVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
-procedure TLibMailConfig.ClasseParaINI;
-begin
-  inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibMailNome, CLibMailVersao);
 end;
 
 procedure TLibMailConfig.ClasseParaComponentes;

@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibNFeNome = 'ACBrLibNFe';
-  CLibNFeVersao = '0.1.1';
-
   CSessaoDANFE = 'DANFE';
   CChaveTipoDANFE = 'TipoDANFE';
   CChaveImprimeTotalLiquido = 'ImprimeTotalLiquido';

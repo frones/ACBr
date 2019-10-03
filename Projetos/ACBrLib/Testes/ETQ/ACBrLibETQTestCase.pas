@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibETQNome = 'ACBrLibETQ';
+
 type
 
   { TTestACBrETQLib }
@@ -50,6 +53,7 @@ uses
 
 procedure TTestACBrETQLib.Test_ETQ_Inicializar_Com_DiretorioInvalido;
 begin
+  ETQ_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, ETQ_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -128,13 +132,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, ETQ_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibETQVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, ETQ_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibETQVersao), Bufflen);
-  AssertEquals(CLibETQVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrETQLib.Test_ETQ_ConfigLerValor;
@@ -145,9 +149,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, ETQ_ConfigLerValor(CSessaoVersao, CLibETQNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, ETQ_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibETQVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrETQLib.Test_ETQ_ConfigGravarValor;

@@ -42,9 +42,6 @@ uses
   Classes, SysUtils, ACBrLibComum;
 
 const
-  CLibBoletoNome = 'ACBrLibBoleto';
-  CLibBoletoVersao = '0.0.2';
-
   CSessaoBoletoDiretorioConfig = 'BoletoDiretorioConfig';
   CChaveDataArquivo = 'DataArquivo';
   CChaveDataCreditoLanc = 'DataCreditoLanc';

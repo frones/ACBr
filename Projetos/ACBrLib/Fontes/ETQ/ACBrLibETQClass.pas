@@ -136,9 +136,6 @@ uses
 constructor TACBrLibETQ.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibETQNome;
-  fpVersao := CLibETQVersao;
-
   FETQDM := TLibETQDM.Create(nil);
 end;
 

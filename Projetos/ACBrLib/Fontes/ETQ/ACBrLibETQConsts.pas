@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibETQNome = 'ACBrLibETQ';
-  CLibETQVersao = '0.0.1';
-
   CSessaoETQ = 'ETQ';
 
   CChaveLog = 'ArqLog';

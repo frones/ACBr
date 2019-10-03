@@ -792,8 +792,14 @@ function TLibConfig.AtualizarArquivoConfiguracao: Boolean;
 var
   Versao: String;
 begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibNome, '0');
-  Result := (CompareVersions(CLibVersao, Versao) > 0);
+  Versao := FIni.ReadString(CSessaoVersao, CACBrLib, '0');
+  Result := (CompareVersions(CACBrLibVersaoConfig, Versao) > 0);
+
+  if (not Result) then
+  begin
+    Versao := FIni.ReadString(CSessaoVersao, TACBrLib(FOwner).Nome, '0');
+    Result := (CompareVersions(TACBrLib(FOwner).Versao, Versao) > 0);
+  end;
 end;
 
 procedure TLibConfig.AplicarConfiguracoes;
@@ -870,7 +876,8 @@ end;
 procedure TLibConfig.ClasseParaINI;
 begin
   FIni.WriteInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta));
-  FIni.WriteString(CSessaoVersao, CLibNome, CLibVersao);
+  FIni.WriteString(CSessaoVersao, CACBrLib, CACBrLibVersaoConfig);
+  FIni.WriteString(CSessaoVersao, TACBrLib(FOwner).Nome, TACBrLib(FOwner).Versao);
 
   FLog.GravarIni(FIni);
   FSistema.GravarIni(FIni);

@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibPosPrinterNome = 'ACBrLibPosPrinter';
+
 type
 
   { TTestACBrPosPrinterLib }
@@ -35,7 +38,7 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterStaticImport, ACBrLibPosPrinterConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibPosPrinterStaticImport, ACBrLibConsts, ACBrUtil;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioValido;
 var
@@ -56,6 +59,7 @@ end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_Inicializar_Com_DiretorioInvalido;
 begin
+  POS_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, POS_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -134,13 +138,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, POS_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibPosPrinterVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, POS_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibPosPrinterVersao), Bufflen);
-  AssertEquals(CLibPosPrinterVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ConfigLerValor;
@@ -151,9 +155,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, POS_ConfigLerValor(CSessaoVersao, CLibPosPrinterNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, POS_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibPosPrinterVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrPosPrinterLib.Test_POS_ConfigGravarValor;

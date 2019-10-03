@@ -167,9 +167,6 @@ uses
 constructor TACBrLibSAT.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibSATNome;
-  fpVersao := CLibSATVersao;
-
   FSatDM := TLibSatDM.Create(nil);
 end;
 

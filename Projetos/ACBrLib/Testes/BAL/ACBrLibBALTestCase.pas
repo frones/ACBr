@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibBALNome = 'ACBrLibBAL';
+
 type
 
   { TTestACBrBALLib }
@@ -40,6 +43,7 @@ uses
 
 procedure TTestACBrBALLib.Test_BAL_Inicializar_Com_DiretorioInvalido;
 begin
+  BAL_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, BAL_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -106,7 +110,7 @@ begin
   Bufflen := 4;
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, BAL_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
+  AssertEquals(Length(CLibBALNome), Bufflen);
   AssertEquals(copy(CLibBALNome,1,4), AStr);
 end;
 
@@ -118,13 +122,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, BAL_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibBALVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, BAL_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibBALVersao), Bufflen);
-  AssertEquals(CLibBALVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrBALLib.Test_BAL_ConfigLerValor;
@@ -135,9 +139,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, BAL_ConfigLerValor(CSessaoVersao, CLibBALNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, BAL_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibBALVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrBALLib.Test_BAL_ConfigGravarValor;

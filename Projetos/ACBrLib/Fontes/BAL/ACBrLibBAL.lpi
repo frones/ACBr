@@ -238,7 +238,7 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\Testes\BAL\bin\ACBrBAL32"/>
+            <Filename Value="..\..\Testes\BAL\bin\ACBrBAL32"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
@@ -279,13 +279,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\BAL\bin\ACBrLibBALTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\BAL\bin\ACBrLibBALTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\BAL\bin\ACBrLibBALTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\BAL\bin\ACBrLibBALTest.exe"/>
           </local>
         </Mode0>
       </Modes>

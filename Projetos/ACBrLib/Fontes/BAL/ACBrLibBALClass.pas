@@ -113,9 +113,6 @@ uses
 constructor TACBrLibBAL.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibBALNome;
-  fpVersao := CLibBALVersao;
-
   FBALDM := TLibBALDM.Create(nil);
 end;
 

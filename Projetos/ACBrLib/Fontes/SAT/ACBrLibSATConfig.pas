@@ -222,8 +222,6 @@ type
     function GetIsMFe: Boolean;
 
   protected
-    function AtualizarArquivoConfiguracao: boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -636,16 +634,9 @@ begin
   FSATCertificado.GravarIni(AIni);
   FExtrato.GravarIni(AIni);
   FIntegrador.GravarIni(AIni);
-  if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);
-end;
 
-function TLibSATConfig.AtualizarArquivoConfiguracao: boolean;
-var
-  Versao: string;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibSATNome, '0');
-  Result := (CompareVersions(CLibSATVersao, Versao) > 0) or
-    (inherited AtualizarArquivoConfiguracao);
+  if FDeviceConfig <> nil then
+    FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibSATConfig.INIParaClasse;
@@ -658,8 +649,6 @@ end;
 procedure TLibSATConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibSATNome, CLibSATVersao);
 
   GravarIni(Ini);
 end;

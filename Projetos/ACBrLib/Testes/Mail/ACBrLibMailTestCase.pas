@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testregistry;
 
+const
+  CLibMailNome = 'ACBrLibMail';
+
 type
 
   { TTestACBrMailLib }
@@ -47,10 +50,11 @@ type
 implementation
 
 uses
-  ACBrLibMailStaticImport, ACBrLibMailConsts, ACBrLibConsts, ACBrUtil;
+  ACBrLibMailStaticImport, ACBrLibConsts, ACBrUtil;
 
 procedure TTestACBrMailLib.Test_MAIL_Inicializar_Com_DiretorioInvalido;
 begin
+  MAIL_Finalizar();
   AssertEquals(ErrDiretorioNaoExiste, MAIL_Inicializar('C:\NAOEXISTE\ACBrLib.ini',''));
 end;
 
@@ -129,13 +133,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, MAIL_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibMailVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, MAIL_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibMailVersao), Bufflen);
-  AssertEquals(CLibMailVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_ConfigLerValor;
@@ -146,9 +150,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, MAIL_ConfigLerValor(CSessaoVersao, CLibMailNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, MAIL_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibMailVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrMailLib.Test_MAIL_ConfigGravarValor;

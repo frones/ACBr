@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibBALNome = 'ACBrLibBAL';
-  CLibBALVersao = '0.0.1';
-
   CSessaoBAL = 'BAL';
 
   CChaveLog = 'ArqLog';

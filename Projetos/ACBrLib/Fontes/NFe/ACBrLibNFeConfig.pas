@@ -218,8 +218,6 @@ type
     FDeviceConfig: TDeviceConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -664,15 +662,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibNFeConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibNFeNome, '0');
-  Result := (CompareVersions(CLibNFeVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibNFeConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -690,10 +679,8 @@ begin
   inherited ClasseParaINI;
 
   FNFeConfig.ChaveCryptINI := ChaveCrypt;
-
-  Ini.WriteString(CSessaoVersao, CLibNFeNome, CLibNFeVersao);
-
   FNFeConfig.GravarIni(Ini);
+
   FDANFeConfig.GravarIni(Ini);
   FIntegradorConfig.GravarIni(Ini);
   if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);

@@ -125,9 +125,6 @@ uses
 constructor TACBrLibMail.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibMailNome;
-  fpVersao := CLibMailVersao;
-
   FMailDM := TLibMailDM.Create(nil);
 end;
 

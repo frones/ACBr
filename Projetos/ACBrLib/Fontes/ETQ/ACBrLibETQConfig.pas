@@ -89,8 +89,6 @@ type
     FDeviceConfig: TDeviceConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -187,15 +185,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibETQConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibETQNome, '0');
-  Result := (CompareVersions(CLibETQVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibETQConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -207,8 +196,6 @@ end;
 procedure TLibETQConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibETQNome, CLibETQVersao);
 
   FETQConfig.GravarIni(Ini);
   FDeviceConfig.GravarIni(Ini);

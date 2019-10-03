@@ -18,7 +18,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="429"/>
+      <BuildNr Value="431"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrPosPrinter - Biblioteca para comunicação com impressoras não fiscais ﻿usando EscPos" InternalName="ACBrLibPosPrinter" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="PosPrinter " ProductVersion="0.0.2.30"/>
@@ -274,13 +274,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+        <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
+            <HostApplicationFilename Value="C:\Pascal\Comp\ACBr\trunk2\Projetos\ACBrLib\Testes\PosPrinter\bin\ACBrLibPosPrinterTest.exe"/>
           </local>
         </Mode0>
       </Modes>
@@ -290,7 +290,7 @@
         <PackageName Value="ACBrSerial"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ACBrLibPosPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -323,13 +323,9 @@
         <ResourceBaseClass Value="DataModule"/>
       </Unit6>
       <Unit7>
-        <Filename Value="ACBrLibPosPrinterConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit7>
-      <Unit8>
         <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
         <IsPartOfProject Value="True"/>
-      </Unit8>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

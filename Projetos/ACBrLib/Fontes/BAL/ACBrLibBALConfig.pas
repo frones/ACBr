@@ -76,8 +76,6 @@ type
     FDeviceConfig: TDeviceConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -156,15 +154,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibBALConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibBALNome, '0');
-  Result := (CompareVersions(CLibBALVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibBALConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -176,8 +165,6 @@ end;
 procedure TLibBALConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibBALNome, CLibBALVersao);
 
   FBALConfig.GravarIni(Ini);
   FDeviceConfig.GravarIni(Ini);

@@ -441,6 +441,7 @@ end;
 function TNFSeG.Gera_DadosMsgEnviarLote: String;
 var
   Atributo_cMun: String;
+  xNotas: String;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -765,12 +766,23 @@ begin
 
      proAssessorPublico:
        begin
-//         Gerador.Prefixo := 'nfse:';
+         xNotas := '<NFSE>';
+         xNotas := xNotas + '<IDENTIFICACAO>';
+         xNotas := xNotas + '<MESCOMP>' + FormatDateTime('MM', Now)+'</MESCOMP>';
+         xNotas := xNotas + '<ANOCOMP>' + FormatDateTime('yyyy', Now)+'</ANOCOMP>';
+         xNotas := xNotas + '<INSCRICAO>' + IM + '</INSCRICAO>';
+         xNotas := xNotas + '<VERSAO>' + VersaoXML + '</VERSAO>';
+         xNotas := xNotas + '</IDENTIFICACAO>';
+         xNotas := xNotas + '<NOTAS>';
+         xNotas := xNotas + Notas;
+         xNotas := xNotas + '</NOTAS>';
+         xNotas := xNotas + '</NFSE>';
+
          Gerador.wGrupoNFSe('Nfse.Execute xmlns="nfse"');
          Gerador.wCampoNFSe(tcStr, '', 'Operacao', 1, 1, 1, '1', '');
          Gerador.wCampoNFSe(tcStr, '', 'Usuario', 1, 1, 1, UserWeb, '');
          Gerador.wCampoNFSe(tcStr, '', 'Senha', 1, 1, 1, SenhaWeb, '');
-         Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, Notas, '');
+         Gerador.wCampoNFSe(tcStr, '', 'Webxml', 1, 1, 1, xNotas, '');
          Gerador.wGrupoNFSe('/Nfse.Execute');
        end
   else

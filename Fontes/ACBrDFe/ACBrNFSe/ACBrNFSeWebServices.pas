@@ -1829,6 +1829,7 @@ begin
                                   RetornarConteudoEntre(RPS, '<NFS-e', '</NFS-e>') +
                                 '</NFS-e>';
 
+        proAssessorPublico,
         proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
 
@@ -1847,21 +1848,6 @@ begin
         proLencois,
         proSMARAPD,
         proIPM: FvNotas := RPS;
-
-        proAssessorPublico: begin
-                              SRpsTmp := StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
-                              FvNotas := '<NFSE>';
-                              FvNotas := FvNotas + '<IDENTIFICACAO>';
-                              FvNotas := FvNotas + '<MESCOMP>'+FormatDateTime('MM',Now)+'</MESCOMP>';
-                              FvNotas := FvNotas + '<ANOCOMP>'+FormatDateTime('yyyy',Now)+'</ANOCOMP>';
-                              FvNotas := FvNotas + '<INSCRICAO>'+FPConfiguracoesNFSe.Geral.Emitente.InscMun+'</INSCRICAO>';
-                              FvNotas := FvNotas + '<VERSAO>'+FVersaoXML+'</VERSAO>';
-                              FvNotas := FvNotas + '</IDENTIFICACAO>';
-                              FvNotas := FvNotas + '<NOTAS>';
-                              FvNotas := FvNotas + SRpsTmp;
-                              FvNotas := FvNotas + '</NOTAS>';
-                              FvNotas := FvNotas + '</NFSE>';
-                            end;
 
 //        proWEBFISCO: FvNotas := RetornarConteudoEntre(RPS, '<EnvNfe>', '</EnvNfe>');
         proWEBFISCO: FvNotas := RPS;
@@ -1922,6 +1908,7 @@ begin
            proInfiscv11,
            proIPM,
            proSMARAPD: FTagI := '';
+
            proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                                    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
@@ -2226,18 +2213,18 @@ begin
            proAssessorPublico:
              FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad +
+           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                                    ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
                                    ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
-           FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
+           FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;	 
        end;
 
     LayNfseSubstituiNfse:
        begin
          case FProvedor of
-           proAgili: FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+           proAgili: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                                '<UnidadeGestora>' +
                                 OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
                                '</UnidadeGestora>'{ +
@@ -2245,7 +2232,7 @@ begin
                                ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
                                       FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
 
-           proAgiliv2: FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>'{ +
+           proAgiliv2: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>'{ +
                                 '<' + FPrefixo4 + 'PedidoCancelamento' +
                                  ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
                                         FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>'};
@@ -2255,7 +2242,7 @@ begin
            proGiap,
            proIPM: FTagI := '';
          else begin
-                FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
                           '<' + FPrefixo3 + 'SubstituicaoNfse>'{ +
                            '<' + FPrefixo3 + 'Pedido>' +
                             '<' + FPrefixo4 + 'InfPedidoCancelamento' +
@@ -2362,14 +2349,14 @@ begin
          if FProvedor = proAssessorPublico then
            FTagF := ''
          else
-           FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
+           FTagF := '</' + FTagGrupo + '>';
        end;
 
     LayNfseSubstituiNfse:
        begin
          case FProvedor of
            proAgili,
-           proAgiliv2: FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+           proAgiliv2: FTagF := '</' + FTagGrupo + '>';
 
            proAssessorPublico,
            proSMARAPD,
@@ -2377,7 +2364,7 @@ begin
            proIPM: FTagF := '';
          else
            FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
-                    '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+                    '</' + FTagGrupo + '>';
          end;
        end;
 

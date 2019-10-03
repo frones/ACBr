@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2019
+-- Diversos --
+[*] Ajustes para o provedor Assessor Publico.
+   Por: Italo Jurisato Junior / José Jair de Oliveira
+
 02/10/2019
 -- ACBrNFSeDANFSeRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/53987-ajuste-campo-competencia-danfe-fortes/

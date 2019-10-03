@@ -98,7 +98,7 @@ begin
 
 
 // devem ser previamente cadastrados no sistema
-  Gerador.wCampoNFSe(tcStr, '', 'SITUACAO', 1, 1, 1, '1', '');
+  Gerador.wCampoNFSe(tcStr, '', 'SITUACAO', 1, 1, 1, NFSe.Situacao, '');
 
   if NFSe.Servico.Valores.IssRetido = stRetencao then
     Gerador.wCampoNFSe(tcStr, '', 'RETIDO', 1, 1, 1, 'S', '')

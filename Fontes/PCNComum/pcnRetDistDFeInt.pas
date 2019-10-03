@@ -381,12 +381,14 @@ begin
   inherited Create;
   CTe  := TDetEventoCTe.Create;
   emit := TDetEventoEmit.Create;
+  itensAverbados := TitensAverbadosCollection.Create;
 end;
 
 destructor TprocEvento_DetEvento.Destroy;
 begin
   CTe.Free;
   emit.Free;
+  itensAverbados.Free;
 
   inherited;
 end;

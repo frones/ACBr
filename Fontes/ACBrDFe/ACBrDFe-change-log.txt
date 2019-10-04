@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2019
+-- ACBrDFeReport --
+[*] Ajuste no método SetPathPDF, para considerar apenas o Path
+    (por: DSA)
+
 04/09/2019
 -- ACBrDFeUtil, ACBrDFeSSL --
 [*] Método ExtraiURI, renomeado para EncontrarURI, e otimizado para considerar

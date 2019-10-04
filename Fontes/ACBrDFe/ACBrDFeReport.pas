@@ -302,7 +302,7 @@ end;
 
 procedure TACBrDFeReport.SetPathPDF(const Value: String);
 begin
-  FPathPDF := PathWithDelim(Trim(Value));
+  FPathPDF := PathWithDelim( ExtractFilePath(Trim(Value)) );
 end;
 
 function TACBrDFeReport.GetPathPDF: String;

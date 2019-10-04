@@ -634,6 +634,16 @@ begin
                          fACBrNFe.NotasFiscais.Items[J].NFe.Ide.nNF)) +']' + sLineBreak +
                          'Arquivo=' + fACBrNFe.NotasFiscais.Items[J].NomeArq;
 
+          if pPDF then
+          begin
+            DoConfiguraDANFe(pPDF, Trim(pPreview) );
+            NotasFiscais.Items[J].ImprimirPDF;
+            ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.ID)+'-nfe.pdf';
+
+            fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
+              'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak;
+          end;
+
           DoConfiguraDANFe(False, Trim(pPreview) );
 
           if NaoEstaVazio(pImpressora) then
@@ -641,15 +651,6 @@ begin
 
           if pCopias > 0 then
             DANFE.NumCopias := pCopias;
-
-          if pPDF then
-          begin
-            NotasFiscais.Items[J].ImprimirPDF;
-            ArqPDF := OnlyNumber(ACBrNFe.NotasFiscais.Items[J].NFe.infNFe.ID)+'-nfe.pdf';
-
-            fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +
-              'PDF='+ PathWithDelim(ACBrNFe.DANFE.PathPDF) + ArqPDF + sLineBreak;
-          end;
 
           if (NotasFiscais.Items[J].Confirmada) and (pImprimir) then
           begin
@@ -2135,6 +2136,9 @@ begin
 
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
+    ACBrNFe.WebServices.Consulta.Clear;
+    ACBrNFe.NotasFiscais.Clear;
+
     if not ValidarChave(AChave) then
       raise Exception.Create('Chave ' + AChave + ' inválida.')
     else

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2019
+-- ACBrNFeServicos --
+[*] Incluido a seção: SOAP_V4_BA no arquivo INI, pois a SEFAZ-BA esta usando 
+    namespace diferente do padrão para alguns serviços.
+   Por: Italo Jurisato Junior / Henrique Sandri Zimermam
+
 03/10/2019
 -- pcnConversaoNFe --
 [*] Incluido o tipo de evento: Averbação para Exportação.

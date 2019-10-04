@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2019
+-- ACBrSATExtratoFortesFr --
+[*] Ajuste para atruibuir extensão default para filtros PDF ou HTML
+[-] Correção para definir Nome default como CFe+Chave, para PDF, HTML,
+	caso o "NomeDocumento" seja vazio
+[-] Ajuste para considerar a propriedade "PathPDF", caso o "NomeDocumento"
+	não tenha Path informado
+[*] Ajuste para criar diretório de criação do PDF, caso o mesmo ainda não 
+	exista
+	(por: DSA)
+
 20/09/2019
 -- ACBrSATExtratoESCPOS --
 [-] Correção para impressão de Logo Lateral, em Epson TM-T20 e TM-T20X

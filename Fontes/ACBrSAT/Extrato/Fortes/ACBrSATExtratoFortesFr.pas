@@ -1340,6 +1340,7 @@ var
   frACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr;
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
+  FileExt, DirPDF: String;
 begin
   frACBrSATExtratoFortesFr := TACBrSATExtratoFortesFr.Create(Self);
   try
@@ -1402,15 +1403,34 @@ begin
         begin
           case Filtro of
             fiPDF  :
-              RLFiltro := RLPDFFilter1;
+              begin
+                RLFiltro := RLPDFFilter1;
+                FileExt := '.pdf';
+              end;
             fiHTML :
-              RLFiltro := RLHTMLFilter1;
+              begin
+                RLFiltro := RLHTMLFilter1;
+                FileExt := '.html';
+              end
           else
             exit ;
           end ;
 
+          if (NomeDocumento = '') then
+            RLFiltro.FileName := OnlyAlphaNum(RLLayout.Title)
+          else
+            RLFiltro.FileName := NomeDocumento ;
+
+          DirPDF := ExtractFilePath(RLFiltro.FileName);
+          if (DirPDF = '') then
+            RLFiltro.FileName := PathPDF + RLFiltro.FileName;
+
+          DirPDF := ExtractFilePath(RLFiltro.FileName);
+          if not DirectoryExists(DirPDF) then
+            ForceDirectories(DirPDF);
+
+          RLFiltro.FileName := ChangeFileExt(RLFiltro.FileName, FileExt);
           RLFiltro.ShowProgress := RLLayout.ShowProgress;
-          RLFiltro.FileName := NomeDocumento ;
           RLFiltro.FilterPages( RLLayout.Pages );
         end;
       end;

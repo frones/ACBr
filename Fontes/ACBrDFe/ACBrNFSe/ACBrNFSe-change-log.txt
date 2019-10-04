@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2019
+-- pnfsNFSeW_Agili --
+[*] Ajustes para o provedor Agili.
+   Por: Italo Jurisato Junior / Márcio Lopes
+
 03/10/2019
 -- Diversos --
 [*] Ajustes para o provedor Assessor Publico.

@@ -1024,6 +1024,7 @@ const
   CKeySATSalvarEnvio =                      'SalvarEnvio';
   CKeySATSepararPorCNPJ =                   'SepararPorCNPJ';
   CKeySATSepararPorMES =                    'SepararPorMES';
+  CKeySATValidarNumeroSessaoResposta =      'ValidarNumeroSessaoResposta';
 
   CSecSATExtrato =                          'SATExtrato';
   CKeySATExtParamsString =                  'ParamsString';

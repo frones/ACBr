@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2019
+[*] DoSATUnit, ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade "Validar Numero Sessao Resposta" nas configurações do SAT
+
+04/10/2019
+[*] DoSATUnit
+Validação para quando não obtem nenhuma resposta do SAT
+
+04/10/2019
+[*] DoACBrNFe
+Ajustes no método para CancelarNFe
+
+04/10/2019
+[*] DoACBrNFe
+Alteraçoes na rotina de impressão para quando existir parametro de gerar PDF com impressão ESCPOS
+
 02/10/2019
 [+] ACBrMonitor1, UtilUnit
 Adicionado um alerta quando usuário está utilizando arquivos de Servicos.ini dos DFes desatualizados.

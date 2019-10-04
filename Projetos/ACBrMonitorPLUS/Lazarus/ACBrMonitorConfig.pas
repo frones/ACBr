@@ -486,10 +486,12 @@ type
     SalvarEnvio                  : Boolean;
     SepararPorCNPJ               : Boolean;
     SepararPorMES                : Boolean;
+    ValidarNumeroSessaoResposta  : Boolean;
     SATImpressao                 : TSATImpressao;
     SATRede                      : TSATRede;
     SATSWH                       : TSATSwH;
     SATEmail                     : TSATEmail;
+
   end;
 
   TIntegradorFiscal = record
@@ -1131,6 +1133,7 @@ begin
       ini.WriteBool(    CSecSAT, CKeySATSalvarEnvio    , SalvarEnvio    );
       ini.WriteBool(    CSecSAT, CKeySATSepararPorCNPJ , SepararPorCNPJ );
       ini.WriteBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
+      ini.WriteBool(    CSecSAT, CKeySATValidarNumeroSessaoResposta, ValidarNumeroSessaoResposta );
     end;
 
     with SAT.SATImpressao.SATExtrato do
@@ -1802,6 +1805,7 @@ begin
       SalvarEnvio               := ini.ReadBool(    CSecSAT, CKeySATSalvarEnvio    , SalvarEnvio    );
       SepararPorCNPJ            := ini.ReadBool(    CSecSAT, CKeySATSepararPorCNPJ , SepararPorCNPJ );
       SepararPorMES             := ini.ReadBool(    CSecSAT, CKeySATSepararPorMES  , SepararPorMES  );
+      ValidarNumeroSessaoResposta := ini.ReadBool(CSecSAT, CKeySATValidarNumeroSessaoResposta, ValidarNumeroSessaoResposta );
     end;
 
     with SAT.SATImpressao.SATExtrato do
@@ -2443,6 +2447,7 @@ begin
     SalvarEnvio               := True;
     SepararPorCNPJ            := True;
     SepararPorMES             := True;
+    ValidarNumeroSessaoResposta:= True;
   end;
 
   with SAT.SATImpressao.SATExtrato do

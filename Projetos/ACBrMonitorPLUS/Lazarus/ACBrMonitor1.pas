@@ -261,6 +261,7 @@ type
     cbTagInfSuplCTe: TComboBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
+    cbxValidarNumeroSessaoResposta: TCheckBox;
     cbxImprimirLogoLateralNFCe: TCheckBox;
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
@@ -1536,7 +1537,7 @@ type
     procedure PathClick(Sender: TObject);
     procedure ACT_ButtonMouseEnter(Sender: TObject);
     procedure ACT_ButtonMouseLeave(Sender: TObject);
-    procedure AlertaValidaArquivo(APath:String);
+    function ValidaArquivo(APath:String): String;
   private
     ACBrMonitorINI: string;
     Inicio, fsMonitorarPasta: boolean;
@@ -4629,20 +4630,13 @@ begin
     cbLogComp.Checked                  := Gravar_Log_Comp;
     sedLogLinhasComp.Value             := Linhas_Log_Comp;
     ArqLogCompTXT                      := AcertaPath(edLogComp.Text);
-    edtArquivoWebServicesNFe.Text      := ArquivoWebServices;
-    AlertaValidaArquivo(ArquivoWebServices);
-    edtArquivoWebServicesCTe.Text      := ArquivoWebServicesCTe;
-    AlertaValidaArquivo(ArquivoWebServicesCTe);
-    edtArquivoWebServicesMDFe.Text     := ArquivoWebServicesMDFe;
-    AlertaValidaArquivo(ArquivoWebServicesMDFe);
-    edtArquivoWebServicesBPe.Text      := ArquivoWebServicesBPe;
-    AlertaValidaArquivo(ArquivoWebServicesBPe);
-    edtArquivoWebServicesGNRe.Text     := ArquivoWebServicesGNRe;
-    AlertaValidaArquivo(ArquivoWebServicesGNRe);
-    edtArquivoWebServiceseSocial.Text  := ArquivoWebServiceseSocial;
-    AlertaValidaArquivo(ArquivoWebServiceseSocial);
-    edtArquivoWebServicesReinf.Text    := ArquivoWebServicesReinf;
-    AlertaValidaArquivo(ArquivoWebServicesReinf);
+    edtArquivoWebServicesNFe.Text      := ValidaArquivo(ArquivoWebServices);
+    edtArquivoWebServicesCTe.Text      := ValidaArquivo(ArquivoWebServicesCTe);
+    edtArquivoWebServicesMDFe.Text     := ValidaArquivo(ArquivoWebServicesMDFe);
+    edtArquivoWebServicesBPe.Text      := ValidaArquivo(ArquivoWebServicesBPe);
+    edtArquivoWebServicesGNRe.Text     := ValidaArquivo(ArquivoWebServicesGNRe);
+    edtArquivoWebServiceseSocial.Text  := ValidaArquivo(ArquivoWebServiceseSocial);
+    edtArquivoWebServicesReinf.Text    := ValidaArquivo(ArquivoWebServicesReinf);
     cbValidarDigest.Checked            := ValidarDigest;
     edtTimeoutWebServices.Value        := TimeoutWebService;
     cbModoEmissao.Checked              := IgnorarComandoModoEmissao;
@@ -5004,6 +4998,7 @@ begin
     cbxSATSalvarEnvio.Checked          := SalvarEnvio;
     cbxSATSepararPorCNPJ.Checked       := SepararPorCNPJ;
     cbxSATSepararPorMES.Checked        := SepararPorMES;
+    cbxValidarNumeroSessaoResposta.Checked:= ValidarNumeroSessaoResposta;
 
     with SATImpressao.SATExtrato do
     begin
@@ -6036,6 +6031,7 @@ begin
       SalvarEnvio                      := cbxSATSalvarEnvio.Checked;
       SepararPorCNPJ                   := cbxSATSepararPorCNPJ.Checked;
       SepararPorMES                    := cbxSATSepararPorMES.Checked;
+      ValidarNumeroSessaoResposta      := cbxValidarNumeroSessaoResposta.Checked;
 
       with SATImpressao.SATExtrato do
       begin
@@ -8437,6 +8433,7 @@ begin
     Config.PaginaDeCodigo     := sePagCod.Value;
     Config.EhUTF8             := cbxUTF8.Checked;
     Config.infCFe_versaoDadosEnt := sfeVersaoEnt.Value;
+    ValidarNumeroSessaoResposta := cbxValidarNumeroSessaoResposta.Checked;
 
     ConfigArquivos.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
     ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
@@ -10158,14 +10155,24 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.AlertaValidaArquivo(APath: String);
+function TFrmACBrMonitor.ValidaArquivo(APath: String): String;
+var
+  ErroStr: String;
 begin
-  if not( FileExists(APath) ) then
-    AddLinesLog('ATENÇÃO: Arquivo ' + APath + ' não encontrado!!!')
-  else if VerificaArquivoDesatualizado(APath) then
-    AddLinesLog('ATENÇÃO: Arquivo ' + ExtractFileName(APath)
-              + ' disponível em: ' + ExtractFileDir(APath) + ' está desatualizado!!!');
+  ErroStr := '';
+  Result := Trim(APath);
 
+  if not FileExists(Result) then
+    ErroStr := 'ATENÇÃO: Arquivo ' + Result + ' não encontrado!!!'
+  else if VerificaArquivoDesatualizado(Result) then
+    ErroStr := 'ATENÇÃO: Arquivo ' + ExtractFileName(Result)
+              + ' disponível em: ' + ExtractFileDir(Result) + ' está desatualizado!!!';
+
+  if (ErroStr <> '') then
+  begin
+    AddLinesLog( ErroStr );
+	Result := ApplicationPath + ExtractFileName(Result);
+  end;
 end;
 
 function TFrmACBrMonitor.IsVisible: Boolean;

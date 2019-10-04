@@ -542,6 +542,10 @@ begin
     CarregarDadosVenda(cXMLVenda);
     Resultado := ACBrSAT.TesteFimAFim(ACBrSAT.CFe.GerarXML(True));
 
+    if EstaVazio(Resultado) or (ACBrSat.Resposta.codigoDeRetorno = 0) then
+      raise Exception.Create('Nenhuma Resposta de Retorno! ' + sLineBreak
+      + 'CodigoDeRetorno: ' + IntToStr(ACBrSat.Resposta.codigoDeRetorno) + ' / Resultado: ' + Resultado);
+
     RespostaTesteFimaFim(Resultado);
 
   end;
@@ -703,6 +707,10 @@ begin
 
     Resultado := ACBrSAT.CancelarUltimaVenda;
 
+    if EstaVazio(Resultado) or (ACBrSat.Resposta.codigoDeRetorno = 0) then
+      raise Exception.Create('Nenhuma Resposta de Retorno! ' + sLineBreak
+      + 'CodigoDeRetorno: ' + IntToStr(ACBrSat.Resposta.codigoDeRetorno) + ' / Resultado: ' + Resultado);
+
     RespostaCancelarVenda(Resultado);
 
   end;
@@ -735,6 +743,10 @@ begin
     else
       raise Exception.Create('Nenhum XML encontrado para envio! ');
 
+    if EstaVazio(Resultado) or (ACBrSat.Resposta.codigoDeRetorno = 0) then
+      raise Exception.Create('Nenhuma Resposta de Retorno! ' + sLineBreak
+      + 'CodigoDeRetorno: ' + IntToStr(ACBrSat.Resposta.codigoDeRetorno) + ' / Resultado: ' + Resultado);
+
     RespostaEnviarDadosVenda( Resultado );
 
   end;
@@ -757,6 +769,11 @@ begin
     ACBrSAT.CFe.GerarXML( True ); // Tags da Aplicação
 
     Resultado := ACBrSAT.EnviarDadosVenda( ACBrSAT.CFe.AsXMLString );
+
+    if EstaVazio(Resultado) or (ACBrSat.Resposta.codigoDeRetorno = 0) then
+      raise Exception.Create('Nenhuma Resposta de Retorno! ' + sLineBreak
+      + 'CodigoDeRetorno: ' + IntToStr(ACBrSat.Resposta.codigoDeRetorno) + ' / Resultado: ' + Resultado);
+
     RespostaEnviarDadosVenda( Resultado );
 
   end;

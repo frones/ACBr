@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/10/2019
+-- ACBrMDFeConfiguracoes --
+[*] Removido a propriedade de configuração: GerarInfMDFeSupl pois a geração da 
+    string do QR-Code no XML é obrigatória em ambos os ambientes.
+   Por: Italo Jurisato Junior
+
 01/10/2019
 -- ACBrMDFeManifestos --
 [*] Correções na rotina que le o arquivo INI que é utilizado pelo

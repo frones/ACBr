@@ -23,12 +23,12 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="10"/>
-      <BuildNr Value="115"/>
+      <BuildNr Value="116"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ECFTeste - Programa de teste do ACBrECF" ProductVersion="0.9.0.114"/>
     </VersionInfo>
-    <BuildModes Count="4">
+    <BuildModes Count="5">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release-Win32-i386">
         <CompilerOptions>
@@ -67,14 +67,48 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <OtherDefines Count="1">
-              <Define0 Value="DEBUG"/>
-            </OtherDefines>
-          </Other>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="Release-Linux-x86_64">
+      <Item3 Name="Release-Win64-x86_64">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="ECFTeste64"/>
+          </Target>
+          <SearchPaths>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <UseAnsiStrings Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="x86_64"/>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="Release-Linux-x86_64">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -116,8 +150,8 @@
             </CompilerMessages>
           </Other>
         </CompilerOptions>
-      </Item3>
-      <Item4 Name="Release-Linux-i386">
+      </Item4>
+      <Item5 Name="Release-Linux-i386">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -159,7 +193,7 @@
             </CompilerMessages>
           </Other>
         </CompilerOptions>
-      </Item4>
+      </Item5>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>

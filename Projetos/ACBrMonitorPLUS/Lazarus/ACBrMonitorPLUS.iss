@@ -2,10 +2,7 @@
 #define MyAppPublisher "Projeto ACBr"
 #define MyAppURL "https://www.projetoacbr.com.br/acbr-monitor-plus/"
 #define MyAppUrlName "ACBrMonitor.url"
-#define MyAppExeName "ACBrMonitor.exe"
-#define ECFTesteExeName "ECFTeste.exe"
 #define ACBrDIR GetEnv("ACBR_HOME")
-#define MyAppVersion GetFileVersion(MyAppExeName)
 
 #define ACBrMonitorPLUSDir ACBrDir + "\Projetos\ACBrMonitorPLUS\Lazarus"
 #ifNDef OutputDir
@@ -16,9 +13,18 @@
   #define MyAppTarget "x86"
 #else
   #define MyAppTarget "x64"
+  #define App64bits
+#endif
+
+#ifDef App64bits
   #define MyAppExeName "ACBrMonitor64.exe"
   #define ECFTesteExeName "ECFTeste64.exe"
+#else
+  #define MyAppExeName "ACBrMonitor.exe"
+  #define ECFTesteExeName "ECFTeste.exe"
 #endif
+
+#define MyAppVersion GetFileVersion(MyAppExeName)
 
 #define MyAppVerName MyAppName + "-" + MyAppVersion + "-" + MyAppTarget
 #define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.0.2.19\" + MyAppTarget
@@ -40,8 +46,6 @@ Compression=lzma
 SolidCompression=yes
 AppMuTex=ACBrMonitor
 DisableDirPage=no
-; Comente a linha abaixo caso não deseje gerar instalador assinado.
-;SignTool=SignTool /d $qACBrMonitorPLUS - SAC ACBr$q /du $qhttp://www.projetoacbr.com.br$q $f
 
 [Types]
 Name: full; Description: Instalação Completa;
@@ -120,7 +124,7 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\Oracle.txt; DestDir: {app}\Exemplos; Flag
 Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; Flags: ignoreversion; Components: exemplos
 
 ;DLL para acesso direto a portas
-#if MyAppTarget = "x86"
+#ifNDef App64bits
   Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ; Components: programa
 #else
   Source: {#ACBrDIR}\DLLs\Diversos\inpoutx64.dll; DestDir: {sysnative}; Flags: ; Components: programa
@@ -137,14 +141,14 @@ Source: {#LibXML2Dir}\libiconv.dll; DestDir: {app}; Components: programa; Flags:
 Source: {#LibXML2Dir}\libxml2.dll; DestDir: {app}; Components: programa; Flags: sharedfile
 Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: sharedfile
 
-#if MyAppTarget = "x86"
-  ;DLLs CAPICOM
+#ifNDef App64bits
+  ;DLLs CAPICOM  
   Source: {#ACBrDIR}\DLLs\Capicom\capicom.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
   Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
   Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {syswow64}; Components: programa; Flags: sharedfile
 
   ;DLLs de Fabricantes SAT
-  Source: SAT\*.*; DestDir: {app}\SAT; Flags: recursesubdirs; Components: programa;
+  Source: {#ACBrMonitorPLUSDir}\SAT\*.*; DestDir: {app}\SAT; Flags: recursesubdirs; Components: programa;
 #endif
 
 [INI]

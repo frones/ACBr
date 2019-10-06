@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
   Left = 401
   Height = 723
-  Top = 220
+  Top = 218
   Width = 1228
   HelpType = htKeyword
   HelpKeyword = 'ACBrMonitor/Monitor.htm'
@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -9203,7 +9203,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Height = -13
                     ParentColor = False
                     ParentFont = False
-                    OnClick = Label138Click
                   end
                 end
                 object tsEmailCTe: TTabSheet
@@ -13403,7 +13402,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Font.Height = -13
                 ParentColor = False
                 ParentFont = False
-                OnClick = Label138Click
               end
               object mmEmailMsgSAT: TMemo
                 Left = 6
@@ -16216,7 +16214,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
+    Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0
     DataArquivo = 0
     DataCreditoLanc = 0

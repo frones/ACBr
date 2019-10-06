@@ -59,7 +59,6 @@ uses
   DoACBreSocialUnit, DoACBrBPeUnit;
 
 const
-  //{$I versao.txt}
   CEstados: array[TACBrECFEstado] of string =
     ('Não Inicializada', 'Desconhecido', 'Livre', 'Venda',
     'Pagamento', 'Relatório', 'Bloqueada', 'Requer Z', 'Requer X',
@@ -1383,7 +1382,6 @@ type
     procedure bECFTestarClick(Sender: TObject);
     procedure bECFLeituraXClick(Sender: TObject);
     procedure bECFAtivarClick(Sender: TObject);
-    procedure Label138Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
@@ -7001,11 +6999,6 @@ begin
 
   AvaliaEstadoTsECF;
   AvaliaEstadoTsRFD;
-end;
-
-procedure TFrmACBrMonitor.Label138Click(Sender: TObject);
-begin
-
 end;
 
 procedure TFrmACBrMonitor.meUSUHoraCadastroExit(Sender: TObject);

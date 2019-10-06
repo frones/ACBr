@@ -2,19 +2,27 @@
 #define MyAppPublisher "Projeto ACBr"
 #define MyAppURL "https://www.projetoacbr.com.br/acbr-monitor-plus/"
 #define MyAppUrlName "ACBrMonitor.url"
-#define ACBrDIR GetEnv("ACBR_HOME")
+#define ACBrDIR "..\..\.."
+;GetEnv("ACBR_HOME")
 
-#define ACBrMonitorPLUSDir ACBrDir + "\Projetos\ACBrMonitorPLUS\Lazarus"
+#define ACBrMonitorPLUSDir ACBrDIR + "\Projetos\ACBrMonitorPLUS\Lazarus"
 #ifNDef OutputDir
   #define OutputDir ACBrMonitorPLUSDir
 #endif
 
 #IfNDef MyAppTarget
   #define MyAppTarget "x86"
-#else
+#endif
+
+#if MyAppTarget != "x86"
   #define MyAppTarget "x64"
   #define App64bits
 #endif
+
+#pragma warning "ACBrDIR: " + ACBrDIR
+#pragma warning "ACBrMonitorPLUSDir: " + ACBrMonitorPLUSDir
+#pragma warning "OutputDir: " + OutputDir
+#pragma warning "MyAppTarget: " + MyAppTarget
 
 #ifDef App64bits
   #define MyAppExeName "ACBrMonitor64.exe"
@@ -132,14 +140,14 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; 
 
 ;OpenSSL
 Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Flags: ; Components: programa
-Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: sharedfile
-Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: sharedfile
+Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: ;
 
 ;LibXML2
-Source: {#LibXML2Dir}\libexslt.dll; DestDir: {app}; Components: programa; Flags: sharedfile
-Source: {#LibXML2Dir}\libiconv.dll; DestDir: {app}; Components: programa; Flags: sharedfile
-Source: {#LibXML2Dir}\libxml2.dll; DestDir: {app}; Components: programa; Flags: sharedfile
-Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: sharedfile
+Source: {#LibXML2Dir}\libexslt.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#LibXML2Dir}\libiconv.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#LibXML2Dir}\libxml2.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: ;
 
 #ifNDef App64bits
   ;DLLs CAPICOM  

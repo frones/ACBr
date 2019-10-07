@@ -36,7 +36,6 @@ begin
       Path := ExtractFilePath(Application.ExeName);
 
       try
-        {$Region 'Bloco 0000'}
         with Bloco0000 do
           begin
             COD_VER := Versao001;
@@ -47,16 +46,12 @@ begin
             DT_INI := StrToDate('01/01/2019');
             DT_FIN := StrToDate('31/12/2019');
           end;
-        {$EndRegion}
 
-        {$Region 'Bloco 0010'}
         with Bloco0010 do
           begin
             FORMA_APUR := faLivroCaixa;
           end;
-        {$EndRegion}
 
-        {$Region 'Bloco 0030'}
         with Bloco0030 do
           begin
             ENDERECO := 'Rua das Mangueiras';
@@ -69,9 +64,7 @@ begin
             NUM_TEL := '66999554613';
             EMAIL := 'willian.hubner@hotmail.co.uk';
           end;
-        {$EndRegion}
 
-        {$Region 'Bloco 0040'}
         for I := 1 to 3 do
           begin
             with Bloco0040.Bloco0040New do
@@ -84,7 +77,7 @@ begin
                     CAD_ITR := 12345678;
                     CAEPF := '123456789012';
                     INSCR_ESTADUAL := '00000000-0';
-                    NOME_IMOVEL := 'BRASIL SISTEMAS ' + I.ToString;
+                    NOME_IMOVEL := 'BRASIL SISTEMAS ' + IntToStr(I);
                     ENDERECO := 'Rua das Primaveras';
                     NUM := '1538';
                     COMPL := 'Esquina com Pariris';
@@ -106,9 +99,7 @@ begin
                     end;
               end;
           end;
-        {$EndRegion}
 
-        {$Region 'Bloco 0050'}
         with Bloco0050.Registro0050New do
           begin
             COD_CONTA := 1;
@@ -118,9 +109,7 @@ begin
             AGENCIA := '1180';
             NUM_CONTA := '12.123-1';
           end;
-        {$EndRegion}
 
-        {$Region 'Bloco Q100'}
         with BlocoQ.RegistroQ100New do
           begin
             DATA := Date;
@@ -175,16 +164,13 @@ begin
             SLD_FIN := 14499.24;
           end;
 
-      {$EndRegion}
 
-        {$Region 'DadosContador'}
         DadosContador.IDENT_NOME := 'Willian Hubner';
         DadosContador.IDENT_CPF_CNPJ := '0000000000';
         DadosContador.IND_CRC := '000000000';
         DadosContador.EMAIL := 'email@emitir.com.br';
         DadosContador.FONE := '0000000000';
 
-        {$EndRegion}
       except
         on e : exception do
           Memo1.Lines.Add(e.Message);

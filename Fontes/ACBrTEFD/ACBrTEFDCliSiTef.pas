@@ -106,7 +106,7 @@ type
   TACBrTEFDCliSiTefExibeMenu = procedure( Titulo : String; Opcoes : TStringList;
     var ItemSelecionado : Integer; var VoltarMenu : Boolean ) of object ;
 
-  TACBrTEFDCliSiTefOperacaoCampo = (tcString, tcDouble, tcCMC7, tcBarCode) ;
+  TACBrTEFDCliSiTefOperacaoCampo = (tcString, tcDouble, tcCMC7, tcBarCode, tcStringMask) ;
 
   TACBrTEFDCliSiTefObtemCampo = procedure( Titulo : String;
     TamanhoMinimo, TamanhoMaximo : Integer ;
@@ -1406,6 +1406,14 @@ begin
                      BloquearMouseTeclado(False);
                      OnObtemCampo( ACBrStr(Mensagem), TamanhoMinimo, TamanhoMaximo,
                                    TipoCampo, tcBarCode, Resposta, Digitado, Voltar ) ;
+                     BloquearMouseTeclado(True);
+                   end;
+
+                 41 :
+                   begin
+                     BloquearMouseTeclado(False);
+                     OnObtemCampo( ACBrStr(Mensagem), TamanhoMinimo, TamanhoMaximo,
+                                   TipoCampo, tcStringMask, Resposta, Digitado, Voltar ) ;
                      BloquearMouseTeclado(True);
                    end;
 

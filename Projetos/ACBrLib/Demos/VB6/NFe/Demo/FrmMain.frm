@@ -1395,7 +1395,7 @@ Private Sub LoadConfig()
     Dim porta As String
     porta = nfe.ConfigLerValor(SESSAO_PROXY, "Porta")
     
-    If porta <> vbNullString Then
+    If IsNumeric(porta) Then
       nudProxyPorta.Value = CLng(porta)
     End If
     

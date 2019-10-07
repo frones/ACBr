@@ -1540,16 +1540,6 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 </xs:documentation>
 													</xs:annotation>
 												</xs:element>
-												<xs:element name="pICMSInterPart" type="TDec_0302" minOccurs="0">
-													<xs:annotation>
-														<xs:documentation>Percentual provisório de partilha entre os estados</xs:documentation>
-														<xs:documentation>Percentual de partilha para a UF do destinatário:
-- 40% em 2016;
-- 60% em 2017;
-- 80% em 2018;
-- 100% a partir de 2019.</xs:documentation>
-													</xs:annotation>
-												</xs:element>
 												<xs:element name="vFCPUFFim" type="TDec_1302">
 													<xs:annotation>
 														<xs:documentation>Valor do ICMS relativo ao Fundo de Combate á Pobreza (FCP) da UF de término da prestação</xs:documentation>
@@ -3239,16 +3229,6 @@ REENTREGA; DEVOLUÇÃO; REFATURAMENTO; etc</xs:documentation>
 														<xs:documentation>Alíquota interestadual das UF envolvidas</xs:documentation>
 														<xs:documentation>Alíquota interestadual das UF envolvidas
 </xs:documentation>
-													</xs:annotation>
-												</xs:element>
-												<xs:element name="pICMSInterPart" type="TDec_0302" minOccurs="0">
-													<xs:annotation>
-														<xs:documentation>Percentual provisório de partilha entre os estados</xs:documentation>
-														<xs:documentation>Percentual de partilha para a UF do destinatário:
-- 40% em 2016;
-- 60% em 2017;
-- 80% em 2018;
-- 100% a partir de 2019.</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="vFCPUFFim" type="TDec_1302">

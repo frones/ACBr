@@ -32,7 +32,7 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-package ACBrLCDPR;
+package ACBr_LCDPR;
 
 {$R *.res}
 {$ALIGN 8}

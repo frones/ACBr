@@ -1431,7 +1431,7 @@ begin
   if MatchText(oACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d7','d9','d10','d11']) then
   begin
     Application.MessageBox(
-      'Atenção: a partir de Agosto de 2016 o Projeto ACBr não suportará mais versões não Unicode do Delphi, atualize o quanto antes para versões mais recentes do Delphi.',
+      'Atenção: Embora o ACBr continue suportando versões anteriores do Delphi, incentivamos que você atualize o quanto antes para versões mais recentes do Delphi ou considere migrar para o Lazarus.',
       'Erro.',
       MB_OK + MB_ICONWARNING
     );

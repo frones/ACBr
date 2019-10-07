@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_LCDPR"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Willian Hübner  - Elton Barbosa"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrLCDPR\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - LCDPR (http://www.projectoacbr.com.br/)"/>
+    <Files Count="2">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\UACBrLCDPR.pas"/>
+        <UnitName Value="UACBrLCDPR"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\ACBrLCDPRReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrLCDPRReg"/>
+      </Item2>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

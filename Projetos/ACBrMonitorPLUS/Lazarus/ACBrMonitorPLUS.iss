@@ -133,21 +133,21 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; 
 
 ;DLL para acesso direto a portas
 #ifNDef App64bits
-  Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ; Components: programa
+  Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ignoreversion ; Components: programa
 #else
-  Source: {#ACBrDIR}\DLLs\Diversos\inpoutx64.dll; DestDir: {sysnative}; Flags: ; Components: programa
+  Source: {#ACBrDIR}\DLLs\Diversos\inpoutx64.dll; DestDir: {sysnative}; Flags: ignoreversion ; Components: programa
 #endif
 
 ;OpenSSL
 Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Flags: ; Components: programa
-Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: ;
-Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 
 ;LibXML2
-Source: {#LibXML2Dir}\libexslt.dll; DestDir: {app}; Components: programa; Flags: ;
-Source: {#LibXML2Dir}\libiconv.dll; DestDir: {app}; Components: programa; Flags: ;
-Source: {#LibXML2Dir}\libxml2.dll; DestDir: {app}; Components: programa; Flags: ;
-Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: ;
+Source: {#LibXML2Dir}\libexslt.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#LibXML2Dir}\libiconv.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#LibXML2Dir}\libxml2.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#LibXML2Dir}\libxslt.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 
 #ifNDef App64bits
   ;DLLs CAPICOM  

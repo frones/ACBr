@@ -1,17 +1,13 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 566
-  Height = 361
-  Top = 324
-  Width = 934
+  Top = 76
   Caption = 'DACTe - Retrato'
-  ClientHeight = 361
+  ClientHeight = 738
   ClientWidth = 934
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 8
-    Top = 8
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
@@ -632,7 +628,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_09_Obs: TRLBand[2]
       Left = 26
       Height = 70
-      Top = 1446
+      Top = 1348
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1613,7 +1609,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_10_ModRodFracionado: TRLBand[4]
       Left = 26
       Height = 44
-      Top = 1560
+      Top = 1524
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1902,7 +1898,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_11_ModRodLot103: TRLBand[5]
       Left = 26
       Height = 108
-      Top = 1604
+      Top = 1568
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5206,7 +5202,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_17_Sistema: TRLBand[9]
       Left = 26
       Height = 16
-      Top = 2090
+      Top = 2054
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5272,7 +5268,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_16_DadosExcEmitente: TRLBand[10]
       Left = 26
       Height = 68
-      Top = 2022
+      Top = 1986
       Width = 742
       AutoSize = True
       BandType = btHeader
@@ -6445,7 +6441,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_12_ModAereo: TRLBand[12]
       Left = 26
       Height = 97
-      Top = 1819
+      Top = 1783
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7076,7 +7072,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_13_ModAquaviario: TRLBand[13]
       Left = 26
       Height = 92
-      Top = 1916
+      Top = 1880
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7515,7 +7511,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_14_ModFerroviario: TRLBand[14]
       Left = 26
       Height = 7
-      Top = 2008
+      Top = 1972
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7529,7 +7525,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_15_ModDutoviario: TRLBand[15]
       Left = 26
       Height = 7
-      Top = 2015
+      Top = 1979
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7864,7 +7860,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_11_ModRodLot104: TRLBand[17]
       Left = 26
       Height = 107
-      Top = 1712
+      Top = 1676
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -8464,7 +8460,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_18_Recibo: TRLBand[18]
       Left = 26
       Height = 97
-      Top = 2106
+      Top = 2070
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -9189,9 +9185,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_VeiculosNovos: TRLBand[20]
       Left = 26
-      Height = 98
-      Top = 1348
+      Height = 62
+      Top = 1418
       Width = 742
+      AutoSize = True
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -9202,7 +9199,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       BeforePrint = rlb_06_VeiculosNovosBeforePrint
       object RLDraw228: TRLDraw
         Left = 0
-        Height = 97
+        Height = 61
         Top = 1
         Width = 741
         Angle = 0
@@ -9337,7 +9334,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw324: TRLDraw
         Left = 123
-        Height = 81
+        Height = 46
         Top = 16
         Width = 1
         Angle = 90
@@ -9350,7 +9347,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw335: TRLDraw
         Left = 332
-        Height = 81
+        Height = 46
         Top = 16
         Width = 1
         Angle = 90
@@ -9363,7 +9360,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw310: TRLDraw
         Left = 500
-        Height = 81
+        Height = 46
         Top = 16
         Width = 1
         Angle = 90
@@ -9376,7 +9373,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw411: TRLDraw
         Left = 620
-        Height = 81
+        Height = 46
         Top = 16
         Width = 1
         Angle = 90
@@ -9389,10 +9386,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object CHASSI: TRLMemo
         Left = 5
-        Height = 63
+        Height = 16
         Top = 33
         Width = 116
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
@@ -9410,10 +9406,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object COR: TRLMemo
         Left = 128
-        Height = 63
+        Height = 16
         Top = 33
         Width = 201
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
@@ -9431,10 +9426,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object MODELO: TRLMemo
         Left = 336
-        Height = 63
+        Height = 16
         Top = 33
         Width = 161
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
@@ -9452,10 +9446,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object VUNIT: TRLMemo
         Left = 509
-        Height = 63
+        Height = 16
         Top = 33
         Width = 108
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
@@ -9473,10 +9466,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object VFRETE: TRLMemo
         Left = 625
-        Height = 63
+        Height = 16
         Top = 33
         Width = 112
-        AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
@@ -10143,7 +10135,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_Dados_Seguradora: TRLBand[23]
       Left = 26
       Height = 44
-      Top = 1516
+      Top = 1480
       Width = 742
       BandType = btHeader
       Color = clWhite

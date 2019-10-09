@@ -304,13 +304,17 @@ function TACBrCTe.GetURLQRCode(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const TipoEmissao: TpcnTipoEmissao;
   const AChaveCTe: String; const Versao: Double): String;
 var
-  idCTe, sEntrada, urlUF, Passo2, sign: String;
+  idCTe, sEntrada, urlUF, Passo2, sign, xUF: String;
 //  VersaoDFe: TVersaoCTe;
 //  ok: Boolean;
 begin
 //  VersaoDFe := DblToVersaoCTe(ok, Versao);  // Deixado para usu futuro
+  xUF := GetUFFormaEmissao;
 
-  urlUF := LerURLDeParams('CTe', GetUFFormaEmissao, TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('CTe', xUF, TipoAmbiente, 'URL-QRCode', 0);
+
+  if (CUF = 50) and (xUF = 'SVC-RS') then
+    urlUF := 'http://www.dfe.ms.gov.br/cte/qrcode';
 
   if Pos('?', urlUF) <= 0 then
     urlUF := urlUF + '?';

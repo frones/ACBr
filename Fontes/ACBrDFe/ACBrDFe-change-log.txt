@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2019
+-- ACBrDFeSSL --
+[-] Correção para quando trocar o tipo de certificado zerar a propriedade do tipo anterior para que o carregamento do novo certificado ocorra corretamente.
+    (por: Rafael Dias)
+
 04/10/2019
 -- ACBrDFeReport --
 [*] Ajuste no método SetPathPDF, para considerar apenas o Path

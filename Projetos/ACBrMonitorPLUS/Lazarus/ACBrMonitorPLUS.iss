@@ -43,6 +43,9 @@
 #define VCRedistInstaller "vcredist_" + MyAppTarget + ".exe"
 
 [Setup]
+#ifDef App64bits
+ArchitecturesAllowed=x64
+#endif
 AppName={#MyAppName}
 AppVerName={#MyAppVerName}
 AppPublisher={#MyAppPublisher}
@@ -137,13 +140,18 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; 
 
 ;DLL para acesso direto a portas
 #ifNDef App64bits
-  Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ignoreversion ; Components: programa
+  Source: {#ACBrDIR}\DLLs\Diversos\x86\inpout32.dll; DestDir: {syswow64}; Flags: ignoreversion ; Components: programa
 #else
-  Source: {#ACBrDIR}\DLLs\Diversos\inpoutx64.dll; DestDir: {sysnative}; Flags: ignoreversion ; Components: programa
+  Source: {#ACBrDIR}\DLLs\Diversos\x64\inpoutx64.dll; DestDir: {sys}; Flags: ignoreversion ; Components: programa
 #endif
 
 ;Visual C++ 2010 RunTime
-Source: {#ACBrDIR}\DLLs\Diversos\{#VCRedistInstaller}; DestDir: {tmp}; Flags: deleteafterinstall
+Source: {#ACBrDIR}\DLLs\Diversos\{#MyAppTarget}\{#VCRedistInstaller}; DestDir: {tmp}; Flags: deleteafterinstall
+#ifNDef App64bits
+  Source: {#ACBrDIR}\DLLs\Diversos\x86\msvcr120.dll; DestDir: {syswow64}; Flags: ignoreversion ; Components: programa
+#else
+  Source: {#ACBrDIR}\DLLs\Diversos\x64\msvcr120.dll; DestDir: {sys}; Flags: ignoreversion ; Components: programa
+#endif
 
 ;OpenSSL
 Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Components: programa; Flags: ignoreversion ;

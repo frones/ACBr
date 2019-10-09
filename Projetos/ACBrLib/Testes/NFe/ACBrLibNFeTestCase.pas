@@ -135,6 +135,8 @@ begin
   AssertEquals(ErrOk, NFE_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
   AssertEquals(CACBrLibVersaoConfig, AStr);
+
+  NFE_ConfigGravarValor('DFe', 'DadosPFX', );
 end;
 
 initialization

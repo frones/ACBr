@@ -202,6 +202,7 @@ begin
                  ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
                  ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
                  edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
+                 edtNumeroSerie.Text :=  '';
                end
               else
                begin
@@ -210,6 +211,7 @@ begin
                  ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
                  ACBrGNRE1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
                  edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
+                 edtArquivoPFX.Text :=  '';
                end;
 
               ACBrNFe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);

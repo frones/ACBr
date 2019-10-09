@@ -10,6 +10,9 @@
   #define OutputDir ACBrMonitorPLUSDir
 #endif
 
+; Teste de compilação em 64 bits
+;#define MyAppTarget "x64"
+
 #IfNDef MyAppTarget
   #define MyAppTarget "x86"
 #endif
@@ -37,6 +40,7 @@
 #define MyAppVerName MyAppName + "-" + MyAppVersion + "-" + MyAppTarget
 #define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.0.2.19\" + MyAppTarget
 #define LibXML2Dir ACBrDIR + "\DLLs\LibXml2\" + MyAppTarget
+#define VCRedistInstaller "vcredist_" + MyAppTarget + ".exe"
 
 [Setup]
 AppName={#MyAppName}
@@ -138,8 +142,11 @@ Source: {#ACBrMonitorPLUSDir}\Exemplos\php_socket.zip; DestDir: {app}\Exemplos; 
   Source: {#ACBrDIR}\DLLs\Diversos\inpoutx64.dll; DestDir: {sysnative}; Flags: ignoreversion ; Components: programa
 #endif
 
+;Visual C++ 2010 RunTime
+Source: {#ACBrDIR}\DLLs\Diversos\{#VCRedistInstaller}; DestDir: {tmp}; Flags: deleteafterinstall
+
 ;OpenSSL
-Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Flags: ; Components: programa
+Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 
@@ -172,9 +179,12 @@ Name: {userstartup}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; WorkingDir: {
 Name: {group}\{cm:ProgramOnTheWeb,{#MyAppName}}; Filename: {app}\{#MyAppUrlName}; Components: help
 
 [Run]
+Filename: {tmp}\{#VCRedistInstaller}; Parameters: "/passive /Q:a /c:""msiexec /qb /i vcredist.msi"" "; StatusMsg: Installing Visual C++ 2010 RunTime...
+    
 Filename: "{app}\{#MyAppExeName}"; Flags: nowait postinstall skipifsilent; Description: "{cm:LaunchProgram,{#MyAppName}}"
 Filename: "{app}\ACBrMonitor.chm"; Flags: postinstall shellexec skipifsilent; Description: "Manual ACBrMonitor"; Components: help
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall add rule name=""{#MyAppName}"" dir=in action=allow protocol=TCP localport=3434"; Flags: skipifdoesntexist runhidden; MinVersion: 0,6.0; Tasks: firewallopen
 
 [UninstallRun]
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""{#MyAppName}"""; Flags: skipifdoesntexist runhidden; MinVersion: 0,6.0; Tasks: firewallopen
+

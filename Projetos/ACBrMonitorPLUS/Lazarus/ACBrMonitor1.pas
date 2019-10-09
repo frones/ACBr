@@ -2194,7 +2194,8 @@ begin
   try
     FileVerInfo.FileName:=paramstr(0);
     FileVerInfo.ReadFileInfo;
-    sVersaoACBr := FileVerInfo.VersionStrings.Values['FileVersion'];
+    sVersaoACBr := FileVerInfo.VersionStrings.Values['FileVersion'] + ' - ' +
+                   {$IfDef CPU64}'x64'{$Else}'x86'{$EndIf};
   finally
     FileVerInfo.Free;
   end;

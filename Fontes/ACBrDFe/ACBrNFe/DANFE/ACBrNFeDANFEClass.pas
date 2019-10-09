@@ -683,6 +683,8 @@ end;
 
 function TACBrNFeDANFEClass.ManterColunaDesconto(Value: Double): Boolean;
 begin
+  //Por padrão a configuração atual é idaiSempre.
+  Result := True;
   // idaiSempre    => Sempre apresentar a coluna desconto
   // idaiNunca     => Nunca apresenta a coluna desconto
   // idaiComValor  => Apresentar a coluna desconto se value > 0 ( desconto )

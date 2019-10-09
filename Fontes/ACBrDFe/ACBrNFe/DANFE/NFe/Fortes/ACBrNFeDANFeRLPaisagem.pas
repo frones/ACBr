@@ -346,9 +346,9 @@ type
     lblqtd: TRLLabel;
     rlsVunitario: TRLDraw;
     lblValorUnit: TRLLabel;
-    RLLabel7: TRLLabel;
+    lblValorUnitarioInf: TRLLabel;
     rlsDivvalortotal: TRLDraw;
-    RLLabel6: TRLLabel;
+    lblValorTotalSup: TRLLabel;
     lblValorTotal: TRLLabel;
     rlsDivdesconto: TRLDraw;
     lblPercValorDesc: TRLLabel;
@@ -577,6 +577,7 @@ type
     procedure AplicarParametrosRetirada;
     procedure DefinirEntrega;
     procedure DefinirRetirada;
+    procedure ControlaExibicaoColunaDesconto(var vWidthAux: Integer; var vLeftAux: Integer);
   end;
 
 implementation
@@ -788,6 +789,7 @@ begin
     rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO')
   else
     rlmDescricaoProduto.Lines.Text := 'DESCR. PROD. / SERV.';
+  ControlaExibicaoColunaDesconto(vWidthAux, vLeftAux);
 
   case fpDANFe.Fonte.Nome of
     nfTimesNewRoman, nfArial:
@@ -2153,6 +2155,114 @@ begin
   RLLquadroEntregaMunicipio.Font := RLLquadroEntregaNome.Font;
   RLLquadroEntregaUF.Font := RLLquadroEntregaNome.Font;
   RLLquadroEntregaTelefone.Font := RLLquadroEntregaNome.Font;
+end;
+
+
+procedure TfrlDANFeRLPaisagem.ControlaExibicaoColunaDesconto(var vWidthAux: Integer; var vLeftAux: Integer);
+begin
+  // Controle para exibir coluna de desconto
+  txtValorDesconto.Visible := fpDANFe.ManterColunaDesconto( fpNFe.Total.ICMSTot.vDesc );
+  lblPercValorDesc.Visible := txtValorDesconto.Visible;
+  lblPercValorDesc1.Visible := txtValorDesconto.Visible;
+  LinhaDesconto.Visible := txtValorDesconto.Visible;
+  rlsDivdesconto.Visible := txtValorDesconto.Visible;
+  // Ajusta a posição da coluna 'VALOR TOTAL'
+  if (txtValorDesconto.Visible) then
+  begin
+    // Quantidade
+    lblqtd.Width := 51;
+    txtQuantidade.Width := 51;
+    // Linha Valor Unitario
+    rlsVunitario.Left := 180;
+    LinhaValorUnitario.Left := 180;
+    // Valor Unitario
+    lblValorUnit.Left := 182;
+    lblValorUnit.Width := 62;
+    lblValorUnitarioInf.Left := 182;
+    lblValorUnitarioInf.Width := 62;
+    txtValorUnitario.Left := 182;
+    txtValorUnitario.Width := 62;
+    // Linha Valor Total
+    rlsDivvalortotal.Left := 244;
+    LinhaValorTotal1.Left := 244;
+    // Valor Total
+    lblValorTotalSup.Left := 247;
+    lblValorTotalSup.Width := 43;
+    txtValorTotal.Left := 247;
+    txtValorTotal.Width := 43;
+    lblValorTotal.Left := 247;
+    lblValorTotal.Width := 43;
+  end
+  else
+  begin
+    // Calcula o espaço a distribuir entre os campos qtd, vlunit e vltot pela
+    // diferença entre a posição inicial da qtd e a posição final do desconto, descontando 4 para separação de cada campó que restou
+    vWidthAux := (txtValorDesconto.Left + txtValorDesconto.Width) - txtQuantidade.Left - 12;
+    vWidthAux := Trunc(vWidthAux / 3);
+    vLeftAux := txtQuantidade.Left;
+    // Quantidade
+    lblqtd.Width := vWidthAux;
+    txtQuantidade.Width := vWidthAux;
+    // Linha Valor Unitario
+    rlsVunitario.Left := vLeftAux + vWidthAux + 2;
+    LinhaValorUnitario.Left := vLeftAux + vWidthAux + 2;
+    vLeftAux := vLeftAux + vWidthAux + 4;
+    // Valor Unitario
+    lblValorUnit.Left := vLeftAux;
+    lblValorUnit.Width := vWidthAux;
+    lblValorUnitarioInf.Left := vLeftAux;
+    lblValorUnitarioInf.Width := vWidthAux;
+    txtValorUnitario.Left := vLeftAux;
+    txtValorUnitario.Width := vWidthAux;
+    // Linha Valor Total
+    rlsDivvalortotal.Left := vLeftAux + vWidthAux + 2;
+    LinhaValorTotal1.Left := vLeftAux + vWidthAux + 2;
+    vLeftAux := vLeftAux + vWidthAux + 4;
+    // Ajuste se deu diferença na última posição quando o cálculo do vWidthAux não for divisão exata
+    if ((vLeftAux + vWidthAux) <> (txtValorDesconto.Left + txtValorDesconto.Width)) then
+      vWidthAux := vWidthAux + ((txtValorDesconto.Left + txtValorDesconto.Width) - (vLeftAux + vWidthAux));
+    // Valor Total
+    lblValorTotalSup.Left := vLeftAux;
+    lblValorTotalSup.Width := vWidthAux;
+    txtValorTotal.Left := vLeftAux;
+    txtValorTotal.Width := vWidthAux;
+    lblValorTotal.Left := vLeftAux;
+    lblValorTotal.Width := vWidthAux;
+  end;
+  // Se a largura da coluna 'Quantidade' for suficiente,
+  // exibe o título sem abreviações
+  if (lblqtd.Width > 47) then
+    lblqtd.Caption := ACBrStr('QUANTIDADE')
+  else
+    lblqtd.Caption := ACBrStr('QUANT.');
+  // Se a largura da coluna 'Valor Unitário' for suficiente,
+  // exibe o título em uma linha apenas
+  if (lblValorUnitarioInf.Width > 61) then
+  begin
+    lblValorUnit.Visible := False;
+    lblValorUnitarioInf.Caption := ACBrStr('VALOR UNITÁRIO');
+    lblValorUnitarioInf.Top := 8;
+  end
+  else
+  begin
+    lblValorUnit.Visible := True;
+    lblValorUnitarioInf.Caption := ACBrStr('UNITÁRIO');
+    lblValorUnitarioInf.Top := 10;
+  end;
+  // Se a largura da coluna 'Valor Total' for suficiente,
+  // exibe o título em uma linha apenas
+  if (lblValorTotal.Width > 52) then
+  begin
+    lblValorTotalSup.Visible := False;
+    lblValorTotal.Caption := ACBrStr('VALOR TOTAL');
+    lblValorTotal.Top := 8;
+  end
+  else
+  begin
+    lblValorTotalSup.Visible := True;
+    lblValorTotal.Caption := ACBrStr('TOTAL');
+    lblValorTotal.Top := 10;
+  end;
 end;
 
 end.

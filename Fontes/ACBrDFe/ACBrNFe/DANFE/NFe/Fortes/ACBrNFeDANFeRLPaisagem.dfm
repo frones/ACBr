@@ -419,7 +419,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           HoldStyle = hsRelatively
           ParentFont = False
         end
-        object RLLabel7: TRLLabel
+        object lblValorUnitarioInf: TRLLabel
           Tag = 10
           Left = 182
           Top = 10
@@ -445,7 +445,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           DrawKind = dkLine
           HoldStyle = hsRelatively
         end
-        object RLLabel6: TRLLabel
+        object lblValorTotalSup: TRLLabel
           Tag = 10
           Left = 247
           Top = 2
@@ -4818,7 +4818,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             Font.Name = 'Arial'
             Font.Style = []
             ParentFont = False
-            SecondHolder = RLLabel7
+            SecondHolder = lblValorUnitarioInf
           end
         end
       end

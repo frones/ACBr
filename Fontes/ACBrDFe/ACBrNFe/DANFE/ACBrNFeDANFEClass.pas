@@ -84,6 +84,7 @@ type
     FFormularioContinuo: Boolean;
     FImprimeValor: TImprimirUnidQtdeValor;
     FImprimeDetalhamentoEspecifico: Boolean;
+    FImprimeDescAcrescItem: TpcnImprimeDescAcrescItem;
     FPosCanhoto: TPosRecibo;
     FPosCanhotoLayout: TPosReciboLayout;
     FExibeResumoCanhoto: Boolean;
@@ -116,12 +117,14 @@ type
     function ManterContingencia(aNFE: TNFe): String; virtual;
     function ManterVTribPerc(dVTotTrib, dVProd, dVNF: Double): Double; virtual;
     function ManterValAprox(aNFE: TNFe; inItem: Integer): String; virtual;
+    function ManterColunaDesconto( Value : Double): Boolean;
 
   published
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo default False;
     property ImprimeValor: TImprimirUnidQtdeValor read FImprimeValor write FImprimeValor default iuComercial;
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual default False;
     property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico default True;
+    property ImprimeDescAcrescItem: TpcnImprimeDescAcrescItem read FImprimeDescAcrescItem write FImprimeDescAcrescItem default idaiSempre;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
     property PosCanhotoLayout: TPosReciboLayout read FPosCanhotoLayout write FPosCanhotoLayout default prlPadrao;
     property ExibeResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto default True;
@@ -188,6 +191,7 @@ begin
   FFormularioContinuo := False;
   FImprimeValor := iuComercial;
   FImprimeDetalhamentoEspecifico := True;
+  FImprimeDescAcrescItem := idaiSempre;
   FPosCanhoto := prCabecalho;
   FPosCanhotoLayout := prlPadrao;
   FExibeResumoCanhoto := True;
@@ -676,5 +680,19 @@ begin
   end;
 
 end;
+
+function TACBrNFeDANFEClass.ManterColunaDesconto(Value: Double): Boolean;
+begin
+  // idaiSempre    => Sempre apresentar a coluna desconto
+  // idaiNunca     => Nunca apresenta a coluna desconto
+  // idaiComValor  => Apresentar a coluna desconto se value > 0 ( desconto )
+
+  case fImprimeDescAcrescItem of
+    idaiSempre    : Result := True;
+    idaiNunca     : Result := False;
+    idaiComValor  : Result := ( value > 0 );
+  end;
+end;
+
 
 end.

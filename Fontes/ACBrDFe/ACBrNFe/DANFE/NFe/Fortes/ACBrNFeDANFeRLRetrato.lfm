@@ -449,12 +449,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel91: TRLLabel
+      object lblQuantidade: TRLLabel
         Tag = 10
         Left = 359
         Height = 7
         Top = 18
-        Width = 45
+        Width = 46
         Alignment = taCenter
         AutoSize = False
         Caption = 'QUANT.'
@@ -468,7 +468,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel87: TRLLabel
+      object lblValorUnitarioSup: TRLLabel
         Tag = 10
         Left = 405
         Height = 7
@@ -487,7 +487,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel88: TRLLabel
+      object lblValorUnitarioInf: TRLLabel
         Tag = 10
         Left = 405
         Height = 7
@@ -508,10 +508,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object lblValorTotal: TRLLabel
         Tag = 10
-        Left = 457
+        Left = 455
         Height = 7
         Top = 21
-        Width = 50
+        Width = 52
         Alignment = taCenter
         AutoSize = False
         Caption = 'TOTAL'
@@ -774,7 +774,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLDraw1: TRLDraw
+      object rlsDivProd14: TRLDraw
         Left = 508
         Height = 19
         Top = 12
@@ -787,12 +787,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel2: TRLLabel
+      object lblValorTotalSup: TRLLabel
         Tag = 10
-        Left = 459
+        Left = 455
         Height = 7
         Top = 14
-        Width = 44
+        Width = 52
         Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR'
@@ -7996,7 +7996,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         end
         object txtValorUnitario: TRLMemo
           Tag = 705
-          Left = 404
+          Left = 405
           Height = 11
           Top = 1
           Width = 50

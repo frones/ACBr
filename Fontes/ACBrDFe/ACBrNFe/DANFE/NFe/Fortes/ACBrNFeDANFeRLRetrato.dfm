@@ -340,11 +340,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLLabel91: TRLLabel
+      object lblQuantidade: TRLLabel
         Tag = 10
         Left = 359
         Top = 18
-        Width = 45
+        Width = 46
         Height = 7
         Alignment = taCenter
         AutoSize = False
@@ -357,7 +357,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLLabel87: TRLLabel
+      object lblValorUnitarioSup: TRLLabel
         Tag = 10
         Left = 405
         Top = 14
@@ -374,7 +374,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLLabel88: TRLLabel
+      object lblValorUnitarioInf: TRLLabel
         Tag = 10
         Left = 405
         Top = 21
@@ -393,9 +393,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object lblValorTotal: TRLLabel
         Tag = 10
-        Left = 457
+        Left = 455
         Top = 21
-        Width = 50
+        Width = 52
         Height = 7
         Alignment = taCenter
         AutoSize = False
@@ -629,7 +629,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         HoldStyle = hsRelatively
         ParentFont = False
       end
-      object RLDraw1: TRLDraw
+      object rlsDivProd14: TRLDraw
         Left = 508
         Top = 12
         Width = 1
@@ -638,11 +638,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
-      object RLLabel2: TRLLabel
+      object lblValorTotalSup: TRLLabel
         Tag = 10
-        Left = 459
+        Left = 455
         Top = 14
-        Width = 44
+        Width = 52
         Height = 7
         Alignment = taCenter
         AutoSize = False
@@ -6665,7 +6665,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         end
         object txtValorUnitario: TRLMemo
           Tag = 705
-          Left = 404
+          Left = 405
           Top = 1
           Width = 50
           Height = 11

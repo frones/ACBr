@@ -529,7 +529,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object RLLabel7: TRLLabel
+        object lblValorUnitarioInf: TRLLabel
           Tag = 10
           Left = 182
           Height = 7
@@ -561,7 +561,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object RLLabel6: TRLLabel
+        object lblValorTotalSup: TRLLabel
           Tag = 10
           Left = 247
           Height = 7
@@ -5905,7 +5905,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Top = 0
             RealBounds.Width = 0
             RealBounds.Height = 0
-            SecondHolder = RLLabel7
+            SecondHolder = lblValorUnitarioInf
           end
         end
       end

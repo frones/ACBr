@@ -109,6 +109,8 @@ type
   TPosRecibo = (prCabecalho, prRodape, prEsquerda);
   TPosReciboLayout = (prlPadrao, prlBarra);
 
+  TpcnImprimeDescAcrescItem = (idaiSempre, idaiNunca, idaiComValor);
+
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
   TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao,

@@ -33,22 +33,22 @@
 #define BUFFER_LEN 256
 
 class ACBrNFe {
-    private:
-    #if defined(ISWINDOWS)
-        HMODULE nHandler;
-    #else
-        void* nHandler;
-    #endif      
+private:
+#if defined(ISWINDOWS)
+	HMODULE nHandler;
+#else
+	void* nHandler;
+#endif
 
-      void CheckResult(int ret);
-      std::string ProcessResult(std::string buffer, int bufferLen);
+	std::string trim(std::string& buffer) const;
+	void check_result(int ret) const;
+	std::string process_result(std::string buffer, int buffer_len);
 
-    public:
-        ACBrNFe(std::string eArqConfig, std::string eChaveCrypt);
-        ACBrNFe() : ACBrNFe("", ""){}
-        ~ACBrNFe();
+public:
+	ACBrNFe(std::string eArqConfig, std::string e_chave_crypt);
+	ACBrNFe() : ACBrNFe("", "") {}
+	~ACBrNFe();
 
-        std::string Nome();
-        std::string Versao();
-
+	std::string nome();
+	std::string versao();
 };

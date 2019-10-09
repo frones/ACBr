@@ -279,6 +279,7 @@ type
         Valor : Double) : Boolean; overload; override;
      Function PRE(Valor : Double; DocumentoVinculado : String = '';
         Moeda : Integer = 0) : Boolean; override;
+     function CDP(const EntidadeCliente: string; out Resposta: string): Boolean; override;
 
      Function DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
      Function ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
@@ -695,6 +696,7 @@ begin
   xValidaCampoCodigoEmBarras          := Nil;
   xEnviaRecebeSiTefDireto             := Nil;
   xVerificaPresencaPinPad             := Nil;
+  xObtemDadoPinPadDiretoEx            := Nil;
 end;
 
 procedure TACBrTEFDCliSiTef.SetParametrosAdicionais(const AValue : TStringList
@@ -1842,5 +1844,10 @@ begin
     raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFD_CliSiTef_NaoInicializado));
 end;
 
+
+function TACBrTEFDCliSiTef.CDP(const EntidadeCliente: string; out Resposta: string): Boolean;
+begin
+  raise EACBrTEFDErro.Create( ACBrStr('Não implementado para SiTef no momento. Use a função "ObtemDadoPinPadDiretoEx".') ) ;
+end;
 
 end.

@@ -767,6 +767,7 @@ type
      Function ADM : Boolean; virtual;
      Function CRT( Valor : Double; IndiceFPG_ECF : String;
         DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean; virtual;
+     Function CDP(Const EntidadeCliente: String; Out Resposta: String): Boolean; virtual;
      Function CHQ( Valor : Double; IndiceFPG_ECF : String;
         DocumentoVinculado : String = ''; CMC7 : String = '';
         TipoPessoa : AnsiChar = 'F'; DocumentoPessoa : String = '';
@@ -2558,6 +2559,22 @@ begin
      ArquivosVerficar.Free;
      RespostasCanceladas.Free;
   end;
+end;
+
+function TACBrTEFDClass.CDP(const EntidadeCliente: String; out Resposta: String): Boolean;
+begin
+  Resposta := '';
+  IniciarRequisicao('CDP');
+  Req.Conteudo.GravaInformacao(006, 000, EntidadeCliente);
+  AdicionarIdentificacao;
+  FinalizarRequisicao;
+  Try
+     LerRespostaRequisicao;
+     Resposta := Resp.DocumentoPessoa;
+     Result := Resp.TransacaoAprovada;
+  Finally
+     FinalizarResposta(True); { True = Apaga Arquivo de Resposta }
+  End;
 end;
 
 procedure TACBrTEFDClass.ConfirmarTransacoesAnteriores;

@@ -245,6 +245,7 @@ type
      Function CRT( const Valor : Double; const IndiceFPG_ECF : String;
         const DocumentoVinculado : String = ''; const Moeda : Integer = 0 )
         : Boolean ;
+     Function CDP(Const EntidadeCliente:String; Out Resposta:String): Boolean;
      Function CHQ( const Valor : Double; const IndiceFPG_ECF : String;
         const DocumentoVinculado : String = ''; const CMC7 : String = '';
         const TipoPessoa : AnsiChar = 'F'; const DocumentoPessoa : String = '';
@@ -823,6 +824,11 @@ begin
         RespostasPendentes.Clear;
      end;
   end;
+end;
+
+function TACBrTEFD.CDP(const EntidadeCliente: String; out Resposta: String): Boolean;
+begin
+  Result := fTefClass.CDP(EntidadeCliente, Resposta);
 end;
 
 procedure TACBrTEFD.ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean);

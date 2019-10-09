@@ -1718,6 +1718,7 @@ begin
                           '</Signature>'+
                        '</' + FPrefixo4 + 'Rps>';
 
+             proTcheInfov2,
              proSimplISSv2: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps' +
                           RetornarConteudoEntre(RPS,

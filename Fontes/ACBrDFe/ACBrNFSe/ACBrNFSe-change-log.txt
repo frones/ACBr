@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2019
+-- ACBrNFSeWebServices --
+[*] Alteração visando o provedor TcheInfov2, incluio o namespace na tag <Rps>
+   Por: Italo Jurisato Junior
+
 04/10/2019
 -- pnfsNFSeW_Agili --
 [*] Ajustes para o provedor Agili.

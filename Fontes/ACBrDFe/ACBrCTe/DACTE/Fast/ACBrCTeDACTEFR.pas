@@ -2116,8 +2116,15 @@ begin
       end;
       Post;
     end;
-    cdsDadosNotasFiscais.RecordCount;
   end;
+
+  if cdsDadosNotasFiscais.IsEmpty then
+  begin
+    // inserir registro vazio caso CTe não possua documentos (redespacho intermediario ou vinculado a multimodal)
+    cdsDadosNotasFiscais.Append;
+    cdsDadosNotasFiscais.Post;
+  end;
+
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDestinatario;

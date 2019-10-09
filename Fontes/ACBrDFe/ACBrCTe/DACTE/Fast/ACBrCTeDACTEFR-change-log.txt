@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2019
+-- ACBrCTeDACTEFR --
+[*] Ajuste para impressão quando CTe não contiver documentos no grupo "infDoc".
+    https://www.projetoacbr.com.br/forum/topic/54123-observação-não-sai-no-dacte/
+  Por: BigWings
+
 02/09/2019
 -- ACBrCTeDACTEFR --
 [*] Ajustes para impressão de evento do comprovante de entrega e cancelamento

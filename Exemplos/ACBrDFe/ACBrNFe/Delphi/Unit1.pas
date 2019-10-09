@@ -3428,7 +3428,6 @@ begin
 
   LoadXML(ACBrNFe1.WebServices.DistribuicaoDFe.RetWS, WBResposta);
 
-  ACBrNFe1.Free;
 end;
 
 procedure TForm1.PathClick(Sender: TObject);

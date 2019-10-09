@@ -58,7 +58,6 @@ type
     FProtocoloNFe: String;
     FNFeCancelada: Boolean;
     FImprimeCodigoEan: Boolean;
-    FImprimeInfContr: Boolean;
     FvTribFed: currency;
     FvTribEst: currency;
     FvTribMun: currency;
@@ -130,7 +129,6 @@ type
     property ExibeTotalTributosItem: Boolean read FExibeTotalTributosItem write FExibeTotalTributosItem default False;
     property ExibeInforAdicProduto: TinfAdcProd read FExibeInforAdicProduto write FExibeInforAdicProduto default infDescricao;
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
-    property ImprimeInfContr: Boolean read FImprimeInfContr write FImprimeInfContr default True;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia default False;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default False;
   end;
@@ -160,7 +158,6 @@ begin
   FImprimeTributos := trbNormal;
   FExibeTotalTributosItem := False;
   FImprimeCodigoEan := False;
-  FImprimeInfContr := True;
   FImprimeNomeFantasia := False;
   FImprimeEmUmaLinha := False;
   FExibeInforAdicProduto := infDescricao;
@@ -412,22 +409,19 @@ var
   i: Integer;
 begin
   Result := '';
-  if FImprimeInfContr then
+  with ANFe.InfAdic do
   begin
-    with ANFe.InfAdic do
+    if obsCont.Count > 0 then
     begin
-      if obsCont.Count > 0 then
+      for i := 0 to (obsCont.Count - 1) do
       begin
-        for i := 0 to (obsCont.Count - 1) do
-        begin
-          Result := Result +
-            obsCont.Items[i].xCampo + ': ' +
-            obsCont.Items[i].xTexto +
-            IfThen((i = (obsCont.Count - 1)), '', ';');
-        end;
-
-        Result := Result + '; ';
+        Result := Result +
+          obsCont.Items[i].xCampo + ': ' +
+          obsCont.Items[i].xTexto +
+          IfThen((i = (obsCont.Count - 1)), '', ';');
       end;
+
+      Result := Result + '; ';
     end;
   end;
 end;

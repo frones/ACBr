@@ -44,44 +44,56 @@
 package ACBr_NFeDanfeFR;
 
 {$R *.res}
-{$R *.otares}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
+{$OPTIMIZATION ON}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
+{$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ACBr - DANFe em FastReport - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
   designide,
-  fs26,
-  frx26,
-  frxe26,
-  frxDB26,
-  dsnap,
-  ACBr_NFe,
-  vcl;
+{$IFDEF VER140} fs6, frx6, frxe6, frxDB6, {$ENDIF} // D6
+{$IFDEF VER150} fs7, frx7, frxe7, frxDB7, {$ENDIF} // D7
+{$IFDEF VER170} fs9, frx9, frxe9, frxDB9, {$ENDIF} // D2005
+{$IFDEF VER180} 
+   {$IFNDEF VER185} fs10, frx10, frxe10, frxDB10, {$ENDIF} // D2006
+{$ENDIF}
+{$IFDEF VER185} fs11, frx11, frxe11, frxDB11, {$ENDIF} // D2007
+{$IFDEF VER190} fs11, frx11, frxe11, frxDB11, {$ENDIF} // D2007
+{$IFDEF VER200} fs12, frx12, frxe12, frxDB12, {$ENDIF} // D2009
+{$IFDEF VER210} fs14, frx14, frxe14, frxDB14, {$ENDIF} // D2010
+{$IFDEF VER220} fs15, frx15, frxe15, frxDB15, {$ENDIF} // XE
+{$IFDEF VER230} fs16, frx16, frxe16, frxDB16, {$ENDIF} // XE2
+{$IFDEF VER240} fs17, frx17, frxe17, frxDB17, {$ENDIF} // XE3
+{$IFDEF VER250} fs18, frx18, frxe18, frxDB18, {$ENDIF} // XE4
+{$IFDEF VER260} fs19, frx19, frxe19, frxDB19, {$ENDIF} // XE5
+{$IFDEF VER270} fs20, frx20, frxe20, frxDB20, dsnap, {$ENDIF} // XE6
+{$IFDEF VER280} fs21, frx21, frxe21, frxDB21, dsnap, {$ENDIF} // XE7
+{$IFDEF VER290} fs22, frx22, frxe22, frxDB22, dsnap, {$ENDIF} // XE8
+{$IFDEF VER300} fs23, frx23, frxe23, frxDB23, dsnap, {$ENDIF} // Seattle
+{$IFDEF VER310} fs24, frx24, frxe24, frxDB24, dsnap, {$ENDIF} // Berlin
+{$IFDEF VER320} fs25, frx25, frxe25, frxDB25, dsnap, {$ENDIF} // Tokyo
+{$IFDEF VER330} fs26, frx26, frxe26, frxDB26, dsnap, {$ENDIF} // Rio
+  ACBr_NFe;
 
 contains
   ACBrNFeDANFEFRReg in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fast\ACBrNFeDANFEFRReg.pas',

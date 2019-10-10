@@ -49,6 +49,9 @@ type
   //                         0          1
   TTipoRelatorioBobina = (tpFortes, tpEscPos);
 
+  //                 0       1
+  TTipoFuncao = (tfGravar, tfLer);
+
   { TLogConfig }
 
   TLogConfig = class
@@ -285,6 +288,7 @@ type
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
     FTipoResposta: TACBrLibRespostaTipo;
+    FFormatoResposta: TACBrLibFormatoResposta;
 
     procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
@@ -312,12 +316,15 @@ type
 
     procedure GravarValor(ASessao, AChave, AValor: String);
     function LerValor(ASessao, AChave: String): String;
+
     function PrecisaCriptografar(ASessao, AChave: String): Boolean; virtual;
+    function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; virtual;
 
     property NomeArquivo: String read FNomeArquivo write SetNomeArquivo;
     property ChaveCrypt: String read FChaveCrypt;
 
     property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
+    property FormatoResposta: TACBrLibFormatoResposta read FFormatoResposta;
     property Log: TLogConfig read FLog;
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
@@ -332,8 +339,8 @@ type
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibComum,
-  ACBrUtil;
+  TypInfo,
+  ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TSistemaConfig }
 
@@ -710,6 +717,7 @@ begin
     FChaveCrypt := AChaveCrypt;
 
   FTipoResposta := resINI;
+  FFormatoResposta := fmtUTF8;
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
@@ -849,6 +857,7 @@ procedure TLibConfig.INIParaClasse;
 begin
 
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
+  FFormatoResposta := TACBrLibFormatoResposta(FIni.ReadInteger(CSessaoPrincipal, CChaveFormatoResposta, Integer(FFormatoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);
@@ -906,7 +915,7 @@ end;
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);
 begin
   VerificarSessaoEChave(ASessao, AChave);
-  FIni.WriteString(ASessao, AChave, AValor);
+  FIni.WriteString(ASessao, AChave, AjustarValor(tfGravar, ASessao, AChave, AValor));
   AplicarConfiguracoes;
 end;
 
@@ -914,6 +923,7 @@ function TLibConfig.LerValor(ASessao, AChave: String): String;
 begin
   VerificarSessaoEChave(ASessao, AChave);
   Result := FIni.ReadString(ASessao, AChave, '');
+  Result := AjustarValor(tfLer, ASessao, AChave, Result)
 end;
 
 function TLibConfig.PrecisaCriptografar(ASessao, AChave: String): Boolean;
@@ -925,6 +935,24 @@ begin
                                         (ASessao = CSessaoDFe));
 
   TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar - Feito Result: ' + BoolToStr(Result, True), logParanoico);
+end;
+
+function TLibConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
+begin
+  TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
+                                                          + ASessao + ',' + AChave + ',' + AValor +')', logParanoico);
+
+  if PrecisaCriptografar(ASessao, AChave) then
+  begin
+    case Tipo of
+      tfGravar: Result := StringToB64Crypt(AValor, pLib.Config.ChaveCrypt);
+      tfLer: Result := B64CryptToString(AValor, pLib.Config.ChaveCrypt);
+    end;
+  end
+  else
+    Result := AValor;
+
+  TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);
 end;
 
 end.

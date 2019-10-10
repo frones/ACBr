@@ -46,33 +46,37 @@ const
   CSessaoHttpResposta = 'RespostaHttp';
 
 type
-  { TACBrLibResposta }
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
+  TACBrLibFormatoResposta = (fmtUTF8, fmtANSI);
 
+  { TACBrLibResposta }
   TACBrLibResposta = class abstract
   private
     FSessao: String;
     FTipo: TACBrLibRespostaTipo;
 
-    function GerarXml: String;
-    function GerarIni: String;
-    function GerarJson: String;
+    function GerarXml: Ansistring;
+    function GerarIni: Ansistring;
+    function GerarJson: Ansistring;
 
   protected
+    FFormato: TACBrLibFormatoResposta;
+
     procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
     procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
     procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 
     property Sessao: String read FSessao;
     property Tipo: TACBrLibRespostaTipo read FTipo;
 
-    function Gerar: String; virtual;
+    function Gerar: Ansistring; virtual;
 
   end;
 
+  { TACBrLibResposta }
   TACBrLibResposta<T: TACBrComponent> = class abstract(TACBrLibResposta)
   public
     procedure Processar(const Control: T); virtual; abstract;
@@ -86,7 +90,7 @@ type
     FMsg: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
 
   published
     property WebService: String read FWebService write FWebService;
@@ -101,7 +105,7 @@ type
     FMsg: string;
 
   public
-    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -114,14 +118,15 @@ uses
   math;
 
 { TACBrLibResposta }
-constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
   inherited Create;
   FSessao := ASessao;
   FTipo := ATipo;
+  FFormato := AFormato;
 end;
 
-function TACBrLibResposta.GerarXml: String;
+function TACBrLibResposta.GerarXml: Ansistring;
 var
   xDoc: TXMLDocument;
   RootNode: TDomNode;
@@ -196,7 +201,7 @@ begin
   end;
 end;
 
-function TACBrLibResposta.GerarIni: String;
+function TACBrLibResposta.GerarIni: Ansistring;
 var
   AIni: TMemIniFile;
   TList: TStringList;
@@ -300,7 +305,7 @@ begin
   end;
 end;
 
-function TACBrLibResposta.GerarJson: String;
+function TACBrLibResposta.GerarJson: Ansistring;
 var
   JSON: TJSONObject;
 begin
@@ -362,7 +367,7 @@ begin
   end;
 end;
 
-function TACBrLibResposta.Gerar: String;
+function TACBrLibResposta.Gerar: Ansistring;
 begin
   case FTipo of
     resXML: Result := GerarXml;
@@ -370,18 +375,21 @@ begin
     else
       Result := GerarIni;
   end;
+
+  if FFormato = fmtANSI then
+    Result := ACBrUTF8ToAnsi(Result);
 end;
 
 { TACBrLibHttpResposta }
-constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo);
+constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoHttpResposta, ATipo);
+  inherited Create(CSessaoHttpResposta, ATipo, AFormato);
 end;
 
 { TLibImpressaoResposta }
-constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo);
+constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create('Impressao', ATipo);
+  inherited Create('Impressao', ATipo, AFormato);
   Msg := Format('%d Documento (s) impresso(s) com sucesso', [QtdImpresso]);
 end;
 

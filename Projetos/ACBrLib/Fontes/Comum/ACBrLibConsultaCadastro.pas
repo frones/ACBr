@@ -62,7 +62,8 @@ type
     FxRegApur: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibFormatoResposta); reintroduce;
 
     procedure Processar(const infCad: TInfCadCollectionItem);
 
@@ -112,7 +113,7 @@ type
     function GetItem(Index: Integer): TConsultaCadastroItemResposta;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const retConsCad: TRetConsCad);
@@ -145,9 +146,9 @@ uses
 
 { TConsultaCadastroItemResposta }
 constructor TConsultaCadastroItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 procedure TConsultaCadastroItemResposta.Processar(const infCad: TInfCadCollectionItem);
@@ -176,9 +177,9 @@ begin
 end;
 
 { TConsultaCadastroResposta }
-constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo);
+constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoRespConsultaCadastro, ATipo);
+  inherited Create(CSessaoRespConsultaCadastro, ATipo, AFormato);
 
   FItens := TObjectList.Create(True);
 end;
@@ -229,7 +230,7 @@ begin
   begin
     for i := 0 to InfCad.Count - 1 do
     begin
-      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo);
+      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, FFormato);
       Item.Processar(InfCad.Items[i]);
       FItens.Add(Item);
     end;

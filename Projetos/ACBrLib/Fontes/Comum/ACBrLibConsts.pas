@@ -55,6 +55,7 @@ const
   CSessaoVersao = 'Versao';
   CChaveChave = 'Chave';
   CChaveTipoResposta = 'TipoResposta';
+  CChaveFormatoResposta = 'FormatoResposta';
   CChaveLogNivel = 'LogNivel';
   CChaveLogPath = 'LogPath';
   CChaveTimeOut = 'Timeout';
@@ -172,6 +173,7 @@ const
   CSessaoDFe = 'DFe';
   CChaveSSLCryptLib = 'SSLCryptLib';
   CChaveArquivoPFX = 'ArquivoPFX';
+  CChaveDadosPFX = 'DadosPFX';
   CChaveNumeroSerie = 'NumeroSerie';
 
   CChaveBaud = 'Baud';
@@ -220,7 +222,7 @@ Var
   Resp: TACBrLibHttpResposta;
 begin
   Result := '';
-  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta);
+  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
   try
     Resp.CodigoHTTP := CodigoHTTP;
     Resp.WebService := WebService;

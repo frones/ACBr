@@ -49,7 +49,7 @@ type
     FValor: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
 
     procedure Processar(const Integrador: TACBrIntegrador); override;
 
@@ -65,9 +65,9 @@ uses
   ACBrLibConsts;
 
 { TIntegradorResp }
-constructor TIntegradorResp.Create;
+constructor TIntegradorResp.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoIntegrador, ATipo);
+  inherited Create(CSessaoIntegrador, ATipo, AFormato);
 end;
 
 procedure TIntegradorResp.Processar(const Integrador: TACBrIntegrador);

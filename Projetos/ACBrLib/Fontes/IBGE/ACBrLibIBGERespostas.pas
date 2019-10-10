@@ -51,7 +51,8 @@ type
     FCodMunicipio: string;
     FArea: string;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibFormatoResposta); reintroduce;
 
   published
     property UF: string read FUF write FUF;
@@ -66,9 +67,9 @@ implementation
 { TLibIBGEResposta }
 
 constructor TLibIBGEResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 end.

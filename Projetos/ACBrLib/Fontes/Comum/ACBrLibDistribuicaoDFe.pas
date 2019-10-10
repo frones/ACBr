@@ -82,7 +82,7 @@ type
     FxNome: string;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
 
     procedure Processar(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
     procedure Processar(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
@@ -156,7 +156,7 @@ type
     function GetItem(Index: Integer): TDistribuicaoDFeItemResposta;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const retDistDFeInt: TretDistDFeInt;
@@ -192,9 +192,9 @@ uses
 { TDistribuicaoDFeItemResposta }
 
 constructor TDistribuicaoDFeItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 procedure TDistribuicaoDFeItemResposta.Processar(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String;
@@ -295,9 +295,9 @@ end;
 
 { TDistribuicaoDFeResposta }
 
-constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo);
+constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoRespDistribuicaoDFe, ATipo);
+  inherited Create(CSessaoRespDistribuicaoDFe, ATipo, AFormato);
 
   FItems := TObjectList.Create;
 end;
@@ -353,7 +353,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo);
+      Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
       Item.Processar(retDistDFeInt.docZip.Items[I].resDFe,
                      retDistDFeInt.docZip.Items[I].NSU,
                      ListaArqs[I],
@@ -369,7 +369,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), Tipo);
+      Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
       Item.Processar(retDistDFeInt.docZip.Items[I].resEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      ListaArqs[I],
@@ -385,7 +385,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), Tipo);
+      Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
       Item.Processar(retDistDFeInt.docZip.Items[I].procEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      listaArqs[I],
@@ -401,7 +401,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo);
+      Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
       Item.Processar(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      listaArqs[I],

@@ -46,19 +46,19 @@ type
   {TACBrLibBoleto}
 
   TACBrLibBoleto = class(TACBrLib)
-    private
-      FBoletoDM: TLibBoletoDM;
+  private
+    FBoletoDM: TLibBoletoDM;
 
-    protected
-      procedure Inicializar; override;
-      procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-      procedure Executar; override;
+  protected
+    procedure Inicializar; override;
+    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
+    procedure Executar; override;
 
-    public
-      constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
-      destructor Destroy; override;
+  public
+    constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
+    destructor Destroy; override;
 
-      property BoletoDM: TLibBoletoDM read FBoletoDM;
+    property BoletoDM: TLibBoletoDM read FBoletoDM;
 
   end;
 

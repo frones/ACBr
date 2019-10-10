@@ -55,7 +55,8 @@ type
     FTipo_Logradouro: string;
     FUF: string;
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+      const AFormato: TACBrLibFormatoResposta); reintroduce;
 
   published
     property CEP: string read FCEP write FCEP;
@@ -77,9 +78,9 @@ uses
 { TLibCEPResposta }
 
 constructor TLibCEPResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 end.

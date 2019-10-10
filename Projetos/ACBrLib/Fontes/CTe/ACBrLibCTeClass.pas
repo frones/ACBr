@@ -171,8 +171,6 @@ uses
 constructor TACBrLibCTe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibCTeNome;
-  fpVersao := CLibCTeVersao;
 
   FCTeDM := TLibCTeDM.Create(nil);
 end;
@@ -507,7 +505,7 @@ begin
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
-      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta);
+      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         with CTeDM.ACBrCTe1 do
         begin
@@ -574,7 +572,7 @@ begin
           CTeDM.ACBrCTe1.Conhecimentos.Items[CTeDM.ACBrCTe1.Conhecimentos.Count - 1].CTe.infCTe.ID,
           'CTe','',[rfIgnoreCase]);
 
-      Resposta := TConsultaCTeResposta.Create(pLib.Config.TipoResposta);
+      Resposta := TConsultaCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         with CTeDM.ACBrCTe1 do
         begin
@@ -630,7 +628,7 @@ begin
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
-      Resposta := TInutilizarCTeResposta.Create(pLib.Config.TipoResposta);
+      Resposta := TInutilizarCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         with CTeDM.ACBrCTe1 do
         begin
@@ -718,7 +716,7 @@ begin
             Exit;
           end;
 
-          RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta);
+          RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
           try
             RespEnvio.Processar(CTeDM.ACBrCTe1);
             Resposta := RespEnvio.Gerar;
@@ -732,7 +730,7 @@ begin
             WebServices.Retorno.Executar
           end;
 
-          RespRetorno := TRetornoResposta.Create('CTe', pLib.Config.TipoResposta);
+          RespRetorno := TRetornoResposta.Create('CTe', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
           try
             RespRetorno.Processar(WebServices.Retorno.CTeRetorno,
                                   WebServices.Retorno.Recibo,
@@ -760,7 +758,7 @@ begin
 
             if ImpCount > 0 then
             begin
-              ImpResp := TLibImpressaoResposta.Create(ImpCount, pLib.Config.TipoResposta);
+              ImpResp := TLibImpressaoResposta.Create(ImpCount, pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
               try
                 Resposta := Resposta + sLineBreak + ImpResp.Gerar;
               finally
@@ -809,7 +807,7 @@ begin
           WebServices.Recibo.Recibo := sRecibo;
           WebServices.Recibo.Executar;
 
-          Resp := TReciboResposta.Create('CTe', pLib.Config.TipoResposta);
+          Resp := TReciboResposta.Create('CTe', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
           try
             Resp.Processar(WebServices.Recibo.CTeRetorno,
             WebServices.Recibo.Recibo);
@@ -890,7 +888,7 @@ begin
         try
           if CTeDM.ACBrCTe1.EnviarEvento(ALote) then
           begin
-            Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta);
+            Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
             try
               Resp.Processar(CTeDM.ACBrCTe1);
               Resposta := Resp.Gerar;
@@ -949,7 +947,7 @@ begin
 
           if EnviarEvento(idLote) then
           begin
-            Resp := TEventoResposta.Create(pLib.Config.TipoResposta);
+            Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
             try
               Resp.Processar(CTeDM.ACBrCTe1);
               Resposta := Resp.Gerar;
@@ -1010,7 +1008,7 @@ begin
         end;
 
         CTeDM.ACBrCTe1.WebServices.ConsultaCadastro.Executar;
-        Resp := TConsultaCadastroResposta.Create(pLib.Config.TipoResposta);
+        Resp := TConsultaCadastroResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
         try
           Resp.Processar(CTeDM.ACBrCTe1.WebServices.ConsultaCadastro.RetConsCad);
           Resposta := Resp.Gerar;
@@ -1065,7 +1063,7 @@ begin
         try
           if DistribuicaoDFePorUltNSU(AcUFAutor, ACNPJCPF, AultNSU) then
           begin
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
+            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
             try
               Resp.Processar(CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                              CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.Msg,
@@ -1129,7 +1127,7 @@ begin
         try
           if DistribuicaoDFePorNSU(AcUFAutor, ACNPJCPF, ANSU) then
           begin
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
+            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
             try
               Resp.Processar(CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                              CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.Msg,
@@ -1196,7 +1194,7 @@ begin
         try
           if DistribuicaoDFePorChaveCTe(AcUFAutor, ACNPJCPF, AchCTe) then
           begin
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta);
+            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
             try
               Resp.Processar(CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                              CTeDM.ACBrCTe1.WebServices.DistribuicaoDFe.Msg,

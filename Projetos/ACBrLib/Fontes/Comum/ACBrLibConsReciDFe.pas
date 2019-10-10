@@ -49,7 +49,7 @@ type
     FXML: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 
     procedure Processar(const Item: TProtDFeCollectionItem);
 
@@ -89,7 +89,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo, Msg, Protocolo, ChaveDFe: String);
@@ -130,7 +130,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo: String);
@@ -155,9 +155,10 @@ uses
   ACBrUtil,ACBrLibConsts;
 
 { TRetornoItemResposta }
-constructor TRetornoItemResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo);
+constructor TRetornoItemResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+  const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(ASessao, ATipo);
+  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 procedure TRetornoItemResposta.Processar(const Item: TProtDFeCollectionItem);
@@ -175,9 +176,9 @@ begin
 end;
 
 { TRetornoResposta }
-constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo);
+constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoRespRetorno, ATipo);
+  inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 
   FPrefix := APrefix;
   FItens := TObjectList.Create(True);
@@ -228,7 +229,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo);
+      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, FFormato);
       Item.Processar(ProtDFe.Items[i]);
       FItens.Add(Item);
     end;
@@ -236,9 +237,9 @@ begin
 end;
 
 { TReciboResposta }
-constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo);
+constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
 begin
-  inherited Create(CSessaoRespRetorno, ATipo);
+  inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 
   FPrefix := APrefix;
   FItens := TObjectList.Create(True);
@@ -284,7 +285,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo);
+      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, FFormato);
       Item.Processar(ProtDFe.Items[i]);
       FItens.Add(Item);
     end;

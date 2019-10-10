@@ -448,7 +448,7 @@ begin
   Result := '';
   if ACBrSAT1.Integrador = ACBrIntegrador1 then
   begin
-    Resp := TIntegradorResp.Create(pLib.Config.TipoResposta);
+    Resp := TIntegradorResp.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
     try
       Resp.Processar(ACBrIntegrador1);
       Result := sLineBreak + Resp.Gerar;

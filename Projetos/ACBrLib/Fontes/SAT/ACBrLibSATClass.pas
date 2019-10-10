@@ -349,7 +349,7 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.AssociarAssinatura(CNPJ, Assinatura);
@@ -386,7 +386,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.BloquearSAT;
@@ -422,7 +422,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.DesbloquearSAT;
@@ -466,7 +466,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao, opcao, NovoCodigoAtv);
@@ -503,7 +503,7 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
 
       try
         Resposta := '';
@@ -543,8 +543,8 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
-      Resp := TRetornoStatusSAT.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoStatusSAT.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.ConsultarStatusOperacional;
@@ -595,7 +595,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
 
       try
         Resposta := '';
@@ -608,7 +608,7 @@ begin
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
         begin
-          Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta);
+          Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
           try
             Resp.Processar(SatDM.ACBrSAT1);
             Resposta := Resposta + sLineBreak + Resp.Gerar;
@@ -619,7 +619,7 @@ begin
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
         begin
-          RespCanc := TRetornoConsultarSessaoCancelado.Create(resINI);
+          RespCanc := TRetornoConsultarSessaoCancelado.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
           try
             RespCanc.Processar(SatDM.ACBrSAT1);
             Resposta := Resposta + sLineBreak + RespCanc.Gerar;
@@ -659,7 +659,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.AtualizarSoftwareSAT;
@@ -701,7 +701,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.ComunicarCertificadoICPBRASIL(cCertificado);
@@ -777,7 +777,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta);
+      Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         Resp.Resultado := SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
@@ -869,7 +869,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoCriarCFe.Create(Config.TipoResposta);
+      Resp := TRetornoCriarCFe.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -913,7 +913,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoEnvio.Create(Config.TipoResposta);
+      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -959,7 +959,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoEnvio.Create(Config.TipoResposta);
+      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -1005,7 +1005,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoCancelarCFe.Create(Config.TipoResposta);
+      Resp := TRetornoCancelarCFe.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
@@ -1212,7 +1212,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.FormatoResposta);
       try
         Resposta := '';
         SatDM.ConfigurarImpressao('', True);
@@ -1263,7 +1263,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta);
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.FormatoResposta);
       try
        Resposta := '';
         SatDM.ConfigurarImpressao('', True);

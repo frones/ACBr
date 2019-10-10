@@ -38,17 +38,16 @@ unit ACBrLibNFeConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles,
+  Classes, Graphics, SysUtils, IniFiles,
   pcnConversao,
-  ACBrNFeConfiguracoes, Graphics,
-  ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeRLClass,
-  ACBrLibConfig, ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
+  ACBrNFeConfiguracoes, ACBrDFeReport, ACBrDFeDANFeReport,
+  ACBrNFeDANFEClass, ACBrNFeDANFeRLClass, ACBrLibConfig,
+  ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
 
 type
   TTipoRelatorioEvento = (evA4, evBobina);
 
   { TDANFeNFeConfig }
-
   TDANFeNFeConfig = class
   private
     FImprimeDescPorPercentual: Boolean;
@@ -164,7 +163,6 @@ type
   end;
 
   { TDANFeReportConfig }
-
   TDANFeReportConfig = class(TDFeReportConfig<TACBrDFeDANFeReport>)
   private
     FTipoDANFE: TpcnTipoImpressao;
@@ -209,7 +207,6 @@ type
   end;
 
   { TLibNFeConfig }
-
   TLibNFeConfig = class(TLibConfig)
   private
     FDANFeConfig: TDANFeReportConfig;
@@ -230,6 +227,7 @@ type
     destructor Destroy; override;
 
     function PrecisaCriptografar(ASessao, AChave: String): Boolean; override;
+    function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
 
     property NFeConfig: TConfiguracoesNFe read FNFeConfig;
     property DANFeConfig: TDANFeReportConfig read FDANFeConfig;
@@ -241,7 +239,7 @@ type
 implementation
 
 uses
-  typinfo,
+  typinfo, synacode,
   ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum,
   ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
@@ -667,7 +665,6 @@ begin
   inherited INIParaClasse;
 
   FNFeConfig.ChaveCryptINI := ChaveCrypt;
-
   FNFeConfig.LerIni(Ini);
   FDANFeConfig.LerIni(Ini);
   FIntegradorConfig.LerIni(Ini);
@@ -680,7 +677,6 @@ begin
 
   FNFeConfig.ChaveCryptINI := ChaveCrypt;
   FNFeConfig.GravarIni(Ini);
-
   FDANFeConfig.GravarIni(Ini);
   FIntegradorConfig.GravarIni(Ini);
   if FDeviceConfig <> nil then FDeviceConfig.GravarIni(Ini);
@@ -718,8 +714,21 @@ begin
 
   if not Result then
   begin
-    Result := (ASessao = CDFeSessaoIni) and ((AChave = 'DadosPFX') or (AChave = 'Proxy.Pass'));
+    Result := (ASessao = CDFeSessaoIni) and (AChave = CChaveDadosPFX);
   end;
+end;
+
+function TLibNFeConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
+begin
+  if (ASessao = CSessaoDFe) and (AChave = CChaveDadosPFX) then
+  begin
+    case Tipo of
+      tfGravar: Result := EncodeBase64(StrCrypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt));
+      tfLer: Result := EncodeBase64(StrCrypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt));
+    end;
+  end
+  else
+    Result := inherited AjustarValor(Tipo, ASessao, AChave, AValor);
 end;
 
 end.

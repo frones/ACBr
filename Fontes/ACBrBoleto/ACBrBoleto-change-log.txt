@@ -50,6 +50,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+10/10/2019
+-- ACBrBancoDaycoval, ACBrBoleto --
+[+] Adicionado Classe do Banco Daycoval
+https://www.projetoacbr.com.br/forum/topic/52403-boleto-daycoval-banco-707-homologado/
+
 23/09/2019
 -- ACBrBancoSafra --
 [*] Ajustes geração remessa CNAB240 (código Multa)

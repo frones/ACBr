@@ -391,7 +391,8 @@ type
     cobUnicredES,
     cobBancoCresolSCRS,
     cobCitiBank,
-    cobBancoABCBrasil
+    cobBancoABCBrasil,
+    cobDaycoval
     );
 
   TACBrTitulo = class;
@@ -1464,7 +1465,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil;
+     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBRBancoDaycoval;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2440,6 +2441,7 @@ begin
      cobBancoCresolSCRS     : fBancoClass := TACBrBancoCresol.create(Self);         {133 + 237}
      cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
      cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
+     cobDaycoval            : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
 
    else
      fBancoClass := TACBrBancoClass.create(Self);
@@ -3081,6 +3083,7 @@ begin
     047: Result := cobBanese;
     745: Result := cobCitiBank;
     246: Result := cobBancoABCBrasil;
+    707: Result := cobDaycoval;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));

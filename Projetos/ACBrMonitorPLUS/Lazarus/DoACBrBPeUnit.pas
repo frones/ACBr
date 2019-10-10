@@ -447,7 +447,7 @@ procedure TACBrObjetoBPe.RespostaEnvio;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.Enviar do
     begin
@@ -510,7 +510,7 @@ procedure TACBrObjetoBPe.RespostaStatus;
 var
   Resp: TStatusServicoResposta;
 begin
-  Resp := TStatusServicoResposta.Create(resINI);
+  Resp := TStatusServicoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.StatusServico do
     begin
@@ -538,7 +538,7 @@ procedure TACBrObjetoBPe.RespostaConsulta;
 var
   Resp: TConsultaBPeResposta;
 begin
-  Resp := TConsultaBPeResposta.Create(resINI);
+  Resp := TConsultaBPeResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.Consulta do
     begin
@@ -566,7 +566,7 @@ procedure TACBrObjetoBPe.RespostaCancelamento;
 var
   Resp: TCancelamentoResposta;
 begin
-  Resp := TCancelamentoResposta.Create(resINI);
+  Resp := TCancelamentoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento do
     begin
@@ -598,7 +598,7 @@ procedure TACBrObjetoBPe.RespostaEvento;
 var
   Resp: TEventoResposta;
 begin
-  Resp := TEventoResposta.Create(resINI);
+  Resp := TEventoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.EnvEvento.EventoRetorno do
     begin
@@ -622,7 +622,7 @@ var
   Resp: TEventoItemResposta;
 begin
   Resp := TEventoItemResposta.Create(
-    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfevento do
     begin
@@ -655,7 +655,7 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(resINI);
+  Resp := TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt do
     begin
@@ -689,7 +689,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
     begin
@@ -728,7 +728,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
     begin
@@ -773,7 +773,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrBPe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
     begin

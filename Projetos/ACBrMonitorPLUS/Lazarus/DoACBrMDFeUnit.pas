@@ -518,7 +518,7 @@ procedure TACBrObjetoMDFe.RespostaEnvio;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Enviar do
     begin
@@ -545,7 +545,7 @@ procedure TACBrObjetoMDFe.RespostaRetorno;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create(resINI);
+  Resp := TRetornoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Retorno do
     begin
@@ -629,7 +629,7 @@ var
 begin
   Resp := TRetornoItemResposta.Create(
     'MDFe' + Trim(IntToStr(
-    fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)), resINI);
+    fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Retorno.MDFeRetorno.ProtDFe.Items[ItemID] do
     begin
@@ -660,7 +660,7 @@ procedure TACBrObjetoMDFe.RespostaPadrao;
 var
   Resp: TPadraoMDFeResposta ;
 begin
-  Resp := TPadraoMDFeResposta.Create('NAOENCERRADOS',resINI);
+  Resp := TPadraoMDFeResposta.Create('NAOENCERRADOS',resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.ConsMDFeNaoEnc do
     begin
@@ -683,7 +683,7 @@ procedure TACBrObjetoMDFe.RespostaStatus;
 var
   Resp: TStatusServicoResposta;
 begin
-  Resp := TStatusServicoResposta.Create(resINI);
+  Resp := TStatusServicoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.StatusServico do
     begin
@@ -711,7 +711,7 @@ procedure TACBrObjetoMDFe.RespostaConsulta;
 var
   Resp: TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(resINI);
+  Resp := TConsultaResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Consulta do
     begin
@@ -739,7 +739,7 @@ procedure TACBrObjetoMDFe.RespostaCancelamento;
 var
   Resp: TCancelamentoResposta;
 begin
-  Resp := TCancelamentoResposta.Create(resINI);
+  Resp := TCancelamentoResposta.Create(resINI, fmtUTF8);
   try
     if fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Count > 0 then
     begin
@@ -775,7 +775,7 @@ procedure TACBrObjetoMDFe.RespostaEncerramento;
 var
   Resp: TEncerramentoResposta;
 begin
-  Resp := TEncerramentoResposta.Create(resINI);
+  Resp := TEncerramentoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
     begin
@@ -808,7 +808,7 @@ procedure TACBrObjetoMDFe.RespostaMDFeNaoEnc(ItemID: integer);
 var
   Resp: TNaoEncerradosResposta;
 begin
-  Resp := TNaoEncerradosResposta.Create('NAOENCERRADOS' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+  Resp := TNaoEncerradosResposta.Create('NAOENCERRADOS' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.ConsMDFeNaoEnc do
     begin
@@ -828,7 +828,7 @@ procedure TACBrObjetoMDFe.RespostaRecibo;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create(resINI);
+  Resp := TRetornoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Recibo do
     begin
@@ -861,7 +861,7 @@ begin
   Resp := TRetornoItemResposta.Create(
     'MDFe' + Trim(IntToStr(StrToInt(copy(
     fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items
-    [ItemID].chDFe, 26, 9)))), resINI);
+    [ItemID].chDFe, 26, 9)))), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items[ItemID] do
     begin
@@ -887,7 +887,7 @@ procedure TACBrObjetoMDFe.RespostaEvento;
 var
   Resp: TEventoResposta;
 begin
-  Resp := TEventoResposta.Create(resINI);
+  Resp := TEventoResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.EnvEvento.EventoRetorno do
     begin
@@ -910,7 +910,7 @@ var
   Resp: TEventoItemResposta;
 begin
   Resp := TEventoItemResposta.Create(
-    'Evento' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'Evento' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfEvento do
     begin
@@ -943,7 +943,7 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(resINI);
+  Resp := TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt do
     begin
@@ -977,7 +977,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResMDFe' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ResMDFe' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
     begin
@@ -1013,7 +1013,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
     begin
@@ -1059,7 +1059,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, fmtUTF8);
   try
     with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
     begin

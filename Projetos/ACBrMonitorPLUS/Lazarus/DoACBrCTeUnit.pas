@@ -973,7 +973,7 @@ begin
     end;
 
     ACBrCTe.WebServices.ConsultaCadastro.Executar;
-    Resp := TConsultaCadastroResposta.Create(resINI);
+    Resp := TConsultaCadastroResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe.WebServices.ConsultaCadastro.RetConsCad);
       fpCmd.Resposta:= Resp.Msg + sLineBreak + Resp.Gerar ;
@@ -1012,7 +1012,7 @@ begin
   with TACBrObjetoCTe(fpObjetoDono) do
   begin
     ACBrCTe.WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, AModelo, ASerie, ANumInicial, ANumFinal);
-    Resposta := TInutilizarCTeResposta.Create(resINI);
+    Resposta := TInutilizarCTeResposta.Create(resINI, fmtUTF8);
     try
       Resposta.Processar(ACBrCTe);
       fpCmd.Resposta:= Resposta.Msg + sLineBreak + Resposta.Gerar ;
@@ -1127,7 +1127,7 @@ begin
     ACBrCTe.WebServices.Recibo.Recibo := ARecibo;
     ACBrCTe.WebServices.Recibo.Executar;
 
-    RespRetorno := TRetornoResposta.Create('CTe', resINI);
+    RespRetorno := TRetornoResposta.Create('CTe', resINI, fmtUTF8);
     try
       RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
                             ACBrCTe.WebServices.Retorno.Recibo,
@@ -1177,7 +1177,7 @@ begin
 
 
       ACBrCTe.WebServices.Consulta.Executar;
-      Resposta := TConsultaCTeResposta.Create(resINI);
+      Resposta := TConsultaCTeResposta.Create(resINI, fmtUTF8);
       try
         Resposta.Processar(ACBrCTe);
         fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
@@ -1270,7 +1270,7 @@ begin
   begin
     if ACBrCTe.WebServices.StatusServico.Executar then
     begin
-      Resposta := TStatusServicoResposta.Create(resINI);
+      Resposta := TStatusServicoResposta.Create(resINI, fmtUTF8);
       try
         Resposta.Processar(ACBrCTe);
         fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
@@ -1490,7 +1490,7 @@ begin
     ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
 
     ACBrCTe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(resINI);
+    RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
     try
        RespEnvio.Processar(ACBrCTe);
        fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1502,7 +1502,7 @@ begin
     begin
       ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
       ACBrCTe.WebServices.Retorno.Executar;
-      RespRetorno := TRetornoResposta.Create('CTe', resINI);
+      RespRetorno := TRetornoResposta.Create('CTe', resINI, fmtUTF8);
       try
         RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
                               ACBrCTe.WebServices.Retorno.Recibo,
@@ -1636,7 +1636,7 @@ begin
     ACBrCTe.WebServices.Enviar.Lote := IntToStr(ALoteEnvio);
 
     ACBrCTe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(resINI);
+    RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
     try
        RespEnvio.Processar(ACBrCTe);
        fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1646,7 +1646,7 @@ begin
 
     ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
     ACBrCTe.WebServices.Retorno.Executar;
-    RespRetorno := TRetornoResposta.Create('CTe', resINI);
+    RespRetorno := TRetornoResposta.Create('CTe', resINI, fmtUTF8);
     try
       RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
                             ACBrCTe.WebServices.Retorno.Recibo,
@@ -1710,7 +1710,7 @@ begin
       ACBrCTe.WebServices.Enviar.Sincrono:= not(Assincrono);
 
       ACBrCTe.WebServices.Enviar.Executar;
-      RespEnvio := TEnvioResposta.Create(resINI);
+      RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
       try
          RespEnvio.Processar(ACBrCTe);
          fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1724,7 +1724,7 @@ begin
       begin
         ACBrCTe.WebServices.Retorno.Recibo := ACBrCTe.WebServices.Enviar.Recibo;
         ACBrCTe.WebServices.Retorno.Executar;
-        RespRetorno := TRetornoResposta.Create('CTe', resINI);
+        RespRetorno := TRetornoResposta.Create('CTe', resINI, fmtUTF8);
         try
           RespRetorno.Processar(ACBrCTe.WebServices.Retorno.CTeRetorno,
                                 ACBrCTe.WebServices.Retorno.Recibo,
@@ -1916,7 +1916,7 @@ begin
     end;
 
     ACBrCTe.EnviarEvento(ALote);
-    Resposta := TCancelamentoResposta.Create(resINI);
+    Resposta := TCancelamentoResposta.Create(resINI, fmtUTF8);
     try
       Resposta.Processar(ACBrCTe);
       fpCmd.Resposta := Resposta.XMotivo + sLineBreak + Resposta.Gerar;
@@ -2122,7 +2122,7 @@ begin
     ACBrCTe.EventoCTe.LerFromIni( AArq, False );
 
     ACBrCTe.EnviarEvento(ACBrCTe.EventoCTe.idLote);
-    Resp := TEventoResposta.Create(resINI);
+    Resp := TEventoResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe);
       fpCmd.Resposta:= sLineBreak + Resp.Gerar;
@@ -2154,7 +2154,7 @@ begin
     ACBrCTe.EventoCTe.LerFromIni( AArq, True );
 
     ACBrCTe.EnviarEvento(ACBrCTe.EventoCTe.idLote);
-    Resp := TEventoResposta.Create(resINI);
+    Resp := TEventoResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe);
       fpCmd.Resposta:= sLineBreak + Resp.Gerar;
@@ -2187,7 +2187,7 @@ begin
 
     try
       ACBrCTe.EnviarEvento(ACBrCTe.EventoCTe.idLote);
-      Resp := TEventoResposta.Create(resINI);
+      Resp := TEventoResposta.Create(resINI, fmtUTF8);
       try
         Resp.Processar(ACBrCTe);
         fpCmd.Resposta:= sLineBreak + Resp.Gerar;
@@ -2226,7 +2226,7 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorChaveCTe(AUF, ACNPJ, AChave);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrCTe.WebServices.DistribuicaoDFe.Msg,
@@ -2264,7 +2264,7 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrCTe.WebServices.DistribuicaoDFe.Msg,
@@ -2302,7 +2302,7 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrCTe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
     try
       Resp.Processar(ACBrCTe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrCTe.WebServices.DistribuicaoDFe.Msg,

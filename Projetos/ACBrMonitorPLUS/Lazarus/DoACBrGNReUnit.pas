@@ -183,7 +183,7 @@ procedure TACBrObjetoGNRe.RespostaConsulta;
 var
   Resp: TLibGNReConsulta;
 begin
-  Resp := TLibGNReConsulta.Create(resINI);
+  Resp := TLibGNReConsulta.Create(resINI, fmtUTF8);
   try
     with fACBrGNRe.WebServices.ConsultaUF do
     begin
@@ -205,7 +205,7 @@ procedure TACBrObjetoGNRe.RespostaEnvio;
 var
   Resp: TLibGNReEnvio;
 begin
-  Resp := TLibGNReEnvio.Create(resINI);
+  Resp := TLibGNReEnvio.Create(resINI, fmtUTF8);
   try
     with fACBrGNRe.WebServices.Retorno do
     begin

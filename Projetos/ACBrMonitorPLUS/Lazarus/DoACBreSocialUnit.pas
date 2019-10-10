@@ -741,7 +741,7 @@ procedure TACBrObjetoeSocial.RespostaEnvio;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -768,7 +768,7 @@ procedure TACBrObjetoeSocial.RespostaEnvioConsulta;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
     begin
@@ -794,7 +794,7 @@ procedure TACBrObjetoeSocial.RespostaEnvioOcorrencia(ACont: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -817,7 +817,7 @@ procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
     begin
@@ -841,7 +841,7 @@ procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont, ACont2: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont2), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont2), resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.
          Items[ACont].Processamento.Ocorrencias.Items[ACont2] do
@@ -863,7 +863,7 @@ procedure TACBrObjetoeSocial.RespostaConsulta(ACont: Integer);
 var
   Resp : TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),resINI);
+  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
     begin
@@ -892,7 +892,7 @@ var
   evtS5011: TS5011;
   evtS5012: TS5012;
 begin
-  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),resINI);
+  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos
          .Items[ACont].tot[ACont2] do
@@ -939,7 +939,7 @@ procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosQtd;
 var
   Resp : TConsultaTotEventos;
 begin
-  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,resINI);
+  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
     begin
@@ -962,7 +962,7 @@ procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosRecibo(ACont: Integer);
 var
   Resp : TConsultaIdentEvento;
 begin
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),resINI);
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt.RetIdentEvts.Items[ACont] do
     begin
@@ -984,7 +984,7 @@ var
   Resp : TConsultaIdentEvento;
 begin
 
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,resINI);
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
     begin
@@ -1007,7 +1007,7 @@ procedure TACBrObjetoeSocial.RespostaPadrao;
 var
   Resp : TPadraoeSocialResposta;
 begin
-  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,resINI);
+  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,resINI, fmtUTF8);
   try
     with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
     begin

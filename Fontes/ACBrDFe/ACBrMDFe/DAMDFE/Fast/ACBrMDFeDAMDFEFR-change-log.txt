@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2019
+-- ACBrMDFeDAMDFEFR --
+[*] Ajustes para impressão no DAMDFE os campos cMunDescarga e xMunDescarga.
+    https://www.projetoacbr.com.br/forum/topic/53677-campos-cmundescarga-e-xmundescarga/
+  Por: FSoftware
+
 18/07/2019
 -- ACBrMDFeDAMDFEFR --
 [*] Ajustes para impressão do DAMDFE Retrato em FastReport conforme layout 3.00a.

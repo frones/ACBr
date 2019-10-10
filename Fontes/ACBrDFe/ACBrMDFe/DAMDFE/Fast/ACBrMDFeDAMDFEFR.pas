@@ -339,6 +339,8 @@ begin
     Close;
     Clear;
     Add('Tipo', ftString, 5);
+    Add('cMunDescarga', ftInteger);
+    Add('xMunDescarga', ftString, 60);
     Add('Chave', ftString, 70);
     Add('idUnidTransp', ftString, 70);
     Add('idUnidCarga', ftString, 70);
@@ -1283,6 +1285,8 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CTe';
+            FieldByName('cMunDescarga').AsInteger := cMunDescarga;
+            FieldByName('xMunDescarga').AsString  := xMunDescarga;
             FieldByName('Chave').AsString := FormatarChaveAcesso(infCTe.Items[j].chCTe);
             Post;
             with infCTe[j] do
@@ -1309,6 +1313,8 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'CT';
+            FieldByName('cMunDescarga').AsInteger := cMunDescarga;
+            FieldByName('xMunDescarga').AsString  := xMunDescarga;
             FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + '        ' +
               IntToStr(infCT.Items[j].serie) + '-' + infCT.Items[j].nCT;
             Post;
@@ -1336,6 +1342,8 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NFe';
+            FieldByName('cMunDescarga').AsInteger := cMunDescarga;
+            FieldByName('xMunDescarga').AsString  := xMunDescarga;
             FieldByName('Chave').AsString := FormatarChaveAcesso(infNFe.Items[j].chNFe);
             Post;
             with infNFe[j] do
@@ -1362,6 +1370,8 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'NF';
+            FieldByName('cMunDescarga').AsInteger := cMunDescarga;
+            FieldByName('xMunDescarga').AsString  := xMunDescarga;
             FieldByName('Chave').AsString := FormatarCNPJouCPF(FMDFe.emit.CNPJCPF) + '        ' +
               IntToStr(infNF.Items[j].serie) + '-' + IntToStr(infNF.Items[j].nNF);
             Post;
@@ -1389,6 +1399,8 @@ begin
           begin
             Append;
             FieldByName('Tipo').AsString  := 'MDF-e';
+            FieldByName('cMunDescarga').AsInteger := cMunDescarga;
+            FieldByName('xMunDescarga').AsString  := xMunDescarga;
             FieldByName('Chave').AsString := FormatarChaveAcesso(infMDFeTransp.Items[j].chMDFe);
             Post;
             with infMDFeTransp[j] do

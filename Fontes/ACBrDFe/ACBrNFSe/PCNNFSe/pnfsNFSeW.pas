@@ -142,7 +142,7 @@ uses
   pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL,
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa,
   pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili, pnfsNFSeW_SMARAPD, pnfsNFSeW_IPM,
-  pnfsNFSeW_AssessorPublico, pnfsNFSeW_WebFisco, pnfsNFSeW_Lencois;
+  pnfsNFSeW_AssessorPublico, pnfsNFSeW_WebFisco, pnfsNFSeW_Lencois, pnfsNFSeW_Giap;
 
 { TNFSeW }
 
@@ -203,6 +203,7 @@ begin
     loAssessorPublico : FNFSeWClass := TNFSeW_AssesorPublico.Create(Self);
     loWebFisco:    FNFSeWClass := TNFSeW_WebFisco.Create(Self);
     loLencois:     FNFSeWClass := TNFSeW_Lencois.Create(Self);
+    loGiap:        FNFSeWClass := TNFSeW_Giap.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2019
+-- pnfsLerListaNFSe --
+[*] Acrescentado a leitura da tag <situacao_codigo_nfse> provedor IPM.
+-- pnfsNFSeW_Giap / pnfsNFSeW --
+[*] Estava faltando incluir o provedor Giap na unit para gerar o XML do RPS.
+   Por: Italo Jurisato Junior
+
 09/10/2019
 -- ACBrNFSeWebServices --
 [*] Alteração visando o provedor TcheInfov2, incluio o namespace na tag <Rps>

@@ -1157,7 +1157,8 @@ begin
             lNFSe.NFSe.Protocolo               := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
             lNFSe.NFSe.Link                    := Leitor.rCampo(tcStr, 'link_nfse');
             lNFSe.NFSe.CodigoVerificacao       := Leitor.rCampo(tcStr, 'cod_verificador_autenticidade');
-            lNFSe.NFSe.XML                     := Leitor.Arquivo;// FListaNFSe.FCompNFSe.Items[0].FNFSe.XML;
+            lNFSe.NFSe.XML                     := Leitor.Arquivo;
+            lNFSe.NFSe.Situacao                := Leitor.rCampo(tcStr, 'situacao_codigo_nfse');
 
             if (Leitor.rCampo(tcStr, 'situacao_descricao_nfse') = 'Emitida') then
             begin

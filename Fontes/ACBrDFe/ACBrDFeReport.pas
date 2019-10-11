@@ -111,9 +111,10 @@ type
     FExpandeLogoMarca: Boolean;
     FNomeDocumento: String;
 
-    procedure SetNumCopias(const Value: Integer);
-    procedure SetPathPDF(const Value: String);
+    procedure SetNumCopias(const AValue: Integer);
+    procedure SetPathPDF(const AValue: String);
     function GetPathPDF: String;
+    procedure SetNomeDocumento(const AValue: String);
   protected
     FPArquivoPDF: String;
     function GetSeparadorPathPDF(const aInitialPath: String): String; virtual;
@@ -133,7 +134,7 @@ type
     property Impressora: String read FImpressora write FImpressora;
     {@prop NomeDocumento - Define/retorna o nome do documento para exportação PDF.
      @links TACBrDFeReport.NomeDocumento :/}
-    property NomeDocumento: String read FNomeDocumento write FNomeDocumento;
+    property NomeDocumento: String read FNomeDocumento write SetNomeDocumento;
     {@prop NumCopias - Define/retorna a quantidade de copias para Imprimir.
      @links TACBrDFeReport.NumCopias :/}
     property NumCopias: Integer read FNumCopias write SetNumCopias default 1;
@@ -300,9 +301,27 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrDFeReport.SetPathPDF(const Value: String);
+procedure TACBrDFeReport.SetPathPDF(const AValue: String);
+var
+  APath, AFile, AExt: String;
 begin
-  FPathPDF := PathWithDelim( ExtractFilePath(Trim(Value)) );
+  if FPathPDF = AValue then
+    Exit;
+
+  APath := Trim(AValue);
+  AExt  := ExtractFileExt(APath);
+  AFile := '';
+  if (AExt <> '') then
+  begin
+    AFile := ExtractFileName(APath);
+    APath := ExtractFilePath(APath);
+  end;
+
+  if (APath <> '') then
+    FPathPDF := PathWithDelim( APath );
+
+  if (AFile <> '') then
+    SetNomeDocumento( AFile );
 end;
 
 function TACBrDFeReport.GetPathPDF: String;
@@ -322,6 +341,30 @@ begin
     Result := PathWithDelim(GetSeparadorPathPDF(Result));
 end;
 
+procedure TACBrDFeReport.SetNomeDocumento(const AValue: String);
+var
+  AFile, APath: String;
+begin
+  if FNomeDocumento = AValue then
+    Exit;
+
+  AFile := Trim(AValue);
+  APath := ExtractFilePath(AFile);
+  if (APath <> '') then
+  begin
+    AFile := ExtractFileName(AFile);
+    FPathPDF := PathWithDelim( APath );
+  end;
+
+  if (AFile <> '') then
+  begin
+    if ExtractFileExt(AFile) = '' then
+      AFile := AFile + '.pdf';
+
+    FNomeDocumento := AFile;
+  end;
+end;
+
 function TACBrDFeReport.GetSeparadorPathPDF(const aInitialPath: String): String;
 begin
   // Esse método deve ser sobreposto pelas Classes Filhas //
@@ -337,16 +380,16 @@ begin
   Result := StringReplace(ATexto, ABloco, ATag + ABloco + TagClose, [rfReplaceAll]);
 end;
 
-procedure TACBrDFeReport.SetNumCopias(const Value: Integer);
+procedure TACBrDFeReport.SetNumCopias(const AValue: Integer);
 begin
   // O valor de cópias zero é utilizado por aplicações ISAPI no momento.
   // É utilizado por causa de problemas encontrados ao usar o Fortes Report.
   // Para mais informações, veja:
   // https://www.projetoacbr.com.br/forum/topic/52337-gerar-pdf-nfcenfe-danfe-aplica%C3%A7%C3%A3o-isapi-com-fortes-report/?tab=comments#comment-344431
-  if (Value < 0) then
+  if (AValue < 0) then
     Exit;
 
-  FNumCopias := Value;
+  FNumCopias := AValue;
 end;
 
 function TACBrDFeReport.FormatarQuantidade(dValor: Double; dForcarDecimais: Boolean): String;

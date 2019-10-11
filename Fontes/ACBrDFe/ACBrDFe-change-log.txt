@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2019
+-- ACBrDFeReport --
+[-] Correção no método SetPathPDF, para considerar Paths sem PathDelimiter no final
+[*] Se o Nome do Arquivo for informado em PathPDF, ele será aproveitado e atribuido
+    para a propriedades "NomeArquivo", e PathPDF ficará apenas com o Path
+[*] Se o Path for informado em "NomeArquivo", ele será extraido e movido para
+    a propriedade "PathPDF"
+[*] Se o nome do arquivo estiver sem extensão, será incluido '.pdf'
+    (por: DSA)
+
 09/10/2019
 -- ACBrDFeSSL --
 [-] Correção para quando trocar o tipo de certificado zerar a propriedade do tipo anterior para que o carregamento do novo certificado ocorra corretamente.

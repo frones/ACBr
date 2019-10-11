@@ -761,22 +761,12 @@ begin
         //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
         //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
         TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := True;
-        try
-              FazerImpressaoDocumento;
-            except
-              on E: Exception do
-                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
-            end;
+        FazerImpressaoDocumento;
 
         if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
         begin
           TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := False;
-          try
-              FazerImpressaoDocumento;
-            except
-              on E: Exception do
-                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
-            end;
+          FazerImpressaoDocumento;
         end;
       end;
     end
@@ -834,22 +824,12 @@ begin
             // imprimir obrigatoriamente duas vias quando em off-line
             // uma para consumidor e outra para o estabelecimento
             TACBrNFeDANFCEClass(DANFE).ViaConsumidor := True;
-            try
-              FazerImpressaoDocumento;
-            except
-              on E: Exception do
-                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
-            end;
+            FazerImpressaoDocumento;
 
             if fsImprimir2ViaOffLine then
             begin
               TACBrNFeDANFCEClass(DANFE).ViaConsumidor := False;
-              try
               FazerImpressaoDocumento;
-            except
-              on E: Exception do
-                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
-            end;
             end;
           end;
         end
@@ -872,12 +852,7 @@ begin
         ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
 
         if (NotasFiscais.Items[0].Confirmada) then
-          try
-              FazerImpressaoDocumento;
-            except
-              on E: Exception do
-                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
-            end;
+          FazerImpressaoDocumento;
     end;
     end;
   end

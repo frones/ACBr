@@ -670,7 +670,7 @@ begin
           if NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado then
           begin
             ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total), 2);
-            TotDescAcre := TotDescAcre + ItDescAcre[i];
+            TotDescAcre   := RoundABNT(TotDescAcre + ItDescAcre[i],2);
 
             if ItDescAcre[i] > VlItMaior then
             begin
@@ -680,6 +680,9 @@ begin
           end;
         end;
 
+        if (VlDescAcres > 0) and (TotDescAcre = 0) then
+          ItDescAcre[0] := VlDescAcres
+        else
         if TotDescAcre <> VlDescAcres then
           ItDescAcre[ItMaior] := ItDescAcre[ItMaior] -
             (TotDescAcre - VlDescAcres);
@@ -758,12 +761,22 @@ begin
         //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
         //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
         TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := True;
-        FazerImpressaoDocumento;
+        try
+              FazerImpressaoDocumento;
+            except
+              on E: Exception do
+                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
+            end;
 
         if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
         begin
           TACBrNFeDANFCEClass(fsACBrNFCe.DANFE).ViaConsumidor := False;
-          FazerImpressaoDocumento;
+          try
+              FazerImpressaoDocumento;
+            except
+              on E: Exception do
+                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
+            end;
         end;
       end;
     end
@@ -813,7 +826,7 @@ begin
         if Configuracoes.Geral.FormaEmissao = teOffLine then
         begin
           NotasFiscais.Assinar;
-          NotasFiscais.Validar;
+          //NotasFiscais.Validar;
           //NotasFiscais.Items[0].Confirmada := True;
 
           if DANFE is TACBrNFeDANFCEClass then
@@ -821,12 +834,22 @@ begin
             // imprimir obrigatoriamente duas vias quando em off-line
             // uma para consumidor e outra para o estabelecimento
             TACBrNFeDANFCEClass(DANFE).ViaConsumidor := True;
-            FazerImpressaoDocumento;
+            try
+              FazerImpressaoDocumento;
+            except
+              on E: Exception do
+                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
+            end;
 
             if fsImprimir2ViaOffLine then
             begin
               TACBrNFeDANFCEClass(DANFE).ViaConsumidor := False;
+              try
               FazerImpressaoDocumento;
+            except
+              on E: Exception do
+                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
+            end;
             end;
           end;
         end
@@ -848,8 +871,13 @@ begin
 
         ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
 
-        if NotasFiscais.Items[0].Confirmada then
-          FazerImpressaoDocumento;
+        if (NotasFiscais.Items[0].Confirmada) then
+          try
+              FazerImpressaoDocumento;
+            except
+              on E: Exception do
+                raise Exception.Create('Erro ao imprimir DANFCE' + #13 + E.Message);
+            end;
     end;
     end;
   end

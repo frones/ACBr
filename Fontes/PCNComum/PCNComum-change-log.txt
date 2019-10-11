@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2019
+[*] pcnRetDistDFeInt
+    Possivel correção, para um erro que esta ocorrendo ao tentar ler a lista 
+    de Itens Averbados.
+    Por: Italo Jurisato Junior
+
 03/10/2019
 [+] pcnRetDistDFeInt
     Implementado a classe para realizar a leitura dos Itens Averbados em um 

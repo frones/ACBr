@@ -379,16 +379,17 @@ end;
 constructor TprocEvento_DetEvento.Create;
 begin
   inherited Create;
-  CTe  := TDetEventoCTe.Create;
-  emit := TDetEventoEmit.Create;
-  itensAverbados := TitensAverbadosCollection.Create;
+
+  FCTe  := TDetEventoCTe.Create;
+  Femit := TDetEventoEmit.Create;
+  FitensAverbados := TitensAverbadosCollection.Create();
 end;
 
 destructor TprocEvento_DetEvento.Destroy;
 begin
-  CTe.Free;
-  emit.Free;
-  itensAverbados.Free;
+  FCTe.Free;
+  Femit.Free;
+  FitensAverbados.Free;
 
   inherited;
 end;
@@ -659,6 +660,7 @@ begin
               while Leitor.rExtrai(3, 'itensAverbados', '', j + 1) <> '' do
               begin
                 FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.New;
+
                 FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FdhEmbarque   := oLeitorInfZip.rCampo(tcDatHor, 'dhEmbarque');
                 FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FdhAverbacao  := oLeitorInfZip.rCampo(tcDatHor, 'dhAverbacao');
                 FdocZip.Items[i].FprocEvento.detEvento.FitensAverbados.Items[j].FnDue         := oLeitorInfZip.rCampo(tcStr, 'nDue');

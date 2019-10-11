@@ -21,10 +21,10 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="38"/>
+      <BuildNr Value="44"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCTe - BIblioteca para emissão e impressão de Conhecimento de Transporte Eletrônico" InternalName="ACBrLibCTe" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrCTe " ProductVersion="0.0.0.1"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCTe - Biblioteca para emissão e impressão de Conhecimento de Transporte Eletrônico" InternalName="ACBrLibCTe" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrCTe " ProductVersion="0.0.0.1"/>
     </VersionInfo>
     <BuildModes Count="7">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>

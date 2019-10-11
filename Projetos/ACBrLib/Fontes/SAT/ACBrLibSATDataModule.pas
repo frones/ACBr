@@ -64,7 +64,7 @@ type
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
-    procedure CarregarDadosVenda(XmlArquivoOuString: String; aNomePDF: String = '');
+    procedure CarregarDadosVenda(XmlArquivoOuString: Ansistring; aNomePDF: Ansistring = '');
     procedure CarregarDadosCancelamento(aStr: String; aNomePDF: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
@@ -387,11 +387,9 @@ begin
   end;
 end;
 
-procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: String; aNomePDF: String);
+procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: Ansistring; aNomePDF: Ansistring);
 begin
   if Trim(XmlArquivoOuString) = '' then exit;
-
-  ACBrSAT1.CFe.Clear;
 
   if FileExists(XmlArquivoOuString) then
   begin
@@ -448,7 +446,7 @@ begin
   Result := '';
   if ACBrSAT1.Integrador = ACBrIntegrador1 then
   begin
-    Resp := TIntegradorResp.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    Resp := TIntegradorResp.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
     try
       Resp.Processar(ACBrIntegrador1);
       Result := sLineBreak + Resp.Gerar;

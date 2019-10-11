@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibSat Demo - Visual Basic 6"
@@ -153,41 +153,41 @@ Begin VB.Form FrmMain
       TabCaption(1)   =   "Impressão"
       TabPicture(1)   =   "FrmMain.frx":25E6
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "chkImprimeEmUmaLinha"
-      Tab(1).Control(1)=   "chkUsaCodigoEanImpressao"
-      Tab(1).Control(2)=   "chkSetup"
-      Tab(1).Control(3)=   "chkPreview"
-      Tab(1).Control(4)=   "txtSite"
-      Tab(1).Control(5)=   "cbbImpressora"
-      Tab(1).Control(6)=   "txtSoftwareHouse"
-      Tab(1).Control(7)=   "FraEscPos"
-      Tab(1).Control(8)=   "txtCopias"
-      Tab(1).Control(9)=   "cmbImpressao"
-      Tab(1).Control(10)=   "nudCopias"
-      Tab(1).Control(11)=   "lblSite"
-      Tab(1).Control(12)=   "lblImpressora"
-      Tab(1).Control(13)=   "lblSoftwareHouse"
-      Tab(1).Control(14)=   "lblNCopias"
-      Tab(1).Control(15)=   "Label1"
+      Tab(1).Control(0)=   "Label1"
+      Tab(1).Control(1)=   "lblNCopias"
+      Tab(1).Control(2)=   "lblSoftwareHouse"
+      Tab(1).Control(3)=   "lblImpressora"
+      Tab(1).Control(4)=   "lblSite"
+      Tab(1).Control(5)=   "nudCopias"
+      Tab(1).Control(6)=   "cmbImpressao"
+      Tab(1).Control(7)=   "txtCopias"
+      Tab(1).Control(8)=   "FraEscPos"
+      Tab(1).Control(9)=   "txtSoftwareHouse"
+      Tab(1).Control(10)=   "cbbImpressora"
+      Tab(1).Control(11)=   "txtSite"
+      Tab(1).Control(12)=   "chkPreview"
+      Tab(1).Control(13)=   "chkSetup"
+      Tab(1).Control(14)=   "chkUsaCodigoEanImpressao"
+      Tab(1).Control(15)=   "chkImprimeEmUmaLinha"
       Tab(1).ControlCount=   16
       TabCaption(2)   =   "Email"
       TabPicture(2)   =   "FrmMain.frx":2602
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "lblNome"
-      Tab(2).Control(1)=   "lblEmail"
-      Tab(2).Control(2)=   "lblUsuário"
-      Tab(2).Control(3)=   "lblSenha"
-      Tab(2).Control(4)=   "lblHostSMTP"
-      Tab(2).Control(5)=   "lblPortaMail"
-      Tab(2).Control(6)=   "nudPorta"
+      Tab(2).Control(0)=   "ckbTLS"
+      Tab(2).Control(1)=   "ckbSSL"
+      Tab(2).Control(2)=   "txtPorta"
+      Tab(2).Control(3)=   "txtHost"
+      Tab(2).Control(4)=   "txtSenha"
+      Tab(2).Control(5)=   "txtUsuario"
+      Tab(2).Control(6)=   "txtEmail"
       Tab(2).Control(7)=   "txtNome"
-      Tab(2).Control(8)=   "txtEmail"
-      Tab(2).Control(9)=   "txtUsuario"
-      Tab(2).Control(10)=   "txtSenha"
-      Tab(2).Control(11)=   "txtHost"
-      Tab(2).Control(12)=   "txtPorta"
-      Tab(2).Control(13)=   "ckbSSL"
-      Tab(2).Control(14)=   "ckbTLS"
+      Tab(2).Control(8)=   "nudPorta"
+      Tab(2).Control(9)=   "lblPortaMail"
+      Tab(2).Control(10)=   "lblHostSMTP"
+      Tab(2).Control(11)=   "lblSenha"
+      Tab(2).Control(12)=   "lblUsuário"
+      Tab(2).Control(13)=   "lblEmail"
+      Tab(2).Control(14)=   "lblNome"
       Tab(2).ControlCount=   15
       Begin VB.TextBox txtVersaoCFe 
          Alignment       =   1  'Right Justify
@@ -1365,9 +1365,9 @@ End Sub
 
 Private Sub btnEnviarCFe_Click()
     On Error Resume Next
-    CommonDialog1.DialogTitle = "Selecione o arquivo INI"
+    CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
     CommonDialog1.InitDir = App.Path
-    CommonDialog1.Filter = "Arquivo Ini CFe (*.ini)|*.ini|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
     CommonDialog1.ShowOpen
             
     If Err Then Exit Sub
@@ -1382,7 +1382,7 @@ Private Sub btnImprimiCFeRed_Click()
     On Error Resume Next
     CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
     CommonDialog1.InitDir = App.Path
-    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.ini|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
     CommonDialog1.ShowOpen
             
     If Err Then Exit Sub
@@ -1395,7 +1395,7 @@ Private Sub btnImprimirCFe_Click()
     On Error Resume Next
     CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
     CommonDialog1.InitDir = App.Path
-    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.ini|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
     CommonDialog1.ShowOpen
             
     If Err Then Exit Sub
@@ -1407,7 +1407,7 @@ Private Sub btnImprimirPDFCFe_Click()
     On Error Resume Next
     CommonDialog1.DialogTitle = "Selecione o arquivo Xml"
     CommonDialog1.InitDir = App.Path
-    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.ini|Todo os Arquivos (*.*)|*.*"
+    CommonDialog1.Filter = "Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*"
     CommonDialog1.ShowOpen
             
     If Err Then Exit Sub
@@ -1518,19 +1518,12 @@ Private Sub Form_Load()
     If Not DirExists(LogPath) Then
         MkDir LogPath
     End If
-    
-    If Not FileExists(IniPath) Then
-        Dim iFileNo As Integer
-        iFileNo = FreeFile
-        'open the file for writing
-        Open IniPath For Output As #iFileNo
-        Close #iFileNo
-    End If
         
     Set sat = CreateSat(IniPath)
     
     sat.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", NivelLog.logParanoico
     sat.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
+    sat.ConfigGravarValor SESSAO_SAT, "ArqLog", LogPath & "\ACBrSat.log"
     sat.ConfigGravar
     
     LoadConfig

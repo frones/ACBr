@@ -349,7 +349,7 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.AssociarAssinatura(CNPJ, Assinatura);
@@ -386,7 +386,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.BloquearSAT;
@@ -422,7 +422,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.DesbloquearSAT;
@@ -466,7 +466,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.TrocarCodigoDeAtivacao(CodigoAtivacao, opcao, NovoCodigoAtv);
@@ -503,7 +503,7 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
 
       try
         Resposta := '';
@@ -543,8 +543,8 @@ begin
     begin
       SatDM.Travar;
 
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
-      Resp := TRetornoStatusSAT.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+      Resp := TRetornoStatusSAT.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.ConsultarStatusOperacional;
@@ -595,7 +595,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
 
       try
         Resposta := '';
@@ -608,7 +608,7 @@ begin
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
         begin
-          Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          Resp := TRetornoConsultarSessao.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             Resp.Processar(SatDM.ACBrSAT1);
             Resposta := Resposta + sLineBreak + Resp.Gerar;
@@ -619,7 +619,7 @@ begin
 
         if SatDM.ACBrSAT1.Resposta.codigoDeRetorno = 7000 then
         begin
-          RespCanc := TRetornoConsultarSessaoCancelado.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          RespCanc := TRetornoConsultarSessaoCancelado.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             RespCanc.Processar(SatDM.ACBrSAT1);
             Resposta := Resposta + sLineBreak + RespCanc.Gerar;
@@ -659,7 +659,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.AtualizarSoftwareSAT;
@@ -701,7 +701,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      RespSat := TACBrLibSATResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.ComunicarCertificadoICPBRASIL(cCertificado);
@@ -777,7 +777,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoTesteFimaFim.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         Resp.Resultado := SatDM.ACBrSAT1.TesteFimAFim(ArquivoXmlVenda);
@@ -869,7 +869,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoCriarCFe.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoCriarCFe.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -913,7 +913,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ACBrSAT1.CFe.Clear;
@@ -945,11 +945,11 @@ function SAT_EnviarCFe(eArquivoXml: PChar; const sResposta: PChar;
 var
   Resp: TRetornoEnvio;
   Resposta: Ansistring;
-  ArquivoXml: String;
+  ArquivoXml: Ansistring;
 begin
    try
     VerificarLibInicializada;
-    ArquivoXml := String(eArquivoXml);
+    ArquivoXml := Ansistring(eArquivoXml);
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('SAT_EnviarCFe(' + ArquivoXml + ' )', logCompleto, True)
@@ -959,10 +959,9 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
-        SatDM.ACBrSAT1.CFe.Clear;
         SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;
@@ -1005,7 +1004,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TRetornoCancelarCFe.Create(Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TRetornoCancelarCFe.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
@@ -1212,7 +1211,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
         SatDM.ConfigurarImpressao('', True);
@@ -1263,7 +1262,7 @@ begin
     with TACBrLibSAT(pLib) do
     begin
       SatDM.Travar;
-      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TPadraoSATResposta.Create('CFe', Config.TipoResposta, pLib.Config.CodResposta);
       try
        Resposta := '';
         SatDM.ConfigurarImpressao('', True);

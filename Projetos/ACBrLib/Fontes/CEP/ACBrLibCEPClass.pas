@@ -110,8 +110,6 @@ uses
 constructor TACBrLibCEP.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibCEPNome;
-  fpVersao := CLibCEPVersao;
 
   FCEPDM := TLibCEPDM.Create(nil);
 end;
@@ -206,7 +204,7 @@ var
   Resp: TLibCEPResposta;
 begin
   Resp := TLibCEPResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), resINI);
+          CSessaoRespConsulta + IntToStr(ItemID +1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibCEP(pLib).CEPDM.ACBrCEP1.Enderecos[ItemID] do
     begin

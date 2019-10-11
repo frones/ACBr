@@ -117,8 +117,6 @@ uses
 constructor TACBrLibeSocial.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibeSocialNome;
-  fpVersao := CLibeSocialVersao;
 
   FeSocialDM := TLibeSocialDM.Create(nil);
 end;
@@ -211,7 +209,7 @@ function RespostaEnvio: String;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -238,7 +236,7 @@ function RespostaEnvioConsulta: String;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -265,7 +263,7 @@ function RespostaEnvioOcorrencia(ACont: Integer): String;
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -289,7 +287,7 @@ function RespostaOcorrencia1(ACont: Integer): String;
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -313,7 +311,7 @@ function RespostaOcorrencia2(ACont, ACont2: Integer): String;
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont2), resINI);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia + IntToStr(ACont2), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -335,7 +333,7 @@ function RespostaConsulta(ACont: Integer): String;
 var
   Resp: TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(CSessaoRespConsulta + IntToStr(ACont), resINI);
+  Resp := TConsultaResposta.Create(CSessaoRespConsulta + IntToStr(ACont), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin
@@ -363,7 +361,7 @@ var
   evtS5011: TS5011;
   evtS5012: TS5012;
 begin
-  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot + IntToStr(ACont2), resINI);
+  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot + IntToStr(ACont2), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibeSocial(pLib).eSocialDM.ACBreSocial1.WebServices do
     begin

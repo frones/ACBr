@@ -619,7 +619,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resp := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
@@ -688,7 +688,7 @@ begin
           NFeDM.ACBrNFe1.NotasFiscais.Items[NFeDM.ACBrNFe1.NotasFiscais.Count - 1].NFe.infNFe.ID,
           'NFe','',[rfIgnoreCase]);
 
-      Resp := TConsultaNFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TConsultaNFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
@@ -742,7 +742,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resp := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resp := TInutilizarNFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with NFeDM.ACBrNFe1 do
         begin
@@ -832,7 +832,7 @@ begin
             Exit;
           end;
 
-          RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             RespEnvio.Processar(NFeDM.ACBrNFe1);
             Resposta := RespEnvio.Gerar;
@@ -846,7 +846,7 @@ begin
             WebServices.Retorno.Executar;
           end;
 
-          RespRetorno := TRetornoResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          RespRetorno := TRetornoResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             RespRetorno.Processar(WebServices.Retorno.NFeRetorno,
                                   WebServices.Retorno.Recibo,
@@ -874,7 +874,7 @@ begin
 
             if ImpCount > 0 then
             begin
-              ImpResp := TLibImpressaoResposta.Create(ImpCount, pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+              ImpResp := TLibImpressaoResposta.Create(ImpCount, pLib.Config.TipoResposta, pLib.Config.CodResposta);
               try
                 Resposta := Resposta + sLineBreak + ImpResp.Gerar;
               finally
@@ -924,7 +924,7 @@ begin
           WebServices.Recibo.Recibo := sRecibo;
           WebServices.Recibo.Executar;
 
-          Resp := TReciboResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          Resp := TReciboResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             Resp.Processar(WebServices.Recibo.NFeRetorno,
                            WebServices.Recibo.Recibo);
@@ -1001,7 +1001,7 @@ begin
           Infevento.detEvento.xJust := AJustificativa;
         end;
 
-        Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+        Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
         try
           NFeDM.ACBrNFe1.EnviarEvento(ALote);
 
@@ -1118,7 +1118,7 @@ begin
         end;
 
         try
-          Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           Resp.Processar(NFeDM.ACBrNFe1);
           Resposta := Resp.Gerar;
         finally
@@ -1174,7 +1174,7 @@ begin
         end;
 
         NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.Executar;
-        Resp := TConsultaCadastroResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+        Resp := TConsultaCadastroResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
         try
           Resp.Processar(NFeDM.ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad);
           Resposta := Resp.Gerar;
@@ -1236,7 +1236,7 @@ begin
 
             ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
 
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
               Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                              ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
@@ -1305,7 +1305,7 @@ begin
 
             ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
 
-            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+            Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
               Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                              ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
@@ -1377,7 +1377,7 @@ begin
 
           ACBrNFe1.WebServices.DistribuicaoDFe.Executar;
 
-          Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+          Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
             Resp.Processar(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt,
                            ACBrNFe1.WebServices.DistribuicaoDFe.Msg,
@@ -1454,7 +1454,7 @@ begin
             slMensagemEmail := TStringList.Create;
             slCC := TStringList.Create;
             slAnexos := TStringList.Create;
-            Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+            Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
               with mail do
               begin
@@ -1565,7 +1565,7 @@ begin
             slMensagemEmail := TStringList.Create;
             slCC := TStringList.Create;
             slAnexos := TStringList.Create;
-            Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+            Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
               if AEnviaPDF then
               begin
@@ -1662,7 +1662,7 @@ begin
     begin
       NFeDM.Travar;
       Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, pLib.Config.TipoResposta,
-                                               pLib.Config.FormatoResposta);
+                                               pLib.Config.CodResposta);
       try
         NFeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview,
           MarcaDagua, ViaConsumidor, Simplificado);
@@ -1699,7 +1699,7 @@ begin
     begin
       NFeDM.Travar;
       Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, pLib.Config.TipoResposta,
-                                               pLib.Config.FormatoResposta);
+                                               pLib.Config.CodResposta);
       try
         NFeDM.ConfigurarImpressao('', true);
         NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;
@@ -1742,7 +1742,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         EhArquivo := StringEhArquivo(AChaveNFe);
 
@@ -1801,7 +1801,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         EhArquivo := StringEhArquivo(AChaveNFe);
 
@@ -1863,7 +1863,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
 
         if EhArquivo then
@@ -1913,7 +1913,7 @@ begin
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
-      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         if EhArquivo then
           NFeDM.ACBrNFe1.InutNFe.LerXML(AChave);

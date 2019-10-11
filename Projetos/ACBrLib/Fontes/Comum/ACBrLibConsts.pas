@@ -55,7 +55,7 @@ const
   CSessaoVersao = 'Versao';
   CChaveChave = 'Chave';
   CChaveTipoResposta = 'TipoResposta';
-  CChaveFormatoResposta = 'FormatoResposta';
+  CChaveCodificacaoResposta = 'CodificacaoResposta';
   CChaveLogNivel = 'LogNivel';
   CChaveLogPath = 'LogPath';
   CChaveTimeOut = 'Timeout';
@@ -222,7 +222,7 @@ Var
   Resp: TACBrLibHttpResposta;
 begin
   Result := '';
-  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TACBrLibHttpResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     Resp.CodigoHTTP := CodigoHTTP;
     Resp.WebService := WebService;

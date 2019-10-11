@@ -133,8 +133,6 @@ uses
 constructor TACBrLibGNRe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibGNReNome;
-  fpVersao := CLibGNReVersao;
 
   FGNReDM := TLibGNReDM.Create(nil);
 end;
@@ -359,7 +357,7 @@ function RespostaEnvio: String;
 var
   Resp: TLibGNReEnvio;
 begin
-  Resp := TLibGNReEnvio.Create(resINI);
+  Resp := TLibGNReEnvio.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibGNRe(pLib).GNReDM.ACBrGNRe1.WebServices.Retorno do
     begin
@@ -380,7 +378,7 @@ function RespostaConsulta: String;
 var
   Resp: TLibGNReConsulta;
 begin
-  Resp := TLibGNReConsulta.Create(resINI);
+  Resp := TLibGNReConsulta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibGNRe(pLib).GNReDM.ACBrGNRe1.WebServices.ConsultaUF do
     begin

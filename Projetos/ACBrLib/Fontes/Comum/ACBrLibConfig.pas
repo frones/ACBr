@@ -288,7 +288,7 @@ type
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
     FTipoResposta: TACBrLibRespostaTipo;
-    FFormatoResposta: TACBrLibFormatoResposta;
+    FCodificaoResposta: TACBrLibCodResposta;
 
     procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
@@ -324,7 +324,7 @@ type
     property ChaveCrypt: String read FChaveCrypt;
 
     property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
-    property FormatoResposta: TACBrLibFormatoResposta read FFormatoResposta;
+    property CodResposta: TACBrLibCodResposta read FCodificaoResposta;
     property Log: TLogConfig read FLog;
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
@@ -717,7 +717,7 @@ begin
     FChaveCrypt := AChaveCrypt;
 
   FTipoResposta := resINI;
-  FFormatoResposta := fmtUTF8;
+  FCodificaoResposta := codUTF8;
   FLog := TLogConfig.Create;
   FSistema := TSistemaConfig.Create;
   FEmail := TEmailConfig.Create(FChaveCrypt);
@@ -857,7 +857,7 @@ procedure TLibConfig.INIParaClasse;
 begin
 
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
-  FFormatoResposta := TACBrLibFormatoResposta(FIni.ReadInteger(CSessaoPrincipal, CChaveFormatoResposta, Integer(FFormatoResposta)));
+  FCodificaoResposta := TACBrLibCodResposta(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);
@@ -885,6 +885,7 @@ end;
 procedure TLibConfig.ClasseParaINI;
 begin
   FIni.WriteInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta));
+  FIni.WriteInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta));
   FIni.WriteString(CSessaoVersao, CACBrLib, CACBrLibVersaoConfig);
   FIni.WriteString(CSessaoVersao, TACBrLib(FOwner).Nome, TACBrLib(FOwner).Versao);
 

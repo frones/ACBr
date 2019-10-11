@@ -68,7 +68,8 @@ Private Declare Function SAT_DesInicializar Lib "ACBrSAT32.dll" () As Long
 Private Declare Function SAT_AssociarAssinatura _
                 Lib "ACBrSAT32.dll" (ByVal CNPJValue As String, _
                                       ByVal assinaturaCNPJs As String, _
-                                      ByVal valor As String) As Long
+                                      ByVal buffer As String, _
+                                      ByRef bufferLen As Long) As Long
                                       
 Private Declare Function SAT_BloquearSAT _
                 Lib "ACBrSAT32.dll" (ByVal buffer As String, _
@@ -542,7 +543,8 @@ Public Sub EnviarEmail(ByVal eArquivoXml As String, ByVal ePara As String, _
     
     Dim retorno   As Long
     
-    retorno = SAT_EnviarEmail(eArquivoXml, ePara, eAssunto)
+    retorno = SAT_EnviarEmail(eArquivoXml, ePara, eAssunto, eNomeArquivo, sMensagem, _
+                              sCC, eAnexos)
     CheckResult (retorno)
 End Sub
 

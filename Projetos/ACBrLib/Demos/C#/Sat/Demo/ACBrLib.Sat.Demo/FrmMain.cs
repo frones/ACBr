@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing.Printing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;

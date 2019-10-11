@@ -51,7 +51,7 @@ type
     FSituacao: string;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibFormatoResposta); reintroduce;
+      const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property DataHora: TDateTime read FDataHora write FDataHora;
@@ -76,7 +76,7 @@ type
     FValorSemAdicionais: Currency;
     FValorValorDeclarado: Currency;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property CodigoServico: string read FCodigoServico write FCodigoServico;
@@ -99,7 +99,7 @@ uses
 
 { TLibSedexConsulta }
 
-constructor TLibSedexConsulta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TLibSedexConsulta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
@@ -107,7 +107,7 @@ end;
 { TLibSedexRastreio }
 
 constructor TLibSedexRastreio.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;

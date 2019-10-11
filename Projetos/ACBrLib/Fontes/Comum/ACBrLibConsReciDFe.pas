@@ -49,7 +49,7 @@ type
     FXML: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 
     procedure Processar(const Item: TProtDFeCollectionItem);
 
@@ -89,7 +89,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo, Msg, Protocolo, ChaveDFe: String);
@@ -130,7 +130,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo: String);
@@ -156,7 +156,7 @@ uses
 
 { TRetornoItemResposta }
 constructor TRetornoItemResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibFormatoResposta);
+  const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -176,7 +176,7 @@ begin
 end;
 
 { TRetornoResposta }
-constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 
@@ -237,7 +237,7 @@ begin
 end;
 
 { TReciboResposta }
-constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 

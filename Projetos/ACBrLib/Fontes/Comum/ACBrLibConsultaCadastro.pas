@@ -63,7 +63,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibFormatoResposta); reintroduce;
+      const AFormato: TACBrLibCodResposta); reintroduce;
 
     procedure Processar(const infCad: TInfCadCollectionItem);
 
@@ -113,7 +113,7 @@ type
     function GetItem(Index: Integer): TConsultaCadastroItemResposta;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const retConsCad: TRetConsCad);
@@ -146,7 +146,7 @@ uses
 
 { TConsultaCadastroItemResposta }
 constructor TConsultaCadastroItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -177,7 +177,7 @@ begin
 end;
 
 { TConsultaCadastroResposta }
-constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespConsultaCadastro, ATipo, AFormato);
 

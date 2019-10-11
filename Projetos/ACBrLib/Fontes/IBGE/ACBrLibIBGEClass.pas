@@ -109,8 +109,6 @@ uses
 constructor TACBrLibIBGE.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibIBGENome;
-  fpVersao := CLibIBGEVersao;
 
   FIBGEDM := TLibIBGEDM.Create(nil);
 end;
@@ -204,7 +202,7 @@ var
   Resp: TLibIBGEResposta;
 begin
   Resp := TLibIBGEResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), resINI);
+          CSessaoRespConsulta + IntToStr(ItemID +1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibIBGE(pLib).IBGEDM.ACBrIBGE1.Cidades[ItemID] do
     begin

@@ -122,7 +122,7 @@ type
 
   { TDABPeReportConfig }
 
-  TDABPeReportConfig = class(TDFeReportConfig)
+  TDABPeReportConfig = class(TDFeReportConfig<TACBrBPeDABPEClass>)
   private
     FTipoDABPE: TpcnTipoImpressao;
     FImprimeTotalLiquido: Boolean;
@@ -138,7 +138,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrDFeReport); override;
+    procedure AssignChild(const DFeReport: TACBrBPeDABPEClass); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -203,7 +203,7 @@ begin
   FBPeConfig.GravarIni(AIni);
 end;
 
-procedure TDABPeReportConfig.AssignChild(const DFeReport: TACBrDFeReport);
+procedure TDABPeReportConfig.AssignChild(const DFeReport: TACBrBPeDABPEClass);
 var
   pLibConfig: TLibBPeConfig;
 begin

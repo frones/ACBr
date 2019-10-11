@@ -170,8 +170,6 @@ uses
 constructor TACBrLibBPe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibBPeNome;
-  fpVersao := CLibBPeVersao;
 
   FBPeDM := TLibBPeDM.Create(nil);
 end;
@@ -500,7 +498,7 @@ var
   Resp: TCancelamentoResposta;
   Resposta: String;
 begin
-  Resp := TCancelamentoResposta.Create(resINI);
+  Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento do
     begin
@@ -535,7 +533,7 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(resINI);
+  Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.DistribuicaoDFe do
     begin
@@ -572,7 +570,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ResBPe' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.DistribuicaoDFe do
     begin
@@ -607,7 +605,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     // Atualmente o DistribuicaoDFe do CT-e não retorna Resumo de Eventos.
     {
@@ -641,7 +639,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.DistribuicaoDFe do
     begin
@@ -689,7 +687,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.DistribuicaoDFe do
     begin
@@ -727,7 +725,7 @@ function RespostaEnvio: String;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.Enviar do
     begin
@@ -753,7 +751,7 @@ function RespostaRetorno: String;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create(resINI);
+  Resp := TRetornoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     {
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.Retorno do
@@ -779,7 +777,7 @@ function RespostaEvento: String;
 var
   Resp: TEventoResposta;
 begin
-  Resp := TEventoResposta.Create(resINI);
+  Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.EnvEvento.EventoRetorno do
     begin
@@ -802,7 +800,7 @@ var
   Resp: TEventoItemResposta;
 begin
   Resp := TEventoItemResposta.Create(
-    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), resINI);
+    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibBPe(pLib).BPeDM.ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfevento do
     begin
@@ -842,7 +840,7 @@ begin
     with TACBrLibBPe(pLib) do
     begin
       BPeDM.Travar;
-      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta);
+      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with BPeDM.ACBrBPe1 do
         begin
@@ -920,7 +918,7 @@ begin
           BPeDM.ACBrBPe1.Bilhetes.Items[BPeDM.ACBrBPe1.Bilhetes.Count - 1].BPe.infBPe.ID,
           'BPe','',[rfIgnoreCase]);
 
-      Resposta := TConsultaBPeResposta.Create(pLib.Config.TipoResposta);
+      Resposta := TConsultaBPeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with BPeDM.ACBrBPe1 do
         begin

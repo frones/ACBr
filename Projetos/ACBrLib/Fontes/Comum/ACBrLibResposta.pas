@@ -47,7 +47,7 @@ const
 
 type
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
-  TACBrLibFormatoResposta = (fmtUTF8, fmtANSI);
+  TACBrLibCodResposta = (codUTF8, codANSI);
 
   { TACBrLibResposta }
   TACBrLibResposta = class abstract
@@ -60,14 +60,14 @@ type
     function GerarJson: Ansistring;
 
   protected
-    FFormato: TACBrLibFormatoResposta;
+    FFormato: TACBrLibCodResposta;
 
     procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
     procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
     procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 
     property Sessao: String read FSessao;
     property Tipo: TACBrLibRespostaTipo read FTipo;
@@ -90,7 +90,7 @@ type
     FMsg: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property WebService: String read FWebService write FWebService;
@@ -105,7 +105,7 @@ type
     FMsg: string;
 
   public
-    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -118,7 +118,7 @@ uses
   math;
 
 { TACBrLibResposta }
-constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TACBrLibResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create;
   FSessao := ASessao;
@@ -376,18 +376,18 @@ begin
       Result := GerarIni;
   end;
 
-  if FFormato = fmtANSI then
+  if FFormato = codANSI then
     Result := ACBrUTF8ToAnsi(Result);
 end;
 
 { TACBrLibHttpResposta }
-constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TACBrLibHttpResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoHttpResposta, ATipo, AFormato);
 end;
 
 { TLibImpressaoResposta }
-constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TLibImpressaoResposta.Create(const QtdImpresso: Integer; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create('Impressao', ATipo, AFormato);
   Msg := Format('%d Documento (s) impresso(s) com sucesso', [QtdImpresso]);

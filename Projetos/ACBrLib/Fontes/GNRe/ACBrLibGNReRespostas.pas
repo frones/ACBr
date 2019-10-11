@@ -51,7 +51,7 @@ type
     FProtocolo: string;
     FRecibo: string;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property Ambiente: string read FAmbiente write FAmbiente;
@@ -72,7 +72,7 @@ type
     FExigeUfFavorecida: string;
     FUF: string;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
 
   published
     property Ambiente: string read FAmbiente write FAmbiente;
@@ -90,14 +90,14 @@ uses
 
 { TLibGNReConsulta }
 
-constructor TLibGNReConsulta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TLibGNReConsulta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
 
 { TLibGNReEnvio }
 
-constructor TLibGNReEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibFormatoResposta);
+constructor TLibGNReEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
 end;

@@ -497,7 +497,7 @@ var
   Resp: TCancelamentoResposta;
   Resposta: String;
 begin
-  Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento do
     begin
@@ -532,7 +532,7 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TDistribuicaoDFeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.DistribuicaoDFe do
     begin
@@ -569,7 +569,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResMDFe' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    'ResMDFe' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.DistribuicaoDFe do
     begin
@@ -604,7 +604,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    'ResEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     // Atualmente o DistribuicaoDFe do CT-e não retorna Resumo de Eventos.
     {
@@ -638,7 +638,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.DistribuicaoDFe do
     begin
@@ -686,7 +686,7 @@ var
   Resp: TDistribuicaoDFeItemResposta;
 begin
   Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.DistribuicaoDFe do
     begin
@@ -724,7 +724,7 @@ function RespostaEnvio: String;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.Enviar do
     begin
@@ -750,7 +750,7 @@ function RespostaRetorno: String;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TRetornoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.Retorno do
     begin
@@ -774,7 +774,7 @@ function RespostaEvento: String;
 var
   Resp: TEventoResposta;
 begin
-  Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+  Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.EnvEvento.EventoRetorno do
     begin
@@ -797,7 +797,7 @@ var
   Resp: TEventoItemResposta;
 begin
   Resp := TEventoItemResposta.Create(
-    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+    'EVENTO' + Trim(IntToStrZero(ItemID +1, 3)), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibMDFe(pLib).MDFeDM.ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfevento do
     begin
@@ -837,7 +837,7 @@ begin
     with TACBrLibMDFe(pLib) do
     begin
       MDFeDM.Travar;
-      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with MDFeDM.ACBrMDFe1 do
         begin
@@ -915,7 +915,7 @@ begin
           MDFeDM.ACBrMDFe1.Manifestos.Items[MDFeDM.ACBrMDFe1.Manifestos.Count - 1].MDFe.infMDFe.ID,
           'MDFe','',[rfIgnoreCase]);
 
-      Resposta := TConsultaResposta.Create(pLib.Config.TipoResposta, pLib.Config.FormatoResposta);
+      Resposta := TConsultaResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with MDFeDM.ACBrMDFe1 do
         begin

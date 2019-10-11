@@ -8,12 +8,6 @@ namespace ACBrLib.NFe
 {
     public sealed class ACBrNFe : ACBrLibHandle
     {
-        #region Fields
-
-        private const int BUFFER_LEN = 256;
-
-        #endregion Fields
-
         #region InnerTypes
 
         private class Delegates
@@ -149,6 +143,42 @@ namespace ACBrLib.NFe
 
         #endregion Constructors
 
+        #region Properties
+
+        public string Nome
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.NFE_Nome>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        public string Versao
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.NFE_Versao>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        #endregion Properties
+
         #region Methods
 
         #region Ini
@@ -178,7 +208,7 @@ namespace ACBrLib.NFe
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), pValue, ref bufferLen));
             CheckResult(ret);
 
-            var value = FromUTF8(pValue);
+            var value = ProcessResult(pValue, bufferLen);
 
             if (typeof(T).IsEnum) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
 

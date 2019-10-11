@@ -142,8 +142,6 @@ uses
 constructor TACBrLibReinf.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibReinfNome;
-  fpVersao := CLibReinfVersao;
 
   FReinfDM := TLibReinfDM.Create(nil);
 end;
@@ -287,7 +285,7 @@ function RespostaEnvioRetorno: String;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI);
+  Resp := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -304,7 +302,7 @@ function RespostaEnvioideTransmissor: String;
 var
   Resp: TEnvioRespostaideTransmissor;
 begin
-  Resp := TEnvioRespostaideTransmissor.Create(resINI);
+  Resp := TEnvioRespostaideTransmissor.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -321,7 +319,7 @@ function RespostaEnviostatus: String;
 var
   Resp: TEnvioRespostastatus;
 begin
-  Resp := TEnvioRespostastatus.Create(resINI);
+  Resp := TEnvioRespostastatus.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -339,7 +337,7 @@ function RespostaEnvioOcorrencias(ACont: Integer): String;
 var
   Resp: TEnvioRespostaOcorrencias;
 begin
-  Resp := TEnvioRespostaOcorrencias.Create(CSessaoRespEnvioocorrencias + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TEnvioRespostaOcorrencias.Create(CSessaoRespEnvioocorrencias + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -359,7 +357,7 @@ function RespostaEnvioevento(ACont: Integer): String;
 var
   Resp: TEnvioRespostaevento;
 begin
-  Resp := TEnvioRespostaevento.Create(CSessaoRespEnvioevento + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TEnvioRespostaevento.Create(CSessaoRespEnvioevento + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -376,7 +374,7 @@ function RespostaEnvioevtTotal(ACont: Integer): String;
 var
   Resp: TEnvioRespostaevtTotal;
 begin
-  Resp := TEnvioRespostaevtTotal.Create(CSessaoRespEnvioevtTotal + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TEnvioRespostaevtTotal.Create(CSessaoRespEnvioevtTotal + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -393,7 +391,7 @@ function RespostaEnvioideEvento(ACont: Integer): String;
 var
   Resp: TRespostaideEvento;
 begin
-  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -410,7 +408,7 @@ function RespostaEnvioideContri(ACont: Integer): String;
 var
   Resp: TRespostaideContri;
 begin
-  Resp := TRespostaideContri.Create(CSessaoRetornoideContri + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaideContri.Create(CSessaoRetornoideContri + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -428,7 +426,7 @@ function RespostaEnvioideStatus(ACont: Integer): String;
 var
   Resp: TRespostaideStatus;
 begin
-  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -447,7 +445,7 @@ var
   Resp: TRespostaregOcorrs;
 begin
   Resp := TRespostaregOcorrs.Create(CSessaoRetornoideStatus +
-                      IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), resINI);
+                      IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -467,7 +465,7 @@ function RespostaEnvioinfoRecEv(ACont: Integer): String;
 var
   Resp: TRespostainfoRecEv;
 begin
-  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -489,7 +487,7 @@ var
   Resp: TRespostainfoTotal_infoTotalContrib;
 begin
   Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespEnvioinfoTotal +
-                                              IntToStrZero(ACont+1, 3), resINI);
+                                              IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -507,7 +505,7 @@ var
   Resp: TRespostaRTom;
 begin
   Resp := TRespostaRTom.Create(CSessaoRetornoRTom +
-                                              IntToStrZero(ACont+1, 3), resINI);
+                                              IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -530,7 +528,7 @@ var
   Resp: TRespostainfoCRTom;
 begin
   Resp := TRespostainfoCRTom.Create(CSessaoRetornoinfoCRTom +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -550,7 +548,7 @@ var
   Resp: TRespostaRPrest;
 begin
   Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest +
-                                              IntToStrZero(ACont+1, 3), resINI);
+                                              IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -574,7 +572,7 @@ var
   Resp: TRespostaRRecRepAD;
 begin
   Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), resINI);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -600,7 +598,7 @@ var
   Resp: TRespostaRComl;
 begin
   Resp := TRespostaRComl.Create(CSessaoRetornoRComl +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -628,7 +626,7 @@ var
   Resp: TRespostaRCPRB;
 begin
   Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -653,7 +651,7 @@ var
   Resp: TEnvioRespostaRRecEspetDesp;
 begin
   Resp := TEnvioRespostaRRecEspetDesp.Create(CSessaoRetornoRRecEspetDesp +
-                  IntToStrZero(ACont+1, 3), resINI);
+                  IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -677,7 +675,7 @@ function RespostaConsulta: String;
 var
   Resp: TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(resINI);
+  Resp := TConsultaResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -694,7 +692,7 @@ function RespostaConsultaideEvento: String;
 var
   Resp: TRespostaideEvento;
 begin
-  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento, resINI);
+  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento, pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -711,7 +709,7 @@ function RespostaConsultaideContri: String;
 var
   Resp: TRespostaideContri;
 begin
-  Resp := TRespostaideContri.Create(CSessaoRetornoideContri, resINI);
+  Resp := TRespostaideContri.Create(CSessaoRetornoideContri, pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -729,7 +727,7 @@ function RespostaConsultaideStatus: String;
 var
   Resp: TRespostaideStatus;
 begin
-  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, resINI);
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -747,7 +745,7 @@ function RespostaConsultaregOcorrs(ACont: Integer): String;
 var
   Resp: TRespostaregOcorrs;
 begin
-  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -767,7 +765,7 @@ function RespostaConsultainfoRecEv: String;
 var
   Resp: TRespostainfoRecEv;
 begin
-  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv, resINI);
+  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv, pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -788,7 +786,7 @@ function RespostaConsultainfoTotalContrib: String;
 var
   Resp: TRespostainfoTotal_infoTotalContrib;
 begin
-  Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespConsultainfoTotalContrib, resINI);
+  Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespConsultainfoTotalContrib, pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -806,7 +804,7 @@ function RespostaConsultaRTom(ACont: Integer): String;
 var
   Resp: TRespostaRTom;
 begin
-  Resp := TRespostaRTom.Create(CSessaoRetornoRTom + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaRTom.Create(CSessaoRetornoRTom + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -829,7 +827,7 @@ var
   Resp: TRespostainfoCRTom;
 begin
   Resp := TRespostainfoCRTom.Create(CSessaoRetornoinfoCRTom +
-                  intToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI);
+                  intToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -848,7 +846,7 @@ function RespostaConsultaRPrest(ACont: Integer): String;
 var
   Resp: TRespostaRPrest;
 begin
-  Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -871,7 +869,7 @@ function RespostaConsultaRRecRepAD(ACont: Integer): String;
 var
   Resp: TRespostaRRecRepAD;
 begin
-  Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD + IntToStrZero(ACont+1, 3), resINI);
+  Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD + IntToStrZero(ACont+1, 3), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -896,7 +894,7 @@ function RespostaConsultaRComl(ACont: Integer): String;
 var
   Resp: TRespostaRComl;
 begin
-  Resp := TRespostaRComl.Create(CSessaoRetornoRComl + IntToStrZero(ACont+1, 1), resINI);
+  Resp := TRespostaRComl.Create(CSessaoRetornoRComl + IntToStrZero(ACont+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -923,7 +921,7 @@ function RespostaConsultaRCPRB(ACont: Integer): String;
 var
   Resp: TRespostaRCPRB;
 begin
-  Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB + IntToStrZero(ACont+1, 1), resINI);
+  Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB + IntToStrZero(ACont+1, 1), pLib.Config.TipoResposta, pLib.Config.CodResposta);
   try
     with TACBrLibReinf(pLib).ReinfDM.ACBrReinf1.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin

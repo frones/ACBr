@@ -676,7 +676,7 @@ var
 begin
   Resp := TRetornoItemResposta.Create(
     'NFe' + Trim(IntToStr(
-    fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.Ide.nNF)), resINI, fmtUTF8);
+    fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.Ide.nNF)), resINI, codUTF8);
   try
     with fACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[ItemID] do
     begin
@@ -1137,7 +1137,7 @@ begin
 
     DoValidarIntegradorNFCe();
     ACBrNFe.WebServices.ConsultaCadastro.Executar;
-    Resp := TConsultaCadastroResposta.Create(resINI, fmtUTF8);
+    Resp := TConsultaCadastroResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.ConsultaCadastro.RetConsCad);
       fpCmd.Resposta:= Resp.Msg + sLineBreak + Resp.Gerar ;
@@ -1178,7 +1178,7 @@ begin
     DoValidarIntegradorNFCe( IntToStrZero(0,20) + IntToStr(AModelo));
 
     ACBrNFe.WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, AModelo, ASerie, ANumInicial, ANumFinal);
-    Resposta := TInutilizarNFeResposta.Create(resINI, fmtUTF8);
+    Resposta := TInutilizarNFeResposta.Create(resINI, codUTF8);
     try
       Resposta.Processar(ACBrNFe);
       fpCmd.Resposta:= Resposta.Msg + sLineBreak + Resposta.Gerar ;
@@ -1293,7 +1293,7 @@ begin
     DoValidarIntegradorNFCe();
 
     ACBrNFe.WebServices.Retorno.Executar;
-    RespRetorno := TRetornoResposta.Create('NFe', resINI, fmtUTF8);
+    RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
     try
       RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
                             ACBrNFe.WebServices.Retorno.Recibo,
@@ -1343,7 +1343,7 @@ begin
       DoValidarIntegradorNFCe(ACBrNFe.WebServices.Consulta.NFeChave);
 
       ACBrNFe.WebServices.Consulta.Executar;
-      Resposta := TConsultaNFeResposta.Create(resINI, fmtUTF8);
+      Resposta := TConsultaNFeResposta.Create(resINI, codUTF8);
       try
         Resposta.Processar(ACBrNFe);
         fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
@@ -1437,7 +1437,7 @@ begin
   begin
     DoValidarIntegradorNFCe();
     ACBrNFe.WebServices.StatusServico.Executar;
-    Resposta := TStatusServicoResposta.Create(resINI, fmtUTF8);
+    Resposta := TStatusServicoResposta.Create(resINI, codUTF8);
     try
       Resposta.Processar(ACBrNFe);
       fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
@@ -1694,7 +1694,7 @@ begin
       DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
     ACBrNFe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
+    RespEnvio := TEnvioResposta.Create(resINI, codUTF8);
     try
        RespEnvio.Processar(ACBrNFe);
        fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1707,7 +1707,7 @@ begin
        ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
        ACBrNFe.WebServices.Retorno.Executar;
 
-       RespRetorno := TRetornoResposta.Create('NFe', resINI, fmtUTF8);
+       RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
        try
          RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
                                ACBrNFe.WebServices.Retorno.Recibo,
@@ -1847,7 +1847,7 @@ begin
       DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
     ACBrNFe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
+    RespEnvio := TEnvioResposta.Create(resINI, codUTF8);
     try
       RespEnvio.Processar(ACBrNFe);
       fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1858,7 +1858,7 @@ begin
     begin
       ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
       ACBrNFe.WebServices.Retorno.Executar;
-      RespRetorno := TRetornoResposta.Create('NFe', resINI, fmtUTF8);
+      RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
       try
          RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
                                ACBrNFe.WebServices.Retorno.Recibo,
@@ -1936,7 +1936,7 @@ begin
         DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
       ACBrNFe.WebServices.Enviar.Executar;
-      RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
+      RespEnvio := TEnvioResposta.Create(resINI, codUTF8);
       try
         RespEnvio.Processar(ACBrNFe);
         fpCmd.Resposta := RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -1947,7 +1947,7 @@ begin
       begin
         ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
         ACBrNFe.WebServices.Retorno.Executar;
-        RespRetorno := TRetornoResposta.Create('NFe', resINI, fmtUTF8);
+        RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
         try
            RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
                                  ACBrNFe.WebServices.Retorno.Recibo,
@@ -2168,7 +2168,7 @@ begin
     end;
     DoValidarIntegradorNFCe(AChave);
     ACBrNFe.EnviarEvento(ALote);
-    Resposta := TCancelamentoResposta.Create(resINI, fmtUTF8);
+    Resposta := TCancelamentoResposta.Create(resINI, codUTF8);
     try
       Resposta.Processar(ACBrNFe);
       fpCmd.Resposta := Resposta.XMotivo + sLineBreak + Resposta.Gerar;
@@ -2473,7 +2473,7 @@ begin
       DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
 
     ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
-    Resp := TEventoResposta.Create(resINI, fmtUTF8);
+    Resp := TEventoResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe);
       fpCmd.Resposta:= sLineBreak + Resp.Gerar;
@@ -2506,7 +2506,7 @@ begin
     if ACBrNFe.EventoNFe.Evento.Count > 0 then
       DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
     ACBrNFe.EnviarEvento(ACBrNFe.EventoNFe.idLote);
-    Resp := TEventoResposta.Create(resINI, fmtUTF8);
+    Resp := TEventoResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe);
       fpCmd.Resposta:= sLineBreak + Resp.Gerar ;
@@ -2535,7 +2535,7 @@ begin
   begin
     ACBrNFe.EventoNFe.Evento.Clear;
     CargaDFeEvento := TACBrCarregarNFeEvento.Create(ACBrNFe, AArq);
-    Resp := TEventoResposta.Create(resINI, fmtUTF8);
+    Resp := TEventoResposta.Create(resINI, codUTF8);
     try
       if ACBrNFe.EventoNFe.Evento.Count > 0 then
         DoValidarIntegradorNFCe(ACBrNFe.EventoNFe.Evento.Items[0].InfEvento.chNFe);
@@ -2577,7 +2577,7 @@ begin
 
     DoValidarIntegradorNFCe();
     ACBrNFe.DistribuicaoDFePorChaveNFe(AUF, ACNPJ, AChave);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrNFe.WebServices.DistribuicaoDFe.Msg,
@@ -2618,7 +2618,7 @@ begin
     DoValidarIntegradorNFCe();
 
     ACBrNFe.DistribuicaoDFePorUltNSU(AUF, ACNPJ, AUltNSU);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrNFe.WebServices.DistribuicaoDFe.Msg,
@@ -2658,7 +2658,7 @@ begin
 
     DoValidarIntegradorNFCe();
     ACBrNFe.DistribuicaoDFePorNSU(AUF, ACNPJ, ANSU);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrNFe.WebServices.DistribuicaoDFe.Msg,
@@ -3145,7 +3145,7 @@ begin
       DoValidarIntegradorNFCe(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID);
 
     ACBrNFe.WebServices.Enviar.Executar;
-    RespEnvio := TEnvioResposta.Create(resINI, fmtUTF8);
+    RespEnvio := TEnvioResposta.Create(resINI, codUTF8);
     try
       RespEnvio.Processar(ACBrNFe);
       fpCmd.Resposta := fpCmd.Resposta + RespEnvio.Msg + sLineBreak + RespEnvio.Gerar;
@@ -3156,7 +3156,7 @@ begin
     begin
       ACBrNFe.WebServices.Retorno.Recibo := ACBrNFe.WebServices.Enviar.Recibo;
       ACBrNFe.WebServices.Retorno.Executar;
-      RespRetorno := TRetornoResposta.Create('NFe', resINI, fmtUTF8);
+      RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
       try
          RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
                                ACBrNFe.WebServices.Retorno.Recibo,
@@ -3271,7 +3271,7 @@ begin
 
     DoValidarIntegradorNFCe();
     ACBrNFe.DistribuicaoDFe(AUF, ACNPJ, AUltNSU, ANSU, AChave);
-    Resp:= TDistribuicaoDFeResposta.Create(resINI, fmtUTF8);
+    Resp:= TDistribuicaoDFeResposta.Create(resINI, codUTF8);
     try
       Resp.Processar(ACBrNFe.WebServices.DistribuicaoDFe.retDistDFeInt,
                      ACBrNFe.WebServices.DistribuicaoDFe.Msg,

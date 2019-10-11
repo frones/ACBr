@@ -114,7 +114,7 @@ var
   Resp: TLibCEPResposta;
 begin
   Resp := TLibCEPResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), resINI, fmtUTF8);
+          CSessaoRespConsulta + IntToStr(ItemID +1), resINI, codUTF8);
   try
     with fACBrCEP.Enderecos[ItemID] do
     begin

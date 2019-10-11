@@ -301,7 +301,7 @@
         <PackageName Value="LCL"/>
       </Item36>
     </RequiredPackages>
-    <Units Count="58">
+    <Units Count="60">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -551,6 +551,14 @@
         <Filename Value="..\..\ACBrLib\Fontes\BPe\ACBrLibBPeRespostas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit57>
+      <Unit58>
+        <Filename Value="..\..\ACBrLib\Fontes\Comum\ACBrLibDistribuicaoDFe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit58>
+      <Unit59>
+        <Filename Value="..\..\ACBrLib\Fontes\Comum\ACBrLibConsReciDFe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit59>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -128,7 +128,7 @@ procedure TACBrObjetoSedex.RespostaConsulta;
 var
   Resp: TLibSedexConsulta;
 begin
-  Resp := TLibSedexConsulta.Create(resINI, fmtUTF8);
+  Resp := TLibSedexConsulta.Create(resINI, codUTF8);
   try
     with fACBrSedex do
     begin
@@ -157,7 +157,7 @@ var
   Resp: TLibSedexRastreio;
 begin
   Resp := TLibSedexRastreio.Create(
-          CSessaoRespRastreio + Trim(IntToStrZero(ItemID +1, 2)), resINI, fmtUTF8);
+          CSessaoRespRastreio + Trim(IntToStrZero(ItemID +1, 2)), resINI, codUTF8);
   try
     with fACBrSedex.retRastreio[ItemID] do
     begin

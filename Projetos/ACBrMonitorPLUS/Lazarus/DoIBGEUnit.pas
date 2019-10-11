@@ -114,7 +114,7 @@ var
   Resp: TLibIBGEResposta;
 begin
   Resp := TLibIBGEResposta.Create(
-          CSessaoRespConsulta + IntToStr(ItemID +1), resINI, fmtUTF8);
+          CSessaoRespConsulta + IntToStr(ItemID +1), resINI, codUTF8);
   try
     with fACBrIBGE.Cidades[ItemID] do
     begin

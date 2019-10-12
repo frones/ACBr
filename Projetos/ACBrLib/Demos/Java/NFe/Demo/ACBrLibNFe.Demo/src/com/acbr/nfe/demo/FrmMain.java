@@ -693,7 +693,7 @@ public class FrmMain extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(btnCancelarNFe, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInutilizar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                        .addComponent(btnInutilizar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, Short.MAX_VALUE)
                         .addGap(4, 4, 4)
                         .addComponent(btnEnviarEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -1018,7 +1018,9 @@ public class FrmMain extends javax.swing.JFrame {
             cmbSSlType.setSelectedIndex(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "SSLType"))); 
             nudTimeOut.setValue(Integer.parseInt(acbrNFe.configLerValor(ACBrSessao.NFe, "Timeout")));
             txtProxyServidor.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Servidor"));
-            nudProxyPorta.setValue(acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta"));
+            String Value = acbrNFe.configLerValor(ACBrSessao.Proxy, "Porta");
+            if(Value.matches("-?\\d+"))
+                nudProxyPorta.setValue(Integer.parseInt(Value));
             txtProxyUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Usuario"));
             txtProxySenha.setText(acbrNFe.configLerValor(ACBrSessao.Proxy, "Senha"));
             txtNome.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Nome"));
@@ -1026,7 +1028,9 @@ public class FrmMain extends javax.swing.JFrame {
             txtUsuario.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Usuario"));
             txtSenha.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Senha"));
             txtHost.setText(acbrNFe.configLerValor(ACBrSessao.Email, "Servidor"));
-            nudPorta.setValue(acbrNFe.configLerValor(ACBrSessao.Email, "Porta"));            
+            Value = acbrNFe.configLerValor(ACBrSessao.Email, "Porta");
+            if(Value.matches("-?\\d+"))
+                nudPorta.setValue(Integer.parseInt(Value));          
             ckbSSL.setSelected(acbrNFe.configLerValor(ACBrSessao.Email, "SSL").equals("1"));            
             ckbTLS.setSelected(acbrNFe.configLerValor(ACBrSessao.Email, "TLS").equals("1"));
 
@@ -1067,7 +1071,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "Senha", 
-                    txtCertPassword.getPassword());            
+                    new String(txtCertPassword.getPassword()));            
             
             acbrNFe.configGravarValor(ACBrSessao.DFe, 
                     "NumeroSerie", 
@@ -1107,7 +1111,7 @@ public class FrmMain extends javax.swing.JFrame {
 
             acbrNFe.configGravarValor(ACBrSessao.Proxy, 
                     "Senha", 
-                    txtProxySenha.getPassword());            
+                    new String(txtProxySenha.getPassword()));            
             
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "Nome", 
@@ -1123,7 +1127,7 @@ public class FrmMain extends javax.swing.JFrame {
             
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "Senha", 
-                    txtSenha.getPassword());
+                    new String(txtSenha.getPassword()));
                         
             acbrNFe.configGravarValor(ACBrSessao.Email, 
                     "Servidor", 

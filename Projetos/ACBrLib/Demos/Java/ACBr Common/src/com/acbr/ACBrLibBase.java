@@ -36,24 +36,6 @@ public abstract class ACBrLibBase {
     protected static String fromUTF8(ByteBuffer buffer, int len) {
         return new String(buffer.array(), 0, len, UTF8);
     }
-
-    protected static int parseInt(ByteBuffer buffer, IntByReference len) {
-        return parseInt(buffer, len, 0);
-    }
-    
-    protected static int parseInt(ByteBuffer buffer, IntByReference len, int defaultVal) {
-        String s = fromUTF8(buffer, len);
-        return s.matches("-?\\d+") ? Integer.parseInt(s) : defaultVal;   
-    }
-    
-    protected static boolean parseBoolean(ByteBuffer buffer, IntByReference len) {
-        String s = fromUTF8(buffer, len);
-        return s.equals("1");
-    }
-    
-    protected static String parseString(ByteBuffer buffer, IntByReference len){
-        return fromUTF8(buffer, len);
-    }
     
     protected static String toUTF8(Boolean value) {
         return toUTF8(value ? "1" : "0");

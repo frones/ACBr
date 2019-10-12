@@ -568,8 +568,7 @@ end;
 
 procedure TLibSATConfig.LerIni(const AIni: TCustomIniFile);
 begin
-  FModelo := TACBrSATModelo(AIni.ReadInteger(CSessaoSAT, CChaveModelo,
-    integer(FModelo)));
+  FModelo := TACBrSATModelo(AIni.ReadInteger(CSessaoSAT, CChaveModelo, integer(FModelo)));
   FNomeDLL := AIni.ReadString(CSessaoSAT, CChaveNomeDLL, FNomeDLL);
   FArqLOG := AIni.ReadString(CSessaoSAT, CChaveArqLog, FArqLOG);
   FCodigoDeAtivacao := AIni.ReadString(CSessaoSAT, CChaveCodigoDeAtivacao, FCodigoDeAtivacao);

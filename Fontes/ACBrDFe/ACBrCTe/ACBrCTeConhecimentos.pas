@@ -277,22 +277,12 @@ begin
       Leitor.Free;
     end;
 
-    // Gera o QR-Code para adicionar no XML após ter a
-    // assinatura, e antes de ser salvo.
-
-    if ((Configuracoes.Geral.GerarInfCTeSupl = fgtSomenteProducao) and
-       (Configuracoes.WebServices.Ambiente = taProducao)) or
-       ((Configuracoes.Geral.GerarInfCTeSupl = fgtSomenteHomologacao) and
-       (Configuracoes.WebServices.Ambiente = taHomologacao)) or
-       (Configuracoes.Geral.GerarInfCTeSupl = fgtSempre) then
+    with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
     begin
-      with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
-      begin
-        CTe.infCTeSupl.qrCodCTe := GetURLQRCode(CTe.Ide.cUF, CTe.Ide.tpAmb,
-                  CTe.ide.tpEmis, CTe.infCTe.ID, CTe.infCTe.Versao);
+      CTe.infCTeSupl.qrCodCTe := GetURLQRCode(CTe.Ide.cUF, CTe.Ide.tpAmb,
+                CTe.ide.tpEmis, CTe.infCTe.ID, CTe.infCTe.Versao);
 
-        GerarXML;
-      end;
+      GerarXML;
     end;
 
     if Configuracoes.Arquivos.Salvar and

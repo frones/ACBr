@@ -100,21 +100,6 @@ type
     btnSalvarConfig: TBitBtn;
     Panel2: TPanel;
     Panel3: TPanel;
-    btnImprimir: TButton;
-    btnConsultar: TButton;
-    btnValidarXML: TButton;
-    btnStatusServ: TButton;
-    btnCancCTe: TButton;
-    btnCriarEnviar: TButton;
-    btnInutilizar: TButton;
-    btnGerarCTe: TButton;
-    btnConsCad: TButton;
-    btnGerarPDF: TButton;
-    btnEnviarEmail: TButton;
-    btnConsultarRecibo: TButton;
-    btnEnvEPEC: TButton;
-    btnImprimirEvento: TButton;
-    btnConsultarChave: TButton;
     PageControl2: TPageControl;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
@@ -130,10 +115,6 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrCTe1: TACBrCTe;
-    btnEnviarEventoEmail: TButton;
-    btnGerarPDFEvento: TButton;
-    btnImprimirInut: TButton;
-    btnGerarPDFInut: TButton;
     ACBrMail1: TACBrMail;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
     lSSLLib: TLabel;
@@ -148,8 +129,35 @@ type
     cbSSLType: TComboBox;
     rgModeloDF: TRadioGroup;
     rgVersaoDF: TRadioGroup;
-    btnValidarAssinatura: TButton;
+    PageControl3: TPageControl;
+    TabSheet11: TTabSheet;
+    btnStatusServ: TButton;
+    btnConsultarRecibo: TButton;
+    btnConsCad: TButton;
+    btnConsultar: TButton;
+    btnConsultarChave: TButton;
+    TabSheet12: TTabSheet;
+    btnGerarCTe: TButton;
+    btnCriarEnviar: TButton;
     btnCriarEnviarSincrono: TButton;
+    btnEnviarEmail: TButton;
+    TabSheet15: TTabSheet;
+    btnEnvEPEC: TButton;
+    btnCancCTe: TButton;
+    btnImprimirEvento: TButton;
+    btnGerarPDFEvento: TButton;
+    btnEnviarEventoEmail: TButton;
+    btnValidarXML: TButton;
+    btnValidarAssinatura: TButton;
+    btnImprimir: TButton;
+    btnGerarPDF: TButton;
+    TabSheet13: TTabSheet;
+    btnInutilizar: TButton;
+    btnImprimirInut: TButton;
+    btnGerarPDFInut: TButton;
+    btnCCe: TButton;
+    btnCompEntr: TButton;
+    btnCancEntr: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -187,6 +195,9 @@ type
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure btnValidarAssinaturaClick(Sender: TObject);
     procedure btnCriarEnviarSincronoClick(Sender: TObject);
+    procedure btnCCeClick(Sender: TObject);
+    procedure btnCompEntrClick(Sender: TObject);
+    procedure btnCancEntrClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -210,7 +221,7 @@ implementation
 
 uses
   FileCtrl, DateUtils,
-  ufrmStatus,
+  ufrmStatus, ACBrDFeUtil,
   pcnConversao, pcteConversaoCTe, ACBrUtil,
   ACBrCTeConhecimentos, blcksock, TypInfo;
 
@@ -389,7 +400,7 @@ begin
     begin
       ACBrCTe1.DACTe.TipoDACTe    := StrToTpImp(OK,IntToStr(rgTipoDaCTe.ItemIndex+1));
       ACBrCTe1.DACTe.Logo         := edtLogoMarca.Text;
-      ACBrCTe1.DACTe.PathPDF      := edtPathLogs.Text;
+      ACBrCTe1.DACTe.PathPDF      := 'c:\Erp\DFe'; //edtPathLogs.Text;
       ACBrCTe1.DACTe.TamanhoPapel := tpA4_2vias;
     end;
 
@@ -1514,10 +1525,70 @@ begin
 end;
 
 procedure TfrmDemo_ACBrCTe.btnEnvEPECClick(Sender: TObject);
-//var
-//  vAux: String;
+var
+  vAux: String;
+  iLote: Integer;
 begin
-  ShowMessage('Opção não Implementada, no programa exemplo!');
+  OpenDialog1.Title := 'Selecione o CTe a ser Enviado por EPEC';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('EPEC do CTe:', 'Justificativa', vAux)) then
+      exit;
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de EPEC: nSeqEvento sempre = 1
+      infEvento.nSeqEvento      := 1;
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ            := edtEmitCNPJ.Text;
+      infEvento.dhEvento        := now;
+      infEvento.tpEvento        := teEPEC;
+
+      infEvento.detEvento.xJust   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.xJust;
+
+      // Exemplo com CST = 00 (vICMS, vICMSRet ou vICMSOutraUF)
+      infEvento.detEvento.vICMS   := ACBrCTe1.Conhecimentos.Items[0].CTe.imp.ICMS.ICMS00.vICMS;
+
+      // Exemplo com CST = 60 o campo abaixo é opcional
+      infEvento.detEvento.vICMSST := ACBrCTe1.Conhecimentos.Items[0].CTe.imp.ICMS.ICMS60.vICMSSTRet;
+
+      infEvento.detEvento.vTPrest := ACBrCTe1.Conhecimentos.Items[0].CTe.vPrest.vTPrest;
+      infEvento.detEvento.vCarga  := ACBrCTe1.Conhecimentos.Items[0].CTe.infCTeNorm.infCarga.vCarga;
+
+      InfEvento.detEvento.toma    := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.toma03.Toma;
+
+      // Exemplo quando o tomador é o remetente da carga
+      InfEvento.detEvento.UF      := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.enderReme.UF;
+      InfEvento.detEvento.CNPJCPF := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.CNPJCPF;
+      InfEvento.detEvento.IE      := ACBrCTe1.Conhecimentos.Items[0].CTe.rem.IE;
+
+      InfEvento.detEvento.modal   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.modal;
+      InfEvento.detEvento.UFIni   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.UFIni;
+      InfEvento.detEvento.UFFim   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.UFFim;
+      InfEvento.detEvento.tpCTe   := tcNormal;
+      InfEvento.detEvento.dhEmi   := ACBrCTe1.Conhecimentos.Items[0].CTe.ide.dhEmi;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+
+    LoadXML(MemoResp, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
 end;
 
 procedure TfrmDemo_ACBrCTe.btnValidarAssinaturaClick(Sender: TObject);
@@ -1569,6 +1640,132 @@ begin
 
     showmessage('Conhecimento de Transporte Eletrônico Valido');
     showmessage(Erros);
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnCancEntrClick(Sender: TObject);
+var
+  vProt: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o CTe para Cancelar o Comprovante de Entrega';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('Comprovante de Entrega:', 'Numero do Protocolo', vProt)) then
+      exit;
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento de Comprovante de Entrega: nSeqEvento sempre = 1
+      infEvento.nSeqEvento      := 1;
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ            := edtEmitCNPJ.Text;
+      infEvento.dhEvento        := now;
+      infEvento.tpEvento        := teCancComprEntrega;
+
+      infEvento.detEvento.nProt   := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.nProtCE := vProt;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+
+    LoadXML(MemoResp, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnCompEntrClick(Sender: TObject);
+var
+  vData, vHora, vDoc, vNome, vPathImg, vChaveNFe: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o CTe para enviar o Comprovante de Entrega';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('Comprovante de Entrega:', 'Data da Entrega (DD/MM/AAAA)', vData)) then
+      exit;
+
+    if not(InputQuery('Comprovante de Entrega:', 'Hora da Entrega (HH:MM:SS)', vHora)) then
+      exit;
+
+    if not(InputQuery('Comprovante de Entrega:', 'Num. Doc. de quem recebeu', vDoc)) then
+      exit;
+
+    if not(InputQuery('Comprovante de Entrega:', 'Nome de quem recebeu', vNome)) then
+      exit;
+
+    if not(InputQuery('Comprovante de Entrega:', 'Chave da NFe Entregue', vChaveNFe)) then
+      exit;
+
+    OpenDialog1.Title := 'Selecione a Imagem da Entrega';
+    OpenDialog1.DefaultExt := '*.jpg';
+    OpenDialog1.Filter := 'Arquivos de Imagem (*.jpg)|*.jpg|Todos os Arquivos (*.*)|*.*';
+    OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+    if OpenDialog1.Execute then
+      vPathImg := OpenDialog1.FileName
+    else
+      exit;
+
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      infEvento.nSeqEvento      := 1;
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ            := edtEmitCNPJ.Text;
+      infEvento.dhEvento        := now;
+      infEvento.tpEvento        := teComprEntrega;
+
+      infEvento.detEvento.nProt         := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+      infEvento.detEvento.dhEntrega     := StrToDateTime(vData + ' ' + vHora);
+      infEvento.detEvento.nDoc          := vDoc;
+      infEvento.detEvento.xNome         := vNome;
+      infEvento.detEvento.hashEntrega   := CalcularHashArquivo(vPathImg, infEvento.chCTe);
+      infEvento.detEvento.dhHashEntrega := Now;
+
+      InfEvento.detEvento.infEntrega.Clear;
+
+      with InfEvento.detEvento.infEntrega.New do
+      begin
+        chNFe := vChaveNFe;
+      end;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+
+    LoadXML(MemoResp, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
   end;
 end;
 
@@ -1640,13 +1837,79 @@ begin
 
     with ACBrCTe1.EventoCTe.Evento.New do
     begin
-      infEvento.nSeqEvento      := 1; // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      infEvento.nSeqEvento      := 1;
       infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
       infEvento.dhEvento        := now;
       infEvento.tpEvento        := teCancelamento;
+
       infEvento.detEvento.xJust := trim(vAux);
       infEvento.detEvento.nProt := ACBrCTe1.Conhecimentos.Items[0].CTe.procCTe.nProt;
+    end;
+
+    iLote := 1; // Numero do Lote do Evento
+    ACBrCTe1.EnviarEvento(iLote);
+
+    MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.EnvEvento.RetWS);
+
+    LoadXML(MemoResp, WBResposta);
+
+    ShowMessage(IntToStr(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.cStat));
+    ShowMessage(ACBrCTe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt);
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnCCeClick(Sender: TObject);
+var
+  vGrupo, vCampo, vConteudo, vIndice: String;
+  iLote: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o CTe a ser Corrigido por CC-e';
+  OpenDialog1.DefaultExt := '*-cte.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*-cte.xml)|*-cte.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.Conhecimentos.Clear;
+    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
+
+    if not(InputQuery('Carta de Correção do CTe:', 'Grupo', vGrupo)) then
+      exit;
+
+    if not(InputQuery('Carta de Correção do CTe:', 'Campo', vCampo)) then
+      exit;
+
+    if not(InputQuery('Carta de Correção do CTe:', 'Conteudo', vConteudo)) then
+      exit;
+
+    if not(InputQuery('Carta de Correção do CTe:', 'Indice (por padrão é 1)', vIndice)) then
+      exit;
+
+    ACBrCTe1.EventoCTe.Evento.Clear;
+
+    with ACBrCTe1.EventoCTe.Evento.New do
+    begin
+      // Para o Evento de CCe: nSeqEvento varia de 1 até 20 por CT-e
+      infEvento.nSeqEvento      := 1;
+      infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
+      infEvento.CNPJ            := edtEmitCNPJ.Text;
+      infEvento.dhEvento        := now;
+      infEvento.tpEvento        := teCCe;
+
+      infEvento.detEvento.xCondUso := '';
+
+      ACBrCTe1.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.Clear;
+
+      with ACBrCTe1.EventoCTe.Evento.Items[0].InfEvento.detEvento.infCorrecao.New do
+      begin
+        grupoAlterado   := vGrupo;
+        campoAlterado   := vCampo;
+        valorAlterado   := vConteudo;
+        nroItemAlterado := StrToIntDef(vIndice, 1);
+      end;
     end;
 
     iLote := 1; // Numero do Lote do Evento
@@ -1673,7 +1936,6 @@ begin
   begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
-    ACBrCTe1.DACTE.Cancelada := True;
     ACBrCTe1.Conhecimentos.Imprimir;
   end;
 end;

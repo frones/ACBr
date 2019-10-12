@@ -920,204 +920,254 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       Left = 1
       Top = 1
       Width = 556
-      Height = 224
+      Height = 136
       Align = alTop
       TabOrder = 0
-      object btnImprimir: TButton
-        Left = 9
-        Top = 95
-        Width = 177
-        Height = 25
-        Caption = 'Imprimir DACTe'
-        TabOrder = 3
-        OnClick = btnImprimirClick
-      end
-      object btnConsultar: TButton
-        Left = 192
-        Top = 34
-        Width = 177
-        Height = 25
-        Caption = 'Consultar carregando XML'
-        TabOrder = 4
-        OnClick = btnConsultarClick
-      end
-      object btnValidarXML: TButton
-        Left = 192
-        Top = 64
-        Width = 177
-        Height = 25
-        Caption = 'Validar XML'
-        TabOrder = 1
-        OnClick = btnValidarXMLClick
-      end
-      object btnStatusServ: TButton
-        Left = 9
-        Top = 6
-        Width = 177
-        Height = 25
-        Caption = 'Status Servi'#231'o'
+      object PageControl3: TPageControl
+        Left = 5
+        Top = 7
+        Width = 548
+        Height = 122
+        ActivePage = TabSheet12
         TabOrder = 0
-        OnClick = btnStatusServClick
-      end
-      object btnCancCTe: TButton
-        Left = 375
-        Top = 126
-        Width = 177
-        Height = 25
-        Caption = 'Cancelamento por Evento'
-        TabOrder = 6
-        OnClick = btnCancCTeClick
-      end
-      object btnCriarEnviar: TButton
-        Left = 375
-        Top = 6
-        Width = 177
-        Height = 25
-        Caption = 'Criar e Enviar modo Ass'#237'ncrono'
-        TabOrder = 2
-        OnClick = btnCriarEnviarClick
-      end
-      object btnInutilizar: TButton
-        Left = 9
-        Top = 192
-        Width = 177
-        Height = 25
-        Caption = 'Inutilizar Numera'#231#227'o'
-        TabOrder = 5
-        OnClick = btnInutilizarClick
-      end
-      object btnGerarCTe: TButton
-        Left = 192
-        Top = 6
-        Width = 177
-        Height = 25
-        Caption = 'Gerar CTe'
-        TabOrder = 7
-        OnClick = btnGerarCTeClick
-      end
-      object btnConsCad: TButton
-        Left = 9
-        Top = 126
-        Width = 177
-        Height = 25
-        Caption = 'Consulta Cadastro'
-        TabOrder = 8
-        OnClick = btnConsCadClick
-      end
-      object btnGerarPDF: TButton
-        Left = 192
-        Top = 95
-        Width = 177
-        Height = 25
-        Caption = 'Gerar PDF'
-        TabOrder = 9
-        OnClick = btnGerarPDFClick
-      end
-      object btnEnviarEmail: TButton
-        Left = 375
-        Top = 95
-        Width = 177
-        Height = 25
-        Caption = 'Enviar CTe Email'
-        TabOrder = 10
-        OnClick = btnEnviarEmailClick
-      end
-      object btnConsultarRecibo: TButton
-        Left = 9
-        Top = 34
-        Width = 177
-        Height = 25
-        Caption = 'Consultar Recibo Lote'
-        TabOrder = 11
-        OnClick = btnConsultarReciboClick
-      end
-      object btnEnvEPEC: TButton
-        Left = 192
-        Top = 126
-        Width = 177
-        Height = 25
-        Caption = 'Enviar EPEC'
-        TabOrder = 12
-        OnClick = btnEnvEPECClick
-      end
-      object btnImprimirEvento: TButton
-        Left = 8
-        Top = 158
-        Width = 177
-        Height = 25
-        Caption = 'Imprimir Evento'
-        TabOrder = 13
-        OnClick = btnImprimirEventoClick
-      end
-      object btnConsultarChave: TButton
-        Left = 375
-        Top = 34
-        Width = 177
-        Height = 25
-        Caption = 'Consultar pela Chave'
-        TabOrder = 14
-        OnClick = btnConsultarChaveClick
-      end
-      object btnEnviarEventoEmail: TButton
-        Left = 375
-        Top = 158
-        Width = 177
-        Height = 25
-        Caption = 'Enviar Evento Email'
-        TabOrder = 15
-        OnClick = btnEnviarEventoEmailClick
-      end
-      object btnGerarPDFEvento: TButton
-        Left = 192
-        Top = 158
-        Width = 177
-        Height = 25
-        Caption = 'Gerar PDF Evento'
-        TabOrder = 16
-        OnClick = btnGerarPDFEventoClick
-      end
-      object btnImprimirInut: TButton
-        Left = 192
-        Top = 192
-        Width = 177
-        Height = 25
-        Caption = 'Imprimir Inutiliza'#231#227'o'
-        TabOrder = 17
-        OnClick = btnImprimirInutClick
-      end
-      object btnGerarPDFInut: TButton
-        Left = 375
-        Top = 192
-        Width = 177
-        Height = 25
-        Caption = 'Gerar PDF Inutiliza'#231#227'o'
-        TabOrder = 18
-        OnClick = btnGerarPDFInutClick
-      end
-      object btnValidarAssinatura: TButton
-        Left = 375
-        Top = 65
-        Width = 177
-        Height = 25
-        Caption = 'Validar Assinatura'
-        TabOrder = 19
-        OnClick = btnValidarAssinaturaClick
-      end
-      object btnCriarEnviarSincrono: TButton
-        Left = 9
-        Top = 65
-        Width = 177
-        Height = 25
-        Caption = 'Criar e Enviar modo S'#237'ncrono'
-        TabOrder = 20
-        OnClick = btnCriarEnviarSincronoClick
+        object TabSheet12: TTabSheet
+          Caption = 'Envios'
+          ImageIndex = 1
+          object btnGerarCTe: TButton
+            Left = 0
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Gerar CTe'
+            TabOrder = 0
+            OnClick = btnGerarCTeClick
+          end
+          object btnCriarEnviar: TButton
+            Left = 0
+            Top = 32
+            Width = 166
+            Height = 25
+            Caption = 'Criar e Enviar modo Ass'#237'ncrono'
+            TabOrder = 1
+            OnClick = btnCriarEnviarClick
+          end
+          object btnCriarEnviarSincrono: TButton
+            Left = 184
+            Top = 32
+            Width = 166
+            Height = 25
+            Caption = 'Criar e Enviar modo S'#237'ncrono'
+            TabOrder = 2
+            OnClick = btnCriarEnviarSincronoClick
+          end
+          object btnEnviarEmail: TButton
+            Left = 368
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Enviar CTe Email'
+            TabOrder = 3
+            OnClick = btnEnviarEmailClick
+          end
+          object btnValidarXML: TButton
+            Left = 184
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Validar XML'
+            TabOrder = 4
+            OnClick = btnValidarXMLClick
+          end
+          object btnValidarAssinatura: TButton
+            Left = 368
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Validar Assinatura'
+            TabOrder = 5
+            OnClick = btnValidarAssinaturaClick
+          end
+          object btnImprimir: TButton
+            Left = 0
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Imprimir DACTe'
+            TabOrder = 6
+            OnClick = btnImprimirClick
+          end
+          object btnGerarPDF: TButton
+            Left = 184
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Gerar PDF'
+            TabOrder = 7
+            OnClick = btnGerarPDFClick
+          end
+        end
+        object TabSheet11: TTabSheet
+          Caption = 'Consultas'
+          object btnStatusServ: TButton
+            Left = 0
+            Top = 0
+            Width = 177
+            Height = 25
+            Caption = 'Status Servi'#231'o'
+            TabOrder = 0
+            OnClick = btnStatusServClick
+          end
+          object btnConsultarRecibo: TButton
+            Left = 0
+            Top = 32
+            Width = 177
+            Height = 25
+            Caption = 'Consultar Recibo Lote'
+            TabOrder = 1
+            OnClick = btnConsultarReciboClick
+          end
+          object btnConsCad: TButton
+            Left = 0
+            Top = 64
+            Width = 177
+            Height = 25
+            Caption = 'Consultar Cadastro'
+            TabOrder = 2
+            OnClick = btnConsCadClick
+          end
+          object btnConsultar: TButton
+            Left = 193
+            Top = 0
+            Width = 177
+            Height = 25
+            Caption = 'Consultar carregando XML'
+            TabOrder = 3
+            OnClick = btnConsultarClick
+          end
+          object btnConsultarChave: TButton
+            Left = 192
+            Top = 32
+            Width = 177
+            Height = 25
+            Caption = 'Consultar pela Chave'
+            TabOrder = 4
+            OnClick = btnConsultarChaveClick
+          end
+        end
+        object TabSheet15: TTabSheet
+          Caption = 'Eventos'
+          ImageIndex = 4
+          object btnEnvEPEC: TButton
+            Left = 368
+            Top = 34
+            Width = 166
+            Height = 25
+            Caption = 'EPEC'
+            TabOrder = 0
+            OnClick = btnEnvEPECClick
+          end
+          object btnCancCTe: TButton
+            Left = 0
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Cancelamento do CTe'
+            TabOrder = 1
+            OnClick = btnCancCTeClick
+          end
+          object btnImprimirEvento: TButton
+            Left = 0
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Imprimir Evento'
+            TabOrder = 2
+            OnClick = btnImprimirEventoClick
+          end
+          object btnGerarPDFEvento: TButton
+            Left = 184
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Gerar PDF Evento'
+            TabOrder = 3
+            OnClick = btnGerarPDFEventoClick
+          end
+          object btnEnviarEventoEmail: TButton
+            Left = 368
+            Top = 64
+            Width = 166
+            Height = 25
+            Caption = 'Enviar Evento Email'
+            TabOrder = 4
+            OnClick = btnEnviarEventoEmailClick
+          end
+          object btnCCe: TButton
+            Left = 184
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Carta de Corre'#231#227'o do CTe'
+            TabOrder = 5
+            OnClick = btnCCeClick
+          end
+          object btnCompEntr: TButton
+            Left = 0
+            Top = 34
+            Width = 166
+            Height = 25
+            Caption = 'Comprovante de Entrega'
+            TabOrder = 6
+            OnClick = btnCompEntrClick
+          end
+          object btnCancEntr: TButton
+            Left = 184
+            Top = 34
+            Width = 166
+            Height = 25
+            Caption = 'Cancelamento de Entrega'
+            TabOrder = 7
+            OnClick = btnCancEntrClick
+          end
+        end
+        object TabSheet13: TTabSheet
+          Caption = 'Inutiliza'#231#227'o'
+          ImageIndex = 3
+          object btnInutilizar: TButton
+            Left = 0
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Inutilizar Numera'#231#227'o'
+            TabOrder = 0
+            OnClick = btnInutilizarClick
+          end
+          object btnImprimirInut: TButton
+            Left = 184
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Imprimir Inutiliza'#231#227'o'
+            TabOrder = 1
+            OnClick = btnImprimirInutClick
+          end
+          object btnGerarPDFInut: TButton
+            Left = 368
+            Top = 0
+            Width = 166
+            Height = 25
+            Caption = 'Gerar PDF Inutiliza'#231#227'o'
+            TabOrder = 2
+            OnClick = btnGerarPDFInutClick
+          end
+        end
       end
     end
     object PageControl2: TPageControl
       Left = 1
-      Top = 225
+      Top = 137
       Width = 556
-      Height = 303
+      Height = 391
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -1127,7 +1177,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           TabOrder = 0
         end
@@ -1139,11 +1189,11 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           TabOrder = 0
           ControlData = {
-            4C000000A33800006C1C00000000000000000000000000000000000000000000
+            4C000000A3380000842500000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1157,7 +1207,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1170,7 +1220,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1183,7 +1233,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           TabOrder = 0
         end
@@ -1195,7 +1245,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
           Left = 0
           Top = 0
           Width = 548
-          Height = 275
+          Height = 363
           Align = alClient
           TabOrder = 0
         end
@@ -1208,8 +1258,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 578
-    Top = 304
+    Left = 328
+    Top = 232
   end
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
@@ -1220,8 +1270,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ModeloDF = moCTeOS
-    Configuracoes.Geral.GerarInfCTeSupl = fgtSomenteHomologacao
     Configuracoes.Arquivos.PathSchemas = 'C:\ACBr\trunk2\Exemplos\ACBrDFe\Schemas\CTe\'
+    Configuracoes.Arquivos.AdicionarLiteral = True
     Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -1229,8 +1279,8 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
     DACTE = ACBrCTeDACTeRL1
-    Left = 330
-    Top = 302
+    Left = 328
+    Top = 184
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1241,9 +1291,10 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     DefaultCharset = UTF_8
     IDECharset = CP1252
     Left = 504
-    Top = 300
+    Top = 184
   end
   object ACBrCTeDACTeRL1: TACBrCTeDACTeRL
+    UsaSeparadorPathPDF = True
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.800000000000000000
     MargemSuperior = 0.800000000000000000
@@ -1256,14 +1307,14 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrCTE = ACBrCTe1
     ImprimirHoraSaida = False
-    TipoDACTE = tiSemGeracao
+    TipoDACTE = tiRetrato
     TamanhoPapel = tpA4
     Cancelada = False
     ExibeResumoCanhoto = False
     EPECEnviado = False
     ImprimeDescPorc = False
     PrintDialog = True
-    Left = 410
-    Top = 302
+    Left = 408
+    Top = 184
   end
 end

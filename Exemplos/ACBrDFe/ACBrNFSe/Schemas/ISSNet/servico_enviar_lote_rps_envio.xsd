@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
-	xmlns:tc="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"
-	targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_envio.xsd"
-	xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_envio.xsd"
+	xmlns:ts="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
+	xmlns:tc="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"
+	targetNamespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_envio.xsd"
+	xmlns="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_envio.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
 	attributeFormDefault="unqualified" elementFormDefault="qualified">
 	<xsd:import schemaLocation="tipos_simples.xsd"
-		namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" />
+		namespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" />
 	<xsd:import schemaLocation="tipos_complexos.xsd"
-		namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" />
+		namespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" />
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
 		schemaLocation="xmldsig-core-schema20020212.xsd" />
 	<xsd:element name="EnviarLoteRpsEnvio">

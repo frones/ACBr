@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -29,9 +29,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="4">
       <Item1>
@@ -47,7 +48,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="ACBrLibCHQTest.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -56,10 +57,6 @@
         <Filename Value="ACBrLibCHQTestCase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="..\..\CHQ\ACBrLibCHQStaticImport.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -69,8 +66,8 @@
       <Filename Value="bin\ACBrLibCHQTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);..\..\Comum"/>
-      <OtherUnitFiles Value="..\..\Comum;..\..\CHQ"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\Fontes\Comum"/>
+      <OtherUnitFiles Value="..\..\Fontes\Comum;..\..\Fontes\CHQ"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

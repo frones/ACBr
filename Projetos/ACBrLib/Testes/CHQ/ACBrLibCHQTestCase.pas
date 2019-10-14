@@ -7,6 +7,9 @@ interface
 uses
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
+const
+  CLibCHQNome = 'ACBrLibCHQ';
+
 type
 
   { TTestACBrCHQLib }
@@ -130,13 +133,13 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 0;
   AssertEquals(ErrOk, CHQ_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibCHQVersao), Bufflen);
+  Assert(Bufflen > 0);
 
   // Lendo a resposta //
   AStr := Space(Bufflen);
   AssertEquals(ErrOk, CHQ_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibCHQVersao), Bufflen);
-  AssertEquals(CLibCHQVersao, AStr);
+  Assert(Bufflen > 0);
+  Assert(AStr <> '');
 end;
 
 procedure TTestACBrCHQLib.Test_CHQ_ConfigLerValor;
@@ -147,9 +150,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CHQ_ConfigLerValor(CSessaoVersao, CLibCHQNome, PChar(AStr), Bufflen));
+  AssertEquals(ErrOk, CHQ_ConfigLerValor(CSessaoVersao, CACBrLib, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibCHQVersao, AStr);
+  AssertEquals(CACBrLibVersaoConfig, AStr);
 end;
 
 procedure TTestACBrCHQLib.Test_CHQ_ConfigGravarValor;

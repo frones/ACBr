@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibCHQNome = 'ACBrLibCHQ';
-  CLibCHQVersao = '0.0.1';
-
   CSessaoCHQ = 'CHQ';
 
   CChaveLog = 'ArqLog';

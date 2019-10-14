@@ -69,8 +69,6 @@ type
     FCHQConfig: TCHQConfig;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -136,15 +134,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibCHQConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibCHQNome, '0');
-  Result := (CompareVersions(CLibCHQVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibCHQConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -155,8 +144,6 @@ end;
 procedure TLibCHQConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibCHQNome, CLibCHQVersao);
 
   FCHQConfig.GravarIni(Ini);
 end;

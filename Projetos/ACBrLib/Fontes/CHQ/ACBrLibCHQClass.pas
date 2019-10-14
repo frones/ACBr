@@ -130,8 +130,6 @@ uses
 constructor TACBrLibCHQ.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibCHQNome;
-  fpVersao := CLibCHQVersao;
 
   FCHQDM := TLibCHQDM.Create(nil);
 end;

@@ -152,6 +152,9 @@ type
     function LerXml_proSMARAPD: Boolean;
     function LerXml_proGIAP: Boolean;
 
+    // 14/10/2019
+    function LerXml_proAssessorPublico: Boolean;
+
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfCanc: TInfCanc       read FInfCanc  write FInfCanc;
     property Provedor: TnfseProvedor read FProvedor write FProvedor;
@@ -298,6 +301,8 @@ begin
     proGoverna:     Result := LerXml_proGoverna;
     proSMARAPD:     Result := LerXml_proSMARAPD;
     proGiap:        Result := LerXml_proGIAP;
+    // 14/10/2019
+    proAssessorPublico:  Result := LerXml_proAssessorPublico;
   else
     Result := LerXml_ABRASF;
   end;
@@ -1036,6 +1041,26 @@ begin
 
   except
     Result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proAssessorPublico: Boolean;
+begin
+  try
+    if pos('Sucesso', leitor.Arquivo) > 0 then
+    begin
+       InfCanc.Sucesso  := 'S';
+       InfCanc.MsgCanc  := leitor.Arquivo;
+    end
+    else
+      infCanc.DataHora := 0;
+    FInfCanc.MsgRetorno.New;
+    FInfCanc.FMsgRetorno[0].FCodigo   := '';
+    FInfCanc.FMsgRetorno[0].FMensagem := leitor.Arquivo;
+    FInfCanc.FMsgRetorno[0].FCorrecao := '';
+    Result := True;
+  except
+    result := False;
   end;
 end;
 

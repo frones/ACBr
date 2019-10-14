@@ -408,7 +408,7 @@ begin
                      Space(1)                                                           +  // 326 a 326 - Filler - Brancos
                      PadRight( OnlyNumber(Sacado.CEP), 8 )                              +  // 327 a 334 - CEP do sacado
                      PadRight('', 5, '0')                                               +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
-                     PadRight(Sacado.SacadoAvalista.CNPJCPF, 14, ' ')                   +  // 340 a 353 - CIC/CGC do sacador avalista
+                     PadRight(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, ' ')       +  // 340 a 353 - CIC/CGC do sacador avalista
                      PadRight(TiraAcentos(Sacado.Avalista), 41, ' ')                                    // 354 a 394 - Nome do sacador avalista ---Anderson
          else
             wLinha:= wLinha +
@@ -509,7 +509,7 @@ begin
                     PadLeft(wNossoNumeroCompleto,15,' ')                           + // 002 a 016 - Nosso número Sicredi
                     PadRight( NumeroDocumento,  10)                                + // 017 a 026 - Seu número
                     PadRight('', 5, '0')                                           + // 027 a 031 - Código do pagador junto ao cliente
-                    PadLeft(Sacado.SacadoAvalista.CNPJCPF, 14, '0')                + // 032 a 045 - CPF/CNPJ do Sacador Avalista ( Obrigatório )
+                    PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')    + // 032 a 045 - CPF/CNPJ do Sacador Avalista ( Obrigatório )
                     PadRight( TiraAcentos( Sacado.SacadoAvalista.NomeAvalista
                                           ), 41, ' ')                              + // 046 a 086 - Nome do Sacador Avalista ( Obrigatório )
                     PadRight( TiraAcentos( Sacado.SacadoAvalista.Logradouro  + ',' +
@@ -531,7 +531,7 @@ begin
                     PadLeft(wNossoNumeroCompleto, 15, ' ')                         + // 002 a 016 - Nosso número Sicredi
                     PadRight(NumeroDocumento, 10)                                  + // 017 a 026 - Seu número
                     PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0')                   + // 027 a 040 - CPF/CNPJ do pagador
-                    PadLeft(Sacado.SacadoAvalista.CNPJCPF, 14, '0')                + // 041 a 054 - CPF/CNPJ do Sacador Avalista
+                    PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')    + // 041 a 054 - CPF/CNPJ do Sacador Avalista
                     IfThen(DataDesconto2 < EncodeDate(2000, 01, 01), '000000',
                          FormatDateTime('ddmmyy', DataDesconto2))                  + // 055 a 060 - Data limite para desconto 2
                     IntToStrZero( Round( ValorDesconto2 * 100 ), 13)               + // 061 a 073 - Valor do desconto 2
@@ -1724,7 +1724,7 @@ end;
 function TACBrBancoSicredi.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
-    AceiteStr, CodProtesto, DiasProtesto, TipoSacado, ATipoBoleto: String;
+    AceiteStr, CodProtestoNegativacao, DiasProtestoNegativacao, TipoSacado, ATipoBoleto: String;
     Especie, EndSacado, Ocorrencia: String;
     TipoAvalista: Char;
 begin
@@ -1769,13 +1769,23 @@ begin
     end;
 
     {Protesto}
-    CodProtesto := '3';
-    DiasProtesto := '00';
+    CodProtestoNegativacao := '3'; //Não protestar/negativar
+    DiasProtestoNegativacao := '00';
     if (DataProtesto > 0) and (DataProtesto > Vencimento) then
     begin
-      CodProtesto := '1';
-      DiasProtesto := PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0');
+      CodProtestoNegativacao := '1'; //Protestar dias corridos
+      DiasProtestoNegativacao := PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0');
+    end
+    else if (DataNegativacao > 0) and (DataNegativacao >= Vencimento + 3) then // mínimo de 3 dias de negativacaoserasa
+    begin
+      {Pegando campo Negativação Serasa}
+      CodProtestoNegativacao := '8'; //Negativação sem Protesto
+      DiasProtestoNegativacao := IntToStrZero(DaysBetween(DataNegativacao,Vencimento),2);
     end;
+
+    //75-Excluir Negativação Serasa  76-Excluir Negativação Serasa e Baixar
+    if (Ocorrencia = '75') or (Ocorrencia = '76') then
+      CodProtestoNegativacao := '9'; //Cancelamento protesto automático/negativação
 
     {Sacado}
     case Sacado.Pessoa of
@@ -1845,8 +1855,8 @@ begin
              IntToStrZero(Round(ValorIOF * 100), 15)                          + // 166 a 180 - Valor do IOF a ser recolhido
              IntToStrZero(Round(ValorAbatimento * 100), 15)                   + // 181 a 195 - Valor do abatimento
              PadRight(SeuNumero, 25)                                          + // 196 a 220 - Identificação do título na empresa
-             CodProtesto                                                      + // 221 a 221 - Código para protesto
-             DiasProtesto                                                     + // 222 a 223 - Número de dias para protesto
+             CodProtestoNegativacao                                           + // 221 a 221 - Código para protesto
+             DiasProtestoNegativacao                                          + // 222 a 223 - Número de dias para protesto
              '1'                                                              + // 224 a 224 - Código para baixa/devolução
              '060'                                                            + // 225 a 227 - Nº de dias para baixa/devolução
              '09'                                                             + // 228 a 229 - Código da moeda = "09"
@@ -1873,7 +1883,7 @@ begin
              PadRight(TiraAcentos(Sacado.Cidade), 15)                       + // 137 a 151 - Cidade
              PadLeft(Sacado.UF, 2)                                          + // 152 a 153 - Unidade da Federação
              TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
-             PadRight(Sacado.SacadoAvalista.CNPJCPF, 15, '0')               + // 155 a 169 - Número de inscrição
+             PadRight(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')   + // 155 a 169 - Número de inscrição
              PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
              PadRight('', 3, '0')                                           + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente

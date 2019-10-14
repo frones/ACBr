@@ -47,10 +47,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
 ver: 0.1.0
 
 10/10/2019
+
+-- ACBrBancoBrasil--
+[*] Adicionado validação do Código de Negativação na geração da Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/51515-negativa%C3%A7%C3%A3o-serasa-banco-do-brasil-cnab-240/
+
+-- ACBrBancoBancoob--
+[*] Melhoria na leitura de cód ocorrencia no Retorno CNAB240
+https://www.projetoacbr.com.br/forum/topic/52183-retorno-sicoob-retorno-baixa-por-protesto/
+
+-- ACBrBancoCecred --
+[*] Ajustes na leitura do campo Conta no retorno do CNAB240
+https://www.projetoacbr.com.br/forum/topic/51995-boleto-cecredevoluaailos-085/
+
+-- ACBrBancoSicred --
+[*] Ajustes na geração CNAB240 validando DataNegativação na informação do Protesto, presente no layout atualizado
+https://www.projetoacbr.com.br/forum/topic/51806-boletos-sicredi-negativação-cnab400/
+
+-- ACBrBancoSicred --
+[*] Ajustes na geração remessa e retorno removendo pontos do CNPJ do Sacado Avalista
+https://www.projetoacbr.com.br/forum/topic/54023-cnpj-sacadoavalistacnpjcpf-errado-na-remessa/
+
 -- ACBrBancoDaycoval, ACBrBoleto --
 [+] Adicionado Classe do Banco Daycoval
 https://www.projetoacbr.com.br/forum/topic/52403-boleto-daycoval-banco-707-homologado/

@@ -567,11 +567,11 @@ begin
 
             for I := 0 to 4 do
             begin
-              CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = '00', '00', Copy(Linha, MotivoLinha, 2)), 0);
+              CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = Poem_Zeros('0', 2), '00', Copy(Linha, MotivoLinha, 2)), 0); 
 
               if CodMotivo <> 0 then
               begin
-                MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 2) = '00', '00', Copy(Linha, MotivoLinha, 2)));
+                MotivoRejeicaoComando.Add(Poem_Zeros(CodMotivo,2)); 
                 DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodMotivo));
               end;
 

@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2019
+[*] ACBrMonitor1, ACBrMonitorConfig
+Remoção da propriedade GerarInfCTeSupl, devido ser removido do componente
+
+14/10/2019
+[*] DoACBrNFeUnit, DoACBrCTeUnit
+Validação no método de Impressão via parâmetro, verificando documento em homologação para impressão da Mensagem padrão
+de documento em Homologação no Destinatário.
+
 04/10/2019
 [*] DoSATUnit, ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado propriedade "Validar Numero Sessao Resposta" nas configurações do SAT
@@ -53,7 +62,7 @@ Validação para quando não obtem nenhuma resposta do SAT
 
 04/10/2019
 [*] DoACBrNFe
-Ajustes no método para CancelarNFe
+Ajustes no método para CancelarNFe, limpa o componente ACBrNFe antes de executar o método
 
 04/10/2019
 [*] DoACBrNFe

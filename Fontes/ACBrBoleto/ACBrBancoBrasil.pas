@@ -456,12 +456,18 @@ begin
 
      {SEGMENTO P}
 
-     {Código para Protesto}
-      case TipoDiasProtesto of
-        diCorridos       : ACodProtesto := '1';
-        diUteis          : ACodProtesto := '2';
+     {Código para Protesto / Negativação}
+      case CodigoNegativacao of
+        cnProtestarCorrido :  ACodProtesto := '1';
+        cnProtestarUteis   :  ACodProtesto := '2';
+        cnNegativar        :  ACodProtesto := '8';
       else
-        ACodProtesto := '3';
+        case TipoDiasProtesto of
+          diCorridos       : ACodProtesto := '1';
+          diUteis          : ACodProtesto := '2';
+        else
+          ACodProtesto := '3';
+        end;
       end;
 
      {Pegando o Tipo de Ocorrencia}
@@ -498,7 +504,7 @@ begin
      else if EspecieDoc = 'NCC' then
        EspecieDoc   := '08'
      else if EspecieDoc = 'NCE' then
-            EspecieDoc   := '09'
+       EspecieDoc   := '09'
      else if EspecieDoc = 'NCI' then
        EspecieDoc   := '10'
      else if EspecieDoc = 'NCR' then

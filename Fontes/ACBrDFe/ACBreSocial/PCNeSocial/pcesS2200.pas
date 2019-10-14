@@ -178,7 +178,7 @@ begin
     GerarIdeEvento2(self.IdeEvento);
     GerarIdeEmpregador(self.IdeEmpregador);
 
-    GerarTrabalhador(self.Trabalhador, 'trabalhador', 2);
+    GerarTrabalhador(self.Trabalhador, Self.Vinculo.cadIni, 'trabalhador', 2);
     GerarVinculo(self.Vinculo, 2);
 
     Gerador.wGrupo('/evtAdmissao');

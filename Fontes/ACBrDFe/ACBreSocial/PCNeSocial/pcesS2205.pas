@@ -179,7 +179,7 @@ begin
 
   Gerador.wCampo(tcDat, '', 'dtAlteracao', 10, 10, 1, self.dtAlteracao);
 
-  GerarTrabalhador(self.Trabalhador, 'dadosTrabalhador');
+  GerarTrabalhador(self.Trabalhador, tpSim, 'dadosTrabalhador');
 
   GerarModoFechamento(mlAlteracao);
 end;

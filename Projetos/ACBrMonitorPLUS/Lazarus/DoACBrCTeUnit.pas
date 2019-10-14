@@ -42,6 +42,9 @@ uses
   CmdUnit, ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   ACBrLibConsultaCadastro;
 
+const
+  cHOM_MSG = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+
 type
 
 { TACBrObjetoCTe }
@@ -556,6 +559,10 @@ begin
         if ('CTe' + WebServices.Retorno.CTeRetorno.ProtDFe.Items[i].chDFe =
           Conhecimentos.Items[j].CTe.infCTe.Id) then
         begin
+          //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+          if Conhecimentos.Items[J].CTe.Ide.tpAmb = taHomologacao then
+            Conhecimentos.Items[J].CTe.dest.xNome:= cHOM_MSG;
+
           //RespostaItensCTe(J, I, True);
           fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[CTe_Arq' + Trim(IntToStr(
                          fACBrCTe.Conhecimentos.Items[J].CTe.ide.nCT)) +']' + sLineBreak +
@@ -604,6 +611,10 @@ begin
   begin
     if (Conhecimentos.Items[0].Confirmado) then
     begin
+      //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+      if Conhecimentos.Items[0].CTe.Ide.tpAmb = taHomologacao then
+        Conhecimentos.Items[0].CTe.dest.xNome:= cHOM_MSG;
+
       DoConfiguraDACTe(pPDF, Trim(pPreview) );
       if NaoEstaVazio(pImpressora) then
         DACTE.Impressora := pImpressora;

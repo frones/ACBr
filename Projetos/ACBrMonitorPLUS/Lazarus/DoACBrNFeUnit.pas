@@ -42,6 +42,9 @@ uses
   CmdUnit, ACBrNFeDANFeRLClass, ACBrPosPrinter, ACBrNFeDANFeESCPOS,
   ACBrLibConsultaCadastro;
 
+const
+  cHOM_MSG = 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
+
 type
 
 { TACBrObjetoNFe }
@@ -630,6 +633,15 @@ begin
           NotasFiscais.Items[J].NFe.infNFe.Id) then
         begin
           //RespostaItensNFe(J, I, True);
+
+          //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+          if NotasFiscais.Items[J].NFe.Ide.tpAmb = taHomologacao then
+            NotasFiscais.Items[J].NFe.Dest.xNome:= cHOM_MSG;
+          if (NotasFiscais.Items[J].NFe.ide.modelo = 65)
+             and (NotasFiscais.Items[J].NFe.Ide.tpAmb = taHomologacao)
+             and ( NotasFiscais.Items[J].NFe.Det[0].Prod.nItem = 1) then
+                 NotasFiscais.Items[J].NFe.Det[0].Prod.xProd:= cHOM_MSG;
+
           fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[NFe_Arq' + Trim(IntToStr(
                          fACBrNFe.NotasFiscais.Items[J].NFe.Ide.nNF)) +']' + sLineBreak +
                          'Arquivo=' + fACBrNFe.NotasFiscais.Items[J].NomeArq;
@@ -729,6 +741,15 @@ begin
   begin
     if (NotasFiscais.Items[0].Confirmada) then
     begin
+
+      //Informa Mensagem de Sem Valor Fiscal para documentos emitidos em Homologação
+      if NotasFiscais.Items[0].NFe.Ide.tpAmb = taHomologacao then
+        NotasFiscais.Items[0].NFe.Dest.xNome:= cHOM_MSG;
+      if (NotasFiscais.Items[0].NFe.ide.modelo = 65)
+         and (NotasFiscais.Items[0].NFe.Ide.tpAmb = taHomologacao)
+         and ( NotasFiscais.Items[0].NFe.Det[0].Prod.nItem = 1) then
+             NotasFiscais.Items[0].NFe.Det[0].Prod.xProd:= cHOM_MSG;
+
       DoConfiguraDANFe(pPDF, Trim(pPreview) );
       if NaoEstaVazio(pImpressora) then
         DANFe.Impressora := pImpressora;

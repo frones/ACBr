@@ -9328,11 +9328,68 @@ begin
   begin
     with Geral do
     begin
-      Salvar         := ckSalvar.Checked;
-      SSLLib         := TSSLLib(cbSSLLib.ItemIndex);
-      SSLCryptLib    := TSSLCryptLib(cbCryptLib.ItemIndex);
-      SSLHttpLib     := TSSLHttpLib(cbHttpLib.ItemIndex);
-      SSLXmlSignLib  := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      Salvar := ckSalvar.Checked;
+
+      try
+        SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+      Except
+        on E: Exception do
+        begin
+          {$IFDEF LINUX}
+            SSLLib  := libOpenSSL;
+          {$ELSE}
+            SSLLib  := libWinCrypt;
+          {$ENDIF}
+          cbSSLLib.ItemIndex := Integer( SSLLib );
+          AddLinesLog(E.Message
+                      + sLineBreak + Format(SErroSSLDesabilitado, [GetEnumName(TypeInfo(TSSLLib), Integer( SSLLib ) )]) );
+        end;
+      end;
+
+      try
+        SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+      Except
+        on E: Exception do
+        begin
+          {$IFDEF LINUX}
+            SSLCryptLib  := cryOpenSSL;
+          {$ELSE}
+            SSLCryptLib  := cryWinCrypt;
+          {$ENDIF}
+          cbCryptLib.ItemIndex := Integer( SSLCryptLib );
+          AddLinesLog(E.Message
+                      + sLineBreak + Format(SErroSSLDesabilitado, [GetEnumName(TypeInfo(TSSLCryptLib), Integer( SSLCryptLib ) )]) );
+        end;
+      end;
+
+      try
+        SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+      Except
+        on E: Exception do
+        begin
+          {$IFDEF LINUX}
+            SSLHttpLib  := httpOpenSSL;
+          {$ELSE}
+            SSLHttpLib  := httpWinHttp;
+          {$ENDIF}
+          cbHttpLib.ItemIndex := Integer( SSLHttpLib );
+          AddLinesLog(E.Message
+                      + sLineBreak + Format(SErroSSLDesabilitado, [GetEnumName(TypeInfo(TSSLHttpLib), Integer( SSLHttpLib ) )]) );
+        end;
+      end;
+
+      try
+        SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+      Except
+        on E: Exception do
+        begin
+          SSLXmlSignLib  := xsLibXml2;
+          cbXmlSignLib.ItemIndex := Integer( SSLXmlSignLib );
+          AddLinesLog(E.Message
+                      + sLineBreak + Format(SErroSSLDesabilitado, [GetEnumName(TypeInfo(TSSLXmlSignLib), Integer( SSLXmlSignLib ) )]) );
+        end;
+      end;
+
       ValidarDigest  := cbValidarDigest.Checked;
       RetirarAcentos := cbRetirarAcentos.Checked;
     end;

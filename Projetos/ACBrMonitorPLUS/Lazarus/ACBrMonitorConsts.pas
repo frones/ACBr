@@ -43,7 +43,8 @@ ResourceString
   SMsgReinfLimparLista = 'Lista de Eventos Limpas com Sucesso';
   SErroReinfNenhumEvento = 'Erro: Nenhum evento na lista';
   SErroIDContribuinteTransmissor = 'ID do Contribuinte/Transmissor Inválido.';
-  SErroReinfConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido';
+  SErroReinfConsulta = 'Erro ao Consultar Evento - Parâmetro não Preenchido.';
+  SErroSSLDesabilitado = 'Será utilizado a configuração padrão SSL: %s !';
 
 
 const

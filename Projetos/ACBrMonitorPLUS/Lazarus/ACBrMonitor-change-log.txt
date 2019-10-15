@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2019
+[*] ACBrMonitor1, ACBrMonitorConsts
+Validação das configurações SSL ao recarregar o dados .ini, define valores padrão no caso de existir tipos desabilitados.
+
+15/10/2019
+[*] DoACBrMDFeUnit
+Melhorias na rotina de validação da chave MDFe no método EncerrarMDFe estava causando AV na versao x64
+
 14/10/2019
 [*] ACBrMonitor1, ACBrMonitorConfig
 Remoção da propriedade GerarInfCTeSupl, devido ser removido do componente

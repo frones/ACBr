@@ -623,15 +623,12 @@ begin
       try
         with NFeDM.ACBrNFe1 do
         begin
-          if WebServices.StatusServico.Executar then
-          begin
-            Resp.Processar(NFeDM.ACBrNFe1);
-            Resposta := Resp.Gerar;
-            MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, Resposta);
-          end
-          else
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'StatusServico');
+          WebServices.StatusServico.Executar;
+
+          Resp.Processar(NFeDM.ACBrNFe1);
+          Resposta := Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
         Resp.Free;
@@ -784,7 +781,7 @@ var
   RespEnvio: TEnvioResposta;
   RespRetorno: TRetornoResposta;
   ImpResp: TLibImpressaoResposta;
-  I, ImpCount: Integer;
+  i, j, ImpCount: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -811,6 +808,9 @@ begin
             raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de NF-e transmitidas (máximo de 50 NF-e)' +
               ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count));
 
+          if NotasFiscais.Count > 0 then
+            NFeDM.ValidarIntegradorNFCe(NotasFiscais.Items[0].NFe.infNFe.ID);
+
           Resposta := '';
           WebServices.Enviar.Clear;
           WebServices.Retorno.Clear;
@@ -825,12 +825,7 @@ begin
 
           WebServices.Enviar.Sincrono := Sincrono;
           WebServices.Enviar.Zipado := Zipado;
-
-          if not WebServices.Enviar.Executar then
-          begin
-            Result := SetRetornoWebService(SSL.HTTPResultCode, 'Enviar', WebServices.Enviar.Msg);
-            Exit;
-          end;
+          WebServices.Enviar.Executar;
 
           RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
@@ -844,18 +839,31 @@ begin
           begin
             WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;
             WebServices.Retorno.Executar;
-          end;
 
-          RespRetorno := TRetornoResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
-          try
-            RespRetorno.Processar(WebServices.Retorno.NFeRetorno,
-                                  WebServices.Retorno.Recibo,
-                                  WebServices.Retorno.Msg,
-                                  WebServices.Retorno.Protocolo,
-                                  WebServices.Retorno.ChaveNFe);
-            Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
-          finally
-            RespRetorno.Free;
+            RespRetorno := TRetornoResposta.Create('NFe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
+            try
+              RespRetorno.Processar(WebServices.Retorno.NFeRetorno,
+                                    WebServices.Retorno.Recibo,
+                                    WebServices.Retorno.Msg,
+                                    WebServices.Retorno.Protocolo,
+                                    WebServices.Retorno.ChaveNFe);
+
+              // Preenche o xml completo no retorno se tiver a nota de carregada no componente
+              for i := 0 to WebServices.Recibo.NFeRetorno.ProtDFe.Count - 1 do
+              begin
+                for j := 0 to NotasFiscais.Count - 1 do
+                begin
+                  if OnlyNumber(WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe) = NotasFiscais.Items[J].NumID then
+                  begin
+                    RespRetorno.Items[i].XML := NotasFiscais.Items[J].XML;
+                  end;
+                end;
+              end;
+
+              Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
+            finally
+              RespRetorno.Free;
+            end;
           end;
 
           if Imprimir then
@@ -903,6 +911,7 @@ function NFE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTaman
 var
   Resp: TReciboResposta;
   sRecibo, Resposta: string;
+  i, j: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -928,6 +937,19 @@ begin
           try
             Resp.Processar(WebServices.Recibo.NFeRetorno,
                            WebServices.Recibo.Recibo);
+
+            // Preenche o xml completo no retorno se tiver a nota de carregada no componente
+            for i := 0 to WebServices.Recibo.NFeRetorno.ProtDFe.Count - 1 do
+            begin
+              for j := 0 to NotasFiscais.Count - 1 do
+              begin
+                if OnlyNumber(WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe) = NotasFiscais.Items[J].NumID then
+                begin
+                  Resp.Items[i].XML := NotasFiscais.Items[J].XML;
+                end;
+              end;
+            end;
+
             Resposta := Resp.Gerar;
           finally
             Resp.Free;

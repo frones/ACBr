@@ -70,4 +70,10 @@ object LibNFeDM: TLibNFeDM
     left = 176
     top = 163
   end
+  object ACBrIntegrador1: TACBrIntegrador
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    left = 176
+    top = 8
+  end
 end

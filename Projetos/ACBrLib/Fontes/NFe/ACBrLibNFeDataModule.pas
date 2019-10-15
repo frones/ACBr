@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, syncobjs,
   ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
-  ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
+  ACBrPosPrinter, ACBrIntegrador, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
   ACBrLibConfig,  ACBrLibMailImport, ACBrLibPosPrinterImport;
 
 type
@@ -15,6 +15,7 @@ type
   { TLibNFeDM }
 
   TLibNFeDM = class(TDataModule)
+    ACBrIntegrador1: TACBrIntegrador;
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
@@ -36,6 +37,7 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
+    procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
                                   ViaConsumidor: String = ''; Simplificado: String = '');
@@ -47,7 +49,7 @@ type
 implementation
 
 uses
-  pcnConversao,
+  pcnConversao, pcnConversaoNFe,
   ACBrUtil, FileUtil, ACBrNFeDANFEClass, ACBrLibConsts,
   ACBrDeviceConfig, ACBrLibNFeConfig, ACBrLibComum;
 
@@ -310,6 +312,18 @@ begin
     end;
   end;
   GravarLog('ConfigurarImpressao - Feito', logNormal);
+end;
+
+procedure TLibNFeDM.ValidarIntegradorNFCe(ChaveNFe: String = '');
+var
+  Modelo: Integer;
+begin
+  if NaoEstaVazio(ChaveNFe) then
+    Modelo:= StrToIntDef(copy(OnlyNumber(ChaveNFe),21,2),55);
+  if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) and (Modelo <> 65) then
+    ACBrNFe1.Integrador := nil
+  else
+    ACBrNFe1.Integrador := ACBrIntegrador1;
 end;
 
 procedure TLibNFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

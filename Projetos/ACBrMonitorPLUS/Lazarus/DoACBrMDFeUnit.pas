@@ -1957,78 +1957,76 @@ begin
   begin
     ACBrMDFe.Manifestos.Clear;
     if FilesExists(AXML) then
+    begin
       CargaDFe := TACBrCarregarMDFe.Create(ACBrMDFe, AXML);
-    try
-
-      if (ACBrMDFe.Manifestos.Count = 0) then
-      begin
-        if ValidarChave(AXML) then
-          Chave := AXML
+      try
+        if (ACBrMDFe.Manifestos.Count > 0) then
+          Chave := OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID)
         else
-          raise Exception.Create(
-            'Chave do MDFe inválida ou arquivo não encontrado.');
-      end
+          raise Exception.Create('Arquivo MDFe inválido: ' + AXML);
+      finally
+        CargaDFe.Free;
+      end;
+    end
+    else if ValidarChave(AXML) then
+      Chave := AXML
+    else
+      raise Exception.Create('Chave ou arquivo MDFe inválido: '+ AXML);
+
+    ACBrMDFe.EventoMDFe.Evento.Clear;
+    with ACBrMDFe.EventoMDFe.Evento.New do
+    begin
+      infEvento.CNPJCPF := ACNPJ;
+      if Trim(infEvento.CNPJCPF) = '' then
+        infEvento.CNPJCPF := copy(chave, 7, 14)
       else
-        Chave := OnlyNumber(ACBrMDFe.Manifestos.Items[0].MDFe.infMDFe.ID);
-
-      ACBrMDFe.EventoMDFe.Evento.Clear;
-      with ACBrMDFe.EventoMDFe.Evento.New do
       begin
-        infEvento.CNPJCPF := ACNPJ;
-        if Trim(infEvento.CNPJCPF) = '' then
-          infEvento.CNPJCPF := copy(chave, 7, 14)
-        else
-        begin
-          if not ValidarCNPJouCPF(ACNPJ) then
-            raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
-        end;
-
-        infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(chave), 1, 2), 0);
-        infEvento.dhEvento := now;
-        infEvento.tpEvento := teEncerramento;
-        infEvento.chMDFe := Chave;
-
-        if (Trim(AProtocolo) <> '') then
-          infEvento.detEvento.nProt := Trim(AProtocolo)
-        else if ((ACBrMDFe.Manifestos.Count > 0) and
-          (ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt <> '')) then
-          infEvento.detEvento.nProt := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt
-        else
-        begin
-          //Realiza Consulta na Sefaz
-          ACBrMDFe.WebServices.Consulta.MDFeChave := Chave;
-          ACBrMDFe.WebServices.Consulta.Executar;
-          if (ACBrMDFe.WebServices.Consulta.protocolo <> '') then
-            infEvento.detEvento.nProt := ACBrMDFe.WebServices.Consulta.Protocolo
-          else
-            raise Exception.Create('Falha na consulta do Protocolo MDFe. ' + ACBrMDFe.WebServices.Consulta.Msg);
-        end;
-
-        if (Trim(AMunicipio) <> '') then
-        begin
-          infEvento.detEvento.cUF := StrToIntDef(copy(AMunicipio, 1, 2), 1);
-          infEvento.detEvento.cMun := StrToIntDef(AMunicipio, 1);
-        end
-        else if ((ACBrMDFe.Manifestos.Count > 0) and
-          (ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga > 0)) then
-        begin
-          infEvento.detEvento.cMun :=
-            ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
-          infEvento.detEvento.cUF :=
-            StrToIntDef(copy(IntToStr(ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[
-            0].cMunDescarga), 1, 2), 1);
-        end;
-
-        infEvento.detEvento.dtEnc := DtEncerra;
+        if not ValidarCNPJouCPF(ACNPJ) then
+          raise Exception.Create('CNPJ/CPF ' + ACNPJ + ' inválido.');
       end;
 
-      ACBrMDFe.EnviarEvento(1);
-      RespostaEncerramento;
+      infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(chave), 1, 2), 0);
+      infEvento.dhEvento := now;
+      infEvento.tpEvento := teEncerramento;
+      infEvento.chMDFe := Chave;
 
-    finally
-      if Assigned(CargaDFe) then
-        CargaDFe.Free;
+      if (Trim(AProtocolo) <> '') then
+        infEvento.detEvento.nProt := Trim(AProtocolo)
+      else if ((ACBrMDFe.Manifestos.Count > 0) and
+        (ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt <> '')) then
+        infEvento.detEvento.nProt := ACBrMDFe.Manifestos.Items[0].MDFe.procMDFe.nProt
+      else
+      begin
+        //Realiza Consulta na Sefaz
+        ACBrMDFe.WebServices.Consulta.MDFeChave := Chave;
+        ACBrMDFe.WebServices.Consulta.Executar;
+        if (ACBrMDFe.WebServices.Consulta.protocolo <> '') then
+          infEvento.detEvento.nProt := ACBrMDFe.WebServices.Consulta.Protocolo
+        else
+          raise Exception.Create('Falha na consulta do Protocolo MDFe. ' + ACBrMDFe.WebServices.Consulta.Msg);
+      end;
+
+      if (Trim(AMunicipio) <> '') then
+      begin
+        infEvento.detEvento.cUF := StrToIntDef(copy(AMunicipio, 1, 2), 1);
+        infEvento.detEvento.cMun := StrToIntDef(AMunicipio, 1);
+      end
+      else if ((ACBrMDFe.Manifestos.Count > 0) and
+        (ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga > 0)) then
+      begin
+        infEvento.detEvento.cMun :=
+          ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
+        infEvento.detEvento.cUF :=
+          StrToIntDef(copy(IntToStr(ACBrMDFe.Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[
+          0].cMunDescarga), 1, 2), 1);
+      end;
+
+      infEvento.detEvento.dtEnc := DtEncerra;
     end;
+
+    ACBrMDFe.EnviarEvento(1);
+    RespostaEncerramento;
+
   end;
 end;
 

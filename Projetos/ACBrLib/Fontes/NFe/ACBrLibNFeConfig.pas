@@ -229,10 +229,10 @@ type
     function PrecisaCriptografar(ASessao, AChave: String): Boolean; override;
     function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
 
-    property NFeConfig: TConfiguracoesNFe read FNFeConfig;
-    property DANFeConfig: TDANFeReportConfig read FDANFeConfig;
-    property IntegradorConfig: TIntegradorConfig read FIntegradorConfig;
-    property PosDeviceConfig: TDeviceConfig read FDeviceConfig write FDeviceConfig;
+    property NFe: TConfiguracoesNFe read FNFeConfig;
+    property DANFe: TDANFeReportConfig read FDANFeConfig;
+    property Integrador: TIntegradorConfig read FIntegradorConfig;
+    property PosDevice: TDeviceConfig read FDeviceConfig write FDeviceConfig;
 
   end;
 
@@ -629,11 +629,11 @@ begin
 
   if DFeReport is TACBrNFeDANFeRL then
   begin
-    pLibConfig.DANFeConfig.NFeConfig.Assign(TACBrNFeDANFeRL(DFeReport));
+    pLibConfig.DANFe.NFeConfig.Assign(TACBrNFeDANFeRL(DFeReport));
   end
   else if DFeReport is TACBrNFeDANFCEClass then
   begin
-    pLibConfig.DANFeConfig.NFCeConfig.Assign(TACBrNFeDANFCEClass(DFeReport));
+    pLibConfig.DANFe.NFCeConfig.Assign(TACBrNFeDANFCEClass(DFeReport));
   end;
 end;
 

@@ -51,8 +51,7 @@ type
 
   protected
     procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
+    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
   public
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
@@ -808,8 +807,7 @@ begin
             raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de NF-e transmitidas (máximo de 50 NF-e)' +
               ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count));
 
-          if NotasFiscais.Count > 0 then
-            NFeDM.ValidarIntegradorNFCe(NotasFiscais.Items[0].NFe.infNFe.ID);
+          NFeDM.ValidarIntegradorNFCe;
 
           Resposta := '';
           WebServices.Enviar.Clear;

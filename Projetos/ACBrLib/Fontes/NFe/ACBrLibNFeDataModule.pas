@@ -37,7 +37,7 @@ type
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
     procedure AplicarConfigPosPrinter;
-    procedure ValidarIntegradorNFCe(ChaveNFe: String = '');
+    procedure ValidarIntegradorNFCe();
     procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
                                   Protocolo: String = ''; MostrarPreview: String = ''; MarcaDagua: String = '';
                                   ViaConsumidor: String = ''; Simplificado: String = '');
@@ -129,7 +129,7 @@ begin
   begin
     GravarLog('     Criando PosPrinter Interno', logCompleto);
     FACBrPosPrinter := TACBrPosPrinter.Create(Nil);
-    TLibNFeConfig(pLib.Config).PosDeviceConfig := TDeviceConfig.Create(CSessaoPosPrinterDevice);
+    TLibNFeConfig(pLib.Config).PosDevice := TDeviceConfig.Create(CSessaoPosPrinterDevice);
   end;
 
   ACBrNFeDANFeESCPOS1.PosPrinter := FACBrPosPrinter;
@@ -141,7 +141,15 @@ var
 begin
   ACBrNFe1.SSL.DescarregarCertificado;
   pLibConfig := TLibNFeConfig(pLib.Config);
-  ACBrNFe1.Configuracoes.Assign(pLibConfig.NFeConfig);
+  ACBrNFe1.Configuracoes.Assign(pLibConfig.NFe);
+
+  with ACBrIntegrador1 do
+  begin
+    ArqLOG := pLibConfig.Integrador.ArqLOG;
+    PastaInput := pLibConfig.Integrador.PastaInput;
+    PastaOutput := pLibConfig.Integrador.PastaOutput;
+    Timeout := pLibConfig.Integrador.Timeout;
+  end;
 
   AplicarConfigMail;
   AplicarConfigPosPrinter;
@@ -231,7 +239,7 @@ begin
     ConfigModoPagina.Direcao := TACBrPosDirecao(pLibConfig.PosPrinter.MpDirecao);
     ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinter.MpEspacoEntreLinhas;
 
-    pLibConfig.PosDeviceConfig.Assign(Device);
+    pLibConfig.PosDevice.Assign(Device);
   end;
 end;
 
@@ -249,7 +257,7 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if (pLibConfig.DANFeConfig.NFCeConfig.TipoRelatorioBobina = tpFortes) or GerarPDF then
+      if (pLibConfig.DANFe.NFCeConfig.TipoRelatorioBobina = tpFortes) or GerarPDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
@@ -259,15 +267,15 @@ begin
       ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
     end;
 
-    pLibConfig.DANFeConfig.Assign(ACBrNFe1.DANFE);
+    pLibConfig.DANFe.Assign(ACBrNFe1.DANFE);
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
       ACBrNFe1.DANFE.Cancelada := True
     else
       ACBrNFe1.DANFE.Cancelada := False;
 
-    if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFeConfig.PathPDF))then
-        ForceDirectories(PathWithDelim(pLibConfig.DANFeConfig.PathPDF));
+    if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
   end;
 
   if NaoEstaVazio(NomeImpressora) then
@@ -314,16 +322,14 @@ begin
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 
-procedure TLibNFeDM.ValidarIntegradorNFCe(ChaveNFe: String = '');
-var
-  Modelo: Integer;
+procedure TLibNFeDM.ValidarIntegradorNFCe;
+
 begin
-  if NaoEstaVazio(ChaveNFe) then
-    Modelo:= StrToIntDef(copy(OnlyNumber(ChaveNFe),21,2),55);
-  if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFe) and (Modelo <> 65) then
-    ACBrNFe1.Integrador := nil
+  if (ACBrNFe1.Configuracoes.Geral.ModeloDF = moNFCe) and
+     (ACBrNFe1.Configuracoes.WebServices.UF = 'CE') then
+    ACBrNFe1.Integrador := ACBrIntegrador1
   else
-    ACBrNFe1.Integrador := ACBrIntegrador1;
+    ACBrNFe1.Integrador := nil;
 end;
 
 procedure TLibNFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);

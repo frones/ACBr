@@ -39,6 +39,40 @@ VISIBLE:
     METHOD ConfigLerValor(eSessao, eChave)
     METHOD ConfigGravarValor(eSessao, eChave, eValor)
 
+    METHOD CarregarXML(eArquivoOuXml)
+    METHOD CarregarINI(eArquivoOuIni)
+    METHOD CarregarEventoXML(eArquivoOuXml)
+    METHOD CarregarEventoINI(eArquivoOuIni)
+    METHOD LimparLista()
+    METHOD LimparListaEventos()
+
+    METHOD Assinar()
+    METHOD Validar()
+    METHOD ValidarRegrasdeNegocios()
+    METHOD VerificarAssinatura()
+
+    METHOD StatusServico()
+    METHOD Consultar(eChaveOuNFe)
+    METHOD Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, NumeroInicial, NumeroFinal)
+    METHOD Enviar(ALote, Imprimir, Sincrono, Zipado)
+    METHOD ConsultarRecibo(ARecibo)
+    METHOD Cancelar(eChave, eJustificativa, eCNPJ, ALote)
+    METHOD EnviarEvento(ALote)
+
+    METHOD DistribuicaoDFePorUltNSU(acUFAutor, eCNPJCPF, eultNSU)
+    METHOD DistribuicaoDFePorNSU(acUFAutor, eCNPJCPF, eNSU)
+    METHOD DistribuicaoDFePorChave(acUFAutor, eCNPJCPF, echNFe)
+
+    METHOD EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos)
+    METHOD EnviarEmailEvento(ePara, eChaveEvento, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos)
+
+    METHOD Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado)
+    METHOD ImprimirPDF()
+    METHOD ImprimirEvento(eChaveNFe, eChaveEvento)
+    METHOD ImprimirEventoPDF(eChaveNFe, eChaveEvento)
+    METHOD ImprimirInutilizacao(eChaveNFe)
+    METHOD ImprimirInutilizacaoPDF(eChaveNFe)
+
 END CLASS
 
 METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrNFe
@@ -89,7 +123,7 @@ METHOD ProcessResult(buffer, bufferLen) CLASS ACBrNFe
     RETURN buffer
 
 METHOD Nome CLASS ACBrNFe
-    local hResult, buffer, bufferLen, ret
+    local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Nome", @buffer, @bufferLen)
@@ -127,5 +161,194 @@ METHOD ConfigLerValor(eSessao, eChave) CLASS ACBrNFe
 METHOD ConfigGravarValor(eSessao, eChave, eValor) CLASS ACBrNFe
     local hResult
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConfigGravarValor", hb_StrToUTF8(eSessao), hb_StrToUTF8(eChave), hb_StrToUTF8(eValor))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD CarregarXML(eArquivoOuXml) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarXML", hb_StrToUTF8(eArquivoOuXml))
+    ::CheckResult(hResult)
+    RETURN nil
+    
+METHOD CarregarINI(eArquivoOuIni) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarINI", hb_StrToUTF8(eArquivoOuIni))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD CarregarEventoXML(eArquivoOuXml) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarEventoXML", hb_StrToUTF8(eArquivoOuXml))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD CarregarEventoINI(eArquivoOuIni) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarEventoINI", hb_StrToUTF8(eArquivoOuIni))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD LimparLista() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_LimparLista")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD LimparListaEventos() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_LimparListaEventos")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD Assinar() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Assinar")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD Validar() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Validar")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ValidarRegrasdeNegocios() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ValidarRegrasdeNegocios")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD VerificarAssinatura() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_VerificarAssinatura")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD StatusServico() CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_StatusServico", @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+    RETURN nil
+
+METHOD Consultar(eChaveOuNFe) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Consultar", hb_StrToUTF8(eChaveOuNFe), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD Inutilizar(ACNPJ, AJustificativa, Ano, Modelo, Serie, NumeroInicial, NumeroFinal) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Inutilizar", hb_StrToUTF8(ACNPJ), hb_StrToUTF8(AJustificativa), Ano, Modelo, Serie, NumeroInicial, NumeroFinal, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD Enviar(ALote, Imprimir, Sincrono, Zipado) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Enviar", ALote, Imprimir, Sincrono, Zipado, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD ConsultarRecibo(ARecibo) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ConsultarRecibo", hb_StrToUTF8(ARecibo), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD Cancelar(eChave, eJustificativa, eCNPJ, ALote) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Cancelar", hb_StrToUTF8(eChave), hb_StrToUTF8(eJustificativa), hb_StrToUTF8(eCNPJ), ALote, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD EnviarEvento(ALote) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEvento", ALote, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD DistribuicaoDFePorUltNSU(acUFAutor, eCNPJCPF, eultNSU) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorUltNSU", hb_StrToUTF8(acUFAutor), hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eultNSU), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD DistribuicaoDFePorNSU(acUFAutor, eCNPJCPF, eNSU) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorNSU", hb_StrToUTF8(acUFAutor), hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(eNSU), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD DistribuicaoDFePorChave(acUFAutor, eCNPJCPF, echNFe) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_DistribuicaoDFePorChave", hb_StrToUTF8(acUFAutor), hb_StrToUTF8(eCNPJCPF), hb_StrToUTF8(echNFe), @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD EnviarEmail(ePara, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmail", hb_StrToUTF8(ePara), hb_StrToUTF8(eChaveNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eMensagem), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD EnviarEmailEvento(ePara, eChaveEvento, eChaveNFe, aEnviaPDF, eAssunto, eMensagem, eCc, eAnexos) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_EnviarEmailEvento", hb_StrToUTF8(ePara), hb_StrToUTF8(eChaveEvento), hb_StrToUTF8(eChaveNFe), aEnviaPDF, hb_StrToUTF8(eAssunto), hb_StrToUTF8(eMensagem), hb_StrToUTF8(eCc), hb_StrToUTF8(eAnexos))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_Imprimir", hb_StrToUTF8(cImpressora), nNumCopias, hb_StrToUTF8(bMostrarPreview), hb_StrToUTF8(cMarcaDagua), hb_StrToUTF8(bViaConsumidor), hb_StrToUTF8(bSimplificado))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirPDF() CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirPDF")
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirEvento(eChaveNFe, eChaveEvento) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEvento", hb_StrToUTF8(eChaveNFe), hb_StrToUTF8(eChaveEvento))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirEventoPDF(eChaveNFe, eChaveEvento) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEventoPDF", hb_StrToUTF8(eChaveNFe), hb_StrToUTF8(eChaveEvento))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirInutilizacao(eChaveNFe) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacao", hb_StrToUTF8(eChaveNFe))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ImprimirInutilizacaoPDF(eChaveNFe) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacaoPDF", hb_StrToUTF8(eChaveNFe))
     ::CheckResult(hResult)
     RETURN nil

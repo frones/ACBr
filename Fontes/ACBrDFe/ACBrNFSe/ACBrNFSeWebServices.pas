@@ -5954,7 +5954,8 @@ begin
           proInfiscv11,
           proSafeWeb,
           proTiplanv2,
-          proWebISSv2 : Result := True
+          proWebISSv2,
+          proTcheInfov2 : Result := True
         else
           begin
             Sleep(Configuracoes.WebServices.AguardarConsultaRet);

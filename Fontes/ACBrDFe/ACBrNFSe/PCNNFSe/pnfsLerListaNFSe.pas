@@ -356,6 +356,9 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RetornoEnvioRPS') <> '');
 
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '');
+
     //Conam
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '');
@@ -430,9 +433,9 @@ begin
       FSituacao := SituacaoTemp;
 
       // Ler a Lista de NFSe
-      if leitor.rExtrai(2, 'ListaNfse') <> '' then
-        Nivel := 3
-      else if leitor.rExtrai(2, 'notas') <> '' then
+      if (leitor.rExtrai(2, 'ListaNfse') <> '') or
+         (leitor.rExtrai(2, 'notas') <> '') or
+         (Leitor.rExtrai(2, 'RetSubstituicao') <> '') then
         Nivel := 3
       else
         Nivel := 2;
@@ -461,6 +464,7 @@ begin
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or                   // Provedor SP
             (leitor.rExtrai(Nivel, 'Reg20Item', '', i + 1) <> '') or             // Provedor CONAM
+            (leitor.rExtrai(Nivel, 'NfseSubstituida', '', i + 1) <> '') or
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proAgili, proAgiliv2, proDataSmart]) and (Leitor.rExtrai(Nivel, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or

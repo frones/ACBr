@@ -1484,6 +1484,7 @@ begin
         proVitoria,
         proDBSeller,
         proFriburgo,
+        proTcheInfov2,
         proElotech: NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao');
 
         proNFSeBrasil,

@@ -459,7 +459,8 @@ begin
             InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento id=');
 
           InfCanc.FPedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
-          If Provedor = proSimpliss then
+
+          If (Provedor in [proSimpliss, proTcheInfov2]) then
             InfCanc.Sucesso := InfCanc.FPedido.CodigoCancelamento;
 
           if Leitor.rExtrai(2, 'IdentificacaoNfse') <> '' then

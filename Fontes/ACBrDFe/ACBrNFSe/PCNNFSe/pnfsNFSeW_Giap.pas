@@ -168,8 +168,8 @@ begin
 end;
 
 function TNFSeW_Giap.GerarXml: Boolean;
-Var
-  Gerar: boolean;
+//Var
+//  Gerar: boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo := FPrefixo4;

@@ -53,7 +53,7 @@ type
     FEspessuraBorda  : Integer;
     FDANFSeClassOwner: TACBrNFSeDANFSeClass;
     function GetPreparedReport: TfrxReport;
-    function PrepareReport(NFSe: TNFSe = nil): Boolean;
+    function PrepareReport(ANFSe: TNFSe = nil): Boolean;
     procedure CriarDataSetsFrx;
     procedure CarregaDados(ANFSe: TNFSe);
     procedure CarregaIdentificacao(ANFSe: TNFSe);
@@ -220,7 +220,7 @@ begin
   frxReport.EnabledDataSets.Add(frxItensServico);
 end;
 
-function TACBrNFSeDANFSeFR.PrepareReport(NFSe: TNFSe): Boolean;
+function TACBrNFSeDANFSeFR.PrepareReport(ANFSe: TNFSe): Boolean;
 var
   I: Integer;
 	wProjectStream: TStringStream;
@@ -258,9 +258,9 @@ begin
   if NaoEstaVazio(frxReport.PrintOptions.Printer) then
     frxReport.PrintOptions.Printer := Impressora;
 
-  if Assigned(NFSe) then
+  if Assigned(ANFSe) then
   begin
-    CarregaDados(NFSe);
+    CarregaDados(ANFSe);
     Result := frxReport.PrepareReport;
   end
   else

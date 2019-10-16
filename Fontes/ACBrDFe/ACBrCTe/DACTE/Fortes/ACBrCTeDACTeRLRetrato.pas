@@ -1093,7 +1093,7 @@ procedure TfrmDACTeRLRetrato.rlb_02_CabecalhoBeforePrint(Sender: TObject;
 var
   CarregouLogo: Boolean;
   strChaveContingencia: string;
-  vStringStream: TStringStream;
+//  vStringStream: TStringStream;
 begin
   inherited;
 

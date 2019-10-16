@@ -70,10 +70,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure ImprimirDAMDFe(MDFe: TMDFe = nil); virtual;
-    procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); virtual;
-    procedure ImprimirEVENTO(MDFe: TMDFe = nil); virtual;
-    procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); virtual;
+    procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); virtual;
+    procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); virtual;
+    procedure ImprimirEVENTO(AMDFe: TMDFe = nil); virtual;
+    procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); virtual;
   published
     property ACBrMDFe: TComponent           read FACBrMDFe               write SetACBrMDFe;
     property ImprimeHoraSaida: Boolean      read FImprimirHoraSaida      write FImprimirHoraSaida;
@@ -150,22 +150,22 @@ begin
   raise Exception.Create(NomeProcedure);
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(MDFe: TMDFe = nil);
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFe(AMDFe: TMDFe = nil);
 begin
   ErroAbstract('ImprimirDAMDFe');
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(MDFe: TMDFe = nil);
+procedure TACBrMDFeDAMDFeClass.ImprimirDAMDFePDF(AMDFe: TMDFe = nil);
 begin
   ErroAbstract('ImprimirDAMDFePDF');
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirEVENTO(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFeClass.ImprimirEVENTO(AMDFe: TMDFe);
 begin
   ErroAbstract('ImprimirEVENTO');
 end;
 
-procedure TACBrMDFeDAMDFeClass.ImprimirEVENTOPDF(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFeClass.ImprimirEVENTOPDF(AMDFe: TMDFe);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;

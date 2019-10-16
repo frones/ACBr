@@ -183,8 +183,8 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure ImprimirDACTE(ACTE: TCTe = nil); override;
-    procedure ImprimirDACTEPDF(ACTE: TCTe = nil); override;
+    procedure ImprimirDACTe(ACTE: TCTe = nil); override;
+    procedure ImprimirDACTePDF(ACTE: TCTe = nil); override;
     procedure ImprimirEVENTO(ACTE: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); override;
     procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); override;
@@ -1178,8 +1178,8 @@ procedure TACBrCTeDACTEFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   ChildEvento, Child: TfrxChild;
   DetailData: TfrxDetailData;
-  Memo      : TfrxMemoView;
-  Shape     : TfrxShapeView;
+//  Memo      : TfrxMemoView;
+//  Shape     : TfrxShapeView;
   qrCode    : string;
 begin
   ChildEvento := frxReport.FindObject('ChildProcEvento') as TfrxChild;
@@ -1261,7 +1261,7 @@ begin
   end;
 end;
 
-procedure TACBrCTeDACTEFR.ImprimirDACTE(ACTE: TCTe);
+procedure TACBrCTeDACTEFR.ImprimirDACTe(ACTE: TCTe);
 begin
   if PrepareReport(ACTE) then
   begin
@@ -1272,7 +1272,7 @@ begin
   end;
 end;
 
-procedure TACBrCTeDACTEFR.ImprimirDACTEPDF(ACTE: TCTe);
+procedure TACBrCTeDACTEFR.ImprimirDACTePDF(ACTE: TCTe);
 const
   TITULO_PDF = 'Conhecimento de Transporte Eletrônico';
 var

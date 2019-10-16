@@ -98,7 +98,7 @@ type
     FcUF: Integer;
 
 //    function GetLote: String;
-    function GetRecibo: String;
+//    function GetRecibo: String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -137,7 +137,7 @@ type
     FGNRERetorno: TTResultLote_GNRE;
     FcUF: Integer;
 
-    function GetRecibo: String;
+//    function GetRecibo: String;
     function TratarRespostaFinal: Boolean;
   protected
     procedure DefinirURL; override;
@@ -510,12 +510,12 @@ function TGNRERecepcao.GetLote: String;
 begin
   Result := Trim(Numero);
 end;
-}
+
 function TGNRERecepcao.GetRecibo: String;
 begin
   Result := Trim(numero);
 end;
-
+}
 function TGNRERecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
@@ -679,12 +679,12 @@ function TGNRERetRecepcao.GerarPrefixoArquivo: String;
 begin
   Result := numeroRecibo;
 end;
-
+{
 function TGNRERetRecepcao.GetRecibo: String;
 begin
   Result := Trim(numeroRecibo);
 end;
-
+}
 function TGNRERetRecepcao.TratarResposta: Boolean;
 var
   SL: TStringList;

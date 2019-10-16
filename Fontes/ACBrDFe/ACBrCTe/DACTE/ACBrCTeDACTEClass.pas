@@ -83,12 +83,12 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure ImprimirDACTe(CTE: TCTE = nil); virtual;
-    procedure ImprimirDACTePDF(CTE: TCTE = nil); virtual;
-    procedure ImprimirEVENTO(CTE: TCTe = nil); virtual;
-    procedure ImprimirEVENTOPDF(CTE: TCTe = nil); virtual;
-    procedure ImprimirINUTILIZACAO(CTE: TCTe = nil); virtual;
-    procedure ImprimirINUTILIZACAOPDF(CTE: TCTe = nil); virtual;
+    procedure ImprimirDACTe(ACTE: TCTE = nil); virtual;
+    procedure ImprimirDACTePDF(ACTE: TCTE = nil); virtual;
+    procedure ImprimirEVENTO(ACTE: TCTe = nil); virtual;
+    procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); virtual;
+    procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); virtual;
+    procedure ImprimirINUTILIZACAOPDF(ACTE: TCTe = nil); virtual;
   published
     property ACBrCTE: TComponent read FACBrCTE write SetACBrCTE;
     property ImprimirHoraSaida: boolean read FImprimirHoraSaida write FImprimirHoraSaida;
@@ -169,32 +169,32 @@ begin
   raise Exception.Create(NomeProcedure);
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirDACTe(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTe(ACTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirDACTE');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirDACTePDF(CTE: TCTE = nil);
+procedure TACBrCTeDACTEClass.ImprimirDACTePDF(ACTE: TCTE = nil);
 begin
   ErroAbstract('ImprimirDACTEPDF');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirEVENTO(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirEVENTO(ACTE: TCTe);
 begin
   ErroAbstract('ImprimirEVENTO');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirEVENTOPDF(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirEVENTOPDF(ACTE: TCTe);
 begin
   ErroAbstract('ImprimirEVENTOPDF');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAO(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAO(ACTE: TCTe);
 begin
   ErroAbstract('ImprimirINUTILIZACAO');
 end;
 
-procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAOPDF(CTE: TCTe);
+procedure TACBrCTeDACTEClass.ImprimirINUTILIZACAOPDF(ACTE: TCTe);
 begin
   ErroAbstract('ImprimirINUTILIZACAOPDF');
 end;

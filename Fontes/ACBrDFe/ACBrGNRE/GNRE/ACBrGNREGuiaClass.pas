@@ -83,8 +83,8 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirGuia(GNRE: TGNRERetorno = nil); virtual;
-    procedure ImprimirGuiaPDF(GNRE: TGNRERetorno = nil); virtual;
+    procedure ImprimirGuia(AGNRE: TGNRERetorno = nil); virtual;
+    procedure ImprimirGuiaPDF(AGNRE: TGNRERetorno = nil); virtual;
   published
     property ACBrGNRE : TComponent  read FACBrGNRE write SetGNRE;
     property Sistema: String read FSistema write FSistema;
@@ -138,12 +138,12 @@ begin
   inherited Destroy;
 end;
 
-procedure TACBrGNREGuiaClass.ImprimirGuia(GNRE: TGNRERetorno = nil);
+procedure TACBrGNREGuiaClass.ImprimirGuia(AGNRE: TGNRERetorno = nil);
 begin
   ErroAbstract('Imprimir');
 end;
 
-procedure TACBrGNREGuiaClass.ImprimirGuiaPDF(GNRE: TGNRERetorno = nil);
+procedure TACBrGNREGuiaClass.ImprimirGuiaPDF(AGNRE: TGNRERetorno = nil);
 begin
   ErroAbstract('ImprimirPDF');
 end;

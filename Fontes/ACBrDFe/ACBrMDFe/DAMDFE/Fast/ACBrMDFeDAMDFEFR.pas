@@ -124,7 +124,7 @@ type
 
     function  GetPreparedReport: TfrxReport;
     function  GetPreparedReportEvento: TfrxReport;
-    function  PrepareReport(MDFe: TMDFe = nil): Boolean;
+    function  PrepareReport(AMDFe: TMDFe = nil): Boolean;
     function  PrepareReportEvento: Boolean;
     procedure CriarDataSetsFrx;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
@@ -135,10 +135,10 @@ type
     VersaoDAMDFe: string;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure ImprimirDAMDFe(MDFe: TMDFe = nil); override;
-    procedure ImprimirDAMDFePDF(MDFe: TMDFe = nil); override;
-    procedure ImprimirEVENTO(MDFe: TMDFe = nil); override;
-    procedure ImprimirEVENTOPDF(MDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFe(AMDFe: TMDFe = nil); override;
+    procedure ImprimirDAMDFePDF(AMDFe: TMDFe = nil); override;
+    procedure ImprimirEVENTO(AMDFe: TMDFe = nil); override;
+    procedure ImprimirEVENTOPDF(AMDFe: TMDFe = nil); override;
 
     procedure CarregaDados;
     procedure LimpaDados;
@@ -750,9 +750,9 @@ begin
   end;
 end;
 
-procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFe(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFe(AMDFe: TMDFe);
 begin
-  if PrepareReport(MDFe) then
+  if PrepareReport(AMDFe) then
   begin
     if MostraPreview then
       frxReport.ShowPreparedReport
@@ -761,13 +761,13 @@ begin
   end;
 end;
 
-procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFePDF(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFEFR.ImprimirDAMDFePDF(AMDFe: TMDFe);
 var
   I:          Integer;
   TITULO_PDF: string;
   OldShowDialog : Boolean;
 begin
-  if PrepareReport(MDFe) then
+  if PrepareReport(AMDFe) then
   begin
     for I := 0 to TACBrMDFe(ACBrMDFe).Manifestos.Count - 1 do
     begin
@@ -796,7 +796,7 @@ begin
   end;
 end;
 
-procedure TACBrMDFeDAMDFEFR.ImprimirEVENTO(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFEFR.ImprimirEVENTO(AMDFe: TMDFe);
 begin
   if PrepareReportEvento then
   begin
@@ -807,7 +807,7 @@ begin
   end;
 end;
 
-procedure TACBrMDFeDAMDFEFR.ImprimirEVENTOPDF(MDFe: TMDFe);
+procedure TACBrMDFeDAMDFEFR.ImprimirEVENTOPDF(AMDFe: TMDFe);
 const
   TITULO_PDF = 'Manifesto de Documento Eletrônico - Evento';
 var
@@ -839,7 +839,7 @@ begin
   end;
 end;
 
-function TACBrMDFeDAMDFEFR.PrepareReport(MDFe: TMDFe): Boolean;
+function TACBrMDFeDAMDFEFR.PrepareReport(AMDFe: TMDFe): Boolean;
 var
   i: Integer;
   Stream: TStringStream;
@@ -876,9 +876,9 @@ begin
   if NaoEstaVazio(frxReport.PrintOptions.Printer) then
     frxReport.PrintOptions.Printer := Impressora;
 
-  if Assigned(MDFe) then
+  if Assigned(AMDFe) then
   begin
-    FMDFe := MDFe;
+    FMDFe := AMDFe;
     CarregaDados;
     SetDataSetsToFrxReport;
     Result := frxReport.PrepareReport;

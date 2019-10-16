@@ -23,7 +23,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     OnDataRecord = RLMDFeDataRecord
     object rlb_2_Rodo: TRLBand
       Left = 26
-      Top = 226
+      Top = 385
       Width = 742
       Height = 208
       AutoExpand = False
@@ -59,7 +59,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           DrawKind = dkLine
         end
         object rlLabel35: TRLLabel
-          Left = 4
+          Left = 3
           Top = 4
           Width = 37
           Height = 14
@@ -532,7 +532,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_3_Aereo: TRLBand
       Left = 26
-      Top = 491
+      Top = 593
       Width = 742
       Height = 54
       AutoExpand = False
@@ -544,7 +544,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_4_Aquav: TRLBand
       Left = 26
-      Top = 545
+      Top = 647
       Width = 742
       Height = 121
       BandType = btHeader
@@ -824,7 +824,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_5_Ferrov: TRLBand
       Left = 26
-      Top = 666
+      Top = 768
       Width = 742
       Height = 60
       BandType = btHeader
@@ -835,7 +835,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_6_Observacao: TRLBand
       Left = 26
-      Top = 844
+      Top = 946
       Width = 742
       Height = 152
       BandType = btSummary
@@ -934,7 +934,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_7_Documentos_Titulos: TRLBand
       Left = 26
-      Top = 726
+      Top = 828
       Width = 742
       Height = 32
       AutoExpand = False
@@ -1061,11 +1061,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Transparent = False
       end
     end
-    object RLBand1: TRLBand
+    object rlb_2: TRLBand
       Left = 26
-      Top = 449
+      Top = 256
       Width = 742
-      Height = 42
+      Height = 129
       AutoExpand = False
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -1074,42 +1074,18 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawRight = True
       Borders.DrawBottom = False
       Color = clWhite
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -8
+      Font.Name = 'Courier New'
+      Font.Style = []
       ParentColor = False
+      ParentFont = False
       BeforePrint = rlb_3_AereoBeforePrint
-      object RLDraw2: TRLDraw
-        Left = 136
-        Top = -2
-        Width = 1
-        Height = 44
-        Align = faBottomOnly
-        Angle = 90.000000000000000000
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
-      object RLDraw3: TRLDraw
-        Left = 264
-        Top = -2
-        Width = 1
-        Height = 44
-        Align = faBottomOnly
-        Angle = 90.000000000000000000
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
-      object RLDraw4: TRLDraw
-        Left = 400
-        Top = -2
-        Width = 1
-        Height = 44
-        Align = faBottomOnly
-        Angle = 90.000000000000000000
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
       object rlLabel12: TRLLabel
-        Left = 407
+        Left = 150
         Top = 6
-        Width = 96
+        Width = 120
         Height = 14
         Caption = 'PESO TOTAL (Kg)'
         Color = clWhite
@@ -1122,9 +1098,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllPesoTotal: TRLLabel
-        Left = 405
+        Left = 150
         Top = 22
-        Width = 147
+        Width = 120
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -1133,14 +1109,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
-      object rllqMDFe: TRLLabel
-        Left = 272
+      object rllqNFeMDFe: TRLLabel
+        Left = 72
         Top = 22
-        Width = 88
+        Width = 74
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -1149,30 +1125,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
-      object rllqNFe: TRLLabel
-        Left = 144
-        Top = 22
-        Width = 88
-        Height = 16
-        Alignment = taCenter
-        AutoSize = False
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
       object rllqCTe: TRLLabel
-        Left = 6
+        Left = 1
         Top = 22
-        Width = 88
+        Width = 66
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -1181,14 +1141,14 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel23: TRLLabel
-        Left = 274
+      object lblQTDENFeMDFe: TRLLabel
+        Left = 72
         Top = 6
-        Width = 87
+        Width = 74
         Height = 15
         AutoSize = False
         Caption = 'QTDE MDF-e'
@@ -1201,26 +1161,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rlLabel10: TRLLabel
-        Left = 146
-        Top = 6
-        Width = 87
-        Height = 15
-        AutoSize = False
-        Caption = 'QTDE NF-e'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-      end
       object rlLabel5: TRLLabel
-        Left = 8
+        Left = 1
         Top = 6
-        Width = 87
+        Width = 66
         Height = 18
         AutoSize = False
         Caption = 'QTDE CT-e'
@@ -1233,18 +1177,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object RLDraw15: TRLDraw
-        Left = 580
-        Top = -2
-        Width = 1
-        Height = 44
-        Align = faBottomOnly
-        Angle = 90.000000000000000000
-        Brush.Style = bsClear
-        DrawKind = dkLine
-      end
       object RLLabel27: TRLLabel
-        Left = 587
+        Left = 274
         Top = 6
         Width = 152
         Height = 14
@@ -1259,9 +1193,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
       end
       object rllValorMercadoria: TRLLabel
-        Left = 585
+        Left = 274
         Top = 22
-        Width = 148
+        Width = 152
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -1270,38 +1204,165 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
-    end
-    object RLBand2: TRLBand
-      Left = 26
-      Top = 434
-      Width = 742
-      Height = 15
-      AutoExpand = False
-      AutoSize = True
-      BandType = btHeader
-      Borders.Sides = sdCustom
-      Borders.DrawLeft = True
-      Borders.DrawTop = False
-      Borders.DrawRight = True
-      Borders.DrawBottom = False
-      Color = clWhite
-      ParentColor = False
-      BeforePrint = rlb_3_AereoBeforePrint
-      object rllModal: TRLLabel
+      object RLPanel4: TRLPanel
+        Left = 432
+        Top = 6
+        Width = 306
+        Height = 72
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        object RLBarcode1: TRLBarcode
+          Left = 5
+          Top = 18
+          Width = 298
+          Height = 42
+          Margins.LeftMargin = 1.000000000000000000
+          Margins.RightMargin = 1.000000000000000000
+          Alignment = taCenter
+          AutoSize = False
+          BarcodeType = bcCode128C
+        end
+        object rlLabel74: TRLLabel
+          Left = 5
+          Top = 4
+          Width = 63
+          Height = 11
+          Caption = 'Controle do Fisco'
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -8
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+        end
+      end
+      object RLPanel3: TRLPanel
+        Left = 432
+        Top = 82
+        Width = 307
+        Height = 42
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        object rllChave: TRLLabel
+          Left = 3
+          Top = 22
+          Width = 300
+          Height = 14
+          Alignment = taCenter
+          AutoSize = False
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+        end
+        object rlLabel1: TRLLabel
+          Left = 3
+          Top = 5
+          Width = 58
+          Height = 11
+          Caption = 'Chave de acesso'
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -8
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+        end
+      end
+      object rllDescricao: TRLLabel
+        Left = 4
+        Top = 73
+        Width = 141
+        Height = 8
+        Caption = 'PROTOCOLO DE AUTORIZA'#199#195'O DE USO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw17: TRLDraw
         Left = 1
-        Top = 0
-        Width = 740
+        Top = 40
+        Width = 428
+        Height = 9
+        DrawKind = dkLine
+      end
+      object RLDraw2: TRLDraw
+        Left = 70
+        Top = 1
+        Width = 1
+        Height = 44
+        Align = faTopOnly
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw3: TRLDraw
+        Left = 428
+        Top = 1
+        Width = 1
+        Height = 44
+        Align = faTopOnly
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw4: TRLDraw
+        Left = 148
+        Top = 1
+        Width = 1
+        Height = 44
+        Align = faTopOnly
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw15: TRLDraw
+        Left = 272
+        Top = 1
+        Width = 1
+        Height = 44
+        Align = faTopOnly
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object rllModal: TRLLabel
+        Left = 4
+        Top = 51
+        Width = 426
         Height = 15
-        Align = faBottom
         Alignment = taCenter
         AutoSize = False
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
-        Borders.DrawTop = True
+        Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Caption = 'Modal Rodovi'#225'rio de Carga'
@@ -1310,14 +1371,28 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Times New Roman'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentColor = False
+        ParentFont = False
+      end
+      object rllProtocolo: TRLMemo
+        Left = 12
+        Top = 87
+        Width = 404
+        Height = 36
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
         ParentFont = False
       end
     end
     object subItens: TRLSubDetail
       Left = 26
-      Top = 758
+      Top = 860
       Width = 742
       Height = 86
       Borders.Sides = sdCustom
@@ -1407,7 +1482,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Left = 26
       Top = 26
       Width = 742
-      Height = 200
+      Height = 230
       AutoExpand = False
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -1418,17 +1493,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_1_DadosManifestoBeforePrint
-      object RLPanel5: TRLPanel
-        Left = 1
-        Top = 1
-        Width = 320
-        Height = 167
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = False
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-      end
       object rliLogo: TRLImage
         Left = 6
         Top = 57
@@ -1439,7 +1503,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlmEmitente: TRLMemo
         Left = 7
         Top = 10
-        Width = 308
+        Width = 586
         Height = 39
         Alignment = taCenter
         AutoSize = False
@@ -1457,7 +1521,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlmDadosEmitente: TRLMemo
         Left = 109
         Top = 54
-        Width = 206
+        Width = 484
         Height = 108
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -1477,208 +1541,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLPanel1: TRLPanel
-        Left = 320
-        Top = 1
-        Width = 421
-        Height = 167
-        Align = faRight
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = True
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-        Borders.FixedLeft = True
-        object RLPanel2: TRLPanel
-          Left = 1
-          Top = 135
-          Width = 420
-          Height = 32
-          Align = faBottom
-          Borders.Sides = sdCustom
-          Borders.DrawLeft = False
-          Borders.DrawTop = True
-          Borders.DrawRight = False
-          Borders.DrawBottom = False
-          object rllProtocolo: TRLLabel
-            Left = 11
-            Top = 17
-            Width = 380
-            Height = 14
-            Alignment = taCenter
-            AutoSize = False
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Times New Roman'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-          end
-          object rllDescricao: TRLLabel
-            Left = 2
-            Top = 7
-            Width = 141
-            Height = 8
-            Caption = 'PROTOCOLO DE AUTORIZA'#199#195'O DE USO'
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -7
-            Font.Name = 'Times New Roman'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-            Transparent = False
-          end
-        end
-        object RLPanel3: TRLPanel
-          Left = 1
-          Top = 94
-          Width = 307
-          Height = 42
-          Borders.Sides = sdCustom
-          Borders.DrawLeft = False
-          Borders.DrawTop = False
-          Borders.DrawRight = False
-          Borders.DrawBottom = False
-          object rllChave: TRLLabel
-            Left = 3
-            Top = 22
-            Width = 300
-            Height = 14
-            Alignment = taCenter
-            AutoSize = False
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Times New Roman'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-            Transparent = False
-          end
-          object rlLabel1: TRLLabel
-            Left = 3
-            Top = 2
-            Width = 58
-            Height = 11
-            Caption = 'Chave de acesso'
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -8
-            Font.Name = 'Times New Roman'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-            Transparent = False
-          end
-        end
-        object RLPanel4: TRLPanel
-          Left = 1
-          Top = 26
-          Width = 306
-          Height = 72
-          Borders.Sides = sdCustom
-          Borders.DrawLeft = False
-          Borders.DrawTop = True
-          Borders.DrawRight = False
-          Borders.DrawBottom = True
-          object RLBarcode1: TRLBarcode
-            Left = 5
-            Top = 18
-            Width = 298
-            Height = 42
-            Margins.LeftMargin = 1.000000000000000000
-            Margins.RightMargin = 1.000000000000000000
-            Alignment = taCenter
-            AutoSize = False
-            BarcodeType = bcCode128C
-          end
-          object rlLabel74: TRLLabel
-            Left = 5
-            Top = 4
-            Width = 63
-            Height = 11
-            Caption = 'Controle do Fisco'
-            Color = clWhite
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -8
-            Font.Name = 'Times New Roman'
-            Font.Style = [fsBold]
-            ParentColor = False
-            ParentFont = False
-            Transparent = False
-          end
-        end
-        object rlLabel17: TRLLabel
-          Left = 2
-          Top = 4
-          Width = 89
-          Height = 22
-          Caption = 'DAMDFE'
-          Color = clWhite
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -19
-          Font.Name = 'Times New Roman'
-          Font.Style = [fsBold]
-          ParentColor = False
-          ParentFont = False
-        end
-        object RLMemo1: TRLMemo
-          Left = 94
-          Top = 8
-          Width = 323
-          Height = 14
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Times New Roman'
-          Font.Style = []
-          Lines.Strings = (
-            'Documento Auxiliar de Manifesto Eletr'#244'nico de Documentos Fiscais')
-          ParentFont = False
-        end
-        object imgQRCode: TRLImage
-          Left = 310
-          Top = 27
-          Width = 111
-          Height = 107
-          Center = True
-          Scaled = True
-        end
-        object rlsLinhaH02: TRLDraw
-          Left = 303
-          Top = 26
-          Width = 119
-          Height = 1
-          Brush.Style = bsClear
-          DrawKind = dkLine
-        end
-        object RLDraw53: TRLDraw
-          Left = 307
-          Top = 27
-          Width = 1
-          Height = 109
-          HelpContext = 1
-          Brush.Style = bsClear
-          Color = clDefault
-          DrawKind = dkLine
-          ParentColor = False
-          Transparent = False
-        end
-      end
       object RLPanel6: TRLPanel
         Left = 1
-        Top = 168
+        Top = 199
         Width = 740
-        Height = 32
+        Height = 31
         Align = faBottom
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -1978,6 +1845,44 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Brush.Style = bsClear
           DrawKind = dkLine
         end
+      end
+      object rlLabel17: TRLLabel
+        Left = 4
+        Top = 174
+        Width = 89
+        Height = 22
+        Caption = 'DAMDFE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLMemo1: TRLMemo
+        Left = 99
+        Top = 174
+        Width = 323
+        Height = 14
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Documento Auxiliar de Manifesto Eletr'#244'nico de Documentos Fiscais')
+        ParentFont = False
+      end
+      object imgQRCode: TRLImage
+        Left = 617
+        Top = 10
+        Width = 111
+        Height = 107
+        Center = True
+        Scaled = True
       end
     end
   end

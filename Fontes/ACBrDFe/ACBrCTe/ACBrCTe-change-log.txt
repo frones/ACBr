@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/10/2019
+-- ACBrCTe --
+[*] Removido a checagem de Forma de emissão ao gerar a string do QR-Code.
+    Pois parece que as SVC mudaram as regras de checagem de URL do QR-Code.
+   Por: Italo Jurisato Junior
 -- ACBrCTeDACTeRLRetrato --
 [*] Impressão correta dos titulos dos documentos originarios.
    Por: Italo Jurisato Junior

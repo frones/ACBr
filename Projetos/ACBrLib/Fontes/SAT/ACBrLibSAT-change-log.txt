@@ -44,19 +44,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2019
+-- ACBrLibSATConfig --
+[-] Corrigido o erro de não passar aas propriedades corretamente para os componentes.
+    (por Rafael Dias)
+
 12/10/2019
+-- ACBrLibSatDataModule --
 [-] Corrigido o erro ao carregar xml de venda.
     (por Rafael Dias)
 
 17/09/2019
+-- ACBrLibSATClass --
 [-] Corrigido o metodo SAT_GerarImpressaoFiscalMFe.
     (por Rafael Dias)
 
 13/08/2019
+-- ACBrLibSATConfig --
 [+] Adicionado as propriedades ImprimeQRCodeLateral e ImprimeLogoLateral.
     (por Rafael Dias)
 
 22/05/2019
+-- ACBrLibSATClass --
 [*] Melhorias na função de impressão PDF, para sempre setar como fortes na hora de exportar.
     (por Rafael Dias)
 [*] Melhorias nas configurações do extrato herdando da classe base TDFeReportConfig.
@@ -65,14 +74,17 @@ Símbolo : Significado
     (por Rafael Dias)
 
 08/01/2019
+-- ACBrLibSATClass --
 [*] Melhorias no codigo de carregamento do INI.
     (por Rafael Dias)
 
 05/01/2019
+-- ACBrLibSATClass --
 [-] Corrigido erro ao carregar xml do CFe, no metodo EnviarCFe.
     (por Rafael Dias)
 
 24/07/2018
+-- ACBrLibSATClass --
 [+] Adicionado métodos para retorno de envio do XML do componente sat
  (Utilizado também pelo ACBrMonitorPlus).
 

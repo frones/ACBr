@@ -350,6 +350,8 @@ begin
   DFeReport.ImprimeDescAcrescItem := ImprimeDescAcrescItem;
   DFeReport.ImprimeCodigoEan := ImprimeCodigoEan;
   DFeReport.Filtro := Filtro;
+  DFeReport.ImprimeLogoLateral := ImprimeLogoLateral;
+  DFeReport.ImprimeQRCodeLateral := ImprimeQRCodeLateral;
 
   if DFeReport is TACBrSATExtratoESCPOS then
     TACBrSATExtratoESCPOS(DFeReport).ImprimeChaveEmUmaLinha := ImprimeChaveEmUmaLinha;

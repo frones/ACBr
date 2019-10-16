@@ -468,7 +468,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel96: TRLLabel
+      object rllTituloSerie1: TRLLabel
         Left = 174
         Height = 8
         Top = 17
@@ -486,7 +486,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
         Transparent = False
       end
-      object RLLabel92: TRLLabel
+      object rllTituloCNPJ1: TRLLabel
         Left = 88
         Height = 8
         Top = 17
@@ -540,7 +540,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
         Transparent = False
       end
-      object RLLabel106: TRLLabel
+      object rllTituloCNPJ2: TRLLabel
         Left = 456
         Height = 8
         Top = 17
@@ -558,7 +558,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
         Transparent = False
       end
-      object RLLabel100: TRLLabel
+      object rllTituloSerie2: TRLLabel
         Left = 542
         Height = 8
         Top = 17

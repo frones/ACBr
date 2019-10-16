@@ -153,10 +153,10 @@ type
     rlLabel20: TRLLabel;
     RLDraw32: TRLDraw;
     rlLabel91: TRLLabel;
-    rlLabel92: TRLLabel;
-    rlLabel96: TRLLabel;
-    rlLabel100: TRLLabel;
-    rlLabel106: TRLLabel;
+    rllTituloCNPJ1: TRLLabel;
+    rllTituloSerie1: TRLLabel;
+    rllTituloSerie2: TRLLabel;
+    rllTituloCNPJ2: TRLLabel;
     rlLabel109: TRLLabel;
     rld_07_headerItens: TRLDraw;
     rlb_09_Obs: TRLBand;
@@ -767,6 +767,33 @@ begin
     exit;
 
   Item := 0;
+
+  if (fpCTe.infCTeNorm.infDoc.infNF.Count > 0) or
+     (fpCTe.infCTeNorm.docAnt.emiDocAnt.Count > 0) then
+  begin
+    rllTituloCNPJ1.Caption := 'CNPJ/CPF EMITENTE';
+    rllTituloCNPJ2.Caption := 'CNPJ/CPF EMITENTE';
+    rllTituloSerie1.Caption := 'SÉRIE/NRO. DOCUMENTO';
+    rllTituloSerie2.Caption := 'SÉRIE/NRO. DOCUMENTO';
+  end;
+
+  if (fpCTe.infCTeNorm.infDoc.infNFe.Count > 0) or
+     (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].idDocAnt.Count > 0) then
+  begin
+    rllTituloCNPJ1.Caption := 'CHAVE DO DF-e';
+    rllTituloCNPJ2.Caption := 'CHAVE DO DF-e';
+    rllTituloSerie1.Caption := '';
+    rllTituloSerie2.Caption := '';
+  end;
+
+  if fpCTe.infCTeNorm.infDoc.InfOutros.Count > 0 then
+  begin
+    rllTituloCNPJ1.Caption := 'CNPJ/CPF EMITENTE';
+    rllTituloCNPJ2.Caption := 'CNPJ/CPF EMITENTE';
+    rllTituloSerie1.Caption := '';
+    rllTituloSerie2.Caption := '';
+  end;
+
   //Varrendo NF comum
   for I := 0 to (fpCTe.infCTeNorm.infDoc.infNF.Count - 1) do
   begin
@@ -793,6 +820,7 @@ begin
       Inc(Item);
     end;
   end;
+
   //Varrendo NFe
   for I := 0 to (fpCTe.infCTeNorm.infDoc.InfNFE.Count - 1) do
   begin
@@ -813,6 +841,7 @@ begin
       Inc(Item);
     end;
   end;
+
   //Varrendo Outros
   for I := 0 to (fpCTe.infCTeNorm.infDoc.InfOutros.Count - 1) do
   begin
@@ -913,6 +942,7 @@ begin
       Inc(Item);
     end;
   end;
+
   //Varrendo Documentos de Transporte anterior
   for I := 0 to (fpCTe.infCTeNorm.docAnt.emiDocAnt.Count - 1) do
   begin

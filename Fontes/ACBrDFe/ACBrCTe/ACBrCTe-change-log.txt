@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] Impressão correta dos titulos dos documentos originarios.
+   Por: Italo Jurisato Junior
+
 12/10/2019
 -- ACBrCTeConfiguracoes --
 [*] Removido a propriedade de configuração: GerarInfCTeSupl pois a geração da 

@@ -387,7 +387,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Brush.Style = bsClear
         DrawKind = dkLine
       end
-      object RLLabel96: TRLLabel
+      object rllTituloSerie1: TRLLabel
         Left = 174
         Top = 17
         Width = 86
@@ -403,7 +403,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel92: TRLLabel
+      object rllTituloCNPJ1: TRLLabel
         Left = 88
         Top = 17
         Width = 69
@@ -451,7 +451,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel106: TRLLabel
+      object rllTituloCNPJ2: TRLLabel
         Left = 456
         Top = 17
         Width = 69
@@ -467,7 +467,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object RLLabel100: TRLLabel
+      object rllTituloSerie2: TRLLabel
         Left = 542
         Top = 17
         Width = 86

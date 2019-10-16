@@ -163,10 +163,10 @@ begin
   FGerador.wGrupo('DadosReducaoZ');
   FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferencia));
   case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
-       erv0205 :
-       begin
-            FGerador.wCampo(tcStr, '', 'DataHoraEmissao', 0, 0, 1, DateTimeTodh(DataHoraEmissaoReducaoZ));
-       end;
+    erv0205, erv0206 :
+    begin
+      FGerador.wCampo(tcStr, '', 'DataHoraEmissao', 0, 0, 1, DateTimeTodh(DataHoraEmissaoReducaoZ));
+    end;
   end;
 
   FGerador.wCampo(tcInt, '', 'CRZ', 4, 4, 1, CRZ);
@@ -205,7 +205,7 @@ begin
                      FGerador.wCampo(tcStr, '', 'Codigo',    0, 0, 1,Produtos[X].Codigo.CodigoProprio);
                      FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1,TipoCodigoToStr(Produtos[X].Codigo.Tipo));
                 end;
-                erv0205 :
+                erv0205, erv0206:
                 begin
                      FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Produtos[X].Codigo.CodigoGTIN);
                      FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Produtos[X].Codigo.CodigoCEST);
@@ -219,7 +219,7 @@ begin
             case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
                  // 0204 Unitario ou TotalLiquido???
                  erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorTotalLiquido));
-                 erv0205 :
+                 erv0205, erv0206 :
                  begin
                       FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorDesconto));
                       FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorAcrescimo));
@@ -244,7 +244,7 @@ begin
                      FGerador.wCampo(tcStr, '', 'Codigo',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
                      FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1,TipoCodigoToStr(Servicos[X].Codigo.Tipo));
                 end;
-                erv0205 :
+                erv0205, erv0206 :
                 begin
                     FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
                 end;
@@ -254,7 +254,7 @@ begin
             case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
                  // 0204 Unitario ou TotalLiquido???
                  erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorTotalLiquido));
-                 erv0205 :
+                 erv0205, erv0206 :
                  begin
                     FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorDesconto));
                     FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorAcrescimo));

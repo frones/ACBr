@@ -41,7 +41,7 @@ type
   TACBrBlocoX_SitTributaria = (stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN);
   TACBrBlocoX_URLWebService = (wsRecepcao, wsBlocoX);
   TACBrBlocoX_Ippt = (ipptProprio, ipptTerceiros);
-  TVersaoER = (erv0204, erv0205);
+  TVersaoER = (erv0204, erv0205, erv0206);
 
   TACBrBlocoX_Codigo = class
   private

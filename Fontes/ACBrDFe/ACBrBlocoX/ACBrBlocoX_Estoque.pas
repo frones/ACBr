@@ -73,7 +73,6 @@ procedure TACBrBlocoX_Estoque.GerarXML(const Assinar: Boolean);
 var
   I: Integer;
 begin
-
   FXMLOriginal := '';
   FXMLAssinado := '';
   FGerador.ArquivoFormatoXML := '';
@@ -103,7 +102,7 @@ begin
                 FGerador.wCampo(tcStr, '', 'CodigoTipo', 0, 0, 1, TipoCodigoToStr(Produtos[I].Codigo.Tipo));
                 FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.000',Abs(Produtos[I].Quantidade)));
            end;
-           erv0205 :
+           erv0205, erv0206 :
            begin
               with Produtos[I] do begin
                 FGerador.wCampo(tcStr, '', 'CodigoGTIN', 0, 0, 1, Produtos[I].Codigo.CodigoGTIN);
@@ -118,7 +117,7 @@ begin
       FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
       FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.000',Produtos[I].ValorUnitario));
       case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
-           erv0205 :
+           erv0205, erv0206 :
            begin
               FGerador.wCampo(tcStr, '', 'ValorTotalAquisicao', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalAquisicaoMercadoria));
               FGerador.wCampo(tcStr, '', 'ValorTotalICMSDebitoFornecedor', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalICMSDebitoFornecedor));

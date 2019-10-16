@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Controls, StdCtrls, Forms, Clipbrd,
-  Dialogs, Buttons, ACBrBase, ACBrDFe, ACBrBlocoX;
+  Dialogs, Buttons, ACBrBase, ACBrDFe, ACBrBlocoX, ACBrBlocoX_WebServices;
 
 type
   TfrmPrincipal = class(TForm)

@@ -49,6 +49,11 @@ Símbolo : Significado
 
 16/10/2019
 -- ACBrMDFeDAMDFeRLRetrato --
+[*] Alteração no layout .lfm convertendo para UTF8
+   Por: José M S Junior
+
+16/10/2019
+-- ACBrMDFeDAMDFeRLRetrato --
 [*] Alteração em nomes de objetos e ajustes para o novo layout da versão 3.00a
     (para o Lazarus).
   por: Italo Jurisato Junior

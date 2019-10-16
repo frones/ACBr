@@ -77,7 +77,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 4
           Width = 37
-          Caption = 'Veículo'
+          Caption = 'VeÃ­culo'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -327,7 +327,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 103
           Width = 62
-          Caption = 'Vale Pedágio'
+          Caption = 'Vale PedÃ¡gio'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -356,7 +356,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 123
           Width = 89
-          Caption = 'Responsável CNPJ'
+          Caption = 'ResponsÃ¡vel CNPJ'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -506,7 +506,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 103
           Width = 126
-          Caption = 'Responsável pelo Seguro - '
+          Caption = 'ResponsÃ¡vel pelo Seguro - '
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -565,7 +565,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 123
           Width = 92
-          Caption = 'Número da Apólice'
+          Caption = 'NÃºmero da ApÃ³lice'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -702,7 +702,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Height = 14
             Top = 3
             Width = 107
-            Caption = 'Código da Embarcação'
+            Caption = 'CÃ³digo da EmbarcaÃ§Ã£o'
             Color = clWhite
             Font.Color = clWindowText
             Font.Height = -11
@@ -736,7 +736,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
             Height = 14
             Top = 3
             Width = 103
-            Caption = 'Nome da Embarcação'
+            Caption = 'Nome da EmbarcaÃ§Ã£o'
             Color = clWhite
             Font.Color = clWindowText
             Font.Height = -11
@@ -771,7 +771,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 24
           Width = 35
-          Caption = 'Código'
+          Caption = 'CÃ³digo'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -805,7 +805,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Height = 14
           Top = 24
           Width = 35
-          Caption = 'Código'
+          Caption = 'CÃ³digo'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -1048,7 +1048,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 14
         Top = 4
         Width = 56
-        Caption = 'Observação'
+        Caption = 'ObservaÃ§Ã£o'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -1066,7 +1066,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 38
         Width = 724
         Alignment = taCenter
-        Caption = 'AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'
+        Caption = 'AMBIENTE DE HOMOLOGAÃ‡ÃƒO - SEM VALOR FISCAL'
         Color = clWhite
         Font.Color = clGray
         Font.Height = -27
@@ -1141,7 +1141,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Top = 4
         Width = 244
         Alignment = taCenter
-        Caption = 'RELAÇÃO DOS DOCUMENTOS FISCAIS ELETRÔNICOS'
+        Caption = 'RELAÃ‡ÃƒO DOS DOCUMENTOS FISCAIS ELETRÃ”NICOS'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -1196,7 +1196,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 8
         Top = 22
         Width = 86
-        Caption = 'SÉRIE/NRO. DOCUMENTO'
+        Caption = 'SÃ‰RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1250,7 +1250,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 8
         Top = 22
         Width = 86
-        Caption = 'SÉRIE/NRO. DOCUMENTO'
+        Caption = 'SÃ‰RIE/NRO. DOCUMENTO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1541,7 +1541,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Height = 8
         Top = 73
         Width = 141
-        Caption = 'PROTOCOLO DE AUTORIZAÇÃO DE USO'
+        Caption = 'PROTOCOLO DE AUTORIZAÃ‡ÃƒO DE USO'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
@@ -1635,7 +1635,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawTop = False
         Borders.DrawRight = False
         Borders.DrawBottom = False
-        Caption = 'Modal Rodoviário de Carga'
+        Caption = 'Modal RodoviÃ¡rio de Carga'
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -11
@@ -2030,7 +2030,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Top = 7
           Width = 22
           Alignment = taCenter
-          Caption = 'SÉRIE'
+          Caption = 'SÃ‰RIE'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -7
@@ -2050,7 +2050,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 70
           Alignment = taCenter
           AutoSize = False
-          Caption = 'NÚMERO'
+          Caption = 'NÃšMERO'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -7
@@ -2090,7 +2090,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Width = 104
           Alignment = taCenter
           AutoSize = False
-          Caption = 'DATA E HORA DE EMISSÃO'
+          Caption = 'DATA E HORA DE EMISSÃƒO'
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -7
@@ -2248,7 +2248,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Font.Height = -11
         Font.Name = 'Times New Roman'
         Lines.Strings = (
-          'Documento Auxiliar de Manifesto Eletrônico de Documentos Fiscais'
+          'Documento Auxiliar de Manifesto EletrÃ´nico de Documentos Fiscais'
         )
         ParentFont = False
         RealBounds.Left = 0

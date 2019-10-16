@@ -5141,9 +5141,16 @@ begin
 end;
 
 function TNFSeSubstituirNFSe.TratarResposta: Boolean;
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
+  FPMsg := '';
+  FaMsg := '';
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg,
+                            FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Substituir);
+  Result := ExtrairNotasRetorno;
+
+{
   FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg,
                             FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Substituir);
 
@@ -5182,6 +5189,7 @@ begin
   finally
     FNFSeRetorno.Free;
   end;
+}
 end;
 
 procedure TNFSeSubstituirNFSe.FinalizarServico;

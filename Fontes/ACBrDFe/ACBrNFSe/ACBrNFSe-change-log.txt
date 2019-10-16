@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/10/2019
+-- ACBrNFSeWebServices --
+[*] Alterado o método TratarResposta do SubstituirNFSe.
+   Por: Italo Jurisato Junior
+
 15/10/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/53949-nfse-de-santo-antonio-do-planalto-rs/

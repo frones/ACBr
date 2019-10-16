@@ -80,10 +80,10 @@ type
       ASite: string = '';
       AUsuario: string = '';
       APreview: boolean = True;
-      AMargemSuperior: double = 0.8;
-      AMargemInferior: double = 0.8;
-      AMargemEsquerda: double = 0.6;
-      AMargemDireita: double = 0.51;
+      AMargemSuperior: double = 8;
+      AMargemInferior: double = 8;
+      AMargemEsquerda: double = 6;
+      AMargemDireita: double = 5.1;
       AImpressora: string = '';
       APrintDialog  : Boolean = True  );
 
@@ -96,10 +96,10 @@ type
       ASistema: string = '';
       ASite: string = '';
       AUsuario: string = '';
-      AMargemSuperior: double = 0.8;
-      AMargemInferior: double = 0.8;
-      AMargemEsquerda: double = 0.6;
-      AMargemDireita: double = 0.51);
+      AMargemSuperior: double = 8;
+      AMargemInferior: double = 8;
+      AMargemEsquerda: double = 6;
+      AMargemDireita: double = 5.1);
   end;
 
 implementation
@@ -119,10 +119,10 @@ class procedure TfrlGuiaRL.Imprimir(AOwner: TComponent;
   ASite: string = '';
   AUsuario: string = '';
   APreview: boolean = True;
-  AMargemSuperior: double = 0.8;
-  AMargemInferior: double = 0.8;
-  AMargemEsquerda: double = 0.6;
-  AMargemDireita: double = 0.51;
+  AMargemSuperior: double = 8;
+  AMargemInferior: double = 8;
+  AMargemEsquerda: double = 6;
+  AMargemDireita: double = 5.1;
   AImpressora: string = '';
   APrintDialog: Boolean = True);
 begin
@@ -167,10 +167,10 @@ class procedure TfrlGuiaRL.SavePDF(AOwner: TComponent;
   ASistema: string = '';
   ASite: string = '';
   AUsuario: string = '';
-  AMargemSuperior: double = 0.8;
-  AMargemInferior: double = 0.8;
-  AMargemEsquerda: double = 0.6;
-  AMargemDireita: double = 0.51);
+  AMargemSuperior: double = 8;
+  AMargemInferior: double = 8;
+  AMargemEsquerda: double = 6;
+  AMargemDireita: double = 5.1);
 begin
   with Create(AOwner) do
     try

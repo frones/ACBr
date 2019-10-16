@@ -96,10 +96,10 @@ begin
   FMostraStatus := True;
   FNumCopias := 1;
   FLogo := '';
-  FMargemInferior := 0.8;
-  FMargemSuperior := 0.8;
-  FMargemEsquerda := 0.6;
-  FMargemDireita := 0.51;
+  FMargemInferior := 8;
+  FMargemSuperior := 8;
+  FMargemEsquerda := 6;
+  FMargemDireita := 5.1;
   ExpandeLogoMarca := False;
 
   if Assigned(FCasasDecimais) then FCasasDecimais.Free;

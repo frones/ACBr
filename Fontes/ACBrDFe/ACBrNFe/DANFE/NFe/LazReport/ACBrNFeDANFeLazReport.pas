@@ -48,7 +48,6 @@ uses
 
 type
 
-  TACBrNFeDANFeLazReport = class;
   TACBrNFeLazReportClass = class;
 
   EACBrNFeDANFELazReport = class(Exception);
@@ -69,6 +68,7 @@ type
     function PrepareReport(NFE: TNFe = nil): boolean;
     function PrepareReportEvento: boolean;
     function PrepareReportInutilizacao: boolean;
+    procedure AjustarMargensReportAtual;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -364,6 +364,7 @@ begin
     FdmDanfe.NFe := NFE;
     FdmDanfe.CarregaDadosNFe;
 
+    AjustarMargensReportAtual;
     Result := FdmDanfe.Report.PrepareReport;
   end
   else
@@ -378,6 +379,7 @@ begin
         FdmDanfe.NFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[i].NFe;
         FdmDanfe.CarregaDadosNFe;
 
+        AjustarMargensReportAtual;
         Result := FdmDanfe.Report.PrepareReport;
 
         if not FdmDanfe.Report.CanRebuild and not (roDontUpgradePreparedReport in FdmDanfe.Report.Options) then
@@ -404,22 +406,6 @@ begin
     else
       raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe não assinalada.');
   end;
-   {
-    if Assigned(FdmDanfe.NFe) and (FdmDanfe.NFe.Ide.modelo = 55) then
-    for i := 0 to FdmDanfe.Report.EMFPages.Count do
-    begin
-      Page := PfrPageInfo(FdmDanfe.Report.EMFPages.Pages[i])^.Page;
-
-      if MargemSuperior > 0 then
-         Page.Margins.Top := Round(MargemSuperior * 10);
-      if MargemInferior > 0 then
-         Page.Margins.Bottom := Round(MargemInferior * 10);
-      if MargemEsquerda > 0 then
-         Page.Margins.Left := Round(MargemEsquerda * 10);
-      if MargemDireita > 0 then
-         Page.Margins.Right := Round(MargemDireita * 10);
-    end;
-   }
 end;
 
 function TACBrNFeDANFeLazReport.PrepareReportEvento: boolean;
@@ -469,6 +455,7 @@ begin
       FdmDanfe.CarregaDadosNFe;
     end;
 
+    AjustarMargensReportAtual;
     Result := FdmDanfe.Report.PrepareReport;
   end
   else
@@ -516,11 +503,29 @@ begin
     else
       raise EACBrNFeDANFELazReport.Create('INUTILIZAÇÃO não foi assinalada.');
 
+    AjustarMargensReportAtual;
     Result := FdmDanfe.Report.PrepareReport;
   end
   else
     raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe não assinalada.');
 
+end;
+
+procedure TACBrNFeDANFeLazReport.AjustarMargensReportAtual;
+var
+  i: Integer;
+begin
+  for i := 0 to (FdmDanfe.Report.Pages.Count -1) do
+  begin
+    if MargemSuperior > 0 then
+       FdmDanfe.Report.Pages[i].Margins.Top    := Round(MargemSuperior);
+    if MargemInferior > 0 then
+       FdmDanfe.Report.Pages[i].Margins.Bottom := Round(MargemInferior);
+    if MargemEsquerda > 0 then
+       FdmDanfe.Report.Pages[i].Margins.Left   := Round(MargemEsquerda);
+    if MargemDireita > 0 then
+       FdmDanfe.Report.Pages[i].Margins.Right  := Round(MargemDireita);
+  end;
 end;
 
 procedure TACBrNFeDANFeLazReport.ImprimirDANFE(NFE: TNFe);

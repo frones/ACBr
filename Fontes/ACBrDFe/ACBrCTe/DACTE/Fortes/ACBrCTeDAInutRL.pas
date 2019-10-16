@@ -98,6 +98,7 @@ begin
     DACTeInuReport.fpDACTe := aDACTe;
     DACTeInuReport.fpInutCTe := AInutCTe;
     TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
+    TDFeReportFortes.AjustarMargem(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
 
     if ACTe <> nil then
       DACTeInuReport.fpCTe := ACTe;
@@ -122,6 +123,7 @@ begin
     DACTeInuReport.fpInutCTe := AInutCTe;
 
     TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
+    TDFeReportFortes.AjustarMargem(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
     TDFeReportFortes.AjustarFiltroPDF(DACTeInuReport.RLPDFFilter1, DACTeInuReport.fpDACTe, AFile);
 
     for i := 0 to DACTeInuReport.ComponentCount -1 do

@@ -159,6 +159,7 @@ type
     procedure CarregaInformacoesAdicionais;
 
     function CollateBr(const Str: String): String;
+    procedure AjustaMargensReports;
 
   public
     constructor Create(AOwner: TComponent);
@@ -1996,8 +1997,6 @@ function TACBrNFeFRClass.PrepareReport(ANFE: TNFe): Boolean;
 var
   I: Integer;
   wProjectStream: TStringStream;
-  Page: TfrxReportPage;
-  MultiplicadorMargem: Integer;
 begin
   Result := False;
 
@@ -2067,26 +2066,7 @@ begin
 
   if Assigned(NFe) then
   begin
-
-    // Informar margem para NFe em cm, NFCe em mm
-    if NFe.Ide.modelo = 55 then
-	  MultiplicadorMargem := 10
-	else
-	  MultiplicadorMargem := 1;
-
-    for i := 0 to (frxReport.PreviewPages.Count - 1) do
-    begin
-      Page := frxReport.PreviewPages.Page[i];
-      if (DANFEClassOwner.MargemSuperior > 0) then
-        Page.TopMargin    := DANFEClassOwner.MargemSuperior * MultiplicadorMargem;
-      if (DANFEClassOwner.MargemInferior > 0) then
-        Page.BottomMargin := DANFEClassOwner.MargemInferior * MultiplicadorMargem;
-      if (DANFEClassOwner.MargemEsquerda > 0) then
-        Page.LeftMargin   := DANFEClassOwner.MargemEsquerda * MultiplicadorMargem;
-      if (DANFEClassOwner.MargemDireita > 0) then
-        Page.RightMargin  := DANFEClassOwner.MargemDireita * MultiplicadorMargem;
-      frxReport.PreviewPages.ModifyPage(i, Page);
-    end;
+    AjustaMargensReports;
   end;
 
 end;
@@ -2151,6 +2131,8 @@ begin
   else
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
 
+  AjustaMargensReports;
+
 end;
 
 function TACBrNFeFRClass.PrepareReportInutilizacao: Boolean;
@@ -2205,6 +2187,8 @@ begin
   end
   else
     raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+
+  AjustaMargensReports;
 
 end;
 
@@ -2482,6 +2466,26 @@ begin
   else
     frxPDFExport.FileName := '';
 
+end;
+
+procedure TACBrNFeFRClass.AjustaMargensReports;
+var
+  Page: TfrxReportPage;
+  I: Integer;
+begin
+  for I := 0 to (frxReport.PreviewPages.Count - 1) do
+  begin
+    Page := frxReport.PreviewPages.Page[I];
+    if (DANFEClassOwner.MargemSuperior > 0) then
+      Page.TopMargin := DANFEClassOwner.MargemSuperior;
+    if (DANFEClassOwner.MargemInferior > 0) then
+      Page.BottomMargin := DANFEClassOwner.MargemInferior;
+    if (DANFEClassOwner.MargemEsquerda > 0) then
+      Page.LeftMargin := DANFEClassOwner.MargemEsquerda;
+    if (DANFEClassOwner.MargemDireita > 0) then
+      Page.RightMargin := DANFEClassOwner.MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
+  end;
 end;
 
 end.

@@ -104,6 +104,7 @@ type
     procedure CarregaPercurso;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
+    procedure AjustaMargensReports;
   protected
     procedure CarregaDados;
     procedure CarregaDadosEventos;
@@ -1388,6 +1389,26 @@ begin
   end;
 end;
 
+procedure TACBrCTeDACTEFR.AjustaMargensReports;
+var
+  Page: TfrxReportPage;
+  I: Integer;
+begin
+  for I := 0 to (frxReport.PreviewPages.Count - 1) do
+  begin
+    Page := frxReport.PreviewPages.Page[I];
+    if (MargemSuperior > 0) then
+      Page.TopMargin := MargemSuperior;
+    if (MargemInferior > 0) then
+      Page.BottomMargin := MargemInferior;
+    if (MargemEsquerda > 0) then
+      Page.LeftMargin := MargemEsquerda;
+    if (MargemDireita > 0) then
+      Page.RightMargin := MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
+  end;
+end;
+
 procedure TACBrCTeDACTEFR.LimpaDados;
 begin
   cdsIdentificacao.EmptyDataSet;
@@ -1479,6 +1500,9 @@ begin
     else
       raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
   end;
+
+  AjustaMargensReports;
+
 end;
 
 function TACBrCTeDACTEFR.PrepareReportEvento: Boolean;
@@ -1532,6 +1556,9 @@ begin
   end
   else
     raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
+
+  AjustaMargensReports;
+
 end;
 
 function TACBrCTeDACTEFR.PrepareReportInutilizacao: Boolean;
@@ -1570,6 +1597,8 @@ begin
   end
   else
     raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
+
+  AjustaMargensReports;
 
 end;
 

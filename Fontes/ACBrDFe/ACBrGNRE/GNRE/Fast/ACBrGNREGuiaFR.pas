@@ -65,6 +65,7 @@ type
     FShowDialog    : boolean;
     function GetPreparedReport: TfrxReport;
     function PrepareReport(GNRE: TGNRERetorno = nil): boolean;
+    procedure AjustaMargensReports;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -149,6 +150,27 @@ begin
   end;
 end;
 
+procedure TACBrGNREGuiaFR.AjustaMargensReports;
+var
+  Page: TfrxReportPage;
+  I: Integer;
+begin
+  for I := 0 to (dmGuia.frxReport.PreviewPages.Count - 1) do
+  begin
+    Page := dmGuia.frxReport.PreviewPages.Page[I];
+    if (MargemSuperior > 0) then
+      Page.TopMargin := MargemSuperior;
+    if (MargemInferior > 0) then
+      Page.BottomMargin := MargemInferior;
+    if (MargemEsquerda > 0) then
+      Page.LeftMargin := MargemEsquerda;
+    if (MargemDireita > 0) then
+      Page.RightMargin := MargemDireita;
+    dmGuia.frxReport.PreviewPages.ModifyPage(I, Page);
+  end;
+end;
+
+
 function TACBrGNREGuiaFR.PrepareReport(GNRE: TGNRERetorno): boolean;
 var
   i: Integer;
@@ -208,6 +230,8 @@ begin
     else
       raise EACBrGNREGuiaFR.Create('Propriedade ACBrGNRE não assinalada.');
   end;
+
+  AjustaMargensReports;
 end;
 
 end.

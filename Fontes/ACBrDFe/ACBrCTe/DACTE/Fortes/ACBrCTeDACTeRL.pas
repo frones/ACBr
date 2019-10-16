@@ -145,6 +145,7 @@ begin
     end;
 
     TDFeReportFortes.AjustarReport(Report, aDACTe);
+    TDFeReportFortes.AjustarMargem(Report, aDACTe);
 
     if aDACTe.MostraPreview then
       Report.PreviewModal
@@ -173,6 +174,7 @@ begin
     DACTeReport.fpDACTe := aDACTe;
 
     TDFeReportFortes.AjustarReport(DACTeReport.RLCTe, DACTeReport.fpDACTe);
+    TDFeReportFortes.AjustarMargem(DACTeReport.RLCTe, DACTeReport.fpDACTe);
     TDFeReportFortes.AjustarFiltroPDF(DACTeReport.RLPDFFilter1, DACTeReport.fpDACTe, AFile);
 
     with DACTeReport.RLPDFFilter1.DocumentInfo do

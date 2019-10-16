@@ -128,6 +128,7 @@ type
     function  PrepareReportEvento: Boolean;
     procedure CriarDataSetsFrx;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
+    procedure AjustaMargensReports;
   public
     frxReport: TfrxReport;
     frxPDFExport: TfrxPDFExport;
@@ -724,6 +725,26 @@ begin
     Value := False;
 end;
 
+procedure TACBrMDFeDAMDFEFR.AjustaMargensReports;
+var
+  Page: TfrxReportPage;
+  I: Integer;
+begin
+  for I := 0 to (frxReport.PreviewPages.Count - 1) do
+  begin
+    Page := frxReport.PreviewPages.Page[I];
+    if (MargemSuperior > 0) then
+      Page.TopMargin := MargemSuperior;
+    if (MargemInferior > 0) then
+      Page.BottomMargin := MargemInferior;
+    if (MargemEsquerda > 0) then
+      Page.LeftMargin := MargemEsquerda;
+    if (MargemDireita > 0) then
+      Page.RightMargin := MargemDireita;
+    frxReport.PreviewPages.ModifyPage(I, Page);
+  end;
+end;
+
 function TACBrMDFeDAMDFEFR.GetPreparedReport: TfrxReport;
 begin
   if Trim(FFastFile) = '' then
@@ -900,6 +921,9 @@ begin
     else
       raise EACBrMDFeDAMDFEFR.Create('Propriedade ACBrMDFe não assinalada.');
   end;
+
+  AjustaMargensReports;
+
 end;
 
 function TACBrMDFeDAMDFEFR.PrepareReportEvento: Boolean;
@@ -956,6 +980,8 @@ begin
   end
   else
     raise EACBrMDFeDAMDFEFR.Create('Propriedade ACBrMDFe não assinalada.');
+
+  AjustaMargensReports;
 end;
 
 procedure TACBrMDFeDAMDFEFR.SetDataSetsToFrxReport;

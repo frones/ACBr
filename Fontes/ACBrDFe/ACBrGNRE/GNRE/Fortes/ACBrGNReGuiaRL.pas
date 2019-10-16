@@ -51,7 +51,7 @@ type
   RLGNRe: TRLReport;
   RLPDFFilter1: TRLPDFFilter;
   private
-    { Private declarations }
+    procedure AjustarMargens(AMargemSuperior: Double; AMargemInferior: Double; AMargemEsquerda: Double; AMargemDireita: Double);
   protected
     FACBrGNRe: TACBrGNRE;
     FGNRe: TGNRERetorno;
@@ -145,6 +145,9 @@ begin
         RLPrinter.Copies := FNumCopias;
       end;
 
+
+      AjustarMargens(AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita);
+
       RLGNRe.PrintDialog := APrintDialog;
       if APreview = True then
         RLGNRe.PreviewModal
@@ -183,6 +186,8 @@ begin
       FMargemEsquerda := AMargemEsquerda;
       FMargemDireita := AMargemDireita;
 
+      AjustarMargens(AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita);
+
       with RLPDFFilter1.DocumentInfo do
       begin
 //        Title := ACBrStr('Guia - GNRe nº ') +  FGNRe.
@@ -198,6 +203,14 @@ begin
     finally
       Free;
     end;
+end;
+
+procedure TfrlGuiaRL.AjustarMargens(AMargemSuperior: Double; AMargemInferior: Double; AMargemEsquerda: Double; AMargemDireita: Double);
+begin
+  RLGNRe.Margins.TopMargin := AMargemSuperior;
+  RLGNRe.Margins.BottomMargin := AMargemInferior;
+  RLGNRe.Margins.LeftMargin := AMargemEsquerda;
+  RLGNRe.Margins.RightMargin := AMargemDireita;
 end;
 
 end.

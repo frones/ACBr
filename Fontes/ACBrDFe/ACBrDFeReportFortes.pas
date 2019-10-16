@@ -75,10 +75,10 @@ begin
   // AJuste das Margens
   with FReport.Margins do
   begin
-    TopMargin := AConfig.MargemSuperior * 10;
-    BottomMargin := AConfig.MargemInferior * 10;
-    LeftMargin := AConfig.MargemEsquerda * 10;
-    RightMargin := AConfig.MargemDireita * 10;
+    TopMargin    := AConfig.MargemSuperior;
+    BottomMargin := AConfig.MargemInferior;
+    LeftMargin   := AConfig.MargemEsquerda;
+    RightMargin  := AConfig.MargemDireita;
   end;
 end;
 

@@ -1614,16 +1614,17 @@ begin
     end;
   end;
 
-  if not ckbRemoverCastWarnings.Checked then
-  begin
-    if MessageDlg('Se não estiver resolvendo os Warnings com strings sugerimos marcar a opção "'+
-                  ckbRemoverCastWarnings.Caption + '" antes de continuar.'+ sLineBreak +
-                  'Deseja continuar assim mesmo?', mtConfirmation, mbYesNo, 0, mbNo) <> mrYes  then
-    begin
-      Stop := True;
-    end;
-  end;
-
+//  //Exibir mensagem abaixo apenas se não for o Delphi 7..
+//  if not ckbRemoverCastWarnings.Checked then
+//  begin
+//    if MessageDlg('Se não estiver resolvendo os Warnings com strings sugerimos marcar a opção "'+
+//                  ckbRemoverCastWarnings.Caption + '" antes de continuar.'+ sLineBreak +
+//                  'Deseja continuar assim mesmo?', mtConfirmation, mbYesNo, 0, mbNo) <> mrYes  then
+//    begin
+//      Stop := True;
+//    end;
+//  end;
+//
   if not ckbCopiarTodasDll.Checked then
   begin
     if MessageDlg('Não foi marcado a opção para copiar as DLLs. Você terá que copiar manualmente. ' + sLineBreak +

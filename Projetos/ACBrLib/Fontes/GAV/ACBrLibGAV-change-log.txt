@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2019
+--- ACBrLibGAVConfig, ACBrLibGAVDataModule ---
+[+] Adicionado as configurações serial.
+   Por: Rafael Dias.
+
+
 28/08/2018
 --- ACBrLibGAV ---
 [+] Inicio do projeto.

@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrGAV, ACBrDevice;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrGAV, ACBrDevice;
 
 type
 
@@ -69,6 +69,7 @@ type
   TLibGAVConfig = class(TLibConfig)
   private
     FGAVConfig: TGAVConfig;
+    FDeviceConfig: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -85,6 +86,8 @@ type
     destructor Destroy; override;
 
     property GAVConfig: TGAVConfig read FGAVConfig;
+    property DeviceConfig: TDeviceConfig read FDeviceConfig;
+
   end;
 
 implementation
@@ -134,11 +137,13 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FGAVConfig := TGAVConfig.Create;
+  FDeviceConfig := TDeviceConfig.Create('GAV_Device');
 end;
 
 destructor TLibGAVConfig.Destroy;
 begin
   FGAVConfig.Free;
+  FDeviceConfig.Free;
 
   inherited Destroy;
 end;

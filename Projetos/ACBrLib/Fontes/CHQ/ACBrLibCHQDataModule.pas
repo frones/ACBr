@@ -87,11 +87,12 @@ begin
 
   with ACBrCHQ1 do
   begin
-//    ArqLog    := pLibConfig.CHQConfig.ArqLog;
-    Porta     := pLibConfig.CHQConfig.Porta;
-    Modelo    := pLibConfig.CHQConfig.Modelo;
+    Porta := pLibConfig.CHQConfig.Porta;
+    Modelo := pLibConfig.CHQConfig.Modelo;
     PaginaDeCodigo := pLibConfig.CHQConfig.PaginaDeCodigo;
   end;
+
+  pLibConfig.DeviceConfig.Assign(ACBrCHQ1.Device);
 end;
 
 procedure TLibCHQDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

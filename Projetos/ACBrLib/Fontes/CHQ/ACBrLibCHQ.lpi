@@ -17,12 +17,12 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MajorVersionNr Value="1"/>
+      <MinorVersionNr Value="2"/>
       <RevisionNr Value="1"/>
-      <BuildNr Value="32"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCHQ - Biblioteca para impressão de Cheque" InternalName="ACBrLibCHQ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CHQ" ProductVersion="0.0.1.30"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCHQ - Biblioteca para impressão de Cheque" InternalName="ACBrLibCHQ" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="CHQ" ProductVersion="0.2.1.1"/>
     </VersionInfo>
     <BuildModes Count="7">
       <Item1 Name="Win32-i386-CDECL" Default="True"/>
@@ -277,9 +277,6 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CHQ\bin\ACBrLibCHQTest.exe"/>
-      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
@@ -297,7 +294,7 @@
         <PackageName Value="ACBrTCP"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibCHQ.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -333,6 +330,10 @@
         <Filename Value="ACBrLibCHQConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

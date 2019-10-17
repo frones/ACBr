@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2019
+--- ACBrLibCHQConfig, ACBrLibCHQDataModule ---
+[+] Adicionado as configurações serial.
+   Por: Rafael Dias.
+
 23/08/2018
 --- ACBrLibCHQ ---
 [+] Inicio do projeto.

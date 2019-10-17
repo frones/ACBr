@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -17,10 +17,9 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="32"/>
+      <MinorVersionNr Value="1"/>
       <Language Value="0416"/>
-      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrDIS - Biblioteca para Display" InternalName="ACBrLibDIS" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="DIS" ProductVersion="0.0.1.30"/>
+      <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrDIS - Biblioteca para Display" InternalName="ACBrLibDIS" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="DIS" ProductVersion="0.1.0.0"/>
     </VersionInfo>
     <BuildModes Count="5">
       <Item1 Name="x86 - CDECL" Default="True"/>
@@ -192,9 +191,16 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <FormatVersion Value="1"/>
         <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
       </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default">
+          <local>
+            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\DIS\bin\ACBrLibDISTest.exe"/>
+          </local>
+        </Mode0>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
@@ -204,7 +210,7 @@
         <PackageName Value="ACBrTCP"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ACBrLibDIS.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -240,6 +246,10 @@
         <Filename Value="ACBrLibDISConsts.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

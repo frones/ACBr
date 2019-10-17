@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2019
+--- ACBrLibDISConfig, ACBrLibDISDataModule ---
+[+] Adicionado as configurações serial.
+   Por: Rafael Dias.
+
 25/08/2018
 --- ACBrLibDIS ---
 [+] Inicio do projeto.

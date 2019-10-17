@@ -97,6 +97,8 @@ begin
     IntervaloEnvioBytes := pLibConfig.DISConfig.IntervaloEnvioBytes;
     RemoveAcentos       := pLibConfig.DISConfig.RemoveAcentos;
   end;
+
+  pLibConfig.DeviceConfig.Assign(ACBrDIS1.Device);
 end;
 
 procedure TLibDISDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

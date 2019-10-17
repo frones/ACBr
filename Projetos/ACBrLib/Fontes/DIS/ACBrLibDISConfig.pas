@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrDIS;
+  ACBrLibConfig, ACBrDeviceConfig, ACBrDIS;
 
 type
 
@@ -78,6 +78,7 @@ type
   TLibDISConfig = class(TLibConfig)
   private
     FDISConfig: TDISConfig;
+    FDeviceConfig: TDeviceConfig;
 
   protected
     function AtualizarArquivoConfiguracao: Boolean; override;
@@ -94,6 +95,8 @@ type
     destructor Destroy; override;
 
     property DISConfig: TDISConfig read FDISConfig;
+    property DeviceConfig: TDeviceConfig read FDeviceConfig;
+
   end;
 
 implementation
@@ -154,11 +157,13 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FDISConfig := TDISConfig.Create;
+  FDeviceConfig := TDeviceConfig.Create('DIS_Device');
 end;
 
 destructor TLibDISConfig.Destroy;
 begin
   FDISConfig.Free;
+  FDeviceConfig.Free;
 
   inherited Destroy;
 end;
@@ -177,15 +182,15 @@ begin
   inherited INIParaClasse;
 
   FDISConfig.LerIni(Ini);
+  FDeviceConfig.LerIni(Ini);
 end;
 
 procedure TLibDISConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibDISNome, CLibDISVersao);
-
   FDISConfig.GravarIni(Ini);
+  FDeviceConfig.GravarIni(Ini);
 end;
 
 procedure TLibDISConfig.ClasseParaComponentes;

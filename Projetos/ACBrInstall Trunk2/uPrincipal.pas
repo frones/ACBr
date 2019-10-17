@@ -44,7 +44,7 @@ interface
 uses
   JclIDEUtils, JclCompilerUtils, ACBrUtil,
 
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, FileCtrl, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
   uFrameLista, IOUtils,
   Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
@@ -175,7 +175,7 @@ type
     function RegistrarActiveXServer(const AServerLocation: string;
       const ARegister: Boolean): Boolean;
     procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
-    procedure ExtrairDiretorioPacote(NomePacote: string);
+    procedure ExtrairDiretorioPacote(const NomePacote: string);
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
     procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
     procedure DeixarSomenteLib;
@@ -185,6 +185,7 @@ type
     procedure GetDriveLetters(AList: TStrings);
     procedure MostraDadosVersao;
     function GetPathACBrInc: TFileName;
+    procedure InstalarLibXml2;
   public
 
   end;
@@ -195,7 +196,7 @@ var
 implementation
 
 uses
-  SVN_Class, FileCtrl, ShellApi, IniFiles, StrUtils, Math, Registry;
+  SVN_Class, ShellApi, IniFiles, StrUtils, Math, Registry;
 
 {$R *.dfm}
 
@@ -224,11 +225,12 @@ begin
       GetExitCodeProcess(sei.hProcess, ExitCode) ;
     until (ExitCode <> STILL_ACTIVE) or  Application.Terminated;
   end;
+  Result := True;
 end;
 
-procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
+procedure TfrmPrincipal.ExtrairDiretorioPacote(const NomePacote: string);
 
-  procedure FindDirPackage(sDir, sPacote: String);
+  procedure FindDirPackage(sDir: String; const sPacote: String);
   var
     oDirList: TSearchRec;
 //    iRet: Integer;
@@ -447,15 +449,26 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.InstalarLibXml2;
+begin
+  if sDestino <> tdNone then
+  begin
+    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libxslt.dll');
+    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libexslt.dll');
+    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libiconv.dll');
+    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libxml2.dll');
+  end;
+end;
+
 // copia as dlls da pasta openssl, estas dlls são utilizadas para assinar
 // arquivos e outras coisas mais
 procedure TfrmPrincipal.InstalarOpenSSL;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\libeay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\ssleay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.13\x86\msvcr120.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\libeay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\ssleay32.dll');
+    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\msvcr120.dll');
   end;
 end;
 
@@ -1354,8 +1367,11 @@ begin
     // instalar capicom
     // *************************************************************************
     try
-      InstalarCapicom;
-      MostrarMensagemInstalado('CAPICOM instalado com sucesso');
+      if not ckbRemoveCapicom.Checked then
+      begin
+        InstalarCapicom;
+        MostrarMensagemInstalado('CAPICOM instalado com sucesso');
+      end;
     except
       on E: Exception do
       begin
@@ -1367,8 +1383,11 @@ begin
     // instalar OpenSSL
     // *************************************************************************
     try
-      InstalarOpenSSL;
-      MostrarMensagemInstalado('OPENSSL instalado com sucesso');
+      if not ckbRemoveOpenSSL.Checked then
+      begin
+        InstalarOpenSSL;
+        MostrarMensagemInstalado('OPENSSL instalado com sucesso');
+      end;
     except
       on E: Exception do
       begin
@@ -1382,8 +1401,10 @@ begin
     if ckbCopiarTodasDll.Checked then
     begin
       try
-        InstalarXMLSec;
+        InstalarLibXml2;
         InstalarDiversos;
+        if not ckbRemoveXMLSec.Checked then
+          InstalarXMLSec;
         MostrarMensagemInstalado('Outras DLL´s instaladas com sucesso');
       except
         on E: Exception do
@@ -1581,6 +1602,35 @@ begin
       'Erro.',
       MB_OK + MB_ICONERROR
     );
+  end;
+
+  if not ckbRemoveXMLSec.Checked then
+  begin
+    if MessageDlg('Usar XMLSec não é recomendado. Sugerimos que marque a opção "'+
+                  ckbRemoveXMLSec.Caption + '" antes de continuar.'+ sLineBreak +
+                  'Deseja continuar assim mesmo?', mtConfirmation, mbYesNo, 0, mbNo) <> mrYes  then
+    begin
+      Stop := True;
+    end;
+  end;
+
+  if not ckbRemoverCastWarnings.Checked then
+  begin
+    if MessageDlg('Se não estiver resolvendo os Warnings com strings sugerimos marcar a opção "'+
+                  ckbRemoverCastWarnings.Caption + '" antes de continuar.'+ sLineBreak +
+                  'Deseja continuar assim mesmo?', mtConfirmation, mbYesNo, 0, mbNo) <> mrYes  then
+    begin
+      Stop := True;
+    end;
+  end;
+
+  if not ckbCopiarTodasDll.Checked then
+  begin
+    if MessageDlg('Não foi marcado a opção para copiar as DLLs. Você terá que copiar manualmente. ' + sLineBreak +
+                  'Deseja continuar assim mesmo?', mtConfirmation, mbYesNo, 0, mbNo) <> mrYes  then
+    begin
+      Stop := True;
+    end;
   end;
 
   // Gravar as configurações em um .ini para utilizar depois

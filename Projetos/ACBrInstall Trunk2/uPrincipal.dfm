@@ -1232,10 +1232,14 @@ object frmPrincipal: TfrmPrincipal
       object ckbCopiarTodasDll: TCheckBox
         Left = 195
         Top = 306
-        Width = 305
+        Width = 350
         Height = 17
-        Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
-        Caption = 'Copiar Todas as DLL'#39's (CLX, Diversos, MSVCR, XMLSec)'
+        Hint = 
+          'Copia todas as DLL'#180's "Extras" para o destino selecionado (CLX, D' +
+          'iversos, MSVCR, LibXml, etc...)'
+        Caption = 
+          'Copiar todas as DLL'#39's requeridas (exceto as marcadas '#39'n'#227'o utiliz' +
+          'ar'#39')'
         TabOrder = 13
       end
       object ckbBCB: TCheckBox
@@ -1290,7 +1294,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbCargaDllTardia: TCheckBox
         Left = 195
-        Top = 237
+        Top = 239
         Width = 379
         Height = 17
         Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
@@ -1301,6 +1305,9 @@ object frmPrincipal: TfrmPrincipal
         Top = 260
         Width = 379
         Height = 17
+        Hint = 
+          'Sugerimos marcar caso n'#227'o esteja resolvendo problemas com string' +
+          's.'
         Caption = 
           'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
           'ng'
@@ -1316,7 +1323,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object ckbRemoveXMLSec: TCheckBox
         Left = 195
-        Top = 216
+        Top = 214
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar XMLSec'
@@ -1732,7 +1739,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

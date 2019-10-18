@@ -391,8 +391,6 @@ procedure TLibSatDM.CarregarDadosVenda(XmlArquivoOuString: Ansistring; aNomePDF:
 begin
   if Trim(XmlArquivoOuString) = '' then exit;
 
-  ACBrSAT1.InicializaCFe;
-
   if FileExists(XmlArquivoOuString) then
   begin
     GravarLog('Carregando arquivo xml [' + XmlArquivoOuString + ']', logParanoico);

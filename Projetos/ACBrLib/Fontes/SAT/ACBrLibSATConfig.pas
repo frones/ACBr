@@ -338,9 +338,12 @@ begin
 end;
 
 procedure TExtratoConfig.AssignChild(const DFeReport: TACBrSATExtratoClass);
+Var
+  LogoVisible: Boolean;
 begin
-  if FileExists(Logo) then
-    DFeReport.PictureLogo.Bitmap.LoadFromFile(Logo);
+  LogoVisible := FileExists(Logo);
+  if LogoVisible then
+    DFeReport.PictureLogo.LoadFromFile(Logo);
 
   DFeReport.ImprimeQRCode := ImprimeQRCode;
   DFeReport.ImprimeMsgOlhoNoImposto := ImprimeMsgOlhoNoImposto;
@@ -358,6 +361,7 @@ begin
 
   if DFeReport is TACBrSATExtratoFortes then
   begin
+    TACBrSATExtratoFortes(DFeReport).LogoVisible := LogoVisible;
     TACBrSATExtratoFortes(DFeReport).LarguraBobina := LarguraBobina;
     TACBrSATExtratoFortes(DFeReport).EspacoFinal := EspacoFinal;
     TACBrSATExtratoFortes(DFeReport).LogoWidth := LogoWidth;

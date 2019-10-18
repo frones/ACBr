@@ -962,6 +962,8 @@ begin
       Resp := TRetornoEnvio.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.InicializaCFe;
         SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp.Resultado := SatDM.ACBrSAT1.EnviarDadosVenda;

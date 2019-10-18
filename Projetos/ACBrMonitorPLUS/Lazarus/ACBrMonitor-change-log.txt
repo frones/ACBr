@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2019
+[*] ACBrMonitor1, ACBrMonitorConfig
+Ajustes nos valores defaults nas margens dos DFes para milímetros
+
 15/10/2019
 [*] ACBrMonitor1, ACBrMonitorConsts
 Validação das configurações SSL ao recarregar o dados .ini, define valores padrão no caso de existir tipos desabilitados.

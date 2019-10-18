@@ -9398,7 +9398,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Height = 71
                     Top = 94
                     Width = 299
-                    Caption = 'Margens (NFe/CTe/MDFe)'
+                    Caption = 'Margens "mm" (NFe/CTe/MDFe)'
                     ClientHeight = 49
                     ClientWidth = 295
                     Font.Height = -13
@@ -10473,7 +10473,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Top = 242
                     Width = 299
                     Anchors = [akLeft, akBottom]
-                    Caption = 'Margens'
+                    Caption = 'Margens "mm"'
                     ClientHeight = 50
                     ClientWidth = 295
                     Font.Height = -13
@@ -13009,7 +13009,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Top = 0
                 Width = 301
                 Align = alCustom
-                Caption = 'Fortes'
+                Caption = 'Fortes (Margens "mm")'
                 ClientHeight = 194
                 ClientWidth = 297
                 Font.Height = -13
@@ -16176,7 +16176,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0

@@ -2351,10 +2351,10 @@ begin
     FonteEndereco             :=  7;
     FonteCampos               :=  8;
     AlturaCampos              :=  30;
-    Margem                    :=  0.7;
-    MargemSup                 :=  0.7;
-    MargemDir                 :=  0.7;
-    MargemEsq                 :=  0.7;
+    Margem                    :=  7;
+    MargemSup                 :=  7;
+    MargemDir                 :=  7;
+    MargemEsq                 :=  7;
     PathPDF                   :=  AcertaPath('PDF');
     DecimaisQTD               :=  2;
     DecimaisValor             :=  2;

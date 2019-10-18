@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2019
+-- ACBrCTeDACTeRLRetrato --
+[-] Possível correção para o problema de: list index out of bounds(0)
+  por: Italo Jurisato Junior
+
 16/10/2019
 -- ACBrCTeDACTeRLRetrato --
 [*] Alteração em nomes de objetos (para o Lazarus).

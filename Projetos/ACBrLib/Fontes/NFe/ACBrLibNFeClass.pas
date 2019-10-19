@@ -661,16 +661,17 @@ begin
     else
       pLib.GravarLog('NFE_Consultar', logNormal);
 
-    EhArquivo := StringEhArquivo(ChaveOuNFe);
-    if EhArquivo then
-      VerificarArquivoExiste(ChaveOuNFe);
-
     with TACBrLibNFe(pLib) do
     begin
       NFeDM.Travar;
 
-      if EhArquivo then
+      EhArquivo := StringEhArquivo(ChaveOuNFe);
+
+      if EhArquivo and not ValidarChave(ChaveOuNFe) then
+      begin
+        VerificarArquivoExiste(ChaveOuNFe);
         NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(ChaveOuNFe);
+      end;
 
       if NFeDM.ACBrNFe1.NotasFiscais.Count = 0 then
       begin
@@ -999,7 +1000,9 @@ begin
         else
           NFeDM.ACBrNFe1.WebServices.Consulta.NFeChave := AChave;
 
-        NFeDM.ACBrNFe1.WebServices.Consulta.Executar;
+        if not NFeDM.ACBrNFe1.WebServices.Consulta.Executar then
+          raise EACBrLibException.Create(ErrConsulta, NFeDM.ACBrNFe1.WebServices.Consulta.Msg);
+
         NFeDM.ACBrNFe1.EventoNFe.Evento.Clear;
 
         with NFeDM.ACBrNFe1.EventoNFe.Evento.New do
@@ -1457,7 +1460,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        with NFeDM.ACBrNFe1 do
+        with NFeDM do
         begin
           EhArquivo := StringEhArquivo(AChaveNFe);
 
@@ -1465,10 +1468,10 @@ begin
             VerificarArquivoExiste(AChaveNFe);
 
           if EhArquivo then
-            NotasFiscais.LoadFromFile(AchaveNFe);
+            ACBrNFe1.NotasFiscais.LoadFromFile(AchaveNFe);
 
-          if NotasFiscais.Count = 0 then
-            raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [NotasFiscais.Count]))
+          if ACBrNFe1.NotasFiscais.Count = 0 then
+            raise EACBrLibException.Create(ErrEnvio, Format(SInfNFeCarregadas, [ACBrNFe1.NotasFiscais.Count]))
           else
           begin
             slMensagemEmail := TStringList.Create;
@@ -1476,7 +1479,7 @@ begin
             slAnexos := TStringList.Create;
             Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
-              with mail do
+              with ACBrNFe1.Mail do
               begin
                 slMensagemEmail.DelimitedText:= sLineBreak;
                 slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
@@ -1487,8 +1490,7 @@ begin
                 slAnexos.DelimitedText := sLineBreak;
                 slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
-                try
-                  NFeDM.ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
+                NFeDM.ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
                     APara,
                     AAssunto,
                     slMensagemEmail,
@@ -1496,12 +1498,8 @@ begin
                     slCC,      // Lista com emails que serão enviado cópias - TStrings
                     slAnexos); // Lista de slAnexos - TStrings
 
-                  Resposta.Msg := 'Email enviado com sucesso';
-                  Result := SetRetorno(ErrOK, Resposta.Gerar);
-                except
-                  on E: Exception do
-                    raise EACBrLibException.Create(ErrRetorno, 'Erro ao enviar email' + sLineBreak + E.Message);
-                end;
+                Resposta.Msg := 'Email enviado com sucesso';
+                Result := SetRetorno(ErrOK, Resposta.Gerar);
               end;
             finally
               Resposta.Free;

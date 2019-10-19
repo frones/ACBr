@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/10/2019
+--- ACBrLibCTeClass ---
+[-] Varias correções nos metodos da biblioteca.
+   Por: Italo Jurisato Junior
+
 18/09/2018
 --- ACBrLibCTe ---
 [+] Inicio do projeto.

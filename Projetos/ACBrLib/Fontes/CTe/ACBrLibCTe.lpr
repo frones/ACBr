@@ -51,7 +51,10 @@ exports
   // Arquivos
   CTE_CarregarXML,
   CTE_CarregarINI,
+  CTE_CarregarEventoXML,
+  CTE_CarregarEventoINI,
   CTE_LimparLista,
+  CTE_LimparListaEventos,
   CTE_Assinar,
   CTE_Validar,
   CTE_ValidarRegrasdeNegocios,

@@ -90,7 +90,13 @@ function CTE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_LimparLista: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_LimparListaEventos: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_Assinar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -342,6 +348,84 @@ begin
   end;
 end;
 
+function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  EhArquivo: boolean;
+  ArquivoOuXml: string;
+begin
+  try
+    VerificarLibInicializada;
+    ArquivoOuXml := string(eArquivoOuXML);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_CarregarEventoXML(' + ArquivoOuXml + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_CarregarEventoXML', logNormal);
+
+    EhArquivo := StringEhArquivo(ArquivoOuXml);
+    if EhArquivo then
+      VerificarArquivoExiste(ArquivoOuXml);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        if EhArquivo then
+          CTeDM.ACBrCTe1.EventoCTe.LerXML(ArquivoOuXml)
+        else
+          CTeDM.ACBrCTe1.EventoCTe.LerXMLFromString(ArquivoOuXml);
+
+        Result := SetRetornoEventoCarregados(CTeDM.ACBrCTe1.EventoCTe.Evento.Count);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+var
+  ArquivoOuINI: string;
+begin
+  try
+    VerificarLibInicializada;
+    ArquivoOuINI := string(eArquivoOuINI);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_CarregarEventoINI(' + ArquivoOuINI + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_CarregarEventoINI', logNormal);
+
+    if StringEhArquivo(ArquivoOuINI) then
+      VerificarArquivoExiste(ArquivoOuINI);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        CTeDM.ACBrCTe1.EventoCTe.LerFromIni(ArquivoOuINI, False);
+        Result := SetRetornoEventoCarregados(CTeDM.ACBrCTe1.EventoCTe.Evento.Count);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 function CTE_LimparLista: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
@@ -355,6 +439,32 @@ begin
       try
         CTeDM.ACBrCTe1.Conhecimentos.Clear;
         Result := SetRetornoCTesCarregados(CTeDM.ACBrCTe1.Conhecimentos.Count);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_LimparListaEventos: longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  try
+    VerificarLibInicializada;
+    pLib.GravarLog('NFE_LimparListaEventos', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        CTeDM.ACBrCTe1.EventoCTe.Evento.Clear;
+        Result := SetRetornoEventoCarregados(CTeDM.ACBrCTe1.EventoCTe.Evento.Count);
       finally
         CTeDM.Destravar;
       end;

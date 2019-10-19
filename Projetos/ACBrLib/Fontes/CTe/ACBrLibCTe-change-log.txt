@@ -46,8 +46,10 @@ Símbolo : Significado
 
 18/10/2019
 --- ACBrLibCTeClass ---
-[-] Varias correções nos metodos da biblioteca.
-   Por: Italo Jurisato Junior
+[+] Adicionado metodos para carregamento dos eventos e limpeza da lista de evento.
+    Por: Rafael Dias
+[*] Varias correções nos metodos da biblioteca.
+    Por: Rafael Dias
 
 18/09/2018
 --- ACBrLibCTe ---

@@ -95,7 +95,7 @@ begin
     PosFim    := pLibConfig.BALConfig.PosFim;
 
     MonitorarBalanca := pLibConfig.BALConfig.MonitorarBalanca;
-    pLibConfig.DeviceConfig.Assign(Device);
+    pLibConfig.DeviceConfig.Apply(Device);
   end;
 end;
 

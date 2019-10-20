@@ -59,7 +59,7 @@ type
     procedure DefinirValoresPadroes;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
-    procedure Assign(const Device: TACBrDevice);
+    procedure Apply(const AACBrDevice: TACBrDevice);
 
     property Baud: Integer read FBaud write FBaud;
     property Data: Integer read FData write FData;
@@ -134,19 +134,19 @@ begin
   AIni.WriteBool(FSessao, CChaveHardFlow, FSoftFlow);
 end;
 
-procedure TDeviceConfig.Assign(const Device: TACBrDevice);
+procedure TDeviceConfig.Apply(const AACBrDevice: TACBrDevice);
 begin
-  Device.Baud := Baud;
-  Device.Data := Data;
-  Device.TimeOut := TimeOut;
-  Device.Parity := Parity;
-  Device.Stop := Stop;
-  Device.MaxBandwidth := MaxBandwidth;
-  Device.SendBytesCount :=SendBytesCount;
-  Device.SendBytesInterval := SendBytesInterval;
-  Device.HandShake := HandShake;
-  Device.HardFlow := HardFlow;
-  Device.SoftFlow := SoftFlow;
+  AACBrDevice.Baud := Baud;
+  AACBrDevice.Data := Data;
+  AACBrDevice.TimeOut := TimeOut;
+  AACBrDevice.Parity := Parity;
+  AACBrDevice.Stop := Stop;
+  AACBrDevice.MaxBandwidth := MaxBandwidth;
+  AACBrDevice.SendBytesCount :=SendBytesCount;
+  AACBrDevice.SendBytesInterval := SendBytesInterval;
+  AACBrDevice.HandShake := HandShake;
+  AACBrDevice.HardFlow := HardFlow;
+  AACBrDevice.SoftFlow := SoftFlow;
 end;
 
 end.

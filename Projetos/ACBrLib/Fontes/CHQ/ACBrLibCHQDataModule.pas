@@ -92,7 +92,7 @@ begin
     PaginaDeCodigo := pLibConfig.CHQConfig.PaginaDeCodigo;
   end;
 
-  pLibConfig.DeviceConfig.Assign(ACBrCHQ1.Device);
+  pLibConfig.DeviceConfig.Apply(ACBrCHQ1.Device);
 end;
 
 procedure TLibCHQDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

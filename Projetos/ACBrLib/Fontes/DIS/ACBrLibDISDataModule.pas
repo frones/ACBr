@@ -98,7 +98,7 @@ begin
     RemoveAcentos       := pLibConfig.DISConfig.RemoveAcentos;
   end;
 
-  pLibConfig.DeviceConfig.Assign(ACBrDIS1.Device);
+  pLibConfig.DeviceConfig.Apply(ACBrDIS1.Device);
 end;
 
 procedure TLibDISDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

@@ -94,7 +94,7 @@ begin
     AberturaAntecipada := pLibConfig.GAVConfig.AberturaAntecipada;
   end;
 
-  pLibConfig.DeviceConfig.Assign(ACBrGAV1.Device);
+  pLibConfig.DeviceConfig.Apply(ACBrGAV1.Device);
 end;
 
 procedure TLibGAVDM.GravarLog(AMsg: String; NivelLog: TNivelLog;

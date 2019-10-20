@@ -101,7 +101,7 @@ begin
     Origem         := pLibConfig.ETQConfig.Origem;
     DPI            := pLibConfig.ETQConfig.DPI;
 
-    pLibConfig.DeviceConfig.Assign(Device);
+    pLibConfig.DeviceConfig.Apply(Device);
   end;
 end;
 

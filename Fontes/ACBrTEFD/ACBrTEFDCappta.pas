@@ -265,6 +265,8 @@ begin
   if Assigned( fpResp ) then
      fpResp.Free ;
 
+  fpResp := TACBrTEFDRespCliSiTef.Create;
+  fpResp.TipoGP := Tipo;
 end;
 
 destructor TACBrTEFDCappta.Destroy;

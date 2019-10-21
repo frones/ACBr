@@ -270,7 +270,7 @@ end;
 
 function TRegistro2List.GetItem(Index: Integer): TRegistro2;
 begin
-  Result := TRegistro2(inherited Items[Index]);
+  Result := TRegistro2(inherited GetItem[Index]);
 end;
 
 function TRegistro2List.New: TRegistro2;
@@ -300,7 +300,7 @@ end;
 
 function TRegistro3List.GetItem(Index: Integer): TRegistro3;
 begin
-  Result := TRegistro3(inherited Items[Index]);
+  Result := TRegistro3(inherited GetItem[Index]);
 end;
 
 function TRegistro3List.New: TRegistro3;
@@ -330,7 +330,7 @@ end;
 
 function TRegistro4List.GetItem(Index: Integer): TRegistro4;
 begin
-  Result := TRegistro4(inherited Items[Index]);
+  Result := TRegistro4(inherited GetItem[Index]);
 end;
 
 function TRegistro4List.New: TRegistro4;
@@ -360,7 +360,7 @@ end;
 
 function TRegistro5List.GetItem(Index: Integer): TRegistro5;
 begin
-  Result := TRegistro5(inherited Items[Index]);
+  Result := TRegistro5(inherited GetItem[Index]);
 end;
 
 function TRegistro5List.New: TRegistro5;

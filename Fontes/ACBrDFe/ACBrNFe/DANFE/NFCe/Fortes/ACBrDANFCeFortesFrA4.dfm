@@ -1,9 +1,9 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Left = 0
   Top = 0
-  Width = 1028
-  Height = 784
   Caption = 'frmACBrDANFCeFortesFrA4'
+  ClientHeight = 745
+  ClientWidth = 1012
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

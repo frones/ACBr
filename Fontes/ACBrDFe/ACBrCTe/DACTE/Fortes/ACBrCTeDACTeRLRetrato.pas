@@ -622,7 +622,7 @@ type
     RLDraw51: TRLDraw;
     RLDraw52: TRLDraw;
     RLDraw50: TRLDraw;
-    RLLabel198: TRLLabel;
+    rllVariavel2: TRLLabel;
     RLDraw108: TRLDraw;
     RLDraw109: TRLDraw;
     rlmComplChave1: TRLMemo;
@@ -1178,8 +1178,10 @@ begin
   // Normal **************************************************************
   if fpCTe.Ide.tpEmis in [teNormal, teSCAN, teSVCSP, teSVCRS] then
   begin
-    rllVariavel1.Enabled := True;
-    RLBarcode1.Enabled := False;
+    rllVariavel1.Visible := True;
+    rllVariavel2.Visible := True;
+    RLBarcode1.Visible := False;
+
     if fpCTe.procCTe.cStat = 100 then
       rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
@@ -1202,8 +1204,10 @@ begin
   begin
     if fpCTe.procCTe.cStat in [100, 101, 110] then
     begin
-      rllVariavel1.Enabled := True;
-      RLBarcode1.Enabled := False;
+      rllVariavel1.Visible := True;
+      rllVariavel2.Visible := True;
+      RLBarcode1.Visible := False;
+
       if fpCTe.procCTe.cStat = 100 then
         rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
 
@@ -1222,8 +1226,9 @@ begin
     end
     else
     begin
-      rllVariavel1.Enabled := False;
-      RLBarcode1.Enabled := True;
+      rllVariavel1.Visible := False;
+      rllVariavel2.Visible := False;
+      RLBarcode1.Visible := True;
 
       strChaveContingencia := fpACBrCTe.GerarChaveContingencia(fpCTe);
       RLBarcode1.Caption := strChaveContingencia;
@@ -1235,8 +1240,9 @@ begin
   // EPEC ****************************************************************
   if fpCTe.Ide.tpEmis = teDPEC then
   begin
-    rllVariavel1.Enabled := False;
-    RLBarcode1.Enabled := True;
+    rllVariavel1.Visible := False;
+    rllVariavel2.Visible := False;
+    RLBarcode1.Visible := True;
 
     strChaveContingencia := fpACBrCTe.GerarChaveContingencia(fpCTe);
     RLBarcode1.Caption := strChaveContingencia;
@@ -2665,7 +2671,7 @@ begin
     RLDraw99.Width         := 427;
     rlbCodigoBarras.Width  := 419;
     rllVariavel1.Width     := 419;
-    RLLabel198.Width       := 419;
+    rllVariavel2.Width     := 419;
     imgQRCode.Visible      := False;
   end;
 end;

@@ -632,6 +632,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_02_CabecalhoBeforePrint
+      object RLBarcode1: TRLBarcode
+        Left = 318
+        Top = 122
+        Width = 298
+        Height = 28
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+        AutoSize = False
+        BarcodeType = bcCode128C
+      end
       object rlsQuadro01: TRLDraw
         Left = 0
         Top = 2
@@ -649,7 +659,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlsLinhaH03: TRLDraw
         Left = 313
-        Top = 94
+        Top = 88
         Width = 304
         Height = 8
         Brush.Style = bsClear
@@ -657,7 +667,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlsLinhaV01: TRLDraw
         Left = 176
-        Top = 124
+        Top = 120
         Width = 1
         Height = 60
         Angle = 90.000000000000000000
@@ -727,8 +737,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Scaled = True
       end
       object rlsLinhaH04: TRLDraw
-        Left = 0
-        Top = 124
+        Left = -6
+        Top = 120
         Width = 332
         Height = 1
         Brush.Style = bsClear
@@ -999,7 +1009,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel74: TRLLabel
         Left = 315
-        Top = 98
+        Top = 92
         Width = 58
         Height = 11
         Caption = 'Chave de acesso'
@@ -1015,7 +1025,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllChave: TRLLabel
         Left = 315
-        Top = 109
+        Top = 104
         Width = 300
         Height = 14
         AutoSize = False
@@ -1193,7 +1203,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllVariavel1: TRLLabel
         Left = 316
-        Top = 127
+        Top = 122
         Width = 298
         Height = 13
         Alignment = taCenter
@@ -1221,25 +1231,15 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw99: TRLDraw
         Left = 332
-        Top = 120
+        Top = 116
         Width = 285
         Height = 10
         Brush.Style = bsClear
         DrawKind = dkLine
       end
-      object RLBarcode1: TRLBarcode
-        Left = 342
-        Top = 60
-        Width = 270
-        Height = 34
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
-        AutoSize = False
-        BarcodeType = bcCode128C
-      end
       object rlbCodigoBarras: TRLBarcode
         Left = 316
-        Top = 65
+        Top = 62
         Width = 298
         Height = 26
         Margins.LeftMargin = 1.000000000000000000
@@ -1249,9 +1249,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         BarcodeType = bcCode128C
         Transparent = False
       end
-      object RLLabel198: TRLLabel
+      object rllVariavel2: TRLLabel
         Left = 316
-        Top = 140
+        Top = 134
         Width = 298
         Height = 13
         Alignment = taCenter

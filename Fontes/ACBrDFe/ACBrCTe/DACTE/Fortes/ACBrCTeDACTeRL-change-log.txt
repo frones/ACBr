@@ -48,6 +48,10 @@ Símbolo : Significado
 
 21/10/2019
 -- ACBrCTeDACTeRLRetrato --
+[*] Ajuste na impressão do Código de Barras Adicional, impresso somente quando o
+    CT-e for emitido em Contingência FS-DA.
+  por: Italo Jurisato Junior
+-- ACBrCTeDACTeRLRetrato --
 [-] https://www.projetoacbr.com.br/forum/topic/54391-erro-ao-imprimir-de-ct-e-os/
   por: wm Rodrigo
 

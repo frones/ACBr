@@ -57,7 +57,7 @@ type
 
   { TACBrECFVirtualSAT }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualSAT = class(TACBrECFVirtualPrinter)
   private
@@ -97,7 +97,7 @@ type
 
   { TACBrECFVirtualSATClass }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualSATClass = class(TACBrECFVirtualPrinterClass)
   private

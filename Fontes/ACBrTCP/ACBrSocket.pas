@@ -124,7 +124,7 @@ TACBrTCPServerThread = class(TThread)
 
 { TACBrTCPServer }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrTCPServer = class( TACBrComponent )
   private
@@ -192,7 +192,7 @@ TACBrOnAntesAbrirHTTP = procedure( var AURL : String ) of object ;
 
 EACBrHTTPError = class( Exception ) ;
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrHTTP = class( TACBrComponent )
   private

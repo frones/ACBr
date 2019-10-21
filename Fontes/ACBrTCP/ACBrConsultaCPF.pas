@@ -48,7 +48,7 @@ type
 
   { TACBrConsultaCPF }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrConsultaCPF = class(TACBrHTTP)
   private

@@ -72,7 +72,7 @@ type
   TACBrSpedFiscalImportarLinha = procedure(var Linha: string; const LinhaI: integer) of Object;
   TACBrSpedFiscalImportarColuna = TACBrSpedFiscalImportarGetColumn;
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSpedFiscalImportar = class(TACBrComponent)
   private

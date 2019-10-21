@@ -56,7 +56,7 @@ type
   TLocalSons = (lsDiretorio, lsRecurso);
 
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}	
   TACBrFala = class( TACBrComponent )
   private

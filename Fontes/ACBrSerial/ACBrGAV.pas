@@ -62,7 +62,7 @@ TACBrGAVModelo = (gavNenhuma, gavSerialMenno, gavSerialGerbo, gavImpressoraECF,
 
 { Componente ACBrGAV }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrGAV = class( TACBrComponent )
   private

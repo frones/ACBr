@@ -75,7 +75,7 @@ TACBrExtensoFormato = (extPadrao, extDolar) ;
 
 { Componente ACBrExtenso }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrExtenso = class( TACBrComponent )
   private

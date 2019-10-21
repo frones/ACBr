@@ -70,7 +70,7 @@ type
 
 { Componente ACBrLCB - Leitor de Código de Barras }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrLCB = class( TACBrComponent )
   private

@@ -61,7 +61,7 @@ type
   EACBrNFeDANFEFR = class(Exception);
 
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFEFR = class( TACBrNFeDANFEClass )
   private
@@ -132,7 +132,7 @@ type
   end;
 
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFCEFR = class( TACBrNFeDANFCEClass )
   private

@@ -47,7 +47,7 @@ uses
 type
   EACBrMDFeDAMDFEFR = class(Exception);
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}	
   TACBrMDFeDAMDFEFR = class(TACBrMDFeDAMDFEClass)
   private

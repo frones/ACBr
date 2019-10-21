@@ -102,7 +102,7 @@ TTrocoList = class(TObjectList)
 
 {Calsse que ira fazer toda a manutencao}
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
 TACBrTroco = class( TACBrComponent )
   private

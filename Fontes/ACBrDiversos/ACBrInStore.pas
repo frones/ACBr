@@ -48,12 +48,12 @@ uses
 
 type
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}	
   TACBrPrecoUnitario = procedure(const Codigo: string;
                                  var PrecoUnitario: Double) of object;
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrInStore = class(TACBrComponent)
   private

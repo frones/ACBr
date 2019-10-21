@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBr_TEFD"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simões de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -19,15 +20,13 @@
       <Other>
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
-          <UseMsgFile Value="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Major="4" Minor="3" Release="9"/>
-    <Files Count="8">
+    <Files Count="9">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFD.pas"/>
         <HasRegisterProc Value="True"/>
@@ -61,8 +60,11 @@
         <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDBanese.pas"/>
         <UnitName Value="ACBrTEFDBanese"/>
       </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\ACBrTEFD\ACBrTEFDCappta.pas"/>
+        <UnitName Value="ACBrTEFDCappta"/>
+      </Item9>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrComum"/>
@@ -73,7 +75,6 @@
     </UsageOptions>
     <PublishOptions>
       <Version Value="2"/>
-      <IgnoreBinaries Value="False"/>
     </PublishOptions>
     <CustomOptions Items="ExternHelp" Version="2">
       <_ExternHelp Items="Count"/>

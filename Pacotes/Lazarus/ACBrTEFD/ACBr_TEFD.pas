@@ -8,7 +8,8 @@ interface
 
 uses
   ACBrTEFD, ACBrTEFDClass, ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, 
-  ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, LazarusPackageIntf;
+  ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDCappta, 
+  LazarusPackageIntf;
 
 implementation
 

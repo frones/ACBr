@@ -49,7 +49,7 @@ uses
   ACBrTEFDDial, ACBrTEFDDisc, ACBrTEFDHiper, ACBrTEFDCliSiTef, ACBrTEFDGpu,
   ACBrTEFDVeSPague, ACBrTEFDBanese, ACBrTEFDGoodCard, ACBrTEFDFoxWin,
   ACBrTEFDCliDTEF, ACBrTEFDPetroCard, ACBrTEFDCrediShop, ACBrTEFDTicketCar,
-  ACBrTEFDConvCard
+  ACBrTEFDConvCard, ACBrTEFDCappta
   {$IfNDef NOGUI}
     {$IfDef FPC}
       ,LResources
@@ -99,8 +99,8 @@ type
 
    { TACBrTEFD }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
+   [ComponentPlatformsAttribute(pidAllPlatforms)]
+   {$ENDIF RTL230_UP}
    TACBrTEFD = class( TACBrComponent )
    private
      fAutoAtivarGP : Boolean;
@@ -162,7 +162,8 @@ type
      fTefPetrocard : TACBrTEFDPetroCard ;
      fTefCrediShop : TACBrTEFDCrediShop ;
      fTefTicketCar : TACBrTEFDTicketCar ;
-     fTefConvCard  : TACBrTEFDConvCard ;     
+     fTefConvCard  : TACBrTEFDConvCard ;
+     fTefCappta    : TACBrTEFDCappta;
 
      fEsperaSTS    : Integer;
      fEsperaMinimaMensagemFinal: Integer;
@@ -328,6 +329,7 @@ type
      property TEFCrediShop : TACBrTEFDCrediShop  read fTefCrediShop ;
      property TEFTicketCar : TACBrTEFDTicketCar  read fTefTicketCar ;
      property TEFConvCard : TACBrTEFDConvCard read fTefConvCard ;     
+     property TEFCappta    : TACBrTEFDCappta    read fTefCappta;
 
      property OnAguardaResp : TACBrTEFDAguardaRespEvent read fOnAguardaResp
         write fOnAguardaResp ;
@@ -584,7 +586,14 @@ begin
   fTEFList.Add(fTefConvCard);     // Adicionando "fTefConvCard" na Lista Objetos de Classes de TEF
   {$IFDEF COMPILER6_UP}
    fTefConvCard.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
-  {$ENDIF}  
+  {$ENDIF}
+
+  { Criando Classe TEF Cappta }
+  fTefCappta := TACBrTEFDCappta.Create(self);
+  fTEFList.Add(fTefCappta);     // Adicionando "fTefCappta" na Lista Objetos de Classes de TEF
+  {$IFDEF COMPILER6_UP}
+   fTefCappta.SetSubComponent(True);   // Ajustando como SubComponente para aparecer no ObjectInspector
+  {$ENDIF}
 
   GPAtual := gpTefDial;
 end;
@@ -701,7 +710,8 @@ begin
     gpPetroCard : fTefClass := fTefPetrocard ;
     gpCrediShop : fTefClass := fTefCrediShop ;
     gpTicketCar : fTefClass := fTefTicketCar ;
-    gpConvCard  : fTefClass := fTefConvCard ;    
+    gpConvCard  : fTefClass := fTefConvCard ;
+    gpCappta    : fTefClass := fTefCappta ;
   end;
 
   fGPAtual := AValue;

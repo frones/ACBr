@@ -90,7 +90,7 @@ type
   TACBrTEFDTipo = ( gpNenhum, gpTefDial, gpTefDisc, gpHiperTef, gpCliSiTef,
                     gpTefGpu, gpVeSPague, gpBanese, gpTefAuttar, gpGoodCard,
                     gpFoxWin, gpCliDTEF, gpPetrocard, gpCrediShop, gpTicketCar,
-                    gpConvCard ) ;
+                    gpConvCard, gpCappta ) ;
 
   TACBrTEFDReqEstado = ( reqNenhum,             // Nennhuma Requisição em andamento
                          reqIniciando,          // Iniciando uma nova Requisicao
@@ -665,7 +665,9 @@ type
    TACBrTEFDGravarLog = procedure(const GP: TACBrTEFDTipo; ALogLine: String; var Tratado: Boolean) of object ;
 
    { TACBrTEFDClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidAllPlatforms)]
+  {$ENDIF RTL230_UP}
    TACBrTEFDClass = class( TComponent )
    private
      fArqLOG : String;

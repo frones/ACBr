@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2019
+-- pnfsNFSeW_IPM--
+[*] https://www.projetoacbr.com.br/forum/topic/54381-ipm-tributa_municipio_prestador-bug/
+   Por: Marcos
+
 16/10/2019
 -- ACBrNFSeWebServices --
 [*] Alterado o método TratarResposta do SubstituirNFSe.

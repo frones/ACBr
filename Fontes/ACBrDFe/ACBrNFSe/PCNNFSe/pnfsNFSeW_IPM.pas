@@ -171,12 +171,17 @@ begin
   begin
     Gerador.wGrupoNFSe('lista');
 
-    if (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> IntToStr(NFSe.Servico.MunicipioIncidencia)) then
-      // Não Tributa no Municipio do prestador
-      Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '0', '')
+    if NFSe.Servico.CodigoTributacaoMunicipio.IsEmpty then
+    begin
+      if (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> IntToStr(NFSe.Servico.MunicipioIncidencia)) then
+        // Não Tributa no Municipio do prestador
+        Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '0', '')
+      else
+        // Tributa no Municipio do Prestador
+        Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '1', '');
+    end
     else
-      // Tributa no Municipio do Prestador
-      Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, '1', '');
+      Gerador.wCampoNFSe(tcStr, '', 'tributa_municipio_prestador', 1, 1, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
 
     Gerador.wCampoNFSe(tcStr, '', 'codigo_local_prestacao_servico', 1, 9, 1, NFSe.Servico.CodigoMunicipio, '');
     Gerador.wCampoNFSe(tcStr, '', 'unidade_codigo', 1, 9, 0, TUnidadeToStr(NFSe.Servico.ItemServico[I].TipoUnidade), '');

@@ -171,7 +171,7 @@ begin
   begin
     Gerador.wGrupoNFSe('lista');
 
-    if NFSe.Servico.CodigoTributacaoMunicipio.IsEmpty then
+    if EstaVazio(NFSe.Servico.CodigoTributacaoMunicipio) then
     begin
       if (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> IntToStr(NFSe.Servico.MunicipioIncidencia)) then
         // Não Tributa no Municipio do prestador

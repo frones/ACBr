@@ -265,7 +265,7 @@ begin
   if Assigned( fpResp ) then
      fpResp.Free ;
 
-  fpResp := TACBrTEFDRespCliSiTef.Create;
+  fpResp := TACBrTEFDResp.Create;
   fpResp.TipoGP := Tipo;
 end;
 

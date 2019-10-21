@@ -1143,6 +1143,7 @@ begin
   // Alguns provedores retornam a resposta em String
   // Aplicado a conversão de String para XML
   FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, 'lt;', '<', [rfReplaceAll]), 'gt;', '>', [rfReplaceAll]);
 
   FPRetornoWS := RemoverCharControle(FPRetornoWS);
 

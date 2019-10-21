@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2019
+-- ACBrNFSeWebServices --
+[*] Possível correção para o provedor Pronim.
+   Por: Italo Jurisato Junior
+
 -- pnfsNFSeW_IPM--
 [*] https://www.projetoacbr.com.br/forum/topic/54381-ipm-tributa_municipio_prestador-bug/
    Por: Marcos

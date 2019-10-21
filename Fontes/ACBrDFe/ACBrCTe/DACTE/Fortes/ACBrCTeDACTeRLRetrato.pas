@@ -778,7 +778,7 @@ begin
   end;
 
   if (fpCTe.infCTeNorm.infDoc.infNFe.Count > 0) or
-     (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[0].idDocAnt.Count > 0) then
+     (fpCTe.infCTeNorm.docAnt.emiDocAnt.Count > 0) then
   begin
     rllTituloCNPJ1.Caption := 'CHAVE DO DF-e';
     rllTituloCNPJ2.Caption := 'CHAVE DO DF-e';

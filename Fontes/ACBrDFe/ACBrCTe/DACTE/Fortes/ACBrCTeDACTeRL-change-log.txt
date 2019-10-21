@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2019
+-- ACBrCTeDACTeRLRetrato --
+[-] https://www.projetoacbr.com.br/forum/topic/54391-erro-ao-imprimir-de-ct-e-os/
+  por: wm Rodrigo
+
 18/10/2019
 -- ACBrCTeDACTeRLRetrato --
 [-] Possível correção para o problema de: list index out of bounds(0)

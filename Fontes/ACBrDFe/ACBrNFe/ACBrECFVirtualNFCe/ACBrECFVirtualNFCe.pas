@@ -62,18 +62,9 @@ type
   TACBrECFVirtualNFCeQuandoImprimirDocumento = procedure(var Tratado: Boolean) of object;
 
   { TACBrECFVirtualNFCe }
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidOSX32 or
-  pidiOSSimulator or  pidAndroid or
-  pidLinux32 or pidiOSDevice
-  {$IFDEF RTL300_UP}
-  or pidiOSDevice32 or pidLinux64
-  or pidWinNX32 or pidWinIoT32
-  or pidiOSDevice64
-  or pidOSX64 or pidLinux32Arm
-  or pidLinux64Arm or pidAndroid64Arm
-  {$ENDIF RTL300_UP})]
-  {$ENDIF RTL230_UP}	
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCe = class(TACBrECFVirtualPrinter)
   private
     function GetACBrNFCe: TACBrNFe;
@@ -119,18 +110,9 @@ type
   end;
 
   { TACBrECFVirtualNFCeClass }
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidOSX32 or
-  pidiOSSimulator or  pidAndroid or
-  pidLinux32 or pidiOSDevice
-  {$IFDEF RTL300_UP}
-  or pidiOSDevice32 or pidLinux64
-  or pidWinNX32 or pidWinIoT32
-  or pidiOSDevice64
-  or pidOSX64 or pidLinux32Arm
-  or pidLinux64Arm or pidAndroid64Arm
-  {$ENDIF RTL300_UP})]
-  {$ENDIF RTL230_UP}	
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private
     fsACBrNFCe: TACBrNFe;

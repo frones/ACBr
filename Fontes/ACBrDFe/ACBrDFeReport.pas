@@ -50,16 +50,7 @@ type
    Determina como será a formatação das casas decimais existentes no relátorio.
    @links TACBrDFeReport.CasasDecimais }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidOSX32 or
-  pidiOSSimulator or  pidAndroid or
-  pidLinux32 or pidiOSDevice
-  {$IFDEF RTL300_UP}
-  or pidiOSDevice32 or pidLinux64
-  or pidWinNX32 or pidWinIoT32
-  or pidiOSDevice64
-  or pidOSX64 or pidLinux32Arm
-  or pidLinux64Arm or pidAndroid64Arm
-  {$ENDIF RTL300_UP})]
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TCasasDecimais = class(TComponent)
   private
@@ -95,16 +86,7 @@ type
   {@class TACBrDFeReport - Classe base para os componentes de impressão dos documentos DFe.
    @links TACBrDFeReport }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidOSX32 or
-  pidiOSSimulator or  pidAndroid or
-  pidLinux32 or pidiOSDevice
-  {$IFDEF RTL300_UP}
-  or pidiOSDevice32 or pidLinux64
-  or pidWinNX32 or pidWinIoT32
-  or pidiOSDevice64
-  or pidOSX64 or pidLinux32Arm
-  or pidLinux64Arm or pidAndroid64Arm
-  {$ENDIF RTL300_UP})]
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrDFeReport = class(TACBrComponent)
   private

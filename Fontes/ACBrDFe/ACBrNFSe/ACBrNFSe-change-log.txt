@@ -48,11 +48,15 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/10/2019
+-- pnfsNFSeW_SP --
+[*] https://www.projetoacbr.com.br/forum/topic/54158-envio-de-nota-para-blumenau-usando-o-webservice-de-migra%C3%A7%C3%A3o/?do=findComment&comment=357512
+   Por: João Paulo Muller
+
 -- ACBrNFSeWebServices --
 [*] Possível correção para o provedor Pronim.
    Por: Italo Jurisato Junior
 
--- pnfsNFSeW_IPM--
+-- pnfsNFSeW_IPM --
 [*] https://www.projetoacbr.com.br/forum/topic/54381-ipm-tributa_municipio_prestador-bug/
    Por: Marcos
 

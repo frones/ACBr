@@ -124,7 +124,11 @@ begin
 
   if NFSe.Servico.Valores.Aliquota > 0 then
   begin
-    aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100);
+    if (FProvedor = proSP) then
+      aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100)
+    else
+      aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota);
+
     aliquota := StringReplace(aliquota, ',', '.', [rfReplaceAll]);
   end
   else

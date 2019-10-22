@@ -72,6 +72,7 @@ type
     procedure SetPastaOutput(const AValue: String);
 
   private
+    FPastaBackup: string;
     function PegaResposta(const Resp : String) : String;
     function AguardaArqResposta(numeroSessao: Integer) : String;
     procedure DoException( const AMessage: String );
@@ -85,6 +86,7 @@ type
   public
     property PastaInput  : String  read FPastaInput  write SetPastaInput;
     property PastaOutput : String  read FPastaOutput write SetPastaOutput;
+    property PastaBackup : string  read FPastaBackup  write FPastaBackup ;
     property Timeout     : Integer read FTimeout     write FTimeout default 30;
     property ErroTimeout : Boolean read FErroTimeout;
     property Erro        : String  read FErro;
@@ -126,6 +128,8 @@ type
     function GetUltimaResposta: String;
     procedure GravaLog(const AString : AnsiString ) ;
     procedure DoException( const AMessage: String );
+    function GetPastaBackup: string;
+    procedure SetPastaBackup(const AValue: string);
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -160,6 +164,7 @@ type
 
     property PastaInput  : String  read GetPastaInput    write SetPastaInput;
     property PastaOutput : String  read GetPastaOutput   write SetPastaOutput;
+    property PastaBackup : string  read GetPastaBackup   write SetPastaBackup;
     property Timeout     : Integer read GetTimeout       write SetTimeout default 30;
     property OnGetNumeroSessao : TACBrIntegradorGetNumeroSessao read FOnGetNumeroSessao
        write FOnGetNumeroSessao;
@@ -223,9 +228,10 @@ var
   NomeArquivoXml, RespostaIntegrador : String;
   ATimeout: Integer;
 
-  function CriarXml(const  NomeArquivo, Comando: String): String;
+  function CriarXml(const PastaBackup, NomeArquivo, Comando: String): String;
   var
     NomeArquivoTmp, NomeArquivoXml: String;
+    PastaBackupIntegrador: string;
   begin
     NomeArquivoTmp := ChangeFileExt(NomeArquivo, '.tmp');
     FOwner.DoLog('Criando arquivo: '+NomeArquivoTmp);
@@ -233,6 +239,27 @@ var
 
     if not FileExists(NomeArquivoTmp) then
       DoException('Erro ao criar o arquivo: '+NomeArquivoTmp);
+
+    // ultimas homologações tem pedido para ver os arquivos enviados
+    if (Trim(PastaBackup) <> EmptyStr) then
+    begin
+      PastaBackupIntegrador := IncludeTrailingPathDelimiter(
+        IncludeTrailingPathDelimiter(PastaBackup) +
+        FormatDateTime('yyyymmdd', DATE));
+
+      ForceDirectories(PastaBackupIntegrador);
+      if not CopyFileTo(
+        NomeArquivoTmp,
+        PastaBackupIntegrador + ChangeFileExt(ExtractFileName(NomeArquivoTmp),'.xml'),
+        False
+      ) then
+      begin
+        DoException(
+          'Erro ao copiar o arquivo: '+ NomeArquivoTmp + ' para pasta de backup ' + sLineBreak +
+          'em: ' + PastaBackupIntegrador + ChangeFileExt(NomeArquivoTmp,'.xml') + sLineBreak +
+          SysErrorMessage(GetLastError));
+      end;
+    end;
 
     NomeArquivoXml := ChangeFileExt(NomeArquivoTmp,'.xml');
     FOwner.DoLog('Renomeando arquivo: '+NomeArquivoTmp+' para: '+NomeArquivoXml);
@@ -246,8 +273,12 @@ begin
   Result := '';
   Clear;
 
-  NomeArquivoXml := CriarXml( FPastaInput + LowerCase(Nome) + '-' + IntToStr(numeroSessao),
-                              Comando);
+  NomeArquivoXml := CriarXml(
+    FPastaBackup,
+    FPastaInput + LowerCase(Nome) + '-' + IntToStr(numeroSessao),
+    Comando
+  );
+
   ActualTime  := Now;
   TimeToRetry := IncSecond(ActualTime,5);
   if (TimeOutComando > 0) then
@@ -277,9 +308,11 @@ begin
         except
         end;
 
-        NomeArquivoXml := CriarXml( FPastaInput + LowerCase(Nome) +'-'+ IntToStr(numeroSessao) +
-                                    '-' + FormatDateTime('HHNNSS', ActualTime),
-                                    Comando);
+        NomeArquivoXml := CriarXml(
+          FPastaBackup,
+          FPastaInput + LowerCase(Nome) +'-'+ IntToStr(numeroSessao) + '-' + FormatDateTime('HHNNSS', ActualTime),
+          Comando
+        );
       end;
     end;
   end;
@@ -443,9 +476,19 @@ begin
   Result := FComandoIntegrador.ErroTimeout;
 end;
 
+function TACBrIntegrador.GetPastaBackup: string;
+begin
+  Result := FComandoIntegrador.PastaBackup;
+end;
+
 function TACBrIntegrador.GetPastaInput: String;
 begin
   Result := FComandoIntegrador.PastaInput;
+end;
+
+procedure TACBrIntegrador.SetPastaBackup(const AValue: string);
+begin
+  FComandoIntegrador.PastaBackup := AValue;
 end;
 
 procedure TACBrIntegrador.SetPastaInput(const AValue: String);

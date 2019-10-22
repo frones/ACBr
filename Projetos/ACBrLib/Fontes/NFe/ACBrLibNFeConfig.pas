@@ -239,7 +239,7 @@ type
 implementation
 
 uses
-  typinfo, synacode,
+  typinfo, strutils, synacode,
   ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum,
   ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
@@ -720,12 +720,20 @@ end;
 
 function TLibNFeConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
 begin
+  Result := '';
+
   if (ASessao = CSessaoDFe) and (AChave = CChaveDadosPFX) then
   begin
+    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
+                                                          + ASessao + ',' + AChave + ',' +
+                                                          IfThen(PrecisaCriptografar(ASessao, AChave),
+                                                          StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
     case Tipo of
-      tfGravar: Result := EncodeBase64(StrCrypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt));
-      tfLer: Result := EncodeBase64(StrCrypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt));
+      tfGravar: Result := StringToB64Crypt(DecodeBase64(AValor), pLib.Config.ChaveCrypt);
+      tfLer: Result := EncodeBase64(B64CryptToString(AValor, pLib.Config.ChaveCrypt));
     end;
+
+    TACBrLib(Owner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);
   end
   else
     Result := inherited AjustarValor(Tipo, ASessao, AChave, AValor);

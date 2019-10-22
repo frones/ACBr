@@ -90,6 +90,7 @@ type
     property cMun: Integer read FcMun write FcMun;
     property xMun: String read FxMun write FxMun;
     property CEP: Integer read FCEP write FCEP;
+
   end;
 
   { TConsultaCadastroResposta }

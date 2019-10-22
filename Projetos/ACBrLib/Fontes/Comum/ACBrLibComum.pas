@@ -350,7 +350,7 @@ begin
     MoverStringParaPChar(pLib.Nome, sNome, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
       pLib.GravarLog('   Nome:' + strpas(sNome) + ', len:' + IntToStr(esTamanho), logCompleto, True);
-    Result := SetRetorno(ErrOK, strpas(sNome));
+    Result := SetRetorno(ErrOK, pLib.Nome);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -368,7 +368,7 @@ begin
     MoverStringParaPChar(pLib.Versao, sVersao, esTamanho);
     if pLib.Config.Log.Nivel >= logCompleto then
       pLib.GravarLog('   Versao:' + strpas(sVersao) + ', len:' + IntToStr(esTamanho), logCompleto, True);
-    Result := SetRetorno(ErrOK, strpas(sVersao));
+    Result := SetRetorno(ErrOK, pLib.Versao);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -459,12 +459,13 @@ begin
     Valor := pLib.Config.LerValor(Sessao, Chave);
 
     MoverStringParaPChar(Valor, sValor, esTamanho);
+
     if (pLib.Config.Log.Nivel >= logCompleto) then
       pLib.GravarLog('   Valor:' + IfThen(pLib.Config.PrecisaCriptografar(Sessao, Chave),
                                           StringOfChar('*', esTamanho), sValor) +
                                           ', len:' + IntToStr(esTamanho), logCompleto, True);
 
-    Result := SetRetorno(ErrOK, strpas(sValor));
+    Result := SetRetorno(ErrOK, Valor);
   except
     on E: EACBrLibException do
       Result := SetRetorno(E.Erro, E.Message);
@@ -484,7 +485,9 @@ begin
     Chave := Ansistring(eChave);
     Valor := Ansistring(eValor);
 
-    pLib.GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' + Valor + ')', logNormal);
+    pLib.GravarLog('LIB_ConfigGravarValor(' + Sessao + ', ' + Chave + ', ' +
+                                          IfThen(pLib.Config.PrecisaCriptografar(Sessao, Chave),
+                                          StringOfChar('*', Length(Valor)), Valor) + ')', logNormal);
 
     pLib.Config.GravarValor(Sessao, Chave, Valor);
     Result := SetRetorno(ErrOK);

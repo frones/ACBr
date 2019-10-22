@@ -339,7 +339,7 @@ type
 implementation
 
 uses
-  TypInfo,
+  TypInfo, strutils,
   ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TSistemaConfig }
@@ -932,8 +932,8 @@ begin
 
   TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar(' + ASessao + ',' + AChave + ')', logParanoico);
 
-  Result := (AChave = CChaveSenha) and ((ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or
-                                        (ASessao = CSessaoDFe));
+  Result := ((AChave = CChaveSenha) or (AChave = CChaveDadosPFX)) and
+            ((ASessao = CSessaoProxy) or (ASessao = CSessaoEmail) or (ASessao = CSessaoDFe));
 
   TACBrLib(FOwner).GravarLog(ClassName + '.PrecisaCriptografar - Feito Result: ' + BoolToStr(Result, True), logParanoico);
 end;
@@ -941,19 +941,19 @@ end;
 function TLibConfig.AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring;
 begin
   TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor(' + GetEnumName(TypeInfo(TTipoFuncao), Integer(Tipo)) + ','
-                                                          + ASessao + ',' + AChave + ',' + AValor +')', logParanoico);
-
+                                                          + ASessao + ',' + AChave + ',' +
+                                                          IfThen(PrecisaCriptografar(ASessao, AChave),
+                                                          StringOfChar('*', Length(AValor)), AValor) +')', logParanoico);
+  Result := AValor;
   if PrecisaCriptografar(ASessao, AChave) then
   begin
     case Tipo of
-      tfGravar: Result := StringToB64Crypt(AValor, pLib.Config.ChaveCrypt);
-      tfLer: Result := B64CryptToString(AValor, pLib.Config.ChaveCrypt);
+      tfGravar: Result := StringToB64Crypt(Result, pLib.Config.ChaveCrypt);
+      tfLer: Result := B64CryptToString(Result, pLib.Config.ChaveCrypt);
     end;
-  end
-  else
-    Result := AValor;
+  end;
 
-  TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor - Feito Result: ' + Result, logParanoico);
+  TACBrLib(FOwner).GravarLog(ClassName + '.AjustarValor - Feito', logParanoico);
 end;
 
 end.

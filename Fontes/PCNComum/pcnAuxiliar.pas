@@ -711,11 +711,14 @@ end;
 
 function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
 begin
-  if Ano >= 2018 then
-  begin
-    // http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/D9242.htm
-    Result := GetPrimeiroDomingoDoMes(ano, 11);
-  end
+
+// http://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Decreto/D9772.htm
+// http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/D9242.htm
+
+  if Ano >= 2019 then
+    Result := 0
+  else if Ano >= 2018 then
+    Result := GetPrimeiroDomingoDoMes(ano, 11)
   else
   begin
     {Até 2017, o inicio do horário de verão era no terceiro domingo do mes de outubro}
@@ -749,6 +752,11 @@ var
   domingoCarnaval: TDateTime;
   terceiroDomingoFevereiro: TDateTime;
 begin
+  // http://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Decreto/D9772.htm
+  Result := 0;
+  if ano > 2019 then
+    Exit;
+
   domingoCarnaval := getDataDoCarnaval(ano) - 2; //Carnaval é na terça - 2 = Domingo
   terceiroDomingoFevereiro := getTerceiroDomingoDoMes(ano, 2);
   if domingoCarnaval <> terceiroDomingoFevereiro then

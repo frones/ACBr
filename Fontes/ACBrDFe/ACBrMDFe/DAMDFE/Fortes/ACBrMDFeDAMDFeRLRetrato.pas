@@ -65,7 +65,7 @@ type
     rlLabel77: TRLLabel;
     rllEmissao: TRLLabel;
     rllModelo: TRLLabel;
-    rllMsgTeste: TRLLabel;
+    rllMsg1: TRLLabel;
     rllDataHoraImpressao: TRLLabel;
     rllNumMDFe: TRLLabel;
     rllSerie: TRLLabel;
@@ -175,6 +175,7 @@ type
     RLDraw17: TRLDraw;
     rllModal: TRLLabel;
     rllProtocolo: TRLMemo;
+    rllMsg2: TRLLabel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -507,56 +508,59 @@ begin
 
   // Mensagem para modo Homologacao.
 
-  rllMsgTeste.Enabled := False;
-  rllMsgTeste.Visible := False;
+  rllMsg1.Caption := '';
+  rllMsg1.Enabled := False;
+  rllMsg1.Visible := False;
+  rllMsg2.Caption := '';
+  rllMsg2.Enabled := False;
+  rllMsg2.Visible := False;
 
-  if fpMDFe.Ide.tpAmb = taHomologacao then
+  if fpMDFe.procMDFe.cStat > 0 then
   begin
-    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
-    rllMsgTeste.Enabled := True;
-    rllMsgTeste.Visible := True;
+    if fpMDFe.Ide.tpAmb = taHomologacao then
+    begin
+      rllMsg1.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+      rllMsg1.Enabled := True;
+      rllMsg1.Visible := True;
+    end;
+
+    if (fpMDFe.procMDFe.cStat = 101) or (fpDAMDFe.Cancelada) then
+    begin
+      rllMsg2.Caption := 'MDF-e CANCELADO';
+      rllMsg2.Visible := True;
+      rllMsg2.Enabled := True;
+    end;
+
+    if (fpMDFe.procMDFe.cStat = 100) and (fpDAMDFe.Encerrado) then
+    begin
+      rllMsg2.Caption := 'MDF-e ENCERRADO';
+      rllMsg2.Visible := True;
+      rllMsg2.Enabled := True;
+    end;
+
+    if fpMDFe.procMDFe.cStat = 110 then
+    begin
+      rllMsg2.Caption := 'MDF-e DENEGADO';
+      rllMsg2.Visible := True;
+      rllMsg2.Enabled := True;
+    end;
+
+    if not fpMDFe.procMDFe.cStat in [100, 101, 110] then
+    begin
+      rllMsg2.Caption := fpMDFe.procMDFe.xMotivo;
+      rllMsg2.Visible := True;
+      rllMsg2.Enabled := True;
+    end;
   end
   else
   begin
-    if fpMDFe.procMDFe.cStat > 0 then
-    begin
-      if (fpMDFe.procMDFe.cStat = 101) or (fpDAMDFe.Cancelada) then
-      begin
-        rllMsgTeste.Caption := 'MDF-e CANCELADO';
-        rllMsgTeste.Visible := True;
-        rllMsgTeste.Enabled := True;
-      end;
-
-      if (fpMDFe.procMDFe.cStat = 100) and (fpDAMDFe.Encerrado) then
-      begin
-        rllMsgTeste.Caption := 'MDF-e ENCERRADO';
-        rllMsgTeste.Visible := True;
-        rllMsgTeste.Enabled := True;
-      end;
-
-      if fpMDFe.procMDFe.cStat = 110 then
-      begin
-        rllMsgTeste.Caption := 'MDF-e DENEGADO';
-        rllMsgTeste.Visible := True;
-        rllMsgTeste.Enabled := True;
-      end;
-
-      if not fpMDFe.procMDFe.cStat in [101, 110, 100] then
-      begin
-        rllMsgTeste.Caption := fpMDFe.procMDFe.xMotivo;
-        rllMsgTeste.Visible := True;
-        rllMsgTeste.Enabled := True;
-      end;
-    end
-    else
-    begin
-      rllMsgTeste.Caption := ACBrStr('MDF-E NÃO ENVIADO PARA SEFAZ');
-      rllMsgTeste.Visible := True;
-      rllMsgTeste.Enabled := True;
-    end;
+    rllMsg1.Caption := ACBrStr('MDF-E NÃO ENVIADO PARA SEFAZ');
+    rllMsg1.Visible := True;
+    rllMsg1.Enabled := True;
   end;
 
-  rllMsgTeste.Repaint;
+  rllMsg1.Repaint;
+  rllMsg2.Repaint;
 
   // imprime data e hora da impressao
   rllDataHoraImpressao.Caption := ACBrStr('DATA E HORA DA IMPRESSÃO: ') + FormatDateTime('dd/mm/yyyy hh:nn', Now);

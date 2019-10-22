@@ -12,7 +12,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 30
-    Top = 0
+    Top = 1
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -883,7 +883,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object rllMsgTeste: TRLLabel
+      object rllMsg1: TRLLabel
         Left = 11
         Top = 38
         Width = 724
@@ -930,6 +930,21 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
         Transparent = False
+      end
+      object rllMsg2: TRLLabel
+        Left = 325
+        Top = 75
+        Width = 98
+        Height = 31
+        Alignment = taCenter
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -27
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
       end
     end
     object rlb_7_Documentos_Titulos: TRLBand

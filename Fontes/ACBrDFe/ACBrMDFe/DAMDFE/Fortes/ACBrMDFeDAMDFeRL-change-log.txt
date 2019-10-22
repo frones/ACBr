@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/10/2019
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Acrescentado uma segunda mensagem para mostrar se o MDF-e esta Cancelado ou
+    Encerrado, mesmo quando este for enviado em ambiente de homologação
+   Por: Italo Jurisato Junior
+
 16/10/2019
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Alteração no layout .lfm convertendo para UTF8

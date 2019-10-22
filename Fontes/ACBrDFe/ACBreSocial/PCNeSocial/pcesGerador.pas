@@ -819,7 +819,7 @@ begin
 
   Gerador.wCampo(tcStr, '', 'grauInstr', 2, 2, 1, pTrabalhador.GrauInstr);
 
-  if (tipo = 2) and (AcadIni = tpSim) then
+  if (tipo = 2) and (AcadIni = tpNao) then
     Gerador.wCampo(tcStr, '', 'indPriEmpr', 1, 1, 0, eSSimNaoToStr(pTrabalhador.IndPriEmpr));
 
   Gerador.wCampo(tcStr, '', 'nmSoc', 1, 70, 0, pTrabalhador.nmSoc);

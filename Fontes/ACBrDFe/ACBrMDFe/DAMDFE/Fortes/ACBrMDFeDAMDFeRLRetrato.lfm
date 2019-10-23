@@ -1,13 +1,13 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 214
-  Top = 36
+  Left = 146
+  Top = 55
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLMDFe: TRLReport
     Tag = 1
-    Left = 30
+    Left = 1
     Top = 1
     Font.Height = -8
     Font.Name = 'Courier New'
@@ -20,7 +20,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_2_Rodo: TRLBand[0]
       Left = 26
       Height = 208
-      Top = 385
+      Top = 368
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -636,7 +636,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_3_Aereo: TRLBand[1]
       Left = 26
       Height = 54
-      Top = 593
+      Top = 576
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -652,7 +652,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_4_Aquav: TRLBand[2]
       Left = 26
       Height = 121
-      Top = 647
+      Top = 630
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -989,7 +989,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_5_Ferrov: TRLBand[3]
       Left = 26
       Height = 60
-      Top = 768
+      Top = 751
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1004,7 +1004,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_6_Observacao: TRLBand[4]
       Left = 26
       Height = 152
-      Top = 946
+      Top = 929
       Width = 742
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1137,7 +1137,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object rlb_7_Documentos_Titulos: TRLBand[5]
       Left = 26
       Height = 32
-      Top = 828
+      Top = 811
       Width = 742
       AutoExpand = False
       BandType = btHeader
@@ -1284,7 +1284,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     end
     object rlb_2: TRLBand[6]
       Left = 26
-      Height = 129
+      Height = 112
       Top = 256
       Width = 742
       AutoExpand = False
@@ -1305,10 +1305,22 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_3_AereoBeforePrint
+      object RLDraw19: TRLDraw
+        Left = 1
+        Height = 9
+        Top = 17
+        Width = 428
+        Angle = 0
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
       object rlLabel12: TRLLabel
         Left = 150
         Height = 14
-        Top = 6
+        Top = 26
         Width = 120
         Caption = 'PESO TOTAL (Kg)'
         Color = clWhite
@@ -1325,7 +1337,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllPesoTotal: TRLLabel
         Left = 150
         Height = 16
-        Top = 22
+        Top = 42
         Width = 120
         Alignment = taCenter
         AutoSize = False
@@ -1344,7 +1356,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllqNFeMDFe: TRLLabel
         Left = 72
         Height = 16
-        Top = 22
+        Top = 42
         Width = 74
         Alignment = taCenter
         AutoSize = False
@@ -1363,7 +1375,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllqCTe: TRLLabel
         Left = 1
         Height = 16
-        Top = 22
+        Top = 42
         Width = 66
         Alignment = taCenter
         AutoSize = False
@@ -1382,7 +1394,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object lblQTDENFeMDFe: TRLLabel
         Left = 72
         Height = 15
-        Top = 6
+        Top = 26
         Width = 74
         AutoSize = False
         Caption = 'QTDE MDF-e'
@@ -1400,7 +1412,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rlLabel5: TRLLabel
         Left = 1
         Height = 18
-        Top = 6
+        Top = 26
         Width = 66
         AutoSize = False
         Caption = 'QTDE CT-e'
@@ -1418,7 +1430,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLLabel27: TRLLabel
         Left = 274
         Height = 14
-        Top = 6
+        Top = 26
         Width = 152
         Caption = 'VALOR DA MERCADORIA R$'
         Color = clWhite
@@ -1435,7 +1447,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllValorMercadoria: TRLLabel
         Left = 274
         Height = 16
-        Top = 22
+        Top = 42
         Width = 152
         Alignment = taCenter
         AutoSize = False
@@ -1453,8 +1465,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       end
       object RLPanel4: TRLPanel
         Left = 432
-        Height = 72
-        Top = 6
+        Height = 64
+        Top = 2
         Width = 306
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -1467,7 +1479,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
         object RLBarcode1: TRLBarcode
           Left = 5
-          Height = 42
+          Height = 39
           Top = 18
           Width = 298
           Alignment = taCenter
@@ -1503,7 +1515,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLPanel3: TRLPanel
         Left = 432
         Height = 42
-        Top = 82
+        Top = 68
         Width = 307
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -1557,7 +1569,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object rllDescricao: TRLLabel
         Left = 4
         Height = 8
-        Top = 73
+        Top = 72
         Width = 141
         Caption = 'PROTOCOLO DE AUTORIZAÇÃO DE USO'
         Color = clWhite
@@ -1576,7 +1588,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLDraw17: TRLDraw
         Left = 1
         Height = 9
-        Top = 40
+        Top = 60
         Width = 428
         Angle = 0
         DrawKind = dkLine
@@ -1588,9 +1600,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLDraw2: TRLDraw
         Left = 70
         Height = 44
-        Top = 1
+        Top = 21
         Width = 1
-        Align = faTopOnly
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1602,9 +1613,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLDraw3: TRLDraw
         Left = 428
         Height = 44
-        Top = 1
+        Top = 21
         Width = 1
-        Align = faTopOnly
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1616,9 +1626,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLDraw4: TRLDraw
         Left = 148
         Height = 44
-        Top = 1
+        Top = 20
         Width = 1
-        Align = faTopOnly
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1630,9 +1639,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLDraw15: TRLDraw
         Left = 272
         Height = 44
-        Top = 1
+        Top = 21
         Width = 1
-        Align = faTopOnly
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1642,10 +1650,10 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Height = 0
       end
       object rllModal: TRLLabel
-        Left = 4
+        Left = 1
         Height = 15
-        Top = 51
-        Width = 426
+        Top = 3
+        Width = 427
         Alignment = taCenter
         AutoSize = False
         Borders.Sides = sdCustom
@@ -1668,8 +1676,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       end
       object rllProtocolo: TRLMemo
         Left = 12
-        Height = 36
-        Top = 87
+        Height = 23
+        Top = 86
         Width = 404
         Alignment = taCenter
         Behavior = [beSiteExpander]
@@ -1687,7 +1695,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     object subItens: TRLSubDetail[7]
       Left = 26
       Height = 86
-      Top = 860
+      Top = 843
       Width = 742
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
@@ -2237,6 +2245,19 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
+        object RLDraw18: TRLDraw
+          Left = 352
+          Height = 31
+          Top = 0
+          Width = 1
+          Angle = 90
+          Brush.Style = bsClear
+          DrawKind = dkLine
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
       object rlLabel17: TRLLabel
         Left = 4
@@ -2259,7 +2280,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       object RLMemo1: TRLMemo
         Left = 99
         Height = 14
-        Top = 174
+        Top = 178
         Width = 323
         Behavior = [beSiteExpander]
         Font.Color = clWindowText

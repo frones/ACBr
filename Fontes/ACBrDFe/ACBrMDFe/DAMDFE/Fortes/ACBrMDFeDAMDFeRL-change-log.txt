@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/10/2019
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Ajustes de alinhamento de alguns campos.
+   Por: Jose A Silva
+
 22/10/2019
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Acrescentado uma segunda mensagem para mostrar se o MDF-e esta Cancelado ou

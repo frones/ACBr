@@ -176,6 +176,8 @@ type
     rllModal: TRLLabel;
     rllProtocolo: TRLMemo;
     rllMsg2: TRLLabel;
+    RLDraw18: TRLDraw;
+    RLDraw19: TRLDraw;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -225,11 +227,11 @@ begin
   if (RLMDFe.PageNumber <> 1) then
   begin
     rlb_2_Rodo.Visible := False;
-    rlb_2.Visible    := False;
+    rlb_2.Visible      := False;
   end;
 
   {$IFNDEF BORLAND}
-    RLMemo1.Layout := tlCenter;
+    RLMemo1.Layout    := tlCenter;
     RLMemo1.Font.Size := 6;
   {$ENDIF}
 
@@ -260,10 +262,13 @@ begin
       with EnderEmit do
       begin
         rlmDadosEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro));
+
         if XCpl <> '' then
           rlmDadosEmitente.Lines.Add(XCpl);
+
         if XBairro <> '' then
           rlmDadosEmitente.Lines.Add(XBairro);
+
         rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(CEP) +
           ' - ' + XMun + ' - ' + UF);
       end;
@@ -346,6 +351,7 @@ var
 //  averbacao: string;
 begin
   inherited;
+
   rlb_2_Rodo.Enabled := (fpMDFe.Ide.modal = moRodoviario);
 
   if rlb_2_Rodo.Enabled then
@@ -358,6 +364,7 @@ begin
                      fpMDFe.rodo.veicTracao.UF );
 
   rlmRNTRC.Lines.Clear;
+
   if fpMDFe.rodo.veicTracao.prop.RNTRC <> '' then
     rlmRNTRC.Lines.Add(fpMDFe.rodo.veicTracao.prop.RNTRC)
   else
@@ -444,6 +451,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
+
   rlb_3_Aereo.Enabled := (fpMDFe.Ide.modal = moAereo);
 
   if rlb_3_Aereo.Enabled then
@@ -457,6 +465,7 @@ var
   i: integer;
 begin
   inherited;
+
   rlb_4_Aquav.Enabled := (fpMDFe.Ide.modal = moAquaviario);
 
   if rlb_4_Aquav.Enabled then
@@ -488,6 +497,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
+
   rlb_5_Ferrov.Enabled := (fpMDFe.Ide.modal = moFerroviario);
 
   if rlb_5_Ferrov.Enabled then
@@ -579,6 +589,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.RLMDFeBeforePrint(Sender: TObject; var PrintIt: boolean);
 begin
   inherited;
+
   nItemControle := 0;
   FTotalPages   := 1;
   RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
@@ -669,6 +680,7 @@ procedure TfrlDAMDFeRLRetrato.RLMDFeDataRecord(Sender: TObject; RecNo,
   CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
   inherited;
+
   Eof := (RecNo > 1);
   RecordAction := raUseIt;
   rlb_6_Observacao.Visible := Eof;
@@ -678,6 +690,7 @@ procedure TfrlDAMDFeRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
   CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
   inherited;
+
   FNumItem     := RecNo - 1;
   Eof          := (RecNo > fpMDFe.infDoc.infMunDescarga.Count);
   RecordAction := raUseIt;
@@ -686,6 +699,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 begin
   inherited;
+
   rlmChave1.Lines.Clear;
   rlmChave2.Lines.Clear;
 end;
@@ -704,6 +718,7 @@ var
   end;
 begin
   nItem := 0;
+
   with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
     rlbNumcipio.Caption := ACBrStr(Format('Município %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
@@ -747,6 +762,7 @@ begin
       Inc(nItem);
     end;
   end;
+
   inherited;
 end;
 

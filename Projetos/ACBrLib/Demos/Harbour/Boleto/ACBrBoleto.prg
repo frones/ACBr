@@ -222,7 +222,7 @@ METHOD SetDiretorioArquivo(eDir, eArq) CLASS ACBrBoleto
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
     buffer := Space(bufferLen)   
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SetDiretorioArquivo", @buffer, @bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_SetDiretorioArquivo", hb_StrToUTF8(eDir), hb_StrToUTF8(eArq), @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 

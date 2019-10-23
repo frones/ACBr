@@ -875,6 +875,10 @@ begin
     VerificarNomeEPath(True);
 
     ClasseParaINI;
+
+    if FIni.FileName <> FNomeArquivo then
+      FIni.Rename(FNomeArquivo, False);
+
     FIni.UpdateFile;
   finally
     TACBrLib(FOwner).GravarLog(ClassName + '.Gravar - Feito', logParanoico);

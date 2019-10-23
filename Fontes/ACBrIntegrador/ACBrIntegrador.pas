@@ -225,13 +225,14 @@ end;
 function TComandoIntegrador.EnviaComando(numeroSessao: Integer; const Nome, Comando: String; TimeOutComando : Integer = 0): String;
 var
   LocTimeOut, ActualTime, TimeToRetry : TDateTime;
-  NomeArquivoXml, RespostaIntegrador : String;
+  NomeArquivoXml, RespostaIntegrador: String;
   ATimeout: Integer;
 
   function CriarXml(const PastaBackup, NomeArquivo, Comando: String): String;
   var
     NomeArquivoTmp, NomeArquivoXml: String;
     PastaBackupIntegrador: string;
+    MensagemDeErro : String;
   begin
     NomeArquivoTmp := ChangeFileExt(NomeArquivo, '.tmp');
     FOwner.DoLog('Criando arquivo: '+NomeArquivoTmp);
@@ -254,10 +255,15 @@ var
         False
       ) then
       begin
-        DoException(
+	    MensagemDeErro := 
           'Erro ao copiar o arquivo: '+ NomeArquivoTmp + ' para pasta de backup ' + sLineBreak +
-          'em: ' + PastaBackupIntegrador + ChangeFileExt(NomeArquivoTmp,'.xml') + sLineBreak +
-          SysErrorMessage(GetLastError));
+          'em: ' + PastaBackupIntegrador + ChangeFileExt(NomeArquivoTmp,'.xml');
+
+        {$IFNDEF FPC}
+        MensagemDeErro := MensagemDeErro + sLineBreak + SysErrorMessage(GetLastError);
+        {$ENDIF}
+
+        DoException(MensagemDeErro);
       end;
     end;
 

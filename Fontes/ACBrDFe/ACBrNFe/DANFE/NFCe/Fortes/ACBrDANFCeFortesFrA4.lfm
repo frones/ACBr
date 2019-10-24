@@ -1,17 +1,17 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 246
+  Left = 0
   Height = 745
-  Top = 16
-  Width = 995
+  Top = 8
+  Width = 1012
   Caption = 'frmACBrDANFCeFortesFrA4'
   ClientHeight = 745
-  ClientWidth = 995
+  ClientWidth = 1012
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '2.0.2.0'
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
@@ -232,7 +232,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 105
-        Caption = 'Produto.............:'
+        Caption = 'Produto'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -264,7 +264,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 74
-        Caption = 'Quantidade:'
+        Caption = 'Quantidade'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -280,7 +280,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 72
-        Caption = 'Vlr.Unitário:'
+        Caption = 'Vlr.Unitário'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -296,7 +296,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 70
-        Caption = 'Valor Total:'
+        Caption = 'Valor Total'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -312,7 +312,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 63
-        Caption = 'Desconto:'
+        Caption = 'Desconto'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -329,7 +329,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Height = 16
         Top = 0
         Width = 70
-        Caption = 'Acréscimo:'
+        Caption = 'Acréscimo'
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
@@ -404,7 +404,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Width = 74
           Alignment = taRightJustify
           AutoSize = False
-          Caption = 'Quantidade:'
+          Caption = 'Quantidade'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -423,7 +423,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Width = 72
           Alignment = taRightJustify
           AutoSize = False
-          Caption = 'Vlr.Unitário:'
+          Caption = 'Vlr.Unitário'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -442,7 +442,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Width = 63
           Alignment = taRightJustify
           AutoSize = False
-          Caption = 'Desconto:'
+          Caption = 'Desconto'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -461,7 +461,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Width = 70
           Alignment = taRightJustify
           AutoSize = False
-          Caption = 'Acréscimo:'
+          Caption = 'Acréscimo'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -624,7 +624,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Borders.DrawTop = False
           Borders.DrawRight = False
           Borders.DrawBottom = True
-          Caption = 'Forma de Pagamento :'
+          Caption = 'Forma de Pagamento'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
@@ -679,7 +679,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Top = 0
           Width = 137
           Alignment = taRightJustify
-          Caption = 'Forma de Pagamento :'
+          Caption = 'Forma de Pagamento'
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'

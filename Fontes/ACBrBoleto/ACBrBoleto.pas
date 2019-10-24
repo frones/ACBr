@@ -392,7 +392,8 @@ type
     cobBancoCresolSCRS,
     cobCitiBank,
     cobBancoABCBrasil,
-    cobDaycoval
+    cobDaycoval,
+    cobUniprimeNortePR
     );
 
   TACBrTitulo = class;
@@ -1466,7 +1467,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval;
+     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -2443,6 +2444,7 @@ begin
      cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
      cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
      cobDaycoval            : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
+     cobUniprimeNortePR     : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}   
 
    else
      fBancoClass := TACBrBancoClass.create(Self);
@@ -3085,6 +3087,7 @@ begin
     745: Result := cobCitiBank;
     246: Result := cobBancoABCBrasil;
     707: Result := cobDaycoval;
+    084: Result := cobUniprimeNortePR;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));
@@ -3135,7 +3138,7 @@ begin
         Convenio      := IniBoletos.ReadString(CCedente,'CONVENIO',Convenio);
         CaracTitulo  := TACBrCaracTitulo(IniBoletos.ReadInteger(CCedente,'CaracTitulo',Integer(CaracTitulo) ));
         TipoCarteira := TACBrTipoCarteira(IniBoletos.ReadInteger(CCedente,'TipoCarteira', Integer(TipoCarteira) ));
-        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento',Integer(TipoDocumento) ));
+        TipoDocumento:= TACBrTipoDocumento(IniBoletos.ReadInteger(CCedente,'TipoDocumento', Integer(TipoDocumento) ));
 
         wLayoutBoleto:= IniBoletos.ReadInteger(CCedente,'LAYOUTBOL', Integer(Self.ACBrBoletoFC.LayOut) );
         Self.ACBrBoletoFC.LayOut  := TACBrBolLayOut(wLayoutBoleto);
@@ -3244,6 +3247,7 @@ begin
             TipoImpressao := TACBrTipoImpressao(IniBoletos.ReadInteger(Sessao,'TipoImpressao',1));
             TipoDesconto := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto',0));
             TipoDesconto2 := TACBrTipoDesconto(IniBoletos.ReadInteger(Sessao,'TipoDesconto2',0));
+            CarteiraEnvio:= TACBrCarteiraEnvio(IniBoletos.ReadInteger(Sessao,'CarteiraEnvio', 0));
             MultaValorFixo := IniBoletos.ReadBool(Sessao,'MultaValorFixo',False);
 
             wLocalPagto := IniBoletos.ReadString(Sessao,'LocalPagamento','');

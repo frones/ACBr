@@ -49,6 +49,29 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+21/10/2019
+
+--ACBrBoleto, ACBrUniprimeNortePR--
+[+] Adicionado o Banco Uniprime - 084, Norte - PR
+https://www.projetoacbr.com.br/forum/topic/50248-84-cc-uniprime-norte-do-parana/
+
+--ACBrBoleto--
+[+] Adicionado na leitura do .ini o campo CarteiraEnvio, que define como o boleto vai ser gerado/enviado
+pelo Cedente ou pelo Banco via correio ou Banco via email
+https://www.projetoacbr.com.br/forum/topic/54349-registo-segmento-s-do-banco-do-brasil/
+
+--ACBrBancoCaixa--
+[*] Implementado a leitura do motivo da rejeição nos retornos modelo CNAB400
+https://www.projetoacbr.com.br/forum/topic/54345-boleto-caixa-leitura-do-motivo-da-rejei%C3%A7%C3%A3o/
+
+--ACBrBancoBrasil--
+[*] Adicionado validação da Identificação de Distribuição no Segmento "P" do arquivo de Remessa CNAB240
+https://www.projetoacbr.com.br/forum/topic/54339-ajuste-remessa-banco-do-brasil-identifica%C3%A7%C3%A3o-da-distribui%C3%A7%C3%A3o/
+
+--ACBrBancoSantander--
+[*] Atualização de Ocorrencias na função CodOcorrenciaToTipoRemessa.
+https://www.projetoacbr.com.br/forum/topic/47429-santander-novas-ocorr%C3%AAncias-em-codocorrenciatotiporemessa/
+
 10/10/2019
 
 -- ACBrBancoBrasil--

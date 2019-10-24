@@ -126,7 +126,7 @@ type
     procedure InicializarTagITagF;
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(const AGrupo: String): String;
-    function RemoverCharControle(AXML: String): String;
+    function RemoverCharControle(const AXML: String): String;
     function DefinirDadosSenha(ATexto: String): String;
 
   public
@@ -694,7 +694,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrNFSe,
-  pcnGerador, pcnLeitor;
+  pcnGerador, pcnLeitor, StrUtilsEx;
 
 { TNFSeWebService }
 
@@ -848,7 +848,10 @@ begin
 
     CabMsg := FPCabMsg;
     if FCabecalhoStr then
-      CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+    begin
+      CabMsg := StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]);
+      CabMsg := StringReplace(CabMsg, '>', '&gt;', [rfReplaceAll]);
+    end;
 
     CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpaceTemp, [rfReplaceAll]);
     CabMsg := StringReplace(CabMsg, '%NameSpaceXML%', NameSpace, [rfReplaceAll]);
@@ -857,14 +860,20 @@ begin
 
     DadosMsg := FPDadosMsg;
     if FDadosStr then
-      DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+    begin
+      DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
+      DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
+    end;
 
     // Alterações no conteudo de DadosMsg especificas para alguns provedores
     case FProvedor of
       proGinfes:
         begin
           if (FPLayout = LayNfseCancelaNfse) then
-            DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+          begin
+            DadosMsg := StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]);
+            DadosMsg := StringReplace(DadosMsg, '>', '&gt;', [rfReplaceAll]);
+          end;
         end;
 
       proPronim:
@@ -1110,30 +1119,31 @@ begin
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
 end;
 
-function TNFSeWebService.RemoverCharControle(AXML: String): String;
+function TNFSeWebService.RemoverCharControle(const AXML: String): String;
 begin
+  Result := AXML;
+
   if FPConfiguracoesNFSe.Geral.ConfigRemover.Tabulacao then
-    AXML := StringReplace(AXML, '#9', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, '#9', '', [rfReplaceAll]);
 
   if FPConfiguracoesNFSe.Geral.ConfigRemover.QuebradeLinhaRetorno then
   begin
-    AXML := StringReplace(AXML, #10, '', [rfReplaceAll]);
-    AXML := StringReplace(AXML, #13, '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, #10, '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, #13, '', [rfReplaceAll]);
 
-    AXML := StringReplace(AXML, '&#xD;', '', [rfReplaceAll]);
-    AXML := StringReplace(AXML, '&#xd;', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, '&#xD;', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, '&#xd;', '', [rfReplaceAll]);
   end;
 
   if FPConfiguracoesNFSe.Geral.ConfigRemover.EComercial then
-    AXML := StringReplace(AXML, '&amp;', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, '&amp;', '', [rfReplaceAll]);
 
   if FPConfiguracoesNFSe.Geral.ConfigRemover.TagQuebradeLinhaUnica then
   begin
-    AXML := StringReplace(AXML, 'lt;brgt;', '', [rfReplaceAll]);
-    AXML := StringReplace(AXML, '</>', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, 'lt;brgt;', '', [rfReplaceAll]);
+    Result := FastStringReplace(Result, '</>', '', [rfReplaceAll]);
   end;
 
-  Result := AXML;
 end;
 
 function TNFSeWebService.ExtrairRetorno(const GrupoMsgRet, AGrupo: String): String;
@@ -1142,8 +1152,10 @@ var
 begin
   // Alguns provedores retornam a resposta em String
   // Aplicado a conversão de String para XML
-  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
-  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, 'lt;', '<', [rfReplaceAll]), 'gt;', '>', [rfReplaceAll]);
+  FPRetornoWS := FastStringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]);
+  FPRetornoWS := FastStringReplace(FPRetornoWS, 'gt;', '>', [rfReplaceAll]);
+  FPRetornoWS := FastStringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]);
+  FPRetornoWS := FastStringReplace(FPRetornoWS, 'gt;', '>', [rfReplaceAll]);
 
   FPRetornoWS := RemoverCharControle(FPRetornoWS);
 
@@ -2827,7 +2839,6 @@ begin
         end;
       end;
   end;
-
 
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin

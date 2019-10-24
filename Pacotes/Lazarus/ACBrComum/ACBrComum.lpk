@@ -10,7 +10,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\..\..\Fontes\ACBrComum"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils;..\..\..\Fontes\Terceiros\FastStringReplace"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrComum\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -25,7 +25,7 @@
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="10">
+    <Files Count="11">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
         <Type Value="Include"/>
@@ -68,6 +68,10 @@
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrImage.pas"/>
         <UnitName Value="ACBrImage"/>
       </Item10>
+      <Item11>
+        <Filename Value="..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas"/>
+        <UnitName Value="StrUtilsEx"/>
+      </Item11>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -406,7 +406,7 @@ implementation
 
 Uses
   synautil,
-  ACBrCompress;
+  ACBrCompress, StrUtilsEx;
 
 var
   Randomized : Boolean ;
@@ -4108,7 +4108,7 @@ var
   function InternalStringReplace(const S, OldPatern, NewPattern: String ): String;
   begin
     if pos(OldPatern, S) > 0 then
-      Result := ReplaceString(AnsiString(S), AnsiString(OldPatern), AnsiString(ACBrStr(NewPattern)))
+      Result := FastStringReplace(AnsiString(S), AnsiString(OldPatern), AnsiString(ACBrStr(NewPattern)), [rfReplaceAll])
     else
       Result := S;
   end;
@@ -4272,7 +4272,7 @@ begin
   DeclaracaoXML := ObtemDeclaracaoXML(AXML);
 
   if DeclaracaoXML <> '' then
-    Result := StringReplace(AXML, DeclaracaoXML, '', [])
+    Result := FastStringReplace(AXML, DeclaracaoXML, '', [])
   else
     Result := AXML;
 end;

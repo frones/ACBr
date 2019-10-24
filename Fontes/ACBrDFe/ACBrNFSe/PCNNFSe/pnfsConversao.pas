@@ -284,7 +284,7 @@ function RemoverIdentacao(const AXML: String): String;
 implementation
 
 uses
-  pcnConversao;
+  pcnConversao, StrUtilsEx;
 
 // Status RPS ******************************************************************
 
@@ -18687,10 +18687,10 @@ begin
     if XMLs <> '' then
       XMLe := XMLs;
 
-    XMLs := StringReplace(XMLe, ' <', '<', [rfReplaceAll]);
-    XMLs := StringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
-    XMLs := StringReplace(XMLs, '> ', '>', [rfReplaceAll]);
-    XMLs := StringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
+    XMLs := FastStringReplace(XMLe, ' <', '<', [rfReplaceAll]);
+    XMLs := FastStringReplace(XMLs, #13 + '<', '<', [rfReplaceAll]);
+    XMLs := FastStringReplace(XMLs, '> ', '>', [rfReplaceAll]);
+    XMLs := FastStringReplace(XMLs, '>' + #13, '>', [rfReplaceAll]);
   end;
 
   Result := XMLs;

@@ -39,5 +39,15 @@ contains
   ACBrAAC in '..\..\..\Fontes\ACBrComum\ACBrAAC.pas',
   ACBrCompress in '..\..\..\Fontes\ACBrComum\ACBrCompress.pas',
   ACBrImage in '..\..\..\Fontes\ACBrComum\ACBrImage.pas',
-  ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas';
+  ACBrPAFClass in '..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas',
+  StrUtilsEx in '..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas';
+
+//  {$IfNDef USE_ZLibExGZ}
+//   ACBrZLibExGZ,
+//  {$Else}
+//   GZIPUtils,
+//  {$EndIf}
+
 end.
+
+

@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- ACBrCTeDACTeRLRetrato --
+[-] Corrigido compatibilidade no arquivo .lfm
+  por: José M S Junior
+
 21/10/2019
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajuste na impressão do Código de Barras Adicional, impresso somente quando o

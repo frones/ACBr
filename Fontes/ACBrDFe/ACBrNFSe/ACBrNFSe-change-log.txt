@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- pnfsNFSe --
+[*] Alterado o tipo Currency para Double do campo Aliquota
+   Por: Italo Jurisato Junior
+
 21/10/2019
 -- pnfsNFSeW_SP --
 [*] https://www.projetoacbr.com.br/forum/topic/54158-envio-de-nota-para-blumenau-usando-o-webservice-de-migra%C3%A7%C3%A3o/?do=findComment&comment=357512

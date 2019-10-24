@@ -3658,12 +3658,12 @@ begin
              '<InfRps' + FNameSpaceDad + ' ', [rfReplaceAll]);
         end;
 
-      proSimplISSv2:
-          FPDadosMsg := StringReplace(FPDadosMsg,
-                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
-                                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
-                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
-                                      'GerarNfseEnvio', [rfReplaceAll]);
+//      proSimplISSv2:
+//          FPDadosMsg := StringReplace(FPDadosMsg,
+//                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
+//                                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+//                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
+//                                      'GerarNfseEnvio', [rfReplaceAll]);
 
       proNotaBlu:
         FPDadosMsg := StringReplace(FPDadosMsg, 'EnvioRps xmlns=""', 'EnvioRps', [rfReplaceAll]);

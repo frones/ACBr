@@ -35,6 +35,12 @@ typedef int (*NFE_CarregarXML)(const char* eArquivoOuXML);
 // function NFE_CarregarINI(const eArquivoOuINI: PChar): longint;
 typedef int (*NFE_CarregarINI)(const char* eArquivoOuINI);
 
+// function NFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+typedef int (*NFE_ObterXml)(int AIndex, const char* sMensagem, int* esTamanho);
+
+// function NFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+typedef int (*NFE_GravarXml)(int AIndex, const char* eNomeArquivo, const char* ePathArquivo);
+
 // function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
 typedef int (*NFE_CarregarEventoXML)(const char* eArquivoOuXML);
 
@@ -67,8 +73,8 @@ typedef int (*NFE_Consultar)(const char* eChaveOuNFe, const char* sResposta, int
 
 // function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar; Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
 //  const sResposta: PChar; var esTamanho: longint): longint;
-typedef int (*NFE_Inutilizar)(const char* ACNPJ, const char* AJustificativa, int Ano, int Modelo, int Serie, 
-                             int NumeroInicial, int NumeroFinal, const char* sResposta, int* esTamanho);
+typedef int (*NFE_Inutilizar)(const char* ACNPJ, const char* AJustificativa, int Ano, int Modelo, int Serie,
+	int NumeroInicial, int NumeroFinal, const char* sResposta, int* esTamanho);
 
 // function NFE_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
 typedef int (*NFE_Enviar)(int ALote, bool Imprimir, bool Sincrono, bool Zipado, const char* sResposta, int* esTamanho);
@@ -95,16 +101,16 @@ typedef int (*NFE_DistribuicaoDFePorNSU)(int AcUFAutor, const char* eCNPJCPF, co
 typedef int (*NFE_DistribuicaoDFePorChave)(int AcUFAutor, const char* eCNPJCPF, const char* echNFe, const char* sResposta, int* esTamanho);
 
 // function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
-typedef int (*NFE_EnviarEmail)(const char* ePara, const char* eChaveNFe, bool AEnviaPDF, const char* eAssunto, const char* eCC, 
-                               const char* eAnexos, const char* eMensagem);
+typedef int (*NFE_EnviarEmail)(const char* ePara, const char* eChaveNFe, bool AEnviaPDF, const char* eAssunto, const char* eCC,
+	const char* eAnexos, const char* eMensagem);
 
 // function NFE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveNFe: PChar; const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
 typedef int (*NFE_EnviarEmailEvento)(const char* ePara, const char* eChaveEvento, const char* eChaveNFe, bool AEnviaPDF, const char* eAssunto,
-                                     const char* eCC, const char* eAnexos, const char* eMensagem);
+	const char* eCC, const char* eAnexos, const char* eMensagem);
 
 // function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado: PChar): longint;
-typedef int (*NFE_Imprimir)(const char* cImpressora, int nNumCopias, const char* cProtocolo, const char* bMostrarPreview, const char* cMarcaDagua, 
-                            const char* bViaConsumidor, const char* bSimplificado);
+typedef int (*NFE_Imprimir)(const char* cImpressora, int nNumCopias, const char* cProtocolo, const char* bMostrarPreview, const char* cMarcaDagua,
+	const char* bViaConsumidor, const char* bSimplificado);
 
 // function NFE_ImprimirPDF(): longint;
 typedef int (*NFE_ImprimirPDF)();

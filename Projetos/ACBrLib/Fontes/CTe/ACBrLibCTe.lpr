@@ -51,6 +51,8 @@ exports
   // Arquivos
   CTE_CarregarXML,
   CTE_CarregarINI,
+  CTE_ObterXml,
+  CTE_GravarXml,
   CTE_CarregarEventoXML,
   CTE_CarregarEventoINI,
   CTE_LimparLista,

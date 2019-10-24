@@ -90,6 +90,10 @@ function CTE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
@@ -335,6 +339,78 @@ begin
       try
         CTeDM.ACBrCTe1.Conhecimentos.LoadFromIni(ArquivoOuINI);
         Result := SetRetornoCTesCarregados(CTeDM.ACBrCTe1.Conhecimentos.Count);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: String;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_ObterXml(' + IntToStr(AIndex) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_ObterXml', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        if EstaVazio(CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].XMLOriginal) then
+          CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarXML;
+
+        Resposta := CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].XMLOriginal;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ANomeArquivo, APathArquivo: String;
+begin
+  try
+    VerificarLibInicializada;
+    ANomeArquivo := String(eNomeArquivo);
+    APathArquivo := String(ePathArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_GravarXml(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_GravarXml', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        if CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GravarXML(ANomeArquivo, APathArquivo) then
+          Result := SetRetorno(ErrOK)
+        else
+          Result := SetRetorno(ErrGerarXml);
       finally
         CTeDM.Destravar;
       end;

@@ -1288,7 +1288,10 @@ begin
     07 : Result:= toRemessaAlterarControleParticipante;     {Alteração do controle do participante}
     08 : Result:= toRemessaAlterarNumeroControle;           {Alteração de seu número}
     09 : Result:= toRemessaProtestar;                       {Pedido de protesto}
-    18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}
+    10 : Result:= toRemessaConcederDesconto;                {Concessão de Desconto}
+    11 : Result:= toRemessaCancelarDesconto;                {Cancelamento de desconto}
+    18 : Result:= toRemessaCancelarInstrucaoProtesto;       {Sustar protesto e manter na carteira}    
+    31 : Result:= toRemessaAlterarOutrosDados;              {Alteração de outros dados}
     98 : Result:= toRemessaNaoProtestar;                    {Sustar protesto antes do início do ciclo de protesto}
   else
      Result:= toRemessaRegistrar;                           {Remessa}

@@ -541,13 +541,40 @@ begin
        ATipoAceite := 'N';
      end;
 
+     BoletoEmail:= ACBrTitulo.CarteiraEnvio = tceBancoEmail;
+     if (BoletoEmail) or (Mensagem.Count > 1) then
+      begin
+       QtdRegTitulo:= 4;
+       GeraSegS    := True;
+      end
+     else
+      begin
+       QtdRegTitulo:= 3;
+       GeraSegS    := False;
+      end;     
+
      {Pegando Tipo de Boleto}
      case ACBrBoleto.Cedente.ResponEmissao of
-       tbCliEmite        : ATipoBoleto := '2' + '2';
-       tbBancoEmite      : ATipoBoleto := '1' + '1';
-       tbBancoReemite    : ATipoBoleto := '4' + '1';
+       tbCliEmite : ATipoBoleto := '2' + '2';
+       tbBancoEmite :
+       begin
+         if BoletoEmail then
+           ATipoBoleto := '1' + '3'
+         else
+           ATipoBoleto := '1' + '1';
+       end;
+       tbBancoReemite :
+       begin
+         if BoletoEmail then
+           ATipoBoleto := '4' + '3'
+         else
+           ATipoBoleto := '4' + '1';
+       end;
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
+     else
+       ATipoBoleto := '2' + '2';
      end;
+
      ACaracTitulo := ' ';
      case CaracTitulo of
        tcSimples     : ACaracTitulo  := '1';
@@ -555,6 +582,8 @@ begin
        tcCaucionada  : ACaracTitulo  := '3';
        tcDescontada  : ACaracTitulo  := '4';
        tcVendor      : ACaracTitulo  := '5';
+     else
+       ACaracTitulo  := '1';
      end;
 
      wCarteira:= StrToIntDef(Carteira,0);
@@ -598,19 +627,6 @@ begin
      AMensagem   := '';
      if Mensagem.Text <> '' then
        AMensagem   := Mensagem.Strings[0];
-
-
-     BoletoEmail:= ACBrTitulo.CarteiraEnvio = tceBancoEmail;
-     if (BoletoEmail) or (Mensagem.Count > 1) then
-      begin
-       QtdRegTitulo:= 4;
-       GeraSegS    := True;
-      end
-     else
-      begin
-       QtdRegTitulo:= 3;
-       GeraSegS    := False;
-      end;
 
      {SEGMENTO P}
      Result:= IntToStrZero(ACBrBanco.Numero, 3)                                         + // 1 a 3 - Código do banco

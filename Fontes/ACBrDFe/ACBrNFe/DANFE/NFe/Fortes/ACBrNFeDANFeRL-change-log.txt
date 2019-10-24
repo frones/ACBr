@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- ACBrNFeDANFeRLRetrato
+[*] Ajuste na impressão do Canhoto apenas na primeira página
+	(por: José M S Junior )
+
+
 19/09/2019
 -- ACBrNFeDANFeRLRetrato
 [-] Corrigido erro de impressão quando tinha apenas 1 item na nfe e a continuação das observações imprimiam abaixo dos itens em vez de uma nova pagina.

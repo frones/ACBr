@@ -650,6 +650,7 @@ type
       Sender: TObject; var PrintIt: Boolean);
     procedure rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbReciboHeaderBarraBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -731,6 +732,12 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.rlbReciboHeaderBarraBeforePrint(Sender: TObject; var PrintIt: Boolean);
+begin
+  PrintIt := (RLNFe.PageNumber = 1);
+end;
+
+procedure TfrlDANFeRLRetrato.rlbReciboHeaderBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
 begin
   PrintIt := (RLNFe.PageNumber = 1);
 end;

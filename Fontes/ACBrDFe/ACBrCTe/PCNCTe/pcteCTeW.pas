@@ -2256,13 +2256,13 @@ begin
 
     for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count - 1 do
     begin
-      Gerador.wGrupo('Lacre', '#18');
+      Gerador.wGrupo('lacre', '#18');
       Gerador.wCampo(tcStr, '#19', 'nLacre', 01, 20, 1, CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Items[j].nLacre, DSC_NLACRE);
-      Gerador.wGrupo('/Lacre');
+      Gerador.wGrupo('/lacre');
     end;
 
     if CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count > 3 then
-      Gerador.wAlerta('#18', 'Lacre', DSC_NLACRE, ERR_MSG_MAIOR_MAXIMO + '3');
+      Gerador.wAlerta('#18', 'lacre', DSC_NLACRE, ERR_MSG_MAIOR_MAXIMO + '3');
 
     if (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count > 0) or
        (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count > 0) then

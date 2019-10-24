@@ -1261,7 +1261,7 @@ begin
         CTe.infCTeNorm.aquav.detCont[i01].nCont := Leitor.rCampo(tcStr, 'nCont');
 
         i02 := 0;
-        while Leitor.rExtrai(4, 'Lacre', '', i02 + 1) <> '' do
+        while Leitor.rExtrai(4, 'lacre', '', i02 + 1) <> '' do
         begin
           CTe.infCTeNorm.aquav.detCont[i01].Lacre.New;
           CTe.infCTeNorm.aquav.detCont[i01].Lacre[i02].nLacre := Leitor.rCampo(tcStr, 'nLacre');

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- pcteCTeR / pcteCTeW --
+[*] Correção na grafia da tag lacre referente ao modal Aquaviário.
+  Por: Renan Eustaquio
+
 16/10/2019
 -- ACBrCTe --
 [*] Removido a checagem de Forma de emissão ao gerar a string do QR-Code.

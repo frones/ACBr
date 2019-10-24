@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- ACBrNFeServicos --
+[*] Correção da URL de consulta por QR-Code AC homologação.
+  Por: BigWings
+
 11/09/2019
 -- ACBrECFVirtualNFCe --
 [-] Acerto para considerar 0,01 de desconto no total.

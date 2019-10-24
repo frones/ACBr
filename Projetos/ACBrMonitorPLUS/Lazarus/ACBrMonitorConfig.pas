@@ -2353,8 +2353,8 @@ begin
     AlturaCampos              :=  30;
     Margem                    :=  7;
     MargemSup                 :=  7;
-    MargemDir                 :=  7;
-    MargemEsq                 :=  7;
+    MargemDir                 :=  5;
+    MargemEsq                 :=  9;
     PathPDF                   :=  AcertaPath('PDF');
     DecimaisQTD               :=  2;
     DecimaisValor             :=  2;

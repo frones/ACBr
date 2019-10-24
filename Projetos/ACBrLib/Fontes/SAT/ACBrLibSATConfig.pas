@@ -67,7 +67,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrSATExtratoClass); override;
+    procedure ApplyChild(const DFeReport: TACBrSATExtratoClass); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -337,7 +337,7 @@ begin
   AIni.WriteBool(FSessao, CChaveImprimeLogoLateral, FImprimeLogoLateral);
 end;
 
-procedure TExtratoConfig.AssignChild(const DFeReport: TACBrSATExtratoClass);
+procedure TExtratoConfig.ApplyChild(const DFeReport: TACBrSATExtratoClass);
 Var
   LogoVisible: Boolean;
 begin

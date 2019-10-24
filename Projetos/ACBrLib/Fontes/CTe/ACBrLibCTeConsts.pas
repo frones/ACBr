@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibCTeNome = 'ACBrLibCTe';
-  CLibCTeVersao = '0.0.1';
-
   CSessaoDACTe = 'DACTe';
 
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';

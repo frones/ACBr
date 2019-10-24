@@ -239,7 +239,7 @@ begin
     ConfigModoPagina.Direcao := TACBrPosDirecao(pLibConfig.PosPrinter.MpDirecao);
     ConfigModoPagina.EspacoEntreLinhas := pLibConfig.PosPrinter.MpEspacoEntreLinhas;
 
-    pLibConfig.PosDevice.Assign(Device);
+    pLibConfig.PosDevice.Apply(Device);
   end;
 end;
 
@@ -257,7 +257,7 @@ begin
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
     begin
-      if (pLibConfig.DANFe.NFCeConfig.TipoRelatorioBobina = tpFortes) or GerarPDF then
+      if (pLibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes) or GerarPDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
@@ -267,7 +267,7 @@ begin
       ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
     end;
 
-    pLibConfig.DANFe.Assign(ACBrNFe1.DANFE);
+    pLibConfig.DANFe.Apply(ACBrNFe1.DANFE);
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
       ACBrNFe1.DANFE.Cancelada := True

@@ -64,7 +64,7 @@ type
   protected
       procedure LerIniChild(const AIni: TCustomIniFile); override;
       procedure GravarIniChild(const AIni: TCustomIniFile); override;
-      procedure AssignChild(const DFeReport: TACBrCTeDACTeRL); reintroduce;
+      procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL); reintroduce;
       procedure DefinirValoresPadroesChild; override;
 
   public
@@ -91,9 +91,6 @@ type
     FCTeConfig: TConfiguracoesCTe;
 
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-//    procedure AplicarConfiguracoes; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -105,8 +102,8 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    property CTeConfig: TConfiguracoesCTe read FCTeConfig;
-    property DACTeConfig: TDACTeConfig read FDACTeConfig;
+    property CTe: TConfiguracoesCTe read FCTeConfig;
+    property DACTe: TDACTeConfig read FDACTeConfig;
   end;
 
 implementation
@@ -167,7 +164,7 @@ begin
   AIni.WriteInteger(FSessao, CChaveTamanhoPapel, Integer(FTamanhoPapel));
 end;
 
-procedure TDACTeConfig.AssignChild(const DFeReport: TACBrCTeDACTeRL);
+procedure TDACTeConfig.ApplyChild(const DFeReport: TACBrCTeDACTeRL);
 begin
   with DFeReport do
   begin
@@ -203,15 +200,6 @@ begin
   inherited Destroy;
 end;
 
-function TLibCTeConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibCTeNome, '0');
-  Result := (CompareVersions(CLibCTeVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibCTeConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -223,8 +211,6 @@ end;
 procedure TLibCTeConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
-
-  Ini.WriteString(CSessaoVersao, CLibCTeNome, CLibCTeVersao);
 
   FCTeConfig.GravarIni(Ini);
   FDACTeConfig.GravarIni(Ini);

@@ -185,7 +185,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrDFeDANFeReport); override;
+    procedure ApplyChild(const DFeReport: TACBrDFeDANFeReport); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -201,8 +201,8 @@ type
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia;
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha;
-    property NFeConfig: TDANFeNFeConfig read FNFeConfig;
-    property NFCeConfig: TDANFeNFCeConfig read FNFCeConfig;
+    property NFe: TDANFeNFeConfig read FNFeConfig;
+    property NFCe: TDANFeNFCeConfig read FNFCeConfig;
 
   end;
 
@@ -603,7 +603,7 @@ begin
 
 end;
 
-procedure TDANFeReportConfig.AssignChild(const DFeReport: TACBrDFeDANFeReport);
+procedure TDANFeReportConfig.ApplyChild(const DFeReport: TACBrDFeDANFeReport);
 var
   pLibConfig: TLibNFeConfig;
 begin
@@ -629,11 +629,11 @@ begin
 
   if DFeReport is TACBrNFeDANFeRL then
   begin
-    pLibConfig.DANFe.NFeConfig.Assign(TACBrNFeDANFeRL(DFeReport));
+    pLibConfig.DANFe.NFe.Assign(TACBrNFeDANFeRL(DFeReport));
   end
   else if DFeReport is TACBrNFeDANFCEClass then
   begin
-    pLibConfig.DANFe.NFCeConfig.Assign(TACBrNFeDANFCEClass(DFeReport));
+    pLibConfig.DANFe.NFCe.Assign(TACBrNFeDANFCEClass(DFeReport));
   end;
 end;
 

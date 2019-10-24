@@ -95,7 +95,7 @@ var
 begin
   ACBrCTe1.SSL.DescarregarCertificado;
   pLibConfig := TLibCTeConfig(TACBrLibCTe(pLib).Config);
-  ACBrCTe1.Configuracoes.Assign(pLibConfig.CTeConfig);
+  ACBrCTe1.Configuracoes.Assign(pLibConfig.CTe);
 
   AplicarConfigMail;
 end;
@@ -144,13 +144,13 @@ begin
    if ACBrCTe1.Conhecimentos.Count <= 0 then
      Exit;
 
-   pLibConfig.DACTeConfig.Assign(ACBrCTeDACTeRL1);
+   pLibConfig.DACTe.Apply(ACBrCTeDACTeRL1);
 
    if NaoEstaVazio(NomeImpressora) then
      ACBrCTeDACTeRL1.Impressora := NomeImpressora;
 
-   if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DACTeConfig.PathPDF))then
-        ForceDirectories(PathWithDelim(pLibConfig.DACTeConfig.PathPDF));
+   if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DACTe.PathPDF))then
+        ForceDirectories(PathWithDelim(pLibConfig.DACTe.PathPDF));
 
    GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;

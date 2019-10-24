@@ -36,7 +36,7 @@ type
 
     procedure LerIniChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure GravarIniChild(const AIni: TCustomIniFile); virtual; abstract;
-    procedure AssignChild(const DFeReport: T); virtual; abstract;
+    procedure ApplyChild(const DFeReport: T); virtual; abstract;
     procedure DefinirValoresPadroesChild; virtual; abstract;
 
  public
@@ -46,7 +46,7 @@ type
    procedure DefinirValoresPadroes;
    procedure LerIni(const AIni: TCustomIniFile);
    procedure GravarIni(const AIni: TCustomIniFile);
-   procedure Assign(const DFeReport: T);
+   procedure Apply(const DFeReport: T);
 
    property Impressora: String read FImpressora write FImpressora;
    property NomeDocumento: String read FNomeDocumento write FNomeDocumento;
@@ -166,7 +166,7 @@ begin
   GravarIniChild(AIni);
 end;
 
-procedure TDFeReportConfig<T>.Assign(const DFeReport: T);
+procedure TDFeReportConfig<T>.Apply(const DFeReport: T);
 begin
   if not Assigned(DFeReport) or (DFeReport = nil) then Exit;
 
@@ -199,7 +199,7 @@ begin
   DFeReport.Email := pLib.Config.Emissor.Email;
   DFeReport.Fax := pLib.Config.Emissor.Telefone;
 
-  AssignChild(DFeReport);
+  ApplyChild(DFeReport);
 end;
 
 end.

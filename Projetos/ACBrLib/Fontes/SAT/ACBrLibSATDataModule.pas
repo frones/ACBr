@@ -377,7 +377,7 @@ begin
     else
       ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 
-    pLibConfig.Extrato.Assign(ACBrSAT1.Extrato);
+    pLibConfig.Extrato.Apply(ACBrSAT1.Extrato);
 
     if NomeImpressora <> '' then
       ACBrSAT1.Extrato.Impressora := NomeImpressora;

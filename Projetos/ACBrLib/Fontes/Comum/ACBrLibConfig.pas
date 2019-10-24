@@ -952,8 +952,8 @@ begin
   if PrecisaCriptografar(ASessao, AChave) then
   begin
     case Tipo of
-      tfGravar: Result := StringToB64Crypt(Result, pLib.Config.ChaveCrypt);
-      tfLer: Result := B64CryptToString(Result, pLib.Config.ChaveCrypt);
+      tfGravar: Result := StringToB64Crypt(Result, ChaveCrypt);
+      tfLer: Result := B64CryptToString(Result, ChaveCrypt);
     end;
   end;
 

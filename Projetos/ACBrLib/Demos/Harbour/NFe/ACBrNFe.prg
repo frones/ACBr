@@ -41,6 +41,8 @@ VISIBLE:
 
     METHOD CarregarXML(eArquivoOuXml)
     METHOD CarregarINI(eArquivoOuIni)
+    METHOD ObterXml(AIndex)
+    METHOD GravarXml(AIndex, eNomeArquivo, ePathArquivo)
     METHOD CarregarEventoXML(eArquivoOuXml)
     METHOD CarregarEventoINI(eArquivoOuIni)
     METHOD LimparLista()
@@ -173,6 +175,20 @@ METHOD CarregarXML(eArquivoOuXml) CLASS ACBrNFe
 METHOD CarregarINI(eArquivoOuIni) CLASS ACBrNFe
     local hResult
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_CarregarINI", hb_StrToUTF8(eArquivoOuIni))
+    ::CheckResult(hResult)
+    RETURN nil
+
+METHOD ObterXml(AIndex) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)   
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterXml", AIndex, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD GravarXml(AIndex, eNomeArquivo, ePathArquivo) CLASS ACBrNFe
+    local hResult
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GravarXml", AIndex, hb_StrToUTF8(eNomeArquivo), hb_StrToUTF8(ePathArquivo))
     ::CheckResult(hResult)
     RETURN nil
 

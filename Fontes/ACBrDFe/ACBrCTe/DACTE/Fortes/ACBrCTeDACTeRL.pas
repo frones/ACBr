@@ -126,6 +126,9 @@ begin
       ReportArray[i] := DACTeReport;
     end;
 
+    if Length(ReportArray) = 0 then
+      raise Exception.Create('Nenhum relatorio foi inicializado.');
+
     Report := ReportArray[0].RLCTe;
     for i := 1 to High(ReportArray) do
     begin

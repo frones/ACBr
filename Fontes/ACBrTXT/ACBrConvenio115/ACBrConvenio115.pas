@@ -764,8 +764,18 @@ begin
               {07} PadLeft(OnlyNumber(FMestre[I].Destinatario.CEP), 8, '0') +
               {08} PadRight(TiraAcentos(FMestre[I].Destinatario.Bairro), 15) +
               {09} PadRight(FMestre[I].Destinatario.Municipio, 30) +
-              {10} PadRight(UpperCase(FMestre[I].Destinatario.UF), 2) +
-              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, ' ')  +
+              {10} PadRight(UpperCase(FMestre[I].Destinatario.UF), 2);
+      if _VersaoAntiga then
+      begin
+        SRec := SRec +
+              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, '0');
+      end
+      else
+      begin
+        SRec := SRec +
+              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, ' ');
+      end;
+      SRec := SRec +
               {12} PadRight(FMestre[I].Destinatario.CodigoConsumidor, 12) +
               {13} PadRight(FMestre[I].NumeroTerminalTelefonico, 12) +
               {14} PadRight(UpperCase(FMestre[I].UFTerminalTelefonico), 2);
@@ -902,13 +912,17 @@ begin
                              ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
 
     if Ano < 2017 then
+    begin
       if FMestre[I].TipoAssinanteAte201612 = tac111None then
         raise Exception.Create('Tipo de assinante inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
-                               ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial)
+                               ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
+    end
     else
+    begin
       if FMestre[I].TipoAssinante = tac1182None then
         raise Exception.Create('Tipo de assinante inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
                                ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
+    end;
 
     if FMestre[I].TipoUtilizacao = pc112None then
       raise Exception.Create('Tipo de utilização inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +

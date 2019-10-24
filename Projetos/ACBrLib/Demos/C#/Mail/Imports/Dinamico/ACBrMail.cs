@@ -85,8 +85,6 @@ namespace ACBrLib.Mail
         public ACBrMail(string eArqConfig = "", string eChaveCrypt = "") :
             base(Environment.Is64BitProcess ? "ACBrMail64.dll" : "ACBrMail32.dll")
         {
-            InitializeMethods();
-
             var inicializar = GetMethod<Delegates.MAIL_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
@@ -94,6 +92,42 @@ namespace ACBrLib.Mail
         }
 
         #endregion Constructors
+		
+		#region Properties
+
+        public string Nome
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.ETQ_Nome>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        public string Versao
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.ETQ_Versao>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        #endregion Properties
 
         #region Methods
 
@@ -124,13 +158,8 @@ namespace ACBrLib.Mail
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), pValue, ref bufferLen));
             CheckResult(ret);
 
-            var value = FromUTF8(pValue);
-
-            if (typeof(T).IsEnum) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
-
-            if (typeof(T) == typeof(bool)) return (T)(object)Convert.ToBoolean(Convert.ToInt32(value));
-
-            return (T)Convert.ChangeType(value, typeof(T));
+            var value = ProcessResult(pValue, bufferLen);
+            return ConvertValue<T>(value);
         }
 
         public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
@@ -138,11 +167,7 @@ namespace ACBrLib.Mail
             if (value == null) return;
 
             var method = GetMethod<Delegates.MAIL_ConfigGravarValor>();
-            var type = value.GetType();
-
-            var propValue = value.ToString();
-            if (type.IsEnum) propValue = ((int)value).ToString();
-            if (type == typeof(bool)) propValue = Convert.ToInt32(value).ToString();
+            var propValue = ConvertValue(value);
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
             CheckResult(ret);
@@ -255,23 +280,25 @@ namespace ACBrLib.Mail
             CheckResult(codRet);
         }
 
-        protected override string GetUltimoRetorno()
+        protected override string GetUltimoRetorno(int iniBufferLen = 0)
         {
-            var bufferLen = BUFFER_LEN;
+            var bufferLen = iniBufferLen < 1 ? BUFFER_LEN : iniBufferLen;
             var buffer = new StringBuilder(bufferLen);
             var ultimoRetorno = GetMethod<Delegates.MAIL_UltimoRetorno>();
 
+            if (iniBufferLen < 1)
+            {
+                ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
+                if (bufferLen <= BUFFER_LEN) return FromUTF8(buffer);
+
+                buffer.Capacity = bufferLen;
+            }
+
             ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-
-            if (bufferLen <= BUFFER_LEN) return FromUTF8(buffer);
-
-            buffer.Capacity = bufferLen;
-            ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-
             return FromUTF8(buffer);
         }
 
-        private void InitializeMethods()
+        protected override void InitializeMethods()
         {
             AddMethod<Delegates.MAIL_Inicializar>("MAIL_Inicializar");
             AddMethod<Delegates.MAIL_Finalizar>("MAIL_Finalizar");

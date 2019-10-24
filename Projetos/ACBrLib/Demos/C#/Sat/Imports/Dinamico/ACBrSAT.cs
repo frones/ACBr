@@ -126,8 +126,6 @@ namespace ACBrLib.Sat
         public ACBrSat(string eArqConfig = "", string eChaveCrypt = "") :
             base(Environment.Is64BitProcess ? "ACBrSAT64.dll" : "ACBrSAT32.dll")
         {
-            InitializeMethods();
-
             var inicializar = GetMethod<Delegates.SAT_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
 
@@ -135,6 +133,42 @@ namespace ACBrLib.Sat
         }
 
         #endregion Constructors
+		
+		#region Properties
+
+        public string Nome
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.SAT_Nome>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        public string Versao
+        {
+            get
+            {
+                var bufferLen = BUFFER_LEN;
+                var buffer = new StringBuilder(bufferLen);
+
+                var method = GetMethod<Delegates.SAT_Versao>();
+                var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+                CheckResult(ret);
+
+                return ProcessResult(buffer, bufferLen);
+            }
+        }
+
+        #endregion Properties
 
         #region Methods
 
@@ -165,13 +199,8 @@ namespace ACBrLib.Sat
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), pValue, ref bufferLen));
             CheckResult(ret);
 
-            var value = FromUTF8(pValue);
-
-            if (typeof(T).IsEnum) return (T)Enum.ToObject(typeof(T), Convert.ToInt32(value));
-
-            if (typeof(T) == typeof(bool)) return (T)(object)Convert.ToBoolean(Convert.ToInt32(value));
-
-            return (T)Convert.ChangeType(value, typeof(T));
+            var value = ProcessResult(pValue, bufferLen);
+            return ConvertValue<T>(value);
         }
 
         public void ConfigGravarValor(ACBrSessao eSessao, string eChave, object value)
@@ -179,11 +208,7 @@ namespace ACBrLib.Sat
             if (value == null) return;
 
             var method = GetMethod<Delegates.SAT_ConfigGravarValor>();
-            var type = value.GetType();
-
-            var propValue = value.ToString();
-            if (type.IsEnum) propValue = ((int)value).ToString();
-            if (type == typeof(bool)) propValue = Convert.ToInt32(value).ToString();
+            var propValue = ConvertValue(value);
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
             CheckResult(ret);
@@ -475,7 +500,7 @@ namespace ACBrLib.Sat
             CheckResult(codRet);
         }
 
-        private void InitializeMethods()
+        protected override void InitializeMethods()
         {
             AddMethod<Delegates.SAT_Inicializar>("SAT_Inicializar");
             AddMethod<Delegates.SAT_Finalizar>("SAT_Finalizar");
@@ -512,19 +537,21 @@ namespace ACBrLib.Sat
             AddMethod<Delegates.SAT_EnviarEmail>("SAT_EnviarEmail");
         }
 
-        protected override string GetUltimoRetorno()
+        protected override string GetUltimoRetorno(int iniBufferLen = 0)
         {
-            var bufferLen = BUFFER_LEN;
+            var bufferLen = iniBufferLen < 1 ? BUFFER_LEN : iniBufferLen;
             var buffer = new StringBuilder(bufferLen);
             var ultimoRetorno = GetMethod<Delegates.SAT_UltimoRetorno>();
 
+            if (iniBufferLen < 1)
+            {
+                ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
+                if (bufferLen <= BUFFER_LEN) return FromUTF8(buffer);
+
+                buffer.Capacity = bufferLen;
+            }
+
             ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-
-            if (bufferLen <= BUFFER_LEN) return FromUTF8(buffer);
-
-            buffer.Capacity = bufferLen;
-            ExecuteMethod(() => ultimoRetorno(buffer, ref bufferLen));
-
             return FromUTF8(buffer);
         }
 

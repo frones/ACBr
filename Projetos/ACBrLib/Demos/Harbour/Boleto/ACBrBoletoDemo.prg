@@ -11,7 +11,7 @@ Function Main ()
    boleto:ConfigGravarValor("Principal", "LogPath", hb_dirBase())
 
    // Salvando configurações
-   boleto:ConfigGravar("")
+   boleto:ConfigGravar("E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Demos\Harbour\Boleto\boleto.ini")
   
    ?boleto:Nome
    ?boleto:Versao

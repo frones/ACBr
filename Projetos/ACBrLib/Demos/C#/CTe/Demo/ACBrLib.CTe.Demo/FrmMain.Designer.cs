@@ -1,4 +1,4 @@
-﻿namespace ACBrLib.NFe.Demo
+﻿namespace ACBrLib.CTe.Demo
 {
     partial class FrmMain
     {
@@ -29,15 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            this.rtbRespostas = new System.Windows.Forms.RichTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
             this.cmbModeloDocumento = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtCSC = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtIdCSC = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtSchemaPath = new System.Windows.Forms.TextBox();
             this.btnSelectSchema = new System.Windows.Forms.Button();
@@ -98,18 +93,19 @@
             this.txtNome = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.btnSalvar = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rtbRespostas = new System.Windows.Forms.RichTextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnStatusServ = new System.Windows.Forms.Button();
             this.btnInutilizar = new System.Windows.Forms.Button();
-            this.btnCancelarNFe = new System.Windows.Forms.Button();
+            this.btnEnviar = new System.Windows.Forms.Button();
+            this.btnCancelarCTe = new System.Windows.Forms.Button();
+            this.btnImprimir = new System.Windows.Forms.Button();
             this.btnConsultarRecibo = new System.Windows.Forms.Button();
+            this.btnConsultaXml = new System.Windows.Forms.Button();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnConsultaChave = new System.Windows.Forms.Button();
-            this.btnConsultaXml = new System.Windows.Forms.Button();
-            this.btnImprimir = new System.Windows.Forms.Button();
-            this.btnEnviar = new System.Windows.Forms.Button();
-            this.btnStatusServ = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnSalvar = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tbpWebservices.SuspendLayout();
@@ -122,18 +118,9 @@
             this.tbpEmail.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rtbRespostas
-            // 
-            this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
-            this.rtbRespostas.Name = "rtbRespostas";
-            this.rtbRespostas.Size = new System.Drawing.Size(380, 233);
-            this.rtbRespostas.TabIndex = 3;
-            this.rtbRespostas.Text = "";
             // 
             // tabControl1
             // 
@@ -145,16 +132,12 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(269, 439);
-            this.tabControl1.TabIndex = 4;
+            this.tabControl1.TabIndex = 5;
             // 
             // tbpConfiguracoes
             // 
             this.tbpConfiguracoes.Controls.Add(this.cmbModeloDocumento);
             this.tbpConfiguracoes.Controls.Add(this.label17);
-            this.tbpConfiguracoes.Controls.Add(this.txtCSC);
-            this.tbpConfiguracoes.Controls.Add(this.label12);
-            this.tbpConfiguracoes.Controls.Add(this.txtIdCSC);
-            this.tbpConfiguracoes.Controls.Add(this.label11);
             this.tbpConfiguracoes.Controls.Add(this.label10);
             this.tbpConfiguracoes.Controls.Add(this.txtSchemaPath);
             this.tbpConfiguracoes.Controls.Add(this.btnSelectSchema);
@@ -185,47 +168,11 @@
             this.label17.TabIndex = 22;
             this.label17.Text = "Modelo Documento Fiscal";
             // 
-            // txtCSC
-            // 
-            this.txtCSC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCSC.Location = new System.Drawing.Point(6, 106);
-            this.txtCSC.Name = "txtCSC";
-            this.txtCSC.Size = new System.Drawing.Size(249, 20);
-            this.txtCSC.TabIndex = 21;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(3, 90);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 13);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "CSC";
-            // 
-            // txtIdCSC
-            // 
-            this.txtIdCSC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIdCSC.Location = new System.Drawing.Point(6, 67);
-            this.txtIdCSC.Name = "txtIdCSC";
-            this.txtIdCSC.Size = new System.Drawing.Size(249, 20);
-            this.txtIdCSC.TabIndex = 19;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 51);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(42, 13);
-            this.label11.TabIndex = 18;
-            this.label11.Text = "IdCSC";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 129);
+            this.label10.Location = new System.Drawing.Point(6, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(118, 13);
             this.label10.TabIndex = 14;
@@ -233,20 +180,20 @@
             // 
             // txtSchemaPath
             // 
-            this.txtSchemaPath.Location = new System.Drawing.Point(6, 145);
+            this.txtSchemaPath.Location = new System.Drawing.Point(6, 67);
             this.txtSchemaPath.Name = "txtSchemaPath";
             this.txtSchemaPath.Size = new System.Drawing.Size(223, 20);
             this.txtSchemaPath.TabIndex = 13;
             // 
             // btnSelectSchema
             // 
-            this.btnSelectSchema.Location = new System.Drawing.Point(228, 144);
+            this.btnSelectSchema.Location = new System.Drawing.Point(228, 66);
             this.btnSelectSchema.Name = "btnSelectSchema";
             this.btnSelectSchema.Size = new System.Drawing.Size(27, 22);
             this.btnSelectSchema.TabIndex = 15;
             this.btnSelectSchema.Text = "...";
             this.btnSelectSchema.UseVisualStyleBackColor = true;
-            this.btnSelectSchema.Click += new System.EventHandler(this.BtnSelectSchema_Click);
+            this.btnSelectSchema.Click += new System.EventHandler(this.btnSelectSchema_Click);
             // 
             // tbpWebservices
             // 
@@ -636,7 +583,7 @@
             this.btnSelecionarCertificado.TabIndex = 9;
             this.btnSelecionarCertificado.Text = "...";
             this.btnSelecionarCertificado.UseVisualStyleBackColor = true;
-            this.btnSelecionarCertificado.Click += new System.EventHandler(this.BtnSelecionarCertificado_Click);
+            this.btnSelecionarCertificado.Click += new System.EventHandler(this.btnSelecionarCertificado_Click);
             // 
             // cmbXmlSign
             // 
@@ -899,15 +846,52 @@
             this.label18.TabIndex = 24;
             this.label18.Text = "Email";
             // 
-            // btnSalvar
+            // groupBox2
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(46, 457);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(139, 23);
-            this.btnSalvar.TabIndex = 5;
-            this.btnSalvar.Text = "Salvar Configurações";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.BtnSalvar_Click);
+            this.groupBox2.Controls.Add(this.rtbRespostas);
+            this.groupBox2.Location = new System.Drawing.Point(287, 228);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(386, 252);
+            this.groupBox2.TabIndex = 22;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Respostas";
+            // 
+            // rtbRespostas
+            // 
+            this.rtbRespostas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbRespostas.Location = new System.Drawing.Point(3, 16);
+            this.rtbRespostas.Name = "rtbRespostas";
+            this.rtbRespostas.Size = new System.Drawing.Size(380, 233);
+            this.rtbRespostas.TabIndex = 3;
+            this.rtbRespostas.Text = "";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnStatusServ);
+            this.groupBox1.Controls.Add(this.btnInutilizar);
+            this.groupBox1.Controls.Add(this.btnEnviar);
+            this.groupBox1.Controls.Add(this.btnCancelarCTe);
+            this.groupBox1.Controls.Add(this.btnImprimir);
+            this.groupBox1.Controls.Add(this.btnConsultarRecibo);
+            this.groupBox1.Controls.Add(this.btnConsultaXml);
+            this.groupBox1.Controls.Add(this.btnEnviarEmail);
+            this.groupBox1.Controls.Add(this.btnConsultaChave);
+            this.groupBox1.Location = new System.Drawing.Point(287, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(386, 210);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Comandos";
+            // 
+            // btnStatusServ
+            // 
+            this.btnStatusServ.Location = new System.Drawing.Point(6, 19);
+            this.btnStatusServ.Name = "btnStatusServ";
+            this.btnStatusServ.Size = new System.Drawing.Size(118, 23);
+            this.btnStatusServ.TabIndex = 9;
+            this.btnStatusServ.Text = " Status de Serviço";
+            this.btnStatusServ.UseVisualStyleBackColor = true;
+            this.btnStatusServ.Click += new System.EventHandler(this.btnStatusServ_Click);
             // 
             // btnInutilizar
             // 
@@ -917,17 +901,37 @@
             this.btnInutilizar.TabIndex = 17;
             this.btnInutilizar.Text = "Inutilizar Numeração";
             this.btnInutilizar.UseVisualStyleBackColor = true;
-            this.btnInutilizar.Click += new System.EventHandler(this.BtnInutilizar_Click);
+            this.btnInutilizar.Click += new System.EventHandler(this.btnInutilizar_Click);
             // 
-            // btnCancelarNFe
+            // btnEnviar
             // 
-            this.btnCancelarNFe.Location = new System.Drawing.Point(6, 77);
-            this.btnCancelarNFe.Name = "btnCancelarNFe";
-            this.btnCancelarNFe.Size = new System.Drawing.Size(118, 23);
-            this.btnCancelarNFe.TabIndex = 16;
-            this.btnCancelarNFe.Text = "Cancelar NFe";
-            this.btnCancelarNFe.UseVisualStyleBackColor = true;
-            this.btnCancelarNFe.Click += new System.EventHandler(this.BtnCancelarNFe_Click);
+            this.btnEnviar.Location = new System.Drawing.Point(130, 19);
+            this.btnEnviar.Name = "btnEnviar";
+            this.btnEnviar.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviar.TabIndex = 10;
+            this.btnEnviar.Text = "Criar e Enviar";
+            this.btnEnviar.UseVisualStyleBackColor = true;
+            this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
+            // 
+            // btnCancelarCTe
+            // 
+            this.btnCancelarCTe.Location = new System.Drawing.Point(6, 77);
+            this.btnCancelarCTe.Name = "btnCancelarCTe";
+            this.btnCancelarCTe.Size = new System.Drawing.Size(118, 23);
+            this.btnCancelarCTe.TabIndex = 16;
+            this.btnCancelarCTe.Text = "Cancelar CTe";
+            this.btnCancelarCTe.UseVisualStyleBackColor = true;
+            this.btnCancelarCTe.Click += new System.EventHandler(this.btnCancelarCTe_Click);
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Location = new System.Drawing.Point(254, 19);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimir.TabIndex = 11;
+            this.btnImprimir.Text = "Imprimir DACTe";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnConsultarRecibo
             // 
@@ -937,27 +941,7 @@
             this.btnConsultarRecibo.TabIndex = 15;
             this.btnConsultarRecibo.Text = "Consultar Recibo";
             this.btnConsultarRecibo.UseVisualStyleBackColor = true;
-            this.btnConsultarRecibo.Click += new System.EventHandler(this.BtnConsultarRecibo_Click);
-            // 
-            // btnEnviarEmail
-            // 
-            this.btnEnviarEmail.Location = new System.Drawing.Point(254, 77);
-            this.btnEnviarEmail.Name = "btnEnviarEmail";
-            this.btnEnviarEmail.Size = new System.Drawing.Size(118, 23);
-            this.btnEnviarEmail.TabIndex = 14;
-            this.btnEnviarEmail.Text = "Enviar NFe Email";
-            this.btnEnviarEmail.UseVisualStyleBackColor = true;
-            this.btnEnviarEmail.Click += new System.EventHandler(this.BtnEnviarEmail_Click);
-            // 
-            // btnConsultaChave
-            // 
-            this.btnConsultaChave.Location = new System.Drawing.Point(130, 48);
-            this.btnConsultaChave.Name = "btnConsultaChave";
-            this.btnConsultaChave.Size = new System.Drawing.Size(118, 23);
-            this.btnConsultaChave.TabIndex = 13;
-            this.btnConsultaChave.Text = "Consultar com Chave";
-            this.btnConsultaChave.UseVisualStyleBackColor = true;
-            this.btnConsultaChave.Click += new System.EventHandler(this.BtnConsultaChave_Click);
+            this.btnConsultarRecibo.Click += new System.EventHandler(this.btnConsultarRecibo_Click);
             // 
             // btnConsultaXml
             // 
@@ -969,63 +953,35 @@
             this.btnConsultaXml.UseVisualStyleBackColor = true;
             this.btnConsultaXml.Click += new System.EventHandler(this.btnConsultaXml_Click);
             // 
-            // btnImprimir
+            // btnEnviarEmail
             // 
-            this.btnImprimir.Location = new System.Drawing.Point(254, 19);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(118, 23);
-            this.btnImprimir.TabIndex = 11;
-            this.btnImprimir.Text = "Imprimir DANFe";
-            this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Click += new System.EventHandler(this.BtnImprimir_Click);
+            this.btnEnviarEmail.Location = new System.Drawing.Point(254, 77);
+            this.btnEnviarEmail.Name = "btnEnviarEmail";
+            this.btnEnviarEmail.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarEmail.TabIndex = 14;
+            this.btnEnviarEmail.Text = "Enviar CTe Email";
+            this.btnEnviarEmail.UseVisualStyleBackColor = true;
+            this.btnEnviarEmail.Click += new System.EventHandler(this.btnEnviarEmail_Click);
             // 
-            // btnEnviar
+            // btnConsultaChave
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(130, 19);
-            this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(118, 23);
-            this.btnEnviar.TabIndex = 10;
-            this.btnEnviar.Text = "Criar e Enviar";
-            this.btnEnviar.UseVisualStyleBackColor = true;
-            this.btnEnviar.Click += new System.EventHandler(this.BtnEnviar_Click);
+            this.btnConsultaChave.Location = new System.Drawing.Point(130, 48);
+            this.btnConsultaChave.Name = "btnConsultaChave";
+            this.btnConsultaChave.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultaChave.TabIndex = 13;
+            this.btnConsultaChave.Text = "Consultar com Chave";
+            this.btnConsultaChave.UseVisualStyleBackColor = true;
+            this.btnConsultaChave.Click += new System.EventHandler(this.btnConsultaChave_Click);
             // 
-            // btnStatusServ
+            // btnSalvar
             // 
-            this.btnStatusServ.Location = new System.Drawing.Point(6, 19);
-            this.btnStatusServ.Name = "btnStatusServ";
-            this.btnStatusServ.Size = new System.Drawing.Size(118, 23);
-            this.btnStatusServ.TabIndex = 9;
-            this.btnStatusServ.Text = " Status de Serviço";
-            this.btnStatusServ.UseVisualStyleBackColor = true;
-            this.btnStatusServ.Click += new System.EventHandler(this.BtnStatusServ_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnStatusServ);
-            this.groupBox1.Controls.Add(this.btnInutilizar);
-            this.groupBox1.Controls.Add(this.btnEnviar);
-            this.groupBox1.Controls.Add(this.btnCancelarNFe);
-            this.groupBox1.Controls.Add(this.btnImprimir);
-            this.groupBox1.Controls.Add(this.btnConsultarRecibo);
-            this.groupBox1.Controls.Add(this.btnConsultaXml);
-            this.groupBox1.Controls.Add(this.btnEnviarEmail);
-            this.groupBox1.Controls.Add(this.btnConsultaChave);
-            this.groupBox1.Location = new System.Drawing.Point(287, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(386, 210);
-            this.groupBox1.TabIndex = 18;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Comandos";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rtbRespostas);
-            this.groupBox2.Location = new System.Drawing.Point(287, 228);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(386, 252);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Respostas";
+            this.btnSalvar.Location = new System.Drawing.Point(80, 453);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(139, 23);
+            this.btnSalvar.TabIndex = 20;
+            this.btnSalvar.Text = "Salvar Configurações";
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // FrmMain
             // 
@@ -1036,12 +992,12 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.tabControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ACBrLibNFe Demo";
+            this.Text = "ACBrLibCTe Demo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Shown += new System.EventHandler(this.FrmMain_Shown);
             this.tabControl1.ResumeLayout(false);
@@ -1064,27 +1020,22 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox rtbRespostas;
+
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tbpCertificados;
+        private System.Windows.Forms.TabPage tbpConfiguracoes;
+        private System.Windows.Forms.ComboBox cmbModeloDocumento;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtSchemaPath;
+        private System.Windows.Forms.Button btnSelectSchema;
         private System.Windows.Forms.TabPage tbpWebservices;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton rdbProducao;
-        private System.Windows.Forms.RadioButton rdbHomologacao;
-        private System.Windows.Forms.ComboBox cmbUfDestino;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbSSlType;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown nudTimeOut;
-        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox txtProxySenha;
         private System.Windows.Forms.Label label16;
@@ -1094,7 +1045,20 @@
         private System.Windows.Forms.NumericUpDown nudProxyPorta;
         private System.Windows.Forms.TextBox txtProxyServidor;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown nudTimeOut;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbSSlType;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton rdbProducao;
+        private System.Windows.Forms.RadioButton rdbHomologacao;
+        private System.Windows.Forms.ComboBox cmbUfDestino;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tbpCertificados;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox txtDadosPFX;
+        private System.Windows.Forms.Button btnDadosPFX;
         private System.Windows.Forms.TextBox txtCertNumero;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
@@ -1108,50 +1072,39 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbCrypt;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TabPage tbpConfiguracoes;
-        private System.Windows.Forms.TextBox txtCSC;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtIdCSC;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtSchemaPath;
-        private System.Windows.Forms.Button btnSelectSchema;
-        private System.Windows.Forms.ComboBox cmbModeloDocumento;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button btnInutilizar;
-        private System.Windows.Forms.Button btnCancelarNFe;
-        private System.Windows.Forms.Button btnConsultarRecibo;
-        private System.Windows.Forms.Button btnEnviarEmail;
-        private System.Windows.Forms.Button btnConsultaChave;
-        private System.Windows.Forms.Button btnConsultaXml;
-        private System.Windows.Forms.Button btnImprimir;
-        private System.Windows.Forms.Button btnEnviar;
-        private System.Windows.Forms.Button btnStatusServ;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TabPage tbpEmail;
-        private System.Windows.Forms.TextBox txtSenha;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown nudPorta;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtNome;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.CheckBox ckbTLS;
-        private System.Windows.Forms.CheckBox ckbSSL;
-        private System.Windows.Forms.TextBox txtHost;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.TextBox txtAssunto;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtMensagem;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox txtDadosPFX;
-        private System.Windows.Forms.Button btnDadosPFX;
+        private System.Windows.Forms.TextBox txtAssunto;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.TextBox txtSenha;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtHost;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.CheckBox ckbSSL;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.CheckBox ckbTLS;
+        private System.Windows.Forms.NumericUpDown nudPorta;
+        private System.Windows.Forms.TextBox txtNome;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RichTextBox rtbRespostas;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnStatusServ;
+        private System.Windows.Forms.Button btnInutilizar;
+        private System.Windows.Forms.Button btnEnviar;
+        private System.Windows.Forms.Button btnCancelarCTe;
+        private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnConsultarRecibo;
+        private System.Windows.Forms.Button btnConsultaXml;
+        private System.Windows.Forms.Button btnEnviarEmail;
+        private System.Windows.Forms.Button btnConsultaChave;
+        private System.Windows.Forms.Button btnSalvar;
     }
 }
 

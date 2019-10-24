@@ -32,5 +32,7 @@
         BoletoBancoConfig,
         BoletoDiretorioConfig,
         BoletoBancoFCFortesConfig,
+        CTe,
+        DACTe
     }
 }

@@ -263,8 +263,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object RLDraw9: TRLDraw
           Left = 0
           Top = 101
-          Width = 750
+          Width = 740
           Height = 1
+          Align = faWidth
           DrawKind = dkLine
         end
         object RLLabel7: TRLLabel
@@ -285,8 +286,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         object RLDraw10: TRLDraw
           Left = 0
           Top = 120
-          Width = 750
+          Width = 740
           Height = 1
+          Align = faWidth
           DrawKind = dkLine
         end
         object rlLabel19: TRLLabel
@@ -1241,8 +1243,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Borders.DrawRight = False
         Borders.DrawBottom = False
         object RLBarcode1: TRLBarcode
-          Left = 5
-          Top = 18
+          Left = 4
+          Top = 24
           Width = 298
           Height = 39
           Margins.LeftMargin = 1.000000000000000000

@@ -667,13 +667,7 @@ begin
   if not EstaVazio(Trim(fpMDFe.infMDFeSupl.qrCodMDFe)) then
     PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture, qrUTF8NoBOM )
   else
-  begin
-    RLPanel4.width    := 420;
-    RLPanel3.width    := 420;
-    RLBarcode1.width  := 408;
-    rllChave.width    := 408;
     imgQRCode.Visible := False;
-  end;
 end;
 
 procedure TfrlDAMDFeRLRetrato.RLMDFeDataRecord(Sender: TObject; RecNo,

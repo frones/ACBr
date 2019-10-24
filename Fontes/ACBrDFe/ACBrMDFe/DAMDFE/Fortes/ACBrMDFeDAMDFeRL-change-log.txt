@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2019
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Ajustes de alinhamento do código de barras e da chave.
+   Por: Italo Jurisato Junior
+
 23/10/2019
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Ajustes de alinhamento de alguns campos.

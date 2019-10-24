@@ -1799,7 +1799,8 @@ procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha : Integer;
-  rAgencia, rCodCedente, Linha, rCedente , TempData:String;
+  rAgencia, rCodCedente, Linha, rCedente , TempData:String;  
+  MotivoLinha, CodMotivo: Integer;
 begin
    fpTamanhoMaximoNossoNum := 15;
  
@@ -1879,6 +1880,24 @@ begin
 
        if TempData <> '00/00/00' then
          DataCredito:= StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
+       case OcorrenciaOriginal.Tipo of
+         toRetornoRegistroRecusado:
+           begin
+              MotivoLinha := 80;
+              CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = '00', '00', Copy(Linha, MotivoLinha, 2)), 0);
+
+              if (CodMotivo <> 0) then
+              begin
+                MotivoRejeicaoComando.Add(IntToStr(CodMotivo));
+                DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodMotivo));
+              end;
+           end;
+       else
+         begin
+           MotivoLinha := 0;
+           CodMotivo := 0;
+         end;
+       end;
      end;
    end;
 

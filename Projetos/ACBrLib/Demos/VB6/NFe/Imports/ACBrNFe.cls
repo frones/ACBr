@@ -67,6 +67,16 @@ Private Declare Function NFE_CarregarXML _
 Private Declare Function NFE_CarregarINI _
                 Lib "ACBrNFE32.dll" (ByVal eArquivoOuIni As String) As Long
                 
+Private Declare Function NFE_ObterXml _
+                Lib "ACBrNFE32.dll" (ByVal AIndex As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function NFE_GravarXml _
+                Lib "ACBrNFE32.dll" (ByVal AIndex As Long, _
+                                     ByVal eNomeArquivo As String, _
+                                     ByVal ePathArquivo As String) As Long
+                
 Private Declare Function NFE_CarregarEventoXML _
                 Lib "ACBrNFE32.dll" (ByVal eArquivoOuXml As String) As Long
                 
@@ -299,6 +309,30 @@ End Sub
 Public Sub CarregarINI(ByVal eArquivoOuIni As String)
     Dim retorno   As Long
     retorno = NFE_CarregarINI(eArquivoOuIni)
+    CheckResult retorno
+End Sub
+
+Public Function ObterXml(ByVal AIndex As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_ObterXml(AIndex, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterXml = processResult(buffer, bufferLen)
+End Function
+
+Public Sub GravarXml(ByVal AIndex As Long, _
+                     Optional ByVal eNomeArquivo As String = "", _
+                     Optional ByVal ePathArquivo As String = "")
+    Dim retorno   As Long
+    retorno = NFE_GravarXml(AIndex, eNomeArquivo, ePathArquivo)
     CheckResult retorno
 End Sub
 

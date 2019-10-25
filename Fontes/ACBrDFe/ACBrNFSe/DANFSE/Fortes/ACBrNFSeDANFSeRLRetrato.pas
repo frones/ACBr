@@ -389,7 +389,8 @@ begin
 
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
-    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
+    //rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
+    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Tomador.Endereco.CodigoMunicipio, 0));
   end;
 end;
 

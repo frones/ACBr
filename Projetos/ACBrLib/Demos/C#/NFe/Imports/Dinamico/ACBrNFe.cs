@@ -46,6 +46,12 @@ namespace ACBrLib.NFe
             public delegate int NFE_CarregarINI(string eArquivoOuIni);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ObterXml(int AIndex, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_GravarXml(int AIndex, string eNomeArquivo, string ePathArquivo);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_CarregarEventoXML(string eArquivoOuXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -215,7 +221,7 @@ namespace ACBrLib.NFe
             if (value == null) return;
 
             var method = GetMethod<Delegates.NFE_ConfigGravarValor>();
-           var propValue = ConvertValue(value);
+            var propValue = ConvertValue(value);
 
             var ret = ExecuteMethod(() => method(ToUTF8(eSessao.ToString()), ToUTF8(eChave), ToUTF8(propValue)));
             CheckResult(ret);
@@ -235,6 +241,27 @@ namespace ACBrLib.NFe
         {
             var method = GetMethod<Delegates.NFE_CarregarINI>();
             var ret = ExecuteMethod(() => method(ToUTF8(eArquivoOuIni)));
+
+            CheckResult(ret);
+        }
+
+        public string ObterXml(int aIndex)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_ObterXml>();
+            var ret = ExecuteMethod(() => method(aIndex, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void GravarXml(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
+        {
+            var method = GetMethod<Delegates.NFE_GravarXml>();
+            var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
 
             CheckResult(ret);
         }
@@ -539,6 +566,8 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_ConfigGravarValor>("NFE_ConfigGravarValor");
             AddMethod<Delegates.NFE_CarregarXML>("NFE_CarregarXML");
             AddMethod<Delegates.NFE_CarregarINI>("NFE_CarregarINI");
+            AddMethod<Delegates.NFE_ObterXml>("NFE_ObterXml");
+            AddMethod<Delegates.NFE_GravarXml>("NFE_GravarXml");
             AddMethod<Delegates.NFE_CarregarEventoXML>("NFE_CarregarEventoXML");
             AddMethod<Delegates.NFE_CarregarEventoINI>("NFE_CarregarEventoINI");
             AddMethod<Delegates.NFE_LimparLista>("NFE_LimparLista");

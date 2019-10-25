@@ -167,7 +167,7 @@ namespace ACBrLib.Core
         {
             var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
             var path = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path) + uri.Fragment);
-            path += Environment.Is64BitOperatingSystem ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
+            path += Environment.Is64BitProcess ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
             Environment.SetEnvironmentVariable("PATH", path, EnvironmentVariableTarget.Process);
 
             methodCache = new Dictionary<string, Delegate>();

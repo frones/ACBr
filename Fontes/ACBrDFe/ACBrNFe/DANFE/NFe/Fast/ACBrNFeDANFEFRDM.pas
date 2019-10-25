@@ -191,7 +191,7 @@ type
     property OtimizaImpressaoPdf: Boolean read FOtimizaImpressaoPdf write FOtimizaImpressaoPdf;
 
     function PrepareReport(ANFE: TNFe = nil): Boolean;
-    function PrepareReportEvento: Boolean;
+    function PrepareReportEvento(ANFE: TNFe = nil): Boolean;
     function PrepareReportInutilizacao: Boolean;
 
     function GetPreparedReport: TfrxReport;
@@ -2071,7 +2071,7 @@ begin
 
 end;
 
-function TACBrNFeFRClass.PrepareReportEvento: Boolean;
+function TACBrNFeFRClass.PrepareReportEvento(ANFE: TNFe = nil): Boolean;
 var
  wProjectStream: TStringStream;
 begin
@@ -2119,10 +2119,19 @@ begin
     else
       raise EACBrNFeDANFEFR.Create('Evento não foi assinalado.');
 
-    if (TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count > 0) then
+    NFe := nil;
+
+    if Assigned(ANFE) then
+      NFe := ANFE
+    else
+    begin
+      if (TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Count > 0) then
+        NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Items[0].NFe;
+    end;
+
+    if Assigned(NFe) then
     begin
       frxReport.Variables['PossuiNFe'] := QuotedStr('S');
-      NFe := TACBrNFe(DANFEClassOwner.ACBrNFe).NotasFiscais.Items[0].NFe;
       CarregaDadosNFe;
     end;
 
@@ -2388,7 +2397,7 @@ var
   NomeArq: String;
   fsShowDialog: Boolean;
 begin
-  if PrepareReportEvento then
+  if PrepareReportEvento(ANFE) then
   begin
     frxPDFExport.Author        := DANFEClassOwner.Sistema;
     frxPDFExport.Creator       := DANFEClassOwner.Sistema;

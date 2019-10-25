@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2019
+-- pcnAuxiliar --
+[+] Adicionando o método:
+    function TimeToDecimal(const ATime: TDateTime): Double;
+    https://www.projetoacbr.com.br/forum/topic/54474-converter-horas-para-decimal-s-2245/
+    (por: DSA)
+
 22/10/2019
 -- pcnAuxiliar --
 [*] Ajuste na função "GetInicioDoHorarioDeVerao" e "GetFimDoHorarioDeVerao" 

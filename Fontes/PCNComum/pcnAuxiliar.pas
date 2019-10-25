@@ -78,6 +78,7 @@ type
 
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
+function TimeToDecimal(const ATime: TDateTime): Double;
 function DateTimeToDataHora(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: String; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; const QuebraLinha: String = ';'): String;
@@ -163,6 +164,17 @@ begin
             IntToStrZero(wHor, 2) + ':' +
             IntToStrZero(wMin, 2) + ':' +
             IntToStrZero(wSeg, 2);
+end;
+
+function TimeToDecimal(const ATime: TDateTime): Double;
+var
+  H, N, S, MS: word;
+  MDec: Double;
+begin
+  DecodeTime(ATime, H,N,S,MS);
+
+  MDec := N/60;
+  Result := H + MDec;
 end;
 
 function DateTimeToDataHora(DataHora: TDateTime): string;
@@ -853,7 +865,7 @@ begin
     Result := StrToIntDef(Copy(AChave, 36, 8), 0);
 end;
 
-function ExtrairTipoEmissaoChaveAcesso(aChave: String): Integer;
+function ExtrairTipoEmissaoChaveAcesso(AChave: String): Integer;
 begin
   AChave := OnlyNumber(AChave);
 
@@ -863,7 +875,7 @@ begin
     Result := StrToIntDef(Copy(AChave, 35, 1), 0);
 end;
 
-function ExtrairDigitoChaveAcesso(AChave: String): Integer;
+function ExtrairDigitoChaveAcesso(AChave: string): Integer;
 begin
   AChave := OnlyNumber(AChave);
 

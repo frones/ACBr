@@ -78,6 +78,8 @@ type
     procedure SetXMLOriginal(const Value: String);
 
     procedure AssinaturaAdicional;
+
+    function CorrigirAssinatura(const AXML: string): string;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -116,7 +118,6 @@ type
     property Msg: String read GetMsg;
     property Alertas: String read FAlertas;
     property ErroRegrasdeNegocios: String read FErroRegrasdeNegocios;
-
   end;
 
   { TNotasFiscais }
@@ -301,6 +302,8 @@ begin
                                   '', '', '', IdAttr)
     else
       FXMLAssinado := XMLOriginal;
+
+    FXMLAssinado := CorrigirAssinatura(FXMLAssinado);
 
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasNFSeProcessadas)  then
@@ -522,6 +525,33 @@ begin
   end;
 end;
 
+function NotaFiscal.CorrigirAssinatura(const AXML: string): string;
+var
+  XML:string;
+begin
+  XML := StringReplace(AXML,
+      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>',
+      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
+
+  XML := StringReplace(XML,
+      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>',
+      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>', [rfReplaceAll]);
+
+  XML := StringReplace(XML,
+      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>',
+      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>', [rfReplaceAll]);
+
+  XML := StringReplace(XML,
+      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>',
+      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
+
+  XML := StringReplace(XML,
+      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>',
+      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>', [rfReplaceAll]);
+
+  Result := XML;
+end;
+
 function NotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
 begin
@@ -692,6 +722,9 @@ begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
                             SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
       FXMLLoteAssinado := XMLAss;
+
+      FXMLLoteAssinado := Self.Items[0].CorrigirAssinatura(FXMLLoteAssinado);
+
       Result := FXMLLoteAssinado;
     end;
   end;
@@ -720,6 +753,9 @@ begin
     begin
       XMLAss := SSL.Assinar(ArqXML, docElemento, infElemento,
                             SignatureNode, SelectionNamespaces, IdSignature, IdAttr);
+
+      XMLAss := Self.Items[0].CorrigirAssinatura(XMLAss);
+
       Result := XMLAss;
     end;
   end;

@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/10/2019
+-- ACBrNFSeWebServices --
+[*] Possível correção para o provedor SimplISSv2.
+   Por: Italo Jurisato Junior
+
+24/10/2019
 -- pnfsNFSe --
 [*] Alterado o tipo Currency para Double do campo Aliquota
    Por: Italo Jurisato Junior

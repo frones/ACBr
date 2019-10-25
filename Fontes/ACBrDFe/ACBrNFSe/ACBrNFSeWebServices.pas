@@ -2213,9 +2213,9 @@ begin
            proWEBFISCO,
            proIPM: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -3669,12 +3669,18 @@ begin
              '<InfRps' + FNameSpaceDad + ' ', [rfReplaceAll]);
         end;
 
-//      proSimplISSv2:
+      proSimplISSv2:
+        begin
 //          FPDadosMsg := StringReplace(FPDadosMsg,
 //                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
 //                                      'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
 //                                      'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
-//                                      'GerarNfseEnvio', [rfReplaceAll]);
+//                                      'GerarNfseEnvio xmlns="http://www.abrasf.org.br/nfse.xsd"', [rfReplaceAll]);
+
+          FPDadosMsg := StringReplace(FPDadosMsg,
+                                      'Rps xmlns="http://www.abrasf.org.br/nfse.xsd"',
+                                      'Rps', [rfReplaceAll]);
+        end;
 
       proNotaBlu:
         FPDadosMsg := StringReplace(FPDadosMsg, 'EnvioRps xmlns=""', 'EnvioRps', [rfReplaceAll]);
@@ -5305,7 +5311,7 @@ begin
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.AbrirSessao) and (FPDadosMsg <> '') then
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Abrir Sessão: ');
-    
+
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao.IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao.Envelope;

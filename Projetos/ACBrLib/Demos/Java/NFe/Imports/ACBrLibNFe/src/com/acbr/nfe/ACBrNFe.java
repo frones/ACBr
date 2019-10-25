@@ -121,6 +121,24 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
+  public String obterXml( int AIndex ) throws Exception {
+      ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+      IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+      int ret = ACBrNFeLib.INSTANCE.NFE_ObterXml(AIndex, buffer, bufferLen );
+      checkResult( ret );
+      
+      return processResult( buffer, bufferLen );
+  }
+  
+  public void gravarXml ( int AIndex ) throws Exception {
+      gravarXml(AIndex, "", "");
+  }
+  
+  public void gravarXml ( int AIndex, String eNomeArquivo, String ePathArquivo ) throws Exception {
+      int ret = ACBrNFeLib.INSTANCE.NFE_GravarXml( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
+    checkResult( ret );
+  }
+  
   public void carregarIni( String eArquivoOuIni ) throws Exception {
     int ret = ACBrNFeLib.INSTANCE.NFE_CarregarINI( toUTF8( eArquivoOuIni ) );
     checkResult( ret );
@@ -128,6 +146,21 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
   public void limparLista() throws Exception {
     int ret = ACBrNFeLib.INSTANCE.NFE_LimparLista();
+    checkResult( ret );
+  }
+  
+  public void carregarEventoXml( String eArquivoOuXML ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_CarregarEventoXML( toUTF8( eArquivoOuXML ) );
+    checkResult( ret );
+  }
+
+  public void carregarEventoINI( String eArquivoOuIni ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_CarregarEventoINI(toUTF8( eArquivoOuIni ) );
+    checkResult( ret );
+  }
+
+  public void limparListaEventos() throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_LimparListaEventos();
     checkResult( ret );
   }
 
@@ -369,6 +402,10 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     int NFE_CarregarXML( String eArquivoOuXML );
 
     int NFE_CarregarINI( String eArquivoOuINI );
+    
+    int NFE_ObterXml( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int NFE_GravarXml( Integer AIndex, String eNomeArquivo, String ePathArquivo );
 
     int NFE_LimparLista();
 

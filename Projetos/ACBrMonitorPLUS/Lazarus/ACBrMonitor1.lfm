@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -16083,7 +16083,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 554
   end
   object ACBrETQ1: TACBrETQ
-    ArqLOG = 'C:\TEMP\etq.txt'
     Porta = 'LPT1'
     Ativo = False
     left = 589
@@ -16176,6 +16175,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0

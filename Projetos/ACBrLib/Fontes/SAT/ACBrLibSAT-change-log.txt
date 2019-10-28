@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/10/2019
+-- ACBrLibSATClass --
+[-] Corrigido erro ao carregar arquivo de venda no cancelamento em formato string.
+    (por Rafael Dias)
+
 18/10/2019
 -- ACBrLibSATConfig --
 [-] Corrigido erro ao carregar logo.

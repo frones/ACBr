@@ -1009,11 +1009,10 @@ begin
       Resp := TRetornoCancelarCFe.Create(Config.TipoResposta, pLib.Config.CodResposta);
       try
         Resposta := '';
-        if (ArquivoXml <> '') and (FileExists(ArquivoXml)) then
-        begin
-          SatDM.ACBrSAT1.CFe.Clear;
-          SatDM.CarregarDadosVenda(ArquivoXml);
-        end;
+
+        SatDM.ACBrSAT1.CFe.Clear;
+        SatDM.ACBrSAT1.InicializaCFe;
+        SatDM.CarregarDadosVenda(ArquivoXml);
 
         Resp.Resultado := SatDM.ACBrSAT1.CancelarUltimaVenda;
         Resp.Processar(SatDM.ACBrSAT1);

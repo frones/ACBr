@@ -264,7 +264,6 @@ var
   function CriarXml(const NomeArquivo, Comando: String): String;
   var
     NomeArquivoTmp, NomeArquivoXml: String;
-    MensagemDeErro : String;
   begin
     NomeArquivoTmp := ChangeFileExt(NomeArquivo, '.tmp');
     FOwner.DoLog('Criando arquivo: '+NomeArquivoTmp);

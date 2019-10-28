@@ -386,7 +386,7 @@ end;
 
 procedure TfrlDANFeRLSimplificado.AdicionarFatura;
 var
-  x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha, iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
+  x, iQuantDup: Integer;
 begin
   rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
 

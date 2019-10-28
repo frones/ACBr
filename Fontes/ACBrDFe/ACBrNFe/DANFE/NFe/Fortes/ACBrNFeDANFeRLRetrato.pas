@@ -750,7 +750,10 @@ end;
 procedure TfrlDANFeRLRetrato.rlbContinuacaoInformacoesComplementaresBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
 begin
-  if(RLNFe.PageNumber = 1) then RLNFe.NewPageNeeded := True;
+  if (not fpDANFe.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina) and (RLNFe.PageNumber = 1) then
+  begin
+    RLNFe.NewPageNeeded := True;
+  end;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -935,31 +938,31 @@ begin
   // Oculta alguns itens do fpDANFe
   if fpDANFe.FormularioContinuo then
   begin
-    rllRecebemosDe.Visible := False;
-    rllResumo.Visible := False;
+    rllRecebemosDe.Visible     := False;
+    rllResumo.Visible          := False;
     rllDataRecebimento.Visible := False;
-    rllIdentificacao.Visible := False;
-    rllNFe.Visible := False;
-    rliCanhoto.Visible := False;
-    rliCanhoto1.Visible := False;
-    rliCanhoto2.Visible := False;
-    rliCanhoto3.Visible := False;
-    rliDivisao.Visible := False;
-    rliTipoEntrada.Visible := False;
-    rllDANFE.Visible := False;
-    rllDocumento1.Visible := False;
-    rllDocumento2.Visible := False;
-    rllTipoEntrada.Visible := False;
-    rllTipoSaida.Visible := False;
-    rllEmitente.Visible := False;
-    rliLogo.Visible := False;
-    rlmEmitente.Visible := False;
-    rlmEndereco.Visible := False;
-    rliEmitente.Visible := False;
-    rllChaveAcesso.Visible := False;
-    rliChave.Visible := False;
-    rliChave2.Visible := False;
-    rliChave3.Visible := False;
+    rllIdentificacao.Visible   := False;
+    rllNFe.Visible             := False;
+    rliCanhoto.Visible         := False;
+    rliCanhoto1.Visible        := False;
+    rliCanhoto2.Visible        := False;
+    rliCanhoto3.Visible        := False;
+    rliDivisao.Visible         := False;
+    rliTipoEntrada.Visible     := False;
+    rllDANFE.Visible           := False;
+    rllDocumento1.Visible      := False;
+    rllDocumento2.Visible      := False;
+    rllTipoEntrada.Visible     := False;
+    rllTipoSaida.Visible       := False;
+    rllEmitente.Visible        := False;
+    rliLogo.Visible            := False;
+    rlmEmitente.Visible        := False;
+    rlmEndereco.Visible        := False;
+    rliEmitente.Visible        := False;
+    rllChaveAcesso.Visible     := False;
+    rliChave.Visible           := False;
+    rliChave2.Visible          := False;
+    rliChave3.Visible          := False;
   end;
 
   // Expande a logomarca
@@ -1079,19 +1082,27 @@ begin
   posicionaCanhoto;
 
   // Verifica se será exibida a 'continuação das informações complementares'
-  if (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
+  if rlbContinuacaoInformacoesComplementares.Visible then
   begin
-    rlbContinuacaoInformacoesComplementares.Visible := True;
     h := (rlmContinuacaoDadosAdicionais.Top + rlmContinuacaoDadosAdicionais.Height) + 2;
     LinhaDCInferior.Top := h;
     h := (h - LinhaDCSuperior.Top) + 1;
     LinhaDCEsquerda.Height := h;
     LinhaDCDireita.Height := h;
-  end
-  else
-    rlbContinuacaoInformacoesComplementares.Visible := False;
+  end;
 
   fpQuantItens := fpNFe.Det.Count;
+
+  //Ajustar tamanho quadro DadosAdicionais
+  if fpDANFe.ExpandirDadosAdicionaisAuto then
+  begin
+    rlbDadosAdicionais.AutoExpand := True;
+    rlmDadosAdicionais.AutoSize := True;
+    RLDraw50.Height := (rlmDadosAdicionais.Top + rlmDadosAdicionais.Height) - RLLabel77.Top + 2;
+    RLDraw51.Height := RLDraw50.Height;
+    rllSistema.Top  := RLDraw50.Top + RLDraw50.Height;
+    rllUsuario.Top  := rllSistema.Top;
+  end;
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirCabecalho;
@@ -1446,35 +1457,37 @@ var
   sProtocolo, sSuframa: String;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
-  rlmDadosAdicionaisAuxiliar.Lines.Clear;
+  try
+    rlmDadosAdicionaisAuxiliar.Lines.Clear;
 
-  // Protocolo de autorização, nos casos de emissão em contingência
-  if (fpNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (fpNFe.procNFe.cStat = 100) then
-  begin
-    sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
-      fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
-    InserirLinhas(sProtocolo, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+    // Protocolo de autorização, nos casos de emissão em contingência
+    if (fpNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (fpNFe.procNFe.cStat = 100) then
+    begin
+      sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
+        fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
+      InserirLinhas(sProtocolo, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+    end;
+
+    // Inscrição Suframa
+    if NaoEstaVazio(fpNFe.Dest.ISUF) then
+    begin
+      sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
+      InserirLinhas(sSuframa, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
+    end;
+
+    InserirLinhas(
+      fpDANFe.ManterDocreferenciados(fpNFe) +
+      fpDANFe.ManterInfAdFisco(fpNFe) +
+      fpDANFe.ManterObsFisco(fpNFe) +
+      fpDANFe.ManterProcreferenciado(fpNFe) +
+      fpDANFe.ManterInfContr(fpNFe) +
+      fpDANFe.ManterInfCompl(fpNFe) +
+      fpDANFe.ManterContingencia(fpNFe),
+      fpLimiteCaracteresLinha,
+      rlmDadosAdicionaisAuxiliar);
+  finally
+    rlmDadosAdicionaisAuxiliar.Lines.EndUpdate;
   end;
-
-  // Inscrição Suframa
-  if NaoEstaVazio(fpNFe.Dest.ISUF) then
-  begin
-    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
-    InserirLinhas(sSuframa, fpLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-  end;
-
-  InserirLinhas(
-    fpDANFe.ManterDocreferenciados(fpNFe) +
-    fpDANFe.ManterInfAdFisco(fpNFe) +
-    fpDANFe.ManterObsFisco(fpNFe) +
-    fpDANFe.ManterProcreferenciado(fpNFe) +
-    fpDANFe.ManterInfContr(fpNFe) +
-    fpDANFe.ManterInfCompl(fpNFe) +
-    fpDANFe.ManterContingencia(fpNFe),
-    fpLimiteCaracteresLinha,
-    rlmDadosAdicionaisAuxiliar);
-
-  rlmDadosAdicionaisAuxiliar.Lines.EndUpdate;
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirObservacoes;
@@ -1483,33 +1496,42 @@ var
   sTexto: String;
 begin
   rlmDadosAdicionais.Lines.BeginUpdate;
-  rlmDadosAdicionais.Lines.Clear;
+  try
+    rlmDadosAdicionais.Lines.Clear;
 
-  if (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
-  begin
-    iMaximoLinhas := fpLimiteLinhas;
-    iRestanteLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count - fpLimiteLinhas;
-    rlmContinuacaoDadosAdicionais.Lines.BeginUpdate;
-    sTexto := '';
-    for i := 0 to (iRestanteLinhas - 1) do
-      sTexto := sTexto + rlmDadosAdicionaisAuxiliar.Lines.Strings[(iMaximoLinhas + i)];
+    if (not fpDANFe.ExpandirDadosAdicionaisAuto) and
+       (rlmDadosAdicionaisAuxiliar.Lines.Count > fpLimiteLinhas) then
+    begin
+      rlbContinuacaoInformacoesComplementares.Visible := True;
+      iMaximoLinhas := fpLimiteLinhas;
+      iRestanteLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count - fpLimiteLinhas;
+      rlmContinuacaoDadosAdicionais.Lines.BeginUpdate;
+      try
+        sTexto := '';
+        for i := 0 to (iRestanteLinhas - 1) do
+          sTexto := sTexto + rlmDadosAdicionaisAuxiliar.Lines.Strings[(iMaximoLinhas + i)];
 
-    InserirLinhas(sTexto, fpLimiteCaracteresContinuacao, rlmContinuacaoDadosAdicionais);
-    rlmContinuacaoDadosAdicionais.Lines.Text :=
-      StringReplace(rlmContinuacaoDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
+        InserirLinhas(sTexto, fpLimiteCaracteresContinuacao, rlmContinuacaoDadosAdicionais);
+        rlmContinuacaoDadosAdicionais.Lines.Text :=
+          StringReplace(rlmContinuacaoDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
+      finally
+        rlmContinuacaoDadosAdicionais.Lines.EndUpdate;
+      end;
+    end
+    else
+    begin
+      iMaximoLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count;
+      rlbContinuacaoInformacoesComplementares.Visible := False;
+    end;
 
-    rlmContinuacaoDadosAdicionais.Lines.EndUpdate;
-  end
-  else
-    iMaximoLinhas := rlmDadosAdicionaisAuxiliar.Lines.Count;
+    for i := 0 to (iMaximoLinhas - 1) do
+      rlmDadosAdicionais.Lines.Add(rlmDadosAdicionaisAuxiliar.Lines.Strings[i]);
 
-  for i := 0 to (iMaximoLinhas - 1) do
-    rlmDadosAdicionais.Lines.Add(rlmDadosAdicionaisAuxiliar.Lines.Strings[i]);
-
-  rlmDadosAdicionais.Lines.Text :=
-    StringReplace(rlmDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
-
-  rlmDadosAdicionais.Lines.EndUpdate;
+    rlmDadosAdicionais.Lines.Text :=
+      StringReplace(rlmDadosAdicionais.Lines.Text, ';', '', [rfReplaceAll]);
+  finally
+    rlmDadosAdicionais.Lines.EndUpdate;
+  end;
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirISSQN;

@@ -99,6 +99,7 @@ type
     FDetRastros: TDetRastros;
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: Double;
+    FExpandirDadosAdicionaisAuto: boolean;
 
     procedure SetTributosPercentual(const AValue: TpcnPercentualTributos);
     procedure SetTributosPercentualPersonalizado(const AValue: Double);
@@ -139,6 +140,7 @@ type
     property DetRastros: TDetRastros read FDetRastros write FDetRastros default [dr_nLote, dr_qLote, dr_dFab, dr_dVal, dr_cAgreg];
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write SetTributosPercentual default ptValorProdutos;
     property TributosPercentualPersonalizado: Double read FTributosPercentualPersonalizado write SetTributosPercentualPersonalizado;
+    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto default False;
   end;
 
 
@@ -188,25 +190,27 @@ constructor TACBrNFeDANFEClass.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FFormularioContinuo := False;
-  FImprimeValor := iuComercial;
-  FImprimeDetalhamentoEspecifico := True;
-  FImprimeDescAcrescItem := idaiSempre;
-  FPosCanhoto := prCabecalho;
-  FPosCanhotoLayout := prlPadrao;
-  FExibeResumoCanhoto := True;
-  FTextoResumoCanhoto := '';
-  FImprimeDescPorPercentual := False;
-  FExibeCampoFatura := True;
-  FExibeDadosISSQN := False;
-  FExibeDadosDocReferenciados := True;
-  FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
-  FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
-  FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
-  FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
-  FDetRastros := [dr_nLote, dr_qLote, dr_dFab, dr_dVal, dr_cAgreg];
-  FTributosPercentual := ptValorProdutos;
+  FFormularioContinuo              := False;
+  FImprimeValor                    := iuComercial;
+  FImprimeDetalhamentoEspecifico   := True;
+  FImprimeDescAcrescItem           := idaiSempre;
+  FPosCanhoto                      := prCabecalho;
+  FPosCanhotoLayout                := prlPadrao;
+  FExibeResumoCanhoto              := True;
+  FTextoResumoCanhoto              := '';
+  FImprimeDescPorPercentual        := False;
+  FExibeCampoFatura                := True;
+  FExibeDadosISSQN                 := False;
+  FExibeDadosDocReferenciados      := True;
+  FDetVeiculos                     := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
+  FDetMedicamentos                 := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
+  FDetArmamentos                   := [da_tpArma, da_nSerie, da_nCano, da_descr];
+  FDetCombustiveis                 := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
+  FDetRastros                      := [dr_nLote, dr_qLote, dr_dFab, dr_dVal, dr_cAgreg];
+  FTributosPercentual              := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
+  FExpandirDadosAdicionaisAuto     := False;
+
 end;
 
 procedure TACBrNFeDANFEClass.SetTributosPercentual(const AValue: TpcnPercentualTributos);

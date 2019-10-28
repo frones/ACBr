@@ -68,7 +68,6 @@ type
     FdmDanfe: TACBrNFeFRClass;
     FEspessuraBorda: Integer;
     FMarcaDaguaMSG: string;
-    FExpandirDadosAdicionaisAuto: boolean;
 
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
@@ -120,7 +119,6 @@ type
     property FastFileInutilizacao: String read GetFastFileInutilizacao write SetFastFileInutilizacao;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
-    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
     property IncorporarBackgroundPdf: Boolean read GetIncorporarBackgroundPdf write SetIncorporarBackgroundPdf default True;
     property IncorporarFontesPdf: Boolean read GetIncorporarFontesPdf write SetIncorporarFontesPdf default True;
     property OtimizaImpressaoPdf: Boolean read GetOtimizaImpressaoPdf write SetOtimizaImpressaoPdf default True;
@@ -205,10 +203,8 @@ begin
   inherited create( AOwner );
 
   FEspessuraBorda := 1;
-  FMarcaDaguaMSG:='';
-  ExpandirDadosAdicionaisAuto:=false;
-  FdmDanfe := TACBrNFeFRClass.Create(Self);
-
+  FMarcaDaguaMSG  :='';
+  FdmDanfe        := TACBrNFeFRClass.Create(Self);
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;

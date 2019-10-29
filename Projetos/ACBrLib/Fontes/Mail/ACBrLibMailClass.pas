@@ -118,7 +118,7 @@ function MAIL_Send: longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibMailConsts, ACBrLibConfig, ACBrLibMailConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibMailConfig;
 
 { TACBrLibMail }
 

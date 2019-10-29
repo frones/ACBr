@@ -105,15 +105,13 @@ function LCB_LerString(var eTexto: PChar): longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibLCBConsts, ACBrLibConfig, ACBrLibLCBConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibLCBConfig;
 
 { TACBrLibLCB }
 
 constructor TACBrLibLCB.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibLCBNome;
-  fpVersao := CLibLCBVersao;
 
   FLCBDM := TLibLCBDM.Create(nil);
 end;

@@ -51,7 +51,7 @@ type
     FXML: String;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); virtual; reintroduce;
 
@@ -63,7 +63,7 @@ type
 
   { TACBrLibSATResposta }
 
-  TACBrLibSATResposta = class(TACBrLibResposta)
+  TACBrLibSATResposta = class(TACBrLibRespostaBase)
   private
     FCodigoDeErro: Integer;
     FNumeroSessao : Integer ;
@@ -74,7 +74,7 @@ type
     FRetorno : String ;
 
   public
-    constructor Create( const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create( const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT);
 
@@ -95,7 +95,7 @@ type
   private
     FnCFe: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -110,7 +110,7 @@ type
   private
     FnCFeCanc: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -125,7 +125,7 @@ type
   private
     FnCFe: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -143,7 +143,7 @@ type
     FCodigoDeRetorno: Integer;
     FRetornoStr: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -164,7 +164,7 @@ type
     FCodigoDeRetorno: Integer;
     FRetornoStr: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -185,7 +185,7 @@ type
     FCodigoDeRetorno: Integer;
     FRetornoStr: String;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT); override;
 
@@ -199,7 +199,7 @@ type
 
   { TRetornoStatusSAT }
 
-  TRetornoStatusSAT = class(TACBrLibResposta)
+  TRetornoStatusSAT = class(TACBrLibRespostaBase)
   private
     FNSERIE          : String;
     FLAN_MAC         : String;
@@ -220,7 +220,7 @@ type
     FESTADO_OPERACAO : String;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const SAT: TACBrSAT);
 
@@ -253,7 +253,7 @@ uses
 
 { TRetornoStatusSAT }
 
-constructor TRetornoStatusSAT.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoStatusSAT.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoStatusSAT, ATipo, AFormato);
 end;
@@ -284,7 +284,7 @@ end;
 
 { TRetornoEnvio }
 
-constructor TRetornoEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoEnvio.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoENVIO, ATipo, AFormato);
 end;
@@ -302,7 +302,7 @@ end;
 
 { TRetornoTesteFimaFim }
 
-constructor TRetornoTesteFimaFim.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoTesteFimaFim.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoTESTEFIMAFIM, ATipo, AFormato);
 end;
@@ -320,7 +320,7 @@ end;
 
 { TRetornoCancelarCFe }
 
-constructor TRetornoCancelarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoCancelarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFeCancelado, ATipo, AFormato);
 end;
@@ -338,7 +338,7 @@ end;
 
 { TRetornoCriarCFe }
 
-constructor TRetornoCriarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoCriarCFe.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFe, ATipo, AFormato);
 end;
@@ -357,7 +357,7 @@ end;
 { TRetornoConsultarSessaoCancelado }
 
 constructor TRetornoConsultarSessaoCancelado.Create(
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFeCancelado, ATipo, AFormato);
 end;
@@ -375,7 +375,7 @@ end;
 { TPadraoResposta }
 
 constructor TPadraoSATResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -387,7 +387,7 @@ end;
 
 { TRetornoConsultarSessao }
 
-constructor TRetornoConsultarSessao.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoConsultarSessao.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoCFe, ATipo, AFormato);
 end;
@@ -404,7 +404,7 @@ end;
 
 { TPadraoResposta }
 
-constructor TACBrLibSATResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TACBrLibSATResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespostaSat, ATipo, AFormato);
 end;

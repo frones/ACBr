@@ -288,7 +288,7 @@ type
     FSoftwareHouse: TEmpresaConfig;
     FEmissor: TEmpresaConfig;
     FTipoResposta: TACBrLibRespostaTipo;
-    FCodificaoResposta: TACBrLibCodResposta;
+    FCodificaoResposta: TACBrLibCodificacao;
 
     procedure SetNomeArquivo(AValue: String);
     procedure VerificarNomeEPath(Gravando: Boolean);
@@ -324,7 +324,7 @@ type
     property ChaveCrypt: String read FChaveCrypt;
 
     property TipoResposta: TACBrLibRespostaTipo read FTipoResposta;
-    property CodResposta: TACBrLibCodResposta read FCodificaoResposta;
+    property CodResposta: TACBrLibCodificacao read FCodificaoResposta;
     property Log: TLogConfig read FLog;
     property ProxyInfo: TProxyConfig read FProxyInfo;
     property Email: TEmailConfig read FEmail;
@@ -857,7 +857,7 @@ procedure TLibConfig.INIParaClasse;
 begin
 
   FTipoResposta := TACBrLibRespostaTipo(FIni.ReadInteger(CSessaoPrincipal, CChaveTipoResposta, Integer(FTipoResposta)));
-  FCodificaoResposta := TACBrLibCodResposta(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
+  FCodificaoResposta := TACBrLibCodificacao(FIni.ReadInteger(CSessaoPrincipal, CChaveCodificacaoResposta, Integer(FCodificaoResposta)));
   FLog.LerIni(FIni);
   FSistema.LerIni(FIni);
   FEmail.LerIni(FIni);

@@ -944,7 +944,6 @@ end;
 function Reinf_LerArqIni(const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Ok: Boolean;
   AArqIni: String;
 begin
   try
@@ -960,7 +959,7 @@ begin
     begin
       ReinfDM.Travar;
       try
-        Ok := ReinfDM.ACBrReinf1.Eventos.LoadFromFile(AArqIni, False);
+        ReinfDM.ACBrReinf1.Eventos.LoadFromFile(AArqIni, False);
         Result := SetRetorno(ErrOK);
       finally
         ReinfDM.Destravar;

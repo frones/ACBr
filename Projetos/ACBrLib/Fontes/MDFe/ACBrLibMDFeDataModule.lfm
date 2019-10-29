@@ -19,26 +19,30 @@ object LibMDFeDM: TLibMDFeDM
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DAMDFE = ACBrMDFeDAMDFeRL1
     left = 94
     top = 72
   end
   object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
-    ACBrMDFe = ACBrMDFe1
-    ImprimirHoraSaida = False
-    MostrarPreview = True
-    MostrarStatus = True
-    TipoDAMDFe = tiSemGeracao
-    TamanhoPapel = tpA4
-    NumCopias = 1
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
-    MDFeCancelada = False
-    MDFeEncerrado = False
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = ',0.00'
+    CasasDecimais.MaskvUnCom = ',0.00'
+    ACBrMDFe = ACBrMDFe1
+    ImprimeHoraSaida = False
+    TipoDAMDFe = tiSemGeracao
+    TamanhoPapel = tpA4
+    Cancelada = False
+    Encerrado = False
     PrintDialog = True
-    left = 239
-    top = 73
+    left = 208
+    top = 80
   end
 end

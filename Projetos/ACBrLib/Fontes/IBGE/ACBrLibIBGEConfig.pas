@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, SysUtils, IniFiles, SynaChar,
-  ACBrLibConfig, ACBrIBGE;
+  ACBrLibConfig;
 
 type
 

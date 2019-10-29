@@ -106,8 +106,6 @@ uses
 constructor TACBrLibGAV.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibGAVNome;
-  fpVersao := CLibGAVVersao;
 
   FGAVDM := TLibGAVDM.Create(nil);
 end;

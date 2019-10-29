@@ -222,7 +222,6 @@ end;
 function Sedex_LerArqIni(const eArqIni: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Ok: Boolean;
   AArqIni: String;
 begin
   try
@@ -238,7 +237,7 @@ begin
     begin
       SedexDM.Travar;
       try
-        Ok := SedexDM.ACBrSedex1.LerArqIni(AArqIni);
+        SedexDM.ACBrSedex1.LerArqIni(AArqIni);
         Result := SetRetorno(ErrOK);
       finally
         SedexDM.Destravar;

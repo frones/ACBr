@@ -38,13 +38,14 @@ unit ACBrLibMDFeRespostas;
 interface
 
 uses
-  SysUtils, Classes, ACBrLibResposta;
+  SysUtils, Classes,
+  ACBrMDFe, ACBrLibResposta;
 
 type
 
   { TPadraoMDFeResposta }
 
-  TPadraoMDFeResposta = class(TACBrLibResposta)
+  TPadraoMDFeResposta = class(TACBrLibResposta<TACBrMDFe>)
   private
     Fversao: string;
     FtpAmb: string;
@@ -54,7 +55,7 @@ type
     FcUF: integer;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Versao: string read Fversao write Fversao;
@@ -76,7 +77,7 @@ type
     FdhRetorno: TDateTime;
     FxObs: string;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -98,7 +99,7 @@ type
     FdigVal: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -125,7 +126,7 @@ type
     Fxml: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
@@ -157,7 +158,7 @@ type
     Fxml: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
@@ -184,7 +185,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Msg: string read Fmsg write Fmsg;
@@ -204,7 +205,7 @@ type
     FnRec: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Msg: string read Fmsg write Fmsg;
@@ -225,7 +226,7 @@ type
     FmotivoMDFe: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Msg: string read Fmsg write Fmsg;
@@ -248,7 +249,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
@@ -266,7 +267,7 @@ type
     FidLote: Integer;
     FcOrgao: Integer;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property idLote: Integer read FidLote write FidLote;
@@ -292,7 +293,7 @@ type
     FXML: string;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property chMDFe: string read FchMDFe write FchMDFe;
@@ -320,7 +321,7 @@ type
     FmaxNSU: string;
     FultNSU: string;
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property dhResp: TDateTime read FdhResp write FdhResp;
@@ -373,7 +374,7 @@ type
     FdhRecbto: TDateTime;
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property NSU: string read FNSU write FNSU;
@@ -424,14 +425,14 @@ uses
 { TDistribuicaoDFeItemResposta }
 
 constructor TDistribuicaoDFeItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TDistribuicaoDFeResposta }
 
-constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespDistribuicaoDFe, ATipo, AFormato);
 end;
@@ -439,14 +440,14 @@ end;
 { TEventoItemResposta }
 
 constructor TEventoItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TEventoResposta }
 
-constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
 end;
@@ -454,7 +455,7 @@ end;
 { TPadraoResposta }
 
 constructor TPadraoMDFeResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -462,21 +463,21 @@ end;
 { TRetornoItemResposta }
 
 constructor TRetornoItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TRetornoResposta }
 
-constructor TRetornoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 end;
 
 { TEnvioResposta }
 
-constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
 end;
@@ -484,34 +485,34 @@ end;
 { TNaoEncerradosResposta }
 
 constructor TNaoEncerradosResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TEncerramentoResposta }
 
-constructor TEncerramentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TEncerramentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEncerramento, ATipo, AFormato);
 end;
 
 { TCancelamentoResposta }
 
-constructor TCancelamentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TCancelamentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespCancelamento, ATipo, AFormato);
 end;
 
 { TConsultaResposta }
 
-constructor TConsultaResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TConsultaResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
 
  { TStatusServicoResposta }
-constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespStatus, ATipo, AFormato);
 end;

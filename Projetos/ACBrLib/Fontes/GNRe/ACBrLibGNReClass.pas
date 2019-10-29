@@ -126,7 +126,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibGNReConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibGNReConfig, ACBrLibGNReRespostas, ACBrGNRE2, ACBrMail,
-  pcnConversao, pcnAuxiliar, pgnreConversao, blcksock, ACBrUtil;
+  pcnConversao, pcnAuxiliar, blcksock, ACBrUtil;
 
 { TACBrLibGNRe }
 

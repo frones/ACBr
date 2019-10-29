@@ -43,14 +43,14 @@ type
 
   { TPadraoeSocialResposta }
 
-    TPadraoeSocialResposta = class(TACBrLibResposta)
+    TPadraoeSocialResposta = class(TACBrLibRespostaBase)
     private
       FCodigo: Integer;
       FMensagem: String;
 
     public
       constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-        const AFormato: TACBrLibCodResposta); reintroduce;
+        const AFormato: TACBrLibCodificacao); reintroduce;
 
     published
       property Codigo: Integer read FCodigo write FCodigo;
@@ -71,7 +71,7 @@ type
     FProtocolo: String;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property TpInscEmpreg: String read FTpInscEmpreg write FTpInscEmpreg;
@@ -95,7 +95,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property CodigoOco: Integer read FCodigoOco write FCodigoOco;
@@ -118,7 +118,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property cdResposta: Integer read FcdResposta write FcdResposta;
@@ -140,7 +140,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property Tipo: String read FTipo write FTipo;
@@ -158,7 +158,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property QtdeTotal: Integer read FQtdeTotal write FQtdeTotal;
@@ -176,7 +176,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
     property IdEvento: String read FIdEvento write FIdEvento;
@@ -190,7 +190,7 @@ implementation
 { TConsultaIdentEvento }
 
 constructor TConsultaIdentEvento.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -198,7 +198,7 @@ end;
 { TConsultaTotEventos }
 
 constructor TConsultaTotEventos.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -206,7 +206,7 @@ end;
 { TConsultaTotResposta }
 
 constructor TConsultaTotResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -214,14 +214,14 @@ end;
 { TConsultaResposta }
 
 constructor TConsultaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
 
 { TEnvioResposta }
 
-constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
 end;
@@ -229,7 +229,7 @@ end;
 { TOcorrenciaResposta }
 
 constructor TOcorrenciaResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -237,7 +237,7 @@ end;
 { TPadraoeSocialResposta }
 
 constructor TPadraoeSocialResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;

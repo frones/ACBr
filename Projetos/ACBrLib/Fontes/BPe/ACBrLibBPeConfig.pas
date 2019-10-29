@@ -138,7 +138,7 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure AssignChild(const DFeReport: TACBrBPeDABPEClass); override;
+    procedure ApplyChild(const DFeReport: TACBrBPeDABPEClass); override;
     procedure DefinirValoresPadroesChild; override;
 
   public
@@ -203,7 +203,7 @@ begin
   FBPeConfig.GravarIni(AIni);
 end;
 
-procedure TDABPeReportConfig.AssignChild(const DFeReport: TACBrBPeDABPEClass);
+procedure TDABPeReportConfig.ApplyChild(const DFeReport: TACBrBPeDABPEClass);
 var
   pLibConfig: TLibBPeConfig;
 begin

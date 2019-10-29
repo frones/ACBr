@@ -123,7 +123,7 @@ function CHQ_SetBomPara(const BomPara: TDateTime): longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibCHQConsts, ACBrLibConfig, ACBrLibCHQConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibCHQConfig;
 
 { TACBrLibCHQ }
 

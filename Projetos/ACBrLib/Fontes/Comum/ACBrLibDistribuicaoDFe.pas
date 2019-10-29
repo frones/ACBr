@@ -36,7 +36,7 @@ uses
 
 type
   { TDistribuicaoDFeItemResposta }
-  TDistribuicaoDFeItemResposta = class(TACBrLibResposta)
+  TDistribuicaoDFeItemResposta = class(TACBrLibRespostaBase)
   private
     Fversao: String;
     FtpAmb: String;
@@ -82,7 +82,7 @@ type
     FxNome: string;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const AresDFe: TresDFe; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
     procedure Processar(const AresEvento: TresEvento; const ANSU, AArquivo, AXml: String; const  ASchema: TSchemaDFe); overload;
@@ -136,7 +136,7 @@ type
     end;
 
   { TDistribuicaoDFeResposta }
-  TDistribuicaoDFeResposta = class(TACBrLibResposta)
+  TDistribuicaoDFeResposta = class(TACBrLibRespostaBase)
   private
     FMsg: string;
     Fversao: string;
@@ -156,7 +156,7 @@ type
     function GetItem(Index: Integer): TDistribuicaoDFeItemResposta;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const retDistDFeInt: TretDistDFeInt;
@@ -192,7 +192,7 @@ uses
 { TDistribuicaoDFeItemResposta }
 
 constructor TDistribuicaoDFeItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -295,7 +295,7 @@ end;
 
 { TDistribuicaoDFeResposta }
 
-constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespDistribuicaoDFe, ATipo, AFormato);
 

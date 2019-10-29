@@ -118,15 +118,13 @@ function DIS_ContinuarLinha(const Linha: Integer): longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibDISConsts, ACBrLibConfig, ACBrLibDISConfig;
+  ACBrLibConsts, ACBrLibConfig, ACBrLibDISConfig;
 
 { TACBrLibDIS }
 
 constructor TACBrLibDIS.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
-  fpNome := CLibDISNome;
-  fpVersao := CLibDISVersao;
 
   FDISDM := TLibDISDM.Create(nil);
 end;

@@ -35,7 +35,7 @@ uses
 
 type
   { TRetornoItemResposta }
-  TRetornoItemResposta = class(TACBrLibResposta)
+  TRetornoItemResposta = class(TACBrLibRespostaBase)
   private
     FId: String;
     FtpAmb: String;
@@ -49,7 +49,7 @@ type
     FXML: String;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 
     procedure Processar(const Item: TProtDFeCollectionItem);
 
@@ -68,7 +68,7 @@ type
   end;
 
   { TReciboResposta }
-  TRetornoResposta = class(TACBrLibResposta)
+  TRetornoResposta = class(TACBrLibRespostaBase)
   private
     FPrefix: string;
     FMsg: string;
@@ -89,7 +89,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo, Msg, Protocolo, ChaveDFe: String);
@@ -115,7 +115,7 @@ type
   end;
 
   { TReciboResposta }
-  TReciboResposta = class(TACBrLibResposta)
+  TReciboResposta = class(TACBrLibRespostaBase)
   private
     FPrefix: string;
     Fversao: string;
@@ -130,7 +130,7 @@ type
     function GetItem(Index: Integer): TRetornoItemResposta;
 
   public
-    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo: String);
@@ -156,7 +156,7 @@ uses
 
 { TRetornoItemResposta }
 constructor TRetornoItemResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-  const AFormato: TACBrLibCodResposta);
+  const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -176,7 +176,7 @@ begin
 end;
 
 { TRetornoResposta }
-constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TRetornoResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 
@@ -237,7 +237,7 @@ begin
 end;
 
 { TReciboResposta }
-constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TReciboResposta.Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 

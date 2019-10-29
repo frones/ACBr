@@ -36,7 +36,7 @@ uses
 
 type
   { TConsultaCadastroItemResposta }
-  TConsultaCadastroItemResposta = class(TACBrLibResposta)
+  TConsultaCadastroItemResposta = class(TACBrLibRespostaBase)
   private
     Farquivo: string;
     FCEP: Integer;
@@ -63,7 +63,7 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodResposta); reintroduce;
+      const AFormato: TACBrLibCodificacao); reintroduce;
 
     procedure Processar(const infCad: TInfCadCollectionItem);
 
@@ -94,7 +94,7 @@ type
   end;
 
   { TConsultaCadastroResposta }
-  TConsultaCadastroResposta = class(TACBrLibResposta)
+  TConsultaCadastroResposta = class(TACBrLibRespostaBase)
   private
     FMsg: string;
     Fversao: string;
@@ -114,7 +114,7 @@ type
     function GetItem(Index: Integer): TConsultaCadastroItemResposta;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const retConsCad: TRetConsCad);
@@ -147,7 +147,7 @@ uses
 
 { TConsultaCadastroItemResposta }
 constructor TConsultaCadastroItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
 end;
@@ -178,7 +178,7 @@ begin
 end;
 
 { TConsultaCadastroResposta }
-constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodResposta);
+constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespConsultaCadastro, ATipo, AFormato);
 

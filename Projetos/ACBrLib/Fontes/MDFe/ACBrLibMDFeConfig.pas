@@ -120,9 +120,6 @@ type
     FDAMDFeConfig: TDAMDFeConfig;
     FMDFeConfig: TConfiguracoesMDFe;
   protected
-    function AtualizarArquivoConfiguracao: Boolean; override;
-//    procedure AplicarConfiguracoes; override;
-
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
@@ -134,8 +131,8 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    property MDFeConfig: TConfiguracoesMDFe read FMDFeConfig;
-    property DAMDFeConfig: TDAMDFeConfig read FDAMDFeConfig;
+    property MDFe: TConfiguracoesMDFe read FMDFeConfig;
+    property DAMDFe: TDAMDFeConfig read FDAMDFeConfig;
   end;
 
 implementation
@@ -253,6 +250,8 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FMDFeConfig := TConfiguracoesMDFe.Create(nil);
+  FMDFeConfig.ChaveCryptINI := AChaveCrypt;
+
   FDAMDFeConfig := TDAMDFeConfig.Create;
 end;
 
@@ -264,18 +263,11 @@ begin
   inherited Destroy;
 end;
 
-function TLibMDFeConfig.AtualizarArquivoConfiguracao: Boolean;
-var
-  Versao: String;
-begin
-  Versao := Ini.ReadString(CSessaoVersao, CLibMDFeNome, '0');
-  Result := (CompareVersions(CLibMDFeVersao, Versao) > 0) or
-            (inherited AtualizarArquivoConfiguracao);
-end;
-
 procedure TLibMDFeConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
+
+  FMDFeConfig.ChaveCryptINI := ChaveCrypt;
 
   FMDFeConfig.LerIni(Ini);
   FDAMDFeConfig.LerIni(Ini);
@@ -285,7 +277,7 @@ procedure TLibMDFeConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
-  Ini.WriteString(CSessaoVersao, CLibMDFeNome, CLibMDFeVersao);
+  FMDFeConfig.ChaveCryptINI := ChaveCrypt;
 
   FMDFeConfig.GravarIni(Ini);
   FDAMDFeConfig.GravarIni(Ini);
@@ -293,6 +285,8 @@ end;
 
 procedure TLibMDFeConfig.ClasseParaComponentes;
 begin
+  FMDFeConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibMDFe(Owner).MDFeDM.AplicarConfiguracoes;
 end;

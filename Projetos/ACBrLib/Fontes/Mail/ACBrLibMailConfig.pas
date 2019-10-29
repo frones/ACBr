@@ -38,7 +38,7 @@ unit ACBrLibMailConfig;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, SynaChar,
+  Classes, SysUtils, SynaChar,
   ACBrLibConfig, ACBrMail;
 
 type

@@ -206,8 +206,6 @@ namespace ACBrLib.CTe
             CheckResult(ret);
 
             var value = ProcessResult(pValue, bufferLen);
-
-            var value = ProcessResult(pValue, bufferLen);
             return ConvertValue<T>(value);
         }
 

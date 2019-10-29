@@ -226,7 +226,6 @@ type
     constructor Create(AOwner: TObject; ANomeArquivo: String = ''; AChaveCrypt: AnsiString = ''); override;
     destructor Destroy; override;
 
-    function PrecisaCriptografar(ASessao, AChave: String): Boolean; override;
     function AjustarValor(Tipo: TTipoFuncao; ASessao, AChave, AValor: Ansistring): Ansistring; override;
 
     property NFe: TConfiguracoesNFe read FNFeConfig;
@@ -705,16 +704,6 @@ begin
   begin
     with TACBrLibNFe(Owner) do
       NFeDM.Destravar;
-  end;
-end;
-
-function TLibNFeConfig.PrecisaCriptografar(ASessao, AChave: String): Boolean;
-begin
-  Result := inherited PrecisaCriptografar(ASessao, AChave);
-
-  if not Result then
-  begin
-    Result := (ASessao = CDFeSessaoIni) and (AChave = CChaveDadosPFX);
   end;
 end;
 

@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="4"/>
-      <RevisionNr Value="2"/>
+      <RevisionNr Value="3"/>
       <BuildNr Value="24"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>

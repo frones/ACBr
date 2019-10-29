@@ -189,6 +189,8 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FCTeConfig := TConfiguracoesCTe.Create(nil);
+  FCTeConfig.ChaveCryptINI := AChaveCrypt;
+
   FDACTeConfig := TDACTeConfig.Create;
 end;
 

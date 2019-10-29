@@ -27,12 +27,12 @@
         NFe,
         DANFE,
         DANFECe,
-        CSessaoBolConfig,
+        CTe,
+        DACTe,
+        BoletoConfig,
         BoletoCedenteConfig,
         BoletoBancoConfig,
         BoletoDiretorioConfig,
         BoletoBancoFCFortesConfig,
-        CTe,
-        DACTe
     }
 }

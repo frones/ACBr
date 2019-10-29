@@ -682,6 +682,7 @@ type
     RLMemo1: TRLMemo;
     rlsLinhaV07: TRLDraw;
     imgQRCode: TRLImage;
+    tlsQuadroItens: TRLDraw;
 
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -1667,6 +1668,7 @@ procedure TfrmDACTeRLRetrato.rlb_06_ValorPrestacaoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   inherited;
+
   PrintIt := RLCTe.PageNumber = 1;
 end;
 

@@ -48,6 +48,12 @@ Símbolo : Significado
 
 24/10/2019
 -- ACBrCTeDACTeRLRetrato --
+[-] Corrigido a largura dos quadros.
+   https://www.projetoacbr.com.br/forum/topic/54578-erro-na-impress%C3%A3o-do-cte-rodovi%C3%A1rio-com-fortes-report/
+  por: Italo Jurisato Junior
+
+24/10/2019
+-- ACBrCTeDACTeRLRetrato --
 [-] Corrigido compatibilidade no arquivo .lfm
   por: José M S Junior
 

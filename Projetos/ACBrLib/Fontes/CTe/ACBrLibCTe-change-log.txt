@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/10/2019
+--- ACBrLibCTeConfig ---
+[-] Corrigido erro na criptografia da senha na ACBrLibCTe.
+    Por: Rafael Dias
+
 18/10/2019
 --- ACBrLibCTeClass ---
 [+] Adicionado metodos para carregamento dos eventos e limpeza da lista de evento.

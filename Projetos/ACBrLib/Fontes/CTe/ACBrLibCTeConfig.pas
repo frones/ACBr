@@ -206,6 +206,7 @@ procedure TLibCTeConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
 
+  FCTeConfig.ChaveCryptINI := ChaveCrypt;
   FCTeConfig.LerIni(Ini);
   FDACTeConfig.LerIni(Ini);
 end;
@@ -214,12 +215,15 @@ procedure TLibCTeConfig.ClasseParaINI;
 begin
   inherited ClasseParaINI;
 
+  FCTeConfig.ChaveCryptINI := ChaveCrypt;
   FCTeConfig.GravarIni(Ini);
   FDACTeConfig.GravarIni(Ini);
 end;
 
 procedure TLibCTeConfig.ClasseParaComponentes;
 begin
+  FCTeConfig.ChaveCryptINI := ChaveCrypt;
+
   if Assigned(Owner) then
     TACBrLibCTe(Owner).CTeDM.AplicarConfiguracoes;
 end;

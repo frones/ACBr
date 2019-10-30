@@ -76,7 +76,7 @@ type
     function PegaResposta(const Resp : String) : String;
     function AguardaArqResposta(numeroSessao: Integer) : String;
     procedure DoException( const AMessage: String );
-    procedure BackupArquivo(const ANomeArquivo: String);
+    procedure BackupArquivo(const ANomeArquivo, AXML: String);
 
   public
     constructor Create( AOwner: TACBrIntegrador );
@@ -223,7 +223,7 @@ begin
   FPastaOutput := PathWithDelim(AValue);
 end;
 
-procedure TComandoIntegrador.BackupArquivo(const ANomeArquivo: String);
+procedure TComandoIntegrador.BackupArquivo(const ANomeArquivo, AXML: String);
 var
   MensagemDeErro: string;
   PastaBackupIntegrador: string;
@@ -235,23 +235,13 @@ begin
       IncludeTrailingPathDelimiter(PastaBackup) +
       FormatDateTime('yyyymmdd', DATE));
 
-    ForceDirectories(PastaBackupIntegrador);
-    if not CopyFileTo(
-      ANomeArquivo,
+    WriteToTXT(
       PastaBackupIntegrador + ChangeFileExt(ExtractFileName(ANomeArquivo),'.xml'),
-      False
-    ) then
-    begin
-      MensagemDeErro :=
-        'Erro ao copiar o arquivo: '+ ANomeArquivo + ' para pasta de backup ' + sLineBreak +
-        'em: ' + PastaBackupIntegrador + ChangeFileExt(ANomeArquivo,'.xml');
-
-      {$IFNDEF FPC}
-      MensagemDeErro := MensagemDeErro + sLineBreak + SysErrorMessage(GetLastError);
-      {$ENDIF}
-
-      DoException(MensagemDeErro);
-    end;
+      AXML,
+      False,
+      False,
+      True
+    );
   end;
 end;
 
@@ -266,14 +256,14 @@ var
     NomeArquivoTmp, NomeArquivoXml: String;
   begin
     NomeArquivoTmp := ChangeFileExt(NomeArquivo, '.tmp');
-    FOwner.DoLog('Criando arquivo: '+NomeArquivoTmp);
+    FOwner.DoLog('Criando arquivo: ' + NomeArquivoTmp);
     WriteToFile(NomeArquivoTmp, Comando);
 
     if not FileExists(NomeArquivoTmp) then
       DoException('Erro ao criar o arquivo: '+NomeArquivoTmp);
 
     // pedido nas ultimas homologaçãoes
-    BackupArquivo(NomeArquivoTmp);
+    BackupArquivo(NomeArquivoTmp, Comando);
 
     NomeArquivoXml := ChangeFileExt(NomeArquivoTmp,'.xml');
     FOwner.DoLog('Renomeando arquivo: '+NomeArquivoTmp+' para: '+NomeArquivoXml);
@@ -343,8 +333,8 @@ begin
   else
   begin
     // pedido nas ultimas homologações
-    NomeArquivoXmlResp :=  'respostaIntegrador-' + IntToStr(numeroSessao) + '.xml';
-    BackupArquivo(NomeArquivoXmlResp);
+    NomeArquivoXmlResp :=  Nome + '-resposta-' + IntToStr(numeroSessao) + '.xml';
+    BackupArquivo(NomeArquivoXmlResp, RespostaIntegrador);
   end;
 
   FOwner.DoLog('RespostaIntegrador: '+RespostaIntegrador);

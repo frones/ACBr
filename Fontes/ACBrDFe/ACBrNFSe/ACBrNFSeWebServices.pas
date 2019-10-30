@@ -1144,6 +1144,9 @@ begin
     Result := FastStringReplace(Result, '</>', '', [rfReplaceAll]);
   end;
 
+  // Remover o CDATA
+  Result := FastStringReplace(Result, '<![CDATA[', '', [rfReplaceAll]);
+  Result := FastStringReplace(Result, ']]>', '', [rfReplaceAll]);
 end;
 
 function TNFSeWebService.ExtrairRetorno(const GrupoMsgRet, AGrupo: String): String;

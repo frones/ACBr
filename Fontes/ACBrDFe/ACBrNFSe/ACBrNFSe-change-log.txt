@@ -49,6 +49,8 @@ Símbolo : Significado
 
 30/10/2019
 -- ACBrNFSeWebServices --
+[*] Alterado os namespace de todos os método - provedor SimplISSv2 - Blumenau/SC
+   Por: Italo Jurisato Junior
 [*] Alterado os namespace do método Cancelar - provedor SimplISSv2 - Blumenau/SC
    Por: Italo Jurisato Junior
 [*] Remoção do "CDATA" no XML de retorno.

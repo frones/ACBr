@@ -1926,9 +1926,9 @@ begin
            proIPM,
            proSMARAPD: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1971,9 +1971,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2021,9 +2021,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2071,9 +2071,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2104,9 +2104,9 @@ begin
            proGiap,
            proSMARAPD: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -2230,9 +2230,9 @@ begin
            proAssessorPublico:
              FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;	 
@@ -2903,11 +2903,11 @@ begin
       FPDadosMsg := StringReplace(FPDadosMsg, 'http://www.abrasf.org.br/nfse.xsd',
                                               'http:/www.abrasf.org.br/nfse.xsd', [rfReplaceAll]);
 
-    proSimplISSv2:
-      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
-                                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
-                                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
-                                              'EnviarLoteRpsEnvio', [rfReplaceAll]);
+//    proSimplISSv2:
+//      FPDadosMsg := StringReplace(FPDadosMsg, 'EnviarLoteRpsEnvio xmlns="http://www.abrasf.org.br/nfse.xsd" '+
+//                                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
+//                                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema"',
+//                                              'EnviarLoteRpsEnvio', [rfReplaceAll]);
   end;
 
   // Lote tem mais de 500kb ? //

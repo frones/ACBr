@@ -2180,9 +2180,9 @@ begin
            proGiap,
            proIPM: FTagI := '';
 
-           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
-                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
-                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
+//           proSimplISSv2: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+//                                   ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'+
+//                                   ' xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
          else
            begin
              FNameSpaceCan := FNameSpaceDad;

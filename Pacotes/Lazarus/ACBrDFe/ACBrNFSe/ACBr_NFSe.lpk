@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -106,9 +106,13 @@
         <UnitName Value="pnfsNFSeW_ISSDSF"/>
       </Item22>
       <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Giap.pas"/>
+        <UnitName Value="pnfsnfseW_Giap"/>
+      </Item23>
+      <Item24>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas"/>
         <UnitName Value="pnfsConsts"/>
-      </Item23>
+      </Item24>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

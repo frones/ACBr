@@ -39,11 +39,12 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Height = 35
       AutoSize = True
       BandType = btSummary
+      BeforePrint = rlbContinuacaoInformacoesComplementaresBeforePrint
       object rlmContinuacaoDadosAdicionais: TRLMemo
         Tag = 20
         Left = 8
         Top = 24
-        Width = 1018
+        Width = 1077
         Height = 8
         Behavior = [beSiteExpander]
         Borders.Style = bsClear
@@ -152,21 +153,19 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rlmDadosAdicionaisAuxiliar: TRLMemo
+        Tag = 20
         Left = 3
         Top = 13
-        Width = 681
-        Height = 12
+        Width = 683
+        Height = 8
         Behavior = [beSiteExpander]
-        Color = clSkyBlue
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -8
         Font.Name = 'Courier New'
         Font.Style = []
         IntegralHeight = True
-        ParentColor = False
         ParentFont = False
-        Transparent = False
         Visible = False
       end
       object pnlCabecalho: TRLPanel
@@ -883,7 +882,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 20
         Left = 39
         Top = 18
-        Width = 706
+        Width = 683
         Height = 92
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -5154,7 +5153,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Tag = 10
         Left = 3
         Top = 107
-        Width = 95
+        Width = 94
         Height = 7
         Caption = 'NATUREZA DE OPERA'#199#195'O'
         Font.Charset = DEFAULT_CHARSET

@@ -1281,8 +1281,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 20
         Left = 8
         Top = 34
-        Width = 417
-        Height = 119
+        Width = 458
+        Height = 120
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
@@ -1325,7 +1325,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Tag = 10
         Left = 562
         Top = 158
-        Width = 176
+        Width = 177
         Height = 7
         Alignment = taRightJustify
         Caption = 'DESENVOLVIDO POR: EMPRESA RRRRRRRRRRRR'
@@ -7761,9 +7761,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rlmDadosAdicionaisAuxiliar: TRLMemo
+        Tag = 20
         Left = 136
         Top = 36
-        Width = 457
+        Width = 458
         Height = 12
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET

@@ -1,7 +1,10 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 527
-  Top = 194
+  Left = 597
+  Height = 827
+  Top = 72
   Caption = 'frlDANFeRLRetrato'
+  ClientHeight = 827
+  ClientWidth = 810
   Font.Height = -18
   inherited RLNFe: TRLReport
     Top = 0
@@ -1591,9 +1594,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       object rlmDadosAdicionais: TRLMemo
         Tag = 20
         Left = 8
-        Height = 119
+        Height = 120
         Top = 34
-        Width = 417
+        Width = 458
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Color = clBlack
@@ -9350,10 +9353,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object rlmDadosAdicionaisAuxiliar: TRLMemo
+        Tag = 20
         Left = 136
         Height = 12
         Top = 36
-        Width = 457
+        Width = 458
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9

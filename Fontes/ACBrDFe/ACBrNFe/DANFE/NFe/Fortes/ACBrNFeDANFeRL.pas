@@ -64,17 +64,11 @@ type
     fpDANFe: TACBrNFeDANFeRL;
     fpCorDestaqueProdutos: TColor;
 
-    fpLimiteLinhas: Integer;
-    fpLimiteCaracteresLinha: Integer;
-    fpLimiteCaracteresContinuacao: Integer;
     fpLinhasUtilizadas: Integer;
     fpAuxDiferencaPDF: Integer;
 
     fpQuantItens: Integer;
     fpItemAtual: Integer;
-
-    procedure ConfigurarVariavies(ATipoDANFE: TpcnTipoImpressao);
-    procedure InserirLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
 
   public
     class procedure Imprimir(ADANFe: TACBrNFeDANFeRL; ANotas: array of TNFe);
@@ -194,86 +188,6 @@ begin
   {$EndIf}
   fpCorDestaqueProdutos := StringToColor('$00E5E5E5');
 
-end;
-
-procedure TfrlDANFeRL.ConfigurarVariavies(ATipoDANFE: TpcnTipoImpressao);
-begin
-  fpLinhasUtilizadas := 0;
-
-  case ATipoDANFE of
-    tiRetrato:
-    begin
-      fpLimiteLinhas := 10;
-      fpLimiteCaracteresLinha := 81;
-      fpLimiteCaracteresContinuacao := 129;
-    end;
-
-    tiPaisagem:
-    begin
-      fpLimiteLinhas := 12;
-      fpLimiteCaracteresLinha := 142;
-      fpLimiteCaracteresContinuacao := 204;
-    end;
-  end;
-end;
-
-procedure TfrlDANFeRL.InserirLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
-var
-  iTotalLinhas, iUltimoEspacoLinha, iPrimeiraQuebraDeLinha, iPosAtual, iQuantCaracteres, i: Integer;
-  sLinhaProvisoria, sLinha: String;
-begin
-  iPosAtual := 1;
-  sTexto := StringReplace(sTexto, sLineBreak, ';', [rfReplaceAll]);
-  iQuantCaracteres := Length(sTexto);
-  if iQuantCaracteres <= fpLimiteLinhas then
-    iTotalLinhas := 1
-  else
-  begin
-    if (iQuantCaracteres mod iLimCaracteres) > 0 then
-      iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
-    else
-      iTotalLinhas := iQuantCaracteres div iLimCaracteres;
-  end;
-
-  // Define o numero de linhas em complemento
-  // iTotalLinhas + 20 = 30 linhas
-  for i := 1 to (iTotalLinhas + 20) do
-  begin
-    sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
-    iUltimoEspacoLinha := PosLast(' ', sLinhaProvisoria);
-    iPrimeiraQuebraDeLinha := Pos(';', sLinhaProvisoria);
-
-    if iUltimoEspacoLinha = 0 then
-      iUltimoEspacoLinha := iQuantCaracteres;
-
-    if (iPrimeiraQuebraDeLinha = 0) then
-    begin
-      if (iUltimoEspacoLinha = iLimCaracteres) or (iUltimoEspacoLinha = (iLimCaracteres + 1)) then
-        sLinha := sLinhaProvisoria
-      else
-      begin
-        if ((iQuantCaracteres - iPosAtual) > iLimCaracteres) then
-          sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
-        else
-          sLinha := sLinhaProvisoria;
-      end;
-
-      iPosAtual := iPosAtual + Length(sLinha);
-    end
-    else
-    begin
-      sLinha := Copy(sLinhaProvisoria, 1, iPrimeiraQuebraDeLinha);
-      iPosAtual := iPosAtual + (Length(sLinha));
-    end;
-
-    if NaoEstaVazio(sLinha) then
-    begin
-      if (LeftStr(sLinha, 1) = ' ') then
-        sLinha := Copy(sLinha, 2, (Length(sLinha) - 1));
-
-      rMemo.Lines.Add(sLinha);
-    end;
-  end;
 end;
 
 end.

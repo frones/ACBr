@@ -1,13 +1,14 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 249
-  Height = 537
-  Top = 115
+  Left = 274
+  Height = 306
+  Top = 114
   Caption = 'DACTe - Retrato'
-  ClientHeight = 537
+  ClientHeight = 306
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
+    Top = -400
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
@@ -24,11 +25,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     BeforePrint = RLCTeBeforePrint
     object rlb_01_Recibo: TRLBand[0]
       Left = 26
-      Height = 75
+      Height = 76
       Top = 26
       Width = 742
       AutoSize = True
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -57,22 +63,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
         Visible = False
       end
-      object RLDraw46: TRLDraw
-        Left = 0
-        Height = 72
-        Top = 2
-        Width = 741
-        Angle = 0
-        Borders.Sides = sdCustom
-        Borders.DrawLeft = False
-        Borders.DrawTop = False
-        Borders.DrawRight = False
-        Borders.DrawBottom = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw49: TRLDraw
         Left = 1
         Height = 1
@@ -92,6 +82,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 14
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         DrawKind = dkLine
         RealBounds.Left = 0
@@ -403,16 +394,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_07_HeaderItens: TRLBand[1]
       Left = 26
-      Height = 116
-      Top = 1114
+      Height = 81
+      Top = 1142
       Width = 742
       AutoSize = True
       BandType = btHeader
       Borders.Sides = sdCustom
-      Borders.DrawLeft = False
-      Borders.DrawTop = False
-      Borders.DrawRight = False
-      Borders.DrawBottom = False
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -421,18 +412,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Height = 0
       AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
-      object tlsQuadroItens: TRLDraw
-        Left = 0
-        Height = 116
-        Top = 0
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel20: TRLLabel
         Left = 6
         Height = 12
@@ -454,11 +433,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLDraw32: TRLDraw
-        Left = 0
+        Left = 1
         Height = 1
         Top = 14
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -640,9 +620,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_09_Obs: TRLBand[2]
       Left = 26
       Height = 70
-      Top = 1355
+      Top = 1348
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -650,24 +635,13 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_09_ObsBeforePrint
-      object rlsQuadro08: TRLDraw
-        Left = 0
-        Height = 64
-        Top = 2
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw1: TRLDraw
         Left = 1
         Height = 1
         Top = 18
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -743,9 +717,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_02_Cabecalho: TRLBand[3]
       Left = 26
       Height = 184
-      Top = 212
+      Top = 213
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -778,11 +757,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Visible = False
       end
       object rlsLinhaH02: TRLDraw
         Left = 313
         Height = 1
-        Top = 58
+        Top = 57
         Width = 428
         Angle = 0
         Brush.Style = bsClear
@@ -912,7 +892,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = -6
         Height = 1
         Top = 120
-        Width = 332
+        Width = 320
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1440,10 +1420,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object RLDraw88: TRLDraw
-        Left = 0
+        Left = 1
         Height = 1
         Top = 154
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1487,10 +1468,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object RLDraw99: TRLDraw
-        Left = 332
-        Height = 10
-        Top = 116
-        Width = 285
+        Left = 314
+        Height = 1
+        Top = 120
+        Width = 304
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1621,9 +1602,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_10_ModRodFracionado: TRLBand[4]
       Left = 26
       Height = 44
-      Top = 1531
+      Top = 1525
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -1642,6 +1628,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Visible = False
       end
       object RLDraw24: TRLDraw
         Left = 1
@@ -1649,6 +1636,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1910,7 +1898,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_11_ModRodLot103: TRLBand[5]
       Left = 26
       Height = 108
-      Top = 1575
+      Top = 1569
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -2650,9 +2638,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_03_DadosDACTe: TRLBand[6]
       Left = 26
       Height = 202
-      Top = 396
+      Top = 397
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -2660,23 +2653,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_03_DadosDACTeBeforePrint
-      object rlsQuadro02: TRLDraw
-        Left = 0
-        Height = 201
-        Top = 0
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object rlsLinhaH08: TRLDraw
         Left = 1
         Height = 1
         Top = 167
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -2703,6 +2685,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 1
         Top = 109
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -2716,6 +2699,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 1
         Top = 51
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -2729,6 +2713,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 1
         Top = 26
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -4314,9 +4299,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_04_DadosNotaFiscal: TRLBand[7]
       Left = 26
       Height = 90
-      Top = 667
+      Top = 668
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -4324,18 +4314,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_04_DadosNotaFiscalBeforePrint
-      object rlsQuadro03: TRLDraw
-        Left = 0
-        Height = 88
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw9: TRLDraw
         Left = 283
         Height = 25
@@ -4458,6 +4436,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 1
         Top = 26
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -4973,9 +4952,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_05_Complemento: TRLBand[8]
       Left = 26
       Height = 81
-      Top = 757
+      Top = 758
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -4983,18 +4967,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_05_ComplementoBeforePrint
-      object rlsQuadro04: TRLDraw
-        Left = 0
-        Height = 79
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw6: TRLDraw
         Left = 372
         Height = 64
@@ -5013,6 +4985,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -5214,9 +5187,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_17_Sistema: TRLBand[9]
       Left = 26
       Height = 16
-      Top = 2061
+      Top = 2056
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -5279,11 +5257,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_16_DadosExcEmitente: TRLBand[10]
       Left = 26
-      Height = 68
-      Top = 1993
+      Height = 69
+      Top = 1987
       Width = 742
       AutoSize = True
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -5291,18 +5274,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_16_DadosExcEmitenteBeforePrint
-      object RLDraw71: TRLDraw
-        Left = 0
-        Height = 67
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel165: TRLLabel
         Left = 566
         Height = 12
@@ -5367,6 +5338,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 15
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -5413,16 +5385,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_ValorPrestacao: TRLBand[11]
       Left = 26
-      Height = 116
-      Top = 998
+      Height = 143
+      Top = 999
       Width = 742
-      AutoSize = True
+      AutoExpand = False
       BandType = btHeader
       Borders.Sides = sdCustom
-      Borders.DrawLeft = False
-      Borders.DrawTop = False
-      Borders.DrawRight = False
-      Borders.DrawBottom = False
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -5430,18 +5402,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_06_ValorPrestacaoBeforePrint
-      object rlsQuadro05: TRLDraw
-        Left = 0
-        Height = 116
-        Top = 0
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw16: TRLDraw
         Left = 557
         Height = 1
@@ -5462,6 +5422,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -5512,7 +5473,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLDraw22: TRLDraw
         Left = 346
         Height = 26
-        Top = 90
+        Top = 91
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -5525,7 +5486,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLDraw23: TRLDraw
         Left = 500
         Height = 26
-        Top = 90
+        Top = 91
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -5538,7 +5499,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLDraw25: TRLDraw
         Left = 586
         Height = 26
-        Top = 90
+        Top = 91
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -5551,7 +5512,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLDraw26: TRLDraw
         Left = 650
         Height = 26
-        Top = 90
+        Top = 91
         Width = 1
         Angle = 90
         Brush.Style = bsClear
@@ -5567,6 +5528,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 78
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -5594,6 +5556,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 93
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -6143,8 +6106,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel44: TRLLabel
         Left = 5
-        Height = 8
-        Top = 19
+        Height = 6
+        Top = 21
         Width = 22
         Caption = 'NOME'
         Color = clWhite
@@ -6198,16 +6161,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rlpnlTributosFederais: TRLPanel
-        Left = 0
+        Left = 1
         Height = 25
-        Top = 0
-        Width = 742
-        Align = faTop
+        Top = 117
+        Width = 740
+        Align = faBottom
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
-        Borders.DrawTop = False
+        Borders.DrawTop = True
         Borders.DrawRight = True
-        Borders.DrawBottom = True
+        Borders.DrawBottom = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -6215,7 +6178,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         object RLDraw101: TRLDraw
           Left = 150
           Height = 24
-          Top = 0
+          Top = 1
           Width = 4
           Align = faHeight
           Angle = 90
@@ -6229,7 +6192,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         object RLDraw114: TRLDraw
           Left = 448
           Height = 24
-          Top = 0
+          Top = 1
           Width = 1
           Align = faHeight
           Angle = 90
@@ -6243,7 +6206,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         object RLDraw115: TRLDraw
           Left = 300
           Height = 24
-          Top = 0
+          Top = 1
           Width = 4
           Align = faHeight
           Angle = 90
@@ -6257,7 +6220,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         object RLDraw116: TRLDraw
           Left = 586
           Height = 24
-          Top = 0
+          Top = 1
           Width = 1
           Align = faHeight
           Angle = 90
@@ -6458,7 +6421,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_12_ModAereo: TRLBand[12]
       Left = 26
       Height = 97
-      Top = 1790
+      Top = 1784
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7089,7 +7052,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_13_ModAquaviario: TRLBand[13]
       Left = 26
       Height = 92
-      Top = 1887
+      Top = 1881
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7528,7 +7491,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_14_ModFerroviario: TRLBand[14]
       Left = 26
       Height = 7
-      Top = 1979
+      Top = 1973
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7542,7 +7505,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_15_ModDutoviario: TRLBand[15]
       Left = 26
       Height = 7
-      Top = 1986
+      Top = 1980
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7556,9 +7519,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_01_Recibo_Aereo: TRLBand[16]
       Left = 26
       Height = 111
-      Top = 101
+      Top = 102
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -7566,24 +7534,13 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_01_Recibo_AereoBeforePrint
-      object RLDraw10: TRLDraw
-        Left = 0
-        Height = 108
-        Top = 0
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw2: TRLDraw
         Left = 1
         Height = 1
         Top = 15
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7650,10 +7607,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw81: TRLDraw
         Left = 1
-        Height = 1
-        Top = 50
+        Height = 109
+        Top = 1
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7668,6 +7626,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 61
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7877,7 +7836,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_11_ModRodLot104: TRLBand[17]
       Left = 26
       Height = 107
-      Top = 1683
+      Top = 1677
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -8477,9 +8436,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_18_Recibo: TRLBand[18]
       Left = 26
       Height = 97
-      Top = 2077
+      Top = 2072
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -8491,7 +8455,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 0
         Height = 78
         Top = 14
-        Width = 741
+        Width = 742
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -8553,11 +8518,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object RLDraw96: TRLDraw
-        Left = 1
+        Left = 0
         Height = 1
         Top = 39
-        Width = 740
+        Width = 742
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -8841,7 +8807,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 0
         Height = 1
         Top = 7
-        Width = 741
+        Width = 742
+        Align = faWidth
         Angle = 0
         DrawKind = dkLine
         Pen.Style = psDot
@@ -8854,7 +8821,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_06_ProdutosPerigosos: TRLBand[19]
       Left = 26
       Height = 83
-      Top = 838
+      Top = 839
       Width = 742
       AutoSize = True
       BandType = btHeader
@@ -8896,6 +8863,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -9192,6 +9160,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 30
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -9202,11 +9171,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_VeiculosNovos: TRLBand[20]
       Left = 26
-      Height = 62
-      Top = 1425
+      Height = 63
+      Top = 1418
       Width = 742
       AutoSize = True
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -9214,18 +9188,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_06_VeiculosNovosBeforePrint
-      object RLDraw228: TRLDraw
-        Left = 0
-        Height = 61
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel222: TRLLabel
         Left = 6
         Height = 13
@@ -9252,6 +9214,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 16
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -9505,26 +9468,19 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_Fluxo_Carga: TRLBand[21]
       Left = 26
       Height = 44
-      Top = 1311
+      Top = 1304
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_Fluxo_CargaBeforePrint
-      object rlsQuadro10_Fluxo: TRLDraw
-        Left = 0
-        Height = 42
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel201: TRLLabel
         Left = 6
         Height = 12
@@ -9546,11 +9502,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLDraw34: TRLDraw
-        Left = 0
+        Left = 1
         Height = 1
         Top = 14
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -9700,9 +9657,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_03_DadosDACTe_OS: TRLBand[22]
       Left = 26
       Height = 69
-      Top = 598
+      Top = 599
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -9721,12 +9683,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Visible = False
       end
       object rlsLinhaH7: TRLDraw
         Left = 1
         Height = 1
         Top = 28
         Width = 740
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -10152,9 +10116,14 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_Dados_Seguradora: TRLBand[23]
       Left = 26
       Height = 44
-      Top = 1487
+      Top = 1481
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -10162,24 +10131,13 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_Dados_SeguradoraBeforePrint
-      object rlsQuadro10: TRLDraw
-        Left = 0
-        Height = 43
-        Top = 0
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLDraw29: TRLDraw
         Left = 1
         Height = 1
         Top = 15
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -10358,7 +10316,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_CTeOS_PrestacaoServico: TRLBand[24]
       Left = 26
       Height = 77
-      Top = 921
+      Top = 922
       Width = 742
       BandType = btHeader
       Borders.Sides = sdCustom
@@ -10454,11 +10412,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLDraw35: TRLDraw
-        Left = 0
+        Left = 1
         Height = 1
         Top = 14
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -10471,7 +10430,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_Cte_Anulado_Substituido: TRLBand[25]
       Left = 26
       Height = 81
-      Top = 1230
+      Top = 1223
       Width = 742
       AutoSize = True
       BandType = btHeader
@@ -10508,11 +10467,12 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLDraw117: TRLDraw
-        Left = 0
+        Left = 1
         Height = 1
         Top = 14
         Width = 740
         HelpContext = 1
+        Align = faWidth
         Angle = 0
         Brush.Style = bsClear
         DrawKind = dkLine

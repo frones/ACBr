@@ -1,7 +1,7 @@
 object frmDACTeRL: TfrmDACTeRL
   Left = 255
   Height = 304
-  Top = 130
+  Top = 131
   Width = 890
   Caption = 'frmDACTeRL'
   ClientHeight = 304
@@ -12,7 +12,7 @@ object frmDACTeRL: TfrmDACTeRL
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.4.0'
   object RLCTe: TRLReport
     Left = 2
     Height = 1123

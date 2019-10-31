@@ -46,9 +46,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2019
+-- ACBrCTeDACTeRLRetrato --
+[-] Correção nas larguras dos quadros.
+   https://www.projetoacbr.com.br/forum/topic/54627-erro-na-impress%C3%A3o-do-cte-os-rodovi%C3%A1rio-com-fortes-report/
+  por: Italo Jurisato Junior
+
 24/10/2019
 -- ACBrCTeDACTeRLRetrato --
-[-] Corrigido a largura dos quadros.
+[-] Correção nas larguras dos quadros.
    https://www.projetoacbr.com.br/forum/topic/54578-erro-na-impress%C3%A3o-do-cte-rodovi%C3%A1rio-com-fortes-report/
   por: Italo Jurisato Junior
 

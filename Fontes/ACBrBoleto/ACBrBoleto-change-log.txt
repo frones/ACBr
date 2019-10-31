@@ -49,6 +49,10 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+--ACBrBoletoSantander--
+[*] Ajuste na remessa CNAB240, adiciona Código da multa baseado no manual
+https://www.projetoacbr.com.br/forum/topic/54640-c%C3%B3digo-multa-santander/
+
 21/10/2019
 
 --ACBrBoleto, ACBrUniprimeNortePR--

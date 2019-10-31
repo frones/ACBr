@@ -18508,8 +18508,8 @@ begin
     proVersaTecnologia, proActconv201, proSafeWeb, proActconv202, proWebISSv2,
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
-    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, 
-    proGiap: Result := ve200;
+    proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, proGiap,
+    proSimplISSv2: Result := ve200;
 
     proInfiscv11, proLencois: Result := ve110;
   else

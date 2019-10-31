@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2019
+-- pnfsConversao --
+[-] Estava faltando o enumerador do provedor SimplISSv2 na lista de provedores que
+    seguem a versão 2 do layout da ABRASF.
+   Por: Italo Jurisato Junior
+
 30/10/2019
 -- ACBrNFSeWebServices --
 [*] Alterado os namespace de todos os método - provedor SimplISSv2 - Blumenau/SC

@@ -174,7 +174,7 @@ type
     function PathSystem: String;
     function RegistrarActiveXServer(const AServerLocation: string;
       const ARegister: Boolean): Boolean;
-    procedure CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
+    procedure CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String);
     procedure ExtrairDiretorioPacote(const NomePacote: string);
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
     procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
@@ -382,7 +382,7 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
+procedure TfrmPrincipal.CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String);
 var
   PathOrigem: String;
   PathDestino: String;
@@ -421,9 +421,9 @@ procedure TfrmPrincipal.InstalarCapicom;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'Capicom\capicom.dll');
-    CopiarArquivoTo(sDestino,'Capicom\msxml5.dll');
-    CopiarArquivoTo(sDestino,'Capicom\msxml5r.dll');
+    CopiarArquivoDLLTo(sDestino,'Capicom\capicom.dll');
+    CopiarArquivoDLLTo(sDestino,'Capicom\msxml5.dll');
+    CopiarArquivoDLLTo(sDestino,'Capicom\msxml5r.dll');
 
     if sDestino = tdDelphi then
     begin
@@ -443,9 +443,9 @@ procedure TfrmPrincipal.InstalarDiversos;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'Diversos\iconv.dll');
-    CopiarArquivoTo(sDestino,'Diversos\inpout32.dll');
-    CopiarArquivoTo(sDestino,'Diversos\msvcr71.dll');
+    CopiarArquivoDLLTo(sDestino,'Diversos\iconv.dll');
+    CopiarArquivoDLLTo(sDestino,'Diversos\inpout32.dll');
+    CopiarArquivoDLLTo(sDestino,'Diversos\msvcr71.dll');
   end;
 end;
 
@@ -453,10 +453,10 @@ procedure TfrmPrincipal.InstalarLibXml2;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libxslt.dll');
-    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libexslt.dll');
-    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libiconv.dll');
-    CopiarArquivoTo(sDestino,'DLLs\LibXml2\x86\libxml2.dll');
+    CopiarArquivoDLLTo(sDestino,'LibXml2\x86\libxslt.dll');
+    CopiarArquivoDLLTo(sDestino,'LibXml2\x86\libexslt.dll');
+    CopiarArquivoDLLTo(sDestino,'LibXml2\x86\libiconv.dll');
+    CopiarArquivoDLLTo(sDestino,'LibXml2\x86\libxml2.dll');
   end;
 end;
 
@@ -466,9 +466,9 @@ procedure TfrmPrincipal.InstalarOpenSSL;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\libeay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\ssleay32.dll');
-    CopiarArquivoTo(sDestino,'OpenSSL\1.0.2.19\x86\msvcr120.dll');
+    CopiarArquivoDLLTo(sDestino,'OpenSSL\1.0.2.19\x86\libeay32.dll');
+    CopiarArquivoDLLTo(sDestino,'OpenSSL\1.0.2.19\x86\ssleay32.dll');
+    CopiarArquivoDLLTo(sDestino,'OpenSSL\1.0.2.19\x86\msvcr120.dll');
   end;
 end;
 
@@ -477,12 +477,12 @@ procedure TfrmPrincipal.InstalarXMLSec;
 begin
   if sDestino <> tdNone then
   begin
-    CopiarArquivoTo(sDestino, 'XMLSec\iconv.dll');
-    CopiarArquivoTo(sDestino, 'XMLSec\libxml2.dll');
-    CopiarArquivoTo(sDestino, 'XMLSec\libxmlsec.dll');
-    CopiarArquivoTo(sDestino, 'XMLSec\libxmlsec-openssl.dll');
-    CopiarArquivoTo(sDestino, 'XMLSec\libxslt.dll');
-    CopiarArquivoTo(sDestino, 'XMLSec\zlib1.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\iconv.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\libxml2.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\libxmlsec.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\libxmlsec-openssl.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\libxslt.dll');
+    CopiarArquivoDLLTo(sDestino, 'XMLSec\zlib1.dll');
   end;
 end;
 

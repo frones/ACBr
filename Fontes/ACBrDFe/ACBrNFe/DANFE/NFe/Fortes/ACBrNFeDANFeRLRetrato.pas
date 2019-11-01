@@ -694,7 +694,7 @@ uses
   DateUtils, StrUtils, Math,
   ACBrNFeDANFeRLClass, ACBrDFeUtil, ACBrValidador, ACBrUtil,
   ACBrDFeDANFeReport, ACBrDFeReportFortes,
-  pcnNFe, pcnConversaoNFe, ACBrNFe, StrUtilsEx;
+  pcnNFe, pcnConversaoNFe, ACBrNFe;
 
 {$IfNDef FPC}
  {$R *.dfm}
@@ -1450,34 +1450,9 @@ begin
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirDadosAdicionais;
-var
-  sProtocolo, sSuframa, sCompleto: String;
 begin
-  // Protocolo de autorização, nos casos de emissão em contingência
-  if (fpNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (fpNFe.procNFe.cStat = 100) then
-  begin
-    sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
-      fpNFe.procNFe.nProt + ' ' + FormatDateTimeBr(fpNFe.procNFe.dhRecbto);
-  end;
-
-  // Inscrição Suframa
-  if NaoEstaVazio(fpNFe.Dest.ISUF) then
-  begin
-    sSuframa := ACBrStr('INSCRIÇÃO SUFRAMA: ') + fpNFe.Dest.ISUF;
-  end;
-
-  sCompleto := sProtocolo + sSuframa+
-               fpDANFe.ManterDocreferenciados(fpNFe) +
-               fpDANFe.ManterInfAdFisco(fpNFe) +
-               fpDANFe.ManterObsFisco(fpNFe) +
-               fpDANFe.ManterProcreferenciado(fpNFe) +
-               fpDANFe.ManterInfContr(fpNFe) +
-               fpDANFe.ManterInfCompl(fpNFe) +
-               fpDANFe.ManterContingencia(fpNFe);
-
-  sCompleto := FastStringReplace(sCompleto, ';', sLineBreak, [rfReplaceAll]);
-
-  rlmDadosAdicionaisAuxiliar.Lines.Text := sCompleto;
+  rlmDadosAdicionaisAuxiliar.Lines.Text :=
+    fpDANFe.ManterInformacoesDadosAdicionais( fpNFe  );
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirObservacoes;

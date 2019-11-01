@@ -52,7 +52,7 @@ interface
 uses
   SysUtils, Classes,
   ACBrDFeDANFeReport,
-  pcnNFe, pcnConversao, pcnConversaoNFe;
+  pcnNFe, pcnConversao, pcnConversaoNFe, StrUtilsEx;
 
 type
   TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
@@ -119,6 +119,10 @@ type
     function ManterVTribPerc(dVTotTrib, dVProd, dVNF: Double): Double; virtual;
     function ManterValAprox(aNFE: TNFe; inItem: Integer): String; virtual;
     function ManterColunaDesconto( Value : Double): Boolean;
+    function ManterProtocolo(aNFE: TNFe): String;
+    function ManterSuframa(aNFE: TNFe): String;
+
+    function ManterInformacoesDadosAdicionais(aNFE: TNFe): String;
 
   published
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo default False;
@@ -698,6 +702,43 @@ begin
     idaiNunca     : Result := False;
     idaiComValor  : Result := ( value > 0 );
   end;
+end;
+function TACBrNFeDANFEClass.ManterProtocolo(aNFE: TNFe): String;
+begin
+  // Protocolo de autorização, nos casos de emissão em contingência
+  if (aNFe.Ide.tpEmis in [teContingencia, teFSDA]) and (aNFe.procNFe.cStat = 100) then
+  begin
+    Result := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
+      aNFe.procNFe.nProt + ' ' + FormatDateTimeBr(aNFe.procNFe.dhRecbto);
+  end
+  else
+    Result := '';
+end;
+
+function TACBrNFeDANFEClass.ManterSuframa(aNFE: TNFe): String;
+begin
+  // Inscrição Suframa
+  if NaoEstaVazio(aNFe.Dest.ISUF) then
+  begin
+    Result := ACBrStr('INSCRIÇÃO SUFRAMA: ') + aNFe.Dest.ISUF;
+  end
+  else
+    Result := '';
+end;
+
+function TACBrNFeDANFEClass.ManterInformacoesDadosAdicionais( aNFE: TNFe): String;
+begin
+  Result := ManterProtocolo( aNFE ) +
+            ManterSuframa( aNFE ) +
+            ManterDocreferenciados(aNFE) +
+            ManterInfAdFisco(aNFE) +
+            ManterObsFisco(aNFE) +
+            ManterProcreferenciado(aNFE) +
+            ManterInfContr(aNFE) +
+            ManterInfCompl(aNFE) +
+            ManterContingencia(aNFE);
+
+  Result := FastStringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
 end;
 
 

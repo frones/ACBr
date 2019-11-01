@@ -639,7 +639,34 @@ procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(MensagemRodape: AnsiS
 var
   i, ItMaior: Integer;
   ItDescAcre: array of Extended;
-  Total, VlDescAcres, TotDescAcre, VlItMaior: Extended;
+  Total, VlDescAcres, TotDescAcre, VlItMaior, vlrDifeDescAcres: Extended;
+
+  procedure ratearDescAcre(vlrRateioDescAcre : Extended);
+  var
+    iItens : integer;
+  begin
+    with fsACBrNFCe do
+    begin
+      for iItens := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+      begin
+        if vlrRateioDescAcre <= 0 then //Caso não tenha mais valor para rateio então sai do laço para não cosumir processamento desnecessário
+          Break;
+
+        if (NotasFiscais.Items[0].NFe.Det[iItens].Prod.cProd <> cItemCancelado) then
+        begin
+          if ItDescAcre[iItens] > 0 then  //So decrementa em valores que obtiveram desconto
+          begin
+            ItDescAcre[iItens] := TruncTo(ItDescAcre[iItens], 2) - TruncTo(0.01, 2);
+            vlrRateioDescAcre  := TruncTo(vlrRateioDescAcre, 2) - TruncTo(0.01, 2); //Decrementa o valor
+          end;
+        end;
+      end;
+    end;
+
+    //Caso ainda fique valor para rateio efetuo uma recusividade para zerar ela
+    if vlrRateioDescAcre > 0 then
+      ratearDescAcre(vlrRateioDescAcre);
+  end;
 begin
   if fsEhVenda then
   begin
@@ -656,6 +683,7 @@ begin
         ItMaior := -1;
         VlItMaior := 0;
         TotDescAcre := 0;
+        vlrDifeDescAcres := 0;
 
         SetLength(ItDescAcre, NotasFiscais.Items[0].NFe.Det.Count);
 
@@ -684,8 +712,18 @@ begin
           ItDescAcre[0] := VlDescAcres
         else
         if TotDescAcre <> VlDescAcres then
-          ItDescAcre[ItMaior] := ItDescAcre[ItMaior] -
-            (TotDescAcre - VlDescAcres);
+        begin
+          vlrDifeDescAcres := TruncTo(TotDescAcre, 2) - TruncTo(VlDescAcres, 2);
+
+          if ItDescAcre[ItMaior] >= vlrDifeDescAcres  then
+            ItDescAcre[ItMaior] := ItDescAcre[ItMaior] - vlrDifeDescAcres
+          else
+          begin
+            //Existe casos que o valor de desconto pode ficar negativo pois a vlrDifeDescAcres pode ser jogada em itens com descontos <= a vlrDifeDescAcres
+            //Solução: ratear em todos os itens 0,01 para solucionar esse tipo raro de situação
+            ratearDescAcre(vlrDifeDescAcres);
+          end;
+        end;
 
         for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
         begin
@@ -851,7 +889,7 @@ begin
 
         ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
 
-        if (NotasFiscais.Items[0].Confirmada) then
+        if NotasFiscais.Items[0].Confirmada then
           FazerImpressaoDocumento;
     end;
     end;

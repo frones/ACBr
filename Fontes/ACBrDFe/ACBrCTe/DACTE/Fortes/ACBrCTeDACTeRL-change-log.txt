@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/11/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] Ajustes nas larguras dos quadros dos modais Aério e Aquaviário.
+  por: Italo Jurisato Junior
+
 31/10/2019
 -- ACBrCTeDACTeRLRetrato --
 [-] Correção nas larguras dos quadros.

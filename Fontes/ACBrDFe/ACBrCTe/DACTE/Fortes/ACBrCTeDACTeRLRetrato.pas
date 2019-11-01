@@ -443,7 +443,6 @@ type
     rlb_13_ModAquaviario: TRLBand;
     rlb_14_ModFerroviario: TRLBand;
     rlb_15_ModDutoviario: TRLBand;
-    RLDraw47: TRLDraw;
     RLDraw54: TRLDraw;
     RLDraw63: TRLDraw;
     RLDraw64: TRLDraw;
@@ -481,7 +480,6 @@ type
     rllLojaAgenteEmissor: TRLLabel;
     rllRetira: TRLLabel;
     RLDraw70: TRLDraw;
-    RLDraw73: TRLDraw;
     rlLabel151: TRLLabel;
     RLDraw74: TRLDraw;
     rlLabel152: TRLLabel;
@@ -615,7 +613,7 @@ type
     RLDraw52: TRLDraw;
     RLDraw50: TRLDraw;
     rllVariavel2: TRLLabel;
-    RLDraw108: TRLDraw;
+    rldPontilhado3: TRLDraw;
     RLDraw109: TRLDraw;
     rlmComplChave1: TRLMemo;
     rlmComplValor1: TRLMemo;
@@ -671,6 +669,8 @@ type
     RLMemo1: TRLMemo;
     rlsLinhaV07: TRLDraw;
     imgQRCode: TRLImage;
+    RLDraw10: TRLDraw;
+    RLDraw46: TRLDraw;
 
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -713,6 +713,7 @@ type
     procedure dadosSeguradoraMod67();
     procedure rlb_Cte_Anulado_SubstituidoBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
+
   private
     Linhas: integer;
 

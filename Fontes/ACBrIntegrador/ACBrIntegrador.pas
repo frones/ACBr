@@ -225,7 +225,6 @@ end;
 
 procedure TComandoIntegrador.BackupArquivo(const ANomeArquivo, AXML: String);
 var
-  MensagemDeErro: string;
   PastaBackupIntegrador: string;
 begin
   // ultimas homologações tem pedido para ver os arquivos enviados

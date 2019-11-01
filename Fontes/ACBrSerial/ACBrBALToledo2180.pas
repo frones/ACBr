@@ -130,7 +130,8 @@ begin
   begin
     wResposta := Copy(aResposta, wPos + 1, Length(aResposta));
     wResposta := Copy(wResposta, 1, 6);
-    Insert('.', wResposta, 6);
+    // Para a linha abaixo, queira ver: https://www.projetoacbr.com.br/forum/topic/54533-balan%C3%A7a-toledo-2180/
+    //Insert('.', wResposta, 6);
   end
   else
     wResposta := 'I';

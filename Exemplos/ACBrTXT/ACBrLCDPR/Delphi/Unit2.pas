@@ -38,7 +38,7 @@ begin
       try
         with Bloco0000 do
           begin
-            COD_VER := Versao001;
+            COD_VER := Versao011;
             CPF := '000.000.000-00';
             NOME := 'Willian Aparecido Hübner do Nascimento';
             IND_SIT_INI_PER := indRegular;
@@ -107,27 +107,31 @@ begin
             BANCO := 001;
             NOME_BANCO := 'Banco do Brasil';
             AGENCIA := '1180';
-            NUM_CONTA := '12.123-1';
+            NUM_CONTA := '121231';
           end;
 
         with BlocoQ.RegistroQ100New do
           begin
-            DATA := Date;
+            DATA := EncodeDate(2019, 1, 1); //JANEIRO
             COD_IMOVEL := 1;
             COD_CONTA := 1;
             NUM_DOC := 'DOCUMENTO 1';
             TIPO_DOC := tdNotaFiscal;
             HISTORICO := 'Compra referente a nota fiscal numero 0001';
-            ID_PARTIC := '000.000.000-00';
+            ID_PARTIC := '000.000.000-00';  // O validador não aceita sem esta informação nos casos reais
             TIPO_LANC := tlDespesaCusteio;
             VL_ENTRADA := 0;
             VL_SAIDA := 1000.84;
             SLD_FIN := -1000.84;
+            if SLD_FIN < 0 then
+               NAT_SLD_FIN := 'N'
+            else
+               NAT_SLD_FIN := 'P';
           end;
 
         with BlocoQ.RegistroQ100New do
           begin
-            DATA := Date;
+            DATA := EncodeDate(2019, 1, 1); //JANEIRO
             COD_IMOVEL := 1;
             COD_CONTA := 1;
             NUM_DOC := 'DOCUMENTO 2';
@@ -137,33 +141,55 @@ begin
             TIPO_LANC := tlDespesaCusteio;
             VL_ENTRADA := 0;
             VL_SAIDA := 500.79;
-            SLD_FIN := -500.79;
+            SLD_FIN := -1501.63;
+            if SLD_FIN < 0 then
+               NAT_SLD_FIN := 'N'
+            else
+               NAT_SLD_FIN := 'P';
           end;
 
         with BlocoQ.RegistroQ100New do
           begin
-            DATA := Date;
+            DATA := EncodeDate(2019, 2, 1); //FEVEREIRO
             COD_IMOVEL := 1;
             COD_CONTA := 1;
             NUM_DOC := 'DOCUMENTO 3';
             TIPO_DOC := tdNotaFiscal;
             HISTORICO := 'Venda referente a nota fiscal numero 0003';
             ID_PARTIC := '000.000.000-00';
-            TIPO_LANC := tlDespesaCusteio;
+            TIPO_LANC := tlReceitaRural;
             VL_ENTRADA := 16000.87;
             VL_SAIDA := 0;
-            SLD_FIN := 16000.87;
-          end;
-
-        with BlocoQ.RegistroQ200 do
-          begin
-            PAIS := 'BRA';
-            MES := '01';
-            VL_ENTRADA := 16000.87;
-            VL_SAIDA := 1501.63;
             SLD_FIN := 14499.24;
+            if SLD_FIN < 0 then
+               NAT_SLD_FIN := 'N'
+            else
+               NAT_SLD_FIN := 'P';
           end;
 
+        with BlocoQ.RegistroQ200New do
+          begin
+            MES := '012019';                //TOTALIZAÇÃO DE JANEIRO
+            VL_ENTRADA := 0;
+            VL_SAIDA := 1501.63;
+            SLD_FIN := -1501.63;
+            if SLD_FIN < 0 then
+               NAT_SLD_FIN := 'N'
+            else
+               NAT_SLD_FIN := 'P';
+          end;
+
+        with BlocoQ.RegistroQ200New do
+          begin
+            MES := '022019';                //TOTALIZAÇÃO DE FEVEREIRO
+            VL_ENTRADA := 16000.87;
+            VL_SAIDA := 0;
+            SLD_FIN := 14499.24;
+            if SLD_FIN < 0 then
+               NAT_SLD_FIN := 'N'
+            else
+               NAT_SLD_FIN := 'P';
+          end;
 
         DadosContador.IDENT_NOME := 'Willian Hubner';
         DadosContador.IDENT_CPF_CNPJ := '0000000000';

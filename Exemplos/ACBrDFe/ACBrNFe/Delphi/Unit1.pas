@@ -987,6 +987,8 @@ begin
 
   if OpenDialog1.Execute then
   begin
+//    ACBrNFeDANFeRL1.ExpandirDadosAdicionaisAuto := True;
+//    ACBrNFeDANFeRL1.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := True;
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
     ACBrNFe1.NotasFiscais.Imprimir;

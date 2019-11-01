@@ -37,7 +37,7 @@ unit Registro0000;
 interface
 
 uses
-  LCDPRBlocos, LCDPRUtils;
+  LCDPRBlocos;
 
 type
   TRegistro0000 = Class
@@ -72,7 +72,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, ACBrUtil;
 
 { TRegistro0000 }
 
@@ -82,11 +82,14 @@ begin
 end;
 
 procedure TRegistro0000.SetCPF(const Value: String);
+var
+  TempCPF: string;
 begin
-  if (Length(SoNumeros(Value)) <> 11) then
+  TempCPF := OnlyNumber(Value);
+  if (Length(TempCPF) <> 11) then
     raise Exception.Create('CPF precisa possuir 11 caracteres!');
 
-  FCPF := SoNumeros(Value);
+  FCPF := TempCPF;
 end;
 
 procedure TRegistro0000.SetDT_FIN(const Value: TDateTime);

@@ -5,10 +5,45 @@
 
   http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-caixa-digital-do-produtor-rural/leiaute-1-0-lcdpr.xlsx
   http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-0.docx
+  http://receita.economia.gov.br/orientacao/tributaria/declaracoes-e-demonstrativos/lcdpr-livro-caixa-digital-do-produtor-rural/manual-de-preenchimento-do-lcdpr-1-2.docx
 
   Willian Hübner
 }
 
+{******************************************************************************}
+{ Projeto: Componente ACBrLCDPR                                                }
+{  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
+{ Lirvro Caixa Digital do Produtor Rural                                       }
+{                                                                              }
+{                                                                              }
+{ Desenvolvimento e doação ao Projeto ACBr: Willian Hübner                     }
+{                                                                              }
+{ Ajustes e correções para doação: Elton Barbosa (EMBarbosa)                   }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
 unit UACBrLCDPR;
 
 interface
@@ -47,7 +82,7 @@ type
 
     function GetArquivo : String;
 
-    function AddCampo(const Value : String) : String;
+    function AddCampo(const Value : String; AddDelimiter: Boolean = True ) : String;
 
     procedure WriteBloco0000;
     procedure WriteBloco0010;
@@ -80,16 +115,18 @@ type
     property DadosContador : TContador read FDadosContador write SetDadosContador;
   end;
 
-const
-  crFinal = 'CRLF';
-
 implementation
+
+uses
+  ACBrUtil;
 
 { TLCDPR }
 
-function TACBrLCDPR.AddCampo(const Value: String): String;
+function TACBrLCDPR.AddCampo(const Value: String; AddDelimiter: Boolean): String;
 begin
-  Result := Trim(Value) + Delimitador;
+  Result := Trim(Value);
+  if AddDelimiter then
+     Result := Result + Delimitador;
 end;
 
 constructor TACBrLCDPR.Create(AOwner: TComponent);
@@ -139,7 +176,9 @@ end;
 
 function TACBrLCDPR.GetArquivo: String;
 begin
-  Result := FArquivo + '_' + FBloco0000.NOME + '_' + SoNumeros(DateToStr(FBloco0000.DT_INI)) + '_' + SoNumeros(DateToStr(FBloco0000.DT_FIN)) + '.txt';
+  Result := FArquivo + '_' + FBloco0000.NOME + '_' +
+    OnlyNumber(DateToStr(FBloco0000.DT_INI)) + '_' + OnlyNumber(DateToStr(FBloco0000.DT_FIN)) +
+    '.txt';
 end;
 
 procedure TACBrLCDPR.PrepararArquivo;
@@ -227,14 +266,13 @@ begin
         AddCampo('0000') +
         AddCampo('LCDPR') +
         AddCampo(CodVerToStr(COD_VER)) +
-        AddCampo(SoNumeros(CPF)) +
+        AddCampo(OnlyNumber(CPF)) +
         AddCampo(NOME) +
         AddCampo(IndInicioToStr(IND_SIT_INI_PER)) +
         AddCampo(IndSitEspToStr(SIT_ESPECIAL)) +
         AddCampo(formatDate(DT_SIT_ESP)) +
         AddCampo(formatDate(DT_INI)) +
-        AddCampo(formatDate(DT_FIN)) +
-        crFinal
+        AddCampo(formatDate(DT_FIN), False)
       );
     end;
 end;
@@ -245,8 +283,7 @@ begin
     begin
       FConteudo.Add (
         AddCampo('0010') +
-        AddCampo(IndFormaApurToStr(FORMA_APUR)) +
-        crFinal
+        AddCampo(IndFormaApurToStr(FORMA_APUR), False)
       );
     end;
 end;
@@ -265,8 +302,7 @@ begin
         AddCampo(COD_MUN) +
         AddCampo(CEP) +
         AddCampo(NUM_TEL) +
-        AddCampo(EMAIL) +
-        crFinal
+        AddCampo(EMAIL, False)
       );
     end;
 end;
@@ -285,41 +321,7 @@ begin
             AddCampo(PAIS) +
             AddCampo(MOEDA) +
             AddCampo(IntToStr(CAD_ITR)) +
-            AddCampo(CAEPF){******************************************************************************}
-{ Projeto: Componente ACBrLCDPR                                                }
-{  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
-{ Lirvro Caixa Digital do Produtor Rural                                       }
-{                                                                              }
-{                                                                              }
-{ Desenvolvimento e doação ao Projeto ACBr: Willian Hübner                     }
-{                                                                              }
-{ Ajustes e correções para doação: Elton Barbosa (EMBarbosa)                   }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
- +
+            AddCampo(CAEPF) +
             AddCampo(INSCR_ESTADUAL) +
             AddCampo(NOME_IMOVEL) +
             AddCampo(ENDERECO) +
@@ -330,8 +332,7 @@ begin
             AddCampo(COD_MUN) +
             AddCampo(CEP) +
             AddCampo(TipoExploracaoToStr(TIPO_EXPLORACAO)) +
-            AddCampo(IntToStr(PARTICIPACAO)) +
-            crFinal
+            AddCampo(IntToStr(PARTICIPACAO), False)
           );
         end;
 
@@ -345,8 +346,7 @@ begin
                 AddCampo(TipoContraparteToStr(TIPO_CONTRAPARTE)) +
                 AddCampo(CPF_CONTRAPARTE) +
                 AddCampo(NOME_CONTRAPARTE) +
-                AddCampo(IntToStr(PERC_CONTRAPARTE)) +
-                crFinal
+                AddCampo(IntToStr(PERC_CONTRAPARTE), False)
               );
             end;
         end;
@@ -368,8 +368,7 @@ begin
             AddCampo(IntToStr(BANCO)) +
             AddCampo(NOME_BANCO) +
             AddCampo(AGENCIA) +
-            AddCampo(NUM_CONTA) +
-            crFinal
+            AddCampo(NUM_CONTA, False)
           );
         end;
     end;
@@ -386,8 +385,7 @@ begin
         AddCampo(IND_CRC) +
         AddCampo(EMAIL) +
         AddCampo(FONE) +
-        AddCampo(IntToStr(FConteudo.Count)) +
-        crFinal
+        AddCampo(IntToStr(FConteudo.Count + 1), False)
       );
     end;
 end;
@@ -413,24 +411,24 @@ begin
             AddCampo(formatNumeric(VL_ENTRADA)) +
             AddCampo(formatNumeric(VL_SAIDA)) +
             AddCampo(formatNumeric(SLD_FIN)) +
-            AddCampo(NAT_SLD_FIN) +
-            crFinal
+            AddCampo(NAT_SLD_FIN, False)
           );
         end;
     end;
 
-  with FBlocoQ.RegistroQ200 do
+  for i := 0 to Pred(FBlocoQ.RegistrosQ200.Count) do
     begin
-      FConteudo.Add(
-        AddCampo('Q200') +
-        AddCampo(PAIS) +
-        AddCampo(MES) +
-        AddCampo(formatNumeric(VL_ENTRADA)) +
-        AddCampo(formatNumeric(VL_SAIDA)) +
-        AddCampo(formatNumeric(SLD_FIN)) +
-        AddCampo(NAT_SLD_FIN) +
-        crFinal
-      );
+      with FBlocoQ.RegistrosQ200[i] do
+        begin
+          FConteudo.Add(
+            AddCampo('Q200') +
+            AddCampo(MES) +
+            AddCampo(formatNumeric(VL_ENTRADA)) +
+            AddCampo(formatNumeric(VL_SAIDA)) +
+            AddCampo(formatNumeric(SLD_FIN)) +
+            AddCampo(NAT_SLD_FIN, False)
+          );
+        end;
     end;
 end;
 

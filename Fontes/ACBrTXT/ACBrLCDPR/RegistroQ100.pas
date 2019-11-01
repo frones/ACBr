@@ -36,7 +36,7 @@ unit RegistroQ100;
 
 interface
 
-uses Classes, Contnrs, LCDPRBlocos, LCDPRUtils;
+uses Classes, Contnrs, LCDPRBlocos;
 
 type
   TRegistroQ100 = Class
@@ -93,7 +93,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, ACBrUtil;
 
 { TRegistroQ100 }
 
@@ -124,11 +124,14 @@ begin
 end;
 
 procedure TRegistroQ100.SetID_PARTIC(const Value: String);
+var
+  TempIdPart: string;
 begin
-  if Length(SoNumeros(Value)) > 14 then
+  TempIdPart := OnlyNumber(Value);
+  if Length(TempIdPart) > 14 then
     raise Exception.Create('ID_PARTIC - Tamanho máximo permitido é 14 caracteres!');
 
-  FID_PARTIC := SoNumeros(Value);
+  FID_PARTIC := TempIdPart;
 end;
 
 procedure TRegistroQ100.SetNAT_SLD_FIN(const Value: String);

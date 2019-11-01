@@ -36,7 +36,7 @@ unit Registro9999;
 
 interface
 
-uses LCDPRUtils, SysUtils;
+uses SysUtils;
 
 type
   TRegistro9999 = Class

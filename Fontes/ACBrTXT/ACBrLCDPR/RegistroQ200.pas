@@ -36,6 +36,8 @@ unit RegistroQ200;
 
 interface
 
+uses Classes, Contnrs;
+
 type
   TRegistroQ200 = Class
   private
@@ -43,16 +45,13 @@ type
     FSLD_FIN: Double;
     FVL_SAIDA: Double;
     FVL_ENTRADA: Double;
-    FPAIS: String;
     FNAT_SLD_FIN: String;
     procedure SetMES(const Value: String);
-    procedure SetPAIS(const Value: String);
     procedure SetSLD_FIN(const Value: Double);
     procedure SetVL_ENTRADA(const Value: Double);
     procedure SetVL_SAIDA(const Value: Double);
     procedure SetNAT_SLD_FIN(const Value: String);
   public
-    property PAIS : String read FPAIS write SetPAIS;
     property MES : String read FMES write SetMES;
     property VL_ENTRADA : Double read FVL_ENTRADA write SetVL_ENTRADA;
     property VL_SAIDA : Double read FVL_SAIDA write SetVL_SAIDA;
@@ -61,6 +60,14 @@ type
     constructor Create;
   End;
 
+  TRegistroQ200List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroQ200;
+    procedure SetItem(Index: Integer; const Value: TRegistroQ200);
+  public
+    function New: TRegistroQ200;
+    property Items[Index: Integer]: TRegistroQ200 read GetItem write SetItem; default;
+  end;
 
 implementation
 
@@ -88,14 +95,6 @@ begin
   FNAT_SLD_FIN := Value;
 end;
 
-procedure TRegistroQ200.SetPAIS(const Value: String);
-begin
-  if Length(Value) > 3 then
-    raise Exception.Create('PAIS - Tamanho máximo permitido é 3 caracteres!');
-
-  FPAIS := Value;
-end;
-
 procedure TRegistroQ200.SetSLD_FIN(const Value: Double);
 begin
   FSLD_FIN := Value;
@@ -120,5 +119,24 @@ begin
   else
     FNAT_SLD_FIN := 'N';
 end;
+
+{ TRegistroQ200List }
+
+function TRegistroQ200List.GetItem(Index: Integer): TRegistroQ200;
+begin
+  Result := TRegistroQ200(inherited GetItem(Index));
+end;
+
+procedure TRegistroQ200List.SetItem(Index: Integer; const Value: TRegistroQ200);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+function TRegistroQ200List.New: TRegistroQ200;
+begin
+  Result := TRegistroQ200.Create;
+  Self.Add(Result);
+end;
+
 
 end.

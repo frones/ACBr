@@ -42,18 +42,20 @@ type
   TBlocoQ = Class
   private
     FRegistrosQ100: TRegistroQ100List;
-    FRegistroQ200: TRegistroQ200;
-    procedure SetRegistroQ200(const Value: TRegistroQ200);
+    FRegistrosQ200: TRegistroQ200List;
+    procedure SetRegistrosQ200(const Value: TRegistroQ200List);
     procedure SetRegistrosQ100(const Value: TRegistroQ100List);
   public
     constructor Create;
     destructor Destroy; override;
     procedure AddRegistroQ100(RegistroQ100 : TRegistroQ100);
+    procedure AddRegistroQ200(RegistroQ200 : TRegistroQ200);
 
     function RegistroQ100New : TRegistroQ100;
+    function RegistroQ200New : TRegistroQ200;
 
     property RegistrosQ100 : TRegistroQ100List read FRegistrosQ100 write SetRegistrosQ100;
-    property RegistroQ200 : TRegistroQ200 read FRegistroQ200 write SetRegistroQ200;
+    property RegistrosQ200 : TRegistroQ200List read FRegistrosQ200 write SetRegistrosQ200;
   End;
 
 implementation
@@ -79,16 +81,29 @@ begin
   FRegistrosQ100[I].SLD_FIN     := RegistroQ100.SLD_FIN;
 end;
 
+procedure TBlocoQ.AddRegistroQ200(RegistroQ200: TRegistroQ200);
+var
+  i : integer;
+begin
+  FRegistrosQ200.Add(TRegistroQ200.Create);
+  I := FRegistrosQ200.Count -1;
+  FRegistrosQ200[I].MES         := RegistroQ200.MES;
+  FRegistrosQ200[I].VL_ENTRADA  := RegistroQ200.VL_ENTRADA;
+  FRegistrosQ200[I].VL_SAIDA    := RegistroQ200.VL_SAIDA;
+  FRegistrosQ200[I].SLD_FIN     := RegistroQ200.SLD_FIN;
+  FRegistrosQ200[I].NAT_SLD_FIN := RegistroQ200.NAT_SLD_FIN;
+end;
+
 constructor TBlocoQ.Create;
 begin
   FRegistrosQ100 := TRegistroQ100List.Create;
-  FRegistroQ200 := TRegistroQ200.Create;
+  FRegistrosQ200 := TRegistroQ200List.Create;
 end;
 
 destructor TBlocoQ.Destroy;
 begin
   FRegistrosQ100.Destroy;
-  FRegistroQ200.Destroy;
+  FRegistrosQ200.Destroy;
   inherited;
 end;
 
@@ -99,9 +114,16 @@ begin
   FRegistrosQ100.Add(Result);
 end;
 
-procedure TBlocoQ.SetRegistroQ200(const Value: TRegistroQ200);
+function TBlocoQ.RegistroQ200New: TRegistroQ200;
 begin
-  FRegistroQ200 := Value;
+  Result := TRegistroQ200.Create;
+
+  FRegistrosQ200.Add(Result);
+end;
+
+procedure TBlocoQ.SetRegistrosQ200(const Value: TRegistroQ200List);
+begin
+  FRegistrosQ200 := Value;
 end;
 
 procedure TBlocoQ.SetRegistrosQ100(const Value: TRegistroQ100List);

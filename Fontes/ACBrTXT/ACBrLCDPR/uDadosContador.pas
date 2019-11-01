@@ -36,8 +36,6 @@ unit uDadosContador;
 
 interface
 
-uses LCDPRUtils;
-
 type
   TContador = Class
   private
@@ -61,6 +59,9 @@ type
 
 implementation
 
+uses
+  ACBrUtil;
+
 { TContador }
 
 procedure TContador.SetEMAIL(const Value: String);
@@ -70,7 +71,7 @@ end;
 
 procedure TContador.SetFONE(const Value: String);
 begin
-  FFONE := SoNumeros(Value);
+  FFONE := OnlyNumber(Value);
 end;
 
 procedure TContador.SetIDENT_CPF_CNPJ(const Value: String);

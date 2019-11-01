@@ -37,14 +37,14 @@ unit LCDPRBlocos;
 interface
 
 type
-  TCodVer = (Versao001);
+  TCodVer = (Versao001, Versao011);
   TIndInicio = (indRegular, indAbertura, indInicioObriga);
   TIndSitEsp = (iseNormal, iseFalecimento, iseEspolio, iseSaidaDefinitiva);
   TFormaApur = (faLivroCaixa, faApurLucro);
-  TTipoExploracao = (teExploracaoInd, teCondominio, teImovelArrendado, teParceria, teComodato);
-  TTipoContraparte = (tpcCondomino, tpcArrendante, tpcParceiro, tpcComodatario);
+  TTipoExploracao = (teExploracaoInd, teCondominio, teImovelArrendado, teParceria, teComodato, teOutro);
+  TTipoContraparte = (tpcCondomino, tpcArrendante, tpcParceiro, tpcComodatario, tpcOutro);
   TTipoDoc = (tdNotaFiscal, tdFatura, tdRecibo, tdContrato, tdFolhaPagamento, tdOutros);
-  TTipoLanc = (tlReceitaRural, tlDespesaCusteio, tlDespesaNaoDedutivel, tlProdEntregue, tlAdiantamentos);
+  TTipoLanc = (tlReceitaRural, tlDespesaCusteio, tlProdEntregue);
 
 function CodVerToStr(CodVer : TCodVer) : String;
 function IndInicioToStr(IndInicio : TIndInicio) : String;
@@ -61,6 +61,7 @@ function CodVerToStr(CodVer : TCodVer) : String;
 begin
   case CodVer of
     Versao001 : Result := '0001';
+    Versao011 : Result := '0011';
   end;
 end;
 
@@ -86,52 +87,52 @@ end;
 function IndFormaApurToStr(IndFormaApur : TFormaApur) : String;
 begin
   case IndFormaApur of
-    faLivroCaixa  : Result := '0';
-    faApurLucro   : Result := '1';
+    faLivroCaixa  : Result := '1';
+    faApurLucro   : Result := '2';
   end;
 end;
 
 function TipoExploracaoToStr(TipoExploracao : TTipoExploracao) : String;
 begin
   case TipoExploracao of
-    teExploracaoInd   : Result := '0';
-    teCondominio      : Result := '1';
-    teImovelArrendado : Result := '2';
-    teParceria        : Result := '3';
-    teComodato        : Result := '4';
+    teExploracaoInd   : Result := '1';
+    teCondominio      : Result := '2';
+    teImovelArrendado : Result := '3';
+    teParceria        : Result := '4';
+    teComodato        : Result := '5';
+    teOutro           : Result := '6';
   end;
 end;
 
 function TipoContraparteToStr(TipoContraparte : TTipoContraparte) : String;
 begin
   case TipoContraparte of
-    tpcCondomino    : Result := '0';
-    tpcArrendante   : Result := '1';
-    tpcParceiro     : Result := '2';
-    tpcComodatario  : Result := '3';
+    tpcCondomino    : Result := '1';
+    tpcArrendante   : Result := '2';
+    tpcParceiro     : Result := '3';
+    tpcComodatario  : Result := '4';
+    tpcOutro        : Result := '5';
   end;
 end;
 
 function TipoDocToStr(TipoDoc : TTipoDoc) : String;
 begin
   case TipoDoc of
-    tdNotaFiscal    : Result := '0';
-    tdFatura        : Result := '1';
-    tdRecibo        : Result := '2';
-    tdContrato      : Result := '3';
-    tdFolhaPagamento: Result := '4';
-    tdOutros        : Result := '5';
+    tdNotaFiscal    : Result := '1';
+    tdFatura        : Result := '2';
+    tdRecibo        : Result := '3';
+    tdContrato      : Result := '4';
+    tdFolhaPagamento: Result := '5';
+    tdOutros        : Result := '6';
   end;
 end;
 
 function TipoLancToStr(TipoLanc : TTipoLanc) : String;
 begin
   case TipoLanc of
-    tlReceitaRural        : Result := '0';
-    tlDespesaCusteio      : Result := '1';
-    tlDespesaNaoDedutivel : Result := '2';
+    tlReceitaRural        : Result := '1';
+    tlDespesaCusteio      : Result := '2';
     tlProdEntregue        : Result := '3';
-    tlAdiantamentos       : Result := '4';
   end;
 end;
 

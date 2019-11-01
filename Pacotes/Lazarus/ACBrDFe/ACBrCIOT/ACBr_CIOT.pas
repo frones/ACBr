@@ -4,12 +4,13 @@
 
 unit ACBr_CIOT;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  ACBrCIOT, ACBrCIOTConfiguracoes, ACBrCIOTContratos, ACBrCIOTReg, pcaRetEnvANe, 
-  pcnCIOT, pcnCIOTR, pcnCIOTW, pcnCIOTW_eFrete, pcnCIOTW_REPOM, pcnConversaoCIOT, 
-  LazarusPackageIntf;
+  ACBrCIOT, ACBrCIOTConfiguracoes, ACBrCIOTContratos, ACBrCIOTReg, 
+  pcnRetEnvCIOT, pcnCIOT, pcnCIOTR, pcnCIOTW, pcnCIOTW_eFrete, pcnCIOTW_REPOM, 
+  pcnConversaoCIOT, LazarusPackageIntf;
 
 implementation
 

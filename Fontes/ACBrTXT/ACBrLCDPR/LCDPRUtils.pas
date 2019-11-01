@@ -37,9 +37,7 @@ unit LCDPRUtils;
 interface
 
 uses
-  SysUtils;
-
-function SoNumeros(const Value : String) : String;
+  SysUtils, ACBrUtil;
 
 function formatNumeric(Value : Double) : String;
 function formatDate(Value : TDateTime) : String;
@@ -53,21 +51,8 @@ end;
 
 function formatNumeric(Value : Double) : String;
 begin
-  Result := SoNumeros(FormatFloat(',0.00;-,0.00', Value));
+  Result := OnlyNumber(FormatFloat(',0.00;-,0.00', Value));
 end;
 
-function SoNumeros(const Value : String) : String;
-var
-  x: Integer;
-  v: string;
-begin
-  for x := 1 to Length(Value) do
-    if (Value[x] = '0') or (Value[x] = '1') or (Value[x] = '2')
-      or (Value[x] = '3') or (Value[x] = '4') or (Value[x] = '5')
-      or (Value[x] = '6') or (Value[x] = '7') or (Value[x] = '8')
-      or (Value[x] = '9') then
-      v := v + Value[x];
-  Result := v;
-end;
 
 end.

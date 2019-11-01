@@ -1,8 +1,42 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrLCDPR                                                }
+{  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
+{ Lirvro Caixa Digital do Produtor Rural                                       }
+{                                                                              }
+{                                                                              }
+{ Desenvolvimento e doação ao Projeto ACBr: Willian Hübner                     }
+{                                                                              }
+{ Ajustes e correções para doação: Elton Barbosa (EMBarbosa)                   }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
 unit Registro0040;
 
 interface
 
-uses LCDPRBlocos, LCDPRUtils;
+uses LCDPRBlocos;
 
 type
   TRegistro0040 = Class
@@ -61,7 +95,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, ACBrUtil;
 
 { TRegistro0040 }
 
@@ -83,40 +117,7 @@ end;
 
 procedure TRegistro0040.SetCAEPF(const Value: string);
 begin
-  if Length(Value) > 14{******************************************************************************}
-{ Projeto: Componente ACBrLCDPR                                                }
-{  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
-{ Lirvro Caixa Digital do Produtor Rural                                       }
-{                                                                              }
-{                                                                              }
-{ Desenvolvimento e doação ao Projeto ACBr: Willian Hübner                     }
-{                                                                              }
-{ Ajustes e correções para doação: Elton Barbosa (EMBarbosa)                   }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{                                                                              }
-{                                                                              }
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-{                                                                              }
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/lgpl-license.php                          }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
-{******************************************************************************}
+  if Length(Value) > 14
  then
     raise Exception.Create('CAEPF - Tamanho máximo permitido é 14 caracteres!');
 
@@ -124,11 +125,14 @@ begin
 end;
 
 procedure TRegistro0040.SetCEP(const Value: String);
+var
+  TempCep: string;
 begin
-  if Length(SoNumeros(Value)) > 8 then
+  TempCep := OnlyNumber(Value);
+  if Length(TempCep) > 8 then
     raise Exception.Create('CEP - Tamanho máximo permitido é 8 caracteres!');
 
-  FCEP := SoNumeros(Value);
+  FCEP := TempCep;
 end;
 
 procedure TRegistro0040.SetCOD_IMOVEL(const Value: Integer);
@@ -161,11 +165,14 @@ begin
 end;
 
 procedure TRegistro0040.SetINSCR_ESTADUAL(const Value: String);
+var
+  TempIE: string;
 begin
-  if Length(SoNumeros(Value)) > 14 then
+  TempIE := OnlyNumber(Value);
+  if Length(TempIE) > 14 then
     raise Exception.Create('INSCR_ESTADUAL - Tamanho máximo permitido é 14 caracteres!');
 
-  FINSCR_ESTADUAL := SoNumeros(Value);
+  FINSCR_ESTADUAL := TempIE;
 end;
 
 procedure TRegistro0040.SetMOEDA(const Value: String);

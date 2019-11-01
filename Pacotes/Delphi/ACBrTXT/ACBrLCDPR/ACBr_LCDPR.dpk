@@ -59,7 +59,9 @@ package ACBr_LCDPR;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl;
+  rtl,
+  ACBr_Comum,
+  ACBr_synapse;
 
 contains
   Bloco0040 in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\Bloco0040.pas',
@@ -81,4 +83,5 @@ contains
   ACBrLCDPRReg in '..\..\..\..\Fontes\ACBrTXT\ACBrLCDPR\ACBrLCDPRReg.pas';
 
 end.
+
 

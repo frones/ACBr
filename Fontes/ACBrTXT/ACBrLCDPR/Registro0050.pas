@@ -1,8 +1,4 @@
-unit Registro0050;
-
-interface
-
-uses Classes, {******************************************************************************}
+{******************************************************************************}
 { Projeto: Componente ACBrLCDPR                                                }
 {  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
 { Lirvro Caixa Digital do Produtor Rural                                       }
@@ -36,7 +32,11 @@ uses Classes, {*****************************************************************
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-Contnrs;
+unit Registro0050;
+
+interface
+
+uses Classes, Contnrs;
 
 type
   TRegistro0050 = Class

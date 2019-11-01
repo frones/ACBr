@@ -1,8 +1,4 @@
-unit Registro0045;
-
-interface
-
-uses Classes, {******************************************************************************}
+{******************************************************************************}
 { Projeto: Componente ACBrLCDPR                                                }
 {  Biblioteca multiplataforma de componentes Delphi para geração do LCDPR -    }
 { Lirvro Caixa Digital do Produtor Rural                                       }
@@ -36,7 +32,11 @@ uses Classes, {*****************************************************************
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-Contnrs, LCDPRBlocos, LCDPRUtils;
+unit Registro0045;
+
+interface
+
+uses Classes, Contnrs, LCDPRBlocos;
 
 type
   TRegistro0045 = Class
@@ -71,7 +71,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, ACBrUtil;
 
 { TRegistro0045 }
 
@@ -81,11 +81,14 @@ begin
 end;
 
 procedure TRegistro0045.SetCPF_CONTRAPARTE(const Value: String);
+var
+  TempDoc: string;
 begin
-  if Length(SoNumeros(Value)) > 11 then
+  TempDoc := OnlyNumber(Value);
+  if Length(TempDoc) > 11 then
     raise Exception.Create('CPF_CONTRAPARTE - Tamanho máximo permitido é 11 caracteres!');
 
-  FCPF_CONTRAPARTE := SoNumeros(Value);
+  FCPF_CONTRAPARTE := TempDoc;
 end;
 
 procedure TRegistro0045.SetNOME_CONTRAPARTE(const Value: String);

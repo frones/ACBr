@@ -3497,7 +3497,7 @@ end;
 procedure TForm1.btnDistribuicaoDFeClick(Sender: TObject);
 var
  cUFAutor, CNPJ, ultNSU, ANSU: string;
- ok: boolean;
+ //ok: boolean;
 begin
   cUFAutor := '';
   if not(InputQuery('WebServices Distribuição Documentos Fiscais', 'Código da UF do Autor', cUFAutor)) then

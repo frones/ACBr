@@ -86,6 +86,8 @@ const
   CChaveRecuoEmpresa = 'RecuoEmpresa';
   CChaveLogoemCima = 'LogoemCima';
   CChaveRecuoLogo = 'RecuoLogo';
+  CChaveExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
+  CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContDadosAdPrimeiraPagina';
   CChaveFonteNome = 'Fonte.Nome';
   CChaveFonteNegrito = 'Fonte.Negrito';
   CChaveFonteTamanhoFonteRazaoSocial = 'Fonte.TamanhoFonteRazaoSocial';

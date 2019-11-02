@@ -80,6 +80,8 @@ type
     FRecuoEmpresa: Integer;
     FLogoEmCima: Boolean;
     FRecuoLogo: Integer;
+    FExpandirDadosAdicionaisAuto: boolean;
+    FImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
 
   public
     constructor Create;
@@ -121,6 +123,8 @@ type
     property RecuoEmpresa: Integer read FRecuoEmpresa write FRecuoEmpresa;
     property LogoemCima: Boolean read FLogoEmCima write FLogoEmCima;
     property RecuoLogo: Integer read FRecuoLogo write FRecuoLogo;
+    property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
+    property ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean read FImprimeContinuacaoDadosAdicionaisPrimeiraPagina write FImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
 
   end;
 
@@ -287,6 +291,8 @@ begin
   FRecuoEmpresa := 0;
   FLogoEmCima := False;
   FRecuoLogo := 0;
+  FExpandirDadosAdicionaisAuto := False;
+  FImprimeContinuacaoDadosAdicionaisPrimeiraPagina := False;
 
   if Assigned(FFonte) then FFonte.Free;
   FFonte := TFonte.Create(nil);
@@ -327,6 +333,8 @@ begin
   RecuoEmpresa := AIni.ReadInteger(CSessaoDANFENFE, CChaveRecuoEmpresa, RecuoEmpresa);
   LogoemCima := AIni.ReadBool(CSessaoDANFENFE, CChaveLogoemCima, LogoemCima);
   RecuoLogo := AIni.ReadInteger(CSessaoDANFENFE, CChaveRecuoLogo, RecuoLogo);
+  ExpandirDadosAdicionaisAuto := AIni.ReadBool(CSessaoDANFENFE, CChaveExpandirDadosAdicionaisAuto, FExpandirDadosAdicionaisAuto);
+  ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina, FImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
 
   with Fonte do
   begin
@@ -372,6 +380,9 @@ begin
   AIni.WriteInteger(CSessaoDANFENFE, CChaveRecuoEmpresa, RecuoEmpresa);
   AIni.WriteBool(CSessaoDANFENFE, CChaveLogoemCima, LogoemCima);
   AIni.WriteInteger(CSessaoDANFENFE, CChaveRecuoLogo, RecuoLogo);
+  AIni.WriteBool(CSessaoDANFENFE, CChaveExpandirDadosAdicionaisAuto, ExpandirDadosAdicionaisAuto);
+  AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
+
 
   with Fonte do
   begin

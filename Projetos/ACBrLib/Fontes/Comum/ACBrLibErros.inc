@@ -10,5 +10,6 @@ ErrHttp = -7;
 ErrExecutandoMetodo = -10;
 ErrCNPJInvalido = -11;
 ErrCPFInvalido = -12;
-ErrGerarXml = -13;
+ErrIndex = -13;
+ErrGerarXml = -14;
 

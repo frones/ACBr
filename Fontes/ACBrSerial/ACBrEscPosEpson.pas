@@ -47,6 +47,9 @@ interface
 uses
   Classes, SysUtils, ACBrPosPrinter;
 
+const
+  MAX_LEN_CMD=65535;
+
 type
 
   { TACBrEscPosEpson }
@@ -474,13 +477,14 @@ function TACBrEscPosEpson.ComandoGravarLogoRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
 var
   KeyCode: Byte;
+  LenCMD: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
 
-      Nota: O Comando novo da Epson "GS + '8L'", não é compatível em alguns
+      Nota: O Comando novo da Epson "GS + '(L'", não é compatível em alguns
       Equipamentos (não Epson), mas que usam EscPosEpson...
       Nesse caso, vamos usar o comando "FS + 'q'", para tal, informe:
       KeyCode1 := 1; KeyCode2 := 0
@@ -505,7 +509,12 @@ begin
                 RasterStr +
                 #1;                 // Fim, cor 1
 
-      Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
+      LenCMD := Length(Result);
+
+      if LenCMD <= MAX_LEN_CMD then
+        Result := GS + '(L' + IntToLEStr(LenCMD) + Result
+      else
+        Result := GS + '8L' + IntToLEStr(LenCMD,4) + Result;
     end;
   end;
 end;
@@ -668,13 +677,15 @@ end;
 
 function TACBrEscPosEpson.ComandoImprimirImagemRasterStr(
   const RasterStr: AnsiString; AWidth: Integer; AHeight: Integer): AnsiString;
+var
+  LenCMD: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
     {
       Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
 
-      Nota: O Comando novo da Epson "GS + '8L'", não é compatível em alguns
+      Nota: O Comando novo da Epson "GS + '(L'", não é compatível em alguns
       Equipamentos (não Epson), mas que usam EscPosEpson...
       Nesse caso, vamos usar o comando "GS + '*'", para tal, informe:
       KeyCode1 := 1; KeyCode2 := 0
@@ -692,9 +703,15 @@ begin
                 IntToLEStr(AHeight) +
                 RasterStr;
 
-      Result := GS + '8L' + IntToLEStr(Length(Result), 4) + Result;
+      LenCMD := Length(Result);
 
-      // Comando para imprimir Raster image na impressora
+      if LenCMD <= MAX_LEN_CMD then
+        Result := GS + '(L' + IntToLEStr(LenCMD) + Result
+      else
+        Result := GS + '8L' + IntToLEStr(LenCMD,4) + Result;
+
+
+      // Novo Comando... Para imprimir Raster image gravada com o comando antereior, na impressora
       Result := Result + GS  + '(L' + #2 + #0 + #48 +#50;
 
       //DEBUG

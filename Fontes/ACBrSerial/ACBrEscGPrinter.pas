@@ -55,8 +55,6 @@ type
   { TACBrEscGPrinter }
 
   TACBrEscGPrinter = class(TACBrEscPosEpson)
-  protected
-    procedure VerificarKeyCodes; override;
   public
     constructor Create(AOwner: TACBrPosPrinter);
   end;
@@ -81,15 +79,6 @@ begin
     Beep := ESC + 'B' + #1 + #3;   // n - Refers to the number of buzzer times,
   end;
   {*)}
-end;
-
-procedure TACBrEscGPrinter.VerificarKeyCodes;
-begin
-  with fpPosPrinter.ConfigLogo do
-  begin
-    if (KeyCode1 <> 1) or (KeyCode2 <> 0) then
-      raise EPosPrinterException.Create(fpModeloStr+' apenas aceitas KeyCode1=1, KeyCode2=0');
-  end;
 end;
 
 end.

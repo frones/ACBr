@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/10/2019
+-- ACBrEscGPrinter --
+[*] Remoção do Bloqueio de Keycodes iguais a KC1=1 e KC2=0... pois os novos
+    Firmwares suportam o comando GS+"(L"
+
+-- ACBrEscPosEpson --
+[*] Métodos "ComandoGravarLogoRasterStr" e "ComandoImprimirImagemRasterStr",
+    modificados para usar o comando GS+"(L" se a imagem em Raster a ser enviada
+    for menor do que 65535, e GS+"8L", se for maior
+    (por: DSA)
+
 Data: 25/09/2019
 -- ACBrPosPrinter, ACBrEscGPrinter --
 [+] Adicionado novo modelo: ppEscGPrinter

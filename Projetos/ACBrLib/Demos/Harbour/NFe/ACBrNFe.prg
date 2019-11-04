@@ -70,10 +70,10 @@ VISIBLE:
 
     METHOD Imprimir(cImpressora, nNumCopias, cProtocolo, bMostrarPreview, cMarcaDagua, bViaConsumidor, bSimplificado)
     METHOD ImprimirPDF()
-    METHOD ImprimirEvento(eChaveNFe, eChaveEvento)
-    METHOD ImprimirEventoPDF(eChaveNFe, eChaveEvento)
-    METHOD ImprimirInutilizacao(eChaveNFe)
-    METHOD ImprimirInutilizacaoPDF(eChaveNFe)
+    METHOD ImprimirEvento(eArquivoXmlNFe, eArquivoXmlEvento)
+    METHOD ImprimirEventoPDF(eArquivoXmlNFe, eArquivoXmlEvento)
+    METHOD ImprimirInutilizacao(eArquivoXml)
+    METHOD ImprimirInutilizacaoPDF(eArquivoXml)
 
 END CLASS
 
@@ -345,26 +345,26 @@ METHOD ImprimirPDF() CLASS ACBrNFe
     ::CheckResult(hResult)
     RETURN nil
 
-METHOD ImprimirEvento(eChaveNFe, eChaveEvento) CLASS ACBrNFe
+METHOD ImprimirEvento(eArquivoXmlNFe, eArquivoXmlEvento) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEvento", hb_StrToUTF8(eChaveNFe), hb_StrToUTF8(eChaveEvento))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEvento", hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
     ::CheckResult(hResult)
     RETURN nil
 
-METHOD ImprimirEventoPDF(eChaveNFe, eChaveEvento) CLASS ACBrNFe
+METHOD ImprimirEventoPDF(eArquivoXmlNFe, eArquivoXmlEvento) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEventoPDF", hb_StrToUTF8(eChaveNFe), hb_StrToUTF8(eChaveEvento))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirEventoPDF", hb_StrToUTF8(eArquivoXmlNFe), hb_StrToUTF8(eArquivoXmlEvento))
     ::CheckResult(hResult)
     RETURN nil
 
-METHOD ImprimirInutilizacao(eChaveNFe) CLASS ACBrNFe
+METHOD ImprimirInutilizacao(eArquivoXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacao", hb_StrToUTF8(eChaveNFe))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacao", hb_StrToUTF8(eArquivoXml))
     ::CheckResult(hResult)
     RETURN nil
 
-METHOD ImprimirInutilizacaoPDF(eChaveNFe) CLASS ACBrNFe
+METHOD ImprimirInutilizacaoPDF(eArquivoXml) CLASS ACBrNFe
     local hResult
-    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacaoPDF", hb_StrToUTF8(eChaveNFe))
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ImprimirInutilizacaoPDF", hb_StrToUTF8(eArquivoXml))
     ::CheckResult(hResult)
     RETURN nil

@@ -30,7 +30,8 @@ type
 
     procedure AplicarConfiguracoes;
     procedure AplicarConfigMail;
-    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
+    procedure ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
+                                  Protocolo: String = ''; MostrarPreview: String = '');
     procedure GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean = False);
     procedure Travar;
     procedure Destravar;
@@ -133,16 +134,14 @@ begin
     pLib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
-procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False);
+procedure TLibCTeDM.ConfigurarImpressao(NomeImpressora: String = ''; GerarPDF: Boolean = False;
+                                        Protocolo: String = ''; MostrarPreview: String = '');
 var
   pLibConfig: TLibCTeConfig;
 begin
   pLibConfig := TLibCTeConfig(pLib.Config);
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
-
-   if ACBrCTe1.Conhecimentos.Count <= 0 then
-     Exit;
 
    pLibConfig.DACTe.Apply(ACBrCTeDACTeRL1);
 
@@ -151,6 +150,17 @@ begin
 
    if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DACTe.PathPDF))then
         ForceDirectories(PathWithDelim(pLibConfig.DACTe.PathPDF));
+
+   if NaoEstaVazio(NomeImpressora) then
+     ACBrCTeDACTeRL1.Impressora := NomeImpressora;
+
+   if NaoEstaVazio(MostrarPreview) then
+     ACBrCTeDACTeRL1.MostraPreview := StrToBoolDef(MostrarPreview, False);
+
+   if NaoEstaVazio(Protocolo) then
+     ACBrCTeDACTeRL1.Protocolo := Protocolo
+   else
+     ACBrCTeDACTeRL1.Protocolo := '';
 
    GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;

@@ -152,17 +152,17 @@ function CTE_EnviarEmail(const ePara, eChaveCTe: PChar; const AEnviaPDF: Boolean
 function CTE_EnviarEmailEvento(const ePara, eChaveEvento, eChaveCTe: PChar;
   const AEnviaPDF: Boolean; const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Imprimir: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirEvento(const eChaveCTe, eChaveEvento: PChar): longint;
+function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirEventoPDF(const eChaveCTe, eChaveEvento: PChar): longint;
+function CTE_ImprimirEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirInutilizacao(const eChave: PChar): longint;
+function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
+function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -369,6 +369,9 @@ begin
     begin
       CTeDM.Travar;
       try
+        if (AIndex >= CTeDM.ACBrCTe1.Conhecimentos.Count) and (CTeDM.ACBrCTe1.Conhecimentos.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
         if EstaVazio(CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].XMLOriginal) then
           CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarXML;
 
@@ -407,6 +410,9 @@ begin
     begin
       CTeDM.Travar;
       try
+        if (AIndex >= CTeDM.ACBrCTe1.Conhecimentos.Count) and (CTeDM.ACBrCTe1.Conhecimentos.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
         if CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GravarXML(ANomeArquivo, APathArquivo) then
           Result := SetRetorno(ErrOK)
         else
@@ -1676,20 +1682,43 @@ begin
   end;
 end;
 
-function CTE_Imprimir: longint;
-  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProtocolo,
+  bMostrarPreview: PChar): longint; {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: TLibImpressaoResposta;
+  NumCopias: Integer;
+  Impressora, Protocolo,
+  MostrarPreview: String;
 begin
   try
     VerificarLibInicializada;
-    pLib.GravarLog('CTE_Imprimir', logNormal);
+
+    Impressora := String(cImpressora);
+    Protocolo := String(cProtocolo);
+    MostrarPreview := String(bMostrarPreview);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_Imprimir(' + Impressora + ',' + IntToStr(nNumCopias) + ','
+        + Protocolo + ',' + MostrarPreview + ')', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_Imprimir', logNormal);
 
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
+      Resposta := TLibImpressaoResposta.Create(CTeDM.ACBrCTe1.Conhecimentos.Count, pLib.Config.TipoResposta,
+                                               pLib.Config.CodResposta);
+
       try
+        CTeDM.ConfigurarImpressao(Impressora, False);
+        NumCopias := CTeDM.ACBrCTe1.DACTE.NumCopias;
+        if nNumCopias > 0 then
+          CTeDM.ACBrCTe1.DACTE.NumCopias := nNumCopias;
         CTeDM.ACBrCTe1.Conhecimentos.Imprimir;
-        Result := SetRetornoCTesCarregados(CTeDM.ACBrCTe1.Conhecimentos.Count);
+        Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally
+        CTeDM.ACBrCTe1.DACTE.NumCopias := NumCopias;
+        Resposta.Free;
         CTeDM.Destravar;
       end;
     end;
@@ -1713,6 +1742,7 @@ begin
     begin
       CTeDM.Travar;
       try
+        CTeDM.ConfigurarImpressao('', True);
         CTeDM.ACBrCTe1.Conhecimentos.ImprimirPDF;
         Result := SetRetornoCTesCarregados(CTeDM.ACBrCTe1.Conhecimentos.Count);
       finally
@@ -1728,21 +1758,21 @@ begin
   end;
 end;
 
-function CTE_ImprimirEvento(const eChaveCTe, eChaveEvento: PChar): longint;
+function CTE_ImprimirEvento(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChaveCTe: string;
-  AChaveEvento: string;
+  AArquivoXmlCTe: string;
+  AArquivoXmlEvento: string;
 begin
   try
     VerificarLibInicializada;
 
-    AChaveCTe := string(eChaveCTe);
-    AChaveEvento := string(eChaveEvento);
+    AArquivoXmlCTe := string(eArquivoXmlCTe);
+    AArquivoXmlEvento := string(eArquivoXmlEvento);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CTE_ImprimirEvento(' + AChaveCTe + ',' + AChaveEvento + ' )', logCompleto, True)
+      pLib.GravarLog('CTE_ImprimirEvento(' + AArquivoXmlCTe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_ImprimirEvento', logNormal);
 
@@ -1750,22 +1780,23 @@ begin
     begin
       CTeDM.Travar;
 
-      EhArquivo := StringEhArquivo(AChaveCTe);
+      EhArquivo := StringEhArquivo(AArquivoXmlCTe);
 
       if EhArquivo then
-        VerificarArquivoExiste(AChaveCTe);
+        VerificarArquivoExiste(AArquivoXmlCTe);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AchaveCTe);
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe);
 
-      EhArquivo := StringEhArquivo(AChaveEvento);
-
-      if EhArquivo then
-        VerificarArquivoExiste(AChaveEvento);
+      EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.EventoCTe.LerXML(AChaveEvento);
+        VerificarArquivoExiste(AArquivoXmlEvento);
 
+      if EhArquivo then
+        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento);
+
+      CTeDM.ConfigurarImpressao;
       CTeDM.ACBrCTe1.ImprimirEvento;
 
       Result := SetRetorno(ErrOK);
@@ -1779,21 +1810,21 @@ begin
   end;
 end;
 
-function CTE_ImprimirEventoPDF(const eChaveCTe, eChaveEvento: PChar): longint;
+function CTE_ImprimirEventoPDF(const eArquivoXmlCTe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChaveCTe: string;
-  AChaveEvento: string;
+  AArquivoXmlCTe: string;
+  AArquivoXmlEvento: string;
 begin
   try
     VerificarLibInicializada;
 
-    AChaveCTe := string(eChaveCTe);
-    AChaveEvento := string(eChaveEvento);
+    AArquivoXmlCTe := string(eArquivoXmlCTe);
+    AArquivoXmlEvento := string(eArquivoXmlEvento);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CTE_ImprimirEventoPDF(' + AChaveCTe + ',' + AChaveEvento + ' )', logCompleto, True)
+      pLib.GravarLog('CTE_ImprimirEventoPDF(' + AArquivoXmlCTe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_ImprimirEventoPDF', logNormal);
 
@@ -1801,22 +1832,23 @@ begin
     begin
       CTeDM.Travar;
 
-      EhArquivo := StringEhArquivo(AChaveCTe);
+      EhArquivo := StringEhArquivo(AArquivoXmlCTe);
 
       if EhArquivo then
-        VerificarArquivoExiste(AChaveCTe);
+        VerificarArquivoExiste(AArquivoXmlCTe);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AchaveCTe);
+        CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(AArquivoXmlCTe);
 
-      EhArquivo := StringEhArquivo(AChaveEvento);
-
-      if EhArquivo then
-        VerificarArquivoExiste(AChaveEvento);
+      EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.EventoCTe.LerXML(AChaveEvento);
+        VerificarArquivoExiste(AArquivoXmlEvento);
 
+      if EhArquivo then
+        CTeDM.ACBrCTe1.EventoCTe.LerXML(AArquivoXmlEvento);
+
+      CTeDM.ConfigurarImpressao('', True);
       CTeDM.ACBrCTe1.ImprimirEventoPDF;
 
       Result := SetRetorno(ErrOK);
@@ -1830,34 +1862,35 @@ begin
   end;
 end;
 
-function CTE_ImprimirInutilizacao(const eChave: PChar): longint;
+function CTE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChave: string;
+  AArquivoXml: string;
 begin
   try
     VerificarLibInicializada;
 
-    AChave := string(eChave);
+    AArquivoXml := string(eArquivoXml);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CTE_ImprimirInutilizacao(' + AChave + ' )', logCompleto, True)
+      pLib.GravarLog('CTE_ImprimirInutilizacao(' + AArquivoXml + ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_ImprimirInutilizacao', logNormal);
 
-    EhArquivo := StringEhArquivo(AChave);
+    EhArquivo := StringEhArquivo(AArquivoXml);
 
     if EhArquivo then
-      VerificarArquivoExiste(AChave);
+      VerificarArquivoExiste(AArquivoXml);
 
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.InutCTe.LerXML(AChave);
+        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml);
 
+      CTeDM.ConfigurarImpressao;
       CTeDM.ACBrCTe1.ImprimirInutilizacao;
 
       Result := SetRetorno(ErrOK);
@@ -1871,34 +1904,35 @@ begin
   end;
 end;
 
-function CTE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
+function CTE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChave: string;
+  AArquivoXml: string;
 begin
   try
     VerificarLibInicializada;
 
-    AChave := string(eChave);
+    AArquivoXml := string(eArquivoXml);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('CTE_ImprimirInutilizacaoPDF(' + AChave + ' )', logCompleto, True)
+      pLib.GravarLog('CTE_ImprimirInutilizacaoPDF(' + AArquivoXml + ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_ImprimirInutilizacaoPDF', logNormal);
 
-    EhArquivo := StringEhArquivo(AChave);
+    EhArquivo := StringEhArquivo(AArquivoXml);
 
     if EhArquivo then
-      VerificarArquivoExiste(AChave);
+      VerificarArquivoExiste(AArquivoXml);
 
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
 
       if EhArquivo then
-        CTeDM.ACBrCTe1.InutCTe.LerXML(AChave);
+        CTeDM.ACBrCTe1.InutCTe.LerXML(AArquivoXml);
 
+      CTeDM.ConfigurarImpressao('', True);
       CTeDM.ACBrCTe1.ImprimirInutilizacaoPDF;
 
       Result := SetRetorno(ErrOK);

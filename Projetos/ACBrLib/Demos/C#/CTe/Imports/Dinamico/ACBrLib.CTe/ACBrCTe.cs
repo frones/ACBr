@@ -107,22 +107,22 @@ namespace ACBrLib.CTe
             public delegate int CTE_EnviarEmailEvento(string ePara, string eChaveEvento, string eChaveCTe, bool aEnviaPDF, string eAssunto, string eCc, string eAnexos, string eMensagem);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_Imprimir();
+            public delegate int CTE_Imprimir(string cImpressora, int nNumCopias, string cProtocolo, string bMostrarPreview);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_ImprimirPDF();
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirEvento(string eChaveCTe, string eChaveEvento);
+            public delegate int CTE_ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirEventoPDF(string eChaveCTe, string eChaveEvento);
+            public delegate int CTE_ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirInutilizacao(string eChave);
+            public delegate int CTE_ImprimirInutilizacao(string eArquivoXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirInutilizacaoPDF(string eChave);
+            public delegate int CTE_ImprimirInutilizacaoPDF(string eArquivoXml);
         }
 
         #endregion InnerTypes
@@ -461,10 +461,12 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public void Imprimir()
+        public void Imprimir(string cImpressora = "", int nNumCopias = 1, string cProtocolo = "", bool? bMostrarPreview = null)
         {
+            var mostrarPreview = bMostrarPreview.HasValue ? $"{Convert.ToInt32(bMostrarPreview.Value)}" : string.Empty;
+
             var method = GetMethod<Delegates.CTE_Imprimir>();
-            var ret = ExecuteMethod(() => method());
+            var ret = ExecuteMethod(() => method(ToUTF8(cImpressora), nNumCopias, ToUTF8(cProtocolo), ToUTF8(mostrarPreview)));
 
             CheckResult(ret);
         }
@@ -477,34 +479,34 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public void ImprimirEvento(string eChaveNFe, string eChaveEvento)
+        public void ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.CTE_ImprimirEvento>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe), ToUTF8(eChaveEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirEventoPDF(string eChaveNFe, string eChaveEvento)
+        public void ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.CTE_ImprimirEventoPDF>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe), ToUTF8(eChaveEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirInutilizacao(string eChaveNFe)
+        public void ImprimirInutilizacao(string eArquivoXml)
         {
             var method = GetMethod<Delegates.CTE_ImprimirInutilizacao>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirInutilizacaoPDF(string eChaveNFe)
+        public void ImprimirInutilizacaoPDF(string eArquivoXml)
         {
             var method = GetMethod<Delegates.CTE_ImprimirInutilizacaoPDF>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
 
             CheckResult(ret);
         }

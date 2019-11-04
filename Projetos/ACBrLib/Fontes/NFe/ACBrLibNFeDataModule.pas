@@ -286,6 +286,8 @@ begin
 
   GravarLog('ConfigurarImpressao - Iniciado', logNormal);
 
+  ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
+
   if ACBrNFe1.NotasFiscais.Count > 0 then
   begin
     if ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.modelo = 65 then
@@ -294,13 +296,7 @@ begin
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
-    end
-    else
-    begin
-      ACBrNFe1.DANFE := ACBrNFeDANFeRL1;
     end;
-
-    pLibConfig.DANFe.Apply(ACBrNFe1.DANFE);
 
     if (ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.cStat in [101, 151, 155]) then
       ACBrNFe1.DANFE.Cancelada := True
@@ -310,6 +306,8 @@ begin
     if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
         ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
   end;
+
+  pLibConfig.DANFe.Apply(ACBrNFe1.DANFE);
 
   if NaoEstaVazio(NomeImpressora) then
     ACBrNFe1.DANFE.Impressora := NomeImpressora;
@@ -352,6 +350,7 @@ begin
         ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
     end;
   end;
+
   GravarLog('ConfigurarImpressao - Feito', logNormal);
 end;
 

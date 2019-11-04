@@ -156,13 +156,13 @@ function NFE_Imprimir(const cImpressora: PChar; nNumCopias: Integer; const cProt
 {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ImprimirPDF: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirEventoPDF(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirInutilizacao(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
@@ -934,7 +934,7 @@ begin
               begin
                 for j := 0 to NotasFiscais.Count - 1 do
                 begin
-                  if OnlyNumber(WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe) = NotasFiscais.Items[J].NumID then
+                  if WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe = NotasFiscais.Items[J].NFe.infNFe.ID then
                   begin
                     RespRetorno.Items[i].XML := NotasFiscais.Items[J].XML;
                   end;
@@ -1024,7 +1024,7 @@ begin
             begin
               for j := 0 to NotasFiscais.Count - 1 do
               begin
-                if OnlyNumber(WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe) = NotasFiscais.Items[J].NumID then
+                if WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe = NotasFiscais.Items[J].NFe.infNFe.ID then
                 begin
                   Resp.Items[i].XML := NotasFiscais.Items[J].XML;
                 end;
@@ -1801,7 +1801,7 @@ begin
       Resposta := TLibImpressaoResposta.Create(NFeDM.ACBrNFe1.NotasFiscais.Count, pLib.Config.TipoResposta,
                                                pLib.Config.CodResposta);
       try
-        NFeDM.ConfigurarImpressao('', true);
+        NFeDM.ConfigurarImpressao('', True);
         NFeDM.ACBrNFe1.NotasFiscais.ImprimirPDF;
 
         Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
@@ -1820,22 +1820,22 @@ begin
   end;
 end;
 
-function NFE_ImprimirEvento(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEvento(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChaveNFe: string;
-  AChaveEvento: string;
+  AArquivoXmlNFe: string;
+  AArquivoXmlEvento: string;
   Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
 
-    AChaveNFe := string(eChaveNFe);
-    AChaveEvento := string(eChaveEvento);
+    AArquivoXmlNFe := string(eArquivoXmlNFe);
+    AArquivoXmlEvento := string(eArquivoXmlEvento);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFe_ImprimirEvento(' + AChaveNFe + ',' + AChaveEvento + ' )', logCompleto, True)
+      pLib.GravarLog('NFe_ImprimirEvento(' + AArquivoXmlNFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFe_ImprimirEvento', logNormal);
 
@@ -1844,23 +1844,23 @@ begin
       NFeDM.Travar;
       Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
-        EhArquivo := StringEhArquivo(AChaveNFe);
+        EhArquivo := StringEhArquivo(AArquivoXmlNFe);
 
         if EhArquivo then
-          VerificarArquivoExiste(AChaveNFe);
+          VerificarArquivoExiste(AArquivoXmlNFe);
 
         if EhArquivo then
-          NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AchaveNFe);
+          NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe);
 
-        EhArquivo := StringEhArquivo(AChaveEvento);
-
-        if EhArquivo then
-          VerificarArquivoExiste(AChaveEvento);
+        EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
         if EhArquivo then
-          NFeDM.ACBrNFe1.EventoNFe.LerXML(AChaveEvento);
+          VerificarArquivoExiste(AArquivoXmlEvento);
 
-        NFeDM.ConfigurarImpressao();
+        if EhArquivo then
+          NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento);
+
+        NFeDM.ConfigurarImpressao;
         NFeDM.ACBrNFe1.ImprimirEvento;
 
         Resposta.Msg := 'Danfe Impresso com sucesso';
@@ -1879,22 +1879,22 @@ begin
   end;
 end;
 
-function NFE_ImprimirEventoPDF(const eChaveNFe, eChaveEvento: PChar): longint;
+function NFE_ImprimirEventoPDF(const eArquivoXmlNFe, eArquivoXmlEvento: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChaveNFe: string;
-  AChaveEvento: string;
+  AArquivoXmlNFe: string;
+  AArquivoXmlEvento: string;
   Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
 
-    AChaveNFe := string(eChaveNFe);
-    AChaveEvento := string(eChaveEvento);
+    AArquivoXmlNFe := string(eArquivoXmlNFe);
+    AArquivoXmlEvento := string(eArquivoXmlEvento);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFe_ImprimirEventoPDF(' + AChaveNFe + ',' + AChaveEvento + ' )', logCompleto, True)
+      pLib.GravarLog('NFe_ImprimirEventoPDF(' + AArquivoXmlNFe + ',' + AArquivoXmlEvento + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFe_ImprimirEventoPDF', logNormal);
 
@@ -1903,23 +1903,23 @@ begin
       NFeDM.Travar;
       Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
-        EhArquivo := StringEhArquivo(AChaveNFe);
+        EhArquivo := StringEhArquivo(AArquivoXmlNFe);
 
         if EhArquivo then
-          VerificarArquivoExiste(AChaveNFe);
+          VerificarArquivoExiste(AArquivoXmlNFe);
 
         if EhArquivo then
-          NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AchaveNFe);
+          NFeDM.ACBrNFe1.NotasFiscais.LoadFromFile(AArquivoXmlNFe);
 
-        EhArquivo := StringEhArquivo(AChaveEvento);
-
-        if EhArquivo then
-          VerificarArquivoExiste(AChaveEvento);
+        EhArquivo := StringEhArquivo(AArquivoXmlEvento);
 
         if EhArquivo then
-          NFeDM.ACBrNFe1.EventoNFe.LerXML(AChaveEvento);
+          VerificarArquivoExiste(AArquivoXmlEvento);
 
-        NFeDM.ConfigurarImpressao('', false);
+        if EhArquivo then
+          NFeDM.ACBrNFe1.EventoNFe.LerXML(AArquivoXmlEvento);
+
+        NFeDM.ConfigurarImpressao('', True);
         NFeDM.ACBrNFe1.ImprimirEventoPDF;
 
         Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;
@@ -1938,27 +1938,27 @@ begin
   end;
 end;
 
-function NFE_ImprimirInutilizacao(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacao(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChave: string;
+  AArquivoXml: string;
   Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
 
-    AChave := string(eChave);
+    AArquivoXml := string(eArquivoXml);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFe_ImprimirInutilizacao(' + AChave + ' )', logCompleto, True)
+      pLib.GravarLog('NFe_ImprimirInutilizacao(' + AArquivoXml + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFe_ImprimirInutilizacao', logNormal);
 
-    EhArquivo := StringEhArquivo(AChave);
+    EhArquivo := StringEhArquivo(AArquivoXml);
 
     if EhArquivo then
-      VerificarArquivoExiste(AChave);
+      VerificarArquivoExiste(AArquivoXml);
 
     with TACBrLibNFe(pLib) do
     begin
@@ -1967,9 +1967,9 @@ begin
       try
 
         if EhArquivo then
-          NFeDM.ACBrNFe1.InutNFe.LerXML(AChave);
+          NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml);
 
-        NFeDM.ConfigurarImpressao();
+        NFeDM.ConfigurarImpressao;
         NFeDM.ACBrNFe1.ImprimirInutilizacao;
 
         Resposta.Msg := 'Danfe Impresso com sucesso';
@@ -1988,27 +1988,27 @@ begin
   end;
 end;
 
-function NFE_ImprimirInutilizacaoPDF(const eChave: PChar): longint;
+function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  AChave: string;
+  AArquivoXml: string;
   Resposta: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
 
-    AChave := string(eChave);
+    AArquivoXml := string(eArquivoXml);
 
     if pLib.Config.Log.Nivel > logNormal then
-      pLib.GravarLog('NFe_ImprimirInutilizacaoPDF(' + AChave + ' )', logCompleto, True)
+      pLib.GravarLog('NFe_ImprimirInutilizacaoPDF(' + AArquivoXml + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFe_ImprimirInutilizacaoPDF', logNormal);
 
-    EhArquivo := StringEhArquivo(AChave);
+    EhArquivo := StringEhArquivo(AArquivoXml);
 
     if EhArquivo then
-      VerificarArquivoExiste(AChave);
+      VerificarArquivoExiste(AArquivoXml);
 
     with TACBrLibNFe(pLib) do
     begin
@@ -2016,9 +2016,9 @@ begin
       Resposta := TLibNFeResposta.Create('Imprimir', pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         if EhArquivo then
-          NFeDM.ACBrNFe1.InutNFe.LerXML(AChave);
+          NFeDM.ACBrNFe1.InutNFe.LerXML(AArquivoXml);
 
-        NFeDM.ConfigurarImpressao('', false);
+        NFeDM.ConfigurarImpressao('', True);
         NFeDM.ACBrNFe1.ImprimirInutilizacaoPDF;
 
         Resposta.Msg := NFeDM.ACBrNFe1.DANFE.ArquivoPDF;

@@ -331,6 +331,14 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
+        private void btnImprimirInut_Click(object sender, EventArgs e)
+        {
+            var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(arquivoXml)) return;
+
+            AcbrNFe.ImprimirInutilizacaoPDF(arquivoXml);
+        }
+
         #endregion EventHandlers
     }
 }

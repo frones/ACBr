@@ -110,6 +110,7 @@
             this.btnStatusServ = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnImprimirInut = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tbpWebservices.SuspendLayout();
@@ -941,7 +942,7 @@
             // 
             // btnEnviarEmail
             // 
-            this.btnEnviarEmail.Location = new System.Drawing.Point(254, 77);
+            this.btnEnviarEmail.Location = new System.Drawing.Point(6, 107);
             this.btnEnviarEmail.Name = "btnEnviarEmail";
             this.btnEnviarEmail.Size = new System.Drawing.Size(118, 23);
             this.btnEnviarEmail.TabIndex = 14;
@@ -1001,6 +1002,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnImprimirInut);
             this.groupBox1.Controls.Add(this.btnStatusServ);
             this.groupBox1.Controls.Add(this.btnInutilizar);
             this.groupBox1.Controls.Add(this.btnEnviar);
@@ -1026,6 +1028,16 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Respostas";
+            // 
+            // btnImprimirInut
+            // 
+            this.btnImprimirInut.Location = new System.Drawing.Point(254, 77);
+            this.btnImprimirInut.Name = "btnImprimirInut";
+            this.btnImprimirInut.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimirInut.TabIndex = 18;
+            this.btnImprimirInut.Text = "Imprimir Inutilização";
+            this.btnImprimirInut.UseVisualStyleBackColor = true;
+            this.btnImprimirInut.Click += new System.EventHandler(this.btnImprimirInut_Click);
             // 
             // FrmMain
             // 
@@ -1152,6 +1164,7 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox txtDadosPFX;
         private System.Windows.Forms.Button btnDadosPFX;
+        private System.Windows.Forms.Button btnImprimirInut;
     }
 }
 

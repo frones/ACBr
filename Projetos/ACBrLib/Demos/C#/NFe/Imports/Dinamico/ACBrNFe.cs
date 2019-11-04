@@ -120,16 +120,16 @@ namespace ACBrLib.NFe
             public delegate int NFE_ImprimirPDF();
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int NFE_ImprimirEvento(string eChaveNFe, string eChaveEvento);
+            public delegate int NFE_ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int NFE_ImprimirEventoPDF(string eChaveNFe, string eChaveEvento);
+            public delegate int NFE_ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int NFE_ImprimirInutilizacao(string eChave);
+            public delegate int NFE_ImprimirInutilizacao(string eArquivoXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int NFE_ImprimirInutilizacaoPDF(string eChave);
+            public delegate int NFE_ImprimirInutilizacaoPDF(string eArquivoXml);
         }
 
         #endregion InnerTypes
@@ -512,34 +512,34 @@ namespace ACBrLib.NFe
             CheckResult(ret);
         }
 
-        public void ImprimirEvento(string eChaveNFe, string eChaveEvento)
+        public void ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.NFE_ImprimirEvento>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe), ToUTF8(eChaveEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirEventoPDF(string eChaveNFe, string eChaveEvento)
+        public void ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.NFE_ImprimirEventoPDF>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe), ToUTF8(eChaveEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirInutilizacao(string eChaveNFe)
+        public void ImprimirInutilizacao(string eArquivoXml)
         {
             var method = GetMethod<Delegates.NFE_ImprimirInutilizacao>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirInutilizacaoPDF(string eChaveNFe)
+        public void ImprimirInutilizacaoPDF(string eArquivoXml)
         {
             var method = GetMethod<Delegates.NFE_ImprimirInutilizacaoPDF>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveNFe)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXml)));
 
             CheckResult(ret);
         }

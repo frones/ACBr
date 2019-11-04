@@ -329,9 +329,13 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
   }
   
   public void imprimir() throws Exception {
-      
-    int ret = ACBrCTeLib.INSTANCE.CTE_Imprimir();
-    checkResult( ret );
+      imprimir( "", 1, "", null);
+  }
+  
+  public void imprimir( String cImpressora, int nNumCopias, String cProtocolo, Boolean bMostrarPreview ) throws Exception {
+      String mostrarPreview = bMostrarPreview != null ? bMostrarPreview ? "1" : "0" : "";
+      int ret = ACBrCTeLib.INSTANCE.CTE_Imprimir( toUTF8( cImpressora ), nNumCopias, toUTF8( cProtocolo ), toUTF8( mostrarPreview ) );
+      checkResult( ret );
   }
 
   public void imprimirPDF() throws Exception {
@@ -339,23 +343,23 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
-  public void imprimirEvento( String aChaveNFe, String aChaveEvento ) throws Exception {
-    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirEvento( aChaveNFe, aChaveEvento );
+  public void imprimirEvento( String eArquivoXmlCTe, String eArquivoXmlEvento ) throws Exception {
+    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirEvento( toUTF8(eArquivoXmlCTe), toUTF8(eArquivoXmlEvento) );
     checkResult( ret );
   }
 
-  public void imprimirEventoPDF( String aChaveNFe, String aChaveEvento ) throws Exception {
-    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirEventoPDF( aChaveNFe, aChaveEvento );
+  public void imprimirEventoPDF( String eArquivoXmlCTe, String eArquivoXmlEvento ) throws Exception {
+    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirEventoPDF( toUTF8(eArquivoXmlCTe), toUTF8(eArquivoXmlEvento) );
     checkResult( ret );
   }
 
-  public void imprimirInutilizacao( String aChave ) throws Exception {
-    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirInutilizacao( aChave );
+  public void imprimirInutilizacao( String eArquivoXml ) throws Exception {
+    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirInutilizacao( toUTF8(eArquivoXml) );
     checkResult( ret );
   }
 
-  public void imprimirInutilizacaoPDF( String aChave ) throws Exception {
-    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirInutilizacaoPDF( aChave );
+  public void imprimirInutilizacaoPDF( String eArquivoXml ) throws Exception {
+    int ret = ACBrCTeLib.INSTANCE.CTE_ImprimirInutilizacaoPDF( toUTF8(eArquivoXml) );
     checkResult( ret );
   }
 
@@ -441,17 +445,17 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
     int CTE_EnviarEmailEvento( String ePara, String eChaveEvento, String eChaveNFe,
                                boolean AEnviaPDF, String eAssunto, String eCC, String eAnexos, String eMensagem );
 
-    int CTE_Imprimir();
+    int CTE_Imprimir(String cImpressora, int nNumCopias, String cProtocolo, String bMostrarPreview);
 
     int CTE_ImprimirPDF();
 
-    int CTE_ImprimirEvento( String eChaveNFe, String eChaveEvento );
+    int CTE_ImprimirEvento( String eArquivoXmlCTe, String eArquivoXmlEvento );
 
-    int CTE_ImprimirEventoPDF( String eChaveNFe, String eChaveEvento );
+    int CTE_ImprimirEventoPDF( String eArquivoXmlCTe, String eArquivoXmlEvento );
 
-    int CTE_ImprimirInutilizacao( String eChave );
+    int CTE_ImprimirInutilizacao( String eArquivoXml );
 
-    int CTE_ImprimirInutilizacaoPDF( String eChave );
+    int CTE_ImprimirInutilizacaoPDF( String eArquivoXml );
 
     class LibraryLoader {
       private static String library = "";

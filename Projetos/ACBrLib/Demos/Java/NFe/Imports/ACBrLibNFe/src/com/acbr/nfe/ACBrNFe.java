@@ -350,23 +350,23 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     checkResult( ret );
   }
 
-  public void imprimirEvento( String aChaveNFe, String aChaveEvento ) throws Exception {
-    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirEvento( aChaveNFe, aChaveEvento );
+  public void imprimirEvento( String eArquivoXmlNFe, String eArquivoXmlEvento ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirEvento( toUTF8(eArquivoXmlNFe), toUTF8(eArquivoXmlEvento) );
     checkResult( ret );
   }
 
-  public void imprimirEventoPDF( String aChaveNFe, String aChaveEvento ) throws Exception {
-    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirEventoPDF( aChaveNFe, aChaveEvento );
+  public void imprimirEventoPDF( String eArquivoXmlNFe, String eArquivoXmlEvento ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirEventoPDF( toUTF8(eArquivoXmlNFe), toUTF8(eArquivoXmlEvento)  );
     checkResult( ret );
   }
 
-  public void imprimirInutilizacao( String aChave ) throws Exception {
-    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacao( aChave );
+  public void imprimirInutilizacao( String eArquivoXml ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacao( toUTF8(eArquivoXml) );
     checkResult( ret );
   }
 
-  public void imprimirInutilizacaoPDF( String aChave ) throws Exception {
-    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacaoPDF( aChave );
+  public void imprimirInutilizacaoPDF( String eArquivoXml ) throws Exception {
+    int ret = ACBrNFeLib.INSTANCE.NFE_ImprimirInutilizacaoPDF( toUTF8(eArquivoXml) );
     checkResult( ret );
   }
 
@@ -459,13 +459,13 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     int NFE_ImprimirPDF();
 
-    int NFE_ImprimirEvento( String eChaveNFe, String eChaveEvento );
+    int NFE_ImprimirEvento( String eArquivoXmlNFe, String eArquivoXmlEvento );
 
-    int NFE_ImprimirEventoPDF( String eChaveNFe, String eChaveEvento );
+    int NFE_ImprimirEventoPDF( String eArquivoXmlNFe, String eArquivoXmlEvento );
 
-    int NFE_ImprimirInutilizacao( String eChave );
+    int NFE_ImprimirInutilizacao( String eArquivoXml );
 
-    int NFE_ImprimirInutilizacaoPDF( String eChave );
+    int NFE_ImprimirInutilizacaoPDF( String eArquivoXml );
 
     class LibraryLoader {
       private static String library = "";

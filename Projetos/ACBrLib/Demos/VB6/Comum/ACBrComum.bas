@@ -34,34 +34,34 @@ Public Enum NivelLog
 End Enum
 
 Public Enum ACBrPosPrinterModelo
-    Texto = 0
-    EscPosEpson = 1
-    EscBematech = 2
-    EscDaruma = 3
-    EscVox = 4
-    EscDiebold = 5
-    EscEpsonP2 = 6
-    CustomPos = 7
-    EscPosStar = 8
-	EscZJiang = 9
-	EscGPrinter = 10
+    ppTexto = 0
+    ppEscPosEpson = 1
+    ppEscBematech = 2
+    ppEscDaruma = 3
+    ppEscVox = 4
+    ppEscDiebold = 5
+    ppEscEpsonP2 = 6
+    ppCustomPos = 7
+    ppEscPosStar = 8
+    ppEscZJiang = 9
+    ppEscGPrinter = 10
 End Enum
 
 Public Enum ACBrPosTipoStatus
-    None = 0
-    Erro = 2 ^ 0
-    NaoSerial = 2 ^ 1
-    PoucoPapel = 2 ^ 2
-    SemPapel = 2 ^ 3
-    GavetaAberta = 2 ^ 4
-    Imprimindo = 2 ^ 5
-    OffLine = 2 ^ 6
-    TampaAberta = 2 ^ 7
-    ErroLeitura = 2 ^ 8
+    stNone = 0
+    stErro = 2 ^ 0
+    stNaoSerial = 2 ^ 1
+    stPoucoPapel = 2 ^ 2
+    stSemPapel = 2 ^ 3
+    stGavetaAberta = 2 ^ 4
+    stImprimindo = 2 ^ 5
+    stOffLine = 2 ^ 6
+    stTampaAberta = 2 ^ 7
+    stErroLeitura = 2 ^ 8
 End Enum
 
 Public Enum PosPaginaCodigo
-    None = 0
+    pcNone = 0
     pc437 = 1
     pc850 = 2
     pc852 = 3
@@ -71,24 +71,24 @@ Public Enum PosPaginaCodigo
 End Enum
 
 Public Enum SerialHandShake
-    Nenhum = 0
-    XON_XOFF = 1
-    RTS_CTS = 2
-    DTR_DSR = 3
+    hsNenhum = 0
+    hsXON_XOFF = 1
+    hsRTS_CTS = 2
+    hsDTR_DSR = 3
 End Enum
 
 Public Enum SerialParity
-    None = 78
-    Odd = 79
-    Even = 69
-    Mark = 77
-    Space = 83
+    pNone = 78
+    pOdd = 79
+    pEven = 69
+    pMark = 77
+    pSpace = 83
 End Enum
 
 Public Enum SerialStopBytes
-    One = 0
-    OnePointFive = 1
-    Two = 2
+    s1 = 0
+    s1eMeio = 1
+    s2 = 2
 End Enum
 
 Public Enum ETQModelo
@@ -146,8 +146,8 @@ Public Enum ETQBarraExibeCodigo
 End Enum
 
 Public Enum MailAttachmentDisposition
-    Attachment = 0
-    Inline = 1
+    adAttachment = 0
+    adInline = 1
 End Enum
 
 Public Enum MessPriority

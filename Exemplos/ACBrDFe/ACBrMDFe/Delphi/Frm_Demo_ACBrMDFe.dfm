@@ -105,8 +105,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       OnClick = btnSalvarConfigClick
     end
     object GroupBox1: TGroupBox
-      Left = 16
-      Top = 16
+      Left = 10
+      Top = 9
       Width = 281
       Height = 377
       Caption = 'Configura'#231#245'es'
@@ -116,10 +116,196 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         Top = 15
         Width = 277
         Height = 360
-        ActivePage = TabSheet1
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
         TabOrder = 0
+        object TabSheet4: TTabSheet
+          Caption = 'Emitente'
+          ImageIndex = 3
+          object Label12: TLabel
+            Left = 8
+            Top = 4
+            Width = 27
+            Height = 13
+            Caption = 'CNPJ'
+          end
+          object Label13: TLabel
+            Left = 136
+            Top = 4
+            Width = 41
+            Height = 13
+            Caption = 'Insc.Est.'
+          end
+          object Label14: TLabel
+            Left = 8
+            Top = 44
+            Width = 63
+            Height = 13
+            Caption = 'Raz'#227'o Social'
+          end
+          object Label15: TLabel
+            Left = 8
+            Top = 84
+            Width = 40
+            Height = 13
+            Caption = 'Fantasia'
+          end
+          object Label16: TLabel
+            Left = 8
+            Top = 164
+            Width = 54
+            Height = 13
+            Caption = 'Logradouro'
+          end
+          object Label17: TLabel
+            Left = 208
+            Top = 164
+            Width = 37
+            Height = 13
+            Caption = 'N'#250'mero'
+          end
+          object Label18: TLabel
+            Left = 8
+            Top = 204
+            Width = 64
+            Height = 13
+            Caption = 'Complemento'
+          end
+          object Label19: TLabel
+            Left = 136
+            Top = 204
+            Width = 27
+            Height = 13
+            Caption = 'Bairro'
+          end
+          object Label20: TLabel
+            Left = 8
+            Top = 244
+            Width = 61
+            Height = 13
+            Caption = 'C'#243'd. Cidade '
+          end
+          object Label21: TLabel
+            Left = 76
+            Top = 244
+            Width = 33
+            Height = 13
+            Caption = 'Cidade'
+          end
+          object Label22: TLabel
+            Left = 225
+            Top = 244
+            Width = 14
+            Height = 13
+            Caption = 'UF'
+          end
+          object Label23: TLabel
+            Left = 136
+            Top = 124
+            Width = 21
+            Height = 13
+            Caption = 'CEP'
+          end
+          object Label24: TLabel
+            Left = 8
+            Top = 124
+            Width = 24
+            Height = 13
+            Caption = 'Fone'
+          end
+          object edtEmitCNPJ: TEdit
+            Left = 8
+            Top = 20
+            Width = 123
+            Height = 21
+            TabOrder = 0
+          end
+          object edtEmitIE: TEdit
+            Left = 137
+            Top = 20
+            Width = 123
+            Height = 21
+            TabOrder = 1
+          end
+          object edtEmitRazao: TEdit
+            Left = 8
+            Top = 60
+            Width = 252
+            Height = 21
+            TabOrder = 2
+          end
+          object edtEmitFantasia: TEdit
+            Left = 8
+            Top = 100
+            Width = 252
+            Height = 21
+            TabOrder = 3
+          end
+          object edtEmitFone: TEdit
+            Left = 8
+            Top = 140
+            Width = 125
+            Height = 21
+            TabOrder = 4
+          end
+          object edtEmitCEP: TEdit
+            Left = 137
+            Top = 140
+            Width = 123
+            Height = 21
+            TabOrder = 5
+          end
+          object edtEmitLogradouro: TEdit
+            Left = 8
+            Top = 180
+            Width = 196
+            Height = 21
+            TabOrder = 6
+          end
+          object edtEmitNumero: TEdit
+            Left = 210
+            Top = 180
+            Width = 50
+            Height = 21
+            TabOrder = 7
+          end
+          object edtEmitComp: TEdit
+            Left = 8
+            Top = 220
+            Width = 123
+            Height = 21
+            TabOrder = 8
+          end
+          object edtEmitBairro: TEdit
+            Left = 137
+            Top = 220
+            Width = 123
+            Height = 21
+            TabOrder = 9
+          end
+          object edtEmitCodCidade: TEdit
+            Left = 8
+            Top = 260
+            Width = 61
+            Height = 21
+            TabOrder = 10
+          end
+          object edtEmitCidade: TEdit
+            Left = 76
+            Top = 260
+            Width = 142
+            Height = 21
+            TabOrder = 11
+          end
+          object edtEmitUF: TEdit
+            Left = 225
+            Top = 260
+            Width = 35
+            Height = 21
+            TabOrder = 12
+          end
+        end
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
           object lSSLLib: TLabel
@@ -634,192 +820,6 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
               PasswordChar = '*'
               TabOrder = 3
             end
-          end
-        end
-        object TabSheet4: TTabSheet
-          Caption = 'Emitente'
-          ImageIndex = 3
-          object Label12: TLabel
-            Left = 8
-            Top = 4
-            Width = 27
-            Height = 13
-            Caption = 'CNPJ'
-          end
-          object Label13: TLabel
-            Left = 136
-            Top = 4
-            Width = 41
-            Height = 13
-            Caption = 'Insc.Est.'
-          end
-          object Label14: TLabel
-            Left = 8
-            Top = 44
-            Width = 63
-            Height = 13
-            Caption = 'Raz'#227'o Social'
-          end
-          object Label15: TLabel
-            Left = 8
-            Top = 84
-            Width = 40
-            Height = 13
-            Caption = 'Fantasia'
-          end
-          object Label16: TLabel
-            Left = 8
-            Top = 164
-            Width = 54
-            Height = 13
-            Caption = 'Logradouro'
-          end
-          object Label17: TLabel
-            Left = 208
-            Top = 164
-            Width = 37
-            Height = 13
-            Caption = 'N'#250'mero'
-          end
-          object Label18: TLabel
-            Left = 8
-            Top = 204
-            Width = 64
-            Height = 13
-            Caption = 'Complemento'
-          end
-          object Label19: TLabel
-            Left = 136
-            Top = 204
-            Width = 27
-            Height = 13
-            Caption = 'Bairro'
-          end
-          object Label20: TLabel
-            Left = 8
-            Top = 244
-            Width = 61
-            Height = 13
-            Caption = 'C'#243'd. Cidade '
-          end
-          object Label21: TLabel
-            Left = 76
-            Top = 244
-            Width = 33
-            Height = 13
-            Caption = 'Cidade'
-          end
-          object Label22: TLabel
-            Left = 225
-            Top = 244
-            Width = 14
-            Height = 13
-            Caption = 'UF'
-          end
-          object Label23: TLabel
-            Left = 136
-            Top = 124
-            Width = 21
-            Height = 13
-            Caption = 'CEP'
-          end
-          object Label24: TLabel
-            Left = 8
-            Top = 124
-            Width = 24
-            Height = 13
-            Caption = 'Fone'
-          end
-          object edtEmitCNPJ: TEdit
-            Left = 8
-            Top = 20
-            Width = 123
-            Height = 21
-            TabOrder = 0
-          end
-          object edtEmitIE: TEdit
-            Left = 137
-            Top = 20
-            Width = 123
-            Height = 21
-            TabOrder = 1
-          end
-          object edtEmitRazao: TEdit
-            Left = 8
-            Top = 60
-            Width = 252
-            Height = 21
-            TabOrder = 2
-          end
-          object edtEmitFantasia: TEdit
-            Left = 8
-            Top = 100
-            Width = 252
-            Height = 21
-            TabOrder = 3
-          end
-          object edtEmitFone: TEdit
-            Left = 8
-            Top = 140
-            Width = 125
-            Height = 21
-            TabOrder = 4
-          end
-          object edtEmitCEP: TEdit
-            Left = 137
-            Top = 140
-            Width = 123
-            Height = 21
-            TabOrder = 5
-          end
-          object edtEmitLogradouro: TEdit
-            Left = 8
-            Top = 180
-            Width = 196
-            Height = 21
-            TabOrder = 6
-          end
-          object edtEmitNumero: TEdit
-            Left = 210
-            Top = 180
-            Width = 50
-            Height = 21
-            TabOrder = 7
-          end
-          object edtEmitComp: TEdit
-            Left = 8
-            Top = 220
-            Width = 123
-            Height = 21
-            TabOrder = 8
-          end
-          object edtEmitBairro: TEdit
-            Left = 137
-            Top = 220
-            Width = 123
-            Height = 21
-            TabOrder = 9
-          end
-          object edtEmitCodCidade: TEdit
-            Left = 8
-            Top = 260
-            Width = 61
-            Height = 21
-            TabOrder = 10
-          end
-          object edtEmitCidade: TEdit
-            Left = 76
-            Top = 260
-            Width = 142
-            Height = 21
-            TabOrder = 11
-          end
-          object edtEmitUF: TEdit
-            Left = 225
-            Top = 260
-            Width = 35
-            Height = 21
-            TabOrder = 12
           end
         end
         object TabSheet7: TTabSheet

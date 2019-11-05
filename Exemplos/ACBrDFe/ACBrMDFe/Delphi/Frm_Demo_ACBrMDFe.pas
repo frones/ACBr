@@ -378,10 +378,16 @@ begin
 
     if ACBrMDFe1.DAMDFE <> nil then
     begin
-      ACBrMDFe1.DAMDFE.TipoDAMDFe    := StrToTpImp(OK,IntToStr(rgTipoDAMDFE.ItemIndex+1));
+      ACBrMDFe1.DAMDFE.TipoDAMDFe   := StrToTpImp(OK,IntToStr(rgTipoDAMDFE.ItemIndex+1));
       ACBrMDFe1.DAMDFE.Logo         := edtLogoMarca.Text;
       ACBrMDFe1.DAMDFE.PathPDF      := edtPathLogs.Text;
-      ACBrMDFe1.DAMDFE.TamanhoPapel := tpA4_2vias;
+      ACBrMDFe1.DAMDFE.TamanhoPapel := tpA4;
+
+      ACBrMDFe1.DAMDFE.MargemInferior := 5;
+      ACBrMDFe1.DAMDFE.MargemSuperior := 5;
+      ACBrMDFe1.DAMDFE.MargemEsquerda := 5;
+      ACBrMDFe1.DAMDFE.MargemDireita  := 5;
+      ACBrMDFe1.DAMDFE.ExpandeLogoMarca := False;
     end;
 
     edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       , '');
@@ -589,7 +595,7 @@ begin
       UF := edtEmitUF.Text;
     end;
 
-    with rodo.valePed.disp.New do
+    with rodo.infANTT.valePed.disp.New do
     begin
       CNPJForn := '12345678000199';
       CNPJPg   := '21543876000188';
@@ -903,6 +909,7 @@ begin
   ACBrMDFe1.Manifestos.Clear;
   GerarMDFe(vAux);
   ACBrMDFe1.Manifestos.Items[0].GravarXML('', '');
+  ACBrMDFe1.Manifestos.Assinar;
 
   ShowMessage('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
   MemoDados.Lines.Add('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
@@ -912,6 +919,8 @@ begin
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnValidarXMLClick(Sender: TObject);
+var
+  Erros: string;
 begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-MDFe.xml';
@@ -923,7 +932,9 @@ begin
     ACBrMDFe1.Manifestos.Clear;
     ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
     ACBrMDFe1.Manifestos.Validar;
+    ACBrMDFe1.Manifestos.ValidarRegrasdeNegocios(Erros);
     showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
+    showmessage(Erros);
   end;
 end;
 

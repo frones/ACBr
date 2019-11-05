@@ -11999,11 +11999,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1015
-            ActivePage = Impressao
+            ActivePage = tsDadosSAT
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 4
+            TabIndex = 0
             TabOrder = 0
             object tsDadosSAT: TTabSheet
               HelpType = htKeyword
@@ -13415,7 +13415,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 25
                   Top = 23
                   Width = 65
-                  OnKeyPress = edtSATCasasMaskQtdKeyPress
+                  OnKeyPress = onMascaraFormatKeyPress
                   TabOrder = 3
                   Text = '0.0000'
                 end
@@ -13424,7 +13424,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 25
                   Top = 23
                   Width = 64
-                  OnKeyPress = edtSATMaskVUnitKeyPress
+                  OnKeyPress = onMascaraFormatKeyPress
                   TabOrder = 4
                   Text = '0.000'
                 end

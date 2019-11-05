@@ -45,7 +45,7 @@ Símbolo : Significado
 
 04/11/2019
 [-] DoACBrNFe
-Ajuste na chamada do metodo NFe.ReciboNFe, estava chamando método de forma errada
+Ajuste na chamada do metodo NFe.ReciboNFe, estava chamando método de forma errada.
 
 [-] DoACBrNFe
 Ajuste no método NFe.ImprimirEvento, definindo impressora padrão do ACBrMonitor caso não seja passado como parâmetro.

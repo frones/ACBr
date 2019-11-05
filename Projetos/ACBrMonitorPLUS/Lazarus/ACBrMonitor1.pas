@@ -1384,8 +1384,7 @@ type
     procedure edEmailEnderecoExit(Sender: TObject);
     procedure edSATLogChange(Sender: TObject);
     procedure edTimeZoneStrEditingDone(Sender: TObject);
-    procedure edtSATCasasMaskQtdKeyPress(Sender: TObject; var Key: char);
-    procedure edtSATMaskVUnitKeyPress(Sender: TObject; var Key: char);
+    procedure OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
     procedure ACBrECF1MsgAguarde(Mensagem: string);
@@ -1395,8 +1394,6 @@ type
     procedure bECFTestarClick(Sender: TObject);
     procedure bECFLeituraXClick(Sender: TObject);
     procedure bECFAtivarClick(Sender: TObject);
-    procedure Label240Click(Sender: TObject);
-    procedure Label241Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
@@ -3987,19 +3984,7 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.edtSATCasasMaskQtdKeyPress(Sender: TObject; var Key: char);
-begin
- if (Key = '.')
-        or ((Key = ',') and (Pos(',', TEdit(Sender).Text) < 1))
-        or (Key in ['0'..'9'])
-        or (Key = Char(VK_BACK))
-        or (Key = Char(VK_END)) then
-    Exit;
-
-    Key := #0;
-end;
-
-procedure TFrmACBrMonitor.edtSATMaskVUnitKeyPress(Sender: TObject; var Key: char);
+procedure TFrmACBrMonitor.OnMascaraFormatKeyPress(Sender: TObject; var Key: char);
 begin
   if (Key = '.')
         or ((Key = ',') and (Pos(',', TEdit(Sender).Text) < 1))
@@ -7071,16 +7056,6 @@ begin
 
   AvaliaEstadoTsECF;
   AvaliaEstadoTsRFD;
-end;
-
-procedure TFrmACBrMonitor.Label240Click(Sender: TObject);
-begin
-
-end;
-
-procedure TFrmACBrMonitor.Label241Click(Sender: TObject);
-begin
-
 end;
 
 procedure TFrmACBrMonitor.meUSUHoraCadastroExit(Sender: TObject);

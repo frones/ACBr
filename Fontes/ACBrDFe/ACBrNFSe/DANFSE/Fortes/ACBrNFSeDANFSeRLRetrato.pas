@@ -290,7 +290,7 @@ begin
     if fpDANFSe.OutrasInformacaoesImp <> '' then
       rlmDadosAdicionais.Lines.Add(StringReplace(fpDANFSe.OutrasInformacaoesImp, ';', #13#10, [rfReplaceAll,rfIgnoreCase]));
 
-  if ((pos('http://', LowerCase( fpNFSe.OutrasInformacoes) ) > 0) or (pos('http://', LowerCase( fpNFSe.Link) ) > 0)) then
+  if ( (pos('http://', LowerCase( fpNFSe.OutrasInformacoes) ) > 0) or (pos('http://', LowerCase( fpNFSe.Link) ) > 0) or (pos('https://', LowerCase( fpNFSe.Link) ) > 0) ) then
   begin
     rlmDadosAdicionais.Width := 643;
 
@@ -302,8 +302,10 @@ begin
     rlImgQrCode.SetBounds(648, 3, 90, 90);
     rlImgQrCode.BringToFront;
 
-    if(fpNFSe.Link <> '') then //Provedor Tecnos tem o link para a nota no campo Link
+    if pos('http://', LowerCase( fpNFSe.Link) ) > 0 then
       QRCodeData := Trim(MidStr(fpNFSe.Link, pos('http://', LowerCase( fpNFSe.Link)), Length(fpNFSe.Link) ))
+    else if pos('https://', LowerCase( fpNFSe.Link) ) > 0 then
+      QRCodeData := Trim(MidStr(fpNFSe.Link, pos('https://', LowerCase( fpNFSe.Link)), Length(fpNFSe.Link) ))
     else
       QRCodeData := Trim(MidStr(fpNFSe.OutrasInformacoes, pos('http://', LowerCase( fpNFSe.OutrasInformacoes)), Length(fpNFSe.OutrasInformacoes) ));
 

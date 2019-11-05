@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/11/2019
+-- pnfsNFSeG --
+[-] https://www.projetoacbr.com.br/forum/topic/54660-cancelamento-issnet-novo-hamburgo/
+   Por: Marco Moreira
+-- ACBrNFSeDANFSeRLRetrato --
+[-] https://www.projetoacbr.com.br/forum/topic/54623-ajustes-danfe-fortes/
+   Por: Marcio Lopes
+
 31/10/2019
 -- pnfsConversao --
 [-] Estava faltando o enumerador do provedor SimplISSv2 na lista de provedores que

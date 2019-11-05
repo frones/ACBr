@@ -15,8 +15,7 @@ object frmSobre: TfrmSobre
   OnCreate = FormCreate
   OnShortCut = FormShortCut
   Position = poDesktopCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '2.0.2.0'
   object Image1: TImage
     Left = 0
     Height = 278
@@ -651,10 +650,10 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     Cursor = crHandPoint
-    Left = 222
+    Left = 229
     Height = 15
     Top = 62
-    Width = 57
+    Width = 43
     Alignment = taCenter
     Caption = 'Ver: 0.00'
     ParentColor = False
@@ -664,10 +663,10 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     Cursor = crHandPoint
-    Left = 134
+    Left = 162
     Height = 15
     Top = 91
-    Width = 233
+    Width = 177
     Alignment = taCenter
     Caption = 'Projeto ACBr - http://acbr.sf.net'
     Font.Color = clBlue
@@ -680,10 +679,10 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = bAjuda
     AnchorSideRight.Control = bAjuda
     AnchorSideRight.Side = asrBottom
-    Left = 426
-    Height = 22
+    Left = 415
+    Height = 26
     Top = 184
-    Width = 66
+    Width = 77
     Anchors = [akTop, akLeft, akRight]
     AutoSize = True
     Cancel = True
@@ -734,10 +733,10 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     Cursor = crHandPoint
-    Left = 204
+    Left = 214
     Height = 15
     Top = 39
-    Width = 92
+    Width = 73
     Alignment = taCenter
     Caption = 'ACBrMonitor'
     Font.Style = [fsBold]
@@ -748,10 +747,10 @@ object frmSobre: TfrmSobre
   object Label1: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
-    Left = 185
+    Left = 200
     Height = 15
     Top = 123
-    Width = 131
+    Width = 100
     Alignment = taCenter
     Caption = 'Desenvolvedores:'
     Font.Color = clGreen
@@ -760,10 +759,10 @@ object frmSobre: TfrmSobre
     ParentFont = False
   end
   object bAjuda: TBitBtn
-    Left = 426
+    Left = 415
     Height = 26
     Top = 8
-    Width = 66
+    Width = 77
     Anchors = [akTop, akRight]
     AutoSize = True
     Caption = '&Ajuda'
@@ -777,10 +776,10 @@ object frmSobre: TfrmSobre
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = bAjuda
     AnchorSideRight.Side = asrBottom
-    Left = 426
+    Left = 415
     Height = 27
     Top = 37
-    Width = 66
+    Width = 77
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 3
     Caption = '&Doar'
@@ -827,12 +826,12 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     Cursor = crHandPoint
-    Left = 91
+    Left = 110
     Height = 30
     Top = 143
-    Width = 318
+    Width = 280
     Alignment = taCenter
-    Caption = 'Daniel Simões de Almeida - www.djsystem.com.br'#13#10'André Ferreira de Moraes - www.djsystem.com.br'
+    Caption = 'Daniel Simões de Almeida - www.projetoacbr.com.br'#13#10'André Ferreira de Moraes - www.projetoacbr.com.br'
     ParentColor = False
     OnClick = lDesenvolvedoresClick
   end
@@ -842,10 +841,10 @@ object frmSobre: TfrmSobre
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = bAjuda
     AnchorSideRight.Side = asrBottom
-    Left = 426
+    Left = 415
     Height = 27
     Top = 67
-    Width = 66
+    Width = 77
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Top = 3
     Caption = '&SAC'

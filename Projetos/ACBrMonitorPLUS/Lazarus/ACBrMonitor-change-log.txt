@@ -43,6 +43,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2019
+[-] DoACBrNFe
+Ajuste na chamada do metodo NFe.ReciboNFe, estava chamando método de forma errada
+
+[-] DoACBrNFe
+Ajuste no método NFe.ImprimirEvento, definindo impressora padrão do ACBrMonitor caso não seja passado como parâmetro.
+
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado as propriedades ExpandirDadosAdicionaisAuto e ImprimeContinuacaoDadosAdicionaisPrimeiraPagina para impressão
+do DANFE
+
+31/10/2019
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado campos para configuração de casas de decimais na emissão do Extrato SAT
+
+[*] DoSATUnit, DoBoletoUnit
+Ajustes na validação de retorno de envio de e-mail
+
+[*] ACBrMonitor1
+Ajustes na validação dos Arquivos .ini de ServicosDFe, utiliza arquivo da pasta de instalação se não encontrar o arquivo nas configuraçoes.
+
 18/10/2019
 [*] ACBrMonitor1, ACBrMonitorConfig
 Ajustes nos valores defaults nas margens dos DFes para milímetros

@@ -950,6 +950,8 @@ const
   CKeyDANFEImprimirDadosDocReferenciados = 'ImprimirDadosDocReferenciados';
   CKeyDANFEExibirBandInforAdicProduto =    'ExibirBandInforAdicProduto';
   CKeyDANFELogoEmCima =                    'LogoEmCima';
+  CKeyDANFEExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
+  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContinuacaoDadosAdicionaisPrimeiraPagina';
 
   CSecDANFCe =                         'DANFCe';
   CKeyDANFCeMargemInf =                'MargemInf';
@@ -1035,6 +1037,11 @@ const
   CKeySATExtUsaCodigoEanImpressao =         'UsaCodigoEanImpressao';
   CKeySATExtLogoLateral =                   'LogoLateral';
   CKeySATExtQRCodeLateral =                 'QRCodeLateral';
+  CKeySATExtDecimaisQTD =                   'ExtratoDecimaisQTD';
+  CKeySATExtDecimaisValor =                 'ExtratoDecimaisValor';
+  CKeySATExtMaskQTD =                       'ExtratoMaskQTD';
+  CKeySATExtMaskValor =                     'ExtratoMaskValor';
+  CKeySATExtFormatoDecimal =                'FormatoDecimal';
 
   CSecSATEmit =                             'SATEmit';
   CKeySATEmitCNPJ =                         'CNPJ';

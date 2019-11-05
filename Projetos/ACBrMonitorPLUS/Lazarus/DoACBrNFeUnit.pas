@@ -1304,7 +1304,7 @@ end;
 procedure TMetodoReciboNFe.Executar;
 var
   ARecibo: String;
-  RespRetorno: TRetornoResposta;
+  RespRetorno: TReciboResposta;
 begin
   ARecibo := fpCmd.Params(0);
 
@@ -1313,15 +1313,13 @@ begin
     ACBrNFe.WebServices.Recibo.Recibo := ARecibo;
     DoValidarIntegradorNFCe();
 
-    ACBrNFe.WebServices.Retorno.Executar;
-    RespRetorno := TRetornoResposta.Create('NFe', resINI, codUTF8);
+    ACBrNFe.WebServices.Recibo.Executar;
+    RespRetorno := TReciboResposta.Create('NFe', resINI, codUTF8);
     try
-      RespRetorno.Processar(ACBrNFe.WebServices.Retorno.NFeRetorno,
-                            ACBrNFe.WebServices.Retorno.Recibo,
-                            ACBrNFe.WebServices.Retorno.Msg,
-                            ACBrNFe.WebServices.Retorno.Protocolo,
-                            ACBrNFe.WebServices.Retorno.ChaveNFe);
-      fpCmd.Resposta := RespRetorno.Msg + sLineBreak + RespRetorno.Gerar;
+
+      RespRetorno.Processar(ACBrNFe.WebServices.Recibo.NFeRetorno,
+                            ACBrNFe.WebServices.Recibo.Recibo);
+      fpCmd.Resposta := RespRetorno.XMotivo + sLineBreak + RespRetorno.Gerar;
       if ACBrNFe.Configuracoes.Geral.Salvar then
         fpCmd.Resposta := fpCmd.Resposta + sLineBreak + 'Arquivo=' + ACBrNFe.Configuracoes.Arquivos.PathSalvar +
                       ARecibo + '-pro-rec.xml';
@@ -1543,7 +1541,6 @@ begin
     DanfeRL:= TACBrNFeDANFeRL.Create(ACBrNFe);
     try
       ACBrNFe.DANFE:= DanfeRL;
-      ACBrNFe.DANFE.Impressora := ' ';
       DoConfiguraDANFe(False, Trim(APreview) );
 
       if NaoEstaVazio(AImpressora) then

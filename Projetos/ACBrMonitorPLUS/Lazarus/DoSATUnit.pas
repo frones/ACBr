@@ -469,7 +469,11 @@ begin
                             slMensagem,
                             slCC,
                             slAnexos);
-        fpCmd.Resposta := 'Email enviado com sucesso';
+        if not(MonitorConfig.Email.SegundoPlano) then
+          fpCmd.Resposta := 'E-mail enviado com sucesso!'
+        else
+          fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
       except
         on E: Exception do
           raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);

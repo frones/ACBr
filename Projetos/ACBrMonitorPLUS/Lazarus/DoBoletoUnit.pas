@@ -465,11 +465,20 @@ begin
         Mensagem := TStringList.Create;
       try
         Mensagem.Text:= StringToBinaryString(EmailMensagemBoleto);
-        ACBrBoleto.EnviarEmail( ADest,
+        try
+          ACBrBoleto.EnviarEmail( ADest,
                  EmailAssuntoBoleto,
                  Mensagem,
                  True);
-        fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          if not(MonitorConfig.Email.SegundoPlano) then
+            fpCmd.Resposta := 'E-mail enviado com sucesso!'
+          else
+            fpCmd.Resposta := 'Enviando e-mail em segundo plano...';
+
+        except
+          on E: Exception do
+            raise Exception.Create('Erro ao enviar email' + sLineBreak + E.Message);
+        end;
 
       finally
         Mensagem.Free;

@@ -535,11 +535,17 @@ begin
     end
     else
     begin
-      i := 0;
-      FInfRec.FMsgRetorno.New;
-      FInfRec.FMsgRetorno[i].FCodigo   := '';
-      FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
-      FInfRec.FMsgRetorno[i].FCorrecao := '';
+      if leitor.rExtrai(1, 'enviarResponse') <> '' then
+      begin
+        if leitor.rExtrai(2, 'enviarReturn') <> '' then
+        begin
+          i := 0;
+          FInfRec.FMsgRetorno.New;
+          FInfRec.FMsgRetorno[i].FCodigo   := '';
+          FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
+          FInfRec.FMsgRetorno[i].FCorrecao := '';
+        end;
+      end;
     end;
   except
     Result := False;

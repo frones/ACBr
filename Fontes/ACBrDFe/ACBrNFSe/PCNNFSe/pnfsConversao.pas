@@ -115,7 +115,7 @@ type
                     proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
                     proGiap, proAssessorPublico, proSigIss, proElotech,
                     proSilTecnologia, proiiBrasilv2, proWebFisco, proDSFSJC,
-                    proSimplISSv2, proLencois, progeNFe );
+                    proSimplISSv2, proLencois, progeNFe, proMegaSoft );
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -527,7 +527,7 @@ begin
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
          'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2', 'WEBFISCO', 'DSFSJC',
-         'SimplISSv2', 'Lencois', 'geNFe'],
+         'SimplISSv2', 'Lencois', 'geNFe', 'MegaSoft'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -546,7 +546,8 @@ begin
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
          proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
-         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
+         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe,
+         proMegaSoft]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -569,7 +570,7 @@ begin
          'Tiplanv2', 'Giss', 'DeISS', 'TcheInfov2', 'DataSmart', 'MetropolisWeb',
          'Desenvolve', 'Centi', 'RLZ', 'SigCorp', 'Giap', 'AssessorPublico', 
          'SigIss', 'Elotech', 'SilTecnologia', 'iiBrasilv2', 'WEBFISCO', 'DSFSJC',
-         'SimplISSv2', 'Lencois', 'geNFe'],
+         'SimplISSv2', 'Lencois', 'geNFe', 'MegaSoft'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -588,7 +589,8 @@ begin
          proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
          proDataSmart, proMetropolisWeb, proDesenvolve, proCenti, proRLZ, proSigCorp, 
          proGiap, proAssessorPublico, proSigIss, proElotech, proSilTecnologia,
-         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe]);
+         proiiBrasilv2, proWebFisco, proDSFSJC, proSimplISSv2, proLencois, progeNFe,
+         proMegaSoft]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18145,8 +18147,7 @@ begin
   XML := StrReplace( XML, 's:' );
   XML := StrReplace( XML, 'tipos:' );
 
-  // Provedor NFSeBrasil
-  if AProvedor in [proNFSeBrasil, proSigCorp] then
+  if AProvedor in [proNFSeBrasil, proSigCorp, proMegasoft] then
   begin
     XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
     XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );
@@ -18454,8 +18455,8 @@ begin
     proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
     proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan, proWebISS,
-    proCIGA, proNFSeBrasil, proMetropolisWeb, proSilTecnologia, 
-	  proDSFSJC, progeNFe: Result := loABRASFv1;
+    proCIGA, proNFSeBrasil, proMetropolisWeb, proSilTecnologia, proDSFSJC,
+    progeNFe, proMegasoft: Result := loABRASFv1;
 
     proABRASFv2, pro4R, proABase, proActconv2, proBethav2, proCoplan, proDigifred,
     proEReceita, proFIntelISS, proFiorilli, proFriburgo, proGoiania, proGovDigital,

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/11/2019
+-- pnfsNFSeR/pnfsConversao --
+[*] https://www.projetoacbr.com.br/forum/topic/54717-provedor-megasoft/
+   Por: Leonardo Gregianin
 -- pnfsNFSeG --
 [-] https://www.projetoacbr.com.br/forum/topic/54660-cancelamento-issnet-novo-hamburgo/
    Por: Marco Moreira

@@ -1647,6 +1647,21 @@ begin
       NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
   end;
 
+  if FProvedor = proMegaSoft then
+  begin
+     if Leitor.rExtrai(FNivel +1, 'ValoresNfse') <> '' then
+     begin
+       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
+       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
+       NFSe.Servico.Valores.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
+       NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
+       if NFSe.Servico.Valores.ValorLiquidoNfse <= 0 then
+          NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorIss;
+     end;
+
+     NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacao')
+  end;
+
   if (Leitor.rExtrai(FNivel +1, 'Servico') <> '') then
   begin
     SetxItemListaServico;

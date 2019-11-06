@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ts="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
-	targetNamespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" xmlns="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ts="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
+	targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd" xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"
 	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xsd:import namespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" schemaLocation="tipos_simples.xsd" />
+	<xsd:import namespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" schemaLocation="tipos_simples.xsd" />
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd" />
 	<xsd:complexType name="tcCpfCnpj">
 		<xsd:choice>

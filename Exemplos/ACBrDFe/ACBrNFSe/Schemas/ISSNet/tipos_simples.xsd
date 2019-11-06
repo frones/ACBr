@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
-	xmlns="https://wscuiaba.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" attributeFormDefault="unqualified"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd"
+	xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_simples.xsd" attributeFormDefault="unqualified"
 	elementFormDefault="qualified">
 	<!-- Min Length Adicionado aos tipos simples String -->
 	<!-- WhiteSpace collapse aos tipos simples String -->

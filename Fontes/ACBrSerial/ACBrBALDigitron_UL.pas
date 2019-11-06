@@ -88,15 +88,23 @@ var
 begin
   Result := -9;
 
-  //Por  exemplo,  a  string  transmitida no  Modo  Contadora  é  visualizada
-  //no Hyper  Terminal como D00005.
-
-
   if (aResposta = EmptyStr) then
     Exit;
 
+  //Fonte: "Manual de Operação Balanças dePiso, Balança de Bancada e Barra de Pesagem"
+  //-- manual digitron_UL.pdf
+  //A balança pode ser configurada como Modo Contadora ou Modo Pesadora.
+  //A string transmitida no Modo Contadora é visualizada no Hyper Terminal como
+  // "D00005" (sem aspas)
+  //A string transmitida no Modo Pesadora é visualizada no Hyper Terminal como
+  // "E1234.5" (sem aspas)
+
   wDecimais := 100;
   wResposta := Copy(aResposta, 1, 8);
+
+  //TODO: O primeiro byte que está sendo retirado abaixo além de mostrar o modo
+  // também traz o status da balança.
+  // Mas esse status não está sendo tratado...
 
   { Retira D }
   if (Copy(wResposta, 1, 1) = 'D') then

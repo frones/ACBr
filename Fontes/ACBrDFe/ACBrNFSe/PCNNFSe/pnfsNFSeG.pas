@@ -1534,7 +1534,8 @@ begin
 
       if NumeroNFSe <> '' then
       begin
-        if Provedor in [proPublica, proPVH, proSisPMJP, proSystemPro, proTecnos, proRLZ] then
+        if Provedor in [proPublica, proPVH, proSisPMJP, proSystemPro, proTecnos,
+                        proRLZ, proWebISSv2] then
         begin
           Gerador.wGrupoNFSe('Faixa');
           Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfseInicial', 01, 15, 1, NumeroNFSe, '');
@@ -1545,7 +1546,8 @@ begin
           Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfse', 01, 15, 1, NumeroNFSe, '', True, FaNameSpace);
       end;
 
-      if ((DataInicial>0) and (DataFinal>0)) and (provedor <> proPVH) then
+      if ((DataInicial>0) and (DataFinal>0)) and not
+         (provedor in [proPVH, proWebISSv2]) then
       begin
         Gerador.wGrupoNFSe('PeriodoEmissao' + FaNameSpace);
         Gerador.wCampoNFSe(tcDat, '#5', 'DataInicial', 10, 10, 1, DataInicial, '');
@@ -1618,7 +1620,8 @@ begin
       end;
 
       if Provedor in [proDigifred, profintelISS, proFiorilli, proPronimv2,
-                      proPVH, proSisPMJP, proSystemPro, proTecnos, proRLZ] then
+                      proPVH, proSisPMJP, proSystemPro, proTecnos, proRLZ,
+                      proWebISSv2] then
         Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
     end;
   end;

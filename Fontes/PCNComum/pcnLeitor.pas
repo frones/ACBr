@@ -198,13 +198,17 @@ begin
       inicioTAGparada := inicio;
   end
   else
-    inicioTAGparada := inicio;
+    inicioTAGparada := pos('</' + UpperCase(Trim(TAG)) + '>', UpperCase(FGrupo));
 
-  if (inicio = 0) or (InicioTAGparada < inicio) then
+  if (InicioTAGparada < inicio) then
     ConteudoTag := ''
   else
   begin
-    inicio := inicio + Length(Tag) + 2;
+    if (inicio = 0) then //Tag com namespace
+      inicio := PosLast('>',copy(FGrupo,0,inicioTAGparada))+1
+    else
+      inicio := inicio + Length(Tag) + 2;
+
     fim := pos('</' + Tag + '>', UpperCase(FGrupo)) - inicio;
     ConteudoTag := trim(copy(FGrupo, inicio, fim));
   end;

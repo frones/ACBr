@@ -691,7 +691,7 @@ end;
 
 procedure TBPeRecepcao.SalvarEnvio;
 var
-  Prefixo, ArqEnv: String;
+  Prefixo, xArqEnv: String;
   IsUTF8: Boolean;
 begin
   if FPArqEnv = '' then
@@ -699,20 +699,20 @@ begin
 
   Prefixo := GerarPrefixoArquivo;
 
-  if FPConfiguracoes.Geral.Salvar then
+  if FPConfiguracoesBPe.Geral.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
+    xArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
 
     IsUTF8  := XmlEstaAssinado(FMsgUnZip);
-    FPDFeOwner.Gravar(ArqEnv, FMsgUnZip, '', IsUTF8);
+    FPDFeOwner.Gravar(xArqEnv, FMsgUnZip, '', IsUTF8);
   end;
 
-  if FPConfiguracoes.WebServices.Salvar then
+  if FPConfiguracoesBPe.WebServices.Salvar then
   begin
-    ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
+    xArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
     IsUTF8  := XmlEstaAssinado(FPEnvelopeSoap);
-    FPDFeOwner.Gravar(ArqEnv, FPEnvelopeSoap, '', IsUTF8);
+    FPDFeOwner.Gravar(xArqEnv, FPEnvelopeSoap, '', IsUTF8);
   end;
 end;
 
@@ -1580,29 +1580,29 @@ end;
 
 procedure TBPeEnvEvento.SalvarEnvio;
 begin
-  if ArqEnv = '' then
+  if FPArqEnv = '' then
     exit;
 
   if FPConfiguracoesBPe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + FPArqEnv + '.xml',
                       FPDadosMsg, GerarPathEvento(FCNPJ));
 
   if FPConfiguracoesBPe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + FPArqEnv + '-soap.xml',
       FPEnvelopeSoap, GerarPathEvento(FCNPJ));
 end;
 
 procedure TBPeEnvEvento.SalvarResposta;
 begin
-  if ArqResp = '' then
+  if FPArqResp = '' then
     exit;
 
   if FPConfiguracoesBPe.Geral.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + FPArqResp + '.xml',
                       FPRetWS, GerarPathEvento(FCNPJ));
 
   if FPConfiguracoesBPe.WebServices.Salvar then
-    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
+    FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + FPArqResp + '-soap.xml',
       FPRetornoWS, GerarPathEvento(FCNPJ));
 end;
 

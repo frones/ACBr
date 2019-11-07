@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2019
+-- ACBrBPeWebServices --
+[*] Melhorias nas procedures responsáveis por salvar o envio e o retorno dos
+    eventos.
+   Por: Italo Jurisato Junior
+
 21/10/2019
 -- ACBrBPeServicos --
 [*] Remoção de espaço em branco no meio de uma URL.

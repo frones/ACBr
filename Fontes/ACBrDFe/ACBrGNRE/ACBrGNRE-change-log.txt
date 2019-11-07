@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/11/2019
+-- pgnreRetConsResLoteGNRE --
+[*] Melhorias na leitura do retorno da consulta do GNRE versão 2.00
+    por: Italo Jurisato Junior
+
 23/10/2019
 -- ACBrGNREServicos --
 [+] Inclusão das URL de produção da versão 2.00

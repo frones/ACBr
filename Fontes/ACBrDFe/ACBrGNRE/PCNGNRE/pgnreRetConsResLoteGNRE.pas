@@ -51,69 +51,10 @@ interface
 
 uses
   SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
-(*
- pgnreConversao;
-*)
+
 type
-  TTResultLote_GNRE            = class;
-  TInfoCabec                   = class;
-  TRejeicaoGuiaCollection      = class;
-  TRejeicaoGuiaCollectionItem  = class;
-  TGuiaCollection              = class;
-  TGuiaCollectionItem          = class;
 
-  TTResultLote_GNRE = class(TPersistent)
-  private
-    FLeitor: TLeitor;
-    Fambiente: TpcnTipoAmbiente;
-    FnumeroRecibo: string;
-    Fcodigo: Integer;
-    Fdescricao: string;
-    Fresultado: string;
-    FresInfoCabec: TInfoCabec;
-    FresGuia: TGuiaCollection;
-    FresRejeicaoGuia: TRejeicaoGuiaCollection;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function LerXml: boolean;
-  published
-    property Leitor: TLeitor read FLeitor write FLeitor;
-    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
-    property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
-    property codigo: Integer read Fcodigo write Fcodigo;
-    property descricao: string read Fdescricao write Fdescricao;
-    property resultado: string read Fresultado write Fresultado;
-    property resInfoCabec: TInfoCabec read FresInfoCabec write FresInfoCabec;
-    property resGuia: TGuiaCollection read FresGuia write FresGuia;
-    property resRejeicaGuia: TRejeicaoGuiaCollection read FresRejeicaoGuia write FresRejeicaoGuia;
-  end;
-
-  TInfoCabec = class
-  private
-    FTipoIdentificadoSolicitante: Integer;
-    FIdentificadorSolicitante: string;
-    FNumeroProtocoloLote: string;
-    FAmbiente: Integer;
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    property TipoIdentificadoSolicitante: Integer read FTipoIdentificadoSolicitante write FTipoIdentificadoSolicitante;
-    property IdentificadorSolicitante: string read FIdentificadorSolicitante write FIdentificadorSolicitante;
-    property NumeroProtocoloLote: string read FNumeroProtocoloLote write FNumeroProtocoloLote;
-    property Ambiente: Integer read FAmbiente write FAmbiente;
-  end;
-
-  TRejeicaoGuiaCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TRejeicaoGuiaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TRejeicaoGuiaCollectionItem);
-  public
-    constructor Create(AOwner: TTResultLote_GNRE); reintroduce;
-    function Add: TRejeicaoGuiaCollectionItem;
-    property Items[Index: Integer]: TRejeicaoGuiaCollectionItem read GetItem write SetItem; default;
-  end;
+  TTResultLote_GNRE = class;
 
   TRejeicaoGuiaCollectionItem = class(TCollectionItem)
   private
@@ -130,14 +71,14 @@ type
     property DescMotivoRejeicao: string read FDescMotivoRejeicao write FDescMotivoRejeicao;
   end;
 
-  TGuiaCollection = class(TCollection)
+  TRejeicaoGuiaCollection = class(TCollection)
   private
-    function GetItem(Index: Integer): TGuiaCollectionItem;
-    procedure SetItem(Index: Integer; Value: TGuiaCollectionItem);
+    function GetItem(Index: Integer): TRejeicaoGuiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRejeicaoGuiaCollectionItem);
   public
     constructor Create(AOwner: TTResultLote_GNRE); reintroduce;
-    function Add: TGuiaCollectionItem;
-    property Items[Index: Integer]: TGuiaCollectionItem read GetItem write SetItem; default;
+    function Add: TRejeicaoGuiaCollectionItem;
+    property Items[Index: Integer]: TRejeicaoGuiaCollectionItem read GetItem write SetItem; default;
   end;
 
   TGuiaCollectionItem = class(TCollectionItem)
@@ -223,6 +164,62 @@ type
     property ValorICMS: Currency read FValorICMS write FValorICMS;
   end;
 
+  TGuiaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TGuiaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TGuiaCollectionItem);
+  public
+    constructor Create(AOwner: TTResultLote_GNRE); reintroduce;
+    function Add: TGuiaCollectionItem;
+    property Items[Index: Integer]: TGuiaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfoCabec = class
+  private
+    FTipoIdentificadoSolicitante: Integer;
+    FIdentificadorSolicitante: string;
+    FNumeroProtocoloLote: string;
+    FAmbiente: Integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property TipoIdentificadoSolicitante: Integer read FTipoIdentificadoSolicitante write FTipoIdentificadoSolicitante;
+    property IdentificadorSolicitante: string read FIdentificadorSolicitante write FIdentificadorSolicitante;
+    property NumeroProtocoloLote: string read FNumeroProtocoloLote write FNumeroProtocoloLote;
+    property Ambiente: Integer read FAmbiente write FAmbiente;
+  end;
+
+  TTResultLote_GNRE = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    Fambiente: TpcnTipoAmbiente;
+    FnumeroRecibo: string;
+    Fcodigo: Integer;
+    Fdescricao: string;
+    Fresultado: string;
+    FresInfoCabec: TInfoCabec;
+    FresGuia: TGuiaCollection;
+    FresRejeicaoGuia: TRejeicaoGuiaCollection;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    function LerXml: boolean;
+    function Ler_Versao_1: boolean;
+    function Ler_Versao_2: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property ambiente: TpcnTipoAmbiente read Fambiente write Fambiente;
+    property numeroRecibo: string read FnumeroRecibo write FnumeroRecibo;
+    property codigo: Integer read Fcodigo write Fcodigo;
+    property descricao: string read Fdescricao write Fdescricao;
+    property resultado: string read Fresultado write Fresultado;
+    property resInfoCabec: TInfoCabec read FresInfoCabec write FresInfoCabec;
+    property resGuia: TGuiaCollection read FresGuia write FresGuia;
+    property resRejeicaGuia: TRejeicaoGuiaCollection read FresRejeicaoGuia write FresRejeicaoGuia;
+  end;
+
 implementation
 
 { TTResultLote_GNRE }
@@ -230,8 +227,9 @@ implementation
 constructor TTResultLote_GNRE.Create;
 begin
   FLeitor := TLeitor.Create;
-  FresGuia := TGuiaCollection.Create(Self);
-  FresInfoCabec := TInfoCabec.Create;
+
+  FresGuia         := TGuiaCollection.Create(Self);
+  FresInfoCabec    := TInfoCabec.Create;
   FresRejeicaoGuia := TRejeicaoGuiaCollection.Create(Self);
 end;
 
@@ -241,190 +239,210 @@ begin
   FresGuia.Free;
   FresInfoCabec.Free;
   FresRejeicaoGuia.Free;
+
   inherited;
 end;
 
 function TTResultLote_GNRE.LerXml: boolean;
 var
   ok: Boolean;
-  i: Integer;
-  SLResultGuia: TStringList;
-  Guia: TGuiaCollectionItem;
-  GuiaRejeicao: TRejeicaoGuiaCollectionItem;
 begin
   Result := False;
+
+  Leitor.Grupo := StringReplace(Leitor.Arquivo, 'ns1:', '', [rfReplaceAll]);
+
+  if Leitor.rExtrai(1, 'TResultLote_GNRE') <> '' then
+  begin
+    FAmbiente     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ambiente'));
+    FnumeroRecibo := Leitor.rCampo(tcStr, 'numeroRecibo');
+    Fresultado    := Leitor.rCampo(tcStr, 'resultado');
+
+    if Leitor.rExtrai(2, 'situacaoProcess') <> '' then
+    begin
+      Fcodigo    := Leitor.rCampo(tcInt, 'codigo');
+      Fdescricao := Leitor.rCampo(tcStr, 'descricao');
+    end;
+
+    if (Fresultado <> '') and (Pos('versao="2.00"', Fresultado) > 0) then
+      Result := Ler_Versao_2
+    else
+      Result := Ler_Versao_1;
+  end;
+end;
+
+function TTResultLote_GNRE.Ler_Versao_1: boolean;
+var
+  SLResultGuia: TStringList;
+  i, j, k: Integer;
+begin
   SLResultGuia := TStringList.Create;
+  Result       := False;
 
   try
-    Leitor.Grupo := Leitor.Arquivo;
+    SLResultGuia.Text := Fresultado;
+    j := -1;
+    k := -1;
 
-    if Leitor.rExtrai(1, 'ns1:TResultLote_GNRE') <> '' then
+    for i := 0 to SLResultGuia.Count - 1 do
     begin
-      FAmbiente     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
-      FnumeroRecibo := Leitor.rCampo(tcStr, 'ns1:numeroRecibo');
-      Fresultado    := Leitor.rCampo(tcStr, 'ns1:resultado');
-
-      if Leitor.rExtrai(2, 'ns1:situacaoProcess') <> '' then
+      if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '0') then
       begin
-        Fcodigo    := Leitor.rCampo(tcInt, 'ns1:codigo');
-        Fdescricao := Leitor.rCampo(tcStr, 'ns1:descricao');
+        FresInfoCabec.FTipoIdentificadoSolicitante := StrToInt(Copy(SLResultGuia.Strings[i], 2, 1));
+        FresInfoCabec.FIdentificadorSolicitante    := Trim(Copy(SLResultGuia.Strings[i], 3, 14));
+        FresInfoCabec.FNumeroProtocoloLote         := Trim(Copy(SLResultGuia.Strings[i], 17, 10));
+        FresInfoCabec.FAmbiente                    := StrToInt(Copy(SLResultGuia.Strings[i], 27, 1));
       end;
 
-      if Fresultado <> '' then
+      if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '1') then
       begin
-        if Pos('ns1:guia versao="2.00"', Fresultado) > 0 then
-        begin
-          Leitor.Grupo := Fresultado;
-          Guia := resGuia.Add;
+        resGuia.Add;
+        Inc(j);
 
-          Guia.SituacaoGuia := Leitor.rCampo(tcStr, 'ns1:situacaoGuia');
-          Guia.UFFavorecida := Leitor.rCampo(tcStr, 'ns1:ufFavorecida');
-          Guia.tipoGnre     := Leitor.rCampo(tcStr, 'ns1:tipoGnre');
-          Guia.ValorPrincipal := Leitor.rCampo(tcDe2, 'ns1:valorGNRE');
-          Guia.DataLimitePagamento := Leitor.rCampo(tcStr, 'ns1:dataLimitePagamento');
-          Guia.IdentificadorGuia := Leitor.rCampo(tcInt, 'ns1:identificadorGuia');
-          Guia.NumeroControle := Leitor.rCampo(tcStr, 'ns1:nossoNumero');
-          Guia.RepresentacaoNumerica := Leitor.rCampo(tcStr, 'ns1:linhaDigitavel');
-          Guia.CodigoBarras := Leitor.rCampo(tcStr, 'ns1:codigoBarras');
+        resGuia.Items[j].Identificador          := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
+        resGuia.Items[j].SequencialGuia         := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
+        resGuia.Items[j].SituacaoGuia           := Trim(Copy(SLResultGuia.Strings[i], 6, 1));
+        resGuia.Items[j].UFFavorecida           := Trim(Copy(SLResultGuia.Strings[i], 7, 2));
+        resGuia.Items[j].CodReceita             := StrToInt(Copy(SLResultGuia.Strings[i], 9, 6));
+        resGuia.Items[j].TipoDocEmitente        := StrToInt(Copy(SLResultGuia.Strings[i], 15, 1));
+        resGuia.Items[j].DocEmitente            := Trim(Copy(SLResultGuia.Strings[i], 16, 16));
+        resGuia.Items[j].RazaoSocialEmitente    := Trim(Copy(SLResultGuia.Strings[i], 32, 60));
+        resGuia.Items[j].EnderecoEmitente       := Trim(Copy(SLResultGuia.Strings[i], 92, 60));
+        resGuia.Items[j].MunicipioEmitente      := Trim(Copy(SLResultGuia.Strings[i], 152, 50));
+        resGuia.Items[j].UFEmitente             := Trim(Copy(SLResultGuia.Strings[i], 202, 2));
+        resGuia.Items[j].CEPEmitente            := Trim(Copy(SLResultGuia.Strings[i], 204, 8));
+        resGuia.Items[j].TelefoneEmitente       := Trim(Copy(SLResultGuia.Strings[i], 212, 11));
+        resGuia.Items[j].TipoDocDestinatario    := StrToInt(Copy(SLResultGuia.Strings[i], 223, 1));
+        resGuia.Items[j].DocDestinatario        := Trim(Copy(SLResultGuia.Strings[i], 224, 16));
+        resGuia.Items[j].MunicipioDestinatario  := Trim(Copy(SLResultGuia.Strings[i], 240, 50));
+        resGuia.Items[j].Produto                := Trim(Copy(SLResultGuia.Strings[i], 290, 255));
+        resGuia.Items[j].NumDocOrigem           := Copy(SLResultGuia.Strings[i], 545, 18);
+        resGuia.Items[j].Convenio               := Trim(Copy(SLResultGuia.Strings[i], 563, 30));
+        resGuia.Items[j].InfoComplementares     := Trim(Copy(SLResultGuia.Strings[i], 593, 300));
+        resGuia.Items[j].DataVencimento         := Trim(Copy(SLResultGuia.Strings[i], 893, 8));
+        resGuia.Items[j].DataLimitePagamento    := Trim(Copy(SLResultGuia.Strings[i], 901, 8));
+        resGuia.Items[j].PeriodoReferencia      := Trim(Copy(SLResultGuia.Strings[i], 909, 1));
+        resGuia.Items[j].MesAnoReferencia       := Trim(Copy(SLResultGuia.Strings[i], 910, 6));
+        resGuia.Items[j].Parcela                := StrToInt(Copy(SLResultGuia.Strings[i], 916, 3));
+        resGuia.Items[j].ValorPrincipal         := StrToInt(Copy(SLResultGuia.Strings[i], 919, 15)) / 100;
+        resGuia.Items[j].AtualizacaoMonetaria   := StrToInt(Copy(SLResultGuia.Strings[i], 934, 15)) / 100;
+        resGuia.Items[j].Juros                  := StrToInt(Copy(SLResultGuia.Strings[i], 949, 15)) / 100;
+        resGuia.Items[j].Multa                  := StrToInt(Copy(SLResultGuia.Strings[i], 964, 15)) / 100;
+        resGuia.Items[j].RepresentacaoNumerica  := Copy(SLResultGuia.Strings[i], 979, 48);
+        resGuia.Items[j].CodigoBarras           := Copy(SLResultGuia.Strings[i], 1027, 44);
+        resGuia.Items[j].QtdeVias               := StrToInt(Copy(SLResultGuia.Strings[i], 1071, 1));
+        resGuia.Items[j].NumeroControle         := Copy(SLResultGuia.Strings[i], 1072, 16);
+        resGuia.Items[j].IdentificadorGuia      := Copy(SLResultGuia.Strings[i], 1088, 10);
+        resGuia.Items[j].GuiaGeradaContingencia := StrToInt(Copy(SLResultGuia.Strings[i], 1098, 1));
+        resGuia.Items[j].Reservado              := Trim(Copy(SLResultGuia.Strings[i], 1099, 126));
+      end;
 
-          if Leitor.rExtrai(2, 'ns1:contribuinteEmitente') <> '' then
-          begin
-            Guia.DocEmitente := Leitor.rCampo(tcStr, 'ns1:CNPJ');
-            Guia.RazaoSocialEmitente := Leitor.rCampo(tcStr, 'ns1:razaoSocial');
-            Guia.EnderecoEmitente := Leitor.rCampo(tcStr, 'ns1:endereco');
-            Guia.MunicipioEmitente := Leitor.rCampo(tcStr, 'ns1:municipio');
-            Guia.UFEmitente := Leitor.rCampo(tcStr, 'ns1:uf');
-            Guia.CEPEmitente := Leitor.rCampo(tcStr, 'ns1:cep');
-            Guia.TelefoneEmitente := Leitor.rCampo(tcStr, 'ns1:telefone');
+      if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '2') then
+      begin
+        resRejeicaGuia.Add;
+        Inc(k);
+
+        resRejeicaGuia.Items[k].Identificador      := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
+        resRejeicaGuia.Items[k].SequencialGuia     := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
+        resRejeicaGuia.Items[k].NomeCampo          := Copy(SLResultGuia.Strings[i], 6, 30);
+        resRejeicaGuia.Items[k].CodMotivoRejeicao  := StrToInt(Copy(SLResultGuia.Strings[i], 36, 3));
+        resRejeicaGuia.Items[k].DescMotivoRejeicao := Copy(SLResultGuia.Strings[i], 39, 355);
+      end;
+    end;
+
+    Result := True;
+  except
+    SLResultGuia.Free;
+  end;
+end;
+
+function TTResultLote_GNRE.Ler_Versao_2: boolean;
+var
+  i, j, k: Integer;
+begin
+  if Leitor.rExtrai(2, 'resultado') <> '' then
+  begin
+    i := 0;
+    while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
+    begin
+      resGuia.Add;
+
+      resGuia.Items[i].SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
+      resGuia.Items[i].UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
+      resGuia.Items[i].tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
+      resGuia.Items[i].ValorPrincipal        := Leitor.rCampo(tcDe2, 'valorGNRE');
+      resGuia.Items[i].DataLimitePagamento   := Leitor.rCampo(tcStr, 'dataLimitePagamento');
+      resGuia.Items[i].IdentificadorGuia     := Leitor.rCampo(tcInt, 'identificadorGuia');
+      resGuia.Items[i].NumeroControle        := Leitor.rCampo(tcStr, 'nossoNumero');
+      resGuia.Items[i].RepresentacaoNumerica := Leitor.rCampo(tcStr, 'linhaDigitavel');
+      resGuia.Items[i].CodigoBarras          := Leitor.rCampo(tcStr, 'codigoBarras');
+
+      if Leitor.rExtrai(4, 'contribuinteEmitente') <> '' then
+      begin
+        resGuia.Items[i].DocEmitente         := Leitor.rCampo(tcStr, 'CNPJ');
+        resGuia.Items[i].RazaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
+        resGuia.Items[i].EnderecoEmitente    := Leitor.rCampo(tcStr, 'endereco');
+        resGuia.Items[i].MunicipioEmitente   := Leitor.rCampo(tcStr, 'municipio');
+        resGuia.Items[i].UFEmitente          := Leitor.rCampo(tcStr, 'uf');
+        resGuia.Items[i].CEPEmitente         := Leitor.rCampo(tcStr, 'cep');
+        resGuia.Items[i].TelefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');
 
 //              Guia.TipoDocEmitente := StrToInt(Copy(SLResultGuia.Strings[i], 15, 1));
-          end;
-
-          if Leitor.rExtrai(2, 'ns1:itensGNRE') <> '' then
-          begin
-            if Leitor.rExtrai(3, 'ns1:item') <> '' then
-            begin
-              Guia.CodReceita := Leitor.rCampo(tcInt, 'ns1:receita');
-              Guia.DataVencimento := Leitor.rCampo(tcStr, 'ns1:dataVencimento');
-
-              if Leitor.rExtrai(4, 'ns1:referencia') <> '' then
-              begin
-                Guia.MesAnoReferencia := Leitor.rCampo(tcStr, 'ns1:mes') +
-                                         Leitor.rCampo(tcStr, 'ns1:ano');
-              end;
-
-              i := 0;
-              while Leitor.rExtrai(4, 'valor', '', i + 1) <> '' do
-              begin
-                {
-                11 - Valor Principal ICMS
-                12 - Valor Principal Fundo de Pobreza (FP)
-                21 - Valor Total ICMS
-                22 - Valor Total FP
-                31 - Valor Multa ICMS
-                32 - Valor Multa FP
-                41 - Valor Juros ICMS
-                42 - Valor Juros FP
-                51 - Valor Atualização Monetaria ICMS
-                52 - Valor Atualização Monetaria FP
-                }
-                if Leitor.rAtributo('tipo=', 'valor') = '11' then
-                  Guia.ValorPrincipal := Leitor.rCampo(tcDe2, 'ns1:valor');
-
-                if Leitor.rAtributo('tipo=', 'valor') = '21' then
-                  Guia.ValorICMS := Leitor.rCampo(tcDe2, 'ns1:valor');
-
-                if Leitor.rAtributo('tipo=', 'valor') = '31' then
-                  Guia.Multa := Leitor.rCampo(tcDe2, 'ns1:valor');
-
-                if Leitor.rAtributo('tipo=', 'valor') = '41' then
-                  Guia.Juros := Leitor.rCampo(tcDe2, 'ns1:valor');
-
-                if Leitor.rAtributo('tipo=', 'valor') = '51' then
-                  Guia.AtualizacaoMonetaria := Leitor.rCampo(tcDe2, 'ns1:valor');
-
-                inc(i);
-              end;
-            end;
-          end;
-        end
-        else
-        begin
-          SLResultGuia.Text := Fresultado;
-          for i := 0 to SLResultGuia.Count - 1 do
-          begin
-            if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '0') then
-            begin
-              FresInfoCabec.FTipoIdentificadoSolicitante := StrToInt(Copy(SLResultGuia.Strings[i], 2, 1));
-              FresInfoCabec.FIdentificadorSolicitante := Trim(Copy(SLResultGuia.Strings[i], 3, 14));
-              FresInfoCabec.FNumeroProtocoloLote := Trim(Copy(SLResultGuia.Strings[i], 17, 10));
-              FresInfoCabec.FAmbiente := StrToInt(Copy(SLResultGuia.Strings[i], 27, 1));
-            end;
-
-            if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '1') then
-            begin
-              Guia := resGuia.Add;
-              Guia.Identificador := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
-              Guia.SequencialGuia := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
-              Guia.SituacaoGuia := Trim(Copy(SLResultGuia.Strings[i], 6, 1));
-              Guia.UFFavorecida := Trim(Copy(SLResultGuia.Strings[i], 7, 2));
-              Guia.CodReceita := StrToInt(Copy(SLResultGuia.Strings[i], 9, 6));
-              Guia.TipoDocEmitente := StrToInt(Copy(SLResultGuia.Strings[i], 15, 1));
-              Guia.DocEmitente := Trim(Copy(SLResultGuia.Strings[i], 16, 16));
-              Guia.RazaoSocialEmitente := Trim(Copy(SLResultGuia.Strings[i], 32, 60));
-              Guia.EnderecoEmitente := Trim(Copy(SLResultGuia.Strings[i], 92, 60));
-              Guia.MunicipioEmitente := Trim(Copy(SLResultGuia.Strings[i], 152, 50));
-              Guia.UFEmitente := Trim(Copy(SLResultGuia.Strings[i], 202, 2));
-              Guia.CEPEmitente := Trim(Copy(SLResultGuia.Strings[i], 204, 8));
-              Guia.TelefoneEmitente := Trim(Copy(SLResultGuia.Strings[i], 212, 11));
-              Guia.TipoDocDestinatario := StrToInt(Copy(SLResultGuia.Strings[i], 223, 1));
-              Guia.DocDestinatario := Trim(Copy(SLResultGuia.Strings[i], 224, 16));
-              Guia.MunicipioDestinatario := Trim(Copy(SLResultGuia.Strings[i], 240, 50));
-              Guia.Produto := Trim(Copy(SLResultGuia.Strings[i], 290, 255));
-              Guia.NumDocOrigem := Copy(SLResultGuia.Strings[i], 545, 18);
-              Guia.Convenio := Trim(Copy(SLResultGuia.Strings[i], 563, 30));
-              Guia.InfoComplementares := Trim(Copy(SLResultGuia.Strings[i], 593, 300));
-              Guia.DataVencimento := Trim(Copy(SLResultGuia.Strings[i], 893, 8));
-              Guia.DataLimitePagamento := Trim(Copy(SLResultGuia.Strings[i], 901, 8));
-              Guia.PeriodoReferencia := Trim(Copy(SLResultGuia.Strings[i], 909, 1));
-              Guia.MesAnoReferencia := Trim(Copy(SLResultGuia.Strings[i], 910, 6));
-              Guia.Parcela := StrToInt(Copy(SLResultGuia.Strings[i], 916, 3));
-              Guia.ValorPrincipal := StrToInt(Copy(SLResultGuia.Strings[i], 919, 15)) / 100;
-              Guia.AtualizacaoMonetaria := StrToInt(Copy(SLResultGuia.Strings[i], 934, 15)) / 100;
-              Guia.Juros := StrToInt(Copy(SLResultGuia.Strings[i], 949, 15)) / 100;
-              Guia.Multa := StrToInt(Copy(SLResultGuia.Strings[i], 964, 15)) / 100;
-              Guia.RepresentacaoNumerica := Copy(SLResultGuia.Strings[i], 979, 48);
-              Guia.CodigoBarras := Copy(SLResultGuia.Strings[i], 1027, 44);
-              Guia.QtdeVias := StrToInt(Copy(SLResultGuia.Strings[i], 1071, 1));
-              Guia.NumeroControle := Copy(SLResultGuia.Strings[i], 1072, 16);
-              Guia.IdentificadorGuia := Copy(SLResultGuia.Strings[i], 1088, 10);
-              Guia.GuiaGeradaContingencia := StrToInt(Copy(SLResultGuia.Strings[i], 1098, 1));
-              Guia.Reservado := Trim(Copy(SLResultGuia.Strings[i], 1099, 126));
-            end;
-
-            if SameText(Copy(SLResultGuia.Strings[i], 1, 1), '2') then
-            begin
-              GuiaRejeicao := resRejeicaGuia.Add;
-              GuiaRejeicao.Identificador := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
-              GuiaRejeicao.SequencialGuia := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
-              GuiaRejeicao.NomeCampo := Copy(SLResultGuia.Strings[i], 6, 30);
-              GuiaRejeicao.CodMotivoRejeicao := StrToInt(Copy(SLResultGuia.Strings[i], 36, 3));
-              GuiaRejeicao.DescMotivoRejeicao := Copy(SLResultGuia.Strings[i], 39, 355);
-            end;
-          end;
-        end;
-      end
-      else
-      begin
-        FresGuia.Add;
-        FresRejeicaoGuia.Add;
       end;
 
-      Result := True;
+      if Leitor.rExtrai(4, 'itensGNRE') <> '' then
+      begin
+        j := 0;
+        while Leitor.rExtrai(5, 'item', '', j + 1) <> '' do
+        begin
+          resGuia.Items[i].CodReceita     := Leitor.rCampo(tcInt, 'receita');
+          resGuia.Items[i].DataVencimento := Leitor.rCampo(tcStr, 'dataVencimento');
+
+          if Leitor.rExtrai(6, 'referencia') <> '' then
+          begin
+            resGuia.Items[i].MesAnoReferencia := Leitor.rCampo(tcStr, 'mes') +
+                                                 Leitor.rCampo(tcStr, 'ano');
+          end;
+
+          k := 0;
+          while Leitor.rExtrai(6, 'valor', '', k + 1) <> '' do
+          begin
+            {
+            11 - Valor Principal ICMS
+            12 - Valor Principal Fundo de Pobreza (FP)
+            21 - Valor Total ICMS
+            22 - Valor Total FP
+            31 - Valor Multa ICMS
+            32 - Valor Multa FP
+            41 - Valor Juros ICMS
+            42 - Valor Juros FP
+            51 - Valor Atualização Monetaria ICMS
+            52 - Valor Atualização Monetaria FP
+            }
+            if Leitor.rAtributo('tipo=', 'valor') = '11' then
+              resGuia.Items[i].ValorPrincipal := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '21' then
+              resGuia.Items[i].ValorICMS := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '31' then
+              resGuia.Items[i].Multa := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '41' then
+              resGuia.Items[i].Juros := Leitor.rCampo(tcDe2, 'valor');
+
+            if Leitor.rAtributo('tipo=', 'valor') = '51' then
+              resGuia.Items[i].AtualizacaoMonetaria := Leitor.rCampo(tcDe2, 'valor');
+
+            Inc(k);
+          end;
+
+          Inc(j);
+        end;
+      end;
+
+      Inc(i);
     end;
-  except
-    Result := false;
-  end;
+  end
 end;
 
 { TGuiaCollection }

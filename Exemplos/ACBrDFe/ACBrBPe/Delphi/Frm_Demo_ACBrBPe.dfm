@@ -33,55 +33,28 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
         Top = 1
         Width = 611
         Height = 230
-        ActivePage = tsBPe
+        ActivePage = tsEnvios
         Align = alClient
         TabOrder = 0
-        object tsBPe: TTabSheet
-          Caption = 'BP-e'
+        object tsEnvios: TTabSheet
+          Caption = 'Envios'
           object btnImprimir: TButton
-            Left = 192
-            Top = 104
+            Left = 193
+            Top = 72
             Width = 177
             Height = 25
             Caption = 'Imprimir DABPE'
             TabOrder = 0
             OnClick = btnImprimirClick
           end
-          object btnConsultar: TButton
-            Left = 8
+          object btnValidarXML: TButton
+            Left = 9
             Top = 40
             Width = 177
             Height = 25
-            Caption = 'Consultar carregando XML'
-            TabOrder = 1
-            OnClick = btnConsultarClick
-          end
-          object btnValidarXML: TButton
-            Left = 376
-            Top = 72
-            Width = 177
-            Height = 25
             Caption = 'Validar XML'
-            TabOrder = 2
+            TabOrder = 1
             OnClick = btnValidarXMLClick
-          end
-          object btnStatusServ: TButton
-            Left = 8
-            Top = 8
-            Width = 177
-            Height = 25
-            Caption = ' Status de Servi'#231'o'
-            TabOrder = 3
-            OnClick = btnStatusServClick
-          end
-          object btnCancBPe: TButton
-            Left = 8
-            Top = 72
-            Width = 177
-            Height = 25
-            Caption = 'Cancelamento BPe com XML'
-            TabOrder = 4
-            OnClick = btnCancBPeClick
           end
           object btnCriarEnviar: TButton
             Left = 192
@@ -89,107 +62,62 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Width = 177
             Height = 25
             Caption = 'Criar e Enviar'
-            TabOrder = 5
+            TabOrder = 2
             OnClick = btnCriarEnviarClick
           end
           object btnGerarBPE: TButton
-            Left = 376
+            Left = 9
             Top = 8
             Width = 177
             Height = 25
             Caption = 'Gerar BPe'
-            TabOrder = 6
+            TabOrder = 3
             OnClick = btnGerarBPEClick
           end
           object btnGerarPDF: TButton
-            Left = 8
-            Top = 104
+            Left = 9
+            Top = 72
             Width = 177
             Height = 25
             Caption = 'Gerar PDF'
-            TabOrder = 7
+            TabOrder = 4
             OnClick = btnGerarPDFClick
           end
           object btnEnviarEmail: TButton
-            Left = 376
+            Left = 193
             Top = 104
             Width = 177
             Height = 25
             Caption = 'Enviar BPe Email'
-            TabOrder = 8
+            TabOrder = 5
             OnClick = btnEnviarEmailClick
           end
-          object btnConsultarChave: TButton
+          object btnAdicionarProtBPe: TButton
+            Left = 9
+            Top = 104
+            Width = 177
+            Height = 25
+            Caption = 'Adicionar bpeProc ao XML'
+            TabOrder = 6
+            OnClick = btnAdicionarProtBPeClick
+          end
+          object btnCarregarXMLEnviar: TButton
+            Left = 376
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = 'Carregar XML e Enviar'
+            TabOrder = 7
+            OnClick = btnCarregarXMLEnviarClick
+          end
+          object btnValidarAssinatura: TButton
             Left = 192
             Top = 40
             Width = 177
             Height = 25
-            Caption = 'Consultar pela Chave'
-            TabOrder = 9
-            OnClick = btnConsultarChaveClick
-          end
-          object btnCancelarChave: TButton
-            Left = 192
-            Top = 72
-            Width = 177
-            Height = 25
-            Caption = 'Cancelamento BPe pela Chave'
-            TabOrder = 10
-            OnClick = btnCancelarChaveClick
-          end
-          object btnAdicionarProtBPe: TButton
-            Left = 9
-            Top = 136
-            Width = 177
-            Height = 25
-            Caption = 'Adicionar bpeProc ao XML'
-            TabOrder = 11
-            OnClick = btnAdicionarProtBPeClick
-          end
-          object btnCarregarXMLEnviar: TButton
-            Left = 192
-            Top = 136
-            Width = 177
-            Height = 25
-            Caption = 'Carregar XML e Enviar'
-            TabOrder = 12
-            OnClick = btnCarregarXMLEnviarClick
-          end
-          object btnValidarAssinatura: TButton
-            Left = 376
-            Top = 136
-            Width = 177
-            Height = 25
             Caption = 'Validar Assinatura'
-            TabOrder = 13
+            TabOrder = 8
             OnClick = btnValidarAssinaturaClick
-          end
-          object btnImprimirEvento: TButton
-            Left = 8
-            Top = 168
-            Width = 177
-            Height = 25
-            Caption = 'Imprimir Evento'
-            TabOrder = 14
-            OnClick = btnImprimirEventoClick
-          end
-          object btnEnviarEvento: TButton
-            Left = 193
-            Top = 168
-            Width = 177
-            Height = 25
-            Caption = 'Enviar Evento Email'
-            TabOrder = 15
-            OnClick = btnEnviarEventoClick
-          end
-          object btnDistribuicaoDFe: TButton
-            Left = 375
-            Top = 168
-            Width = 178
-            Height = 25
-            Caption = 'Distribui'#231#227'o Documentos Fiscais'
-            TabOrder = 16
-            OnClick = btnDistribuicaoDFeClick
           end
           object btnValidarRegrasNegocio: TButton
             Left = 376
@@ -197,8 +125,97 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
             Width = 177
             Height = 25
             Caption = 'Validar Regras de Neg'#243'cio'
-            TabOrder = 17
+            TabOrder = 9
             OnClick = btnValidarRegrasNegocioClick
+          end
+          object btnImprimirOffline: TButton
+            Left = 376
+            Top = 72
+            Width = 177
+            Height = 25
+            Caption = 'Imprimir DABPE Offline'
+            TabOrder = 10
+            OnClick = btnImprimirOfflineClick
+          end
+        end
+        object tsConsultas: TTabSheet
+          Caption = 'Consultas'
+          ImageIndex = 1
+          object btnStatusServ: TButton
+            Left = 9
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = ' Status de Servi'#231'o'
+            TabOrder = 0
+            OnClick = btnStatusServClick
+          end
+          object btnConsultar: TButton
+            Left = 193
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = 'Consultar carregando XML'
+            TabOrder = 1
+            OnClick = btnConsultarClick
+          end
+          object btnConsultarChave: TButton
+            Left = 376
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = 'Consultar pela Chave'
+            TabOrder = 2
+            OnClick = btnConsultarChaveClick
+          end
+          object btnDistribuicaoDFe: TButton
+            Left = 9
+            Top = 40
+            Width = 178
+            Height = 25
+            Caption = 'Distribui'#231#227'o Documentos Fiscais'
+            TabOrder = 3
+            OnClick = btnDistribuicaoDFeClick
+          end
+        end
+        object tsEventos: TTabSheet
+          Caption = 'Eventos'
+          ImageIndex = 2
+          object btnCancBPe: TButton
+            Left = 9
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = 'Cancelamento BPe com XML'
+            TabOrder = 0
+            OnClick = btnCancBPeClick
+          end
+          object btnCancelarChave: TButton
+            Left = 194
+            Top = 8
+            Width = 177
+            Height = 25
+            Caption = 'Cancelamento BPe pela Chave'
+            TabOrder = 1
+            OnClick = btnCancelarChaveClick
+          end
+          object btnImprimirEvento: TButton
+            Left = 9
+            Top = 39
+            Width = 177
+            Height = 25
+            Caption = 'Imprimir Evento'
+            TabOrder = 2
+            OnClick = btnImprimirEventoClick
+          end
+          object btnEnviarEvento: TButton
+            Left = 194
+            Top = 39
+            Width = 177
+            Height = 25
+            Caption = 'Enviar Evento Email'
+            TabOrder = 3
+            OnClick = btnEnviarEventoClick
           end
         end
       end
@@ -208,7 +225,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
       Top = 233
       Width = 613
       Height = 371
-      ActivePage = TabSheet6
+      ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
       object TabSheet5: TTabSheet
@@ -393,7 +410,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
       Top = 0
       Width = 283
       Height = 504
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       TabOrder = 1
       object TabSheet1: TTabSheet
         Caption = 'Configura'#231#245'es'
@@ -402,7 +419,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
           Top = 0
           Width = 275
           Height = 476
-          ActivePage = TabSheet7
+          ActivePage = TabSheet13
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -1758,6 +1775,7 @@ object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
     DABPE = ACBrBPeDABPeESCPOS1
     Left = 336
     Top = 280

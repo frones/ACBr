@@ -51,9 +51,9 @@ type
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; const AFile: String);
     class function CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
-    class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer); static;
+    class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer);
     class function EspacejarTextoGrafico(const AText: String; AWidth: Integer;
-      AFonte: TFont): String; static;
+      AFonte: TFont): String;
   end;
 
 

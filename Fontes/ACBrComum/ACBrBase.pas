@@ -87,14 +87,14 @@ const
   piacbrWinARM32       = $00000800; // Windows 32-bit ARM processor (raspberry pi)
 
 
-  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 or
+  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 {or
                        piacbrOSX32 or piacbrOSX64 or
                        piacbriOSSimulator32 or piacbriOSSimulator64 or
                        piacbrAndroid32Arm or piacbrAndroid64Arm or
                        piacbrLinux32 or piacbrLinux64 or
                        piacbrLinux32Arm or piacbrLinux64Arm or
                        piacbriOSDevice32 or piacbriOSDevice64 or
-                       piacbrWinNX32 or piacbrWinIoT32 or piacbrWinARM32;
+                       piacbrWinNX32 or piacbrWinIoT32 or piacbrWinARM32};
 {$ENDIF RTL230_UP}
 
 type

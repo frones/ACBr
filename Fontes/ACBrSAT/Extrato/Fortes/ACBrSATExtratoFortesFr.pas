@@ -359,7 +359,6 @@ type
     function CompoemCliche: String;
 
     function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
-    procedure DiminuirFonteSeNecessario( ARLMemo: TRLMemo; TamanhoMinimo: Integer = 1);
   public
     { Public declarations }
     property ACBrSATExtrato : TACBrSATExtratoFortes read fACBrSATExtrato ;
@@ -372,7 +371,7 @@ implementation
 
 uses  math, RLTypes,
      ACBrDelphiZXingQRCode, ACBrValidador, ACBrDFeUtil, ACBrUtil,
-     ACBrDFeReport;
+     ACBrDFeReport, ACBrDFeReportFortes;
 
 {$ifdef FPC}
   {$R *.lfm}
@@ -642,29 +641,6 @@ begin
   Result := Length(LinhaExemplo)-2
 end;
 
-procedure TACBrSATExtratoFortesFr.DiminuirFonteSeNecessario(ARLMemo: TRLMemo;
-  TamanhoMinimo: Integer);
-var
-  ABmp: TBitmap;
-begin
-  ABmp := TBitmap.Create;
-  try
-    ABmp.Canvas.Font.Assign(ARLMemo.Font);
-    TamanhoMinimo := max(1, TamanhoMinimo);
-
-    while ABmp.Canvas.Font.Size > TamanhoMinimo do
-    begin
-      if ABmp.Canvas.TextWidth( ARLMemo.Lines.Text ) <= ARLMemo.ClientWidth then
-        Break;
-
-      ABmp.Canvas.Font.Size := ABmp.Canvas.Font.Size - 1;
-    end;
-  finally
-    ARLMemo.Font.Size := ABmp.Canvas.Font.Size;
-    ABmp.Free;
-  end;
-end;
-
 procedure TACBrSATExtratoFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
@@ -691,7 +667,7 @@ begin
     lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Lines.Text := CompoemCliche;
-    DiminuirFonteSeNecessario(lEmitCNPJ_IE_IM, 6);
+    TDFeReportFortes.DiminuirFonteSeNecessario(lEmitCNPJ_IE_IM, 6);
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -700,7 +676,7 @@ begin
       NumExtrato := IntToStrZero(ide.nCFe, 6);
 
     lNumeroExtrato.Lines.Text := StringReplace(lNumeroExtrato.Lines.Text,'<NUMERO>',NumExtrato,[]);
-    DiminuirFonteSeNecessario(lNumeroExtrato, 6);
+    TDFeReportFortes.DiminuirFonteSeNecessario(lNumeroExtrato, 6);
 
     pSATSerieHora.Visible := not ACBrSATExtrato.ImprimeQRCodeLateral;
     lTitLei12743.Visible := not ACBrSATExtrato.ImprimeQRCodeLateral;
@@ -1250,7 +1226,7 @@ begin
     lRazaoSocialCanc.Lines.Text := Emit.xNome ;
     lEnderecoCanc.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCanc.Lines.Text := CompoemCliche;
-    DiminuirFonteSeNecessario(lEmitCNPJ_IE_IMCanc, 6);
+    TDFeReportFortes.DiminuirFonteSeNecessario(lEmitCNPJ_IE_IMCanc, 6);
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -1299,7 +1275,7 @@ begin
   with ACBrSATExtrato.CFeCanc do
   begin
     lNumeroExtratoCanc.Lines.Text := StringReplace(lNumeroExtratoCanc.Lines.Text,'<NUMERO>',NumExtrato,[]);
-    DiminuirFonteSeNecessario(lNumeroExtratoCanc, 6);
+    TDFeReportFortes.DiminuirFonteSeNecessario(lNumeroExtratoCanc, 6);
 
     // Informações do Rodapé do Extrato //
     lChaveAcessoCanc2.Lines.Text := FormatarChaveAcesso(infCFe.ID);

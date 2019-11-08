@@ -69,7 +69,6 @@ type
     FExibeTotalTributosItem: Boolean;
     FExibeInforAdicProduto: TinfAdcProd;
     FImprimeNomeFantasia: Boolean;
-    FImprimeEmUmaLinha: Boolean;
     FTipoDANFE: TpcnTipoImpressao;
 
     procedure SetACBrNFE(const AValue: TComponent);
@@ -132,7 +131,6 @@ type
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
     property ImprimeInfContr: Boolean read FImprimeInfContr write FImprimeInfContr default True;
     property ImprimeNomeFantasia: Boolean read FImprimeNomeFantasia write FImprimeNomeFantasia default False;
-    property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write FImprimeEmUmaLinha default False;
   end;
 
 implementation
@@ -147,23 +145,22 @@ constructor TACBrDFeDANFeReport.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FACBrNFe := nil;
-  FTipoDANFE := tiRetrato;
-  FImprimeTotalLiquido := True;
-  FProtocoloNFe := '';
-  FNFeCancelada := False;
-  FvTribFed := 0.0;
-  FvTribEst := 0.0;
-  FvTribMun := 0.0;
-  FFonteTributos := '';
-  FChaveTributos := '';
-  FImprimeTributos := trbNormal;
-  FExibeTotalTributosItem := False;
-  FImprimeCodigoEan := False;
-  FImprimeInfContr := True;
-  FImprimeNomeFantasia := False;
-  FImprimeEmUmaLinha := False;
-  FExibeInforAdicProduto := infDescricao;
+  FACBrNFe                    := nil;
+  FTipoDANFE                  := tiRetrato;
+  FImprimeTotalLiquido        := True;
+  FProtocoloNFe               := '';
+  FNFeCancelada               := False;
+  FvTribFed                   := 0.0;
+  FvTribEst                   := 0.0;
+  FvTribMun                   := 0.0;
+  FFonteTributos              := '';
+  FChaveTributos              := '';
+  FImprimeTributos            := trbNormal;
+  FExibeTotalTributosItem     := False;
+  FImprimeCodigoEan           := False;
+  FImprimeInfContr            := True;
+  FImprimeNomeFantasia        := False;
+  FExibeInforAdicProduto      := infDescricao;
   FQuebraLinhaEmDetalhamentos := True;
 end;
 
@@ -519,6 +516,7 @@ begin
 
   Result := FormatFloatBr(dValor);
 end;
+
 
 
 end.

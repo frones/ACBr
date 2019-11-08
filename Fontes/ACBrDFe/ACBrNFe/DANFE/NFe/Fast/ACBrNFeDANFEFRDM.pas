@@ -1741,13 +1741,14 @@ begin
     FieldByName('Mask_vUnCom').AsString                 := FDANFEClassOwner.CasasDecimais.MaskvUnCom;
     FieldByName('Casas_qCom').AsInteger                 := FDANFEClassOwner.CasasDecimais.qCom;
     FieldByName('Casas_vUnCom').AsInteger               := FDANFEClassOwner.CasasDecimais.vUnCom;
-    FieldByName('ImprimeEm1Linha').AsString             := IfThen(FDANFEClassOwner.ImprimeEmUmaLinha, 'S', 'N');
-
-    if (DANFEClassOwner is TACBrNFeDANFCEClass) then
-      FieldByName('QrCodeLateral').AsString := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner ).ImprimeQRCodeLateral, 'S', 'N');
 
     if (FDANFEClassOwner is TACBrNFeDANFCEClass) then
-      FieldByName('ImprimeDescAcrescItem').AsInteger    := IfThen( TACBrNFeDANFCEFR(FDANFEClassOwner).ImprimeDescAcrescItem, 1 , 0 );
+    begin
+      FieldByName('ImprimeEm1Linha').AsString        := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeEmUmaLinha, 'S', 'N');
+      FieldByName('ImprimeEmDuasLinhas').AsString    := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeEmDuasLinhas, 'S', 'N');
+      FieldByName('QrCodeLateral').AsString          := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeQRCodeLateral, 'S', 'N');
+      FieldByName('ImprimeDescAcrescItem').AsInteger := IfThen( TACBrNFeDANFCEClass(FDANFEClassOwner).ImprimeDescAcrescItem, 1 , 0 );
+    end;
 
     // Carregamento da imagem
     if NaoEstaVazio(DANFEClassOwner.Logo) then

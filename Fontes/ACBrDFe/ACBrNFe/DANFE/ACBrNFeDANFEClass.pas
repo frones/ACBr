@@ -164,7 +164,11 @@ type
     FImprimeQRCodeLateral: Boolean;
     FImprimeLogoLateral: Boolean;
     FDescricaoPagamentos: TDescricaoPagamentos;
+    FImprimeEmUmaLinha: Boolean;
+    FImprimeEmDuasLinhas: Boolean;
 
+    procedure setImprimeEmUmaLinha(const Value: Boolean);
+    procedure setImprimeEmDuasLinhas(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -180,6 +184,8 @@ type
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default False;
     property EspacoFinal: Integer read FEspacoFinal write FEspacoFinal default 38;
     property DescricaoPagamentos: TDescricaoPagamentos read FDescricaoPagamentos write FDescricaoPagamentos default [icaTipo, icaBandeira];
+    property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write setImprimeEmUmaLinha default False;
+    property ImprimeEmDuasLinhas: Boolean read FImprimeEmDuasLinhas write setImprimeEmDuasLinhas default False;
   end;
 
 implementation
@@ -650,15 +656,18 @@ constructor TACBrNFeDANFCEClass.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FLarguraBobina := 302;
+  FLarguraBobina         := 302;
   FImprimeDescAcrescItem := True;
-  FImprimeItens := True;
-  FViaConsumidor := False;
-  FvTroco := 0;
-  FImprimeQRCodeLateral := False;
-  FImprimeLogoLateral := False;
-  FEspacoFinal := 38;
-  FDescricaoPagamentos := [icaTipo, icaBandeira];
+  FImprimeItens          := True;
+  FViaConsumidor         := False;
+  FvTroco                := 0;
+  FImprimeQRCodeLateral  := False;
+  FImprimeLogoLateral    := False;
+  FEspacoFinal           := 38;
+  FDescricaoPagamentos   := [icaTipo, icaBandeira];
+  FImprimeEmUmaLinha     := False;
+  FImprimeEmDuasLinhas   := False;
+
 end;
 
 function TACBrNFeDANFCEClass.ManterDescricaoPagamentos(aPagto: TpagCollectionItem
@@ -688,6 +697,30 @@ begin
   end;
 
 end;
+
+procedure TACBrNFeDANFCEClass.setImprimeEmDuasLinhas(const Value: Boolean);
+begin
+  if Value = FImprimeEmDuasLinhas then Exit;
+
+  FImprimeEmDuasLinhas := Value;
+  if Value then
+  begin
+    FImprimeEmUmaLinha := False;
+  end;
+end;
+
+procedure TACBrNFeDANFCEClass.setImprimeEmUmaLinha(const Value: Boolean);
+begin
+  if Value = FImprimeEmUmaLinha then Exit;
+
+  FImprimeEmUmaLinha := Value;
+  if Value then
+  begin
+    FImprimeEmDuasLinhas := False;
+  end;
+
+end;
+
 
 function TACBrNFeDANFEClass.ManterColunaDesconto(Value: Double): Boolean;
 begin

@@ -39,17 +39,21 @@ unit ACBrDFeReportFortes;
 interface
 
 uses
-  Classes, SysUtils, math,
+  Classes, SysUtils, math, Graphics,
   RLReport, RLPrinters, RLPDFFilter,
   ACBrUtil, ACBrDFeReport;
 
 type
   TDFeReportFortes = class
+  private
   public
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarFiltroPDF(PDFFilter: TRLPDFFilter; AConfig: TACBrDFeReport; const AFile: String);
     class function CarregarLogo(ALogoImage: TRLImage; const ALogo: string): Boolean;
+    class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer); static;
+    class function EspacejarTextoGrafico(const AText: String; AWidth: Integer;
+      AFonte: TFont): String; static;
   end;
 
 
@@ -131,6 +135,52 @@ begin
     finally
       LogoStream.Free;
     end;
+  end;
+end;
+
+class procedure TDFeReportFortes.DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer);
+var
+  ABmp: TBitmap;
+begin
+  ABmp := TBitmap.Create;
+  try
+    ABmp.Canvas.Font.Assign(ARLMemo.Font);
+    TamanhoMinimo := max(1, TamanhoMinimo);
+
+    while ABmp.Canvas.Font.Size > TamanhoMinimo do
+    begin
+      if ABmp.Canvas.TextWidth( ARLMemo.Lines.Text ) <= ARLMemo.ClientWidth then
+        Break;
+
+      ABmp.Canvas.Font.Size := ABmp.Canvas.Font.Size - 1;
+    end;
+  finally
+    ARLMemo.Font.Size := ABmp.Canvas.Font.Size;
+    ABmp.Free;
+  end;
+end;
+
+class function TDFeReportFortes.EspacejarTextoGrafico(const AText: String; AWidth: Integer; AFonte: TFont): String;
+var
+  ABMP: TBitmap;
+  LenText, TextWidth: Integer;
+  TextSpaced: String;
+begin
+  ABMP := TBitmap.Create;
+  try
+    ABMP.Canvas.Font.Assign(AFonte);
+    LenText := Length(AText);
+    TextWidth := 0;
+    while (TextWidth < AWidth) do
+    begin
+      Inc(LenText);
+      TextSpaced := ACBrStr(PadSpace(AText, LenText, '|'));
+      TextWidth := ABMP.Canvas.TextWidth(TextSpaced);
+    end;
+
+    Result := ACBrStr(PadSpace(AText, LenText-1, '|'));
+  finally
+    ABMP.Free;
   end;
 end;
 

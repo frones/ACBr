@@ -1105,16 +1105,22 @@ begin
 end;
 
 procedure TBilhetes.ImprimirOffline;
+var
+  ViaConsumidorOld: Boolean;
 begin
   VerificarDABPE;
 
-  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := True;
-  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
+  ViaConsumidorOld := TACBrBPe(FACBrBPe).DABPE.ViaConsumidor;
 
-  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := False;
-  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
+  try
+    TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := True;
+    TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
 
-  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := True;
+    TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := False;
+    TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
+  finally
+    TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := ViaConsumidorOld;
+  end;
 end;
 
 procedure TBilhetes.ImprimirResumido;

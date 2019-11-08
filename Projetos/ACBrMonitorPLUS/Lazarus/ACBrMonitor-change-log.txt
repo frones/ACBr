@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2019
+[*] DoACBrMDFe
+Compatibilização das funções de Respostas do componente MDFe, baseado no Refactory realizado nas classes da ACBrLib.
+
 04/11/2019
 [-] DoACBrNFe
 Ajuste na chamada do metodo NFe.ReciboNFe, estava chamando método de forma errada.

@@ -1,34 +1,36 @@
-{******************************************************************************}
-{ Projeto: ACBrNFeMonitor                                                      }
-{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
+{*******************************************************************************}
+{ Projeto: ACBrMonitor                                                         }
+{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.   }
+{                                                                               }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida                }
+{                                                                               }
+{ Colaboradores nesse arquivo:                                  }
+{                                                                               }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr       }
+{                                                                               }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la  }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela   }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério)  }
+{ qualquer versão posterior.                                                    }
+{                                                                               }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM    }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU       }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)               }
+{                                                                               }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,   }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.           }
+{ Você também pode obter uma copia da licença em:                               }
+{ http://www.opensource.org/licenses/gpl-license.php                            }
+{                                                                               }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{        Rua Cel.Aureliano de Camargo, 963 - Tatuí - SP - 18270-170             }
+{                                                                               }
+{*******************************************************************************}
 
-{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
-
-{ Colaboradores nesse arquivo:                                                 }
-
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-
-{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
-{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
-{ qualquer versão mais nova.                                                   }
-
-{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
-{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
-{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-
-{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
-{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
-{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
-
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
-{******************************************************************************}
 {$I ACBr.inc}
 
 unit DoACBrMDFeUnit;
@@ -53,9 +55,7 @@ public
 
   function GerarMDFeIni(XML: string): string;
   procedure RespostaManifesto(pImprimir: boolean; pImpressora: string; pPreview: String; pCopias: Integer; pPDF: Boolean);
-  procedure RespostaItensMDFe(ManifestoID: integer = 0; ItemID: integer = 0; Gerar: boolean = False);
   procedure RespostaPadrao;
-  procedure RespostaMDFeNaoEnc(ItemID: integer = 0);
   procedure RespostaEncerramento;
   procedure RespostaEnvio;
   procedure RespostaRetorno;
@@ -63,14 +63,8 @@ public
   procedure RespostaConsulta;
   procedure RespostaCancelamento;
   procedure RespostaRecibo;
-  procedure RespostaItensRecibo(ItemID: integer = 0);
   procedure RespostaEvento;
-  procedure RespostaItensEvento(ItemID: integer = 0);
   procedure RespostaDistribuicaoDFe;
-  procedure RespostaItensDistribuicaoDFeResMDFe(ItemID: integer = 0);
-  procedure RespostaItensDistribuicaoDFeResEve(ItemID: integer = 0);
-  procedure RespostaItensDistribuicaoDFeProEve(ItemID: integer = 0);
-  procedure RespostaItensDistribuicaoDFeInfeve(ItemID: integer = 0);
   procedure ImprimirMDFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
 
   property ACBrMDFe: TACBrMDFe read fACBrMDFe;
@@ -346,6 +340,7 @@ implementation
 
 uses IniFiles, DateUtils, Forms, strutils,
   ACBrDFeConfiguracoes,
+  ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   pcnConversao, pmdfeConversaoMDFe,
   pcnAuxiliar, pmdfeMDFeR, DoACBrUnit, pmdfeMDFe;
 
@@ -520,19 +515,10 @@ var
 begin
   Resp := TEnvioResposta.Create(resINI, codUTF8);
   try
+    Resp.Processar(fACBrMDFe);
+
     with fACBrMDFe.WebServices.Enviar do
     begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.verAplic := verAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := xMotivo;
-      Resp.CUF := cUF;
-      Resp.nRec := Recibo;
-      Resp.DhRecbto := dhRecbto;
-      Resp.Tmed := TMed;
-      Resp.Msg := Msg;
-
       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -545,22 +531,16 @@ procedure TACBrObjetoMDFe.RespostaRetorno;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create(resINI, codUTF8);
+  Resp := TRetornoResposta.Create('MDFe', resINI, codUTF8);
   try
-    with fACBrMDFe.WebServices.Retorno do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.verAplic := verAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := xMotivo;
-      Resp.CUF := cUF;
-      Resp.nRec := Recibo;
-      Resp.Msg := Msg;
+    Resp.Processar(fACBrMDFe.WebServices.Retorno.MDFeRetorno,
+                   fACBrMDFe.WebServices.Retorno.Recibo,
+                   fACBrMDFe.WebServices.Retorno.Msg,
+                   fACBrMDFe.WebServices.Retorno.Protocolo,
+                   fACBrMDFe.WebServices.Retorno.ChaveMDFe);
 
-      fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + fACBrMDFe.WebServices.Retorno.Msg + sLineBreak;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -581,7 +561,7 @@ begin
         if ('MDFe' + WebServices.Retorno.MDFeRetorno.ProtDFe.Items[i].chDFe =
           Manifestos.Items[j].MDFe.infMDFe.Id) then
         begin
-          RespostaItensMDFe(J, I, True);
+          //RespostaItensMDFe(J, I, True);
 
           fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak +'[MDFe_Arq' + Trim(IntToStr(
                          fACBrMDFe.Manifestos.Items[J].MDFe.Ide.nMDF)) +']' + sLineBreak +
@@ -622,55 +602,15 @@ begin
   end;
 end;
 
-procedure TACBrObjetoMDFe.RespostaItensMDFe(ManifestoID: integer;
-  ItemID: integer; Gerar: boolean);
-var
-  Resp: TRetornoItemResposta;
-begin
-  Resp := TRetornoItemResposta.Create(
-    'MDFe' + Trim(IntToStr(
-    fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.Ide.nMDF)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.Retorno.MDFeRetorno.ProtDFe.Items[ItemID] do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := fACBrMDFe.WebServices.Retorno.MDFeRetorno.cUF;
-      Resp.ChMDFe := chDFe;
-      Resp.DhRecbto := dhRecbto;
-      Resp.NProt := nProt;
-      Resp.DigVal := digVal;
-      {if Gerar then
-        Resp.Arquivo :=
-          PathWithDelim(fACBrMDFe.Configuracoes.Arquivos.PathSalvar) +
-          OnlyNumber(fACBrMDFe.Manifestos.Items[ManifestoID].MDFe.infMDFe.ID) +
-          '-MDFe.xml';  }
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
 procedure TACBrObjetoMDFe.RespostaPadrao;
 var
-  Resp: TPadraoMDFeResposta ;
+  Resp: TNaoEncerradosResposta ;
 begin
-  Resp := TPadraoMDFeResposta.Create('NAOENCERRADOS',resINI, codUTF8);
+  Resp := TNaoEncerradosResposta.Create(resINI, codUTF8);
   try
+    Resp.Processar(fACBrMDFe);
     with fACBrMDFe.WebServices.ConsMDFeNaoEnc do
     begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cUF;
-
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -685,23 +625,9 @@ var
 begin
   Resp := TStatusServicoResposta.Create(resINI, codUTF8);
   try
-    with fACBrMDFe.WebServices.StatusServico do
-    begin
-      Resp.Versao := versao;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cUF;
-      Resp.DhRecbto := dhRecbto;
-      Resp.tMed := TMed;
-      Resp.dhRetorno := dhRetorno;
-      Resp.xObs := xObs;
-      Resp.Msg := Msg;
-
-      fpCmd.Resposta := Msg + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    Resp.Processar(fACBrMDFe);
+    fpCmd.Resposta := Resp.Msg + sLineBreak;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -713,23 +639,9 @@ var
 begin
   Resp := TConsultaResposta.Create(resINI, codUTF8);
   try
-    with fACBrMDFe.WebServices.Consulta do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cUF;
-      Resp.ChMDFe := MDFeChave;
-      Resp.DhRecbto := dhRecbto;
-      Resp.NProt := Protocolo;
-      Resp.digVal := protMDFe.digVal;
-      Resp.Msg := Msg;
-
-      fpCmd.Resposta := Msg + sLineBreak;
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    Resp.Processar(fACBrMDFe);
+    fpCmd.Resposta := Resp.Msg + sLineBreak;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -741,31 +653,9 @@ var
 begin
   Resp := TCancelamentoResposta.Create(resINI, codUTF8);
   try
-    if fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Count > 0 then
-    begin
-      with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
-      begin
-        Resp.Versao := verAplic;
-        Resp.TpAmb := TpAmbToStr(TpAmb);
-        Resp.VerAplic := VerAplic;
-        Resp.CStat := cStat;
-        Resp.XMotivo := XMotivo;
-        Resp.CUF := cOrgao;
-        Resp.ChMDFe := chMDFe;
-        Resp.DhRecbto := dhRegEvento;
-        Resp.NProt := nProt;
-        Resp.TpEvento := TpEventoToStr(tpEvento);
-        Resp.xEvento := xEvento;
-        Resp.nSeqEvento := nSeqEvento;
-        Resp.CNPJDest := CNPJDest;
-        Resp.emailDest := emailDest;
-        Resp.XML := XML;
-        Resp.Arquivo := NomeArquivo;
-
-        fpCmd.Resposta := XMotivo + sLineBreak;
-        fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-      end;
-    end;
+    Resp.Processar(fACBrMDFe);
+    fpCmd.Resposta := Resp.XMotivo + sLineBreak;
+    fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -777,25 +667,10 @@ var
 begin
   Resp := TEncerramentoResposta.Create(resINI, codUTF8);
   try
+    Resp.Processar(fACBrMDFe);
+
     with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
     begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cOrgao;
-      Resp.ChMDFe := chMDFe;
-      Resp.DhRecbto := dhRegEvento;
-      Resp.NProt := nProt;
-      Resp.TpEvento := TpEventoToStr(tpEvento);
-      Resp.xEvento := xEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.CNPJDest := CNPJDest;
-      Resp.emailDest := emailDest;
-      Resp.XML := XML;
-      Resp.Arquivo := NomeArquivo;
-
       fpCmd.Resposta := XMotivo + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
     end;
@@ -804,79 +679,27 @@ begin
   end;
 end;
 
-procedure TACBrObjetoMDFe.RespostaMDFeNaoEnc(ItemID: integer);
-var
-  Resp: TNaoEncerradosResposta;
-begin
-  Resp := TNaoEncerradosResposta.Create('NAOENCERRADOS' + Trim(IntToStrZero(ItemID +1, 3)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.ConsMDFeNaoEnc do
-    begin
-      Resp.CNPJ := CNPJCPF;
-      Resp.ChMDFe := InfMDFe.Items[ItemID].chMDFe;
-      Resp.NProt := InfMDFe.Items[ItemID].nProt;
-    end;
-
-    fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Resp.Gerar;
-
-  finally
-    Resp.Free;
-  end;
-end;
-
 procedure TACBrObjetoMDFe.RespostaRecibo;
 var
-  Resp: TRetornoResposta;
+  Resp: TReciboResposta;
 begin
-  Resp := TRetornoResposta.Create(resINI, codUTF8);
+  Resp := TReciboResposta.Create('MDFe', resINI, codUTF8);
+  Resp.Processar(fACBrMDFe.WebServices.Recibo.MDFeRetorno, fACBrMDFe.WebServices.Recibo.Recibo);
   try
     with fACBrMDFe.WebServices.Recibo do
     begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.nRec := Recibo;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := cUF;
-      if fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Count > 0 then
-      begin
-        Resp.ChMDFe := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe;
-        Resp.NProt := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt;
-        Resp.MotivoMDFe := MDFeRetorno.ProtDFe.Items[0].xMotivo;
-      end;
+      //Pq tem esta chamada ?
+      {
+       if fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Count > 0 then
+       begin
+         Resp.ChMDFe := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe;
+         Resp.NProt := fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt;
+         Resp.MotivoMDFe := MDFeRetorno.ProtDFe.Items[0].xMotivo;
+       end;
+      }
 
       fpCmd.Resposta := Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensRecibo(ItemID: integer);
-var
-  Resp: TRetornoItemResposta;
-begin
-  Resp := TRetornoItemResposta.Create(
-    'MDFe' + Trim(IntToStr(StrToInt(copy(
-    fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items
-    [ItemID].chDFe, 26, 9)))), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Items[ItemID] do
-    begin
-      Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.CUF := fACBrMDFe.WebServices.Recibo.MDFeRetorno.cUF;
-      Resp.ChMDFe := chDFe;
-      Resp.DhRecbto := dhRecbto;
-      Resp.NProt := nProt;
-      Resp.digVal := digVal;
-
-      fpCmd.Resposta := Resp.Gerar;
     end;
   finally
     Resp.Free;
@@ -889,50 +712,8 @@ var
 begin
   Resp := TEventoResposta.Create(resINI, codUTF8);
   try
-    with fACBrMDFe.WebServices.EnvEvento.EventoRetorno do
-    begin
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.idLote := IdLote;
-      Resp.cOrgao := cOrgao;
-
-      fpCmd.Resposta := sLineBreak + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensEvento(ItemID: integer);
-var
-  Resp: TEventoItemResposta;
-begin
-  Resp := TEventoItemResposta.Create(
-    'Evento' + Trim(IntToStrZero(ItemID +1, 3)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Items[ItemID].RetInfEvento do
-    begin
-      Resp.Id := Id;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.verAplic := verAplic;
-      Resp.cOrgao := cOrgao;
-      Resp.cStat := cStat;
-      Resp.xMotivo := xMotivo;
-      Resp.chMDFe := chMDFe;
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.xEvento := xEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.CNPJDest := CNPJDest;
-      Resp.emailDest := emailDest;
-      Resp.dhRegEvento := dhRegEvento;
-      Resp.nProt := nProt;
-      Resp.Arquivo := NomeArquivo;
-      Resp.XML := XML;
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    Resp.Processar(fACBrMDFe);
+    fpCmd.Resposta := sLineBreak + Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -945,146 +726,12 @@ var
 begin
   Resp := TDistribuicaoDFeResposta.Create(resINI, codUTF8);
   try
-    with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt do
-    begin
-      Resp.Versao := versao;
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      Resp.dhResp := dhResp;
-      Resp.ultNSU := ultNSU;
-      Resp.maxNSU := maxNSU;
-      Resp.arquivo := fACBrMDFe.WebServices.DistribuicaoDFe.NomeArq;
+    Resp.Processar(fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt,
+                   fACBrMDFe.WebServices.DistribuicaoDFe.Msg,
+                   fACBrMDFe.WebServices.DistribuicaoDFe.NomeArq,
+                   fACBrMDFe.WebServices.DistribuicaoDFe.ListaArqs);
 
-      if cStat = 137 then
-        sTemMais := '1'  // Sim
-      else
-        sTemMais := '0'; // Não
-
-      Resp.indCont := sTemMais;
-
-      fpCmd.Resposta := Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensDistribuicaoDFeResMDFe(ItemID: integer);
-var
-  Resp: TDistribuicaoDFeItemResposta;
-begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'ResMDFe' + Trim(IntToStrZero(ItemID +1, 3)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].resDFe do
-    begin
-      Resp.NSU := fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chMDFe := chDFe;
-      Resp.CNPJCPF := CNPJCPF;
-      Resp.xNome := xNome;
-      Resp.IE := IE;
-      Resp.dhEmi := dhEmi;
-      Resp.vNF := vNF;
-      Resp.digVal := digVal;
-      Resp.dhRecbto := dhRecbto;
-      Resp.cSitMDFe := SituacaoDFeToStr(cSitDFe);
-      Resp.nProt := nProt;
-      Resp.XML := fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrMDFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensDistribuicaoDFeResEve(ItemID: integer);
-begin
-  // Atualmente o DistribuicaoDFe do MDF-e não retorna Resumo de Eventos.
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensDistribuicaoDFeProEve(ItemID: integer);
-var
-  Resp: TDistribuicaoDFeItemResposta;
-begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'ProEve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento do
-    begin
-      Resp.NSU := fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].NSU;
-      Resp.chMDFe := chDFe;
-      Resp.cOrgao := cOrgao;
-      Resp.CNPJ := CNPJ;
-      Resp.Id := Id;
-      Resp.dhEvento := dhEvento;
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.verEvento := verEvento;
-
-      with detEvento do
-      begin
-        Resp.descEvento := descEvento;
-        Resp.xJust := xJust;
-        Resp.EmiCnpj := emit.CNPJ;
-        Resp.EmiIE := emit.IE;
-        Resp.EmixNome := emit.xNome;
-        Resp.cteNProt := CTe.nProt;
-        Resp.cteChvCte := CTe.chCTe;
-        Resp.cteDhemi := CTe.dhEmi;
-        Resp.cteModal := TpModalToStr(CTe.modal);
-        Resp.cteDhRebcto := CTe.dhRecbto;
-      end;
-
-      Resp.XML := fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrMDFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
-  end;
-
-end;
-
-procedure TACBrObjetoMDFe.RespostaItensDistribuicaoDFeInfeve(ItemID: integer);
-var
-  Resp: TDistribuicaoDFeItemResposta;
-begin
-  Resp := TDistribuicaoDFeItemResposta.Create(
-    'Infeve' + Trim(IntToStrZero(ItemID +1, 3)), resINI, codUTF8);
-  try
-    with fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].procEvento.RetInfevento do
-    begin
-      Resp.Id := Id;
-      Resp.VerAplic := VerAplic;
-      Resp.tpAmb := TpAmbToStr(tpAmb);
-      Resp.cOrgao := cOrgao;
-      Resp.chMDFe := chDFe;
-      Resp.CStat := cStat;
-      Resp.CNPJDest := CNPJDest;
-      Resp.cOrgaoAutor := cOrgaoAutor;
-      Resp.tpEvento := TpEventoToStr(tpEvento);
-      Resp.nSeqEvento := nSeqEvento;
-      Resp.xEvento := xEvento;
-      Resp.XMotivo := XMotivo;
-      Resp.dhRegEvento := dhRegEvento;
-      Resp.emailDest := emailDest;
-      Resp.nProt := nProt;
-
-      Resp.XML := fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Items[ItemID].XML;
-      Resp.Arquivo := fACBrMDFe.WebServices.DistribuicaoDFe.listaArqs[ItemID];
-      Resp.schema := SchemaDFeToStr(fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip[ItemID].schema);
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
+    fpCmd.Resposta := Resp.Gerar;
   finally
     Resp.Free;
   end;
@@ -1150,20 +797,7 @@ begin
       raise Exception.Create('CNPJ/CPF '+ACNPJ+' inválido.');
 
     ACBrMDFe.DistribuicaoDFePorChaveMDFe(ACNPJ, AChave);
-
     RespostaDistribuicaoDFe;
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResMDFe(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfEve(I);
   end;
 
 end;
@@ -1191,18 +825,6 @@ begin
     ACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJ, AUltNSU);
 
     RespostaDistribuicaoDFe;
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResMDFe(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfeve(I);
   end;
 end;
 
@@ -1229,18 +851,6 @@ begin
     ACBrMDFe.DistribuicaoDFePorNSU(ACNPJ, ANSU);
 
     RespostaDistribuicaoDFe;
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResMDFe(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeResEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeProEve(I);
-
-    for I := 0 to ACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt.docZip.Count - 1 do
-      RespostaItensDistribuicaoDFeInfeve(I);
   end;
 
 end;
@@ -1899,8 +1509,6 @@ begin
     ACBrMDFe.WebServices.Recibo.Executar;
 
     RespostaRecibo;
-    for I := 0 to ACBrMDFe.WebServices.Recibo.MDFeRetorno.ProtDFe.Count - 1 do
-      RespostaItensRecibo(I);
 
     if ACBrMDFe.Configuracoes.Geral.Salvar then
       fpCmd.Resposta := 'Arquivo=' + ACBrMDFe.Configuracoes.Arquivos.PathSalvar +
@@ -1926,9 +1534,6 @@ begin
 
     ACBrMDFe.WebServices.ConsultaMDFeNaoEnc(ACNPJ);
     RespostaPadrao;
-    for I:= 0 to fACBrMDFe.WebServices.ConsMDFeNaoEnc.InfMDFe.Count -1  do
-      RespostaMDFeNaoEnc(I);
-
   end;
 
 end;
@@ -2727,7 +2332,6 @@ end;
 procedure TMetodoEnviarEvento.Executar;
 var
   AArq: String;
-  I: Integer;
 begin
   AArq := fpCmd.Params(0);
 
@@ -2740,9 +2344,6 @@ begin
     ACBrMDFe.EnviarEvento(ACBrMDFe.EventoMDFe.idLote);
 
     RespostaEvento;
-
-    for I := 0 to ACBrMDFe.WebServices.EnvEvento.EventoRetorno.retEvento.Count - 1 do
-       RespostaItensEvento(I);
   end;
 end;
 

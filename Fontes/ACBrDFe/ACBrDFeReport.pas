@@ -50,7 +50,7 @@ type
    Determina como será a formatação das casas decimais existentes no relátorio.
    @links TACBrDFeReport.CasasDecimais }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TCasasDecimais = class(TComponent)
   private
@@ -86,7 +86,7 @@ type
   {@class TACBrDFeReport - Classe base para os componentes de impressão dos documentos DFe.
    @links TACBrDFeReport }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrDFeReport = class(TACBrComponent)
   private
@@ -397,10 +397,9 @@ begin
   if (Frac(dValor) > 0) or (dForcarDecimais) then
   begin
     case CasasDecimais.Formato of
-      tdetInteger: Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.qCom));
       tdetMascara: Result := FormatFloatBr(dValor, CasasDecimais.MaskqCom);
-      else
-        Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.qCom));
+    else
+      Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.qCom));
     end;
   end
   else
@@ -412,10 +411,9 @@ function TACBrDFeReport.FormatarValorUnitario(dValor: Double): String;
 begin
   // formatar conforme configurado
   case CasasDecimais.Formato of
-    tdetInteger: Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.vUnCom));
     tdetMascara: Result := FormatFloatBr(dValor, CasasDecimais.MaskvUnCom);
-    else
-      Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.vUnCom));
+  else
+    Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.vUnCom));
   end;
 end;
 

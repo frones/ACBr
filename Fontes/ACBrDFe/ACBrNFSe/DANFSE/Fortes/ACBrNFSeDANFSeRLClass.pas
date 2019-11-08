@@ -39,11 +39,12 @@ unit ACBrNFSeDANFSeRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, pnfsNFSe, ACBrNFSeDANFSeClass;
+  Forms, SysUtils, Classes, pnfsNFSe,
+  ACBrBase, ACBrNFSeDANFSeClass;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFSeDANFSeRL = class(TACBrNFSeDANFSeClass)
   private

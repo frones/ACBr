@@ -48,7 +48,8 @@ unit ACBrNFPws ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSocket;
+  Classes, SysUtils,
+  ACBrBase, ACBrSocket;
 
 const
   CNFPws_URLNF = 'https://www.nfp.fazenda.sp.gov.br/ws/arquivonf_mod1.asmx' ;
@@ -65,7 +66,7 @@ type
 
   { TACBrNFPws }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFPws = class( TACBrHTTP )
     private

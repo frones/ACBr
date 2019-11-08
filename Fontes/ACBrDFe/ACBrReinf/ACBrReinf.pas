@@ -44,7 +44,7 @@ unit ACBrReinf;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil,
+  Classes, SysUtils, ACBrUtil, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrReinfConfiguracoes, ACBrReinfWebServices, ACBrReinfEventos,
   pcnConversao, pcnConversaoReinf;
@@ -69,7 +69,7 @@ type
 
   { TACBrReinf }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrReinf = class(TACBrDFe)
   private

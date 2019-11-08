@@ -45,17 +45,17 @@ unit ACBrBarCode;
 interface
 
 uses
- {ACBrBase, }Classes, SysUtils,
+ Classes, SysUtils,
  {$IFDEF VisualCLX}
   QGraphics, QControls, QExtCtrls, QDialogs,
  {$ELSE}
   Graphics, Controls, ExtCtrls, Dialogs, 
  {$ENDIF}
-  AJBarcode ;
+  ACBrBase, AJBarcode ;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrBarCode = class ( TGraphicControl )
   private

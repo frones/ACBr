@@ -47,14 +47,15 @@ unit ACBrConsultaCNPJ;
 interface
 
 uses
-  SysUtils, Classes, ACBrSocket, ACBrIBGE;
+  SysUtils, Classes,
+  ACBrBase, ACBrSocket, ACBrIBGE;
 
 type
   EACBrConsultaCNPJException = class ( Exception );
 
   { TACBrConsultaCNPJ }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrConsultaCNPJ = class(TACBrHTTP)
   private

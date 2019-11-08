@@ -46,18 +46,18 @@ unit ACBrDANFCeFortesFrA4;
 interface
 
 uses
-	Classes, SysUtils,
-     {$IFDEF FPC}
-       LResources,
-     {$ENDIF}
-  Messages, Variants, Graphics,
-  Controls, Forms, Dialogs, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
+  Classes, SysUtils,
+  {$IFDEF FPC}
+   LResources,
+  {$ENDIF}
+  Messages, Variants, Graphics, Controls, Forms, Dialogs,
+  ACBrBase, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
   RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFCeFortesA4 = class(TACBrNFeDANFCEClass)
   private

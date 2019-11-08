@@ -49,7 +49,8 @@ unit ACBrIBPTax;
 interface
 
 uses
-  Contnrs,  SysUtils, Variants, Classes, ACBrSocket;
+  Contnrs, SysUtils, Variants, Classes,
+  ACBrBase, ACBrSocket;
 
 type
   EACBrIBPTax = class(Exception);
@@ -143,7 +144,7 @@ type
   { TACBrIBPTax }
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrIBPTax = class(TACBrHTTP)
   private

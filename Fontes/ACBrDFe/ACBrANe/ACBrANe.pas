@@ -41,7 +41,7 @@ unit ACBrANe;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, ACBrBase,
   ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
   ACBrANeConfiguracoes, ACBrANeWebServices, ACBrANeDocumentos,
   pcnConversao, pcaANe, pcaConversao;
@@ -55,7 +55,7 @@ type
   EACBrANeException = class(EACBrDFeException);
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
   TACBrANe = class(TACBrDFe)

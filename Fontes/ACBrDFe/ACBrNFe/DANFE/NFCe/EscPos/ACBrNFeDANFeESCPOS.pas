@@ -57,7 +57,7 @@ interface
 
 uses
   Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
-  ACBrNFeDANFEClass, ACBrPosPrinter,
+  ACBrBase, ACBrNFeDANFEClass, ACBrPosPrinter,
   pcnNFe, pcnEnvEventoNFe, pcnInutNFe;
 
 const
@@ -66,7 +66,7 @@ const
 type
   { TACBrNFeDANFeESCPOS }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFCEClass)
   private

@@ -52,7 +52,7 @@ uses Classes, SysUtils,
        LResources,
      {$ENDIF}
      Forms, Graphics,
-     ACBrSATExtratoClass, ACBrSATExtratoReportClass,
+     ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
      pcnCFe, pcnCFeCanc, pcnConversao,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
      RLFilters, RLPrinters, Controls, StrUtils;
@@ -61,7 +61,7 @@ type
 
   { TACBrSATExtratoFortes }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSATExtratoFortes = class( TACBrSATExtratoReportClass )
   private

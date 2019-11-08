@@ -41,7 +41,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics,
-  pcnNFe, ACBrNFeDANFEClass, pcnConversao;
+  ACBrBase, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
@@ -49,7 +49,7 @@ type
   { TFonte }
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TFonte = class(TComponent)
   protected
@@ -73,7 +73,7 @@ type
   { TACBrNFeDANFeRL }
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFeRL = class(TACBrNFeDANFEClass)
   protected

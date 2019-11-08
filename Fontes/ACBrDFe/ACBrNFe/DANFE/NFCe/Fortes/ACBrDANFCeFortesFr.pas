@@ -48,7 +48,7 @@ uses Classes, SysUtils,
        LResources,
      {$ENDIF}
      Forms, Graphics,
-     ACBrNFeDANFEClass,
+     ACBrNFeDANFEClass, ACBrBase,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
      RLFilters, RLPrinters, RLTypes, Controls;
@@ -61,7 +61,7 @@ type
 
   { TACBrNFeDANFCeFortes }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFCEClass )
   private

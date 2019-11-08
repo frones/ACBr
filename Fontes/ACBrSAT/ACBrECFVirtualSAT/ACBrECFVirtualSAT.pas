@@ -37,7 +37,8 @@ unit ACBrECFVirtualSAT;
 
 interface
 
-uses ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
+uses
+  ACBrBase, ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrSAT, ACBrUtil, ACBrConsts,
   Classes, SysUtils, pcnCFe, pcnConversao, ACBrECF, ACBrDevice
   {$IFDEF FPC}, LResources {$ENDIF};
 
@@ -57,7 +58,7 @@ type
 
   { TACBrECFVirtualSAT }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualSAT = class(TACBrECFVirtualPrinter)
   private
@@ -97,7 +98,7 @@ type
 
   { TACBrECFVirtualSATClass }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualSATClass = class(TACBrECFVirtualPrinterClass)
   private

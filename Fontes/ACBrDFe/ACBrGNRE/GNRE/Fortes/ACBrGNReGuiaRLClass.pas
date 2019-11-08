@@ -39,11 +39,12 @@ unit ACBrGNReGuiaRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, ACBrGNREGuiaClass,pgnreGNRERetorno,RLTypes;
+  Forms, SysUtils, Classes, RLTypes,
+  ACBrBase, ACBrGNREGuiaClass, pgnreGNRERetorno;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrGNREGuiaRL = class(TACBrGNREGuiaClass)
   private

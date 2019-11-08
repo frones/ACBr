@@ -195,7 +195,7 @@ type
   TACBrIBGELerGravarCache = procedure(ConteudoCache: TStrings; var Tratado: Boolean) of object;
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrIBGE = class( TACBrHTTP )
   private

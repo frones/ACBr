@@ -39,7 +39,7 @@ interface
 
 uses Classes, SysUtils,
 {$IFDEF FPC}LResources, {$ENDIF}
-  ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrECF, ACBrDevice,
+  ACBrECFVirtual, ACBrECFVirtualPrinter, ACBrNFe, ACBrECF, ACBrDevice, ACBrBase,
   pcnNFe, pcnConversao;
 
 const
@@ -63,7 +63,7 @@ type
 
   { TACBrECFVirtualNFCe }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCe = class(TACBrECFVirtualPrinter)
   private
@@ -111,7 +111,7 @@ type
 
   { TACBrECFVirtualNFCeClass }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private

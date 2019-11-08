@@ -42,7 +42,8 @@ unit ACBrSped;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrTXTClass;
+uses
+  SysUtils, Classes, DateUtils, ACBrBase, ACBrTXTClass;
 
 type
   TWriteRegistroEvent = procedure(var ALinha: String) of object;
@@ -52,7 +53,7 @@ type
 
   { TACBrSPED }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSPED = class(TACBrTXTClass)
   private

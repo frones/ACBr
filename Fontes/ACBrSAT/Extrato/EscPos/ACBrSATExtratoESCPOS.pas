@@ -43,12 +43,13 @@ unit ACBrSATExtratoESCPOS;
 
 interface
 
-uses Classes, SysUtils,
-     {$IFDEF FPC}
-       LResources,
-     {$ENDIF} 
-     ACBrSATExtratoClass, ACBrPosPrinter,
-     pcnCFe, pcnCFeCanc, pcnConversao;
+uses
+  Classes, SysUtils,
+  {$IFDEF FPC}
+    LResources,
+  {$ENDIF}
+  ACBrBase, ACBrSATExtratoClass, ACBrPosPrinter,
+  pcnCFe, pcnCFeCanc, pcnConversao;
 
 const
   CLarguraRegiaoEsquerda = 290;
@@ -58,7 +59,7 @@ type
 
   { TACBrSATExtratoESCPOS }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSATExtratoESCPOS = class( TACBrSATExtratoClass )
   private

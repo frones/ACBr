@@ -33,7 +33,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFe, ACBrDFeConfiguracoes, ACBrSATWS_WebServices,
+  ACBrBase, ACBrDFe, ACBrDFeConfiguracoes, ACBrSATWS_WebServices,
   ACBrUtil;
 
 type
@@ -50,7 +50,7 @@ type
 
   { TACBrSATWS }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSATWS = class(TACBrDFe)
   private

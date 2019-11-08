@@ -47,7 +47,8 @@ unit ACBrSuframa;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrSocket, ACBrValidador;
+  Classes, SysUtils,
+  ACBrBase, ACBrUtil, ACBrSocket, ACBrValidador;
 
 type
   EACBrSuframa = class( Exception );
@@ -65,7 +66,7 @@ type
   end;
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSuframa = class( TACBrHTTP )
   private

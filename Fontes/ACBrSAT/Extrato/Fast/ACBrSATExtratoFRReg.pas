@@ -44,14 +44,15 @@ unit ACBrSATExtratoFRReg;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
+  Classes, SysUtils,
+  ACBrBase, ACBrSATExtratoClass, ACBrSATExtratoReportClass,
   pcnCFe, pcnCFeCanc, pcnConversao;
 
 type
 
   { TACBrSATExtratoFast }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSATExtratoFast = class( TACBrSATExtratoReportClass )
   private

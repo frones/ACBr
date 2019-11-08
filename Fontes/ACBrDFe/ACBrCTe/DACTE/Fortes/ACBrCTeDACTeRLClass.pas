@@ -49,14 +49,14 @@ interface
 {$H+}
 
 uses
-  Forms, SysUtils, Classes,
+  Forms, SysUtils, Classes, ACBrBase,
   pcnConversao, pcteCTe, ACBrCTeDACTEClass, RLTypes;
 
 type
 
   { TACBrCTeDACTeRL }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCTeDACTeRL = class(TACBrCTeDACTeClass)
   protected

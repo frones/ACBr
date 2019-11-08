@@ -381,7 +381,7 @@ type
 
   TConvenio115TipoArquivo = (c115taMestre, c115taitem, c115taDestinatario);
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrConvenio115 = class(TACBrComponent)
   private

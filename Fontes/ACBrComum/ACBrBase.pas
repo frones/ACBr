@@ -64,14 +64,47 @@ uses Classes, SysUtils, Contnrs, syncobjs,
           ,Dialogs
        {$IFEND}
      {$ENDIF};
+
+{$IFDEF RTL230_UP}
+const
+  { Platform identifiers }
+  piacbrWin32          = $00000001; // Windows 32-bit
+  piacbrWin64          = $00000002; // Windows 64-bit
+  piacbrOSX32          = $00000004; // OS X 32-bit
+  piacbrOSX64          = $00001000; // OS X 64-bit
+  piacbriOSSimulator32 = $00000008; // iOS Simulator 32-bit (runs on the Mac)
+  piacbriOSSimulator64 = $00010000; // iOS Simulator 64-bit (runs on the Mac)
+  piacbrAndroid32Arm   = $00000010; // Android device 32-bit
+  piacbrAndroid64Arm   = $00008000; // Android device 64-bit
+  piacbrLinux32        = $00000020; // Linux 32-bit
+  piacbrLinux64        = $00000080; // Linux 64-bit
+  piacbrLinux32Arm     = $00002000; // Linux 32-bit ARM processor (raspberry pi)
+  piacbrLinux64Arm     = $00004000; // Linux 64-bit ARM processor (raspberry pi)
+  piacbriOSDevice32    = $00000040; // iOS Device 32-bit (iPad, iPhone, iPod Touch)
+  piacbriOSDevice64    = $00000400; // iOS Device 64-bit (iPad, iPhone, iPod Touch)
+  piacbrWinNX32        = $00000100; // Windows ??
+  piacbrWinIoT32       = $00000200; // Windows Embedded IoT (Internet of Things) - Intel Galileo
+  piacbrWinARM32       = $00000800; // Windows 32-bit ARM processor (raspberry pi)
+
+
+  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 or
+                       piacbrOSX32 or piacbrOSX64 or
+                       piacbriOSSimulator32 or piacbriOSSimulator64 or
+                       piacbrAndroid32Arm or piacbrAndroid64Arm or
+                       piacbrLinux32 or piacbrLinux64 or
+                       piacbrLinux32Arm or piacbrLinux64Arm or
+                       piacbriOSDevice32 or piacbriOSDevice64 or
+                       piacbrWinNX32 or piacbrWinIoT32 or piacbrWinARM32;
+{$ENDIF RTL230_UP}
+
 type
 
 TACBrAboutInfo = (ACBrAbout);
 
 { ACBrComponente contém apenas a propriedade ACBrAbout }
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
-  {$ENDIF RTL230_UP}
+{$IFDEF RTL230_UP}
+[ComponentPlatformsAttribute(piacbrAllPlatforms)]
+{$ENDIF RTL230_UP}
 TACBrComponent = class( TComponent )
   private
     fsAbout: TACBrAboutInfo;

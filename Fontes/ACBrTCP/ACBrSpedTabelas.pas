@@ -48,7 +48,8 @@ unit ACBrSpedTabelas;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrSocket, ACBrDownload, ACBrUtil;
+  Classes, SysUtils, contnrs,
+  ACBrBase, ACBrSocket, ACBrDownload, ACBrUtil;
 
 type
   TACBrCodSistema = (csSpedFiscal, csSpedPisCofins, csSpedContabil, csSpedECF);
@@ -93,7 +94,7 @@ type
 
   { TACBrSpedTabelas}
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrSpedTabelas = class(TACBrHTTP)
   private

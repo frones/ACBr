@@ -54,14 +54,15 @@ unit ACBrNFeDANFEFR;
 interface
 
 uses
-  SysUtils, Classes, Forms, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
+  SysUtils, Classes, Forms,
+  ACBrBase, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
   pcnNFe, pcnConversao, frxClass;
 
 type
   EACBrNFeDANFEFR = class(Exception);
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFEFR = class( TACBrNFeDANFEClass )
   private
@@ -130,7 +131,7 @@ type
   end;
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFeDANFCEFR = class( TACBrNFeDANFCEClass )
   private

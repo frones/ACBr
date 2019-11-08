@@ -6,7 +6,7 @@ unit ACBrCIOT;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, ACBrBase,
   ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
   ACBrCIOTConfiguracoes, ACBrCIOTWebServices, ACBrCIOTContratos,
   pcnConversao, pcnCIOT, pcnConversaoCIOT;
@@ -21,7 +21,7 @@ type
   EACBrCIOTException = class(EACBrDFeException);
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
   TACBrCIOT = class(TACBrDFe)

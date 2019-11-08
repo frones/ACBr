@@ -45,7 +45,8 @@ unit ACBrNCMs;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrSocket, ACBrUtil;
+  Classes, SysUtils, contnrs,
+  ACBrBase, ACBrSocket, ACBrUtil;
 
 type
   EACBrNcmException = class(Exception);
@@ -77,7 +78,7 @@ type
     procedure SaveToFile(const AFileName: String);
   end;
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNCMs = class(TACBrHTTP)
   private

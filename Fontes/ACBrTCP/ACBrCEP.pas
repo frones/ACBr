@@ -52,7 +52,8 @@ unit ACBrCEP ;
 interface
 
 uses
-  Classes, SysUtils, contnrs, ACBrSocket, ACBrIBGE, Jsons;
+  Classes, SysUtils, contnrs,
+  ACBrBase, ACBrSocket, ACBrIBGE, Jsons;
 
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
@@ -116,7 +117,7 @@ type
 
   { TACBrCEP }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCEP = class( TACBrHTTP )
     private
@@ -155,7 +156,7 @@ type
 
   { TACBrCEPWSClass }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCEPWSClass = class
     private

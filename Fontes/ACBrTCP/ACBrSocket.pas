@@ -124,7 +124,7 @@ TACBrTCPServerThread = class(TThread)
 
 { TACBrTCPServer }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrTCPServer = class( TACBrComponent )
   private
@@ -193,7 +193,7 @@ end ;
 { TACBrHTTP }
 
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrHTTP = class( TACBrComponent )
   private

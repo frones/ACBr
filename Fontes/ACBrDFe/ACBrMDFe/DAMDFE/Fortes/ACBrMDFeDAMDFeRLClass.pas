@@ -39,11 +39,11 @@ unit ACBrMDFeDAMDFeRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, ACBrMDFeDAMDFeClass, pmdfeMDFe;
+  Forms, SysUtils, Classes, ACBrBase, ACBrMDFeDAMDFeClass, pmdfeMDFe;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrMDFeDAMDFeRL = class(TACBrMDFeDAMDFeClass)
   private

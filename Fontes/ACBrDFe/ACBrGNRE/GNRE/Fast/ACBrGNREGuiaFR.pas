@@ -49,13 +49,14 @@ unit ACBrGNREGuiaFR;
 interface
 
 uses
-  Forms, SysUtils, Classes, Graphics, ACBrGNREGuiaClass, ACBrGNREGuiaFRDM,
+  Forms, SysUtils, Classes, Graphics,
+  ACBrBase, ACBrGNREGuiaClass, ACBrGNREGuiaFRDM,
   pcnConversao, frxClass, pgnreGNRERetorno;
 
 type
   EACBrGNREGuiaFR = class(Exception);
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrGNREGuiaFR = class(TACBrGNREGuiaClass)
   private

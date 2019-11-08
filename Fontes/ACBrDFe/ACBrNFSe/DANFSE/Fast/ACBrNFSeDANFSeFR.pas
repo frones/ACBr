@@ -39,13 +39,14 @@ unit ACBrNFSeDANFSeFR;
 interface
 
 uses
-  SysUtils, Classes, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,
+  SysUtils, Classes,
+  ACBrBase, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,
   DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
 
 type
   EACBrNFSeDANFSeFR = class(Exception);
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrNFSeDANFSeFR = class(TACBrNFSeDANFSeClass)
   private

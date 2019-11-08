@@ -40,14 +40,14 @@ unit ACBrMDFeDAMDFEFR;
 interface
 
 uses
-  SysUtils, Classes, DB, DBClient, ACBrMDFeDAMDFeClass, pcnConversao,
+  SysUtils, Classes, DB, DBClient, ACBrBase, ACBrMDFeDAMDFeClass, pcnConversao,
   pmdfeMDFe, frxClass, ACBrDFeUtil, pmdfeEnvEventoMDFe, frxDBSet,
   frxExportPDF, frxBarcode;
 
 type
   EACBrMDFeDAMDFEFR = class(Exception);
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrMDFeDAMDFEFR = class(TACBrMDFeDAMDFEClass)
   private

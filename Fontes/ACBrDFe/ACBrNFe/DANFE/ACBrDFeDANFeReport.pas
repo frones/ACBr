@@ -40,7 +40,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeReport,
+  ACBrBase, ACBrDFeReport,
   pcnNFe, pcnConversao, pcnAuxiliar;
 
 type
@@ -49,7 +49,7 @@ type
 
   { TACBrDFeDANFeReport }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrDFeDANFeReport = class(TACBrDFeReport)
   private

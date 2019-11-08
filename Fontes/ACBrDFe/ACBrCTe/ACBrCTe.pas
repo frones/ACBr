@@ -43,7 +43,7 @@ unit ACBrCTe;
 interface
 
 uses
-  Classes, Sysutils,
+  Classes, Sysutils, ACBrBase,
   ACBrDFe, ACBrDFeConfiguracoes,
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
@@ -61,7 +61,7 @@ type
 
   { TACBrCTe }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCTe = class(TACBrDFe)
   private

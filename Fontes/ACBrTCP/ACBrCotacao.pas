@@ -53,8 +53,8 @@ unit ACBrCotacao;
 interface
 
 uses
-  ACBrSocket, ACBrUtil, 
-  SysUtils, Variants, Classes, Contnrs;
+    SysUtils, Variants, Classes, Contnrs,
+    ACBrBase, ACBrSocket, ACBrUtil;
 
 type
   EACBrCotacao = class(Exception);
@@ -96,7 +96,7 @@ type
     property Items[Index: integer]: TACBrCotacaoItem read GetItem write SetItem; default;
   end;
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCotacao = class(TACBrHTTP)
   private
@@ -317,4 +317,4 @@ begin
 
 end;
 
-end.
+end.

@@ -36,7 +36,7 @@
 unit ACBrECFVirtualNaoFiscal ;
 
 interface
-uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil,
+uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrBase,
      Classes, SysUtils
      {$IFNDEF NOGUI}
        {$IF DEFINED(VisualCLX)}
@@ -58,7 +58,7 @@ type
 
 { TACBrECFVirtualNaoFiscal }
 	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}	
 TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
   private

@@ -46,14 +46,15 @@ unit ACBrBPeDABPeESCPOS;
 interface
 
 uses
-  Classes, SysUtils, {$IFDEF FPC} LResources, {$ENDIF}
-  ACBrBPeDABPEClass, ACBrPosPrinter,
+  Classes, SysUtils,
+  {$IFDEF FPC} LResources, {$ENDIF}
+  ACBrBPeDABPEClass, ACBrPosPrinter, ACBrBase,
   pcnBPe, pcnEnvEventoBPe;
 
 type
   { TACBrBPeDABPeESCPOS }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrBPeDABPeESCPOS = class(TACBrBPeDABPEClass)
   private

@@ -49,7 +49,7 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil,
+  Classes, SysUtils, ACBrUtil, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBreSocialEventos,
   pcnConversao, pcesConversaoeSocial;
@@ -81,7 +81,7 @@ type
 
   { TACBreSocial }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBreSocial = class(TACBrDFe)
   private

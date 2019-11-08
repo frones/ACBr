@@ -49,8 +49,8 @@ uses
   pcnConversao, ACBrDFeSSL;
 
 const
-  cLIBSAT              = 'SAT.DLL';
-  cversaoDadosEnt      = 0.07;
+  cLIBSAT = 'SAT.DLL';
+  cversaoDadosEnt = 0.07;
   CPREFIXO_ArqCFe = 'AD';
   CPREFIXO_ArqCFeCanc = 'ADC';
   CPastaVendas = 'Vendas';

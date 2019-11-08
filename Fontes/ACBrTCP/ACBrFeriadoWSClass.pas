@@ -46,11 +46,11 @@ unit ACBrFeriadoWSClass;
 interface
 
 uses
-  Classes;
+  Classes, ACBrBase;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrFeriadoWSClass = class
   protected

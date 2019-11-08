@@ -41,14 +41,15 @@ unit ACBrConsultaCPF;
 interface
 
 uses
-  SysUtils, Classes, ACBrSocket;
+  SysUtils, Classes,
+  ACBrBase, ACBrSocket;
 
 type
   EACBrConsultaCPFException = class ( Exception );
 
   { TACBrConsultaCPF }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrConsultaCPF = class(TACBrHTTP)
   private

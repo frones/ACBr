@@ -58,11 +58,11 @@ uses
  {$ELSE}
   Graphics, Controls, ExtCtrls, Dialogs, 
  {$ENDIF}
-  Gif3 ;
+  ACBrBase, Gif3 ;
 
 type
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrGIF = class ( TGraphicControl )
   private

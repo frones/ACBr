@@ -48,7 +48,7 @@ unit ACBrCTeDACTEFR;
 interface
 
 uses
-  SysUtils, Classes, ACBrCTeDACTEClass,
+  SysUtils, Classes, ACBrCTeDACTEClass, ACBrBase,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
   pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe, ACBrUtil, StrUtils,
   DB, MaskUtils;
@@ -56,7 +56,7 @@ uses
 type
   EACBrCTeDACTEFR = class(Exception);
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrCTeDACTEFR = class(TACBrCTeDACTEClass)
   private

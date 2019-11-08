@@ -49,7 +49,7 @@ unit ACBrGNRE2;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrGNREConfiguracoes, ACBrGNREWebServices, ACBrGNREGuias,
   ACBrGNREGuiasRetorno, ACBrGNREGuiaClass,
@@ -66,7 +66,7 @@ type
 
   { TACBrGNRE }
   {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
   TACBrGNRE = class(TACBrDFe)
   private

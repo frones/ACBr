@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/11/2019
+-- ACBrBPeBilhetes --
+[+] Implementado o método ImprimirOffline, esse método imprime automaticamente a
+    via do consumidor e da empresa.
+   Por: Italo Jurisato Junior
+
 07/11/2019
 -- ACBrBPeWebServices --
 [*] Melhorias nas procedures responsáveis por salvar o envio e o retorno dos

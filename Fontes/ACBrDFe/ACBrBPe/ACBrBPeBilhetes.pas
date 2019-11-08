@@ -157,6 +157,8 @@ type
     procedure ImprimirResumido;
     procedure ImprimirPDF;
     procedure ImprimirResumidoPDF;
+    procedure ImprimirOffline;
+
     function Add: Bilhete;
     function Insert(Index: integer): Bilhete;
 
@@ -1100,6 +1102,19 @@ procedure TBilhetes.ImprimirCancelado;
 begin
   VerificarDABPE;
   TACBrBPe(FACBrBPe).DABPE.ImprimirDABPECancelado(nil);
+end;
+
+procedure TBilhetes.ImprimirOffline;
+begin
+  VerificarDABPE;
+
+  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := True;
+  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
+
+  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := False;
+  TACBrBPe(FACBrBPe).DABPE.ImprimirDABPE(nil);
+
+  TACBrBPe(FACBrBPe).DABPE.ViaConsumidor := True;
 end;
 
 procedure TBilhetes.ImprimirResumido;

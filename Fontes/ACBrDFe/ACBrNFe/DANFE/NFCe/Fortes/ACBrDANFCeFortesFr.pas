@@ -718,7 +718,7 @@ begin
   Result := '';
   TamanhoDescricao := 9;
   TamanhoLinha     := 0;
-  TamanhoMaximo    := mLinhaItem.Width - 10;
+  TamanhoMaximo    := mLinhaItem.Width - 40;
   DescricaoProduto := Trim(UmProd.xProd);
 
   ABMP := TBitmap.Create;
@@ -757,7 +757,7 @@ begin
   mLinhaTotalItem.Width := rlbDetItem.Width;
   mLinhaTotalItem.Visible := not ACBrNFeDANFCeFortes.ImprimeEmUmaLinha;
   if ACBrNFeDANFCeFortes.ImprimeEmUmaLinha then
-     mLinhaItem.Alignment := taRightJustify
+     mLinhaItem.Alignment := taCenter
   else
     mLinhaItem.Alignment := taLeftJustify;
 

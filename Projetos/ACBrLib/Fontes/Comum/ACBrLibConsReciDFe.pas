@@ -92,7 +92,7 @@ type
     FxMsg: string;
     FProtocolo: string;
     FChaveDFe: string;
-    FItens: TObjectList;
+    FItems: TObjectList;
 
     function GetItem(Index: Integer): TRetornoItemResposta;
 
@@ -190,19 +190,19 @@ begin
   inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 
   FPrefix := APrefix;
-  FItens := TObjectList.Create(True);
+  FItems := TObjectList.Create(True);
 end;
 
 destructor TRetornoResposta.Destroy;
 begin
-  FItens.Free;
+  FItems.Free;
 
   Inherited Destroy;
 end;
 
 function TRetornoResposta.GetItem(Index: Integer): TRetornoItemResposta;
 begin
-  Result := TRetornoItemResposta(FItens[Index]);
+  Result := TRetornoItemResposta(FItems[Index]);
 end;
 
 function TRetornoResposta.Gerar: Ansistring;
@@ -210,9 +210,9 @@ Var
   i: Integer;
 begin
   Result := Inherited Gerar;
-  for i := 0 to FItens.Count - 1 do
+  for i := 0 to FItems.Count - 1 do
   begin
-    Result := Result + sLineBreak + TRetornoItemResposta(FItens.Items[i]).Gerar;
+    Result := Result + sLineBreak + TRetornoItemResposta(FItems.Items[i]).Gerar;
   end;
 end;
 
@@ -234,13 +234,15 @@ begin
   FProtocolo := Protocolo;
   FChaveDFe := ChaveDFe;
 
+  FItems.Clear;
+
   with RetConsReciDFe do
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
       Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, FFormato);
       Item.Processar(ProtDFe.Items[i]);
-      FItens.Add(Item);
+      FItems.Add(Item);
     end;
   end;
 end;
@@ -290,6 +292,8 @@ begin
   FXMotivo := RetConsReciDFe.XMotivo;
   FCUF := RetConsReciDFe.cUF;
   FnRec := RetConsReciDFe.nRec;
+
+  FItens.Clear;
 
   with RetConsReciDFe do
   begin

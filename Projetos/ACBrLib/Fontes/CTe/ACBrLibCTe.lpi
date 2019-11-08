@@ -21,8 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="3"/>
-      <RevisionNr Value="1"/>
-      <BuildNr Value="12"/>
+      <RevisionNr Value="2"/>
       <Language Value="0416"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Projeto ACBr" FileDescription="ACBrCTe - Biblioteca para emissão e impressão de Conhecimento de Transporte Eletrônico" InternalName="ACBrLibCTe" LegalCopyright="Projeto ACBr" LegalTrademarks="Projeto ACBr" ProductName="ACBrCTe " ProductVersion="0.1.2.0"/>
@@ -283,13 +282,13 @@
     </PublishOptions>
     <RunParams>
       <local>
-        <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\ACBrLibCTeTest.exe"/>
+        <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\CTe\bin\ACBrLibCTeTest.exe"/>
       </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <HostApplicationFilename Value="C:\ACBr\trunk2\Projetos\ACBrLib\Testes\CTe\bin\ACBrLibCTeTest.exe"/>
+            <HostApplicationFilename Value="E:\Programacao\ACBr\ACBr\Projetos\ACBrLib\Testes\CTe\bin\ACBrLibCTeTest.exe"/>
           </local>
         </Mode0>
       </Modes>

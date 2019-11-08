@@ -1,35 +1,35 @@
-﻿{******************************************************************************}
-{ Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
-{ mentos de Automação Comercial utilizados no Brasil                           }
-
-{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida               }
-
-{ Colaboradores nesse arquivo: Rafael Teno Dias                                }
-
-{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-
-{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior.                                                   }
-
-{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
-{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
-
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{        Rua Cel.Aureliano de Camargo, 973 - Tatuí - SP - 18270-170            }
-
-{******************************************************************************}
+﻿{*******************************************************************************}
+{ Projeto: Componentes ACBr                                                     }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
+{ mentos de Automação Comercial utilizados no Brasil                            }
+{                                                                               }
+{ Direitos Autorais Reservados (c) 2018 Daniel Simoes de Almeida                }
+{                                                                               }
+{ Colaboradores nesse arquivo: Rafael Teno Dias                                 }
+{                                                                               }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr       }
+{                                                                               }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la  }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela   }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério)  }
+{ qualquer versão posterior.                                                    }
+{                                                                               }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM    }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU       }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)               }
+{                                                                               }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,   }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.           }
+{ Você também pode obter uma copia da licença em:                               }
+{ http://www.opensource.org/licenses/gpl-license.php                            }
+{                                                                               }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{        Rua Cel.Aureliano de Camargo, 963 - Tatuí - SP - 18270-170             }
+{                                                                               }
+{*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -38,14 +38,15 @@ unit ACBrLibMDFeRespostas;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, contnrs,
+  pmdfeRetConsMDFeNaoEnc, pmdfeEventoMDFe,
   ACBrMDFe, ACBrLibResposta;
 
 type
 
-  { TPadraoMDFeResposta }
+  { TLibMDFeResposta }
 
-  TPadraoMDFeResposta = class(TACBrLibResposta<TACBrMDFe>)
+  TLibMDFeResposta = class(TACBrLibResposta<TACBrMDFe>)
   private
     Fversao: string;
     FtpAmb: string;
@@ -53,9 +54,13 @@ type
     FcStat: integer;
     FxMotivo: string;
     FcUF: integer;
+    FMsg: string;
+
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrMDFe); reintroduce; virtual; abstract;
 
   published
     property Versao: string read Fversao write Fversao;
@@ -64,12 +69,13 @@ type
     property CStat: integer read FcStat write FcStat;
     property XMotivo: string read FxMotivo write FxMotivo;
     property CUF: integer read FcUF write FcUF;
+    property Msg: string read FMsg write FMsg;
 
   end;
 
   { TStatusServicoResposta }
 
-  TStatusServicoResposta = class(TPadraoMDFeResposta)
+  TStatusServicoResposta = class(TLibMDFeResposta)
   private
     FMsg: string;
     FdhRecbto: TDateTime;
@@ -78,6 +84,8 @@ type
     FxObs: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrMDFe); override;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -90,7 +98,7 @@ type
 
   { TConsultaResposta }
 
-  TConsultaResposta = class(TPadraoMDFeResposta)
+  TConsultaResposta = class(TLibMDFeResposta)
   private
     FMsg: string;
     FchMDFe: string;
@@ -100,6 +108,8 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrMDFe); override;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -112,7 +122,7 @@ type
 
   { TCancelamentoResposta }
 
-  TCancelamentoResposta = class(TPadraoMDFeResposta)
+  TCancelamentoResposta = class(TLibMDFeResposta)
   private
     FArquivo: string;
     FchMDFe: string;
@@ -127,6 +137,8 @@ type
 
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrMDFe); override;
 
   published
     property ChMDFe: string read FchMDFe write FchMDFe;
@@ -142,62 +154,85 @@ type
 
   end;
 
-  { TEncerramentoResposta }
+  { TNaoEncerradosRespostaItem }
 
-  TEncerramentoResposta = class(TPadraoMDFeResposta)
+  TNaoEncerradosRespostaItem = class(TACBrLibRespostaBase)
   private
-    FArquivo: string;
+    Fmsg: string;
+    FCNPJCPF: string;
     FchMDFe: string;
-    FdhRecbto: TDateTime;
     FnProt: string;
-    FtpEvento: string;
-    FxEvento: string;
-    FnSeqEvento: integer;
-    FCNPJDest: string;
-    FemailDest: string;
-    Fxml: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+        const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const CNPJCPF: String; const Item: TRetInfMDFeCollectionItem);
 
   published
+    property Msg: string read Fmsg write Fmsg;
+    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
     property ChMDFe: string read FchMDFe write FchMDFe;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property NProt: string read FnProt write FnProt;
-    property TpEvento: string read FtpEvento write FtpEvento;
-    property XEvento: string read FxEvento write FxEvento;
-    property NSeqEvento: integer read FnSeqEvento write FnSeqEvento;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property EmailDest: string read FemailDest write FemailDest;
-    property XML: string read Fxml write Fxml;
-    property Arquivo: string read FArquivo write FArquivo;
 
   end;
 
   { TNaoEncerradosResposta }
 
-  TNaoEncerradosResposta = class(TPadraoMDFeResposta)
+  TNaoEncerradosResposta = class(TLibMDFeResposta)
   private
-    Fmsg: string;
-    FCNPJ: string;
-    FchMDFe: string;
-    FnProt: string;
+    FItems: TObjectList;
+
+    function GetItem(Index: Integer): TNaoEncerradosRespostaItem;
 
   public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const Control: TACBrMDFe); override;
+    function Gerar: Ansistring; override;
+
+    property Items[Index: Integer]: TNaoEncerradosRespostaItem read GetItem; default;
+
+  end;
+
+  { TEncerramentoResposta }
+
+  TEncerramentoResposta = class(TLibMDFeResposta)
+  private
+    FArquivo: string;
+    FchMDFe: string;
+    FdhRecbto: TDateTime;
+    FnProt: string;
+    FtpEvento: string;
+    FxEvento: string;
+    FnSeqEvento: integer;
+    FCNPJDest: string;
+    FemailDest: string;
+    Fxml: string;
+
+  public
+    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Control: TACBrMDFe); override;
 
   published
-    property Msg: string read Fmsg write Fmsg;
-    property CNPJ: string read FCNPJ write FCNPJ;
     property ChMDFe: string read FchMDFe write FchMDFe;
+    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property NProt: string read FnProt write FnProt;
+    property TpEvento: string read FtpEvento write FtpEvento;
+    property XEvento: string read FxEvento write FxEvento;
+    property NSeqEvento: integer read FnSeqEvento write FnSeqEvento;
+    property CNPJDest: string read FCNPJDest write FCNPJDest;
+    property EmailDest: string read FemailDest write FemailDest;
+    property XML: string read Fxml write Fxml;
+    property Arquivo: string read FArquivo write FArquivo;
 
   end;
 
   { TEnvioResposta }
 
-  TEnvioResposta = class(TPadraoMDFeResposta)
+  TEnvioResposta = class(TLibMDFeResposta)
   private
     Fmsg: string;
     FdhRecbto: TDateTime;
@@ -207,6 +242,8 @@ type
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
+    procedure Processar(const Control: TACBrMDFe); override;
+
   published
     property Msg: string read Fmsg write Fmsg;
     property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
@@ -215,234 +252,104 @@ type
 
   end;
 
-  { TRetornoResposta }
+  { TEventoItemResposta }
 
-  TRetornoResposta = class(TPadraoMDFeResposta)
+  TEventoItemResposta = class(TLibMDFeResposta)
   private
-    Fmsg: string;
-    FnRec: string;
+    Farquivo: String;
     FchMDFe: string;
-    FnProt: string;
-    FmotivoMDFe: string;
+    FCNPJDest: string;
+    FcOrgao: integer;
+    FdhRegEvento: TDateTime;
+    FdigVal: String;
+    FemailDest: string;
+    FId: string;
+    FnProt: String;
+    FnSeqEvento: Integer;
+    FtpEvento: string;
+    FxEvento: string;
+    FXML: string;
 
   public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    constructor Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+         const AFormato: TACBrLibCodificacao); reintroduce;
+
+    procedure Processar(const Item: TRetInfEvento);
 
   published
-    property Msg: string read Fmsg write Fmsg;
-    property NRec: string read FnRec write FnRec;
-    property ChMDFe: string read FchMDFe write FchMDFe;
-    property NProt: string read FnProt write FnProt;
-    property MotivoMDFe: string read FmotivoMDFe write FmotivoMDFe;
-
-  end;
-
-  { TRetornoItemResposta }
-
-  TRetornoItemResposta = class(TPadraoMDFeResposta)
-  private
-    FchMDFe: string;
-    FdhRecbto: TDateTime;
-    FnProt: string;
-    FdigVal: string;
-    Farquivo: string;
-
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-  published
-    property ChMDFe: string read FchMDFe write FchMDFe;
-    property DhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property NProt: String read FnProt write FnProt;
-    property DigVal: String read FdigVal write FdigVal;
-    property Arquivo: String read Farquivo write Farquivo;
-
+    property chMDFe: string read FchMDFe write FchMDFe;
+    property nProt: String read FnProt write FnProt;
+    property arquivo: String read Farquivo write Farquivo;
+    property digVal: String read FdigVal write FdigVal;
+    property Id: string read FId write FId;
+    property cOrgao: integer read FcOrgao write FcOrgao;
+    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
+    property tpEvento: string read FtpEvento write FtpEvento;
+    property xEvento: string read FxEvento write FxEvento;
+    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
+    property CNPJDest: string read FCNPJDest write FCNPJDest;
+    property emailDest: string read FemailDest write FemailDest;
+    property XML: string read FXML write FXML;
   end;
 
   { TEventoResposta }
 
-  TEventoResposta = class(TPadraoMDFeResposta)
+  TEventoResposta = class(TLibMDFeResposta)
   private
     FidLote: Integer;
     FcOrgao: Integer;
+    FItems: TObjectList;
+
+    function GetItem(Index: Integer): TEventoItemResposta;
+
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
+
+    procedure Processar(const Control: TACBrMDFe); override;
+    function Gerar: Ansistring; override;
+
+    property Items[Index: Integer]: TEventoItemResposta read GetItem; default;
 
   published
     property idLote: Integer read FidLote write FidLote;
     property cOrgao: Integer read FcOrgao write FcOrgao;
   end;
 
-  { TEventoItemResposta }
-
-  TEventoItemResposta = class(TPadraoMDFeResposta)
-  private
-    Farquivo: String;
-    FchMDFe: string;
-    FCNPJDest: string;
-    FcOrgao: integer;
-    FdhRegEvento: TDateTime;
-    FdigVal: String;
-    FemailDest: string;
-    FId: string;
-    FnProt: String;
-    FnSeqEvento: Integer;
-    FtpEvento: string;
-    FxEvento: string;
-    FXML: string;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-  published
-    property chMDFe: string read FchMDFe write FchMDFe;
-    property nProt: String read FnProt write FnProt;
-    property arquivo: String read Farquivo write Farquivo;
-    property digVal: String read FdigVal write FdigVal;
-    property Id: string read FId write FId;
-    property cOrgao: integer read FcOrgao write FcOrgao;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property xEvento: string read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property emailDest: string read FemailDest write FemailDest;
-    property XML: string read FXML write FXML;
-  end;
-
-  { TDistribuicaoDFeResposta }
-
-  TDistribuicaoDFeResposta = class(TPadraoMDFeResposta)
-  private
-    Farquivo: string;
-    FdhResp: TDateTime;
-    FindCont: string;
-    FmaxNSU: string;
-    FultNSU: string;
-  public
-    constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
-
-  published
-    property dhResp: TDateTime read FdhResp write FdhResp;
-    property ultNSU: string read FultNSU write FultNSU;
-    property maxNSU: string read FmaxNSU write FmaxNSU;
-    property arquivo: string read Farquivo write Farquivo;
-    property indCont: string read FindCont write FindCont;
-  end;
-
-  { TDistribuicaoDFeItemResposta }
-
-  TDistribuicaoDFeItemResposta = class(TPadraoMDFeResposta)
-  private
-    Farquivo: String;
-    FCNPJ: string;
-    FCNPJDest: string;
-    FcOrgao: integer;
-    FcOrgaoAutor: integer;
-    FcSitMDFe: String;
-    FcteChvCte: String;
-    FcteDhemi: TDateTime;
-    FcteDhRebcto: TDateTime;
-    FcteModal: string;
-    FcteNProt: string;
-    FdescEvento: string;
-    FdhEmi: TDateTime;
-    FdhEvento: TDateTime;
-    FdhRegEvento: TDateTime;
-    FdigVal: String;
-    FemailDest: string;
-    FEmiCNPJ: string;
-    FEmiIE: string;
-    FEmixNome: string;
-    FId: string;
-    FIE: String;
-    FnProt: String;
-    FnSeqEvento: Integer;
-    FNSU: string;
-    FchMDFe: string;
-    FCNPJCPF: string;
-    Fschema: String;
-    FtpEvento: string;
-    FtpNF: String;
-    FverEvento: string;
-    FvNF: Currency;
-    FxEvento: string;
-    FxJust: string;
-    FXML: string;
-    FxNome: string;
-    FdhRecbto: TDateTime;
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
-      const AFormato: TACBrLibCodificacao); reintroduce;
-
-  published
-    property NSU: string read FNSU write FNSU;
-    property chMDFe: string read FchMDFe write FchMDFe;
-    property CNPJCPF: string read FCNPJCPF write FCNPJCPF;
-    property xNome: string read FxNome write FxNome;
-    property IE: String read FIE write FIE;
-    property dhEmi: TDateTime read FdhEmi write FdhEmi;
-    property tpNF: String read FtpNF write FtpNF;
-    property vNF: Currency read FvNF write FvNF;
-    property digVal: String read FdigVal write FdigVal;
-    property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
-    property cSitMDFe: String read FcSitMDFe write FcSitMDFe;
-    property nProt: String read FnProt write FnProt;
-    property XML: string read FXML write FXML;
-    property arquivo: String read Farquivo write Farquivo;
-    property schema: String read Fschema write Fschema;
-    property dhEvento: TDateTime read FdhEvento write FdhEvento;
-    property tpEvento: string read FtpEvento write FtpEvento;
-    property xEvento: string read FxEvento write FxEvento;
-    property nSeqEvento: Integer read FnSeqEvento write FnSeqEvento;
-    property cOrgao: integer read FcOrgao write FcOrgao;
-    property CNPJ: string read FCNPJ write FCNPJ;
-    property Id: string read FId write FId;
-    property verEvento: string read FverEvento write FverEvento;
-    property descEvento: string read FdescEvento write FdescEvento;
-    property xJust: string read FxJust write FxJust;
-    property xMotivo: string read FxMotivo write FxMotivo;
-    property EmiCNPJ: string read FEmiCNPJ write FEmiCNPJ;
-    property EmiIE: string read FEmiIE write FEmiIE;
-    property EmixNome: string read FEmixNome write FEmixNome;
-    property cteNProt: string read FcteNProt write FcteNProt;
-    property cteChvCte: String read FcteChvCte write FcteChvCte;
-    property cteDhemi: TDateTime read FcteDhemi write FcteDhemi;
-    property cteDhRebcto: TDateTime read FcteDhRebcto write FcteDhRebcto;
-    property cteModal: string read FcteModal write FcteModal;
-    property CNPJDest: string read FCNPJDest write FCNPJDest;
-    property cOrgaoAutor: integer read FcOrgaoAutor write FcOrgaoAutor;
-    property dhRegEvento: TDateTime read FdhRegEvento write FdhRegEvento;
-    property emailDest: string read FemailDest write FemailDest;
-  end;
-
 implementation
 
 uses
-  ACBrLibMDFeConsts;
-
-{ TDistribuicaoDFeItemResposta }
-
-constructor TDistribuicaoDFeItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(ASessao, ATipo, AFormato);
-end;
-
-{ TDistribuicaoDFeResposta }
-
-constructor TDistribuicaoDFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(CSessaoRespDistribuicaoDFe, ATipo, AFormato);
-end;
+  pcnConversao, pcnAuxiliar, ACBrLibMDFeConsts;
 
 { TEventoItemResposta }
 
-constructor TEventoItemResposta.Create(const ASessao: String;
+constructor TEventoItemResposta.Create(const ItemID: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create('Evento' + Trim(IntToStrZero(ItemID +1, 3)), ATipo, AFormato);
+end;
+
+procedure TEventoItemResposta.Processar(const Item: TRetInfEvento);
+begin
+  with Item do
+  begin
+    Self.Id := Id;
+    Self.tpAmb := TpAmbToStr(tpAmb);
+    Self.verAplic := verAplic;
+    Self.cOrgao := cOrgao;
+    Self.cStat := cStat;
+    Self.xMotivo := xMotivo;
+    Self.chMDFe := chMDFe;
+    Self.tpEvento := TpEventoToStr(tpEvento);
+    Self.xEvento := xEvento;
+    Self.nSeqEvento := nSeqEvento;
+    Self.CNPJDest := CNPJDest;
+    Self.emailDest := emailDest;
+    Self.dhRegEvento := dhRegEvento;
+    Self.nProt := nProt;
+    Self.Arquivo := NomeArquivo;
+    Self.XML := XML;
+  end;
 end;
 
 { TEventoResposta }
@@ -452,27 +359,59 @@ begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
 end;
 
+destructor TEventoResposta.Destroy;
+begin
+  FItems.Clear;
+  FItems.Free;
+
+  inherited Destroy;
+end;
+
+function TEventoResposta.GetItem(Index: Integer): TEventoItemResposta;
+begin
+  Result := TEventoItemResposta(FItems[Index]);
+end;
+
+function TEventoResposta.Gerar: Ansistring;
+Var
+  i: Integer;
+begin
+  Result := Inherited Gerar;
+  for i := 0 to FItems.Count - 1 do
+  begin
+    Result := Result + sLineBreak + TEventoItemResposta(FItems.Items[i]).Gerar;
+  end;
+end;
+
+procedure TEventoResposta.Processar(const Control: TACBrMDFe);
+Var
+  i: Integer;
+  Item: TEventoItemResposta;
+begin
+  with Control.WebServices.EnvEvento.EventoRetorno do
+  begin
+    Self.VerAplic := VerAplic;
+    Self.tpAmb := TpAmbToStr(tpAmb);
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.idLote := IdLote;
+    Self.cOrgao := cOrgao;
+
+    for i := 0 to retEvento.Count - 1 do
+    begin
+      Item := TEventoItemResposta.Create(i+1, Tipo, FFormato);
+      Item.Processar(retEvento.Items[i].RetInfEvento);
+      FItems.Add(Item);
+    end;
+  end;
+end;
+
 { TPadraoResposta }
 
-constructor TPadraoMDFeResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+constructor TLibMDFeResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(ASessao, ATipo, AFormato);
-end;
-
-{ TRetornoItemResposta }
-
-constructor TRetornoItemResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(ASessao, ATipo, AFormato);
-end;
-
-{ TRetornoResposta }
-
-constructor TRetornoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(CSessaoRespRetorno, ATipo, AFormato);
 end;
 
 { TEnvioResposta }
@@ -482,12 +421,91 @@ begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
 end;
 
+procedure TEnvioResposta.Processar(const Control: TACBrMDFe);
+begin
+  with Control.WebServices.Enviar do
+  begin
+    Self.Versao := verAplic;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.verAplic := verAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := xMotivo;
+    Self.CUF := cUF;
+    Self.nRec := Recibo;
+    Self.DhRecbto := dhRecbto;
+    Self.Tmed := TMed;
+    Self.Msg := Msg;
+  end;
+end;
+
+{ TNaoEncerradosRespostaItem }
+
+constructor TNaoEncerradosRespostaItem.Create(const ItemID: Integer; const ATipo: TACBrLibRespostaTipo;
+        const AFormato: TACBrLibCodificacao);
+begin
+  inherited Create(CSessaoNaoEncerrados + Trim(IntToStrZero(ItemID +1, 3)), ATipo, AFormato);
+end;
+
+procedure TNaoEncerradosRespostaItem.Processar(const CNPJCPF: String; const Item: TRetInfMDFeCollectionItem);
+begin
+  Self.CNPJCPF := CNPJCPF;
+  Self.ChMDFe := Item.chMDFe;
+  Self.NProt := Item.nProt;
+end;
+
 { TNaoEncerradosResposta }
 
-constructor TNaoEncerradosResposta.Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
+constructor TNaoEncerradosResposta.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
-  inherited Create(ASessao, ATipo, AFormato);
+  inherited Create(CSessaoNaoEncerrados, ATipo, AFormato);
+end;
+
+destructor TNaoEncerradosResposta.Destroy;
+begin
+  FItems.Clear;
+  FItems.Free;
+
+  inherited Destroy;
+end;
+
+function TNaoEncerradosResposta.GetItem(Index: Integer): TNaoEncerradosRespostaItem;
+begin
+  Result := TNaoEncerradosRespostaItem(FItems[Index]);
+end;
+
+function TNaoEncerradosResposta.Gerar: Ansistring;
+Var
+  i: Integer;
+begin
+  Result := Inherited Gerar;
+  for i := 0 to FItems.Count - 1 do
+  begin
+    Result := Result + sLineBreak + TNaoEncerradosRespostaItem(FItems.Items[i]).Gerar;
+  end;
+end;
+
+procedure TNaoEncerradosResposta.Processar(const Control: TACBrMDFe);
+Var
+  i: Integer;
+  Item: TNaoEncerradosRespostaItem;
+begin
+  with Control.WebServices.ConsMDFeNaoEnc do
+  begin
+    Self.Versao := verAplic;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.VerAplic := VerAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.CUF := cUF;
+
+    for i := 0 to InfMDFe.Count - 1 do
+    begin
+      Item := TNaoEncerradosRespostaItem.Create(i+1, Tipo, FFormato);
+      Item.Processar(CNPJCPF, InfMDFe.Items[i]);
+      FItems.Add(Item);
+    end;
+  end;
 end;
 
 { TEncerramentoResposta }
@@ -497,11 +515,60 @@ begin
   inherited Create(CSessaoRespEncerramento, ATipo, AFormato);
 end;
 
+procedure TEncerramentoResposta.Processar(const Control: TACBrMDFe);
+begin
+  with Control.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+  begin
+    Self.Versao := verAplic;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.VerAplic := VerAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.CUF := cOrgao;
+    Self.ChMDFe := chMDFe;
+    Self.DhRecbto := dhRegEvento;
+    Self.NProt := nProt;
+    Self.TpEvento := TpEventoToStr(tpEvento);
+    Self.xEvento := xEvento;
+    Self.nSeqEvento := nSeqEvento;
+    Self.CNPJDest := CNPJDest;
+    Self.emailDest := emailDest;
+    Self.XML := XML;
+    Self.Arquivo := NomeArquivo;
+  end;
+end;
+
 { TCancelamentoResposta }
 
 constructor TCancelamentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespCancelamento, ATipo, AFormato);
+end;
+
+procedure TCancelamentoResposta.Processar(const Control: TACBrMDFe);
+begin
+  if Control.WebServices.EnvEvento.EventoRetorno.retEvento.Count > 0 then
+  begin
+    with Control.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
+    begin
+      Self.Versao := verAplic;
+      Self.TpAmb := TpAmbToStr(TpAmb);
+      Self.VerAplic := VerAplic;
+      Self.CStat := cStat;
+      Self.XMotivo := XMotivo;
+      Self.CUF := cOrgao;
+      Self.ChMDFe := chMDFe;
+      Self.DhRecbto := dhRegEvento;
+      Self.NProt := nProt;
+      Self.TpEvento := TpEventoToStr(tpEvento);
+      Self.xEvento := xEvento;
+      Self.nSeqEvento := nSeqEvento;
+      Self.CNPJDest := CNPJDest;
+      Self.emailDest := emailDest;
+      Self.XML := XML;
+      Self.Arquivo := NomeArquivo;
+    end;
+  end;
 end;
 
 { TConsultaResposta }
@@ -511,10 +578,47 @@ begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);
 end;
 
+procedure TConsultaResposta.Processar(const Control: TACBrMDFe);
+begin
+  with Control.WebServices.Consulta do
+  begin
+    Self.Versao := verAplic;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.VerAplic := VerAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.CUF := cUF;
+    Self.ChMDFe := MDFeChave;
+    Self.DhRecbto := dhRecbto;
+    Self.NProt := Protocolo;
+    Self.digVal := protMDFe.digVal;
+    Self.Msg := Msg;
+  end;
+end;
+
  { TStatusServicoResposta }
+
 constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespStatus, ATipo, AFormato);
+end;
+
+procedure TStatusServicoResposta.Processar(const Control: TACBrMDFe);
+begin
+  with Control.WebServices.StatusServico do
+  begin
+    Self.Versao := versao;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.VerAplic := VerAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := XMotivo;
+    Self.CUF := cUF;
+    Self.DhRecbto := dhRecbto;
+    Self.tMed := TMed;
+    Self.dhRetorno := dhRetorno;
+    Self.xObs := xObs;
+    Self.Msg := Msg;
+  end;
 end;
 
 end.

@@ -48,30 +48,22 @@ const
 
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';
   CChaveTipoDAMDFe = 'TipoDAMDFe';
-  CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
-  CChavePosCanhoto = 'PosCanhoto';
-  CChaveAlturaLinhaComun = 'AlturaLinhaComun';
-  CChaveMDFeCancelado = 'MDFeCancelado';
-  CChaveEPECEnviado = 'EPECEnviado';
-  CChaveImprimirHoraSaida = 'ImprimirHoraSaida';
+  CChaveCancelada = 'Cancelada';
+  CChaveEncerrado = 'Encerrado';
+  CChaveImprimeHoraSaida = 'ImprimeHoraSaida';
   CChavePrintDialog = 'PrintDialog';
-  CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
-  CChaveFax = 'Fax';
-  CChaveImprimirHoraSaida_Hora = 'ImprimirHoraSaida_Hora';
-  CChaveProtocoloMDFe = 'ProtocoloMDFe';
-  CChaveSistema = 'Sistema';
-  CChaveSite = 'Site';
+  CChaveImprimeHoraSaida_Hora = 'ImprimeHoraSaida_Hora';
+  CChaveProtocolo = 'Protocolo';
   CChaveTamanhoPapel = 'TamanhoPapel';
 
+  CSessaoRespEnvio = 'Envio';
   CSessaoRespStatus = 'Status';
   CSessaoRespConsulta = 'Consulta';
   CSessaoRespCancelamento = 'Cancelamento';
   CSessaoRespEncerramento = 'Encerramento';
+  CSessaoNaoEncerrados = 'NAOENCERRADOS';
   CSessaoRespNaoEncerrados = 'NaoEncerrados';
-  CSessaoRespEnvio = 'Envio';
-  CSessaoRespRetorno = 'Retorno';
   CSessaoRespEvento = 'Evento';
-  CSessaoRespDistribuicaoDFe = 'DistribuicaoDFe';
 
   ErrValidacaoMDFe = -11;
   ErrChaveMDFe = -12;
@@ -91,6 +83,7 @@ Resourcestring
   SErrCNPJCPFInvalido = 'CNPJ/CPF % inválido.';
 
 function SetRetornoMDFeCarregados(const NumMDFe: Integer): Integer;
+function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
 
 implementation
 
@@ -100,6 +93,11 @@ uses
 function SetRetornoMDFeCarregados(const NumMDFe: Integer): Integer;
 begin
   Result := SetRetorno( 0, {NumMDFe,} Format(SInfMDFeCarregados, [NumMDFe]));
+end;
+
+function SetRetornoEventoCarregados(const NumEventos: Integer): Integer;
+begin
+  Result := SetRetorno( 0, {NumEventos,} Format(SInfEventosCarregados, [NumEventos]));
 end;
 
 end.

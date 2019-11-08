@@ -117,7 +117,7 @@ type
     FCPF: string;
     FUF: string;
     FdhCons: TDateTime;
-    FItens: TObjectList;
+    FItems: TObjectList;
 
     function GetItem(Index: Integer): TConsultaCadastroItemResposta;
 
@@ -190,13 +190,13 @@ constructor TConsultaCadastroResposta.Create(const ATipo: TACBrLibRespostaTipo; 
 begin
   inherited Create(CSessaoRespConsultaCadastro, ATipo, AFormato);
 
-  FItens := TObjectList.Create(True);
+  FItems := TObjectList.Create(True);
 end;
 
 destructor TConsultaCadastroResposta.Destroy;
 begin
-  FItens.Clear;
-  FItens.Free;
+  FItems.Clear;
+  FItems.Free;
 
   inherited Destroy;
 end;
@@ -207,15 +207,15 @@ Var
 begin
   Result := Inherited Gerar;
 
-  for i := 0 to FItens.Count - 1  do
+  for i := 0 to FItems.Count - 1  do
   begin
-    Result := Result + sLineBreak + TConsultaCadastroItemResposta(FItens.Items[i]).Gerar;
+    Result := Result + sLineBreak + TConsultaCadastroItemResposta(FItems.Items[i]).Gerar;
   end;
 end;
 
 function TConsultaCadastroResposta.GetItem(Index: Integer): TConsultaCadastroItemResposta;
 begin
-  Result := TConsultaCadastroItemResposta(FItens.Items[Index]);
+  Result := TConsultaCadastroItemResposta(FItems.Items[Index]);
 end;
 
 procedure TConsultaCadastroResposta.Processar(const retConsCad: TRetConsCad);
@@ -235,13 +235,15 @@ begin
   FCPF := RetConsCad.CPF;
   FUF := REtConsCad.UF;
 
+  FItems.Clear;
+
   with retConsCad do
   begin
     for i := 0 to InfCad.Count - 1 do
     begin
       Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, FFormato);
       Item.Processar(InfCad.Items[i]);
-      FItens.Add(Item);
+      FItems.Add(Item);
     end;
   end;
 

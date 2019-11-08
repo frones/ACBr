@@ -788,8 +788,8 @@ function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: TInutilizarCTeResposta;
-  CNPJ, Justificativa: string;
+  Resp: TInutilizarCTeResposta;
+  Resposta, CNPJ, Justificativa: string;
 begin
   try
     VerificarLibInicializada;
@@ -807,33 +807,32 @@ begin
     CNPJ := OnlyNumber(CNPJ);
 
     if not ValidarCNPJ(CNPJ) then
-      raise EACBrLibException.Create(ErrChaveCTe, Format(SErrCNPJInvalido, [ACNPJ]));
+      raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJInvalido, [ACNPJ]));
 
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
-      Resposta := TInutilizarCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+      Resp := TInutilizarCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
-        with CTeDM.ACBrCTe1 do
+        with CTeDM.ACBrCTe1.WebServices do
         begin
-          with WebServices do
-          begin
-            Inutilizacao.CNPJ := CNPJ;
-            Inutilizacao.Justificativa := Justificativa;
-            Inutilizacao.Modelo := Modelo;
-            Inutilizacao.Serie := Serie;
-            Inutilizacao.Ano := Ano;
-            Inutilizacao.NumeroInicial := NumeroInicial;
-            Inutilizacao.NumeroFinal := NumeroFinal;
+          Inutilizacao.Clear;
+          Inutilizacao.CNPJ := CNPJ;
+          Inutilizacao.Justificativa := Justificativa;
+          Inutilizacao.Modelo := Modelo;
+          Inutilizacao.Serie := Serie;
+          Inutilizacao.Ano := Ano;
+          Inutilizacao.NumeroInicial := NumeroInicial;
+          Inutilizacao.NumeroFinal := NumeroFinal;
 
-            Inutilizacao.Executar;
-            Resposta.Processar(CTeDM.ACBrCTe1);
-            MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
-          end;
+          Inutilizacao.Executar;
+          Resp.Processar(CTeDM.ACBrCTe1);
+          Resposta := Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
-        Resposta.Free;
+        Resp.Free;
         CTeDM.Destravar;
       end;
     end;
@@ -1045,14 +1044,17 @@ begin
         with CTeDM.ACBrCTe1.EventoCTe.Evento.New do
         begin
           Infevento.CNPJ := ACNPJ;
+
           if Trim(Infevento.CNPJ) = '' then
             Infevento.CNPJ := copy(OnlyNumber(CTeDM.ACBrCTe1.WebServices.Consulta.CTeChave), 7, 14)
           else
           begin
-            if not ValidarCNPJ(ACNPJ) then
-              raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJInvalido, [ACNPJ]));
+            if not ValidarCNPJouCPF(ACNPJ) then
+              raise EACBrLibException.Create(ErrCNPJ, Format(SErrCNPJCPFInvalido, [ACNPJ]));
           end;
 
+          Infevento.nSeqEvento := 1;
+          InfEvento.tpAmb := CTeDM.ACBrCTe1.Configuracoes.WebServices.Ambiente;
           Infevento.cOrgao := StrToIntDef(copy(OnlyNumber(CTeDM.ACBrCTe1.WebServices.Consulta.CTeChave), 1, 2), 0);
           Infevento.dhEvento := now;
           Infevento.tpEvento := teCancelamento;
@@ -1060,25 +1062,23 @@ begin
           Infevento.detEvento.nProt := CTeDM.ACBrCTe1.WebServices.Consulta.Protocolo;
           Infevento.detEvento.xJust := AJustificativa;
         end;
-        try
-          if CTeDM.ACBrCTe1.EnviarEvento(ALote) then
-          begin
-            Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
-            try
-              Resp.Processar(CTeDM.ACBrCTe1);
-              Resposta := Resp.Gerar;
-            finally
-              Resp.Free;
-            end;
 
-            MoverStringParaPChar(Resposta, sResposta, esTamanho);
-            Result := SetRetorno(ErrOK, StrPas(sResposta));
-          end
-          else
-            Result := SetRetornoWebService(CTeDM.ACBrCTe1.SSL.HTTPResultCode, 'Cancelar');
-        except
-          raise EACBrLibException.Create(ErrRetorno, CTeDM.ACBrCTe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
+        if (ALote = 0) then
+            ALote := 1;
+
+        CTeDM.ACBrCTe1.WebServices.EnvEvento.idLote := ALote;
+        CTeDM.ACBrCTe1.WebServices.EnvEvento.Executar;
+        Resp := TCancelamentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+
+        try
+          Resp.Processar(CTeDM.ACBrCTe1);
+          Resposta := Resp.Gerar;
+        finally
+          Resp.Free;
         end;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, StrPas(sResposta));
       finally
         CTeDM.Destravar;
       end;
@@ -1120,8 +1120,6 @@ begin
         if EventoCTe.Evento.Count > 20 then
           raise EACBrLibException.Create(ErrEnvioEvento,'ERRO: Conjunto de Eventos transmitidos (máximo de 20) ' +
                                                         'excedido. Quantidade atual: ' + IntToStr(EventoCTe.Evento.Count));
-
-        WebServices.EnvEvento.idLote := idLote;
 
         {Atribuir nSeqEvento, CNPJ, Chave e/ou Protocolo quando não especificar}
         for i := 0 to EventoCTe.Evento.Count -1 do
@@ -1176,6 +1174,7 @@ begin
           end;
         end;
 
+        WebServices.EnvEvento.idLote := idLote;
         WebServices.EnvEvento.Executar;
 
         Resp := TEventoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);

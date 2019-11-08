@@ -302,10 +302,10 @@ begin
       ACBrNFe1.DANFE.Cancelada := True
     else
       ACBrNFe1.DANFE.Cancelada := False;
-
-    if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
-        ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
   end;
+
+  if GerarPDF and not DirectoryExists(PathWithDelim(pLibConfig.DANFe.PathPDF))then
+    ForceDirectories(PathWithDelim(pLibConfig.DANFe.PathPDF));
 
   pLibConfig.DANFe.Apply(ACBrNFe1.DANFE);
 
@@ -320,9 +320,23 @@ begin
   else
     ACBrNFe1.DANFE.Protocolo := '';
 
-  if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
+  if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
   begin
+     if NaoEstaVazio(ViaConsumidor) then
+       TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
 
+     if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
+     begin
+        if not ACBrNFeDANFeESCPOS1.PosPrinter.ControlePorta then
+        begin
+          ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
+          if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
+            ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
+        end;
+     end;
+  end
+  else
+  begin
     if NaoEstaVazio(Simplificado) then
     begin
       if StrToBoolDef(Simplificado, False) then
@@ -333,22 +347,6 @@ begin
        ACBrNFeDANFeRL1.MarcaDagua := MarcaDagua
      else
        ACBrNFeDANFeRL1.MarcaDagua := '';
-  end;
-
-  if ACBrNFe1.DANFE is TACBrNFeDANFCEClass then
-  begin
-     if NaoEstaVazio(ViaConsumidor) then
-       TACBrNFeDANFCEClass(ACBrNFe1.DANFE).ViaConsumidor := StrToBoolDef(ViaConsumidor, False);
-  end;
-
-  if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
-  begin
-    if not ACBrNFeDANFeESCPOS1.PosPrinter.ControlePorta then
-    begin
-      ACBrNFeDANFeESCPOS1.PosPrinter.Ativar;
-      if not ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo then
-        ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativar;
-    end;
   end;
 
   GravarLog('ConfigurarImpressao - Feito', logNormal);

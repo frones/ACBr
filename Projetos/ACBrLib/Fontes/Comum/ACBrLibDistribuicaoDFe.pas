@@ -351,6 +351,8 @@ begin
   self.maxNSU := retDistDFeInt.maxNSU;
   self.arquivo := arquivo;
 
+  FItems.Clear;
+
   if retDistDFeInt.cStat = 137 then
     indCont := '1'  // Sim
   else

@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -58,6 +58,7 @@ resourcestring
   DSC_CPF = 'CPF';
 
 type
+ {$M+}
   { TACBrXmlWriterOptions }
   TACBrXmlWriterOptions = class
   private
@@ -82,6 +83,7 @@ type
     property FormatoAlerta: string read FFormatoAlerta write FFormatoAlerta;
 
   end;
+ {$M-}
 
   { TACBrXmlWriter }
   TACBrXmlWriter = class

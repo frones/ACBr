@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -983,8 +983,8 @@ var
   buffer: xmlBufferPtr;
   xmlSaveCtx: xmlSaveCtxtPtr;
 begin
-  try
     buffer := xmlBufferCreate();
+  try
     xmlSaveCtx := xmlSaveToBuffer(buffer, PAnsiChar(ansistring('UTF-8')), GetSaveOptions);
     xmlSaveDoc(xmlSaveCtx, xmlDocInternal);
     xmlSaveClose(xmlSaveCtx);

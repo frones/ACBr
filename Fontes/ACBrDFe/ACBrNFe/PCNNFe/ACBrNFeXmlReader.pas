@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -116,6 +116,7 @@ begin
     raise Exception.Create('Arquivo xml da Nfe não carregado.');
 
   Result := False;
+  infNFeNode := nil;
   Document.Clear();
   Document.LoadFromXml(Arquivo);
 

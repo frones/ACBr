@@ -358,7 +358,7 @@ end;
 
 function TTResultLote_GNRE.Ler_Versao_2: boolean;
 var
-  i, j, k: Integer;
+  i, j, k, l: Integer;
 begin
   if Leitor.rExtrai(2, 'resultado') <> '' then
   begin
@@ -397,6 +397,18 @@ begin
         begin
           resGuia.Items[i].CodReceita     := Leitor.rCampo(tcInt, 'receita');
           resGuia.Items[i].DataVencimento := Leitor.rCampo(tcStr, 'dataVencimento');
+
+          l := 0;
+          while Leitor.rExtrai(6, 'documentoOrigem', '', l + 1) <> '' do
+          begin
+            if Leitor.rAtributo('tipo=', 'documentoOrigem') = '22' then
+              resGuia.Items[i].NumDocOrigem := Leitor.rCampo(tcStr, 'documentoOrigem');
+
+             inc(l);
+          end;
+
+          if Leitor.rExtrai(6, 'contribuinteDestinatario') <> '' then
+            resGuia.Items[i].DocDestinatario := Leitor.rCampo(tcStr, 'CNPJ');
 
           if Leitor.rExtrai(6, 'referencia') <> '' then
           begin
@@ -440,6 +452,9 @@ begin
           Inc(j);
         end;
       end;
+
+      if Leitor.rExtrai(4, 'informacoesComplementares') <> '' then
+        resGuia.Items[i].InfoComplementares := Leitor.rCampo(tcStr, 'informacao');
 
       Inc(i);
     end;

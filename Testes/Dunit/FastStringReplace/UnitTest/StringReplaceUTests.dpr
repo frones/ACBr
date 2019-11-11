@@ -17,9 +17,8 @@ program StringReplaceUTests;
 uses
   TestuStrReplaceTestClass in 'TestuStrReplaceTestClass.pas',
   uStrReplaceTestClass in 'uStrReplaceTestClass.pas',
-  StrUtilsEx in '..\StrUtilsEx.pas',
+  StrUtilsEx in '..\..\..\..\Fontes\Terceiros\FastStringReplace\StrUtilsEx.pas',
   DUnitTestRunner;
-
 {R *.RES}
 
 begin

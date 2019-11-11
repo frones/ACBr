@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Debug 64"/>
     <Units Count="6">
       <Unit0>
         <Filename Value="FastStringReplaceTestCases.lpr"/>
@@ -13,30 +13,30 @@
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="faststringreplaceclasstest1.pas"/>
-        <UnitName Value="FastStringReplaceClassTest1"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3"/>
-        <CursorPos X="24" Y="6"/>
-        <UsageCount Value="20"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\TestuStrReplaceTestClass.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="262"/>
+        <TopLine Value="222"/>
         <CursorPos X="62" Y="287"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
-      </Unit2>
-      <Unit3>
+      </Unit1>
+      <Unit2>
         <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\uStrReplaceTestClass.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="faststringreplaceclasstest1.pas"/>
+        <UnitName Value="FastStringReplaceClassTest1"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3"/>
+        <CursorPos X="24" Y="6"/>
         <UsageCount Value="20"/>
       </Unit3>
       <Unit4>

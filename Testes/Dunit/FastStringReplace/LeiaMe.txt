@@ -1,0 +1,6 @@
+Esse código é parte do código disponibilizado por Alexandre Machado como parte do repositório abaixo:
+https://bitbucket.org/alex7691/delphi/src/master/FastStringReplace/
+
+Para licença veja o arquivo StrUtilsEX.pas na pasta Fontes\Terceiros\FastStringReplace
+
+Alguns ajustes foram feitos para compilação dos testes em FPC.

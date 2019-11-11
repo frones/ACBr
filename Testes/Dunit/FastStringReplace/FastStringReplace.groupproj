@@ -1,0 +1,48 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{FA6D82E8-75A3-4F97-851D-5E2FB63A47BF}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="PerformanceTest\StringReplacePerformanceTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="UnitTest\StringReplaceUTests.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="StringReplacePerformanceTest">
+			<MSBuild Projects="PerformanceTest\StringReplacePerformanceTest.dproj"/>
+		</Target>
+		<Target Name="StringReplacePerformanceTest:Clean">
+			<MSBuild Targets="Clean" Projects="PerformanceTest\StringReplacePerformanceTest.dproj"/>
+		</Target>
+		<Target Name="StringReplacePerformanceTest:Make">
+			<MSBuild Targets="Make" Projects="PerformanceTest\StringReplacePerformanceTest.dproj"/>
+		</Target>
+		<Target Name="StringReplaceUTests">
+			<MSBuild Projects="UnitTest\StringReplaceUTests.dproj"/>
+		</Target>
+		<Target Name="StringReplaceUTests:Clean">
+			<MSBuild Targets="Clean" Projects="UnitTest\StringReplaceUTests.dproj"/>
+		</Target>
+		<Target Name="StringReplaceUTests:Make">
+			<MSBuild Targets="Make" Projects="UnitTest\StringReplaceUTests.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="StringReplacePerformanceTest;StringReplaceUTests"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="StringReplacePerformanceTest:Clean;StringReplaceUTests:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="StringReplacePerformanceTest:Make;StringReplaceUTests:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

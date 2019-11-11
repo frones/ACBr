@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="FastStringReplaceTestCases.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="61" Y="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="faststringreplaceclasstest1.pas"/>
+        <UnitName Value="FastStringReplaceClassTest1"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3"/>
+        <CursorPos X="24" Y="6"/>
+        <UsageCount Value="20"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\TestuStrReplaceTestClass.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="262"/>
+        <CursorPos X="62" Y="287"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\uStrReplaceTestClass.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\fpcunit.pp"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="202"/>
+        <CursorPos X="3" Y="189"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\testregistry.pp"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="19"/>
+        <CursorPos X="20" Y="31"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="FastStringReplaceTestCases.lpr"/>
+        <Caret Line="6" Column="61"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\TestuStrReplaceTestClass.pas"/>
+        <Caret Line="18" Column="23"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\Dunit\FastStringReplace\UnitTest\TestuStrReplaceTestClass.pas"/>
+        <Caret Line="20" Column="12" TopLine="6"/>
+      </Position3>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

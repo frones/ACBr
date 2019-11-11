@@ -49,7 +49,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         Font.Style = []
         ParentFont = False
       end
@@ -1288,7 +1288,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         Font.Style = []
         IntegralHeight = True
         ParentFont = False
@@ -7770,7 +7770,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         Font.Style = []
         IntegralHeight = True
         ParentFont = False

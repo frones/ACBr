@@ -50,8 +50,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Borders.Style = bsClear
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         Font.Style = []
         ParentFont = False
       end
@@ -161,8 +161,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         Font.Style = []
         IntegralHeight = True
         ParentFont = False
@@ -888,8 +888,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         Font.Style = []
         IntegralHeight = True
         ParentFont = False

@@ -57,8 +57,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Behavior = [beSiteExpander]
         Borders.Style = bsClear
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -206,8 +206,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 683
         Behavior = [beSiteExpander]
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         IntegralHeight = True
         ParentFont = False
         RealBounds.Left = 0
@@ -1097,8 +1097,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         AutoSize = False
         Behavior = [beSiteExpander]
         Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
         IntegralHeight = True
         ParentFont = False
         RealBounds.Left = 0

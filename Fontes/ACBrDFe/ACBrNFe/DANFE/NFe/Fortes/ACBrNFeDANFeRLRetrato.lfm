@@ -57,7 +57,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Borders.Style = bsClear
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -1601,7 +1601,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         IntegralHeight = True
         ParentFont = False
         RealBounds.Left = 0
@@ -9361,7 +9361,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Courier New'
+        Font.Name = 'Times New Roman'
         IntegralHeight = True
         ParentFont = False
         RealBounds.Left = 0

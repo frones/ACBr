@@ -65,7 +65,7 @@ uses Classes, SysUtils, Contnrs, syncobjs,
        {$IFEND}
      {$ENDIF};
 
-{$IFDEF RTL230_UP}
+{$IFDEF DELPHIXE2_UP}
 const
   { Platform identifiers }
   piacbrWin32          = $00000001; // Windows 32-bit
@@ -87,24 +87,32 @@ const
   piacbrWinARM32       = $00000800; // Windows 32-bit ARM processor (raspberry pi)
 
 
-  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 {or
-                       piacbrOSX32 or piacbrOSX64 or
-                       piacbriOSSimulator32 or piacbriOSSimulator64 or
-                       piacbrAndroid32Arm or piacbrAndroid64Arm or
-                       piacbrLinux32 or piacbrLinux64 or
-                       piacbrLinux32Arm or piacbrLinux64Arm or
-                       piacbriOSDevice32 or piacbriOSDevice64 or
-                       piacbrWinNX32 or piacbrWinIoT32 or piacbrWinARM32};
-{$ENDIF RTL230_UP}
+  piacbrAllPlatforms = piacbrWin32 or piacbrWin64 or piacbrOSX32
+  {$IFDEF DELPHIXE3_UP}
+    or piacbriOSSimulator32 or piacbrAndroid32Arm or piacbrLinux32 or piacbriOSDevice32 or piacbrWinNX32
+  {$ENDIF}
+  {$IFDEF DELPHIXE8_UP}
+    or piacbriOSDevice64 or piacbrLinux64 or piacbrWinIoT32
+  {$ENDIF}
+  {$IFDEF DELPHIX_SEATTLE_UP}
+    or piacbrWinARM32
+  {$ENDIF}
+  {$IFDEF DELPHIX_BERLIN_UP}
+    or piacbrOSX64 or piacbrLinux32Arm or piacbrLinux64Arm or piacbrAndroid64Arm
+  {$ENDIF}
+  {$IFDEF DELPHIX_RIO_UP}
+    or piacbriOSSimulator64
+  {$ENDIF};
+{$ENDIF}
 
 type
 
 TACBrAboutInfo = (ACBrAbout);
 
 { ACBrComponente contém apenas a propriedade ACBrAbout }
-{$IFDEF RTL230_UP}
+{$IFDEF DELPHIXE2_UP}
 [ComponentPlatformsAttribute(piacbrAllPlatforms)]
-{$ENDIF RTL230_UP}
+{$ENDIF DELPHIXE2_UP}
 TACBrComponent = class( TComponent )
   private
     fsAbout: TACBrAboutInfo;

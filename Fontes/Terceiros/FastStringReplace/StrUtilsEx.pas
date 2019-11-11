@@ -30,7 +30,6 @@ unit StrUtilsEx;
 {$Else}
   {$IF CompilerVersion < 24}
    {$Define FPC_OR_LEGACY24}
-   {$UnDef USE_FASTPOS}
   {$IfEnd}
 {$EndIf}
 

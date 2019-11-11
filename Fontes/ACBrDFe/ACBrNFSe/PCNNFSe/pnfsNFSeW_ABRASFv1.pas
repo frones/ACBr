@@ -145,7 +145,7 @@ begin
         ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
          (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
          (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> ''))) or
-       ((FProvedor in [proSimplISS, proISSNet, proPronim, proLexsom])) then
+       ((FProvedor in [proSimplISS, proISSNet,proFISSLEX, proPronim, proLexsom])) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       
@@ -163,7 +163,7 @@ begin
 
       Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, DSC_IM);
 
-      if FProvedor in [proBetha, proSimplISS] then
+      if FProvedor in [proBetha, proSimplISS, proFISSLEX] then
         Gerador.wCampoNFSe(tcStr, '#38', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, DSC_IE);
 
       Gerador.wGrupoNFSe('/IdentificacaoTomador');

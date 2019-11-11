@@ -297,7 +297,7 @@ type
   tpLocalAmb              = (laEstabProprioEmpregador, laEstabTerceiro, laPrestInstalacaoTerceiro);
 
   tpTpAcConv              = (tacAcordoColTrab, tacLegislacaoFederalEstadualMunicipalDistrital, tacConvencaoColTrab,
-                             tacSetencNormativa, tacConversaoLicenSaudeAcidTrabalho, tacOutrasVerbas);
+                             tacSetencNormativa, tacConversaoLicenSaudeAcidTrabalho, tacOutrasVerbas, tacAntecipacaoDif);
 
   tpIndSusp               = (siLiminarMandadoSeguranca, siDepositoJudicial, siDepositoAdministrativo, siAntecipacaoTutela, siLiminarMedidaCautelar,
                              siSentencaMandadoSegurancaFavoravelContribuinte, siSentencaAcaoOrdinariaFavContribuinteConfirmadaPeloTRF,
@@ -961,7 +961,7 @@ const
 
   TGenericosStringA_E : array[0..4] of string = ('A','B','C','D','E');
 
-  TGenericosStringA_F : array[0..5] of string = ('A','B','C','D','E','F');
+  TGenericosStringA_G : array[0..6] of string = ('A','B','C','D','E','F','G');
 
   TGenericosStringO_N : array[0..1] of string = ('O', 'N');
 
@@ -2213,12 +2213,12 @@ end;
 
 function eSTpAcConvToStr(const t: tpTpAcConv): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosStringA_F);
+  result := EnumeradoToStr2(t, TGenericosStringA_G);
 end;
 
 function eSStrToTpAcConv(var ok: Boolean; const s: string): tpTpAcConv;
 begin
-  result := tpTpAcConv( StrToEnumerado2(ok , s, TGenericosStringA_F ));
+  result := tpTpAcConv( StrToEnumerado2(ok , s, TGenericosStringA_G ));
 end;
 
 function eSTpNatEstagioToStr(const t: tpNatEstagio): string;

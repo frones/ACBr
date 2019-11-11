@@ -249,7 +249,8 @@ var
 begin
   Result := False;
 
-  Leitor.Grupo := StringReplace(Leitor.Arquivo, 'ns1:', '', [rfReplaceAll]);
+  Leitor.Arquivo := StringReplace(Leitor.Arquivo, 'ns1:', '', [rfReplaceAll]);
+  Leitor.Grupo   := Leitor.Arquivo;
 
   if Leitor.rExtrai(1, 'TResultLote_GNRE') <> '' then
   begin

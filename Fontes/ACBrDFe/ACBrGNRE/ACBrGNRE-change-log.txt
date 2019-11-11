@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2019
+-- Diversos --
+[+] Implementado a leitura da Guia em formato do XML do GNRE versão 2.00
+    por: Italo Jurisato Junior
+
 07/11/2019
 -- pgnreRetConsResLoteGNRE --
 [*] Melhorias na leitura do retorno da consulta do GNRE versão 2.00

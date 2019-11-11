@@ -28,6 +28,13 @@ unit StrUtilsEx;
   {$IFEND}
 {$ENDIF}
 
+{$IFDEF FPC}
+  {$IFDEF CPU64}
+    {$DEFINE  USAR_REPLACE_DEFAULT}
+  {$ENDIF}
+{$ENDIF}
+
+
 interface
 
 uses
@@ -69,6 +76,12 @@ begin
     Result := '';
     Exit;
   end;
+
+  {$IFDEF USAR_REPLACE_DEFAULT}
+  Result := StringReplace(S, OldPattern, NewPattern, Flags);
+  Exit;
+  {$ENDIF}
+
 
   if rfIgnoreCase in Flags then begin
     xOldPattern := AnsiUpperCase(OldPattern);

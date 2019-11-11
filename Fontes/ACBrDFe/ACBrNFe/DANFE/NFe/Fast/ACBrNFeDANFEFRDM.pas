@@ -477,6 +477,7 @@ begin
         FieldDefs.Add('QrCodeCarregado', ftGraphic, 1000);
         FieldDefs.Add('QrCodeLateral', ftString, 1);
         FieldDefs.Add('ImprimeEm1Linha', ftString, 1);
+        FieldDefs.Add('ImprimeEmDuasLinhas', ftString, 1);
         FieldDefs.Add('DescricaoViaEstabelec', ftString, 30);
         FieldDefs.Add('QtdeItens', ftInteger);
         FieldDefs.Add('ExpandirDadosAdicionaisAuto', ftString, 1);

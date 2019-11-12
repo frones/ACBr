@@ -102,10 +102,8 @@ type
   {$ENDIF RTL230_UP}
   TACBrECFVirtualSATClass = class(TACBrECFVirtualPrinterClass)
   private
-    fsACBrSAT: TACBrSAT;
-    fsEhVenda: Boolean;
-    fsNomeArqTempXML: String;
     fsECF: TACBrECF;
+    fsNomeArqTempXML: String;
 
     fsQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
     fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
@@ -117,6 +115,8 @@ type
     function GetACBrECF: TACBrECF;
     procedure FazerImpressaoDocumento;
   protected
+    fsACBrSAT: TACBrSAT;
+    fsEhVenda: Boolean;
     function GetSubModeloECF: string; override;
     function GetNumVersao: string; override;
     procedure AtivarVirtual; override;

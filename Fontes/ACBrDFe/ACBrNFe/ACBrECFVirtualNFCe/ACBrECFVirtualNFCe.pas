@@ -115,22 +115,14 @@ type
   {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private
-    fsACBrNFCe: TACBrNFe;
-    fsEhVenda: Boolean;
-    fsImprimir2ViaOffLine : Boolean;
-
+    fsECF: TACBrECF;
+    fsNomeArqTempXML: string;
     fsQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
     fsQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
     fsQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
     fsQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
     fsQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
     fsQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
-    fsNomeArqTempXML: string;
-    fsECF: TACBrECF;
-    fsDestCNPJ: string;
-    fsDestNome: string;
-    fsvTotTrib, fsvBC, fsvICMS, fsvBCST, fsvST, fsvProd, fsvFrete: Currency;
-    fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvNF: Currency;
 
     function AdivinharFormaPagamento(const DescricaoPagto: string): TpcnFormaPagamento;
     procedure SomaTotais;
@@ -138,6 +130,13 @@ type
     function GetACBrECF: TACBrECF;
     procedure FazerImpressaoDocumento;
   protected
+    fsACBrNFCe: TACBrNFe;
+    fsImprimir2ViaOffLine : Boolean;
+    fsEhVenda: Boolean;
+    fsDestCNPJ: string;
+    fsDestNome: string;
+    fsvTotTrib, fsvBC, fsvICMS, fsvBCST, fsvST, fsvProd, fsvFrete: Currency;
+    fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvNF: Currency;
     function GetSubModeloECF: string; override;
     function GetNumVersao: string; override;
     procedure AtivarVirtual; override;

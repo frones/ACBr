@@ -92,7 +92,8 @@ exports
   NFE_Assinar,
   NFE_Validar,
   NFE_ValidarRegrasdeNegocios,
-  NFE_VerificarAssinatura;
+  NFE_VerificarAssinatura,
+  NFE_GerarChave;
 
 begin
   {$IFDEF DEBUG}

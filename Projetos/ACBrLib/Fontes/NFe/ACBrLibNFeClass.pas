@@ -109,6 +109,9 @@ function NFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -174,7 +177,7 @@ uses
   ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
-  ACBrNFe, ACBrMail, ACBrUtil,
+  ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil,
   pcnConversao, pcnAuxiliar, blcksock;
 
 { TACBrLibNFe }
@@ -670,6 +673,48 @@ begin
         Erros := '';
         NFeDM.ACBrNFe1.NotasFiscais.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Erros);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta, CNPJCPF: string;
+  Emissao: TDateTime;
+begin
+  try
+    VerificarLibInicializada;
+
+    Emissao := StrToDateTime(AEmissao);
+    CNPJCPF := String(ACNPJCPF);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
+                      IntToStr(AModelo)  + ',' + IntToStr(AModelo) + ',' + IntToStr(ASerie) + ',' +
+                      IntToStr(ANumero) + ',' + IntToStr(ATpEmi) + ',' + DateTimeToStr(Emissao) + ',' +
+                      CNPJCPF + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_GerarChave', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
         Result := SetRetorno(ErrOK, Erros);
       finally
         NFeDM.Destravar;

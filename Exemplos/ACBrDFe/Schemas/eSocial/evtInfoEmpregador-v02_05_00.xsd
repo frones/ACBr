@@ -190,7 +190,7 @@
       <xs:documentation>Informações do Empregador</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="nmRazao">
+      <xs:element name="nmRazao" minOccurs="0">
         <xs:simpleType>
           <xs:annotation>
             <xs:documentation>Nome/Razão Social</xs:documentation>
@@ -293,7 +293,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="indEtt">
+      <xs:element name="indEtt" minOccurs="0">
         <xs:simpleType>
           <xs:annotation>
             <xs:documentation>Indicativo de Empresa de Trabalho Temporário</xs:documentation>
@@ -404,7 +404,7 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="contato">
+      <xs:element name="contato" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Informações de contato</xs:documentation>
         </xs:annotation>
@@ -654,7 +654,7 @@
                 </xs:restriction>
               </xs:simpleType>
             </xs:element>
-            <xs:element name="nmRazao">
+            <xs:element name="nmRazao" minOccurs="0">
               <xs:simpleType>
                 <xs:annotation>
                   <xs:documentation>Nome/Razão Social</xs:documentation>
@@ -704,7 +704,7 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="infoComplementares">
+      <xs:element name="infoComplementares" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Informações complementares sobre o declarante</xs:documentation>
         </xs:annotation>

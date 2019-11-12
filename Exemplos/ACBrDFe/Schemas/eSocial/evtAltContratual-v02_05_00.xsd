@@ -689,7 +689,7 @@
       <xs:documentation>Informações do Endereço no Brasil</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="tpLograd">
+      <xs:element name="tpLograd" minOccurs="0">
         <xs:simpleType>
           <xs:annotation>
             <xs:documentation>Tipo de Logradouro</xs:documentation>

@@ -219,7 +219,7 @@
             <xs:documentation>Classificação Brasileira de Ocupação</xs:documentation>
           </xs:annotation>
           <xs:restriction base="xs:string">
-            <xs:pattern value="\d{4,6}"/>
+            <xs:pattern value="\d{6}"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>

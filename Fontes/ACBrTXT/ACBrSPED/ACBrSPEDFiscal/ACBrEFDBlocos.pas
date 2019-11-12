@@ -791,6 +791,10 @@ type
   function StrToIndicadorProcesso(const AValue: string): TACBrIndicadorProcesso;
   function IndicadorObrigacaoToStr(AValue: TACBrIndicadorObrigacao): string;
   function StrToIndicadorObrigacao(const AValue: string): TACBrIndicadorObrigacao;
+  function TipoBaseMedicamentoToStr(const AValue: TACBrTipoBaseMedicamento): string;
+  function StrToTipoBaseMedicamento(const AValue: string): TACBrTipoBaseMedicamento;
+  function TipoProdutoToStr(const AValue: TACBrTipoProduto): string;
+  function StrToTipoProduto(const AValue: string): TACBrTipoProduto;
 
 implementation
 
@@ -1839,4 +1843,65 @@ begin
   if AValue = '2' then
     Result := tioISSUniprofissionais;
 end;
+
+function TipoBaseMedicamentoToStr(const AValue: TACBrTipoBaseMedicamento): string;
+begin
+  case Avalue of
+    bmCalcTabeladoSugerido: // 0 - Base de cálculo referente ao preço tabelado ou preço máximo sugerido;
+      Result := '0';
+    bmCalMargemAgregado: // 1 - Base cálculo – Margem de valor agregado;
+      Result := '1';
+    bmCalListNegativa: // 2 - Base de cálculo referente à Lista Negativa;
+      Result := '2';
+    bmCalListaPositiva: // 3 - Base de cálculo referente à Lista Positiva;
+      Result := '3';
+    bmCalListNeutra: // 4 - Base de cálculo referente à Lista Neutra
+      Result := '4';
+  end;
+end;
+
+function StrToTipoBaseMedicamento(const AValue: string): TACBrTipoBaseMedicamento;
+begin
+  Result := bmCalcTabeladoSugerido;
+  if AValue = '0' then // 0 - Base de cálculo referente ao preço tabelado ou preço máximo sugerido;
+    Result := bmCalcTabeladoSugerido
+  else
+  if  AValue = '1' then // 1 - Base cálculo – Margem de valor agregado;
+    Result := bmCalMargemAgregado
+  else
+  if AValue = '2' then // 2 - Base de cálculo referente à Lista Negativa;
+    Result := bmCalListNegativa
+  else
+  if AValue = '3' then // 3 - Base de cálculo referente à Lista Positiva;
+    Result := bmCalListaPositiva
+  else
+  if AValue = '4' then // 4 - Base de cálculo referente à Lista Neutra
+    Result := bmCalListNeutra;
+end;
+
+function TipoProdutoToStr(const AValue: TACBrTipoProduto): string;
+begin
+  case Avalue of
+    tpSimilar: // 0 - Similar
+      Result := '0';
+    tpGenerico: // 1 - Genérico
+      Result := '1';
+    tpMarca: // 2 - Ético ou de Marca
+      Result := '2';
+  end;
+end;
+
+function StrToTipoProduto(const AValue: string): TACBrTipoProduto;
+begin
+  Result := tpSimilar;
+  if AValue = '0' then // 0 - Similar
+    Result := tpSimilar
+  else
+  if  AValue = '1' then // 1 - Genérico
+    Result := tpGenerico
+  else
+  if AValue = '2' then // 2 - Ético ou de Marca
+    Result := tpMarca;
+end;
+
 end.

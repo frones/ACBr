@@ -126,6 +126,8 @@ begin
     VL_NT := ValorF;
     COD_INF := Valor;
     COD_CTA := Valor;
+    COD_MUN_ORIG := Valor;
+    COD_MUN_DEST := Valor;
   end;
 end;
 

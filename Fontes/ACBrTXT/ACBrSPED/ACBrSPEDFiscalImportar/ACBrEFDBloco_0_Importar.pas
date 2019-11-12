@@ -64,6 +64,7 @@ type
     procedure Reg0206;
     procedure Reg0400;
     procedure Reg0450;
+    procedure Reg0460;
     procedure Reg0500;
     procedure Reg0600;
   public
@@ -91,6 +92,7 @@ begin
   else if (vHead = '0206') then Reg0206
   else if (vHead = '0400') then Reg0400
   else if (vHead = '0450') then Reg0450
+  else if (vHead = '0460') then Reg0460
   else if (vHead = '0500') then Reg0500
   else if (vHead = '0600') then Reg0600;
 end;
@@ -272,6 +274,16 @@ begin
   with ACBrSpedFiscal.Bloco_0.Registro0450New do
   begin
     COD_INF := Valor;
+    TXT := Valor;
+  end;
+end;
+
+//Tabela de Observações do Lançamento Fiscal
+procedure TACBrSpedFiscalImportar_Bloco0.Reg0460;
+begin
+  with ACBrSpedFiscal.Bloco_0.Registro0460New do
+  begin
+    COD_OBS := Valor;
     TXT := Valor;
   end;
 end;

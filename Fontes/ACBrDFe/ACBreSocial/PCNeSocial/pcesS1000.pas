@@ -155,8 +155,8 @@ type
     FIndOptRegEletron: TpIndOptRegEletron;
     FIndOpcCP: TpIndOpcCP;
     FIndPorte: tpSimNao;
-    FIndEntEd: tpSimNao;
-    FIndEtt: tpSimNao;
+    FIndEntEd: tpSimNaoFacultativo;
+    FIndEtt: tpSimNaoFacultativo;
     FNrRegEtt: String;
     FDadosIsencao: TDadosIsencao;
     FContato: TContato;
@@ -184,8 +184,8 @@ type
     property IndOptRegEletron: TpIndOptRegEletron read FIndOptRegEletron write FIndOptRegEletron;
     property IndOpcCP: TpIndOpcCP read FIndOpcCP write FIndOpcCP;
     property IndPorte: tpSimNao read FIndPorte write FIndPorte;
-    property IndEntEd: tpSimNao read FIndEntEd write FIndEntEd;
-    property IndEtt: tpSimNao read FIndEtt write FIndEtt;
+    property IndEntEd: tpSimNaoFacultativo read FIndEntEd write FIndEntEd;
+    property IndEtt: tpSimNaoFacultativo read FIndEtt write FIndEtt;
     property nrRegEtt: String read FNrRegEtt write FNrRegEtt;
     property DadosIsencao: TDadosIsencao read getDadosIsencao write FDadosIsencao;
     property Contato: TContato read FContato write FContato;
@@ -388,15 +388,18 @@ end;
 
 procedure TevtInfoEmpregador.GerarContato;
 begin
-  Gerador.wGrupo('contato');
+  if (Self.infoEmpregador.infoCadastro.Contato.NmCtt <> '') or (VersaoDF < ve02_05_00) then
+  begin
+    Gerador.wGrupo('contato');
 
-  Gerador.wCampo(tcStr, '', 'nmCtt',     1, 70, 1, Self.infoEmpregador.infoCadastro.Contato.NmCtt);
-  Gerador.wCampo(tcStr, '', 'cpfCtt',   11, 11, 1, Self.infoEmpregador.infoCadastro.Contato.CpfCtt);
-  Gerador.wCampo(tcStr, '', 'foneFixo',  1, 13, 0, Self.infoEmpregador.infoCadastro.Contato.FoneFixo);
-  Gerador.wCampo(tcStr, '', 'foneCel',   1, 13, 0, Self.infoEmpregador.infoCadastro.Contato.FoneCel);
-  Gerador.wCampo(tcStr, '', 'email',     1, 60, 0, Self.infoEmpregador.infoCadastro.Contato.email);
+    Gerador.wCampo(tcStr, '', 'nmCtt',     1, 70, 1, Self.infoEmpregador.infoCadastro.Contato.NmCtt);
+    Gerador.wCampo(tcStr, '', 'cpfCtt',   11, 11, 1, Self.infoEmpregador.infoCadastro.Contato.CpfCtt);
+    Gerador.wCampo(tcStr, '', 'foneFixo',  1, 13, 0, Self.infoEmpregador.infoCadastro.Contato.FoneFixo);
+    Gerador.wCampo(tcStr, '', 'foneCel',   1, 13, 0, Self.infoEmpregador.infoCadastro.Contato.FoneCel);
+    Gerador.wCampo(tcStr, '', 'email',     1, 60, 0, Self.infoEmpregador.infoCadastro.Contato.email);
 
-  Gerador.wGrupo('/contato');
+    Gerador.wGrupo('/contato');
+  end;
 end;
 
 procedure TevtInfoEmpregador.GerarInfoEFR;
@@ -495,13 +498,14 @@ begin
   Gerador.wCampo(tcStr, '', 'indOptRegEletron', 1, 001, 1, eSIndOptRegEletronicoToStr(Self.infoEmpregador.infoCadastro.IndOptRegEletron));
 
   if (Self.ideEmpregador.TpInsc = tiCNPJ) then
-    Gerador.wCampo(tcStr, '', 'indEntEd',       1, 001, 0, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
+    Gerador.wCampo(tcStr, '', 'indEntEd',       0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEntEd));
 
-  Gerador.wCampo(tcStr, '', 'indEtt',           1, 001, 1, eSSimNaoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
+  Gerador.wCampo(tcStr, '', 'indEtt',           0, 001, 0, eSSimNaoFacultativoToStr(Self.infoEmpregador.infoCadastro.IndEtt));
   Gerador.wCampo(tcStr, '', 'nrRegEtt',         0, 030, 0, Self.infoEmpregador.infoCadastro.nrRegEtt);
 
   GerarDadosIsencao;
   GerarContato;
+
   GerarInfoOp;
   GerarInfoOrgInternacional;
   GerarSoftwareHouse;
@@ -665,8 +669,8 @@ begin
         infoEmpregador.infoCadastro.IndOpcCP         := eSStrToIndOpcCP(Ok, INIRec.ReadString(sSecao, 'indOpcCP', '0'));
         infoEmpregador.infoCadastro.IndPorte         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indPorte', 'S'));
         infoEmpregador.infoCadastro.IndOptRegEletron := eSStrToIndOptRegEletronico(Ok, INIRec.ReadString(sSecao, 'indOptRegEletron', '0'));
-        infoEmpregador.infoCadastro.IndEntEd         := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
-        infoEmpregador.infoCadastro.IndEtt           := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
+        infoEmpregador.infoCadastro.IndEntEd         := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEntEd', 'S'));
+        infoEmpregador.infoCadastro.IndEtt           := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'indEtt', 'S'));
         infoEmpregador.infoCadastro.nrRegEtt         := INIRec.ReadString(sSecao, 'nrRegEtt', EmptyStr);
 
         sSecao := 'dadosIsencao';

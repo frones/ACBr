@@ -436,6 +436,10 @@ begin
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('Tributacao', ftString, 1);
       Add('OutrosDescontos', ftCurrency);
+      // Provedor SP
+      Add('ValorCargaTributaria', ftCurrency);
+      Add('PercentualCargaTributaria', ftCurrency);
+      Add('FonteCargaTributaria', ftString, 10);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -470,6 +474,8 @@ begin
       Add('OptanteSimplesNacional', ftString, 10);
       Add('IncentivadorCultural', ftString, 10);
       Add('TipoRecolhimento', ftString, 10);
+      //
+      Add('ValorCredito', ftCurrency);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -697,8 +703,12 @@ begin
         Add('DescontoCondicionado=DescontoCondicionado');
         Add('DescontoIncondicionado=DescontoIncondicionado');
         Add('TotalNota=TotalNota');
-        Add('Tributacao=Tributacao'); 
+        Add('Tributacao=Tributacao');
         Add('OutrosDescontos=OutrosDescontos');
+        // Provedor SP
+        Add('ValorCargaTributaria=ValorCargaTributaria');
+        Add('PercentualCargaTributaria=PercentualCargaTributaria');
+        Add('FonteCargaTributaria=FonteCargaTributaria');
       end;
       DataSet       := cdsServicos;
       BCDToCurrency := False;
@@ -736,7 +746,8 @@ begin
         Add('OptanteSimplesNacional=OptanteSimplesNacional');
         Add('RegimeEspecialTributacao=RegimeEspecialTributacao');
         Add('NaturezaOperacao=NaturezaOperacao');
-        Add('TipoRecolhimento=TipoRecolhimento'); 
+        Add('TipoRecolhimento=TipoRecolhimento');
+        Add('ValorCredito=ValorCredito');
       end;
       DataSet       := cdsParametros;
       BCDToCurrency := False;
@@ -937,6 +948,7 @@ begin
       end;
 
       FieldByName('InformacoesComplementares').AsString := InformacoesComplementares;
+      FieldByName('ValorCredito').AsCurrency := ValorCredito;
     end;
 
     CarregaLogoPrefeitura;
@@ -1048,6 +1060,10 @@ begin
         FieldByName('DescontoCondicionado').AsFloat   := DescontoCondicionado;
         FieldByName('DescontoIncondicionado').AsFloat := DescontoIncondicionado;
         FieldByName('OutrosDescontos').AsCurrency := OutrosDescontos;
+        // Provedor SP
+        FieldByName('ValorCargaTributaria').AsCurrency := ValorCargaTributaria;
+        FieldByName('PercentualCargaTributaria').AsCurrency := PercentualCargaTributaria;
+        FieldByName('FonteCargaTributaria').AsString := FonteCargaTributaria;
       end;
     end;
     Post;

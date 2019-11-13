@@ -715,7 +715,7 @@ begin
       try
         Resposta := '';
         Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
-        Result := SetRetorno(ErrOK, Erros);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         NFeDM.Destravar;
       end;

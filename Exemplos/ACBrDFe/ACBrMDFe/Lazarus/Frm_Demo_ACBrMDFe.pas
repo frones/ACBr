@@ -8,7 +8,7 @@ uses
   IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Buttons, ExtCtrls,
   SynEdit, SynHighlighterXML, ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase,
-  ACBrDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeSSL;
+  ACBrDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeSSL, ACBrDFeReport;
 
 type
 
@@ -35,8 +35,8 @@ type
     btnConsultarChave: TButton;
     btnEncerramento: TButton;
     PageControl2: TPageControl;
-    WBResposta: TSynEdit;
     SynXMLSyn1: TSynXMLSyn;
+    WBResposta: TSynEdit;
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
     TabSheet6: TTabSheet;
@@ -56,6 +56,7 @@ type
     btnGerarPDFEvento: TButton;
     ACBrMail1: TACBrMail;
     btnConsultarNaoEncerrados: TButton;
+    btnModeloFR: TButton;
     btEncerramentoSemXml: TButton;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     GroupBox1: TGroupBox;
@@ -180,6 +181,7 @@ type
     procedure btnGerarPDFEventoClick(Sender: TObject);
     procedure sbPathSchemasClick(Sender: TObject);
     procedure btnConsultarNaoEncerradosClick(Sender: TObject);
+    procedure btnModeloFRClick(Sender: TObject);
     procedure btEncerramentoSemXmlClick(Sender: TObject);
     procedure cbSSLLibChange(Sender: TObject);
     procedure cbCryptLibChange(Sender: TObject);
@@ -187,7 +189,10 @@ type
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure cbSSLTypeChange(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
-
+    {
+    procedure lblMouseEnter(Sender: TObject);
+    procedure lblMouseLeave(Sender: TObject);
+    }
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -216,6 +221,17 @@ const
 
 {$R *.lfm}
 
+(*
+procedure TForm1.lblMouseEnter(Sender: TObject);
+begin
+ TLabel(Sender).Font.Style := [fsBold,fsUnderline];
+end;
+
+procedure TForm1.lblMouseLeave(Sender: TObject);
+begin
+ TLabel(Sender).Font.Style := [fsBold];
+end;
+*)
 procedure TfrmDemo_ACBrMDFe.GravarConfiguracao;
 var
   IniFile: String;
@@ -365,10 +381,16 @@ begin
 
     if ACBrMDFe1.DAMDFE <> nil then
     begin
-      ACBrMDFe1.DAMDFE.TipoDAMDFe    := StrToTpImp(OK,IntToStr(rgTipoDAMDFE.ItemIndex+1));
+      ACBrMDFe1.DAMDFE.TipoDAMDFe   := StrToTpImp(OK,IntToStr(rgTipoDAMDFE.ItemIndex+1));
       ACBrMDFe1.DAMDFE.Logo         := edtLogoMarca.Text;
       ACBrMDFe1.DAMDFE.PathPDF      := edtPathLogs.Text;
-      ACBrMDFe1.DAMDFE.TamanhoPapel := tpA4_2vias;
+      ACBrMDFe1.DAMDFE.TamanhoPapel := tpA4;
+
+      ACBrMDFe1.DAMDFE.MargemInferior := 5;
+      ACBrMDFe1.DAMDFE.MargemSuperior := 5;
+      ACBrMDFe1.DAMDFE.MargemEsquerda := 5;
+      ACBrMDFe1.DAMDFE.MargemDireita  := 5;
+      ACBrMDFe1.DAMDFE.ExpandeLogoMarca := False;
     end;
 
     edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       , '');
@@ -418,9 +440,12 @@ var
   PathMensal: String;
 begin
   // Configurações -> Certificados
-   ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX := edtCaminho.Text;
+  {$IFDEF ACBrMDFeOpenSSL}
+   ACBrMDFe1.Configuracoes.Certificados.Certificado := edtCaminho.Text;
    ACBrMDFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+  {$ELSE}
    ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+  {$ENDIF}
 
   ACBrMDFe1.Configuracoes.Certificados.VerificarValidade := False;
 
@@ -434,6 +459,8 @@ begin
 
   PathMensal := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe(0);
 
+  ACBrMDFe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
+
   // Configurações -> Geral
   ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
   ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
@@ -441,8 +468,6 @@ begin
    0: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100;
    1: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve300;
   end;
-
-  ACBrMDFe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
 
   // Configurações -> WebServices
   ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet      := 0;
@@ -501,7 +526,7 @@ begin
     Ide.UFIni   := 'SP';
     Ide.UFFim   := 'SP';
 
-    with Ide.infMunCarrega.Add do
+    with Ide.infMunCarrega.New do
     begin
       cMunCarrega := 3503208;
       xMunCarrega := 'ARARAQUARA';
@@ -511,9 +536,9 @@ begin
     // Dados do Emitente
     //
     Emit.CNPJCPF := edtEmitCNPJ.Text;
-    Emit.IE    := edtEmitIE.Text;
-    Emit.xNome := edtEmitRazao.Text;
-    Emit.xFant := edtEmitFantasia.Text;
+    Emit.IE      := edtEmitIE.Text;
+    Emit.xNome   := edtEmitRazao.Text;
+    Emit.xFant   := edtEmitFantasia.Text;
 
     Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
     Emit.EnderEmit.nro     := edtEmitNumero.Text;
@@ -545,13 +570,13 @@ begin
 
     rodo.veicTracao.UF := edtEmitUF.Text;
 
-    with rodo.veicTracao.condutor.Add do
+    with rodo.veicTracao.condutor.New do
     begin
       xNome := 'JOAO';
       CPF   := '12345678912';
     end;
 
-    with rodo.veicReboque.Add do
+    with rodo.veicReboque.New do
     begin
       cInt    := '002';
       placa   := 'XYZ4567';
@@ -566,43 +591,43 @@ begin
       UF := edtEmitUF.Text;
     end;
 
-    with rodo.valePed.disp.Add do
+    with rodo.infANTT.valePed.disp.New do
     begin
       CNPJForn := '12345678000199';
       CNPJPg   := '21543876000188';
       nCompra  := '789';
     end;
 
-    with infDoc.infMunDescarga.Add do
+    with infDoc.infMunDescarga.New do
     begin
       cMunDescarga := 3550308;
       xMunDescarga := 'SAO PAULO';
 
-      with infCTe.Add do
+      with infCTe.New do
       begin
         chCTe := '35110803911545000148570010000001011000001018';
 
         // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
 
-        with infUnidTransp.Add do
+        with infUnidTransp.New do
         begin
           //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
           tpUnidTransp := utRodoTracao;
           idUnidTransp := 'ABC1234'; // informar a placa se rodoviário
 
-          with lacUnidTransp.Add do
+          with lacUnidTransp.New do
           begin
             nLacre := '123';
           end;
 
           // Informações das Unidades de carga (Containeres/ULD/Outros)
-          with infUnidCarga.Add do
+          with infUnidCarga.New do
           begin
             // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
             tpUnidCarga := ucOutros;
             idUnidCarga := 'AB45'; // informar o numero da unidade da carga
 
-            with lacUnidCarga.Add do
+            with lacUnidCarga.New do
             begin
               nLacre := '123';
             end;
@@ -614,31 +639,31 @@ begin
         end;
       end; // fim do with
 
-      with infCTe.Add do
+      with infCTe.New do
       begin
         chCTe := '35110803911545000148570010000001021000001023';
 
         // Informações das Unidades de Transporte (Carreta/Reboque/Vagão)
 
-        with infUnidTransp.Add do
+        with infUnidTransp.New do
         begin
           //TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
           tpUnidTransp := utRodoReboque;
           idUnidTransp := 'XYZ5678';
 
-          with lacUnidTransp.Add do
+          with lacUnidTransp.New do
           begin
             nLacre := '321';
           end;
 
           // Informações das Unidades de carga (Containeres/ULD/Outros)
-          with infUnidCarga.Add do
+          with infUnidCarga.New do
           begin
             // TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
             tpUnidCarga := ucOutros;
             idUnidCarga := 'DD98';
 
-            with lacUnidCarga.Add do
+            with lacUnidCarga.New do
             begin
               nLacre := '321';
             end;
@@ -657,7 +682,7 @@ begin
     tot.cUnid  :=  uTon;
     tot.qCarga := 2.8000;
 
-    with lacres.Add do
+    with lacres.New do
     begin
       nLacre := '123';
     end;
@@ -766,17 +791,17 @@ end;
 
 procedure TfrmDemo_ACBrMDFe.lblColaboradorClick(Sender: TObject);
 begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5'); { *Convertido de ShellExecute* }
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
 end;
 
 procedure TfrmDemo_ACBrMDFe.lblPatrocinadorClick(Sender: TObject);
 begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/35'); { *Convertido de ShellExecute* }
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/35');
 end;
 
 procedure TfrmDemo_ACBrMDFe.lblDoar1Click(Sender: TObject);
 begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14'); { *Convertido de ShellExecute* }
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
 end;
 
 procedure TfrmDemo_ACBrMDFe.ACBrMDFe1StatusChange(Sender: TObject);
@@ -843,11 +868,6 @@ begin
   cbSSLType.Enabled      := (ACBrMDFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
 end;
 
-procedure TfrmDemo_ACBrMDFe.ACBrMDFe1GerarLog(const Mensagem: String);
-begin
-  memoLog.Lines.Add(Mensagem);
-end;
-
 procedure TfrmDemo_ACBrMDFe.LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
 var
   vText: String;
@@ -858,11 +878,16 @@ begin
   vText := StringReplace(vText, '>', '>' + LineEnding + '    ', [rfReplaceAll]);
   vText := StringReplace(vText, '<', LineEnding + '  <', [rfReplaceAll]);
   vText := StringReplace(vText, '>' + LineEnding + '    ' + LineEnding +
-             '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
+           '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
   vText := StringReplace(vText, '  </ret', '</ret', []);
 
   // exibe resposta
   SynEdit.Text := Trim(vText);
+end;
+
+procedure TfrmDemo_ACBrMDFe.ACBrMDFe1GerarLog(const Mensagem: String);
+begin
+  memoLog.Lines.Add(Mensagem);
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnStatusServClick(Sender: TObject);
@@ -897,6 +922,7 @@ begin
   ACBrMDFe1.Manifestos.Clear;
   GerarMDFe(vAux);
   ACBrMDFe1.Manifestos.Items[0].GravarXML('', '');
+  ACBrMDFe1.Manifestos.Assinar;
 
   ShowMessage('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
   MemoDados.Lines.Add('Arquivo gerado em: '+ACBrMDFe1.Manifestos.Items[0].NomeArq);
@@ -906,6 +932,8 @@ begin
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnValidarXMLClick(Sender: TObject);
+var
+  Erros: string;
 begin
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-MDFe.xml';
@@ -917,7 +945,9 @@ begin
     ACBrMDFe1.Manifestos.Clear;
     ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
     ACBrMDFe1.Manifestos.Validar;
+    ACBrMDFe1.Manifestos.ValidarRegrasdeNegocios(Erros);
     showmessage('Manifesto Eletrônico de Documentos Fiscais Valido');
+    showmessage(Erros);
   end;
 end;
 
@@ -1083,7 +1113,7 @@ begin
 
     ACBrMDFe1.EventoMDFe.Evento.Clear;
 
-    with ACBrMDFe1.EventoMDFe.Evento.Add do
+    with ACBrMDFe1.EventoMDFe.Evento.New do
     begin
       infEvento.chMDFe   := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
       infEvento.CNPJCPF  := edtEmitCNPJ.Text;
@@ -1127,7 +1157,7 @@ begin
   ACBrMDFe1.Manifestos.Clear;
   ACBrMDFe1.EventoMDFe.Evento.Clear;
 
-  with ACBrMDFe1.EventoMDFe.Evento.Add do
+  with ACBrMDFe1.EventoMDFe.Evento.New do
   begin
     infEvento.chMDFe   := vChave;
     infEvento.CNPJCPF  := edtEmitCNPJ.Text;
@@ -1141,7 +1171,7 @@ begin
     infEvento.detEvento.nProt := vProtocolo;
     infEvento.detEvento.dtEnc := Date;
     infEvento.detEvento.cUF   := UFtoCUF( vUF );
-    infEvento.detEvento.cMun  := vCodMun.ToInteger;
+    infEvento.detEvento.cMun  := StrToInt(vCodMun);
   end;
 
   ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
@@ -1178,6 +1208,11 @@ end;
 
 procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
 begin
+//  if ACBrMDFeDAMDFEFR1.FastFile = '' then
+//    btnModeloFR.Click;
+
+//  if ACBrMDFeDAMDFEFR1.FastFile = '' then Exit;
+
   OpenDialog1.Title := 'Selecione o MDFe';
   OpenDialog1.DefaultExt := '*-MDFe.xml';
   OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
@@ -1263,6 +1298,19 @@ begin
     ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
     ACBrMDFe1.ImprimirEvento;
   end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnModeloFRClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o modelo';
+  OpenDialog1.DefaultExt := '*.fr3';
+  OpenDialog1.Filter := 'Arquivos FR3 (*.fr3)|*.fr3|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName)+'\Report\';
+
+//  if OpenDialog1.Execute then
+//  begin
+//    ACBrMDFeDAMDFEFR1.FastFile := OpenDialog1.FileName;
+//  end;
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnGerarPDFEventoClick(Sender: TObject);

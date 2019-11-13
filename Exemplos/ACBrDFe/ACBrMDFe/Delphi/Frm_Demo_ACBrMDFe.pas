@@ -456,6 +456,8 @@ begin
 
   PathMensal := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe(0);
 
+  ACBrMDFe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
+
   // Configurações -> Geral
   ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK,IntToStr(rgFormaEmissao.ItemIndex+1));
   ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
@@ -463,8 +465,6 @@ begin
    0: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100;
    1: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve300;
   end;
-
-  ACBrMDFe1.Configuracoes.Arquivos.PathSalvar       := PathMensal;
 
   // Configurações -> WebServices
   ACBrMDFe1.Configuracoes.WebServices.AguardarConsultaRet      := 0;

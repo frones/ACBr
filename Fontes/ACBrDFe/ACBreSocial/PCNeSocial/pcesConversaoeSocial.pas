@@ -432,7 +432,7 @@ type
 
   tpContPCD               = (cpcdDispensado, cpcdDispensadoParcialmente, cpcdExigibilidadeSuspensa, cpcdObrigado);
 
-  tpInclContr             = (icLocaisSemFiliais, icEstudoDeMercado, icContratacaoSuperior3Meses);
+  tpInclContr             = (icNenhum, icLocaisSemFiliais, icEstudoDeMercado, icContratacaoSuperior3Meses);
 
   tpPlanRP                = (prpNenhum, prpPlanoPrevidenciarioOuUnico, prpPlanoFinanceiro);
 
@@ -1188,12 +1188,12 @@ end;
 
 function eSTpInclContrToStr(const t: tpInclContr): string;
 begin
-  result := EnumeradoToStr2(t, TGenericosString1_3 );
+  result := EnumeradoToStr2(t, TGenericosString0_3 );
 end;
 
 function eSStrToTpInclContr(var ok: Boolean; const s: string): tpInclContr;
 begin
-  result := tpInclContr( StrToEnumerado2(ok, s, TGenericosString1_3) );
+  result := tpInclContr( StrToEnumerado2(ok, s, TGenericosString0_3) );
 end;
 
 function eSTpPlanRPToStr(const t: tpPlanRP): string;

@@ -608,7 +608,9 @@ procedure TeSocialEvento.GerarEnderecoBrasil(pEndereco: TBrasil; const GroupName
 begin
   Gerador.wGrupo(GroupName);
 
-  Gerador.wCampo(tcStr, '', 'tpLograd',    1,  4, 1, pEndereco.TpLograd);
+
+  Gerador.wCampo(tcStr, '', 'tpLograd',    1,  4, 0, pEndereco.TpLograd);
+
   Gerador.wCampo(tcStr, '', 'dscLograd',   1, 80, 1, pEndereco.DscLograd);
   Gerador.wCampo(tcStr, '', 'nrLograd',    1, 10, 1, pEndereco.NrLograd);
   Gerador.wCampo(tcStr, '', 'complemento', 1, 30, 0, pEndereco.Complemento);
@@ -866,7 +868,9 @@ begin
 
     Gerador.wCampo(tcInt, '', 'hipLeg',      1,   1, 1, pTrabTemporario.hipLeg);
     Gerador.wCampo(tcStr, '', 'justContr',   1, 999, 1, pTrabTemporario.justContr);
-    Gerador.wCampo(tcInt, '', 'tpInclContr', 1,   1, 1, eSTpInclContrToStr(pTrabTemporario.tpinclContr));
+
+    if (pTrabTemporario.tpinclContr <> icNenhum) then
+      Gerador.wCampo(tcInt, '', 'tpInclContr', 1,   1, 1, eSTpInclContrToStr(pTrabTemporario.tpinclContr));
 
     GerarIdeTomadorServ(pTrabTemporario.IdeTomadorServ);
     GerarIdeTrabSubstituido(pTrabTemporario.IdeTrabSubstituido);

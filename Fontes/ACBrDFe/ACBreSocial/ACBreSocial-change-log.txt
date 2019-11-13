@@ -49,6 +49,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/11/2019
+-- pcesConversaoeSocial/pcesGerador --
+[*] Alterações visando a versão 2.5
+    https://www.projetoacbr.com.br/forum/topic/54851-atualiza%C3%A7%C3%A3o-de-vers%C3%A3o-25-25-revisada-reg-s2200/
+   Por: Paulo Aguiar Junior
 -- pcesConversaoeSocial/pcesS1005 --
 [*] Alterações visando a versão 2.5
     https://www.projetoacbr.com.br/forum/topic/54210-atualiza%C3%A7%C3%A3o-de-vers%C3%A3o-25-25-revisada/?do=findComment&comment=360276

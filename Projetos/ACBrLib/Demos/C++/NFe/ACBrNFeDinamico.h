@@ -65,6 +65,11 @@ typedef int (*NFE_ValidarRegrasdeNegocios)(const char* sResposta, int* esTamanho
 // function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
 typedef int (*NFE_VerificarAssinatura)(const char* sResposta, int* esTamanho);
 
+// function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+// AEmissao, ACNPJCPF: PChar; const sResposta : PChar; var esTamanho : longint): longint;
+typedef int (*NFE_GerarChave)(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie,
+	int ANumero, int ATpEmi, const char* AEmissao, const char* ACNPJCPF, const char* sResposta, int* esTamanho);
+
 // function NFE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
 typedef int (*NFE_StatusServico)(const char* sResposta, int* esTamanho);
 

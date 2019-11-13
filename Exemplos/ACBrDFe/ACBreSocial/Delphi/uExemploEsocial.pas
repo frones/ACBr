@@ -393,7 +393,7 @@ begin
           IndDesFolha := TpIndDesFolha(1);
           IndPorte := tpSim;
           IndOptRegEletron := TpIndOptRegEletron(1);
-          IndEtt := tpSim;
+          IndEtt := snfSim;
           nrRegEtt := '';
 
           with InfoOp do
@@ -511,7 +511,7 @@ begin
             begin
               contApr := tpContApr(2);
               nrProcJud := '20150612';
-              contEntEd := tpSim;
+              contEntEd := snfSim;
 
               infoEntEduc.Clear;
 

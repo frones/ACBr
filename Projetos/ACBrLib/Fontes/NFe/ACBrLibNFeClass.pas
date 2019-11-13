@@ -697,13 +697,13 @@ begin
   try
     VerificarLibInicializada;
 
-    Emissao := StrToDateTime(AEmissao);
+    Emissao := StrToDate(AEmissao);
     CNPJCPF := String(ACNPJCPF);
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('NFE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
                       IntToStr(AModelo)  + ',' + IntToStr(AModelo) + ',' + IntToStr(ASerie) + ',' +
-                      IntToStr(ANumero) + ',' + IntToStr(ATpEmi) + ',' + DateTimeToStr(Emissao) + ',' +
+                      IntToStr(ANumero) + ',' + IntToStr(ATpEmi) + ',' + DateToStr(Emissao) + ',' +
                       CNPJCPF + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFE_GerarChave', logNormal);

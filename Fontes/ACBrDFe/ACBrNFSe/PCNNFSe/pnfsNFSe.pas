@@ -278,6 +278,7 @@ type
     FpRetCOFINS: currency;
     FvRed: currency;
     FTipoUnidade: TUnidade;
+    FItemListaServico: String;
 
   public
     constructor Create;
@@ -324,6 +325,7 @@ type
     property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
     property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
     property TipoUnidade: TUnidade read FTipoUnidade write FTipoUnidade;
+    property ItemListaServico: String read FItemListaServico write FItemListaServico;
   end;
 
  TDeducaoCollection = class(TObjectList)

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/54688-como-informar-o-codigo_item_lista_servico-na-nfs-e/?do=findComment&comment=360196
+   Por: Juliano do Amaral Chaves
+
 11/11/2019
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/54793-provedor-fisslex-inscri%C3%A7%C3%A3o-estadual/?do=findComment&comment=359896

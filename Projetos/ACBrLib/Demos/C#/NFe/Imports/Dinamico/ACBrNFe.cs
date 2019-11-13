@@ -76,6 +76,10 @@ namespace ACBrLib.NFe
             public delegate int NFE_VerificarAssinatura(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
+                int ATpEmi, string AEmissao, string CPFCNPJ, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_StatusServico(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -340,6 +344,22 @@ namespace ACBrLib.NFe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string GerarChave(int aCodigoUf, int aCodigoNumerico, int aModelo, int aSerie, int aNumero,
+            int aTpEmi, DateTime aEmissao, string acpfcnpj)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_GerarChave>();
+            var ret = ExecuteMethod(() => method(aCodigoUf, aCodigoNumerico, aModelo, aSerie, aNumero,
+                                                 aTpEmi, aEmissao.Date.ToString("dd/MM/yyyy"), ToUTF8(acpfcnpj),
+                                                 buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public string StatusServico()
         {
             var bufferLen = BUFFER_LEN;
@@ -576,6 +596,7 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_Validar>("NFE_Validar");
             AddMethod<Delegates.NFE_ValidarRegrasdeNegocios>("NFE_ValidarRegrasdeNegocios");
             AddMethod<Delegates.NFE_VerificarAssinatura>("NFE_VerificarAssinatura");
+            AddMethod<Delegates.NFE_GerarChave>("NFE_GerarChave");
             AddMethod<Delegates.NFE_StatusServico>("NFE_StatusServico");
             AddMethod<Delegates.NFE_Consultar>("NFE_Consultar");
             AddMethod<Delegates.NFE_Inutilizar>("NFE_Inutilizar");

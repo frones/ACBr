@@ -331,7 +331,10 @@ procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boo
 
   function FormatarData(Str: string): string;
   begin
-    Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4);
+    if Pos('/', Str) = 0 then
+      Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4)
+    else
+      Result := Str;
   end;
 
   function RemoverZeros(Str: string): string;

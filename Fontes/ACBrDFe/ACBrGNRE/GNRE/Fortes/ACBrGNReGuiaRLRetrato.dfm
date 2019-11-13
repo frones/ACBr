@@ -2,7 +2,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
   Left = 0
   Top = 0
   Caption = 'ACBrGNREGuiaFR_Fortes'
-  ClientHeight = 1053
+  ClientHeight = 749
   ClientWidth = 812
   Font.Name = 'Tahoma'
   OldCreateOrder = False

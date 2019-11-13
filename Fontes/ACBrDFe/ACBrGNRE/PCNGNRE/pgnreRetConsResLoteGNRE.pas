@@ -380,6 +380,7 @@ begin
       if Leitor.rExtrai(4, 'contribuinteEmitente') <> '' then
       begin
         resGuia.Items[i].DocEmitente         := Leitor.rCampo(tcStr, 'CNPJ');
+        resGuia.Items[i].TipoDocEmitente     := 2;
         resGuia.Items[i].RazaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
         resGuia.Items[i].EnderecoEmitente    := Leitor.rCampo(tcStr, 'endereco');
         resGuia.Items[i].MunicipioEmitente   := Leitor.rCampo(tcStr, 'municipio');
@@ -387,7 +388,11 @@ begin
         resGuia.Items[i].CEPEmitente         := Leitor.rCampo(tcStr, 'cep');
         resGuia.Items[i].TelefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');
 
-//              Guia.TipoDocEmitente := StrToInt(Copy(SLResultGuia.Strings[i], 15, 1));
+        if resGuia.Items[i].DocEmitente = '' then
+        begin
+          resGuia.Items[i].DocEmitente     := Leitor.rCampo(tcStr, 'CPF');
+          resGuia.Items[i].TipoDocEmitente := 1;
+        end;
       end;
 
       if Leitor.rExtrai(4, 'itensGNRE') <> '' then
@@ -408,7 +413,16 @@ begin
           end;
 
           if Leitor.rExtrai(6, 'contribuinteDestinatario') <> '' then
-            resGuia.Items[i].DocDestinatario := Leitor.rCampo(tcStr, 'CNPJ');
+          begin
+            resGuia.Items[i].DocDestinatario     := Leitor.rCampo(tcStr, 'CNPJ');
+            resGuia.Items[i].TipoDocDestinatario := 2;
+
+            if resGuia.Items[i].DocDestinatario = '' then
+            begin
+              resGuia.Items[i].DocDestinatario     := Leitor.rCampo(tcStr, 'CPF');
+              resGuia.Items[i].TipoDocDestinatario := 1;
+            end;
+          end;
 
           if Leitor.rExtrai(6, 'referencia') <> '' then
           begin

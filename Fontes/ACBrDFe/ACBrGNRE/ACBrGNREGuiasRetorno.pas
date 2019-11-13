@@ -278,7 +278,7 @@ begin
         GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
         GNRERetorno.tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');
         GNRERetorno.ValorPrincipal        := Leitor.rCampo(tcDe2, 'valorGNRE');
-        GNRERetorno.DataLimitePagamento   := Leitor.rCampo(tcStr, 'dataLimitePagamento');
+        GNRERetorno.DataLimitePagamento   := DateToStr(Leitor.rCampo(tcDat, 'dataLimitePagamento'));
         GNRERetorno.IdentificadorGuia     := Leitor.rCampo(tcInt, 'identificadorGuia');
         GNRERetorno.NumeroControle        := Leitor.rCampo(tcStr, 'nossoNumero');
         GNRERetorno.RepresentacaoNumerica := Leitor.rCampo(tcStr, 'linhaDigitavel');

@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/11/2019
+-- pgnreRetConsResLoteGNRE/ --
+[*] Melhorias na leitura do retorno da consulta do GNRE versão 2.00
+    por: Murilo X / Italo Jurisato Junior
+
 -- ACBrGNREGuiasRetorno --
 [*] Melhorias na leitura da Guia em formato XML do GNRE versão 2.00
     por: Murilo X / Italo Jurisato Junior

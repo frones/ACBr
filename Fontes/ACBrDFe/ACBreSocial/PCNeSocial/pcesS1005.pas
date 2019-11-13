@@ -112,7 +112,7 @@ type
   private
     FContApr: tpContApr;
     FNrProcJud: string;
-    FContEntEd: tpSimNao;
+    FContEntEd: tpSimNaoFacultativo;
     FInfoEntEduc: TInfoEntEducCollection;
   public
     constructor Create;
@@ -120,7 +120,7 @@ type
 
     property contApr: tpContApr read FContApr write FContApr;
     property nrProcJud: String read FNrProcJud write FNrProcJud;
-    property contEntEd: tpSimNao read FContEntEd write FContEntEd;
+    property contEntEd: tpSimNaoFacultativo read FContEntEd write FContEntEd;
     property infoEntEduc: TInfoEntEducCollection read FInfoEntEduc write FInfoEntEduc;
   end;
 
@@ -140,14 +140,16 @@ type
     FInfoPCD: TInfoPCD;
 
     function getInfoPCD: TInfoPCD;
+    function getInfoApr: TInfoApr;
   public
     constructor Create;
     destructor Destroy; override;
 
     function infoPCDInst(): Boolean;
+    function infoAprInst(): Boolean;
 
     property regPt: tpRegPt read FRegPt write FRegPt;
-    property infoApr: TInfoApr read FInfoApr write FInfoApr;
+    property infoApr: TInfoApr read getInfoApr write FInfoApr;
     property infoPCD: TInfoPCD read getInfoPCD write FInfoPCD;
   end;
 
@@ -324,13 +326,15 @@ constructor TInfoTrab.Create;
 begin
   inherited;
 
-  FInfoApr := TInfoApr.Create;
+  FInfoApr := nil;
   FInfoPCD := nil;
+
+  FRegPt := rpNaoInformado;
 end;
 
 destructor TInfoTrab.Destroy;
 begin
-  FInfoApr.Free;
+  FreeAndNil(FInfoApr);
   FreeAndNil(FInfoPCD);
 
   inherited;
@@ -343,9 +347,21 @@ begin
   result := FInfoPCD;
 end;
 
+function TInfoTrab.getInfoApr: TInfoApr;
+begin
+  if not(Assigned(FInfoApr)) then
+    FInfoApr := TInfoApr.Create;
+  result := FInfoApr;
+end;
+
 function TInfoTrab.infoPCDInst: boolean;
 begin
   result := Assigned(FInfoPCD);
+end;
+
+function TInfoTrab.infoAprInst: boolean;
+begin
+  result := Assigned(FInfoApr);
 end;
 
 { TInfoEstab }
@@ -465,7 +481,8 @@ procedure TEvtTabEstab.GerarInfoTrab;
 begin
   Gerador.wGrupo('infoTrab');
 
-  Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
+  if (infoEstab.DadosEstab.infoTrab.regPt <> rpNaoInformado) then
+    Gerador.wCampo(tcInt, '', 'regPt', 1, 1, 1, eStpRegPtToStr(infoEstab.DadosEstab.infoTrab.regPt));
 
   GerarInfoApr;
   GerarInfoPCD;
@@ -488,17 +505,20 @@ end;
 
 procedure TEvtTabEstab.GerarInfoApr;
 begin
-  Gerador.wGrupo('infoApr');
+  if infoEstab.DadosEstab.infoTrab.infoAprInst() then
+  begin
+    Gerador.wGrupo('infoApr');
 
-  Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
-  Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
+    Gerador.wCampo(tcStr, '', 'contApr',   1,  1, 1, eStpContAprToStr(infoEstab.DadosEstab.infoTrab.infoApr.contApr));
+    Gerador.wCampo(tcStr, '', 'nrProcJud', 1, 20, 0, infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud);
 
-  if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
-    Gerador.wCampo(tcStr, '', 'contEntEd', 1, 1, 0, eSSimNaoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
+    if infoEstab.DadosEstab.infoTrab.infoApr.contApr <> caDispensado then
+      Gerador.wCampo(tcStr, '', 'contEntEd', 0, 1, 0, eSSimNaoFacultativoToStr(infoEstab.DadosEstab.infoTrab.infoApr.contEntEd));
 
-  GerarInfoEntEduc;
+    GerarInfoEntEduc;
 
-  Gerador.wGrupo('/infoApr');
+    Gerador.wGrupo('/infoApr');
+  end;
 end;
 
 procedure TEvtTabEstab.GerarInfoEntEduc;
@@ -640,7 +660,7 @@ begin
         sSecao := 'infoApr';
         infoEstab.DadosEstab.infoTrab.infoApr.contApr   := eSStrToTpContApr(Ok, INIRec.ReadString(sSecao, 'contApr', '0'));
         infoEstab.DadosEstab.infoTrab.infoApr.nrProcJud := INIRec.ReadString(sSecao, 'nrProcJud', EmptyStr);
-        infoEstab.DadosEstab.infoTrab.infoApr.contEntEd := eSStrToSimNao(Ok, INIRec.ReadString(sSecao, 'contEntEd', 'S'));
+        infoEstab.DadosEstab.infoTrab.infoApr.contEntEd := eSStrToSimNaoFacultativo(Ok, INIRec.ReadString(sSecao, 'contEntEd', 'S'));
 
         I := 1;
         while true do

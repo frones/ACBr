@@ -241,7 +241,7 @@ end;
 function TArquivosConfeSocial.GetPatheSocial(Data: TDateTime;
   const CNPJ: String): String;
 begin
-  Result := GetPath(PatheSocial, ACBRESOCIAL_MODELODF, CNPJ, Data, ACBRESOCIAL_MODELODF);
+  Result := GetPath(PatheSocial, ACBRESOCIAL_MODELODF, CNPJ, '', Data, ACBRESOCIAL_MODELODF);
 end;
 
 procedure TArquivosConfeSocial.GravarIni(const AIni: TCustomIniFile);

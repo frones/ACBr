@@ -230,7 +230,7 @@ begin
       end;
 
       Result := TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(Result,
-        DescricaoModelo, ACTe.Emit.CNPJ, dhEmissao, DescricaoModelo);
+        DescricaoModelo, ACTe.Emit.CNPJ, ACTe.Emit.IE, dhEmissao, DescricaoModelo);
     end;
   end;
 end;

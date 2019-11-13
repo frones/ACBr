@@ -87,7 +87,7 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathGNRE(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathGNRE(Data: TDateTime = 0; CNPJ: String = ''; AIE: String = ''): String;
   published
     property EmissaoPathGNRE: boolean read FEmissaoPathGNRE
       write FEmissaoPathGNRE default False;
@@ -185,10 +185,10 @@ begin
   SalvarTXT                   := DeArquivosConfGNRE.SalvarTXT;
 end;
 
-function TArquivosConfGNRE.GetPathGNRE(Data: TDateTime;
-  CNPJ: String): String;
+function TArquivosConfGNRE.GetPathGNRE(Data: TDateTime = 0;
+  CNPJ: String = ''; AIE: String = ''): String;
 begin
-  Result := GetPath(FPathGNRE, 'GNRE', CNPJ, Data);
+  Result := GetPath(FPathGNRE, 'GNRE', CNPJ, AIE, Data);
 end;
 
 procedure TArquivosConfGNRE.GravarIni(const AIni: TCustomIniFile);

@@ -241,7 +241,7 @@ begin
       end;
 
       Result := TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(Result,
-        DescricaoModelo, ANFe.Emit.CNPJCPF, dhEmissao, DescricaoModelo);
+        DescricaoModelo, ANFe.Emit.CNPJCPF, ANFe.Emit.IE, dhEmissao, DescricaoModelo);
     end;
   end;
 end;

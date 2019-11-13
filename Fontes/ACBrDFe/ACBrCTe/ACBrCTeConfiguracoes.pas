@@ -87,9 +87,9 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
-    function GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
+    function GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathCTe: Boolean     read FEmissaoPathCte write FEmissaoPathCTe default False;
     property SalvarApenasCTeProcessados: Boolean read FSalvarApenasCTeProcessados write FSalvarApenasCTeProcessados default False;
@@ -246,7 +246,7 @@ begin
   inherited;
 end;
 
-function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin
@@ -264,20 +264,20 @@ begin
       DescricaoModelo := 'CTeOS';
   end;
 
-  Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
+  Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, IE, Data, DescricaoModelo);
 end;
 
-function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''): String;
+function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
 begin
-  Result := GetPath(FPathInu, 'Inu', CNPJ);
+  Result := GetPath(FPathInu, 'Inu', CNPJ, IE);
 end;
 
 function TArquivosConfCTe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  const CNPJ: String = ''; Data: TDateTime = 0): String;
+  const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, IE, Data);
 
   if AdicionarLiteral then
     Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);

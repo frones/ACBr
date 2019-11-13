@@ -521,7 +521,7 @@ begin
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathRPS(Data, FNFSe.Prestador.Cnpj));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathRPS(Data, FNFSe.Prestador.Cnpj, FNFSe.Prestador.InscricaoEstadual));
   end;
 end;
 

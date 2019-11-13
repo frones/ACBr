@@ -446,10 +446,11 @@ type
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
+    FIE: String;
 
     FEventoRetorno: TRetEventoNFe;
 
-    function GerarPathEvento(const ACNPJ: String = ''): String;
+    function GerarPathEvento(const ACNPJ: String = ''; const AIE: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -2393,7 +2394,7 @@ begin
             else
               dhEmissao := Now;
 
-            sPathNFe := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(dhEmissao, NFe.Emit.CNPJCPF, NFe.Ide.modelo));
+            sPathNFe := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(dhEmissao, NFe.Emit.CNPJCPF, NFe.Emit.IE, NFe.Ide.modelo));
 
             if (FRetNFeDFe <> '') then
               FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml', FRetNFeDFe, sPathNFe);
@@ -2943,11 +2944,11 @@ begin
   FEventoRetorno := TRetEventoNFe.Create;
 end;
 
-function TNFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
+function TNFeEnvEvento.GerarPathEvento(const ACNPJ, AIE: String): String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
   begin
-    Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
+    Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(tpEvento, ACNPJ, AIE);
   end;
 end;
 
@@ -2965,6 +2966,7 @@ begin
   FCNPJ    := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb   := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo   := ModeloDFToPrefixo( StrToModeloDF(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe) ));
+  FIE      := FEvento.Evento.Items[0].InfEvento.detEvento.IE;
 
   // Configuração correta ao enviar para o SVC
   case FPConfiguracoesNFe.Geral.FormaEmissao of
@@ -3344,7 +3346,7 @@ begin
               if FPConfiguracoesNFe.Arquivos.Salvar then
               begin
                 NomeArq := OnlyNumber(FEvento.Evento.Items[i].InfEvento.Id) + '-procEventoNFe.xml';
-                PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+                PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ, FEvento.Evento.Items[I].InfEvento.detEvento.IE));
 
                 FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
                 FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
@@ -3378,11 +3380,11 @@ begin
 
   if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-                      FPDadosMsg, GerarPathEvento(FCNPJ));
+                      FPDadosMsg, GerarPathEvento(FCNPJ, FIE));
 
   if FPConfiguracoesNFe.WebServices.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
+      FPEnvelopeSoap, GerarPathEvento(FCNPJ, FIE));
 end;
 
 procedure TNFeEnvEvento.SalvarResposta;
@@ -3394,11 +3396,11 @@ begin
 
   if FPConfiguracoesNFe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-                      FPRetWS, GerarPathEvento(FCNPJ));
+                      FPRetWS, GerarPathEvento(FCNPJ, FIE));
 
   if FPConfiguracoesNFe.WebServices.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ));
+      FPRetornoWS, GerarPathEvento(FCNPJ, FIE));
 end;
 
 function TNFeEnvEvento.GerarMsgLog: String;
@@ -3725,18 +3727,21 @@ begin
       Result := FPConfiguracoesNFe.Arquivos.GetPathDownloadEvento(AItem.resEvento.tpEvento,
                                                           AItem.resDFe.xNome,
                                                           AItem.resEvento.CNPJCPF,
+                                                          AItem.resDFe.IE,
                                                           Data);
 
     schprocEventoNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
                                                           AItem.resDFe.xNome,
                                                           AItem.procEvento.CNPJ,
+                                                          AItem.resDFe.IE,
                                                           Data);
 
     schresNFe,
     schprocNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                         AItem.resDFe.CNPJCPF,
+                                                        AItem.resDFe.IE,
                                                         Data);
   end;
 end;

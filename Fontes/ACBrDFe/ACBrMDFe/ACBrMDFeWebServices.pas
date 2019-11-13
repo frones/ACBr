@@ -326,7 +326,7 @@ type
 
     FEventoRetorno: TRetEventoMDFe;
 
-    function GerarPathEvento(const ACNPJ: String = ''): String;
+    function GerarPathEvento(const ACNPJ: String = ''; const AIE: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -1904,7 +1904,7 @@ begin
               else
                 dhEmissao := Now;
 
-              sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJCPF));
+              sPathMDFe := PathWithDelim(FPConfiguracoesMDFe.Arquivos.GetPathMDFe(dhEmissao, MDFe.Emit.CNPJCPF, MDFe.emit.IE));
 
               if (FRetMDFeDFe <> '') then
                 FPDFeOwner.Gravar( FMDFeChave + '-MDFeDFe.xml', FRetMDFeDFe, sPathMDFe);
@@ -1994,11 +1994,11 @@ begin
   FEventoRetorno := TRetEventoMDFe.Create;
 end;
 
-function TMDFeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
+function TMDFeEnvEvento.GerarPathEvento(const ACNPJ, AIE: String): String;
 begin
   with FEvento.Evento.Items[0].InfEvento do
   begin
-    Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
+    Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(tpEvento, ACNPJ, AIE);
   end;
 end;
 
@@ -2644,11 +2644,13 @@ begin
       Result := FPConfiguracoesMDFe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
                                                            AItem.resDFe.xNome,
                                                            AItem.procEvento.CNPJ,
+                                                           AItem.resDFe.IE,
                                                            Data);
 
     schprocMDFe:
       Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                              AItem.resDFe.CNPJCPF,
+                                                             AItem.resDFe.IE,
                                                              Data);
   end;
 end;

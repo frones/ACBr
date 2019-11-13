@@ -216,6 +216,7 @@ begin
                          Result,
                          DescricaoModelo,
                          ABPe.Emit.CNPJ,
+                         ABPe.Emit.IE,
                          dhEmissao,
                          DescricaoModelo);
     end;

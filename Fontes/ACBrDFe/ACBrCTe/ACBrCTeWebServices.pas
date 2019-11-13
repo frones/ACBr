@@ -441,10 +441,11 @@ type
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
+    FIE: String;
 
     FEventoRetorno: TRetEventoCTe;
 
-    function GerarPathEvento(const ACNPJ: String = ''): String;
+    function GerarPathEvento(const ACNPJ: String = ''; const AIE: String = ''): String;
   protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
@@ -2228,7 +2229,7 @@ begin
                 else
                   dhEmissao := Now;
 
-                sPathCTe := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(dhEmissao, CTe.Emit.CNPJ));
+                sPathCTe := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(dhEmissao, CTe.Emit.CNPJ, CTe.emit.IE));
 
                 if (FRetCTeDFe <> '') {and FPConfiguracoesCTe.Geral.Salvar} then
                   FPDFeOwner.Gravar( FCTeChave + '-CTeDFe.xml', FRetCTeDFe, sPathCTe);
@@ -2772,11 +2773,11 @@ begin
   FEventoRetorno := TRetEventoCTe.Create;
 end;
 
-function TCTeEnvEvento.GerarPathEvento(const ACNPJ: String): String;
+function TCTeEnvEvento.GerarPathEvento(const ACNPJ: String = ''; const AIE: String = ''): String;
 begin
   with FEvento.Evento.Items[0].Infevento do
   begin
-    Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento, ACNPJ);
+    Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(tpEvento, ACNPJ, AIE);
   end;
 end;
 
@@ -2788,6 +2789,7 @@ var
 begin
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
+  FIE     := FEvento.Evento.Items[0].InfEvento.detEvento.IE;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
   Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
 
@@ -3215,7 +3217,7 @@ begin
             if FPConfiguracoesCTe.Arquivos.Salvar then
             begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoCTe.xml';
-              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
+              PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ, FEvento.Evento.Items[I].InfEvento.detEvento.IE));
 
               FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
               FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
@@ -3243,11 +3245,11 @@ begin
 
   if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '.xml',
-      FPDadosMsg, GerarPathEvento(FCNPJ));
+      FPDadosMsg, GerarPathEvento(FCNPJ, FIE));
 
   if FPConfiguracoesCTe.WebServices.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqEnv + '-soap.xml',
-      FPEnvelopeSoap, GerarPathEvento(FCNPJ));
+      FPEnvelopeSoap, GerarPathEvento(FCNPJ, FIE));
 end;
 
 procedure TCTeEnvEvento.SalvarResposta;
@@ -3257,11 +3259,11 @@ begin
 
   if FPConfiguracoesCTe.Geral.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '.xml',
-      FPRetWS, GerarPathEvento(FCNPJ));
+      FPRetWS, GerarPathEvento(FCNPJ, FIE));
 
   if FPConfiguracoesCTe.WebServices.Salvar then
     FPDFeOwner.Gravar(GerarPrefixoArquivo + '-' + ArqResp + '-soap.xml',
-      FPRetornoWS, GerarPathEvento(FCNPJ));
+      FPRetornoWS, GerarPathEvento(FCNPJ, FIE));
 end;
 
 function TCTeEnvEvento.GerarMsgLog: String;
@@ -3491,12 +3493,14 @@ begin
       Result := FPConfiguracoesCTe.Arquivos.GetPathDownloadEvento(AItem.procEvento.tpEvento,
                                                           AItem.resDFe.xNome,
                                                           AItem.procEvento.CNPJ,
+                                                          AItem.resDFe.IE,
                                                           Data);
 
     schprocCTe,
     schprocCTeOS:
       Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resDFe.xNome,
                                                         AItem.resDFe.CNPJCPF,
+                                                        AItem.resDFe.IE,
                                                         Data);
   end;
 end;

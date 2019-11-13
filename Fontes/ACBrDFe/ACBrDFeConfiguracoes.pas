@@ -51,7 +51,7 @@ const
 
 type
 
-  TTagOrdenacaoPath = (opNenhum, opCNPJ, opModelo, opData, opLiteral);
+  TTagOrdenacaoPath = (opNenhum, opCNPJ, opModelo, opData, opLiteral, opIE);
 
   TConfiguracoes = class;
 
@@ -298,6 +298,7 @@ type
     FSalvar: Boolean;
     FAdicionarLiteral: Boolean;
     FSepararPorCNPJ: Boolean;
+    FSepararPorIE: Boolean;
     FSepararPorModelo: Boolean;
     FOrdenacaoPath: TOrdenacaoPath;
     FSepararPorAno: Boolean;
@@ -320,10 +321,10 @@ type
     procedure GravarIni( const AIni: TCustomIniFile ); virtual;
     procedure LerIni( const AIni: TCustomIniFile ); virtual;
 
-    function GetPath(const APath: String; const ALiteral: String; const CNPJ: String = '';
+    function GetPath(const APath: String; const ALiteral: String; const CNPJ: string = ''; const IE: String = '';
       Data: TDateTime = 0; const ModeloDescr: String = ''): String; virtual;
-    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
-    function GetPathDownloadEvento(tipoEvento: TpcnTpEvento; const xNome: String = ''; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownload(const xNome: String = ''; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
+    function GetPathDownloadEvento(tipoEvento: TpcnTpEvento; const xNome: String = ''; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
@@ -332,6 +333,7 @@ type
     property Salvar: Boolean read FSalvar write FSalvar default True;
     property AdicionarLiteral: Boolean read FAdicionarLiteral write FAdicionarLiteral default False;
     property SepararPorCNPJ: Boolean read FSepararPorCNPJ write FSepararPorCNPJ default False;
+    property SepararPorIE: Boolean read FSepararPorIE write FSepararPorIE default False;
     property SepararPorModelo: Boolean read FSepararPorModelo write FSepararPorModelo default False;
     property OrdenacaoPath: TOrdenacaoPath read FOrdenacaoPath write FOrdenacaoPath;
     property SepararPorAno: Boolean read FSepararPorAno write SetSepararPorAno default False;
@@ -1132,6 +1134,7 @@ begin
   FSepararPorAno := False;
   FAdicionarLiteral := False;
   FSepararPorCNPJ := False;
+  FSepararPorIE := False;
   FSepararPorModelo := False;
 end;
 
@@ -1153,6 +1156,7 @@ begin
   Salvar           := DeArquivosConf.Salvar;
   AdicionarLiteral := DeArquivosConf.AdicionarLiteral;
   SepararPorCNPJ   := DeArquivosConf.SepararPorCNPJ;
+  SepararPorIE     := DeArquivosConf.SepararPorIE;
   SepararPorModelo := DeArquivosConf.SepararPorModelo;
   SepararPorMes    := DeArquivosConf.SepararPorMes;
   SepararPorDia    := DeArquivosConf.SepararPorDia;
@@ -1175,6 +1179,7 @@ begin
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SalvarArq', Salvar);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'AdicionarLiteral', AdicionarLiteral);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SepararPorCNPJ', SepararPorCNPJ);
+  AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SepararPorIE', SepararPorIE);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SepararPorModelo', SepararPorModelo);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SepararPorAno', SepararPorAno);
   AIni.WriteBool(fpConfiguracoes.SessaoIni, 'SepararPorMes', SepararPorMes);
@@ -1194,6 +1199,7 @@ begin
   Salvar := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SalvarArq', Salvar);
   AdicionarLiteral := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'AdicionarLiteral', AdicionarLiteral);
   SepararPorCNPJ := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SepararPorCNPJ', SepararPorCNPJ);
+  SepararPorIE := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SepararPorIE', SepararPorIE);
   SepararPorModelo := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SepararPorModelo', SepararPorModelo);
   SepararPorAno := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SepararPorAno', SepararPorAno);
   SepararPorMes := AIni.ReadBool(fpConfiguracoes.SessaoIni, 'SepararPorMes', SepararPorMes);
@@ -1253,8 +1259,8 @@ begin
   Result := FIniServicos;
 end;
 
-function TArquivosConf.GetPath(const APath: String; const ALiteral: String; const CNPJ: String;
-  Data: TDateTime; const ModeloDescr: String): String;
+function TArquivosConf.GetPath(const APath: String; const ALiteral: String; const CNPJ: String = ''; const IE: String = '';
+  Data: TDateTime = 0; const ModeloDescr: String = ''): String;
 
   procedure AddPathOrder(AAdicionar: Boolean; AItemOrdenacaoPath: TTagOrdenacaoPath);
   begin
@@ -1264,7 +1270,7 @@ function TArquivosConf.GetPath(const APath: String; const ALiteral: String; cons
 
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, sAno, sMes, sDia, CNPJ_temp: String;
+  Dir, Modelo, sAno, sMes, sDia, CNPJ_temp, IE_temp: String;
   LenLiteral, i: integer;
 begin
   if EstaVazio(APath) then
@@ -1276,6 +1282,7 @@ begin
   if (FOrdenacaoPath.Count = 0) then
   begin
     AddPathOrder(SepararPorCNPJ, opCNPJ);
+    AddPathOrder(SepararPorIE, opIE);
     AddPathOrder(SepararPorModelo, opModelo);
     AddPathOrder((SepararPorAno or SepararPorMes or SepararPorDia), opData);
     AddPathOrder(AdicionarLiteral, opLiteral);
@@ -1294,6 +1301,14 @@ begin
 
           if NaoEstaVazio(CNPJ_temp) then
             Dir := PathWithDelim(Dir) + CNPJ_temp;
+        end;
+
+      opIE:
+        begin
+          IE_temp := OnlyNumber(IE);
+
+          if NaoEstaVazio(IE_temp) then
+            Dir := PathWithDelim(Dir) + IE_temp;
         end;
 
       opModelo:
@@ -1351,7 +1366,7 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConf.GetPathDownload(const xNome, CNPJ: String;
+function TArquivosConf.GetPathDownload(const xNome, CNPJ, IE: String;
   Data: TDateTime): String;
 var
   rPathDown: String;
@@ -1365,11 +1380,11 @@ begin
   else
      rPathDown := FDownloadDFe.PathDownload;
 
-  Result := GetPath(rPathDown, 'Down', CNPJ, Data);
+  Result := GetPath(rPathDown, 'Down', CNPJ, IE, Data);
 end;
 
 function TArquivosConf.GetPathDownloadEvento(tipoEvento: TpcnTpEvento;
-  const xNome, CNPJ: String; Data: TDateTime): String;
+  const xNome, CNPJ, IE: String; Data: TDateTime): String;
 var
   rPathDown: String;
 begin
@@ -1383,7 +1398,7 @@ begin
   else
      rPathDown := FDownloadDFe.PathDownload;
 
-  rPathDown := GetPath(rPathDown, 'Evento', CNPJ, Data);
+  rPathDown := GetPath(rPathDown, 'Evento', CNPJ, IE, Data);
 
   if AdicionarLiteral then
     rPathDown := PathWithDelim(rPathDown) + TpEventoToDescStr(tipoEvento);

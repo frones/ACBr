@@ -86,8 +86,8 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''; const AIE: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const AIE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathBPe: Boolean read FEmissaoPathBPe
       write FEmissaoPathBPe default False;
@@ -238,12 +238,12 @@ begin
   FPathArquivoMunicipios      := DeArquivosConfBPe.PathArquivoMunicipios;
 end;
 
-function TArquivosConfBPe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;
-  Data: TDateTime): String;
+function TArquivosConfBPe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = '';
+  const AIE: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, AIE, Data);
 
   if AdicionarLiteral then
     Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);
@@ -254,9 +254,9 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''): String;
+function TArquivosConfBPe.GetPathBPe(Data: TDateTime = 0; const CNPJ: String = ''; const AIE: String = ''): String;
 begin
-  Result := GetPath(FPathBPe, ModeloDF, CNPJ, Data, ModeloDF);
+  Result := GetPath(FPathBPe, ModeloDF, CNPJ, AIE, Data, ModeloDF);
 end;
 
 procedure TArquivosConfBPe.GravarIni(const AIni: TCustomIniFile);

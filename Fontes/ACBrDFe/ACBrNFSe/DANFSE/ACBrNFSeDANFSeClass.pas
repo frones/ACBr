@@ -233,6 +233,7 @@ begin
       Result := TACBrNFSe(ACBrNFSe).Configuracoes.Arquivos.GetPath(
                 Result, DescricaoModelo,
                 OnlyNumber(ANFSe.PrestadorServico.IdentificacaoPrestador.CNPJ),
+                OnlyNumber(ANFSe.PrestadorServico.IdentificacaoPrestador.InscricaoEstadual),
                 dhEmissao);
     end;
   end;

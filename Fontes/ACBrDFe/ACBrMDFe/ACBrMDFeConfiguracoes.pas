@@ -80,8 +80,8 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathMDFe(Data: TDateTime = 0; const CNPJ: String = ''): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathMDFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathMDFe: boolean read FEmissaoPathMDFe
       write FEmissaoPathMDFe default False;
@@ -227,11 +227,11 @@ begin
 end;
 
 function TArquivosConfMDFe.GetPathEvento(tipoEvento: TpcnTpEvento;
-  const CNPJ: String = ''; Data: TDateTime = 0): String;
+  const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, IE, Data);
 
   if AdicionarLiteral then
     Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);
@@ -242,9 +242,9 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfMDFe.GetPathMDFe(Data: TDateTime = 0; const CNPJ: String = ''): String;
+function TArquivosConfMDFe.GetPathMDFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''): String;
 begin
-  Result := GetPath(FPathMDFe, 'MDFe', CNPJ, Data, 'MDFe');
+  Result := GetPath(FPathMDFe, 'MDFe', CNPJ, IE, Data, 'MDFe');
 end;
 
 procedure TArquivosConfMDFe.GravarIni(const AIni: TCustomIniFile);

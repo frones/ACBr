@@ -1227,7 +1227,7 @@ end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
 var
-  FRetNFSe, PathArq, NomeArq, xCNPJ: String;
+  FRetNFSe, PathArq, NomeArq, xCNPJ, xIE: String;
   i, l, ii: Integer;
   xData: TDateTime;
   NovoRetorno, CondicaoNovoRetorno: Boolean;
@@ -1450,6 +1450,7 @@ begin
       xData := Date;
 
     xCNPJ := OnlyNumber(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.CNPJ);
+    xIE := OnlyNumber(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoEstadual);
 
     if FPConfiguracoesNFSe.Arquivos.NomeLongoNFSe then
       NomeArq := GerarNomeNFSe(FPConfiguracoesNFSe.WebServices.UFCodigo,
@@ -1461,7 +1462,7 @@ begin
                  FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie +
                  '-nfse.xml';
 
-    PathArq := PathWithDelim(FPConfiguracoesNFSe.Arquivos.GetPathNFSe(xData, xCNPJ));
+    PathArq := PathWithDelim(FPConfiguracoesNFSe.Arquivos.GetPathNFSe(xData, xCNPJ, xIE));
 
     FNotasFiscais.Items[ii].NomeArq := PathArq + NomeArq;
     FNotasFiscais.Items[ii].XMLNFSe := FRetNFSe;

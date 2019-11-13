@@ -237,7 +237,7 @@ end;
 
 function TArquivosConfANe.GetPathANe(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
-  Result := GetPath(FPathANe, 'ANe', CNPJ, Data);
+  Result := GetPath(FPathANe, 'ANe', CNPJ, '', Data);
 end;
 
 procedure TArquivosConfANe.GravarIni(const AIni: TCustomIniFile);

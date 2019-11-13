@@ -548,7 +548,7 @@ begin
     else
       Data := Now;
 
-    Result := PathWithDelim(Configuracoes.Arquivos.GetPathGNRE(Data, FGNRE.c03_idContribuinteEmitente));
+    Result := PathWithDelim(Configuracoes.Arquivos.GetPathGNRE(Data, FGNRE.c03_idContribuinteEmitente, FGNRE.c17_inscricaoEstadualEmitente));
   end;
 end;
 

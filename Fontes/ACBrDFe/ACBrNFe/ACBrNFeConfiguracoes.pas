@@ -103,9 +103,9 @@ type
     procedure GravarIni(const AIni: TCustomIniFile); override;
     procedure LerIni(const AIni: TCustomIniFile); override;
 
-    function GetPathInu(const CNPJ: String = ''): String;
-    function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
-    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; Data: TDateTime = 0): String;
+    function GetPathInu(const CNPJ: string = ''; const IE: String = ''): String;
+    function GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
+    function GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String = ''; const IE: String = ''; Data: TDateTime = 0): String;
   published
     property EmissaoPathNFe: boolean read FEmissaoPathNFe
       write FEmissaoPathNFe default False;
@@ -338,12 +338,12 @@ begin
   PathArquivoMunicipios := AIni.ReadString(fpConfiguracoes.SessaoIni, 'PathArquivoMunicipios', PathArquivoMunicipios);
 end;
 
-function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ: String;
+function TArquivosConfNFe.GetPathEvento(tipoEvento: TpcnTpEvento; const CNPJ, IE: String;
   Data: TDateTime): String;
 var
   Dir: String;
 begin
-  Dir := GetPath(FPathEvento, 'Evento', CNPJ, Data);
+  Dir := GetPath(FPathEvento, 'Evento', CNPJ, IE, Data);
 
   if AdicionarLiteral then
     Dir := PathWithDelim(Dir) + TpEventoToDescStr(tipoEvento);
@@ -354,12 +354,12 @@ begin
   Result := Dir;
 end;
 
-function TArquivosConfNFe.GetPathInu(const CNPJ: String = ''): String;
+function TArquivosConfNFe.GetPathInu(const CNPJ, IE: String): String;
 begin
-  Result := GetPath(FPathInu, 'Inu', CNPJ);
+  Result := GetPath(FPathInu, 'Inu', CNPJ, IE);
 end;
 
-function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; Modelo: Integer = 0): String;
+function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; const CNPJ: String = ''; const IE: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin
@@ -378,7 +378,7 @@ begin
        DescricaoModelo := 'NFCe';
   end;
 
-  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
+  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, IE, Data, DescricaoModelo);
 end;
 
 end.

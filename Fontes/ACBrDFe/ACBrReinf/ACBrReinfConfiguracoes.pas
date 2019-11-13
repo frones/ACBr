@@ -225,7 +225,7 @@ end;
 function TArquivosConfReinf.GetPathReinf(Data: TDateTime;
   const CNPJ: String): String;
 begin
-  Result := GetPath(PathReinf, ACBRReinf_MODELODF, CNPJ, Data, ACBRReinf_MODELODF);
+  Result := GetPath(PathReinf, ACBRReinf_MODELODF, CNPJ, '', Data, ACBRReinf_MODELODF);
 end;
 
 procedure TArquivosConfReinf.GravarIni(const AIni: TCustomIniFile);

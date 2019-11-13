@@ -219,7 +219,7 @@ end;
 
 function TArquivosConfONE.GetPathONE(Data: TDateTime = 0; const CNPJ: String = ''): String;
 begin
-  Result := GetPath(FPathONE, ModeloDF, CNPJ, Data, ModeloDF);
+  Result := GetPath(FPathONE, ModeloDF, CNPJ, '', Data, ModeloDF);
 end;
 
 procedure TArquivosConfONE.GravarIni(const AIni: TCustomIniFile);

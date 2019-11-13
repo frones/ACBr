@@ -189,10 +189,12 @@ begin
          dhEmissao := Now;
 
        DescricaoModelo := 'MDFe';
+
        Result := TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
                          Result,
                          DescricaoModelo,
                          AMDFe.Emit.CNPJCPF,
+                         AMDFe.emit.IE,
                          dhEmissao,
                          DescricaoModelo);
      end;

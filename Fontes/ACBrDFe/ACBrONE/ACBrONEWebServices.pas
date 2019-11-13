@@ -957,6 +957,7 @@ function TDistLeituras.GerarPathDistribuicao: String;
 begin
   Result := FPConfiguracoesONE.Arquivos.GetPathDownload('',
                                                         FPConfiguracoesONE.Geral.CNPJOper,
+                                                        '',
                                                         Now);
 end;
 

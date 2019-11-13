@@ -925,10 +925,10 @@ begin
       CancelarNFCe
     else
     begin
-      NomeNFCe := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Now, CNPJ, StrToInt(ModeloDFToStr(moNFCe))))+OnlyNumber(ChaveCupom)+'-nfe.xml';
+      NomeNFCe := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Now, CNPJ, IE, StrToInt(ModeloDFToStr(moNFCe))))+OnlyNumber(ChaveCupom)+'-nfe.xml';
 
       if not FileExists(NomeNFCe) then
-        NomeNFCe := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Now-1, CNPJ, StrToInt(ModeloDFToStr(moNFCe))))+OnlyNumber(ChaveCupom)+'-nfe.xml';
+        NomeNFCe := PathWithDelim(Configuracoes.Arquivos.GetPathNFe(Now-1, CNPJ, IE, StrToInt(ModeloDFToStr(moNFCe))))+OnlyNumber(ChaveCupom)+'-nfe.xml';
 
       if FileExists(NomeNFCe) then
       begin

@@ -169,7 +169,7 @@ end;
 
 function TArquivosConfCIOT.GetPathCIOT(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
-  Result := GetPath(FPathCIOT, 'CIOT', CNPJ, Data);
+  Result := GetPath(FPathCIOT, 'CIOT', CNPJ, '', Data);
 end;
 
 end.

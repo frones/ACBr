@@ -44,12 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/11/2019
+-- ACBrGNREGuiasRetorno --
+[*] Melhorias na leitura da Guia em formato XML do GNRE versão 2.00
+    por: Murilo X / Italo Jurisato Junior
+
 11/11/2019
 -- pgnreRetConsResLoteGNRE --
 [*] Melhorias na leitura do retorno da consulta do GNRE versão 2.00
     por: Eremar Mates
 -- Diversos --
-[+] Implementado a leitura da Guia em formato do XML do GNRE versão 2.00
+[+] Implementado a leitura da Guia em formato XML do GNRE versão 2.00
     por: Italo Jurisato Junior
 
 07/11/2019
@@ -86,7 +91,7 @@ Símbolo : Significado
    Por: Italo Jurisato Junior
 
 11/07/2019
-[+] ACBrGNReGuiasa
+[+] ACBrGNReGuias
 Adicionado campo TipoGNRe na leitura .ini (LerArqIni)
 
 11/07/2019

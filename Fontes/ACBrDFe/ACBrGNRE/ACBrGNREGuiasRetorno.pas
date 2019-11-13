@@ -187,6 +187,7 @@ var
   i: Integer;
 begin
   GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
+
   for i := 0 to ArqRetorno.Count - 1 do
   begin
     if SameText(Copy(ArqRetorno.Strings[i], 1, 1), '0') then
@@ -249,6 +250,8 @@ begin
       GNRERetorno.Reservado := Trim(Copy(ArqRetorno.Strings[i], 1099, 126));
     end
   end;
+
+  Result := True;
 end;
 
 function TGuiasRetorno.LerXML(AXML: String): Boolean;
@@ -257,15 +260,19 @@ var
   i, j, k: Integer;
   Leitor: TLeitor;
 begin
+  Result := False;
   Leitor := TLeitor.Create;
+
+  Leitor.Arquivo := StringReplace(AXML, 'ns1:', '', [rfReplaceAll]);
+  Leitor.Grupo   := Leitor.Arquivo;
 
   try
     GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
 
-    if Leitor.rExtrai(2, 'resultado') <> '' then
+    if Leitor.rExtrai(1, 'resultado') <> '' then
     begin
       i := 0;
-      while Leitor.rExtrai(3, 'guia', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'guia', '', i + 1) <> '' do
       begin
         GNRERetorno.SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
         GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
@@ -277,7 +284,7 @@ begin
         GNRERetorno.RepresentacaoNumerica := Leitor.rCampo(tcStr, 'linhaDigitavel');
         GNRERetorno.CodigoBarras          := Leitor.rCampo(tcStr, 'codigoBarras');
 
-        if Leitor.rExtrai(4, 'contribuinteEmitente') <> '' then
+        if Leitor.rExtrai(3, 'contribuinteEmitente') <> '' then
         begin
           GNRERetorno.DocEmitente         := Leitor.rCampo(tcStr, 'CNPJ');
           GNRERetorno.RazaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
@@ -288,22 +295,26 @@ begin
           GNRERetorno.TelefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');
         end;
 
-        if Leitor.rExtrai(4, 'itensGNRE') <> '' then
+        if Leitor.rExtrai(3, 'itensGNRE') <> '' then
         begin
           j := 0;
-          while Leitor.rExtrai(5, 'item', '', j + 1) <> '' do
+          while Leitor.rExtrai(4, 'item', '', j + 1) <> '' do
           begin
             GNRERetorno.CodReceita     := Leitor.rCampo(tcInt, 'receita');
-            GNRERetorno.DataVencimento := Leitor.rCampo(tcStr, 'dataVencimento');
+            GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
 
-            if Leitor.rExtrai(6, 'referencia') <> '' then
+            if Leitor.rAtributo('tipo=', 'documentoOrigem') = '10' then
+              GNRERetorno.NumDocOrigem := Leitor.rCampo(tcDe2, 'documentoOrigem');
+
+            if Leitor.rExtrai(5, 'referencia') <> '' then
             begin
+              GNRERetorno.PeriodoReferencia := Leitor.rCampo(tcStr, 'periodo');
               GNRERetorno.MesAnoReferencia := Leitor.rCampo(tcStr, 'mes') +
                                                    Leitor.rCampo(tcStr, 'ano');
             end;
 
             k := 0;
-            while Leitor.rExtrai(6, 'valor', '', k + 1) <> '' do
+            while Leitor.rExtrai(5, 'valor', '', k + 1) <> '' do
             begin
               {
               11 - Valor Principal ICMS
@@ -335,6 +346,26 @@ begin
               Inc(k);
             end;
 
+            if Leitor.rExtrai(5, 'contribuinteDestinatario') <> '' then
+            begin
+              GNRERetorno.DocDestinatario       := Leitor.rCampo(tcStr, 'CNPJ');
+              GNRERetorno.MunicipioDestinatario := Leitor.rCampo(tcStr, 'municipio');
+
+              if GNRERetorno.DocDestinatario = '' then
+                GNRERetorno.DocDestinatario := Leitor.rCampo(tcStr, 'CPF');
+            end;
+
+            if Leitor.rExtrai(5, 'camposExtras') <> '' then
+            begin
+              k := 0;
+              while Leitor.rExtrai(6, 'campoExtra', '', k + 1) <> '' do
+              begin
+                GNRERetorno.InfoComplementares := GNRERetorno.InfoComplementares +
+                                                  Leitor.rCampo(tcStr, 'valor');
+                Inc(k);
+              end;
+            end;
+
             Inc(j);
           end;
         end;
@@ -344,6 +375,7 @@ begin
     end
   finally
     Leitor.Free;
+    Result := True;
   end;
 end;
 
@@ -368,7 +400,7 @@ begin
   // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
   XMLString := ConverteXMLtoNativeString(XMLString);
 
-  if Pos('<ns1:guia versao="2.00">', XMLString) > 0  then
+  if Pos('guia versao="2.00"', XMLString) > 0  then
     Result := LerXML(XMLString)
   else
   begin

@@ -52,6 +52,7 @@ VISIBLE:
     METHOD Validar()
     METHOD ValidarRegrasdeNegocios()
     METHOD VerificarAssinatura()
+    METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF)
 
     METHOD StatusServico()
     METHOD Consultar(eChaveOuNFe)
@@ -240,6 +241,14 @@ METHOD VerificarAssinatura() CLASS ACBrNFe
     ::CheckResult(hResult)
     RETURN nil
 
+METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF) CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GerarChave", ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
 METHOD StatusServico() CLASS ACBrNFe
     local hResult, buffer, bufferLen
     bufferLen := STR_LEN
@@ -247,7 +256,6 @@ METHOD StatusServico() CLASS ACBrNFe
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_StatusServico", @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
-    RETURN nil
 
 METHOD Consultar(eChaveOuNFe) CLASS ACBrNFe
     local hResult, buffer, bufferLen

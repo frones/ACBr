@@ -927,8 +927,7 @@ begin
               Space(6)                                                                       + //  32 a  37 - "Brancos"
               PadRight(SeuNumero,25)                                                         + //  38 a  62 - Uso exclusivo da Empresa
               IfThen(NossoNumero = '000000000', '000000000',
-                                 PadLeft(RightStr(NossoNumero,8),8,'0') +
-                                 CalcularDigitoVerificador(ACBrTitulo)) +                      //  63 a  71 - Número do título no banco
+                                 PadLeft(RightStr(NossoNumero,9),9,'0'))                     + //  63 a  71 - Número do título no banco
               Space(30)                                                                      + //  72 a 101 - "Brancos"
               '0'                                                                            + // 102 a 102 - Código de IOF sobre Operações de Seguro
               '00'                                                                           + // 103 a 104 - Identificação do Tipo de Moeda, 00=Real

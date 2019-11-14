@@ -87,6 +87,7 @@ type
     Label31: TLabel;
     cbxLayOut: TComboBox;
     cbxImprimirVersoFatura: TCheckBox;
+    btnLerRetorno: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
@@ -97,6 +98,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure cbxLayOutChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnLerRetornoClick(Sender: TObject);
   private
 {$IFDEF demo_forte}
     dm: TdmForte;
@@ -116,6 +118,11 @@ implementation
 Uses TypInfo;
 
 {$R *.dfm}
+
+procedure TfrmDemo.btnLerRetornoClick(Sender: TObject);
+begin
+  dm.ACBrBoleto.LerRetorno();
+end;
 
 procedure TfrmDemo.Button1Click(Sender: TObject);
 begin

@@ -387,7 +387,7 @@ object frmDemo: TfrmDemo
     Left = 8
     Top = 320
     Width = 786
-    Height = 143
+    Height = 162
     Caption = 'Informa'#231#245'es do Sacado'
     TabOrder = 4
     object Label21: TLabel
@@ -558,13 +558,22 @@ object frmDemo: TfrmDemo
       OnChange = cbxLayOutChange
     end
     object cbxImprimirVersoFatura: TCheckBox
-      Left = 596
-      Top = 112
-      Width = 172
+      Left = 424
+      Top = 139
+      Width = 161
       Height = 17
       Caption = 'Imprimir Verso da Fatura'
       Enabled = False
       TabOrder = 11
+    end
+    object btnLerRetorno: TButton
+      Left = 648
+      Top = 120
+      Width = 89
+      Height = 25
+      Caption = 'Ler Retorno'
+      TabOrder = 12
+      OnClick = btnLerRetornoClick
     end
   end
   object Panel1: TPanel

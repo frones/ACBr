@@ -297,6 +297,9 @@ begin
       toRemessaCancelarInstrucaoProtesto     : ATipoOcorrencia := '11';
       toRemessaDispensarJuros                : ATipoOcorrencia := '13';
       toRemessaAlterarNomeEnderecoSacado     : ATipoOcorrencia := '31';
+      toRemessaDispensarMulta                   : ATipoOcorrencia := '15';
+      toRemessaNegativacaoSemProtesto           : ATipoOcorrencia := '45';
+      toRemessaBaixaTituloNegativadoSemProtesto : ATipoOcorrencia := '46';
     else
       ATipoOcorrencia := '01';
     end;
@@ -1749,7 +1752,7 @@ begin
       end;
    end;
 
-   ACBrBanco.TamanhoMaximoNossoNum := 10;
+   //ACBrBanco.TamanhoMaximoNossoNum := 10;
 end;
 function TACBrBancoBradesco.CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
 begin

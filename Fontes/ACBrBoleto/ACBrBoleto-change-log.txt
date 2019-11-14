@@ -49,6 +49,24 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+14/11/2019
+
+-- ACBrBancoBradesco --
+[*] Adicionado novos códigos de ocorrência para CNAB240
+https://www.projetoacbr.com.br/forum/topic/54527-erro-leitura-retorno-bradesco-240/
+
+-- ACBrBancoBanestes --
+[*] Ajuste no código de Mora na Remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/54453-arquivo-de-remessa-banestes/
+
+-- ACBrBancoSicred --
+[*] Adicionado código de Ocorrencia "D9" na função CodMotivoRejeicaoToDescricao
+https://www.projetoacbr.com.br/forum/topic/54648-ocorr%C3%AAncia-de-registro-recusado-n%C3%A3o-tratada/
+
+-- ACBrBancoSafra --
+[*] Ajustes geração cód Nosso Número na remessa CNAB400
+https://www.projetoacbr.com.br/forum/topic/52974-erro-boleto-banco-safra-linha-digitável-e-código-de-barras/
+
 --ACBrBoletoSantander--
 [*] Ajuste na remessa CNAB240, adiciona Código da multa baseado no manual
 https://www.projetoacbr.com.br/forum/topic/54640-c%C3%B3digo-multa-santander/

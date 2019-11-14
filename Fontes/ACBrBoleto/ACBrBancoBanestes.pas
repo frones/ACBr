@@ -253,6 +253,7 @@ var
    PracaPostagem, aCarteira, Protesto: String;
    TipoSacado, MensagemCedente, wLinha: String;
    TipoAvalista: String;
+   TipoMora: String;
 begin
 
    case ACBrBanco.ACBrBoleto.Cedente.TipoInscricao of
@@ -324,7 +325,14 @@ begin
 
       case Aceite of
          atSim :  ATipoAceite := 'A';
-         atNao :  ATipoAceite := 'N';
+      else
+         ATipoAceite := 'N';
+      end;
+
+      case CodigoMoraJuros of
+        cjValorDia   : TipoMora := '0';
+      else
+        TipoMora := '1';
       end;
 
       with ACBrBoleto do
@@ -358,7 +366,7 @@ begin
                   ATipoAceite                                                 +
                   FormatDateTime('ddmmyy', DataDocumento )                    +  // Data de Emissão
                   Protesto                                                    +
-                  IfThen(ValorMoraJuros > 0, '0', '9')                        +  // Indica se exite Multa ou não
+                  TipoMora                                                    +  // Indica se exite Multa ou não
                   IntToStrZero(Round(ValorMoraJuros * 100 ), 12)              +
                   IfThen(DataDesconto < EncodeDate(2000, 01, 01), '000000',
                          FormatDateTime('ddmmyy', DataDesconto))              +

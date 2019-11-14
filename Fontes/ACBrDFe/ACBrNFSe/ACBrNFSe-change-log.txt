@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2019
+-- pnfsNFSeR --
+[*] O grupo <Servico> do provedor SystemPro pode ter mais de uma ocorrência.
+    Alteração feita para ler todas as ocorrências desse grupo.
+   Por: Italo Jurisato Junior
+
 13/11/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/54688-como-informar-o-codigo_item_lista_servico-na-nfs-e/?do=findComment&comment=360196

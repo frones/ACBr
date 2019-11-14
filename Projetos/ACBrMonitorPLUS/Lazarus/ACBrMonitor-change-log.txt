@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2019
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade "Texto Personalizado Canhoto NFe", configuravel em DFe/Impressao/NFe
+
 08/11/2019
 [*] DoACBrMDFe
 Compatibilização das funções de Respostas do componente MDFe, baseado no Refactory realizado nas classes da ACBrLib.

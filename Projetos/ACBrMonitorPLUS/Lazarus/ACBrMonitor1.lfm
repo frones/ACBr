@@ -19,7 +19,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   ShowHint = True
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.6.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -9847,7 +9847,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 10
                     Height = 44
                     Top = 65
-                    Width = 351
+                    Width = 423
                     AutoFill = True
                     Caption = 'Tipo de Fonte'
                     ChildSizing.LeftRightSpacing = 6
@@ -9858,7 +9858,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 3
                     ClientHeight = 22
-                    ClientWidth = 347
+                    ClientWidth = 419
                     Columns = 3
                     Font.Height = -13
                     ItemIndex = 0
@@ -10048,7 +10048,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirEAN: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 171
+                    Top = 179
                     Width = 132
                     Caption = 'Exibir Código GTIN'
                     Font.Height = -13
@@ -10058,7 +10058,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxExibirCampoFatura: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 193
+                    Top = 201
                     Width = 138
                     Caption = 'Exibir Campo Fatura'
                     Font.Height = -13
@@ -10068,7 +10068,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxQuebrarLinhasDetalhesItens: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 215
+                    Top = 223
                     Width = 241
                     Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
                     Font.Height = -13
@@ -10078,7 +10078,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxFormCont: TCheckBox
                     Left = 8
                     Height = 21
-                    Top = 237
+                    Top = 245
                     Width = 165
                     Caption = 'Formulario Pré-Impresso'
                     Font.Height = -13
@@ -10088,19 +10088,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpValLiq: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 193
+                    Top = 201
                     Width = 222
                     Caption = 'Imprimir Valor Líquido do Produto'
-                    Font.Height = -13
-                    ParentFont = False
-                    TabOrder = 14
-                  end
-                  object cbxExibeResumo: TCheckBox
-                    Left = 262
-                    Height = 21
-                    Top = 171
-                    Width = 175
-                    Caption = 'Exibir Resumo no Canhoto'
                     Font.Height = -13
                     ParentFont = False
                     TabOrder = 13
@@ -10135,7 +10125,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 262
                     Height = 25
                     Top = 32
-                    Width = 220
+                    Width = 171
                     Font.Height = -13
                     ItemHeight = 17
                     ItemIndex = 0
@@ -10145,7 +10135,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Unidade Comercial e Tributável'
                     )
                     ParentFont = False
-                    TabOrder = 15
+                    TabOrder = 14
                     Text = 'Unidade Comercial'
                   end
                   object Label193: TLabel
@@ -10161,38 +10151,39 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   object cbxImpDetEspNFe: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 215
+                    Top = 223
                     Width = 273
                     Caption = 'Imprimir Detalhamento Específico dos Itens'
                     Font.Height = -13
                     ParentFont = False
-                    TabOrder = 16
+                    TabOrder = 15
                   end
                   object cbxImpDocsReferenciados: TCheckBox
                     Left = 262
                     Height = 21
-                    Top = 237
+                    Top = 245
                     Width = 275
                     Caption = 'Imprimir Dados Documentos Referenciados'
                     Font.Height = -13
                     ParentFont = False
-                    TabOrder = 17
+                    TabOrder = 16
                   end
                   object cbxExibirLogoEmCima: TCheckBox
-                    Left = 555
+                    Left = 262
                     Height = 21
-                    Top = 171
+                    Top = 179
                     Width = 141
                     Caption = 'Exibir Logo em Cima'
                     Font.Height = -13
                     ParentFont = False
-                    TabOrder = 18
+                    TabOrder = 17
                   end
                   object rgInfAdicProduto: TRadioGroup
-                    Left = 501
-                    Height = 55
-                    Top = 5
-                    Width = 306
+                    Left = 448
+                    Height = 43
+                    Top = 8
+                    Width = 480
+                    Anchors = [akTop, akLeft, akRight]
                     AutoFill = True
                     Caption = 'Exibir Inf. Adicionais Produto'
                     ChildSizing.LeftRightSpacing = 6
@@ -10202,8 +10193,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.ShrinkVertical = crsScaleChilds
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 3
-                    ClientHeight = 33
-                    ClientWidth = 302
+                    ClientHeight = 21
+                    ClientWidth = 476
                     Columns = 3
                     Font.Height = -13
                     ItemIndex = 0
@@ -10213,27 +10204,74 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       'Separados'
                     )
                     ParentFont = False
-                    TabOrder = 19
+                    TabOrder = 18
                   end
                   object cbxExpandirDadosAdicionaisAuto: TCheckBox
                     Left = 555
                     Height = 21
-                    Top = 193
+                    Top = 179
                     Width = 281
                     Caption = 'Expandir Dados Adicionais Automaticamente'
                     Font.Height = -13
                     ParentFont = False
-                    TabOrder = 20
+                    TabOrder = 19
                   end
                   object cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox
                     Left = 555
                     Height = 21
-                    Top = 215
+                    Top = 201
                     Width = 344
                     Caption = 'Imprime Continuação Dados Adicionais Primeira Pagina'
                     Font.Height = -13
                     ParentFont = False
+                    TabOrder = 20
+                  end
+                  object rgrMsgCanhoto: TRadioGroup
+                    Left = 448
+                    Height = 101
+                    Top = 66
+                    Width = 480
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoFill = False
+                    Caption = 'Mensagem Resumida Canhoto'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 1
+                    ClientHeight = 79
+                    ClientWidth = 476
                     TabOrder = 21
+                    object cbxExibeResumo: TCheckBox
+                      Left = 6
+                      Height = 21
+                      Top = 0
+                      Width = 221
+                      AutoSize = False
+                      Caption = 'Exibir Resumo Padrão no Canhoto'
+                      Font.Height = -13
+                      OnChange = cbxExibeResumoChange
+                      ParentFont = False
+                      TabOrder = 0
+                    end
+                    object edtMsgResumoCanhoto: TEdit
+                      Left = 6
+                      Height = 25
+                      Top = 48
+                      Width = 463
+                      Anchors = [akLeft, akRight, akBottom]
+                      TabOrder = 1
+                    end
+                    object lblMsgCanhoto: TLabel
+                      AnchorSideBottom.Control = edtMsgResumoCanhoto
+                      Left = 8
+                      Height = 17
+                      Top = 31
+                      Width = 447
+                      Anchors = [akLeft, akBottom]
+                      Caption = 'Mensagem Personalizada   (Se não informado será emitido resumo padrão)'
+                      ParentColor = False
+                    end
                   end
                 end
                 object tsImpNFCe: TTabSheet

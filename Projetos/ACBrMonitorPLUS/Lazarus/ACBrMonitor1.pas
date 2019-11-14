@@ -259,6 +259,7 @@ type
     cbFormaEmissaoGNRe: TComboBox;
     cbVersaoWSBPe: TComboBox;
     cbVersaoWSGNRE: TComboBox;
+    cbxExibeResumo: TCheckBox;
     cbxExpandirDadosAdicionaisAuto: TCheckBox;
     cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina: TCheckBox;
     cbxValidarNumeroSessaoResposta: TCheckBox;
@@ -266,6 +267,7 @@ type
     cbxSepararPorNome: TCheckBox;
     ckCamposFatObrigatorio: TCheckBox;
     cbFormatoDecimais: TComboBox;
+    edtMsgResumoCanhoto: TEdit;
     edtSATCasasMaskQtd: TEdit;
     edtSATMaskVUnit: TEdit;
     edtBOLDigitoAgConta: TEdit;
@@ -370,7 +372,6 @@ type
     cbxBOLUF: TComboBox;
     cbxCNAB: TComboBox;
     cbxEmissaoPathNFe: TCheckBox;
-    cbxExibeResumo: TCheckBox;
     cbxExibirCampoFatura: TCheckBox;
     cbxExibirEAN: TCheckBox;
     cbxExpandirLogo: TCheckBox;
@@ -538,6 +539,7 @@ type
     Label241: TLabel;
     Label242: TLabel;
     Label243: TLabel;
+    lblMsgCanhoto: TLabel;
     Label26: TLabel;
     lblIDCSRT: TLabel;
     lblCSRT: TLabel;
@@ -585,6 +587,7 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
+    rgrMsgCanhoto: TRadioGroup;
     rgImprimeTributos: TRadioGroup;
     rgInfAdicProduto: TRadioGroup;
     rdgImprimeChave1LinhaSAT: TRadioGroup;
@@ -1348,6 +1351,7 @@ type
     procedure cbxBOLBancoChange(Sender: TObject);
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
+    procedure cbxExibeResumoChange(Sender: TObject);
     procedure cbxImpDescPorcChange(Sender: TObject);
     procedure cbXMLSignLibChange(Sender: TObject);
     procedure cbxModeloSATChange(Sender: TObject);
@@ -1675,6 +1679,7 @@ type
     function RespostaIntegrador():String;
     function SubstituirVariaveis(const ATexto: String): String;
     procedure OnFormataDecimalSAT;
+    procedure OnMensagemCanhotoNFe;
 
     property MonitorConfig: TMonitorConfig read FMonitorConfig;
   end;
@@ -3700,6 +3705,11 @@ begin
   edCEPChaveBuscarCEP.Enabled := (ACBrCEP1.WebService in [wsBuscarCep, wsCepLivre]);
 end;
 
+procedure TFrmACBrMonitor.cbxExibeResumoChange(Sender: TObject);
+begin
+  OnMensagemCanhotoNFe;
+end;
+
 procedure TFrmACBrMonitor.cbxImpDescPorcChange(Sender: TObject);
 begin
   cbxImpValLiq.Enabled := not cbxImpDescPorc.Checked;
@@ -4837,6 +4847,8 @@ begin
       spedtCasasDecimaisQtd.Value         := DecimaisQTD;
       spedtDecimaisVUnit.Value            := DecimaisValor;
       cbxExibeResumo.Checked              := ExibeResumo;
+      edtMsgResumoCanhoto.Text            := TextoResumoCanhoto;
+      OnMensagemCanhotoNFe;
       cbxImprimirTributos.Checked         := ImprimirTributosItem;
       cbxImpValLiq.Checked                := ImprimirValLiq;
       cbxUnComTributavel.ItemIndex        := UNComercialETributavel;
@@ -6008,6 +6020,7 @@ begin
         DecimaisQTD                := spedtCasasDecimaisQtd.Value;
         DecimaisValor              := spedtDecimaisVUnit.Value;
         ExibeResumo                := cbxExibeResumo.Checked;
+        TextoResumoCanhoto         := trim(edtMsgResumoCanhoto.Text);
         ImprimirTributosItem       := cbxImprimirTributos.Checked;
         ImprimirValLiq             := cbxImpValLiq.Checked;
         UNComercialETributavel     := cbxUnComTributavel.ItemIndex;
@@ -8837,6 +8850,7 @@ begin
     begin
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ImprimeDescPorPercentual := cbxImpDescPorc.Checked;
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).ExibeResumoCanhoto       := cbxExibeResumo.Checked;
+      (ACBrNFe1.DANFE as TACBrNFeDANFEClass).TextoResumoCanhoto       := edtMsgResumoCanhoto.Text;
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).FormularioContinuo       := cbxFormCont.Checked;
       (ACBrNFe1.DANFE as TACBrNFeDANFEClass).PosCanhoto               := TPosRecibo( rgLocalCanhoto.ItemIndex );
     end;
@@ -10106,6 +10120,13 @@ begin
   spedtSATDecimaisVUnit.Enabled:= cbFormatoDecimais.ItemIndex = 0;
   edtSATCasasMaskQtd.Enabled:= cbFormatoDecimais.ItemIndex = 1;
   edtSATMaskVUnit.Enabled:= cbFormatoDecimais.ItemIndex = 1;
+end;
+
+procedure TFrmACBrMonitor.OnMensagemCanhotoNFe;
+begin
+  lblMsgCanhoto.Enabled:= cbxExibeResumo.Checked;
+  edtMsgResumoCanhoto.Enabled:= cbxExibeResumo.Checked;
+
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

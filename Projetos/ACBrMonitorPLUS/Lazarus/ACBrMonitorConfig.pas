@@ -292,6 +292,7 @@ type
     DecimaisQTD                      : Integer;
     DecimaisValor                    : Integer;
     ExibeResumo                      : Boolean;
+    TextoResumoCanhoto               : String;
     ImprimirTributosItem             : Boolean;
     ImprimirValLiq                   : Boolean;
     UNComercialETributavel           : Integer;
@@ -1074,6 +1075,7 @@ begin
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEDecimaisQTD            , DecimaisQTD );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEDecimaisValor          , DecimaisValor );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExibeResumo               , ExibeResumo );
+      Ini.WriteString( CSecDANFE, CKeyDANFETextoResumoCanhoto       , TextoResumoCanhoto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirTributosItem      , ImprimirTributosItem );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirValLiq            , ImprimirValLiq );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEUNComercialETributavel , UNComercialETributavel );
@@ -1730,6 +1732,7 @@ begin
       DecimaisQTD               :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEDecimaisQTD                    , DecimaisQTD );
       DecimaisValor             :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEDecimaisValor                  , DecimaisValor );
       ExibeResumo               :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEExibeResumo                       , ExibeResumo );
+      TextoResumoCanhoto        :=  Ini.ReadString( CSecDANFE, CKeyDANFETextoResumoCanhoto               , TextoResumoCanhoto);
       ImprimirTributosItem      :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirTributosItem              , ImprimirTributosItem );
       ImprimirValLiq            :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirValLiq                    , ImprimirValLiq );
       UNComercialETributavel    :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEUNComercialETributavel         , UNComercialETributavel );
@@ -2381,6 +2384,7 @@ begin
     DecimaisQTD               :=  2;
     DecimaisValor             :=  2;
     ExibeResumo               :=  False;
+    TextoResumoCanhoto        := '';
     ImprimirTributosItem      :=  False;
     ImprimirValLiq            :=  False;
     UNComercialETributavel    :=  0;

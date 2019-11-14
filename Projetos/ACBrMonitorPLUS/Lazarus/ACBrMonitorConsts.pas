@@ -934,6 +934,7 @@ const
   CKeyDANFEDecimaisQTD =               'DecimaisQTD';
   CKeyDANFEDecimaisValor =             'DecimaisValor';
   CKeyDANFEExibeResumo =               'ExibeResumo';
+  CKeyDANFETextoResumoCanhoto =        'TextoResumoCanhoto';
   CKeyDANFEImprimirTributosItem =      'ImprimirTributosItem';
   CKeyDANFEImprimirValLiq =            'ImprimirValLiq';
   CKeyDANFEUNComercialETributavel =    'UNComercialETributavel';

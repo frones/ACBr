@@ -265,6 +265,7 @@ type
 
   padRightTest = class(TTestCase)
   published
+    procedure CompletarStringComAcentos;
     procedure CompletarString;
     procedure ManterString;
     procedure TruncarString;
@@ -3322,6 +3323,13 @@ begin
   dblQtde := 1;
   dblTotal := dblValorUnit * dblQtde;
   CheckEquals( 4.88, RoundABNT(dblTotal, 2), 0.00001);
+
+  dblTotal := 14.90 * 1.550;
+  CheckEquals( 23.10, RoundABNT(dblTotal, 2), 0.00001);
+
+  dblTotal := 1.5 * 40.13;
+  CheckEquals( 60.20, RoundABNT(dblTotal, 2), 0.00001);
+
 end;
 
 procedure RoundABNTTest.TestesEstouro;
@@ -4344,6 +4352,16 @@ begin
 end;
 
 { padRightTest }
+
+procedure padRightTest.CompletarStringComAcentos;
+var
+  StrAcentos: String;
+begin
+  StrAcentos := ACBrStr('ACBr¡…Õ”⁄«');
+
+  CheckEquals(StrAcentos+'ZZZZZ', PadRight(StrAcentos, 15, 'Z'));
+  CheckEquals(StrAcentos+'     ', PadRight(StrAcentos, 15));
+end;
 
 procedure padRightTest.CompletarString;
 begin

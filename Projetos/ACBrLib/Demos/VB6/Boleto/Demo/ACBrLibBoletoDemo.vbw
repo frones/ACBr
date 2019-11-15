@@ -1,0 +1,5 @@
+FrmMain = 78, 78, 1218, 564, Z, 26, 26, 1162, 531, C
+ACBrComum = 78, 78, 1333, 613, C
+FolderBrowser = 104, 104, 1359, 639, C
+ACBrBoleto = 156, 156, 1411, 691, 
+ACBrBoletoUtils = 0, 0, 0, 0, C

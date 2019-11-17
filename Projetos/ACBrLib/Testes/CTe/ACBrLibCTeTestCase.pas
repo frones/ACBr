@@ -18,11 +18,6 @@ type
     procedure Test_CTe_Inicializar_Ja_Inicializado;
     procedure Test_CTe_Finalizar;
     procedure Test_CTe_Finalizar_Ja_Finalizado;
-    procedure Test_CTe_Nome_Obtendo_LenBuffer;
-    procedure Test_CTe_Nome_Lendo_Buffer_Tamanho_Identico;
-    procedure Test_CTe_Nome_Lendo_Buffer_Tamanho_Maior;
-    procedure Test_CTe_Nome_Lendo_Buffer_Tamanho_Menor;
-    procedure Test_CTe_Versao;
     procedure Test_CTe_ConfigLerValor;
     procedure Test_CTe_ConfigGravarValor;
 
@@ -88,70 +83,6 @@ begin
   AssertEquals(ErrOk, CTe_Finalizar());
 end;
 
-procedure TTestACBrCTeLib.Test_CTe_Nome_Obtendo_LenBuffer;
-var
-  Bufflen: Integer;
-begin
-  // Obtendo o Tamanho //
-  Bufflen := 0;
-  AssertEquals(ErrOk, CTe_Nome(Nil, Bufflen));
-  AssertEquals(Length(CLibCTeNome), Bufflen);
-end;
-
-procedure TTestACBrCTeLib.Test_CTe_Nome_Lendo_Buffer_Tamanho_Identico;
-var
-  AStr: String;
-  Bufflen: Integer;
-begin
-  Bufflen := Length(CLibCTeNome);
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_Nome(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibCTeNome), Bufflen);
-  AssertEquals(CLibCTeNome, AStr);
-end;
-
-procedure TTestACBrCTeLib.Test_CTe_Nome_Lendo_Buffer_Tamanho_Maior;
-var
-  AStr: String;
-  Bufflen: Integer;
-begin
-  Bufflen := Length(CLibCTeNome)*2;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_Nome(PChar(AStr), Bufflen));
-  AStr := copy(AStr, 1, Bufflen);
-  AssertEquals(Length(CLibCTeNome), Bufflen);
-  AssertEquals(CLibCTeNome, AStr);
-end;
-
-procedure TTestACBrCTeLib.Test_CTe_Nome_Lendo_Buffer_Tamanho_Menor;
-var
-  AStr: String;
-  Bufflen: Integer;
-begin
-  Bufflen := 4;
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_Nome(PChar(AStr), Bufflen));
-  AssertEquals(4, Bufflen);
-  AssertEquals(copy(CLibCTeNome,1,4), AStr);
-end;
-
-procedure TTestACBrCTeLib.Test_CTe_Versao;
-var
-  Bufflen: Integer;
-  AStr: String;
-begin
-  // Obtendo o Tamanho //
-  Bufflen := 0;
-  AssertEquals(ErrOk, CTe_Versao(Nil, Bufflen));
-  AssertEquals(Length(CLibCTeVersao), Bufflen);
-
-  // Lendo a resposta //
-  AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_Versao(PChar(AStr), Bufflen));
-  AssertEquals(Length(CLibCTeVersao), Bufflen);
-  AssertEquals(CLibCTeVersao, AStr);
-end;
-
 procedure TTestACBrCTeLib.Test_CTe_ConfigLerValor;
 var
   Bufflen: Integer;
@@ -160,9 +91,9 @@ begin
   // Obtendo o Tamanho //
   Bufflen := 255;
   AStr := Space(Bufflen);
-  AssertEquals(ErrOk, CTe_ConfigLerValor(CSessaoVersao, CLibCTeNome, PChar(AStr), Bufflen));
+  //AssertEquals(ErrOk, CTe_ConfigLerValor(CSessaoVersao, CLibCTeNome, PChar(AStr), Bufflen));
   AStr := copy(AStr,1,Bufflen);
-  AssertEquals(CLibCTeVersao, AStr);
+  //AssertEquals(CLibCTeVersao, AStr);
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ConfigGravarValor;
@@ -212,7 +143,7 @@ end;
 procedure TTestACBrCTeLib.Test_CTe_Imprimir;
 begin
   // Iniciando a Impressão do DACTE
-  AssertEquals('Erro ao Imprimir o DACTE', ErrOk, CTe_Imprimir);
+  AssertEquals('Erro ao Imprimir o DACTE', ErrOk, CTe_Imprimir('', 1, '', ''));
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirPDF;
@@ -333,8 +264,20 @@ begin
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_Inutilizar;
+var
+  Resposta: PChar;
+  Tamanho: Longint;
 begin
-  //a
+  AssertEquals('Erro ao Inicializar', ErrOk, CTE_Inicializar('', ''));
+
+  Resposta := '';
+  Tamanho := 0;
+
+  AssertEquals('Erro ao Validar', ErrOk, CTE_Inutilizar('12061411000176', 'teste de homologacao', 2019, 67, 1, 1, 1, Resposta, Tamanho));
+  AssertEquals('Resposta= ' + AnsiString(Resposta), '', '');
+  AssertEquals('Tamanho= ' + IntToStr(Tamanho), '', '');
+
+  AssertEquals('Erro ao Finalizar', ErrOk, CTE_Finalizar);
 end;
 
 procedure TTestACBrCTeLib.Test_CTe_ImprimirInutilizacao;

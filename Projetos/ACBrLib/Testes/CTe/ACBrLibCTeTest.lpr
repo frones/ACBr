@@ -3,7 +3,7 @@ program ACBrLibCTeTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, ACBrLibCTeTestCase, ACBrLibCTeStaticImport;
+  Interfaces, Forms, GuiTestRunner, ACBrLibCTeTestCase;
 
 {$R *.res}
 

@@ -61,10 +61,12 @@ type
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
-    procedure DefinirValoresPadroesChild;
+    procedure DefinirValoresPadroesChild; override;
     procedure ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL); override;
 
   public
+    constructor Create;
+
     property ImprimeHoraSaida: Boolean read FImprimeHoraSaida write FImprimeHoraSaida;
     property ImprimeHoraSaida_Hora: String read FImprimeHoraSaida_Hora write FImprimeHoraSaida_Hora;
     property TipoDAMDFe: TpcnTipoImpressao read FTipoDAMDFe write FTipoDAMDFe;
@@ -82,6 +84,7 @@ type
   private
     FDAMDFeConfig: TDAMDFeConfig;
     FMDFeConfig: TConfiguracoesMDFe;
+
   protected
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
@@ -105,6 +108,10 @@ uses
   ACBrUtil;
 
 { TDAMDFeConfig }
+constructor TDAMDFeConfig.Create;
+begin
+  inherited Create(CSessaoDAMDFe);
+end;
 
 procedure TDAMDFeConfig.DefinirValoresPadroesChild;
 begin
@@ -163,7 +170,7 @@ begin
   FMDFeConfig := TConfiguracoesMDFe.Create(nil);
   FMDFeConfig.ChaveCryptINI := AChaveCrypt;
 
-  FDAMDFeConfig := TDAMDFeConfig.Create(CSessaoDAMDFe);
+  FDAMDFeConfig := TDAMDFeConfig.Create;
 end;
 
 destructor TLibMDFeConfig.Destroy;

@@ -24,12 +24,9 @@ type
     FLibMail: TACBrLibMail;
 
   protected
-    FOwner: TACBrLib;
     FLock: TCriticalSection;
 
   public
-    constructor Create(AOwner: TACBrLib); reintroduce;
-
     procedure CriarACBrMail;
 
     procedure AplicarConfiguracoes;
@@ -50,14 +47,6 @@ uses
 {$R *.lfm}
 
 { TLibMDFeDM }
-
-constructor TLibMDFeDM.Create(AOwner: TACBrLib);
-begin
-  Inherited Create(nil);
-
-  FOwner := AOwner;
-end;
-
 procedure TLibMDFeDM.DataModuleCreate(Sender: TObject);
 begin
   FLock := TCriticalSection.Create;
@@ -89,7 +78,7 @@ begin
   begin
     GravarLog('      Carregando MAIL de: ' + NomeLib, logCompleto);
     // Criando Classe para Leitura da Lib //
-    FLibMail  := TACBrLibMail.Create(NomeLib, FOwner.Config.NomeArquivo, FOwner.Config.ChaveCrypt);
+    FLibMail  := TACBrLibMail.Create(NomeLib, pLib.Config.NomeArquivo, pLib.Config.ChaveCrypt);
     FACBrMail := FLibMail.ACBrMail;
   end
   else
@@ -106,7 +95,7 @@ var
   pLibConfig: TLibMDFeConfig;
 begin
   ACBrMDFe1.SSL.DescarregarCertificado;
-  pLibConfig := TLibMDFeConfig(TACBrLibMDFe(FOwner).Config);
+  pLibConfig := TLibMDFeConfig(TACBrLibMDFe(pLib).Config);
   ACBrMDFe1.Configuracoes.Assign(pLibConfig.MDFe);
 
   AplicarConfigMail;
@@ -176,8 +165,8 @@ end;
 
 procedure TLibMDFeDM.GravarLog(AMsg: String; NivelLog: TNivelLog; Traduzir: Boolean);
 begin
-  if Assigned(FOwner) then
-    FOwner.GravarLog(AMsg, NivelLog, Traduzir);
+  if Assigned(pLib) then
+    pLib.GravarLog(AMsg, NivelLog, Traduzir);
 end;
 
 procedure TLibMDFeDM.Travar;

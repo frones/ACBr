@@ -64,29 +64,29 @@ type
 {%region Declaração da funções}
 
 {%region Redeclarando Métodos de ACBrLibComum, com nome específico}
-function MDFe_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
+function MDFE_Inicializar(const eArqConfig, eChaveCrypt: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_Finalizar: longint;
+function MDFE_Finalizar: longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_Nome(const sNome: PChar; var esTamanho: longint): longint;
+function MDFE_Nome(const sNome: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_Versao(const sVersao: PChar; var esTamanho: longint): longint;
+function MDFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
+function MDFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_ConfigLer(const eArqConfig: PChar): longint;
+function MDFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_ConfigGravar(const eArqConfig: PChar): longint;
+function MDFE_ConfigGravar(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
+function MDFE_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar;
   var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFe_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
+function MDFE_ConfigGravarValor(const eSessao, eChave, eValor: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region MDFe}
-function MDFe_CarregarXML(const eArquivoOuXML: PChar): longint;
+function MDFE_CarregarXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_CarregarINI(const eArquivoOuINI: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -123,6 +123,7 @@ function MDFE_Enviar(ALote: Integer; Imprimir, Sincrono: Boolean;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ConsultarRecibo(ARecibo: PChar;
     const sResposta: PChar; var esTamanho: longint): longint;
+{$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -162,7 +163,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibMDFeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibMDFeConfig, ACBrLibMDFeRespostas, ACBrMDFe, ACBrMail,
-  ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrLibConsultaCadastro,
+  ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
   pcnConversao, pcnAuxiliar, pMDFeConversaoMDFe, blcksock, ACBrUtil;
 
 { TACBrLibMDFe }
@@ -171,7 +172,7 @@ constructor TACBrLibMDFe.Create(ArqConfig: string; ChaveCrypt: ansistring);
 begin
   inherited Create(ArqConfig, ChaveCrypt);
 
-  FMDFeDM := TLibMDFeDM.Create(Self);
+  FMDFeDM := TLibMDFeDM.Create(nil);
 end;
 
 destructor TACBrLibMDFe.Destroy;

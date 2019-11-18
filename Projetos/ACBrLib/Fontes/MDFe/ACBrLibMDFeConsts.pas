@@ -41,9 +41,6 @@ uses
   Classes, SysUtils;
 
 const
-  CLibMDFeNome = 'ACBrLibMDFe';
-  CLibMDFeVersao = '0.0.1';
-
   CSessaoDAMDFe = 'DAMDFe';
 
   CChaveTipoRelatorioEvento = 'TipoRelatorioEvento';

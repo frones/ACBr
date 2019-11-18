@@ -28,6 +28,8 @@ public enum  ACBrSessao {
     DANFECe,
     CTe,
     DACTe,
+    MDFe,
+    DAMDFe,
     BoletoConfig,
     BoletoCedenteConfig,
     BoletoBancoConfig,

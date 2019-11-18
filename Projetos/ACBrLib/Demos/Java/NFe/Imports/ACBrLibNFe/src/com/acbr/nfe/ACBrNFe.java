@@ -242,6 +242,16 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     return processResult( buffer, bufferLen );
   }
+  
+  public String consultaCadastro( String cUF, String nDocumento, Boolean nIE ) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+
+    int ret = ACBrNFeLib.INSTANCE.NFE_ConsultaCadastro( toUTF8( cUF ), toUTF8( nDocumento), nIE, buffer, bufferLen );
+    checkResult( ret );
+
+    return processResult( buffer, bufferLen );
+  }
 
   //TODO: Sobrescrever método com valores default
   public String inutilizar( String aCNPJ, String aJustificativa, int ano, int modelo, int serie,
@@ -455,6 +465,8 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     int NFE_Enviar( int ALote, boolean Imprimir, boolean sincrono, boolean zipado, ByteBuffer buffer, IntByReference bufferSize );
 
     int NFE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int NFE_ConsultaCadastro( String cUF, String nDocumento, Boolean nIE, ByteBuffer buffer, IntByReference bufferSize );
 
     int NFE_Cancelar( String eChave, String eJustificativa, String eCNPJ, int ALote,
                       ByteBuffer buffer, IntByReference bufferSize );

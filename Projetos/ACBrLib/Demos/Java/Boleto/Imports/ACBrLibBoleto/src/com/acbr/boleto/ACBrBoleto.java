@@ -135,7 +135,7 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Nome(buffer, bufferLen);
         checkResult(ret);
 
-        return fromUTF8(buffer, bufferLen.getValue());
+        return processResult(buffer, bufferLen);
     }
 
     public String versao() throws Exception {
@@ -145,7 +145,7 @@ public final class ACBrBoleto extends ACBrLibBase implements AutoCloseable {
         int ret = ACBrBoletoLib.INSTANCE.Boleto_Versao(buffer, bufferLen);
         checkResult(ret);
 
-        return fromUTF8(buffer, bufferLen.getValue());
+        return processResult(buffer, bufferLen);
     }
 
     public void configLer() throws Exception {

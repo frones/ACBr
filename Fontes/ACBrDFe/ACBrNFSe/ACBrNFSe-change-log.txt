@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/54874-loadfromfile-carrega-somente-1-servi%C3%A7o/?do=findComment&comment=360557
+   Por: Rafael Sartori
+
 14/11/2019
 -- pnfsNFSeR --
 [*] O grupo <Servico> do provedor SystemPro pode ter mais de uma ocorrência.

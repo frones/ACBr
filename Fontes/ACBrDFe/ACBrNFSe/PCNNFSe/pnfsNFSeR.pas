@@ -2158,7 +2158,7 @@ begin
       NFSe.Servico.MunicipioIncidencia          := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
       NFSe.Servico.CodigoCnae                   := Leitor.rCampo(tcStr, 'CodigoCnae');
       NFSe.Servico.CodigoTributacaoMunicipio    := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
-      NFSe.Servico.CodigoPais                   := Leitor.rCampo(tcStr, 'CodigoPais');
+      NFSe.Servico.CodigoPais                   := Leitor.rCampo(tcInt, 'CodigoPais');
       NFSe.Servico.NumeroProcesso               := Leitor.rCampo(tcStr, 'NumeroProcesso');
       NFSe.Servico.ResponsavelRetencao          := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
 

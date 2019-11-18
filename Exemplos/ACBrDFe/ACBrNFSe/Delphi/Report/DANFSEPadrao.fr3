@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<TfrxReport Tag="1" Version="5.5.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padrão" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="41401,6014078935" ReportOptions.Description.Text="" ReportOptions.LastChange="42906,8386365278" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+<TfrxReport Tag="1" Version="5.5.8" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Padrão" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="41401,6014078935" ReportOptions.Description.Text="" ReportOptions.LastChange="43787,4720538426" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
     <item DataSetName="Identificacao"/>
     <item DataSetName="ItensServico"/>
@@ -11,7 +11,7 @@
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" EndlessHeight="True" EndlessWidth="True" LargeDesignHeight="True" HGuides.Text="" VGuides.Text="">
     <TfrxPageHeader Name="PageHeader1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Times New Roman" Font.Style="0" Height="136,06308" Left="0" ParentFont="False" Top="18,89765" Width="718,1107" OnBeforePrint="PageHeader1OnBeforePrint" Child="TomadorPrestador">
-      <TfrxShapeView Name="Shape2" Align="baClient" Left="0" Top="0" Width="718,1107" Height="136,06308"/>
+      <TfrxShapeView Name="Shape2" Left="0" Top="0" Width="718,1107" Height="136,06308"/>
       <TfrxMemoView Name="Memo2" Left="117,16535433" Top="3,77952756" Width="438,42548" Height="64,25201" DataSetName="Parametros" Font.Charset="1" Font.Color="-16777208" Font.Height="-19" Font.Name="Times New Roman" Font.Style="1" HAlign="haCenter" ParentFont="False" Text="PREFEITURA MUNICIPAL DE &#13;&#10;[Parametros.&#34;Nome_Prefeitura&#34;]"/>
       <TfrxMemoView Name="Memo6" Left="559,37044" Top="0" Width="158,74026" Height="34,01574071" Font.Charset="1" Font.Color="-16777208" Font.Height="-12" Font.Name="Times New Roman" Font.Style="0" Frame.Typ="15" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" Text="Número da Nota"/>
       <TfrxMemoView Name="Memo7" Left="559,37044" Top="34,01577" Width="158,74026" Height="34,01575535" Font.Charset="1" Font.Color="-16777208" Font.Height="-12" Font.Name="Times New Roman" Font.Style="0" Frame.Typ="15" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" Text="Data e Hora da Emissão"/>
@@ -120,7 +120,7 @@
       </TfrxMemoView>
     </TfrxPageFooter>
     <TfrxMasterData Name="MasterData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Font.Charset="1" Font.Color="0" Font.Height="-13" Font.Name="Times New Roman" Font.Style="0" Height="222,99227" Left="0" ParentFont="False" Top="495,11843" Width="718,1107" ColumnWidth="0" ColumnGap="0" DataSetName="Servicos" RowCount="0" Stretched="True">
-      <TfrxMemoView Name="Memo13" Align="baClient" Left="0" Top="0" Width="718,1107" Height="222,99227" DataSetName="Servicos" DisplayFormat.DecimalSeparator="," Font.Charset="1" Font.Color="-16777208" Font.Height="-9" Font.Name="Lucida Console" Font.Style="0" Frame.Typ="15" Frame.Width="0,5" ParentFont="False" Text="[Servicos.&#34;Discriminacao&#34;]"/>
+      <TfrxMemoView Name="Memo13" Left="0" Top="0" Width="718,1107" Height="222,99227" DataSetName="Servicos" DisplayFormat.DecimalSeparator="," Font.Charset="1" Font.Color="-16777208" Font.Height="-9" Font.Name="Lucida Console" Font.Style="0" Frame.Typ="15" Frame.Width="0,5" ParentFont="False" Text="[Servicos.&#34;Discriminacao&#34;]"/>
       <TfrxMemoView Name="Memo22" Left="3,77953" Top="200,31509" Width="710,55164" Height="22,67718" DataField="Mensagem0" DataSetName="Parametros" DisplayFormat.DecimalSeparator="," Font.Charset="1" Font.Color="-16777208" Font.Height="-19" Font.Name="Arial" Font.Style="1" HAlign="haCenter" ParentFont="False" VAlign="vaCenter" Text="[Parametros.&#34;Mensagem0&#34;]"/>
       <TfrxSubreport Name="Subreport1" Left="0" Top="18,89765" Width="672,75634" Height="136,06308" Visible="False" Page="Page2" PrintOnParent="True"/>
     </TfrxMasterData>
@@ -181,7 +181,7 @@
       <TfrxMemoView Name="Memo94" Left="456,32313" Top="192,75603" Width="22,67718" Height="15,11812" DataSetName="Prestador" Font.Charset="1" Font.Color="-16777208" Font.Height="-11" Font.Name="Times New Roman" Font.Style="1" Frame.Width="0,5" ParentFont="False" VAlign="vaCenter" Text="[Tomador.&#34;UF&#34;]"/>
     </TfrxChild>
     <TfrxHeader Name="Header2" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="22,67718" Left="0" Top="449,76407" Width="718,1107">
-      <TfrxMemoView Name="Memo10" Align="baClient" Left="0" Top="0" Width="718,1107" Height="22,67718" Font.Charset="1" Font.Color="-16777208" Font.Height="-13" Font.Name="Times New Roman" Font.Style="1" Frame.Typ="15" Frame.Width="0,5" Fill.BackColor="16777215" HAlign="haCenter" ParentFont="False" Text="DISCRIMINAÇÃO DOS SERVIÇOS"/>
+      <TfrxMemoView Name="Memo10" Left="0" Top="0" Width="718,1107" Height="22,67718" Font.Charset="1" Font.Color="-16777208" Font.Height="-13" Font.Name="Times New Roman" Font.Style="1" Frame.Typ="15" Frame.Width="0,5" Fill.BackColor="16777215" HAlign="haCenter" ParentFont="False" Text="DISCRIMINAÇÃO DOS SERVIÇOS"/>
     </TfrxHeader>
   </TfrxReportPage>
   <TfrxReportPage Name="Page2" PaperWidth="210" PaperHeight="350" PaperSize="256" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" EndlessHeight="True" EndlessWidth="True" LargeDesignHeight="True" HGuides.Text="" VGuides.Text="">

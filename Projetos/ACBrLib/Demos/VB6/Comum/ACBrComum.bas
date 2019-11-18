@@ -2,28 +2,33 @@ Attribute VB_Name = "ACBrComum"
 Option Explicit
 
 Public Const SESSAO_PRINCIPAL         As String = "Principal"
-Public Const SESSAO_VERSAO            As String = "Versao"
-Public Const SESSAO_SISTEMA           As String = "Sistema"
-Public Const SESSAO_PROXY             As String = "Proxy"
-Public Const SESSAO_EMAIL             As String = "Email"
-Public Const SESSAO_SOFTWAREHOUSE     As String = "SoftwareHouse"
-Public Const SESSAO_EMISSOR           As String = "Emissor"
-Public Const SESSAO_POSPRINTER        As String = "PosPrinter"
-Public Const SESSAO_POSPRINTER_BARRAS As String = "PosPrinter_Barras"
-Public Const SESSAO_POSPRINTER_QRCODE As String = "PosPrinter_QRCode"
-Public Const SESSAO_POSPRINTER_LOGO   As String = "PosPrinter_Logo"
-Public Const SESSAO_POSPRINTER_GAVETA As String = "PosPrinter_Gaveta"
-Public Const SESSAO_ETQ               As String = "ETQ"
-Public Const SESSAO_SAT               As String = "SAT"
-Public Const SESSAO_SATCONFIG         As String = "SATConfig"
-Public Const SESSAO_SATCONFIGARQUIVOS As String = "SATConfigArquivos"
-Public Const SESSAO_SATREDE           As String = "SATRede"
-Public Const SESSAO_EXTRATO           As String = "Extrato"
-Public Const SESSAO_DFE               As String = "DFe"
-Public Const SESSAO_NFE               As String = "NFe"
-Public Const SESSAO_DANFE             As String = "DANFE"
-Public Const SESSAO_DANFENFe          As String = "DANFENFe"
-Public Const SESSAO_DANFENFCe         As String = "DANFENFCe"
+Public Const SESSAO_VERSAO                    As String = "Versao"
+Public Const SESSAO_SISTEMA                   As String = "Sistema"
+Public Const SESSAO_PROXY                     As String = "Proxy"
+Public Const SESSAO_EMAIL                     As String = "Email"
+Public Const SESSAO_SOFTWAREHOUSE             As String = "SoftwareHouse"
+Public Const SESSAO_EMISSOR                   As String = "Emissor"
+Public Const SESSAO_POSPRINTER                As String = "PosPrinter"
+Public Const SESSAO_POSPRINTER_BARRAS         As String = "PosPrinter_Barras"
+Public Const SESSAO_POSPRINTER_QRCODE         As String = "PosPrinter_QRCode"
+Public Const SESSAO_POSPRINTER_LOGO           As String = "PosPrinter_Logo"
+Public Const SESSAO_POSPRINTER_GAVETA         As String = "PosPrinter_Gaveta"
+Public Const SESSAO_ETQ                       As String = "ETQ"
+Public Const SESSAO_SAT                       As String = "SAT"
+Public Const SESSAO_SATCONFIG                 As String = "SATConfig"
+Public Const SESSAO_SATCONFIGARQUIVOS         As String = "SATConfigArquivos"
+Public Const SESSAO_SATREDE                   As String = "SATRede"
+Public Const SESSAO_EXTRATO                   As String = "Extrato"
+Public Const SESSAO_DFE                       As String = "DFe"
+Public Const SESSAO_NFE                       As String = "NFe"
+Public Const SESSAO_DANFE                     As String = "DANFE"
+Public Const SESSAO_DANFENFe                  As String = "DANFENFe"
+Public Const SESSAO_DANFENFCe                 As String = "DANFENFCe"
+Public Const SESSAO_BOLETOCONFIG              As String = "BoletoConfig"
+Public Const SESSAO_BOLETOCEDENTECONFIG       As String = "BoletoCedenteConfig"
+Public Const SESSAO_BOLETOBANCOCONFIG         As String = "BoletoBancoConfig"
+Public Const SESSAO_BOLETODIRETORIOCONFIG     As String = "BoletoDiretorioConfig"
+Public Const SESSAO_BOLETOBANCOFCFORTESCONFIG As String = "BoletoBancoFCFortesConfig"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -372,6 +377,76 @@ Public Enum VersaoDFe
     ve300 = 1
     ve310 = 2
     ve400 = 3
+End Enum
+
+Public Enum BancoBoleto
+    cobNenhum = 0
+    cobBancoDoBrasil = 1
+    cobSantander = 2
+    cobCaixaEconomica = 3
+    cobCaixaSicob = 4
+    cobBradesco = 5
+    cobItau = 6
+    cobBancoMercantil = 7
+    cobSicred = 8
+    cobBancoob = 9
+    cobBanrisul = 10
+    cobBanestes = 11
+    cobHSBC = 12
+    cobBancoDoNordeste = 13
+    cobBRB = 14
+    cobBicBanco = 15
+    cobBradescoSICOOB = 16
+    cobBancoSafra = 17
+    cobSafraBradesco = 18
+    cobBancoCECRED = 19
+    cobBancoDaAmazonia = 20
+    cobBancoDoBrasilSICOOB = 21
+    cobUniprime = 22
+    cobUnicredRS = 23
+    cobBanese = 24
+    cobCrediSIS = 25
+    cobUnicredES = 26
+    cobBancoCresolSCRS = 27
+    cobCitiBank = 28
+End Enum
+
+Public Enum CNABBoleto
+    CNAB240 = 0
+    CNAB400 = 1
+End Enum
+
+Public Enum ModeloBoleto
+    lPadrao = 0
+    lCarne = 1
+    llFatura = 2
+    lPadraoEntrega = 3
+    lReciboTopo = 4
+    lPadraoEntrega2 = 5
+    lFaturaDetal = 6
+End Enum
+
+Public Enum RespEmissaoBoleto
+    tbCliEmite = 0
+    tbBancoEmite = 1
+    tbBancoReemite = 2
+    tbBancoNaoReemite = 3
+End Enum
+
+Public Enum TipoCarteiraBoleto
+    tctSimples = 0
+    tctRegistrada = 1
+    tctEletronica = 2
+End Enum
+
+Public Enum TipoDocumento
+    Tradicional = 0
+    Escritural = 1
+End Enum
+
+Public Enum TipoInscricao
+    pFisica = 0
+    pJuridica = 1
 End Enum
 
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean

@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibPosPrinter Demo VB6"
@@ -410,6 +410,7 @@ Begin VB.Form FrmMain
          NumTabs         =   1
          BeginProperty Tab1 {0713F341-850A-101B-AFC0-4210102A8DA7} 
             Caption         =   "Texto a Imprimir"
+            Key             =   ""
             Object.Tag             =   ""
             ImageVarType    =   2
          EndProperty
@@ -554,15 +555,16 @@ End Sub
 
 Private Sub Form_Load()
 
-    ComModelo.AddItem "Texto", ACBrPosPrinterModelo.Texto
-    ComModelo.AddItem "EscPosEpson", ACBrPosPrinterModelo.EscPosEpson
-    ComModelo.AddItem "EscBematech", ACBrPosPrinterModelo.EscBematech
-    ComModelo.AddItem "EscDaruma", ACBrPosPrinterModelo.EscDaruma
-    ComModelo.AddItem "EscVox", ACBrPosPrinterModelo.EscVox
-    ComModelo.AddItem "EscDiebold", ACBrPosPrinterModelo.EscDiebold
-    ComModelo.AddItem "EscEpsonP2", ACBrPosPrinterModelo.EscEpsonP2
-    ComModelo.AddItem "CustomPos", ACBrPosPrinterModelo.CustomPos
-    ComModelo.AddItem "EscPosStar", ACBrPosPrinterModelo.EscPosStar
+    ComModelo.AddItem "ppTexto", ACBrPosPrinterModelo.ppTexto
+    ComModelo.AddItem "ppEscPosEpson", ACBrPosPrinterModelo.ppEscPosEpson
+    ComModelo.AddItem "ppEscBematech", ACBrPosPrinterModelo.ppEscBematech
+    ComModelo.AddItem "ppEscDaruma", ACBrPosPrinterModelo.ppEscDaruma
+    ComModelo.AddItem "ppEscVox", ACBrPosPrinterModelo.ppEscVox
+    ComModelo.AddItem "ppEscDiebold", ACBrPosPrinterModelo.ppEscDiebold
+    ComModelo.AddItem "ppEscEpsonP2", ACBrPosPrinterModelo.ppEscEpsonP2
+    ComModelo.AddItem "ppCustomPos", ACBrPosPrinterModelo.ppCustomPos
+    ComModelo.AddItem "ppEscZJiang", ACBrPosPrinterModelo.ppEscZJiang
+    ComModelo.AddItem "ppEscGPrinter", ACBrPosPrinterModelo.ppEscGPrinter
     
     ComModelo.ListIndex = ACBrPosPrinterModelo.Texto
     
@@ -578,7 +580,7 @@ Private Sub Form_Load()
     ComPorta.AddItem "TCP:192.168.0.31:9100"
     ComPorta.AddItem "RAW:Elgin I9"
     
-    ComCodePage.AddItem "None", PosPaginaCodigo.None
+    ComCodePage.AddItem "None", PosPaginaCodigo.pcNone
     ComCodePage.AddItem "pc437", PosPaginaCodigo.pc437
     ComCodePage.AddItem "pc850", PosPaginaCodigo.pc850
     ComCodePage.AddItem "pc852", PosPaginaCodigo.pc852

@@ -106,6 +106,8 @@
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnConsultaChave = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
+            this.cmbVersao = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tbpWebservices.SuspendLayout();
@@ -136,6 +138,8 @@
             // 
             // tbpConfiguracoes
             // 
+            this.tbpConfiguracoes.Controls.Add(this.cmbVersao);
+            this.tbpConfiguracoes.Controls.Add(this.label11);
             this.tbpConfiguracoes.Controls.Add(this.cmbModeloDocumento);
             this.tbpConfiguracoes.Controls.Add(this.label17);
             this.tbpConfiguracoes.Controls.Add(this.label10);
@@ -153,7 +157,7 @@
             // 
             this.cmbModeloDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbModeloDocumento.FormattingEnabled = true;
-            this.cmbModeloDocumento.Location = new System.Drawing.Point(6, 27);
+            this.cmbModeloDocumento.Location = new System.Drawing.Point(8, 63);
             this.cmbModeloDocumento.Name = "cmbModeloDocumento";
             this.cmbModeloDocumento.Size = new System.Drawing.Size(129, 21);
             this.cmbModeloDocumento.TabIndex = 23;
@@ -162,7 +166,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(4, 11);
+            this.label17.Location = new System.Drawing.Point(6, 47);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(153, 13);
             this.label17.TabIndex = 22;
@@ -172,7 +176,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 51);
+            this.label10.Location = new System.Drawing.Point(6, 87);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(118, 13);
             this.label10.TabIndex = 14;
@@ -180,14 +184,14 @@
             // 
             // txtSchemaPath
             // 
-            this.txtSchemaPath.Location = new System.Drawing.Point(6, 67);
+            this.txtSchemaPath.Location = new System.Drawing.Point(6, 103);
             this.txtSchemaPath.Name = "txtSchemaPath";
             this.txtSchemaPath.Size = new System.Drawing.Size(223, 20);
             this.txtSchemaPath.TabIndex = 13;
             // 
             // btnSelectSchema
             // 
-            this.btnSelectSchema.Location = new System.Drawing.Point(228, 66);
+            this.btnSelectSchema.Location = new System.Drawing.Point(228, 102);
             this.btnSelectSchema.Name = "btnSelectSchema";
             this.btnSelectSchema.Size = new System.Drawing.Size(27, 22);
             this.btnSelectSchema.TabIndex = 15;
@@ -983,6 +987,25 @@
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
+            // cmbVersao
+            // 
+            this.cmbVersao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVersao.FormattingEnabled = true;
+            this.cmbVersao.Location = new System.Drawing.Point(8, 23);
+            this.cmbVersao.Name = "cmbVersao";
+            this.cmbVersao.Size = new System.Drawing.Size(129, 21);
+            this.cmbVersao.TabIndex = 25;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 7);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(46, 13);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Versão";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1105,6 +1128,8 @@
         private System.Windows.Forms.Button btnEnviarEmail;
         private System.Windows.Forms.Button btnConsultaChave;
         private System.Windows.Forms.Button btnSalvar;
+        private System.Windows.Forms.ComboBox cmbVersao;
+        private System.Windows.Forms.Label label11;
     }
 }
 

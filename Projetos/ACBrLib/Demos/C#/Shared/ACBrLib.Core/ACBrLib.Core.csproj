@@ -60,6 +60,7 @@
     <Compile Include="Mail\MailAttachmentDisposition.cs" />
     <Compile Include="Mail\MessPriority.cs" />
     <Compile Include="Mail\MimeChar.cs" />
+    <Compile Include="MDFe\VersaoMDFe.cs" />
     <Compile Include="NFe\ModeloDF.cs" />
     <Compile Include="NFe\VersaoDFe.cs" />
     <Compile Include="NivelLog.cs" />

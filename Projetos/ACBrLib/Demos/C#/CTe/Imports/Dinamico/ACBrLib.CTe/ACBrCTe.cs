@@ -75,6 +75,9 @@ namespace ACBrLib.CTe
             public delegate int CTE_Consultar(string eChaveOuCTe, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_ConsultaCadastro(string cUF, string nDocumento, bool nIE, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
                 int serie, int numeroInicial, int numeroFinal, StringBuilder buffer, ref int bufferSize);
 
@@ -338,6 +341,19 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string ConsultaCadastro(string cUF, string nDocumento, bool nIE)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.CTE_ConsultaCadastro>();
+            var ret = ExecuteMethod(() => method(ToUTF8(cUF), ToUTF8(nDocumento), nIE, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public string Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
             int serie, int numeroInicial, int numeroFinal)
         {
@@ -536,6 +552,7 @@ namespace ACBrLib.CTe
             AddMethod<Delegates.CTE_VerificarAssinatura>("CTE_VerificarAssinatura");
             AddMethod<Delegates.CTE_StatusServico>("CTE_StatusServico");
             AddMethod<Delegates.CTE_Consultar>("CTE_Consultar");
+            AddMethod<Delegates.CTE_ConsultaCadastro>("CTE_ConsultaCadastro");
             AddMethod<Delegates.CTE_Inutilizar>("CTE_Inutilizar");
             AddMethod<Delegates.CTE_Enviar>("CTE_Enviar");
             AddMethod<Delegates.CTE_ConsultarRecibo>("CTE_ConsultarRecibo");

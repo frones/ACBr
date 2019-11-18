@@ -33,6 +33,7 @@ namespace ACBrLib.CTe.Demo
 
         private void FrmMain_Shown(object sender, EventArgs e)
         {
+            cmbVersao.EnumDataSource(VersaoCTe.ve300);
             cmbModeloDocumento.EnumDataSource(ModeloCTe.moCTe);
             cmbCrypt.EnumDataSource(SSLCryptLib.cryWinCrypt);
             cmbHttp.EnumDataSource(SSLHttpLib.httpWinHttp);
@@ -60,6 +61,7 @@ namespace ACBrLib.CTe.Demo
 
         private void SalvarConfig()
         {
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "VersaoDF", cmbVersao.GetSelectedValue<VersaoCTe>());
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "ModeloDF", cmbModeloDocumento.GetSelectedValue<ModeloCTe>());
             ACBrCTe.ConfigGravarValor(ACBrSessao.DFe, "SSLCryptLib", cmbCrypt.GetSelectedValue<SSLCryptLib>());
             ACBrCTe.ConfigGravarValor(ACBrSessao.DFe, "SSLHttpLib", cmbHttp.GetSelectedValue<SSLHttpLib>());
@@ -92,6 +94,7 @@ namespace ACBrLib.CTe.Demo
         {
             ACBrCTe.ConfigLer();
 
+            cmbVersao.SetSelectedValue(ACBrCTe.ConfigLerValor<VersaoCTe>(ACBrSessao.CTe, "VersaoDF"));
             cmbModeloDocumento.SetSelectedValue(ACBrCTe.ConfigLerValor<ModeloCTe>(ACBrSessao.CTe, "ModeloDF"));
             cmbCrypt.SetSelectedValue(ACBrCTe.ConfigLerValor<SSLCryptLib>(ACBrSessao.DFe, "SSLCryptLib"));
             cmbHttp.SetSelectedValue(ACBrCTe.ConfigLerValor<SSLHttpLib>(ACBrSessao.DFe, "SSLHttpLib"));
@@ -303,7 +306,7 @@ namespace ACBrLib.CTe.Demo
             try
             {
                 var ano = 1;
-                var modelo = 55;
+                var modelo = 57;
                 var serie = 1;
                 var numeroInicial = 1;
                 var numeroFinal = 1;

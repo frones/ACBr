@@ -382,18 +382,18 @@ namespace ACBrLib.Core
         {
             if (ret >= 0) return;
 
-            var ultimoRetorno = GetUltimoRetorno();
+            var message = GetUltimoRetorno();
 
             switch (ret)
             {
                 case -6:
-                    throw new DirectoryNotFoundException(ultimoRetorno);
+                    throw new DirectoryNotFoundException(message);
 
                 case -5:
-                    throw new FileNotFoundException(ultimoRetorno);
+                    throw new FileNotFoundException(message);
 
                 default:
-                    throw new ApplicationException(ultimoRetorno);
+                    throw new ApplicationException(message);
             }
         }
 

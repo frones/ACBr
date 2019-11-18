@@ -86,6 +86,9 @@ namespace ACBrLib.NFe
             public delegate int NFE_Consultar(string eChaveOuNFe, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ConsultaCadastro(string cUF, string nDocumento, bool nIE, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
                 int serie, int numeroInicial, int numeroFinal, StringBuilder buffer, ref int bufferSize);
 
@@ -386,6 +389,19 @@ namespace ACBrLib.NFe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string ConsultaCadastro(string cUF, string nDocumento, bool nIE)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_ConsultaCadastro>();
+            var ret = ExecuteMethod(() => method(ToUTF8(cUF), ToUTF8(nDocumento), nIE, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public string Inutilizar(string acnpj, string aJustificativa, int ano, int modelo,
             int serie, int numeroInicial, int numeroFinal)
         {
@@ -599,6 +615,7 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_GerarChave>("NFE_GerarChave");
             AddMethod<Delegates.NFE_StatusServico>("NFE_StatusServico");
             AddMethod<Delegates.NFE_Consultar>("NFE_Consultar");
+            AddMethod<Delegates.NFE_ConsultaCadastro>("NFE_ConsultaCadastro");
             AddMethod<Delegates.NFE_Inutilizar>("NFE_Inutilizar");
             AddMethod<Delegates.NFE_Enviar>("NFE_Enviar");
             AddMethod<Delegates.NFE_ConsultarRecibo>("NFE_ConsultarRecibo");

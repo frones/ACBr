@@ -144,6 +144,13 @@ Private Declare Function NFE_ConsultarRecibo _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
+Private Declare Function NFE_ConsultaCadastro _
+                Lib "ACBrNFE32.dll" (ByVal cUF As String, _
+                                     ByVal nDocumento As String, _
+                                     ByVal nIE As Boolen, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
 Private Declare Function NFE_Cancelar _
                 Lib "ACBrNFE32.dll" (ByVal eChave As String, _
                                      ByVal eJustificativa As String, _
@@ -452,6 +459,20 @@ Public Function Consultar(ByVal eChaveOuNFe As String) As String
     CheckResult retorno
     
     Consultar = processResult(buffer, bufferLen)
+End Function
+
+Public Function ConsultaCadastro(ByVal cUF As String, ByVal nDocumento As String, ByVal nIE As Boolean) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_ConsultaCadastro(cUF, nDocumento, nIE, buffer, bufferLen)
+    CheckResult retorno
+    
+    ConsultaCadastro = processResult(buffer, bufferLen)
 End Function
 
 Public Function Inutilizar(ByVal acnpj As String, ByVal aJustificativa As String, ByVal ano As Long, _

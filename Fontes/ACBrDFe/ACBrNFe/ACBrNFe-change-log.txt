@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/11/2019
+-- ACBrNFeWebServices 
+[*] https://www.projetoacbr.com.br/forum/topic/54881-sefaz-ms-nota-ms-premiada/?do=findComment&comment=360858
+   Por: Compusofts
 -- ACBrNFeWebServices --
 [*] Ajustes para a leitura dos campos cMsg, xMsg na consulta logo após o envio.
   Por: Italo Jurisato Junior

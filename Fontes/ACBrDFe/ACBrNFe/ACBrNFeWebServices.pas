@@ -1400,6 +1400,9 @@ begin
           FNotasFiscais.Items[j].NFe.procNFe.digVal   := '';
           FNotasFiscais.Items[j].NFe.procNFe.cStat    := 0;
           FNotasFiscais.Items[j].NFe.procNFe.xMotivo  := '';
+          FNotasFiscais.Items[j].NFe.procNFe.cMsg     := 0;
+          FNotasFiscais.Items[j].NFe.procNFe.xMsg     := '';
+
         end;
       end;
     end;
@@ -1611,6 +1614,8 @@ begin
           NFe.procNFe.digVal := AInfProt.Items[I].digVal;
           NFe.procNFe.cStat := AInfProt.Items[I].cStat;
           NFe.procNFe.xMotivo := AInfProt.Items[I].xMotivo;
+          NFe.ProcNFe.cMsg := AInfProt.Items[I].cMsg;
+          Nfe.ProcNFe.xMsg := AInfProt.Items[I].xMsg;
         end;
 
         // Monta o XML da NF-e assinado e com o protocolo de Autorização ou Denegação

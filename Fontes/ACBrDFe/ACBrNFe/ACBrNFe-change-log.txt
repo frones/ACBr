@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/11/2019
+-- ACBrNFeWebServices --
+[+] Implementado a leitura dos campos cMsg, xMsg na consulta.
+  Por: André Moraes
 -- Diversos --
 [+] Implementado a impressão do conteúdo da tag xMsg nos DANFE da NF-e e NFC-e
     feitos em Fortes Report e EscPos.

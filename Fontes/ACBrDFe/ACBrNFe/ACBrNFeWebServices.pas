@@ -1196,6 +1196,8 @@ begin
             NFe.procNFe.nProt := FNFeRetornoSincrono.ProtNFe.nProt;
             NFe.procNFe.digVal := FNFeRetornoSincrono.protNFe.digVal;
             NFe.procNFe.xMotivo := FNFeRetornoSincrono.protNFe.xMotivo;
+            NFe.procNFe.cMsg := FNFeRetornoSincrono.protNFe.cMsg;
+            NFe.procNFe.xMsg := FNFeRetornoSincrono.protNFe.xMsg;
 
             AProcNFe := TProcNFe.Create;
             try

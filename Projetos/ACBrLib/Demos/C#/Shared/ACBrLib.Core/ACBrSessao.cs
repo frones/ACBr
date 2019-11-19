@@ -26,7 +26,7 @@
         DFe,
         NFe,
         DANFE,
-        DANFECe,
+        DANFENFCe,
         CTe,
         DACTe,
         MDFe,

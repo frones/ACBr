@@ -449,11 +449,13 @@ begin
   if Site <> '' then
     FPosPrinter.Buffer.Add('</ce><c>' + Site);
 
+  FPosPrinter.Buffer.Add('</pular_linhas>');
+
   // pular linhas e cortar o papel
   if FPosPrinter.CortaPapel then
     FPosPrinter.Buffer.Add('</corte_total>')
   else
-    FPosPrinter.Buffer.Add('</pular_linhas>')
+    FPosPrinter.Buffer.Add('</pular_linhas>');
 end;
 
 procedure TACBrBPeDABPeESCPOS.MontarEnviarDABPe(BPe: TBPe;

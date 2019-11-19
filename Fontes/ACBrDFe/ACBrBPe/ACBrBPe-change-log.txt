@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2019
+-- ACBrBPeDABPeESCPOS --
+[*] Incluido o comando para avançar linhas após as mensagens do rodapé.
+   Por: Italo Jurisato Junior
+
 08/11/2019
 -- ACBrBPeBilhetes --
 [+] Implementado o método ImprimirOffline, esse método imprime automaticamente a

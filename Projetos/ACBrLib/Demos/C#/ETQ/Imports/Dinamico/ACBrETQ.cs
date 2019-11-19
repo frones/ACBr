@@ -92,7 +92,7 @@ namespace ACBrLib.ETQ
         #region Constructors
 
         public ACBrETQ(string eArqConfig = "", string eChaveCrypt = "") :
-            base(Environment.Is64BitProcess ? "ACBrETQ32.dll" : "ACBrETQ64.dll")
+            base(Environment.Is64BitProcess ? "ACBrETQ64.dll" : "ACBrETQ32.dll")
         {
             var inicializar = GetMethod<Delegates.ETQ_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
@@ -101,8 +101,8 @@ namespace ACBrLib.ETQ
         }
 
         #endregion Constructors
-		
-		#region Properties
+
+        #region Properties
 
         public string Nome
         {

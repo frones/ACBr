@@ -29,7 +29,7 @@
 {       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170         }
 {                                                                              }
 {******************************************************************************}
-unit ConfiguraSerial;
+unit Frm_ConfiguraSerial;
 
 interface
 
@@ -42,7 +42,7 @@ type
 
   { TfrConfiguraSerial }
 
-  TfrConfiguraSerial = class(TForm)
+  TfrmConfiguraSerial = class(TForm)
     Label5: TLabel;
     cmbBaudRate: TComboBox;
     Label6: TLabel;
@@ -72,14 +72,14 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
-    procedure VerificaFlow ;
+    procedure VerificaFlow;
   public
     { Public declarations }
-    Device : TACBrDevice ;
+    Device : TACBrDevice;
   end;
 
 var
-  frConfiguraSerial: TfrConfiguraSerial;
+  frmConfiguraSerial: TfrmConfiguraSerial;
 
 implementation
 
@@ -87,75 +87,75 @@ implementation
 
 { TfrConfiguraSerial }
 
-procedure TfrConfiguraSerial.FormCreate(Sender: TObject);
+procedure TfrmConfiguraSerial.FormCreate(Sender: TObject);
 begin
   Device := TACBrDevice.Create(self);
 end;
 
-procedure TfrConfiguraSerial.FormDestroy(Sender: TObject);
+procedure TfrmConfiguraSerial.FormDestroy(Sender: TObject);
 begin
-  Device.Free ;
+  Device.Free;
 end;
 
-procedure TfrConfiguraSerial.FormShow(Sender: TObject);
+procedure TfrmConfiguraSerial.FormShow(Sender: TObject);
 begin
-  cmbBaudRate.ItemIndex    := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud )) ;
-  cmbDataBits.ItemIndex    := cmbDataBits.Items.IndexOf(IntToStr( Device.Data )) ;
-  cmbParity.ItemIndex      := Integer( Device.Parity ) ;
-  cmbStopBits.ItemIndex    := Integer( Device.Stop ) ;
-  chHardFlow.Checked       := Device.HardFlow ;
-  chSoftFlow.Checked       := Device.SoftFlow ;
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
+  cmbBaudRate.ItemIndex    := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud ));
+  cmbDataBits.ItemIndex    := cmbDataBits.Items.IndexOf(IntToStr( Device.Data ));
+  cmbParity.ItemIndex      := Integer( Device.Parity );
+  cmbStopBits.ItemIndex    := Integer( Device.Stop );
+  chHardFlow.Checked       := Device.HardFlow;
+  chSoftFlow.Checked       := Device.SoftFlow;
+  cmbHandShaking.ItemIndex := Integer( Device.HandShake );
 end;
 
-procedure TfrConfiguraSerial.cmbPortaSerialChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbPortaSerialChange(Sender: TObject);
 begin
-  Device.Porta := cmbPortaSerial.Text ;
+  Device.Porta := cmbPortaSerial.Text;
 end;
 
-procedure TfrConfiguraSerial.cmbBaudRateChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbBaudRateChange(Sender: TObject);
 begin
-  Device.Baud := StrToInt(cmbBaudRate.Text) ;
+  Device.Baud := StrToInt(cmbBaudRate.Text);
 end;
 
-procedure TfrConfiguraSerial.cmbDataBitsChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbDataBitsChange(Sender: TObject);
 begin
-  Device.Data := StrToInt(cmbDataBits.Text) ;
+  Device.Data := StrToInt(cmbDataBits.Text);
 end;
 
-procedure TfrConfiguraSerial.cmbParityChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbParityChange(Sender: TObject);
 begin
-  Device.Parity := TACBrSerialParity( cmbParity.ItemIndex ) ;
+  Device.Parity := TACBrSerialParity( cmbParity.ItemIndex );
 end;
 
-procedure TfrConfiguraSerial.cmbStopBitsChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbStopBitsChange(Sender: TObject);
 begin
-  Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex ) ;
+  Device.Stop := TACBrSerialStop( cmbStopBits.ItemIndex );
 end;
 
-procedure TfrConfiguraSerial.cmbHandShakingChange(Sender: TObject);
+procedure TfrmConfiguraSerial.cmbHandShakingChange(Sender: TObject);
 begin
-  Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex ) ;
-  VerificaFlow ;
+  Device.HandShake := TACBrHandShake( cmbHandShaking.ItemIndex );
+  VerificaFlow;
 end;
 
-procedure TfrConfiguraSerial.chHardFlowClick(Sender: TObject);
+procedure TfrmConfiguraSerial.chHardFlowClick(Sender: TObject);
 begin
-  Device.HardFlow := chHardFlow.Checked ;
-  VerificaFlow ;
+  Device.HardFlow := chHardFlow.Checked;
+  VerificaFlow;
 end;
 
-procedure TfrConfiguraSerial.chSoftFlowClick(Sender: TObject);
+procedure TfrmConfiguraSerial.chSoftFlowClick(Sender: TObject);
 begin
-  Device.SoftFlow := chSoftFlow.Checked ;
-  VerificaFlow ;
+  Device.SoftFlow := chSoftFlow.Checked;
+  VerificaFlow;
 end;
 
-procedure TfrConfiguraSerial.VerificaFlow;
+procedure TfrmConfiguraSerial.VerificaFlow;
 begin
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
-  chHardFlow.Checked := Device.HardFlow ;
-  chSoftFlow.Checked := Device.SoftFlow ;
+  cmbHandShaking.ItemIndex := Integer( Device.HandShake );
+  chHardFlow.Checked := Device.HardFlow;
+  chSoftFlow.Checked := Device.SoftFlow;
 end;
 
 end.

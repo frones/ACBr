@@ -1,4 +1,4 @@
-object frConfiguraSerial: TfrConfiguraSerial
+object frmConfiguraSerial: TfrmConfiguraSerial
   Left = 322
   Top = 155
   ActiveControl = cmbPortaSerial

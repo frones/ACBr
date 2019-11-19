@@ -111,6 +111,8 @@ type
     FcStat: Integer;
     FxMotivo: String;
     FXMLprotDFe: String;
+    FcMsg : Integer;
+    FxMsg : String;
   public
     property Id: String              read FId         write FId;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
@@ -122,6 +124,8 @@ type
     property cStat: Integer          read FcStat      write FcStat;
     property xMotivo: String         read FxMotivo    write FxMotivo;
     property XMLprotDFe: String      read FXMLprotDFe write FXMLprotDFe;
+    property cMSg: Integer           read FcMsg       write FcMsg;
+    property xMsg: String            read FxMsg       write FxMsg;
   end;
 
 implementation
@@ -204,6 +208,8 @@ begin
           ProtDFe[i].FdigVal   := Leitor.rCampo(tcStr, 'digVal');
           ProtDFe[i].FcStat    := Leitor.rCampo(tcInt, 'cStat');
           ProtDFe[i].FxMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+          ProtDFe[i].FcMsg     := Leitor.rCampo(tcInt, 'cMsg');
+          ProtDFe[i].FxMsg     := Leitor.rCampo(tcStr, 'xMsg');
         end;
         inc(i);
       end;

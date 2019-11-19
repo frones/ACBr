@@ -1,7 +1,7 @@
 Attribute VB_Name = "ACBrComum"
 Option Explicit
 
-Public Const SESSAO_PRINCIPAL         As String = "Principal"
+Public Const SESSAO_PRINCIPAL                 As String = "Principal"
 Public Const SESSAO_VERSAO                    As String = "Versao"
 Public Const SESSAO_SISTEMA                   As String = "Sistema"
 Public Const SESSAO_PROXY                     As String = "Proxy"
@@ -24,6 +24,10 @@ Public Const SESSAO_NFE                       As String = "NFe"
 Public Const SESSAO_DANFE                     As String = "DANFE"
 Public Const SESSAO_DANFENFe                  As String = "DANFENFe"
 Public Const SESSAO_DANFENFCe                 As String = "DANFENFCe"
+Public Const SESSAO_CTe                       As String = "CTe"
+Public Const SESSAO_DACTe                     As String = "DACTe"
+Public Const SESSAO_MDFe                      As String = "MDFe"
+Public Const SESSAO_DAMDFe                    As String = "DAMDFe"
 Public Const SESSAO_BOLETOCONFIG              As String = "BoletoConfig"
 Public Const SESSAO_BOLETOCEDENTECONFIG       As String = "BoletoCedenteConfig"
 Public Const SESSAO_BOLETOBANCOCONFIG         As String = "BoletoBancoConfig"
@@ -367,16 +371,31 @@ Public Enum SATModelo
     mfe_Integrador_XML = 3
 End Enum
 
-Public Enum ModeloDF
+Public Enum ModeloNFe
     moNFe = 0
     moNFCe = 1
 End Enum
 
-Public Enum VersaoDFe
+Public Enum VersaoNFe
     ve200 = 0
     ve300 = 1
     ve310 = 2
     ve400 = 3
+End Enum
+
+Public Enum ModeloCTe
+    moCTe = 0
+    moCTeOS = 1
+End Enum
+
+Public Enum VersaoCTe
+    ve200 = 0
+    ve300 = 1
+End Enum
+
+Public Enum VersaoMDFe
+    ve100 = 0
+    ve300 = 1
 End Enum
 
 Public Enum BancoBoleto

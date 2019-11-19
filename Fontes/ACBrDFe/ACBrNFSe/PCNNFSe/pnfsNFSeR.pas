@@ -1934,7 +1934,9 @@ begin
     end;
   end; // fim ValoresNfse
 
-  if (Leitor.rExtrai(3, 'PrestadorServico') <> '') or (Leitor.rExtrai(3, 'DadosPrestador') <> '') then
+  if (Leitor.rExtrai(3, 'PrestadorServico') <> '') or
+     (Leitor.rExtrai(3, 'DadosPrestador') <> '') or
+     (Leitor.rExtrai(3, 'Prestador') <> '') then
   begin
     NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
     NFSe.PrestadorServico.NomeFantasia := Leitor.rCampo(tcStr, 'NomeFantasia');
@@ -2027,7 +2029,8 @@ begin
 
   end; // fim EnderecoPrestadorServico
 
-  if Leitor.rExtrai(3, 'ContatoPrestadorServico') <> '' then
+  if (Leitor.rExtrai(3, 'ContatoPrestadorServico') <> '') or
+     (Leitor.rExtrai(3, 'Contato') <> '') then
   begin
     NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'Telefone');
     NFSe.PrestadorServico.Contato.Email    := Leitor.rCampo(tcStr, 'Email');

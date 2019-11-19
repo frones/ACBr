@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/54163-envio-de-nota-para-blumenau-usando-o-novo-webservice/?do=findComment&comment=360700
+   Por: Ernesto Ricardo
+
 18/11/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/54874-loadfromfile-carrega-somente-1-servi%C3%A7o/?do=findComment&comment=360557

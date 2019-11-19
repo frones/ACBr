@@ -173,11 +173,10 @@ type
     btnValidarAssinatura: TButton;
     btnCancelarXML: TButton;
     btnCancelarChave: TButton;
-    btnCartadeCorrecao: TButton;
+    btnNaoEmbarque: TButton;
     btnImprimirEvento: TButton;
     btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
-    btnManifDestConfirmacao: TButton;
     btnDistribuicaoDFe: TButton;
     pgRespostas: TPageControl;
     TabSheet5: TTabSheet;
@@ -217,6 +216,7 @@ type
     Label32: TLabel;
     cbVersaoDF: TComboBox;
     btnStatusServ: TButton;
+    btnAlteracaoPoltrona: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathBPeClick(Sender: TObject);
@@ -263,14 +263,14 @@ type
     procedure btnConsultarChaveClick(Sender: TObject);
     procedure btnCancelarXMLClick(Sender: TObject);
     procedure btnCancelarChaveClick(Sender: TObject);
-    procedure btnCartadeCorrecaoClick(Sender: TObject);
     procedure btnImprimirEventoClick(Sender: TObject);
     procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnDistribuicaoDFeClick(Sender: TObject);
-    procedure btnManifDestConfirmacaoClick(Sender: TObject);
     procedure ACBrBPe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
+    procedure btnNaoEmbarqueClick(Sender: TObject);
+    procedure btnAlteracaoPoltronaClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -659,11 +659,67 @@ begin
   end;
 end;
 
+procedure TfrmACBrBPe.btnAlteracaoPoltronaClick(Sender: TObject);
+var
+  Chave, idLote, CNPJ, Protocolo, NumPoltrona: string;
+begin
+  if not(InputQuery('WebServices Eventos: Alteração de Poltrona', 'Chave da BP-e', Chave)) then
+     exit;
+  Chave := Trim(OnlyNumber(Chave));
+  idLote := '1';
+  if not(InputQuery('WebServices Eventos: Alteração de Poltrona', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+     exit;
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery('WebServices Eventos: Alteração de Poltrona', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+  Protocolo:='';
+  if not(InputQuery('WebServices Eventos: Alteração de Poltrona', 'Protocolo de Autorização', Protocolo)) then
+     exit;
+  NumPoltrona := '1';
+  if not(InputQuery('WebServices Eventos: Alteração de Poltrona', 'Número da Poltrona', NumPoltrona)) then
+     exit;
+
+  NumPoltrona := OnlyNumber(NumPoltrona);
+
+  if Trim(NumPoltrona) = '' then
+  begin
+    MessageDlg('Número da Poltrona inválido.', mtError,[mbok], 0);
+    exit;
+  end;
+
+  ACBrBPe1.EventoBPe.Evento.Clear;
+
+  with ACBrBPe1.EventoBPe.Evento.New do
+  begin
+    infevento.chBPe := Chave;
+    infevento.CNPJ   := CNPJ;
+    infEvento.dhEvento := now;
+    infEvento.tpEvento := teAlteracaoPoltrona;
+    infEvento.detEvento.poltrona := StrToInt(NumPoltrona);
+    infEvento.detEvento.nProt := Protocolo;
+  end;
+
+  ACBrBPe1.EnviarEvento(StrToInt(idLote));
+
+  MemoResp.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetWS;
+  memoRespWS.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetornoWS;
+  LoadXML(ACBrBPe1.WebServices.EnvEvento.RetornoWS, WBResposta);
+  (*
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.TpAmb
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.verAplic
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.cStat
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.xMotivo
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento.chBPe
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt
+  *)
+end;
+
 procedure TfrmACBrBPe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
-  if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da NF-e', Chave)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da BP-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
@@ -780,7 +836,7 @@ begin
       Emit.EnderEmit.UF      := edtEmitUF.Text;
 
       Emit.IEST              := '';
-      Emit.IM                := ''; // Preencher no caso de existir serviços na nota
+      Emit.IM                := ''; // Preencher no caso de existir serviços
       Emit.CNAE              := ''; // Verifique na cidade do emissor da BPe se é permitido
                                     // a inclusão de serviços na BPe
       Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
@@ -807,44 +863,6 @@ begin
   end;
 end;
 
-procedure TfrmACBrBPe.btnCartadeCorrecaoClick(Sender: TObject);
-var
-  Chave, idLote, CNPJ, nSeqEvento, Correcao: string;
-begin
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Chave da NF-e', Chave)) then
-     exit;
-  Chave := Trim(OnlyNumber(Chave));
-  idLote := '1';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Identificador de controle do Lote de envio do Evento', idLote)) then
-     exit;
-  CNPJ := copy(Chave,7,14);
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
-     exit;
-  nSeqEvento := '1';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Sequencial do evento para o mesmo tipo de evento', nSeqEvento)) then
-     exit;
-  Correcao := 'Correção a ser considerada, texto livre. A correção mais recente substitui as anteriores.';
-  if not(InputQuery('WebServices Eventos: Carta de Correção', 'Correção a ser considerada', Correcao)) then
-     exit;
-
-  ACBrBPe1.EventoBPe.Evento.Clear;
-
-  with ACBrBPe1.EventoBPe.Evento.New do
-  begin
-    infEvento.chBPe := Chave;
-    infEvento.CNPJ   := CNPJ;
-    infEvento.dhEvento := now;
-    infEvento.tpEvento := teCCe;
-    infEvento.nSeqEvento := StrToInt(nSeqEvento);
-    infEvento.detEvento.xCorrecao := Correcao;
-  end;
-
-  ACBrBPe1.EnviarEvento(StrToInt(idLote));
-
-  MemoResp.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetWS;
-  LoadXML(ACBrBPe1.WebServices.EnvEvento.RetWS, WBResposta);
-end;
-
 procedure TfrmACBrBPe.btnCNPJClick(Sender: TObject);
 begin
   ShowMessage(ACBrBPe1.SSL.CertCNPJ);
@@ -854,7 +872,7 @@ procedure TfrmACBrBPe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
-  if not(InputQuery('WebServices Consultar', 'Chave da NF-e:', vChave)) then
+  if not(InputQuery('WebServices Consultar', 'Chave da BP-e:', vChave)) then
     exit;
 
   ACBrBPe1.Bilhetes.Clear;
@@ -891,7 +909,7 @@ procedure TfrmACBrBPe.btnCriarEnviarClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
@@ -1089,7 +1107,7 @@ begin
     if OpenDialog1.Execute then
       ACBrBPe1.Bilhetes.LoadFromFile(OpenDialog1.FileName);
 
-    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
+    CarregarMaisXML := MessageDlg('Carregar mais Bilhetes?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
 
   ACBrBPe1.Bilhetes.ImprimirPDF;
@@ -1099,7 +1117,7 @@ procedure TfrmACBrBPe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Bilhete', vAux)) then
     exit;
 
   ACBrBPe1.Bilhetes.Clear;
@@ -1243,58 +1261,52 @@ begin
   end;
 end;
 
-procedure TfrmACBrBPe.btnManifDestConfirmacaoClick(Sender: TObject);
+procedure TfrmACBrBPe.btnNaoEmbarqueClick(Sender: TObject);
 var
-  Chave, idLote, CNPJ, lMsg: string;
+  Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
-  Chave:='';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Chave da NF-e', Chave)) then
+  if not(InputQuery('WebServices Eventos: Não Embarque', 'Chave da BP-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'Identificador de controle do Lote de envio do Evento', idLote)) then
+  if not(InputQuery('WebServices Eventos: Não Embarque', 'Identificador de controle do Lote de envio do Evento', idLote)) then
      exit;
-  CNPJ := '';
-  if not(InputQuery('WebServices Eventos: Manif. Destinatario - Conf. Operacao', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+  CNPJ := copy(Chave,7,14);
+  if not(InputQuery('WebServices Eventos: Não Embarque', 'CNPJ ou o CPF do autor do Evento', CNPJ)) then
+     exit;
+  Protocolo:='';
+  if not(InputQuery('WebServices Eventos: Não Embarque', 'Protocolo de Autorização', Protocolo)) then
+     exit;
+  Justificativa := 'Justificativa do Não Embarque';
+  if not(InputQuery('WebServices Eventos: Não Embarque', 'Justificativa do Não Embarque', Justificativa)) then
      exit;
 
   ACBrBPe1.EventoBPe.Evento.Clear;
 
   with ACBrBPe1.EventoBPe.Evento.New do
   begin
-    infEvento.cOrgao   := 91;
-    infEvento.chBPe    := Chave;
-    infEvento.CNPJ     := CNPJ;
+    infevento.chBPe := Chave;
+    infevento.CNPJ   := CNPJ;
     infEvento.dhEvento := now;
-    infEvento.tpEvento := teManifDestConfirmacao;
+    infEvento.tpEvento := teNaoEmbarque;
+    infEvento.detEvento.xJust := Justificativa;
+    infEvento.detEvento.nProt := Protocolo;
   end;
 
-  ACBrBPe1.EnviarEvento(StrToInt(IDLote));
-
-  with AcbrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento do
-  begin
-    lMsg:=
-    'Id: ' + Id + #13 +
-    'tpAmb: ' + TpAmbToStr(tpAmb) + #13 +
-    'verAplic: ' + verAplic + #13 +
-    'cOrgao: ' + IntToStr(cOrgao) + #13 +
-    'cStat: ' + IntToStr(cStat) + #13 +
-    'xMotivo: ' + xMotivo + #13 +
-    'chBPe: ' + chBPe + #13 +
-    'tpEvento: ' + TpEventoToStr(tpEvento) + #13 +
-    'xEvento: ' + xEvento + #13 +
-    'nSeqEvento: ' + IntToStr(nSeqEvento) + #13 +
-    'CNPJDest: ' + CNPJDest + #13 +
-    'emailDest: ' + emailDest + #13 +
-    'dhRegEvento: ' + DateTimeToStr(dhRegEvento) + #13 +
-    'nProt: ' + nProt;
-  end;
-  ShowMessage(lMsg);
+  ACBrBPe1.EnviarEvento(StrToInt(idLote));
 
   MemoResp.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetWS;
   memoRespWS.Lines.Text := ACBrBPe1.WebServices.EnvEvento.RetornoWS;
-
   LoadXML(ACBrBPe1.WebServices.EnvEvento.RetornoWS, WBResposta);
+  (*
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.TpAmb
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.verAplic
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.cStat
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.xMotivo
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfevento.chBPe
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.dhRegEvento
+  ACBrBPe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nProt
+  *)
 end;
 
 procedure TfrmACBrBPe.btnNumSerieClick(Sender: TObject);
@@ -1445,7 +1457,7 @@ begin
       if ACBrBPe1.Bilhetes.Items[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrBPe1.Bilhetes.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal Eletrônica Valida');
+      ShowMessage('Bilhete de Passagem Eletrônico Valido');
     except
       on E: Exception do
       begin

@@ -87,7 +87,7 @@ object frmACBrBPe: TfrmACBrBPe
       Top = 1
       Width = 295
       Height = 504
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Configura'#231#245'es'
@@ -96,7 +96,7 @@ object frmACBrBPe: TfrmACBrBPe
           Top = 0
           Width = 287
           Height = 476
-          ActivePage = TabSheet13
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -1360,7 +1360,7 @@ object frmACBrBPe: TfrmACBrBPe
           Height = 49
           Caption = 'Componente de Impress'#227'o DABPE'
           Columns = 2
-          ItemIndex = 0
+          ItemIndex = 1
           Items.Strings = (
             'Fortes Report'
             'Esc Pos')
@@ -1658,17 +1658,17 @@ object frmACBrBPe: TfrmACBrBPe
           TabOrder = 1
           OnClick = btnCancelarChaveClick
         end
-        object btnCartadeCorrecao: TButton
+        object btnNaoEmbarque: TButton
           Left = 374
           Top = 9
           Width = 177
           Height = 25
-          Caption = 'Carta de Corre'#231#227'o'
+          Caption = 'N'#227'o Embarque'
           TabOrder = 2
-          OnClick = btnCartadeCorrecaoClick
+          OnClick = btnNaoEmbarqueClick
         end
         object btnImprimirEvento: TButton
-          Left = 8
+          Left = 191
           Top = 40
           Width = 177
           Height = 25
@@ -1677,7 +1677,7 @@ object frmACBrBPe: TfrmACBrBPe
           OnClick = btnImprimirEventoClick
         end
         object btnEnviarEventoEmail: TButton
-          Left = 191
+          Left = 374
           Top = 40
           Width = 177
           Height = 25
@@ -1685,26 +1685,26 @@ object frmACBrBPe: TfrmACBrBPe
           TabOrder = 4
           OnClick = btnEnviarEventoEmailClick
         end
+        object btnAlteracaoPoltrona: TButton
+          Left = 8
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Altera'#231#227'o de Poltrona'
+          TabOrder = 5
+          OnClick = btnAlteracaoPoltronaClick
+        end
       end
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'
         ImageIndex = 5
-        object btnManifDestConfirmacao: TButton
-          Left = 192
-          Top = 9
-          Width = 178
-          Height = 25
-          Caption = 'Manif. Dest. - Conf. Opera'#231#227'o'
-          TabOrder = 0
-          OnClick = btnManifDestConfirmacaoClick
-        end
         object btnDistribuicaoDFe: TButton
           Left = 8
           Top = 9
           Width = 178
           Height = 25
           Caption = 'Distribui'#231#227'o Documentos Fiscais'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnDistribuicaoDFeClick
         end
       end
@@ -1840,7 +1840,7 @@ object frmACBrBPe: TfrmACBrBPe
     ViaConsumidor = True
     ImprimeNomeFantasia = False
     PosPrinter = ACBrPosPrinter1
-    Left = 657
+    Left = 497
     Top = 239
   end
   object ACBrPosPrinter1: TACBrPosPrinter

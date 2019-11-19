@@ -25,6 +25,7 @@ public enum  ACBrSessao {
     DFe,
     NFe,
     DANFE,
+    DANFENFe,
     DANFENFCe,
     CTe,
     DACTe,

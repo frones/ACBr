@@ -2,12 +2,12 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 204
   Top = 207
   Caption = 'frlDANFeRLPaisagem'
-  ClientHeight = 859
+  ClientHeight = 749
   ClientWidth = 1116
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Top = 0
+    Top = -500
     Width = 1123
     Height = 794
     Margins.LeftMargin = 7.000000000000000000
@@ -34,7 +34,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 99
-      Top = 874
+      Top = 574
       Width = 998
       Height = 35
       AutoSize = True
@@ -107,7 +107,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCabecalhoItens: TRLBand
       Left = 99
-      Top = 689
+      Top = 389
       Width = 998
       Height = 35
       AutoExpand = False
@@ -835,7 +835,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbDadosAdicionais: TRLBand
       Left = 99
-      Top = 938
+      Top = 638
       Width = 998
       Height = 124
       AlignToBottom = True
@@ -971,12 +971,28 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         DrawKind = dkLine
         HoldStyle = hsRelatively
       end
+      object rlmDadosFisco: TRLMemo
+        Tag = 20
+        Left = 731
+        Top = 18
+        Width = 262
+        Height = 92
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        IntegralHeight = True
+        ParentFont = False
+      end
     end
     object rlbDestinatario: TRLBand
       Left = 99
-      Top = 184
+      Top = 27
       Width = 998
-      Height = 80
+      Height = 1
       BandType = btTitle
       object quadroDestinatarioExterno: TRLDraw
         Left = 0
@@ -1454,7 +1470,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbFatura: TRLBand
       Left = 99
-      Top = 439
+      Top = 139
       Width = 998
       Height = 54
       BandType = btTitle
@@ -2432,7 +2448,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbImposto: TRLBand
       Left = 99
-      Top = 493
+      Top = 193
       Width = 998
       Height = 58
       BandType = btTitle
@@ -2954,7 +2970,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbTransp: TRLBand
       Left = 99
-      Top = 551
+      Top = 251
       Width = 998
       Height = 80
       BandType = btTitle
@@ -3581,7 +3597,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbISSQN: TRLBand
       Left = 99
-      Top = 909
+      Top = 609
       Width = 998
       Height = 29
       BandType = btFooter
@@ -3765,7 +3781,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbAvisoContingencia: TRLBand
       Left = 99
-      Top = 661
+      Top = 361
       Width = 998
       Height = 28
       BandType = btColumnHeader
@@ -3975,7 +3991,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object RLBFaturaReal: TRLBand
       Left = 99
-      Top = 395
+      Top = 95
       Width = 998
       Height = 44
       BandType = btTitle
@@ -4186,7 +4202,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCanceladaDenegada: TRLBand
       Left = 99
-      Top = 631
+      Top = 331
       Width = 998
       Height = 30
       BandType = btColumnHeader
@@ -4211,7 +4227,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object subItens: TRLSubDetail
       Left = 99
-      Top = 724
+      Top = 424
       Width = 998
       Height = 150
       Borders.Sides = sdCustom
@@ -4894,7 +4910,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       Left = 99
       Top = 26
       Width = 998
-      Height = 158
+      Height = 1
       AutoExpand = False
       BandType = btHeader
       BeforePrint = rlbEmitenteBeforePrint
@@ -5422,9 +5438,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbQuandoRetirada: TRLBand
       Left = 99
-      Top = 264
+      Top = 28
       Width = 998
-      Height = 65
+      Height = 1
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -5819,7 +5835,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbQuandoEntrega: TRLBand
       Left = 99
-      Top = 329
+      Top = 29
       Width = 998
       Height = 66
       BandType = btTitle

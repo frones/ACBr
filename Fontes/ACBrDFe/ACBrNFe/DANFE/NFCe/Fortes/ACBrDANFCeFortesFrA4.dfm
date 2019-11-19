@@ -16,7 +16,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   TextHeight = 13
   object rlReportA4: TRLReport
     Left = 8
-    Top = 0
+    Top = -300
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET
@@ -731,7 +731,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 0
         Top = 142
         Width = 718
-        Height = 89
+        Height = 105
         AutoSize = True
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -838,10 +838,26 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
           Layout = tlCenter
           ParentFont = False
         end
+        object rllFisco: TRLLabel
+          Left = 1
+          Top = 88
+          Width = 716
+          Height = 16
+          Align = faTop
+          Alignment = taCenter
+          Caption = 'Dados do Fisco'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Layout = tlCenter
+          ParentFont = False
+        end
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 231
+        Top = 247
         Width = 718
         Height = 44
         AutoSize = True
@@ -905,7 +921,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 275
+        Top = 291
         Width = 718
         Height = 173
         AutoSize = True

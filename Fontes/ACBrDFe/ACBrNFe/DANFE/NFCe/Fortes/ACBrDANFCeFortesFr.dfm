@@ -2,7 +2,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 521
   Top = 144
   Caption = 'ACBrNFeDANFCeFortesFr'
-  ClientHeight = 751
+  ClientHeight = 749
   ClientWidth = 780
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -1267,7 +1267,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodapeCanc: TRLBand
       Left = 8
-      Top = 345
+      Top = 357
       Width = 264
       Height = 222
       AutoSize = True
@@ -1636,7 +1636,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 8
       Top = 247
       Width = 264
-      Height = 98
+      Height = 110
       AutoSize = True
       BandType = btSummary
       InsideMargins.LeftMargin = 1.000000000000000000
@@ -1755,6 +1755,20 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lCanceladaCanc: TRLLabel
         Left = 4
         Top = 86
+        Width = 256
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object rllFisco: TRLLabel
+        Left = 4
+        Top = 98
         Width = 256
         Height = 12
         Align = faTop

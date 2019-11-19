@@ -624,6 +624,11 @@ begin
     TextoObservacao := StringReplace(FpNFe.InfAdic.infAdFisco, ';', sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
+
+  TextoObservacao := Trim(FpNFe.procNFe.xMsg);
+
+  if TextoObservacao <> '' then
+    FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
 end;
 
 function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(const DadosQRCode: String;

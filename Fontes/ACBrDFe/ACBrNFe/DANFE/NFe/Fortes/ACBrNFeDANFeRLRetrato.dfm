@@ -1336,6 +1336,22 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
+      object rlmDadosFisco: TRLMemo
+        Tag = 20
+        Left = 475
+        Top = 34
+        Width = 261
+        Height = 120
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        IntegralHeight = True
+        ParentFont = False
+      end
     end
     object rlbDestinatario: TRLBand
       Left = 26

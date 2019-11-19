@@ -165,6 +165,7 @@ type
     RlPelosProdutos: TRLLabel;
     RLLabel51: TRLLabel;
     lCancelada: TRLLabel;
+    rllFisco: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLBand9BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -396,6 +397,8 @@ procedure TfrmACBrDANFCeFortesFrA4.RLBand11BeforePrint(Sender: TObject;
 begin
   if self.FACBrNFeDANFCeFortesA4.Cancelada then
     lCancelada.Caption    := ACBrStr('NF-e CANCELADA');
+
+  rllFisco.Caption := ACBrStr(self.FACBrNFeDANFCeFortesA4.FpNFe.procNFe.xMsg);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand12BeforePrint(Sender: TObject;
@@ -689,7 +692,7 @@ begin
   if self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].infAdProd = '' then
     Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.xProd
   else
-    Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.xProd + ' - ' 
+    Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.xProd + ' - '
 			+ StringReplace( self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].infAdProd, ';',#13,[rfReplaceAll]);
 end;
 

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2019
+-- Diversos --
+[+] Implementado a impressão do conteúdo da tag xMsg nos DANFE da NF-e e NFC-e
+    feitos em Fortes Report e EscPos.
+  Por: Italo Jurisato Junior
+
 24/10/2019
 -- ACBrNFeServicos --
 [*] Correção da URL de consulta por QR-Code AC homologação.

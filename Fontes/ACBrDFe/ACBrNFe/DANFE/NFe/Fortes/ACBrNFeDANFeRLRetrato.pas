@@ -645,6 +645,7 @@ type
     rlmDadosAdicionaisAuxiliar: TRLMemo;
     rlbDivisaoRecibo: TRLBand;
     rliDivisao: TRLDraw;
+    rlmDadosFisco: TRLMemo;
 
     procedure rlbContinuacaoInformacoesComplementaresBeforePrint(
       Sender: TObject; var PrintIt: Boolean);
@@ -1484,6 +1485,10 @@ begin
   end;
 
   rlmDadosAdicionais.Lines.Text := rlmDadosAdicionaisAuxiliar.Lines.Text;
+
+  // Área reservada ao Fisco
+  rlmDadosFisco.Lines.Clear;
+  rlmDadosFisco.Lines.Text := fpNFe.procNFe.xMsg;
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirISSQN;

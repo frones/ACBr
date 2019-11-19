@@ -543,6 +543,7 @@ type
     rlbQuandoEntregaLinha1Memo4: TRLLabel;
     rlbQuandoEntregaLinha2Memo5: TRLLabel;
     rlbQuandoRetiradaLinha2Memo5: TRLLabel;
+    rlmDadosFisco: TRLMemo;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -1417,6 +1418,10 @@ begin
   end;
 
   rlmDadosAdicionais.Lines.Text := rlmDadosAdicionaisAuxiliar.Lines.Text;
+
+  // Área reservada ao Fisco
+  rlmDadosFisco.Lines.Clear;
+  rlmDadosFisco.Lines.Text := fpNFe.procNFe.xMsg;
 end;
 
 procedure TfrlDANFeRLPaisagem.DefinirISSQN;

@@ -2174,6 +2174,8 @@ begin
     FprotNFe.cStat := NFeRetorno.protNFe.cStat;
     FprotNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
     FprotNFe.Versao := NFeRetorno.protNFe.Versao;
+    FprotNFe.cMsg := NFeRetorno.protNFe.cMsg;
+    FprotNFe.xMsg := NFeRetorno.protNFe.xMsg;
 
     {(*}
     if Assigned(NFeRetorno.procEventoNFe) and (NFeRetorno.procEventoNFe.Count > 0) then
@@ -2342,6 +2344,8 @@ begin
               NFe.procNFe.cStat := NFeRetorno.protNFe.cStat;
               NFe.procNFe.xMotivo := NFeRetorno.protNFe.xMotivo;
               NFe.procNFe.Versao := NFeRetorno.protNFe.Versao;
+              NFe.procNFe.cMsg := NFeRetorno.protNFe.cMsg;
+              NFe.procNFe.xMsg := NFeRetorno.protNFe.xMsg;
 
               // O código abaixo é bem mais rápido que "GerarXML" (acima)...
               AProcNFe := TProcNFe.Create;

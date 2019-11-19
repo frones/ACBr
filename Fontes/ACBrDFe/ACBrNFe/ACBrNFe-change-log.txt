@@ -49,6 +49,9 @@ Símbolo : Significado
 
 19/11/2019
 -- ACBrNFeWebServices --
+[*] Ajustes para a leitura dos campos cMsg, xMsg na consulta logo após o envio.
+  Por: Italo Jurisato Junior
+-- ACBrNFeWebServices --
 [+] Implementado a leitura dos campos cMsg, xMsg na consulta.
   Por: André Moraes
 -- Diversos --

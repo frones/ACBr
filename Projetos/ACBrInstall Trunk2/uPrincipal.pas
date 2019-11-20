@@ -494,18 +494,18 @@ var
 begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
-    edtDirDestino.Text          := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    edtPlatform.ItemIndex := 0;
+    edtDirDestino.Text             := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
+    edtPlatform.ItemIndex          := 0;
     ckbFecharTortoise.Checked      := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
-    rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL',0);
+    rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL', 0);
     ckbCopiarTodasDll.Checked      := True;
-    ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder',False);
-    chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
-    ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL',False);
-    ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom',False);
-    ckbRemoveXMLSec.Checked        := ArqIni.ReadBool('CONFIG','RemoveXMLSec',False);
-    ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia',False);
-    ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings',False);
+    ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder', False);
+    chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib', False);
+    ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL', False);
+    ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom', False);
+    ckbRemoveXMLSec.Checked        := ArqIni.ReadBool('CONFIG','RemoveXMLSec', True);
+    ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia', False);
+    ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', False);
     ckbUsarArquivoConfig.Checked   := True;
 
     if Trim(edtDelphiVersion.Text) = '' then
@@ -1385,7 +1385,7 @@ begin
     try
       if not ckbRemoveOpenSSL.Checked then
       begin
-        InstalarOpenSSL;
+          InstalarOpenSSL;
         MostrarMensagemInstalado('OPENSSL instalado com sucesso');
       end;
     except

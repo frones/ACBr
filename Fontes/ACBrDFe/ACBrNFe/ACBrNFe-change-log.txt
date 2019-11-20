@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11/2019
+[*] Ajustes nos arquivos .lfm ref. impressão do conteúdo da tag xMsg nos DANFE da NF-e e NFC-e
+    feitos em Fortes Report
+  Por: José M S Junior
+
 19/11/2019
 -- ACBrNFeWebServices 
 [*] https://www.projetoacbr.com.br/forum/topic/54881-sefaz-ms-nota-ms-premiada/?do=findComment&comment=360858

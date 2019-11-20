@@ -2126,7 +2126,7 @@ begin
   if Assigned(Anexos) then
   begin
     for i := 0 to Anexos.Count - 1 do
-      FMAIL.AddAttachment(Anexos[i]);
+      FMAIL.AddAttachment(Anexos[i],ExtractFileName(Anexos[i]));
   end;
 
   FMAIL.Send;

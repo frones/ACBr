@@ -49,6 +49,12 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+20/11/2019
+-- ACBrBoleto --
+[+] Adicionado parametro interno no método EnviarEmail, para permitir enviar imagens em anexo vinculado ao corpo HTML.
+Para isso é necessário passar a tag HTML com o path da imagem, assim como é passado no parâmetro "Anexos"
+https://www.projetoacbr.com.br/forum/topic/54924-enviaremail/
+
 14/11/2019
 
 -- ACBrBancoBradesco --

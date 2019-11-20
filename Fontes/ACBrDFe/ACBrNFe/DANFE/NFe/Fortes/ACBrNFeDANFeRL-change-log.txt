@@ -47,11 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/11-2019
+-- ACBrDANFCeFortesFr --
+[*] Ajuste para impressão de "procNFe.xMsg" nas informações do Fisco, com QRCode
+    Lateral
+    https://www.projetoacbr.com.br/forum/topic/54953-sefaz-ms-nota-ms-premiada-2/
+    (por: Compusofts)
+
 24/10/2019
 -- ACBrNFeDANFeRLRetrato
 [*] Ajuste na impressão do Canhoto apenas na primeira página
-	(por: José M S Junior )
-
+    (por: José M S Junior )
 
 19/09/2019
 -- ACBrNFeDANFeRLRetrato

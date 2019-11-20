@@ -371,6 +371,8 @@ begin
         lMensagemFiscal1.Lines.Add(ACBrStr( 'SEM VALOR FISCAL'));
       end;
 
+      lMensagemFiscal1.Lines.Add(ACBrStr(procNFe.xMsg));
+
       if (Ide.tpEmis <> teNormal) and EstaVazio(procNFe.nProt) then
       begin
         lContingencia1.Lines.Add(ACBrStr('EMITIDA EM CONTINGÊNCIA'));

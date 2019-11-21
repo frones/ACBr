@@ -1,7 +1,7 @@
 program ACBrBPe_Exemplo;
 
 uses
-  Vcl.Forms,
+  Forms,
   Frm_ACBrBPe in 'Frm_ACBrBPe.pas' {frmACBrBPe},
   Frm_SelecionarCertificado in 'Frm_SelecionarCertificado.pas' {frmSelecionarCertificado},
   Frm_ConfiguraSerial in 'Frm_ConfiguraSerial.pas' {frmConfiguraSerial},
@@ -11,7 +11,6 @@ uses
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmACBrBPe, frmACBrBPe);
   Application.CreateForm(TfrmSelecionarCertificado, frmSelecionarCertificado);
   Application.CreateForm(TfrmConfiguraSerial, frmConfiguraSerial);

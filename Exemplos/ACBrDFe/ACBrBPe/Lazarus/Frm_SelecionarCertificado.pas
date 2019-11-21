@@ -1,4 +1,6 @@
-unit Unit2;
+unit Frm_SelecionarCertificado;
+
+{$MODE Delphi}
 
 interface
 
@@ -10,7 +12,7 @@ type
 
   { TfrSelecionarCertificado }
 
-  TfrSelecionarCertificado = class(TForm)
+  TfrmSelecionarCertificado = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     Panel1: TPanel;
@@ -22,7 +24,7 @@ type
   end;
 
 var
-  frSelecionarCertificado: TfrSelecionarCertificado;
+  frmSelecionarCertificado: TfrmSelecionarCertificado;
 
 implementation
 

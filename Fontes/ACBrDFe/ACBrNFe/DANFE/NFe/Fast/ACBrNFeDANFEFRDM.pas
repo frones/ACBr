@@ -775,6 +775,7 @@ begin
       begin
          FieldDefs.Add('OBS', ftString, 6900);
          FieldDefs.Add('LinhasOBS', ftInteger);
+         FieldDefs.Add('MensagemSEFAZ', ftString, 200);
          CreateDataSet;
       end;
    end;
@@ -1464,6 +1465,7 @@ begin
       Append;
       FieldByName('OBS').AsString        := BufferInfCpl;
       FieldByName('LinhasOBS').AsInteger := wLinhasObs;
+      FieldByName('MensagemSEFAZ').AsString := FNFe.procNFe.xMsg;
       Post;
     end;
 	
@@ -2108,7 +2110,7 @@ begin
   frxReport.OnPreview := frxReportPreview;
 
   if NaoEstaVazio(DANFEClassOwner.NomeDocumento) then
-    frxReport.FileName := DANFEClassOwner.NomeDocumento;
+  frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then
@@ -2183,7 +2185,7 @@ begin
   frxReport.OnPreview := frxReportPreview;
 
   if NaoEstaVazio(DANFEClassOwner.NomeDocumento) then
-    frxReport.FileName := DANFEClassOwner.NomeDocumento;
+  frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then

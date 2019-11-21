@@ -48,8 +48,8 @@ object frmStatus: TfrmStatus
     object lblStatus: TLabel
       Left = 2
       Top = 19
-      Width = 477
-      Height = 24
+      Width = 3
+      Height = 13
       Align = alClient
       Color = clGray
       ParentColor = False

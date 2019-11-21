@@ -1925,13 +1925,16 @@ begin
     NFSe.ValoresNfse.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
     NFSe.ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
 
-    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2, proCenti, proRLZ]) then
+    if (FProvedor in [proCoplan, proWebISSv2, proTiplanv2, proCenti, proRLZ, proSystemPro]) then
     begin
       NFSe.Servico.Valores.BaseCalculo      := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota         := Leitor.rCampo(tcDe3, 'Aliquota');
       NFSe.Servico.Valores.ValorIss         := Leitor.rCampo(tcDe2, 'ValorIss');
       NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
+      if (FProvedor = proSystemPro) then
+         NFSe.Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'ValorLiquidoNfse');
     end;
+
   end; // fim ValoresNfse
 
   if (Leitor.rExtrai(3, 'PrestadorServico') <> '') or

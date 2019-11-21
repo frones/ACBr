@@ -49,6 +49,9 @@ Símbolo : Significado
 
 21/11/2019
 -- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/54963-impress%C3%A3o-nfs-e-com-v%C3%A1rios-servi%C3%A7os/?do=findComment&comment=361102
+   Por: Rafael Sartori
+-- pnfsNFSeR --
 [+] Incluida as linhas para a leitura dos campos de itens de serviços, provedor SystemPro.
    Por: Italo Jurisato Junior
 

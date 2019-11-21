@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2019
+-- ACBrNFeNotasFiscais 
+[-] Checagem de todos os campos que compõe o grupo <vol> para decidir se o mesmo será criado ou não.
+   Por: Italo Jurisato Junior
+
 20/11/2019
 [*] Ajustes nos arquivos .lfm ref. impressão do conteúdo da tag xMsg nos DANFE da NF-e e NFC-e
     feitos em Fortes Report

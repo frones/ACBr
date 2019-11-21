@@ -1519,13 +1519,12 @@ end;
 
 function NotaFiscal.LerArqIni(const AIniString: String): Boolean;
 var
-  INIRec : TMemIniFile ;
-//  SL     : TStringList;
-  sSecao : String;
-  OK     : boolean;
-  I, J, K : Integer;
-  {versao,} sFim, sProdID, sDINumber, sADINumber, sQtdVol,
-    sDupNumber, sAdittionalField, sType, sDay, sDeduc, sNVE, sCNPJCPF : String;
+  INIRec: TMemIniFile ;
+  sSecao: String;
+  OK, bVol: boolean;
+  I, J, K: Integer;
+  sFim, sProdID, sDINumber, sADINumber, sDupNumber, sAdittionalField, sType,
+  sDay, sDeduc, sNVE, sCNPJCPF: String;
 begin
   Result := False;
 
@@ -2362,18 +2361,25 @@ begin
       begin
         sSecao := IfThen(INIRec.SectionExists('Volume'+IntToStrZero(I,3)), 'Volume', 'vol');
         sSecao := sSecao+IntToStrZero(I,3) ;
-        sQtdVol  := INIRec.ReadString(sSecao,'Quantidade',INIRec.ReadString(sSecao,'qVol','FIM')) ;
-        if (sQtdVol = 'FIM') or (Length(sQtdVol) <= 0)  then
+
+        bVol := (INIRec.ReadString(sSecao, 'Quantidade', INIRec.ReadString(sSecao, 'qVol', '')) = '') and
+                (INIRec.ReadString(sSecao, 'Especie', INIRec.ReadString( sSecao, 'esp', '')) = '') and
+                (INIRec.ReadString(sSecao, 'Marca', '') = '') and
+                (INIRec.ReadString(sSecao, 'Numeracao', INIRec.ReadString( sSecao, 'nVol', '')) = '') and
+                (INIRec.ReadString(sSecao, 'PesoLiquido', INIRec.ReadString(sSecao, 'pesoL', '')) = '') and
+                (INIRec.ReadString(sSecao, 'PesoBruto', INIRec.ReadString(sSecao, 'pesoB', '')) = '');
+
+        if bVol then
           break ;
 
         with Transp.Vol.New do
         begin
-          qVol  := StrToInt(sQtdVol);
-          esp   := INIRec.ReadString( sSecao,'Especie'  ,INIRec.ReadString( sSecao,'esp'  ,''));
-          marca := INIRec.ReadString( sSecao,'Marca'    ,'');
-          nVol  := INIRec.ReadString( sSecao,'Numeracao',INIRec.ReadString( sSecao,'nVol'  ,''));
-          pesoL := StringToFloatDef( INIRec.ReadString(sSecao,'PesoLiquido',INIRec.ReadString(sSecao,'pesoL','')) ,0) ;
-          pesoB := StringToFloatDef( INIRec.ReadString(sSecao,'PesoBruto'  ,INIRec.ReadString(sSecao,'pesoB','')) ,0) ;
+          qVol  := StrToInt(INIRec.ReadString(sSecao, 'Quantidade', INIRec.ReadString(sSecao, 'qVol', '0')));
+          esp   := INIRec.ReadString(sSecao, 'Especie', INIRec.ReadString(sSecao, 'esp', ''));
+          marca := INIRec.ReadString(sSecao, 'Marca', '');
+          nVol  := INIRec.ReadString(sSecao, 'Numeracao', INIRec.ReadString(sSecao, 'nVol', ''));
+          pesoL := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoLiquido', INIRec.ReadString(sSecao, 'pesoL', '')), 0);
+          pesoB := StringToFloatDef(INIRec.ReadString(sSecao, 'PesoBruto', INIRec.ReadString(sSecao, 'pesoB', '')), 0);
 
           J := 1;
           while true do

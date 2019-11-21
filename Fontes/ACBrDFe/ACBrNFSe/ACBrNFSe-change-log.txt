@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/2019
+-- pnfsNFSeR --
+[+] Incluida as linhas para a leitura dos campos de itens de serviços, provedor SystemPro.
+   Por: Italo Jurisato Junior
+
 19/11/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/54163-envio-de-nota-para-blumenau-usando-o-novo-webservice/?do=findComment&comment=360700

@@ -109,7 +109,7 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
       Top = 9
       Width = 283
       Height = 504
-      ActivePage = TabSheet18
+      ActivePage = TabSheet11
       TabOrder = 0
       object TabSheet11: TTabSheet
         Caption = 'Configura'#231#245'es'
@@ -420,7 +420,7 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
               Left = 0
               Top = 4
               Width = 265
-              Height = 381
+              Height = 423
               Caption = 'Geral'
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
@@ -941,15 +941,8 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
               Height = 13
               Caption = 'Bairro'
             end
-            object Label59: TLabel
-              Left = 8
-              Top = 244
-              Width = 61
-              Height = 13
-              Caption = 'C'#243'd. Cidade '
-            end
             object Label60: TLabel
-              Left = 76
+              Left = 8
               Top = 244
               Width = 33
               Height = 13
@@ -1046,26 +1039,19 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
               Height = 21
               TabOrder = 9
             end
-            object edtEmitCodCidade: TEdit
+            object edtEmitCidade: TEdit
               Left = 8
               Top = 260
-              Width = 61
+              Width = 211
               Height = 21
               TabOrder = 10
-            end
-            object edtEmitCidade: TEdit
-              Left = 76
-              Top = 260
-              Width = 142
-              Height = 21
-              TabOrder = 11
             end
             object edtEmitUF: TEdit
               Left = 225
               Top = 260
               Width = 35
               Height = 21
-              TabOrder = 12
+              TabOrder = 11
             end
           end
           object TabSheet16: TTabSheet
@@ -1372,7 +1358,7 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
       Top = 254
       Width = 562
       Height = 378
-      ActivePage = tsCIOT
+      ActivePage = tsRespostas
       Align = alClient
       TabOrder = 1
       object tsRespostas: TTabSheet
@@ -1462,8 +1448,8 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
       'Arquivos RegBol (*-RegBol.XML)|*-RegBol.XML|Arquivos XML (*.XML)' +
       '|*.XML|Todos os Arquivos (*.*)|*.*'
     Title = 'Selecione a RegBol'
-    Left = 352
-    Top = 304
+    Left = 336
+    Top = 376
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1473,10 +1459,11 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 528
-    Top = 312
+    Left = 400
+    Top = 320
   end
   object ACBrCIOT1: TACBrCIOT
+    MAIL = ACBrMail1
     OnStatusChange = ACBrCIOT1StatusChange
     OnGerarLog = ACBrCIOT1GerarLog
     Configuracoes.Geral.SSLLib = libNone
@@ -1489,7 +1476,7 @@ object frmDemo_ACBrCIOT: TfrmDemo_ACBrCIOT
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Left = 438
+    Left = 334
     Top = 318
   end
 end

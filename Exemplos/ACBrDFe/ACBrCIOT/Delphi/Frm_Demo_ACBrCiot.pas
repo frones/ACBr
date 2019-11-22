@@ -123,7 +123,6 @@ type
     Label56: TLabel;
     Label57: TLabel;
     Label58: TLabel;
-    Label59: TLabel;
     Label60: TLabel;
     Label61: TLabel;
     Label62: TLabel;
@@ -138,7 +137,6 @@ type
     edtEmitNumero: TEdit;
     edtEmitComp: TEdit;
     edtEmitBairro: TEdit;
-    edtEmitCodCidade: TEdit;
     edtEmitCidade: TEdit;
     edtEmitUF: TEdit;
     TabSheet16: TTabSheet;
@@ -317,7 +315,6 @@ begin
       Ini.WriteString( 'Emitente','Numero'     ,edtEmitNumero.Text);
       Ini.WriteString( 'Emitente','Complemento',edtEmitComp.Text);
       Ini.WriteString( 'Emitente','Bairro'     ,edtEmitBairro.Text);
-      Ini.WriteString( 'Emitente','CodCidade'  ,edtEmitCodCidade.Text);
       Ini.WriteString( 'Emitente','Cidade'     ,edtEmitCidade.Text);
       Ini.WriteString( 'Emitente','UF'         ,edtEmitUF.Text);
 
@@ -480,7 +477,6 @@ begin
     edtEmitNumero.Text     := Ini.ReadString( 'Emitente','Numero'     ,'');
     edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','');
     edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'');
-    edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'');
     edtEmitCidade.Text     :=Ini.ReadString(  'Emitente','Cidade'     ,'');
     edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'');
 

@@ -928,7 +928,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         Top = 7
         Width = 548
         Height = 122
-        ActivePage = TabSheet12
+        ActivePage = TabSheet15
         TabOrder = 0
         object TabSheet12: TTabSheet
           Caption = 'Envios'
@@ -1264,7 +1264,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
     OnStatusChange = ACBrCTe1StatusChange
-    Configuracoes.Geral.SSLLib = libCustom
+    Configuracoes.Geral.SSLLib = libOpenSSL
     Configuracoes.Geral.SSLCryptLib = cryOpenSSL
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsLibXml2

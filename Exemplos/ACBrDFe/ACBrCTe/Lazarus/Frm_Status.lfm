@@ -46,17 +46,11 @@ object frmStatus: TfrmStatus
     object lblStatus: TLabel
       Left = 0
       Top = 17
-      Width = 477
-      Height = 24
+      Width = 3
+      Height = 13
       Align = alClient
       Color = clGray
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
       ParentColor = False
-      ParentFont = False
       Layout = tlCenter
     end
   end

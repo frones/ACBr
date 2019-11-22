@@ -453,7 +453,7 @@ begin
         sEspecie := '20'
       else if Trim(EspecieDoc) = 'CH' then {CH - CHEQUE}
         sEspecie := '97'
-      else if Trim(EspecieDoc) = 'CH' then {ND - NOTA PROMISSORIA DIRETA}
+      else if Trim(EspecieDoc) = 'ND' then {ND - NOTA PROMISSORIA DIRETA}
         sEspecie := '98'
       else
       begin

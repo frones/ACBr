@@ -746,6 +746,7 @@ end;
 function TACBrBancoSicredi.CodMotivoRejeicaoToDescricao(
   const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
 begin
+  Result := '';
   case ACBrBanco.ACBrBoleto.LayoutRemessa of
     c240: begin
       case TipoOcorrencia of

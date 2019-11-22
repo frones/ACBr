@@ -575,7 +575,7 @@ begin
        ATipoBoleto := '2' + '2';
      end;
 
-     ACaracTitulo := ' ';
+//     ACaracTitulo := ' ';
      case CaracTitulo of
        tcSimples     : ACaracTitulo  := '1';
        tcVinculada   : ACaracTitulo  := '2';

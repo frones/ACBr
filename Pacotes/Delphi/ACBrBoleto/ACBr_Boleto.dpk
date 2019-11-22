@@ -60,7 +60,11 @@ contains
   ACBrBancoUnicredES in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredES.pas',
   ACBrBancoUnicredRS in '..\..\..\Fontes\ACBrBoleto\ACBrBancoUnicredRS.pas',
   ACBrUniprime in '..\..\..\Fontes\ACBrBoleto\ACBrUniprime.pas',
-  ACBrBancoCitiBank in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCitiBank.pas';
+  ACBrBancoCitiBank in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCitiBank.pas',
+  ACBrBancoABCBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoABCBrasil.pas',
+  ACBrBancoDaycoval in '..\..\..\Fontes\ACBrBoleto\ACBrBancoDaycoval.pas',
+  ACBrUniprimeNortePR in '..\..\..\Fontes\ACBrBoleto\ACBrUniprimeNortePR.pas';
 
 end.
+
 

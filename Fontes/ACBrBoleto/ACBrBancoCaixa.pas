@@ -1893,10 +1893,9 @@ begin
               end;
            end;
        else
-         begin
-           MotivoLinha := 0;
-           CodMotivo := 0;
-         end;
+         //Não teve ocorrência...
+         //MotivoLinha := 0;
+         //CodMotivo := 0;
        end;
      end;
    end;

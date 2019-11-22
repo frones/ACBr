@@ -520,8 +520,6 @@ var
   Titulo: TACBrTitulo;
   ContLinha: Integer;
   CodMotivo: String;
-  rAgencia: String;
-  rConta, rDigitoConta: String;
   Linha, rCedente, rCNPJCPF: String;
   rCodEmpresa: String;
 begin

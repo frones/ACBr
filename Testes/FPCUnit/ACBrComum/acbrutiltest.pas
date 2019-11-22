@@ -3286,6 +3286,10 @@ begin
 end;
 
 procedure RoundABNTTest.ExpressaoCurrDuasCasasDecimais;
+  Function ToDouble(c:Currency):Double;
+  begin
+    Result := c;
+  end;
 var
   currVal, currValorUnit, currQtde, currTotal: Currency;
 begin
@@ -3297,16 +3301,21 @@ begin
   currVal := 0.98;
   CheckEquals(currVal , RoundABNT(currTotal, 2), 0.00001);
 
+  //----------- casts implícitos...
   currVal := 0.99;
   //   RoundABNT tem um parâmetro do tipo "Double" isso pode fazer com que expressões
   // mudem o valor passado para a RoundABNT dependendo do compilador.
+  //   Isso é causado pela mudança da ordem dos casts implícitos. Sendo assim,
+  // não é um erro na RoundABNT.
   //   Por exemplo, O teste comentado abaixo falha quando o compilador é Win 64 bits mas passa no Win 32:
   //CheckEquals( currVal, RoundABNT(currValorUnit * currQtde, 2), 0.00001);
   //   O que acontece é que no Win 32, as variáveis são convertidas para Double antes da multiplicação e,
   // assim, todas as casas decimais serão utilizadas. Já no Win 64,
   // as variáveis são multiplicadas como Currency e só depois convertidas para Double.
   //   No Win 64 o teste fica como abaixo:
-  CheckEquals( currVal, RoundABNT((Double(currValorUnit * Double(currQtde))), 2), 0.00001);
+  //CheckEquals( currVal, RoundABNT((Double(currValorUnit) * Double(currQtde)), 2), 0.00001);
+  //   Como o teste acima gera erro no FPC/Lazarus, usamos a rotina abaixo:
+  CheckEquals( currVal, RoundABNT((ToDouble(currValorUnit) * ToDouble(currQtde)), 2), 0.00001);
 end;
 
 procedure RoundABNTTest.ExpressaoDblDuasCasasDecimais;

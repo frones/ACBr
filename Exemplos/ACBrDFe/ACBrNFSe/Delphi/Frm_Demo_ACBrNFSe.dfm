@@ -186,11 +186,18 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Caption = 'Fone'
           end
           object Label29: TLabel
-            Left = 128
+            Left = 63
             Top = 288
             Width = 58
             Height = 13
             Caption = 'C'#243'd. Cidade'
+          end
+          object Label2: TLabel
+            Left = 167
+            Top = 288
+            Width = 80
+            Height = 13
+            Caption = 'Total de Cidades'
           end
           object edtEmitCNPJ: TEdit
             Left = 8
@@ -478,7 +485,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Nova Serrana/3145208/MG')
           end
           object edtCodCidade: TEdit
-            Left = 128
+            Left = 63
             Top = 304
             Width = 89
             Height = 21
@@ -491,6 +498,21 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             ParentFont = False
             ReadOnly = True
             TabOrder = 13
+          end
+          object edtTotalCidades: TEdit
+            Left = 167
+            Top = 304
+            Width = 89
+            Height = 21
+            TabStop = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 14
           end
         end
         object TabSheet2: TTabSheet
@@ -1597,28 +1619,6 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Left = 320
     Top = 248
   end
-  object ACBrNFSe1: TACBrNFSe
-    MAIL = ACBrMail1
-    OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libWinCrypt
-    Configuracoes.Geral.SSLCryptLib = cryWinCrypt
-    Configuracoes.Geral.SSLHttpLib = httpWinHttp
-    Configuracoes.Geral.SSLXmlSignLib = xsLibXml2
-    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.CodigoMunicipio = 0
-    Configuracoes.Geral.ConsultaLoteAposEnvio = True
-    Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 2000
-    Configuracoes.WebServices.Tentativas = 10
-    Configuracoes.WebServices.IntervaloTentativas = 3000
-    Configuracoes.WebServices.Salvar = True
-    Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.Certificados.VerificarValidade = False
-    DANFSE = ACBrNFSeDANFSeRL1
-    Left = 392
-    Top = 248
-  end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
     Port = '25'
@@ -1649,5 +1649,23 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     PrintDialog = True
     Left = 481
     Top = 248
+  end
+  object ACBrNFSe1: TACBrNFSe
+    MAIL = ACBrMail1
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.ConsultaLoteAposEnvio = False
+    Configuracoes.Geral.Emitente.DadosSenhaParams = <>
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    DANFSE = ACBrNFSeDANFSeRL1
+    Left = 390
+    Top = 249
   end
 end

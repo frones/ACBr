@@ -113,7 +113,6 @@ type
     edtSenhaWeb: TEdit;
     edtCodCidade: TEdit;
     Label29: TLabel;
-    ACBrNFSe1: TACBrNFSe;
     Label20: TLabel;
     edtUserWeb: TEdit;
     btnGerarEnviarNFSe: TButton;
@@ -174,6 +173,9 @@ type
     ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
     Label1: TLabel;
     edtFraseSecWeb: TEdit;
+    Label2: TLabel;
+    edtTotalCidades: TEdit;
+    ACBrNFSe1: TACBrNFSe;
     procedure btnCaminhoCertClick(Sender: TObject);
     procedure btnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -446,6 +448,7 @@ begin
     //Sort
     cbCidades.Sorted := false;
     cbCidades.Sorted := true;
+    edtTotalCidades.Text := IntToStr(cbCidades.Items.Count);
   finally
     FreeAndNil(Cidades);
   end;
@@ -472,6 +475,7 @@ begin
   ACBrNFSe1.Configuracoes.Certificados.ArquivoPFX := edtCaminho.Text;
   ACBrNFSe1.Configuracoes.Certificados.Senha := edtSenha.Text;
   ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+  ACBrNFSe1.Configuracoes.Certificados.VerificarValidade := False;
 
   ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
   ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe := True;
@@ -490,8 +494,7 @@ begin
   ACBrNFSe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
   ACBrNFSe1.Configuracoes.Geral.PathIniCidades := edtArqINI.Text;
   ACBrNFSe1.Configuracoes.Geral.PathIniProvedor := edtArqINI.Text;
-  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio :=
-    StrToIntDef(edtCodCidade.Text, 0);
+  ACBrNFSe1.Configuracoes.Geral.CodigoMunicipio := StrToIntDef(edtCodCidade.Text, 0);
   ACBrNFSe1.Configuracoes.Geral.SenhaWeb := edtSenhaWeb.Text;
   ACBrNFSe1.Configuracoes.Geral.UserWeb := edtUserWeb.Text;
 
@@ -561,7 +564,13 @@ begin
   with ACBrNFSe1 do
   begin
     // Provedor ISSNet sem certificado
-    Configuracoes.Geral.Emitente.WebChaveAcesso := 'A001.B0001.C0001-1';
+    // Configuracoes.Geral.Emitente.WebChaveAcesso := 'A001.B0001.C0001-1';
+
+    // Provedor Sigep sem certificado
+//    Configuracoes.Geral.Emitente.WebChaveAcesso := 'A001.B0001.C0001';
+
+    // Provedor iiBrasil token = WebChaveAcesso para homologação
+    Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
 
     with Configuracoes.Geral.Emitente.DadosSenhaParams.Add do
     begin
@@ -574,18 +583,22 @@ begin
 
     with NotasFiscais.Add.NFSe do
     begin
+      ChaveNFSe := '123456789012345678901234567890123456789';
+      Numero := NumNFSe;
+      SeriePrestacao := '1';
+
       NumeroLote := NumLote;
 
       IdentificacaoRps.Numero := FormatFloat('#########0', StrToInt(NumNFSe));
 
       // Para o provedor ISS.NET em ambiente de Homologação mudar a série para '8'
-      IdentificacaoRps.Serie := 'NF';
+      IdentificacaoRps.Serie := 'NF'; //'85';
 
       // TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
       IdentificacaoRps.Tipo := trRPS;
 
-      DataEmissao := Now;
-      DataEmissaoRPS := Now;
+      DataEmissao := Date;
+      DataEmissaoRPS := Date;
       (*
         TnfseNaturezaOperacao = ( no1, no2, no3, no4, no5, no6, no7,
         no50, no51, no52, no53, no54, no55, no56, no57, no58, no59,
@@ -598,8 +611,8 @@ begin
       // NaturezaOperacao := no51;
 
       // TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa, retSociedadeProfissionais, retCooperativa, retMicroempresarioIndividual, retMicroempresarioEmpresaPP );
-      // RegimeEspecialTributacao := retNenhum;
-      RegimeEspecialTributacao := retEstimativa;
+       RegimeEspecialTributacao := retNenhum;
+//      RegimeEspecialTributacao := retLucroReal;
 
       // TnfseSimNao = ( snSim, snNao );
       OptanteSimplesNacional := snNao;
@@ -676,10 +689,11 @@ begin
       Servico.ResponsavelRetencao := ptTomador;
 
       Servico.ItemListaServico := '09.01';
+//      Servico.CodigoCnae := '452000200';
       Servico.CodigoCnae := '852010';
 
       // Usado pelo provedor de Goiania
-      Servico.CodigoTributacaoMunicipio := '1234';
+      Servico.CodigoTributacaoMunicipio := '09.01';
 
       // Para o provedor ISS.NET em ambiente de Homologação
       // o Codigo CNAE tem que ser '6511102'
@@ -701,12 +715,14 @@ begin
       // Somente o provedor SimplISS permite infomar mais de 1 serviço
       with Servico.ItemServico.Add do
       begin
+        codLCServ := '123';
         Descricao := 'SERVICO 1';
         Quantidade := 1;
         ValorUnitario := 15.00;
+        ValorServicos := Quantidade * ValorUnitario;
       end;
 
-      Prestador.CNPJ := edtEmitCNPJ.Text;
+      Prestador.CNPJ := edtEmitCNPJ.Text; //'88888888888888';
       Prestador.InscricaoMunicipal := edtEmitIM.Text;
 
       // Para o provedor ISSDigital deve-se informar também:
@@ -714,10 +730,26 @@ begin
       Prestador.FraseSecreta := edtFraseSecWeb.Text;
       Prestador.cUF := 33;
 
-      PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;
-      PrestadorServico.RazaoSocial := edtEmitRazao.Text;
+      // Provedor WebFisco
+      Prestador.Usuario := StrToIntDef(ACBrNFSe1.Configuracoes.Geral.Emitente.WebUser, 0);
+      Prestador.CNPJ_Prefeitura := '12.345.678/0001-23';
 
-      Tomador.IdentificacaoTomador.CpfCnpj := '99999999000191';
+      PrestadorServico.Endereco.Endereco := edtEmitLogradouro.Text;
+      PrestadorServico.Endereco.Numero   := edtEmitNumero.Text;
+      PrestadorServico.Endereco.Bairro   := edtEmitBairro.Text;
+      PrestadorServico.Endereco.CodigoMunicipio := edtCodCidade.Text;
+      PrestadorServico.Endereco.UF := edtEmitUF.Text;
+      PrestadorServico.Endereco.CodigoPais := 1058;
+      PrestadorServico.Endereco.xPais := 'BRASIL';
+
+      PrestadorServico.Endereco.CEP := '14800123';
+
+      PrestadorServico.RazaoSocial  := edtEmitRazao.Text;
+      PrestadorServico.NomeFantasia := edtEmitRazao.Text;
+
+      PrestadorServico.Contato.Telefone := '1633224455';
+
+      Tomador.IdentificacaoTomador.CpfCnpj := '55.555.555/5555-55';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '17331600';
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
@@ -734,23 +766,22 @@ begin
       Tomador.Endereco.xPais := 'BRASIL';
       Tomador.IdentificacaoTomador.InscricaoEstadual := '123456';
 
-      Tomador.Contato.Telefone := '1122223333';
+      Tomador.Contato.Telefone := '22223333';
       Tomador.Contato.Email := 'nome@provedor.com.br';
+
+      Tomador.AtualizaTomador := snNao;
+      Tomador.TomadorExterior := snNao;
 
       // Usado quando houver um intermediario na prestação do serviço
       // IntermediarioServico.RazaoSocial        := 'razao';
       // IntermediarioServico.CpfCnpj            := '00000000000';
       // IntermediarioServico.InscricaoMunicipal := '12547478';
 
-
       // Usado quando o serviço for uma obra
       // ConstrucaoCivil.CodigoObra := '88888';
       // ConstrucaoCivil.Art        := '433';
-
     end;
-
   end;
-
 end;
 
 procedure TfrmDemo_ACBrNFSe.btn1Click(Sender: TObject);
@@ -1069,8 +1100,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnCancNFSeClick(Sender: TObject);
 var
-  Codigo: String;
-  // Motivo: String;
+  Codigo, Motivo: String;
 begin
 
   OpenDialog1.Title := 'Selecione a NFSe';
@@ -1093,12 +1123,12 @@ begin
       exit;
 
     // Provedor Equiplano é obrigatório o motivo de cancelamento
-    // if not(InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo))
-    // then exit;
-    // ACBrNFSe1.NotasFiscais.Items[0].NFSe.MotivoCancelamento:= Motivo;
+    if not(InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
+      exit;
 
-    // ACBrNFSe1.WebServices.CancelaNFSe(Codigo, '1', '03310700000170', '0306223', '0');
-    ACBrNFSe1.CancelarNFSe(Codigo);
+//    ACBrNFSe1.NotasFiscais.Items[0].NFSe.MotivoCancelamento:= Motivo;
+
+    ACBrNFSe1.CancelarNFSe(Codigo, '', Motivo);
 
     MemoDados.Lines.Add('Arquivo Carregado de: ' + ACBrNFSe1.NotasFiscais.Items
       [0].NomeArq);
@@ -1273,7 +1303,7 @@ end;
 
 procedure TfrmDemo_ACBrNFSe.btnConsultarNFSePeriodoClick(Sender: TObject);
 var
-  DataInicial, DataFinal: String;
+  DataInicial, DataFinal, NumeroNFSe: String;
 begin
   if not(InputQuery('Consultar NFSe por Período', 'Data Inicial (DD/MM/AAAA):',
     DataInicial)) then
@@ -1282,7 +1312,11 @@ begin
     DataFinal)) then
     exit;
 
-  ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal));
+  if not(InputQuery('Consultar NFSe por Período', 'Numero da NFSe:',
+    NumeroNFSe)) then
+    exit;
+
+  ACBrNFSe1.ConsultarNFSe(StrToDate(DataInicial), StrToDate(DataFinal), NumeroNFSe);
 
   MemoResp.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
   memoRespWS.Lines.Text := UTF8Encode(ACBrNFSe1.WebServices.ConsNfse.RetWS);
@@ -1453,8 +1487,8 @@ var
 begin
   if not(InputQuery('Gerar o Link da NFSe', 'Numero da NFSe', vNumNFSe)) then
     exit;
-  if not(InputQuery('Gerar o Link da NFSe', 'Codigo de Verificacao', sCodVerif))
-  then
+
+  if not(InputQuery('Gerar o Link da NFSe', 'Codigo de Verificacao', sCodVerif)) then
     exit;
 
   sLink := ACBrNFSe1.LinkNFSe(StrToIntDef(vNumNFSe, 0), sCodVerif);
@@ -1500,12 +1534,10 @@ begin
   //
   // **************************************************************************
 
-  if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do RPS', vAux))
-  then
+  if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do RPS', vAux)) then
     exit;
 
-  if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do Lote',
-    vNumLote)) then
+  if not(InputQuery('Gerar e Enviar Lote - Sincrono', 'Numero do Lote', vNumLote)) then
     exit;
 
   ACBrNFSe1.NotasFiscais.Clear;
@@ -1521,15 +1553,13 @@ var
   IniParams: TMemIniFile;
   vAux, provedor: String;
 begin
-  if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:',
-    vAux)) then
+  if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux)) then
     exit;
 
-  NomeArqParams := ACBrNFSe1.Configuracoes.Geral.PathIniCidades +
-    '\Cidades.ini';
+  NomeArqParams := ACBrNFSe1.Configuracoes.Geral.PathIniCidades + '\Cidades.ini';
+
   if not FileExists(NomeArqParams) then
-    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' +
-      NomeArqParams);
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' + NomeArqParams);
 
   IniParams := TMemIniFile.Create(NomeArqParams);
   provedor := IniParams.ReadString(vAux, 'Provedor', '');
@@ -1544,6 +1574,7 @@ var
 begin
   if not(InputQuery('Substituir NFS-e', 'Numero do novo RPS', vAux)) then
     exit;
+
   ACBrNFSe1.NotasFiscais.Clear;
   AlimentaComponente(vAux, '1');
 

@@ -12,10 +12,8 @@ object frmStatus: TfrmStatus
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poMainFormCenter
   PixelsPerInch = 96
-  TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
@@ -27,8 +25,8 @@ object frmStatus: TfrmStatus
     Color = clBlack
     TabOrder = 0
     object lbl1: TLabel
-      Left = 2
-      Top = 2
+      Left = 0
+      Top = 0
       Width = 477
       Height = 17
       Align = alTop
@@ -46,10 +44,10 @@ object frmStatus: TfrmStatus
       Layout = tlCenter
     end
     object lblStatus: TLabel
-      Left = 2
-      Top = 19
-      Width = 477
-      Height = 24
+      Left = 0
+      Top = 17
+      Width = 3
+      Height = 13
       Align = alClient
       Color = clGray
       ParentColor = False

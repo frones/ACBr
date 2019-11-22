@@ -503,7 +503,7 @@ begin
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib', False);
     ckbRemoveOpenSSL.Checked       := ArqIni.ReadBool('CONFIG','RemoveOpenSSL', False);
     ckbRemoveCapicom.Checked       := ArqIni.ReadBool('CONFIG','RemoveCapicom', False);
-    ckbRemoveXMLSec.Checked        := ArqIni.ReadBool('CONFIG','RemoveXMLSec', True);
+    ckbRemoveXMLSec.Checked        := True;
     ckbCargaDllTardia.Checked      := ArqIni.ReadBool('CONFIG','CargaDllTardia', False);
     ckbRemoverCastWarnings.Checked := ArqIni.ReadBool('CONFIG','RemoverCastWarnings', False);
     ckbUsarArquivoConfig.Checked   := True;

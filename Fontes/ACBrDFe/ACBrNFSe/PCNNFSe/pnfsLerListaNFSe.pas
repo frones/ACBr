@@ -529,7 +529,7 @@ begin
                NFSe.Cancelada := snNao;
           end
           else
-          if Provedor = proInfisc then
+          if Provedor in [proInfisc, proInfiscv11] then
           begin
             NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'cNFS-e');
             NFSe.Numero            := Leitor.rCampo(tcStr, 'nNFS-e');
@@ -650,6 +650,7 @@ begin
               FNFSe.Link              := NFSeLida.NFSe.Link;
 
               FNFSe.InfID.ID          := NFSeLida.NFSe.InfID.ID;
+              FNFSe.ChaveNFSe         := NFSeLida.NFSe.ChaveNFSe;
               FNFSe.Numero            := NFSeLida.NFSe.Numero;
               FNFSe.SeriePrestacao    := NFSeLida.NFSe.SeriePrestacao;
               FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;

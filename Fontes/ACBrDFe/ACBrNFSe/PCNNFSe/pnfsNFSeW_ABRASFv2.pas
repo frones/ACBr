@@ -57,6 +57,7 @@ type
 
     procedure GerarPrestador;
     procedure GerarTomador;
+    procedure GerarEnderecoExterior;
     procedure GerarIntermediarioServico;
 
     procedure GerarServicoValores;
@@ -174,44 +175,52 @@ begin
       Gerador.wGrupoNFSe('/IdentificacaoTomador');
     end;
 
+    if (NFSe.Tomador.Endereco.UF = 'EX') and (FProvedor = proISSJoinville) then
+      Gerador.wCampoNFSe(tcStr, '#38', 'NifTomador', 001, 40, 0, NFSe.Tomador.NifTomador);
+
     Gerador.wCampoNFSe(tcStr, '#38', 'RazaoSocial', 001, 115, 0, NFSe.Tomador.RazaoSocial, DSC_XNOME);
 
     if NFSe.Tomador.Endereco.Endereco <> '' then
     begin
-    Gerador.wGrupoNFSe('Endereco');
-
-      if FProvedor = proSigep then
+      if (NFSe.Tomador.Endereco.UF = 'EX') and (FProvedor = proISSJoinville) then
+        GerarEnderecoExterior
+      else
       begin
-        Gerador.wCampoNFSe(tcStr, '#39', 'TipoLogradouro', 001, 50, 0, NFSe.Tomador.Endereco.TipoLogradouro, DSC_XLGR);
-        Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
-      end
-      else
-        Gerador.wCampoNFSe(tcStr, '#39', 'Endereco', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
+        Gerador.wGrupoNFSe('Endereco');
 
-      Gerador.wCampoNFSe(tcStr, '#40', 'Numero  ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, DSC_NRO);
+        if FProvedor = proSigep then
+        begin
+          Gerador.wCampoNFSe(tcStr, '#39', 'TipoLogradouro', 001, 50, 0, NFSe.Tomador.Endereco.TipoLogradouro, DSC_XLGR);
+          Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
+        end
+        else
+          Gerador.wCampoNFSe(tcStr, '#39', 'Endereco', 001, 125, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
 
-      if FProvedor <> proNFSeBrasil then
-        Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, DSC_XCPL)
-      else
-        Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, DSC_XCPL);
+        Gerador.wCampoNFSe(tcStr, '#40', 'Numero  ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, DSC_NRO);
 
-      Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
+        if FProvedor <> proNFSeBrasil then
+          Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 0, NFSe.Tomador.Endereco.Complemento, DSC_XCPL)
+        else
+          Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 060, 1, NFSe.Tomador.Endereco.Complemento, DSC_XCPL);
 
-      Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
-      Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
+        Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 060, 0, NFSe.Tomador.Endereco.Bairro, DSC_XBAIRRO);
 
-      if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
-                            proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep,
-                            proiiBrasilv2]) or
-         ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
-        Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
+        Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio', 7, 7, 0, OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio), DSC_CMUN);
+        Gerador.wCampoNFSe(tcStr, '#44', 'Uf             ', 2, 2, 0, NFSe.Tomador.Endereco.UF, DSC_UF);
 
-      if FProvedor = proELv2 then
-        Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP)
-      else
-        Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+        if not (FProvedor in [proELv2, proNFSeBrasil, proPronimv2, proISSJoinville,
+                              proSmarAPDABRASF, proGiss, proTcheInfov2, proSigep,
+                              proiiBrasilv2]) or
+           ((FProvedor = proPronimv2) and (OnlyNumber(NFSe.Tomador.Endereco.CodigoMunicipio) = '9999999')) then
+          Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
 
-      Gerador.wGrupoNFSe('/Endereco');
+        if FProvedor = proELv2 then
+          Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 1, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP)
+        else
+          Gerador.wCampoNFSe(tcStr, '#45', 'Cep', 008, 008, 0, OnlyNumber(NFSe.Tomador.Endereco.CEP), DSC_CEP);
+
+        Gerador.wGrupoNFSe('/Endereco');
+      end;
     end;
 
     case FProvedor of
@@ -907,6 +916,14 @@ end;
 function TNFSeW_ABRASFv2.ObterNomeArquivo: string;
 begin
   Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+procedure TNFSeW_ABRASFv2.GerarEnderecoExterior;
+begin
+  Gerador.wGrupoNFSe('EnderecoExterior');
+  Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais ', 04, 04, 0, NFSe.Tomador.Endereco.CodigoPais, DSC_CPAIS);
+  Gerador.wCampoNFSe(tcStr, '#39', 'EnderecoCompletoExterior', 001, 255, 0, NFSe.Tomador.Endereco.Endereco, DSC_XLGR);
+  Gerador.wGrupoNFSe('/EnderecoExterior');
 end;
 
 function TNFSeW_ABRASFv2.GerarXml: Boolean;

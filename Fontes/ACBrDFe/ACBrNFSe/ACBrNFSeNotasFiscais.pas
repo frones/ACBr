@@ -273,6 +273,7 @@ begin
       proNotaBlu: DocElemento := 'RPS';
       proSMARAPD: DocElemento := 'tbnfd';
       proGiap:    DocElemento := 'nfe';
+      proInfiscv11: DocElemento := 'infNFSe';
     else
       DocElemento := 'Rps';
     end;

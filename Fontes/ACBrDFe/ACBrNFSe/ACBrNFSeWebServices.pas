@@ -1352,6 +1352,8 @@ begin
       FLoteNaoProc := (FNotasFiscais.Items[ii].NFSe.Situacao = '2');
     end;
 
+    if (Provedor = proInfiscv11) then
+      FNotasFiscais.Items[ii].NFSe.ChaveNFSe       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.ChaveNFSe;
     { Márcio - Como a questão do link é tratada no reader do XML, acho que aqui
       pode pegar direto, sem validar provedor }
     FNotasFiscais.Items[ii].NFSe.Link              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Link;

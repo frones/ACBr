@@ -529,6 +529,7 @@ type
     FContato: TContato;
     FAtualizaTomador: TnfseSimNao;
     FTomadorExterior: TnfseSimNao;
+    FNifTomador: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -539,6 +540,7 @@ type
     property Contato: TContato read FContato write FContato;
     property AtualizaTomador: TnfseSimNao read FAtualizaTomador write FAtualizaTomador;
     property TomadorExterior: TnfseSimNao read FTomadorExterior write FTomadorExterior;
+    property NifTomador: String read FNifTomador write FNifTomador;
   end;
 
  TIdentificacaoIntermediarioServico = class(TObject)

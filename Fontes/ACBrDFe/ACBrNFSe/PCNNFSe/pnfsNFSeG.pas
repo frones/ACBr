@@ -1410,12 +1410,12 @@ begin
     proInfiscv11:
       begin
         Gerador.Prefixo := '';
-        Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-        Gerador.wCampoNFSe(tcStr, '#1', 'notaInicial', 01, 15, 1, NumeroNFSe, '');
-        Gerador.wCampoNFSe(tcStr, '#1', 'notaFinal', 01, 15, 1, NumeroNFSe, '');
-        Gerador.wCampoNFSe(tcDat, '#1', 'emissaoInicial', 01, 15, 1, DataInicial, '');
-        Gerador.wCampoNFSe(tcDat, '#1', 'emissaoFinal', 01, 15, 1, DataFinal, '');
-        Gerador.wCampoNFSe(tcStr, '#1', 'serieNotaFiscal', 01, 15, 1, SerieNFSe, '');
+        Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ           ', 14, 14, 1, Cnpj, '');
+        Gerador.wCampoNFSe(tcStr, '#1', 'notaInicial    ', 01, 15, 1, NumeroNFSe, '');
+        Gerador.wCampoNFSe(tcStr, '#1', 'notaFinal      ', 01, 15, 1, NumeroNFSe, '');
+        Gerador.wCampoNFSe(tcDat, '#1', 'emissaoInicial ', 01, 15, 0, DataInicial, '');
+        Gerador.wCampoNFSe(tcDat, '#1', 'emissaoFinal   ', 01, 15, 0, DataFinal, '');
+        Gerador.wCampoNFSe(tcStr, '#1', 'serieNotaFiscal', 01, 15, 0, SerieNFSe, '');
       end;
 
     proEquiplano:

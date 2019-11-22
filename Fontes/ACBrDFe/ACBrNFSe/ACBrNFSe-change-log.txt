@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/54949-joinville-n%C3%A3o-emite-nota-para-estrangeiro/
+   Por: Augusto Fontana
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/54986-provedor-infisc-v11-melhorias-m%C3%A9todo-tacbrnfseconsultarnfse/
+   Por: Henrique Sandri Zimermam
+
 21/11/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/54963-impress%C3%A3o-nfs-e-com-v%C3%A1rios-servi%C3%A7os/?do=findComment&comment=361102

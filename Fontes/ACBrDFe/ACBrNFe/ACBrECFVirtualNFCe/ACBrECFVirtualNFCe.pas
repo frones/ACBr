@@ -115,6 +115,13 @@ type
   {$ENDIF RTL230_UP}
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private
+    function AdivinharFormaPagamento(const DescricaoPagto: string): TpcnFormaPagamento;
+    procedure SomaTotais;
+    procedure CancelarNFCe;
+    function GetACBrECF: TACBrECF;
+    procedure FazerImpressaoDocumento;
+  protected
+    fsACBrNFCe: TACBrNFe;
     fsECF: TACBrECF;
     fsNomeArqTempXML: string;
     fsQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
@@ -123,14 +130,6 @@ type
     fsQuandoFecharDocumento: TACBrECFVirtualNFCeQuandoFecharDocumento;
     fsQuandoCancelarDocumento: TACBrECFVirtualNFCeQuandoCancelarDocumento;
     fsQuandoImprimirDocumento: TACBrECFVirtualNFCeQuandoImprimirDocumento;
-
-    function AdivinharFormaPagamento(const DescricaoPagto: string): TpcnFormaPagamento;
-    procedure SomaTotais;
-    procedure CancelarNFCe;
-    function GetACBrECF: TACBrECF;
-    procedure FazerImpressaoDocumento;
-  protected
-    fsACBrNFCe: TACBrNFe;
     fsImprimir2ViaOffLine : Boolean;
     fsEhVenda: Boolean;
     fsDestCNPJ: string;

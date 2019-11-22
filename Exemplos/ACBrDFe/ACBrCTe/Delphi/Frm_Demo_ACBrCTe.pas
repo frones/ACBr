@@ -311,7 +311,7 @@ end;
 
 procedure TfrmDemo_ACBrCTe.LerConfiguracao;
 var
-  IniFile: String;
+  IniFile, PathMensal: String;
   Ini: TIniFile;
   Ok: Boolean;
   StreamMemo: TMemoryStream;
@@ -370,7 +370,12 @@ begin
       Salvar := ckSalvar.Checked;
     end;
 
-    ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
+    ACBrCTe1.Configuracoes.Arquivos.PathCTe     := edtPathLogs.Text;;
+    ACBrCTe1.Configuracoes.Arquivos.PathEvento  := edtPathLogs.Text;
+
+    PathMensal := ACBrCTe1.Configuracoes.Arquivos.GetPathCTe(0);
+
+    ACBrCTe1.Configuracoes.Arquivos.PathSalvar := PathMensal;
 
     cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
     rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
@@ -402,6 +407,11 @@ begin
       ACBrCTe1.DACTe.Logo         := edtLogoMarca.Text;
       ACBrCTe1.DACTe.PathPDF      := 'c:\Erp\DFe'; //edtPathLogs.Text;
       ACBrCTe1.DACTe.TamanhoPapel := tpA4_2vias;
+
+      ACBrCTe1.DACTe.MargemDireita  := 7;
+      ACBrCTe1.DACTe.MargemEsquerda := 7;
+      ACBrCTe1.DACTe.MargemSuperior := 5;
+      ACBrCTe1.DACTe.MargemInferior := 5;
     end;
 
     edtEmitCNPJ.Text       := Ini.ReadString( 'Emitente','CNPJ'       ,'');
@@ -1989,6 +1999,8 @@ begin
 end;
 
 procedure TfrmDemo_ACBrCTe.btnImprimirEventoClick(Sender: TObject);
+var
+  CarregarMaisXML: Boolean;
 begin
   OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-cte.xml';
@@ -2006,12 +2018,18 @@ begin
   OpenDialog1.Filter := 'Arquivos Evento (*-procEventoCTe.xml)|*-procEventoCTe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
+  ACBrCTe1.EventoCTe.Evento.Clear;
+  CarregarMaisXML := True;
+
+  while CarregarMaisXML do
   begin
-    ACBrCTe1.EventoCTe.Evento.Clear;
-    ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
-    ACBrCTe1.ImprimirEvento;
+    if OpenDialog1.Execute then
+      ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
+
+    CarregarMaisXML := MessageDlg('Carregar mais Eventos?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
+
+  ACBrCTe1.ImprimirEvento;
 end;
 
 procedure TfrmDemo_ACBrCTe.btnGerarPDFEventoClick(Sender: TObject);

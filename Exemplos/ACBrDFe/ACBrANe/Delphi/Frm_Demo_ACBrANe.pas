@@ -775,8 +775,16 @@ begin
       MemoDados.Lines.Add('CNPJ     : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.CNPJCli);
       MemoDados.Lines.Add('Tipo Doc : '+ IntToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.TpDoc));
       MemoDados.Lines.Add('Inf Adic : '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.InfAdic);
-      MemoDados.Lines.Add('Averbado : '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.dhAverbacao));
-      MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.Protocolo);
+      if ACBrANe1.Configuracoes.Geral.TipoDoc = tdMDFe then
+      begin
+        MemoDados.Lines.Add('Chancel. : '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Declarado.dhChancela));
+        MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Declarado.Protocolo);
+      end
+      else
+      begin
+        MemoDados.Lines.Add('Averbado : '+ DateTimeToStr(ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.dhAverbacao));
+        MemoDados.Lines.Add('Protocolo: '+ ACBrANe1.WebServices.ANeAverbar.ANeRetorno.Averbado.Protocolo);
+      end;
       MemoDados.Lines.Add(' ');
       MemoDados.Lines.Add('Dados do Seguro');
       MemoDados.Lines.Add(' ');

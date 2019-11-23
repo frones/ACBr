@@ -161,14 +161,18 @@ namespace ACBrLib.Core
             MinusOne = new IntPtr(-1);
         }
 
-        /// <inheritdoc />
+        protected ACBrLibHandle(string dllName64, string dllName32) :
+            this(Environment.Is64BitProcess ? dllName64 : dllName32)
+        {
+        }
+
         protected ACBrLibHandle(string dllName)
             : base(IntPtr.Zero, true)
         {
             var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
             var path = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path) + uri.Fragment);
             path += Environment.Is64BitProcess ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
-            Environment.SetEnvironmentVariable("PATH", path, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("PATH", path);
 
             methodCache = new Dictionary<string, Delegate>();
             methodList = new Dictionary<Type, string>();

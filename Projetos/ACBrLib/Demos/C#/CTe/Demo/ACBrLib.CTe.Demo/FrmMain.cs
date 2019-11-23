@@ -176,13 +176,19 @@ namespace ACBrLib.CTe.Demo
         {
             try
             {
-                var arquivoIni = Helpers.OpenFile("Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
-                if (string.IsNullOrEmpty(arquivoIni)) return;
+                if (MessageBox.Show(@"Carregar INI e Limpar a lista ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+                    if (string.IsNullOrEmpty(arquivoIni)) return;
 
-                ACBrCTe.LimparLista();
-                ACBrCTe.CarregarINI(arquivoIni);
+                    ACBrCTe.LimparLista();
+                    ACBrCTe.CarregarINI(arquivoIni);
+                }
 
-                var ret = ACBrCTe.Enviar(1);
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = ACBrCTe.Enviar(aLote);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
@@ -195,7 +201,7 @@ namespace ACBrLib.CTe.Demo
         {
             try
             {
-                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
                 if (string.IsNullOrEmpty(arquivoXml)) return;
 
                 ACBrCTe.LimparLista();
@@ -212,7 +218,7 @@ namespace ACBrLib.CTe.Demo
         {
             try
             {
-                var chaveOuNFe = Helpers.OpenFile("Arquivo Xmnl NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                var chaveOuNFe = Helpers.OpenFile("Arquivo Xmnl CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
                 if (string.IsNullOrEmpty(chaveOuNFe)) return;
 
                 ACBrCTe.LimparLista();
@@ -231,7 +237,7 @@ namespace ACBrLib.CTe.Demo
             try
             {
                 var chaveOuNFe = "";
-                if (InputBox.Show("WebServices Consultar", "Chave da NF-e:", ref chaveOuNFe) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Consultar", "Chave da CT-e:", ref chaveOuNFe) != DialogResult.OK) return;
                 if (string.IsNullOrEmpty(chaveOuNFe)) return;
 
                 ACBrCTe.LimparLista();
@@ -248,7 +254,7 @@ namespace ACBrLib.CTe.Demo
         {
             try
             {
-                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
                 if (string.IsNullOrEmpty(arquivoXml)) return;
 
                 var destinatario = "";
@@ -268,7 +274,7 @@ namespace ACBrLib.CTe.Demo
             try
             {
                 var aRecibo = "";
-                if (InputBox.Show("WebServices Consultar: Recib", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Consultar: Recibo", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.ConsultarRecibo(aRecibo);
                 rtbRespostas.AppendText(ret);
@@ -322,6 +328,45 @@ namespace ACBrLib.CTe.Demo
 
                 var ret = ACBrCTe.Inutilizar(eCNPJ, aJustificativa, ano, modelo, serie, numeroInicial, numeroFinal);
                 rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarIni_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoIni)) return;
+
+                ACBrCTe.CarregarINI(arquivoIni);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAssinar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ACBrCTe.Assinar();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnValidarRegra_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                rtbRespostas.AppendText(ACBrCTe.ValidarRegrasdeNegocios());
             }
             catch (Exception exception)
             {

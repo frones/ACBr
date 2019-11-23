@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ACBrLibHandle.cs" />
     <Compile Include="ACBrSessao.cs" />
+    <Compile Include="BAL\ACBrBALModelo.cs" />
     <Compile Include="CTe\ModeloCTe.cs" />
     <Compile Include="CTe\VersaoCTe.cs" />
     <Compile Include="DFe\TipoEmissao.cs" />

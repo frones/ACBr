@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbpConfiguracoes = new System.Windows.Forms.TabPage();
+            this.cmbVersao = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.cmbModeloDocumento = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -106,8 +108,9 @@
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.btnConsultaChave = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.cmbVersao = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.btnCarregarIni = new System.Windows.Forms.Button();
+            this.btnAssinar = new System.Windows.Forms.Button();
+            this.btnValidarRegra = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tbpWebservices.SuspendLayout();
@@ -152,6 +155,25 @@
             this.tbpConfiguracoes.TabIndex = 2;
             this.tbpConfiguracoes.Text = "Configurações";
             this.tbpConfiguracoes.UseVisualStyleBackColor = true;
+            // 
+            // cmbVersao
+            // 
+            this.cmbVersao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbVersao.FormattingEnabled = true;
+            this.cmbVersao.Location = new System.Drawing.Point(8, 23);
+            this.cmbVersao.Name = "cmbVersao";
+            this.cmbVersao.Size = new System.Drawing.Size(129, 21);
+            this.cmbVersao.TabIndex = 25;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 7);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(46, 13);
+            this.label11.TabIndex = 24;
+            this.label11.Text = "Versão";
             // 
             // cmbModeloDocumento
             // 
@@ -871,6 +893,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnValidarRegra);
+            this.groupBox1.Controls.Add(this.btnAssinar);
+            this.groupBox1.Controls.Add(this.btnCarregarIni);
             this.groupBox1.Controls.Add(this.btnStatusServ);
             this.groupBox1.Controls.Add(this.btnInutilizar);
             this.groupBox1.Controls.Add(this.btnEnviar);
@@ -987,24 +1012,36 @@
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
-            // cmbVersao
+            // btnCarregarIni
             // 
-            this.cmbVersao.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbVersao.FormattingEnabled = true;
-            this.cmbVersao.Location = new System.Drawing.Point(8, 23);
-            this.cmbVersao.Name = "cmbVersao";
-            this.cmbVersao.Size = new System.Drawing.Size(129, 21);
-            this.cmbVersao.TabIndex = 25;
+            this.btnCarregarIni.Location = new System.Drawing.Point(6, 106);
+            this.btnCarregarIni.Name = "btnCarregarIni";
+            this.btnCarregarIni.Size = new System.Drawing.Size(118, 23);
+            this.btnCarregarIni.TabIndex = 18;
+            this.btnCarregarIni.Text = "Carregar INI CTe";
+            this.btnCarregarIni.UseVisualStyleBackColor = true;
+            this.btnCarregarIni.Click += new System.EventHandler(this.btnCarregarIni_Click);
             // 
-            // label11
+            // btnAssinar
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 7);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(46, 13);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "Versão";
+            this.btnAssinar.Location = new System.Drawing.Point(130, 106);
+            this.btnAssinar.Name = "btnAssinar";
+            this.btnAssinar.Size = new System.Drawing.Size(118, 23);
+            this.btnAssinar.TabIndex = 19;
+            this.btnAssinar.Text = "Assinar CTe ";
+            this.btnAssinar.UseVisualStyleBackColor = true;
+            this.btnAssinar.Click += new System.EventHandler(this.btnAssinar_Click);
+            // 
+            // btnValidarRegra
+            // 
+            this.btnValidarRegra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarRegra.Location = new System.Drawing.Point(254, 106);
+            this.btnValidarRegra.Name = "btnValidarRegra";
+            this.btnValidarRegra.Size = new System.Drawing.Size(118, 23);
+            this.btnValidarRegra.TabIndex = 20;
+            this.btnValidarRegra.Text = "Val. Regra de Neg.";
+            this.btnValidarRegra.UseVisualStyleBackColor = true;
+            this.btnValidarRegra.Click += new System.EventHandler(this.btnValidarRegra_Click);
             // 
             // FrmMain
             // 
@@ -1130,6 +1167,9 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.ComboBox cmbVersao;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnAssinar;
+        private System.Windows.Forms.Button btnCarregarIni;
+        private System.Windows.Forms.Button btnValidarRegra;
     }
 }
 

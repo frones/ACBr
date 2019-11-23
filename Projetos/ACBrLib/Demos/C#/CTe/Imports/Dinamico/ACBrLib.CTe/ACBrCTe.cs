@@ -133,7 +133,7 @@ namespace ACBrLib.CTe
         #region Constructors
 
         public ACBrCTe(string eArqConfig = "", string eChaveCrypt = "") :
-            base(Environment.Is64BitProcess ? "ACBrCTe64.dll" : "ACBrCTe32.dll")
+            base("ACBrCTe64.dll", "ACBrCTe32.dll")
         {
             var inicializar = GetMethod<Delegates.CTE_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));

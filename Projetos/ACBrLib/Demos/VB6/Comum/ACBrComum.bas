@@ -9,11 +9,13 @@ Public Const SESSAO_EMAIL                     As String = "Email"
 Public Const SESSAO_SOFTWAREHOUSE             As String = "SoftwareHouse"
 Public Const SESSAO_EMISSOR                   As String = "Emissor"
 Public Const SESSAO_POSPRINTER                As String = "PosPrinter"
+Public Const SESSAO_POSPRINTER_DEVICE         As String = "PosPrinter_Device"
 Public Const SESSAO_POSPRINTER_BARRAS         As String = "PosPrinter_Barras"
 Public Const SESSAO_POSPRINTER_QRCODE         As String = "PosPrinter_QRCode"
 Public Const SESSAO_POSPRINTER_LOGO           As String = "PosPrinter_Logo"
 Public Const SESSAO_POSPRINTER_GAVETA         As String = "PosPrinter_Gaveta"
 Public Const SESSAO_ETQ                       As String = "ETQ"
+Public Const SESSAO_ETQ_DEVICE                As String = "ETQ_Device"
 Public Const SESSAO_SAT                       As String = "SAT"
 Public Const SESSAO_SATCONFIG                 As String = "SATConfig"
 Public Const SESSAO_SATCONFIGARQUIVOS         As String = "SATConfigArquivos"
@@ -33,6 +35,8 @@ Public Const SESSAO_BOLETOCEDENTECONFIG       As String = "BoletoCedenteConfig"
 Public Const SESSAO_BOLETOBANCOCONFIG         As String = "BoletoBancoConfig"
 Public Const SESSAO_BOLETODIRETORIOCONFIG     As String = "BoletoDiretorioConfig"
 Public Const SESSAO_BOLETOBANCOFCFORTESCONFIG As String = "BoletoBancoFCFortesConfig"
+Public Const SESSAO_BAL                       As String = "BAL"
+Public Const SESSAO_BAL_DEVICE                As String = "BAL_Device"
 
 Public Enum NivelLog
     logNenhum = 0
@@ -468,6 +472,48 @@ Public Enum TipoInscricao
     pJuridica = 1
 End Enum
 
+Public Enum ACBrBALModelo
+    balNenhum = 0
+    balFilizola = 1
+    balToledo = 2
+    balToledo2090 = 3
+    balToledo2180 = 4
+    balUrano = 5
+    balLucasTec = 6
+    balMagna = 7
+    balDigitron = 8
+    balMagellan = 9
+    balUranoPOP = 10
+    balLider = 11
+    balRinnert = 12
+    balMuller = 13
+    balSaturno = 14
+    balAFTS = 15
+    balGenerica = 16
+    balLibratek = 17
+    balMicheletti = 18
+    balAlfa = 19
+    balToledo9091_8530_8540 = 20
+    balWeightechWT1000 = 21
+    balMarelCG62XL = 22
+    balWeightechWT3000_ABS = 23
+    balToledo2090N = 24
+    balToledoBCS21 = 25
+    balPrecision = 26
+    balDigitron_UL = 27
+End Enum
+
+' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
+Const CP_UTF8       As Long = 65001
+
+Private Declare Function MultiByteToWideChar _
+                Lib "kernel32" (ByVal CodePage As Long, _
+                                ByVal dwFlags As Long, _
+                                ByVal lpMultiByteStr As Long, _
+                                ByVal cchMultiByte As Long, _
+                                ByVal lpWideCharStr As Long, _
+                                ByVal cchWideChar As Long) As Long
+
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean
     HasPosTipoStatus = (Check And Flag) = Flag
 End Function
@@ -486,4 +532,22 @@ Function FileExists(ByVal sFileName As String) As Boolean
     FileExists = GetAttr(sFileName) And vbArchive
 ErrorHandler:
     ' if an error occurs, this function returns False
+End Function
+
+Private Function FromUTF8(ByRef utf8STR As String) As String
+    
+    Dim length As Long
+    Dim UTF8() As Byte
+    Dim lDataLength As Long
+
+    length = Len(utf8STR)
+    UTF8 = StrConv(utf8STR, vbFromUnicode)
+    
+    ' Get the length of the data.
+    lDataLength = MultiByteToWideChar(CP_UTF8, 0, VarPtr(UTF8(0)), length, 0, 0)
+    
+    ' Create array big enough
+    FromUTF8 = String$(lDataLength, 0)
+    
+    MultiByteToWideChar CP_UTF8, 0, VarPtr(UTF8(0)), length, StrPtr(FromUTF8), lDataLength
 End Function

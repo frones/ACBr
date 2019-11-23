@@ -35,7 +35,13 @@ public enum  BALModelo {
     balAlfa(19),
     balToledo9091_8530_8540(20),
     balWeightechWT1000(21), 
-    balMarelCG62XL(22);
+    balMarelCG62XL(22),
+    balWeightechWT3000_ABS(23),
+    balToledo2090N(24),
+    balToledoBCS21(25),
+    balPrecision(26),
+    balDigitron_UL(27);
+    
     
     private static final Map<Integer, BALModelo> map;
     private final int enumValue; 

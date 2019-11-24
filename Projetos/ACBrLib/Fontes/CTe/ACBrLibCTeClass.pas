@@ -724,8 +724,8 @@ function CTE_Consultar(const eChaveOuCTe: PChar; const sResposta: PChar; var esT
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
   EhArquivo: boolean;
-  ChaveOuCTe: string;
-  Resposta: TConsultaCTeResposta;
+  Resposta, ChaveOuCTe: string;
+  Resp: TConsultaCTeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -737,16 +737,17 @@ begin
     else
       pLib.GravarLog('CTE_Consultar', logNormal);
 
-    EhArquivo := StringEhArquivo(ChaveOuCTe);
-    if EhArquivo then
-      VerificarArquivoExiste(ChaveOuCTe);
-
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
 
+      EhArquivo := StringEhArquivo(ChaveOuCTe);
+
       if EhArquivo and not ValidarChave(ChaveOuCTe) then
+      begin
+        VerificarArquivoExiste(ChaveOuCTe);
         CTeDM.ACBrCTe1.Conhecimentos.LoadFromFile(ChaveOuCTe);
+      end;
 
       if CTeDM.ACBrCTe1.Conhecimentos.Count = 0 then
       begin
@@ -760,17 +761,19 @@ begin
           CTeDM.ACBrCTe1.Conhecimentos.Items[CTeDM.ACBrCTe1.Conhecimentos.Count - 1].CTe.infCTe.ID,
           'CTe','',[rfIgnoreCase]);
 
-      Resposta := TConsultaCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+      Resp := TConsultaCTeResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
-        with CTeDM do
+        with CTeDM.ACBrCTe1 do
         begin
-          ACBrCTe1.WebServices.Consulta.Executar;
-          Resposta.Processar(CTeDM.ACBrCTe1);
-          MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          WebServices.Consulta.Executar;
+          Resp.Processar(CTeDM.ACBrCTe1);
+
+          Resposta := Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
-        Resposta.Free;
+        Resp.Free;
         CTeDM.Destravar;
       end;
     end;

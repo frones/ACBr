@@ -42,6 +42,7 @@ uses
 
 const
   CSessaoETQ = 'ETQ';
+  CSessaoETQ_Device = 'ETQ_Device';
 
   CChaveLog = 'ArqLog';
   CChaveTemperatura = 'Temperatura';

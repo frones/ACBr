@@ -128,7 +128,7 @@ const
   CSessaoPosPrinterLogo = 'PosPrinter_Logo';
   CSessaoPosPrinterGaveta = 'PosPrinter_Gaveta';
   CSessaoPosPrinterMPagina = 'PosPrinter_MPagina';
-  CSessaoPosPrinterDevice = 'POS_Device';
+  CSessaoPosPrinterDevice = 'PosPrinter_Device';
 
 
   CChaveModelo = 'Modelo';

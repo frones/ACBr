@@ -174,7 +174,7 @@ begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
 
   FETQConfig := TETQConfig.Create;
-  FDeviceConfig := TDeviceConfig.Create('ETQ_Device');
+  FDeviceConfig := TDeviceConfig.Create(CSessaoETQ_Device);
 end;
 
 destructor TLibETQConfig.Destroy;

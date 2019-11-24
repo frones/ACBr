@@ -45,6 +45,14 @@
     <Compile Include="ACBrLibHandle.cs" />
     <Compile Include="ACBrSessao.cs" />
     <Compile Include="BAL\ACBrBALModelo.cs" />
+    <Compile Include="Boleto\ACBrBolLayOut.cs" />
+    <Compile Include="Boleto\ACBrLayoutRemessa.cs" />
+    <Compile Include="Boleto\ACBrTipoCarteira.cs" />
+    <Compile Include="Boleto\ACBrTipoDocumento.cs" />
+    <Compile Include="Boleto\ACBrPessoa.cs" />
+    <Compile Include="Boleto\ACBrResponEmissao.cs" />
+    <Compile Include="Boleto\ACBrTipoCobranca.cs" />
+    <Compile Include="Boleto\BoletoTpSaida.cs" />
     <Compile Include="CTe\ModeloCTe.cs" />
     <Compile Include="CTe\VersaoCTe.cs" />
     <Compile Include="DFe\TipoEmissao.cs" />

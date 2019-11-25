@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="ACBrMDFe_Exemplo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmACBrMDFe"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="2014"/>
+        <CursorPos X="19" Y="1395"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="Frm_Status.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="17" HistoryIndex="16">
+      <Position1>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="283" Column="3" TopLine="260"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="287" Column="3" TopLine="264"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="626" Column="21" TopLine="634"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="674" Column="19" TopLine="661"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="722" Column="21" TopLine="709"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="763" Column="21" TopLine="750"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="810" Column="21" TopLine="797"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="832" Column="19" TopLine="819"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="852" Column="21" TopLine="840"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="872" Column="19" TopLine="860"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="887" Column="19" TopLine="874"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="929" Column="19" TopLine="917"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="988" Column="19" TopLine="975"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="1036" Column="19" TopLine="1024"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="1154" Column="19" TopLine="1142"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="1271" Column="21" TopLine="1258"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Frm_ACBrMDFe.pas"/>
+        <Caret Line="1335" Column="21" TopLine="1322"/>
+      </Position17>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

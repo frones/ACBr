@@ -2,33 +2,32 @@
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
-
+{                                                                              }
 { Direitos Autorais Reservados (c) 2004 Daniel Simoes de Almeida               }
-
+{                                                                              }
 { Colaboradores nesse arquivo:                                                 }
-
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-
+{                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
 { Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
 { qualquer versão posterior.                                                   }
-
+{                                                                              }
 {  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
 { NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
 { do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
 { com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
 { no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
 { Você também pode obter uma copia da licença em:                              }
-{ http://www.opensource.org/licenses/gpl-license.php                           }
-
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -484,8 +483,8 @@ uses
   ACBrUtil, ACBrImage, ACBrConsts,
   synacode,
   ACBrEscPosEpson, ACBrEscEpsonP2, ACBrEscBematech, ACBrEscDaruma,
-  ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar, ACBrEscZJiang,
-  ACBrEscGPrinter,
+  ACBrEscElgin, ACBrEscDiebold, ACBrEscCustomPos, ACBrEscPosStar,
+  ACBrEscZJiang, ACBrEscGPrinter,
   ACBrEscPosHookElginDLL, ACBrEscPosHookEpsonDLL;
 
 { TACBrConfigModoPagina }
@@ -1136,7 +1135,7 @@ begin
     ppEscEpsonP2 : FPosPrinterClass := TACBrEscEpsonP2.Create(self);
     ppCustomPos : FPosPrinterClass := TACBrEscCustomPos.Create(self);
     ppEscPosStar: FPosPrinterClass := TACBrEscPosStar.Create(Self);
-    ppEscZJiang: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
+    ppEscZJiang: FPosPrinterClass := TACBrEscZJiang.Create(Self);
     ppEscGPrinter: FPosPrinterClass := TACBrEscGPrinter.Create(Self);
   else
     FPosPrinterClass := TACBrPosPrinterClass.Create(Self);

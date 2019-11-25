@@ -159,10 +159,10 @@ begin
     adler := adler32(adler, inStream);
   end;
 
-  outStream.Seek(0, soFromEnd);
+  outStream.Seek(0, soEnd);
   RawDeflateCompress(inStream, outStream, level);
 
-  outStream.Seek(0, soFromEnd);
+  outStream.Seek(0, soEnd);
   if (StreamType = zsGZip) then // add checksum and size
   begin
     outStream.WriteBuffer(crc,4); // CRC32 (CRC-32)
@@ -208,7 +208,7 @@ begin
     if (FEXTRA in flags) then // extra field is present
     begin
       inStream.ReadBuffer(len, 2); // extra field length
-      inStream.Seek(len, soFromCurrent);// jump over extra field
+      inStream.Seek(len, soCurrent);// jump over extra field
       // parse subfields
       // |SI1|SI2|  LEN  |... LEN bytes of subfield data ...|
       // SI1 and SI2 provide a subfield ID
@@ -240,7 +240,7 @@ begin
         ;// header checksum mistake
     end;
     headerSize := inStream.Position;
-    inStream.Seek(-8, soFromEnd);
+    inStream.Seek(-8, soEnd);
     inStream.ReadBuffer(crcGZin, 4); // CRC32 (CRC-32)
     inStream.ReadBuffer(sizeGZin, 4); // ISIZE (Input SIZE)
     //inStream.Size := inStream.Size-8; // cut the 4 byte crc32 and 4 byte input size
@@ -249,7 +249,7 @@ begin
   begin
     streamType := zsZLib; // deflate format (with header)
     headerSize := 2;
-    inStream.Seek(-4, soFromEnd); // first byte is start of deflate header
+    inStream.Seek(-4, soEnd); // first byte is start of deflate header
     inStream.ReadBuffer(d, 4);
     adler32in := SwapEndian(d);
     //inStream.Size := inStream.Size-4; // cut the 4 byte adler32 code

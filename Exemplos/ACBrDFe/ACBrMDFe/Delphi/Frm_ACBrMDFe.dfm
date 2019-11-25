@@ -360,7 +360,7 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +370,7 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +380,7 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +390,7 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -501,7 +501,7 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -540,7 +540,7 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -692,7 +692,7 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1330,7 +1330,7 @@ object frmACBrMDFe: TfrmACBrMDFe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsEnvios
+      ActivePage = tsEventos
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet
@@ -1524,22 +1524,13 @@ object frmACBrMDFe: TfrmACBrMDFe
           TabOrder = 3
           OnClick = btnImprimirEventoClick
         end
-        object btnEnviarEventoEmail: TButton
-          Left = 374
-          Top = 71
-          Width = 177
-          Height = 25
-          Caption = 'Enviar Evento Email'
-          TabOrder = 4
-          OnClick = btnEnviarEventoEmailClick
-        end
         object btnGerarPDFEvento: TButton
           Left = 191
           Top = 71
           Width = 177
           Height = 25
           Caption = 'Gerar PDF Evento'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = btnGerarPDFEventoClick
         end
         object btnInclusaoCondutor: TButton
@@ -1548,7 +1539,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Height = 25
           Caption = 'Inclus'#227'o de Condutor'
-          TabOrder = 6
+          TabOrder = 5
           OnClick = btnInclusaoCondutorClick
         end
         object btnInclusaoDFe: TButton
@@ -1557,7 +1548,7 @@ object frmACBrMDFe: TfrmACBrMDFe
           Width = 177
           Height = 25
           Caption = 'Inclus'#227'o de DFe'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = btnInclusaoDFeClick
         end
       end

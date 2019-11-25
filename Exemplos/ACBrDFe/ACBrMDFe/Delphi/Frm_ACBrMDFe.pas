@@ -176,7 +176,6 @@ type
     btnCancelarChave: TButton;
     btnEncerramento: TButton;
     btnImprimirEvento: TButton;
-    btnEnviarEventoEmail: TButton;
     tsDistribuicao: TTabSheet;
     btnDistribuicaoDFe: TButton;
     pgRespostas: TPageControl;
@@ -251,7 +250,6 @@ type
     procedure btnCancelarChaveClick(Sender: TObject);
     procedure btnEncerramentoClick(Sender: TObject);
     procedure btnImprimirEventoClick(Sender: TObject);
-    procedure btnEnviarEventoEmailClick(Sender: TObject);
     procedure btnDistribuicaoDFeClick(Sender: TObject);
     procedure ACBrMDFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btnCriarEnviarClick(Sender: TObject);
@@ -929,7 +927,7 @@ begin
   with MemoDados do
   begin
     Lines.Add('');
-    Lines.Add('Envio CTe');
+    Lines.Add('Envio MDFe');
     Lines.Add('tpAmb: '     + TpAmbToStr(ACBrMDFe1.WebServices.Retorno.tpAmb));
     Lines.Add('verAplic: '  + ACBrMDFe1.WebServices.Retorno.verAplic);
     Lines.Add('cStat: '     + IntToStr(ACBrMDFe1.WebServices.Retorno.cStat));
@@ -973,9 +971,9 @@ begin
 
   // Par‚metros do mÈtodo Enviar:
   // 1o = N˙mero do Lote
-  // 2o = Se True imprime automaticamente o DACTE
+  // 2o = Se True imprime automaticamente o DAMDFE
   // 3o = Se True o envio È no modo SÌncrono, caso contrario AssÌncrono.
-  // Obs: no modo SÌncrono sÛ podemos enviar UM CT-e por vez.
+  // Obs: no modo SÌncrono sÛ podemos enviar UM MDF-e por vez.
   ACBrMDFe1.Enviar(StrToInt(vNumLote), True, True);
 
   MemoResp.Lines.Text   := ACBrMDFe1.WebServices.Enviar.RetWS;
@@ -988,7 +986,7 @@ begin
   with MemoDados do
   begin
     Lines.Add('');
-    Lines.Add('Envio CTe');
+    Lines.Add('Envio MDFe');
     Lines.Add('tpAmb: '     + TpAmbToStr(ACBrMDFe1.WebServices.Enviar.tpAmb));
     Lines.Add('verAplic: '  + ACBrMDFe1.WebServices.Enviar.verAplic);
     Lines.Add('cStat: '     + IntToStr(ACBrMDFe1.WebServices.Enviar.cStat));
@@ -1007,12 +1005,8 @@ end;
 
 procedure TfrmACBrMDFe.btnDistribuicaoDFeClick(Sender: TObject);
 var
-  cUFAutor, CNPJ, ultNSU, ANSU: string;
+  CNPJ, ultNSU, ANSU: string;
 begin
-  cUFAutor := '';
-  if not(InputQuery('WebServices DistribuiÁ„o Documentos Fiscais', 'CÛdigo da UF do Autor', cUFAutor)) then
-     exit;
-
   CNPJ := '';
   if not(InputQuery('WebServices DistribuiÁ„o Documentos Fiscais', 'CNPJ/CPF do interessado no DF-e', CNPJ)) then
      exit;
@@ -1057,87 +1051,28 @@ begin
     CC:=TstringList.Create;
 
     try
-      CC.Add('andrefmoraes@gmail.com'); //especifique um email v√°lido
-      CC.Add('anfm@zipmail.com.br');    //especifique um email v√°lido
+      CC.Add('andrefmoraes@gmail.com'); //especifique um email valido
+      CC.Add('anfm@zipmail.com.br');    //especifique um email valido
 
       ACBrMail1.Host := edtSmtpHost.Text;
       ACBrMail1.Port := edtSmtpPort.Text;
       ACBrMail1.Username := edtSmtpUser.Text;
       ACBrMail1.Password := edtSmtpPass.Text;
       ACBrMail1.From := edtSmtpUser.Text;
-      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conex√£o Segura
+      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
       ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
-      ACBrMail1.ReadingConfirmation := False; //Pede confirma√ß√£o de leitura do email
-      ACBrMail1.UseThread := False;           //Aguarda Envio do Email(n√£o usa thread)
+      ACBrMail1.ReadingConfirmation := False; //Pede confirmacao de leitura do email
+      ACBrMail1.UseThread := False;           //Aguarda Envio do Email(nao usa thread)
       ACBrMail1.FromName := 'Projeto ACBr - ACBrMDFe';
 
       ACBrMDFe1.Manifestos.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
                                                mmEmailMsg.Lines
                                                , True  // Enviar PDF junto
-                                               , CC    // Lista com emails que ser√£o enviado c√≥pias - TStrings
+                                               , CC    // Lista com emails que serao enviado copias - TStrings
                                                , nil); // Lista de anexos - TStrings
     finally
       CC.Free;
     end;
-  end;
-end;
-
-procedure TfrmACBrMDFe.btnEnviarEventoEmailClick(Sender: TObject);
-var
-  Para: String;
-  CC, Evento: Tstrings;
-begin
-  if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
-    exit;
-
-  OpenDialog1.Title := 'Selecione a MDFe';
-  OpenDialog1.DefaultExt := '*-MDFe.XML';
-  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.XML)|*-MDFe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
-
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-  begin
-    ACBrMDFe1.Manifestos.Clear;
-    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-  end;
-
-  OpenDialog1.Title := 'Selecione ao Evento';
-  OpenDialog1.DefaultExt := '*.XML';
-  OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
-
-  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-  begin
-    Evento := TStringList.Create;
-    Evento.Clear;
-    Evento.Add(OpenDialog1.FileName);
-    ACBrMDFe1.EventoMDFe.Evento.Clear;
-    ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
-
-    CC:=TstringList.Create;
-    CC.Add('andrefmoraes@gmail.com'); //especifique um email v√°lido
-    CC.Add('anfm@zipmail.com.br');    //especifique um email v√°lido
-    //TODO:
-    ////ACBrMDFe1.EnviarEmailEvento(edtSmtpHost.Text
-    ////                         , edtSmtpPort.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , edtSmtpPass.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , Para
-    ////                         , edtEmailAssunto.Text
-    ////                         , mmEmailMsg.Lines
-    ////                         , cbEmailSSL.Checked // SSL - Conex√£o Segura
-    ////                         , True //Enviar PDF junto
-    ////                         , CC //Lista com emails que ser√£o enviado c√≥pias - TStrings
-    ////                         , Evento // Lista de anexos - TStrings
-    ////                         , False  //Pede confirma√ß√£o de leitura do email
-    ////                         , False  //Aguarda Envio do Email(n√£o usa thread)
-    ////                         , 'ACBrMDFe2' // Nome do Rementente
-    ////                         , cbEmailSSL.Checked ); // Auto TLS
-    CC.Free;
-    Evento.Free;
   end;
 end;
 
@@ -1158,7 +1093,7 @@ begin
     if OpenDialog1.Execute then
       ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
 
-    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
+    CarregarMaisXML := MessageDlg('Carregar mais Manifestos?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
 
   ACBrMDFe1.Manifestos.ImprimirPDF;
@@ -1194,7 +1129,7 @@ procedure TfrmACBrMDFe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux)) then
     exit;
 
   ACBrMDFe1.Manifestos.Clear;
@@ -1560,7 +1495,7 @@ begin
       if ACBrMDFe1.Manifestos.Items[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrMDFe1.Manifestos.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal EletrÙnica Valida');
+      ShowMessage('Manifesto de Documentos Fiscais EletrÙnicos Valido');
     except
       on E: Exception do
       begin
@@ -1751,8 +1686,8 @@ begin
 
     StreamMemo.Free;
 
-    Ini.WriteInteger('DAMDFe', 'Tipo',      rgTipoDaMDFe.ItemIndex);
-    Ini.WriteString( 'DAMDFe', 'LogoMarca', edtLogoMarca.Text);
+    Ini.WriteInteger('DAMDFE', 'Tipo',      rgTipoDaMDFe.ItemIndex);
+    Ini.WriteString( 'DAMDFE', 'LogoMarca', edtLogoMarca.Text);
 
     ConfigurarComponente;
   finally

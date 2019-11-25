@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="2699"/>
-        <CursorPos X="63" Y="2712"/>
+        <TopLine Value="1288"/>
+        <CursorPos X="21" Y="1110"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -138,15 +138,15 @@
       </Position23>
       <Position24>
         <Filename Value="Frm_ACBrCTe.pas"/>
-        <Caret Line="1757" Column="21" TopLine="1930"/>
+        <Caret Line="1952" Column="19" TopLine="1940"/>
       </Position24>
       <Position25>
         <Filename Value="Frm_ACBrCTe.pas"/>
-        <Caret Line="1952" Column="19" TopLine="1940"/>
+        <Caret Line="2636" Column="80" TopLine="2621"/>
       </Position25>
       <Position26>
         <Filename Value="Frm_ACBrCTe.pas"/>
-        <Caret Line="2189" Column="19" TopLine="2479"/>
+        <Caret Line="2610" Column="67" TopLine="2815"/>
       </Position26>
     </JumpHistory>
     <RunParams>

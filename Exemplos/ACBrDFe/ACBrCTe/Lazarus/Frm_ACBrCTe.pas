@@ -1107,7 +1107,7 @@ procedure TfrmACBrCTe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
-  if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da CT-e', Chave)) then
+  if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave do CT-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
   idLote := '1';
@@ -1413,7 +1413,7 @@ begin
 
     with ACBrCTe1.EventoCTe.Evento.New do
     begin
-      // Para o Evento de Cancelamento: nSeqEvento sempre = 1
+      // Para o Evento: nSeqEvento sempre = 1
       infEvento.nSeqEvento      := 1;
       infEvento.chCTe           := Copy(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.Id, 4, 44);
       infEvento.CNPJ            := edtEmitCNPJ.Text;
@@ -1489,7 +1489,7 @@ procedure TfrmACBrCTe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
-  if not(InputQuery('WebServices Consultar', 'Chave da CT-e:', vChave)) then
+  if not(InputQuery('WebServices Consultar', 'Chave do CT-e:', vChave)) then
     exit;
 
   ACBrCTe1.Conhecimentos.Clear;
@@ -1782,24 +1782,24 @@ begin
     CC:=TstringList.Create;
 
     try
-      CC.Add('andrefmoraes@gmail.com'); //especifique um email vÃ¡lido
-      CC.Add('anfm@zipmail.com.br');    //especifique um email vÃ¡lido
+      CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
+      CC.Add('anfm@zipmail.com.br');    // especifique um email valido
 
       ACBrMail1.Host := edtSmtpHost.Text;
       ACBrMail1.Port := edtSmtpPort.Text;
       ACBrMail1.Username := edtSmtpUser.Text;
       ACBrMail1.Password := edtSmtpPass.Text;
       ACBrMail1.From := edtSmtpUser.Text;
-      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - ConexÃ£o Segura
+      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
       ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
-      ACBrMail1.ReadingConfirmation := False; //Pede confirmaÃ§Ã£o de leitura do email
-      ACBrMail1.UseThread := False;           //Aguarda Envio do Email(nÃ£o usa thread)
+      ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+      ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
       ACBrMail1.FromName := 'Projeto ACBr - ACBrCTe';
 
       ACBrCTe1.Conhecimentos.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
                                                mmEmailMsg.Lines
                                                , True  // Enviar PDF junto
-                                               , CC    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+                                               , CC    // Lista com emails que serao enviado copias - TStrings
                                                , nil); // Lista de anexos - TStrings
     finally
       CC.Free;
@@ -1842,25 +1842,15 @@ begin
     ACBrCTe1.EventoCTe.LerXML(OpenDialog1.FileName);
 
     CC:=TstringList.Create;
-    CC.Add('andrefmoraes@gmail.com'); //especifique um email vÃ¡lido
-    CC.Add('anfm@zipmail.com.br');    //especifique um email vÃ¡lido
-    //TODO:
-    ////ACBrCTe1.EnviarEmailEvento(edtSmtpHost.Text
-    ////                         , edtSmtpPort.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , edtSmtpPass.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , Para
-    ////                         , edtEmailAssunto.Text
-    ////                         , mmEmailMsg.Lines
-    ////                         , cbEmailSSL.Checked // SSL - ConexÃ£o Segura
-    ////                         , True //Enviar PDF junto
-    ////                         , CC //Lista com emails que serÃ£o enviado cÃ³pias - TStrings
-    ////                         , Evento // Lista de anexos - TStrings
-    ////                         , False  //Pede confirmaÃ§Ã£o de leitura do email
-    ////                         , False  //Aguarda Envio do Email(nÃ£o usa thread)
-    ////                         , 'ACBrCTe2' // Nome do Rementente
-    ////                         , cbEmailSSL.Checked ); // Auto TLS
+    CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
+    CC.Add('anfm@zipmail.com.br');    // especifique um email valido
+
+    ACBrCTe1.EnviarEmailEvento(Para, edtEmailAssunto.Text, mmEmailMsg.Lines,
+                               nil, // Lista com emails que serao enviado copias - TStrings
+                               nil, // Lista de anexos - TStrings
+                               nil  // ReplyTo
+                               );
+
     CC.Free;
     Evento.Free;
   end;
@@ -1883,7 +1873,7 @@ begin
     if OpenDialog1.Execute then
       ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
-    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
+    CarregarMaisXML := MessageDlg('Carregar mais Conhecimentos?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
 
   ACBrCTe1.Conhecimentos.ImprimirPDF;
@@ -1933,7 +1923,7 @@ procedure TfrmACBrCTe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
-  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
+  if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
     exit;
 
   ACBrCTe1.Conhecimentos.Clear;
@@ -1984,7 +1974,7 @@ end;
 
 procedure TfrmACBrCTe.btnImprimirClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
   OpenDialog1.Filter := 'Arquivos CTe (*-CTe.XML)|*-CTe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -2000,7 +1990,7 @@ end;
 
 procedure TfrmACBrCTe.btnImprimirEventoClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
   OpenDialog1.Filter := 'Arquivos CTe (*-CTe.XML)|*-CTe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -2213,7 +2203,7 @@ procedure TfrmACBrCTe.btnValidarAssinaturaClick(Sender: TObject);
 var
   Msg: String;
 begin
-  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
   OpenDialog1.Filter := 'Arquivos CTe (*-CTe.XML)|*-CTe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -2248,7 +2238,7 @@ var
   Inicio: TDateTime;
   Ok: Boolean;
 begin
-  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
   OpenDialog1.Filter := 'Arquivos CTe (*-CTe.XML)|*-CTe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -2274,7 +2264,7 @@ end;
 
 procedure TfrmACBrCTe.btnValidarXMLClick(Sender: TObject);
 begin
-  OpenDialog1.Title := 'Selecione a CTe';
+  OpenDialog1.Title := 'Selecione o CTe';
   OpenDialog1.DefaultExt := '*-CTe.XML';
   OpenDialog1.Filter := 'Arquivos CTe (*-CTe.XML)|*-CTe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
 
@@ -2295,7 +2285,7 @@ begin
       if ACBrCTe1.Conhecimentos.Items[0].Alertas <> '' then
         MemoDados.Lines.Add('Alertas: '+ACBrCTe1.Conhecimentos.Items[0].Alertas);
 
-      ShowMessage('Nota Fiscal Eletrônica Valida');
+      ShowMessage('Conhecimento de Transporte Eletrônico Valido');
     except
       on E: Exception do
       begin
@@ -2494,8 +2484,8 @@ begin
 
     StreamMemo.Free;
 
-    Ini.WriteInteger('DACTe', 'Tipo',      rgTipoDaCTe.ItemIndex);
-    Ini.WriteString( 'DACTe', 'LogoMarca', edtLogoMarca.Text);
+    Ini.WriteInteger('DACTE', 'Tipo',      rgTipoDaCTe.ItemIndex);
+    Ini.WriteString( 'DACTE', 'LogoMarca', edtLogoMarca.Text);
 
     ConfigurarComponente;
   finally
@@ -2602,7 +2592,7 @@ begin
     edtEmitComp.Text       := Ini.ReadString('Emitente', 'Complemento', '');
     edtEmitBairro.Text     := Ini.ReadString('Emitente', 'Bairro',      '');
     edtEmitCodCidade.Text  := Ini.ReadString('Emitente', 'CodCidade',   '');
-    edtEmitCidade.Text     := Ini.ReadString( 'Emitente', 'Cidade',      '');
+    edtEmitCidade.Text     := Ini.ReadString('Emitente', 'Cidade',      '');
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');
@@ -2617,8 +2607,8 @@ begin
     mmEmailMsg.Lines.LoadFromStream(StreamMemo);
     StreamMemo.Free;
 
-    rgTipoDaCTe.ItemIndex := Ini.ReadInteger('DACTe', 'Tipo',       0);
-    edtLogoMarca.Text     := Ini.ReadString( 'DACTe', 'LogoMarca',  '');
+    rgTipoDaCTe.ItemIndex := Ini.ReadInteger('DACTE', 'Tipo',      0);
+    edtLogoMarca.Text     := Ini.ReadString( 'DACTE', 'LogoMarca', '');
 
     ConfigurarComponente;
   finally

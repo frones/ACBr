@@ -360,7 +360,7 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +370,7 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +380,7 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +390,7 @@ object frmACBrNFe: TfrmACBrNFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -522,7 +522,7 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -553,7 +553,7 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -569,7 +569,7 @@ object frmACBrNFe: TfrmACBrNFe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -735,7 +735,7 @@ object frmACBrNFe: TfrmACBrNFe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
+                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1483,7 +1483,7 @@ object frmACBrNFe: TfrmACBrNFe
             Width = 233
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 1
           end
           object cbxPorta: TComboBox
@@ -1491,7 +1491,7 @@ object frmACBrNFe: TfrmACBrNFe
             Top = 88
             Width = 201
             Height = 21
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 2
           end
           object cbxPagCodigo: TComboBox
@@ -1500,7 +1500,7 @@ object frmACBrNFe: TfrmACBrNFe
             Width = 101
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
           object seColunas: TSpinEdit

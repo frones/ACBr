@@ -1854,24 +1854,24 @@ begin
     CC:=TstringList.Create;
 
     try
-      CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
-      CC.Add('anfm@zipmail.com.br');    //especifique um email válido
+      CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
+      CC.Add('anfm@zipmail.com.br');    // especifique um email valido
 
       ACBrMail1.Host := edtSmtpHost.Text;
       ACBrMail1.Port := edtSmtpPort.Text;
       ACBrMail1.Username := edtSmtpUser.Text;
       ACBrMail1.Password := edtSmtpPass.Text;
       ACBrMail1.From := edtSmtpUser.Text;
-      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexão Segura
+      ACBrMail1.SetSSL := cbEmailSSL.Checked; // SSL - Conexao Segura
       ACBrMail1.SetTLS := cbEmailSSL.Checked; // Auto TLS
-      ACBrMail1.ReadingConfirmation := False; //Pede confirmação de leitura do email
-      ACBrMail1.UseThread := False;           //Aguarda Envio do Email(não usa thread)
+      ACBrMail1.ReadingConfirmation := False; // Pede confirmacao de leitura do email
+      ACBrMail1.UseThread := False;           // Aguarda Envio do Email(nao usa thread)
       ACBrMail1.FromName := 'Projeto ACBr - ACBrNFe';
 
       ACBrNFe1.NotasFiscais.Items[0].EnviarEmail( Para, edtEmailAssunto.Text,
                                                mmEmailMsg.Lines
                                                , True  // Enviar PDF junto
-                                               , CC    // Lista com emails que serão enviado cópias - TStrings
+                                               , CC    // Lista com emails que serao enviado copias - TStrings
                                                , nil); // Lista de anexos - TStrings
     finally
       CC.Free;
@@ -1914,25 +1914,15 @@ begin
     ACBrNFe1.EventoNFe.LerXML(OpenDialog1.FileName);
 
     CC:=TstringList.Create;
-    CC.Add('andrefmoraes@gmail.com'); //especifique um email válido
-    CC.Add('anfm@zipmail.com.br');    //especifique um email válido
-    //TODO:
-    ////ACBrNFe1.EnviarEmailEvento(edtSmtpHost.Text
-    ////                         , edtSmtpPort.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , edtSmtpPass.Text
-    ////                         , edtSmtpUser.Text
-    ////                         , Para
-    ////                         , edtEmailAssunto.Text
-    ////                         , mmEmailMsg.Lines
-    ////                         , cbEmailSSL.Checked // SSL - Conexão Segura
-    ////                         , True //Enviar PDF junto
-    ////                         , CC //Lista com emails que serão enviado cópias - TStrings
-    ////                         , Evento // Lista de anexos - TStrings
-    ////                         , False  //Pede confirmação de leitura do email
-    ////                         , False  //Aguarda Envio do Email(não usa thread)
-    ////                         , 'ACBrNFe2' // Nome do Rementente
-    ////                         , cbEmailSSL.Checked ); // Auto TLS
+    CC.Add('andrefmoraes@gmail.com'); // especifique um email valido
+    CC.Add('anfm@zipmail.com.br');    // especifique um email valido
+
+    ACBrNFe1.EnviarEmailEvento(Para, edtEmailAssunto.Text, mmEmailMsg.Lines,
+                               nil, // Lista com emails que serao enviado copias - TStrings
+                               nil, // Lista de anexos - TStrings
+                               nil  // ReplyTo
+                               );
+
     CC.Free;
     Evento.Free;
   end;
@@ -3455,7 +3445,7 @@ begin
     edtEmitComp.Text       := Ini.ReadString('Emitente', 'Complemento', '');
     edtEmitBairro.Text     := Ini.ReadString('Emitente', 'Bairro',      '');
     edtEmitCodCidade.Text  := Ini.ReadString('Emitente', 'CodCidade',   '');
-    edtEmitCidade.Text     := Ini.ReadString( 'Emitente', 'Cidade',      '');
+    edtEmitCidade.Text     := Ini.ReadString('Emitente', 'Cidade',      '');
     edtEmitUF.Text         := Ini.ReadString('Emitente', 'UF',          '');
 
     edtSmtpHost.Text     := Ini.ReadString('Email', 'Host',    '');

@@ -351,8 +351,7 @@ type
 implementation
 
 uses 
-  pcnAuxiliar,
-  ACBrUtil, pcnGerador;
+  ACBrUtil;
 
 { TitensAverbadosCollection }
 

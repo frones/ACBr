@@ -49,6 +49,15 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+22/11/2019
+-- ACBrBoletoFCFortesFr --
+[*] Ajuste no Layout de impressão Carne, adicionado ordem correta dos dados Cedente
+https://www.projetoacbr.com.br/forum/topic/54525-d%C3%BAvida-na-impress%C3%A3o-boleto/
+
+-- ACBrBancoBanrisul --
+[*] Ajuste no Layout Remessa CNAB240 conforme manual (Tamanho da Conta, dígito)
+https://www.projetoacbr.com.br/forum/topic/52770-boletos-banrisul/
+
 20/11/2019
 -- ACBrBoleto --
 [+] Adicionado parametro interno no método EnviarEmail, para permitir enviar imagens em anexo vinculado ao corpo HTML.
@@ -56,7 +65,6 @@ Para isso é necessário passar a tag HTML com o path da imagem, assim como é pass
 https://www.projetoacbr.com.br/forum/topic/54924-enviaremail/
 
 14/11/2019
-
 -- ACBrBancoBradesco --
 [*] Adicionado novos códigos de ocorrência para CNAB240
 https://www.projetoacbr.com.br/forum/topic/54527-erro-leitura-retorno-bradesco-240/

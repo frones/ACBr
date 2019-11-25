@@ -1,7 +1,7 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
-  Left = 302
+  Left = 400
   Height = 705
-  Top = 139
+  Top = 214
   Width = 1366
   Caption = 'ACBRBoletoFCFortesFr'
   ClientHeight = 705
@@ -12,7 +12,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '2.0.6.0'
   object BoletoReciboTopo: TRLReport
     Left = 0
     Height = 1123
@@ -10814,10 +10814,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object txtNomeCedente: TRLLabel
-        Left = 154
+        Left = 200
         Height = 13
-        Top = 80
-        Width = 412
+        Top = 71
+        Width = 365
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -9
@@ -11121,10 +11121,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         RealBounds.Height = 0
       end
       object txtEndCedenteCarne: TRLLabel
-        Left = 198
+        Left = 155
         Height = 12
-        Top = 71
-        Width = 368
+        Top = 81
+        Width = 409
         AutoSize = False
         Caption = 'Endereco Cedente'
         Font.Color = clBlack

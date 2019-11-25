@@ -49,7 +49,7 @@ uses
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto, ACBrBase, RLRichText ;
+  ACBrBoleto, ACBrBase;
 
 type
 

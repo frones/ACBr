@@ -33,7 +33,7 @@ object frmStatus: TfrmStatus
       Height = 17
       Align = alTop
       AutoSize = False
-      Caption = 'Status do componente ACBrNFSe'
+      Caption = 'Status do componente ACBrNFe'
       Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -48,17 +48,11 @@ object frmStatus: TfrmStatus
     object lblStatus: TLabel
       Left = 2
       Top = 19
-      Width = 477
-      Height = 24
+      Width = 3
+      Height = 13
       Align = alClient
       Color = clGray
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -15
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
       ParentColor = False
-      ParentFont = False
       Layout = tlCenter
     end
   end

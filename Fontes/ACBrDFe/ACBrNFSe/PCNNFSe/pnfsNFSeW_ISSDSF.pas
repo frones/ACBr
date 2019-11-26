@@ -181,8 +181,8 @@ begin
       Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
 
       sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].TipoDeducao,
-                                            ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
-                                            [tdNenhum, tdMateriais, tdSubEmpreitada]);
+                                            ['', 'Despesas com Materiais', 'Despesas com Subempreitada', 'Deducao de Valor'],
+                                            [tdNenhum, tdMateriais, tdSubEmpreitada, tdValor]);
       Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
 
       Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, OnlyNumber(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');

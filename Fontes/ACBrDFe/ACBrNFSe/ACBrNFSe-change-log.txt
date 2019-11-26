@@ -49,6 +49,9 @@ Símbolo : Significado
 
 26/11/2019
 -- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/55041-tipo-de-deducao-nao-encontrado-ou-invalido/
+   Por: Danilo MS
+-- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/55055-cancelamento-provedor-ipm/
    Por: Marcio st
 -- ACBrNFSeWebServices --

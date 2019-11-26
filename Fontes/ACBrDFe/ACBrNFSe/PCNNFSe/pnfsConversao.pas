@@ -92,7 +92,7 @@ type
   TnfseSituacaoLoteRPS = ( slrNaoRecibo, slrNaoProcessado, slrProcessadoErro, slrProcessadoSucesso );
 
   TnfseDeducaoPor = ( dpNenhum, dpPercentual, dpValor );
-  TnfseTipoDeducao = ( tdNenhum, tdMateriais, tdSubEmpreitada );
+  TnfseTipoDeducao = ( tdNenhum, tdMateriais, tdSubEmpreitada, tdValor );
 
   TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
                     proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,

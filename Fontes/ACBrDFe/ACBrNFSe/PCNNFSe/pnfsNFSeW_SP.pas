@@ -229,7 +229,7 @@ begin
   GerarConstrucaoCivil;
 
   if (FProvedor = proSP) and (NFSe.TipoTributacaoRPS  <> ttTribnoMun) then
-    Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.CodigoMunicipio, '');
+    Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.MunicipioIncidencia, '');
 
   Gerador.wGrupoNFSe('/RPS');
 end;

@@ -1518,7 +1518,7 @@ begin
     ProcSucesso := False;
     for i := 0 to FRetornoNFSe.ListaNFSe.MsgRetorno.Count - 1 do
     begin
-      if fProvedor = proNotaBlu then
+      if fProvedor in [proNotaBlu, proSP] then
       begin
         FNotasFiscais.Items[0].NFSe.Numero := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.Numero;
         FNotasFiscais.Items[0].NFSe.CodigoVerificacao := FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].ChaveNFeRPS.CodigoVerificacao;
@@ -1570,11 +1570,12 @@ begin
 
   case Fprovedor of
     proNotaBlu,
+    proSP,
     proGiap: Result := (UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true'));
 
     proISSDSF: Result := Alerta203 or (FDataRecebimento <> 0);
 
-    proEgoverneISS, 
+    proEgoverneISS,
     proiiBrasilv2: Result := ProcSucesso;
   else
     Result := (FDataRecebimento <> 0);

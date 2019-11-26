@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2019
+-- ACBrNFSeWebServices --
+[*] Possível ajuste para evitar a exibição de uma tela em branco após o envio
+    de RPS pelo método Gerar para o webservice do provedor SP.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeW_SP --
+[*] https://www.projetoacbr.com.br/forum/topic/55000-municipioprestacao-do-servi%C3%A7o/
+   Por: Antonio Alexandre
+
 22/11/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/54949-joinville-n%C3%A3o-emite-nota-para-estrangeiro/

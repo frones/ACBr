@@ -208,6 +208,7 @@ type
     btnConsultarNFSeRPS: TButton;
     btnConsultarNFSePeriodo: TButton;
     btnCancNFSe: TButton;
+    procedure cbCidadesChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFSeClick(Sender: TObject);
@@ -1192,6 +1193,17 @@ begin
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 2;
+end;
+
+procedure TfrmACBrNFSe.cbCidadesChange(Sender: TObject);
+var
+  Tamanho: Integer;
+begin
+  Tamanho := Length(Trim(cbCidades.Text));
+
+  edtEmitCidade.Text := Copy(cbCidades.Text, 1, Tamanho - 11);
+  edtEmitUF.Text := Copy(cbCidades.Text, Tamanho - 1, 2);
+  edtCodCidade.Text := Copy(cbCidades.Text, Tamanho - 9, 7);
 end;
 
 procedure TfrmACBrNFSe.GravarConfiguracao;

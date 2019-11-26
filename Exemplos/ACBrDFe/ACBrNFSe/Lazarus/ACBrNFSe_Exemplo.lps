@@ -20,8 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="361"/>
-        <CursorPos X="57" Y="277"/>
+        <TopLine Value="1192"/>
+        <CursorPos Y="1207"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -45,7 +45,7 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
     </Units>
-    <JumpHistory Count="24" HistoryIndex="23">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="Frm_ACBrNFSe.pas"/>
         <Caret Line="5" Column="29"/>
@@ -142,6 +142,10 @@
         <Filename Value="Frm_ACBrNFSe.pas"/>
         <Caret Line="240" Column="61" TopLine="227"/>
       </Position24>
+      <Position25>
+        <Filename Value="Frm_ACBrNFSe.pas"/>
+        <Caret Line="278" Column="57" TopLine="278"/>
+      </Position25>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

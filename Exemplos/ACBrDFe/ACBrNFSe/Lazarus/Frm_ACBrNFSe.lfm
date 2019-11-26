@@ -1330,6 +1330,7 @@ object frmACBrNFSe: TfrmACBrNFSe
                 'Votuporanga/3557105/SP'
                 'Nova Serrana/3145208/MG'
               )
+              OnChange = cbCidadesChange
               TabOrder = 10
               Text = 'Selecione uma Cidade'
             end

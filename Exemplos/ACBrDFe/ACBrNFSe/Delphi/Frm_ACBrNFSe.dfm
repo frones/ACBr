@@ -1,6 +1,6 @@
 object frmACBrNFSe: TfrmACBrNFSe
-  Left = 249
-  Top = 82
+  Left = 282
+  Top = 118
   Width = 882
   Height = 651
   Caption = 'ACBrNFSe - Programa Exemplo'
@@ -96,7 +96,7 @@ object frmACBrNFSe: TfrmACBrNFSe
           Top = 0
           Width = 287
           Height = 476
-          ActivePage = TabSheet12
+          ActivePage = TabSheet4
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -360,7 +360,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +370,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +380,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +390,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -535,7 +535,7 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -688,7 +688,7 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 4
                 OnChange = cbSSLTypeChange
               end
@@ -1079,6 +1079,7 @@ object frmACBrNFSe: TfrmACBrNFSe
               ItemHeight = 13
               TabOrder = 10
               Text = 'Selecione uma Cidade'
+              OnChange = cbCidadesChange
               Items.Strings = (
                 'Alfenas/3101607/MG'
                 'Americana/3501608/SP'

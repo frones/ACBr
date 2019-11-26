@@ -248,6 +248,7 @@ type
     procedure btnConsultarNFSeRPSClick(Sender: TObject);
     procedure btnConsultarNFSePeriodoClick(Sender: TObject);
     procedure btnCancNFSeClick(Sender: TObject);
+    procedure cbCidadesChange(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1689,6 +1690,17 @@ end;
 procedure TfrmACBrNFSe.spPathSchemasClick(Sender: TObject);
 begin
   PathClick(edtPathSchemas);
+end;
+
+procedure TfrmACBrNFSe.cbCidadesChange(Sender: TObject);
+var
+  Tamanho: Integer;
+begin
+  Tamanho := Length(Trim(cbCidades.Text));
+
+  edtEmitCidade.Text := Copy(cbCidades.Text, 1, Tamanho - 11);
+  edtEmitUF.Text := Copy(cbCidades.Text, Tamanho - 1, 2);
+  edtCodCidade.Text := Copy(cbCidades.Text, Tamanho - 9, 7);
 end;
 
 end.

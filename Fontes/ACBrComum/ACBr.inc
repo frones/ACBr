@@ -124,6 +124,7 @@
    {$DEFINE SUPPORTS_DEPRECATED_DETAILS}
    {$UnDef FPC2}
   {$ENDIF}
+  {$UNDEF REMOVE_CAST_WARN} //Devido a problemas com a mensagem de erro "Message recordind not yet supported"
 {$ELSE}
   {$DEFINE BORLAND}
 {$ENDIF}

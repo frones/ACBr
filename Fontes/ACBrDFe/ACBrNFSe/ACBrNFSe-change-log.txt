@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/11/2019
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/55055-cancelamento-provedor-ipm/
+   Por: Marcio st
 -- ACBrNFSeWebServices --
 [*] Possível ajuste para evitar a exibição de uma tela em branco após o envio
     de RPS pelo método Gerar para o webservice do provedor SP.

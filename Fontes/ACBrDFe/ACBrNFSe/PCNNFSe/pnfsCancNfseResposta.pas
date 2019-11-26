@@ -151,8 +151,7 @@ type
     function LerXml_proGoverna: Boolean;
     function LerXml_proSMARAPD: Boolean;
     function LerXml_proGIAP: Boolean;
-
-    // 14/10/2019
+    function LerXml_proIPM: Boolean;
     function LerXml_proAssessorPublico: Boolean;
 
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -301,7 +300,7 @@ begin
     proGoverna:     Result := LerXml_proGoverna;
     proSMARAPD:     Result := LerXml_proSMARAPD;
     proGiap:        Result := LerXml_proGIAP;
-    // 14/10/2019
+    proIPM:         Result := LerXml_proIPM;
     proAssessorPublico:  Result := LerXml_proAssessorPublico;
   else
     Result := LerXml_ABRASF;
@@ -1062,6 +1061,42 @@ begin
     Result := True;
   except
     result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXml_proIPM: Boolean;
+var
+  sRetorno, sCodigo, sMensagem: String;
+begin
+  Result := False;
+
+  try
+    if (Leitor.rExtrai(1, 'retorno') <> '') and (Leitor.rExtrai(1, 'mensagem') <> '') then
+    begin
+      sRetorno  := Leitor.rCampo(tcStr, 'codigo');
+      sCodigo   := Trim(Copy(sRetorno, 1, PosAt('-', sRetorno, 1) - 1));
+      sMensagem := Trim(Copy(sRetorno, PosAt('-', sRetorno, 1) + 1, Length(sRetorno)));
+
+      if StrToIntDef(sCodigo, 0) = 1 then
+      begin
+        InfCanc.Sucesso  := 'True';
+        InfCanc.DataHora := Now;
+        InfCanc.MsgCanc  := sMensagem;
+
+        Result := True;
+      end
+      else
+      begin
+        InfCanc.Sucesso := 'False';
+
+        InfCanc.MsgRetorno.New;
+        InfCanc.MsgRetorno[0].FCodigo   := sCodigo;
+        InfCanc.MsgRetorno[0].FMensagem := sMensagem;
+        InfCanc.MsgRetorno[0].FCorrecao := '';
+      end;
+    end;
+  except
+    Result := False;
   end;
 end;
 

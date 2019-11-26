@@ -1889,6 +1889,22 @@ begin
         Gerador.wCampoNFSe(tcStr, '', 'tipo'   , 1,   8, 1, CodigoCanc, '', True, xAtrib);
         Gerador.wCampoNFSe(tcStr, '', 'obs'    , 1, 100, 1, MotivoCanc, '', True, xAtrib);
       end;
+
+    proIPM:
+      begin
+        Gerador.wGrupoNFSe('nfse');
+        Gerador.wGrupoNFSe('nf');
+        Gerador.wCampoNFSe(tcStr, '#1', 'numero', 01, 15, 1, NumeroNfse, '');
+        Gerador.wCampoNFSe(tcStr, '#2', 'situacao', 01, 01, 1, 'C', '');
+        Gerador.wCampoNFSe(tcStr, '#3', 'observacao', 01, 01, 1, MotivoCanc, '');
+        Gerador.wGrupoNFSe('/nf');
+        Gerador.wGrupoNFSe('prestador');
+        Gerador.wCampoNFSe(tcStr, '#1', 'cpfcnpj', 01, 15, 1, Cnpj, '');
+        Gerador.wCampoNFSe(tcInt, '#2', 'cidade', 01, 07, 1, CodMunicipio, '');
+        Gerador.wGrupoNFSe('/prestador');
+        Gerador.wGrupoNFSe('/nfse');
+      end;
+
   else
     begin
       Gerador.Prefixo := Prefixo4;

@@ -8,7 +8,7 @@ uses
   IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
   SynEdit, SynHighlighterXML,
-  ACBrBPe, ACBrBPeDABPeClass, ACBrBPeDABPeESCPOS, ACBrMail, ACBrBase, ACBrUtil,
+  ACBrBPe, ACBrBPeDABPEClass, ACBrBPeDABPeESCPOS, ACBrMail, ACBrBase, ACBrUtil,
   ACBrDFe, ACBrDFeSSL, ACBrDFeReport, ACBrPosPrinter, zlib;
 
 type

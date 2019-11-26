@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, ExtCtrls, StdCtrls,
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
-  ACBrPosPrinter, ACBrBPeDABPeESCPOS, ACBrBPeDABPeClass,
+  ACBrPosPrinter, ACBrBPeDABPeESCPOS, ACBrBPeDABPEClass,
   ACBrDFeReport, ACBrBase, ACBrDFe,
   ACBrBPe, ACBrUtil, ShellAPI, XMLIntf, XMLDoc, zlib;
 

@@ -1,18 +1,18 @@
-unit Unit2;
+unit Frm_SelecionarCertificado;
 
-{$mode objfpc}{$H+}
+{$MODE Delphi}
 
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Grids, ExtCtrls, Buttons;
 
 type
 
   { TfrSelecionarCertificado }
 
-  TfrSelecionarCertificado = class(TForm)
+  TfrmSelecionarCertificado = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     Panel1: TPanel;
@@ -24,7 +24,7 @@ type
   end;
 
 var
-  frSelecionarCertificado: TfrSelecionarCertificado;
+  frmSelecionarCertificado: TfrmSelecionarCertificado;
 
 implementation
 

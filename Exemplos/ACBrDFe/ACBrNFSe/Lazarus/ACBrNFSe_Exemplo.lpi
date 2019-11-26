@@ -1,92 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasUsesSectionForAllUnits Value="False"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Demo_ACBrNFSe"/>
+      <Title Value="ACBrNFSe_Exemplo"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
-    <i18n>
-      <EnableI18N LFM="False"/>
-    </i18n>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
+      <UseFileFilters Value="True"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="9">
       <Item1>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="SynEdit"/>
       </Item1>
       <Item2>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="laz_synapse"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_NFSe_DanfseRL"/>
+        <PackageName Value="PCNComum"/>
       </Item3>
       <Item4>
-        <PackageName Value="TurboPowerIPro"/>
+        <PackageName Value="ACBrComum"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBr_NFSe"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_NFSe_DanfseRL"/>
       </Item7>
+      <Item8>
+        <PackageName Value="ACBr_NFSe"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="LCL"/>
+      </Item9>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
-        <Filename Value="Demo_ACBrNFSe.lpr"/>
+        <Filename Value="ACBrNFSe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="Frm_Demo_ACBrNFSe.pas"/>
+        <Filename Value="Frm_ACBrNFSe.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDemo_ACBrNFSe"/>
+        <ComponentName Value="frmACBrNFSe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="ufrmStatus.pas"/>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="Frm_Status.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
-    <Target>
-      <Filename Value="Demo_ACBrNFSe"/>
-    </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\Fontes\ACBrNFSe"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
-        <SyntaxMode Value="Delphi"/>
+        <SyntaxMode Value="delphi"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>
@@ -101,7 +103,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="3">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -111,9 +113,6 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
-      <Item4>
-        <Name Value="Exception"/>
-      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>

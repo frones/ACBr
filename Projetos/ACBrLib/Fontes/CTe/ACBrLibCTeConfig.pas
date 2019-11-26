@@ -64,7 +64,7 @@ type
   protected
       procedure LerIniChild(const AIni: TCustomIniFile); override;
       procedure GravarIniChild(const AIni: TCustomIniFile); override;
-      procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL); reintroduce;
+      procedure ApplyChild(const DFeReport: TACBrCTeDACTeRL); override;
       procedure DefinirValoresPadroesChild; override;
 
   public
@@ -168,17 +168,17 @@ procedure TDACTeConfig.ApplyChild(const DFeReport: TACBrCTeDACTeRL);
 begin
   with DFeReport do
   begin
-    TipoDACTe := Self.TipoDACTe;
-    ImprimeDescPorc := Self.ImprimeDescPorc;
-    ExibeResumoCanhoto := Self.ExibeResumoCanhoto;
-    PosCanhoto := Self.PosCanhoto;
-    CTeCancelada := Self.CTeCancelada;
-    EPECEnviado := Self.EPECEnviado;
-    ImprimirHoraSaida := Self.ImprimirHoraSaida;
-    ImprimirHoraSaida_Hora := Self.ImprimirHoraSaida_Hora;
-    ProtocoloCTe := Self.ProtocoloCTe;
-    Usuario := Self.Usuario;
-    TamanhoPapel := Self.TamanhoPapel;
+    TipoDACTe := FTipoDACTe;
+    ImprimeDescPorc := FImprimeDescPorc;
+    ExibeResumoCanhoto := FExibeResumoCanhoto;
+    PosCanhoto := FPosCanhoto;
+    CTeCancelada := FCTeCancelada;
+    EPECEnviado := FEPECEnviado;
+    ImprimirHoraSaida := FImprimirHoraSaida;
+    ImprimirHoraSaida_Hora := FImprimirHoraSaida_Hora;
+    ProtocoloCTe := FProtocoloCTe;
+    Usuario := FUsuario;
+    TamanhoPapel := FTamanhoPapel;
   end;
 end;
 

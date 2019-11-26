@@ -1712,10 +1712,12 @@ begin
                                                pLib.Config.CodResposta);
 
       try
-        CTeDM.ConfigurarImpressao(Impressora, False);
+        CTeDM.ConfigurarImpressao(Impressora, False, Protocolo, MostrarPreview);
+
         NumCopias := CTeDM.ACBrCTe1.DACTE.NumCopias;
         if nNumCopias > 0 then
           CTeDM.ACBrCTe1.DACTE.NumCopias := nNumCopias;
+
         CTeDM.ACBrCTe1.Conhecimentos.Imprimir;
         Result := SetRetorno(ErrOK, Resposta.Gerar);
       finally

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/11/2019
+-- ACBrNFSeDANFSeRLClass --
+[*] Possivel correção para a quebra de linha na discriminação dos serviços.
+   Por: Italo Jurisato Junior
+
 12/11/2019
 -- ACBrNFSeDANFSeFR --
 [*] https://www.projetoacbr.com.br/forum/topic/54806-valor-do-cr%C3%A9dito-nfse-s%C3%A3o-paulo/

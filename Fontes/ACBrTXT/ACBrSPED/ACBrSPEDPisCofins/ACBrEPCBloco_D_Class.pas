@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -521,15 +521,7 @@ begin
             iedfTerceiro : strIND_EMIT := '1';
           end;
 
-          case COD_SIT of
-            sdfRegular         : strCOD_SIT := '00';
-            sdfExtRegular      : strCOD_SIT := '01';
-            sdfCancelado       : strCOD_SIT := '02';
-            sdfExtCancelado    : strCOD_SIT := '03';
-            sdfComplementar    : strCOD_SIT := '06';
-            sdfExtComplementar : strCOD_SIT := '07';
-            sdfEspecial        : strCOD_SIT := '08';
-          end;
+          strCOD_SIT := CodSitToStr(COD_SIT);
 
           if Bloco_0.DT_INI < StrToDate('01/07/2012') then
           begin
@@ -543,13 +535,7 @@ begin
           end
           else
           begin
-            case IND_FRT of
-	          tfPorContaEmitente     : strIND_FRT := '0';
-	          tfPorContaDestinatario : strIND_FRT := '1';
-	          tfPorContaTerceiros    : strIND_FRT := '2';
-	          tfSemCobrancaFrete     : strIND_FRT := '9';
-	          tfNenhum               : strIND_FRT := '';
-            end;
+            strIND_FRT := IndFrtToStr(IND_FRT);
           end;
 
           // Tratamento COD_SIT canceladas (02, 03), denegadas (04), inutilizadas (05) 17/05/2012 //DigiSat

@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -1227,7 +1227,9 @@ type
     property Items[Index: Integer]: TRegistroC499 read GetItem write SetItem;
   end;
 
-  //REGISTRO C500: NOTA FISCAL/CONTA DE ENERGIA ELÉTRICA (CÓDIGO 06), NOTA FISCAL/CONTA DE FORNECIMENTO D'ÁGUA CANALIZADA (CÓDIGO 29) E NOTA FISCAL CONSUMO FORNECIMENTO DE GÁS (CÓDIGO 28) – DOCUMENTOS DE ENTRADA/AQUISIÇÃO COM CRÉDITO
+  // REGISTRO C500: Nota Fiscal/Conta de Energia Elétrica (Código 06), Nota Fiscal de Energia Elétrica Eletrônica – NF3e (Código 66),
+  //Nota Fiscal/Conta de fornecimento D’água Canalizada (Código 29), Nota Fiscal/Consumo Fornecimento de Gás (Código 28) e
+  //NF-e (Código 55) – Documentos de Entrada / Aquisição com Crédito
   TRegistroC500 = class
   private
     fCOD_PART             : string;               //02	COD_PART	Código do participante do fornecedor (campo 02 do Registro 0150). 	C	060	-
@@ -1243,6 +1245,7 @@ type
     fCOD_INF              : string;               //12	COD_INF	Código da informação complementar do documento fiscal (campo 02 do Registro 0450)	C	006	-
     fVL_PIS               : Currency;             //13	VL_PIS	Valor do PIS/PASEP	N	-	02
     fVL_COFINS            : Currency;             //14	VL_COFINS	Valor da COFINS	N	-	02
+    FCHV_DOCe             : string;               //15	CHV_DOCe Chave do Documento Fiscal Eletrônico
 
     FRegistroC501         : TRegistroC501List;
     FRegistroC505         : TRegistroC505List;
@@ -1264,6 +1267,7 @@ type
     property COD_INF      : string             read FCOD_INF      write FCOD_INF;
     property VL_PIS       : Currency           read FVL_PIS       write FVL_PIS;
     property VL_COFINS    : Currency           read FVL_COFINS    write FVL_COFINS;
+    property CHV_DOCe     : string             read FCHV_DOCe      write FCHV_DOCe;
 
     property RegistroC501 : TRegistroC501List  read FRegistroC501 write FRegistroC501;
     property RegistroC505 : TRegistroC505List  read FRegistroC505 write FRegistroC505;

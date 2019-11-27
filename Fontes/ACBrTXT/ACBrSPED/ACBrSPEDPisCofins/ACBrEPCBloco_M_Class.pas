@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,10 +27,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
 
 {******************************************************************************
 |* Historico
@@ -787,10 +788,10 @@ begin
           if (Bloco_0.Registro0000.COD_VER >= vlVersao310) then
           begin
             Add( LFill('M210')                       +
-                 LFill( strCOD_CONT )                +                 
+                 LFill( strCOD_CONT )                +
                  LFill( VL_REC_BRT, 0, 2 )           +
                  LFill( VL_BC_CONT, 0, 2 )           +
-				 LFill( VL_AJUS_ACRES_BC_PIS, 0, 2 ) +
+                 LFill( VL_AJUS_ACRES_BC_PIS, 0, 2 ) +
                  LFill( VL_AJUS_REDUC_BC_PIS, 0, 2 ) +
                  LFill( VL_BC_CONT_AJUS, 0, 2 )      +
                  VDFill( ALIQ_PIS       , 4)         +

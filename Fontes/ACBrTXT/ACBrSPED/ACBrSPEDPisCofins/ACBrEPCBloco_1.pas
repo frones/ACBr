@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -67,6 +67,75 @@ type
   TRegistro1809List = class;
   TRegistro1900List = class;
 
+  //Registro 1011: Detalhamento das Contribuições com Exigibilidade Suspensa
+  TRegistro1011 = class
+  private
+    FREG_REF           :string;     /// Registro da escrituração que terá o detalhamento das contribuições sociais com exigibilidade suspensa (Blocos A, C, D, F e I, 1800)
+    FCHAVE_DOC         :string;     /// Chave do documento eletrônico
+    FCOD_PART          :string;     /// Código do participante (Campo 02 do Registro 0150)
+    FCOD_ITEM          :string;     /// Código do item (campo 02 do Registro 0200)
+    FDT_OPER           :TDateTime;  /// Data da Operação (ddmmaaaa)
+    FVL_OPER           :Currency;   /// Valor da Operação/Item
+    FCST_PIS           :Integer;    /// Código da Situação Tributária conforme escrituração, referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.
+    FVL_BC_PIS         :Variant;    /// Base de cálculo do PIS/PASEP, conforme escrituração
+    FALIQ_PIS          :Variant;    /// Alíquota do PIS/PASEP, conforme escrituração
+    FVL_PIS            :Variant;    /// Valor do PIS/PASEP, conforme escrituração
+    FCST_COFINS        :Integer;    /// Código da Situação Tributária conforme escrituração, referente a COFINS, conforme a Tabela indicada no item 4.3.4.
+    FVL_BC_COFINS      :Variant;    /// Base de cálculo da COFINS, conforme escrituração
+    FALIQ_COFINS       :Variant;    /// Alíquota da COFINS, conforme escrituração
+    FVL_COFINS         :Variant;    /// Valor da COFINS, conforme escrituração
+    FCST_PIS_SUSP      :Integer;    /// Código da Situação Tributária conforme decisão judicial, referente ao PIS/PASEP, conforme a Tabela indicada no item 4.3.3.
+    FVL_BC_PIS_SUSP    :Variant;    /// Base de cálculo do PIS/PASEP, conforme decisão judicial
+    FALIQ_PIS_SUSP     :Variant;    /// Alíquota do PIS/PASEP, conforme decisão judicial
+    FVL_PIS_SUSP       :Variant;    /// Valor do PIS/PASEP, conforme decisão judicial
+    FCST_COFINS_SUSP   :Integer;    /// Código da Situação Tributária conforme decisão judicial, referente a COFINS, conforme a Tabela indicada no item 4.3.4.
+    FVL_BC_COFINS_SUSP :Variant;    /// Base de cálculo da COFINS, conforme decisão judicial
+    FALIQ_COFINS_SUSP  :Variant;    /// Alíquota da COFINS, conforme decisão judicial
+    FVL_COFINS_SUSP    :Variant;    /// Valor da COFINS, conforme decisão judicial
+    FCOD_CTA           :string;     /// Código da conta analítica contábil debitada/creditada
+    FCOD_CCUS          :string;     /// Código do Centro de Custos
+    FDESC_DOC_OPER     :string;     /// Descrição do Documento/Operação
+
+  public
+    property REG_REF           : string    read FREG_REF            write FREG_REF;
+    property CHAVE_DOC         : string    read FCHAVE_DOC          write FCHAVE_DOC;
+    property COD_PART          : string    read FCOD_PART           write FCOD_PART;
+    property COD_ITEM          : string    read FCOD_ITEM           write FCOD_ITEM;
+    property DT_OPER           : TDateTime read FDT_OPER            write FDT_OPER;
+    property VL_OPER           : Currency  read FVL_OPER            write FVL_OPER;
+    property CST_PIS           : Integer   read FCST_PIS            write FCST_PIS;
+    property VL_BC_PIS         : Variant   read FVL_BC_PIS          write FVL_BC_PIS;
+    property ALIQ_PIS          : Variant   read FALIQ_PIS           write FALIQ_PIS;
+    property VL_PIS            : Variant   read FVL_PIS             write FVL_PIS;
+    property CST_COFINS        : Integer   read FCST_COFINS         write FCST_COFINS;
+    property VL_BC_COFINS      : Variant   read FVL_BC_COFINS       write FVL_BC_COFINS;
+    property ALIQ_COFINS       : Variant   read FALIQ_COFINS        write FALIQ_COFINS;
+    property VL_COFINS         : Variant   read FVL_COFINS          write FVL_COFINS;
+    property CST_PIS_SUSP      : Integer   read FCST_PIS_SUSP       write FCST_PIS_SUSP;
+    property VL_BC_PIS_SUSP    : Variant   read FVL_BC_PIS_SUSP     write FVL_BC_PIS_SUSP;
+    property ALIQ_PIS_SUSP     : Variant   read FALIQ_PIS_SUSP      write FALIQ_PIS_SUSP;
+    property VL_PIS_SUSP       : Variant   read FVL_PIS_SUSP        write FVL_PIS_SUSP;
+    property CST_COFINS_SUSP   : Integer   read FCST_COFINS_SUSP    write FCST_COFINS_SUSP;
+    property VL_BC_COFINS_SUSP : Variant   read FVL_BC_COFINS_SUSP  write FVL_BC_COFINS_SUSP;
+    property ALIQ_COFINS_SUSP  : Variant   read FALIQ_COFINS_SUSP   write FALIQ_COFINS_SUSP;
+    property VL_COFINS_SUSP    : Variant   read FVL_COFINS_SUSP     write FVL_COFINS_SUSP;
+    property COD_CTA           : string    read FCOD_CTA            write FCOD_CTA;
+    property COD_CCUS          : string    read FCOD_CCUS           write FCOD_CCUS;
+    property DESC_DOC_OPER     : string    read FDESC_DOC_OPER      write FDESC_DOC_OPER;
+  end;
+
+ { TRegistro1011List }
+
+ TRegistro1011List = class(TObjectList)
+   function GetItem(Index: Integer): TRegistro1011;
+   procedure SetItem(Index: Integer; const Value: TRegistro1011);
+ public
+   function New: TRegistro1011;
+   property Items[Index: Integer]: TRegistro1011 read GetItem write SetItem;
+ end;
+
+
+
   //REGISTRO 1001: ABERTURA DO BLOCO 1
   TRegistro1001 = class(TOpenBlocos)
   private
@@ -99,6 +168,9 @@ type
   end;
 
   //REGISTRO 1010: PROCESSO REFERENCIADO – AÇÃO JUDICIAL
+
+  { TRegistro1010 }
+
   TRegistro1010 = class
   private
     fNUM_PROC: string;	          //02	NUM_PROC	Identificação do Numero do Processo Judicial	C	020	-
@@ -107,13 +179,20 @@ type
     fIND_NAT_ACAO: Integer;       //05	IND_NAT_ACAO	Indicador da Natureza da Ação Judicial, impetrada na Justiça Federal:01 – Decisão Judicial Transitada em Julgado, a favor da Pessoa Jurídica.02 – Decisão Judicial Não Transitada em Julgado, a favor da Pessoa Jurídica.03 – Decisão Judicial oriunda de Liminar em Mandado de Segurança.04 – Decisão Judicial oriunda de Liminar em Medida Cautelar.05 – Decisão Judicial oriunda de Antecipação de Tutela.06 - Decisão Judicial Vinculada a Depósito Administrativo ou Judicial em Montante Integral.07 – Medida Judicial em que a Pessoa Jurídica não é o autor.08 – Súmula Vinculante aprovada pelo STF.99 - Outros.	C	002*	-
     fDESC_DEC_JUD: string;        //06	DESC_DEC_JUD	Descrição Resumida dos Efeitos Tributários abrangidos pela Decisão Judicial proferida.	C	100	-
     fDT_SENT_JUD: TDateTime;	    //07	DT_SENT_JUD	Data da Sentença/Decisão Judicial	N	008*	-
+
+    FRegistro1011: TRegistro1011List;
   public
+    constructor Create;
+    destructor Destroy; override;
+
     property NUM_PROC: string read FNUM_PROC write FNUM_PROC;
     property ID_SEC_JUD: string read FID_SEC_JUD write FID_SEC_JUD;
     property ID_VARA: string read FID_VARA write FID_VARA;
     property IND_NAT_ACAO: Integer read FIND_NAT_ACAO write FIND_NAT_ACAO;
     property DESC_DEC_JUD: string read FDESC_DEC_JUD write FDESC_DEC_JUD;
     property DT_SENT_JUD: TDateTime read FDT_SENT_JUD write FDT_SENT_JUD;
+
+    property Registro1011: TRegistro1011List read FRegistro1011 write FRegistro1011;
   end;
 
   // Registro 1010 - Lista
@@ -857,6 +936,38 @@ type
   end;
 
 implementation
+
+{ TRegistro1010 }
+
+constructor TRegistro1010.Create;
+begin
+  inherited Create;
+  FRegistro1011 := TRegistro1011List.Create;
+end;
+
+destructor TRegistro1010.Destroy;
+begin
+  FRegistro1011.Free;
+  inherited Destroy;
+end;
+
+{ TRegistro1011List }
+
+function TRegistro1011List.GetItem(Index: Integer): TRegistro1011;
+begin
+  Result := TRegistro1011(Inherited GetItem(Index));
+end;
+
+procedure TRegistro1011List.SetItem(Index: Integer; const Value: TRegistro1011);
+begin
+  inherited SetItem (Index, Value) ;
+end;
+
+function TRegistro1011List.New: TRegistro1011;
+begin
+  Result := TRegistro1011.Create;
+  Self.Add(Result);
+end;
 
 {TRegistro1001}
 

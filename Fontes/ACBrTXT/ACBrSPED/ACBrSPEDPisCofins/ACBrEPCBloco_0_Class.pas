@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -90,6 +90,7 @@ type
     procedure WriteRegistro0450(Reg0140: TRegistro0140);
     procedure WriteRegistro0500(Reg0001: TRegistro0001);
     procedure WriteRegistro0600(Reg0001: TRegistro0001);
+    procedure WriteRegistro0900(Reg0001: TRegistro0001);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -117,6 +118,7 @@ type
     function Registro0450New: TRegistro0450;
     function Registro0500New: TRegistro0500;
     function Registro0600New: TRegistro0600;
+    function Registro0900New: TRegistro0900;
 
     procedure WriteRegistro0000;
     procedure WriteRegistro0001;
@@ -219,12 +221,12 @@ end;
 
 function TBloco_0.Registro0035New: TRegistro0035;
 begin
-  Result := FRegistro0001.Registro0035.New(FRegistro0001);
+  Result := FRegistro0001.Registro0035.New;
 end;
 
 function TBloco_0.Registro0100New: TRegistro0100;
 begin
-   Result := FRegistro0001.Registro0100.New(FRegistro0001);
+   Result := FRegistro0001.Registro0100.New;
 end;
 
 function TBloco_0.Registro0110New: TRegistro0110;
@@ -240,7 +242,7 @@ end;
 // Adicionado por Fábio Gabriel - 29/11/2012
 function TBloco_0.Registro0120New: TRegistro0120;
 begin
-   Result := FRegistro0001.Registro0120.New(FRegistro0001);
+   Result := FRegistro0001.Registro0120.New;
 end;
 
 function TBloco_0.Registro0140New: TRegistro0140;
@@ -258,7 +260,7 @@ begin
       raise Exception.Create('O registro 0150 deve ser filho do registro 0140, e não existe nenhum 0140 pai!');
    //
    U0140  := FRegistro0001.Registro0140.Items[U0140Count];
-   Result := U0140.Registro0150.New(U0140);
+   Result := U0140.Registro0150.New;
 end;
 
 function TBloco_0.Registro0190New: TRegistro0190;
@@ -271,7 +273,7 @@ begin
       raise Exception.Create('O registro 0190 deve ser filho do registro 0140, e não existe nenhum 0140 pai!');
    //
    U0140  := FRegistro0001.Registro0140.Items[U0140Count];
-   Result := U0140.Registro0190.New(U0140);
+   Result := U0140.Registro0190.New;
 end;
 
 function TBloco_0.Registro0200New: TRegistro0200;
@@ -299,7 +301,7 @@ begin
       raise Exception.Create('O registro 0205 deve ser filho do registro 0200, e não existe nenhum 0200 pai!');
    //
    U0200  := FRegistro0001.Registro0140.Items[U0140Count].Registro0200.Items[U0200Count];
-   Result := U0200.Registro0205.New(U0200);
+   Result := U0200.Registro0205.New;
 end;
 
 function TBloco_0.Registro0206New: TRegistro0206;
@@ -334,7 +336,7 @@ begin
       raise Exception.Create('O registro 0150 deve ser filho do registro 0140, e não existe nenhum 0140 pai!');
    //
    U0140  := FRegistro0001.Registro0140.Items[U0140Count];
-   Result := U0140.Registro0400.New(U0140);
+   Result := U0140.Registro0400.New;
 end;
 
 function TBloco_0.Registro0450New: TRegistro0450;
@@ -347,17 +349,26 @@ begin
       raise Exception.Create('O registro 0150 deve ser filho do registro 0140, e não existe nenhum 0140 pai!');
    //
    U0140  := FRegistro0001.Registro0140.Items[U0140Count];
-   Result := U0140.Registro0450.New(U0140);
+   Result := U0140.Registro0450.New;
 end;
 
 function TBloco_0.Registro0500New: TRegistro0500;
 begin
-   Result := FRegistro0001.Registro0500.New(FRegistro0001);
+   Result := FRegistro0001.Registro0500.New;
 end;
 
 function TBloco_0.Registro0600New: TRegistro0600;
 begin
-   Result := FRegistro0001.Registro0600.New(FRegistro0001);
+   Result := FRegistro0001.Registro0600.New;
+end;
+
+function TBloco_0.Registro0900New: TRegistro0900;
+begin
+  if not assigned(FRegistro0001.Registro0900) then
+  begin
+    FRegistro0001.Registro0900 := TRegistro0900.Create;
+  end;
+  Result := FRegistro0001.Registro0900;
 end;
 
 procedure TBloco_0.WriteRegistro0000;
@@ -449,6 +460,7 @@ begin
           WriteRegistro0140(FRegistro0001) ;
           WriteRegistro0500(FRegistro0001) ;
           WriteRegistro0600(FRegistro0001) ;
+          WriteRegistro0900(FRegistro0001) ;
         end;
      end;
      Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
@@ -987,6 +999,35 @@ begin
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistro0600Count := FRegistro0600Count + Reg0001.Registro0600.Count;
   end;
+end;
+
+procedure TBloco_0.WriteRegistro0900(Reg0001: TRegistro0001);
+begin
+  if Assigned(Reg0001.Registro0900) then
+  begin
+     with Reg0001.Registro0900 do
+     begin
+       ///
+       Add(
+         {01} LFill('0990') +
+         {02} VDFill( REC_TOTAL_BLOCO_A    , 2) +
+         {03} VDFill( REC_NRB_BLOCO_A      , 2) +
+         {04} VDFill( REC_TOTAL_BLOCO_C    , 2) +
+         {05} VDFill( REC_NRB_BLOCO_C      , 2) +
+         {06} VDFill( REC_TOTAL_BLOCO_D    , 2) +
+         {07} VDFill( REC_NRB_BLOCO_D      , 2) +
+         {08} VDFill( REC_TOTAL_BLOCO_F    , 2) +
+         {09} VDFill( REC_NRB_BLOCO_F      , 2) +
+         {10} VDFill( REC_TOTAL_BLOCO_I    , 2) +
+         {11} VDFill( REC_NRB_BLOCO_I      , 2) +
+         {12} VDFill( REC_TOTAL_BLOCO_1    , 2) +
+         {13} VDFill( REC_NRB_BLOCO_1      , 2) +
+         {14} VDFill( REC_TOTAL_PERIODO    , 2) +
+         {15} VDFill( REC_TOTAL_NRB_PERIODO, 2)
+         );
+       Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
+     end;
+  end
 end;
 
 procedure TBloco_0.WriteRegistro0990 ;

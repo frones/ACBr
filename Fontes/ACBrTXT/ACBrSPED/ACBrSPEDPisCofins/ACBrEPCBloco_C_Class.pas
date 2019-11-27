@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -2079,6 +2079,28 @@ begin
      begin
         with RegC010.RegistroC500.Items[intFor] do
         begin
+          if Bloco_0.Registro0000.COD_VER >= vlVersao320 then
+          begin
+            Add( LFill('C500')               +
+                 LFill( COD_PART )           +
+                 LFill( COD_MOD,2 )          +
+                 LFill( CodSitToStr(COD_SIT) )  +
+                 LFill( SER )                +
+                 LFill( SUB, 3 )                +
+                 LFill( NUM_DOC,9 )          +
+                 LFill( DT_DOC, 'ddmmyyyy' ) +
+                 LFill( DT_ENT, 'ddmmyyyy' ) +
+                 LFill( VL_DOC,0,2 )         +
+                 LFill( VL_ICMS,0,2 )        +
+                 LFill( COD_INF )            +
+                 LFill( VL_PIS,0,2 )         +
+                 LFill( VL_COFINS,0,2 )      +
+                 LFill( CHV_DOCe )
+               );
+
+          end
+          else
+          begin
            Add( LFill('C500')               +
                 LFill( COD_PART )           +
                 LFill( COD_MOD,2 )          +
@@ -2093,6 +2115,7 @@ begin
                 LFill( COD_INF )            +
                 LFill( VL_PIS,0,2 )         +
                 LFill( VL_COFINS,0,2 ) );
+          end;
         end;
         /// Registro FILHOS do FILHO
         WriteRegistroC501( RegC010.RegistroC500.Items[intFor] ) ;

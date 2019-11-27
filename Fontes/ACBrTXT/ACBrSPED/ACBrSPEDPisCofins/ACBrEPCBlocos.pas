@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -59,7 +59,8 @@ type
                  vlVersao200,  // Código 002 - Versão 200 ADE Cofis nº 20/2012
                  vlVersao201,  // Código 003 - Versão 201 ADE Cofis nº 20/2012 de 14/03/2012
                  vlVersao202,  // Código 004
-                 vlVersao310   // Código 005
+                 vlVersao310,  // Código 005 - ADE Cofis nº 82/2018 - Apuração em 01/01/2019
+                 vlVersao320   // Código 006 - ADE Cofis ??? - Apuração em 01/01/2020
                 );
   TACBrVersaoLeiaute = TACBrCodVer;
 
@@ -1736,27 +1737,34 @@ begin
    if AValue = vlVersao310 then
       Result := '005'
    else
+   if AValue = vlVersao320 then
+      Result := '006'
+   else
      raise Exception.Create('Valor informado inválido para ser convertido em TACBrCodVer');
 end;
 
 function StrToCodVer(const AValue: string): TACBrCodVer;
 begin
-   if AValue = '001' then
-      Result := vlVersao100
-   else
-   if AValue = '002' then
-      Result := vlVersao200
-   else
-   if AValue = '003' then
-      Result := vlVersao201
-	else
-    if AValue = '004' then
-      Result := vlVersao202
-	else
-    if AValue = '005' then
-      Result := vlVersao310
-    else
-     raise Exception.Create(format('Valor informado [%s] deve estar entre (001, 002, 003, 004 e 005)',[AValue]));
+  if AValue = '001' then
+    Result := vlVersao100
+  else
+  if AValue = '002' then
+    Result := vlVersao200
+  else
+  if AValue = '003' then
+    Result := vlVersao201
+  else
+  if AValue = '004' then
+    Result := vlVersao202
+  else
+  if AValue = '005' then
+    Result := vlVersao310
+  else
+  if AValue = '006' then
+    Result := vlVersao320
+  else
+    raise Exception.Create(format('Valor informado [%s] deve estar entre '+
+          '[''001'', ''002'', ''003'', ''004'', ''005'', ''006'']',[AValue]));
 end;
 
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;

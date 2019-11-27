@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2010   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,10 +27,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
 
 {******************************************************************************
 |* Historico
@@ -56,6 +57,7 @@ type
     FRegistro1990: TRegistro1990;      /// BLOCO 1 - Registro1990
 
     FRegistro1010Count: integer;
+    FRegistro1011Count: integer;
     FRegistro1020Count: integer;
     FRegistro1050Count: integer;
     FRegistro1100Count: integer;
@@ -73,11 +75,12 @@ type
     FRegistro1620Count: integer;
     FRegistro1700Count: integer;
     FRegistro1800Count: integer;
-    FRegistro1900Count: integer;
     FRegistro1809Count: integer;
+    FRegistro1900Count: integer;
     FBloco_0: TBloco_0;
 
     procedure WriteRegistro1010(Reg1001: TRegistro1001);
+    procedure WriteRegistro1011(Reg1010: TRegistro1010);
     procedure WriteRegistro1020(Reg1001: TRegistro1001);
     procedure WriteRegistro1050(Reg1001: TRegistro1001);
     procedure WriteRegistro1100(Reg1001: TRegistro1001);
@@ -95,8 +98,8 @@ type
     procedure WriteRegistro1620(Reg1600: TRegistro1600);
     procedure WriteRegistro1700(Reg1001: TRegistro1001);
     procedure WriteRegistro1800(Reg1001: TRegistro1001);
-    procedure WriteRegistro1900(Reg1001: TRegistro1001);
     procedure WriteRegistro1809(Reg1800: TRegistro1800);
+    procedure WriteRegistro1900(Reg1001: TRegistro1001);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -107,6 +110,7 @@ type
 
     function Registro1001New: TRegistro1001;
     function Registro1010New: TRegistro1010;
+    function Registro1011New: TRegistro1011;
     function Registro1020New: TRegistro1020;
     function Registro1050New: TRegistro1050;
     function Registro1100New: TRegistro1100;
@@ -135,6 +139,7 @@ type
     property Registro1990: TRegistro1990 read FRegistro1990 write FRegistro1990;
 
     property Registro1010Count: integer read FRegistro1010Count write FRegistro1010Count;
+    property Registro1011Count: integer read FRegistro1011Count write FRegistro1011Count;
     property Registro1020Count: integer read FRegistro1020Count write FRegistro1020Count;
     property Registro1050Count: integer read FRegistro1050Count write FRegistro1050Count;
     property Registro1100Count: integer read FRegistro1100Count write FRegistro1100Count;
@@ -178,6 +183,7 @@ begin
   FRegistro1990 := TRegistro1990.Create;
 
   FRegistro1010Count:= 0;
+  FRegistro1011Count:= 0;
   FRegistro1020Count:= 0;
   FRegistro1050Count:= 0;
   FRegistro1100Count:= 0;
@@ -225,6 +231,14 @@ end;
 function TBloco_1.Registro1010New: TRegistro1010;
 begin
    Result := FRegistro1001.Registro1010.New;
+end;
+
+function TBloco_1.Registro1011New: TRegistro1011;
+var
+  U1010Count: integer;
+begin
+  U1010Count := FRegistro1001.Registro1010.Count -1;
+  Result := FRegistro1001.Registro1010.Items[U1010Count].Registro1011.New;
 end;
 
 function TBloco_1.Registro1020New: TRegistro1020;
@@ -403,12 +417,61 @@ begin
                LFill( DESC_DEC_JUD ) +
                LFill( DT_SENT_JUD ) ) ;
         end;
+        // Registros FILHOS
+        WriteRegistro1011( Reg1001.Registro1010.Items[intFor] );
         ///
         Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistro1010Count := FRegistro1010Count + Reg1001.Registro1010.Count;
   end;
+end;
+
+procedure TBloco_1.WriteRegistro1011(Reg1010: TRegistro1010);
+var
+  intFor: Integer;
+begin
+  if Assigned(Reg1010.Registro1011) then
+    begin
+       for intFor := 0 to Reg1010.Registro1011.Count - 1 do
+       begin
+          with Reg1010.Registro1011.Items[intFor] do
+          begin
+             Add(
+             {01} LFill('1011')               +
+             {02} LFill(REG_REF)              +
+             {03} LFill(CHAVE_DOC)            +
+             {04} LFill(COD_PART)             +
+             {05} LFill(COD_ITEM)             +
+             {06} LFill(DT_OPER)              +
+             {07} LFill(VL_OPER          ,0, 2) +
+             {08} LFill(CST_PIS            , 2) +
+             {09} VDFill(VL_BC_PIS         , 4) +
+             {10} VDFill(ALIQ_PIS          , 4) +
+             {11} VDFill(VL_PIS            , 2) +
+             {12} LFill(CST_COFINS         , 2) +
+             {13} VDFill(VL_BC_COFINS      , 4) +
+             {14} VDFill(ALIQ_COFINS       , 4) +
+             {15} VDFill(VL_COFINS         , 2) +
+             {16} LFill(CST_PIS_SUSP       , 2) +
+             {17} VDFill(VL_BC_PIS_SUSP    , 4) +
+             {18} VDFill(ALIQ_PIS_SUSP     , 4) +
+             {19} VDFill(VL_PIS_SUSP       , 2) +
+             {20} LFill(CST_COFINS_SUSP    , 2) +
+             {21} VDFill(VL_BC_COFINS_SUSP , 4) +
+             {22} VDFill(ALIQ_COFINS_SUSP  , 4) +
+             {23} VDFill(VL_COFINS_SUSP    , 2) +
+             {24} LFill(COD_CTA            , 0) +
+             {25} LFill(COD_CCUS           , 0) +
+             {26} LFill(DESC_DOC_OPER      , 0)
+               ) ;
+          end;
+          ///
+          Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
+       end;
+       /// Variavél para armazenar a quantidade de registro do tipo.
+       FRegistro1011Count := FRegistro1011Count + Reg1010.Registro1011.Count;
+    end;
 end;
 
 procedure TBloco_1.WriteRegistro1020(Reg1001: TRegistro1001) ;

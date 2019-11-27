@@ -391,9 +391,8 @@ end;
 
 function TEvtTabAmbiente.LerXML: Boolean;
 var
-  Leitor : TLeitor;
-  bOK : Boolean;
-  sEvento : String;
+  Leitor: TLeitor;
+  bOK: Boolean;
 begin
   Result := True;
   Leitor := TLeitor.Create;

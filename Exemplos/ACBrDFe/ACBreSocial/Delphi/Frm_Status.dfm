@@ -4,7 +4,7 @@ object frmStatus: TfrmStatus
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'frmStatus'
-  ClientHeight = 53
+  ClientHeight = 45
   ClientWidth = 481
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object frmStatus: TfrmStatus
     Left = 0
     Top = 0
     Width = 481
-    Height = 53
+    Height = 45
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 2
@@ -33,7 +33,7 @@ object frmStatus: TfrmStatus
       Height = 17
       Align = alTop
       AutoSize = False
-      Caption = 'Status do componente ACBreSocial'
+      Caption = 'Status do componente ACBrNFe'
       Color = clSilver
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
@@ -48,8 +48,8 @@ object frmStatus: TfrmStatus
     object lblStatus: TLabel
       Left = 2
       Top = 19
-      Width = 477
-      Height = 32
+      Width = 3
+      Height = 13
       Align = alClient
       Color = clGray
       ParentColor = False

@@ -1,84 +1,138 @@
-{ ****************************************************************************** }
-{ Projeto: Componente ACBreSocial }
-{ Biblioteca multiplataforma de componentes Delphi para envio dos eventos do }
-{ eSocial - http://www.esocial.gov.br/ }
-{ }
-{ Direitos Autorais Reservados (c) 2008 Wemerson Souto }
-{ Daniel Simoes de Almeida }
-{ André Ferreira de Moraes }
-{ }
-{ Colaboradores nesse arquivo: }
-{ }
-{ Você pode obter a última versão desse arquivo na pagina do Projeto ACBr }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr }
-{ }
-{ }
-{ Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior. }
-{ }
-{ Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU }
-{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT) }
-{ }
-{ Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc., }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
-{ Você também pode obter uma copia da licença em: }
-{ http://www.opensource.org/licenses/lgpl-license.php }
-{ }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br }
-{ Praça Anita Costa, 34 - Tatuí - SP - 18270-410 }
-{ }
-{ ****************************************************************************** }
-
-{ ******************************************************************************
-  |* Historico
-  |*
-  |* 27/10/2015: Jean Carlo Cantu, Tiago Ravache
-  |*  - Doação do componente para o Projeto ACBr
-  ****************************************************************************** }
-{$I ACBr.inc}
-unit uExemploEsocial;
+unit Frm_ACBreSocial;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, IniFiles, ShellAPI, StdCtrls, Buttons, DateUtils, Spin, ExtCtrls,
-  ComCtrls,
-  ACBrBase, ACBrDFe, ACBrUtil, ACBreSocial, ACBrMail,
-  pcesConversaoeSocial, pcesS5001, pcesS5002, pcesS5011, pcesS5012,
-  pcnConversao,
-  ufrmStatus;
+  Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
+  ShellAPI, XMLIntf, XMLDoc, zlib,
+  ACBrUtil, ACBrBase, ACBrDFe,
+  pcnConversao, pcesConversaoeSocial,
+  ACBreSocial;
 
 type
-  TFExemploEsocial = class(TForm)
-    ACBreSocial1: TACBreSocial;
-    OpenDialog1: TOpenDialog;
-    Panel2: TPanel;
-    Panel1: TPanel;
+  TfrmACBreSocial = class(TForm)
+    pnlMenus: TPanel;
+    pnlCentral: TPanel;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    PageControl4: TPageControl;
+    TabSheet3: TTabSheet;
+    lSSLLib: TLabel;
+    lCryptLib: TLabel;
+    lHttpLib: TLabel;
+    lXmlSign: TLabel;
+    gbCertificado: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    sbtnCaminhoCert: TSpeedButton;
+    Label25: TLabel;
+    sbtnGetCert: TSpeedButton;
+    sbtnNumSerie: TSpeedButton;
+    edtCaminho: TEdit;
+    edtSenha: TEdit;
+    edtNumSerie: TEdit;
+    btnDataValidade: TButton;
+    btnNumSerie: TButton;
+    btnSubName: TButton;
+    btnCNPJ: TButton;
+    btnIssuerName: TButton;
+    GroupBox1: TGroupBox;
+    Edit1: TEdit;
+    btnSha256: TButton;
+    cbAssinar: TCheckBox;
+    btnHTTPS: TButton;
+    btnLeituraX509: TButton;
+    cbSSLLib: TComboBox;
+    cbCryptLib: TComboBox;
+    cbHttpLib: TComboBox;
+    cbXmlSignLib: TComboBox;
+    TabSheet4: TTabSheet;
+    GroupBox3: TGroupBox;
+    sbtnPathSalvar: TSpeedButton;
+    Label29: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label42: TLabel;
+    spPathSchemas: TSpeedButton;
+    edtPathLogs: TEdit;
+    ckSalvar: TCheckBox;
+    cbFormaEmissao: TComboBox;
+    cbxAtualizarXML: TCheckBox;
+    cbxExibirErroSchema: TCheckBox;
+    edtFormatoAlerta: TEdit;
+    cbxRetirarAcentos: TCheckBox;
+    cbVersaoDF: TComboBox;
+    edtPathSchemas: TEdit;
+    TabSheet7: TTabSheet;
+    GroupBox4: TGroupBox;
+    Label6: TLabel;
+    lTimeOut: TLabel;
+    lSSLLib1: TLabel;
+    cbxVisualizar: TCheckBox;
+    cbUF: TComboBox;
+    rgTipoAmb: TRadioGroup;
+    cbxSalvarSOAP: TCheckBox;
+    seTimeOut: TSpinEdit;
+    cbSSLType: TComboBox;
+    gbProxy: TGroupBox;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    edtProxyHost: TEdit;
+    edtProxyPorta: TEdit;
+    edtProxyUser: TEdit;
+    edtProxySenha: TEdit;
+    gbxRetornoEnvio: TGroupBox;
+    Label36: TLabel;
+    Label37: TLabel;
+    Label38: TLabel;
+    cbxAjustarAut: TCheckBox;
+    edtTentativas: TEdit;
+    edtIntervalo: TEdit;
+    edtAguardar: TEdit;
+    TabSheet12: TTabSheet;
+    TabSheet13: TTabSheet;
+    sbPatheSocial: TSpeedButton;
+    Label35: TLabel;
+    cbxSalvarArqs: TCheckBox;
+    cbxPastaMensal: TCheckBox;
+    cbxAdicionaLiteral: TCheckBox;
+    cbxEmissaoPatheSocial: TCheckBox;
+    cbxSalvaPathEvento: TCheckBox;
+    cbxSepararPorCNPJ: TCheckBox;
+    edtPatheSocial: TEdit;
+    cbxSepararPorModelo: TCheckBox;
+    btnSalvarConfig: TBitBtn;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;
     lblDoar1: TLabel;
     lblDoar2: TLabel;
-    btnSalvarConfig: TBitBtn;
-    pgcEventos: TPageControl;
-    tbsEventosTabela: TTabSheet;
-    tbsEventosPeriodicos: TTabSheet;
-    tbsEventosNaoPeriodicos: TTabSheet;
-    pgWebservice: TPageControl;
-    tsResposta: TTabSheet;
+    pgcBotoes: TPageControl;
+    pgRespostas: TPageControl;
+    TabSheet5: TTabSheet;
     MemoResp: TMemo;
-    tsXmlEnvio: TTabSheet;
-    MemoXmlEnvio: TMemo;
-    tsXmlRetorno: TTabSheet;
-    MemoXmlRetorno: TMemo;
-    tsFormaEnvio: TTabSheet;
-    rdgGrupo: TRadioGroup;
-    rdgOperacao: TRadioGroup;
+    TabSheet6: TTabSheet;
+    WBResposta: TWebBrowser;
+    TabSheet8: TTabSheet;
+    memoLog: TMemo;
+    TabSheet9: TTabSheet;
+    trvwDocumento: TTreeView;
+    TabSheet10: TTabSheet;
+    memoRespWS: TMemo;
+    Dados: TTabSheet;
+    MemoDados: TMemo;
+    OpenDialog1: TOpenDialog;
+    ACBreSocial1: TACBreSocial;
+    gbDadosEmpresa: TGroupBox;
+    Label7: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    edtIdEmpregador: TEdit;
+    edtIdTransmissor: TEdit;
+    cbTEmpregador: TComboBox;
+    tbsEventosTabela: TTabSheet;
     cbS1000: TCheckBox;
     cbS1005: TCheckBox;
     cbS1010: TCheckBox;
@@ -91,192 +145,95 @@ type
     cbS1060: TCheckBox;
     cbS1070: TCheckBox;
     cbS1080: TCheckBox;
+    tbsEventosPeriodicos: TTabSheet;
     cbS1200: TCheckBox;
     cbS1202: TCheckBox;
     cbS1207: TCheckBox;
     cbS1210: TCheckBox;
     cbS1250: TCheckBox;
     cbS1260: TCheckBox;
-    cbS1300: TCheckBox;
-    cbS1299: TCheckBox;
-    cbS1298: TCheckBox;
-    cbS1295: TCheckBox;
-    cbS1280: TCheckBox;
     cbS1270: TCheckBox;
+    cbS1280: TCheckBox;
+    cbS1295: TCheckBox;
+    cbS1298: TCheckBox;
+    cbS1299: TCheckBox;
+    cbS1300: TCheckBox;
+    tbsEventosNaoPeriodicos: TTabSheet;
     cbS2190: TCheckBox;
     cbS2200: TCheckBox;
     cbS2205: TCheckBox;
     cbS2206: TCheckBox;
     cbS2210: TCheckBox;
     cbS2220: TCheckBox;
+    cbS2221: TCheckBox;
     cbS2230: TCheckBox;
     cbS2240: TCheckBox;
     cbS2245: TCheckBox;
-    cbAviso: TComboBox;
     cbS2250: TCheckBox;
-    cbS3000: TCheckBox;
-    cbS2400: TCheckBox;
-    cbS2399: TCheckBox;
-    cbS2306: TCheckBox;
-    cbS2300: TCheckBox;
-    cbS2299: TCheckBox;
+    cbAviso: TComboBox;
+    cbs2260: TCheckBox;
     cbS2298: TCheckBox;
+    cbS2299: TCheckBox;
+    cbS2300: TCheckBox;
+    cbS2306: TCheckBox;
+    cbS2399: TCheckBox;
+    cbS2400: TCheckBox;
+    cbS3000: TCheckBox;
     tsComandos: TTabSheet;
     btnGerar: TButton;
-    btnConsultar: TButton;
-    btnEnviar: TButton;
-    chkClear: TCheckBox;
-    tsLog: TTabSheet;
-    PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
-    GroupBox1: TGroupBox;
-    sbtnPathSalvar: TSpeedButton;
-    Label3: TLabel;
-    Label4: TLabel;
-    spPathSchemas: TSpeedButton;
-    edtPathLogs: TEdit;
-    ckSalvar: TCheckBox;
-    cbxExibirErroSchema: TCheckBox;
-    edtFormatoAlerta: TEdit;
-    cbxRetirarAcentos: TCheckBox;
-    cbVersaoDF: TComboBox;
-    edtPathSchemas: TEdit;
-    TabSheet2: TTabSheet;
-    Label6: TLabel;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
-    GroupBox2: TGroupBox;
-    Label15: TLabel;
-    Label16: TLabel;
-    sbtnCaminhoCert: TSpeedButton;
-    Label17: TLabel;
-    sbtnGetCert: TSpeedButton;
-    sbtnGetCert1: TSpeedButton;
-    edtCaminho: TEdit;
-    edtSenha: TEdit;
-    edtNumSerie: TEdit;
-    btnValidadeData: TButton;
-    btnNumSerie: TButton;
-    btnSubjectName: TButton;
-    btnCNPJ: TButton;
-    btnIssuerName: TButton;
-    GroupBox3: TGroupBox;
-    edtCalcHash: TEdit;
-    btnSHA_RSA: TButton;
-    cbAssinar: TCheckBox;
-    btnHTTPS: TButton;
-    btnX509: TButton;
-    cbSSLLib: TComboBox;
-    cbCryptLib: TComboBox;
-    cbHttpLib: TComboBox;
-    cbXmlSignLib: TComboBox;
-    TabSheet5: TTabSheet;
-    GroupBox4: TGroupBox;
-    Label18: TLabel;
-    Label19: TLabel;
-    cbxVisualizar: TCheckBox;
-    rgTipoAmb: TRadioGroup;
-    cbxSalvarSOAP: TCheckBox;
-    seTimeOut: TSpinEdit;
-    cbSSLType: TComboBox;
-    GroupBox8: TGroupBox;
-    Label20: TLabel;
-    Label21: TLabel;
-    Label22: TLabel;
-    Label23: TLabel;
-    edtProxyHost: TEdit;
-    edtProxyPorta: TEdit;
-    edtProxyUser: TEdit;
-    edtProxySenha: TEdit;
-    GroupBox9: TGroupBox;
-    Label24: TLabel;
-    Label26: TLabel;
-    Label27: TLabel;
-    cbxAjustarAut: TCheckBox;
-    edtTentativas: TEdit;
-    edtIntervalo: TEdit;
-    edtAguardar: TEdit;
-    TabSheet7: TTabSheet;
-    sbPatheSocial: TSpeedButton;
-    Label28: TLabel;
-    Label36: TLabel;
-    sbPathEvento: TSpeedButton;
-    cbxSalvarArqs: TCheckBox;
-    cbxPastaMensal: TCheckBox;
-    cbxAdicionaLiteral: TCheckBox;
-    cbxEmissaoPatheSocial: TCheckBox;
-    cbxSalvaPathEvento: TCheckBox;
-    cbxSepararPorCNPJ: TCheckBox;
-    edtPatheSocial: TEdit;
-    edtPathEvento: TEdit;
-    Label1: TLabel;
-    gbDadosEmpresa: TGroupBox;
-    Label2: TLabel;
-    edtIdEmpregador: TEdit;
-    Label5: TLabel;
-    edtIdTransmissor: TEdit;
-    tsDados: TTabSheet;
-    MemoDados: TMemo;
-    memoLog: TMemo;
-    Label7: TLabel;
-    cbTEmpregador: TComboBox;
     btnCarregarXML: TButton;
     btnCarregarINI: TButton;
+    btnEnviar: TButton;
     btnGerarEnviar: TButton;
-    cbs2260: TCheckBox;
+    btnConsultar: TButton;
     btnConsIdeEveEmp: TButton;
     btnDownloadEventos: TButton;
-    cbS2221: TCheckBox;
     btnConsIdeEveTab: TButton;
     btnConsIdeEveTrab: TButton;
-
-    procedure btnGerarClick(Sender: TObject);
-
+    tsFormaEnvio: TTabSheet;
+    rdgGrupo: TRadioGroup;
+    rdgOperacao: TRadioGroup;
+    chkClear: TCheckBox;
+    procedure FormCreate(Sender: TObject);
+    procedure btnSalvarConfigClick(Sender: TObject);
+    procedure sbPatheSocialClick(Sender: TObject);
+    procedure sbtnCaminhoCertClick(Sender: TObject);
+    procedure sbtnNumSerieClick(Sender: TObject);
+    procedure sbtnGetCertClick(Sender: TObject);
+    procedure btnDataValidadeClick(Sender: TObject);
+    procedure btnNumSerieClick(Sender: TObject);
+    procedure btnSubNameClick(Sender: TObject);
+    procedure btnCNPJClick(Sender: TObject);
+    procedure btnIssuerNameClick(Sender: TObject);
+    procedure btnSha256Click(Sender: TObject);
+    procedure btnHTTPSClick(Sender: TObject);
+    procedure btnLeituraX509Click(Sender: TObject);
+    procedure sbtnPathSalvarClick(Sender: TObject);
+    procedure spPathSchemasClick(Sender: TObject);
+    procedure PathClick(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
     procedure cbSSLLibChange(Sender: TObject);
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
-    procedure cbSSLTypeChange(Sender: TObject);
-    procedure sbtnCaminhoCertClick(Sender: TObject);
-    procedure sbtnListaCertClick(Sender: TObject);
-    procedure sbtnGetCertClick(Sender: TObject);
-    procedure btnValidadeDataClick(Sender: TObject);
-    procedure btnNumSerieClick(Sender: TObject);
-    procedure btnSubjectNameClick(Sender: TObject);
-    procedure btnCNPJClick(Sender: TObject);
-    procedure btnIssuerNameClick(Sender: TObject);
-    procedure btnSHA_RSAClick(Sender: TObject);
-    procedure btnHTTPSClick(Sender: TObject);
-    procedure btnX509Click(Sender: TObject);
-    procedure sbtnPathSalvarClick(Sender: TObject);
-    procedure spPathSchemasClick(Sender: TObject);
-    procedure sbPatheSocialClick(Sender: TObject);
-    procedure sbPathEventoClick(Sender: TObject);
-    procedure ACBreSocial1StatusChange(Sender: TObject);
-    procedure ACBreSocial1GerarLog(const ALogLine: String;
-      var Tratado: Boolean);
+    procedure ACBrMDFe1StatusChange(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
     procedure lblDoar1Click(Sender: TObject);
     procedure lblDoar2Click(Sender: TObject);
-
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
-    procedure btnSalvarConfigClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure PathClick(Sender: TObject);
-    procedure btnEnviarClick(Sender: TObject);
-    procedure btnConsultarClick(Sender: TObject);
-    procedure ACBreSocial1TransmissaoEventos(const AXML: AnsiString;
-      ATipo: TeSocialEventos);
+    procedure ACBrMDFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
+    procedure btnGerarClick(Sender: TObject);
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
+    procedure btnEnviarClick(Sender: TObject);
     procedure btnGerarEnviarClick(Sender: TObject);
+    procedure btnConsultarClick(Sender: TObject);
     procedure btnConsIdeEveEmpClick(Sender: TObject);
-    procedure btnDownloadEventosClick(Sender: TObject);
     procedure btnConsIdeEveTabClick(Sender: TObject);
     procedure btnConsIdeEveTrabClick(Sender: TObject);
+    procedure btnDownloadEventosClick(Sender: TObject);
   private
     { Private declarations }
     function GetTipoOperacao: TModoLancamento;
@@ -329,32 +286,39 @@ type
     procedure GerareSocial2400;
     procedure GerareSocial3000;
 
-    procedure AtualizaSSLLibsCombo;
-    procedure GravarConfiguracao;
-    procedure LerConfiguracao;
     procedure LimparDocsPasta;
     procedure SelecionaEventos;
+
+    procedure GravarConfiguracao;
+    procedure LerConfiguracao;
+    procedure ConfigurarComponente;
+    procedure AtualizarSSLLibsCombo;
   public
     { Public declarations }
   end;
 
 var
-  FExemploEsocial: TFExemploEsocial;
+  frmACBreSocial: TfrmACBreSocial;
 
 implementation
 
 uses
-  TypInfo, synacode, blcksock, FileCtrl, StrUtils, Math,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL,
-  ACBreSocialWebServices, unit2;
+  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  IniFiles, Printers,
+  pcnAuxiliar, //pcnRetConsReciDFe,
+  pcesS5001, pcesS5002, pcesS5011, pcesS5012,
+  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
+  ACBreSocialEventos, ACBreSocialConfiguracoes, //ACBreSocialWebServices,
+  Frm_Status, Frm_SelecionarCertificado;
 
 const
   SELDIRHELP = 1000;
 
 {$R *.dfm}
-  { TFExemploEsocial }
 
-procedure TFExemploEsocial.GerareSocial1000;
+{ TfrmACBrMDFe }
+
+procedure TfrmACBreSocial.GerareSocial1000;
 begin
   with ACBreSocial1.Eventos.Iniciais.S1000.Add do
   begin
@@ -453,7 +417,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1005;
+procedure TfrmACBreSocial.GerareSocial1005;
 begin
   with ACBreSocial1.Eventos.Iniciais.S1005.Add do
   begin
@@ -531,7 +495,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1010;
+procedure TfrmACBreSocial.GerareSocial1010;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1010.Add do
   begin
@@ -609,7 +573,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1020;
+procedure TfrmACBreSocial.GerareSocial1020;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1020.Add do
   begin
@@ -671,7 +635,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1030;
+procedure TfrmACBreSocial.GerareSocial1030;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1030.Add do
   begin
@@ -716,7 +680,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1035;
+procedure TfrmACBreSocial.GerareSocial1035;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1035.Add do
   begin
@@ -749,7 +713,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1040;
+procedure TfrmACBreSocial.GerareSocial1040;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1040.Add do
   begin
@@ -780,7 +744,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1050;
+procedure TfrmACBreSocial.GerareSocial1050;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1050.Add do
   begin
@@ -834,7 +798,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1060;
+procedure TfrmACBreSocial.GerareSocial1060;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1060.Add do
   begin
@@ -872,7 +836,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1070;
+procedure TfrmACBreSocial.GerareSocial1070;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1070.Add do
   begin
@@ -924,7 +888,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1080;
+procedure TfrmACBreSocial.GerareSocial1080;
 begin
   with ACBreSocial1.Eventos.Tabelas.S1080.Add do
   begin
@@ -956,7 +920,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1200;
+procedure TfrmACBreSocial.GerareSocial1200;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1200.Add do
   begin
@@ -1146,7 +1110,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1202;
+procedure TfrmACBreSocial.GerareSocial1202;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1202.Add do
   begin
@@ -1287,7 +1251,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1207;
+procedure TfrmACBreSocial.GerareSocial1207;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1207.Add do
   begin
@@ -1338,7 +1302,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1210;
+procedure TfrmACBreSocial.GerareSocial1210;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1210.Add do
   begin
@@ -1521,7 +1485,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1250;
+procedure TfrmACBreSocial.GerareSocial1250;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1250.Add do
   begin
@@ -1844,7 +1808,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1260;
+procedure TfrmACBreSocial.GerareSocial1260;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1260.Add do
   begin
@@ -2012,7 +1976,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1270;
+procedure TfrmACBreSocial.GerareSocial1270;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1270.Add do
   begin
@@ -2094,7 +2058,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1280;
+procedure TfrmACBreSocial.GerareSocial1280;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1280.Add do
   begin
@@ -2136,7 +2100,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1295;
+procedure TfrmACBreSocial.GerareSocial1295;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1295.Add do
   begin
@@ -2168,7 +2132,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1298;
+procedure TfrmACBreSocial.GerareSocial1298;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1298.Add do
   begin
@@ -2190,7 +2154,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1299;
+procedure TfrmACBreSocial.GerareSocial1299;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1299.Add do
   begin
@@ -2233,7 +2197,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial1300;
+procedure TfrmACBreSocial.GerareSocial1300;
 begin
   with ACBreSocial1.Eventos.Periodicos.S1300.Add do
   begin
@@ -2266,7 +2230,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2190;
+procedure TfrmACBreSocial.GerareSocial2190;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2190.Add do
   begin
@@ -2287,7 +2251,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2200;
+procedure TfrmACBreSocial.GerareSocial2200;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2200.Add do
   begin
@@ -2591,7 +2555,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2205;
+procedure TfrmACBreSocial.GerareSocial2205;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2205.Add do
   begin
@@ -2750,7 +2714,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2206;
+procedure TfrmACBreSocial.GerareSocial2206;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2206.Add do
   begin
@@ -2866,7 +2830,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2210;
+procedure TfrmACBreSocial.GerareSocial2210;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2210.Add do
   begin
@@ -2982,7 +2946,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2220;
+procedure TfrmACBreSocial.GerareSocial2220;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2220.Add do
   begin
@@ -3049,7 +3013,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2221;
+procedure TfrmACBreSocial.GerareSocial2221;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2221.Add do
   begin
@@ -3086,7 +3050,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2230;
+procedure TfrmACBreSocial.GerareSocial2230;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2230.Add do
   begin
@@ -3175,7 +3139,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2240;
+procedure TfrmACBreSocial.GerareSocial2240;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2240.Add do
   begin
@@ -3278,7 +3242,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2245;
+procedure TfrmACBreSocial.GerareSocial2245;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2245.Add do
   begin
@@ -3330,7 +3294,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2250;
+procedure TfrmACBreSocial.GerareSocial2250;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2250.Add do
   begin
@@ -3374,7 +3338,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2260;
+procedure TfrmACBreSocial.GerareSocial2260;
 begin
  with ACBreSocial1.Eventos.NaoPeriodicos.S2260.Add do
   begin
@@ -3427,7 +3391,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2298;
+procedure TfrmACBreSocial.GerareSocial2298;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2298.Add do
   begin
@@ -3462,7 +3426,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2299;
+procedure TfrmACBreSocial.GerareSocial2299;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2299.Add do
   begin
@@ -3648,7 +3612,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2300;
+procedure TfrmACBreSocial.GerareSocial2300;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2300.Add do
   begin
@@ -3868,7 +3832,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2306;
+procedure TfrmACBreSocial.GerareSocial2306;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2306.Add do
   begin
@@ -3942,7 +3906,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2399;
+procedure TfrmACBreSocial.GerareSocial2399;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2399.Add do
   begin
@@ -4054,7 +4018,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial2400;
+procedure TfrmACBreSocial.GerareSocial2400;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S2400.Add do
   begin
@@ -4156,7 +4120,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.GerareSocial3000;
+procedure TfrmACBreSocial.GerareSocial3000;
 begin
   with ACBreSocial1.Eventos.NaoPeriodicos.S3000.Add do
   begin
@@ -4185,7 +4149,7 @@ begin
   end;
 end;
 
-function TFExemploEsocial.GetTipoOperacao: TModoLancamento;
+function TfrmACBreSocial.GetTipoOperacao: TModoLancamento;
 begin
   case rdgOperacao.ItemIndex of
     1: Result := mlAlteracao;
@@ -4195,7 +4159,575 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.btnGerarClick(Sender: TObject);
+procedure TfrmACBreSocial.ACBrMDFe1GerarLog(const ALogLine: string;
+  var Tratado: Boolean);
+begin
+  memoLog.Lines.Add(ALogLine);
+  Tratado := False;
+end;
+
+procedure TfrmACBreSocial.ACBrMDFe1StatusChange(Sender: TObject);
+begin
+  case ACBreSocial1.Status of
+    stIdle:
+      begin
+        if (frmStatus <> nil) then
+          frmStatus.Hide;
+      end;
+    stEnvLoteEventos:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+    stConsultaLote:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+  end;
+
+  Application.ProcessMessages;
+end;
+
+procedure TfrmACBreSocial.AtualizarSSLLibsCombo;
+begin
+  cbSSLLib.ItemIndex     := Integer(ACBreSocial1.Configuracoes.Geral.SSLLib);
+  cbCryptLib.ItemIndex   := Integer(ACBreSocial1.Configuracoes.Geral.SSLCryptLib);
+  cbHttpLib.ItemIndex    := Integer(ACBreSocial1.Configuracoes.Geral.SSLHttpLib);
+  cbXmlSignLib.ItemIndex := Integer(ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib);
+
+  cbSSLType.Enabled := (ACBreSocial1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+end;
+
+procedure TfrmACBreSocial.btnCNPJClick(Sender: TObject);
+begin
+  ShowMessage(ACBreSocial1.SSL.CertCNPJ);
+end;
+
+procedure TfrmACBreSocial.btnDataValidadeClick(Sender: TObject);
+begin
+  ShowMessage(FormatDateBr(ACBreSocial1.SSL.CertDataVenc));
+end;
+
+procedure TfrmACBreSocial.btnHTTPSClick(Sender: TObject);
+var
+  Acao: String;
+  OldUseCert: Boolean;
+begin
+  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
+     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
+     ' <soapenv:Header/>' +
+     ' <soapenv:Body>' +
+     ' <cli:consultaCEP>' +
+     ' <cep>18270-170</cep>' +
+     ' </cli:consultaCEP>' +
+     ' </soapenv:Body>' +
+     ' </soapenv:Envelope>';
+
+  OldUseCert := ACBreSocial1.SSL.UseCertificateHTTP;
+  ACBreSocial1.SSL.UseCertificateHTTP := False;
+
+  try
+    MemoResp.Lines.Text := ACBreSocial1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+  finally
+    ACBreSocial1.SSL.UseCertificateHTTP := OldUseCert;
+  end;
+
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmACBreSocial.btnIssuerNameClick(Sender: TObject);
+begin
+ ShowMessage(ACBreSocial1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+             'Certificadora: ' + ACBreSocial1.SSL.CertCertificadora);
+end;
+
+procedure TfrmACBreSocial.btnLeituraX509Click(Sender: TObject);
+//var
+//  Erro, AName: String;
+begin
+  with ACBreSocial1.SSL do
+  begin
+     CarregarCertificadoPublico(MemoDados.Lines.Text);
+     MemoResp.Lines.Add(CertIssuerName);
+     MemoResp.Lines.Add(CertRazaoSocial);
+     MemoResp.Lines.Add(CertCNPJ);
+     MemoResp.Lines.Add(CertSubjectName);
+     MemoResp.Lines.Add(CertNumeroSerie);
+
+    //MemoDados.Lines.LoadFromFile('c:\temp\teste2.xml');
+    //MemoResp.Lines.Text := Assinar(MemoDados.Lines.Text, 'Entrada', 'Parametros');
+    //Erro := '';
+    //if VerificarAssinatura(MemoResp.Lines.Text, Erro, 'Parametros' ) then
+    //  ShowMessage('OK')
+    //else
+    //  ShowMessage('ERRO: '+Erro)
+
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TfrmACBreSocial.btnNumSerieClick(Sender: TObject);
+begin
+  ShowMessage(ACBreSocial1.SSL.CertNumeroSerie);
+end;
+
+procedure TfrmACBreSocial.btnSalvarConfigClick(Sender: TObject);
+begin
+  GravarConfiguracao;
+end;
+
+procedure TfrmACBreSocial.btnSha256Click(Sender: TObject);
+var
+  Ahash: AnsiString;
+begin
+  Ahash := ACBreSocial1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+  MemoResp.Lines.Add( Ahash );
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmACBreSocial.btnSubNameClick(Sender: TObject);
+begin
+  ShowMessage(ACBreSocial1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+              'Razão Social: ' + ACBreSocial1.SSL.CertRazaoSocial);
+end;
+
+procedure TfrmACBreSocial.cbCryptLibChange(Sender: TObject);
+begin
+  try
+    if cbCryptLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmACBreSocial.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if cbHttpLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmACBreSocial.cbSSLLibChange(Sender: TObject);
+begin
+  try
+    if cbSSLLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmACBreSocial.cbSSLTypeChange(Sender: TObject);
+begin
+  if cbSSLType.ItemIndex <> -1 then
+     ACBreSocial1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TfrmACBreSocial.cbXmlSignLibChange(Sender: TObject);
+begin
+  try
+    if cbXmlSignLib.ItemIndex <> -1 then
+      ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+  finally
+    AtualizarSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmACBreSocial.FormCreate(Sender: TObject);
+var
+  T: TSSLLib;
+  I: TpcnTipoEmissao;
+  K: TVersaoeSocial;
+  U: TSSLCryptLib;
+  V: TSSLHttpLib;
+  X: TSSLXmlSignLib;
+  Y: TSSLType;
+begin
+  cbSSLLib.Items.Clear;
+  for T := Low(TSSLLib) to High(TSSLLib) do
+    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
+  cbSSLLib.ItemIndex := 0;
+
+  cbCryptLib.Items.Clear;
+  for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
+    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) );
+  cbCryptLib.ItemIndex := 0;
+
+  cbHttpLib.Items.Clear;
+  for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) );
+  cbHttpLib.ItemIndex := 0;
+
+  cbXmlSignLib.Items.Clear;
+  for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) );
+  cbXmlSignLib.ItemIndex := 0;
+
+  cbSSLType.Items.Clear;
+  for Y := Low(TSSLType) to High(TSSLType) do
+    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) );
+  cbSSLType.ItemIndex := 0;
+
+  cbFormaEmissao.Items.Clear;
+  for I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
+     cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) );
+  cbFormaEmissao.ItemIndex := 0;
+
+  cbVersaoDF.Items.Clear;
+  for K := Low(TVersaoeSocial) to High(TVersaoeSocial) do
+     cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TVersaoeSocial), integer(K) ) );
+  cbVersaoDF.ItemIndex := 0;
+
+  LerConfiguracao;
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmACBreSocial.GravarConfiguracao;
+var
+  IniFile: String;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+
+  Ini := TIniFile.Create(IniFile);
+  try
+    Ini.WriteInteger('Certificado', 'SSLLib',     cbSSLLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'CryptLib',   cbCryptLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'HttpLib',    cbHttpLib.ItemIndex);
+    Ini.WriteInteger('Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
+    Ini.WriteString( 'Certificado', 'Caminho',    edtCaminho.Text);
+    Ini.WriteString( 'Certificado', 'Senha',      edtSenha.Text);
+    Ini.WriteString( 'Certificado', 'NumSerie',   edtNumSerie.Text);
+
+    Ini.WriteBool(   'Geral', 'AtualizarXML',     cbxAtualizarXML.Checked);
+    Ini.WriteBool(   'Geral', 'ExibirErroSchema', cbxExibirErroSchema.Checked);
+    Ini.WriteString( 'Geral', 'FormatoAlerta',    edtFormatoAlerta.Text);
+    Ini.WriteInteger('Geral', 'FormaEmissao',     cbFormaEmissao.ItemIndex);
+    Ini.WriteInteger('Geral', 'VersaoDF',         cbVersaoDF.ItemIndex);
+    Ini.WriteBool(   'Geral', 'RetirarAcentos',   cbxRetirarAcentos.Checked);
+    Ini.WriteBool(   'Geral', 'Salvar',           ckSalvar.Checked);
+    Ini.WriteString( 'Geral', 'PathSalvar',       edtPathLogs.Text);
+    Ini.WriteString( 'Geral', 'PathSchemas',      edtPathSchemas.Text);
+    Ini.WriteString( 'Geral', 'IdEmpregador',     edtIdEmpregador.Text);
+    Ini.WriteString( 'Geral', 'IdTransmissor',    edtIdTransmissor.Text);
+    Ini.WriteInteger('Geral', 'TipoEmpregador',   cbTEmpregador.ItemIndex);
+
+    Ini.WriteString( 'WebService', 'UF',         cbUF.Text);
+    Ini.WriteInteger('WebService', 'Ambiente',   rgTipoAmb.ItemIndex);
+    Ini.WriteBool(   'WebService', 'Visualizar', cbxVisualizar.Checked);
+    Ini.WriteBool(   'WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
+    Ini.WriteBool(   'WebService', 'AjustarAut', cbxAjustarAut.Checked);
+    Ini.WriteString( 'WebService', 'Aguardar',   edtAguardar.Text);
+    Ini.WriteString( 'WebService', 'Tentativas', edtTentativas.Text);
+    Ini.WriteString( 'WebService', 'Intervalo',  edtIntervalo.Text);
+    Ini.WriteInteger('WebService', 'TimeOut',    seTimeOut.Value);
+    Ini.WriteInteger('WebService', 'SSLType',    cbSSLType.ItemIndex);
+
+    Ini.WriteString('Proxy', 'Host',  edtProxyHost.Text);
+    Ini.WriteString('Proxy', 'Porta', edtProxyPorta.Text);
+    Ini.WriteString('Proxy', 'User',  edtProxyUser.Text);
+    Ini.WriteString('Proxy', 'Pass',  edtProxySenha.Text);
+
+    Ini.WriteBool(  'Arquivos', 'Salvar',             cbxSalvarArqs.Checked);
+    Ini.WriteBool(  'Arquivos', 'PastaMensal',        cbxPastaMensal.Checked);
+    Ini.WriteBool(  'Arquivos', 'AddLiteral',         cbxAdicionaLiteral.Checked);
+    Ini.WriteBool(  'Arquivos', 'EmissaoPatheSocial', cbxEmissaoPatheSocial.Checked);
+    Ini.WriteBool(  'Arquivos', 'SalvarPathEvento',   cbxSalvaPathEvento.Checked);
+    Ini.WriteBool(  'Arquivos', 'SepararPorCNPJ',     cbxSepararPorCNPJ.Checked);
+    Ini.WriteBool(  'Arquivos', 'SepararPorModelo',   cbxSepararPorModelo.Checked);
+    Ini.WriteString('Arquivos', 'PatheSocial',        edtPatheSocial.Text);
+
+    ConfigurarComponente;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TfrmACBreSocial.lblColaboradorClick(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
+end;
+
+procedure TfrmACBreSocial.lblDoar1Click(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
+end;
+
+procedure TfrmACBreSocial.lblDoar2Click(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
+end;
+
+procedure TfrmACBreSocial.lblMouseEnter(Sender: TObject);
+begin
+  TLabel(Sender).Font.Style := [fsBold,fsUnderline];
+end;
+
+procedure TfrmACBreSocial.lblMouseLeave(Sender: TObject);
+begin
+  TLabel(Sender).Font.Style := [fsBold];
+end;
+
+procedure TfrmACBreSocial.lblPatrocinadorClick(Sender: TObject);
+begin
+  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
+end;
+
+procedure TfrmACBreSocial.LerConfiguracao;
+var
+  IniFile: String;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+
+  Ini := TIniFile.Create(IniFile);
+  try
+    cbSSLLib.ItemIndex     := Ini.ReadInteger('Certificado', 'SSLLib',     0);
+    cbCryptLib.ItemIndex   := Ini.ReadInteger('Certificado', 'CryptLib',   0);
+    cbHttpLib.ItemIndex    := Ini.ReadInteger('Certificado', 'HttpLib',    0);
+    cbXmlSignLib.ItemIndex := Ini.ReadInteger('Certificado', 'XmlSignLib', 0);
+    edtCaminho.Text        := Ini.ReadString( 'Certificado', 'Caminho',    '');
+    edtSenha.Text          := Ini.ReadString( 'Certificado', 'Senha',      '');
+    edtNumSerie.Text       := Ini.ReadString( 'Certificado', 'NumSerie',   '');
+
+    cbxAtualizarXML.Checked     := Ini.ReadBool(   'Geral', 'AtualizarXML',     True);
+    cbxExibirErroSchema.Checked := Ini.ReadBool(   'Geral', 'ExibirErroSchema', True);
+    edtFormatoAlerta.Text       := Ini.ReadString( 'Geral', 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
+    cbFormaEmissao.ItemIndex    := Ini.ReadInteger('Geral', 'FormaEmissao',     0);
+
+    cbVersaoDF.ItemIndex      := Ini.ReadInteger('Geral', 'VersaoDF',       0);
+    ckSalvar.Checked          := Ini.ReadBool(   'Geral', 'Salvar',         True);
+    cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral', 'RetirarAcentos', True);
+    edtPathLogs.Text          := Ini.ReadString( 'Geral', 'PathSalvar',     PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
+    edtPathSchemas.Text       := Ini.ReadString( 'Geral', 'PathSchemas',    PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TVersaoeSocial), integer(cbVersaoDF.ItemIndex) ));
+
+    edtIdEmpregador.Text    := Ini.ReadString( 'Geral', 'IdEmpregador',   '');
+    edtIdTransmissor.Text   := Ini.ReadString( 'Geral', 'IdTransmissor',  '');
+    cbTEmpregador.ItemIndex := Ini.ReadInteger('Geral', 'TipoEmpregador', 0);
+
+    cbUF.ItemIndex := cbUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', 'SP'));
+
+    rgTipoAmb.ItemIndex   := Ini.ReadInteger('WebService', 'Ambiente',   0);
+    cbxVisualizar.Checked := Ini.ReadBool(   'WebService', 'Visualizar', False);
+    cbxSalvarSOAP.Checked := Ini.ReadBool(   'WebService', 'SalvarSOAP', False);
+    cbxAjustarAut.Checked := Ini.ReadBool(   'WebService', 'AjustarAut', False);
+    edtAguardar.Text      := Ini.ReadString( 'WebService', 'Aguardar',   '0');
+    edtTentativas.Text    := Ini.ReadString( 'WebService', 'Tentativas', '5');
+    edtIntervalo.Text     := Ini.ReadString( 'WebService', 'Intervalo',  '0');
+    seTimeOut.Value       := Ini.ReadInteger('WebService', 'TimeOut',    5000);
+    cbSSLType.ItemIndex   := Ini.ReadInteger('WebService', 'SSLType',    0);
+
+    edtProxyHost.Text  := Ini.ReadString('Proxy', 'Host',  '');
+    edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
+    edtProxyUser.Text  := Ini.ReadString('Proxy', 'User',  '');
+    edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass',  '');
+
+    cbxSalvarArqs.Checked         := Ini.ReadBool(  'Arquivos', 'Salvar',             false);
+    cbxPastaMensal.Checked        := Ini.ReadBool(  'Arquivos', 'PastaMensal',        false);
+    cbxAdicionaLiteral.Checked    := Ini.ReadBool(  'Arquivos', 'AddLiteral',         false);
+    cbxEmissaoPatheSocial.Checked := Ini.ReadBool(  'Arquivos', 'EmissaoPatheSocial', false);
+    cbxSalvaPathEvento.Checked    := Ini.ReadBool(  'Arquivos', 'SalvarPathEvento',   false);
+    cbxSepararPorCNPJ.Checked     := Ini.ReadBool(  'Arquivos', 'SepararPorCNPJ',     false);
+    cbxSepararPorModelo.Checked   := Ini.ReadBool(  'Arquivos', 'SepararPorModelo',   false);
+    edtPatheSocial.Text           := Ini.ReadString('Arquivos', 'PatheSocial',        '');
+
+    ConfigurarComponente;
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TfrmACBreSocial.ConfigurarComponente;
+var
+  Ok: Boolean;
+begin
+  ACBreSocial1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+  ACBreSocial1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+  ACBreSocial1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+
+  ACBreSocial1.SSL.DescarregarCertificado;
+
+  with ACBreSocial1.Configuracoes.Geral do
+  begin
+    SSLLib        := TSSLLib(cbSSLLib.ItemIndex);
+    SSLCryptLib   := TSSLCryptLib(cbCryptLib.ItemIndex);
+    SSLHttpLib    := TSSLHttpLib(cbHttpLib.ItemIndex);
+    SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+
+    AtualizarSSLLibsCombo;
+
+    Salvar           := ckSalvar.Checked;
+    ExibirErroSchema := cbxExibirErroSchema.Checked;
+    RetirarAcentos   := cbxRetirarAcentos.Checked;
+    FormatoAlerta    := edtFormatoAlerta.Text;
+    FormaEmissao     := TpcnTipoEmissao(cbFormaEmissao.ItemIndex);
+    VersaoDF         := TVersaoeSocial(cbVersaoDF.ItemIndex);
+
+    IdEmpregador   := edtIdEmpregador.Text;
+    IdTransmissor  := edtIdTransmissor.Text;
+    TipoEmpregador := TEmpregador(cbTEmpregador.ItemIndex);
+  end;
+
+  with ACBreSocial1.Configuracoes.WebServices do
+  begin
+    UF         := cbUF.Text;
+    Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
+    Visualizar := cbxVisualizar.Checked;
+    Salvar     := cbxSalvarSOAP.Checked;
+
+    AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
+
+    if NaoEstaVazio(edtAguardar.Text)then
+      AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text) < 1000, StrToInt(edtAguardar.Text) * 1000, StrToInt(edtAguardar.Text))
+    else
+      edtAguardar.Text := IntToStr(AguardarConsultaRet);
+
+    if NaoEstaVazio(edtTentativas.Text) then
+      Tentativas := StrToInt(edtTentativas.Text)
+    else
+      edtTentativas.Text := IntToStr(Tentativas);
+
+    if NaoEstaVazio(edtIntervalo.Text) then
+      IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text) < 1000, StrToInt(edtIntervalo.Text) * 1000, StrToInt(edtIntervalo.Text))
+    else
+      edtIntervalo.Text := IntToStr(ACBreSocial1.Configuracoes.WebServices.IntervaloTentativas);
+
+    TimeOut   := seTimeOut.Value;
+    ProxyHost := edtProxyHost.Text;
+    ProxyPort := edtProxyPorta.Text;
+    ProxyUser := edtProxyUser.Text;
+    ProxyPass := edtProxySenha.Text;
+  end;
+
+  ACBreSocial1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+
+  with ACBreSocial1.Configuracoes.Arquivos do
+  begin
+    Salvar             := cbxSalvarArqs.Checked;
+    SepararPorMes      := cbxPastaMensal.Checked;
+    AdicionarLiteral   := cbxAdicionaLiteral.Checked;
+    EmissaoPatheSocial := cbxEmissaoPatheSocial.Checked;
+    SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
+    SepararPorModelo   := cbxSepararPorModelo.Checked;
+    PathSalvar         := edtPathLogs.Text;
+    PathSchemas        := edtPathSchemas.Text;
+    PatheSocial        := edtPatheSocial.Text;
+  end;
+end;
+
+procedure TfrmACBreSocial.PathClick(Sender: TObject);
+var
+  Dir: string;
+begin
+  if Length(TEdit(Sender).Text) <= 0 then
+     Dir := ExtractFileDir(application.ExeName)
+  else
+     Dir := TEdit(Sender).Text;
+
+  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt],SELDIRHELP) then
+    TEdit(Sender).Text := Dir;
+end;
+
+procedure TfrmACBreSocial.sbPatheSocialClick(Sender: TObject);
+begin
+  PathClick(edtPatheSocial);
+end;
+
+procedure TfrmACBreSocial.sbtnCaminhoCertClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Certificado';
+  OpenDialog1.DefaultExt := '*.pfx';
+  OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
+
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+
+  if OpenDialog1.Execute then
+    edtCaminho.Text := OpenDialog1.FileName;
+end;
+
+procedure TfrmACBreSocial.sbtnGetCertClick(Sender: TObject);
+begin
+  edtNumSerie.Text := ACBreSocial1.SSL.SelecionarCertificado;
+end;
+
+procedure TfrmACBreSocial.sbtnNumSerieClick(Sender: TObject);
+var
+  I: Integer;
+//  ASerie: String;
+  AddRow: Boolean;
+begin
+  ACBreSocial1.SSL.LerCertificadosStore;
+  AddRow := False;
+
+  with frmSelecionarCertificado.StringGrid1 do
+  begin
+    ColWidths[0] := 220;
+    ColWidths[1] := 250;
+    ColWidths[2] := 120;
+    ColWidths[3] := 80;
+    ColWidths[4] := 150;
+
+    Cells[0, 0] := 'Num.Série';
+    Cells[1, 0] := 'Razão Social';
+    Cells[2, 0] := 'CNPJ';
+    Cells[3, 0] := 'Validade';
+    Cells[4, 0] := 'Certificadora';
+  end;
+
+  for I := 0 to ACBreSocial1.SSL.ListaCertificados.Count-1 do
+  begin
+    with ACBreSocial1.SSL.ListaCertificados[I] do
+    begin
+//      ASerie := NumeroSerie;
+
+      if (CNPJ <> '') then
+      begin
+        with frmSelecionarCertificado.StringGrid1 do
+        begin
+          if Addrow then
+            RowCount := RowCount + 1;
+
+          Cells[0, RowCount-1] := NumeroSerie;
+          Cells[1, RowCount-1] := RazaoSocial;
+          Cells[2, RowCount-1] := CNPJ;
+          Cells[3, RowCount-1] := FormatDateBr(DataVenc);
+          Cells[4, RowCount-1] := Certificadora;
+
+          AddRow := True;
+        end;
+      end;
+    end;
+  end;
+
+  frmSelecionarCertificado.ShowModal;
+
+  if frmSelecionarCertificado.ModalResult = mrOK then
+    edtNumSerie.Text := frmSelecionarCertificado.StringGrid1.Cells[0, frmSelecionarCertificado.StringGrid1.Row];
+end;
+
+procedure TfrmACBreSocial.sbtnPathSalvarClick(Sender: TObject);
+begin
+  PathClick(edtPathLogs);
+end;
+
+procedure TfrmACBreSocial.spPathSchemasClick(Sender: TObject);
+begin
+  PathClick(edtPathSchemas);
+end;
+
+procedure TfrmACBreSocial.btnGerarClick(Sender: TObject);
 var
   i: Integer;
 begin
@@ -4214,10 +4746,123 @@ begin
     MemoLog.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
   end;
 
-  pgWebservice.ActivePageIndex := 3;
+  pgRespostas.ActivePageIndex := 3;
 end;
 
-procedure TFExemploEsocial.btnGerarEnviarClick(Sender: TObject);
+procedure TfrmACBreSocial.btnCarregarXMLClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
+  OpenDialog1.DefaultExt := '*.xml';
+  OpenDialog1.Filter :=
+    'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
+
+
+  MemoResp.Clear;
+  MemoResp.Lines.Clear;
+  MemoResp.Lines.Add('XML de Eventos Carregado com Sucesso!');
+  MemoResp.Lines.Add(' ');
+
+  for i := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
+  begin
+    MemoResp.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
+    MemoResp.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
+  end;
+
+  pgRespostas.ActivePageIndex := 2;
+end;
+
+procedure TfrmACBreSocial.btnCarregarINIClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  OpenDialog1.Title := 'Selecione o Evento (Arquivo INI)';
+  OpenDialog1.DefaultExt := '*.ini';
+  OpenDialog1.Filter :=
+    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBreSocial1.Eventos.LoadFromINI(OpenDialog1.FileName);
+
+  MemoResp.Clear;
+  MemoResp.Lines.Clear;
+  MemoResp.Lines.Add('INI de Eventos Carregado com Sucesso!');
+  MemoResp.Lines.Add(' ');
+
+  for I := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
+  begin
+    MemoResp.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
+    MemoResp.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
+  end;
+
+  pgRespostas.ActivePageIndex := 2;
+end;
+
+procedure TfrmACBreSocial.btnEnviarClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if chkClear.Checked then
+    LimparDocsPasta;
+
+  try
+    ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.EnvioLote.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+
+        if Status.cdResposta in [201, 202] then
+        begin
+          Add('ideEmpregador');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
+          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
+          Add('ideTransmissor');
+          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
+          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
+          Add('dadosRecepcaoLote');
+          Add(' - dhRecepcao..............: ' +
+            DateTimeToStr(dadosRecLote.dhRecepcao));
+          Add(' - versaoAplicativoRecepcao: ' +
+            dadosRecLote.versaoAplicRecepcao);
+          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
+        end
+        else
+        begin
+          for i := 0 to Status.Ocorrencias.Count - 1 do
+          begin
+            with Status.Ocorrencias.Items[i] do
+            begin
+              Add(' Ocorrencia ' + IntToStr(i));
+              Add('   Código.....: ' + IntToStr(Codigo));
+              Add('   Descrição..: ' + Descricao);
+              Add('   Tipo.......: ' + IntToStr(Tipo));
+              Add('   Localização: ' + Localizacao);
+            end;
+          end;
+        end;
+      end;
+    end;
+
+    pgRespostas.ActivePageIndex := 3;
+  finally
+    ACBreSocial1.Eventos.Clear;
+  end;
+end;
+
+procedure TfrmACBreSocial.btnGerarEnviarClick(Sender: TObject);
 var
   i: Integer;
 begin
@@ -4272,212 +4917,13 @@ begin
       end;
     end;
 
-    pgWebservice.ActivePageIndex := 3;
+    pgRespostas.ActivePageIndex := 3;
   finally
     ACBreSocial1.Eventos.Clear;
   end;
 end;
 
-procedure TFExemploEsocial.btnEnviarClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  if chkClear.Checked then
-    LimparDocsPasta;
-
-  try
-    ACBreSocial1.Enviar(TESocialGrupo(rdgGrupo.ItemIndex + 1));
-
-    MemoResp.Lines.Text := ACBreSocial1.WebServices.EnvioLote.RetWS;
-
-    with MemoDados.Lines do
-    begin
-      with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
-      begin
-        Add('');
-        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
-        Add('Mensagem: ' + Status.descResposta);
-
-        if Status.cdResposta in [201, 202] then
-        begin
-          Add('ideEmpregador');
-          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeEmpregador.TpInsc));
-          Add(' - NrInsc: ' + IdeEmpregador.NrInsc);
-          Add('ideTransmissor');
-          Add(' - TpInsc: ' + eSTpInscricaoToStr(IdeTransmissor.TpInsc));
-          Add(' - NrInsc: ' + IdeTransmissor.NrInsc);
-          Add('dadosRecepcaoLote');
-          Add(' - dhRecepcao..............: ' +
-            DateTimeToStr(dadosRecLote.dhRecepcao));
-          Add(' - versaoAplicativoRecepcao: ' +
-            dadosRecLote.versaoAplicRecepcao);
-          Add(' - protocoloEnvio..........: ' + dadosRecLote.Protocolo);
-        end
-        else
-        begin
-          for i := 0 to Status.Ocorrencias.Count - 1 do
-          begin
-            with Status.Ocorrencias.Items[i] do
-            begin
-              Add(' Ocorrencia ' + IntToStr(i));
-              Add('   Código.....: ' + IntToStr(Codigo));
-              Add('   Descrição..: ' + Descricao);
-              Add('   Tipo.......: ' + IntToStr(Tipo));
-              Add('   Localização: ' + Localizacao);
-            end;
-          end;
-        end;
-      end;
-    end;
-
-    pgWebservice.ActivePageIndex := 3;
-  finally
-    ACBreSocial1.Eventos.Clear;
-  end;
-end;
-
-procedure TFExemploEsocial.btnConsIdeEveEmpClick(Sender: TObject);
-var
-  TipoEvento, Periodo: string;
-  i: Integer;
-  Ok: Boolean;
-begin
-  TipoEvento := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
-    Exit;
-
-  Periodo := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Perido de apuracao no formato 01/MM/AAAA', Periodo)) then
-    Exit;
-
-  if ACBreSocial1.ConsultaIdentificadoresEventosEmpregador(edtIdEmpregador.Text,
-                       StrToTipoEvento(Ok, TipoEvento), StrToDate(Periodo)) then
-  begin
-
-    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
-
-    with MemoDados.Lines do
-    begin
-      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
-      begin
-        Add('');
-        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
-        Add('Mensagem: ' + Status.descResposta);
-        Add('');
-        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
-        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          Add('Identificação do Evento:');
-          Add('');
-          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
-          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TFExemploEsocial.btnConsIdeEveTabClick(Sender: TObject);
-var
-  TipoEvento, Chave, DataInicial, DataFinal: string;
-  i: Integer;
-  Ok: Boolean;
-begin
-  TipoEvento := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
-    Exit;
-
-  Chave := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Chave do Evento', Chave)) then
-    Exit;
-
-  DataInicial := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Inicial', DataInicial)) then
-    Exit;
-
-  DataFinal := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Final', DataFinal)) then
-    Exit;
-
-  if ACBreSocial1.ConsultaIdentificadoresEventosTabela(edtIdEmpregador.Text,
-                       StrToTipoEvento(Ok, TipoEvento), Chave,
-                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
-  begin
-
-    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
-
-    with MemoDados.Lines do
-    begin
-      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
-      begin
-        Add('');
-        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
-        Add('Mensagem: ' + Status.descResposta);
-        Add('');
-        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
-        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          Add('Identificação do Evento:');
-          Add('');
-          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
-          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TFExemploEsocial.btnConsIdeEveTrabClick(Sender: TObject);
-var
-  CPFTrab, DataInicial, DataFinal: string;
-  i: Integer;
-begin
-  CPFTrab := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'CPF Trabalhador', CPFTrab)) then
-    Exit;
-
-  DataInicial := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Inicial', DataInicial)) then
-    Exit;
-
-  DataFinal := '';
-  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Final', DataFinal)) then
-    Exit;
-
-  if ACBreSocial1.ConsultaIdentificadoresEventosTrabalhador(edtIdEmpregador.Text, CPFTrab,
-                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
-  begin
-
-    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
-
-    with MemoDados.Lines do
-    begin
-      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
-      begin
-        Add('');
-        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
-        Add('Mensagem: ' + Status.descResposta);
-        Add('');
-        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
-        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
-
-        for i := 0 to RetIdentEvts.Count - 1 do
-        begin
-          Add('Identificação do Evento:');
-          Add('');
-          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
-          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure TFExemploEsocial.btnConsultarClick(Sender: TObject);
+procedure TfrmACBreSocial.btnConsultarClick(Sender: TObject);
 var
   Protocolo: string;
   i, J: Integer;
@@ -4611,11 +5057,155 @@ begin
       end;
     end;
 
-    pgWebservice.ActivePageIndex := 3;
+    pgRespostas.ActivePageIndex := 3;
   end;
 end;
 
-procedure TFExemploEsocial.btnDownloadEventosClick(Sender: TObject);
+procedure TfrmACBreSocial.btnConsIdeEveEmpClick(Sender: TObject);
+var
+  TipoEvento, Periodo: string;
+  i: Integer;
+  Ok: Boolean;
+begin
+  TipoEvento := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
+    Exit;
+
+  Periodo := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Empregador', 'Perido de apuracao no formato 01/MM/AAAA', Periodo)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosEmpregador(edtIdEmpregador.Text,
+                       StrToTipoEvento(Ok, TipoEvento), StrToDate(Periodo)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+    pgRespostas.ActivePageIndex := 3;
+  end;
+end;
+
+procedure TfrmACBreSocial.btnConsIdeEveTabClick(Sender: TObject);
+var
+  TipoEvento, Chave, DataInicial, DataFinal: string;
+  i: Integer;
+  Ok: Boolean;
+begin
+  TipoEvento := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Tipo do Evento no formato S-xxxx', TipoEvento)) then
+    Exit;
+
+  Chave := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Chave do Evento', Chave)) then
+    Exit;
+
+  DataInicial := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Inicial', DataInicial)) then
+    Exit;
+
+  DataFinal := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Tabela', 'Data Final', DataFinal)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosTabela(edtIdEmpregador.Text,
+                       StrToTipoEvento(Ok, TipoEvento), Chave,
+                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+    pgRespostas.ActivePageIndex := 3;
+  end;
+end;
+
+procedure TfrmACBreSocial.btnConsIdeEveTrabClick(Sender: TObject);
+var
+  CPFTrab, DataInicial, DataFinal: string;
+  i: Integer;
+begin
+  CPFTrab := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'CPF Trabalhador', CPFTrab)) then
+    Exit;
+
+  DataInicial := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Inicial', DataInicial)) then
+    Exit;
+
+  DataFinal := '';
+  if not(InputQuery('WebServices: Consulta Identificadores Eventos Trabalhador', 'Data Final', DataFinal)) then
+    Exit;
+
+  if ACBreSocial1.ConsultaIdentificadoresEventosTrabalhador(edtIdEmpregador.Text, CPFTrab,
+                       StrToDateTimeDef(DataInicial, 0), StrToDateTimeDef(DataFinal, 0)) then
+  begin
+
+    MemoResp.Lines.Text := ACBreSocial1.WebServices.ConsultaIdentEventos.RetWS;
+
+    with MemoDados.Lines do
+    begin
+      with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
+      begin
+        Add('');
+        Add('Código Retorno: ' + IntToStr(Status.cdResposta));
+        Add('Mensagem: ' + Status.descResposta);
+        Add('');
+        Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
+        Add('dhUltimo Evento Retornado: ' + DateTimeToStr(RetIdentEvts.dhUltimoEvtRetornado));
+
+        for i := 0 to RetIdentEvts.Count - 1 do
+        begin
+          Add('Identificação do Evento:');
+          Add('');
+          Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
+          Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
+        end;
+      end;
+    end;
+    pgRespostas.ActivePageIndex := 3;
+  end;
+end;
+
+procedure TfrmACBreSocial.btnDownloadEventosClick(Sender: TObject);
 var
   PorID, PorNrRecibo: string;
   i: Integer;
@@ -4662,595 +5252,11 @@ begin
         end;
       end;
     end;
+    pgRespostas.ActivePageIndex := 3;
   end;
 end;
 
-procedure TFExemploEsocial.cbSSLLibChange(Sender: TObject);
-begin
-  try
-    if cbSSLLib.ItemIndex <> -1 then
-      ACBreSocial1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
-  finally
-    AtualizaSSLLibsCombo;
-  end;
-end;
-
-procedure TFExemploEsocial.cbCryptLibChange(Sender: TObject);
-begin
-  try
-    if cbCryptLib.ItemIndex <> -1 then
-      ACBreSocial1.Configuracoes.Geral.SSLCryptLib :=
-        TSSLCryptLib(cbCryptLib.ItemIndex);
-  finally
-    AtualizaSSLLibsCombo;
-  end;
-end;
-
-procedure TFExemploEsocial.cbHttpLibChange(Sender: TObject);
-begin
-  try
-    if cbHttpLib.ItemIndex <> -1 then
-      ACBreSocial1.Configuracoes.Geral.SSLHttpLib :=
-        TSSLHttpLib(cbHttpLib.ItemIndex);
-  finally
-    AtualizaSSLLibsCombo;
-  end;
-end;
-
-procedure TFExemploEsocial.cbXmlSignLibChange(Sender: TObject);
-begin
-  try
-    if cbXmlSignLib.ItemIndex <> -1 then
-      ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib :=
-        TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
-  finally
-    AtualizaSSLLibsCombo;
-  end;
-end;
-
-procedure TFExemploEsocial.cbSSLTypeChange(Sender: TObject);
-begin
-  if cbSSLType.ItemIndex <> -1 then
-    ACBreSocial1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
-end;
-
-procedure TFExemploEsocial.sbtnCaminhoCertClick(Sender: TObject);
-begin
-  OpenDialog1.Title := 'Selecione o Certificado';
-  OpenDialog1.DefaultExt := '*.pfx';
-  OpenDialog1.Filter :=
-    'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ExtractFileDir(Application.ExeName);
-  if OpenDialog1.Execute then
-  begin
-    edtCaminho.Text := OpenDialog1.FileName;
-  end;
-end;
-
-procedure TFExemploEsocial.sbtnListaCertClick(Sender: TObject);
-var
-  i: Integer;
-  ASerie: String;
-  AddRow: Boolean;
-begin
-  frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
-  try
-    ACBreSocial1.SSL.LerCertificadosStore;
-    AddRow := False;
-
-    with frSelecionarCertificado.StringGrid1 do
-    begin
-      ColWidths[0] := 220;
-      ColWidths[1] := 250;
-      ColWidths[2] := 120;
-      ColWidths[3] := 80;
-      ColWidths[4] := 150;
-      Cells[0, 0] := 'Num.Série';
-      Cells[1, 0] := 'Razão Social';
-      Cells[2, 0] := 'CNPJ';
-      Cells[3, 0] := 'Validade';
-      Cells[4, 0] := 'Certificadora';
-    end;
-
-    for i := 0 to ACBreSocial1.SSL.ListaCertificados.Count - 1 do
-    begin
-      with ACBreSocial1.SSL.ListaCertificados[i] do
-      begin
-        ASerie := NumeroSerie;
-        if (CNPJ <> '') then
-        begin
-          with frSelecionarCertificado.StringGrid1 do
-          begin
-            if AddRow then
-              RowCount := RowCount + 1;
-
-            Cells[0, RowCount - 1] := NumeroSerie;
-            Cells[1, RowCount - 1] := RazaoSocial;
-            Cells[2, RowCount - 1] := CNPJ;
-            Cells[3, RowCount - 1] := FormatDateBr(DataVenc);
-            Cells[4, RowCount - 1] := Certificadora;
-            AddRow := True;
-          end;
-        end;
-      end;
-    end;
-
-    frSelecionarCertificado.ShowModal;
-
-    if frSelecionarCertificado.ModalResult = mrOK then
-      edtNumSerie.Text := frSelecionarCertificado.StringGrid1.Cells
-        [0, frSelecionarCertificado.StringGrid1.Row];
-
-  finally
-    frSelecionarCertificado.Free;
-  end;
-
-end;
-
-procedure TFExemploEsocial.sbtnGetCertClick(Sender: TObject);
-begin
-  edtNumSerie.Text := ACBreSocial1.SSL.SelecionarCertificado;
-end;
-
-procedure TFExemploEsocial.btnValidadeDataClick(Sender: TObject);
-begin
-  ShowMessage(FormatDateBr(ACBreSocial1.SSL.CertDataVenc));
-end;
-
-procedure TFExemploEsocial.btnNumSerieClick(Sender: TObject);
-begin
-  ShowMessage(ACBreSocial1.SSL.CertNumeroSerie);
-end;
-
-procedure TFExemploEsocial.btnSubjectNameClick(Sender: TObject);
-begin
-  ShowMessage(ACBreSocial1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-    'Razão Social: ' + ACBreSocial1.SSL.CertRazaoSocial);
-end;
-
-procedure TFExemploEsocial.btnCNPJClick(Sender: TObject);
-begin
-  ShowMessage(ACBreSocial1.SSL.CertCNPJ);
-end;
-
-procedure TFExemploEsocial.btnIssuerNameClick(Sender: TObject);
-begin
-  ShowMessage(ACBreSocial1.SSL.CertIssuerName + sLineBreak + sLineBreak +
-    'Certificadora: ' + ACBreSocial1.SSL.CertCertificadora);
-end;
-
-procedure TFExemploEsocial.btnSHA_RSAClick(Sender: TObject);
-var
-  Ahash: AnsiString;
-begin
-  Ahash := ACBreSocial1.SSL.CalcHash(edtCalcHash.Text, dgstSHA256, outBase64,
-    cbAssinar.Checked);
-  MemoResp.Lines.Add(Ahash);
-  pgWebservice.ActivePageIndex := 3;
-end;
-
-procedure TFExemploEsocial.btnHTTPSClick(Sender: TObject);
-var
-  Acao: String;
-  OldUseCert: Boolean;
-begin
-  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' +
-    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '
-    + 'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> ' +
-    ' <soapenv:Header/>' + ' <soapenv:Body>' + ' <cli:consultaCEP>' +
-    ' <cep>18270-170</cep>' + ' </cli:consultaCEP>' + ' </soapenv:Body>' +
-    ' </soapenv:Envelope>';
-
-  OldUseCert := ACBreSocial1.SSL.UseCertificateHTTP;
-  ACBreSocial1.SSL.UseCertificateHTTP := False;
-  try
-    MemoResp.Lines.Text := ACBreSocial1.SSL.Enviar(Acao,
-      'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl',
-      '');
-  finally
-    ACBreSocial1.SSL.UseCertificateHTTP := OldUseCert;
-  end;
-  pgWebservice.ActivePageIndex := 3;
-end;
-
-procedure TFExemploEsocial.btnX509Click(Sender: TObject);
-begin
-  with ACBreSocial1.SSL do
-  begin
-    CarregarCertificadoPublico(MemoXmlEnvio.Lines.Text);
-    MemoResp.Lines.Add(CertIssuerName);
-    MemoResp.Lines.Add(CertRazaoSocial);
-    MemoResp.Lines.Add(CertCNPJ);
-    MemoResp.Lines.Add(CertSubjectName);
-    MemoResp.Lines.Add(CertNumeroSerie);
-    pgWebservice.ActivePageIndex := 3;
-  end;
-end;
-
-procedure TFExemploEsocial.sbtnPathSalvarClick(Sender: TObject);
-begin
-  PathClick(edtPathLogs);
-end;
-
-procedure TFExemploEsocial.spPathSchemasClick(Sender: TObject);
-begin
-  PathClick(edtPathSchemas);
-end;
-
-procedure TFExemploEsocial.sbPatheSocialClick(Sender: TObject);
-begin
-  PathClick(edtPatheSocial);
-end;
-
-procedure TFExemploEsocial.sbPathEventoClick(Sender: TObject);
-begin
-  PathClick(edtPathEvento);
-end;
-
-procedure TFExemploEsocial.ACBreSocial1GerarLog(const ALogLine: String;
-  var Tratado: Boolean);
-begin
-  memoLog.Lines.Add(ALogLine);
-end;
-
-procedure TFExemploEsocial.ACBreSocial1StatusChange(Sender: TObject);
-begin
-  case ACBreSocial1.Status of
-    stIdle:
-      begin
-        if (frmStatus <> nil) then
-          frmStatus.Hide;
-      end;
-    stEnvLoteEventos:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-    stConsultaLote:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-  end;
-  Application.ProcessMessages;
-end;
-
-procedure TFExemploEsocial.ACBreSocial1TransmissaoEventos
-  (const AXML: AnsiString; ATipo: TeSocialEventos);
-begin
-  case ATipo of
-    eseEnvioLote:
-      MemoXmlEnvio.Lines.Text := AXML;
-    eseRetornoLote:
-      MemoXmlRetorno.Lines.Text := AXML;
-    eseEnvioConsulta:
-      MemoXmlEnvio.Lines.Text := AXML;
-    eseRetornoConsulta:
-      MemoXmlRetorno.Lines.Text := AXML;
-  end;
-end;
-
-procedure TFExemploEsocial.lblColaboradorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
-end;
-
-procedure TFExemploEsocial.lblPatrocinadorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/35');
-end;
-
-procedure TFExemploEsocial.lblDoar1Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
-procedure TFExemploEsocial.lblDoar2Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
-procedure TFExemploEsocial.lblMouseEnter(Sender: TObject);
-begin
-  TLabel(Sender).Font.Style := [fsBold, fsUnderline];
-end;
-
-procedure TFExemploEsocial.lblMouseLeave(Sender: TObject);
-begin
-  TLabel(Sender).Font.Style := [fsBold];
-end;
-
-procedure TFExemploEsocial.btnSalvarConfigClick(Sender: TObject);
-begin
-  GravarConfiguracao;
-  LerConfiguracao;
-end;
-
-procedure TFExemploEsocial.FormCreate(Sender: TObject);
-var
-  T: TSSLLib;
-  K: TVersaoeSocial;
-  U: TSSLCryptLib;
-  V: TSSLHttpLib;
-  X: TSSLXmlSignLib;
-  Y: TSSLType;
-  L: TEmpregador;
-begin
-  cbSSLLib.Items.Clear;
-  for T := Low(TSSLLib) to High(TSSLLib) do
-    cbSSLLib.Items.Add(GetEnumName(TypeInfo(TSSLLib), Integer(T)));
-  cbSSLLib.ItemIndex := 0;
-
-  cbCryptLib.Items.Clear;
-  for U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
-    cbCryptLib.Items.Add(GetEnumName(TypeInfo(TSSLCryptLib), Integer(U)));
-  cbCryptLib.ItemIndex := 0;
-
-  cbHttpLib.Items.Clear;
-  for V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
-    cbHttpLib.Items.Add(GetEnumName(TypeInfo(TSSLHttpLib), Integer(V)));
-  cbHttpLib.ItemIndex := 0;
-
-  cbXmlSignLib.Items.Clear;
-  for X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
-    cbXmlSignLib.Items.Add(GetEnumName(TypeInfo(TSSLXmlSignLib), Integer(X)));
-  cbXmlSignLib.ItemIndex := 0;
-
-  cbSSLType.Items.Clear;
-  for Y := Low(TSSLType) to High(TSSLType) do
-    cbSSLType.Items.Add(GetEnumName(TypeInfo(TSSLType), Integer(Y)));
-  cbSSLType.ItemIndex := 0;
-
-  cbVersaoDF.Items.Clear;
-  for K := Low(TVersaoeSocial) to High(TVersaoeSocial) do
-    cbVersaoDF.Items.Add(GetEnumName(TypeInfo(TVersaoeSocial), Integer(K)));
-  // cbVersaoDF.Items[0] := 've240';
-  cbVersaoDF.ItemIndex := 0;
-
-  cbTEmpregador.Items.Clear;
-  for L := Low(TEmpregador) to High(TEmpregador) do
-    cbTEmpregador.Items.Add(GetEnumName(TypeInfo(TEmpregador), Integer(L)));
-  cbTEmpregador.ItemIndex := 0;
-
-  LerConfiguracao;
-end;
-
-procedure TFExemploEsocial.PathClick(Sender: TObject);
-var
-  Dir: string;
-begin
-  if Length(TEdit(Sender).Text) <= 0 then
-    Dir := ExtractFileDir(Application.ExeName)
-  else
-    Dir := TEdit(Sender).Text;
-
-  if SelectDirectory(Dir, [sdAllowCreate, sdPerformCreate, sdPrompt], SELDIRHELP)
-  then
-    TEdit(Sender).Text := Dir;
-end;
-
-procedure TFExemploEsocial.AtualizaSSLLibsCombo;
-begin
-  cbSSLLib.ItemIndex := Integer(ACBreSocial1.Configuracoes.Geral.SSLLib);
-  cbCryptLib.ItemIndex := Integer(ACBreSocial1.Configuracoes.Geral.SSLCryptLib);
-  cbHttpLib.ItemIndex := Integer(ACBreSocial1.Configuracoes.Geral.SSLHttpLib);
-  cbXmlSignLib.ItemIndex :=
-    Integer(ACBreSocial1.Configuracoes.Geral.SSLXmlSignLib);
-
-  cbSSLType.Enabled := (ACBreSocial1.Configuracoes.Geral.SSLHttpLib
-    in [httpWinHttp, httpOpenSSL]);
-end;
-
-procedure TFExemploEsocial.GravarConfiguracao;
-var
-  IniFile: String;
-  Ini: TIniFile;
-begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
-
-  Ini := TIniFile.Create(IniFile);
-  try
-    Ini.WriteInteger('Certificado', 'SSLLib', cbSSLLib.ItemIndex);
-    Ini.WriteInteger('Certificado', 'CryptLib', cbCryptLib.ItemIndex);
-    Ini.WriteInteger('Certificado', 'HttpLib', cbHttpLib.ItemIndex);
-    Ini.WriteInteger('Certificado', 'XmlSignLib', cbXmlSignLib.ItemIndex);
-    Ini.WriteString('Certificado', 'Caminho', edtCaminho.Text);
-    Ini.WriteString('Certificado', 'Senha', edtSenha.Text);
-    Ini.WriteString('Certificado', 'NumSerie', edtNumSerie.Text);
-
-    Ini.WriteBool('Geral', 'AtualizarXML', ckSalvar.Checked);
-    Ini.WriteBool('Geral', 'ExibirErroSchema', ckSalvar.Checked);
-    Ini.WriteString('Geral', 'FormatoAlerta', edtFormatoAlerta.Text);
-    Ini.WriteInteger('Geral', 'VersaoDF', cbVersaoDF.ItemIndex);
-    Ini.WriteBool('Geral', 'RetirarAcentos', cbxRetirarAcentos.Checked);
-    Ini.WriteBool('Geral', 'Salvar', ckSalvar.Checked);
-    Ini.WriteString('Geral', 'PathSalvar', edtPathLogs.Text);
-    Ini.WriteString('Geral', 'PathSchemas', edtPathSchemas.Text);
-    Ini.WriteString('Geral', 'IdEmpregador', edtIdEmpregador.Text);
-    Ini.WriteString('Geral', 'IdTransmissor', edtIdTransmissor.Text);
-    Ini.WriteInteger('Geral', 'TipoEmpregador', cbTEmpregador.ItemIndex);
-
-    Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
-    Ini.WriteBool('WebService', 'Visualizar', cbxVisualizar.Checked);
-    Ini.WriteBool('WebService', 'SalvarSOAP', cbxSalvarSOAP.Checked);
-    Ini.WriteBool('WebService', 'AjustarAut', cbxAjustarAut.Checked);
-    Ini.WriteString('WebService', 'Aguardar', edtAguardar.Text);
-    Ini.WriteString('WebService', 'Tentativas', edtTentativas.Text);
-    Ini.WriteString('WebService', 'Intervalo', edtIntervalo.Text);
-    Ini.WriteInteger('WebService', 'TimeOut', seTimeOut.Value);
-    Ini.WriteInteger('WebService', 'SSLType', cbSSLType.ItemIndex);
-
-    Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
-    Ini.WriteString('Proxy', 'Porta', edtProxyPorta.Text);
-    Ini.WriteString('Proxy', 'User', edtProxyUser.Text);
-    Ini.WriteString('Proxy', 'Pass', edtProxySenha.Text);
-
-    Ini.WriteBool('Arquivos', 'Salvar', cbxSalvarArqs.Checked);
-    Ini.WriteBool('Arquivos', 'PastaMensal', cbxPastaMensal.Checked);
-    Ini.WriteBool('Arquivos', 'AddLiteral', cbxAdicionaLiteral.Checked);
-    Ini.WriteBool('Arquivos', 'EmissaoPatheSocial',
-      cbxEmissaoPatheSocial.Checked);
-    Ini.WriteBool('Arquivos', 'SalvarPathEvento', cbxSalvaPathEvento.Checked);
-    Ini.WriteBool('Arquivos', 'SepararPorCNPJ', cbxSepararPorCNPJ.Checked);
-    Ini.WriteString('Arquivos', 'PatheSocial', edtPatheSocial.Text);
-    Ini.WriteString('Arquivos', 'PathEvento', edtPathEvento.Text);
-  finally
-    Ini.Free;
-  end;
-end;
-
-procedure TFExemploEsocial.LerConfiguracao;
-var
-  IniFile, PathMensal: String;
-  Ini: TIniFile;
-begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
-  Ini := TIniFile.Create(IniFile);
-
-  try
-    cbSSLLib.ItemIndex := Ini.ReadInteger('Certificado', 'SSLLib', 0);
-    cbCryptLib.ItemIndex := Ini.ReadInteger('Certificado', 'CryptLib', 0);
-    cbHttpLib.ItemIndex := Ini.ReadInteger('Certificado', 'HttpLib', 0);
-    cbXmlSignLib.ItemIndex := Ini.ReadInteger('Certificado', 'XmlSignLib', 0);
-    edtCaminho.Text := Ini.ReadString('Certificado', 'Caminho', '');
-    edtSenha.Text := Ini.ReadString('Certificado', 'Senha', '');
-    edtNumSerie.Text := Ini.ReadString('Certificado', 'NumSerie', '');
-
-    ACBreSocial1.Configuracoes.Certificados.ArquivoPFX := edtCaminho.Text;
-    ACBreSocial1.Configuracoes.Certificados.Senha := edtSenha.Text;
-    ACBreSocial1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-
-    cbxExibirErroSchema.Checked := Ini.ReadBool('Geral',
-      'ExibirErroSchema', True);
-    edtFormatoAlerta.Text := Ini.ReadString('Geral', 'FormatoAlerta',
-      'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.');
-    cbVersaoDF.ItemIndex := Ini.ReadInteger('Geral', 'VersaoDF', 0);
-    ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
-    cbxRetirarAcentos.Checked := Ini.ReadBool('Geral', 'RetirarAcentos', True);
-    edtIdEmpregador.Text := Ini.ReadString('Geral', 'IdEmpregador', '');
-    edtIdTransmissor.Text := Ini.ReadString('Geral', 'IdTransmissor', '');
-    cbTEmpregador.ItemIndex := Ini.ReadInteger('Geral', 'TipoEmpregador', 0);
-
-    ACBreSocial1.SSL.DescarregarCertificado;
-
-    with ACBreSocial1.Configuracoes.Geral do
-    begin
-      SSLLib := TSSLLib(cbSSLLib.ItemIndex);
-      SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
-      SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
-      SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
-
-      AtualizaSSLLibsCombo;
-
-      ExibirErroSchema := cbxExibirErroSchema.Checked;
-      RetirarAcentos := cbxRetirarAcentos.Checked;
-      FormatoAlerta := edtFormatoAlerta.Text;
-      VersaoDF := TVersaoeSocial(cbVersaoDF.ItemIndex);
-      Salvar := ckSalvar.Checked;
-
-      IdEmpregador := edtIdEmpregador.Text;
-      IdTransmissor := edtIdTransmissor.Text;
-      TipoEmpregador := TEmpregador(cbTEmpregador.ItemIndex);
-    end;
-
-    rgTipoAmb.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 0);
-    cbxVisualizar.Checked := Ini.ReadBool('WebService', 'Visualizar', False);
-    cbxSalvarSOAP.Checked := Ini.ReadBool('WebService', 'SalvarSOAP', False);
-    cbxAjustarAut.Checked := Ini.ReadBool('WebService', 'AjustarAut', False);
-    edtAguardar.Text := Ini.ReadString('WebService', 'Aguardar', '0');
-    edtTentativas.Text := Ini.ReadString('WebService', 'Tentativas', '5');
-    edtIntervalo.Text := Ini.ReadString('WebService', 'Intervalo', '0');
-    seTimeOut.Value := Ini.ReadInteger('WebService', 'TimeOut', 5000);
-    cbSSLType.ItemIndex := Ini.ReadInteger('WebService', 'SSLType', 0);
-
-    edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
-    edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
-    edtProxyUser.Text := Ini.ReadString('Proxy', 'User', '');
-    edtProxySenha.Text := Ini.ReadString('Proxy', 'Pass', '');
-
-    with ACBreSocial1.Configuracoes.WebServices do
-    begin
-      if rgTipoAmb.ItemIndex = 0 then
-        Ambiente := taProducao
-      else
-        Ambiente := taHomologacao;
-
-      Visualizar := cbxVisualizar.Checked;
-      Salvar := cbxSalvarSOAP.Checked;
-
-      AjustaAguardaConsultaRet := cbxAjustarAut.Checked;
-
-      if NaoEstaVazio(edtAguardar.Text) then
-        AguardarConsultaRet := ifThen(StrToInt(edtAguardar.Text) < 1000,
-          StrToInt(edtAguardar.Text) * 1000, StrToInt(edtAguardar.Text))
-      else
-        edtAguardar.Text := IntToStr(AguardarConsultaRet);
-
-      if NaoEstaVazio(edtTentativas.Text) then
-        Tentativas := StrToInt(edtTentativas.Text)
-      else
-        edtTentativas.Text := IntToStr(Tentativas);
-
-      if NaoEstaVazio(edtIntervalo.Text) then
-        IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text) < 1000,
-          StrToInt(edtIntervalo.Text) * 1000, StrToInt(edtIntervalo.Text))
-      else
-        edtIntervalo.Text :=
-          IntToStr(ACBreSocial1.Configuracoes.WebServices.IntervaloTentativas);
-
-      TimeOut := seTimeOut.Value;
-      ProxyHost := edtProxyHost.Text;
-      ProxyPort := edtProxyPorta.Text;
-      ProxyUser := edtProxyUser.Text;
-      ProxyPass := edtProxySenha.Text;
-    end;
-
-    ACBreSocial1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
-
-    cbxSalvarArqs.Checked := Ini.ReadBool('Arquivos', 'Salvar', False);
-    cbxPastaMensal.Checked := Ini.ReadBool('Arquivos', 'PastaMensal', False);
-    cbxAdicionaLiteral.Checked := Ini.ReadBool('Arquivos', 'AddLiteral', False);
-    cbxEmissaoPatheSocial.Checked := Ini.ReadBool('Arquivos',
-      'EmissaoPatheSocial', False);
-    cbxSalvaPathEvento.Checked := Ini.ReadBool('Arquivos',
-      'SalvarPathEvento', False);
-    cbxSepararPorCNPJ.Checked := Ini.ReadBool('Arquivos',
-      'SepararPorCNPJ', False);
-    edtPatheSocial.Text := Ini.ReadString('Arquivos', 'PatheSocial', '');
-    edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', '');
-    edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',
-      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Logs');
-    edtPathSchemas.Text := Ini.ReadString('Geral', 'PathSchemas',
-      PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Schemas\' +
-      GetEnumName(TypeInfo(TVersaoeSocial), Integer(cbVersaoDF.ItemIndex)));
-
-    with ACBreSocial1.Configuracoes.Arquivos do
-    begin
-      Salvar := cbxSalvarArqs.Checked;
-      SepararPorMes := cbxPastaMensal.Checked;
-      AdicionarLiteral := cbxAdicionaLiteral.Checked;
-      EmissaoPatheSocial := cbxEmissaoPatheSocial.Checked;
-      SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
-      PathSalvar := edtPathLogs.Text;
-      PathSchemas := edtPathSchemas.Text;
-      PatheSocial := edtPatheSocial.Text;
-    end;
-
-    PathMensal := ACBreSocial1.Configuracoes.Arquivos.GetPatheSocial(0);
-
-    ACBreSocial1.Configuracoes.Arquivos.PathSalvar := PathMensal;
-  finally
-    Ini.Free;
-  end;
-end;
-
-procedure TFExemploEsocial.LimparDocsPasta;
+procedure TfrmACBreSocial.LimparDocsPasta;
 var
   path: string;
   FileOp: TSHFileOpStruct;
@@ -5267,7 +5273,7 @@ begin
   end;
 end;
 
-procedure TFExemploEsocial.SelecionaEventos;
+procedure TfrmACBreSocial.SelecionaEventos;
 begin
   ACBreSocial1.Eventos.Clear;
 
@@ -5356,61 +5362,6 @@ begin
     GerareSocial2400;
   if (cbS3000.Checked) then
     GerareSocial3000;
-end;
-
-procedure TFExemploEsocial.btnCarregarXMLClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  OpenDialog1.Title := 'Selecione o Evento (Arquivo XML)';
-  OpenDialog1.DefaultExt := '*.xml';
-  OpenDialog1.Filter :=
-    'Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-    ACBreSocial1.Eventos.LoadFromFile(OpenDialog1.FileName);
-
-
-  MemoResp.Clear;
-  MemoResp.Lines.Clear;
-  MemoResp.Lines.Add('XML de Eventos Carregado com Sucesso!');
-  MemoResp.Lines.Add(' ');
-
-  for i := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
-  begin
-    MemoResp.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
-    MemoResp.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
-  end;
-
-  pgWebservice.ActivePageIndex := 2;
-end;
-
-procedure TFExemploEsocial.btnCarregarINIClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  OpenDialog1.Title := 'Selecione o Evento (Arquivo INI)';
-  OpenDialog1.DefaultExt := '*.ini';
-  OpenDialog1.Filter :=
-    'Arquivos INI (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*';
-  OpenDialog1.InitialDir := ACBreSocial1.Configuracoes.Arquivos.PathSalvar;
-
-  if OpenDialog1.Execute then
-    ACBreSocial1.Eventos.LoadFromINI(OpenDialog1.FileName);
-
-  MemoResp.Clear;
-  MemoResp.Lines.Clear;
-  MemoResp.Lines.Add('INI de Eventos Carregado com Sucesso!');
-  MemoResp.Lines.Add(' ');
-
-  for I := 0 to ACBreSocial1.Eventos.Gerados.Count -1 do
-  begin
-    MemoResp.Lines.Add('Tipo Evento.: ' + TipoEventoToStr(ACBreSocial1.Eventos.Gerados.Items[i].TipoEvento));
-    MemoResp.Lines.Add('Evento Salvo: ' + ACBreSocial1.Eventos.Gerados.Items[i].PathNome);
-  end;
-
-  pgWebservice.ActivePageIndex := 2;
 end;
 
 end.

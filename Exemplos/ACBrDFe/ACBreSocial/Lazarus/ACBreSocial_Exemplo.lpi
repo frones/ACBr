@@ -12,7 +12,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="ExemploEsocial"/>
+      <Title Value="ACBreSocial_Exemplo"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -29,22 +29,22 @@
     </RunParams>
     <RequiredPackages Count="7">
       <Item1>
-        <PackageName Value="laz_synapse"/>
+        <PackageName Value="SynEdit"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="laz_synapse"/>
       </Item2>
       <Item3>
         <PackageName Value="ACBrComum"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBre_Social"/>
+        <PackageName Value="PCNComum"/>
       </Item5>
       <Item6>
-        <PackageName Value="PCNComum"/>
+        <PackageName Value="ACBre_Social"/>
       </Item6>
       <Item7>
         <PackageName Value="LCL"/>
@@ -52,26 +52,23 @@
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
-        <Filename Value="ExemploEsocial.lpr"/>
+        <Filename Value="ACBreSocial_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="uExemploEsocial.pas"/>
+        <Filename Value="Frm_ACBreSocial.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="FExemploEsocial"/>
+        <ComponentName Value="frmACBreSocial"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="unit2.pas"/>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frSelecionarCertificado"/>
         <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit2"/>
       </Unit2>
       <Unit3>
-        <Filename Value="ufrmStatus.pas"/>
+        <Filename Value="Frm_Status.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>

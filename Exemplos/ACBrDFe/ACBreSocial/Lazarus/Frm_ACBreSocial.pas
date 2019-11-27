@@ -1,20 +1,26 @@
 unit Frm_ACBreSocial;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrUtil, ACBrBase, ACBrDFe,
+  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
+  Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
+  SynEdit, SynHighlighterXML,
+  ACBrUtil, ACBrDFe,
   pcnConversao, pcesConversaoeSocial,
   ACBreSocial;
 
 type
+
+  { TfrmACBreSocial }
+
   TfrmACBreSocial = class(TForm)
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
+    SynXMLSyn1: TSynXMLSyn;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
     TabSheet3: TTabSheet;
@@ -114,7 +120,7 @@ type
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
     TabSheet6: TTabSheet;
-    WBResposta: TWebBrowser;
+    WBResposta: TSynEdit;
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     TabSheet9: TTabSheet;
@@ -265,7 +271,7 @@ type
     procedure GerareSocial1299;
     procedure GerareSocial1300;
 
-    // procedures eventos n„o periÛdicos
+    // procedures eventos n√£o peri√≥dicos
     procedure GerareSocial2190;
     procedure GerareSocial2200;
     procedure GerareSocial2205;
@@ -303,18 +309,18 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
-  IniFiles, Printers,
-  pcnAuxiliar, //pcnRetConsReciDFe,
+  math, TypInfo, DateUtils, blcksock, Grids,
+  Printers,
+  pcnAuxiliar,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
-  ACBreSocialEventos, ACBreSocialConfiguracoes, //ACBreSocialWebServices,
+  ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeUtil,
+  ACBreSocialEventos, ACBreSocialConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
 
 const
   SELDIRHELP = 1000;
 
-{$R *.dfm}
+{$R *.lfm}
 
 { TfrmACBrMDFe }
 
@@ -931,7 +937,7 @@ begin
       with ideEvento do
       begin
         indRetif := ireOriginal;
-        // NrRecibo  := '4564654'; Numero do recibo que ser· retificado.
+        // NrRecibo  := '4564654'; Numero do recibo que ser√° retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
         ProcEmi := peAplicEmpregador;
@@ -950,8 +956,8 @@ begin
         begin
           indMV := imvDescontadaempregador;
 
-          { Os Grupos abaixo s„o opcionais
-            O grupo abaixocorresponde a funcion·rios que tenham dois empregos em empresas diferentes }
+          { Os Grupos abaixo s√£o opcionais
+            O grupo abaixocorresponde a funcion√°rios que tenham dois empregos em empresas diferentes }
             remunOutrEmpr.Clear;
 
           with remunOutrEmpr.New do
@@ -963,11 +969,11 @@ begin
           end;
         end;
 
-        // o grupo abaixo corresponde apenas a trabalhadores cuja categoria n„o est· sujeita ao evento de admiss„o
-        // ou TSV-inÌcio
+        // o grupo abaixo corresponde apenas a trabalhadores cuja categoria n√£o est√° sujeita ao evento de admiss√£o
+        // ou TSV-in√≠cio
         with infoComplem do
         begin
-          NmTrab := 'Jo„o das Neves';
+          NmTrab := 'Jo√£o das Neves';
           DtNascto := date;
           codCBO := '000001';
           NatAtividade := navUrbano;
@@ -983,8 +989,8 @@ begin
           end;
         end;
 
-        // os dados abaixo sÛ devem ser informados em caso do processo existir e houver decis„o que incida sobre as
-        // contribuiÁıes
+        // os dados abaixo s√≥ devem ser informados em caso do processo existir e houver decis√£o que incida sobre as
+        // contribui√ß√µes
         procJudTrab.Clear;
 
         with procJudTrab.New do
@@ -1042,7 +1048,7 @@ begin
               begin
                 tpDep := tdConjuge;
                 cpfDep := '01234567891';
-                nmDep := 'JosÈ das Areias';
+                nmDep := 'Jos√© das Areias';
                 DtNascto := date;
                 vlrPgDep := 0.75;
               end;
@@ -1060,7 +1066,7 @@ begin
           tpAcConv := tacLegislacaoFederalEstadualMunicipalDistrital;
           dtEfAcConv := Now;
           compAcConv := '2017-01';
-          dsc := 'DissÌdio';
+          dsc := 'Diss√≠dio';
 
           idePeriodo.Clear;
 
@@ -1121,7 +1127,7 @@ begin
       with ideEvento do
       begin
         indRetif := ireOriginal;
-        // NrRecibo  := '4564654'; Numero do recibo que ser· retificado.
+        // NrRecibo  := '4564654'; Numero do recibo que ser√° retificado.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
         ProcEmi := peAplicEmpregador;
@@ -1137,8 +1143,8 @@ begin
         NisTrab := '09876543210';
         qtdDepFP := 0;
 
-        // os dados abaixo sÛ devem ser informados em caso do processo existir
-        // e houver decis„o que incida sobre as  contribuiÁıes
+        // os dados abaixo s√≥ devem ser informados em caso do processo existir
+        // e houver decis√£o que incida sobre as  contribui√ß√µes
         procJudTrab.Clear;
 
         with procJudTrab.New do
@@ -1196,7 +1202,7 @@ begin
                 tpDep := tdConjuge;
                 cpfDep := '01234567898';
                 DtNascto := Now;
-                nmDep := 'JosÈ das Areias';
+                nmDep := 'Jos√© das Areias';
                 vlrPgDep := 0.75;
               end;
             end;
@@ -1313,7 +1319,7 @@ begin
       with IdeEvento do
       begin
         indRetif := ireOriginal;
-        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigatÛrio se indRetif = ireRetificacao.
+        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; - obrigat√≥rio se indRetif = ireRetificacao.
         IndApuracao := iapuMensal;
         perApur := '2015-05';
         ProcEmi := peAplicEmpregador;
@@ -1336,8 +1342,8 @@ begin
           tpPgto := tpPgtoRemun1200;
           IndResBr := tpNao;
 
-          // -OS GRUPOS ABAIXO S√O OPCIONAIS
-          // grupo detPgtoFl agora È um collection
+          // -OS GRUPOS ABAIXO S√ÉO OPCIONAIS
+          // grupo detPgtoFl agora √© um collection
           detPgtoFl.Clear;
 
           with detPgtoFl.New do
@@ -1365,7 +1371,7 @@ begin
               begin
                 cpfBenef := '12345698745';
                 dtNasctoBenef := Now;
-                nmBenefic := 'Benefici·rio da pens„o';
+                nmBenefic := 'Benefici√°rio da pens√£o';
                 vlrPensao := 556.32;
               end;
             end;
@@ -1442,7 +1448,7 @@ begin
               begin
                 cpfBenef := '44455588899';
                 dtNasctoBenef := Now;
-                nmBenefic := 'Benefici·rio de Pens„o nas FÈrias';
+                nmBenefic := 'Benefici√°rio de Pens√£o nas F√©rias';
                 vlrPensao := 250.32;
               end;
             end;
@@ -2725,7 +2731,7 @@ begin
       with IdeEvento do
       begin
         indRetif := ireOriginal;
-        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; ObrigatÛrio se indRetif = ireRetificacao;
+        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigat√≥rio se indRetif = ireRetificacao;
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -2741,7 +2747,7 @@ begin
       begin
         dtAlteracao := date;
         dtEf := Now;
-        dscAlt := 'descriÁ„o da alteraÁ„o';
+        dscAlt := 'descri√ß√£o da altera√ß√£o';
 
         Vinculo.TpRegTrab := trCLT;
         Vinculo.TpRegPrev := rpRGPS;
@@ -2771,20 +2777,20 @@ begin
 
           Remuneracao.VrSalFx := 780.00;
           Remuneracao.UndSalFixo := sfPorMes;
-          Remuneracao.DscSalVar := 'DescriÁ„o de sal·rio vari·vel, obrigatÛrio caso UndSalFixo for sfNaoAplicavel';
+          Remuneracao.DscSalVar := 'Descri√ß√£o de sal√°rio vari√°vel, obrigat√≥rio caso UndSalFixo for sfNaoAplicavel';
 
           Duracao.TpContr := PrazoIndeterminado;
-          // Duracao.dtTerm  := Date; // ObrigatÛrio se TpContr = PrazoDeterminado!
+          // Duracao.dtTerm  := Date; // Obrigat√≥rio se TpContr = PrazoDeterminado!
 
-          // LocalTrabGeral n„o deve ser preenchido no caso de trabalhador domÈstico.
+          // LocalTrabGeral n√£o deve ser preenchido no caso de trabalhador dom√©stico.
           with LocalTrabalho do
           begin
             LocalTrabGeral.TpInsc := tiCNPJ;
             LocalTrabGeral.NrInsc := '12345678901234';
-            LocalTrabGeral.DescComp := 'DescriÁ„o complementar do local de trabalho.';
+            LocalTrabGeral.DescComp := 'Descri√ß√£o complementar do local de trabalho.';
 
-            // LocalTrabDom - exclusivo para trabalhador domÈstico,
-            // indicando endereÁo onde exerce suas atividades
+            // LocalTrabDom - exclusivo para trabalhador dom√©stico,
+            // indicando endere√ßo onde exerce suas atividades
             (*
             with LocalTrabDom do
             begin
@@ -2804,7 +2810,7 @@ begin
           begin
             QtdHrsSem := 44;
             TpJornada := tjDemaisTiposJornada;
-            DscTpJorn := 'DescriÁ„o do tipo de jornada, obrigatÛrio se tpJornada = tjDemaisTiposJornada';
+            DscTpJorn := 'Descri√ß√£o do tipo de jornada, obrigat√≥rio se tpJornada = tjDemaisTiposJornada';
             tmpParc := tpNaoeTempoParcial;
 
             horario.Clear;
@@ -2929,7 +2935,7 @@ begin
           dscCompLesao := 'Descricao complementar';
           diagProvavel := 'Diagnostico teste';
           codCID := '1234';
-          observacao := 'ObservaÁ„o teste';
+          observacao := 'Observa√ß√£o teste';
 
           with Emitente do
           begin
@@ -2983,7 +2989,7 @@ begin
           begin
             DtExm := date;
             procRealizado := 123;
-            obsProc := 'observaÁ„o do procedimento realizado';
+            obsProc := 'observa√ß√£o do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
           end;
@@ -2992,7 +2998,7 @@ begin
           begin
             DtExm := date + 1;
             procRealizado := 456;
-            obsProc := 'observaÁ„o do procedimento realizado';
+            obsProc := 'observa√ß√£o do procedimento realizado';
             ordExame := tpOrdExame(0);
             indResult := tpIndResult(1);
           end;
@@ -3061,7 +3067,7 @@ begin
       with IdeEvento do
       begin
         indRetif := ireOriginal;
-        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; ObrigatÛrio se indRetif=ireRetificacao
+        // NrRecibo := 'A.00.NNNNNNNNNNNNNNNNNNN'; Obrigat√≥rio se indRetif=ireRetificacao
         ProcEmi := peAplicEmpregador;
         VerProc := '1.0';
       end;
@@ -3081,7 +3087,7 @@ begin
           codMotAfast := mtvAcidenteDoencaTrabalho;
           infoMesmoMtv := tpNao;
           tpAcidTransito := tpatOutros;
-          observacao := 'Campo opcional, salvo quando codMotAfast=21 aÌ È obrigatÛria';
+          observacao := 'Campo opcional, salvo quando codMotAfast=21 a√≠ √© obrigat√≥ria';
 
           infoAtestado.Clear;
 
@@ -3092,23 +3098,23 @@ begin
 
             with Emitente do
             begin
-              nmEmit := 'Jo„o das Neves';
+              nmEmit := 'Jo√£o das Neves';
               ideOC := idCRM;
               NrOc := '3690';
               ufOC := 'PR';
             end;
           end;
 
-          // infoCessao opcional usado para afastamento por cess„o de funcion·rio. Ex.: Org„o P˙blico, Sindicatos, etc...
+          // infoCessao opcional usado para afastamento por cess√£o de funcion√°rio. Ex.: Org√£o P√∫blico, Sindicatos, etc...
           infoCessao.cnpjCess := '78945612303216';
           infoCessao.infOnus := ocCessionario;
 
-          // infoMandSind opcional para cess„o de funcionario para mandato sindical
+          // infoMandSind opcional para cess√£o de funcionario para mandato sindical
           infoMandSind.cnpjSind := '12345678901234';
           infoMandSind.infOnusRemun := orEmpregador;
         end;
 
-        // Apenas alteraÁ„o do MOTIVO de afastamento
+        // Apenas altera√ß√£o do MOTIVO de afastamento
         with altAfastamento do
         begin
           dtAltMot := date;
@@ -3123,14 +3129,14 @@ begin
           begin
             codCID := '0123';
             qtdDiasAfast := 10;
-            nmEmit := 'Nome do emitente na alteraÁ„o';
+            nmEmit := 'Nome do emitente na altera√ß√£o';
             ideOC := idCRM;
             NrOc := '12313';
             ufOC := ufSP;
           end;
         end;
 
-        // informaÁıes de tÈrmino do Afastamento
+        // informa√ß√µes de t√©rmino do Afastamento
         fimAfastamento.dtTermAfast := Now;
         // fimAfastamento.codMotAfast := '15';
         // fimAfastamento.infoMesmoMtv := tpNao;
@@ -3268,7 +3274,7 @@ begin
       with treiCap do
       begin
         codTreiCap := '3203';
-        obsTreiCap := 'observaÁ„o'; 
+        obsTreiCap := 'observa√ß√£o'; 
 
         with infoComplem do
         begin
@@ -3368,7 +3374,7 @@ begin
         dtFim    := now+3;
 
         jornada.codHorContrat := '1';
-        jornada.dscJornada    := 'DescriÁ„o da Jornada';
+        jornada.dscJornada    := 'Descri√ß√£o da Jornada';
 
         with localTrab do
         begin
@@ -3459,7 +3465,7 @@ begin
         percAliment := 25.5;
         vrAlim := 1985.65;
 
-        // Certid„o de Ûbito apenas em caso de morte quando o mtvDeslig for 09 ou 10
+        // Certid√£o de √≥bito apenas em caso de morte quando o mtvDeslig for 09 ou 10
         nrCertObito := '0123456789';
 
         // numero do processo que decidiu o desligamento mtvdeslig = 17
@@ -3467,12 +3473,12 @@ begin
 
         indCumprParc := cpaCumprimentoTotal;
 
-        // ObsercaÁ„o opcional - vers„o 2.04.01
-        observacao := 'AnotaÁıes relevantes sobre o desligamento que n„o tenham campo prÛprio';
+        // Obserca√ß√£o opcional - vers√£o 2.04.01
+        observacao := 'Anota√ß√µes relevantes sobre o desligamento que n√£o tenham campo pr√≥prio';
 
-        // ObsercaÁ„o opcional - vers„o 2.04.02
+        // Obserca√ß√£o opcional - vers√£o 2.04.02
         with observacoes.New do
-         observacao := 'AnotaÁıes relevantes sobre o desligamento que n„o tenham campo prÛprio';
+         observacao := 'Anota√ß√µes relevantes sobre o desligamento que n√£o tenham campo pr√≥prio';
 
         SucessaoVinc.tpInscSuc := tiCNPJ;
         SucessaoVinc.cnpjSucessora := '12345678912345';
@@ -3630,7 +3636,7 @@ begin
       begin
         CpfTrab := '98765432123';
         NisTrab := '54789632145';
-        NmTrab := 'Jo„o das Neve';
+        NmTrab := 'Jo√£o das Neve';
         Sexo := 'M';
         RacaCor := 1;
         EstCiv := 1;
@@ -3655,7 +3661,7 @@ begin
           CTPS.UfCtps := 'PR';
 
           RIC.NrRic := '10203040506070';
-          RIC.OrgaoEmissor := 'Org„o Emissor';
+          RIC.OrgaoEmissor := 'Org√£o Emissor';
           RIC.DtExped := date;
 
           RG.NrRg := '73062584';
@@ -3764,7 +3770,7 @@ begin
 
           Remuneracao.VrSalFx := 1200.00;
           Remuneracao.UndSalFixo := sfPorMes;
-          Remuneracao.DscSalVar := 'Comiss„o de 1,2% sobre a venda do mÍs';
+          Remuneracao.DscSalVar := 'Comiss√£o de 1,2% sobre a venda do m√™s';
 
           FGTS.OpcFGTS := ofOptante;
           FGTS.DtOpcFGTS := date;
@@ -3778,7 +3784,7 @@ begin
             matricOrig := 'A1234';
           end;
 
-          // InformaÁıes de trabalhador cedido, devem ser preenchidas exclusivamente pelo cession·rio
+          // Informa√ß√µes de trabalhador cedido, devem ser preenchidas exclusivamente pelo cession√°rio
           with infoTrabCedido do
           begin
             categOrig := 111;
@@ -3802,7 +3808,7 @@ begin
             with instEnsino do
             begin
               cnpjInstEnsino := '12345678901234';
-              NmRazao := 'Nome da InstituiÁ„o de Ensino';
+              NmRazao := 'Nome da Institui√ß√£o de Ensino';
               DscLograd := 'R Pitagoras';
               NrLograd := '1618';
               Bairro := 'Bairro Educacional';
@@ -3862,7 +3868,7 @@ begin
 
           Remuneracao.VrSalFx := 1200.00;
           Remuneracao.UndSalFixo := sfPorMes;
-          Remuneracao.DscSalVar := 'Comiss„o de 1,2% sobre a venda do mÍs';
+          Remuneracao.DscSalVar := 'Comiss√£o de 1,2% sobre a venda do m√™s';
 
           with infoEstagiario do
           begin
@@ -3876,7 +3882,7 @@ begin
             with instEnsino do
             begin
               cnpjInstEnsino := '12345678998765';
-              NmRazao := 'Nome da InstituiÁ„o de Ensino';
+              NmRazao := 'Nome da Institui√ß√£o de Ensino';
               DscLograd := 'R Pitagoras';
               NrLograd := '1618';
               Bairro := 'Bairro Educacional';
@@ -4296,7 +4302,7 @@ end;
 procedure TfrmACBreSocial.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBreSocial1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-              'Raz„o Social: ' + ACBreSocial1.SSL.CertRazaoSocial);
+              'Raz√£o Social: ' + ACBreSocial1.SSL.CertRazaoSocial);
 end;
 
 procedure TfrmACBreSocial.cbCryptLibChange(Sender: TObject);
@@ -4685,8 +4691,8 @@ begin
     ColWidths[3] := 80;
     ColWidths[4] := 150;
 
-    Cells[0, 0] := 'Num.SÈrie';
-    Cells[1, 0] := 'Raz„o Social';
+    Cells[0, 0] := 'Num.S√©rie';
+    Cells[1, 0] := 'Raz√£o Social';
     Cells[2, 0] := 'CNPJ';
     Cells[3, 0] := 'Validade';
     Cells[4, 0] := 'Certificadora';
@@ -4827,7 +4833,7 @@ begin
       with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
 
         if Status.cdResposta in [201, 202] then
@@ -4852,10 +4858,10 @@ begin
             with Status.Ocorrencias.Items[i] do
             begin
               Add(' Ocorrencia ' + IntToStr(i));
-              Add('   CÛdigo.....: ' + IntToStr(Codigo));
-              Add('   DescriÁ„o..: ' + Descricao);
+              Add('   C√≥digo.....: ' + IntToStr(Codigo));
+              Add('   Descri√ß√£o..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
-              Add('   LocalizaÁ„o: ' + Localizacao);
+              Add('   Localiza√ß√£o: ' + Localizacao);
             end;
           end;
         end;
@@ -4888,7 +4894,7 @@ begin
       with ACBreSocial1.WebServices.EnvioLote.RetEnvioLote do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
 
         if Status.cdResposta in [201, 202] then
@@ -4913,10 +4919,10 @@ begin
             with Status.Ocorrencias.Items[i] do
             begin
               Add(' Ocorrencia ' + IntToStr(i));
-              Add('   CÛdigo.....: ' + IntToStr(Codigo));
-              Add('   DescriÁ„o..: ' + Descricao);
+              Add('   C√≥digo.....: ' + IntToStr(Codigo));
+              Add('   Descri√ß√£o..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
-              Add('   LocalizaÁ„o: ' + Localizacao);
+              Add('   Localiza√ß√£o: ' + Localizacao);
             end;
           end;
         end;
@@ -4953,7 +4959,7 @@ begin
       with ACBreSocial1.WebServices.ConsultaLote.RetConsultaLote do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
 
         if Status.cdResposta in [201, 202] then
@@ -4991,15 +4997,15 @@ begin
                 Count - 1 do
               begin
                 Add(' Ocorrencia ' + IntToStr(J));
-                Add('   CÛdigo.....: ' +
+                Add('   C√≥digo.....: ' +
                   IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
                   [J].Codigo));
-                Add('   DescriÁ„o..: ' + retEventos.Items[i]
+                Add('   Descri√ß√£o..: ' + retEventos.Items[i]
                   .Processamento.Ocorrencias.Items[J].Descricao);
                 Add('   Tipo.......: ' +
                   IntToStr(retEventos.Items[i].Processamento.Ocorrencias.Items
                   [J].Tipo));
-                Add('   LocalizaÁ„o: ' + retEventos.Items[i]
+                Add('   Localiza√ß√£o: ' + retEventos.Items[i]
                   .Processamento.Ocorrencias.Items[J].Localizacao);
               end;
             end;
@@ -5053,10 +5059,10 @@ begin
             with Status.Ocorrencias.Items[i] do
             begin
               Add(' Ocorrencia ' + IntToStr(i));
-              Add('   CÛdigo.....: ' + IntToStr(Codigo));
-              Add('   DescriÁ„o..: ' + Descricao);
+              Add('   C√≥digo.....: ' + IntToStr(Codigo));
+              Add('   Descri√ß√£o..: ' + Descricao);
               Add('   Tipo.......: ' + IntToStr(Tipo));
-              Add('   LocalizaÁ„o: ' + Localizacao);
+              Add('   Localiza√ß√£o: ' + Localizacao);
             end;
           end;
         end;
@@ -5092,7 +5098,7 @@ begin
       with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
         Add('');
         Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
@@ -5100,7 +5106,7 @@ begin
 
         for i := 0 to RetIdentEvts.Count - 1 do
         begin
-          Add('IdentificaÁ„o do Evento:');
+          Add('Identifica√ß√£o do Evento:');
           Add('');
           Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
           Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
@@ -5145,7 +5151,7 @@ begin
       with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
         Add('');
         Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
@@ -5153,7 +5159,7 @@ begin
 
         for i := 0 to RetIdentEvts.Count - 1 do
         begin
-          Add('IdentificaÁ„o do Evento:');
+          Add('Identifica√ß√£o do Evento:');
           Add('');
           Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
           Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
@@ -5192,7 +5198,7 @@ begin
       with ACBreSocial1.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
         Add('');
         Add('Qtde Total de Eventos na Consulta: ' + IntToStr(RetIdentEvts.qtdeTotEvtsConsulta));
@@ -5200,7 +5206,7 @@ begin
 
         for i := 0 to RetIdentEvts.Count - 1 do
         begin
-          Add('IdentificaÁ„o do Evento:');
+          Add('Identifica√ß√£o do Evento:');
           Add('');
           Add(' - ID Evento: ' + RetIdentEvts.Items[i].Id);
           Add(' - Nr Recibo: ' + RetIdentEvts.Items[i].nrRec);
@@ -5240,21 +5246,21 @@ begin
       with ACBreSocial1.WebServices.DownloadEventos.RetDownloadEvt do
       begin
         Add('');
-        Add('CÛdigo Retorno: ' + IntToStr(Status.cdResposta));
+        Add('C√≥digo Retorno: ' + IntToStr(Status.cdResposta));
         Add('Mensagem: ' + Status.descResposta);
 
         for i := 0 to arquivo.Count - 1 do
         begin
           Add('Arquivo:');
           Add('');
-          Add('CÛdigo Retorno: ' + IntToStr(arquivo.Items[i].Status.cdResposta));
+          Add('C√≥digo Retorno: ' + IntToStr(arquivo.Items[i].Status.cdResposta));
           Add('Mensagem: ' + arquivo.Items[i].Status.descResposta);
           Add('');
           Add(' - ID Evento: ' + arquivo.Items[i].Id);
           Add(' - Nr Recibo: ' + arquivo.Items[i].nrRec);
           Add('');
           Add('** Na propriedade: arquivo.Items[i].XML contem o XML do evento retornado');
-          Add('** Esse XML tambÈm È salvo em disco.');
+          Add('** Esse XML tamb√©m √© salvo em disco.');
         end;
       end;
     end;
@@ -5263,20 +5269,20 @@ begin
 end;
 
 procedure TfrmACBreSocial.LimparDocsPasta;
-var
-  path: string;
-  FileOp: TSHFileOpStruct;
+//var
+//  path: string;
+//  FileOp: TSHFileOpStruct;
 begin
-  try
-    path := IncludeTrailingPathDelimiter(ExtractFileDir(ParamStr(0))) + 'Docs';
-    FillChar(FileOp, SizeOf(FileOp), 0);
-    FileOp.wFunc := FO_DELETE;
-    FileOp.pFrom := PChar(path + #0); // double zero-terminated
-    FileOp.fFlags := FOF_SILENT or FOF_NOERRORUI or FOF_NOCONFIRMATION;
-    SHFileOperation(FileOp);
-    ForceDirectories(path);
-  except
-  end;
+//  try
+//    path := IncludeTrailingPathDelimiter(ExtractFileDir(ParamStr(0))) + 'Docs';
+//    FillChar(FileOp, SizeOf(FileOp), 0);
+//    FileOp.wFunc := FO_DELETE;
+//    FileOp.pFrom := PChar(path + #0); // double zero-terminated
+//    FileOp.fFlags := FOF_SILENT or FOF_NOERRORUI or FOF_NOCONFIRMATION;
+//    SHFileOperation(FileOp);
+//    ForceDirectories(path);
+//  except
+//  end;
 end;
 
 procedure TfrmACBreSocial.SelecionaEventos;

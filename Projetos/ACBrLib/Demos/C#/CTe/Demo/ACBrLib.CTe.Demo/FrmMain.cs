@@ -206,7 +206,7 @@ namespace ACBrLib.CTe.Demo
 
                 ACBrCTe.LimparLista();
                 ACBrCTe.CarregarXML(arquivoXml);
-                ACBrCTe.Imprimir();
+                ACBrCTe.Imprimir(bMostrarPreview: true);
             }
             catch (Exception exception)
             {

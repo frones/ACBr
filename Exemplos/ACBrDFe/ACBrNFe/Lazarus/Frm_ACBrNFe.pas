@@ -5,12 +5,12 @@ unit Frm_ACBrNFe;
 interface
 
 uses
-  IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
+  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
-  SynEdit, SynHighlighterXML, zlib,
-  ACBrBase, ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
+  SynEdit, SynHighlighterXML,
+  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
   ACBrDFeDANFeReport,
-  ACBrNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr,
+  ACBrNFe, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr,
   ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrIntegrador;
 
 type
@@ -339,10 +339,10 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT, pcnRetConsReciDFe,
-  ACBrDFeConfiguracoes, ACBrDFeOpenSSL, ACBrDFeUtil,
+  pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT,
+  ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
 
@@ -357,6 +357,7 @@ procedure TfrmACBrNFe.ACBrNFe1GerarLog(const ALogLine: string;
   var Tratado: Boolean);
 begin
   memoLog.Lines.Add(ALogLine);
+  Tratado := True;
 end;
 
 procedure TfrmACBrNFe.ACBrNFe1StatusChange(Sender: TObject);
@@ -1410,6 +1411,7 @@ procedure TfrmACBrNFe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -1473,6 +1475,7 @@ begin
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
        exit;
 
+    vAux := '';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa', vAux)) then
        exit;
 
@@ -1562,6 +1565,7 @@ procedure TfrmACBrNFe.btnCartadeCorrecaoClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, nSeqEvento, Correcao: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Carta de Correção', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -1605,10 +1609,12 @@ procedure TfrmACBrNFe.btnConsCadClick(Sender: TObject);
 var
   UF, Documento: String;
 begin
- if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:',    UF)) then
+  UF := '';
+  if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF)) then
     exit;
 
- if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)',    Documento)) then
+  Documento := '';
+  if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento)) then
     exit;
 
   Documento :=  Trim(OnlyNumber(Documento));
@@ -1641,6 +1647,7 @@ procedure TfrmACBrNFe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
+  vChave := '';
   if not(InputQuery('WebServices Consultar', 'Chave da NF-e:', vChave)) then
     exit;
 
@@ -1678,6 +1685,7 @@ procedure TfrmACBrNFe.btnConsultarReciboClick(Sender: TObject);
 var
   aux: String;
 begin
+  aux := '';
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
     exit;
 
@@ -1708,9 +1716,11 @@ var
   vAux, vNumLote, vSincrono: String;
   Sincrono: Boolean;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1845,6 +1855,7 @@ var
   Para: String;
   CC: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1891,6 +1902,7 @@ var
   Para: String;
   CC, Evento: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1962,9 +1974,11 @@ procedure TfrmACBrNFe.btnGerarTXTClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1987,6 +2001,7 @@ procedure TfrmACBrNFe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
@@ -2799,16 +2814,22 @@ procedure TfrmACBrNFe.btnInutilizarClick(Sender: TObject);
 var
   Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: String;
 begin
+ Ano := '';
  if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano)) then
     exit;
+ Modelo := '';
  if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo)) then
     exit;
+ Serie := '';
  if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie)) then
     exit;
+ NumeroInicial := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
+ NumeroFinal := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal)) then
     exit;
+ Justificativa := '';
  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
     exit;
 
@@ -3695,7 +3716,7 @@ end;
 procedure TfrmACBrNFe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
+//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrNFe1.SSL.LerCertificadosStore;
@@ -3720,7 +3741,7 @@ begin
   begin
     with ACBrNFe1.SSL.ListaCertificados[I] do
     begin
-      ASerie := NumeroSerie;
+//      ASerie := NumeroSerie;
 
       if (CNPJ <> '') then
       begin

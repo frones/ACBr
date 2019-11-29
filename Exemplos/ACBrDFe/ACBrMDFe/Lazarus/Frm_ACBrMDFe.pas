@@ -5,10 +5,10 @@ unit Frm_ACBrMDFe;
 interface
 
 uses
-  IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
+  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
-  SynEdit, SynHighlighterXML, zlib,
-  ACBrBase, ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
+  SynEdit, SynHighlighterXML,
+  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
   ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass;
 
 type
@@ -283,10 +283,10 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe, pcnRetConsReciDFe,
-  ACBrDFeConfiguracoes, ACBrDFeOpenSSL, ACBrDFeUtil,
+  pcnAuxiliar, pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
+  ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -301,6 +301,7 @@ procedure TfrmACBrMDFe.ACBrMDFe1GerarLog(const ALogLine: string;
   var Tratado: Boolean);
 begin
   memoLog.Lines.Add(ALogLine);
+  Tratado := True;
 end;
 
 procedure TfrmACBrMDFe.ACBrMDFe1StatusChange(Sender: TObject);
@@ -639,6 +640,7 @@ procedure TfrmACBrMDFe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da MDF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -702,6 +704,7 @@ begin
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
        exit;
 
+    vAux := '';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa', vAux)) then
        exit;
 
@@ -820,6 +823,7 @@ procedure TfrmACBrMDFe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
+  vChave := '';
   if not(InputQuery('WebServices Consultar', 'Chave da MDF-e:', vChave)) then
     exit;
 
@@ -876,6 +880,7 @@ procedure TfrmACBrMDFe.btnConsultarReciboClick(Sender: TObject);
 var
   aux: String;
 begin
+  aux := '';
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
     exit;
 
@@ -905,9 +910,11 @@ procedure TfrmACBrMDFe.btnCriarEnviarClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -959,9 +966,11 @@ procedure TfrmACBrMDFe.btnCriarEnviarSincronoClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Manifesto', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1041,6 +1050,7 @@ var
   Para: String;
   CC: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1135,6 +1145,7 @@ procedure TfrmACBrMDFe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero do Manifesto', vAux)) then
     exit;
 
@@ -1975,7 +1986,7 @@ end;
 procedure TfrmACBrMDFe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
+//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrMDFe1.SSL.LerCertificadosStore;
@@ -2000,7 +2011,7 @@ begin
   begin
     with ACBrMDFe1.SSL.ListaCertificados[I] do
     begin
-      ASerie := NumeroSerie;
+//      ASerie := NumeroSerie;
 
       if (CNPJ <> '') then
       begin

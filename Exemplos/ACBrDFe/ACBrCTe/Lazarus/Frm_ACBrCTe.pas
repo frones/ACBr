@@ -5,10 +5,10 @@ unit Frm_ACBrCTe;
 interface
 
 uses
-  IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes,
+  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
   Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
-  SynEdit, SynHighlighterXML, zlib,
-  ACBrBase, ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
+  SynEdit, SynHighlighterXML,
+  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, ACBrDFeReport,
   ACBrCTe, ACBrCTeDACTEClass, ACBrCTeDACTeRLClass;
 
 type
@@ -303,10 +303,10 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
+  strutils, math, TypInfo, DateUtils, blcksock, Grids,
   Printers,
-  pcnAuxiliar, pcteCTe, pcnConversao, pcteConversaoCTe, pcnRetConsReciDFe,
-  ACBrDFeConfiguracoes, ACBrDFeOpenSSL, ACBrDFeUtil,
+  pcnAuxiliar, pcteCTe, pcnConversao, pcteConversaoCTe,
+  ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrCTeConhecimentos, ACBrCTeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
 
@@ -321,6 +321,7 @@ procedure TfrmACBrCTe.ACBrCTe1GerarLog(const ALogLine: string;
   var Tratado: Boolean);
 begin
   memoLog.Lines.Add(ALogLine);
+  Tratado := True;
 end;
 
 procedure TfrmACBrCTe.ACBrCTe1StatusChange(Sender: TObject);
@@ -1107,6 +1108,7 @@ procedure TfrmACBrCTe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave do CT-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -1171,6 +1173,7 @@ begin
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
        exit;
 
+    vAux := '';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa', vAux)) then
        exit;
 
@@ -1211,6 +1214,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    vProt := '';
     if not(InputQuery('Comprovante de Entrega:', 'Numero do Protocolo', vProt)) then
       exit;
 
@@ -1314,15 +1318,19 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    vGrupo := '';
     if not(InputQuery('Carta de Correção do CTe:', 'Grupo', vGrupo)) then
       exit;
 
+    vCampo := '';
     if not(InputQuery('Carta de Correção do CTe:', 'Campo', vCampo)) then
       exit;
 
+    vConteudo := '';
     if not(InputQuery('Carta de Correção do CTe:', 'Conteudo', vConteudo)) then
       exit;
 
+    vIndice := '';
     if not(InputQuery('Carta de Correção do CTe:', 'Indice (por padrão é 1)', vIndice)) then
       exit;
 
@@ -1383,18 +1391,23 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    vData := '';
     if not(InputQuery('Comprovante de Entrega:', 'Data da Entrega (DD/MM/AAAA)', vData)) then
       exit;
 
+    vHora := '';
     if not(InputQuery('Comprovante de Entrega:', 'Hora da Entrega (HH:MM:SS)', vHora)) then
       exit;
 
+    vDoc := '';
     if not(InputQuery('Comprovante de Entrega:', 'Num. Doc. de quem recebeu', vDoc)) then
       exit;
 
+    vNome := '';
     if not(InputQuery('Comprovante de Entrega:', 'Nome de quem recebeu', vNome)) then
       exit;
 
+    vChaveNFe := '';
     if not(InputQuery('Comprovante de Entrega:', 'Chave da NFe Entregue', vChaveNFe)) then
       exit;
 
@@ -1452,10 +1465,12 @@ procedure TfrmACBrCTe.btnConsCadClick(Sender: TObject);
 var
   UF, Documento: String;
 begin
- if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:',    UF)) then
+ UF := '';
+ if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF)) then
     exit;
 
- if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)',    Documento)) then
+ Documento := '';
+ if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento)) then
     exit;
 
   Documento :=  Trim(OnlyNumber(Documento));
@@ -1489,6 +1504,7 @@ procedure TfrmACBrCTe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
+  vChave := '';
   if not(InputQuery('WebServices Consultar', 'Chave do CT-e:', vChave)) then
     exit;
 
@@ -1529,6 +1545,7 @@ procedure TfrmACBrCTe.btnConsultarReciboClick(Sender: TObject);
 var
   aux: String;
 begin
+  aux := '';
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
     exit;
 
@@ -1559,9 +1576,11 @@ procedure TfrmACBrCTe.btnCriarEnviarClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
     exit;
 
+  vNumLote := '';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1613,9 +1632,11 @@ procedure TfrmACBrCTe.btnCriarEnviarSincronoClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Conhecimento', vAux)) then
     exit;
 
+  vNumLote := '';
   if not(InputQuery('WebServices Enviar Síncrono', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1709,6 +1730,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    vAux := '';
     if not(InputQuery('EPEC do CTe:', 'Justificativa', vAux)) then
       exit;
 
@@ -1766,6 +1788,7 @@ var
   Para: String;
   CC: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1812,6 +1835,7 @@ var
   Para: String;
   CC, Evento: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1923,6 +1947,7 @@ procedure TfrmACBrCTe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux)) then
     exit;
 
@@ -2020,16 +2045,22 @@ procedure TfrmACBrCTe.btnInutilizarClick(Sender: TObject);
 var
   Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: String;
 begin
+ Ano := '';
  if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano)) then
     exit;
+ Modelo := '56';
  if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo)) then
     exit;
+ Serie := '';
  if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie)) then
     exit;
+ NumeroInicial := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
+ NumeroFinal := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal)) then
     exit;
+ Justificativa := '';
  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
     exit;
 
@@ -2125,6 +2156,7 @@ begin
     ACBrCTe1.Conhecimentos.Clear;
     ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
 
+    xObs := '';
     if not(InputQuery('Prestação de Serviço em Desacordo:', 'Observação do Tomador', xObs)) then
       exit;
 
@@ -2776,7 +2808,7 @@ end;
 procedure TfrmACBrCTe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
+//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrCTe1.SSL.LerCertificadosStore;
@@ -2801,7 +2833,7 @@ begin
   begin
     with ACBrCTe1.SSL.ListaCertificados[I] do
     begin
-      ASerie := NumeroSerie;
+//      ASerie := NumeroSerie;
 
       if (CNPJ <> '') then
       begin

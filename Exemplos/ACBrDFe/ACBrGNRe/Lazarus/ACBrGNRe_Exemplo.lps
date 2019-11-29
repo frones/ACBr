@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="ACBrGNRe_Exemplo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmACBrGNRe"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="1103"/>
+        <CursorPos X="13" Y="1118"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="Frm_Status.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21" Y="8"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="12" HistoryIndex="11">
+      <Position1>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="237" Column="73" TopLine="235"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="241" Column="73" TopLine="239"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="1017" Column="19" TopLine="1004"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="1029" Column="19" TopLine="1037"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="1095" Column="19" TopLine="1083"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="1124" Column="19" TopLine="1095"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="8" Column="21"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="11" Column="3"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="12" Column="13"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="240" Column="49" TopLine="227"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="242" Column="58" TopLine="229"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Frm_ACBrGNRe.pas"/>
+        <Caret Line="355" Column="14" TopLine="342"/>
+      </Position12>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

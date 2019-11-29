@@ -20,8 +20,7 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="4387"/>
-        <CursorPos Y="4403"/>
+        <CursorPos X="15" Y="13"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -50,123 +49,121 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3947" Column="25" TopLine="3934"/>
+        <Caret Line="3506" Column="36" TopLine="3493"/>
       </Position1>
       <Position2>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3917" Column="52" TopLine="3904"/>
+        <Caret Line="3498" Column="35" TopLine="3485"/>
       </Position2>
       <Position3>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3843" Column="52" TopLine="3830"/>
+        <Caret Line="3490" Column="25" TopLine="3477"/>
       </Position3>
       <Position4>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3741" Column="28" TopLine="3729"/>
+        <Caret Line="3480" Column="29" TopLine="3467"/>
       </Position4>
       <Position5>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3731" Column="28" TopLine="3718"/>
+        <Caret Line="3437" Column="52" TopLine="3424"/>
       </Position5>
       <Position6>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3623" Column="52" TopLine="3610"/>
+        <Caret Line="3402" Column="52" TopLine="3389"/>
       </Position6>
       <Position7>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3610" Column="28" TopLine="3597"/>
+        <Caret Line="3349" Column="51" TopLine="3336"/>
       </Position7>
       <Position8>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3596" Column="35" TopLine="3583"/>
+        <Caret Line="3305" Column="52" TopLine="3292"/>
       </Position8>
       <Position9>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3583" Column="31" TopLine="3570"/>
+        <Caret Line="3288" Column="31" TopLine="3276"/>
       </Position9>
       <Position10>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3563" Column="39" TopLine="3551"/>
+        <Caret Line="3253" Column="52" TopLine="3240"/>
       </Position10>
       <Position11>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3555" Column="39" TopLine="3542"/>
+        <Caret Line="3233" Column="25" TopLine="3221"/>
       </Position11>
       <Position12>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3549" Column="36" TopLine="3536"/>
+        <Caret Line="1496" Column="49" TopLine="1488"/>
       </Position12>
       <Position13>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3540" Column="30" TopLine="3527"/>
+        <Caret Line="2531" Column="36" TopLine="2518"/>
       </Position13>
       <Position14>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3522" Column="36" TopLine="3510"/>
+        <Caret Line="2827" Column="36" TopLine="2814"/>
       </Position14>
       <Position15>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3506" Column="36" TopLine="3493"/>
+        <Caret Line="329" Column="47" TopLine="321"/>
       </Position15>
       <Position16>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3498" Column="35" TopLine="3485"/>
+        <Caret Line="501" Column="50" TopLine="490"/>
       </Position16>
       <Position17>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3490" Column="25" TopLine="3477"/>
+        <Caret Line="4405" TopLine="4389"/>
       </Position17>
       <Position18>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3480" Column="29" TopLine="3467"/>
+        <Caret Line="4415" Column="3" TopLine="4389"/>
       </Position18>
       <Position19>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3437" Column="52" TopLine="3424"/>
+        <Caret Line="4420" Column="3" TopLine="4397"/>
       </Position19>
       <Position20>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3402" Column="52" TopLine="3389"/>
       </Position20>
       <Position21>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3349" Column="51" TopLine="3336"/>
+        <Caret Line="228" TopLine="207"/>
       </Position21>
       <Position22>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3305" Column="52" TopLine="3292"/>
+        <Caret Line="234" TopLine="213"/>
       </Position22>
       <Position23>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3288" Column="31" TopLine="3276"/>
+        <Caret Line="326" Column="18" TopLine="304"/>
       </Position23>
       <Position24>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3253" Column="52" TopLine="3240"/>
+        <Caret Line="4169" TopLine="4162"/>
       </Position24>
       <Position25>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="3233" Column="25" TopLine="3221"/>
+        <Caret Line="4408" TopLine="4403"/>
       </Position25>
       <Position26>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="1496" Column="49" TopLine="1488"/>
       </Position26>
       <Position27>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="2531" Column="36" TopLine="2518"/>
+        <Caret Line="4169" TopLine="4168"/>
       </Position27>
       <Position28>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="2827" Column="36" TopLine="2814"/>
+        <Caret Line="4408" TopLine="4379"/>
       </Position28>
       <Position29>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="329" Column="47" TopLine="321"/>
+        <Caret Line="405" Column="31" TopLine="398"/>
       </Position29>
       <Position30>
         <Filename Value="Frm_ACBreSocial.pas"/>
-        <Caret Line="501" Column="50" TopLine="490"/>
+        <Caret Line="5380" Column="5" TopLine="5045"/>
       </Position30>
     </JumpHistory>
     <RunParams>

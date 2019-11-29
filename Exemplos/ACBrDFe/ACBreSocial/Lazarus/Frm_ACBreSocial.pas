@@ -200,6 +200,9 @@ type
     rdgGrupo: TRadioGroup;
     rdgOperacao: TRadioGroup;
     chkClear: TCheckBox;
+    procedure ACBreSocial1GerarLog(const ALogLine: String; var Tratado: Boolean
+      );
+    procedure ACBreSocial1StatusChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPatheSocialClick(Sender: TObject);
@@ -222,14 +225,12 @@ type
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
-    procedure ACBrMDFe1StatusChange(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
     procedure lblDoar1Click(Sender: TObject);
     procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
-    procedure ACBrMDFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btnGerarClick(Sender: TObject);
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
@@ -322,7 +323,7 @@ const
 
 {$R *.lfm}
 
-{ TfrmACBrMDFe }
+{ TfrmACBreSocial }
 
 procedure TfrmACBreSocial.GerareSocial1000;
 begin
@@ -4165,42 +4166,6 @@ begin
   end;
 end;
 
-procedure TfrmACBreSocial.ACBrMDFe1GerarLog(const ALogLine: string;
-  var Tratado: Boolean);
-begin
-  memoLog.Lines.Add(ALogLine);
-  Tratado := False;
-end;
-
-procedure TfrmACBreSocial.ACBrMDFe1StatusChange(Sender: TObject);
-begin
-  case ACBreSocial1.Status of
-    stIdle:
-      begin
-        if (frmStatus <> nil) then
-          frmStatus.Hide;
-      end;
-    stEnvLoteEventos:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-    stConsultaLote:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-  end;
-
-  Application.ProcessMessages;
-end;
-
 procedure TfrmACBreSocial.AtualizarSSLLibsCombo;
 begin
   cbSSLLib.ItemIndex     := Integer(ACBreSocial1.Configuracoes.Geral.SSLLib);
@@ -4404,6 +4369,42 @@ begin
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TfrmACBreSocial.ACBreSocial1GerarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  memoLog.Lines.Add(ALogLine);
+  Tratado := False;
+end;
+
+procedure TfrmACBreSocial.ACBreSocial1StatusChange(Sender: TObject);
+begin
+  case ACBreSocial1.Status of
+    stIdle:
+      begin
+        if (frmStatus <> nil) then
+          frmStatus.Hide;
+      end;
+    stEnvLoteEventos:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+    stConsultaLote:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+  end;
+
+  Application.ProcessMessages;
 end;
 
 procedure TfrmACBreSocial.GravarConfiguracao;

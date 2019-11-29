@@ -1697,6 +1697,8 @@ object frmACBreSocial: TfrmACBreSocial
     Top = 471
   end
   object ACBreSocial1: TACBreSocial
+    OnStatusChange = ACBreSocial1StatusChange
+    OnGerarLog = ACBreSocial1GerarLog
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone

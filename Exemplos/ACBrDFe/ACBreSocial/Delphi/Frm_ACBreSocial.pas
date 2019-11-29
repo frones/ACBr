@@ -216,14 +216,12 @@ type
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
-    procedure ACBrMDFe1StatusChange(Sender: TObject);
     procedure lblColaboradorClick(Sender: TObject);
     procedure lblPatrocinadorClick(Sender: TObject);
     procedure lblDoar1Click(Sender: TObject);
     procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
-    procedure ACBrMDFe1GerarLog(const ALogLine: string; var Tratado: Boolean);
     procedure btnGerarClick(Sender: TObject);
     procedure btnCarregarXMLClick(Sender: TObject);
     procedure btnCarregarINIClick(Sender: TObject);
@@ -234,6 +232,9 @@ type
     procedure btnConsIdeEveTabClick(Sender: TObject);
     procedure btnConsIdeEveTrabClick(Sender: TObject);
     procedure btnDownloadEventosClick(Sender: TObject);
+    procedure ACBreSocial1GerarLog(const ALogLine: String;
+      var Tratado: Boolean);
+    procedure ACBreSocial1StatusChange(Sender: TObject);
   private
     { Private declarations }
     function GetTipoOperacao: TModoLancamento;
@@ -305,10 +306,10 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
   IniFiles, Printers,
-  pcnAuxiliar, //pcnRetConsReciDFe,
+  pcnAuxiliar,
   pcesS5001, pcesS5002, pcesS5011, pcesS5012,
   ACBrDFeConfiguracoes, ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
-  ACBreSocialEventos, ACBreSocialConfiguracoes, //ACBreSocialWebServices,
+  ACBreSocialEventos, ACBreSocialConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado;
 
 const
@@ -316,7 +317,7 @@ const
 
 {$R *.dfm}
 
-{ TfrmACBrMDFe }
+{ TfrmACBreSocial }
 
 procedure TfrmACBreSocial.GerareSocial1000;
 begin
@@ -4159,42 +4160,6 @@ begin
   end;
 end;
 
-procedure TfrmACBreSocial.ACBrMDFe1GerarLog(const ALogLine: string;
-  var Tratado: Boolean);
-begin
-  memoLog.Lines.Add(ALogLine);
-  Tratado := False;
-end;
-
-procedure TfrmACBreSocial.ACBrMDFe1StatusChange(Sender: TObject);
-begin
-  case ACBreSocial1.Status of
-    stIdle:
-      begin
-        if (frmStatus <> nil) then
-          frmStatus.Hide;
-      end;
-    stEnvLoteEventos:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-    stConsultaLote:
-      begin
-        if (frmStatus = nil) then
-          frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
-        frmStatus.Show;
-        frmStatus.BringToFront;
-      end;
-  end;
-
-  Application.ProcessMessages;
-end;
-
 procedure TfrmACBreSocial.AtualizarSSLLibsCombo;
 begin
   cbSSLLib.ItemIndex     := Integer(ACBreSocial1.Configuracoes.Geral.SSLLib);
@@ -5368,6 +5333,42 @@ begin
     GerareSocial2400;
   if (cbS3000.Checked) then
     GerareSocial3000;
+end;
+
+procedure TfrmACBreSocial.ACBreSocial1GerarLog(const ALogLine: String;
+  var Tratado: Boolean);
+begin
+  memoLog.Lines.Add(ALogLine);
+  Tratado := False;
+end;
+
+procedure TfrmACBreSocial.ACBreSocial1StatusChange(Sender: TObject);
+begin
+  case ACBreSocial1.Status of
+    stIdle:
+      begin
+        if (frmStatus <> nil) then
+          frmStatus.Hide;
+      end;
+    stEnvLoteEventos:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Enviando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+    stConsultaLote:
+      begin
+        if (frmStatus = nil) then
+          frmStatus := TfrmStatus.Create(Application);
+        frmStatus.lblStatus.Caption := 'Consultando lote do eSocial...';
+        frmStatus.Show;
+        frmStatus.BringToFront;
+      end;
+  end;
+
+  Application.ProcessMessages;
 end;
 
 end.

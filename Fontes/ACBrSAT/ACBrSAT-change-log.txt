@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2019
+-- ACBrSAT --
+[*] Novas linhas de Log no metodo "EnviarDadosVenda", para medir o tempo de
+    processamento do Envio a recepção do XML de Venda enviado ao SAT
+    (por: DSA)
+
 04/10/2019
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para atruibuir extensão default para filtros PDF ou HTML

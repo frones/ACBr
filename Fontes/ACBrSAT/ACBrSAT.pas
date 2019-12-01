@@ -260,6 +260,7 @@ function MotivoInvalidoCancelamento(cod: integer): String;
 implementation
 
 Uses
+  dateutils,
   ACBrUtil, ACBrConsts, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador,
   synautil;
 
@@ -1283,6 +1284,7 @@ end;
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
   NomeCFe, SATResp: String;
+  tini, tfim: TDateTime;
 begin
   dadosVenda := Trim(dadosVenda);
 
@@ -1306,12 +1308,17 @@ begin
       DoLog('  Gravando XML Venda enviado: '+NomeCFe);
     end;
 
+    DoLog( '  Inicio do Envio');
     SATResp := '';
+    tini := now;
     if assigned(fsOnEnviarDadosVenda) then
       fsOnEnviarDadosVenda(dadosVenda, SATResp);
 
     if EstaVazio(SATResp) then
       SATResp := fsSATClass.EnviarDadosVenda( dadosVenda );
+
+    tfim := now;
+    DoLog( '  Tempo de Processamento: '+ FormatFloat('##0.000',SecondSpan(tini,tfim))+' segundos' );
   finally
     Result := FinalizaComando( SATResp );
   end;

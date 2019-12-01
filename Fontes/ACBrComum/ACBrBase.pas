@@ -29,9 +29,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {$I ACBr.inc}
@@ -170,6 +169,7 @@ de campos quando necessário}
     fFloatDecimalDigits: Integer;
     fInfo: String;
     fName: String;
+    function GetAsBinary: AnsiString;
     function GetAsDate : TDateTime;
     function GetAsFloat: Double;
     function GetAsInteger : Integer;
@@ -177,7 +177,7 @@ de campos quando necessário}
     function GetAsTime : TDateTime;
     function GetAsTimeStamp : TDateTime;
     function GetAsTimeStampSQL : TDateTime;
-    //procedure SetAsAnsiString(const AValue: AnsiString);
+    procedure SetAsBinary(AValue: AnsiString);
     procedure SetAsDate(const AValue : TDateTime);
     procedure SetAsFloat(const AValue : Double);
     procedure SetAsInteger(const AValue : Integer);
@@ -196,6 +196,7 @@ de campos quando necessário}
     property AsTimeStampSQL: TDateTime  read GetAsTimeStampSQL write SetAsTimeStampSQL ;
     property AsInteger     : Integer    read GetAsInteger      write SetAsInteger ;
     property AsFloat       : Double     read GetAsFloat        write SetAsFloat ;
+    property AsBinary      : AnsiString read GetAsBinary       write SetAsBinary ;
 
     property FloatDecimalDigits : Integer read fFloatDecimalDigits write SetFloatDecimalDigits default 2;
   end ;
@@ -208,7 +209,10 @@ de campos quando necessário}
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
     function GetFields(Index: String): TAcbrInformacao;
   public
-    function Add: TACBrInformacao;
+    function Add (Obj: TACBrInformacao): Integer;
+    procedure Insert (Index: Integer; Obj: TACBrInformacao);
+    function New: TACBrInformacao;
+
     function AddField(const AName: String; const AValue: String): TACBrInformacao;
     function FindFieldByName(const AName: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
@@ -400,6 +404,11 @@ begin
   end;
 end;
 
+function TACBrInformacao.GetAsBinary: AnsiString;
+begin
+  Result := StringToBinaryString(fInfo);
+end;
+
 function TACBrInformacao.GetAsFloat : Double;
 Var
   Info: String ;
@@ -474,12 +483,11 @@ begin
   end;
 end;
 
-{
-procedure TACBrInformacao.SetAsAnsiString(const AValue: AnsiString);
+procedure TACBrInformacao.SetAsBinary(AValue: AnsiString);
 begin
-   fInformacao := AValue;
+  fInfo := String(BinaryStringToString(AValue));
 end;
-}
+
 procedure TACBrInformacao.SetAsDate(const AValue : TDateTime);
 begin
   if AValue = 0 then
@@ -564,7 +572,7 @@ begin
     Result.AsString := AValue
   else
   begin
-    Result := Self.Add;
+    Result := Self.New;
     with Result do
     begin
       Nome     := AName;
@@ -643,13 +651,22 @@ begin
   Result := FieldByName(Index);
 end;
 
-function TACBrInformacoes.GetItem(
-  Index: Integer): TACBrInformacao;
+function TACBrInformacoes.Add(Obj: TACBrInformacao): Integer;
+begin
+  inherited Add(Obj);
+end;
+
+procedure TACBrInformacoes.Insert(Index: Integer; Obj: TACBrInformacao);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TACBrInformacoes.GetItem(Index: Integer): TACBrInformacao;
 begin
   Result := TACBrInformacao(inherited Items[Index]);
 end;
 
-function TACBrInformacoes.Add: TACBrInformacao;
+function TACBrInformacoes.New: TACBrInformacao;
 begin
   Result := TACBrInformacao.Create;
   inherited Add(Result);

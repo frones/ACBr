@@ -150,10 +150,10 @@ procedure BMPMonoToRasterStr(ABMPStream: TStream; InvertImg: Boolean; out
   AWidth: Integer; out AHeight: Integer; out ARasterStr: AnsiString);
 var
   bPixelOffset, bSizePixelArr, bWidth, bHeight: LongWord;
-  bPixel: Byte;
+  bPixel, PadByte: Byte;
   StreamLastPos, RowStart, BytesPerRow, i, RealWidth: Int64;
-  HasPadBits: Boolean;
-  BytesPerWidth: Integer;
+  IsPadByte, HasPadBits: Boolean;
+  BytesPerWidth, PadBits, j: Integer;
 begin
   // Inspiração:
   // http://www.nonov.io/convert_bmp_to_ascii
@@ -190,6 +190,21 @@ begin
   HasPadBits := (BytesPerRow > (trunc(bWidth/8)));
   BytesPerRow := ceil(bWidth / 8);
   AWidth := BytesPerRow*8;
+  if HasPadBits then
+  begin
+    PadBits := AWidth - bWidth;
+    PadByte := 1;
+    for j := 2 to PadBits do
+    begin
+      PadByte := PadByte shl 1;
+      PadByte := PadByte + 1;
+    end;
+  end
+  else
+  begin
+    PadBits := 0;
+    PadByte := 0;
+  end;
 
   if (bSizePixelArr <= 0) then
     bSizePixelArr := ABMPStream.Size-bPixelOffset;
@@ -205,15 +220,14 @@ begin
     ABMPStream.Position := RowStart;
     while (i <= BytesPerRow) do
     begin
+      IsPadByte := HasPadBits and (i = BytesPerRow);
       bPixel := 0;
       ABMPStream.ReadBuffer(bPixel,1);
+      if IsPadByte then
+        bPixel := bPixel or PadByte;
+
       if InvertImg then
-      begin
-        if (not HasPadBits) or (i < BytesPerRow) then
-          bPixel := bPixel xor $FF
-        else
-          bPixel := bPixel xor bPixel;
-      end;
+        bPixel := bPixel xor $FF;
 
       ARasterStr := ARasterStr + AnsiChr(bPixel);
       inc(i);

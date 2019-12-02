@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/12/2019
+-- ACBrETQPpla --
+[+] Implementado o método "BMP2HEX", que converte uma Imagem BitMap, no Formato
+    HEX nativo do protocolo PPLA
+[*] Método "ComandoCarregarImagem" modificado para converter imagens BMP para HEX, no
+    momento da Carga da Imagem
+    (por: DSA)
+
 Data: 01/12/2019
 -- ACBrEscPosEpson --
 [*] Ajuste no método "TACBrEscPosEpson.LerInfo", para correta leitura de informações

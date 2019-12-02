@@ -110,6 +110,7 @@ type
 
     function ComandoCarregarImagem(aStream: TStream; aNomeImagem: String;
       aFlipped: Boolean; aTipo: String): AnsiString; override;
+    function BMP2HEX(aStream: TStream; Inverter: Boolean): String;
   end;
 
 implementation
@@ -468,7 +469,11 @@ function TACBrETQPpla.ComandoCarregarImagem(aStream: TStream;
   aNomeImagem: String; aFlipped: Boolean; aTipo: String): AnsiString;
 var
   Cmd: Char;
+  DataImg: AnsiString;
 begin
+  DataImg := '';
+  aStream.Position := 0;
+
   if (aTipo = '') then
     aTipo := 'BMP'
   else
@@ -486,12 +491,13 @@ begin
     if not IsBMP(aStream, True) then
       raise Exception.Create(ACBrStr(cErrImgBMPMono));
 
-    Cmd := 'b'
+    Cmd := 'F';
+    DataImg := BMP2HEX(aStream, aFlipped);
   end
   else if (aTipo = 'IMG') then
     Cmd := 'i'
   else if (aTipo = 'HEX') then
-    Cmd := 'f'
+    Cmd := 'F'
   else
     raise Exception.Create(ACBrStr(
       'Formato de Imagem deve ser: BMP, PCX, IMG ou HEX, e Monocromática'));
@@ -499,9 +505,37 @@ begin
   if aFlipped then
     Cmd := UpCase(Cmd);
 
-  aStream.Position := 0;
+  if (DataImg = '') then
+    DataImg := ReadStrFromStream(aStream, aStream.Size);
+
   Result := STX + 'IA' + Cmd + AjustarNomeArquivoImagem(aNomeImagem) + CR +
-            ReadStrFromStream(aStream, aStream.Size);
+            DataImg;
+end;
+
+function TACBrETQPpla.BMP2HEX(aStream: TStream; Inverter: Boolean): String;
+var
+  ARasterImg: AnsiString;
+  AHeight, AWidth, i, LenImgHex, BytesPerRow, HexPerRow: Integer;
+  ALine, ImgHex: String;
+begin
+  Result := '';
+  AWidth := 0; AHeight := 0; ARasterImg := '';
+  BMPMonoToRasterStr(aStream, not Inverter, AWidth, AHeight, ARasterImg);
+
+  ImgHex := AsciiToHex(ARasterImg);
+  LenImgHex := Length(ImgHex);
+  BytesPerRow := ceil(AWidth / 8);
+  HexPerRow := BytesPerRow * 2;
+  i := 1;
+  while i < LenImgHex do
+  begin
+    ALine := '80'+IntToHex(BytesPerRow, 2) +
+             copy(ImgHex, i, HexPerRow) + CR;
+    i := i + HexPerRow;
+    Result := ALine + Result;
+  end;
+
+  Result := Result + 'FFFF' + CR;
 end;
 
 end.

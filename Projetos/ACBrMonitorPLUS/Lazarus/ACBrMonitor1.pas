@@ -587,6 +587,7 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
+    rgImprimeDescAcrescItemNFe: TRadioGroup;
     rgrMsgCanhoto: TRadioGroup;
     rgImprimeTributos: TRadioGroup;
     rgInfAdicProduto: TRadioGroup;
@@ -1753,6 +1754,7 @@ var
   IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
   IFormaEmissaoMDFe, IFormaEmissaoBPe: TpcnTipoEmissao;
   IForcarTagICMSSubs: TForcarGeracaoTag;
+  IpcnImprimeDescAcrescItem: TpcnImprimeDescAcrescItem;
   iETQModelo : TACBrETQModelo ;
   iETQDPI: TACBrETQDPI;
   iETQUnidade: TACBrETQUnidade;
@@ -2206,6 +2208,11 @@ begin
   for IForcarTagICMSSubs := Low(TForcarGeracaoTag) to High(TForcarGeracaoTag) do
     cbTagRejeicao938.Items.Add(GetEnumName(TypeInfo(TForcarGeracaoTag), integer(IForcarTagICMSSubs)));
   cbTagRejeicao938.ItemIndex := 0;
+
+  rgImprimeDescAcrescItemNFe.Items.Clear;
+  for IpcnImprimeDescAcrescItem := Low(TpcnImprimeDescAcrescItem) to High(TpcnImprimeDescAcrescItem) do
+    rgImprimeDescAcrescItemNFe.Items.Add(copy( GetEnumName(TypeInfo(TpcnImprimeDescAcrescItem), integer(IpcnImprimeDescAcrescItem)), 5, 8) );
+  rgImprimeDescAcrescItemNFe.ItemIndex := 0;
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
   try
@@ -4867,6 +4874,7 @@ begin
       cbxExibirLogoEmCima.Checked         := LogoEmCima;
       cbxExpandirDadosAdicionaisAuto.Checked:= ExpandirDadosAdicionaisAuto;
       cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked:= ImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
+      rgImprimeDescAcrescItemNFe.ItemIndex:= ImprimeDescAcrescItemNFe;
     end;
 
     with Impressao.DACTE do
@@ -6039,6 +6047,7 @@ begin
         LogoEmCima                     := cbxExibirLogoEmCima.Checked;
         ExpandirDadosAdicionaisAuto    := cbxExpandirDadosAdicionaisAuto.Checked;
         ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
+        ImprimeDescAcrescItemNFe   := rgImprimeDescAcrescItemNFe.ItemIndex;
       end;
 
       with Impressao.DACTE do
@@ -8875,6 +8884,7 @@ begin
       ACBrNFeDANFeRL1.LogoemCima := cbxExibirLogoEmCima.Checked;
       ACBrNFeDANFeRL1.ExpandirDadosAdicionaisAuto:= cbxExpandirDadosAdicionaisAuto.Checked;
       ACBrNFeDANFeRL1.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= cbxImprimeContinuacaoDadosAdicionaisPrimeiraPagina.Checked;
+      ACBrNFeDANFeRL1.ImprimeDescAcrescItem:= TpcnImprimeDescAcrescItem(rgImprimeDescAcrescItemNFe.ItemIndex);
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortesA4_1 then
     begin

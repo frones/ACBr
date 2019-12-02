@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/12/2019
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
+Adicionado propriedade Para apresentar coluna Desconto e Acrescimo na impressão da DANFe
+
+02/12/2019
+[*] DoACBrMDFe
+Adicionado parametrização para emissão do DAMDFe com mensagem de "MDFeEncerrado"
+
 14/11/2019
 [*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado propriedade "Texto Personalizado Canhoto NFe", configuravel em DFe/Impressao/NFe

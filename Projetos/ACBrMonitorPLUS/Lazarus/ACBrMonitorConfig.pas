@@ -308,6 +308,7 @@ type
     ImprimirDetalhamentoEspecifico   : Boolean;
     ImprimirDadosDocReferenciados    : Boolean;
     ExibirBandInforAdicProduto       : Integer;
+    ImprimeDescAcrescItemNFe         : Integer;
     LogoEmCima                       : Boolean;
     ExpandirDadosAdicionaisAuto      : Boolean;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
@@ -1091,6 +1092,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto  , ExibirBandInforAdicProduto );
+      Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe     , ImprimeDescAcrescItemNFe);
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
     end;
@@ -1747,7 +1749,8 @@ begin
       QuebrarLinhasDetalheItens :=  Ini.ReadBool( CSecDANFE,  CKeyDANFEQuebrarLinhasDetalheItens         , QuebrarLinhasDetalheItens );
       ImprimirDetalhamentoEspecifico := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDetalhamentoEspecifico , ImprimirDetalhamentoEspecifico );
       ImprimirDadosDocReferenciados := Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
-      ExibirBandInforAdicProduto := Ini.ReadInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto        , ExibirBandInforAdicProduto );
+      ExibirBandInforAdicProduto := Ini.ReadInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto     , ExibirBandInforAdicProduto );
+      ImprimeDescAcrescItemNFe   := Ini.ReadInteger( CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe        , ImprimeDescAcrescItemNFe );
       LogoEmCima                 := Ini.ReadBool( CSecDANFE,  CKeyDANFELogoEmCima                        , LogoEmCima );
       ExpandirDadosAdicionaisAuto:= Ini.ReadBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto      , ExpandirDadosAdicionaisAuto );
       ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= Ini.ReadBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina,
@@ -2400,6 +2403,7 @@ begin
     ImprimirDetalhamentoEspecifico := True;
     ImprimirDadosDocReferenciados := True;
     ExibirBandInforAdicProduto := 0;
+    ImprimeDescAcrescItemNFe   := 0;
     LogoEmCima                 := False;
     ExpandirDadosAdicionaisAuto := False;
     ImprimeContinuacaoDadosAdicionaisPrimeiraPagina:= False;

@@ -953,6 +953,7 @@ const
   CKeyDANFELogoEmCima =                    'LogoEmCima';
   CKeyDANFEExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
   CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContinuacaoDadosAdicionaisPrimeiraPagina';
+  CKeyDANFEImprimeDescAcrescItemNFe = 'ImprimeDescAcrescItemNFe';
 
   CSecDANFCe =                         'DANFCe';
   CKeyDANFCeMargemInf =                'MargemInf';

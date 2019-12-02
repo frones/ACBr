@@ -54,7 +54,8 @@ public
   procedure Executar(ACmd: TACBrCmd); override;
 
   function GerarMDFeIni(XML: string): string;
-  procedure RespostaManifesto(pImprimir: boolean; pImpressora: string; pPreview: String; pCopias: Integer; pPDF: Boolean);
+  procedure RespostaManifesto(pImprimir: boolean; pImpressora: string; pPreview: String; pCopias: Integer; pPDF: Boolean;
+    pEncerrado: Boolean);
   procedure RespostaPadrao;
   procedure RespostaEncerramento;
   procedure RespostaEnvio;
@@ -65,7 +66,7 @@ public
   procedure RespostaRecibo;
   procedure RespostaEvento;
   procedure RespostaDistribuicaoDFe;
-  procedure ImprimirMDFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
+  procedure ImprimirMDFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean; pEncerrado: Boolean);
 
   property ACBrMDFe: TACBrMDFe read fACBrMDFe;
 end;
@@ -547,7 +548,7 @@ begin
 end;
 
 procedure TACBrObjetoMDFe.RespostaManifesto(pImprimir: boolean;
-  pImpressora: string; pPreview: String; pCopias: Integer; pPDF: Boolean);
+  pImpressora: string; pPreview: String; pCopias: Integer; pPDF: Boolean; pEncerrado: Boolean);
 var
   I, J: integer;
   ArqPDF: String;
@@ -575,6 +576,8 @@ begin
 
           if StrToBoolDef( pPreview, False ) then
             DAMDFE.MostraPreview:= True;
+
+          DAMDFE.Encerrado:= pEncerrado;
 
           if pPDF then
           begin
@@ -738,7 +741,7 @@ begin
 end;
 
 procedure TACBrObjetoMDFe.ImprimirMDFe(pImpressora: String; pPreview: String;
-  pCopias: Integer; pPDF: Boolean);
+  pCopias: Integer; pPDF: Boolean; pEncerrado: Boolean);
 var
   ArqPDF : String;
 begin
@@ -754,6 +757,8 @@ begin
 
       if StrToBoolDef( pPreview, False ) then
         DAMDFE.MostraPreview:= True;
+
+      DAMDFE.Encerrado:= pEncerrado;
 
       if pPDF then
       begin
@@ -1846,14 +1851,17 @@ end;
 
 { Params: 0 - XML - Uma String com um Path completo XML MDFe
           1 - NumeroProtocolo: String com número do lote (opcional)
+          2 - AEncerrado: 1 para imprimir mensagem de Encerrado
 }
 procedure TMetodoImprimirDaMDFePDF.Executar;
 var
   ArqPDF, AXML, AProtocolo: string;
   CargaDFe: TACBrCarregarMDFe;
+  AEncerrado: Boolean;
 begin
   AXML := fpCmd.Params(0);
   AProtocolo := fpCmd.Params(1);
+  AEncerrado:= StrToBoolDef(fpCmd.Params(2), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -1862,6 +1870,8 @@ begin
     try
       if NaoEstaVazio(AProtocolo) then
         ACBrMDFe.DAMDFe.Protocolo := AProtocolo;
+
+      ACBrMDFe.DAMDFE.Encerrado := AEncerrado;
 
       try
         ACBrMDFe.Manifestos.ImprimirPDF;
@@ -1889,6 +1899,7 @@ end;
           5 - MostrarPreview: 1 para mostrar preview (Default)
           6 - Numero de Copias: Inteiro com número de cópias (Default)
           7 - ImprimirPDF: 1 para imprimir PDF (Default)
+          8 - Encerrado: 1 para imprimir Mensagem Encerrado
 }
 procedure TMetodoCriarEnviarMDFe.Executar;
 var
@@ -1901,6 +1912,7 @@ var
   APreview: String;
   ACopias: Integer;
   APDF: Boolean;
+  AEncerrado: Boolean;
 begin
 
   AIni := fpCmd.Params(0);
@@ -1911,6 +1923,7 @@ begin
   APreview := fpCmd.Params(5);
   ACopias := StrToIntDef(fpCmd.Params(6), 0);
   APDF := StrToBoolDef(fpCmd.Params(7), False);
+  AEncerrado := StrToBoolDef(fpCmd.Params(8), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -1959,13 +1972,13 @@ begin
       ACBrMDFe.WebServices.Retorno.Executar;
 
       RespostaRetorno;
-      RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF);
+      RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF, AEncerrado);
 
     end
     else
     begin
       if AImprime then //Sincrono
-        ImprimirMDFe(AImpressora, APreview, ACopias, APDF);
+        ImprimirMDFe(AImpressora, APreview, ACopias, APDF, AEncerrado);
     end;
 
   end;
@@ -2026,6 +2039,7 @@ end;
           4 - Preview: 1 para Mostrar Preview
           5 - Copias: Inteiro com número de cópias para impressão
           6 - PDF: 1 para impressão em PDF
+          7 - Encerrado: 1 para imprimir mensagem de Encerrado
 }
 procedure TMetodoEnviarLoteMDFe.Executar;
 var
@@ -2037,6 +2051,7 @@ var
   APreview: String;
   ACopias: Integer;
   APDF: Boolean;
+  AEncerrado: Boolean;
 begin
   ALote := StrToIntDef(fpCmd.Params(0), 0);
   ALoteEnvio := StrToIntDef(fpCmd.Params(1), 0);
@@ -2045,6 +2060,7 @@ begin
   APreview     := fpCmd.Params(4);
   ACopias      := StrToIntDef(fpCmd.Params(5), 0);
   APDF         := StrToBoolDef(fpCmd.Params(6), False);
+  AEncerrado   := StrToBoolDef(fpCmd.Params(7), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -2087,7 +2103,7 @@ begin
     ACBrMDFe.WebServices.Retorno.Executar;
 
     RespostaRetorno;
-    RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF);
+    RespostaManifesto(AImprime, AImpressora, APreview, ACopias, APDF, AEncerrado);
   end;
 end;
 
@@ -2100,13 +2116,14 @@ end;
           3 - Imprime: 1 Para True. Default 0
           4 - Nome Impressora: String com Nome da Impressora
           5 - Assincrono : Boolean
+          6 - Encerrado: 1 para imprimir mensagem Encerrado
 }
 procedure TMetodoEnviarMDFe.Executar;
 var
   CargaDFe: TACBrCarregarMDFe;
   APathorXML, AImpressora: String;
   ALote: Integer;
-  AAssina, AImprime, Assincrono : Boolean;
+  AAssina, AImprime, Assincrono, AEncerrado : Boolean;
 begin
   APathorXML := fpCmd.Params(0);
   ALote := StrToIntDef(fpCmd.Params(1), 0);
@@ -2114,6 +2131,7 @@ begin
   AImprime := StrToBoolDef(fpCmd.Params(3), False);
   AImpressora := fpCmd.Params(4);
   Assincrono := StrToBoolDef( fpCmd.Params(5), True);
+  AEncerrado := StrToBoolDef( fpCmd.Params(6), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -2142,13 +2160,13 @@ begin
         ACBrMDFe.WebServices.Retorno.Executar;
 
         RespostaRetorno;
-        RespostaManifesto(AImprime, AImpressora, '' , 0, False);
+        RespostaManifesto(AImprime, AImpressora, '' , 0, False, AEncerrado);
 
       end
       else
       begin
         if AImprime then //Sincrono
-          ImprimirMDFe(AImpressora, '', 0, False);
+          ImprimirMDFe(AImpressora, '', 0, False, AEncerrado);
       end;
 
 
@@ -2228,6 +2246,7 @@ end;
           2 - Copias: Integer Número de Copias
           3 - Protocolo: String com Número de Protocolo
           4 - Preview: 1 para Mostrar Preview
+          5 - Encerrado: 1 para imiprimir mensagem Encerrado
 }
 procedure TMetodoImprimirDaMDFe.Executar;
 var
@@ -2235,12 +2254,14 @@ var
   AChave, AImpressora, AProtocolo: String;
   ACopias: Integer;
   APreview: Boolean;
+  AEncerrado: Boolean;
 begin
   AChave := fpCmd.Params(0);
   AImpressora := fpCmd.Params(1);
   ACopias := StrToIntDef(fpCmd.Params(2), 0);
   AProtocolo := fpCmd.Params(3);
   APreview := StrToBoolDef(fpCmd.Params(4), False);
+  AEncerrado := StrToBoolDef(fpCmd.Params(5), False);
 
   with TACBrObjetoMDFe(fpObjetoDono) do
   begin
@@ -2258,6 +2279,8 @@ begin
 
       if APreview then
         ACBrMDFe.DAMDFE.MostraPreview := True;
+
+      ACBrMDFe.DAMDFE.Encerrado := AEncerrado;
 
       try
         DoAntesDeImprimir((APreview) or (MonitorConfig.DFE.Impressao.DANFE.MostrarPreview ));

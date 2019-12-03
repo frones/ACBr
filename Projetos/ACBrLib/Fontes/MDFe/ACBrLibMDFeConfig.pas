@@ -119,7 +119,6 @@ begin
   FEncerrado := False;
   FTipoDAMDFe := tiRetrato;
   FTamanhoPapel := tpA4;
-  FPrintDialog := True;
 end;
 
 procedure TDAMDFeConfig.ApplyChild(const DFeReport: TACBrMDFeDAMDFeRL);
@@ -131,7 +130,6 @@ begin
   DFeReport.Protocolo := FProtocolo;
   DFeReport.Cancelada := FCancelada;
   DFeReport.Encerrado := FEncerrado;
-  DFeReport.PrintDialog := FPrintDialog;
 end;
 
 procedure TDAMDFeConfig.LerIniChild(const AIni: TCustomIniFile);

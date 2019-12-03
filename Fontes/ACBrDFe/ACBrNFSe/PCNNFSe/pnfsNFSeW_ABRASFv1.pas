@@ -371,7 +371,8 @@ begin
   end;
 
   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
-                     StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), DSC_DISCR);
+                     StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ),
+                      DSC_DISCR, (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> '3304557'));
 
   if FProvedor in [proPublica] then
     Gerador.wCampoNFSe(tcStr, '', 'InformacoesComplementares', 001, 255, 0, NFSe.OutrasInformacoes, '');
@@ -432,7 +433,8 @@ begin
     Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae               ', 01, 0007, 0, OnlyNumber(NFSe.Servico.CodigoCnae), DSC_CNAE);
     Gerador.wCampoNFSe(tcStr, '#31', 'CodigoTributacaoMunicipio', 01, 0020, 0, OnlyNumber(NFSe.Servico.CodigoTributacaoMunicipio), DSC_CSERVTRIBMUN);
     Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
-                    StringReplace( NFSe.Servico.ItemServico[i].Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), DSC_DISCR);
+                    StringReplace( NFSe.Servico.ItemServico[i].Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ),
+                      DSC_DISCR, (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> '3304557'));
     Gerador.wCampoNFSe(tcStr, '#33', 'CodigoMunicipio          ', 01, 0007, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN);
     Gerador.wCampoNFSe(tcInt, '#34', 'CodigoPais               ', 04, 04,   0, NFSe.Servico.CodigoPais, DSC_CPAIS);
     Gerador.wCampoNFSe(tcStr, '#35', 'ExigibilidadeISS         ', 01, 01,   1, ExigibilidadeISSToStr(NFSe.Servico.ExigibilidadeISS), DSC_INDISS);

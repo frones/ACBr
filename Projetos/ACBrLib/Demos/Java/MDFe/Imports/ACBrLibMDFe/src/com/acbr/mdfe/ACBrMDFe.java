@@ -225,14 +225,18 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
   }
 
   public String enviar( int aLote ) throws Exception {
-    return enviar( aLote, false );
+    return enviar( aLote, false, false );
+  }
+  
+  public String enviar( int aLote , boolean imprimir) throws Exception {
+    return enviar( aLote, imprimir, false );
   }
 
-  public String enviar( int aLote, boolean imprimir ) throws Exception {
+  public String enviar( int aLote, boolean imprimir, boolean sincrono ) throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
     IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
 
-    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar( aLote, imprimir, buffer, bufferLen );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_Enviar( aLote, imprimir, sincrono, buffer, bufferLen );
     checkResult( ret );
 
     return processResult( buffer, bufferLen );
@@ -395,7 +399,7 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
 
     int MDFE_Consultar( String eChaveOuNFe, ByteBuffer buffer, IntByReference bufferSize );
 
-    int MDFE_Enviar( int ALote, boolean Imprimir, ByteBuffer buffer, IntByReference bufferSize );
+    int MDFE_Enviar( int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
 
     int MDFE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
 

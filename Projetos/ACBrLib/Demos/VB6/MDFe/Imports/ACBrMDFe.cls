@@ -112,7 +112,6 @@ Private Declare Function MDFE_Enviar _
                 Lib "ACBrMDFe32.dll" (ByVal aLote As Long, _
                                      ByVal Imprimir As Boolean, _
                                      ByVal sincrono As Boolean, _
-                                     ByVal zipado As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
@@ -420,8 +419,7 @@ Public Function ConsultaCadastro(ByVal cUF As String, ByVal nDocumento As String
 End Function
 
 Public Function Enviar(ByVal aLote As Long, Optional ByVal Imprimir As Boolean = False, _
-                       Optional ByVal sincrono As Boolean = False, _
-                       Optional ByVal zipado As Boolean = False) As String
+                       Optional ByVal sincrono As Boolean = False) As String
     Dim retorno   As Long
     Dim buffer    As String
     Dim bufferLen As Long
@@ -429,7 +427,7 @@ Public Function Enviar(ByVal aLote As Long, Optional ByVal Imprimir As Boolean =
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDFE_Enviar(aLote, Imprimir, sincrono, zipado, buffer, bufferLen)
+    retorno = MDFE_Enviar(aLote, Imprimir, sincrono, buffer, bufferLen)
     CheckResult retorno
     
     Enviar = processResult(buffer, bufferLen)

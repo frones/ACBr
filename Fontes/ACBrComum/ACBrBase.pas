@@ -653,7 +653,7 @@ end;
 
 function TACBrInformacoes.Add(Obj: TACBrInformacao): Integer;
 begin
-  inherited Add(Obj);
+  Result := inherited Add(Obj);
 end;
 
 procedure TACBrInformacoes.Insert(Index: Integer; Obj: TACBrInformacao);

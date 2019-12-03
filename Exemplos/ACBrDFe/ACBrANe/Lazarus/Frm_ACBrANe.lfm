@@ -1,32 +1,32 @@
-object frmDemo_ACBrANe: TfrmDemo_ACBrANe
-  Left = 224
-  Height = 672
-  Top = 128
-  Width = 877
-  Caption = 'Demo ACBrANe'
-  ClientHeight = 672
-  ClientWidth = 877
+object frmACBrANe: TfrmACBrANe
+  Left = 249
+  Height = 651
+  Top = 82
+  Width = 882
+  Caption = 'ACBrANe - Programa Exemplo'
+  ClientHeight = 651
+  ClientWidth = 882
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Tahoma'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.8.4.0'
-  object Panel1: TPanel
+  LCLVersion = '2.0.6.0'
+  object pnlMenus: TPanel
     Left = 0
-    Height = 672
+    Height = 651
     Top = 0
     Width = 297
     Align = alLeft
-    ClientHeight = 672
+    ClientHeight = 651
     ClientWidth = 297
     TabOrder = 0
     object lblColaborador: TLabel
       Cursor = crHandPoint
-      Left = 8
+      Left = 16
       Height = 13
-      Top = 548
+      Top = 538
       Width = 261
       Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
       Font.Color = clNavy
@@ -39,9 +39,9 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     end
     object lblPatrocinador: TLabel
       Cursor = crHandPoint
-      Left = 6
+      Left = 14
       Height = 13
-      Top = 572
+      Top = 553
       Width = 265
       Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
       Font.Color = clGreen
@@ -54,9 +54,9 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     end
     object lblDoar1: TLabel
       Cursor = crHandPoint
-      Left = 11
+      Left = 19
       Height = 13
-      Top = 596
+      Top = 568
       Width = 255
       Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
       Font.Color = clRed
@@ -69,9 +69,9 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     end
     object lblDoar2: TLabel
       Cursor = crHandPoint
-      Left = 107
+      Left = 115
       Height = 13
-      Top = 612
+      Top = 581
       Width = 63
       Caption = 'clique aqui'
       Font.Color = clRed
@@ -80,63 +80,40 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
+      OnClick = lblDoar2Click
     end
-    object btnSalvarConfig: TBitBtn
-      Left = 60
-      Height = 25
-      Top = 518
-      Width = 153
-      Caption = 'Salvar Configurações'
-      Glyph.Data = {
-        76010000424D7601000000000000760000002800000020000000100000000100
-        04000000000000010000130B0000130B00001000000000000000000000000000
-        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
-        7700333333337777777733333333008088003333333377F73377333333330088
-        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
-        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
-        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
-        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
-        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
-        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
-        93337FFFF7737777733300000033333333337777773333333333
-      }
-      NumGlyphs = 2
-      OnClick = btnSalvarConfigClick
-      TabOrder = 0
-    end
-    object PageControl3: TPageControl
-      Left = 6
+    object PageControl1: TPageControl
+      Left = 0
       Height = 504
-      Top = 7
-      Width = 283
-      ActivePage = TabSheet11
+      Top = 0
+      Width = 295
+      ActivePage = TabSheet1
       TabIndex = 0
-      TabOrder = 1
-      object TabSheet11: TTabSheet
+      TabOrder = 0
+      object TabSheet1: TTabSheet
         Caption = 'Configurações'
         ClientHeight = 478
-        ClientWidth = 275
+        ClientWidth = 287
         object PageControl4: TPageControl
           Left = 0
           Height = 478
           Top = 0
-          Width = 275
-          ActivePage = TabSheet16
+          Width = 287
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
-          TabIndex = 4
+          TabIndex = 3
           TabOrder = 0
           Options = [nboMultiLine]
-          object TabSheet12: TTabSheet
+          object TabSheet3: TTabSheet
             Caption = 'Certificado'
             ClientHeight = 0
             ClientWidth = 0
             object lSSLLib: TLabel
-              Left = 35
+              Left = 39
               Height = 13
               Top = 16
-              Width = 34
+              Width = 30
               Alignment = taRightJustify
               Caption = 'SSLLib'
               Color = clBtnFace
@@ -144,10 +121,10 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Transparent = False
             end
             object lCryptLib: TLabel
-              Left = 31
+              Left = 29
               Height = 13
               Top = 43
-              Width = 38
+              Width = 40
               Alignment = taRightJustify
               Caption = 'CryptLib'
               Color = clBtnFace
@@ -166,10 +143,10 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Transparent = False
             end
             object lXmlSign: TLabel
-              Left = 12
+              Left = 17
               Height = 13
               Top = 97
-              Width = 57
+              Width = 52
               Alignment = taRightJustify
               Caption = 'XMLSignLib'
               Color = clBtnFace
@@ -185,7 +162,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               ClientHeight = 126
               ClientWidth = 259
               TabOrder = 0
-              object Label33: TLabel
+              object Label1: TLabel
                 Left = 6
                 Height = 13
                 Top = 2
@@ -193,11 +170,11 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Caption = 'Caminho'
                 ParentColor = False
               end
-              object Label34: TLabel
+              object Label2: TLabel
                 Left = 6
                 Height = 13
                 Top = 42
-                Width = 31
+                Width = 30
                 Caption = 'Senha'
                 ParentColor = False
               end
@@ -223,7 +200,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 NumGlyphs = 2
                 OnClick = sbtnCaminhoCertClick
               end
-              object Label35: TLabel
+              object Label25: TLabel
                 Left = 6
                 Height = 13
                 Top = 82
@@ -231,7 +208,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Caption = 'Número de Série'
                 ParentColor = False
               end
-              object sbtnListaCert: TSpeedButton
+              object sbtnGetCert: TSpeedButton
                 Left = 233
                 Height = 24
                 Top = 96
@@ -251,9 +228,9 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                   3BB33773333773333773B333333B3333333B7333333733333337
                 }
                 NumGlyphs = 2
-                OnClick = sbtnListaCertClick
+                OnClick = sbtnGetCertClick
               end
-              object sbtnGetCert: TSpeedButton
+              object sbtnNumSerie: TSpeedButton
                 Left = 204
                 Height = 24
                 Top = 96
@@ -273,7 +250,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                   3BB33773333773333773B333333B3333333B7333333733333337
                 }
                 NumGlyphs = 2
-                OnClick = sbtnGetCertClick
+                OnClick = sbtnNumSerieClick
               end
               object edtCaminho: TEdit
                 Left = 6
@@ -317,13 +294,13 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               OnClick = btnNumSerieClick
               TabOrder = 2
             end
-            object btnSubjectname: TButton
+            object btnSubName: TButton
               Left = 8
               Height = 25
               Top = 298
               Width = 99
               Caption = 'Subject Name'
-              OnClick = btnSubjectnameClick
+              OnClick = btnSubNameClick
               TabOrder = 3
             end
             object btnCNPJ: TButton
@@ -344,7 +321,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               OnClick = btnIssuerNameClick
               TabOrder = 5
             end
-            object GroupBox6: TGroupBox
+            object GroupBox1: TGroupBox
               Left = 2
               Height = 69
               Top = 328
@@ -353,7 +330,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               ClientHeight = 51
               ClientWidth = 259
               TabOrder = 6
-              object edtHash: TEdit
+              object Edit1: TEdit
                 Left = 1
                 Height = 21
                 Top = 0
@@ -361,13 +338,13 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 TabOrder = 0
                 Text = '0548133600013704583493000190'
               end
-              object btnSHA256: TButton
+              object btnSha256: TButton
                 Left = 6
                 Height = 25
                 Top = 27
                 Width = 99
                 Caption = 'SHA256+RSA'
-                OnClick = btnSHA256Click
+                OnClick = btnSha256Click
                 TabOrder = 1
               end
               object cbAssinar: TCheckBox
@@ -440,24 +417,24 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               TabOrder = 12
             end
           end
-          object TabSheet13: TTabSheet
+          object TabSheet4: TTabSheet
             Caption = 'Geral'
             ClientHeight = 0
             ClientWidth = 0
             ImageIndex = 1
-            object GroupBox7: TGroupBox
-              Left = 0
-              Height = 381
+            object GroupBox3: TGroupBox
+              Left = 3
+              Height = 421
               Top = 4
               Width = 265
               Caption = 'Geral'
-              ClientHeight = 363
+              ClientHeight = 403
               ClientWidth = 261
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
-                Left = 233
+                Left = 236
                 Height = 24
-                Top = 297
+                Top = 222
                 Width = 23
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
@@ -476,50 +453,42 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 NumGlyphs = 2
                 OnClick = sbtnPathSalvarClick
               end
-              object Label36: TLabel
+              object Label29: TLabel
                 Left = 6
                 Height = 13
-                Top = 74
+                Top = 112
                 Width = 86
                 Caption = 'Forma de Emissão'
                 ParentColor = False
               end
-              object Label37: TLabel
+              object Label31: TLabel
                 Left = 6
                 Height = 13
-                Top = 36
-                Width = 68
+                Top = 74
+                Width = 72
                 Caption = 'Formato Alerta'
                 ParentColor = False
               end
-              object Label38: TLabel
-                Left = 6
-                Height = 13
-                Top = 112
-                Width = 123
-                Caption = 'Modelo Documento Fiscal'
-                ParentColor = False
-              end
-              object Label39: TLabel
+              object Label32: TLabel
                 Left = 6
                 Height = 13
                 Top = 151
-                Width = 121
+                Width = 119
                 Caption = 'Versão Documento Fiscal'
                 ParentColor = False
               end
               object Label42: TLabel
                 Left = 6
                 Height = 13
-                Top = 322
-                Width = 199
+                Top = 246
+                Width = 198
                 Caption = 'Diretórios com os arquivos XSD(Schemas)'
                 ParentColor = False
               end
-              object sbPathSchemas: TSpeedButton
-                Left = 233
+              object spPathSchemas: TSpeedButton
+                Left = 236
                 Height = 24
-                Top = 337
+                Top = 262
                 Width = 23
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
@@ -536,43 +505,55 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                   3BB33773333773333773B333333B3333333B7333333733333337
                 }
                 NumGlyphs = 2
-                OnClick = sbPathSchemasClick
+                OnClick = spPathSchemasClick
               end
               object Label30: TLabel
                 Left = 6
                 Height = 13
-                Top = 190
+                Top = 302
                 Width = 36
                 Caption = 'Usuário'
                 ParentColor = False
               end
-              object Label31: TLabel
+              object Label7: TLabel
                 Left = 136
                 Height = 13
-                Top = 190
-                Width = 31
+                Top = 302
+                Width = 30
                 Caption = 'Senha'
                 ParentColor = False
               end
-              object Label32: TLabel
+              object Label33: TLabel
                 Left = 6
                 Height = 13
-                Top = 228
-                Width = 59
+                Top = 340
+                Width = 57
                 Caption = 'Código ATM'
                 ParentColor = False
+              end
+              object Label34: TLabel
+                Left = 133
+                Height = 13
+                Top = 340
+                Width = 55
+                Caption = 'Seguradora'
+                Font.Color = clWindowText
+                Font.Height = -11
+                Font.Name = 'MS Sans Serif'
+                ParentColor = False
+                ParentFont = False
               end
               object edtPathLogs: TEdit
                 Left = 6
                 Height = 21
-                Top = 301
+                Top = 225
                 Width = 228
                 TabOrder = 0
               end
               object ckSalvar: TCheckBox
                 Left = 6
                 Height = 15
-                Top = 285
+                Top = 209
                 Width = 209
                 Caption = 'Salvar Arquivos de Envio e Resposta'
                 Font.Color = clWindowText
@@ -584,33 +565,41 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               object cbFormaEmissao: TComboBox
                 Left = 6
                 Height = 21
-                Top = 90
+                Top = 128
                 Width = 248
                 ItemHeight = 13
                 TabOrder = 2
               end
+              object cbxAtualizarXML: TCheckBox
+                Left = 6
+                Height = 17
+                Top = 40
+                Width = 97
+                Caption = 'Atualizar XML'
+                TabOrder = 3
+              end
+              object cbxExibirErroSchema: TCheckBox
+                Left = 6
+                Height = 17
+                Top = 56
+                Width = 129
+                Caption = 'Exibir Erro Schema'
+                TabOrder = 4
+              end
               object edtFormatoAlerta: TEdit
                 Left = 6
                 Height = 21
-                Top = 52
+                Top = 90
                 Width = 248
-                TabOrder = 3
-              end
-              object cbModeloDF: TComboBox
-                Left = 6
-                Height = 21
-                Top = 128
-                Width = 248
-                ItemHeight = 13
-                TabOrder = 4
+                TabOrder = 5
               end
               object cbxRetirarAcentos: TCheckBox
                 Left = 6
                 Height = 17
-                Top = 267
+                Top = 191
                 Width = 193
                 Caption = 'Retirar Acentos dos XMLs enviados'
-                TabOrder = 5
+                TabOrder = 6
               end
               object cbVersaoDF: TComboBox
                 Left = 6
@@ -618,37 +607,14 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Top = 167
                 Width = 248
                 ItemHeight = 13
-                TabOrder = 6
+                TabOrder = 7
               end
               object edtPathSchemas: TEdit
                 Left = 6
                 Height = 21
-                Top = 338
+                Top = 262
                 Width = 228
-                TabOrder = 7
-              end
-              object edtUsuarioATM: TEdit
-                Left = 6
-                Height = 21
-                Top = 206
-                Width = 123
                 TabOrder = 8
-              end
-              object edtSenhaATM: TEdit
-                Left = 133
-                Height = 21
-                Top = 206
-                Width = 123
-                EchoMode = emPassword
-                PasswordChar = '*'
-                TabOrder = 9
-              end
-              object edtCodATM: TEdit
-                Left = 6
-                Height = 21
-                Top = 244
-                Width = 123
-                TabOrder = 10
               end
               object rgAverbar: TRadioGroup
                 Left = 6
@@ -663,26 +629,69 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 ChildSizing.ShrinkHorizontal = crsScaleChilds
                 ChildSizing.ShrinkVertical = crsScaleChilds
                 ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                ChildSizing.ControlsPerLine = 2
+                ChildSizing.ControlsPerLine = 3
                 ClientHeight = 15
                 ClientWidth = 245
-                Columns = 2
+                Columns = 3
                 ItemIndex = 0
                 Items.Strings = (
                   'NF-e'
                   'CT-e'
+                  'MDF-e'
                 )
+                TabOrder = 9
+              end
+              object edtUsuarioATM: TEdit
+                Left = 6
+                Height = 21
+                Top = 318
+                Width = 123
+                TabOrder = 10
+              end
+              object edtSenhaATM: TEdit
+                Left = 133
+                Height = 21
+                Top = 318
+                Width = 123
+                EchoMode = emPassword
+                PasswordChar = '*'
                 TabOrder = 11
+              end
+              object edtCodATM: TEdit
+                Left = 6
+                Height = 21
+                Top = 356
+                Width = 123
+                TabOrder = 12
+              end
+              object cbSeguradora: TComboBox
+                Left = 133
+                Height = 24
+                Top = 356
+                Width = 122
+                Font.Color = clWindowText
+                Font.Height = -13
+                Font.Name = 'MS Sans Serif'
+                ItemHeight = 16
+                ItemIndex = 0
+                Items.Strings = (
+                  'ATM'
+                  'ELT'
+                )
+                ParentFont = False
+                Style = csDropDownList
+                TabOrder = 13
+                Text = 'ATM'
               end
             end
           end
-          object TabSheet14: TTabSheet
+          object TabSheet7: TTabSheet
             Caption = 'WebService'
             ClientHeight = 0
             ClientWidth = 0
             ImageIndex = 2
-            object GroupBox8: TGroupBox
-              Left = 0
+            object GroupBox4: TGroupBox
+              Left = 5
               Height = 190
               Top = 4
               Width = 265
@@ -690,12 +699,12 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               ClientHeight = 172
               ClientWidth = 261
               TabOrder = 0
-              object Label43: TLabel
+              object Label6: TLabel
                 Left = 6
                 Height = 13
                 Top = 2
-                Width = 205
-                Caption = 'Selecione UF do Web Services Autorizador'
+                Width = 121
+                Caption = 'Selecione UF de Destino:'
                 Font.Color = clWindowText
                 Font.Height = -11
                 Font.Name = 'MS Sans Serif'
@@ -713,10 +722,10 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Transparent = False
               end
               object lSSLLib1: TLabel
-                Left = 14
+                Left = 17
                 Height = 13
                 Top = 154
-                Width = 44
+                Width = 41
                 Alignment = taRightJustify
                 Caption = 'SSLType'
                 Color = clBtnFace
@@ -834,8 +843,8 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 TabOrder = 5
               end
             end
-            object GroupBox9: TGroupBox
-              Left = 0
+            object gbProxy: TGroupBox
+              Left = 5
               Height = 104
               Top = 283
               Width = 265
@@ -843,7 +852,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               ClientHeight = 86
               ClientWidth = 261
               TabOrder = 1
-              object Label44: TLabel
+              object Label8: TLabel
                 Left = 6
                 Height = 13
                 Top = 2
@@ -851,15 +860,15 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Caption = 'Host'
                 ParentColor = False
               end
-              object Label45: TLabel
+              object Label9: TLabel
                 Left = 206
                 Height = 13
                 Top = 2
-                Width = 25
+                Width = 26
                 Caption = 'Porta'
                 ParentColor = False
               end
-              object Label46: TLabel
+              object Label10: TLabel
                 Left = 6
                 Height = 13
                 Top = 42
@@ -867,11 +876,11 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
                 Caption = 'Usuário'
                 ParentColor = False
               end
-              object Label47: TLabel
+              object Label11: TLabel
                 Left = 136
                 Height = 13
                 Top = 42
-                Width = 31
+                Width = 30
                 Caption = 'Senha'
                 ParentColor = False
               end
@@ -907,36 +916,36 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               end
             end
             object gbxRetornoEnvio: TGroupBox
-              Left = 0
+              Left = 5
               Height = 77
               Top = 200
               Width = 265
-              Caption = 'Retorno de Envio de ANe'
+              Caption = 'Retorno de Envio'
               ClientHeight = 59
               ClientWidth = 261
               TabOrder = 2
-              object Label48: TLabel
+              object Label36: TLabel
                 Left = 91
                 Height = 13
                 Top = 13
-                Width = 50
+                Width = 51
                 Caption = 'Tentativas'
                 ParentColor = False
               end
-              object Label49: TLabel
+              object Label37: TLabel
                 Left = 174
                 Height = 13
                 Top = 13
-                Width = 41
+                Width = 44
                 Caption = 'Intervalo'
                 ParentColor = False
               end
-              object Label50: TLabel
+              object Label38: TLabel
                 Left = 6
                 Height = 13
                 Hint = 'Aguardar quantos segundos para primeira consulta de retorno de envio'
                 Top = 13
-                Width = 43
+                Width = 45
                 Caption = 'Aguardar'
                 ParentColor = False
               end
@@ -972,52 +981,52 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               end
             end
           end
-          object TabSheet15: TTabSheet
+          object TabSheet12: TTabSheet
             Caption = 'Emitente'
-            ClientHeight = 0
-            ClientWidth = 0
+            ClientHeight = 434
+            ClientWidth = 279
             ImageIndex = 3
-            object Label51: TLabel
+            object Label12: TLabel
               Left = 8
               Height = 13
               Top = 4
-              Width = 27
+              Width = 25
               Caption = 'CNPJ'
               ParentColor = False
             end
-            object Label52: TLabel
+            object Label13: TLabel
               Left = 136
               Height = 13
               Top = 4
-              Width = 41
+              Width = 43
               Caption = 'Insc.Est.'
               ParentColor = False
             end
-            object Label53: TLabel
+            object Label14: TLabel
               Left = 8
               Height = 13
               Top = 44
-              Width = 63
+              Width = 60
               Caption = 'Razão Social'
               ParentColor = False
             end
-            object Label54: TLabel
+            object Label15: TLabel
               Left = 8
               Height = 13
               Top = 84
-              Width = 40
+              Width = 41
               Caption = 'Fantasia'
               ParentColor = False
             end
-            object Label55: TLabel
+            object Label16: TLabel
               Left = 8
               Height = 13
               Top = 164
-              Width = 54
+              Width = 55
               Caption = 'Logradouro'
               ParentColor = False
             end
-            object Label56: TLabel
+            object Label17: TLabel
               Left = 208
               Height = 13
               Top = 164
@@ -1025,31 +1034,31 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Caption = 'Número'
               ParentColor = False
             end
-            object Label57: TLabel
+            object Label18: TLabel
               Left = 8
               Height = 13
               Top = 204
-              Width = 64
+              Width = 65
               Caption = 'Complemento'
               ParentColor = False
             end
-            object Label58: TLabel
+            object Label19: TLabel
               Left = 136
               Height = 13
               Top = 204
-              Width = 27
+              Width = 28
               Caption = 'Bairro'
               ParentColor = False
             end
-            object Label59: TLabel
+            object Label20: TLabel
               Left = 8
               Height = 13
               Top = 244
-              Width = 61
+              Width = 62
               Caption = 'Cód. Cidade '
               ParentColor = False
             end
-            object Label60: TLabel
+            object Label21: TLabel
               Left = 76
               Height = 13
               Top = 244
@@ -1057,23 +1066,23 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               Caption = 'Cidade'
               ParentColor = False
             end
-            object Label61: TLabel
+            object Label22: TLabel
               Left = 225
               Height = 13
               Top = 244
-              Width = 14
+              Width = 13
               Caption = 'UF'
               ParentColor = False
             end
-            object Label62: TLabel
+            object Label23: TLabel
               Left = 136
               Height = 13
               Top = 124
-              Width = 21
+              Width = 19
               Caption = 'CEP'
               ParentColor = False
             end
-            object Label63: TLabel
+            object Label24: TLabel
               Left = 8
               Height = 13
               Top = 124
@@ -1173,15 +1182,15 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               TabOrder = 12
             end
           end
-          object TabSheet16: TTabSheet
+          object TabSheet13: TTabSheet
             Caption = 'Arquivos'
-            ClientHeight = 434
-            ClientWidth = 267
+            ClientHeight = 0
+            ClientWidth = 0
             ImageIndex = 4
             object sbPathANe: TSpeedButton
-              Left = 240
+              Left = 247
               Height = 24
-              Top = 130
+              Top = 131
               Width = 23
               Glyph.Data = {
                 76010000424D7601000000000000760000002800000020000000100000000100
@@ -1200,7 +1209,7 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
               NumGlyphs = 2
               OnClick = sbPathANeClick
             end
-            object Label64: TLabel
+            object Label35: TLabel
               Left = 6
               Height = 13
               Top = 116
@@ -1210,41 +1219,41 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
             end
             object cbxSalvarArqs: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 0
-              Width = 94
-              Caption = 'Salvar Arquivos'
+              Width = 210
+              Caption = 'Salvar Arquivos em Pastas Separadas'
               TabOrder = 0
             end
             object cbxPastaMensal: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 16
-              Width = 142
+              Width = 210
               Caption = 'Criar Pastas Mensalmente'
               TabOrder = 1
             end
             object cbxAdicionaLiteral: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 32
-              Width = 193
+              Width = 210
               Caption = 'Adicionar Literal no nome das pastas'
               TabOrder = 2
             end
             object cbxEmissaoPathANe: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 48
-              Width = 215
-              Caption = 'Salvar ANe pelo campo Data de Emissão'
+              Width = 251
+              Caption = 'Salvar Documento pelo campo Data de Emissão'
               TabOrder = 3
             end
             object cbxSepararPorCNPJ: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 64
-              Width = 202
+              Width = 233
               Caption = 'Separar Arqs pelo CNPJ do Certificado'
               TabOrder = 4
             end
@@ -1257,104 +1266,37 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
             end
             object cbxSepararPorModelo: TCheckBox
               Left = 6
-              Height = 19
+              Height = 17
               Top = 80
-              Width = 215
+              Width = 251
               Caption = 'Separar Arqs pelo Modelo do Documento'
               TabOrder = 6
             end
           end
         end
       end
-      object TabSheet17: TTabSheet
-        Caption = 'DAANE'
-        ClientHeight = 0
-        ClientWidth = 0
-        ImageIndex = 1
-        object Label70: TLabel
-          Left = 8
-          Height = 13
-          Top = 8
-          Width = 57
-          Caption = 'Logo Marca'
-          ParentColor = False
-        end
-        object sbtnLogoMarca: TSpeedButton
-          Left = 235
-          Height = 24
-          Top = 20
-          Width = 23
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            04000000000000010000130B0000130B00001000000000000000000000000000
-            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
-            333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
-            0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
-            07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
-            07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
-            0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
-            33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
-            B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
-            3BB33773333773333773B333333B3333333B7333333733333337
-          }
-          NumGlyphs = 2
-          OnClick = sbtnLogoMarcaClick
-        end
-        object edtLogoMarca: TEdit
-          Left = 8
-          Height = 21
-          Top = 24
-          Width = 228
-          TabOrder = 0
-        end
-        object rgTipoDAANE: TRadioGroup
-          Left = 8
-          Height = 49
-          Top = 56
-          Width = 249
-          AutoFill = True
-          Caption = 'DAANE'
-          ChildSizing.LeftRightSpacing = 6
-          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-          ChildSizing.EnlargeVertical = crsHomogenousChildResize
-          ChildSizing.ShrinkHorizontal = crsScaleChilds
-          ChildSizing.ShrinkVertical = crsScaleChilds
-          ChildSizing.Layout = cclLeftToRightThenTopToBottom
-          ChildSizing.ControlsPerLine = 2
-          ClientHeight = 31
-          ClientWidth = 245
-          Columns = 2
-          ItemIndex = 0
-          Items.Strings = (
-            'Retrato'
-            'Paisagem'
-          )
-          TabOrder = 1
-        end
-      end
-      object TabSheet18: TTabSheet
+      object TabSheet14: TTabSheet
         Caption = 'Email'
         ClientHeight = 0
         ClientWidth = 0
         ImageIndex = 2
-        object Label71: TLabel
+        object Label3: TLabel
           Left = 8
           Height = 13
           Top = 8
-          Width = 72
+          Width = 69
           Caption = 'Servidor SMTP'
           ParentColor = False
         end
-        object Label72: TLabel
+        object Label4: TLabel
           Left = 206
           Height = 13
           Top = 8
-          Width = 25
+          Width = 26
           Caption = 'Porta'
           ParentColor = False
         end
-        object Label73: TLabel
+        object Label5: TLabel
           Left = 8
           Height = 13
           Top = 48
@@ -1362,27 +1304,27 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           Caption = 'Usuário'
           ParentColor = False
         end
-        object Label74: TLabel
+        object Label26: TLabel
           Left = 137
           Height = 13
           Top = 48
-          Width = 31
+          Width = 30
           Caption = 'Senha'
           ParentColor = False
         end
-        object Label75: TLabel
+        object Label27: TLabel
           Left = 8
           Height = 13
           Top = 88
-          Width = 121
+          Width = 122
           Caption = 'Assunto do email enviado'
           ParentColor = False
         end
-        object Label76: TLabel
+        object Label28: TLabel
           Left = 8
           Height = 13
           Top = 160
-          Width = 95
+          Width = 93
           Caption = 'Mensagem do Email'
           ParentColor = False
         end
@@ -1438,86 +1380,116 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
         end
       end
     end
+    object btnSalvarConfig: TBitBtn
+      Left = 76
+      Height = 25
+      Top = 513
+      Width = 153
+      Caption = 'Salvar Configurações'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+        7700333333337777777733333333008088003333333377F73377333333330088
+        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+        93337FFFF7737777733300000033333333337777773333333333
+      }
+      NumGlyphs = 2
+      OnClick = btnSalvarConfigClick
+      TabOrder = 1
+    end
   end
-  object Panel2: TPanel
+  object pnlCentral: TPanel
     Left = 297
-    Height = 672
+    Height = 651
     Top = 0
-    Width = 580
+    Width = 585
     Align = alClient
-    ClientHeight = 672
-    ClientWidth = 580
+    ClientHeight = 651
+    ClientWidth = 585
     TabOrder = 1
-    object Panel3: TPanel
+    object pgcBotoes: TPageControl
       Left = 1
-      Height = 40
+      Height = 72
       Top = 1
-      Width = 578
+      Width = 583
+      ActivePage = tsEnvios
       Align = alTop
-      ClientHeight = 40
-      ClientWidth = 578
+      TabIndex = 0
       TabOrder = 0
-      object btnCriarEnviar: TButton
-        Left = 190
-        Height = 25
-        Top = 6
-        Width = 177
-        Caption = 'Criar e Enviar'
-        OnClick = btnCriarEnviarClick
-        TabOrder = 0
-      end
-      object btnGerarANe: TButton
-        Left = 6
-        Height = 25
-        Top = 6
-        Width = 177
-        Caption = 'Gerar ANe'
-        OnClick = btnGerarANeClick
-        TabOrder = 1
-      end
-      object btnEnviarANeEmail: TButton
-        Left = 374
-        Height = 25
-        Top = 5
-        Width = 177
-        Caption = 'Enviar ANe Email'
-        OnClick = btnEnviarANeEmailClick
-        TabOrder = 2
+      object tsEnvios: TTabSheet
+        Caption = 'Envios'
+        ClientHeight = 46
+        ClientWidth = 575
+        ImageIndex = 2
+        object btnGerarANe: TButton
+          Left = 8
+          Height = 25
+          Top = 8
+          Width = 177
+          Caption = 'Gerar ANe'
+          OnClick = btnGerarANeClick
+          TabOrder = 0
+        end
+        object btnCriarEnviar: TButton
+          Left = 192
+          Height = 25
+          Top = 8
+          Width = 177
+          Caption = 'Criar e Enviar'
+          OnClick = btnCriarEnviarClick
+          TabOrder = 1
+        end
+        object btnEnviarANeEmail: TButton
+          Left = 376
+          Height = 25
+          Top = 7
+          Width = 177
+          Caption = 'Enviar ANe Email'
+          OnClick = btnEnviarANeEmailClick
+          TabOrder = 2
+        end
       end
     end
-    object pcRespostas: TPageControl
+    object pgRespostas: TPageControl
       Left = 1
-      Height = 630
-      Top = 41
-      Width = 578
-      ActivePage = tsRespostas
+      Height = 577
+      Top = 73
+      Width = 583
+      ActivePage = TabSheet6
       Align = alClient
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 1
-      object tsRespostas: TTabSheet
+      object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ClientHeight = 604
-        ClientWidth = 570
+        ClientHeight = 551
+        ClientWidth = 575
         object MemoResp: TMemo
           Left = 0
-          Height = 604
+          Height = 551
           Top = 0
-          Width = 570
+          Width = 575
           Align = alClient
+          ScrollBars = ssVertical
           TabOrder = 0
         end
       end
-      object tsXMLResposta: TTabSheet
+      object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
-        ClientHeight = 0
-        ClientWidth = 0
+        ClientHeight = 551
+        ClientWidth = 575
         ImageIndex = 1
-        inline WBResposta: TSynMemo
-          Cursor = crIBeam
+        inline WBResposta: TSynEdit
           Left = 0
-          Height = 564
+          Height = 551
           Top = 0
-          Width = 554
+          Width = 575
           Align = alClient
           Font.Height = -13
           Font.Name = 'Courier New'
@@ -1528,6 +1500,9 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           TabOrder = 0
           Gutter.Width = 57
           Gutter.MouseActions = <>
+          RightGutter.Width = 0
+          RightGutter.MouseActions = <>
+          Highlighter = SynXMLSyn1
           Keystrokes = <>
           MouseActions = <>
           MouseTextActions = <>
@@ -1540,6 +1515,17 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           SelectedColor.ItalicPriority = 50
           SelectedColor.UnderlinePriority = 50
           SelectedColor.StrikeOutPriority = 50
+          BracketHighlightStyle = sbhsBoth
+          BracketMatchColor.Background = clNone
+          BracketMatchColor.Foreground = clNone
+          BracketMatchColor.Style = [fsBold]
+          FoldedCodeColor.Background = clNone
+          FoldedCodeColor.Foreground = clGray
+          FoldedCodeColor.FrameColor = clGray
+          MouseLinkColor.Background = clNone
+          MouseLinkColor.Foreground = clBlue
+          LineHighlightColor.Background = clNone
+          LineHighlightColor.Foreground = clNone
           inline SynLeftGutterPartList1: TSynGutterPartList
             object SynGutterMarks1: TSynGutterMarks
               Width = 24
@@ -1577,89 +1563,71 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
           end
         end
       end
-      object tsLog: TTabSheet
+      object TabSheet8: TTabSheet
         Caption = 'Log'
         ClientHeight = 0
         ClientWidth = 0
         ImageIndex = 2
         object memoLog: TMemo
           Left = 0
-          Height = 564
+          Height = 385
           Top = 0
-          Width = 554
+          Width = 559
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
         end
       end
-      object tsANe: TTabSheet
-        Caption = 'ANe'
+      object TabSheet9: TTabSheet
+        Caption = 'Documento'
         ClientHeight = 0
         ClientWidth = 0
         ImageIndex = 3
-        object trvwANe: TTreeView
+        object trvwDocumento: TTreeView
           Left = 0
-          Height = 564
+          Height = 510
           Top = 0
-          Width = 554
+          Width = 559
           Align = alClient
           Indent = 19
           TabOrder = 0
         end
       end
-      object tsRetorno: TTabSheet
+      object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ClientHeight = 0
         ClientWidth = 0
         ImageIndex = 4
         object memoRespWS: TMemo
           Left = 0
-          Height = 564
+          Height = 385
           Top = 0
-          Width = 554
+          Width = 559
           Align = alClient
+          ScrollBars = ssVertical
           TabOrder = 0
         end
       end
-      object tsDados: TTabSheet
+      object Dados: TTabSheet
         Caption = 'Dados'
-        ClientHeight = 604
-        ClientWidth = 570
+        ClientHeight = 0
+        ClientWidth = 0
         ImageIndex = 5
         object MemoDados: TMemo
           Left = 0
-          Height = 604
+          Height = 510
           Top = 0
-          Width = 570
+          Width = 559
           Align = alClient
+          Lines.Strings = (
+            ''
+          )
+          ScrollBars = ssVertical
           TabOrder = 0
+          WordWrap = False
         end
       end
     end
-  end
-  object OpenDialog1: TOpenDialog
-    Title = 'Selecione a ANe'
-    DefaultExt = '.*-ane.XML'
-    Filter = 'Arquivos ANe (*-ane.XML)|*-ane.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 384
-    top = 296
-  end
-  object ACBrANe1: TACBrANe
-    MAIL = ACBrMail1
-    OnStatusChange = ACBrANe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
-    Configuracoes.Geral.SSLCryptLib = cryCapicom
-    Configuracoes.Geral.SSLHttpLib = httpWinINet
-    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
-    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = False
-    Configuracoes.Geral.TipoDoc = tdCTe
-    Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 424
-    top = 296
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1669,6 +1637,37 @@ object frmDemo_ACBrANe: TfrmDemo_ACBrANe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
+    left = 464
+    top = 238
+  end
+  object OpenDialog1: TOpenDialog
+    Title = 'Selecione a NFe'
+    DefaultExt = '.*-nfe.XML'
+    Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
+    left = 334
+    top = 296
+  end
+  object ACBrANe1: TACBrANe
+    MAIL = ACBrMail1
+    OnStatusChange = ACBrANe1StatusChange
+    OnGerarLog = ACBrANe1GerarLog
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.TipoDoc = tdCTe
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    left = 334
+    top = 238
+  end
+  object SynXMLSyn1: TSynXMLSyn
+    DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
+    Enabled = False
+    WantBracesParsed = False
     left = 464
     top = 296
   end

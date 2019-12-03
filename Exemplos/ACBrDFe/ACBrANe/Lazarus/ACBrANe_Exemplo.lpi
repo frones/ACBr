@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -12,23 +12,20 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Demo_ACBrANe"/>
+      <Title Value="ACBrANe_Exemplo"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
+      <UseFileFilters Value="True"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="0"/>
     </RunParams>
     <RequiredPackages Count="8">
       <Item1>
@@ -41,16 +38,16 @@
         <PackageName Value="PCNComum"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_ANe"/>
+        <PackageName Value="ACBrComum"/>
       </Item4>
       <Item5>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrTCP"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBr_ANe"/>
       </Item7>
       <Item8>
         <PackageName Value="LCL"/>
@@ -58,26 +55,25 @@
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
-        <Filename Value="Demo_ACBrANe.lpr"/>
+        <Filename Value="ACBrANe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="Frm_Demo_ACBrANe.pas"/>
+        <Filename Value="Frm_ACBrANe.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmDemo_ACBrANe"/>
+        <ComponentName Value="frmACBrANe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="ufrmStatus.pas"/>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="unit2.pas"/>
+        <Filename Value="Frm_Status.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <UnitName Value="Unit2"/>
       </Unit3>
     </Units>
   </ProjectOptions>

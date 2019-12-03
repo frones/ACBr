@@ -1,10 +1,10 @@
-object frSelecionarCertificado: TfrSelecionarCertificado
+object frmSelecionarCertificado: TfrmSelecionarCertificado
   Left = 355
   Top = 229
-  Width = 674
-  Height = 276
   ActiveControl = StringGrid1
-  Caption = 'frSelecionarCertificado'
+  Caption = 'Selecionar Certificado'
+  ClientHeight = 237
+  ClientWidth = 658
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object frSelecionarCertificado: TfrSelecionarCertificado
   object StringGrid1: TStringGrid
     Left = 0
     Top = 0
-    Width = 666
-    Height = 200
+    Width = 658
+    Height = 192
     Align = alClient
     FixedCols = 0
     RowCount = 2
@@ -26,28 +26,30 @@ object frSelecionarCertificado: TfrSelecionarCertificado
   end
   object Panel1: TPanel
     Left = 0
-    Top = 200
-    Width = 666
+    Top = 192
+    Width = 658
     Height = 45
     Align = alBottom
     TabOrder = 1
     object BitBtn1: TBitBtn
-      Left = 442
+      Left = 434
       Top = 3
       Width = 88
       Height = 30
       Anchors = [akTop, akRight]
-      TabOrder = 0
       Kind = bkCancel
+      NumGlyphs = 2
+      TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 554
+      Left = 546
       Top = 3
       Width = 88
       Height = 30
       Anchors = [akTop, akRight]
-      TabOrder = 1
       Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 1
     end
   end
 end

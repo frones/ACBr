@@ -38,10 +38,10 @@ unit ACBrLibNFeDataModule;
 interface
 
 uses
-  Classes, SysUtils, syncobjs,
-  ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
+  Classes, SysUtils, syncobjs, ACBrNFe, ACBrNFeDANFeRLClass, ACBrMail,
   ACBrPosPrinter, ACBrIntegrador, ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr,
-  ACBrLibConfig,  ACBrLibMailImport, ACBrLibPosPrinterImport;
+  ACBrDANFCeFortesFrA4, ACBrLibConfig, ACBrLibMailImport,
+  ACBrLibPosPrinterImport;
 
 type
 
@@ -51,6 +51,7 @@ type
     ACBrIntegrador1: TACBrIntegrador;
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
+    ACBrNFeDANFCeFortesA4: TACBrNFeDANFCeFortesA4;
     ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
 
@@ -294,6 +295,8 @@ begin
     begin
       if (pLibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortes) or GerarPDF then
         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1
+      else if (pLibConfig.DANFe.NFCe.TipoRelatorioBobina = tpFortesA4) then
+        ACBrNFe1.DANFE := ACBrNFeDANFCeFortesA4
       else
         ACBrNFe1.DANFE := ACBrNFeDANFeESCPOS1;
     end;

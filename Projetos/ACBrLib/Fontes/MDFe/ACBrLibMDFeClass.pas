@@ -118,7 +118,7 @@ function MDFE_StatusServico(const sResposta: PChar; var esTamanho: longint): lon
 function MDFE_Consultar(const eChaveOuMDFe: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function MDFE_Enviar(ALote: Integer; Imprimir, Sincrono: Boolean;
+function MDFE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ConsultarRecibo(ARecibo: PChar;
@@ -785,7 +785,7 @@ begin
   end;
 end;
 
-function MDFE_Enviar(ALote: Integer; Imprimir, Sincrono: Boolean;
+function MDFE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
@@ -800,8 +800,8 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('MDFE_Enviar(' + IntToStr(ALote) + ','
-                                    + BoolToStr(Sincrono, 'Sincrono','')
-                                    + BoolToStr(Imprimir, 'Imprimir','') + ' )', logCompleto, True)
+                                    + BoolToStr(AImprimir, 'Imprimir','')
+                                    + BoolToStr(ASincrono, 'Sincrono','') + ' )', logCompleto, True)
     else
       pLib.GravarLog('MDFE_Enviar', logNormal);
 
@@ -817,7 +817,7 @@ begin
 
           if Manifestos.Count > 50 then
             raise EACBrLibException.Create(ErrEnvio, 'ERRO: Conjunto de MDF-e transmitidas (máximo de 50 MDF-e)' +
-              ' excedido. Quantidade atual: ' + IntToStr(Manifestos.Count));
+                                                     ' excedido. Quantidade atual: ' + IntToStr(Manifestos.Count));
 
           Resposta := '';
           WebServices.Enviar.Clear;
@@ -831,7 +831,7 @@ begin
           else
             WebServices.Enviar.Lote := IntToStr(ALote);
 
-          WebServices.Enviar.Sincrono := Sincrono;
+          WebServices.Enviar.Sincrono := ASincrono;
           WebServices.Enviar.Executar;
 
           RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
@@ -842,7 +842,7 @@ begin
             RespEnvio.Free;
           end;
 
-          if not Sincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
+          if not ASincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
           begin
             WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;
             WebServices.Retorno.Executar;
@@ -869,11 +869,11 @@ begin
 
               Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
             finally
-              RespRetorno.Free;
+                RespRetorno.Free;
             end;
           end;
 
-          if Imprimir then
+          if AImprimir then
           begin
             MDFeDM.ConfigurarImpressao;
 

@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, contnrs,
   pcteRetEnvEventoCTe, pcteEventoCTe,
-  ACBrCTe, ACBrLibResposta;
+  ACBrLibConsReciDFe, ACBrLibResposta, ACBrCTe;
 
 type
 
@@ -58,8 +58,6 @@ type
 
   public
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-
-    procedure Processar(const ACBrCTe: TACBrCTe); reintroduce; virtual; abstract;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -127,14 +125,22 @@ type
   private
     FtMed: integer;
     FnRec: string;
+    FXml: string;
+    FItem: TRetornoItemResposta;
+
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
 
     procedure Processar(const ACBrCTe: TACBrCTe); override;
+    function Gerar: String; override;
 
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
+   property Xml: string read FXml write FXml;
+   property Item: TRetornoItemResposta read FItem;
+
   end;
 
   { TCancelamentoResposta }
@@ -240,7 +246,7 @@ type
 implementation
 
 uses
-  pcnConversao,
+  pcnConversao, pcteConversaoCTe,
   ACBrUtil,
   ACBrLibCTeConsts;
 
@@ -321,7 +327,7 @@ begin
     begin
       for i := 0 to retEvento.Count - 1 do
       begin
-        Item := TEventoItemResposta.Create('EVENTO' + Trim(IntToStrZero(i +1, 3)), Tipo, FFormato);
+        Item := TEventoItemResposta.Create('EVENTO' + Trim(IntToStrZero(i +1, 3)), Tipo, Formato);
         Item.Processar(retEvento.Items[i].RetInfevento);
         FItens.Add(Item);
       end;
@@ -361,6 +367,13 @@ end;
 constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
+  FItem := nil;
+end;
+
+destructor TEnvioResposta.Destroy;
+begin
+  if Assigned(FItem) then
+    FItem.Free;
 end;
 
 procedure TEnvioResposta.Processar(const ACBrCTe: TACBrCTe);
@@ -377,6 +390,39 @@ begin
     Self.DhRecbto := Enviar.dhRecbto;
     Self.Tmed := Enviar.TMed;
     Self.Msg := Enviar.Msg;
+  end;
+
+  if ACBrCTe.WebServices.Enviar.Sincrono then
+    Self.Xml := ACBrCTe.Conhecimentos.Items[0].XMLOriginal
+  else
+    Self.Xml := '';
+
+  if ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS then
+  begin
+    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(IntToStr(StrToInt(copy(
+                                                        ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe, 26, 9)))),
+                                                        Tipo, Formato);
+
+    FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.Id;
+    FItem.tpAmb := TpAmbToStr(ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.tpAmb);
+    FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.verAplic;
+    FItem.chDFe := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe;
+    FItem.dhRecbto := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.dhRecbto;
+    FItem.nProt := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.nProt;
+    FItem.digVal := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.digVal;
+    FItem.cStat := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.cStat;
+    FItem.xMotivo := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.xMotivo;
+    FItem.XML := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.XML_prot;
+  end;
+end;
+
+function TEnvioResposta.Gerar: String;
+begin
+  Result :=  inherited Gerar;
+
+  if FItem <> nil then
+  begin
+    Result := Result + sLineBreak + FItem.Gerar;
   end;
 end;
 

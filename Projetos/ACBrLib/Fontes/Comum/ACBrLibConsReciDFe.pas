@@ -48,7 +48,7 @@ type
     FId: String;
     FtpAmb: String;
     FverAplic: String;
-    FchNFe: String;
+    FchDFe: String;
     FdhRecbto: TDateTime;
     FnProt: String;
     FdigVal: String;
@@ -65,7 +65,7 @@ type
     property Id: String read FId write FId;
     property tpAmb: String read FtpAmb write FtpAmb;
     property verAplic: String read FverAplic write FverAplic;
-    property chNFe: String read FchNFe write FchNFe;
+    property chDFe: String read FchDFe write FchDFe;
     property dhRecbto: TDateTime read FdhRecbto write FdhRecbto;
     property nProt: String read FnProt write FnProt;
     property digVal: String read FdigVal write FdigVal;
@@ -175,7 +175,7 @@ begin
   FId := Item.Id;
   FtpAmb := TpAmbToStr(Item.tpAmb);
   FverAplic := Item.verAplic;
-  FchNFe := Item.chDFe;
+  FchDFe := Item.chDFe;
   FdhRecbto := Item.dhRecbto;
   FnProt := Item.nProt;
   FdigVal := Item.digVal;
@@ -240,7 +240,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, FFormato);
+      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, Formato);
       Item.Processar(ProtDFe.Items[i]);
       FItems.Add(Item);
     end;
@@ -299,7 +299,7 @@ begin
   begin
     for i := 0 to ProtDFe.Count - 1 do
     begin
-      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, FFormato);
+      Item := TRetornoItemResposta.Create(FPrefix + Trim(IntToStr(StrToInt(copy(ProtDFe.Items[i].chDFe, 26, 9)))), Tipo, Formato);
       Item.Processar(ProtDFe.Items[i]);
       FItens.Add(Item);
     end;

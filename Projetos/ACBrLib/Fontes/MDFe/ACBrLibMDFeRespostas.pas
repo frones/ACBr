@@ -60,7 +60,7 @@ type
     constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo;
       const AFormato: TACBrLibCodificacao); reintroduce;
 
-    procedure Processar(const Control: TACBrMDFe); reintroduce; virtual; abstract;
+    procedure Processar(const Control: TACBrMDFe); override; abstract;
 
   published
     property Versao: string read Fversao write Fversao;
@@ -254,8 +254,15 @@ type
 
   { TEventoItemResposta }
 
-  TEventoItemResposta = class(TLibMDFeResposta)
+  TEventoItemResposta = class(TACBrLibRespostaBase)
   private
+    Fversao: string;
+    FtpAmb: string;
+    FverAplic: string;
+    FcStat: integer;
+    FxMotivo: string;
+    FcUF: integer;
+    FMsg: string;
     Farquivo: String;
     FchMDFe: string;
     FCNPJDest: string;
@@ -277,6 +284,13 @@ type
     procedure Processar(const Item: TRetInfEvento);
 
   published
+    property Versao: string read Fversao write Fversao;
+    property TpAmb: string read FtpAmb write FtpAmb;
+    property VerAplic: string read FverAplic write FverAplic;
+    property CStat: integer read FcStat write FcStat;
+    property XMotivo: string read FxMotivo write FxMotivo;
+    property CUF: integer read FcUF write FcUF;
+    property Msg: string read FMsg write FMsg;
     property chMDFe: string read FchMDFe write FchMDFe;
     property nProt: String read FnProt write FnProt;
     property arquivo: String read Farquivo write Farquivo;
@@ -399,7 +413,7 @@ begin
 
     for i := 0 to retEvento.Count - 1 do
     begin
-      Item := TEventoItemResposta.Create(i+1, Tipo, FFormato);
+      Item := TEventoItemResposta.Create(i+1, Tipo, Formato);
       Item.Processar(retEvento.Items[i].RetInfEvento);
       FItems.Add(Item);
     end;
@@ -501,7 +515,7 @@ begin
 
     for i := 0 to InfMDFe.Count - 1 do
     begin
-      Item := TNaoEncerradosRespostaItem.Create(i+1, Tipo, FFormato);
+      Item := TNaoEncerradosRespostaItem.Create(i+1, Tipo, Formato);
       Item.Processar(CNPJCPF, InfMDFe.Items[i]);
       FItems.Add(Item);
     end;

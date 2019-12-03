@@ -54,14 +54,13 @@ type
   private
     FSessao: String;
     FTipo: TACBrLibRespostaTipo;
+    FFormato: TACBrLibCodificacao;
 
     function GerarXml: Ansistring;
     function GerarIni: Ansistring;
     function GerarJson: Ansistring;
 
   protected
-    FFormato: TACBrLibCodificacao;
-
     procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
     procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
     procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
@@ -71,6 +70,7 @@ type
 
     property Sessao: String read FSessao;
     property Tipo: TACBrLibRespostaTipo read FTipo;
+    property Formato: TACBrLibCodificacao read FFormato;
 
     function Gerar: Ansistring; virtual;
 

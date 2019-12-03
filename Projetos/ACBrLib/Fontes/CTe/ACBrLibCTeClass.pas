@@ -122,7 +122,7 @@ function CTE_Inutilizar(const ACNPJ, AJustificativa: PChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CTE_Enviar(ALote: Integer; Imprimir: Boolean;
+function CTE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_ConsultarRecibo(ARecibo: PChar;
@@ -847,7 +847,7 @@ begin
   end;
 end;
 
-function CTE_Enviar(ALote: Integer; Imprimir: Boolean;
+function CTE_Enviar(ALote: Integer; AImprimir, ASincrono: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
@@ -862,7 +862,8 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('CTE_Enviar(' + IntToStr(ALote) + ',' +
-                   BoolToStr(Imprimir, 'Imprimir','') + ' )', logCompleto, True)
+                   BoolToStr(AImprimir, 'Imprimir','') + ',' +
+                   BoolToStr(ASincrono, 'Sincrono','')+ ' )', logCompleto, True)
     else
       pLib.GravarLog('CTE_Enviar', logNormal);
 
@@ -892,6 +893,7 @@ begin
           else
             WebServices.Enviar.Lote := IntToStr(ALote);
 
+          WebServices.Enviar.Sincrono := ASincrono;
           WebServices.Enviar.Executar;
           RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
           try
@@ -901,25 +903,27 @@ begin
             RespEnvio.Free;
           end;
 
-          if NaoEstaVazio(WebServices.Enviar.Recibo) and (WebServices.Enviar.cStat = 103) then
+          if not ASincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
           begin
             WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;
-            WebServices.Retorno.Executar
+            WebServices.Retorno.Executar;
+
+            RespRetorno := TRetornoResposta.Create('CTe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
+
+            try
+              RespRetorno.Processar(WebServices.Retorno.CTeRetorno,
+                                    WebServices.Retorno.Recibo,
+                                    WebServices.Retorno.Msg,
+                                    WebServices.Retorno.Protocolo,
+                                    WebServices.Retorno.ChaveCTe);
+
+              Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
+            finally
+              RespRetorno.Free;
+            end;
           end;
 
-          RespRetorno := TRetornoResposta.Create('CTe', pLib.Config.TipoResposta, pLib.Config.CodResposta);
-          try
-            RespRetorno.Processar(WebServices.Retorno.CTeRetorno,
-                                  WebServices.Retorno.Recibo,
-                                  WebServices.Retorno.Msg,
-                                  WebServices.Retorno.Protocolo,
-                                  WebServices.Retorno.ChaveCTe);
-            Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
-          finally
-            RespRetorno.Free;
-          end;
-
-          if Imprimir then
+          if AImprimir then
           begin
             CTeDM.ConfigurarImpressao();
 

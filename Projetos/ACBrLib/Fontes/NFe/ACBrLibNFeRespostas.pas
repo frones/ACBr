@@ -583,7 +583,7 @@ begin
 
   for i := 0 to ARetInfEvento.chNFePend.Count - 1  do
    begin
-     Item := TConsultaNFeChNFePendResposta.Create(FAId, FAIndex, i+1, Tipo, FFormato);
+     Item := TConsultaNFeChNFePendResposta.Create(FAId, FAIndex, i+1, Tipo, Formato);
      Item.Processar(ARetInfEvento.chNFePend.Items[i]);
      FItems.Add(Item);
    end;
@@ -666,7 +666,7 @@ begin
 
    for i := 0 to AEvento.itemPedido.Count - 1  do
    begin
-     Item := TConsultaNFeItemPedidoResposta.Create(FId, i+1, Tipo, FFormato);
+     Item := TConsultaNFeItemPedidoResposta.Create(FId, i+1, Tipo, Formato);
      Item.Processar(AEvento.itemPedido.Items[i]);
      FItems.Add(Item);
    end;
@@ -679,7 +679,7 @@ constructor TConsultaNFeProcEventoResposta.Create(const AId: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create('ProcEventoNFe' + Trim(IntToStrZero(AId, 3)), ATipo, AFormato);
-  FDetEvento := TConsultaNFeDetEventoResposta.Create(AId, ATipo, FFormato);
+  FDetEvento := TConsultaNFeDetEventoResposta.Create(AId, ATipo, Formato);
   FRetEventos := TObjectList.Create;
   FID := AId;
 end;
@@ -730,7 +730,7 @@ begin
 
    for i := 0 to AEvento.RetEventoNFe.retEvento.Count - 1  do
    begin
-     RetEvento := TConsultaNFeRetEventoResposta.Create(FId, i+1, Tipo, FFormato);
+     RetEvento := TConsultaNFeRetEventoResposta.Create(FId, i+1, Tipo, Formato);
      RetEvento.Processar(AEvento.RetEventoNFe.retEvento.Items[i].RetInfEvento);
      FRetEventos.Add(RetEvento);
    end;
@@ -836,7 +836,7 @@ begin
 
     for I := 0 to EventoRetorno.retEvento.Count - 1 do
     begin
-      Item := TEventoItemResposta.Create('Evento' + Trim(IntToStrZero(I +1, 3)), Tipo, FFormato);
+      Item := TEventoItemResposta.Create('Evento' + Trim(IntToStrZero(I +1, 3)), Tipo, Formato);
       Item.Processar(EventoRetorno.retEvento.Items[i].RetInfEvento);
       FItems.Add(Item);
     end;
@@ -1022,7 +1022,7 @@ begin
   begin
     for I:= 0 to Consulta.procEventoNFe.Count-1 do
     begin
-      ProcEvento := TConsultaNFeProcEventoResposta.Create(I + 1, Tipo, FFormato);
+      ProcEvento := TConsultaNFeProcEventoResposta.Create(I + 1, Tipo, Formato);
       ProcEvento.Processar(Consulta.procEventoNFe.Items[I]);
       FEventos.Add(ProcEvento);
     end;

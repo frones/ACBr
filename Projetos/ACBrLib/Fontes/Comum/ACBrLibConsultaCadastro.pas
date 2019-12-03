@@ -241,7 +241,7 @@ begin
   begin
     for i := 0 to InfCad.Count - 1 do
     begin
-      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, FFormato);
+      Item := TConsultaCadastroItemResposta.Create('INFCAD' + Trim(IntToStrZero(i + 1, 3)), Tipo, Formato);
       Item.Processar(InfCad.Items[i]);
       FItems.Add(Item);
     end;

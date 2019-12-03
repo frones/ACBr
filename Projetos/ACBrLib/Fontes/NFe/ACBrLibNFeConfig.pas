@@ -519,11 +519,8 @@ begin
 
   if DFeReport is TACBrNFeDANFCeFortes then
   begin
-    with TACBrNFeDANFCeFortes(DFeReport) do
-    begin
-      TamanhoLogoHeight := FTamanhoLogoHeight;
-      TamanhoLogoWidth := FTamanhoLogoWidth;
-    end;
+    TACBrNFeDANFCeFortes(DFeReport).TamanhoLogoHeight := FTamanhoLogoHeight;
+    TACBrNFeDANFCeFortes(DFeReport).TamanhoLogoWidth := FTamanhoLogoWidth;
   end;
 end;
 

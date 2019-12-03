@@ -124,7 +124,7 @@ function NFE_Inutilizar(const ACNPJ, AJustificativa: PChar;
   Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function NFE_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
+function NFE_Enviar(ALote: Integer; AImprimir, ASincrono, AZipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConsultarRecibo(ARecibo: PChar;
@@ -902,7 +902,7 @@ begin
   end;
 end;
 
-function NFE_Enviar(ALote: Integer; Imprimir, Sincrono, Zipado: Boolean;
+function NFE_Enviar(ALote: Integer; AImprimir, ASincrono, AZipado: Boolean;
   const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
@@ -917,9 +917,9 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('NFe_Enviar(' + IntToStr(ALote) + ',' +
-                     BoolToStr(Imprimir, 'Imprimir','') +
-                     BoolToStr(Sincrono, 'Sincrono','') +
-                     BoolToStr(Zipado, 'Zipado','') + ' )', logCompleto, True)
+                     BoolToStr(AImprimir, 'Imprimir','') +
+                     BoolToStr(ASincrono, 'Sincrono','') +
+                     BoolToStr(AZipado, 'Zipado','') + ' )', logCompleto, True)
     else
       pLib.GravarLog('NFe_Enviar', logNormal);
 
@@ -951,8 +951,8 @@ begin
           else
             WebServices.Enviar.Lote := IntToStr(ALote);
 
-          WebServices.Enviar.Sincrono := Sincrono;
-          WebServices.Enviar.Zipado := Zipado;
+          WebServices.Enviar.Sincrono := ASincrono;
+          WebServices.Enviar.Zipado := AZipado;
           WebServices.Enviar.Executar;
 
           RespEnvio := TEnvioResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
@@ -963,7 +963,7 @@ begin
             RespEnvio.Free;
           end;
 
-          if not Sincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
+          if not ASincrono or ((NaoEstaVazio(WebServices.Enviar.Recibo)) and (WebServices.Enviar.cStat = 103)) then
           begin
             WebServices.Retorno.Recibo := WebServices.Enviar.Recibo;
             WebServices.Retorno.Executar;
@@ -994,7 +994,7 @@ begin
             end;
           end;
 
-          if Imprimir then
+          if AImprimir then
           begin
             NFeDM.ConfigurarImpressao();
 

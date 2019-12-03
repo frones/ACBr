@@ -363,7 +363,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].resDFe.chDFe) <> '') then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
+      Item := TDistribuicaoDFeItemResposta.Create('ResNFe' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
       Item.Processar(retDistDFeInt.docZip.Items[I].resDFe,
                      retDistDFeInt.docZip.Items[I].NSU,
                      ListaArqs[I],
@@ -379,7 +379,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].resEvento.chDFe) <> '') then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
+      Item := TDistribuicaoDFeItemResposta.Create('ResEve' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
       Item.Processar(retDistDFeInt.docZip.Items[I].resEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      ListaArqs[I],
@@ -395,7 +395,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].procEvento.detEvento.versao) <> '' ) then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
+      Item := TDistribuicaoDFeItemResposta.Create('ProEve' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
       Item.Processar(retDistDFeInt.docZip.Items[I].procEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      listaArqs[I],
@@ -411,7 +411,7 @@ begin
   begin
     if (Trim(retDistDFeInt.docZip[I].procEvento.RetinfEvento.Id) <> '' ) then
     begin
-      Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo, FFormato);
+      Item := TDistribuicaoDFeItemResposta.Create('InfEve' + Trim(IntToStrZero(J, 3)), Tipo, Formato);
       Item.Processar(retDistDFeInt.docZip.Items[I].procEvento.RetinfEvento,
                      retDistDFeInt.docZip.Items[I].NSU,
                      listaArqs[I],

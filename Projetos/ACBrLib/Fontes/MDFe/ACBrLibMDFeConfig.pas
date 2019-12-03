@@ -56,7 +56,6 @@ type
     FProtocolo: String;
     FCancelada: Boolean;
     FEncerrado: Boolean;
-    FPrintDialog: Boolean;
 
   protected
     procedure LerIniChild(const AIni: TCustomIniFile); override;
@@ -74,8 +73,6 @@ type
     property Protocolo: String read FProtocolo write FProtocolo;
     property Cancelada: Boolean read FCancelada write FCancelada;
     property Encerrado: Boolean read FEncerrado write FEncerrado;
-    property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
-
   end;
 
   { TLibMDFeConfig }
@@ -146,7 +143,6 @@ begin
   FProtocolo := AIni.ReadString(FSessao, CChaveProtocolo, FProtocolo);
   FCancelada := AIni.ReadBool(FSessao, CChaveCancelada, FCancelada);
   FEncerrado := AIni.ReadBool(FSessao, CChaveEncerrado, FEncerrado);
-  FPrintDialog := AIni.ReadBool(FSessao, CChavePrintDialog, FPrintDialog);
 end;
 
 procedure TDAMDFeConfig.GravarIniChild(const AIni: TCustomIniFile);
@@ -158,7 +154,6 @@ begin
   AIni.WriteString(FSessao, CChaveProtocolo, FProtocolo);
   AIni.WriteBool(FSessao, CChaveCancelada, FCancelada);
   AIni.WriteBool(FSessao, CChaveEncerrado, FEncerrado);
-  AIni.WriteBool(FSessao, CChavePrintDialog, FPrintDialog);
 end;
 
 { TLibMDFeConfig }
@@ -188,7 +183,7 @@ begin
   FMDFeConfig.ChaveCryptINI := ChaveCrypt;
 
   FMDFeConfig.LerIni(Ini);
-  FDAMDFeConfig.LerIniChild(Ini);
+  FDAMDFeConfig.LerIni(Ini);
 end;
 
 procedure TLibMDFeConfig.ClasseParaINI;
@@ -198,7 +193,7 @@ begin
   FMDFeConfig.ChaveCryptINI := ChaveCrypt;
 
   FMDFeConfig.GravarIni(Ini);
-  FDAMDFeConfig.GravarIniChild(Ini);
+  FDAMDFeConfig.GravarIni(Ini);
 end;
 
 procedure TLibMDFeConfig.ClasseParaComponentes;

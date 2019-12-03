@@ -51,7 +51,6 @@ const
   CChaveCTeCancelada = 'CTeCancelada';
   CChaveEPECEnviado = 'EPECEnviado';
   CChaveImprimirHoraSaida = 'ImprimirHoraSaida';
-  CChavePrintDialog = 'PrintDialog';
   CChaveUsarSeparadorPathPDF = 'UsarSeparadorPathPDF';
   CChaveFax = 'Fax';
   CChaveImprimirHoraSaida_Hora = 'ImprimirHoraSaida_Hora';
@@ -59,6 +58,7 @@ const
   CChaveSistema = 'Sistema';
   CChaveSite = 'Site';
   CChaveTamanhoPapel = 'TamanhoPapel';
+  CChaveImprimirDescPorc = 'ImprimirDescPorc';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespInutilizacao = 'Inutilizacao';

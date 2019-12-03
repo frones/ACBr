@@ -60,6 +60,7 @@ type
     FExibeResumoCanhoto: Boolean;
     FPosCanhoto: TPosRecibo;
     FUsuario: String;
+    FImprimirDescPorc: boolean;
 
   protected
       procedure LerIniChild(const AIni: TCustomIniFile); override;
@@ -71,7 +72,6 @@ type
     constructor Create;
 
     property TipoDACTe: TpcnTipoImpressao read FTipoDACTe write FTipoDACTe;
-    property ImprimeDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
     property ExibeResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto;
     property CTeCancelada: Boolean read FCTeCancelada write FCTeCancelada;
@@ -81,6 +81,7 @@ type
     property ProtocoloCTe: String read FProtocoloCTe write FProtocoloCTe;
     property Usuario: String read FUsuario write FUsuario;
     property TamanhoPapel: TpcnTamanhoPapel read FTamanhoPapel write FTamanhoPapel;
+    property ImprimeDescPorc: Boolean read FImprimeDescPorc write FImprimeDescPorc;
   end;
 
   { TLibCTeConfig }
@@ -148,6 +149,7 @@ begin
   FProtocoloCTe := AIni.ReadString(FSessao, CChaveProtocoloCTe, FProtocoloCTe);
   FUsuario := AIni.ReadString(FSessao, CChaveUsuario, FUsuario);
   FTamanhoPapel := TpcnTamanhoPapel(AIni.ReadInteger(FSessao, CChaveTamanhoPapel, Integer(FTamanhoPapel)));
+  FImprimirDescPorc := AIni.ReadBool(FSessao, CChaveImprimirDescPorc, FImprimirDescPorc);
 end;
 
 procedure TDACTeConfig.GravarIniChild(const AIni: TCustomIniFile);
@@ -162,6 +164,7 @@ begin
   AIni.WriteString(FSessao, CChaveProtocoloCTe, FProtocoloCTe);
   AIni.WriteString(FSessao, CChaveUsuario, FUsuario);
   AIni.WriteInteger(FSessao, CChaveTamanhoPapel, Integer(FTamanhoPapel));
+  AIni.WriteBool(FSessao, CChaveImprimirDescPorc, FImprimirDescPorc);
 end;
 
 procedure TDACTeConfig.ApplyChild(const DFeReport: TACBrCTeDACTeRL);
@@ -179,6 +182,7 @@ begin
     ProtocoloCTe := FProtocoloCTe;
     Usuario := FUsuario;
     TamanhoPapel := FTamanhoPapel;
+    ImprimeDescPorc := FImprimirDescPorc;
   end;
 end;
 

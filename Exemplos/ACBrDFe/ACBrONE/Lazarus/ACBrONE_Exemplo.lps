@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="ACBrONE_Exemplo.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmACBrONE"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="220"/>
+        <CursorPos X="14" Y="243"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="Frm_SelecionarCertificado.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="Frm_Status.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21" Y="8"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="6" HistoryIndex="5">
+      <Position1>
+        <Filename Value="Frm_ACBrONE.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="235" Column="25" TopLine="220"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="329" Column="19" TopLine="317"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="414" Column="19" TopLine="402"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="459" Column="19" TopLine="446"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="235" Column="25" TopLine="219"/>
+      </Position6>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

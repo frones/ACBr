@@ -1,19 +1,25 @@
 unit Frm_ACBrONE;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, Spin, Buttons, ComCtrls, OleCtrls, SHDocVw,
-  ShellAPI, XMLIntf, XMLDoc, zlib,
-  ACBrBase, ACBrUtil, ACBrDFe,
-  ACBrMail, ACBrONE;
+  IniFiles, LCLIntf, LCLType, SysUtils, Variants, Classes,
+  Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls,
+  SynEdit, SynHighlighterXML,
+  ACBrUtil, ACBrMail, ACBrDFe, ACBrDFeSSL, 
+  ACBrONE;
 
 type
+
+  { TfrmACBrONE }
+
   TfrmACBrONE = class(TForm)
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
+    SynXMLSyn1: TSynXMLSyn;
     TabSheet1: TTabSheet;
     PageControl4: TPageControl;
     TabSheet3: TTabSheet;
@@ -154,7 +160,7 @@ type
     TabSheet5: TTabSheet;
     MemoResp: TMemo;
     TabSheet6: TTabSheet;
-    WBResposta: TWebBrowser;
+    WBResposta: TSynEdit;
     TabSheet8: TTabSheet;
     memoLog: TMemo;
     TabSheet9: TTabSheet;
@@ -211,7 +217,7 @@ type
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
-    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
     procedure AtualizarSSLLibsCombo;
   public
     { Public declarations }
@@ -223,16 +229,16 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, synacode, blcksock, FileCtrl, Grids,
-  IniFiles, Printers,
-  pcnConversao, pcnConversaoONE,
-  ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeUtil,
+  strutils, math, TypInfo, DateUtils, blcksock, Grids,
+  Printers,
+  pcnAuxiliar, pcnConversao, pcnConversaoONE,
+  ACBrDFeConfiguracoes, ACBrDFeUtil,
   Frm_Status, Frm_SelecionarCertificado;
 
 const
   SELDIRHELP = 1000;
 
-{$R *.dfm}
+{$R *.lfm}
 
 { TfrmACBrONE }
 
@@ -255,7 +261,7 @@ begin
       begin
         if ( frmStatus = nil ) then
           frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Enviando Manutenção de Equipamentos...';
+        frmStatus.lblStatus.Caption := 'Enviando ManutenÃ§Ã£o de Equipamentos...';
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
@@ -271,7 +277,7 @@ begin
       begin
         if ( frmStatus = nil ) then
           frmStatus := TfrmStatus.Create(Application);
-        frmStatus.lblStatus.Caption := 'Obtendo Distribuição de Leituras...';
+        frmStatus.lblStatus.Caption := 'Obtendo DistribuiÃ§Ã£o de Leituras...';
         frmStatus.Show;
         frmStatus.BringToFront;
       end;
@@ -307,11 +313,11 @@ begin
   // Exemplo de como obter a Distribuicao de Leituras pelo CNPJ do Operador
 
   ultNSU := '';
-  if not(InputQuery('WebServices Distribuição de Leituras', 'Último NSU recebido', ultNSU)) then
+  if not(InputQuery('WebServices DistribuiÃ§Ã£o de Leituras', 'Ãšltimo NSU recebido', ultNSU)) then
      exit;
 
   NSUFin := '';
-  InputQuery('WebServices Distribuição Documentos Fiscais', 'NSU final', NSUFin);
+  InputQuery('WebServices DistribuiÃ§Ã£o Documentos Fiscais', 'NSU final', NSUFin);
 
 
   //  TtpDist = (tdUFMDFe, tdEquipamento, tdOperador, tdUFCaptura);
@@ -320,7 +326,7 @@ begin
   MemoResp.Lines.Text := ACBrONE1.WebServices.DistLeituras.RetWS;
   memoRespWS.Lines.Text := ACBrONE1.WebServices.DistLeituras.RetornoWS;
 
-  LoadXML(ACBrONE1.WebServices.DistLeituras.RetWS, WBResposta);
+  LoadXML(MemoResp, WBResposta);
 
   ACBrONE1.Free;
 end;
@@ -405,12 +411,12 @@ begin
 
   MemoResp.Lines.Text := ACBrONE1.WebServices.EnvManutencao.RetWS;
   memoRespWS.Lines.Text := ACBrONE1.WebServices.EnvManutencao.RetornoWS;
-  LoadXML(ACBrONE1.WebServices.EnvManutencao.RetornoWS, WBResposta);
+  LoadXML(MemoResp, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
   MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('Manutenção de Equipamento');
+  MemoDados.Lines.Add('ManutenÃ§Ã£o de Equipamento');
   MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrONE1.WebServices.EnvManutencao.TpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrONE1.WebServices.EnvManutencao.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrONE1.WebServices.EnvManutencao.cStat));
@@ -450,12 +456,12 @@ begin
 
   MemoResp.Lines.Text := ACBrONE1.WebServices.EnvLeitura.RetWS;
   memoRespWS.Lines.Text := ACBrONE1.WebServices.EnvLeitura.RetornoWS;
-  LoadXML(ACBrONE1.WebServices.EnvLeitura.RetornoWS, WBResposta);
+  LoadXML(MemoResp, WBResposta);
 
   pgRespostas.ActivePageIndex := 1;
 
   MemoDados.Lines.Add('');
-  MemoDados.Lines.Add('Recepção de Leitura');
+  MemoDados.Lines.Add('RecepÃ§Ã£o de Leitura');
   MemoDados.Lines.Add('tpAmb: ' + TpAmbToStr(ACBrONE1.WebServices.EnvLeitura.TpAmb));
   MemoDados.Lines.Add('verAplic: ' + ACBrONE1.WebServices.EnvLeitura.verAplic);
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrONE1.WebServices.EnvLeitura.cStat));
@@ -480,7 +486,7 @@ end;
 procedure TfrmACBrONE.btnSubNameClick(Sender: TObject);
 begin
   ShowMessage(ACBrONE1.SSL.CertSubjectName + sLineBreak + sLineBreak +
-              'Razão Social: ' + ACBrONE1.SSL.CertRazaoSocial);
+              'RazÃ£o Social: ' + ACBrONE1.SSL.CertRazaoSocial);
 end;
 
 procedure TfrmACBrONE.cbCryptLibChange(Sender: TObject);
@@ -863,12 +869,21 @@ begin
   end;
 end;
 
-procedure TfrmACBrONE.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+procedure TfrmACBrONE.LoadXML(MyMemo: TMemo; SynEdit: TSynEdit);
+var
+  vText: String;
 begin
-  ACBrUtil.WriteToTXT(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml',
-                      ACBrUtil.ConverteXMLtoUTF8(RetWS), False, False);
+  vText := MyMemo.Text;
 
-  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName)) + 'temp.xml');
+  // formata resposta
+  vText := StringReplace(vText, '>', '>' + LineEnding + '    ', [rfReplaceAll]);
+  vText := StringReplace(vText, '<', LineEnding + '  <', [rfReplaceAll]);
+  vText := StringReplace(vText, '>' + LineEnding + '    ' + LineEnding +
+           '  <', '>' + LineEnding + '  <', [rfReplaceAll]);
+  vText := StringReplace(vText, '  </ret', '</ret', []);
+
+  // exibe resposta
+  SynEdit.Text := Trim(vText);
 end;
 
 procedure TfrmACBrONE.PathClick(Sender: TObject);
@@ -923,8 +938,8 @@ begin
     ColWidths[3] := 80;
     ColWidths[4] := 150;
 
-    Cells[0, 0] := 'Num.Série';
-    Cells[1, 0] := 'Razão Social';
+    Cells[0, 0] := 'Num.SÃ©rie';
+    Cells[1, 0] := 'RazÃ£o Social';
     Cells[2, 0] := 'CNPJ';
     Cells[3, 0] := 'Validade';
     Cells[4, 0] := 'Certificadora';

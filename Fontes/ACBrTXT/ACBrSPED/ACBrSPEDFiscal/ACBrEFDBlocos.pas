@@ -82,7 +82,8 @@ type
                              vlVersao109,  // Código 010 - Versão 109 Ato COTEPE 01/07/2016
                              vlVersao110,  // Código 011 - Versão 110 Ato COTEPE 01/01/2017
                              vlVersao111,  // Código 012 - Versão 111 Ato COTEPE 01/01/2018
-                             vlVersao112   // Código 013 - Versão 112 Ato COTEPE 01/01/2019
+                             vlVersao112,  // Código 013 - Versão 112 Ato COTEPE 01/01/2019
+                             vlVersao113   // Código 014 - Versão 113 Ato COTEPE 01/01/2020
                              );
   TACBrVersaoLeiaute = TACBrCodVer;
 
@@ -841,6 +842,9 @@ begin
    if AValue = '013' then
       Result := vlVersao112
    else
+   if AValue = '014' then
+      Result := vlVersao113
+   else
      raise EACBrSPEDFiscalException.CreateFmt('Versão desconhecida. Versao "%s" não é um valor válido.', [AValue]);
 end;
 
@@ -873,6 +877,8 @@ begin
       Result := '012';
     vlVersao112:
       Result := '013';
+    vlVersao113:
+      Result := '014';
   else
     Result := EmptyStr;
   end;

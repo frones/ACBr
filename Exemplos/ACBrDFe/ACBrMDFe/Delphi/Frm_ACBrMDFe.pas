@@ -1894,9 +1894,9 @@ begin
   begin
     ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex + 1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
-//    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [];
-//    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [deRelacaoDFe];
-    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [deValorTotal];
+//    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [];
+//    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deRelacaoDFe];
+    ACBrMDFe1.DAMDFE.ImprimeDadosExtras := [deValorTotal];
   end;
 end;
 

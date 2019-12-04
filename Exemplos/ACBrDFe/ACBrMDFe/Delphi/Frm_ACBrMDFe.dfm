@@ -1431,10 +1431,6 @@ object frmACBrMDFe: TfrmACBrMDFe
       object tsConsultas: TTabSheet
         Caption = 'Consultas'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object btnConsultar: TButton
           Left = 191
           Top = 9
@@ -1551,10 +1547,6 @@ object frmACBrMDFe: TfrmACBrMDFe
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object btnDistribuicaoDFe: TButton
           Left = 8
           Top = 9
@@ -1714,7 +1706,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
-    ImprimirDadosExtras = [deValorTotal, deRelacaoDFe]
+    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
     Left = 470
     Top = 246

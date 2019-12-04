@@ -391,8 +391,10 @@ begin
 
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
-    //rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
-    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Tomador.Endereco.CodigoMunicipio, 0));
+    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
+	// Será necessário uma analise melhor para saber em que condições devemos usar o código do municipio
+	// do tomador em vez do que foi informado em Serviço. 
+//    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Tomador.Endereco.CodigoMunicipio, 0));
   end;
 end;
 

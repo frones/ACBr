@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2019
+-- ACBrNFSeDANFSeRLRetrato --
+[*] https://www.projetoacbr.com.br/forum/topic/53848-nfse-goi%C3%A1sgoi%C3%A2niatrindade/?do=findComment&comment=361859
+   Por: Henrique Sandri Zimermam
+
 26/11/2019
 -- ACBrNFSeDANFSeRLClass --
 [*] Possivel correção para a quebra de linha na discriminação dos serviços.

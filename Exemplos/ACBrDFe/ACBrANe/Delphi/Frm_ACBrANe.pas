@@ -242,7 +242,7 @@ const
 
 {$R *.dfm}
 
-{ TfrmACBrMDFe }
+{ TfrmACBrANe }
 
 procedure TfrmACBrANe.AlimentarComponente(ANomeArq: String);
 begin

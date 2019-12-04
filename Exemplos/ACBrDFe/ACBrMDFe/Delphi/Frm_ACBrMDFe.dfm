@@ -1,9 +1,9 @@
 object frmACBrMDFe: TfrmACBrMDFe
   Left = 249
   Top = 82
-  Width = 882
-  Height = 651
   Caption = 'ACBrMDFe - Programa Exemplo'
+  ClientHeight = 612
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -360,7 +360,6 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +369,6 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +378,6 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +387,6 @@ object frmACBrMDFe: TfrmACBrMDFe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -501,7 +497,6 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -540,7 +535,6 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -619,7 +613,6 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -692,7 +685,6 @@ object frmACBrMDFe: TfrmACBrMDFe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1300,8 +1292,6 @@ object frmACBrMDFe: TfrmACBrMDFe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1316,6 +1306,8 @@ object frmACBrMDFe: TfrmACBrMDFe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel
@@ -1330,7 +1322,7 @@ object frmACBrMDFe: TfrmACBrMDFe
       Top = 1
       Width = 567
       Height = 197
-      ActivePage = tsEventos
+      ActivePage = tsEnvios
       Align = alTop
       TabOrder = 0
       object tsEnvios: TTabSheet
@@ -1439,6 +1431,10 @@ object frmACBrMDFe: TfrmACBrMDFe
       object tsConsultas: TTabSheet
         Caption = 'Consultas'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object btnConsultar: TButton
           Left = 191
           Top = 9
@@ -1555,6 +1551,10 @@ object frmACBrMDFe: TfrmACBrMDFe
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'
         ImageIndex = 5
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object btnDistribuicaoDFe: TButton
           Left = 8
           Top = 9
@@ -1695,7 +1695,6 @@ object frmACBrMDFe: TfrmACBrMDFe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    DAMDFE = ACBrMDFeDAMDFeRL1
     Left = 334
     Top = 238
   end
@@ -1710,14 +1709,14 @@ object frmACBrMDFe: TfrmACBrMDFe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
-    ACBrMDFe = ACBrMDFe1
     ImprimeHoraSaida = False
     TipoDAMDFe = tiSemGeracao
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
+    ImprimirDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
-    Left = 462
-    Top = 238
+    Left = 470
+    Top = 246
   end
 end

@@ -1,9 +1,9 @@
 object frmACBrNFSe: TfrmACBrNFSe
   Left = 282
   Top = 118
-  Width = 882
-  Height = 651
   Caption = 'ACBrNFSe - Programa Exemplo'
+  ClientHeight = 612
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -96,12 +96,16 @@ object frmACBrNFSe: TfrmACBrNFSe
           Top = 0
           Width = 287
           Height = 476
-          ActivePage = TabSheet4
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -360,7 +364,6 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +373,6 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +382,6 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +391,6 @@ object frmACBrNFSe: TfrmACBrNFSe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -535,7 +535,6 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -588,6 +587,10 @@ object frmACBrNFSe: TfrmACBrNFSe
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object Label30: TLabel
               Left = 5
               Top = 317
@@ -688,7 +691,6 @@ object frmACBrNFSe: TfrmACBrNFSe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 4
                 OnChange = cbSSLTypeChange
               end
@@ -1076,7 +1078,6 @@ object frmACBrNFSe: TfrmACBrNFSe
               Top = 264
               Width = 257
               Height = 21
-              ItemHeight = 13
               TabOrder = 10
               Text = 'Selecione uma Cidade'
               OnChange = cbCidadesChange
@@ -1266,6 +1267,10 @@ object frmACBrNFSe: TfrmACBrNFSe
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object sbPathNFSe: TSpeedButton
               Left = 247
               Top = 131
@@ -1570,8 +1575,6 @@ object frmACBrNFSe: TfrmACBrNFSe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1586,6 +1589,8 @@ object frmACBrNFSe: TfrmACBrNFSe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel

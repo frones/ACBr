@@ -251,7 +251,7 @@ const
 
 {$R *.lfm}
 
-{ TfrmACBrMDFe }
+{ TfrmACBrCIOT }
 
 procedure TfrmACBrCIOT.ACBrCIOT1GerarLog(const ALogLine: string;
   var Tratado: Boolean);

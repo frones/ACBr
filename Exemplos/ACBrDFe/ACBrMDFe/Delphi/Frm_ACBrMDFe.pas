@@ -195,13 +195,13 @@ type
     OpenDialog1: TOpenDialog;
     btnStatusServ: TButton;
     ACBrMDFe1: TACBrMDFe;
-    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     btnCriarEnviar: TButton;
     btnCriarEnviarSincrono: TButton;
     btnGerarPDFEvento: TButton;
     btnInclusaoCondutor: TButton;
     btnInclusaoDFe: TButton;
     btnConsultarNaoEncerrados: TButton;
+    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathMDFeClick(Sender: TObject);
@@ -1894,6 +1894,9 @@ begin
   begin
     ACBrMDFe1.DAMDFe.TipoDAMDFe := StrToTpImp(OK, IntToStr(rgTipoDaMDFe.ItemIndex + 1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
+//    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [];
+//    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [deRelacaoDFe];
+    ACBrMDFe1.DAMDFE.ImprimirDadosExtras := [deValorTotal];
   end;
 end;
 

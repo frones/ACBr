@@ -1,9 +1,9 @@
 object frmACBrANe: TfrmACBrANe
   Left = 249
   Top = 82
-  Width = 882
-  Height = 651
   Caption = 'ACBrANe - Programa Exemplo'
+  ClientHeight = 612
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -102,6 +102,10 @@ object frmACBrANe: TfrmACBrANe
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -360,7 +364,6 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +373,6 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +382,6 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +391,6 @@ object frmACBrANe: TfrmACBrANe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -398,6 +398,10 @@ object frmACBrANe: TfrmACBrANe
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 4
@@ -535,7 +539,6 @@ object frmACBrANe: TfrmACBrANe
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -574,7 +577,6 @@ object frmACBrANe: TfrmACBrANe
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 13
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -631,7 +633,6 @@ object frmACBrANe: TfrmACBrANe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 0
                 ParentFont = False
                 TabOrder = 13
@@ -645,6 +646,10 @@ object frmACBrANe: TfrmACBrANe
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -709,7 +714,6 @@ object frmACBrANe: TfrmACBrANe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -782,7 +786,6 @@ object frmACBrANe: TfrmACBrANe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1106,6 +1109,10 @@ object frmACBrANe: TfrmACBrANe
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object sbPathANe: TSpeedButton
               Left = 247
               Top = 131
@@ -1195,6 +1202,10 @@ object frmACBrANe: TfrmACBrANe
       object TabSheet14: TTabSheet
         Caption = 'Email'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label3: TLabel
           Left = 8
           Top = 8
@@ -1295,8 +1306,6 @@ object frmACBrANe: TfrmACBrANe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1311,6 +1320,8 @@ object frmACBrANe: TfrmACBrANe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel
@@ -1383,6 +1394,10 @@ object frmACBrANe: TfrmACBrANe
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1401,6 +1416,10 @@ object frmACBrANe: TfrmACBrANe
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1414,6 +1433,10 @@ object frmACBrANe: TfrmACBrANe
       object TabSheet9: TTabSheet
         Caption = 'Documento'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object trvwDocumento: TTreeView
           Left = 0
           Top = 0
@@ -1427,6 +1450,10 @@ object frmACBrANe: TfrmACBrANe
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1440,6 +1467,10 @@ object frmACBrANe: TfrmACBrANe
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0

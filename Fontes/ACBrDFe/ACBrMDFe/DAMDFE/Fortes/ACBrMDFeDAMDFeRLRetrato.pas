@@ -153,7 +153,7 @@ type
     RLDraw14: TRLDraw;
     rlbNumcipio: TRLLabel;
     RLDraw15: TRLDraw;
-    RLLabel27: TRLLabel;
+    rllTituloValorMerc: TRLLabel;
     rllValorMercadoria: TRLLabel;
     RLLabel28: TRLLabel;
     RLLabel29: TRLLabel;
@@ -191,6 +191,9 @@ type
       var Eof: Boolean; var RecordAction: TRLRecordAction);
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
+    procedure rlb_7_Documentos_TitulosBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure subItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     { Private declarations }
     FNumItem: Integer;
@@ -343,6 +346,17 @@ begin
 
   rllPesoTotal.Caption := FormatFloatBr(fpMDFe.tot.qCarga, ',#0.0000');
   rllValorMercadoria.Caption := FormatFloatBr(fpMDFe.tot.vCarga, ',#0.00');
+
+  if deValorTotal in fpDAMDFe.ImprimeDadosExtras then
+  begin
+    rllTituloValorMerc.Visible := True;
+    rllValorMercadoria.Visible := True;
+  end
+  else
+  begin
+    rllTituloValorMerc.Visible := False;
+    rllValorMercadoria.Visible := False;
+  end;
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -715,7 +729,7 @@ begin
 
   with fpMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
-    rlbNumcipio.Caption := ACBrStr(Format('Município %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
+    rlbNumcipio.Caption := ACBrStr(Format('Município de Descarregamento: %s ',[ fpMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
 
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do
@@ -756,6 +770,22 @@ begin
       Inc(nItem);
     end;
   end;
+
+  inherited;
+end;
+
+procedure TfrlDAMDFeRLRetrato.rlb_7_Documentos_TitulosBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  PrintIt := (deRelacaoDFe in fPDAMDFE.ImprimeDadosExtras);
+
+  inherited;
+end;
+
+procedure TfrlDAMDFeRLRetrato.subItensBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (deRelacaoDFe in fPDAMDFE.ImprimeDadosExtras);
 
   inherited;
 end;

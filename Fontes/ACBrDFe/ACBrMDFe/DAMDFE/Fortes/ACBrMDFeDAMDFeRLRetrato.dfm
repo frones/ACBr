@@ -1,12 +1,10 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 146
-  Top = 55
+  Left = 209
+  Top = 84
   Caption = 'Manifesto - Retrato'
-  ClientWidth = 848
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
-  Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLMDFe: TRLReport
@@ -21,6 +19,8 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
+    ExplicitLeft = 2
+    ExplicitTop = 2
     object rlb_2_Rodo: TRLBand
       Left = 26
       Top = 368
@@ -539,6 +539,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Height = 54
       AutoExpand = False
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       Visible = False
@@ -830,6 +835,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Width = 742
       Height = 60
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       Visible = False
@@ -964,6 +974,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Color = clWhite
       IntegralHeight = False
       ParentColor = False
+      BeforePrint = rlb_7_Documentos_TitulosBeforePrint
       object rlLabel141: TRLLabel
         Left = 254
         Top = 4
@@ -1201,7 +1212,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-      object RLLabel27: TRLLabel
+      object rllTituloValorMerc: TRLLabel
         Left = 274
         Top = 26
         Width = 152
@@ -1420,6 +1431,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Borders.DrawTop = False
       Borders.DrawRight = True
       Borders.DrawBottom = False
+      BeforePrint = subItensBeforePrint
       OnDataRecord = subItensDataRecord
       object rlbItens: TRLBand
         Left = 1

@@ -46,6 +46,9 @@ uses
   pmdfeMDFe, pcnConversao;
 
 type
+  TDadosExtrasMDFe = (deValorTotal, deRelacaoDFe);
+  TConjuntoDadosExtrasMDFe = Set of TDadosExtrasMDFe;
+
   {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
@@ -63,6 +66,7 @@ type
     FProtocoloMDFe: String;
     FMDFeCancelada: Boolean;
     FMDFeEncerrado: Boolean;
+    FImprimeDadosExtras: TConjuntoDadosExtrasMDFe;
 
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     function GetSeparadorPathPDF(const aInitialPath: String): String; override;
@@ -83,6 +87,8 @@ type
     property Protocolo: String              read FProtocoloMDFe          write FProtocoloMDFe;
     property Cancelada: Boolean             read FMDFeCancelada          write FMDFeCancelada;
     property Encerrado: Boolean             read FMDFeEncerrado          write FMDFeEncerrado;
+
+    property ImprimeDadosExtras: TConjuntoDadosExtrasMDFe read FImprimeDadosExtras write FImprimeDadosExtras;
   end;
 
 implementation
@@ -94,12 +100,13 @@ constructor TACBrMDFeDAMDFeClass.Create(AOwner: TComponent);
 begin
   inherited create(AOwner);
 
-  FACBrMDFe   := nil;
-  FImprimirHoraSaida      := False;
+  FACBrMDFe := nil;
+  FImprimirHoraSaida := False;
   FImprimirHoraSaida_Hora := '';
   FProtocoloMDFe := '';
-  FMDFeCancelada  := False;
-  FMDFeEncerrado  := False;
+  FMDFeCancelada := False;
+  FMDFeEncerrado := False;
+  FImprimeDadosExtras := [deValorTotal, deRelacaoDFe];
 end;
 
 destructor TACBrMDFeDAMDFeClass.Destroy;

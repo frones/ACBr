@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/12/2019
+-- ACBrMDFeDAMDFeRLRetrato --
+[+] Implementado a propriedade de configuração: ImprimeDadosExtras onde podemos
+    ativar/desativar as opções: 
+    deValorTotal (se ativo imprime no o valor total da carga)
+    e deRelacaoDFe (se ativo imprime a lista de documentos vinculados no MDF-e)
+    valor padrão para ambas opções é True (ativo).
+   Por: Italo Jurisato Junior
+
 16/10/2019
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Alteração no layout para ficar em conformidade com a nova versão 3.00a.

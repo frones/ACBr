@@ -1,175 +1,27 @@
-object frm_DemoACBrONE: Tfrm_DemoACBrONE
-  Left = 200
-  Top = 124
-  Caption = 'Demo ACBrONE'
-  ClientHeight = 605
-  ClientWidth = 912
+object frmACBrONE: TfrmACBrONE
+  Left = 249
+  Top = 82
+  Caption = 'ACBrONE - Programa Exemplo'
+  ClientHeight = 612
+  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel2: TPanel
-    Left = 297
-    Top = 0
-    Width = 615
-    Height = 605
-    Align = alClient
-    TabOrder = 0
-    object Panel3: TPanel
-      Left = 1
-      Top = 1
-      Width = 613
-      Height = 104
-      Align = alTop
-      TabOrder = 0
-      object PageControl3: TPageControl
-        Left = 1
-        Top = 1
-        Width = 611
-        Height = 102
-        ActivePage = tsONE
-        Align = alClient
-        TabOrder = 0
-        object tsONE: TTabSheet
-          Caption = 'ONE'
-          object btnDistLeituras: TButton
-            Left = 376
-            Top = 8
-            Width = 178
-            Height = 25
-            Caption = 'Distribui'#231#227'o de leituras'
-            TabOrder = 0
-            OnClick = btnDistLeiturasClick
-          end
-          object btnManutencao: TButton
-            Left = 8
-            Top = 8
-            Width = 177
-            Height = 25
-            Caption = 'Manuten'#231#227'o de Equipamento'
-            TabOrder = 1
-            OnClick = btnManutencaoClick
-          end
-          object btnRecepcaoLeitura: TButton
-            Left = 192
-            Top = 8
-            Width = 177
-            Height = 25
-            Caption = 'Recep'#231#227'o de Leitura'
-            TabOrder = 2
-            OnClick = btnRecepcaoLeituraClick
-          end
-        end
-      end
-    end
-    object pgRespostas: TPageControl
-      Left = 1
-      Top = 105
-      Width = 613
-      Height = 499
-      ActivePage = TabSheet5
-      Align = alClient
-      TabOrder = 1
-      object TabSheet5: TTabSheet
-        Caption = 'Respostas'
-        object MemoResp: TMemo
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-      end
-      object TabSheet6: TTabSheet
-        Caption = 'XML Resposta'
-        ImageIndex = 1
-        object WBResposta: TWebBrowser
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          TabOrder = 0
-          ControlData = {
-            4C000000873E0000AE3000000000000000000000000000000000000000000000
-            000000004C000000000000000000000001000000E0D057007335CF11AE690800
-            2B2E126200000000000000004C0000000114020000000000C000000000000046
-            8000000000000000000000000000000000000000000000000000000000000000
-            00000000000000000100000000000000000000000000000000000000}
-        end
-      end
-      object TabSheet8: TTabSheet
-        Caption = 'Log'
-        ImageIndex = 2
-        object memoLog: TMemo
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-      end
-      object TabSheet9: TTabSheet
-        Caption = 'ONE'
-        ImageIndex = 3
-        object trvwONE: TTreeView
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          Indent = 19
-          TabOrder = 0
-        end
-      end
-      object TabSheet10: TTabSheet
-        Caption = 'Retorno Completo WS'
-        ImageIndex = 4
-        object memoRespWS: TMemo
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          ScrollBars = ssVertical
-          TabOrder = 0
-        end
-      end
-      object Dados: TTabSheet
-        Caption = 'Dados'
-        ImageIndex = 5
-        object MemoDados: TMemo
-          Left = 0
-          Top = 0
-          Width = 605
-          Height = 471
-          Align = alClient
-          Lines.Strings = (
-            '')
-          ScrollBars = ssVertical
-          TabOrder = 0
-          WordWrap = False
-        end
-      end
-    end
-  end
-  object Panel1: TPanel
+  object pnlMenus: TPanel
     Left = 0
     Top = 0
     Width = 297
-    Height = 605
+    Height = 612
     Align = alLeft
-    TabOrder = 1
+    TabOrder = 0
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -230,42 +82,19 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
       ParentFont = False
       OnClick = lblDoar2Click
     end
-    object btnSalvarConfig: TBitBtn
-      Left = 78
-      Top = 515
-      Width = 153
-      Height = 25
-      Caption = 'Salvar Configura'#231#245'es'
-      Glyph.Data = {
-        76010000424D7601000000000000760000002800000020000000100000000100
-        04000000000000010000130B0000130B00001000000000000000000000000000
-        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
-        7700333333337777777733333333008088003333333377F73377333333330088
-        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
-        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
-        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
-        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
-        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
-        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
-        93337FFFF7737777733300000033333333337777773333333333}
-      NumGlyphs = 2
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
-    end
     object PageControl1: TPageControl
-      Left = 0
-      Top = 0
-      Width = 283
+      Left = 1
+      Top = 1
+      Width = 295
       Height = 504
       ActivePage = TabSheet1
-      TabOrder = 1
+      TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Configura'#231#245'es'
         object PageControl4: TPageControl
           Left = 0
           Top = 0
-          Width = 275
+          Width = 287
           Height = 476
           ActivePage = TabSheet12
           Align = alClient
@@ -274,9 +103,9 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
             object lSSLLib: TLabel
-              Left = 35
+              Left = 39
               Top = 16
-              Width = 34
+              Width = 30
               Height = 13
               Alignment = taRightJustify
               Caption = 'SSLLib'
@@ -284,9 +113,9 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               ParentColor = False
             end
             object lCryptLib: TLabel
-              Left = 31
+              Left = 29
               Top = 43
-              Width = 38
+              Width = 40
               Height = 13
               Alignment = taRightJustify
               Caption = 'CryptLib'
@@ -304,9 +133,9 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               ParentColor = False
             end
             object lXmlSign: TLabel
-              Left = 12
+              Left = 17
               Top = 97
-              Width = 57
+              Width = 52
               Height = 13
               Alignment = taRightJustify
               Caption = 'XMLSignLib'
@@ -330,7 +159,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               object Label2: TLabel
                 Left = 8
                 Top = 56
-                Width = 31
+                Width = 30
                 Height = 13
                 Caption = 'Senha'
               end
@@ -383,7 +212,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                 NumGlyphs = 2
                 OnClick = sbtnGetCertClick
               end
-              object sbtnListaCert: TSpeedButton
+              object sbtnNumSerie: TSpeedButton
                 Left = 206
                 Top = 110
                 Width = 23
@@ -402,7 +231,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                   B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
                   3BB33773333773333773B333333B3333333B7333333733333337}
                 NumGlyphs = 2
-                OnClick = sbtnListaCertClick
+                OnClick = sbtnNumSerieClick
               end
               object edtCaminho: TEdit
                 Left = 8
@@ -427,14 +256,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                 TabOrder = 2
               end
             end
-            object btnValidadeData: TButton
+            object btnDataValidade: TButton
               Left = 8
               Top = 266
               Width = 99
               Height = 25
               Caption = 'Data de Validade'
               TabOrder = 1
-              OnClick = btnValidadeDataClick
+              OnClick = btnDataValidadeClick
             end
             object btnNumSerie: TButton
               Left = 112
@@ -445,14 +274,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               TabOrder = 2
               OnClick = btnNumSerieClick
             end
-            object btnSubjectName: TButton
+            object btnSubName: TButton
               Left = 8
               Top = 298
               Width = 99
               Height = 25
               Caption = 'Subject Name'
               TabOrder = 3
-              OnClick = btnSubjectNameClick
+              OnClick = btnSubNameClick
             end
             object btnCNPJ: TButton
               Left = 112
@@ -487,14 +316,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                 TabOrder = 0
                 Text = '0548133600013704583493000190'
               end
-              object btnSHA_RSA: TButton
+              object btnSha256: TButton
                 Left = 8
                 Top = 41
                 Width = 99
                 Height = 25
                 Caption = 'SHA256+RSA'
                 TabOrder = 1
-                OnClick = btnSHA_RSAClick
+                OnClick = btnSha256Click
               end
               object cbAssinar: TCheckBox
                 Left = 144
@@ -507,14 +336,23 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                 TabOrder = 2
               end
             end
-            object btnX509: TButton
+            object btnHTTPS: TButton
+              Left = 8
+              Top = 403
+              Width = 128
+              Height = 25
+              Caption = 'HTTPS sem Certificado'
+              TabOrder = 7
+              OnClick = btnHTTPSClick
+            end
+            object btnLeituraX509: TButton
               Left = 144
               Top = 403
               Width = 115
               Height = 25
               Caption = 'Leitura de X509'
-              TabOrder = 7
-              OnClick = btnX509Click
+              TabOrder = 8
+              OnClick = btnLeituraX509Click
             end
             object cbSSLLib: TComboBox
               Left = 80
@@ -522,7 +360,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 8
+              TabOrder = 9
               OnChange = cbSSLLibChange
             end
             object cbCryptLib: TComboBox
@@ -531,7 +369,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 9
+              TabOrder = 10
               OnChange = cbCryptLibChange
             end
             object cbHttpLib: TComboBox
@@ -540,7 +378,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 10
+              TabOrder = 11
               OnChange = cbHttpLibChange
             end
             object cbXmlSignLib: TComboBox
@@ -549,7 +387,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               Width = 160
               Height = 21
               Style = csDropDownList
-              TabOrder = 11
+              TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
           end
@@ -557,15 +395,15 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             Caption = 'Geral'
             ImageIndex = 1
             object GroupBox3: TGroupBox
-              Left = 0
-              Top = 4
+              Left = 3
+              Top = 12
               Width = 265
-              Height = 381
+              Height = 389
               Caption = 'Geral'
               TabOrder = 0
               object sbtnPathSalvar: TSpeedButton
-                Left = 235
-                Top = 213
+                Left = 238
+                Top = 204
                 Width = 23
                 Height = 24
                 Glyph.Data = {
@@ -594,27 +432,27 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               object Label31: TLabel
                 Left = 8
                 Top = 50
-                Width = 68
+                Width = 72
                 Height = 13
                 Caption = 'Formato Alerta'
               end
               object Label32: TLabel
                 Left = 8
                 Top = 133
-                Width = 121
+                Width = 119
                 Height = 13
                 Caption = 'Vers'#227'o Documento Fiscal'
               end
               object Label42: TLabel
                 Left = 8
-                Top = 238
-                Width = 199
+                Top = 228
+                Width = 198
                 Height = 13
                 Caption = 'Diret'#243'rios com os arquivos XSD(Schemas)'
               end
               object spPathSchemas: TSpeedButton
-                Left = 235
-                Top = 253
+                Left = 238
+                Top = 244
                 Width = 23
                 Height = 24
                 Glyph.Data = {
@@ -636,7 +474,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               object Label7: TLabel
                 Left = 8
                 Top = 289
-                Width = 98
+                Width = 96
                 Height = 13
                 Caption = 'Vers'#227'o da Aplica'#231#227'o'
               end
@@ -649,14 +487,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               end
               object edtPathLogs: TEdit
                 Left = 8
-                Top = 217
+                Top = 207
                 Width = 228
                 Height = 21
                 TabOrder = 0
               end
               object ckSalvar: TCheckBox
                 Left = 8
-                Top = 201
+                Top = 191
                 Width = 209
                 Height = 15
                 Caption = 'Salvar Arquivos de Envio e Resposta'
@@ -700,7 +538,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               end
               object cbxRetirarAcentos: TCheckBox
                 Left = 8
-                Top = 183
+                Top = 173
                 Width = 193
                 Height = 17
                 Caption = 'Retirar Acentos dos XMLs enviados'
@@ -715,7 +553,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               end
               object edtPathSchemas: TEdit
                 Left = 8
-                Top = 254
+                Top = 244
                 Width = 228
                 Height = 21
                 TabOrder = 8
@@ -740,7 +578,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             Caption = 'WebService'
             ImageIndex = 2
             object GroupBox4: TGroupBox
-              Left = 0
+              Left = 5
               Top = 4
               Width = 265
               Height = 190
@@ -769,9 +607,9 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
                 ParentColor = False
               end
               object lSSLLib1: TLabel
-                Left = 16
+                Left = 19
                 Top = 168
-                Width = 44
+                Width = 41
                 Height = 13
                 Alignment = taRightJustify
                 Caption = 'SSLType'
@@ -880,7 +718,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               end
             end
             object gbProxy: TGroupBox
-              Left = 0
+              Left = 5
               Top = 283
               Width = 265
               Height = 104
@@ -896,7 +734,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               object Label9: TLabel
                 Left = 208
                 Top = 16
-                Width = 25
+                Width = 26
                 Height = 13
                 Caption = 'Porta'
               end
@@ -910,7 +748,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               object Label11: TLabel
                 Left = 138
                 Top = 56
-                Width = 31
+                Width = 30
                 Height = 13
                 Caption = 'Senha'
               end
@@ -945,30 +783,30 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
               end
             end
             object gbxRetornoEnvio: TGroupBox
-              Left = 0
+              Left = 5
               Top = 200
               Width = 265
               Height = 77
-              Caption = 'Retorno de Envio de ONE'
+              Caption = 'Retorno de Envio'
               TabOrder = 2
               object Label36: TLabel
                 Left = 93
                 Top = 27
-                Width = 50
+                Width = 51
                 Height = 13
                 Caption = 'Tentativas'
               end
               object Label37: TLabel
                 Left = 176
                 Top = 27
-                Width = 41
+                Width = 44
                 Height = 13
                 Caption = 'Intervalo'
               end
               object Label38: TLabel
                 Left = 8
                 Top = 27
-                Width = 43
+                Width = 45
                 Height = 13
                 Hint = 
                   'Aguardar quantos segundos para primeira consulta de retorno de e' +
@@ -1015,35 +853,35 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             object Label12: TLabel
               Left = 8
               Top = 4
-              Width = 27
+              Width = 25
               Height = 13
               Caption = 'CNPJ'
             end
             object Label13: TLabel
               Left = 136
               Top = 4
-              Width = 41
+              Width = 43
               Height = 13
               Caption = 'Insc.Est.'
             end
             object Label14: TLabel
               Left = 8
               Top = 44
-              Width = 63
+              Width = 60
               Height = 13
               Caption = 'Raz'#227'o Social'
             end
             object Label15: TLabel
               Left = 8
               Top = 84
-              Width = 40
+              Width = 41
               Height = 13
               Caption = 'Fantasia'
             end
             object Label16: TLabel
               Left = 8
               Top = 164
-              Width = 54
+              Width = 55
               Height = 13
               Caption = 'Logradouro'
             end
@@ -1057,21 +895,21 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             object Label18: TLabel
               Left = 8
               Top = 204
-              Width = 64
+              Width = 65
               Height = 13
               Caption = 'Complemento'
             end
             object Label19: TLabel
               Left = 136
               Top = 204
-              Width = 27
+              Width = 28
               Height = 13
               Caption = 'Bairro'
             end
             object Label20: TLabel
               Left = 8
               Top = 244
-              Width = 61
+              Width = 62
               Height = 13
               Caption = 'C'#243'd. Cidade '
             end
@@ -1085,14 +923,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             object Label22: TLabel
               Left = 225
               Top = 244
-              Width = 14
+              Width = 13
               Height = 13
               Caption = 'UF'
             end
             object Label23: TLabel
               Left = 136
               Top = 124
-              Width = 21
+              Width = 19
               Height = 13
               Caption = 'CEP'
             end
@@ -1199,8 +1037,8 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             Caption = 'Arquivos'
             ImageIndex = 4
             object sbPathONE: TSpeedButton
-              Left = 240
-              Top = 130
+              Left = 247
+              Top = 131
               Width = 23
               Height = 24
               Glyph.Data = {
@@ -1222,7 +1060,7 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             object Label35: TLabel
               Left = 6
               Top = 116
-              Width = 97
+              Width = 96
               Height = 13
               Caption = 'Pasta Arquivos ONE'
             end
@@ -1253,33 +1091,41 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
             object cbxEmissaoPathONE: TCheckBox
               Left = 6
               Top = 48
+              Width = 251
+              Height = 17
+              Caption = 'Salvar Documento pelo campo Data de Emiss'#227'o'
+              TabOrder = 3
+            end
+            object cbxSalvaPathEvento: TCheckBox
+              Left = 6
+              Top = 64
               Width = 233
               Height = 17
-              Caption = 'Salvar ONE pelo campo Data de Emiss'#227'o'
-              TabOrder = 3
+              Caption = 'Salvar Arquivos de Eventos'
+              TabOrder = 4
             end
             object cbxSepararPorCNPJ: TCheckBox
               Left = 6
-              Top = 66
+              Top = 80
               Width = 233
               Height = 17
               Caption = 'Separar Arqs pelo CNPJ do Certificado'
-              TabOrder = 4
+              TabOrder = 5
             end
             object edtPathONE: TEdit
               Left = 6
               Top = 132
               Width = 235
               Height = 21
-              TabOrder = 5
+              TabOrder = 6
             end
             object cbxSepararPorModelo: TCheckBox
               Left = 6
-              Top = 82
+              Top = 96
               Width = 251
               Height = 17
               Caption = 'Separar Arqs pelo Modelo do Documento'
-              TabOrder = 6
+              TabOrder = 7
             end
           end
         end
@@ -1290,14 +1136,14 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
         object Label3: TLabel
           Left = 8
           Top = 8
-          Width = 72
+          Width = 69
           Height = 13
           Caption = 'Servidor SMTP'
         end
         object Label4: TLabel
           Left = 206
           Top = 8
-          Width = 25
+          Width = 26
           Height = 13
           Caption = 'Porta'
         end
@@ -1311,21 +1157,21 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
         object Label26: TLabel
           Left = 137
           Top = 48
-          Width = 31
+          Width = 30
           Height = 13
           Caption = 'Senha'
         end
         object Label27: TLabel
           Left = 8
           Top = 88
-          Width = 121
+          Width = 122
           Height = 13
           Caption = 'Assunto do email enviado'
         end
         object Label28: TLabel
           Left = 8
           Top = 160
-          Width = 95
+          Width = 93
           Height = 13
           Caption = 'Mensagem do Email'
         end
@@ -1381,32 +1227,171 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
         end
       end
     end
+    object btnSalvarConfig: TBitBtn
+      Left = 78
+      Top = 515
+      Width = 153
+      Height = 25
+      Caption = 'Salvar Configura'#231#245'es'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333330070
+        7700333333337777777733333333008088003333333377F73377333333330088
+        88003333333377FFFF7733333333000000003FFFFFFF77777777000000000000
+        000077777777777777770FFFFFFF0FFFFFF07F3333337F3333370FFFFFFF0FFF
+        FFF07F3FF3FF7FFFFFF70F00F0080CCC9CC07F773773777777770FFFFFFFF039
+        99337F3FFFF3F7F777F30F0000F0F09999937F7777373777777F0FFFFFFFF999
+        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+        93337FFFF7737777733300000033333333337777773333333333}
+      NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
+    end
   end
-  object ACBrONE1: TACBrONE
-    MAIL = ACBrMail1
-    OnStatusChange = ACBrONE1StatusChange
-    OnGerarLog = ACBrONE1GerarLog
-    Configuracoes.Geral.SSLLib = libCapicom
-    Configuracoes.Geral.SSLCryptLib = cryCapicom
-    Configuracoes.Geral.SSLHttpLib = httpWinINet
-    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
-    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Arquivos.OrdenacaoPath = <>
-    Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.RespTec.IdCSRT = 0
-    Left = 336
-    Top = 280
-  end
-  object OpenDialog1: TOpenDialog
-    DefaultExt = '*-nfe.XML'
-    Filter = 
-      'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
-      'dos os Arquivos (*.*)|*.*'
-    Title = 'Selecione a NFe'
-    Left = 480
-    Top = 280
+  object pnlCentral: TPanel
+    Left = 297
+    Top = 0
+    Width = 569
+    Height = 612
+    Align = alClient
+    TabOrder = 1
+    object pgcBotoes: TPageControl
+      Left = 1
+      Top = 1
+      Width = 567
+      Height = 197
+      ActivePage = tsEnvios
+      Align = alTop
+      TabOrder = 0
+      object tsEnvios: TTabSheet
+        Caption = 'Envios'
+        ImageIndex = 2
+        object btnManutencao: TButton
+          Left = 9
+          Top = 8
+          Width = 177
+          Height = 25
+          Caption = 'Manuten'#231#227'o de Equipamento'
+          TabOrder = 0
+          OnClick = btnManutencaoClick
+        end
+        object btnRecepcaoLeitura: TButton
+          Left = 192
+          Top = 8
+          Width = 177
+          Height = 25
+          Caption = 'Recep'#231#227'o de Leitura'
+          TabOrder = 1
+          OnClick = btnRecepcaoLeituraClick
+        end
+        object btnDistLeituras: TButton
+          Left = 376
+          Top = 8
+          Width = 178
+          Height = 25
+          Caption = 'Distribui'#231#227'o de leituras'
+          TabOrder = 2
+          OnClick = btnDistLeiturasClick
+        end
+      end
+    end
+    object pgRespostas: TPageControl
+      Left = 1
+      Top = 198
+      Width = 567
+      Height = 413
+      ActivePage = TabSheet5
+      Align = alClient
+      TabOrder = 1
+      object TabSheet5: TTabSheet
+        Caption = 'Respostas'
+        object MemoResp: TMemo
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          ScrollBars = ssVertical
+          TabOrder = 0
+        end
+      end
+      object TabSheet6: TTabSheet
+        Caption = 'XML Resposta'
+        ImageIndex = 1
+        object WBResposta: TWebBrowser
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          TabOrder = 0
+          ControlData = {
+            4C000000C6390000CA2700000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
+        end
+      end
+      object TabSheet8: TTabSheet
+        Caption = 'Log'
+        ImageIndex = 2
+        object memoLog: TMemo
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          ScrollBars = ssVertical
+          TabOrder = 0
+        end
+      end
+      object TabSheet9: TTabSheet
+        Caption = 'Documento'
+        ImageIndex = 3
+        object trvwDocumento: TTreeView
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          Indent = 19
+          TabOrder = 0
+        end
+      end
+      object TabSheet10: TTabSheet
+        Caption = 'Retorno Completo WS'
+        ImageIndex = 4
+        object memoRespWS: TMemo
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          ScrollBars = ssVertical
+          TabOrder = 0
+        end
+      end
+      object Dados: TTabSheet
+        Caption = 'Dados'
+        ImageIndex = 5
+        object MemoDados: TMemo
+          Left = 0
+          Top = 0
+          Width = 559
+          Height = 385
+          Align = alClient
+          Lines.Strings = (
+            '')
+          ScrollBars = ssVertical
+          TabOrder = 0
+          WordWrap = False
+        end
+      end
+    end
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1416,7 +1401,33 @@ object frm_DemoACBrONE: Tfrm_DemoACBrONE
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 408
-    Top = 280
+    Left = 330
+    Top = 287
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = '*-nfe.XML'
+    Filter = 
+      'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
+      'dos os Arquivos (*.*)|*.*'
+    Title = 'Selecione a NFe'
+    Left = 467
+    Top = 287
+  end
+  object ACBrONE1: TACBrONE
+    MAIL = ACBrMail1
+    OnStatusChange = ACBrONE1StatusChange
+    OnGerarLog = ACBrONE1GerarLog
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
+    Left = 330
+    Top = 243
   end
 end

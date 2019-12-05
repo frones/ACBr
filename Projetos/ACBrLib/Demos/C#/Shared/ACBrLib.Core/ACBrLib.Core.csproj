@@ -90,6 +90,7 @@
     <Compile Include="Serial\SerialHandShake.cs" />
     <Compile Include="Serial\SerialParity.cs" />
     <Compile Include="Serial\SerialStopBytes.cs" />
+    <Compile Include="TipoImpressao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

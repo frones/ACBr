@@ -73,12 +73,29 @@ namespace ACBrLib.CTe.Demo
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathSchemas", txtSchemaPath.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.DFe, "UF", cmbUfDestino.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "Ambiente", $"{(rdbHomologacao.Checked ? "1" : "0")}");
+
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SSLType", cmbSSlType.GetSelectedValue<SSLType>());
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "Timeout", nudTimeOut.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Servidor", txtProxyServidor.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Porta", nudProxyPorta.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Senha", txtProxySenha.Text);
+
+
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SalvarGer", ckbSalvarArqs.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SepararPorMes", ckbPastaMensal.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "AdicionarLiteral", ckbAdicionaLiteral.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "EmissaoPathCTe", ckbEmissaoPathCTe.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SalvarArq", ckbSalvaPathEvento.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SepararPorCNPJ", ckbSepararPorCNPJ.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SepararPorModelo", ckbSepararPorModelo.Checked);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathCTe", txtArqCTe.Text);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathInu", txtArqInu.Text);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathEvento", txtArqEvento.Text);
+
+            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "PathLogo", txtLogomarca.Text);
+            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "TipoDACTe", $"{(rdbRetrato.Checked ? "1" : "2")}");
+
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Usuario", txtUsuario.Text);
@@ -116,6 +133,23 @@ namespace ACBrLib.CTe.Demo
             nudProxyPorta.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Proxy, "Porta");
             txtProxyUsuario.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Proxy, "Usuario");
             txtProxySenha.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Proxy, "Senha");
+
+            ckbSalvarArqs.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "SalvarGer");
+            ckbPastaMensal.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "SepararPorMes");
+            ckbAdicionaLiteral.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "AdicionarLiteral");
+            ckbEmissaoPathCTe.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "EmissaoPathCTe");
+            ckbSalvaPathEvento.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "SalvarArq");
+            ckbSepararPorCNPJ.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "SepararPorCNPJ");
+            ckbSepararPorModelo.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.CTe, "SepararPorModelo");
+            txtArqCTe.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.CTe, "PathCTe");
+            txtArqInu.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.CTe, "PathInu");
+            txtArqEvento.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.CTe, "PathEvento");
+
+            txtLogomarca.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.DACTe, "PathLogo");
+            var tipoImpressao = ACBrCTe.ConfigLerValor<TipoImpressao>(ACBrSessao.DACTe, "TipoDACTe");
+            rdbRetrato.Checked = tipoImpressao == TipoImpressao.tiRetrato;
+            rdbPaisagem.Checked = tipoImpressao == TipoImpressao.tiPaisagem;
+
             txtNome.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Email, "Nome");
             txtEmail.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Email, "Conta");
             txtUsuario.Text = ACBrCTe.ConfigLerValor<string>(ACBrSessao.Email, "Usuario");
@@ -124,6 +158,33 @@ namespace ACBrLib.CTe.Demo
             nudPorta.Value = ACBrCTe.ConfigLerValor<int>(ACBrSessao.Email, "Porta");
             ckbSSL.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.Email, "SSL");
             ckbTLS.Checked = ACBrCTe.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
+        }
+
+        private void CheckCTeLista(bool xml = false)
+        {
+            if (MessageBox.Show(@"Limpar a lista ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                ACBrCTe.LimparLista();
+
+            if(xml)
+                CarregarCTeXml();
+            else
+                CarregarCTeIni();
+        }
+
+        private void CarregarCTeIni()
+        {
+            var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(arquivoIni)) return;
+            
+            ACBrCTe.CarregarINI(arquivoIni);
+        }
+
+        private void CarregarCTeXml()
+        {
+            var arquivoIni = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(arquivoIni)) return;
+
+            ACBrCTe.CarregarXML(arquivoIni);
         }
 
         #endregion Methods
@@ -155,6 +216,26 @@ namespace ACBrLib.CTe.Demo
             txtSchemaPath.Text = Helpers.SelectFolder();
         }
 
+        private void btnArqCTe_Click(object sender, EventArgs e)
+        {
+            txtArqCTe.Text = Helpers.SelectFolder();
+        }
+
+        private void btnArqInu_Click(object sender, EventArgs e)
+        {
+            txtArqInu.Text = Helpers.SelectFolder();
+        }
+
+        private void btnArqEvento_Click(object sender, EventArgs e)
+        {
+            txtArqEvento.Text = Helpers.SelectFolder();
+        }
+
+        private void btnLogomarca_Click(object sender, EventArgs e)
+        {
+            txtLogomarca.Text = Helpers.OpenFile("");
+        }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             SalvarConfig();
@@ -176,14 +257,8 @@ namespace ACBrLib.CTe.Demo
         {
             try
             {
-                if (MessageBox.Show(@"Carregar INI e Limpar a lista ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
-                    if (string.IsNullOrEmpty(arquivoIni)) return;
-
-                    ACBrCTe.LimparLista();
-                    ACBrCTe.CarregarINI(arquivoIni);
-                }
+                ACBrCTe.LimparLista();
+                CarregarCTeIni();
 
                 var aLote = 1;
                 if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
@@ -197,6 +272,80 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
+        private void btnEnviarSincrono_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista();
+
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = ACBrCTe.Enviar(aLote, sincrono: true);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarAssincrono_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista();
+
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = ACBrCTe.Enviar(aLote);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarIni_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarXml_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista(true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimparLista_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(@"Limpar a lista ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    ACBrCTe.LimparLista();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
         private void btnImprimir_Click(object sender, EventArgs e)
         {
             try
@@ -207,6 +356,70 @@ namespace ACBrLib.CTe.Demo
                 ACBrCTe.LimparLista();
                 ACBrCTe.CarregarXML(arquivoXml);
                 ACBrCTe.Imprimir(bMostrarPreview: true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrCTe.LimparLista();
+                ACBrCTe.CarregarXML(arquivoXml);
+                ACBrCTe.Imprimir(bMostrarPreview: true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarEmail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                var destinatario = "";
+                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
+                if (string.IsNullOrEmpty(destinatario)) return;
+
+                ACBrCTe.EnviarEmail(destinatario, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAssinar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista(true);
+
+                ACBrCTe.Assinar();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnValidarRegra_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckCTeLista(true);
+
+                rtbRespostas.AppendText(ACBrCTe.ValidarRegrasdeNegocios());
             }
             catch (Exception exception)
             {
@@ -250,25 +463,6 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
-        private void btnEnviarEmail_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
-                if (string.IsNullOrEmpty(arquivoXml)) return;
-
-                var destinatario = "";
-                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
-                if (string.IsNullOrEmpty(destinatario)) return;
-
-                ACBrCTe.EnviarEmail(destinatario, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void btnConsultarRecibo_Click(object sender, EventArgs e)
         {
             try
@@ -277,6 +471,27 @@ namespace ACBrLib.CTe.Demo
                 if (InputBox.Show("WebServices Consultar: Recibo", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.ConsultarRecibo(aRecibo);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnConsultarCadastro_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var uf = "SP";
+                var documento = "";
+                var ie = false;
+
+                if (InputBox.Show("WebServices Consultar: Cadastro", "UF", ref uf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Consultar: Cadastro", "Documento", ref documento) != DialogResult.OK) return;
+                ie = MessageBox.Show(@"O documento é uma inscrição estadual ?", @"WebServices Consultar: Cadastro", MessageBoxButtons.YesNo) != DialogResult.OK;
+
+                var ret = ACBrCTe.ConsultaCadastro(uf, documento, ie);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
@@ -307,6 +522,108 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
+        private void btnEnviarEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var idLote = 1;
+                if (InputBox.Show("WebServices Eventos: Enviar", "Identificador de controle do Lote de envio do Evento", ref idLote) != DialogResult.OK) return;
+
+                var ret = ACBrCTe.EnviarEvento(idLote);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoIni)) return;
+
+                ACBrCTe.CarregarEventoINI(arquivoIni);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimparListaEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(@"Limpar a lista de eventos ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    ACBrCTe.LimparListaEventos();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrCTe.ImprimirEvento(arquivoXml, arquivoXmlEvento);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirEventoPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrCTe.ImprimirEventoPDF(arquivoXml, arquivoXmlEvento);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarEmailEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml CTe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                var destinatario = "";
+                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
+                if (string.IsNullOrEmpty(destinatario)) return;
+
+                ACBrCTe.EnviarEmailEvento(destinatario, arquivoXmlEvento, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnInutilizar_Click(object sender, EventArgs e)
         {
             try
@@ -318,13 +635,13 @@ namespace ACBrLib.CTe.Demo
                 var numeroFinal = 1;
                 var aJustificativa = "";
                 var eCNPJ = "";
-                if (InputBox.Show("WebServices Inutilização", "Ano", ref ano) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Modelo", ref modelo) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Serie", ref serie) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Número Inicial", ref numeroInicial) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Número Final", ref numeroFinal) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "CNPJ ou o CPF do autor do Emitente", ref eCNPJ) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Ano", ref ano) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Modelo", ref modelo) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Serie", ref serie) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Número Inicial", ref numeroInicial) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Número Final", ref numeroFinal) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "CNPJ ou o CPF do emitente", ref eCNPJ) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = ACBrCTe.Inutilizar(eCNPJ, aJustificativa, ano, modelo, serie, numeroInicial, numeroFinal);
                 rtbRespostas.AppendText(ret);
@@ -335,14 +652,14 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
-        private void btnCarregarIni_Click(object sender, EventArgs e)
+        private void btnImprimirInutilizacao_Click(object sender, EventArgs e)
         {
             try
             {
-                var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
-                if (string.IsNullOrEmpty(arquivoIni)) return;
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml Inutilização (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
 
-                ACBrCTe.CarregarINI(arquivoIni);
+                ACBrCTe.ImprimirInutilizacao(arquivoXml);
             }
             catch (Exception exception)
             {
@@ -350,11 +667,14 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
-        private void btnAssinar_Click(object sender, EventArgs e)
+        private void btnImprimirInutilizacaoPDF_Click(object sender, EventArgs e)
         {
             try
             {
-                ACBrCTe.Assinar();
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml Inutilização (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                ACBrCTe.ImprimirInutilizacaoPDF(arquivoXml);
             }
             catch (Exception exception)
             {
@@ -362,16 +682,53 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
-        private void btnValidarRegra_Click(object sender, EventArgs e)
+        private void btnDFePorChave_Click(object sender, EventArgs e)
         {
             try
             {
-                rtbRespostas.AppendText(ACBrCTe.ValidarRegrasdeNegocios());
+                var codUf = 35;
+                var cnpj = "";
+                var chave = "";
+
+                if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "Chave da CTe", ref chave) != DialogResult.OK) return;
+
+                var ret = ACBrCTe.DistribuicaoDFePorChave(codUf, cnpj, chave);
+                rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnDFePorNSU_Click(object sender, EventArgs e)
+        {
+            var codUf = 35;
+            var cnpj = "";
+            var eNsu = "";
+
+            if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "Número do NSU", ref eNsu) != DialogResult.OK) return;
+
+            var ret = ACBrCTe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
+            rtbRespostas.AppendText(ret);
+        }
+
+        private void btnDFePorUltNSU_Click(object sender, EventArgs e)
+        {
+            var codUf = 35;
+            var cnpj = "";
+            var eNsu = "";
+
+            if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "Número do último NSU", ref eNsu) != DialogResult.OK) return;
+
+            var ret = ACBrCTe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
+            rtbRespostas.AppendText(ret);
         }
 
         #endregion EventHandlers

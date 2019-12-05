@@ -82,7 +82,7 @@ namespace ACBrLib.CTe
                 int serie, int numeroInicial, int numeroFinal, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_Enviar(int aLote, bool imprimir, StringBuilder buffer, ref int bufferSize);
+            public delegate int CTE_Enviar(int aLote, bool imprimir, bool sincrono, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_ConsultarRecibo(string aRecibo, StringBuilder buffer, ref int bufferSize);
@@ -116,10 +116,10 @@ namespace ACBrLib.CTe
             public delegate int CTE_ImprimirPDF();
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento);
+            public delegate int CTE_ImprimirEvento(string eArquivoXmlCTe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int CTE_ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento);
+            public delegate int CTE_ImprimirEventoPDF(string eArquivoXmlCTe, string eArquivoXmlEvento);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_ImprimirInutilizacao(string eArquivoXml);
@@ -328,13 +328,13 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Consultar(string eChaveOuNFe)
+        public string Consultar(string eChaveOuCTe)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.CTE_Consultar>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuNFe), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(ToUTF8(eChaveOuCTe), buffer, ref bufferLen));
 
             CheckResult(ret);
 
@@ -368,13 +368,13 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string Enviar(int aLote, bool imprimir = false)
+        public string Enviar(int aLote, bool imprimir = false, bool sincrono = false)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.CTE_Enviar>();
-            var ret = ExecuteMethod(() => method(aLote, imprimir, buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(aLote, imprimir, sincrono, buffer, ref bufferLen));
 
             CheckResult(ret);
 
@@ -446,32 +446,32 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
-        public string DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echNFe)
+        public string DistribuicaoDFePorChave(int acUFAutor, string eCnpjcpf, string echCTe)
         {
             var bufferLen = BUFFER_LEN;
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.CTE_DistribuicaoDFePorChave>();
-            var ret = ExecuteMethod(() => method(acUFAutor, ToUTF8(eCnpjcpf), ToUTF8(echNFe), buffer, ref bufferLen));
+            var ret = ExecuteMethod(() => method(acUFAutor, ToUTF8(eCnpjcpf), ToUTF8(echCTe), buffer, ref bufferLen));
 
             CheckResult(ret);
 
             return ProcessResult(buffer, bufferLen);
         }
 
-        public void EnviarEmail(string ePara, string eChaveNFe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)
+        public void EnviarEmail(string ePara, string eArquivoCTe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)
         {
             var method = GetMethod<Delegates.CTE_EnviarEmail>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ePara), ToUTF8(eChaveNFe), aEnviaPDF, ToUTF8(eAssunto), ToUTF8(eCc == null ? "" : string.Join(";", eCc)),
+            var ret = ExecuteMethod(() => method(ToUTF8(ePara), ToUTF8(eArquivoCTe), aEnviaPDF, ToUTF8(eAssunto), ToUTF8(eCc == null ? "" : string.Join(";", eCc)),
                                                  ToUTF8(eAnexos == null ? "" : string.Join(";", eAnexos)), ToUTF8(eMensagem.Replace(Environment.NewLine, ";"))));
 
             CheckResult(ret);
         }
 
-        public void EnviarEmailEvento(string ePara, string eChaveEvento, string eChaveNFe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)
+        public void EnviarEmailEvento(string ePara, string eArquivoEvento, string eArquivoCTe, bool aEnviaPDF, string eAssunto, string eMensagem, string[] eCc = null, string[] eAnexos = null)
         {
             var method = GetMethod<Delegates.CTE_EnviarEmailEvento>();
-            var ret = ExecuteMethod(() => method(ToUTF8(ePara), ToUTF8(eChaveEvento), ToUTF8(eChaveNFe), aEnviaPDF, ToUTF8(eAssunto), ToUTF8(eCc == null ? "" : string.Join(";", eCc)),
+            var ret = ExecuteMethod(() => method(ToUTF8(ePara), ToUTF8(eArquivoEvento), ToUTF8(eArquivoCTe), aEnviaPDF, ToUTF8(eAssunto), ToUTF8(eCc == null ? "" : string.Join(";", eCc)),
                 ToUTF8(eAnexos == null ? "" : string.Join(";", eAnexos)), ToUTF8(eMensagem.Replace(Environment.NewLine, ";"))));
 
             CheckResult(ret);
@@ -495,18 +495,18 @@ namespace ACBrLib.CTe
             CheckResult(ret);
         }
 
-        public void ImprimirEvento(string eArquivoXmlNFe, string eArquivoXmlEvento)
+        public void ImprimirEvento(string eArquivoXmlCTe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.CTE_ImprimirEvento>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlCTe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }
 
-        public void ImprimirEventoPDF(string eArquivoXmlNFe, string eArquivoXmlEvento)
+        public void ImprimirEventoPDF(string eArquivoXmlCTe, string eArquivoXmlEvento)
         {
             var method = GetMethod<Delegates.CTE_ImprimirEventoPDF>();
-            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlNFe), ToUTF8(eArquivoXmlEvento)));
+            var ret = ExecuteMethod(() => method(ToUTF8(eArquivoXmlCTe), ToUTF8(eArquivoXmlEvento)));
 
             CheckResult(ret);
         }

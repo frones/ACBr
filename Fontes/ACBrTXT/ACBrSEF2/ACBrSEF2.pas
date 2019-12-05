@@ -1197,9 +1197,11 @@ begin
   Bloco_H.WriteRegistroH990;
 end;
 
-{$IFDEF FPC}
+{$IFNDEF NOGUI}
+ {$IFDEF FPC}
 initialization
 	{$i ACBrSEF2.lrs}
+ {$ENDIF}
 {$ENDIF}
 
 end.

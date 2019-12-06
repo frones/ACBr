@@ -1863,15 +1863,20 @@ type
     fVL_ICMS: currency;                  /// Valor acumulado do ICMS
     fVL_BC_ICMS_ST: currency;            /// Valor acumulado da base de cálculo do ICMS substituição tributária
     fVL_ICMS_ST: currency;               /// Valor acumulado do ICMS retido por substituição tributária
-    fCOD_INF: String;                    /// Código da informação complementar do documento fiscal (campo 02 do Registro 0450)
+    fCOD_INF: string;                    /// Código da informação complementar do documento fiscal (campo 02 do Registro 0450)
     fVL_PIS: currency;                   /// Valor do PIS
     fVL_COFINS: currency;                /// Valor da COFINS
     fTP_LIGACAO: TACBrTipoLigacao;       /// Código de tipo de Ligação [ 1 - Monofásico 2 - Bifásico 3 - Trifásico ]
     fCOD_GRUPO_TENSAO: TACBrGrupoTensao; /// Código de grupo de tensão: Vide Manual Registro C500 Campo 27
+    fCHV_DOCe: string;                   /// Chave da Nota Fiscal de Energia Elétrica Eletrônica
+    fFIN_DOCe:TACBrFinalidadeEmissaoDocumentoEletronico; /// Finalidade da emissão do documento eletrônico
+    FCHV_DOCe_REF: string;               /// Chave da nota referenciada.
+    FIND_DEST: TACBrIndicadorDestinatarioAcessante; /// Indicador do Destinatário/Acessante:
+    FCOD_MUN_DEST: string;               /// Código do município do destinatário conforme a tabela do IBGE.
+    fCOD_CTA: string;                    /// Código da conta analítica contábil debitada/creditada
 
-    FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO) 
-    FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO) 
-
+    FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO)
+    FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO)
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -1903,6 +1908,12 @@ type
     property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
     property TP_LIGACAO:        TACBrTipoLigacao read fTP_LIGACAO       write fTP_LIGACAO;
     property COD_GRUPO_TENSAO:  TACBrGrupoTensao read fCOD_GRUPO_TENSAO write fCOD_GRUPO_TENSAO;
+    property CHV_DOCe: String read fCHV_DOCe write fCHV_DOCe;
+    property FIN_DOCe: TACBrFinalidadeEmissaoDocumentoEletronico read fFIN_DOCe write fFIN_DOCe;
+    property CHV_DOCe_REF: string read FCHV_DOCe_REF write FCHV_DOCe_REF;
+    property IND_DEST: TACBrIndicadorDestinatarioAcessante read FIND_DEST write FIND_DEST;
+    property COD_MUN_DEST: string read FCOD_MUN_DEST write FCOD_MUN_DEST;
+    property COD_CTA: String read fCOD_CTA write fCOD_CTA;
 
     /// Registros FILHOS
     property RegistroC510: TRegistroC510List read FRegistroC510 write FRegistroC510;

@@ -685,6 +685,19 @@ type
                               tioISSSubstituto,        // 1 - ISS Substituto (devido pelas aquisições de serviços do declarante).
                               tioISSUniprofissionais); // 2 - ISS Uniprofissionais
 
+   // Finalidade da emissão do documento eletrônico Registro C500
+   TACBrFinalidadeEmissaoDocumentoEletronico = (fedcNaoDefinida,
+                                                fedcNormal,           // 1 – Normal
+                                                fedcSubstituicao,     // 2 – Substituição
+                                                fedcNormalComAjuste   // 3 – Normal com ajuste
+                                                );
+   // Indicador do Destinatário/Acessante: Registro C500
+   TACBrIndicadorDestinatarioAcessante = (iedaContribuinteICMS,                         // 1 – Contribuinte do ICMS
+                                          iedaContribuinteIsentoInscricaoCadastroICMS,  // 2 – Contribuinte Isento de Inscrição no Cadastro de Contribuintes do ICMS
+                                          iedaNaoContribuinte                           // 9 – Não Contribuinte
+                                         );
+
+
 
   TOpenBlocos = class
   private
@@ -796,6 +809,12 @@ type
   function StrToTipoBaseMedicamento(const AValue: string): TACBrTipoBaseMedicamento;
   function TipoProdutoToStr(const AValue: TACBrTipoProduto): string;
   function StrToTipoProduto(const AValue: string): TACBrTipoProduto;
+  function TipoLigacaoToInt(const AValue: TACBrTipoLigacao): Integer;
+  function IntToTipoLigacao(const AValue: Integer): TACBrTipoLigacao;
+  function FinalidadeEmissaoDocEletToStr( AValue: TACBrFinalidadeEmissaoDocumentoEletronico): string;
+  function StrToFinalidadeEmissaoDocElet(const AValue: string): TACBrFinalidadeEmissaoDocumentoEletronico;
+  function IndicadorDestinatarioAcessanteToInt( AValue: TACBrIndicadorDestinatarioAcessante): Integer;
+  function IntToIndicadorDestinatarioAcessante( AValue: Integer): TACBrIndicadorDestinatarioAcessante;
 
 implementation
 
@@ -1909,5 +1928,92 @@ begin
   if AValue = '2' then // 2 - Ético ou de Marca
     Result := tpMarca;
 end;
+
+function TipoLigacaoToInt(const AValue: TACBrTipoLigacao): Integer;
+begin
+  case AValue of
+    tlMonofasico: Result := 1;
+    tlBifasico:   Result := 2;
+    tlTrifasico:  Result := 3;
+  else
+    Result := 0; // tlNenhum para casos em que o documento for cancelado
+  end;
+
+end;
+
+function IntToTipoLigacao(const AValue: Integer): TACBrTipoLigacao;
+begin
+  case AValue of
+    1: Result := tlMonofasico;
+    2: Result := tlBifasico;
+    3: Result := tlTrifasico;
+  else
+    Result := tlNenhum; // tlNenhum para casos em que o documento for cancelado
+  end;
+end;
+
+function FinalidadeEmissaoDocEletToStr( AValue: TACBrFinalidadeEmissaoDocumentoEletronico): string;
+begin
+  case AValue of
+    fedcNaoDefinida:     Result := '';
+    fedcNormal:          Result := '1';
+    fedcSubstituicao:    Result := '2';
+    fedcNormalComAjuste: Result := '3';
+  else
+    raise EACBrSPEDFiscalException.Create('TACBrFinalidadeEmissaoDocumentoEletronico com valor inválido.');
+  end;
+end;
+
+function StrToFinalidadeEmissaoDocElet(const AValue: string): TACBrFinalidadeEmissaoDocumentoEletronico;
+begin
+  if AValue = '' then
+  begin
+    Result := fedcNaoDefinida;
+  end
+  else
+  if AValue = '1' then
+  begin
+    Result := fedcNormal;
+  end
+  else
+  if AValue = '2' then
+  begin
+    Result := fedcSubstituicao;
+  end
+  else
+  if AValue = '3' then
+  begin
+    Result := fedcNormalComAjuste;
+  end
+  else
+  begin
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrFinalidadeEmissaoDocumentoEletronico.', [AValue]);
+  end;
+end;
+
+function IndicadorDestinatarioAcessanteToInt( AValue: TACBrIndicadorDestinatarioAcessante): Integer;
+begin
+  case Avalue of
+    iedaContribuinteICMS:                         Result := 1;
+    iedaContribuinteIsentoInscricaoCadastroICMS:  Result := 2;
+    iedaNaoContribuinte:                          Result := 9;
+  else
+    raise EACBrSPEDFiscalException.Create('TACBrIndicadorDestinatarioAcessante com valor inválido.');
+  end;
+end;
+
+function IntToIndicadorDestinatarioAcessante( AValue: Integer): TACBrIndicadorDestinatarioAcessante;
+begin
+  case AValue of
+    1: Result := iedaContribuinteICMS;
+    2: Result := iedaContribuinteIsentoInscricaoCadastroICMS;
+    9: Result := iedaNaoContribuinte;
+  else
+    raise EACBrSPEDFiscalException.CreateFmt('Valor "%s" não é válido para TACBrIndicadorDestinatarioAcessante.', [AValue]);
+  end;
+end;
+
+
+
 
 end.

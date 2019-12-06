@@ -2754,10 +2754,12 @@ end;
 
 procedure TBloco_C.WriteRegistroC500(RegC001: TRegistroC001);
 var
-  intFor: integer;
-  intTP_LIGACAO: integer;
-  strCOD_SIT: String;
+  intFor: Integer;
+  intTP_LIGACAO: Integer;
+  strCOD_SIT: string;
   strCOD_GRUPO_TENSAO: String;
+  vFin_DOCe: string;
+  intIND_DEST: Integer;
 begin
   if Assigned( RegC001.RegistroC500 ) then
   begin
@@ -2774,68 +2776,92 @@ begin
                                                       'constar da Tabela 4.4.2 do Ato COTEPE/ICMS nº 09, de 18 de abril de 2008. !',
                                                       ['[01, 02, 03, 04, 05, 06, 07, 08]']);
 
-           case COD_SIT of
-            sdRegular:               strCOD_SIT := '00';
-            sdExtempRegular:         strCOD_SIT := '01';
-            sdCancelado:             strCOD_SIT := '02';
-            sdCanceladoExtemp:       strCOD_SIT := '03';
-            sdDoctoDenegado:         strCOD_SIT := '04';
-            sdDoctoNumInutilizada:   strCOD_SIT := '05';
-            sdFiscalCompl:           strCOD_SIT := '06';
-            sdExtempCompl:           strCOD_SIT := '07';
-            sdRegimeEspecNEsp:       strCOD_SIT := '08';
-           end;
-           case COD_GRUPO_TENSAO of
-            gtNenhum:       strCOD_GRUPO_TENSAO := '';
-            gtA1:           strCOD_GRUPO_TENSAO := '01';
-            gtA2:           strCOD_GRUPO_TENSAO := '02';
-            gtA3:           strCOD_GRUPO_TENSAO := '03';
-            gtA3a:          strCOD_GRUPO_TENSAO := '04';
-            gtA4:           strCOD_GRUPO_TENSAO := '05';
-            gtAS:           strCOD_GRUPO_TENSAO := '06';
-            gtB107:         strCOD_GRUPO_TENSAO := '07';
-            gtB108:         strCOD_GRUPO_TENSAO := '08';
-            gtB209:         strCOD_GRUPO_TENSAO := '09';
-            gtB2Rural:      strCOD_GRUPO_TENSAO := '10';
-            gtB2Irrigacao:  strCOD_GRUPO_TENSAO := '11';
-            gtB3:           strCOD_GRUPO_TENSAO := '12';
-            gtB4a:          strCOD_GRUPO_TENSAO := '13';
-            gtB4b:          strCOD_GRUPO_TENSAO := '14';
-           end;
-           case TP_LIGACAO of
-            tlMonofasico: intTP_LIGACAO := 1;
-            tlBifasico:   intTP_LIGACAO := 2;
-            tlTrifasico:  intTP_LIGACAO := 3;
-            else          intTP_LIGACAO := 0; // tlNenhum para casos em que o documento for cancelado
+           strCOD_SIT := CodSitToStr(COD_SIT);
+
+           strCOD_GRUPO_TENSAO := GrupoTensaoToStr(COD_GRUPO_TENSAO);
+
+           intTP_LIGACAO := TipoLigacaoToInt(TP_LIGACAO);
+
+           if COD_MOD = '66' then
+           begin
+             vFin_DOCe := FinalidadeEmissaoDocEletToStr(FIN_DOCe);
+           end
+           else
+           begin
+             vFin_DOCe := '';
            end;
 
-           Add( LFill('C500') +
-                LFill( Integer(IND_OPER), 0 ) +
-                LFill( Integer(IND_EMIT), 0 ) +
-                LFill( COD_PART ) +
-                LFill( COD_MOD,2 ) +
-                LFill( strCOD_SIT ) +
-                LFill( SER ) +
-                LFill( SUB ) +
-                LFill( COD_CONS ) +
-                LFill( NUM_DOC, 9 ) +
-                LFill( DT_DOC ) +
-                LFill( DT_E_S ) +
-                LFill( VL_DOC,0,2 ) +
-                LFill( VL_DESC,0,2 ) +
-                LFill( VL_FORN,0,2 ) +
-                LFill( VL_SERV_NT,0,2 ) +
-                LFill( VL_TERC,0,2 ) +
-                LFill( VL_DA,0,2 ) +
-                LFill( VL_BC_ICMS,0,2 ) +
-                LFill( VL_ICMS,0,2 ) +
-                LFill( VL_BC_ICMS_ST,0,2 ) +
-                LFill( VL_ICMS_ST,0,2 ) +
-                LFill( COD_INF ) +
-                LFill( VL_PIS,0,2, True ) +
-                LFill( VL_COFINS,0,2, True ) +
-                LFill( intTP_LIGACAO, 0, True ) +
-                LFill( strCOD_GRUPO_TENSAO ) ) ;
+           intIND_DEST := IndicadorDestinatarioAcessanteToInt(IND_DEST);
+
+           if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
+           begin
+             // A partir de 01/01/2020
+             Add( LFill('C500') +
+                  LFill( Integer(IND_OPER), 0 ) +
+                  LFill( Integer(IND_EMIT), 0 ) +
+                  LFill( COD_PART ) +
+                  LFill( COD_MOD,2 ) +
+                  LFill( strCOD_SIT ) +
+                  LFill( SER ) +
+                  LFill( SUB ) +
+                  LFill( COD_CONS ) +
+                  LFill( NUM_DOC, 9 ) +
+                  LFill( DT_DOC ) +
+                  LFill( DT_E_S ) +
+                  LFill( VL_DOC,0,2 ) +
+                  LFill( VL_DESC,0,2 ) +
+                  LFill( VL_FORN,0,2 ) +
+                  LFill( VL_SERV_NT,0,2 ) +
+                  LFill( VL_TERC,0,2 ) +
+                  LFill( VL_DA,0,2 ) +
+                  LFill( VL_BC_ICMS,0,2 ) +
+                  LFill( VL_ICMS,0,2 ) +
+                  LFill( VL_BC_ICMS_ST,0,2 ) +
+                  LFill( VL_ICMS_ST,0,2 ) +
+                  LFill( COD_INF ) +
+                  LFill( VL_PIS,0,2, True ) +
+                  LFill( VL_COFINS,0,2, True ) +
+                  LFill( intTP_LIGACAO, 0, True ) +
+                  LFill( strCOD_GRUPO_TENSAO ) +
+                  LFill( CHV_DOCe ) +
+                  LFill( vFin_DOCe ) +
+                  LFill( CHV_DOCe_REF ) +
+                  LFill( intIND_DEST, 0, True  ) +
+                  LFill( COD_MUN_DEST ) +
+                  LFill( COD_CTA )
+                  ) ;
+           end
+           else
+           begin
+             // Até 31/12/2019
+             Add( LFill('C500') +
+                  LFill( Integer(IND_OPER), 0 ) +
+                  LFill( Integer(IND_EMIT), 0 ) +
+                  LFill( COD_PART ) +
+                  LFill( COD_MOD,2 ) +
+                  LFill( strCOD_SIT ) +
+                  LFill( SER ) +
+                  LFill( SUB ) +
+                  LFill( COD_CONS ) +
+                  LFill( NUM_DOC, 9 ) +
+                  LFill( DT_DOC ) +
+                  LFill( DT_E_S ) +
+                  LFill( VL_DOC,0,2 ) +
+                  LFill( VL_DESC,0,2 ) +
+                  LFill( VL_FORN,0,2 ) +
+                  LFill( VL_SERV_NT,0,2 ) +
+                  LFill( VL_TERC,0,2 ) +
+                  LFill( VL_DA,0,2 ) +
+                  LFill( VL_BC_ICMS,0,2 ) +
+                  LFill( VL_ICMS,0,2 ) +
+                  LFill( VL_BC_ICMS_ST,0,2 ) +
+                  LFill( VL_ICMS_ST,0,2 ) +
+                  LFill( COD_INF ) +
+                  LFill( VL_PIS,0,2, True ) +
+                  LFill( VL_COFINS,0,2, True ) +
+                  LFill( intTP_LIGACAO, 0, True ) +
+                  LFill( strCOD_GRUPO_TENSAO ) ) ;
+           end;
         end;
         /// Registro FILHOS do FILHO
         WriteRegistroC510( RegC001.RegistroC500.Items[intFor] ) ;

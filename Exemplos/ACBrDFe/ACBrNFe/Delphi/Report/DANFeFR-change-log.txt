@@ -53,6 +53,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2019
+-- DANFeNFCe5_00.fr3 --
+[*] Impressão do desconto ou acréscimo por item de acordo com a propriedade 
+    "ImprimeDescAcrescItem".
+    https://www.projetoacbr.com.br/forum/topic/55052-impress%C3%A3o-do-descontoacr%C3%A9scimo-item-danfce-fastreport/
+  Por: BigWings
+
 05/08/2019
 -- DANFeNFCe5_00.fr3 --
 [*] Correção para remover espaço em branco abaixo da nota na visualização e "picote" na impressão.

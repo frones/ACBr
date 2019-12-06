@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/12/2019
+-- ACBrSATExtratoESCPOS --
+[-] Correção para não imprimir "CONSUMIDOR NAO INFORMADO", com QRCode lateral,
+    quando o CPF e CNPJ existirem
+    https://www.projetoacbr.com.br/forum/topic/55195-sweda-sl-150-não-imprime-cpf-no-sat/
+    (por: DSA)
+
 01/12/2019
 -- ACBrSAT --
 [*] Novas linhas de Log no metodo "EnviarDadosVenda", para medir o tempo de

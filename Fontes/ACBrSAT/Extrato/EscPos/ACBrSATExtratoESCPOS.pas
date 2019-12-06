@@ -581,16 +581,17 @@ begin
 
       if (Trim(CFe.Dest.xNome) <> '') then
         NomeConsumidor := Trim(CFe.Dest.xNome)
-      else if ImprimeCPFNaoInformado then
-        NomeConsumidor := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')
+      else if (ImprimeCPFNaoInformado and (CFe.Dest.CNPJCPF = '')) then
+        NomeConsumidor := ACBrStr('NÃO IDENTIFICADO')
       else
         NomeConsumidor := '';
 
       if (Trim(Cfe.Dest.CNPJCPF) <> '') or (NomeConsumidor <> '') then
       begin
         ATexto := TituloConsumidor + ' '+
-                        FormatarCNPJouCPF(CFe.Dest.CNPJCPF) +
-                        IfThen(NomeConsumidor<>'', ' - '+ NomeConsumidor, '') + sLineBreak;
+                  FormatarCNPJouCPF(CFe.Dest.CNPJCPF) +
+                  IfThen((CFe.Dest.CNPJCPF <> '') and (NomeConsumidor <> ''), ' - ','') +
+                  NomeConsumidor + sLineBreak;
       end;
 
       ATexto := ATexto + TituloSAT +

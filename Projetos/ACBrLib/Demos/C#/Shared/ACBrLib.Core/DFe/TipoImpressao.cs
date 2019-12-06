@@ -1,4 +1,4 @@
-﻿namespace ACBrLib.Core
+﻿namespace ACBrLib.Core.DFe
 {
     public enum TipoImpressao
     {

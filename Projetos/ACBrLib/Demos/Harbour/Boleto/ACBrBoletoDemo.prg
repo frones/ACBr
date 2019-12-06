@@ -4,7 +4,7 @@ Function Main ()
    local hIni, hIniVenda
    LOCAL cSection
    
-   boleto := ACBrBoleto():New("", "")
+   boleto := ACBrBoleto():New()
    //                      Sessão       Chave    Valor
    // Configurações de log da Lib
    boleto:ConfigGravarValor("Principal", "LogNivel", "4") // logParanoico     

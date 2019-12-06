@@ -1,10 +1,7 @@
 Function Main ()
    local nfe
-   local vendaRetorno, strIniVenda
-   local hIni, hIniVenda
-   LOCAL cSection
    
-   nfe := ACBrNFe():New("", "")
+   nfe := ACBrNFe():New()
    //                      Sessão       Chave    Valor
    // Configurações de log da Lib
    nfe:ConfigGravarValor("Principal", "LogNivel", "4") // logParanoico     

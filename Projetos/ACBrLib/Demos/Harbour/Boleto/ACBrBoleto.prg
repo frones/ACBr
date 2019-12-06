@@ -4,7 +4,7 @@
 #define DC_CALL_CDECL          0x0010      // __cdecl
 #define DC_CALL_STD            0x0020      // __stdcall
 
-#ifdef _XHARBOUR_ 
+#ifdef __XHARBOUR__ 
 #define ACBrLIB "ACBrBoleto32.dll"
 #define DLL_OSAPI DC_CALL_STD
 #else
@@ -27,7 +27,6 @@ HIDDEN:
     METHOD ProcessResult(buffer, bufferLen)
 
 VISIBLE:
-    METHOD New() CONSTRUCTOR
     METHOD New(eArqConfig, eChaveCrypt) CONSTRUCTOR
     DESTRUCTOR  Destroy
 
@@ -66,6 +65,9 @@ END CLASS
 METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrBoleto
     local hResult, buffer, bufferLen, oErr
 
+    eArqConfig :=if(eArqConfig = nil, '', eArqConfig)
+    eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
+    
     ::hHandle := DllLoad(ACBrLIB)
     if ::hHandle = nil
         oErr := ErrorNew()

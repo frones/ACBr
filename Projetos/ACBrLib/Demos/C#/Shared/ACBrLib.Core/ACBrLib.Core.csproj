@@ -71,6 +71,7 @@
     <Compile Include="Mail\MimeChar.cs" />
     <Compile Include="MDFe\VersaoMDFe.cs" />
     <Compile Include="NFe\ModeloDF.cs" />
+    <Compile Include="NFe\TipoRelatorioEvento.cs" />
     <Compile Include="NFe\VersaoDFe.cs" />
     <Compile Include="NivelLog.cs" />
     <Compile Include="PosPrinter\ACBrPosPrinterModelo.cs" />
@@ -79,18 +80,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DFe\SSLXmlSignLib.cs" />
     <Compile Include="DFe\TipoAmbiente.cs" />
-    <Compile Include="DFe\TipoRelatorioBobina.cs" />
+    <Compile Include="NFe\TipoRelatorioBobina.cs" />
     <Compile Include="Sat\AutoSimNao.cs" />
     <Compile Include="Sat\indRatISSQN.cs" />
     <Compile Include="Sat\RegTrib.cs" />
     <Compile Include="Sat\RegTribISSQN.cs" />
     <Compile Include="Sat\SATExtratoFiltro.cs" />
     <Compile Include="Sat\SATModelo.cs" />
+    <Compile Include="Sat\TipoExtrato.cs" />
     <Compile Include="Serial\ACBrDevice.cs" />
     <Compile Include="Serial\SerialHandShake.cs" />
     <Compile Include="Serial\SerialParity.cs" />
     <Compile Include="Serial\SerialStopBytes.cs" />
-    <Compile Include="TipoImpressao.cs" />
+    <Compile Include="DFe\TipoImpressao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />

@@ -2,16 +2,16 @@
 {
     public enum ACBrPosPrinterModelo
     {
-        Texto,
-        EscPosEpson,
-        EscBematech,
-        EscDaruma,
-        EscVox,
-        EscDiebold,
-        EscEpsonP2,
-        CustomPos,
-        EscPosStar,
-        EscZJiang,
-		EscGPrinter
+        ppTexto,
+        ppEscPosEpson,
+        ppEscBematech,
+        ppEscDaruma,
+        ppEscVox,
+        ppEscDiebold,
+        ppEscEpsonP2,
+        ppCustomPos,
+        ppEscPosStar,
+        ppEscZJiang,
+		ppEscGPrinter
     }
 }

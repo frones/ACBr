@@ -72,7 +72,7 @@ namespace ACBrLib.CTe.Demo
             ACBrCTe.ConfigGravarValor(ACBrSessao.DFe, "NumeroSerie", txtCertNumero.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathSchemas", txtSchemaPath.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.DFe, "UF", cmbUfDestino.Text);
-            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "Ambiente", $"{(rdbHomologacao.Checked ? "1" : "0")}");
+            ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "Ambiente", rdbHomologacao.Checked ? TipoAmbiente.taHomologacao : TipoAmbiente.taProducao);
 
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SSLType", cmbSSlType.GetSelectedValue<SSLType>());
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "Timeout", nudTimeOut.Text);
@@ -94,7 +94,7 @@ namespace ACBrLib.CTe.Demo
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "PathEvento", txtArqEvento.Text);
 
             ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "PathLogo", txtLogomarca.Text);
-            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "TipoDACTe", $"{(rdbRetrato.Checked ? "1" : "2")}");
+            ACBrCTe.ConfigGravarValor(ACBrSessao.DACTe, "TipoDACTe", rdbRetrato.Checked ? TipoImpressao.tiRetrato : TipoImpressao.tiPaisagem);
 
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Nome", txtNome.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Email, "Conta", txtEmail.Text);

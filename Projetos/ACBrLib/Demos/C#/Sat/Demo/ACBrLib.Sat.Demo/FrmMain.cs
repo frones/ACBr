@@ -47,7 +47,7 @@ namespace ACBrLib.Sat.Demo
 
             cmbModeloSat.EnumDataSource(SATModelo.satNenhum);
             cmbImpressao.EnumDataSource(TipoRelatorioBobina.tpFortes);
-            cbbModelo.EnumDataSource(ACBrPosPrinterModelo.Texto);
+            cbbModelo.EnumDataSource(ACBrPosPrinterModelo.ppTexto);
             cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
             // Altera as config de log
@@ -199,7 +199,7 @@ namespace ACBrLib.Sat.Demo
             chkSepararData.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.SATConfigArquivos, "SepararPorDia");
 
             //Extrato
-            cmbImpressao.SetSelectedValue(acbrSat.ConfigLerValor<TipoRelatorioBobina>(ACBrSessao.Extrato, "Tipo"));
+            cmbImpressao.SetSelectedValue(acbrSat.ConfigLerValor<TipoExtrato>(ACBrSessao.Extrato, "Tipo"));
             nudCopias.Value = acbrSat.ConfigLerValor<int>(ACBrSessao.Extrato, "Copias");
             txtSoftwareHouse.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Sistema, "Nome");
             cbbImpressora.Text = acbrSat.ConfigLerValor<string>(ACBrSessao.Extrato, "Impressora");
@@ -248,7 +248,7 @@ namespace ACBrLib.Sat.Demo
             acbrSat.ConfigGravarValor(ACBrSessao.SATConfigArquivos, "SepararPorDia", chkSepararData.Checked);
 
             //Impressão
-            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Tipo", cmbImpressao.GetSelectedValue<TipoRelatorioBobina>());
+            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Tipo", cmbImpressao.GetSelectedValue<TipoExtrato>());
             acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Copias", nudCopias.Value);
             acbrSat.ConfigGravarValor(ACBrSessao.Sistema, "Nome", txtSoftwareHouse.Text);
             acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "Impressora", cbbImpressora.Text);

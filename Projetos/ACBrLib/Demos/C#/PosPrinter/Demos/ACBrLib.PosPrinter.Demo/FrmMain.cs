@@ -42,7 +42,7 @@ namespace ACBrLibPosPrinter.Demo
 
         private void FrmMain_Shown(object sender, EventArgs e)
         {
-            cbbModelo.EnumDataSource(ACBrPosPrinterModelo.Texto);
+            cbbModelo.EnumDataSource(ACBrPosPrinterModelo.ppTexto);
             cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
             cbbPortas.Items.AddRange(SerialPort.GetPortNames());
@@ -432,7 +432,6 @@ namespace ACBrLibPosPrinter.Demo
             posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", cbxTraduzirTags.Checked);
             posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "IgnorarTags", cbxIgnorarTags.Checked);
             posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "ArqLog", txtArqLog.Text);
-            posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo", cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>());
             posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter, "PaginaDeCodigo", cbbPaginaCodigo.GetSelectedValue<PosPaginaCodigo>());
 
             posPrinter.ConfigGravarValor(ACBrSessao.PosPrinter_Barras, "LarguraLinha", (int)nudCodbarLargura.Value);

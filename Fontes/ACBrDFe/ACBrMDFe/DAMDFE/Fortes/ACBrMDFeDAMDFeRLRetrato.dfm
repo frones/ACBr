@@ -19,8 +19,6 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
     Font.Name = 'Courier New'
     BeforePrint = rlMDFeBeforePrint
     OnDataRecord = RLMDFeDataRecord
-    ExplicitLeft = 2
-    ExplicitTop = 2
     object rlb_2_Rodo: TRLBand
       Left = 26
       Top = 368

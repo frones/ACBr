@@ -2,7 +2,6 @@ program ACBrInstall_Trunk2;
 
 uses
   Forms,
-  SVN_Class in 'SVN_Class.pas',
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
 

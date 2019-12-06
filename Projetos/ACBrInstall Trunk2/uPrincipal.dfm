@@ -86,6 +86,10 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Alignment = iaCenter
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label6: TLabel
         Left = 25
         Top = 34
@@ -1067,6 +1071,10 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1352,6 +1360,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1361,105 +1373,28 @@ object frmPrincipal: TfrmPrincipal
         VertScrollBar.Visible = False
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         inherited pnlBotoesMarcar: TPanel
           Top = 458
           Width = 554
+          ExplicitTop = 458
+          ExplicitWidth = 554
           inherited btnPacotesDesmarcarTodos: TSpeedButton
             Left = 504
+            ExplicitLeft = 504
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
             Left = 454
+            ExplicitLeft = 454
           end
         end
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
+          ExplicitWidth = 548
+          ExplicitHeight = 452
         end
-      end
-    end
-    object wizPgObterFontes: TJvWizardInteriorPage
-      Header.Visible = False
-      Header.ParentFont = False
-      Header.Title.Color = clNone
-      Header.Title.Text = 'Obtendo os fontes atualizados'
-      Header.Title.Anchors = [akLeft, akTop, akRight]
-      Header.Title.Font.Charset = DEFAULT_CHARSET
-      Header.Title.Font.Color = clWindowText
-      Header.Title.Font.Height = -16
-      Header.Title.Font.Name = 'Arial'
-      Header.Title.Font.Style = [fsBold]
-      Header.Subtitle.Color = clNone
-      Header.Subtitle.Text = 
-        'O assistente far'#225' o download ou atualiza'#231#227'o dos fontes diretamen' +
-        'te do reposit'#243'rio do ACBr neste momento.'
-      Header.Subtitle.Anchors = [akLeft, akTop, akRight, akBottom]
-      Header.Subtitle.Font.Charset = DEFAULT_CHARSET
-      Header.Subtitle.Font.Color = clWindowText
-      Header.Subtitle.Font.Height = -11
-      Header.Subtitle.Font.Name = 'Arial'
-      Header.Subtitle.Font.Style = []
-      Color = clWhite
-      Caption = 'Reposit'#243'rio'
-      OnEnterPage = wizPgObterFontesEnterPage
-      OnNextButtonClick = wizPgObterFontesNextButtonClick
-      object Label1: TLabel
-        Left = 77
-        Top = 177
-        Width = 91
-        Height = 13
-        Caption = 'URL do  reposit'#243'rio'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clMaroon
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object lblInfoObterFontes: TLabel
-        Left = 77
-        Top = 122
-        Width = 103
-        Height = 13
-        Caption = 'Texto de informa'#231#227'o.'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clMaroon
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object btnSVNCheckoutUpdate: TSpeedButton
-        Left = 365
-        Top = 220
-        Width = 106
-        Height = 25
-        Caption = 'Checkout'
-        OnClick = btnSVNCheckoutUpdateClick
-      end
-      object edtURL: TEdit
-        Left = 77
-        Top = 193
-        Width = 394
-        Height = 21
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        Text = 'svn://svn.code.sf.net/p/acbr/code/trunk2'
-      end
-      object ckbFecharTortoise: TCheckBox
-        Left = 77
-        Top = 260
-        Width = 358
-        Height = 17
-        Caption = 
-          'Fechar automaticamente o tortoise se n'#227'o ocorrem erros ou confli' +
-          'tos?'
-        TabOrder = 1
       end
     end
     object wizPgInstalacao: TJvWizardInteriorPage
@@ -1487,6 +1422,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1559,7 +1498,6 @@ object frmPrincipal: TfrmPrincipal
         Caption = 'Mostrar '#250'ltima revis'#227'o'
         TabOrder = 3
         WordWrap = True
-        OnClick = btnWCInfoClick
       end
     end
     object wizPgFinalizar: TJvWizardInteriorPage
@@ -1584,6 +1522,10 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1739,7 +1681,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

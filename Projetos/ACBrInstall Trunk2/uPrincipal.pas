@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009   Daniel Simoes de Almeida             }
+{                                         Isaque Pinheiro                      }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -43,10 +43,9 @@ interface
 
 uses
   JclIDEUtils, JclCompilerUtils, ACBrUtil,
-
   Windows, Messages, FileCtrl, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
-  uFrameLista, IOUtils,
+  uFrameLista, IOUtils, UITypes,
   Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
   JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst;
 
@@ -57,7 +56,6 @@ type
     wizPrincipal: TJvWizard;
     wizMapa: TJvWizardRouteMapNodes;
     wizPgConfiguracao: TJvWizardInteriorPage;
-    wizPgObterFontes: TJvWizardInteriorPage;
     wizPgInstalacao: TJvWizardInteriorPage;
     wizPgFinalizar: TJvWizardInteriorPage;
     wizPgInicio: TJvWizardWelcomePage;
@@ -68,10 +66,7 @@ type
     Label2: TLabel;
     edtDirDestino: TEdit;
     Label6: TLabel;
-    Label1: TLabel;
-    edtURL: TEdit;
     imgLogomarca: TImage;
-    lblInfoObterFontes: TLabel;
     lstMsgInstalacao: TListBox;
     pnlTopo: TPanel;
     Label9: TLabel;
@@ -95,9 +90,7 @@ type
     Label17: TLabel;
     Label18: TLabel;
     Label7: TLabel;
-    btnSVNCheckoutUpdate: TSpeedButton;
     btnInstalarACBr: TSpeedButton;
-    ckbFecharTortoise: TCheckBox;
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
     wizPgPacotes: TJvWizardInteriorPage;
@@ -131,19 +124,13 @@ type
     procedure wizPrincipalFinishButtonClick(Sender: TObject);
     procedure wizPgConfiguracaoNextButtonClick(Sender: TObject;
       var Stop: Boolean);
-    procedure btnSVNCheckoutUpdateClick(Sender: TObject);
-    procedure wizPgObterFontesEnterPage(Sender: TObject;
-      const FromPage: TJvWizardCustomPage);
     procedure btnInstalarACBrClick(Sender: TObject);
-    procedure wizPgObterFontesNextButtonClick(Sender: TObject;
-      var Stop: Boolean);
     procedure wizPgInstalacaoNextButtonClick(Sender: TObject;
       var Stop: Boolean);
     procedure btnVisualizarLogCompilacaoClick(Sender: TObject);
     procedure wizPgInstalacaoEnterPage(Sender: TObject;
       const FromPage: TJvWizardCustomPage);
     procedure rdgDLLClick(Sender: TObject);
-    procedure btnWCInfoClick(Sender: TObject);
     procedure clbDelphiVersionClick(Sender: TObject);
   private
     FCountErros: Integer;
@@ -160,7 +147,6 @@ type
     procedure AddLibrarySearchPath;
     procedure OutputCallLine(const Text: string);
     procedure SetPlatformSelected;
-    function IsCheckOutJaFeito(const ADiretorio: String): Boolean;
     procedure CreateDirectoryLibrarysNotExist;
     procedure GravarConfiguracoes;
     procedure LerConfiguracoes;
@@ -181,11 +167,12 @@ type
     procedure DeixarSomenteLib;
     procedure RemoverArquivosAntigosDoDisco;
     procedure RemoverDiretoriosEPacotesAntigos;
-    function RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
+    function RunAsAdminAndWaitForCompletion(hWnd: HWND; const filename: string): Boolean;
     procedure GetDriveLetters(AList: TStrings);
     procedure MostraDadosVersao;
     function GetPathACBrInc: TFileName;
     procedure InstalarLibXml2;
+    procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
   public
 
   end;
@@ -196,11 +183,11 @@ var
 implementation
 
 uses
-  SVN_Class, ShellApi, IniFiles, StrUtils, Math, Registry;
+  ShellApi, IniFiles, StrUtils, Math, Registry;
 
 {$R *.dfm}
 
-function TfrmPrincipal.RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
+function TfrmPrincipal.RunAsAdminAndWaitForCompletion(hWnd: HWND; const filename: string): Boolean;
 {
     See Step 3: Redesign for UAC Compatibility (UAC)
     http://msdn.microsoft.com/en-us/library/bb756922.aspx
@@ -289,13 +276,6 @@ end;
 function TfrmPrincipal.PathArquivoLog: String;
 begin
   Result := PathApp + 'log_' + StringReplace(edtDelphiVersion.Text, ' ', '_', [rfReplaceAll]) + '.txt';
-end;
-
-// verificar se no caminho informado já existe o .svn indicando que o
-// checkout já foi feito no diretorio
-function TfrmPrincipal.IsCheckOutJaFeito(const ADiretorio: String): Boolean;
-begin
-  Result := DirectoryExists(IncludeTrailingPathDelimiter(ADiretorio) + '.svn')
 end;
 
 // retorna o diretório de sistema atual
@@ -460,6 +440,35 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
+var
+  I: Integer;
+  NomePacote: string;
+begin
+  // verificar se os pacotes existem antes de seguir para o próximo paso
+  for I := 0 to framePacotes1.Pacotes.Count - 1 do
+  begin
+    if framePacotes1.Pacotes[I].Checked then
+    begin
+      sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
+      NomePacote := framePacotes1.Pacotes[I].Caption;
+      // Busca diretório do pacote
+      ExtrairDiretorioPacote(NomePacote);
+      if Trim(sDirPackage) = '' then
+        raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
+      if IsDelphiPackage(NomePacote) then
+      begin
+        if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then
+        begin
+          Stop := True;
+          Application.MessageBox(PWideChar(Format('Pacote "%s" não encontrado, efetue novamente o download do repositório', [NomePacote])), 'Erro.', MB_ICONERROR + MB_OK);
+          Break;
+        end;
+      end;
+    end;
+  end;
+end;
+
 // copia as dlls da pasta openssl, estas dlls são utilizadas para assinar
 // arquivos e outras coisas mais
 procedure TfrmPrincipal.InstalarOpenSSL;
@@ -496,7 +505,6 @@ begin
   try
     edtDirDestino.Text             := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
     edtPlatform.ItemIndex          := 0;
-    ckbFecharTortoise.Checked      := ArqIni.ReadBool('CONFIG', 'FecharTortoise', True);
     rdgDLL.ItemIndex               := ArqIni.ReadInteger('CONFIG','DestinoDLL', 0);
     ckbCopiarTodasDll.Checked      := True;
     ckbBCB.Checked                 := ArqIni.ReadBool('CONFIG','C++Builder', False);
@@ -542,7 +550,6 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
-    ArqIni.WriteBool('CONFIG', 'FecharTortoise', ckbFecharTortoise.Checked);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
     ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
@@ -1503,11 +1510,6 @@ begin
     );
   end;
   {$ENDIF}
-
-  // Verificar se o tortoise está instalado, se não estiver, não mostrar a aba de atualização
-  // o usuário deve utilizar software proprio e fazer manualmente
-  // pedido do forum
-  wizPgObterFontes.Visible := TSVN_Class.SVNInstalled;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
@@ -1636,105 +1638,13 @@ begin
 
   // Gravar as configurações em um .ini para utilizar depois
   GravarConfiguracoes;
-end;
 
-procedure TfrmPrincipal.wizPgObterFontesEnterPage(Sender: TObject;
-  const FromPage: TJvWizardCustomPage);
-begin
-  // verificar se o checkout já foi feito se sim, atualizar
-  // se não fazer o checkout
-  if IsCheckOutJaFeito(edtDirDestino.Text) then
-  begin
-    lblInfoObterFontes.Caption := 'Clique em "Atualizar" para efetuar a atualização do repositório ACBr.';
-    btnSVNCheckoutUpdate.Caption := 'Atualizar...';
-    btnSVNCheckoutUpdate.Tag := -1;
-  end
-  else
-  begin
-    lblInfoObterFontes.Caption := 'Clique em "Download" para efetuar o download do repositório ACBr.';
-    btnSVNCheckoutUpdate.Caption := 'Download...';
-    btnSVNCheckoutUpdate.Tag := 1;
-  end;
-end;
-
-procedure TfrmPrincipal.btnSVNCheckoutUpdateClick(Sender: TObject);
-begin
-  // chamar o método de update ou checkout conforme a necessidade
-  if TButton(Sender).Tag > 0 then
-  begin
-    // criar o diretório onde será baixado o repositório
-    if not DirectoryExists(edtDirDestino.Text) then
-    begin
-      if not ForceDirectories(edtDirDestino.Text) then
-      begin
-        raise EDirectoryNotFoundException.Create(
-          'Ocorreu o seguinte erro ao criar o diretório' + sLineBreak +
-            SysErrorMessage(GetLastError));
-      end;
-    end;
-
-    // checkout
-    TSVN_Class.SVNTortoise_CheckOut(edtURL.Text, edtDirDestino.Text, ckbFecharTortoise.Checked );
-  end
-  else
-  begin
-    // update
-    TSVN_Class.SVNTortoise_Update(edtDirDestino.Text, ckbFecharTortoise.Checked);
-  end;
+  ValidarSeExistemPacotesNasPastas(Stop);
 end;
 
 procedure TfrmPrincipal.btnVisualizarLogCompilacaoClick(Sender: TObject);
 begin
   ShellExecute(Handle, 'open', PWideChar(PathArquivoLog), '', '', 1);
-end;
-
-procedure TfrmPrincipal.btnWCInfoClick(Sender: TObject);
-begin
-  // capturar informações da última revisão
-  TSVN_Class.GetRevision(edtDirDestino.Text);
-  ShowMessage(
-    'Última Revisão: ' + TSVN_Class.WCInfo.Revision + sLineBreak +
-    'Autor: ' + TSVN_Class.WCInfo.Author + sLineBreak +
-    'Data: ' + TSVN_Class.WCInfo.Date
-  );
-end;
-
-procedure TfrmPrincipal.wizPgObterFontesNextButtonClick(Sender: TObject;
-  var Stop: Boolean);
-var
-  I: Integer;
-  NomePacote: String;
-begin
-  GravarConfiguracoes;
-
-  // verificar se os pacotes existem antes de seguir para o próximo paso
-  for I := 0 to framePacotes1.Pacotes.Count - 1 do
-  begin
-    if framePacotes1.Pacotes[I].Checked then
-    begin
-      sDirRoot   := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-      NomePacote := framePacotes1.Pacotes[I].Caption;
-
-      // Busca diretório do pacote
-      ExtrairDiretorioPacote(NomePacote);
-      if Trim(sDirPackage) = '' then
-        raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
-
-      if IsDelphiPackage(NomePacote) then
-      begin
-        if not FileExists(IncludeTrailingPathDelimiter(sDirPackage) + NomePacote) then
-        begin
-          Stop := True;
-          Application.MessageBox(PWideChar(Format(
-            'Pacote "%s" não encontrado, efetue novamente o download do repositório', [NomePacote])),
-            'Erro.',
-            MB_ICONERROR + MB_OK
-          );
-          Break;
-        end;
-      end;
-    end;
-  end;
 end;
 
 procedure TfrmPrincipal.wizPrincipalCancelButtonClick(Sender: TObject);

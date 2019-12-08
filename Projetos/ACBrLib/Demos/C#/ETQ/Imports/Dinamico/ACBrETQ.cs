@@ -316,7 +316,6 @@ namespace ACBrLib.ETQ
             AddMethod<Delegates.ETQ_Imprimir>("ETQ_Imprimir");
             AddMethod<Delegates.ETQ_ImprimirTexto>("ETQ_ImprimirTexto");
             AddMethod<Delegates.ETQ_ImprimirTextoStr>("ETQ_ImprimirTextoStr");
-            AddMethod<Delegates.ETQ_ImprimirTextoStr>("ETQ_ImprimirTextoStr");
             AddMethod<Delegates.ETQ_ImprimirBarras>("ETQ_ImprimirBarras");
             AddMethod<Delegates.ETQ_ImprimirLinha>("ETQ_ImprimirLinha");
             AddMethod<Delegates.ETQ_ImprimirCaixa>("ETQ_ImprimirCaixa");

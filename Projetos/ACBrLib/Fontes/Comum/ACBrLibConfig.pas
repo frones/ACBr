@@ -46,9 +46,6 @@ type
   //               0           1          2           3             4
   TNivelLog = (logNenhum, logSimples, logNormal, logCompleto, logParanoico);
 
-  //                         0          1         2
-  TTipoRelatorioBobina = (tpFortes, tpEscPos, tpFortesA4);
-
   //                 0       1
   TTipoFuncao = (tfGravar, tfLer);
 

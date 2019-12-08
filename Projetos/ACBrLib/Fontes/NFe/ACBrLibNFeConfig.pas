@@ -45,6 +45,7 @@ uses
   ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
 
 type
+  TTipoRelatorioBobina = (tpFortes, tpEscPos, tpFortesA4);
   TTipoRelatorioEvento = (evA4, evBobina);
 
   { TDANFeNFeConfig }

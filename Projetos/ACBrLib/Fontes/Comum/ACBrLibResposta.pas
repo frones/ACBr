@@ -44,6 +44,7 @@ uses
 
 const
   CSessaoHttpResposta = 'RespostaHttp';
+  CSessionFormat = '%s%.3d';
 
 type
   TACBrLibRespostaTipo = (resINI, resXML, resJSON);
@@ -62,7 +63,7 @@ type
 
   protected
     procedure GravarXml(const xDoc: TXMLDocument; const RootNode: TDomNode; const Target: TObject); virtual;
-    procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean = false); virtual;
+    procedure GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; const Index: Integer = 0); virtual;
     procedure GravarJson(const JSON: TJSONObject; const ASessao: String; const Target: TObject); virtual;
 
   public
@@ -183,7 +184,18 @@ begin
         tkFloat:
           begin
             FloatValue := GetFloatProp(Target, PI);
-            if(PT = TypeInfo(TDateTime))then
+
+            if (PT = TypeInfo(TDate)) then
+            begin
+              if not IsZero(FloatValue) then
+                Node := xDoc.CreateTextNode(DateToStr(FloatValue));
+            end
+            else if (PT = TypeInfo(TTime)) then
+            begin
+              if not IsZero(FloatValue) then
+                Node := xDoc.CreateTextNode(TimeToStr(FloatValue));
+            end
+            else if(PT = TypeInfo(TDateTime))then
             begin
               if not IsZero(FloatValue) then
                 Node := xDoc.CreateTextNode(DateTimeToStr(FloatValue));
@@ -222,16 +234,19 @@ begin
   end;
 end;
 
-procedure TACBrLibRespostaBase.GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; IsCollection: Boolean);
+procedure TACBrLibRespostaBase.GravarIni(const AIni: TCustomIniFile; const ASessao: String; const Target: TObject; const Index: Integer);
 var
   PropList: TPropInfoList;
   i, j: Integer;
   PI: PPropInfo;
-  PT: PTypeInfo;
+  TI: PTypeInfo;
+  TD: PTypeData;
   Sessao: String;
   ClassObject: TObject;
   CollectionObject: TCollection;
   CollectionItem: TCollectionItem;
+  ListObject: TList;
+  Item: TObject;
   FloatValue: Extended;
 begin
   PropList := TPropInfoList.Create(Target, tkProperties);
@@ -240,36 +255,58 @@ begin
     for i := 0 to PropList.Count - 1 do
     begin
       PI := PropList.Items[i];
-      PT := PI^.PropType;
-      case PT^.Kind of
+      TI := PI^.PropType;
+      TD := GetTypeData(TI);
+      case TI^.Kind of
         tkClass:
           begin
-            ClassObject := GetObjectProp(Target, PI);
-            if ClassObject = nil then continue;
+            if TD.ClassType = nil then continue;
 
-            if (ClassObject.InheritsFrom(TCollection)) then
+            ClassObject := GetObjectProp(Target, PI);
+            if not Assigned(ClassObject) or (ClassObject = nil) then continue;
+
+            if (TD.ClassType.InheritsFrom(TCollection)) then
             begin
               CollectionObject := TCollection(ClassObject);
               for j := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[j];
-                Sessao := IfThen(IsCollection, ASessao + PI.Name, PI.Name);
-                GravarIni(AIni, Sessao + FormatFloat('000', J+1), CollectionItem, True)
+                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                GravarIni(AIni, String.Format(CSessionFormat, [Sessao, J+1]), CollectionItem, J+1)
+              end;
+            end
+            else if (TD.ClassType.InheritsFrom(TList)) then
+            begin
+              ListObject := TList(ClassObject);
+              for j := 0 to ListObject.Count - 1 do
+              begin
+                Item := ListObject.Items[j];
+                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                GravarIni(AIni, String.Format(CSessionFormat, [Sessao, J+1]), Item, J+1)
               end;
             end
             else
             begin
-              if (ClassObject.InheritsFrom(TACBrLibRespostaBase)) then
+              if (TD.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
               begin
-                Sessao := IfThen(IsCollection, ASessao + TACBrLibRespostaBase(ClassObject).Sessao, TACBrLibRespostaBase(ClassObject).Sessao);
-                GravarIni(AIni, Sessao, ClassObject, IsCollection)
+                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [TACBrLibRespostaBase(ClassObject).Sessao, Index]),
+                                            TACBrLibRespostaBase(ClassObject).Sessao);
+                GravarIni(AIni, Sessao, ClassObject, Index)
               end
               else
               begin
-                Sessao := IfThen(IsCollection, ASessao + PI.Name, PI.Name);
-                GravarIni(AIni, PI.Name, ClassObject, IsCollection);
+                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                GravarIni(AIni, PI.Name, ClassObject, Index);
               end;
             end;
+          end;
+        tkArray:
+          begin
+
+          end;
+        tkDynArray:
+          begin
+
           end;
         tkSet:
           begin
@@ -289,7 +326,17 @@ begin
         tkFloat:
           begin
             FloatValue := GetFloatProp(Target, PI);
-            if (PT = TypeInfo(TDateTime)) then
+            if (TI = TypeInfo(TDate)) then
+            begin
+              if not IsZero(FloatValue) then
+                AIni.WriteDate(ASessao, PI^.Name, FloatValue);
+            end
+            else if (TI = TypeInfo(TTime)) then
+            begin
+              if not IsZero(FloatValue) then
+                AIni.WriteTime(ASessao, PI^.Name, FloatValue);
+            end
+            else if (TI = TypeInfo(TDateTime)) then
             begin
               if not IsZero(FloatValue) then
                 AIni.WriteDateTime(ASessao, PI^.Name, FloatValue);
@@ -325,7 +372,7 @@ var
   i: Integer;
   PI: PPropInfo;
   PT: PTypeInfo;
-  Aux: Double;
+  FloatValue: Double;
   JSONRoot: TJSONObject;
 begin
   JSONRoot := TJSONObject.Create;
@@ -351,14 +398,27 @@ begin
         tkAString:
           JSONRoot.Add(PI^.Name, Trim(GetStrProp(Target, PI)));
         tkFloat:
-          if (PT = TypeInfo(TDateTime)) then
           begin
-            Aux := GetFloatProp(Target, PI);
-            if not IsZero(Aux) then
-              JSONRoot.Add(PI^.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', TDateTime(Aux)));
-          end
-          else
-            JSONRoot.Add(PI^.Name, GetFloatProp(Target, PI));
+            FloatValue := GetFloatProp(Target, PI);
+
+            if (PT = TypeInfo(TDate)) then
+            begin
+              if not IsZero(FloatValue) then
+                JSONRoot.Add(PI^.Name, DateToStr(FloatValue));
+            end
+            else if (PT = TypeInfo(TTime)) then
+            begin
+              if not IsZero(FloatValue) then
+                JSONRoot.Add(PI^.Name, TimeToStr(FloatValue));
+            end
+            else if (PT = TypeInfo(TDateTime)) then
+            begin
+              if not IsZero(FloatValue) then
+                JSONRoot.Add(PI^.Name, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss.zzz"Z"', FloatValue));
+            end
+            else
+              JSONRoot.Add(PI^.Name, FloatValue);
+          end;
       end;
     end;
   finally

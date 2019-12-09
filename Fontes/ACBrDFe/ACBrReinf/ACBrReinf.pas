@@ -65,7 +65,7 @@ const
 type
 
   EACBrReinfException = class(EACBrDFeException);
-  TNotifyEventosReinf = procedure(const AXML: AnsiString; ATipo: TEventosReinf) of object;
+  TNotifyEventosReinf = procedure(const AXML: String; ATipo: TEventosReinf) of object;
 
   { TACBrReinf }
   {$IFDEF RTL230_UP}

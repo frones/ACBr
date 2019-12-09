@@ -50,6 +50,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2019
+-- ACBrReinf --
+[*] Alterado de AnsiString para String o parametro AXML da procedure TNotifyEventoReinf.
+   Por: Italo Jurisato Junior
+
 13/08/2019
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/52998-corre%C3%A7%C3%A3o-pcngeradorreinf/

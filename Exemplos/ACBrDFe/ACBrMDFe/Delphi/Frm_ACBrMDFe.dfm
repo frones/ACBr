@@ -1670,8 +1670,8 @@ object frmACBrMDFe: TfrmACBrMDFe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 467
-    Top = 287
+    Left = 432
+    Top = 288
   end
   object ACBrMDFe1: TACBrMDFe
     MAIL = ACBrMail1
@@ -1708,7 +1708,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     Encerrado = False
     ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
-    Left = 470
-    Top = 246
+    Left = 432
+    Top = 240
   end
 end

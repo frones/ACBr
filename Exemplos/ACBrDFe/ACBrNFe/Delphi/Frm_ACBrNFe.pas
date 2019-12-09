@@ -3483,6 +3483,7 @@ end;
 procedure TfrmACBrNFe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -3566,17 +3567,24 @@ begin
     SalvarEvento     := cbxSalvaPathEvento.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathNFe          := edtPathNFe.Text;
     PathInu          := edtPathInu.Text;
     PathEvento       := edtPathEvento.Text;
+    PathMensal       := GetPathNFe(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrNFe1.DANFE <> nil then
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo      := edtLogoMarca.Text;
+    ACBrNFe1.DANFE.PathPDF   := PathMensal;
+
+    ACBrNFe1.DANFE.MargemDireita  := 7;
+    ACBrNFe1.DANFE.MargemEsquerda := 7;
+    ACBrNFe1.DANFE.MargemSuperior := 5;
+    ACBrNFe1.DANFE.MargemInferior := 5;
   end;
 end;
 

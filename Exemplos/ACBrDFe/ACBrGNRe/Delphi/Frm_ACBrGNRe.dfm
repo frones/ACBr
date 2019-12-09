@@ -102,10 +102,6 @@ object frmACBrGNRe: TfrmACBrGNRe
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -398,10 +394,6 @@ object frmACBrGNRe: TfrmACBrGNRe
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -557,10 +549,6 @@ object frmACBrGNRe: TfrmACBrGNRe
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -1352,7 +1340,6 @@ object frmACBrGNRe: TfrmACBrGNRe
           Height = 446
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 385
           ControlData = {
             4C000000C6390000182E00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1435,7 +1422,7 @@ object frmACBrGNRe: TfrmACBrGNRe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 435
+    Left = 427
     Top = 287
   end
   object ACBrGNRE1: TACBrGNRE
@@ -1466,7 +1453,7 @@ object frmACBrGNRe: TfrmACBrGNRe
     MargemEsquerda = 6.000000000000000000
     MargemDireita = 5.100000000000000000
     PrintDialog = True
-    Left = 438
+    Left = 430
     Top = 238
   end
 end

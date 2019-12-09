@@ -1112,6 +1112,7 @@ end;
 procedure TfrmACBrCIOT.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrCIOT1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrCIOT1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -1181,9 +1182,10 @@ begin
     EmissaoPathCIOT  := cbxEmissaoPathCIOT.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathCIOT         := edtPathCIOT.Text;
+    PathMensal       := GetPathCIOT(0);
+    PathSalvar       := PathMensal;
   end;
 end;
 

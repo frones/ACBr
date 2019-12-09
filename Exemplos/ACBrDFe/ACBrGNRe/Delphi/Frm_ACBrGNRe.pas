@@ -774,6 +774,7 @@ end;
 procedure TfrmACBrGNRe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrGNRE1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -839,9 +840,10 @@ begin
     EmissaoPathGNRE  := cbxEmissaoPathGNRE.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathGNRE         := edtPathGNRE.Text;
+    PathMensal       := GetPathGNRE(0);
+    PathSalvar       := PathMensal;
   end;
 end;
 

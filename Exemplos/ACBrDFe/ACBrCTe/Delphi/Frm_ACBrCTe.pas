@@ -2613,6 +2613,7 @@ end;
 procedure TfrmACBrCTe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrCTe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrCTe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -2679,17 +2680,26 @@ begin
     EmissaoPathCTe   := cbxEmissaoPathCTe.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathCTe          := edtPathCTe.Text;
     PathInu          := edtPathInu.Text;
     PathEvento       := edtPathEvento.Text;
+    PathMensal       := GetPathCTe(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrCTe1.DACTe <> nil then
   begin
     ACBrCTe1.DACTe.TipoDACTe := StrToTpImp(OK, IntToStr(rgTipoDaCTe.ItemIndex + 1));
     ACBrCTe1.DACTe.Logo      := edtLogoMarca.Text;
+
+    ACBrCTe1.DACTe.PathPDF      := PathMensal;
+    ACBrCTe1.DACTe.TamanhoPapel := tpA4;
+
+    ACBrCTe1.DACTe.MargemDireita  := 7;
+    ACBrCTe1.DACTe.MargemEsquerda := 7;
+    ACBrCTe1.DACTe.MargemSuperior := 5;
+    ACBrCTe1.DACTe.MargemInferior := 5;
   end;
 end;
 

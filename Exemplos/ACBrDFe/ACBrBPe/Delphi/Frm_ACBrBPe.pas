@@ -1819,6 +1819,7 @@ end;
 procedure TfrmACBrBPe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrBPe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrBPe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -1887,10 +1888,11 @@ begin
     SalvarEvento     := cbxSalvaPathEvento.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathBPe          := edtPathBPe.Text;
     PathEvento       := edtPathEvento.Text;
+    PathMensal       := GetPathBPe(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrBPe1.DABPe <> nil then

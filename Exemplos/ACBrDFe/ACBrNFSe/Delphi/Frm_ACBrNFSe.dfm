@@ -102,10 +102,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -587,10 +583,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object Label30: TLabel
               Left = 5
               Top = 317
@@ -1267,10 +1259,6 @@ object frmACBrNFSe: TfrmACBrNFSe
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathNFSe: TSpeedButton
               Left = 247
               Top = 131
@@ -1839,8 +1827,8 @@ object frmACBrNFSe: TfrmACBrNFSe
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 451
-    Top = 303
+    Left = 432
+    Top = 304
   end
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
@@ -1859,8 +1847,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFSE = ACBrNFSeDANFSeRL1
-    Left = 334
-    Top = 246
+    Left = 336
+    Top = 248
   end
   object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
     Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
@@ -1879,8 +1867,8 @@ object frmACBrNFSe: TfrmACBrNFSe
     TamanhoFonte = 6
     FormatarNumeroDocumentoNFSe = True
     PrintDialog = True
-    Left = 446
-    Top = 246
+    Left = 432
+    Top = 248
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1890,7 +1878,7 @@ object frmACBrNFSe: TfrmACBrNFSe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 334
-    Top = 302
+    Left = 336
+    Top = 304
   end
 end

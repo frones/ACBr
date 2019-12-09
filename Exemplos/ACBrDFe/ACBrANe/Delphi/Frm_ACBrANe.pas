@@ -680,6 +680,7 @@ end;
 procedure TfrmACBrANe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrANe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrANe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -757,9 +758,10 @@ begin
     EmissaoPathANe   := cbxEmissaoPathANe.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathANe          := edtPathANe.Text;
+    PathMensal       := GetPathANe(0);
+    PathSalvar       := PathMensal;
   end;
 end;
 

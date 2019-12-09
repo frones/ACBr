@@ -4523,6 +4523,7 @@ end;
 procedure TfrmACBreSocial.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBreSocial1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBreSocial1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -4592,9 +4593,10 @@ begin
     EmissaoPatheSocial := cbxEmissaoPatheSocial.Checked;
     SepararPorCNPJ     := cbxSepararPorCNPJ.Checked;
     SepararPorModelo   := cbxSepararPorModelo.Checked;
-    PathSalvar         := edtPathLogs.Text;
     PathSchemas        := edtPathSchemas.Text;
     PatheSocial        := edtPatheSocial.Text;
+    PathMensal         := GetPatheSocial(0);
+    PathSalvar         := PathMensal;
   end;
 end;
 

@@ -633,11 +633,11 @@ begin
     // 2 - Serviço não concluido
     // 3 - RPS Cancelado na Emissão
 
-    if not(InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo)) then
+    if not (InputQuery('Cancelar NFSe', 'Código de Cancelamento', Codigo)) then
       exit;
 
     // Provedor Equiplano é obrigatório o motivo de cancelamento
-    if not(InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
+    if not (InputQuery('Cancelar NFSe', 'Motivo de Cancelamento', Motivo)) then
       exit;
 
 //    ACBrNFSe1.NotasFiscais.Items[0].NFSe.MotivoCancelamento:= Motivo;
@@ -1393,8 +1393,8 @@ end;
 
 procedure TfrmACBrNFSe.ConfigurarComponente;
 var
-  PathMensal: String;
   Ok: Boolean;
+  PathMensal: String;
 begin
   ACBrNFSe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFSe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -1468,6 +1468,7 @@ begin
 
   with ACBrNFSe1.Configuracoes.Arquivos do
   begin
+    NomeLongoNFSe    := True;
     Salvar           := cbxSalvarArqs.Checked;
     SepararPorMes    := cbxPastaMensal.Checked;
     AdicionarLiteral := cbxAdicionaLiteral.Checked;
@@ -1477,12 +1478,9 @@ begin
     PathSchemas      := edtPathSchemas.Text;
     PathNFSe         := edtPathNFSe.Text;
     PathGer          := edtPathLogs.Text;
-    NomeLongoNFSe    := True;
-
-    PathMensal := GetPathGer(0);
-
-    PathCan    := PathMensal;
-    PathSalvar := PathMensal;
+    PathCan          := PathMensal;
+    PathMensal       := GetPathGer(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrNFSe1.DANFSe <> nil then
@@ -1493,6 +1491,11 @@ begin
     ACBrNFSe1.DANFSe.PrestLogo  := edtPrestLogo.Text;
     ACBrNFSe1.DANFSe.Prefeitura := edtPrefeitura.Text;
     ACBrNFSe1.DANFSe.PathPDF    := PathMensal;
+
+    ACBrNFSe1.DANFSe.MargemDireita  := 7;
+    ACBrNFSe1.DANFSe.MargemEsquerda := 7;
+    ACBrNFSe1.DANFSe.MargemSuperior := 5;
+    ACBrNFSe1.DANFSe.MargemInferior := 5;
   end;
 
   with ACBrNFSe1.MAIL do

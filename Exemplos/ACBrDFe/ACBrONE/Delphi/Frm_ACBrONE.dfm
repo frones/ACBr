@@ -102,10 +102,6 @@ object frmACBrONE: TfrmACBrONE
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -398,10 +394,6 @@ object frmACBrONE: TfrmACBrONE
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -585,10 +577,6 @@ object frmACBrONE: TfrmACBrONE
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -1048,10 +1036,6 @@ object frmACBrONE: TfrmACBrONE
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathONE: TSpeedButton
               Left = 247
               Top = 131
@@ -1149,10 +1133,6 @@ object frmACBrONE: TfrmACBrONE
       object TabSheet14: TTabSheet
         Caption = 'Email'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 8
           Top = 8
@@ -1341,10 +1321,6 @@ object frmACBrONE: TfrmACBrONE
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1363,10 +1339,6 @@ object frmACBrONE: TfrmACBrONE
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1380,10 +1352,6 @@ object frmACBrONE: TfrmACBrONE
       object TabSheet9: TTabSheet
         Caption = 'Documento'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object trvwDocumento: TTreeView
           Left = 0
           Top = 0
@@ -1397,10 +1365,6 @@ object frmACBrONE: TfrmACBrONE
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1414,10 +1378,6 @@ object frmACBrONE: TfrmACBrONE
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object MemoDados: TMemo
           Left = 0
           Top = 0
@@ -1441,8 +1401,8 @@ object frmACBrONE: TfrmACBrONE
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 330
-    Top = 287
+    Left = 328
+    Top = 296
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '*-nfe.XML'
@@ -1450,8 +1410,8 @@ object frmACBrONE: TfrmACBrONE
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 467
-    Top = 287
+    Left = 416
+    Top = 296
   end
   object ACBrONE1: TACBrONE
     MAIL = ACBrMail1
@@ -1467,7 +1427,7 @@ object frmACBrONE: TfrmACBrONE
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     Configuracoes.RespTec.IdCSRT = 0
-    Left = 330
-    Top = 243
+    Left = 328
+    Top = 240
   end
 end

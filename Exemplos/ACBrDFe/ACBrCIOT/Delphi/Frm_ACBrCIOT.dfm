@@ -102,10 +102,6 @@ object frmACBrCIOT: TfrmACBrCIOT
           TabOrder = 0
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object lSSLLib: TLabel
               Left = 39
               Top = 16
@@ -398,10 +394,6 @@ object frmACBrCIOT: TfrmACBrCIOT
           object TabSheet4: TTabSheet
             Caption = 'Geral'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox3: TGroupBox
               Left = 3
               Top = 12
@@ -614,10 +606,6 @@ object frmACBrCIOT: TfrmACBrCIOT
           object TabSheet7: TTabSheet
             Caption = 'WebService'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object GroupBox4: TGroupBox
               Left = 5
               Top = 4
@@ -1077,10 +1065,6 @@ object frmACBrCIOT: TfrmACBrCIOT
           object TabSheet13: TTabSheet
             Caption = 'Arquivos'
             ImageIndex = 4
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object sbPathCIOT: TSpeedButton
               Left = 247
               Top = 131
@@ -1213,10 +1197,6 @@ object frmACBrCIOT: TfrmACBrCIOT
       object TabSheet14: TTabSheet
         Caption = 'Email'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 8
           Top = 8
@@ -1375,10 +1355,6 @@ object frmACBrCIOT: TfrmACBrCIOT
       object tsEnvios: TTabSheet
         Caption = 'Envios'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 22
-        ExplicitWidth = 0
-        ExplicitHeight = 364
         object btnGerarCIOT: TButton
           Left = 9
           Top = 8
@@ -1431,10 +1407,6 @@ object frmACBrCIOT: TfrmACBrCIOT
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 385
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1442,7 +1414,6 @@ object frmACBrCIOT: TfrmACBrCIOT
           Height = 334
           Align = alClient
           TabOrder = 0
-          ExplicitHeight = 385
           ControlData = {
             4C000000C6390000852200000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1454,10 +1425,6 @@ object frmACBrCIOT: TfrmACBrCIOT
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 385
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1466,16 +1433,11 @@ object frmACBrCIOT: TfrmACBrCIOT
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object TabSheet9: TTabSheet
         Caption = 'Documento'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 385
         object trvwDocumento: TTreeView
           Left = 0
           Top = 0
@@ -1489,10 +1451,6 @@ object frmACBrCIOT: TfrmACBrCIOT
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 385
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1501,16 +1459,11 @@ object frmACBrCIOT: TfrmACBrCIOT
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitHeight = 385
         end
       end
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 385
         object MemoDados: TMemo
           Left = 0
           Top = 0
@@ -1543,7 +1496,7 @@ object frmACBrCIOT: TfrmACBrCIOT
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 464
+    Left = 416
     Top = 336
   end
   object ACBrCIOT1: TACBrCIOT

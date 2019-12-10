@@ -444,7 +444,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Control = edPortaTCP
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = edPortaTCP
-              Left = 7
+              Left = 31
               Height = 17
               Top = 9
               Width = 86
@@ -462,7 +462,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = gbTCP
               AnchorSideRight.Side = asrBottom
               Cursor = crIBeam
-              Left = 96
+              Left = 120
               Height = 25
               Hint = 'Numero da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 5
@@ -480,7 +480,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Side = asrCenter
               AnchorSideRight.Control = edTimeOutTCP
               AnchorSideBottom.Side = asrBottom
-              Left = 41
+              Left = 65
               Height = 17
               Top = 38
               Width = 52
@@ -500,7 +500,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Side = asrBottom
               AnchorSideBottom.Side = asrBottom
               Cursor = crIBeam
-              Left = 96
+              Left = 120
               Height = 25
               Hint = 'Numero da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 34
@@ -517,7 +517,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = gbTCP
               AnchorSideTop.Side = asrCenter
-              Left = 160
+              Left = 176
               Height = 21
               Top = 21
               Width = 48
@@ -551,7 +551,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 8
             Height = 21
             Hint = 'Permite qua a máquina que controla o ACBrMonitorPLUS'#13#10'execute comandos nessa máquina.'#13#10#13#10'                      * Use com CUIDADO *'#13#10#13#10'Habilite apenas se necessário,  e quando tiver'#13#10'certeza de quem está controlando o ACBrMonitor'
-            Top = 119
+            Top = 151
             Width = 188
             Caption = 'Permitir Comandos Remotos'
             Font.Height = -13
@@ -565,7 +565,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 8
             Height = 53
             Hint = 'Evita que usuários abram a tela de configuração '#13#10' '#13#10'Também é usada para proteger o arquivo de configurações'#13#10'com dados da Sw.House para geração da RFD'
-            Top = 253
+            Top = 285
             Width = 236
             BorderSpacing.Top = 2
             ClientHeight = 31
@@ -608,12 +608,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Control = gbTXT
             AnchorSideTop.Side = asrBottom
             Left = 253
-            Height = 152
+            Height = 182
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
             Top = 156
             Width = 755
             Anchors = [akLeft, akRight]
-            ClientHeight = 130
+            ClientHeight = 160
             ClientWidth = 751
             Font.Height = -13
             ParentFont = False
@@ -626,7 +626,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Side = asrBottom
               Left = 696
               Height = 25
-              Top = 31
+              Top = 41
               Width = 30
               Anchors = []
               Caption = '...'
@@ -640,7 +640,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 78
               Height = 25
-              Top = 31
+              Top = 41
               Width = 618
               Anchors = [akLeft, akRight]
               BorderSpacing.Top = 5
@@ -654,7 +654,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = edLogArq
               Left = 27
               Height = 17
-              Top = 35
+              Top = 45
               Width = 48
               Alignment = taRightJustify
               Anchors = [akRight]
@@ -672,7 +672,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = sedLogLinhas
               Left = 8
               Height = 17
-              Top = 66
+              Top = 83
               Width = 67
               Alignment = taRightJustify
               Anchors = [akRight]
@@ -692,7 +692,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 78
               Height = 25
               Hint = 'Número máximo de linhas no arquivo de LOG'#13#10'Se for diferente de zero, o ACBrMonitor ajustará'#13#10'o arquivo de Log sempre que for iniciado'
-              Top = 62
+              Top = 79
               Width = 285
               Anchors = [akLeft, akRight]
               BorderSpacing.Top = 4
@@ -704,7 +704,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object chkMostraLogNaTela: TCheckBox
               Left = 0
               Height = 21
-              Top = 109
+              Top = 139
               Width = 751
               Align = alBottom
               Caption = 'Exibir linhas do log na tela em "Respostas Enviadas"'
@@ -819,7 +819,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideBottom.Control = sedIntervalo
               Left = 689
               Height = 17
-              Top = 52
+              Top = 25
               Width = 50
               Alignment = taRightJustify
               Anchors = [akRight, akBottom]
@@ -837,9 +837,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 690
               Height = 25
               Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presença do arquivo de Entrada'
-              Top = 69
+              Top = 42
               Width = 49
-              Anchors = []
+              Anchors = [akTop, akRight]
               Font.Height = -13
               MaxValue = 1000
               MinValue = 5
@@ -917,7 +917,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbUmaInstancia: TCheckBox
             Left = 8
             Height = 21
-            Top = 141
+            Top = 173
             Width = 236
             Caption = 'Permite executar apenas um Monitor'
             Font.Height = -13
@@ -927,7 +927,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbAbas: TCheckBox
             Left = 8
             Height = 21
-            Top = 164
+            Top = 196
             Width = 185
             Caption = 'Mostrar abas de navegação'
             Font.Height = -13
@@ -937,7 +937,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbMostrarNaBarraDeTarefas: TCheckBox
             Left = 8
             Height = 21
-            Top = 186
+            Top = 218
             Width = 184
             Caption = 'Mostrar na barra de tarefas'
             Font.Height = -13
@@ -947,7 +947,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbRetirarAcentosNaResposta: TCheckBox
             Left = 8
             Height = 21
-            Top = 209
+            Top = 241
             Width = 182
             Caption = 'Retirar acentos da resposta'
             Font.Height = -13
@@ -958,13 +958,37 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 8
             Height = 21
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
-            Top = 231
+            Top = 263
             Width = 159
             Caption = 'Proteger Configurações'
             Font.Height = -13
             OnClick = cbSenhaClick
             ParentFont = False
             TabOrder = 11
+          end
+          object cbTipoResposta: TComboBox
+            AnchorSideLeft.Side = asrBottom
+            Left = 130
+            Height = 25
+            Top = 121
+            Width = 114
+            ItemHeight = 17
+            ItemIndex = 0
+            Items.Strings = (
+              'INI'
+              'XML'
+              'JSON'
+            )
+            TabOrder = 12
+            Text = 'INI'
+          end
+          object lbTipoResp: TLabel
+            Left = 18
+            Height = 17
+            Top = 125
+            Width = 106
+            Caption = 'Tipo de Resposta:'
+            ParentColor = False
           end
         end
         object tsCadastro: TTabSheet
@@ -7543,25 +7567,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   State = cbChecked
                   TabOrder = 0
                 end
-                object cbModoXML: TCheckBox
-                  Left = 8
-                  Height = 21
-                  Top = 23
-                  Width = 234
-                  Caption = 'Receber e Enviar Respostas em XML'
-                  Font.Height = -13
-                  ParentFont = False
-                  TabOrder = 1
-                end
                 object cbValidarDigest: TCheckBox
                   Left = 8
                   Height = 21
-                  Top = 47
+                  Top = 18
                   Width = 244
                   Caption = 'Validar Digest Value ao consultar XML'
                   Font.Height = -13
                   ParentFont = False
-                  TabOrder = 2
+                  TabOrder = 1
                 end
                 object Label187: TLabel
                   AnchorSideTop.Control = edtTimeoutWebServices
@@ -7587,7 +7601,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Font.Height = -13
                   MinValue = 5
                   ParentFont = False
-                  TabOrder = 3
+                  TabOrder = 2
                   Value = 15
                 end
               end

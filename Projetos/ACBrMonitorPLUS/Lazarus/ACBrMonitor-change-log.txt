@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2019
+[*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, CmdUnit
+Adicionado propriedade para configurar o Tipo de Resposta dos métodos WebService (INI, XML, JSON)
+
 02/12/2019
 [*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts
 Adicionado propriedade Para apresentar coluna Desconto e Acrescimo na impressão da DANFe

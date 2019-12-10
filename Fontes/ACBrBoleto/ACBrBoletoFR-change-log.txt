@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/12/2019
+ACBrBoletoFCFortesFr
+[*] Ajustes no DFM e LFM
+   por: Olavo Jr
+
 20/02/2019
 ACBrBoletoFCFR
 [*] Ajuste para implementar a configuração de número de cópias a imprimir.

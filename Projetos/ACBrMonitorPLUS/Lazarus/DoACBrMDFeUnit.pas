@@ -514,7 +514,7 @@ procedure TACBrObjetoMDFe.RespostaEnvio;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI, codUTF8);
+  Resp := TEnvioResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
 
@@ -532,7 +532,7 @@ procedure TACBrObjetoMDFe.RespostaRetorno;
 var
   Resp: TRetornoResposta;
 begin
-  Resp := TRetornoResposta.Create('MDFe', resINI, codUTF8);
+  Resp := TRetornoResposta.Create('MDFe', TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe.WebServices.Retorno.MDFeRetorno,
                    fACBrMDFe.WebServices.Retorno.Recibo,
@@ -609,7 +609,7 @@ procedure TACBrObjetoMDFe.RespostaPadrao;
 var
   Resp: TNaoEncerradosResposta ;
 begin
-  Resp := TNaoEncerradosResposta.Create(resINI, codUTF8);
+  Resp := TNaoEncerradosResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
     with fACBrMDFe.WebServices.ConsMDFeNaoEnc do
@@ -626,7 +626,7 @@ procedure TACBrObjetoMDFe.RespostaStatus;
 var
   Resp: TStatusServicoResposta;
 begin
-  Resp := TStatusServicoResposta.Create(resINI, codUTF8);
+  Resp := TStatusServicoResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
     fpCmd.Resposta := Resp.Msg + sLineBreak;
@@ -640,7 +640,7 @@ procedure TACBrObjetoMDFe.RespostaConsulta;
 var
   Resp: TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(resINI, codUTF8);
+  Resp := TConsultaResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
     fpCmd.Resposta := Resp.Msg + sLineBreak;
@@ -654,7 +654,7 @@ procedure TACBrObjetoMDFe.RespostaCancelamento;
 var
   Resp: TCancelamentoResposta;
 begin
-  Resp := TCancelamentoResposta.Create(resINI, codUTF8);
+  Resp := TCancelamentoResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
     fpCmd.Resposta := Resp.XMotivo + sLineBreak;
@@ -668,7 +668,7 @@ procedure TACBrObjetoMDFe.RespostaEncerramento;
 var
   Resp: TEncerramentoResposta;
 begin
-  Resp := TEncerramentoResposta.Create(resINI, codUTF8);
+  Resp := TEncerramentoResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
 
@@ -686,7 +686,7 @@ procedure TACBrObjetoMDFe.RespostaRecibo;
 var
   Resp: TReciboResposta;
 begin
-  Resp := TReciboResposta.Create('MDFe', resINI, codUTF8);
+  Resp := TReciboResposta.Create('MDFe', TpResp, codUTF8);
   Resp.Processar(fACBrMDFe.WebServices.Recibo.MDFeRetorno, fACBrMDFe.WebServices.Recibo.Recibo);
   try
     with fACBrMDFe.WebServices.Recibo do
@@ -713,7 +713,7 @@ procedure TACBrObjetoMDFe.RespostaEvento;
 var
   Resp: TEventoResposta;
 begin
-  Resp := TEventoResposta.Create(resINI, codUTF8);
+  Resp := TEventoResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe);
     fpCmd.Resposta := sLineBreak + Resp.Gerar;
@@ -727,7 +727,7 @@ var
   Resp: TDistribuicaoDFeResposta;
   sTemMais: String;
 begin
-  Resp := TDistribuicaoDFeResposta.Create(resINI, codUTF8);
+  Resp := TDistribuicaoDFeResposta.Create(TpResp, codUTF8);
   try
     Resp.Processar(fACBrMDFe.WebServices.DistribuicaoDFe.retDistDFeInt,
                    fACBrMDFe.WebServices.DistribuicaoDFe.Msg,

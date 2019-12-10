@@ -1,34 +1,35 @@
-﻿{******************************************************************************}
-{ Projeto: ACBr Monitor                                                        }
-{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel Simões de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
-{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
-{ qualquer versão mais nova.                                                   }
-{                                                                              }
-{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
-{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
-{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
-{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
-{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170         }
-{                                                                              }
-{******************************************************************************}
+﻿{*******************************************************************************}
+{ Projeto: ACBrMonitor                                                         }
+{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.   }
+{                                                                               }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida                }
+{                                                                               }
+{ Colaboradores nesse arquivo:                                  }
+{                                                                               }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr       }
+{                                                                               }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la  }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela   }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério)  }
+{ qualquer versão posterior.                                                    }
+{                                                                               }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM    }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU       }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)               }
+{                                                                               }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,   }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.           }
+{ Você também pode obter uma copia da licença em:                               }
+{ http://www.opensource.org/licenses/gpl-license.php                            }
+{                                                                               }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{        Rua Cel.Aureliano de Camargo, 963 - Tatuí - SP - 18270-170             }
+{                                                                               }
+{*******************************************************************************}
 
 {$I ACBr.inc}
 
@@ -622,7 +623,7 @@ procedure TACBrObjetoReinf.RespostaEnvioRetorno;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI, codUTF8);
+  Resp := TEnvioResposta.Create(TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -639,7 +640,7 @@ procedure TACBrObjetoReinf.RespostaEnvioideTransmissor;
 var
   Resp: TEnvioRespostaideTransmissor;
 begin
-  Resp := TEnvioRespostaideTransmissor.Create(resINI, codUTF8);
+  Resp := TEnvioRespostaideTransmissor.Create(TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -656,7 +657,7 @@ procedure TACBrObjetoReinf.RespostaEnviostatus;
 var
   Resp: TEnvioRespostastatus;
 begin
-  Resp := TEnvioRespostastatus.Create(resINI, codUTF8);
+  Resp := TEnvioRespostastatus.Create(TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -674,7 +675,7 @@ procedure TACBrObjetoReinf.RespostaEnvioOcorrencias(ACont: Integer);
 var
   Resp: TEnvioRespostaOcorrencias;
 begin
-  Resp := TEnvioRespostaOcorrencias.Create(CSessaoRespEnvioocorrencias + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TEnvioRespostaOcorrencias.Create(CSessaoRespEnvioocorrencias + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -694,7 +695,7 @@ procedure TACBrObjetoReinf.RespostaEnvioevento(ACont: Integer);
 var
   Resp: TEnvioRespostaevento;
 begin
-  Resp := TEnvioRespostaevento.Create(CSessaoRespEnvioevento + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TEnvioRespostaevento.Create(CSessaoRespEnvioevento + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -711,7 +712,7 @@ procedure TACBrObjetoReinf.RespostaEnvioevtTotal(ACont: Integer);
 var
   Resp: TEnvioRespostaevtTotal;
 begin
-  Resp := TEnvioRespostaevtTotal.Create(CSessaoRespEnvioevtTotal + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TEnvioRespostaevtTotal.Create(CSessaoRespEnvioevtTotal + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -728,7 +729,7 @@ procedure TACBrObjetoReinf.RespostaEnvioideEvento(ACont: Integer);
 var
   Resp: TRespostaideEvento;
 begin
-  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -745,7 +746,7 @@ procedure TACBrObjetoReinf.RespostaEnvioideContri(ACont: Integer);
 var
   Resp: TRespostaideContri;
 begin
-  Resp := TRespostaideContri.Create(CSessaoRetornoideContri + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaideContri.Create(CSessaoRetornoideContri + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -763,7 +764,7 @@ procedure TACBrObjetoReinf.RespostaEnvioideStatus(ACont: Integer);
 var
   Resp: TRespostaideStatus;
 begin
-  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -782,7 +783,7 @@ var
   Resp: TRespostaregOcorrs;
 begin
   Resp := TRespostaregOcorrs.Create(CSessaoRetornoideStatus +
-                      IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), resINI, codUTF8);
+                      IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -802,7 +803,7 @@ procedure TACBrObjetoReinf.RespostaEnvioinfoRecEv(ACont: Integer);
 var
   Resp: TRespostainfoRecEv;
 begin
-  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -824,7 +825,7 @@ var
   Resp: TRespostainfoTotal_infoTotalContrib;
 begin
   Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespEnvioinfoTotal +
-                                              IntToStrZero(ACont+1, 3), resINI, codUTF8);
+                                              IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -842,7 +843,7 @@ var
   Resp: TRespostaRTom;
 begin
   Resp := TRespostaRTom.Create(CSessaoRetornoRTom +
-                                              IntToStrZero(ACont+1, 3), resINI, codUTF8);
+                                              IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -865,7 +866,7 @@ var
   Resp: TRespostainfoCRTom;
 begin
   Resp := TRespostainfoCRTom.Create(CSessaoRetornoinfoCRTom +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI, codUTF8);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -885,7 +886,7 @@ var
   Resp: TRespostaRPrest;
 begin
   Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest +
-                                              IntToStrZero(ACont+1, 3), resINI, codUTF8);
+                                              IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -909,7 +910,7 @@ var
   Resp: TRespostaRRecRepAD;
 begin
   Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), resINI, codUTF8);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -935,7 +936,7 @@ var
   Resp: TRespostaRComl;
 begin
   Resp := TRespostaRComl.Create(CSessaoRetornoRComl +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI, codUTF8);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -963,7 +964,7 @@ var
   Resp: TRespostaRCPRB;
 begin
   Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB +
-                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI, codUTF8);
+                  IntToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -988,7 +989,7 @@ var
   Resp: TEnvioRespostaRRecEspetDesp;
 begin
   Resp := TEnvioRespostaRRecEspetDesp.Create(CSessaoRetornoRRecEspetDesp +
-                  IntToStrZero(ACont+1, 3), resINI, codUTF8);
+                  IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.EnvioLote.RetEnvioLote.evento.Items[ACont].evtTotal do
     begin
@@ -1012,7 +1013,7 @@ procedure TACBrObjetoReinf.RespostaConsulta;
 var
   Resp: TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(resINI, codUTF8);
+  Resp := TConsultaResposta.Create(TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1029,7 +1030,7 @@ procedure TACBrObjetoReinf.RespostaConsultaideEvento;
 var
   Resp: TRespostaideEvento;
 begin
-  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento, resINI, codUTF8);
+  Resp := TRespostaideEvento.Create(CSessaoRetornoideEvento, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1046,7 +1047,7 @@ procedure TACBrObjetoReinf.RespostaConsultaideContri;
 var
   Resp: TRespostaideContri;
 begin
-  Resp := TRespostaideContri.Create(CSessaoRetornoideContri, resINI, codUTF8);
+  Resp := TRespostaideContri.Create(CSessaoRetornoideContri, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1064,7 +1065,7 @@ procedure TACBrObjetoReinf.RespostaConsultaideStatus;
 var
   Resp: TRespostaideStatus;
 begin
-  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, resINI, codUTF8);
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1082,7 +1083,7 @@ procedure TACBrObjetoReinf.RespostaConsultaregOcorrs(ACont: Integer);
 var
   Resp: TRespostaregOcorrs;
 begin
-  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1102,7 +1103,7 @@ procedure TACBrObjetoReinf.RespostaConsultainfoRecEv;
 var
   Resp: TRespostainfoRecEv;
 begin
-  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv, resINI, codUTF8);
+  Resp := TRespostainfoRecEv.Create(CSessaoRetornoinfoRecEv, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1123,7 +1124,7 @@ procedure TACBrObjetoReinf.RespostaConsultainfoTotalContrib;
 var
   Resp: TRespostainfoTotal_infoTotalContrib;
 begin
-  Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespConsultainfoTotalContrib, resINI, codUTF8);
+  Resp := TRespostainfoTotal_infoTotalContrib.Create(CSessaoRespConsultainfoTotalContrib, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1141,7 +1142,7 @@ procedure TACBrObjetoReinf.RespostaConsultaRTom(ACont: Integer);
 var
   Resp: TRespostaRTom;
 begin
-  Resp := TRespostaRTom.Create(CSessaoRetornoRTom + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaRTom.Create(CSessaoRetornoRTom + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1164,7 +1165,7 @@ var
   Resp: TRespostainfoCRTom;
 begin
   Resp := TRespostainfoCRTom.Create(CSessaoRetornoinfoCRTom +
-                  intToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), resINI, codUTF8);
+                  intToStrZero(ACont+1, 3) + IntToStrZero(ACont2+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1183,7 +1184,7 @@ procedure TACBrObjetoReinf.RespostaConsultaRPrest(ACont: Integer);
 var
   Resp: TRespostaRPrest;
 begin
-  Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaRPrest.Create(CSessaoRetornoRPrest + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1206,7 +1207,7 @@ procedure TACBrObjetoReinf.RespostaConsultaRRecRepAD(ACont: Integer);
 var
   Resp: TRespostaRRecRepAD;
 begin
-  Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaRRecRepAD.Create(CSessaoRetornoRRecRepAD + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1231,7 +1232,7 @@ procedure TACBrObjetoReinf.RespostaConsultaRComl(ACont: Integer);
 var
   Resp: TRespostaRComl;
 begin
-  Resp := TRespostaRComl.Create(CSessaoRetornoRComl + IntToStrZero(ACont+1, 1), resINI, codUTF8);
+  Resp := TRespostaRComl.Create(CSessaoRetornoRComl + IntToStrZero(ACont+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1258,7 +1259,7 @@ procedure TACBrObjetoReinf.RespostaConsultaRCPRB(ACont: Integer);
 var
   Resp: TRespostaRCPRB;
 begin
-  Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB + IntToStrZero(ACont+1, 1), resINI, codUTF8);
+  Resp := TRespostaRCPRB.Create(CSessaoRetornoRCPRB + IntToStrZero(ACont+1, 1), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.Consultar.RetConsulta.evtTotalContrib do
     begin
@@ -1282,7 +1283,7 @@ procedure TACBrObjetoReinf.RespostaConsultaReciboStatus;
 var
   Resp: TRespostaideStatus;
 begin
-  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, resINI, codUTF8);
+  Resp := TRespostaideStatus.Create(CSessaoRetornoideStatus, TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta do
     begin
@@ -1300,7 +1301,7 @@ procedure TACBrObjetoReinf.RespostaConsultaReciboOcorrs(ACont: Integer);
 var
   Resp: TRespostaregOcorrs;
 begin
-  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaregOcorrs.Create(CSessaoRetornoregOcorrs + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta.evtTotalContrib do
     begin
@@ -1321,7 +1322,7 @@ procedure TACBrObjetoReinf.RespostaEventoRecibo(ACont: Integer);
 var
   Resp: TRespostaEventoRecibo;
 begin
-  Resp := TRespostaEventoRecibo.Create(CSessaoRetornoEventoRecibo + IntToStrZero(ACont+1, 3), resINI, codUTF8);
+  Resp := TRespostaEventoRecibo.Create(CSessaoRetornoEventoRecibo + IntToStrZero(ACont+1, 3), TpResp, codUTF8);
   try
     with fACBrReinf.WebServices.ConsultarReciboEvento.RetConsulta.evtTotalContrib do
     begin

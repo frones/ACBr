@@ -1,34 +1,35 @@
-{******************************************************************************}
-{ Projeto: ACBr Monitor                                                        }
-{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para }
-{ criar uma interface de comunicação com equipamentos de automacao comercial.  }
-{                                                                              }
-{ Direitos Autorais Reservados (c) 2010 Daniel Simões de Almeida               }
-{                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
-{                                                                              }
-{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
-{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-{                                                                              }
-{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
-{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
-{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
-{ qualquer versão mais nova.                                                   }
-{                                                                              }
-{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
-{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
-{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
-{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-{                                                                              }
-{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
-{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
-{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
-{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
-{                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170         }
-{                                                                              }
-{******************************************************************************}
+{*******************************************************************************}
+{ Projeto: ACBrMonitor                                                         }
+{  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
+{ criar uma interface de comunicação com equipamentos de automacao comercial.   }
+{                                                                               }
+{ Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida                }
+{                                                                               }
+{ Colaboradores nesse arquivo:                                  }
+{                                                                               }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr       }
+{                                                                               }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la  }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela   }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério)  }
+{ qualquer versão posterior.                                                    }
+{                                                                               }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM    }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU       }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)               }
+{                                                                               }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,   }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.           }
+{ Você também pode obter uma copia da licença em:                               }
+{ http://www.opensource.org/licenses/gpl-license.php                            }
+{                                                                               }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br }
+{        Rua Cel.Aureliano de Camargo, 963 - Tatuí - SP - 18270-170             }
+{                                                                               }
+{*******************************************************************************}
 {$I ACBr.inc}
 unit DoACBreSocialUnit;
 
@@ -741,7 +742,7 @@ procedure TACBrObjetoeSocial.RespostaEnvio;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI, codUTF8);
+  Resp := TEnvioResposta.Create(TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -768,7 +769,7 @@ procedure TACBrObjetoeSocial.RespostaEnvioConsulta;
 var
   Resp: TEnvioResposta;
 begin
-  Resp := TEnvioResposta.Create(resINI, codUTF8);
+  Resp := TEnvioResposta.Create(TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
     begin
@@ -794,7 +795,7 @@ procedure TACBrObjetoeSocial.RespostaEnvioOcorrencia(ACont: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI, codUTF8);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.EnvioLote.RetEnvioLote do
     begin
@@ -817,7 +818,7 @@ procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), resINI, codUTF8);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont), TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote do
     begin
@@ -841,7 +842,7 @@ procedure TACBrObjetoeSocial.RespostaOcorrencia(ACont, ACont2: Integer);
 var
   Resp: TOcorrenciaResposta;
 begin
-  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont2), resINI, codUTF8);
+  Resp := TOcorrenciaResposta.Create(CSessaoRespOcorrencia+inttostr(ACont2), TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.
          Items[ACont].Processamento.Ocorrencias.Items[ACont2] do
@@ -863,7 +864,7 @@ procedure TACBrObjetoeSocial.RespostaConsulta(ACont: Integer);
 var
   Resp : TConsultaResposta;
 begin
-  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),resINI, codUTF8);
+  Resp := TConsultaResposta.Create(CSessaoRespConsulta+inttostr(ACont),TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos.Items[ACont] do
     begin
@@ -892,7 +893,7 @@ var
   evtS5011: TS5011;
   evtS5012: TS5012;
 begin
-  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),resINI, codUTF8);
+  Resp := TConsultaTotResposta.Create(CSessaoRespConsultaTot+inttostr(ACont),TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaLote.RetConsultaLote.retEventos
          .Items[ACont].tot[ACont2] do
@@ -939,7 +940,7 @@ procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosQtd;
 var
   Resp : TConsultaTotEventos;
 begin
-  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,resINI, codUTF8);
+  Resp := TConsultaTotEventos.Create(CSessaoRespConsultaIdentEventos,TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt do
     begin
@@ -962,7 +963,7 @@ procedure TACBrObjetoeSocial.RespostaConsultaIdentEventosRecibo(ACont: Integer);
 var
   Resp : TConsultaIdentEvento;
 begin
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),resINI, codUTF8);
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsultaIdentEventosRecibo+inttostr(ACont),TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.ConsultaIdentEventos.RetConsultaIdentEvt.RetIdentEvts.Items[ACont] do
     begin
@@ -984,7 +985,7 @@ var
   Resp : TConsultaIdentEvento;
 begin
 
-  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,resINI, codUTF8);
+  Resp := TConsultaIdentEvento.Create(CSessaoRespConsulta,TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
     begin
@@ -1007,7 +1008,7 @@ procedure TACBrObjetoeSocial.RespostaPadrao;
 var
   Resp : TPadraoeSocialResposta;
 begin
-  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,resINI, codUTF8);
+  Resp := TPadraoeSocialResposta.Create(CSessaoRespConsulta,TpResp, codUTF8);
   try
     with fACBreSocial.WebServices.DownloadEventos.RetDownloadEvt do
     begin

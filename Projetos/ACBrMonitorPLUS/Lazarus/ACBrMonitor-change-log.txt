@@ -44,6 +44,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/12/2019
+[*] DoACBrBPeUnit, DoACBrCTeUnit, DoACBrESocialUnit, DoACBrGNReUnit, DoACBrMDFeUnit, DoACBrSATUnit,
+DoACBrCEPUnit, DoACBrIBGEUnit, DoACBrSEDEXUnit
+Adicionado parametrização para o Tipo de Resposta dos métodos WebService (INI, XML, JSON)
+
+10/12/2019
 [*] ACBrMonitor1, ACBrMonitorConfig, ACBrMonitorConsts, CmdUnit
 Adicionado propriedade para configurar o Tipo de Resposta dos métodos WebService (INI, XML, JSON)
 

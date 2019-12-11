@@ -1,23 +1,14 @@
-#include "hbclass.ch"
-#include "error.ch"
+#include 'acbrlib.ch'
 
-#define DC_CALL_CDECL          0x0010      // __cdecl
-#define DC_CALL_STD            0x0020      // __stdcall
-
-#ifdef __XHARBOUR__
-#define ACBrLIB "ACBrNFe32.dll"
-#define DLL_OSAPI DC_CALL_STD
+#ifdef __PLATFORM__WINDOWS
+   #define ACBrLIB 'ACBrNFe32.dll'
 #else
-#if defined( __PLATFORM__WINDOWS )
-#define ACBrLIB "ACBrNFe32.dll"
-#define DLL_OSAPI DC_CALL_STD
-#else
-#define ACBrLIB "libacbrnfe64.so"
-#define DLL_OSAPI DC_CALL_CDECL
+   #ifdef __PLATFORM__LINUX
+      #define ACBrLIB 'libacbrnfe64.so'
+   #else
+      #error ACBrLIB-FALTA DEFINICAO: PLATFORM__?
+   #endif
 #endif
-#endif
-
-#define STR_LEN 256
 
 CREATE CLASS ACBrNFe
 HIDDEN:
@@ -84,7 +75,7 @@ METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrNFe
     eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
 
     ::hHandle := DllLoad(ACBrLIB)
-    if ::hHandle = nil
+    if EMPTY(::hHandle) // Eric.Developer: xHarbour retorna 0x00000000
         oErr := ErrorNew()
         oErr:Severity := ES_ERROR        
         oErr:Description := "Erro a carregar a dll [" + ACBrLIB + "]"

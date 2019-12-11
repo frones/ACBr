@@ -1,83 +1,75 @@
-#include "hbclass.ch"
-#include "error.ch"
+#include 'acbrlib.ch'
 
-#define DC_CALL_CDECL          0x0010      // __cdecl
-#define DC_CALL_STD            0x0020      // __stdcall
-
-#ifdef __XHARBOUR__ 
-#define ACBrLIB "ACBrBoleto32.dll"
-#define DLL_OSAPI DC_CALL_STD
+#ifdef __PLATFORM__WINDOWS
+   #define ACBrLIB 'ACBrBoleto32.dll'
 #else
-#if defined( __PLATFORM__WINDOWS )
-#define ACBrLIB "ACBrBoleto32.dll"
-#define DLL_OSAPI DC_CALL_STD
-#else
-#define ACBrLIB "libacbrboleto64.so"
-#define DLL_OSAPI DC_CALL_CDECL
+   #ifdef __PLATFORM__LINUX
+      #define ACBrLIB 'libacbrboleto64.so'
+   #else
+      #error ACBrLIB-FALTA DEFINICAO: PLATFORM__?
+   #endif
 #endif
-#endif
-
-#define STR_LEN 256
 
 CREATE CLASS ACBrBoleto
-HIDDEN:
-    VAR hHandle
 
-    METHOD CheckResult(hResult)
-    METHOD ProcessResult(buffer, bufferLen)
+   VISIBLE:
+   METHOD New(eArqConfig, eChaveCrypt) CONSTRUCTOR
+   DESTRUCTOR  Destroy
 
-VISIBLE:
-    METHOD New(eArqConfig, eChaveCrypt) CONSTRUCTOR
-    DESTRUCTOR  Destroy
+   METHOD Nome
+   METHOD Versao
 
-    METHOD Nome
-    METHOD Versao
+   METHOD ConfigLer(eArqConfig)
+   METHOD ConfigGravar(eArqConfig)
+   METHOD ConfigLerValor(eSessao, eChave)
+   METHOD ConfigGravarValor(eSessao, eChave, eValor)
 
-    METHOD ConfigLer(eArqConfig)
-    METHOD ConfigGravar(eArqConfig)
-    METHOD ConfigLerValor(eSessao, eChave)
-    METHOD ConfigGravarValor(eSessao, eChave, eValor)
+   METHOD ConfigurarDados(eArquivoIni)
+   METHOD IncluirTitulos(eArquivoIni, eTpSaida)
+   METHOD LimparLista()
+   METHOD TotalTitulosLista()
+   METHOD Imprimir(eNomeImpressora)
+   METHOD GerarPDF()
+   METHOD GerarHTML()
+   METHOD GerarRemessa(eDir, eNumArquivo, eNomeArq)
+   METHOD LerRetorno(eDir, eNomeArq)
+   METHOD EnviarEmail(ePara, eAssunto, eMensagem, eCC)
+   METHOD SetDiretorioArquivo(eDir, eArq)
+   METHOD ListaBancos()
+   METHOD ListaCaractTitulo()
+   METHOD ListaOcorrencias()
+   METHOD ListaOcorrenciasEX()
+   METHOD TamNossoNumer(eCarteira, enossoNumero, eConvenio)
+   METHOD CodigosMoraAceitos()
+   METHOD SelecionaBanco(eCodBanco)
+   METHOD MontarNossoNumero(eIndice)
+   METHOD RetornaLinhaDigitavel(eIndice)
+   METHOD RetornaCodigoBarras(eIndice)
+    
+   HIDDEN:
+   VAR hHandle
 
-    METHOD ConfigurarDados(eArquivoIni)
-    METHOD IncluirTitulos(eArquivoIni, eTpSaida)
-    METHOD LimparLista()
-    METHOD TotalTitulosLista()
-    METHOD Imprimir(eNomeImpressora)
-    METHOD GerarPDF()
-    METHOD GerarHTML()
-    METHOD GerarRemessa(eDir, eNumArquivo, eNomeArq)
-    METHOD LerRetorno(eDir, eNomeArq)
-    METHOD EnviarEmail(ePara, eAssunto, eMensagem, eCC)
-    METHOD SetDiretorioArquivo(eDir, eArq)
-    METHOD ListaBancos()
-    METHOD ListaCaractTitulo()
-    METHOD ListaOcorrencias()
-    METHOD ListaOcorrenciasEX()
-    METHOD TamNossoNumer(eCarteira, enossoNumero, eConvenio)
-    METHOD CodigosMoraAceitos()
-    METHOD SelecionaBanco(eCodBanco)
-    METHOD MontarNossoNumero(eIndice)
-    METHOD RetornaLinhaDigitavel(eIndice)
-    METHOD RetornaCodigoBarras(eIndice)
+   METHOD CheckResult(hResult)
+   METHOD ProcessResult(buffer, bufferLen)
 
 END CLASS
 
 METHOD New(eArqConfig, eChaveCrypt) CLASS ACBrBoleto
-    local hResult, buffer, bufferLen, oErr
+   local hResult, buffer, bufferLen, oErr
 
-    eArqConfig :=if(eArqConfig = nil, '', eArqConfig)
-    eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
-    
-    ::hHandle := DllLoad(ACBrLIB)
-    if ::hHandle = nil
-        oErr := ErrorNew()
-        oErr:Severity := ES_ERROR        
-        oErr:Description := "Erro a carregar a dll [" + ACBrLIB + "]"
-        Throw(oErr)
-    endif
-    hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_Inicializar", hb_StrToUTF8(eArqConfig), hb_StrToUTF8(eChaveCrypt))
-    ::CheckResult(hResult) 
-    RETURN Self
+   eArqConfig :=if(eArqConfig = nil, '', eArqConfig)
+   eChaveCrypt:=if(eChaveCrypt = nil, '', eChaveCrypt)
+   
+   ::hHandle := DllLoad(ACBrLIB)
+   if EMPTY(::hHandle) // Eric.Developer: xHarbour retorna 0x00000000
+      oErr := ErrorNew()
+      oErr:Severity := ES_ERROR        
+      oErr:Description := "Erro a carregar a dll [" + ACBrLIB + "]"
+      Throw(oErr)
+   endif
+   hResult := DllCall(::hHandle, DLL_OSAPI, "Boleto_Inicializar", hb_StrToUTF8(eArqConfig), hb_StrToUTF8(eChaveCrypt))
+   ::CheckResult(hResult) 
+   RETURN Self
 
 PROCEDURE Destroy CLASS ACBrBoleto
     DllCall(::hHandle, DLL_OSAPI, "Boleto_Finalizar")

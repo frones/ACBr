@@ -9,7 +9,10 @@ Function Main ()
 
    // Salvando configurações
    nfe:ConfigGravar("")
-  
+
+   nfe:CarregarXML(hb_dirbase()+'nfe.xml')
+   nfe:Imprimir("", 1, "", "True", "", "", "")
+   
    ?nfe:Nome
    ?nfe:Versao
 

@@ -4,7 +4,7 @@ Function Main ()
    local hIni, hIniVenda
    LOCAL cSection
    
-   sat := ACBrSat():New("", "")
+   sat := ACBrSat():New()
    //                      Sessão       Chave    Valor
    // Configurações de log da Lib
    sat:ConfigGravarValor("Principal", "LogNivel", "4") // logParanoico     

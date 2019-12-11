@@ -1,8 +1,7 @@
 -hbexe
 -inc
--trace
--gtcgi
 -icon=ACBrMonitor.ico
+-I..
 
 ACBrBoletoDemo.prg
 ACBrBoleto.prg

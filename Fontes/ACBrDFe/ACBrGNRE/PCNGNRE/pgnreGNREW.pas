@@ -429,10 +429,10 @@ begin
   Gerador.wGrupo('/itensGNRE');
 
   if GNRE.c06_valorPrincipal > 0 then
-    Gerador.wCampo(tcDe2, '', 'valorGNRE        ', 01, 15, 1, GNRE.c06_valorPrincipal, '');
-
-  if GNRE.c10_valorTotal > 0 then
-    Gerador.wCampo(tcDe2, '', 'valorGNRE        ', 01, 15, 1, GNRE.c10_valorTotal, '');
+    Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, GNRE.c06_valorPrincipal, '')
+  else
+    if GNRE.c10_valorTotal > 0 then
+      Gerador.wCampo(tcDe2, '', 'valorGNRE', 01, 15, 1, GNRE.c10_valorTotal, '');
 
   Gerador.wCampo(tcDat, '', 'dataPagamento    ', 10, 10, 1, GNRE.c33_dataPagamento, '');
   Gerador.wCampo(tcStr, '', 'identificadorGuia', 01, 10, 0, GNRE.c42_identificadorGuia, '');

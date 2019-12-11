@@ -2147,7 +2147,8 @@ begin
     end;
   end;
 
-  if cdsDadosNotasFiscais.IsEmpty then
+  if cdsDadosNotasFiscais.IsEmpty
+    and (CTE.ide.tpServ in [tsIntermediario, tsMultimodal]) then
   begin
     // inserir registro vazio caso CTe não possua documentos (redespacho intermediario ou vinculado a multimodal)
     cdsDadosNotasFiscais.Append;
@@ -2928,9 +2929,9 @@ begin
     if (FCTe.ide.tpAmb = taHomologacao) then
     begin
       if FCTe.Ide.modelo = 67 then
-        FieldByName('Mensagem0').AsString := 'CT-e OS sem Valor Fiscal - HOMOLOGAÇÃO'
+        FieldByName('Mensagem0').AsString := 'CT-e OS sem Valor Fiscal' + sLineBreak + 'HOMOLOGAÇÃO'
       else
-        FieldByName('Mensagem0').AsString := 'CT-e sem Valor Fiscal - HOMOLOGAÇÃO';
+        FieldByName('Mensagem0').AsString := 'CT-e sem Valor Fiscal' + sLineBreak + 'HOMOLOGAÇÃO';
     end
     else
     begin
@@ -2939,9 +2940,9 @@ begin
         if ((EstaVazio(Protocolo)) and (EstaVazio(FCTe.procCTe.nProt))) then
         begin
           if FCTe.Ide.modelo = 67 then
-            FieldByName('Mensagem0').AsString := 'CT-e OS sem Autorização de Uso da SEFAZ'
+            FieldByName('Mensagem0').AsString := 'CT-e OS sem Autorização' + sLineBreak + 'de Uso da SEFAZ'
           else
-            FieldByName('Mensagem0').AsString := 'CT-e sem Autorização de Uso da SEFAZ';
+            FieldByName('Mensagem0').AsString := 'CT-e sem Autorização' + sLineBreak + 'de Uso da SEFAZ';
         end
         else
           if (not((EstaVazio(Protocolo)) and

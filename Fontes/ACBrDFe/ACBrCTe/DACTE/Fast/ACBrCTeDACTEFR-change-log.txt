@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2019
+-- ACBrCTeDACTEFR --
+[*] Correção na impressão do DACTE quando CTe de complemento ou anulação,
+    alinhamento de bandas e reativação do "double pass" para numeração correta
+    com múltiplos CTe carregados.
+  Por: BigWings
+  
 09/10/2019
 -- ACBrCTeDACTEFR --
 [*] Ajuste para impressão quando CTe não contiver documentos no grupo "infDoc".

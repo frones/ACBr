@@ -3,7 +3,8 @@ program ACBrInstall_Trunk2;
 uses
   Forms,
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame};
+  uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
+  ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas';
 
 {$R *.res}
 

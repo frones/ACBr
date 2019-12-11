@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/12/2019
+-- ACBrNFSeWebServices --
+[*] Possível correção para enviar em ambiente de homologação - provedor ISSDSF.
+   Por: Italo Jurisato Junior
 -- ACBrNFSe --
 [*] https://www.projetoacbr.com.br/forum/topic/55292-charinset/
    Por: Antonio Gomes

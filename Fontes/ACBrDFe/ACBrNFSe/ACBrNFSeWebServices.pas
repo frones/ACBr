@@ -901,6 +901,9 @@ begin
 //  if Provedor = proGiap then
 //    FAuthorization := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
 
+  if (Provedor = proIssDSF) and (FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao) then
+    Texto := StringReplace(Texto, 'dsf:enviar', 'dsf:testeEnviar', [rfReplaceAll]);
+
   FPEnvelopeSoap := Texto;
 end;
 

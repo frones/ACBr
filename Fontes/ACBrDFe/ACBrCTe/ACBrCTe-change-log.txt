@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2019
+-- ACBrCTeWebServices --
+[*] Rhttps://www.projetoacbr.com.br/forum/topic/55322-salvar-xml-do-evento-ap%C3%B3s-consulta/
+   Por: Italo Jurisato Junior
+
 24/10/2019
 -- pcteCTeR / pcteCTeW --
 [*] Correção na grafia da tag lacre referente ao modal Aquaviário.
@@ -68,7 +73,7 @@ Símbolo : Significado
    Por: Italo Jurisato Junior
 
 12/10/2019
--- ACBrCTeManifestos --
+-- ACBrCTeConhecimentos --
 [*] Removido a condição que defini se é para gerar ou não o grupo
     <infCTeSupl>.
    Por: Italo Jurisato Junior

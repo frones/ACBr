@@ -2247,7 +2247,7 @@ begin
                   GravarXML;
 
                 // Salva o XML de eventos retornados ao consultar um CT-e
-                while aEvento <> '' do
+                while aEventos <> '' do
                 begin
                   Inicio := Pos('<procEventoCTe', aEventos);
                   Fim    := Pos('</procEventoCTe', aEventos) -1;
@@ -2861,7 +2861,6 @@ begin
           teCCe:
           begin
             SchemaEventoCTe := schevCCeCTe;
-            infEvento.detEvento.xCondUso := FEvento.Evento[I].InfEvento.detEvento.xCondUso;
             infEvento.detEvento.xCondUso := FEvento.Evento[i].InfEvento.detEvento.xCondUso;
 
             for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infCorrecao.Count - 1 do

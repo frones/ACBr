@@ -49,6 +49,9 @@
     <Compile Include="..\..\..\Shared\Helpers.cs">
       <Link>Helpers.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\Shared\InputBox.cs">
+      <Link>InputBox.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\Shared\ItemData.cs">
       <Link>ItemData.cs</Link>
     </Compile>

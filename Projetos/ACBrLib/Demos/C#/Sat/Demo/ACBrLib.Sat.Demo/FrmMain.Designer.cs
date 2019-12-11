@@ -112,8 +112,10 @@
             this.btnConsultarSAT = new System.Windows.Forms.Button();
             this.btnCancelarCFe = new System.Windows.Forms.Button();
             this.btnEmail = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnImprimirCFeCanc = new System.Windows.Forms.Button();
             this.btnImpMFe = new System.Windows.Forms.Button();
+            this.chkLogoLateral = new System.Windows.Forms.CheckBox();
+            this.chkQrCodeLateral = new System.Windows.Forms.CheckBox();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -464,6 +466,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.chkQrCodeLateral);
+            this.tabPage2.Controls.Add(this.chkLogoLateral);
             this.tabPage2.Controls.Add(this.label24);
             this.tabPage2.Controls.Add(this.cbbImpressora);
             this.tabPage2.Controls.Add(this.groupBox1);
@@ -491,7 +495,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(253, 10);
+            this.label24.Location = new System.Drawing.Point(111, 10);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(68, 13);
             this.label24.TabIndex = 79;
@@ -499,9 +503,9 @@
             // 
             // cbbImpressora
             // 
-            this.cbbImpressora.Location = new System.Drawing.Point(256, 26);
+            this.cbbImpressora.Location = new System.Drawing.Point(114, 27);
             this.cbbImpressora.Name = "cbbImpressora";
-            this.cbbImpressora.Size = new System.Drawing.Size(104, 21);
+            this.cbbImpressora.Size = new System.Drawing.Size(99, 21);
             this.cbbImpressora.TabIndex = 78;
             // 
             // groupBox1
@@ -525,9 +529,9 @@
             this.groupBox1.Controls.Add(this.cbbModelo);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(366, 3);
+            this.groupBox1.Location = new System.Drawing.Point(379, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(338, 141);
+            this.groupBox1.Size = new System.Drawing.Size(325, 141);
             this.groupBox1.TabIndex = 77;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pos Printer";
@@ -538,7 +542,7 @@
             this.cbbPaginaCodigo.FormattingEnabled = true;
             this.cbbPaginaCodigo.Location = new System.Drawing.Point(119, 32);
             this.cbbPaginaCodigo.Name = "cbbPaginaCodigo";
-            this.cbbPaginaCodigo.Size = new System.Drawing.Size(100, 21);
+            this.cbbPaginaCodigo.Size = new System.Drawing.Size(87, 21);
             this.cbbPaginaCodigo.TabIndex = 35;
             // 
             // label17
@@ -553,7 +557,7 @@
             // cbxIgnorarTags
             // 
             this.cbxIgnorarTags.AutoSize = true;
-            this.cbxIgnorarTags.Location = new System.Drawing.Point(225, 82);
+            this.cbxIgnorarTags.Location = new System.Drawing.Point(212, 82);
             this.cbxIgnorarTags.Name = "cbxIgnorarTags";
             this.cbxIgnorarTags.Size = new System.Drawing.Size(98, 17);
             this.cbxIgnorarTags.TabIndex = 33;
@@ -565,7 +569,7 @@
             this.cbxTraduzirTags.AutoSize = true;
             this.cbxTraduzirTags.Checked = true;
             this.cbxTraduzirTags.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxTraduzirTags.Location = new System.Drawing.Point(225, 59);
+            this.cbxTraduzirTags.Location = new System.Drawing.Point(212, 59);
             this.cbxTraduzirTags.Name = "cbxTraduzirTags";
             this.cbxTraduzirTags.Size = new System.Drawing.Size(104, 17);
             this.cbxTraduzirTags.TabIndex = 32;
@@ -577,7 +581,7 @@
             this.cbxCortarPapel.AutoSize = true;
             this.cbxCortarPapel.Checked = true;
             this.cbxCortarPapel.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxCortarPapel.Location = new System.Drawing.Point(225, 36);
+            this.cbxCortarPapel.Location = new System.Drawing.Point(212, 36);
             this.cbxCortarPapel.Name = "cbxCortarPapel";
             this.cbxCortarPapel.Size = new System.Drawing.Size(96, 17);
             this.cbxCortarPapel.TabIndex = 31;
@@ -587,7 +591,7 @@
             // cbxControlePorta
             // 
             this.cbxControlePorta.AutoSize = true;
-            this.cbxControlePorta.Location = new System.Drawing.Point(225, 13);
+            this.cbxControlePorta.Location = new System.Drawing.Point(212, 13);
             this.cbxControlePorta.Name = "cbxControlePorta";
             this.cbxControlePorta.Size = new System.Drawing.Size(107, 17);
             this.cbxControlePorta.TabIndex = 30;
@@ -693,7 +697,7 @@
             this.cbbPortas.FormattingEnabled = true;
             this.cbbPortas.Location = new System.Drawing.Point(6, 72);
             this.cbbPortas.Name = "cbbPortas";
-            this.cbbPortas.Size = new System.Drawing.Size(213, 21);
+            this.cbbPortas.Size = new System.Drawing.Size(200, 21);
             this.cbbPortas.TabIndex = 21;
             // 
             // cbbModelo
@@ -718,7 +722,7 @@
             // 
             this.chkImprimeEmUmaLinha.AutoSize = true;
             this.chkImprimeEmUmaLinha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkImprimeEmUmaLinha.Location = new System.Drawing.Point(129, 117);
+            this.chkImprimeEmUmaLinha.Location = new System.Drawing.Point(219, 79);
             this.chkImprimeEmUmaLinha.Name = "chkImprimeEmUmaLinha";
             this.chkImprimeEmUmaLinha.Size = new System.Drawing.Size(154, 17);
             this.chkImprimeEmUmaLinha.TabIndex = 76;
@@ -729,7 +733,7 @@
             // 
             this.chkUsaCodigoEanImpressao.AutoSize = true;
             this.chkUsaCodigoEanImpressao.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkUsaCodigoEanImpressao.Location = new System.Drawing.Point(129, 93);
+            this.chkUsaCodigoEanImpressao.Location = new System.Drawing.Point(219, 56);
             this.chkUsaCodigoEanImpressao.Name = "chkUsaCodigoEanImpressao";
             this.chkUsaCodigoEanImpressao.Size = new System.Drawing.Size(121, 17);
             this.chkUsaCodigoEanImpressao.TabIndex = 75;
@@ -738,9 +742,9 @@
             // 
             // txtSite
             // 
-            this.txtSite.Location = new System.Drawing.Point(120, 67);
+            this.txtSite.Location = new System.Drawing.Point(72, 67);
             this.txtSite.Name = "txtSite";
-            this.txtSite.Size = new System.Drawing.Size(240, 20);
+            this.txtSite.Size = new System.Drawing.Size(141, 20);
             this.txtSite.TabIndex = 74;
             this.txtSite.Text = "http://www.projetoacbr.com.br";
             // 
@@ -748,7 +752,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(117, 51);
+            this.label10.Location = new System.Drawing.Point(69, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(29, 13);
             this.label10.TabIndex = 73;
@@ -758,7 +762,7 @@
             // 
             this.chkSetup.AutoSize = true;
             this.chkSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkSetup.Location = new System.Drawing.Point(6, 117);
+            this.chkSetup.Location = new System.Drawing.Point(219, 33);
             this.chkSetup.Name = "chkSetup";
             this.chkSetup.Size = new System.Drawing.Size(105, 17);
             this.chkSetup.TabIndex = 72;
@@ -769,7 +773,7 @@
             // 
             this.chkPreview.AutoSize = true;
             this.chkPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.chkPreview.Location = new System.Drawing.Point(6, 94);
+            this.chkPreview.Location = new System.Drawing.Point(219, 11);
             this.chkPreview.Name = "chkPreview";
             this.chkPreview.Size = new System.Drawing.Size(117, 17);
             this.chkPreview.TabIndex = 71;
@@ -778,9 +782,9 @@
             // 
             // txtSoftwareHouse
             // 
-            this.txtSoftwareHouse.Location = new System.Drawing.Point(120, 27);
+            this.txtSoftwareHouse.Location = new System.Drawing.Point(6, 105);
             this.txtSoftwareHouse.Name = "txtSoftwareHouse";
-            this.txtSoftwareHouse.Size = new System.Drawing.Size(130, 20);
+            this.txtSoftwareHouse.Size = new System.Drawing.Size(207, 20);
             this.txtSoftwareHouse.TabIndex = 70;
             this.txtSoftwareHouse.Text = "Projeto ACBr";
             // 
@@ -788,7 +792,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(117, 11);
+            this.label9.Location = new System.Drawing.Point(3, 91);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(97, 13);
             this.label9.TabIndex = 69;
@@ -814,7 +818,7 @@
             0,
             0});
             this.nudCopias.Name = "nudCopias";
-            this.nudCopias.Size = new System.Drawing.Size(108, 20);
+            this.nudCopias.Size = new System.Drawing.Size(60, 20);
             this.nudCopias.TabIndex = 67;
             this.nudCopias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -836,7 +840,7 @@
             "EscPOS"});
             this.cmbImpressao.Location = new System.Drawing.Point(6, 27);
             this.cmbImpressao.Name = "cmbImpressao";
-            this.cmbImpressao.Size = new System.Drawing.Size(108, 21);
+            this.cmbImpressao.Size = new System.Drawing.Size(102, 21);
             this.cmbImpressao.TabIndex = 65;
             // 
             // tabPage3
@@ -1038,14 +1042,15 @@
             this.btnEmail.UseVisualStyleBackColor = true;
             this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
             // 
-            // button1
+            // btnImprimirCFeCanc
             // 
-            this.button1.Location = new System.Drawing.Point(130, 339);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 23);
-            this.button1.TabIndex = 41;
-            this.button1.Text = "Imprimir CFe Canc.";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnImprimirCFeCanc.Location = new System.Drawing.Point(130, 339);
+            this.btnImprimirCFeCanc.Name = "btnImprimirCFeCanc";
+            this.btnImprimirCFeCanc.Size = new System.Drawing.Size(112, 23);
+            this.btnImprimirCFeCanc.TabIndex = 41;
+            this.btnImprimirCFeCanc.Text = "Imprimir CFe Canc.";
+            this.btnImprimirCFeCanc.UseVisualStyleBackColor = true;
+            this.btnImprimirCFeCanc.Click += new System.EventHandler(this.btnImprimirCFeCanc_Click);
             // 
             // btnImpMFe
             // 
@@ -1057,13 +1062,35 @@
             this.btnImpMFe.UseVisualStyleBackColor = true;
             this.btnImpMFe.Click += new System.EventHandler(this.btnImpMFe_Click);
             // 
+            // chkLogoLateral
+            // 
+            this.chkLogoLateral.AutoSize = true;
+            this.chkLogoLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.chkLogoLateral.Location = new System.Drawing.Point(219, 102);
+            this.chkLogoLateral.Name = "chkLogoLateral";
+            this.chkLogoLateral.Size = new System.Drawing.Size(97, 17);
+            this.chkLogoLateral.TabIndex = 80;
+            this.chkLogoLateral.Text = "Logo Lateral";
+            this.chkLogoLateral.UseVisualStyleBackColor = true;
+            // 
+            // chkQrCodeLateral
+            // 
+            this.chkQrCodeLateral.AutoSize = true;
+            this.chkQrCodeLateral.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.chkQrCodeLateral.Location = new System.Drawing.Point(219, 125);
+            this.chkQrCodeLateral.Name = "chkQrCodeLateral";
+            this.chkQrCodeLateral.Size = new System.Drawing.Size(111, 17);
+            this.chkQrCodeLateral.TabIndex = 81;
+            this.chkQrCodeLateral.Text = "QrCode Lateral";
+            this.chkQrCodeLateral.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(742, 417);
             this.Controls.Add(this.btnImpMFe);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnImprimirCFeCanc);
             this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.btnCancelarCFe);
             this.Controls.Add(this.btnConsultarStatus);
@@ -1192,8 +1219,10 @@
         private System.Windows.Forms.Button btnConsultarSAT;
         private System.Windows.Forms.Button btnCancelarCFe;
         private System.Windows.Forms.Button btnEmail;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnImprimirCFeCanc;
         private System.Windows.Forms.Button btnImpMFe;
+        private System.Windows.Forms.CheckBox chkQrCodeLateral;
+        private System.Windows.Forms.CheckBox chkLogoLateral;
     }
 }
 

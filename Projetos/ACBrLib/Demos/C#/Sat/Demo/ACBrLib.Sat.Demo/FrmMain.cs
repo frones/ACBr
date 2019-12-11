@@ -46,7 +46,7 @@ namespace ACBrLib.Sat.Demo
             }
 
             cmbModeloSat.EnumDataSource(SATModelo.satNenhum);
-            cmbImpressao.EnumDataSource(TipoRelatorioBobina.tpFortes);
+            cmbImpressao.EnumDataSource(TipoExtrato.tpFortes);
             cbbModelo.EnumDataSource(ACBrPosPrinterModelo.ppTexto);
             cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
@@ -169,6 +169,18 @@ namespace ACBrLib.Sat.Demo
             rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
         }
 
+        private void btnImprimirCFeCanc_Click(object sender, EventArgs e)
+        {
+            var xmlPath = Helpers.OpenFile("Arquivo Xml CFe Venda (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(xmlPath)) return;
+
+            var xmlCancPath = Helpers.OpenFile("Arquivo Xml CFe Cancelamento (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(xmlCancPath)) return;
+
+            acbrSat.ImprimirExtratoCancelamento(xmlPath, xmlCancPath);
+            rtbRespostas.AppendLine("Impressão efetuada com sucesso.");
+        }
+
         private void btnImpMFe_Click(object sender, EventArgs e)
         {
             var xmlPath = Helpers.OpenFile("Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
@@ -180,6 +192,21 @@ namespace ACBrLib.Sat.Demo
 
         private void btnEmail_Click(object sender, EventArgs e)
         {
+            var xmlPath = Helpers.OpenFile("Arquivo Xml CFe (*.xml)|*.xml|Todo os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(xmlPath)) return;
+
+            var destinatario = "";
+            var eAssunto = "";
+            var eNomeArquivo = "";
+            var eMenssagem = "";
+            if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
+            if (InputBox.Show("Envio email", "Digite o Assunto", ref eAssunto) != DialogResult.OK) return;
+            if (InputBox.Show("Envio email", "Digite o nome do arquivo PDF", ref eNomeArquivo) != DialogResult.OK) return;
+            if (InputBox.Show("Envio email", "Digite digite a mensagem", ref eMenssagem) != DialogResult.OK) return;
+
+            if (string.IsNullOrEmpty(destinatario)) return;
+
+            acbrSat.EnviarEmail(xmlPath, destinatario, eAssunto, eNomeArquivo, eMenssagem, "", "");
         }
 
         private void LoadConfig()
@@ -208,6 +235,8 @@ namespace ACBrLib.Sat.Demo
             chkSetup.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "MostraSetup");
             chkUsaCodigoEanImpressao.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeCodigoEan");
             chkImprimeEmUmaLinha.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeEmUmaLinha");
+            chkLogoLateral.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeLogoLateral");
+            chkQrCodeLateral.Checked = acbrSat.ConfigLerValor<bool>(ACBrSessao.Extrato, "ImprimeQRCodeLateral");
 
             //PosPrinter
             cbbModelo.SetSelectedValue(acbrSat.ConfigLerValor<ACBrPosPrinterModelo>(ACBrSessao.PosPrinter, "Modelo"));
@@ -257,6 +286,8 @@ namespace ACBrLib.Sat.Demo
             acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "MostraSetup", chkSetup.Checked);
             acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeCodigoEan", chkUsaCodigoEanImpressao.Checked);
             acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeEmUmaLinha", chkImprimeEmUmaLinha.Checked);
+            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeLogoLateral", chkLogoLateral.Checked);
+            acbrSat.ConfigGravarValor(ACBrSessao.Extrato, "ImprimeQRCodeLateral", chkQrCodeLateral.Checked);
 
             //PosPrinter
             acbrSat.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo", cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
@@ -285,5 +316,7 @@ namespace ACBrLib.Sat.Demo
         }
 
         #endregion Methods
+
+        
     }
 }

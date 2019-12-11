@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -74,30 +74,39 @@ type
   TRegistroC177List = class;
   TRegistroC178List = class;
   TRegistroC179List = class;
+  TRegistroC180List = class;
+  TRegistroC185List = class;
   TRegistroC190List = class;
-  TRegistroC191List = class; {Alteração Versão 3.0.1 06Nov2018}
+  TRegistroC191List = class;
   TRegistroC195List = class;
   TRegistroC197List = class;
   TRegistroC300List = class;
   TRegistroC310List = class;
   TRegistroC320List = class;
   TRegistroC321List = class;
+  TRegistroC330List = class;
   TRegistroC350List = class;
   TRegistroC370List = class;
+  TRegistroC380List = class;
   TRegistroC390List = class;
   TRegistroC400List = class;
   TRegistroC405List = class;
   TRegistroC410List = class;
   TRegistroC420List = class;
   TRegistroC425List = class;
+  TRegistroC430List = class;
   TRegistroC460List = class;
   TRegistroC465List = class;
   TRegistroC470List = class;
+  TRegistroC480List = class;
   TRegistroC490List = class;
   TRegistroC495List = class;
   TRegistroC500List = class;
   TRegistroC510List = class;
   TRegistroC590List = class;
+  TRegistroC591List = class;
+  TRegistroC595List = class;
+  TRegistroC597List = class;
   TRegistroC600List = class;
   TRegistroC601List = class;
   TRegistroC610List = class;
@@ -174,7 +183,7 @@ type
     fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
 
     FRegistroC101: TRegistroC101List;  /// BLOCO C - Lista de RegistroC105 (FILHO) 
-	FRegistroC105: TRegistroC105List;  /// BLOCO C - Lista de RegistroC105 (FILHO)
+    FRegistroC105: TRegistroC105List;  /// BLOCO C - Lista de RegistroC105 (FILHO)
     FRegistroC110: TRegistroC110List;  /// BLOCO C - Lista de RegistroC110 (FILHO)
     FRegistroC120: TRegistroC120List;  /// BLOCO C - Lista de RegistroC120 (FILHO)
     FRegistroC130: TRegistroC130List;  /// BLOCO C - Lista de RegistroC130 (FILHO)
@@ -182,6 +191,7 @@ type
     FRegistroC160: TRegistroC160List;  /// BLOCO C - Lista de RegistroC160 (FILHO)
     FRegistroC165: TRegistroC165List;  /// BLOCO C - Lista de RegistroC165 (FILHO)
     FRegistroC170: TRegistroC170List;  /// BLOCO C - Lista de RegistroC170 (FILHO)
+    FRegistroC185: TRegistroC185List;  /// BLOCO C - Lista de RegistroC185 (FILHO)
     FRegistroC190: TRegistroC190List;  /// BLOCO C - Lista de RegistroC190 (FILHO) 
     FRegistroC195: TRegistroC195List;  /// BLOCO C - Lista de RegistroC195 (FILHO)
   public
@@ -227,6 +237,7 @@ type
     property RegistroC160: TRegistroC160List read FRegistroC160 write FRegistroC160;
     property RegistroC165: TRegistroC165List read FRegistroC165 write FRegistroC165;
     property RegistroC170: TRegistroC170List read FRegistroC170 write FRegistroC170;
+    property RegistroC185: TRegistroC185List read FRegistroC185 write FRegistroC185;
     property RegistroC190: TRegistroC190List read FRegistroC190 write FRegistroC190;
     property RegistroC195: TRegistroC195List read FRegistroC195 write FRegistroC195;
   end;
@@ -761,6 +772,7 @@ type
     FRegistroC177: TRegistroC177List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
     FRegistroC178: TRegistroC178List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
     FRegistroC179: TRegistroC179List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
+    FRegistroC180: TRegistroC180List;  /// BLOCO C - Lista de RegistroC141 (FILHO fo FILHO)
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -815,6 +827,7 @@ type
     property RegistroC177: TRegistroC177List read FRegistroC177 write FRegistroC177;
     property RegistroC178: TRegistroC178List read FRegistroC178 write FRegistroC178;
     property RegistroC179: TRegistroC179List read FRegistroC179 write FRegistroC179;
+    property RegistroC180: TRegistroC180List read FRegistroC180 write FRegistroC180;
   end;
 
   /// Registro C170 - Lista
@@ -1106,7 +1119,96 @@ type
     property Items[Index: Integer]: TRegistroC179 read GetItem write SetItem;
   end;
 
-  /// Registro C190 - REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04 E 55)
+  /// REGISTRO C180: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE ENTRADA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 01, 1B, 04 e 55)
+
+  TRegistroC180 = class
+  private
+   fCOD_RESP_RET: String;               /// Código que indica o responsável pela retenção do ICMS-ST: 1-Remetente Direto / 2-Remetente Indireto / 3-Próprio declarante.
+   fQUANT_CONV: currency;              /// Quantidade do item convertida na unidade de controle de estoque informada no registro 0200 ou a unidade de comercialização, a critério de cada UF.
+   fUNID: String;                    /// Unidade adotada para informar o campo QUANT_CONV.
+   fVL_UNIT_CONV: currency;            /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_CONV: currency;    /// Valor unitário do ICMS operação própria que o informante teria direito ao crédito caso a mercadoria estivesse sob o regime comum de tributação, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_BC_ICMS_ST_CONV: currency; /// Valor unitário da base de cálculo do imposto pago ou retido anteriormente por substituição, considerando a unidade utilizada para informar o campo “QUANT_CONV”, aplicando-se redução, se houver.
+   fVL_UNIT_ICMS_ST_CONV: currency;    /// Valor unitário do imposto pago ou retido anteriormente por substituição, inclusive FCP se devido, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV: currency;     /// Valor unitário do FCP_ST agregado ao valor informado no campo “VL_UNIT_ICMS_ST_CONV”.
+   fCOD_DA: String;                    /// Código do modelo do documento de arrecadação: 0 – Documento estadual de arrecadação / 1 – GNRE.
+   fNUM_DA: String;                    /// Número do documento de arrecadação estadual, se houver.
+  public
+    property COD_RESP_RET: String read fCOD_RESP_RET write fCOD_RESP_RET;
+    property QUANT_CONV: currency read fQUANT_CONV write fQUANT_CONV;
+    property UNID: String read fUNID write fUNID;
+    property VL_UNIT_CONV: currency read fVL_UNIT_CONV write fVL_UNIT_CONV;
+    property VL_UNIT_ICMS_OP_CONV: currency read fVL_UNIT_ICMS_OP_CONV write fVL_UNIT_ICMS_OP_CONV;
+    property VL_UNIT_BC_ICMS_ST_CONV: currency read fVL_UNIT_BC_ICMS_ST_CONV write fVL_UNIT_BC_ICMS_ST_CONV;
+    property VL_UNIT_ICMS_ST_CONV: currency read fVL_UNIT_ICMS_ST_CONV write fVL_UNIT_ICMS_ST_CONV;
+    property VL_UNIT_FCP_ST_CONV: currency read fVL_UNIT_FCP_ST_CONV write fVL_UNIT_FCP_ST_CONV;
+    property COD_DA: String read fCOD_DA write fCOD_DA;
+    property NUM_DA: String read fNUM_DA write fNUM_DA;
+  end;
+    /// Registro C180 - Lista
+
+  TRegistroC180List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC180; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC180); /// SetItem
+  public
+    function New: TRegistroC180;
+    property Items[Index: Integer]: TRegistroC180 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C185: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 01, 1B, 04, 55 e 65).
+
+  TRegistroC185 = class
+  private
+   fNUM_ITEM: String; /// Número sequencial do item no documento fiscal.
+   fCOD_ITEM: String; /// Código do item (campo 02 do Registro 0200).
+   fCST_ICMS: String; /// Código da Situação Tributária referente ao ICMS.
+   fCFOP:String ; /// Código Fiscal de Operação e Prestação.
+   fCOD_MOT_REST_COMPL:String ; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+   fQUANT_CONV: currency ; /// Quantidade do item.
+   fUNID: String; /// Unidade adotada para informar o campo QUANT_CONV.
+   fVL_UNIT_CONV: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_NA_OPERACAO_CONV: currency; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, considerando redução da base de cálculo do ICMS ST na tributação, se houver.
+   fVL_UNIT_ICMS_OP_CONV: currency; /// Valor unitário do ICMS que o contribuinte teria se creditado, ou pode se creditar, referente à operação de entrada da mercadoria, caso estivesse submetida ao regime comum de tributação, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_REST: currency; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_REST: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_COMPL: currency; ///  Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_COMPL: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+ public
+   property NUM_ITEM: String read fNUM_ITEM write fNUM_ITEM;
+   property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+   property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
+   property CFOP:String  read fCFOP write fCFOP;
+   property COD_MOT_REST_COMPL:String  read fCOD_MOT_REST_COMPL write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: currency  read fQUANT_CONV write fQUANT_CONV;
+   property UNID: String read fUNID write fUNID;
+   property VL_UNIT_CONV: currency read fVL_UNIT_CONV write fVL_UNIT_CONV;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV: currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
+   property VL_UNIT_ICMS_OP_CONV: currency read fVL_UNIT_ICMS_OP_CONV write fVL_UNIT_ICMS_OP_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_CONV_REST: currency read fVL_UNIT_ICMS_ST_CONV_REST write fVL_UNIT_ICMS_ST_CONV_REST;
+   property VL_UNIT_FCP_ST_CONV_REST: currency read fVL_UNIT_FCP_ST_CONV_REST write fVL_UNIT_FCP_ST_CONV_REST;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: currency read fVL_UNIT_ICMS_ST_CONV_COMPL write fVL_UNIT_ICMS_ST_CONV_COMPL;
+   property VL_UNIT_FCP_ST_CONV_COMPL: currency read fVL_UNIT_FCP_ST_CONV_COMPL write fVL_UNIT_FCP_ST_CONV_COMPL;
+  end;
+
+    /// Registro C185 - Lista
+
+  TRegistroC185List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC185; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC185); /// SetItem
+  public
+    function New: TRegistroC185;
+    property Items[Index: Integer]: TRegistroC185 read GetItem write SetItem;
+  end;
+
+   /// Registro C190 - REGISTRO ANALÍTICO DO DOCUMENTO (CÓDIGO 01, 1B, 04 E 55)
 
   TRegistroC190 = class
   private
@@ -1356,7 +1458,11 @@ type
     fVL_ICMS: currency;    /// Valor acumulado do ICMS debitado
     fVL_PIS: currency;     /// Valor acumulado do PIS
     fVL_COFINS: currency;  /// Valor acumulado da COFINS
+    FRegistroC330: TRegistroC330List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+    ///
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
@@ -1366,6 +1472,7 @@ type
     property VL_ICMS: currency read FVL_ICMS write FVL_ICMS;
     property VL_PIS: currency read FVL_PIS write FVL_PIS;
     property VL_COFINS: currency read FVL_COFINS write FVL_COFINS;
+    property RegistroC330: TRegistroC330List read FRegistroC330 write FRegistroC330;
   end;
 
   /// Registro C321 - Lista
@@ -1378,6 +1485,51 @@ type
     function New: TRegistroC321;
     property Items[Index: Integer]: TRegistroC321 read GetItem write SetItem;
   end;
+
+  /// REGISTRO C330: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 02)
+
+  TRegistroC330 = class
+  private
+   fCOD_MOT_REST_COMPL: string; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+   fQUANT_CONV: currency; /// Quantidade do item.
+   fUNID: string ; /// Unidade adotada para informar o campo QUANT_CONV.
+   fVL_UNIT_CONV: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_NA_OPERACAO_CONV: currency; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, aplicando-se a mesma redução da base de cálculo do ICMS ST na tributação, se houver.
+   fVL_UNIT_ICMS_OP_CONV: currency; /// Valor unitário correspondente ao ICMS OP utilizado no cálculo do ressarcimento / restituição, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_REST: currency; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_REST: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_COMPL: currency; /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_COMPL: currency ; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+  public
+   property COD_MOT_REST_COMPL: string read fCOD_MOT_REST_COMPL  write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: currency read fQUANT_CONV  write fQUANT_CONV;
+   property UNID: string  read fUNID  write fUNID;
+   property VL_UNIT_CONV: currency read fVL_UNIT_CONV  write fVL_UNIT_CONV;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV: currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV  write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
+   property VL_UNIT_ICMS_OP_CONV: currency read fVL_UNIT_ICMS_OP_CONV  write fVL_UNIT_ICMS_OP_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_CONV_REST: currency read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST;
+   property VL_UNIT_FCP_ST_CONV_REST: currency read fVL_UNIT_FCP_ST_CONV_REST  write fVL_UNIT_FCP_ST_CONV_REST;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: currency read fVL_UNIT_ICMS_ST_CONV_COMPL  write fVL_UNIT_ICMS_ST_CONV_COMPL;
+   property VL_UNIT_FCP_ST_CONV_COMPL: currency  read fVL_UNIT_FCP_ST_CONV_COMPL  write fVL_UNIT_FCP_ST_CONV_COMPL;
+  end;
+
+   /// Registro C330 - Lista
+
+  TRegistroC330List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC330; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC330); /// SetItem
+  public
+    function New: TRegistroC330;
+    property Items[Index: Integer]: TRegistroC330 read GetItem write SetItem;
+  end;
+
 
   /// Registro C350 - NOTA FISCAL DE VENDA A CONSUMIDOR (CÓDIGO 02)
 
@@ -1438,13 +1590,17 @@ type
     fUNID: String;       /// Unidade do item (campo 02 do registro 0190)
     fVL_ITEM: currency;  /// Valor total do item
     fVL_DESC: currency;  /// Valor total do desconto no item
+    FRegistroC380: TRegistroC380List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
     property NUM_ITEM: String read FNUM_ITEM write FNUM_ITEM;
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
     property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
     property VL_DESC: currency read FVL_DESC write FVL_DESC;
+    property RegistroC380: TRegistroC380List read FRegistroC380 write FRegistroC380;
   end;
 
   /// Registro C370 - Lista
@@ -1456,6 +1612,54 @@ type
   public
     function New: TRegistroC370;
     property Items[Index: Integer]: TRegistroC370 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C380: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 02)
+
+  TRegistroC380 = class
+  private
+   fCOD_MOT_REST_COMPL: string; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+   fQUANT_CONV: currency; ///Quantidade do item.
+   fUNID: string; /// Unidade adotada para informar o campo QUANT_CONV.
+   fVL_UNIT_CONV: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_NA_OPERACAO_CONV: currency; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, aplicando-se a mesma redução da base de cálculo do ICMS ST na tributação, se houver.
+   fVL_UNIT_ICMS_OP_CONV: currency; /// Valor unitário correspondente ao ICMS OP utilizado no cálculo do ressarcimento / restituição, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_REST: currency; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_REST: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_COMPL: currency; /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_COMPL: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fCST_ICMS: string; ///Código da Situação Tributária referente ao ICMS.
+   fCFOP: string; /// Código Fiscal de Operação e Prestação.
+  public
+   property COD_MOT_REST_COMPL: string read fCOD_MOT_REST_COMPL  write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: currency read fQUANT_CONV  write fQUANT_CONV;
+   property UNID: string read fUNID  write fUNID;
+   property VL_UNIT_CONV: currency read fVL_UNIT_CONV  write fVL_UNIT_CONV;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV: currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV  write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
+   property VL_UNIT_ICMS_OP_CONV: currency read fVL_UNIT_ICMS_OP_CONV  write fVL_UNIT_ICMS_OP_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_CONV_REST: currency read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST;
+   property VL_UNIT_FCP_ST_CONV_REST: currency read fVL_UNIT_FCP_ST_CONV_REST  write fVL_UNIT_FCP_ST_CONV_REST;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: currency read fVL_UNIT_ICMS_ST_CONV_COMPL  write fVL_UNIT_ICMS_ST_CONV_COMPL;
+   property VL_UNIT_FCP_ST_CONV_COMPL: currency read fVL_UNIT_FCP_ST_CONV_COMPL  write fVL_UNIT_FCP_ST_CONV_COMPL;
+   property CST_ICMS: string read fCST_ICMS  write fCST_ICMS;
+   property CFOP: string read fCFOP  write fCFOP;
+  end;
+
+  /// Registro C380 - Lista
+
+  TRegistroC380List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC380; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC380); /// SetItem
+  public
+    function New: TRegistroC380;
+    property Items[Index: Integer]: TRegistroC380 read GetItem write SetItem;
   end;
 
   /// Registro C390 - REGISTRO ANALÍTICO DAS NOTAS FISCAIS DE VENDA A CONSUMIDOR (CÓDIGO 02)
@@ -1634,13 +1838,17 @@ type
     fVL_ITEM: currency;          /// Valor acumulado do item:
     fVL_PIS: currency;           /// Valor do PIS
     fVL_COFINS: currency;        /// Valor da COFINS
+    FRegistroC430: TRegistroC430List;  /// BLOCO C - Lista de RegistroC430 (FILHO)
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property QTD: Double read FQTD write FQTD;
     property UNID: String read FUNID write FUNID;
     property VL_ITEM: currency read FVL_ITEM write FVL_ITEM;
     property VL_PIS: currency read fVL_PIS write fVL_PIS;
     property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
+    property RegistroC430: TRegistroC430List read FRegistroC430 write FRegistroC430;
   end;
 
   /// Registro C425 - Lista
@@ -1652,6 +1860,54 @@ type
   public
     function New: TRegistroC425;
     property Items[Index: Integer]: TRegistroC425 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C430: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 02, 2D e 60)
+
+  TRegistroC430 = class
+  private
+   fCOD_MOT_REST_COMPL: string; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+   fQUANT_CONV: currency; /// Quantidade do item.
+   fUNID: string; /// Unidade adotada para informar o campo QUANT_CONV.
+   fVL_UNIT_CONV: currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_NA_OPERACAO_CONV: currency; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, considerando redução da base de cálculo do ICMS ST na tributação, se houver.
+   fVL_UNIT_ICMS_OP_CONV: currency; /// Valor unitário do ICMS que o contribuinte teria se creditado, ou pode se creditar, referente à operação de entrada da mercadoria, caso estivesse submetida ao regime comum de tributação, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_OP_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_REST: currency; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_REST: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_ICMS_ST_CONV_COMPL: currency; /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+   fVL_UNIT_FCP_ST_CONV_COMPL: currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+   fCST_ICMS: string; /// Código da Situação Tributária referente ao ICMS.
+   fCFOP: string;/// Código Fiscal de Operação e Prestação
+  public
+   property COD_MOT_REST_COMPL: string read fCOD_MOT_REST_COMPL  write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: currency read fQUANT_CONV  write fQUANT_CONV;
+   property UNID: string read fUNID  write fUNID;
+   property VL_UNIT_CONV: currency read fVL_UNIT_CONV  write fVL_UNIT_CONV;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV: currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV  write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
+   property VL_UNIT_ICMS_OP_CONV: currency read fVL_UNIT_ICMS_OP_CONV  write fVL_UNIT_ICMS_OP_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_CONV_REST: currency read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST;
+   property VL_UNIT_FCP_ST_CONV_REST: currency read fVL_UNIT_FCP_ST_CONV_REST  write fVL_UNIT_FCP_ST_CONV_REST;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: currency read fVL_UNIT_ICMS_ST_CONV_COMPL  write fVL_UNIT_ICMS_ST_CONV_COMPL;
+   property VL_UNIT_FCP_ST_CONV_COMPL: currency read fVL_UNIT_FCP_ST_CONV_COMPL  write fVL_UNIT_FCP_ST_CONV_COMPL;
+   property CST_ICMS: string read fCST_ICMS  write fCST_ICMS;
+   property CFOP: string read fCFOP  write fCFOP;
+  end;
+
+  /// Registro C430 - Lista
+
+  TRegistroC430List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC430; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC430); /// SetItem
+  public
+    function New: TRegistroC430;
+    property Items[Index: Integer]: TRegistroC430 read GetItem write SetItem;
   end;
 
   /// Registro C460 - DOCUMENTO FISCAL EMITIDO POR ECF (CÓDIGO 02 E 2D)
@@ -1668,9 +1924,9 @@ type
     fCPF_CNPJ: String;            /// CPF ou CNPJ do adquirente
     fNOM_ADQ: String;             /// Nome do adquirente
 
-    FRegistroC470: TRegistroC470List;  /// BLOCO C - Lista de RegistroC110 (FILHO)
     FRegistroC465: TRegistroC465List;
-  public
+    FRegistroC470: TRegistroC470List;  /// BLOCO C - Lista de RegistroC460 (FILHO)
+ public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
 
@@ -1684,8 +1940,8 @@ type
     property CPF_CNPJ: String read fCPF_CNPJ write fCPF_CNPJ;
     property NOM_ADQ: String read fNOM_ADQ write fNOM_ADQ;
     /// Registros FILHOS
-    property RegistroC470: TRegistroC470List read FRegistroC470 write FRegistroC470;
     property RegistroC465: TRegistroC465List read FRegistroC465 write FRegistroC465;
+    property RegistroC470: TRegistroC470List read FRegistroC470 write FRegistroC470;
   end;
 
   /// Registro C460 - Lista
@@ -1735,7 +1991,10 @@ type
     fALIQ_ICMS: Currency;    /// Alíquota do ICMS - Carga tributária efetiva em percentual
     fVL_PIS: currency;       /// Valor do PIS
     fVL_COFINS: currency;    /// Valor da COFINS
+    FRegistroC480: TRegistroC480List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
     property COD_ITEM: String read FCOD_ITEM write FCOD_ITEM;
     property QTD: Double read FQTD write FQTD;
     property QTD_CANC: Double read FQTD_CANC write FQTD_CANC;
@@ -1746,6 +2005,7 @@ type
     property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
     property VL_PIS: currency read fVL_PIS write fVL_PIS;
     property VL_COFINS: currency read fVL_COFINS write fVL_COFINS;
+    property RegistroC480: TRegistroC480List read FRegistroC480 write FRegistroC480;
   end;
 
   /// Registro C470 - Lista
@@ -1757,6 +2017,54 @@ type
   public
     function New: TRegistroC470;
     property Items[Index: Integer]: TRegistroC470 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C480: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À SUBSTITUIÇÃO TRIBUTÁRIA (CÓDIGO 02, 2D e 60)
+
+  TRegistroC480 = class
+  private
+  fCOD_MOT_REST_COMPL: string; /// Código do motivo da restituição ou complementação conforme Tabela 5.7.
+  fQUANT_CONV: Currency; /// Quantidade do item.
+  fUNID: string; /// Unidade adotada para informar o campo QUANT_CONV.
+  fVL_UNIT_CONV: Currency; /// Valor unitário da mercadoria, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_ICMS_NA_OPERACAO_CONV: Currency; /// Valor unitário para o ICMS na operação, caso não houvesse a ST, considerando unidade utilizada para informar o campo “QUANT_CONV”, aplicando-se a mesma redução da base de cálculo do ICMS ST na tributação, se houver.
+  fVL_UNIT_ICMS_OP_CONV: Currency; /// Valor unitário correspondente ao ICMS OP utilizado no cálculo do ressarcimento / restituição, no desfazimento da substituição tributária, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_ICMS_OP_ESTOQUE_CONV: Currency; /// Valor médio unitário do ICMS que o contribuinte teria se creditado referente à operação de entrada das mercadorias em estoque caso estivesse submetida ao regime comum de tributação, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_ICMS_ST_ESTOQUE_CONV: Currency; /// Valor médio unitário do ICMS/ST, incluindo FCP ST, das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Currency; /// Valor médio unitário do FCP ST agregado ao ICMS das mercadorias em estoque, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_ICMS_ST_CONV_REST: Currency; /// Valor unitário do total do ICMS/ST, incluindo FCP ST, a ser restituído/ressarcido, calculado conforme a legislação de cada UF, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_FCP_ST_CONV_REST: Currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_REST”, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_ICMS_ST_CONV_COMPL: Currency; /// Valor unitário do complemento do ICMS, incluindo FCP ST, considerando a unidade utilizada para informar o campo “QUANT_CONV”.
+  fVL_UNIT_FCP_ST_CONV_COMPL: Currency; /// Valor unitário correspondente à parcela de ICMS FCP ST que compõe o campo “VL_UNIT_ICMS_ST_CONV_COMPL”, considerando unidade utilizada para informar o campo “QUANT_CONV”.
+  fCST_ICMS: string; /// Código da Situação Tributária referente ao ICMS.
+  fCFOP: string; /// Código Fiscal de Operação e Prestação.
+ public
+   property COD_MOT_REST_COMPL: string read fCOD_MOT_REST_COMPL  write fCOD_MOT_REST_COMPL;
+   property QUANT_CONV: Currency read fQUANT_CONV  write fQUANT_CONV;
+   property UNID: string read fUNID  write fUNID;
+   property VL_UNIT_CONV: Currency read fVL_UNIT_CONV  write fVL_UNIT_CONV;
+   property VL_UNIT_ICMS_NA_OPERACAO_CONV: Currency read fVL_UNIT_ICMS_NA_OPERACAO_CONV  write fVL_UNIT_ICMS_NA_OPERACAO_CONV;
+   property VL_UNIT_ICMS_OP_CONV: Currency read fVL_UNIT_ICMS_OP_CONV  write fVL_UNIT_ICMS_OP_CONV;
+   property VL_UNIT_ICMS_OP_ESTOQUE_CONV: Currency read fVL_UNIT_ICMS_OP_ESTOQUE_CONV  write fVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_ESTOQUE_CONV: Currency read fVL_UNIT_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Currency read fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV  write fVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+   property VL_UNIT_ICMS_ST_CONV_REST: Currency read fVL_UNIT_ICMS_ST_CONV_REST  write fVL_UNIT_ICMS_ST_CONV_REST;
+   property VL_UNIT_FCP_ST_CONV_REST: Currency read fVL_UNIT_FCP_ST_CONV_REST  write fVL_UNIT_FCP_ST_CONV_REST;
+   property VL_UNIT_ICMS_ST_CONV_COMPL: Currency read fVL_UNIT_ICMS_ST_CONV_COMPL  write fVL_UNIT_ICMS_ST_CONV_COMPL;
+   property VL_UNIT_FCP_ST_CONV_COMPL: Currency read fVL_UNIT_FCP_ST_CONV_COMPL  write fVL_UNIT_FCP_ST_CONV_COMPL;
+   property CST_ICMS: string read fCST_ICMS  write fCST_ICMS;
+   property CFOP: string read fCFOP  write fCFOP;
+  end;
+
+   /// Registro C480 - Lista
+
+  TRegistroC480List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC480; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC480); /// SetItem
+  public
+    function New: TRegistroC480;
+    property Items[Index: Integer]: TRegistroC480 read GetItem write SetItem;
   end;
 
   /// Registro C490 - REGISTRO ANALÍTICO DO MOVIMENTO DIÁRIO (CÓDIGO 02 E 2D)
@@ -1869,7 +2177,7 @@ type
     fTP_LIGACAO: TACBrTipoLigacao;       /// Código de tipo de Ligação [ 1 - Monofásico 2 - Bifásico 3 - Trifásico ]
     fCOD_GRUPO_TENSAO: TACBrGrupoTensao; /// Código de grupo de tensão: Vide Manual Registro C500 Campo 27
     fCHV_DOCe: string;                   /// Chave da Nota Fiscal de Energia Elétrica Eletrônica
-    fFIN_DOCe:TACBrFinalidadeEmissaoDocumentoEletronico; /// Finalidade da emissão do documento eletrônico
+    fFIN_DOCe: TACBrFinalidadeEmissaoDocumentoEletronico; /// Finalidade da emissão do documento eletrônico
     FCHV_DOCe_REF: string;               /// Chave da nota referenciada.
     FIND_DEST: TACBrIndicadorDestinatarioAcessante; /// Indicador do Destinatário/Acessante:
     FCOD_MUN_DEST: string;               /// Código do município do destinatário conforme a tabela do IBGE.
@@ -1877,6 +2185,7 @@ type
 
     FRegistroC510: TRegistroC510List;  /// BLOCO C - Lista de RegistroC510 (FILHO)
     FRegistroC590: TRegistroC590List;  /// BLOCO C - Lista de RegistroC590 (FILHO)
+    FRegistroC595: TRegistroC595List;  /// BLOCO C - Lista de RegistroC595 (FILHO)
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -1918,6 +2227,7 @@ type
     /// Registros FILHOS
     property RegistroC510: TRegistroC510List read FRegistroC510 write FRegistroC510;
     property RegistroC590: TRegistroC590List read FRegistroC590 write FRegistroC590;
+    property RegistroC595: TRegistroC595List read FRegistroC595 write FRegistroC595;
 
   end;
 
@@ -2004,7 +2314,10 @@ type
     fVL_ICMS_ST: currency;    /// Parcela correspondente ao valor creditado/debitado do ICMS da substituição tributária, referente à combinação de CST_ICMS,  CFOP, e alíquota do ICMS.
     fVL_RED_BC: currency;     /// Valor não tributado em função da redução da base de cálculo do ICMS, referente à combinação de CST_ICMS, CFOP e alíquota do ICMS.
     fCOD_OBS: String;         /// Código da observação do lançamento fiscal (campo 02 do Registro 0460)
+    FRegistroC591: TRegistroC591List;
   public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
     property CST_ICMS: String read fCST_ICMS write fCST_ICMS;
     property CFOP: String read fCFOP write fCFOP;
     property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
@@ -2015,6 +2328,7 @@ type
     property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
     property VL_RED_BC: currency read fVL_RED_BC write fVL_RED_BC;
     property COD_OBS: String read fCOD_OBS write fCOD_OBS;
+    property RegistroC591: TRegistroC591List read FRegistroC591 write FRegistroC591;
   end;
 
   /// Registro C590 - Lista
@@ -2026,6 +2340,86 @@ type
   public
     function New: TRegistroC590;
     property Items[Index: Integer]: TRegistroC590 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C591: INFORMAÇÕES DO FUNDO DE COMBATE À POBREZA – FCP NA NF3e (CÓDIGO 66)
+
+  TRegistroC591 = class
+  private
+   fVL_FCP_OP: currency; /// Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação própria, na combinação de CST_ICMS, CFOP e alíquota do ICMS
+   fVL_FCP_ST: currency; /// Valor do Fundo de Combate à Pobreza (FCP) vinculado à operação de substituição tributária, na combinação de CST_ICMS, CFOP e alíquota do ICMS.
+  public
+   property VL_FCP_OP: currency read fVL_FCP_OP write fVL_FCP_OP;
+   property VL_FCP_ST: currency read fVL_FCP_ST write fVL_FCP_ST;
+
+  end;
+
+  /// Registro C591 - Lista
+
+  TRegistroC591List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC591; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC591); /// SetItem
+  public
+    function New: TRegistroC591;
+    property Items[Index: Integer]: TRegistroC591 read GetItem write SetItem;
+  end;
+
+  /// Registro C595: OBSERVAÇÕES DO LANÇAMENTO FISCAL (CÓDIGOS 06, 28, 29 e 66)
+  TRegistroC595 = class
+  private
+   fCOD_OBS: string; /// Código da observação do lançamento fiscal (campo 02 do Registro 0460).
+   fTXT_COMPL: string; /// Descrição complementar do código de observação.
+   FRegistroC597: TRegistroC597List;
+  public
+   constructor Create; virtual; /// Create
+   destructor Destroy; override; /// Destroy
+   property COD_OBS: string read fCOD_OBS write fCOD_OBS;
+   property TXT_COMPL: string read fTXT_COMPL write fTXT_COMPL;
+   property RegistroC597: TRegistroC597List read FRegistroC597 write FRegistroC597;
+  end;
+
+  /// Registro C595 - Lista
+
+  TRegistroC595List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC595; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC595); /// SetItem
+  public
+    function New: TRegistroC595;
+    property Items[Index: Integer]: TRegistroC595 read GetItem write SetItem;
+  end;
+
+  /// REGISTRO C597: OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL.
+
+  TRegistroC597 = class
+  private
+   fCOD_AJ: string; /// Código do ajustes/benefício/incentivo, conforme tabela indicada no item 5.3.
+   fDESCR_COMPL_AJ: string ; /// Descrição complementar do ajuste do documento fiscal
+   fCOD_ITEM: string; /// Código do item (campo 02 do Registro 0200).
+   fVL_BC_ICMS: Currency; /// Base de cálculo do ICMS ou do ICMS ST.
+   fALIQ_ICMS: Currency; /// Alíquota do ICMS.
+   fVL_ICMS: Currency; /// Valor do ICMS ou do ICMS.
+   fVL_OUTROS: Currency; /// Outros valores.
+  public
+   property COD_AJ: string read fCOD_AJ write fCOD_AJ;
+   property DESCR_COMPL_AJ: string read fDESCR_COMPL_AJ write fDESCR_COMPL_AJ;
+   property COD_ITEM: string read fCOD_ITEM write fCOD_ITEM;
+   property VL_BC_ICMS: Currency read fVL_BC_ICMS write fVL_BC_ICMS;
+   property ALIQ_ICMS: Currency read fALIQ_ICMS write fALIQ_ICMS;
+   property VL_ICMS: Currency read fVL_ICMS write fVL_ICMS;
+   property VL_OUTROS: Currency read fVL_OUTROS write fVL_OUTROS;
+  end;
+
+   /// Registro C597 - Lista
+
+  TRegistroC597List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC597; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroC597); /// SetItem
+  public
+    function New: TRegistroC597;
+    property Items[Index: Integer]: TRegistroC597 read GetItem write SetItem;
   end;
 
   /// Registro C600 - CONSOLIDAÇÃO DIÁRIA DE NOTAS FISCAIS/CONTAS DE ENERGIA ELÉTRICA (CÓDIGO 06), NOTA FISCAL/CONTA DE FORNECIMENTO D'ÁGUA CANALIZADA (CÓDIGO 29) E NOTA FISCAL/CONTA DE FORNECIMENTO DE GÁS (CÓDIGO 28) (EMPRESAS NÃO OBRIGADAS AO CONVENIO ICMS 115/03)
@@ -3615,6 +4009,7 @@ begin
   FRegistroC160 := TRegistroC160List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC165 := TRegistroC165List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
   FRegistroC170 := TRegistroC170List.Create;  /// BLOCO C - Lista de RegistroC170 (FILHO)
+  FRegistroC185 := TRegistroC185List.Create;  /// BLOCO C - Lista de RegistroC185 (FILHO)
   FRegistroC190 := TRegistroC190List.Create;  /// BLOCO C - Lista de RegistroC190 (FILHO)
   FRegistroC195 := TRegistroC195List.Create;  /// BLOCO C - Lista de RegistroC110 (FILHO)
 end;
@@ -3630,6 +4025,7 @@ begin
   FRegistroC160.Free;
   FRegistroC165.Free;
   FRegistroC170.Free;
+  FRegistroC185.Free;
   FRegistroC190.Free;
   FRegistroC195.Free;
   inherited;
@@ -3758,6 +4154,7 @@ begin
   FRegistroC177 := TRegistroC177List.Create;
   FRegistroC178 := TRegistroC178List.Create;
   FRegistroC179 := TRegistroC179List.Create;
+  FRegistroC180 := TRegistroC180List.Create;
 end;
 
 destructor TRegistroC170.Destroy;
@@ -3771,6 +4168,7 @@ begin
   FRegistroC177.Free;
   FRegistroC178.Free;
   FRegistroC179.Free;
+  FRegistroC180.Free;
   inherited;
 end;
 
@@ -3780,12 +4178,14 @@ constructor TRegistroC500.Create;
 begin
   FRegistroC510 := TRegistroC510List.Create;  /// BLOCO C - Lista de RegistroC510 (FILHO)
   FRegistroC590 := TRegistroC590List.Create;  /// BLOCO C - Lista de RegistroC590 (FILHO)
+  FRegistroC595 := TRegistroC595List.Create;  /// BLOCO C - Lista de RegistroC590 (FILHO)
 end;
 
 destructor TRegistroC500.Destroy;
 begin
   FRegistroC510.Free;
   FRegistroC590.Free;
+  FRegistroC595.Free;
   inherited;
 end;
 
@@ -3827,7 +4227,8 @@ end;
 
 constructor TRegistroC195.Create;
 begin
-   FRegistroC197 := TRegistroC197List.Create;
+  inherited Create;
+  FRegistroC197 := TRegistroC197List.Create;
 end;
 
 destructor TRegistroC195.Destroy;
@@ -3840,6 +4241,7 @@ end;
 
 constructor TRegistroC300.Create;
 begin
+  inherited Create;
   fRegistroC310 := TRegistroC310List.Create;
   fRegistroC320 := TRegistroC320List.Create;
 end;
@@ -3855,6 +4257,7 @@ end;
 
 constructor TRegistroC320.Create;
 begin
+  inherited Create;
   FRegistroC321 := TRegistroC321List.Create;
 end;
 
@@ -3868,6 +4271,7 @@ end;
 
 constructor TRegistroC600.Create;
 begin
+  inherited Create;
   FRegistroC690 := TRegistroC690List.Create;
   FRegistroC610 := TRegistroC610List.Create;
   FRegistroC601 := TRegistroC601List.Create;
@@ -3885,6 +4289,7 @@ end;
 
 constructor TRegistroC700.Create;
 begin
+  inherited Create;
   FRegistroC790 := TRegistroC790List.Create;
 end;
 
@@ -3898,6 +4303,7 @@ end;
 
 constructor TRegistroC790.Create;
 begin
+  inherited Create;
   FRegistroC791 := TRegistroC791List.Create;
 end;
 
@@ -3911,6 +4317,7 @@ end;
 
 constructor TRegistroC800.Create;
 begin
+  inherited Create;
   FRegistroC850 := TRegistroC850List.Create;
 end;
 
@@ -3924,6 +4331,7 @@ end;
 
 constructor TRegistroC860.Create;
 begin
+  inherited Create;
   FRegistroC890 := TRegistroC890List.Create;
 end;
 
@@ -3943,6 +4351,7 @@ end;
 
 constructor TRegistroC190.Create;
 begin
+  inherited Create;
   FRegistroC191 := TRegistroC191List.Create;
 end;
 
@@ -3950,6 +4359,253 @@ destructor TRegistroC190.Destroy;
 begin
   FRegistroC191.Free;
   inherited;
+end;
+{ TRegistroC180List }
+
+function TRegistroC180List.GetItem(Index: Integer): TRegistroC180;
+begin
+   Result := TRegistroC180(Inherited Items[Index]);
+end;
+
+function TRegistroC180List.New: TRegistroC180;
+begin
+  Result := TRegistroC180.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC180List.SetItem(Index: Integer; const Value: TRegistroC180);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC185 }
+
+{ TRegistroC185List }
+
+function TRegistroC185List.GetItem(Index: Integer): TRegistroC185;
+begin
+   Result := TRegistroC185(Inherited Items[Index]);
+end;
+
+function TRegistroC185List.New: TRegistroC185;
+begin
+  Result := TRegistroC185.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC185List.SetItem(Index: Integer; const Value: TRegistroC185);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC330List }
+
+function TRegistroC330List.GetItem(Index: Integer): TRegistroC330;
+begin
+   Result := TRegistroC330(Inherited Items[Index]);
+end;
+
+function TRegistroC330List.New: TRegistroC330;
+begin
+  Result := TRegistroC330.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC330List.SetItem(Index: Integer; const Value: TRegistroC330);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC321 }
+
+constructor TRegistroC321.Create;
+begin
+  inherited Create;
+  FRegistroC330 := TRegistroC330List.Create;
+end;
+
+destructor TRegistroC321.Destroy;
+begin
+  FRegistroC330.Free;
+  inherited;
+end;
+
+{ TRegistroC380List }
+
+function TRegistroC380List.GetItem(Index: Integer): TRegistroC380;
+begin
+   Result := TRegistroC380(Inherited Items[Index]);
+end;
+
+function TRegistroC380List.New: TRegistroC380;
+begin
+  Result := TRegistroC380.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC380List.SetItem(Index: Integer; const Value: TRegistroC380);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC430List }
+
+function TRegistroC430List.GetItem(Index: Integer): TRegistroC430;
+begin
+   Result := TRegistroC430(Inherited Items[Index]);
+end;
+
+function TRegistroC430List.New: TRegistroC430;
+begin
+  Result := TRegistroC430.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC430List.SetItem(Index: Integer; const Value: TRegistroC430);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC425 }
+
+constructor TRegistroC425.Create;
+begin
+  inherited Create;
+  FRegistroC430 := TRegistroC430List.Create;
+end;
+
+destructor TRegistroC425.Destroy;
+begin
+  FRegistroC430.Free;
+  inherited;
+end;
+
+{ TRegistroC480List }
+
+function TRegistroC480List.GetItem(Index: Integer): TRegistroC480;
+begin
+   Result := TRegistroC480(Inherited Items[Index]);
+end;
+
+function TRegistroC480List.New: TRegistroC480;
+begin
+  Result := TRegistroC480.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC480List.SetItem(Index: Integer; const Value: TRegistroC480);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC470 }
+
+constructor TRegistroC470.Create;
+begin
+  inherited Create;
+  FRegistroC480 := TRegistroC480List.Create;
+end;
+
+destructor TRegistroC470.Destroy;
+begin
+  FRegistroC480.Free;
+  inherited;
+end;
+
+{ TRegistroC370 }
+
+constructor TRegistroC370.Create;
+begin
+  inherited Create;
+  FRegistroC380 := TRegistroC380List.Create;
+end;
+
+destructor TRegistroC370.Destroy;
+begin
+  FRegistroC380.Free;
+  inherited;
+end;
+
+{ TRegistroC591List }
+
+function TRegistroC591List.GetItem(Index: Integer): TRegistroC591;
+begin
+   Result := TRegistroC591(Inherited Items[Index]);
+end;
+
+function TRegistroC591List.New: TRegistroC591;
+begin
+  Result := TRegistroC591.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC591List.SetItem(Index: Integer; const Value: TRegistroC591);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC590 }
+
+constructor TRegistroC590.Create;
+begin
+  inherited Create;
+  FRegistroC591 := TRegistroC591List.Create;
+end;
+
+destructor TRegistroC590.Destroy;
+begin
+  FRegistroC591.Free;
+  inherited;
+end;
+
+{ TRegistroC595List }
+
+function TRegistroC595List.GetItem(Index: Integer): TRegistroC595;
+begin
+   Result := TRegistroC595(Inherited Items[Index]);
+end;
+
+function TRegistroC595List.New: TRegistroC595;
+begin
+  Result := TRegistroC595.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC595List.SetItem(Index: Integer; const Value: TRegistroC595);
+begin
+   Put(Index, Value);
+end;
+
+{ TRegistroC595 }
+
+constructor TRegistroC595.Create;
+begin
+  inherited Create;
+  FRegistroC597 := TRegistroC597List.Create;
+end;
+
+destructor TRegistroC595.Destroy;
+begin
+   FRegistroC597.Free;
+  inherited;
+end;
+
+{ TRegistroC597List }
+
+function TRegistroC597List.GetItem(Index: Integer): TRegistroC597;
+begin
+   Result := TRegistroC597(Inherited Items[Index]);
+end;
+
+function TRegistroC597List.New: TRegistroC597;
+begin
+   Result := TRegistroC597.Create;
+   Add(Result);
+end;
+
+procedure TRegistroC597List.SetItem(Index: Integer; const Value: TRegistroC597);
+begin
+   Put(Index, Value);
 end;
 
 end.

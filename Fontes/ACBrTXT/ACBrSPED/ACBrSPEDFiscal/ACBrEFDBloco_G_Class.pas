@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,10 +27,10 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
+
 
 {******************************************************************************
 |* Historico
@@ -327,19 +328,36 @@ begin
   begin
      for intFor := 0 to RegG125.RegistroG130.Count - 1 do
      begin
-        with RegG125.RegistroG130.Items[intFor] do
-        begin
-          Add( LFill('G130') +
-               LFill( Integer(IND_EMIT), 0 ) +
-               LFill( COD_PART ) +
-               LFill( COD_MOD ) +
-               LFill( SERIE ) +
-               LFill( NUM_DOC ) +
-               LFill( CHV_NFE_CTE ) +
-               LFill( DT_DOC ) ) ;
-        end;
-        WriteRegistroG140( RegG125.RegistroG130.Items[intFor]);
-        RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;
+       with RegG125.RegistroG130.Items[intFor] do
+       begin
+         if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
+         begin
+           // A partir de 01/01/2020
+            Add( LFill('G130') +
+                 LFill( Integer(IND_EMIT), 0 ) +
+                 LFill( COD_PART ) +
+                 LFill( COD_MOD ) +
+                 LFill( SERIE ) +
+                 LFill( NUM_DOC ) +
+                 LFill( CHV_NFE_CTE ) +
+                 LFill( DT_DOC ) +
+                 LFill( NUM_DA)
+                 );
+          end
+          else
+          begin
+            Add( LFill('G130') +
+                 LFill( Integer(IND_EMIT), 0 ) +
+                 LFill( COD_PART ) +
+                 LFill( COD_MOD ) +
+                 LFill( SERIE ) +
+                 LFill( NUM_DOC ) +
+                 LFill( CHV_NFE_CTE ) +
+                 LFill( DT_DOC ) ) ;
+          end;
+       end;
+       WriteRegistroG140( RegG125.RegistroG130.Items[intFor]);
+       RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroG130Count := FRegistroG130Count + RegG125.RegistroG130.Count;
@@ -352,19 +370,35 @@ var
 begin
   if Assigned( RegG130.RegistroG140 ) then
   begin
-     for intFor := 0 to RegG130.RegistroG140.Count - 1 do
-     begin
-        with RegG130.RegistroG140.Items[intFor] do
+    for intFor := 0 to RegG130.RegistroG140.Count - 1 do
+    begin
+      with RegG130.RegistroG140.Items[intFor] do
+      begin
+        Check(FBloco_0.Registro0001.Registro0200.LocalizaRegistro(COD_ITEM), '(G-G140) ITENS: O código do item "%s" não existe no registro 0200!', [COD_ITEM]);
+        if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
         begin
-          Check(FBloco_0.Registro0001.Registro0200.LocalizaRegistro(COD_ITEM), '(G-G140) ITENS: O código do item "%s" não existe no registro 0200!', [COD_ITEM]);
-
+          // A partir de 01/01/2020
+          Add( LFill('G140') +
+               LFill( NUM_ITEM, 3) +
+               LFill( COD_ITEM ) +
+               LFill( QTDE ) +
+               LFill( UNID ) +
+               LFill( VL_ICMS_OP_APLICADO ) +
+               LFill( VL_ICMS_ST_APLICADO ) +
+               LFill( VL_ICMS_FRT_APLICADO ) +
+               LFill( VL_ICMS_DIF_APLICADO )
+             );
+        end
+        else
+        begin
           Add( LFill('G140') +
                LFill( NUM_ITEM, 3) +
                LFill( COD_ITEM ) ) ;
         end;
-        RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;
-     end;
-     FRegistroG140Count := FRegistroG140Count + RegG130.RegistroG140.Count;
+      end;
+      RegistroG990.QTD_LIN_G := RegistroG990.QTD_LIN_G + 1;
+    end;
+    FRegistroG140Count := FRegistroG140Count + RegG130.RegistroG140.Count;
   end;
 end;
 

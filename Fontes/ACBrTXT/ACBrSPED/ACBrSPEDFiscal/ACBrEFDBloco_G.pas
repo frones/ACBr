@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -193,14 +193,15 @@ type
   TRegistroG130 = class
   private
     fIND_EMIT: TACBrIndEmit;     /// Código do ajuste da apuração e dedução, conforme a Tabela indicada no item 5.1.1.
-    fCOD_PART: String;            /// Descrição complementar do ajuste da apuração.
-    fCOD_MOD: String;             /// Valor do ajuste da apuração
+    fCOD_PART: String;           /// Descrição complementar do ajuste da apuração.
+    fCOD_MOD: String;            /// Valor do ajuste da apuração
     fSERIE: String;
     fNUM_DOC: String;
     fCHV_NFE_CTE: String;
     fDT_DOC: TDateTime;
+    FNUM_DA: string;             /// 09 Número do documento de arrecadação estadual, se houver
 
-    FRegistroG140: TRegistroG140List;  /// BLOCO G - Lista de RegistroG130 (FILHO fo FILHO)
+    FRegistroG140: TRegistroG140List;
   public
     constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -212,6 +213,7 @@ type
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property CHV_NFE_CTE: String read fCHV_NFE_CTE write fCHV_NFE_CTE;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
+    property NUM_DA: string read FNUM_DA write FNUM_DA;
 
     property RegistroG140: TRegistroG140List read FRegistroG140 write FRegistroG140;
   end;
@@ -231,12 +233,24 @@ type
   TRegistroG140 = class
   private
     fNUM_ITEM: String;  /// Numero Sequencial do Item no documento fiscal
-    fCOD_ITEM: String;  /// Codigo Correspondente do bem no documento fiscal
+    fCOD_ITEM: String; /// Codigo Correspondente do bem no documento fiscal
+    FQTDE: Extended;   /// Quantidade, deste item da nota fiscal, que foi aplicada neste bem, expressa na mesma unidade constante no documento fiscal de entrada
+    FUNID: string;     ///Unidade do item constante no documento fiscal de entrada
+    FVL_ICMS_OP_APLICADO: Extended; /// Valor do ICMS da Operação Própria na entrada do item, proporcional à quantidade aplicada no bem ou componente.
+    FVL_ICMS_ST_APLICADO: Extended; /// Valor do ICMS ST na entrada do item, proporcional à quantidade aplicada no bem ou componente.
+    FVL_ICMS_FRT_APLICADO: Extended; /// Valor do ICMS sobre Frete do Conhecimento de Transporte na entrada do item, proporcional à quantidade aplicada no bem ou componente.
+    FVL_ICMS_DIF_APLICADO: Extended; /// Valor do ICMS Diferencial de Alíquota, na entrada do item, proporcional à quantidade aplicada no bem ou componente.
   public
     constructor Create(AOwner: TRegistroG130); virtual; /// Create
 
     property NUM_ITEM: String read fNUM_ITEM write fNUM_ITEM;
     property COD_ITEM: String read fCOD_ITEM write fCOD_ITEM;
+    property QTDE: Extended read FQTDE write FQTDE;
+    property UNID: string read FUNID write FUNID;
+    property VL_ICMS_OP_APLICADO: Extended read FVL_ICMS_OP_APLICADO write FVL_ICMS_OP_APLICADO;
+    property VL_ICMS_ST_APLICADO: Extended read FVL_ICMS_ST_APLICADO write FVL_ICMS_ST_APLICADO;
+    property VL_ICMS_FRT_APLICADO: Extended read FVL_ICMS_FRT_APLICADO write FVL_ICMS_FRT_APLICADO;
+    property VL_ICMS_DIF_APLICADO: Extended read FVL_ICMS_DIF_APLICADO write FVL_ICMS_DIF_APLICADO;
   end;
 
   /// Registro G140 - Lista

@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -517,11 +517,32 @@ var
 begin
   if Assigned( Reg1001.Registro1010 ) then
   begin
-     for intFor := 0 to Reg1001.Registro1010.Count - 1 do
-     begin
-        with Reg1001.Registro1010.Items[intFor] do
+    for intFor := 0 to Reg1001.Registro1010.Count - 1 do
+    begin
+      with Reg1001.Registro1010.Items[intFor] do
+      begin
+        if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
         begin
-         Add( LFill('1010') +
+          // A partir de 01/01/2020
+          Add( LFill('1010') +
+               LFill( IND_EXP ) +
+               LFill( IND_CCRF ) +
+               LFill( IND_COMB  ) +
+               LFill( IND_USINA ) +
+               LFill( IND_VA  ) +
+               LFill( IND_EE ) +
+               LFill( IND_CART  ) +
+               LFill( IND_FORM  ) +
+               LFill( IND_AER ) +
+               LFill( IND_GIAF1 ) +
+               LFill( IND_GIAF3 ) +
+               LFill( IND_GIAF4 ) +
+               LFill( IND_REST_RESSARC_COMPL_ICMS )
+             ) ;
+        end
+        else
+        begin
+          Add( LFill('1010') +
                LFill( IND_EXP ) +
                LFill( IND_CCRF ) +
                LFill( IND_COMB  ) +
@@ -535,6 +556,7 @@ begin
                LFill( IND_GIAF1 )+
                LFill( IND_GIAF3 )+
                LFill( IND_GIAF4 ),'') ) ;
+        end;
          Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
         end;
      end;
@@ -903,9 +925,36 @@ var
 begin
   if Assigned( Reg1390.Registro1391 ) then
   begin
-     for intFor := 0 to Reg1390.Registro1391.Count - 1 do
-     begin
-        with Reg1390.Registro1391.Items[intFor] do
+    for intFor := 0 to Reg1390.Registro1391.Count - 1 do
+    begin
+      with Reg1390.Registro1391.Items[intFor] do
+      begin
+        if FBloco_0.Registro0000.COD_VER >= vlVersao113 then
+        begin
+          // A partir de 01/01/2020
+          Add( LFill('1391') +
+               LFill( DT_REGISTRO       ) +
+               LFill( QTD_MOID     ,0,2 ) +
+               LFill( ESTQ_INI     ,0,2 ) +
+               LFill( QTD_PRODUZ   ,0,2 ) +
+               LFill( ENT_ANID_HID ,0,2 ) +
+               LFill( OUTR_ENTR    ,0,2 ) +
+               LFill( PERDA        ,0,2 ) +
+               LFill( CONS         ,0,2 ) +
+               LFill( SAI_ANI_HID  ,0,2 ) +
+               LFill( SAIDAS       ,0,2 ) +
+               LFill( ESTQ_FIN     ,0,2 ) +
+               LFill( ESTQ_INI_MEL ,0,2 ) +
+               LFill( PROD_DIA_MEL ,0,2 ) +
+               LFill( UTIL_MEL     ,0,2 ) +
+               LFill( PROD_ALC_MEL ,0,2 ) +
+               LFill( OBS          ) +
+               LFill( COD_ITEM ) +
+               LFill( TP_RESIDUO ) +
+               LFill( QTD_RESIDUO , 0, 2)
+             ) ;
+        end
+        else
         begin
           Add( LFill('1391') +
                LFill( DT_REGISTRO       ) +
@@ -925,10 +974,11 @@ begin
                LFill( PROD_ALC_MEL ,0,2 ) +
                LFill( OBS          )) ;
         end;
-        Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
-     end;
-     /// Variavél para armazenar a quantidade de registro do tipo.
-     FRegistro1391Count := FRegistro1391Count + Reg1390.Registro1391.Count;
+      end;
+      Registro1990.QTD_LIN_1 := Registro1990.QTD_LIN_1 + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistro1391Count := FRegistro1391Count + Reg1390.Registro1391.Count;
   end;
 end;
 

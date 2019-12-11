@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -140,6 +140,7 @@ type
     fIND_GIAF1 : String;// Reg. 1960 – Possui informações GIAF1:
     fIND_GIAF3 : String;// Reg. 1970 – Possui informações GIAF3:
     fIND_GIAF4 : String;// Reg. 1980 – Possui informações GIAF4:
+    FIND_REST_RESSARC_COMPL_ICMS: string; //Reg. 1250 – Possui informações consolidadas de saldos de restituição, ressarcimento e complementação do ICMS?
   public
     constructor Create(AOwner: TRegistro1001); virtual; /// Create
 
@@ -155,6 +156,7 @@ type
     property IND_GIAF1 : String read fIND_GIAF1 write fIND_GIAF1 ;
     property IND_GIAF3 : String read fIND_GIAF3 write fIND_GIAF3 ;
     property IND_GIAF4 : String read fIND_GIAF4 write fIND_GIAF4 ;
+    property IND_REST_RESSARC_COMPL_ICMS: string read FIND_REST_RESSARC_COMPL_ICMS write FIND_REST_RESSARC_COMPL_ICMS;
   end;
 
   /// Registro 1010 - Lista
@@ -614,6 +616,11 @@ type
     fUTIL_MEL     : Currency;   /// Mel residual utilizado (Kg) e saídas de mel (Kg)
     fPROD_ALC_MEL : Currency;   /// Produção de álcool (litros) ou açúcar (Kg) proveniente do mel residual.
     fOBS          : String;     /// Observações
+    FCOD_ITEM: string;          /// Informar o insumo conforme código do item (campo 02 do Registro 0200)
+    FTP_RESIDUO: Integer;       /// Tipo de resíduo produzido: 01 - Bagaço de cana
+                                                            // 02 - DDG
+                                                            // 03 - WDG
+    FQTD_RESIDUO: Extended;     /// Quantidade de resíduo produzido (toneladas)
   public                        
     constructor Create(AOwner: TRegistro1390); virtual; /// Create
 
@@ -633,6 +640,9 @@ type
     property UTIL_MEL: Currency read fUTIL_MEL write fUTIL_MEL;
     property PROD_ALC_MEL: Currency read fPROD_ALC_MEL write fPROD_ALC_MEL;
     property OBS: String read fOBS write fOBS;
+    property COD_ITEM: string read FCOD_ITEM write FCOD_ITEM;
+    property TP_RESIDUO: Integer read FTP_RESIDUO write FTP_RESIDUO;
+    property QTD_RESIDUO: Extended read FQTD_RESIDUO write FQTD_RESIDUO;
   end;
 
   /// Registro 1391 - Lista

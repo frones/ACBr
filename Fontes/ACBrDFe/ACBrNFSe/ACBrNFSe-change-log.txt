@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/12/2019
+-- ACBrNFSe --
+[*] https://www.projetoacbr.com.br/forum/topic/55292-charinset/
+   Por: Antonio Gomes
+
 03/12/2019
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/55191-quebra-de-linha-na-impress%C3%A3o-via-site-prefeitura-rj/

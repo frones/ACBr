@@ -2151,13 +2151,16 @@ begin
   if FProvedor = proSystemPro then
   begin
     i := 0;
+
     NFSe.Servico.ItemServico.Clear;
 
     while Leitor.rExtrai(NivelTemp, 'Servico', '', i + 1) <> '' do
     begin
+      SetxItemListaServico;
+
       NFSe.Servico.ItemServico.New;
       NFSe.Servico.Valores.IssRetido            := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
-      NFSe.Servico.ItemListaServico             := Leitor.rCampo(tcStr, 'ItemListaServico');
+//      NFSe.Servico.ItemListaServico             := Leitor.rCampo(tcStr, 'ItemListaServico');
       NFSe.Servico.ItemServico[i].Descricao     := Leitor.rCampo(tcStr, 'Discriminacao');
       NFSe.Servico.CodigoMunicipio              := Leitor.rCampo(tcStr, 'CodigoMunicipio');
       NFSe.Servico.ExigibilidadeISS             := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeISS'));

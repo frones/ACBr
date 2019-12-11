@@ -51,9 +51,9 @@ type
 
   protected
     procedure Inicializar; override;
-    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = '');
-      override;
+    procedure CriarConfiguracao(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     procedure Executar; override;
+
   public
     constructor Create(ArqConfig: string = ''; ChaveCrypt: ansistring = ''); override;
     destructor Destroy; override;
@@ -129,6 +129,11 @@ function MDFE_Cancelar(const eChave, eJustificativa, eCNPJCPF: PChar; ALote: Int
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_EnviarEvento(idLote: Integer;
   const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_EncerrarMDFe(const eChaveOuMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_ConsultaMDFeNaoEnc(const nCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_DistribuicaoDFePorUltNSU(eCNPJCPF, eultNSU: PChar;
   const sResposta: PChar; var esTamanho: longint): longint;
@@ -1165,6 +1170,175 @@ begin
         Result := SetRetorno(ErrOK, Resposta);
       finally
         MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MDFE_EncerrarMDFe(const eChaveOuMDFe, eDtEnc, cMunicipioDescarga, nCNPJ, nProtocolo: PChar;
+  const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resp: TEncerramentoResposta;
+  ChaveOuMDFe, MunicipioDescarga, CNPJ, Protocolo, Resposta: string;
+  DtEnc: TDateTime;
+begin
+  try
+    VerificarLibInicializada;
+    ChaveOuMDFe := String(eChaveOuMDFe);
+    DtEnc := StrToDateTime(eDtEnc);
+    MunicipioDescarga := String(cMunicipioDescarga);
+    CNPJ := String(nCNPJ);
+    Protocolo := String(nProtocolo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MDFE_EncerrarMDFe(' + ChaveOuMDFe + ',' + DateTimeToStr(DtEnc) + ',' +
+                     MunicipioDescarga + ',' + CNPJ + ',' + Protocolo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('MDFE_EncerrarMDFe', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        with MDFeDM.ACBrMDFe1 do
+        begin
+          Manifestos.Clear;
+           if FilesExists(ChaveOuMDFe) then
+           begin
+             Manifestos.LoadFromFile(ChaveOuMDFe);
+             if (Manifestos.Count > 0) then
+               ChaveOuMDFe := OnlyNumber(Manifestos.Items[0].MDFe.infMDFe.ID)
+             else
+               raise EACBrLibException.Create(ErrArquivoNaoExiste, 'Arquivo MDFe inválido: ' + ChaveOuMDFe);
+           end
+           else if not ValidarChave(ChaveOuMDFe) then
+             raise EACBrLibException.Create(ErrChaveMDFe, 'Chave ou arquivo MDFe inválido: '+ ChaveOuMDFe);
+
+
+           EventoMDFe.Evento.Clear;
+           with EventoMDFe.Evento.New do
+           begin
+             infEvento.CNPJCPF := CNPJ;
+             if Trim(infEvento.CNPJCPF) = '' then
+               infEvento.CNPJCPF := copy(ChaveOuMDFe, 7, 14)
+             else
+             begin
+               if not ValidarCNPJouCPF(CNPJ) then
+                 raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' inválido.');
+             end;
+
+             infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ChaveOuMDFe), 1, 2), 0);
+             infEvento.dhEvento := now;
+             infEvento.tpEvento := teEncerramento;
+             infEvento.chMDFe := ChaveOuMDFe;
+
+             if (Trim(Protocolo) <> '') then
+               infEvento.detEvento.nProt := Trim(Protocolo)
+             else if ((Manifestos.Count > 0) and (Manifestos.Items[0].MDFe.procMDFe.nProt <> '')) then
+               infEvento.detEvento.nProt := Manifestos.Items[0].MDFe.procMDFe.nProt
+             else
+             begin
+               //Realiza Consulta na Sefaz
+               WebServices.Consulta.MDFeChave := ChaveOuMDFe;
+               WebServices.Consulta.Executar;
+               if (WebServices.Consulta.protocolo <> '') then
+                 infEvento.detEvento.nProt := WebServices.Consulta.Protocolo
+               else
+                 raise EACBrLibException.Create(ErrConsulta, 'Falha na consulta do Protocolo MDFe. ' + WebServices.Consulta.Msg);
+             end;
+
+             if (Trim(MunicipioDescarga) <> '') then
+             begin
+               infEvento.detEvento.cUF := StrToIntDef(copy(MunicipioDescarga, 1, 2), 1);
+               infEvento.detEvento.cMun := StrToIntDef(MunicipioDescarga, 1);
+             end
+             else if ((Manifestos.Count > 0) and
+                     (Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga > 0)) then
+             begin
+               infEvento.detEvento.cMun :=
+               Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga;
+               infEvento.detEvento.cUF := StrToIntDef(copy(IntToStr(Manifestos.Items[0].MDFe.infDoc.infMunDescarga.Items[0].cMunDescarga), 1, 2), 1);
+             end;
+
+             infEvento.detEvento.dtEnc := DtEnc;
+           end;
+
+           WebServices.EnvEvento.idLote := 1;
+           WebServices.EnvEvento.Executar;
+
+           Resposta := '';
+           Resp := TEncerramentoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+
+           try
+             Resp.Processar(MDFeDM.ACBrMDFe1);
+             Resposta := Resp.Gerar;
+           finally
+             Resp.Free;
+           end;
+
+           MoverStringParaPChar(Resposta, sResposta, esTamanho);
+           Result := SetRetorno(ErrOK, Resposta);
+        end;
+      finally
+        MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MDFE_ConsultaMDFeNaoEnc(const nCNPJ: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  CNPJ, Resposta: String;
+  Resp: TNaoEncerradosResposta ;
+begin
+  try
+    VerificarLibInicializada;
+    CNPJ := String(nCNPJ);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MDFE_ConsultaMDFeNaoEnc(' + CNPJ + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('MDFE_ConsultaMDFeNaoEnc', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        if not ValidarCNPJouCPF(CNPJ) then
+          raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' invalido.');
+
+        MDFeDM.ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc(CNPJ);
+
+        Resposta := '';
+        Resp := TNaoEncerradosResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+
+        try
+          Resp.Processar(MDFeDM.ACBrMDFe1);
+          Resposta := Resp.Gerar;
+        finally
+            Resp.Free;
+        end;
+
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+          MDFeDM.Destravar;
       end;
     end;
   except

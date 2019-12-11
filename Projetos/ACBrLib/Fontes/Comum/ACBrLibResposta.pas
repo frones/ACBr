@@ -271,8 +271,8 @@ begin
               for j := 0 to CollectionObject.Count - 1 do
               begin
                 CollectionItem := CollectionObject.Items[j];
-                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
-                GravarIni(AIni, String.Format(CSessionFormat, [Sessao, J+1]), CollectionItem, J+1)
+                Sessao := IfThen(Index > 0, Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                GravarIni(AIni, Format(CSessionFormat, [Sessao, J+1]), CollectionItem, J+1)
               end;
             end
             else if (TD.ClassType.InheritsFrom(TList)) then
@@ -281,21 +281,21 @@ begin
               for j := 0 to ListObject.Count - 1 do
               begin
                 Item := ListObject.Items[j];
-                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
-                GravarIni(AIni, String.Format(CSessionFormat, [Sessao, J+1]), Item, J+1)
+                Sessao := IfThen(Index > 0, Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                GravarIni(AIni, Format(CSessionFormat, [Sessao, J+1]), Item, J+1)
               end;
             end
             else
             begin
               if (TD.ClassType.InheritsFrom(TACBrLibRespostaBase)) then
               begin
-                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [TACBrLibRespostaBase(ClassObject).Sessao, Index]),
+                Sessao := IfThen(Index > 0, Format(CSessionFormat, [TACBrLibRespostaBase(ClassObject).Sessao, Index]),
                                             TACBrLibRespostaBase(ClassObject).Sessao);
                 GravarIni(AIni, Sessao, ClassObject, Index)
               end
               else
               begin
-                Sessao := IfThen(Index > 0, String.Format(CSessionFormat, [PI.Name, Index]), PI.Name);
+                Sessao := IfThen(Index > 0, Format(CSessionFormat, [PI.Name, Index]), PI.Name);
                 GravarIni(AIni, PI.Name, ClassObject, Index);
               end;
             end;

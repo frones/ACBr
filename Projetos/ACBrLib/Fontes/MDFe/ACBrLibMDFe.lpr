@@ -66,6 +66,8 @@ exports
   MDFE_Consultar,
   MDFE_Cancelar,
   MDFE_EnviarEvento,
+  MDFE_EncerrarMDFe,
+  MDFE_ConsultaMDFeNaoEnc,
   MDFE_DistribuicaoDFePorUltNSU,
   MDFE_DistribuicaoDFePorNSU,
   MDFE_DistribuicaoDFePorChave,

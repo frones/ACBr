@@ -233,11 +233,14 @@ end;
 
 function TACBrMDFe.GetURLConsulta(const CUF: integer;
   const TipoAmbiente: TpcnTipoAmbiente; const Versao: Double): String;
-var
-  VersaoDFe: TVersaoMDFe;
-  ok: Boolean;
+//var
+//  VersaoDFe: TVersaoMDFe;
+//  ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoMDFe(ok, Versao);
+  // Se futuramente viermos a ter versões diferentes de URL de consulta
+  // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
+  // VersaoDFe
+//  VersaoDFe := DblToVersaoMDFe(ok, Versao);
   Result := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaMDFe', 0);
 end;
 

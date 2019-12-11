@@ -46,6 +46,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2019
+-- ACBrCTeDACTeRLRetrato --
+[*] O quadro ICMS ST conforme consta na NT 2016/002 não deve ser mais impresso.
+    Realizado ajustes para imprimir o quadro se a versão do CT-e for 2.00
+  por: Italo Jurisato Junior
+
 01/11/2019
 -- ACBrCTeDACTeRLRetrato --
 [*] Ajustes nas larguras dos quadros dos modais Aério e Aquaviário.

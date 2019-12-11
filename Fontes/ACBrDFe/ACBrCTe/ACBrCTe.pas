@@ -296,7 +296,10 @@ function TACBrCTe.GetURLConsulta(const CUF: integer;
 //  VersaoDFe: TVersaoCTe;
 //  ok: Boolean;
 begin
-//  VersaoDFe := DblToVersaoCTe(ok, Versao);  // Deixado para usu futuro
+  // Se futuramente viermos a ter versões diferentes de URL de consulta
+  // devemos descomentar as linhas e trocar o zero da função abaixo pela variável
+  // VersaoDFe
+//  VersaoDFe := DblToVersaoCTe(ok, Versao);
   Result := LerURLDeParams('CTe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaCTe', 0);
 end;
 

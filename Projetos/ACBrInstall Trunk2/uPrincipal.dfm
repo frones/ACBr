@@ -1466,15 +1466,6 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 0
         end
       end
-      object btnWCInfo: TButton
-        Left = 166
-        Top = 463
-        Width = 140
-        Height = 25
-        Caption = 'Mostrar '#250'ltima revis'#227'o'
-        TabOrder = 3
-        WordWrap = True
-      end
     end
     object wizPgFinalizar: TJvWizardInteriorPage
       Header.Visible = False
@@ -1653,6 +1644,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

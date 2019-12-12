@@ -4,7 +4,8 @@ uses
   Forms,
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
-  ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas';
+  ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas',
+  ACBrInstallUtils in 'ACBrInstallUtils.pas';
 
 {$R *.res}
 

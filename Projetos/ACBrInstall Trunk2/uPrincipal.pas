@@ -100,7 +100,6 @@ type
     lbInfo: TListBox;
     Label8: TLabel;
     chkDeixarSomenteLIB: TCheckBox;
-    btnWCInfo: TButton;
     ckbRemoverArquivosAntigos: TCheckBox;
     JvCreateProcess1: TJvCreateProcess;
     Label22: TLabel;
@@ -157,14 +156,11 @@ type
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
     procedure IncrementaBarraProgresso;
     procedure Logar(const AString: String);
-    procedure MostrarMensagemInstalado(const aMensagem: String; FCountErros:
-        Integer; const aErro: String = '');
     procedure ProcedeInstalacao(out FCountErros: Integer);
-    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation;
+    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
         FCountErros: Integer);
-    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation;
+    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
         FCountErros: Integer);
-    procedure LogarCabecalho;
   public
 
   end;
@@ -314,16 +310,18 @@ begin
 end;
 
 procedure TfrmPrincipal.MostraDadosVersao;
+var
+  Cabecalho: string;
 begin
+  Cabecalho := 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion) + ')' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
+               'Dir. Instalação : ' + edtDirDestino.Text + sLineBreak +
+               'Dir. Bibliotecas: ' + sDirLibrary;
+
+  WriteToTXT(PathArquivoLog, Cabecalho + sLineBreak, False);
+
   // mostrar ao usuário as informações de compilação
   lbInfo.Clear;
-  with lbInfo.Items do
-  begin
-    Clear;
-    Add(edtDelphiVersion.Text + ' ' + edtPlatform.Text);
-    Add('Dir. Instalação  : ' + edtDirDestino.Text);
-    Add('Dir. Bibliotecas : ' + sDirLibrary);
-  end;
+  lbInfo.Items.Add(Cabecalho);
 end;
 
 // gravar as configurações efetuadas pelo usuário
@@ -564,69 +562,31 @@ begin
   WriteToTXT(PathArquivoLog, AString);
 end;
 
-procedure TfrmPrincipal.MostrarMensagemInstalado(const aMensagem: String; FCountErros: Integer; const aErro: String = '');
-var
-  Msg: String;
-begin
-
-  if Trim(aErro) = EmptyStr then
-  begin
-    case sDestino of
-      tdSystem: Msg := Format(aMensagem + ' em "%s"', [PathSystem]);
-      tdDelphi: Msg := Format(aMensagem + ' em "%s"', [sPathBin]);
-      tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
-    end;
-  end
-  else
-  begin
-    Inc(FCountErros);
-
-    case sDestino of
-      tdSystem: Msg := Format(aMensagem + ' em "%s": "%s"', [PathSystem, aErro]);
-      tdDelphi: Msg := Format(aMensagem + ' em "%s": "%s"', [sPathBin, aErro]);
-      tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
-    end;
-  end;
-
-  WriteToTXT(PathArquivoLog, '');
-  Logar(Msg);
-end;
-
 procedure TfrmPrincipal.ProcedeInstalacao(out FCountErros: Integer);
 var
   ACBrInstaladorAux: TACBrInstallComponentes;
-  iListaVer: Integer;
-  LimparArquivosACBrAntigos: Boolean;
   InstalacaoAtual: TJclBorRADToolInstallation;
-  DeixarSomentePastasLib: Boolean;
-  DeveInstalarCapicom: Boolean;
-  DeveInstalarOpenSSL: Boolean;
-  DeveCopiarOutrasDLLs: Boolean;
-  DeveInstalarXMLSec: Boolean;
-  UsarCargaTardiaDLL: Boolean;
-  RemoverStringCastWarnings: Boolean;
-  UsarCpp: Boolean;
+  iListaVer: Integer;
 begin
-  LimparArquivosACBrAntigos := ((ckbRemoverArquivosAntigos.Checked) and
-                                (Application.MessageBox('Você optou por limpar arquivos antigos do ACBr do seu computador, essa ação pode demorar vários minutos, deseja realmente continuar com está ação?',
-                                                        'Limpar', MB_YESNO + MB_DEFBUTTON2) = ID_YES)
-                               );
-  DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
-  DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
-  DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
-  DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
-  DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
-  UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
-  RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
-  UsarCpp := ckbBCB.Checked;
-
   ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
   try
-    ACBrInstaladorAux.DesligarDefineACBrInc(GetPathACBrInc, 'DFE_SEM_OPENSSL', not DeveInstalarOpenSSL);
-    ACBrInstaladorAux.DesligarDefineACBrInc(GetPathACBrInc, 'DFE_SEM_CAPICOM', not DeveInstalarCapicom);
-    ACBrInstaladorAux.DesligarDefineACBrInc(GetPathACBrInc, 'USE_DELAYED', UsarCargaTardiaDLL);
-    ACBrInstaladorAux.DesligarDefineACBrInc(GetPathACBrInc, 'REMOVE_CAST_WARN', RemoverStringCastWarnings);
-    ACBrInstaladorAux.DesligarDefineACBrInc(GetPathACBrInc, 'DFE_SEM_XMLSEC', not DeveInstalarXMLSec);
+    ACBrInstaladorAux.OnProgresso       := IncrementaBarraProgresso;
+    ACBrInstaladorAux.OnInformaSituacao := Logar;
+
+    ACBrInstaladorAux.Opcoes.LimparArquivosACBrAntigos := ((ckbRemoverArquivosAntigos.Checked) and
+                                  (Application.MessageBox('Você optou por limpar arquivos antigos do ACBr do seu computador, essa ação pode demorar vários minutos, deseja realmente continuar com está ação?',
+                                                          'Limpar', MB_YESNO + MB_DEFBUTTON2) = ID_YES)
+                                 );
+    ACBrInstaladorAux.Opcoes.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
+    ACBrInstaladorAux.Opcoes.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
+    ACBrInstaladorAux.Opcoes.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
+    ACBrInstaladorAux.Opcoes.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
+    ACBrInstaladorAux.Opcoes.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
+    ACBrInstaladorAux.Opcoes.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
+    ACBrInstaladorAux.Opcoes.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
+    ACBrInstaladorAux.Opcoes.UsarCpp                   := ckbBCB.Checked;
+
+    ACBrInstaladorAux.DesligarDefines(GetPathACBrInc);
 
     for iListaVer := 0 to clbDelphiVersion.Count - 1 do
     begin
@@ -638,54 +598,23 @@ begin
         edtDelphiVersionChange(edtDelphiVersion);
         // define dados da plataforna selecionada
         SetPlatformSelected;
-        FCountErros := 0;
-        // mostra dados da versão na tela a ser instaladas
-        MostraDadosVersao;
         // limpar o log
         lstMsgInstalacao.Clear;
         // setar barra de progresso
         pgbInstalacao.Position := 0;
         pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 6;
-        LogarCabecalho;
 
-        // *************************************************************************
-        // removendo arquivos antigos se configurado
-        // *************************************************************************
-        if LimparArquivosACBrAntigos then
-        begin
-          Logar('Removendo arquivos antigos do disco...');
-          ACBrInstaladorAux.RemoverArquivosAntigosDoDisco;
-          IncrementaBarraProgresso;
-        end;
+        FCountErros := 0;
+        MostraDadosVersao;
 
         InstalacaoAtual := oACBr.Installations[iVersion];
 
-        // *************************************************************************
-        // remover paths do delphi
-        // *************************************************************************
-        Logar('Removendo diretorios e pacotes antigos instalados...');
-        ACBrInstaladorAux.RemoverDiretoriosEPacotesAntigos(InstalacaoAtual, tPlatform);
-        IncrementaBarraProgresso;
-        // *************************************************************************
-        // Cria diretório de biblioteca da versão do delphi selecionada,
-        // só será criado se não existir
-        // *************************************************************************
-        Logar('Criando diretórios de bibliotecas...');
-        ForceDirectories(sDirLibrary);
-        IncrementaBarraProgresso;
-
-        // *************************************************************************
-        // Adiciona os paths dos fontes na versão do delphi selecionada
-        // *************************************************************************        Logar('Adicionando library paths...');
-        ACBrInstaladorAux.AddLibrarySearchPath(InstalacaoAtual, UsarCpp,
-                                               tPlatform, sDirRoot, sDirLibrary);
-        IncrementaBarraProgresso;
-
+        ACBrInstaladorAux.FazInstalacaoInicial(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
+        
         // *************************************************************************
         // compilar os pacotes primeiramente
         // *************************************************************************
-        Logar('');
-        Logar('COMPILANDO OS PACOTES...');
+        Logar(sLineBreak+'COMPILANDO OS PACOTES...');
         CompilarPacotes(InstalacaoAtual, FCountErros);
 
         // *************************************************************************
@@ -693,132 +622,64 @@ begin
         // *************************************************************************
         if FCountErros > 0 then
         begin
-          Logar('');
           Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
           Break;
         end
         else
         if ( tPlatform = bpWin32) then
         begin
-          Logar('');
-          Logar('INSTALANDO OS PACOTES...');
+          Logar(sLineBreak+'INSTALANDO OS PACOTES...');
           InstalarPacotes(InstalacaoAtual, FCountErros);
         end
         else
         begin
-          Logar('');
           Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
         end;
 
-        // *************************************************************************
-        // não instalar outros requisitos se ocorreu erro anteriormente
-        // *************************************************************************
-        Logar('');
-        Logar('INSTALANDO OUTROS REQUISITOS...');
-        // *************************************************************************
-        // deixar somente a pasta lib se for configurado assim
-        // *************************************************************************
-        if DeixarSomentePastasLib then
-        begin
-          try
-            ACBrInstaladorAux.DeixarSomenteLib(InstalacaoAtual, tPlatform, sDirRoot);
-            ACBrInstaladorAux.CopiarOutrosArquivos(sDirRoot, sDirLibrary );
-
-            MostrarMensagemInstalado('Limpeza library path com sucesso', FCountErros);
-            MostrarMensagemInstalado('Copia dos arquivos necessário.', FCountErros);
-          except
-            on E: Exception do
-            begin
-              MostrarMensagemInstalado('Ocorreu erro ao limpar o path e copiar arquivos' + sLineBreak +
-                                       E.Message, FCountErros);
-            end;
-          end;
-        end;
+        ACBrInstaladorAux.InstalarOutrosRequisitos(InstalacaoAtual,tPlatform, sDirRoot, sDirLibrary);
       end;
     end;
 
     if FCountErros = 0 then
     begin
-      // *************************************************************************
-      // instalar capicom
-      // *************************************************************************
-      try
-        if DeveInstalarCapicom then
-        begin
-          ACBrInstaladorAux.InstalarCapicom(sDestino, edtDirDestino.Text, sPathBin);
-          MostrarMensagemInstalado('CAPICOM instalado com sucesso', FCountErros);
-        end;
-      except
-        on E: Exception do
-        begin
-          MostrarMensagemInstalado('Ocorreu erro ao instalar a CAPICOM', FCountErros, E.Message);
-        end;
-      end;
-      // *************************************************************************
-      // instalar OpenSSL
-      // *************************************************************************
-      try
-        if DeveInstalarOpenSSL then
-        begin
-          ACBrInstaladorAux.InstalarOpenSSL(sDestino, edtDirDestino.Text, sPathBin);
-          MostrarMensagemInstalado('OPENSSL instalado com sucesso', FCountErros);
-        end;
-      except
-        on E: Exception do
-        begin
-          MostrarMensagemInstalado('Ocorreu erro ao instalar a OPENSSL', FCountErros, E.Message);
-        end;
-      end;
-      // *************************************************************************
-      //instalar todas as "OUTRAS" DLLs
-      // *************************************************************************
-      if DeveCopiarOutrasDLLs then
-      begin
-        try
-          ACBrInstaladorAux.InstalarLibXml2(sDestino, edtDirDestino.Text, sPathBin);
-          ACBrInstaladorAux.InstalarDiversos(sDestino, edtDirDestino.Text, sPathBin);
-          if DeveInstalarXMLSec then
-            ACBrInstaladorAux.InstalarXMLSec(sDestino, edtDirDestino.Text, sPathBin);
-          MostrarMensagemInstalado('Outras DLL´s instaladas com sucesso', FCountErros);
-        except
-          on E: Exception do
-          begin
-            MostrarMensagemInstalado('Ocorreu erro ao instalar Outras DLL´s', FCountErros, E.Message);
-          end;
-        end;
-      end;
-      Application.MessageBox(PWideChar('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
-                                       'Clique em "Próximo" para finalizar a instalação.'),
-                             'Instalação', MB_ICONINFORMATION + MB_OK);
-    end
-    else if FCountErros > 0 then
-    begin
-      if Application.MessageBox(PWideChar('Ocorreram erros durante o processo de instalação, ' + sLineBreak +
-                                          'para maiores informações verifique o arquivo de log gerado.' +
-                                          sLineBreak + sLineBreak +
-                                          'Deseja visualizar o arquivo de log gerado?'),
-                                'Instalação', MB_ICONQUESTION + MB_YESNO) = ID_YES then
-      begin
-        btnVisualizarLogCompilacao.Click;
-      end;
+      ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, edtDirDestino.Text, sPathBin);
     end;
 
   finally
     ACBrInstaladorAux.Free;
   end;
+
+  if FCountErros = 0 then
+  begin
+    Application.MessageBox(PWideChar('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
+                                     'Clique em "Próximo" para finalizar a instalação.'),
+                           'Instalação', MB_ICONINFORMATION + MB_OK);
+  end
+  else if FCountErros > 0 then
+  begin
+    if Application.MessageBox(PWideChar('Ocorreram erros durante o processo de instalação, ' + sLineBreak +
+                                        'para maiores informações verifique o arquivo de log gerado.' +
+                                        sLineBreak + sLineBreak +
+                                        'Deseja visualizar o arquivo de log gerado?'),
+                              'Instalação', MB_ICONQUESTION + MB_YESNO) = ID_YES then
+    begin
+      btnVisualizarLogCompilacao.Click;
+    end;
+  end;
+
 end;
 
-procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; FCountErros: Integer);
+procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer);
 var
-  Local_iDpk: Integer;
+  iDpk: Integer;
   NomePacote: string;
 begin
-  for Local_iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+  for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
   begin
-    NomePacote := framePacotes1.Pacotes[Local_iDpk].Caption;
+    NomePacote := framePacotes1.Pacotes[iDpk].Caption;
     // Busca diretório do pacote
     ExtrairDiretorioPacote(NomePacote);
-    if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[Local_iDpk].Checked) then
+    if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDpk].Checked) then
     begin
       WriteToTXT(PathArquivoLog, '');
       FPacoteAtual := sDirPackage + NomePacote;
@@ -837,7 +698,7 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; FCountErros: Integer);
+procedure TfrmPrincipal.InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer);
 var
   iDpk: Integer;
   NomePacote: string;
@@ -878,14 +739,6 @@ begin
     end;
     IncrementaBarraProgresso;
   end;
-end;
-
-procedure TfrmPrincipal.LogarCabecalho;
-var
-  Cabecalho: string;
-begin
-  Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak + 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion) + ')' + sLineBreak + 'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak + StringOfChar('=', 80);
-  WriteToTXT(PathArquivoLog, Cabecalho, False);
 end;
 
 procedure TfrmPrincipal.IncrementaBarraProgresso;

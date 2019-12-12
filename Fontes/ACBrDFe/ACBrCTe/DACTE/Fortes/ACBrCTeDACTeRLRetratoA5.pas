@@ -1118,8 +1118,76 @@ begin
   rllVlrTotServico.Caption := FormatFloatBr(msk13x2, fpCTe.vPrest.vTPrest);
   rllVlrTotReceber.Caption := FormatFloatBr(msk13x2, fpCTe.vPrest.vRec);
 
-  rllSitTrib.Caption := ACBrStr(CSTICMSToStr(fpCTe.Imp.ICMS.SituTrib) + '-' +
-    CSTICMSToStrTagPosText(fpCTe.Imp.ICMS.SituTrib));
+//  rllSitTrib.Caption := ACBrStr(CSTICMSToStr(fpCTe.Imp.ICMS.SituTrib) + '-' +
+//    CSTICMSToStrTagPosText(fpCTe.Imp.ICMS.SituTrib));
+
+  rllSitTrib.Caption := ACBrStr(CSTICMSToStrTagPosText(fpCTe.Imp.ICMS.SituTrib));
+
+  case fpCTe.Imp.ICMS.SituTrib of
+    cst00:
+    begin
+      rllBaseCalc.Caption    := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS00.vBC);
+      rllAliqICMS.Caption    := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS00.pICMS);
+      rllVlrICMS.Caption     := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS00.vICMS);
+      rllRedBaseCalc.Caption := '';
+      rllICMS_ST.Caption     := '';
+    end;
+
+    cst20:
+    begin
+      rllBaseCalc.Caption    := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS20.vBC);
+      rllAliqICMS.Caption    := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS20.pICMS);
+      rllVlrICMS.Caption     := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS20.vICMS);
+      rllRedBaseCalc.Caption := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS20.pRedBC);
+      rllICMS_ST.Caption     := '';
+    end;
+
+    cst40,
+    cst41,
+    cst45,
+    cst51,
+    cstICMSSN:
+    begin
+      rllBaseCalc.Caption    := '';
+      rllAliqICMS.Caption    := '';
+      rllVlrICMS.Caption     := '';
+      rllRedBaseCalc.Caption := '';
+      rllICMS_ST.Caption     := '';
+    end;
+
+    cst60:
+    begin
+      rllBaseCalc.Caption    := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS60.vBCSTRet);
+      rllAliqICMS.Caption    := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS60.pICMSSTRet);
+      rllRedBaseCalc.Caption := '';
+
+      if fpCTe.infCTe.versao >= 3 then
+        rllVlrICMS.Caption := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS60.vICMSSTRet)
+      else
+      begin
+        rllVlrICMS.Caption := '';
+        rllICMS_ST.Caption := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS60.vICMSSTRet);
+      end;
+    end;
+
+    cst90:
+    begin
+      rllBaseCalc.Caption    := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS90.vBC);
+      rllAliqICMS.Caption    := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS90.pICMS);
+      rllVlrICMS.Caption     := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMS90.vICMS);
+      rllRedBaseCalc.Caption := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMS90.pRedBC);
+      rllICMS_ST.Caption     := '';
+    end;
+
+    cstICMSOutraUF:
+    begin
+      rllBaseCalc.Caption    := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMSOutraUF.vBCOutraUF);
+      rllAliqICMS.Caption    := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMSOutraUF.pICMSOutraUF);
+      rllVlrICMS.Caption     := FormatFloatBr(msk9x2, fpCTe.Imp.ICMS.ICMSOutraUF.vICMSOutraUF);
+      rllRedBaseCalc.Caption := FormatFloatBr(msk4x2, fpCTe.Imp.ICMS.ICMSOutraUF.pRedBCOutraUF);
+      rllICMS_ST.Caption     := '';
+    end;
+  end;
 end;
 
 procedure TfrmDACTerlRetratoA5.rlb_04_DadosNotaFiscalBeforePrint(Sender: TObject;
@@ -1130,6 +1198,25 @@ begin
 
   // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal
   rlb_04_DadosNotaFiscal.Enabled := (fpCTe.Ide.tpCTe = tcNormal);
+
+  if fpCTe.infCTe.versao >= 3 then
+  begin
+    RLDraw26.Visible := False;
+    rlLabel58.Visible := False;
+    rllICMS_ST.Visible := False;
+    RLDraw25.Left := 650;
+    rlLabel53.Left := 654;
+    rllRedBaseCalc.Left := 654;
+  end
+  else
+  begin
+    RLDraw26.Visible := True;
+    rlLabel58.Visible := True;
+    rllICMS_ST.Visible := True;
+    RLDraw25.Left := 586;
+    rlLabel53.Left := 590;
+    rllRedBaseCalc.Left := 590;
+  end;
 end;
 
 procedure TfrmDACTerlRetratoA5.rlb_05_ComplementoBeforePrint(Sender: TObject;

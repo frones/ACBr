@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -49,6 +49,7 @@ type
   TRegistroH005List = class;
   TRegistroH010List = class;
   TRegistroH020List = class;
+  TRegistroH030List = class;
 
   /// Registro H001 - ABERTURA DO BLOCO H
 
@@ -116,6 +117,8 @@ type
     fVL_ITEM_IR: Double;       /// Valor do item para efeitos do Imposto de Renda.
 
     FRegistroH020: TRegistroH020List;  /// BLOCO H - Lista de RegistroH020 (FILHO)
+    FRegistroH030: TRegistroH030List;  /// BLOCO H - Lista de RegistroH030 (FILHO)
+
   public
     constructor Create(); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -132,6 +135,7 @@ type
     property VL_ITEM_IR : Double read fVL_ITEM_IR write fVL_ITEM_IR;
     /// Registros FILHOS
     property RegistroH020: TRegistroH020List read FRegistroH020 write FRegistroH020;
+    property RegistroH030: TRegistroH030List read FRegistroH030 write FRegistroH030;
   end;
 
   /// Registro H010 - Lista
@@ -170,6 +174,34 @@ type
   public
     function New(AOwner: TRegistroH010): TRegistroH020;
     property Items[Index: Integer]: TRegistroH020 read GetItem write SetItem;
+  end;
+
+  ///REGISTRO H030: INFORMAÇÕES COMPLEMENTARES DO INVENTÁRIO DAS MERCADORIAS SUJEITAS AO REGIME DE SUBSTITUIÇÃO TRIBUTÁRIA.
+
+  TRegistroH030 = class
+  private
+    fVL_ICMS_OP: currency; /// Valor médio unitário do ICMS OP.
+    fVL_BC_ICMS_ST: currency; /// Valor médio unitário da base de cálculo do ICMS ST.
+    fVL_ICMS_ST: currency; /// Valor médio unitário do ICMS ST.
+    fVL_FCP: currency; /// Valor médio unitário do FCP.
+  public
+    constructor Create(AOwner: TRegistroH010); virtual; /// Create
+
+    property VL_ICMS_OP: currency read fVL_ICMS_OP write fVL_ICMS_OP;
+    property VL_BC_ICMS_ST: currency read fVL_BC_ICMS_ST write fVL_BC_ICMS_ST;
+    property VL_ICMS_ST: currency read fVL_ICMS_ST write fVL_ICMS_ST;
+    property VL_FCP: currency read fVL_FCP write fVL_FCP;
+  end;
+
+  /// Registro H030 - Lista
+
+  TRegistroH030List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroH030; /// GetItem
+    procedure SetItem(Index: Integer; const Value: TRegistroH030); /// SetItem
+  public
+    function New(AOwner: TRegistroH010): TRegistroH030;
+    property Items[Index: Integer]: TRegistroH030 read GetItem write SetItem;
   end;
 
   /// Registro H990 - ENCERRAMENTO DO BLOCO H
@@ -289,11 +321,13 @@ constructor TRegistroH010.Create();
 begin
   inherited Create;
   FRegistroH020 := TRegistroH020List.Create;
+  FRegistroH030 := TRegistroH030List.Create;
 end;
 
 destructor TRegistroH010.Destroy;
 begin
   FRegistroH020.Free;
+  FRegistroH030.Free;
   inherited;
 end;
 
@@ -301,6 +335,30 @@ end;
 
 constructor TRegistroH020.Create(AOwner: TRegistroH010);
 begin
+end;
+
+{ TRegistroH030 }
+
+constructor TRegistroH030.Create(AOwner: TRegistroH010);
+begin
+end;
+
+{ TRegistroH030List }
+
+function TRegistroH030List.GetItem(Index: Integer): TRegistroH030;
+begin
+   Result := TRegistroH030(Inherited Items[Index]);
+end;
+
+function TRegistroH030List.New(AOwner: TRegistroH010): TRegistroH030;
+begin
+  Result := TRegistroH030.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroH030List.SetItem(Index: Integer; const Value: TRegistroH030);
+begin
+  Put(Index, Value);
 end;
 
 end.

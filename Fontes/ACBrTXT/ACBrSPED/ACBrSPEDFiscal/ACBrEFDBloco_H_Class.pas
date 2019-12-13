@@ -3,7 +3,8 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
+{                                       Isaque Pinheiro                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -57,10 +57,14 @@ type
     FRegistroH005Count: Integer;
     FRegistroH010Count: Integer;
     FRegistroH020Count: Integer;
+    FRegistroH030Count: Integer;
+
 
     procedure WriteRegistroH005(RegH001: TRegistroH001);
     procedure WriteRegistroH010(RegH005: TRegistroH005);
     procedure WriteRegistroH020(RegH010: TRegistroH010);
+    procedure WriteRegistroH030(RegH010: TRegistroH010);
+
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -73,6 +77,8 @@ type
     function RegistroH005New: TRegistroH005;
     function RegistroH010New: TRegistroH010;
     function RegistroH020New: TRegistroH020;
+    function RegistroH030New: TRegistroH030;
+
 
     procedure WriteRegistroH001;
     procedure WriteRegistroH990;
@@ -84,6 +90,7 @@ type
     property RegistroH005Count: Integer read FRegistroH005Count write FRegistroH005Count;
     property RegistroH010Count: Integer read FRegistroH010Count write FRegistroH010Count;
     property RegistroH020Count: Integer read FRegistroH020Count write FRegistroH020Count;
+    property RegistroH030Count: Integer read FRegistroH030Count write FRegistroH030Count;
   end;
 
 implementation
@@ -110,7 +117,9 @@ begin
   FRegistroH005Count := 0;
   FRegistroH010Count := 0;
   FRegistroH020Count := 0;
-  
+  FRegistroH030Count := 0;
+
+
   FRegistroH990.QTD_LIN_H := 0;
 end;
 
@@ -167,6 +176,22 @@ begin
    H010   := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Items[H010Count];
    Result := H010.RegistroH020.New(H010);
 end;
+
+function TBloco_H.RegistroH030New: TRegistroH030;
+var
+H010: TRegistroH010;
+H005Count: integer;
+H010Count: integer;
+begin
+   H005Count := FRegistroH001.RegistroH005.Count -1;
+   H010Count := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Count -1;
+   if H010Count = -1 then
+      raise Exception.Create('O registro H030 deve ser filho do registro H010, e não existe nenhum H010 pai!');
+
+   H010   := FRegistroH001.RegistroH005.Items[H005Count].RegistroH010.Items[H010Count];
+   Result := H010.RegistroH030.New(H010);
+end;
+
 
 procedure TBloco_H.WriteRegistroH001;
 begin
@@ -266,6 +291,7 @@ begin
 
         /// Registros FILHOS
         WriteRegistroH020( RegH005.RegistroH010.Items[intFor] );
+        WriteRegistroH030( RegH005.RegistroH010.Items[intFor] );
 
         RegistroH990.QTD_LIN_H := RegistroH990.QTD_LIN_H + 1;
      end;
@@ -297,6 +323,35 @@ begin
          end;
          /// Variavél para armazenar a quantidade de registro do tipo.
          FRegistroH020Count := FRegistroH020Count + RegH010.RegistroH020.Count;
+      end;
+    end;
+end;
+
+
+procedure TBloco_H.WriteRegistroH030(RegH010: TRegistroH010);
+var
+  intFor: integer;
+begin
+  if FBloco_0.Registro0000.COD_VER >= vlVersao104 then
+    if DT_INI >= EncodeDate(2012,07,01) then
+    begin
+      if Assigned( RegH010.RegistroH030 ) then
+      begin
+         for intFor := 0 to RegH010.RegistroH030.Count - 1 do
+         begin
+            with RegH010.RegistroH030.Items[intFor] do
+            begin
+              Add( LFill('H030') +
+                   LFill( VL_ICMS_OP, 0, 6 ) +
+                   LFill( VL_BC_ICMS_ST, 0, 6 ) +
+                   LFill( VL_ICMS_ST, 0, 6 ) +
+                   LFill( VL_FCP, 0, 6 ) ) ;
+            end;
+
+            RegistroH990.QTD_LIN_H := RegistroH990.QTD_LIN_H + 1;
+         end;
+         /// Variavél para armazenar a quantidade de registro do tipo.
+         FRegistroH030Count := FRegistroH030Count + RegH010.RegistroH030.Count;
       end;
     end;
 end;

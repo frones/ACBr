@@ -156,7 +156,7 @@ type
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
     procedure IncrementaBarraProgresso;
     procedure Logar(const AString: String);
-    procedure ProcedeInstalacao(out FCountErros: Integer);
+    function ProcedeInstalacao: Boolean;
     procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
         FCountErros: Integer);
     procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
@@ -562,12 +562,14 @@ begin
   WriteToTXT(PathArquivoLog, AString);
 end;
 
-procedure TfrmPrincipal.ProcedeInstalacao(out FCountErros: Integer);
+function TfrmPrincipal.ProcedeInstalacao: Boolean;
 var
   ACBrInstaladorAux: TACBrInstallComponentes;
   InstalacaoAtual: TJclBorRADToolInstallation;
   iListaVer: Integer;
+  FCountErros: Integer;
 begin
+  Result := False;
   ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
   try
     ACBrInstaladorAux.OnProgresso       := IncrementaBarraProgresso;
@@ -651,6 +653,7 @@ begin
 
   if FCountErros = 0 then
   begin
+    Result := True;
     Application.MessageBox(PWideChar('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
                                      'Clique em "Próximo" para finalizar a instalação.'),
                            'Instalação', MB_ICONINFORMATION + MB_OK);
@@ -750,18 +753,19 @@ end;
 // botão de compilação e instalação dos pacotes selecionados no treeview
 procedure TfrmPrincipal.btnInstalarACBrClick(Sender: TObject);
 var
-  FCountErros: Integer;
+  Instalou: Boolean;
 begin
+  Instalou := False;
   btnInstalarACBr.Enabled := False;
-  wizPgInstalacao.EnableButton(bkNext, False);
   wizPgInstalacao.EnableButton(bkBack, False);
+  wizPgInstalacao.EnableButton(bkNext, False);
   wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
   try
-    ProcedeInstalacao(FCountErros);
+    Instalou := ProcedeInstalacao;
   finally
     btnInstalarACBr.Enabled := True;
     wizPgInstalacao.EnableButton(bkBack, True);
-    wizPgInstalacao.EnableButton(bkNext, FCountErros = 0);
+    wizPgInstalacao.EnableButton(bkNext, Instalou);
     wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), True);
   end;
 end;

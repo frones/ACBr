@@ -180,8 +180,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrANe,
-  pcnGerador, pcnLeitor,
-  pcaANeW;
+  pcnGerador, pcnLeitor;
 
 { TANeWebService }
 

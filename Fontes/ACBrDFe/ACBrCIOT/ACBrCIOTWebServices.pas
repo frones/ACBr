@@ -116,10 +116,8 @@ type
 implementation
 
 uses
-  StrUtils, Math,
   ACBrUtil, ACBrCIOT,
-  pcnGerador, pcnLeitor,
-  pcnCIOTW;
+  pcnGerador, pcnLeitor;
 
 { TCIOTWebService }
 

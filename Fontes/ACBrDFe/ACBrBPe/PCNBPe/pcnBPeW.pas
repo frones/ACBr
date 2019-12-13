@@ -84,10 +84,10 @@ type
     procedure GerarEnderEmit;
 
     procedure GerarComp;
-    procedure GerarEnderComp(var UF: String);
+    procedure GerarEnderComp;
 
     procedure GerarAgencia;
-    procedure GerarEnderAgencia(var UF: String);
+    procedure GerarEnderAgencia;
 
     procedure GerarinfBPeSub;
     procedure GerarinfPassagem;
@@ -394,8 +394,6 @@ begin
 end;
 
 procedure TBPeW.GerarComp;
-var
-  UF: String;
 const
   HOM_NOME = 'BP-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 begin
@@ -427,12 +425,12 @@ begin
     end;
   end;
 
-  GerarEnderComp(UF);
+  GerarEnderComp;
 
   Gerador.wGrupo('/comp');
 end;
 
-procedure TBPeW.GerarEnderComp(var UF: String);
+procedure TBPeW.GerarEnderComp;
 var
   cMun: Integer;
   xMun: String;
@@ -440,8 +438,6 @@ var
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, BPe.Comp.enderComp.cPais, BPe.Comp.enderComp.UF,
                      BPe.Comp.enderComp.xMun, BPe.Comp.enderComp.cMun);
-
-  UF := xUF;
 
   Gerador.wGrupo('enderComp', '#051');
 
@@ -474,20 +470,18 @@ begin
 end;
 
 procedure TBPeW.GerarAgencia;
-var
-  UF: String;
 begin
   Gerador.wGrupo('agencia', '#064');
 
   Gerador.wCampo(tcStr, '#065', 'xNome', 02, 60, 1, BPe.Agencia.xNome, DSC_XNOME);
   Gerador.wCampoCNPJ('#066', BPe.Agencia.CNPJ, CODIGO_BRASIL, True);
 
-  GerarEnderAgencia(UF);
+  GerarEnderAgencia;
 
   Gerador.wGrupo('/agencia');
 end;
 
-procedure TBPeW.GerarEnderAgencia(var UF: String);
+procedure TBPeW.GerarEnderAgencia;
 var
   cMun: Integer;
   xMun: String;
@@ -495,8 +489,6 @@ var
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL, BPe.Agencia.enderAgencia.UF,
                      BPe.Agencia.enderAgencia.xMun, BPe.Agencia.EnderAgencia.cMun);
-
-  UF := xUF;
 
   Gerador.wGrupo('enderAgencia', '#067');
 

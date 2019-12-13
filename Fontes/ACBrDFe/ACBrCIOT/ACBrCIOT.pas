@@ -6,10 +6,10 @@ unit ACBrCIOT;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase,
+  Classes, SysUtils,
   ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
   ACBrCIOTConfiguracoes, ACBrCIOTWebServices, ACBrCIOTContratos,
-  pcnConversao, pcnCIOT, pcnConversaoCIOT;
+  pcnConversao, pcnConversaoCIOT;
 
 const
   ACBRCIOT_VERSAO = '1.0.0a';
@@ -80,8 +80,8 @@ type
 implementation
 
 uses
-  strutils, dateutils,
-  pcnAuxiliar, synacode;
+  dateutils,
+  pcnAuxiliar;
 
 {$IFDEF FPC}
  {$R ACBrCIOTServicos.rc}

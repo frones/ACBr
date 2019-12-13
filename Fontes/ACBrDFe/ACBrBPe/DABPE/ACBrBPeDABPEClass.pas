@@ -46,7 +46,7 @@ unit ACBrBPeDABPEClass;
 interface
 
 uses
-  SysUtils, Classes, ACBrBase,
+  SysUtils, Classes,
   pcnBPe, pcnConversao, ACBrDFeReport;
 
 type

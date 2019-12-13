@@ -43,7 +43,7 @@ unit ACBrCTe;
 interface
 
 uses
-  Classes, Sysutils, ACBrBase,
+  Classes, Sysutils,
   ACBrDFe, ACBrDFeConfiguracoes,
   ACBrCTeConfiguracoes, ACBrCTeWebServices, ACBrCTeConhecimentos,
   ACBrCTeDACTEClass, ACBrDFeException,
@@ -161,8 +161,8 @@ type
 implementation
 
 uses
-  strutils, dateutils, math,
-  pcnAuxiliar, synacode, ACBrDFeSSL;
+  dateutils,
+  pcnAuxiliar, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrCTeServicos.rc}

@@ -59,7 +59,7 @@ interface
 uses
   SysUtils, Classes, Contnrs,
   pcnConversao, pcnGerador, pcnConsts,
-  pcnEventoBPe, pcnBPeConsts, pcnSignature;
+  pcnEventoBPe, pcnSignature;
 
 type
   EventoException          = class(Exception);

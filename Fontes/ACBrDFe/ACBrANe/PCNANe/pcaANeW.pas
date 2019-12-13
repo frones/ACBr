@@ -41,7 +41,7 @@ unit pcaANeW;
 interface
 
 uses
-  SysUtils, Classes, synacode,
+  SysUtils, Classes,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnGerador, pcaConversao, pcaANe;
 

@@ -41,10 +41,10 @@ unit ACBrANe;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase,
+  Classes, SysUtils,
   ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
   ACBrANeConfiguracoes, ACBrANeWebServices, ACBrANeDocumentos,
-  pcnConversao, pcaANe, pcaConversao;
+  pcnConversao, pcaConversao;
 
 const
   ACBRANe_NAMESPACE = 'ATMWenSvr';
@@ -114,8 +114,8 @@ type
 implementation
 
 uses
-  strutils, dateutils,
-  pcnAuxiliar, synacode;
+  dateutils,
+  pcnAuxiliar;
 
 {$IFDEF FPC}
  {$R ACBrANeServicos.rc}

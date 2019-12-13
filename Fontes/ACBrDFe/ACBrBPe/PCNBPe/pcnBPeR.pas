@@ -100,14 +100,14 @@ var
   ok: Boolean;
   i: Integer;
   VersaoInfBPe: AnsiString;
-  Aspas: String;
+//  Aspas: String;
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
-  if Pos('versao="', Leitor.Arquivo) <> 0 then
-    Aspas := '"'
-   else
-    Aspas := '''';
+//  if Pos('versao="', Leitor.Arquivo) <> 0 then
+//    Aspas := '"'
+//   else
+//    Aspas := '''';
 
   BPe.infBPe.Id := Leitor.rAtributo('Id=', 'infBPe');
   if OnlyNumber(BPe.infBPe.Id) = '' then

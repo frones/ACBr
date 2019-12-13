@@ -41,7 +41,7 @@ unit ACBrANeDocumentos;
 interface
 
 uses
-  Classes, SysUtils, Dialogs, Forms, StrUtils,
+  Classes, SysUtils, Dialogs, Forms,
   ACBrANeConfiguracoes, ACBrDFeUtil,
   pcaANe, pcaANeR, pcaANeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
@@ -142,7 +142,7 @@ type
 implementation
 
 uses
-  ACBrANe, ACBrUtil, pcaConversao, synautil, IniFiles;
+  ACBrANe, ACBrUtil, pcaConversao, synautil;
 
 { Documento }
 

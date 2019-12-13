@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="8">
       <Unit0>
         <Filename Value="ACBrONE_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -38,14 +38,44 @@
       <Unit3>
         <Filename Value="Frm_Status.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="21" Y="8"/>
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONEWebServices.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="42" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\ACBrONE.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="22" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnRetDistLeitura.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="36"/>
+        <CursorPos X="50" Y="49"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrONE\PCNONE\pcnEnvRecepcaoLeitura.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="44"/>
+        <CursorPos X="22" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit7>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="Frm_ACBrONE.pas"/>
       </Position1>
@@ -69,6 +99,10 @@
         <Filename Value="Frm_ACBrONE.pas"/>
         <Caret Line="235" Column="25" TopLine="219"/>
       </Position6>
+      <Position7>
+        <Filename Value="Frm_ACBrONE.pas"/>
+        <Caret Line="243" Column="14" TopLine="220"/>
+      </Position7>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

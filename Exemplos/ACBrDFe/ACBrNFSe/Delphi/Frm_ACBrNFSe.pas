@@ -354,7 +354,8 @@ begin
 //    Configuracoes.Geral.Emitente.WebChaveAcesso := 'A001.B0001.C0001';
 
     // Provedor iiBrasil token = WebChaveAcesso para homologação
-    Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
+//    Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSEAJYYEA==';
+    Configuracoes.Geral.Emitente.WebChaveAcesso := 'TLXX4JN38KXTRNSE';
 
     with Configuracoes.Geral.Emitente.DadosSenhaParams.Add do
     begin

@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="10">
       <Unit0>
         <Filename Value="ACBrReinf_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -37,14 +37,58 @@
       <Unit3>
         <Filename Value="Frm_Status.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="21" Y="8"/>
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR5011.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="31" Y="47"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnGeradorReinf.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="115"/>
+        <CursorPos X="14" Y="128"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfEventos.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="3" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\ACBrReinfWebServices.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="710"/>
+        <CursorPos X="3" Y="723"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfR5001.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="31" Y="47"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrReinf\PCNReinf\pcnReinfConsulta.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="28"/>
+        <CursorPos X="66" Y="41"/>
+        <UsageCount Value="10"/>
+      </Unit9>
     </Units>
-    <JumpHistory Count="10" HistoryIndex="9">
+    <JumpHistory Count="11" HistoryIndex="10">
       <Position1>
         <Filename Value="Frm_ACBrReinf.pas"/>
         <Caret Line="837" Column="3" TopLine="834"/>
@@ -85,6 +129,10 @@
         <Filename Value="Frm_ACBrReinf.pas"/>
         <Caret Line="1161" Column="14" TopLine="1156"/>
       </Position10>
+      <Position11>
+        <Filename Value="Frm_ACBrReinf.pas"/>
+        <Caret TopLine="253"/>
+      </Position11>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

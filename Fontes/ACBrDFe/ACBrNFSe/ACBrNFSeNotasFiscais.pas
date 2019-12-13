@@ -925,7 +925,7 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..11] of String;
+  TagF: Array[1..12] of String;
 
   function PosNFSe: Integer;
   begin
@@ -939,7 +939,8 @@ var
     TagF[08] := '</tbnfd>';
     TagF[09] := '</nfs>';
     TagF[10] := '</nfeRpsNotaFiscal>'; // Provedor EL
-    TagF[11] := '</notaFiscal>'; // Provedor GIAP
+    TagF[11] := '</notasFiscais>';     // Provedor EL
+    TagF[12] := '</notaFiscal>';       // Provedor GIAP
 
     i := 0;
 

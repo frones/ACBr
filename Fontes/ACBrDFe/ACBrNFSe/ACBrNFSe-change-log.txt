@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2019
+-- ACBrNFSeNotasFiscais --
+[*] https://www.projetoacbr.com.br/forum/topic/55300-provedor-el-carregamento-atrav%C3%A9s-do-m%C3%A9todo-tnotasfiscaisloadfromstring/
+   Por: Italo Jurisato Junior
+
 11/12/2019
 -- pnfsNFSeR --
 [*] Possível correção para a impressão da descrição do código do serviço.

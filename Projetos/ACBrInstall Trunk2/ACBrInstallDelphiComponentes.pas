@@ -307,10 +307,26 @@ end;
 procedure TACBrInstallComponentes.FindDirs(InstalacaoAtual: TJclBorRADToolInstallation;
     APlatform: TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
 
+  function ExisteArquivoPasNoDir(const ADir: string): Boolean;
+  var
+    oDirList: TSearchRec;
+  begin
+    Result := False;
+    if FindFirst(ADir + '*.pas', faNormal, oDirList) = 0 then
+    begin
+      try
+        Result := True;
+      finally
+        SysUtils.FindClose(oDirList)
+      end;
+    end;
+  end;
+
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..5] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery'
+    LISTA_PROIBIDOS: ARRAY[0..14] OF STRING = (
+      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery', 'backup',
+      'Logos', 'Colorido', 'PretoBranco', 'Imagens', 'bmp', 'logotipos', 'PerformanceTest', 'test'
     );
   var
     Str: String;
@@ -328,26 +344,32 @@ var
   oDirList: TSearchRec;
 begin
   ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
-
+  
   if FindFirst(ADirRoot + '*.*', faDirectory, oDirList) = 0 then
   begin
     try
-//      InstalacaoAtual := oACBr.Installations[iVersion];
       repeat
         if ((oDirList.Attr and faDirectory) <> 0) and
             (oDirList.Name <> '.')                and
-            (oDirList.Name <> '..')               and
-            (not EProibido(oDirList.Name)) then
+            (oDirList.Name <> '..') then
         begin
-         if bAdicionar then
-         begin
-           InstalacaoAtual.AddToLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
-           InstalacaoAtual.AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, APlatform);
-         end
-         else
-           InstalacaoAtual.RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
-         //-- Procura subpastas
-         FindDirs(InstalacaoAtual, APlatform, ADirRoot + oDirList.Name, bAdicionar);
+          if not bAdicionar then
+          begin
+            InstalacaoAtual.RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
+          end
+          else
+          begin
+            if (not EProibido(oDirList.Name)) then
+            begin
+              if ExisteArquivoPasNoDir(oDirList.Name) then
+              begin
+                InstalacaoAtual.AddToLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
+                InstalacaoAtual.AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, APlatform);
+              end;
+              //-- Procura subpastas
+              FindDirs(InstalacaoAtual, APlatform, ADirRoot + oDirList.Name, bAdicionar);
+            end;
+          end;
         end;
       until FindNext(oDirList) <> 0;
     finally

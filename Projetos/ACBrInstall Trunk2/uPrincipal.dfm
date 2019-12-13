@@ -1043,6 +1043,73 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
     end
+    object wizPgSelectIDEs: TJvWizardInteriorPage
+      Header.ParentFont = False
+      Header.Title.Color = clNone
+      Header.Title.Text = 'Escolha as IDEs'
+      Header.Title.Anchors = [akLeft, akTop, akRight]
+      Header.Title.Font.Charset = DEFAULT_CHARSET
+      Header.Title.Font.Color = clWindowText
+      Header.Title.Font.Height = -16
+      Header.Title.Font.Name = 'Tahoma'
+      Header.Title.Font.Style = [fsBold]
+      Header.Subtitle.Color = clNone
+      Header.Subtitle.Text = 'Escolha todas as IDEs em que o ACBr deve ser instalado.'
+      Header.Subtitle.Anchors = [akLeft, akTop, akRight, akBottom]
+      Header.Subtitle.Font.Charset = DEFAULT_CHARSET
+      Header.Subtitle.Font.Color = clWindowText
+      Header.Subtitle.Font.Height = -13
+      Header.Subtitle.Font.Name = 'Tahoma'
+      Header.Subtitle.Font.Style = []
+      Color = clWhite
+      Caption = 'Selecione as IDEs'
+      OnNextButtonClick = wizPgSelectIDEsNextButtonClick
+      object Label23: TLabel
+        Left = 280
+        Top = 77
+        Width = 93
+        Height = 13
+        Caption = 'ComboBox Invisivel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object edtDelphiVersion: TComboBox
+        Left = 379
+        Top = 74
+        Width = 172
+        Height = 21
+        Style = csDropDownList
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        Visible = False
+      end
+      object clbDelphiVersion: TCheckListBox
+        Left = 6
+        Top = 101
+        Width = 539
+        Height = 388
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemHeight = 19
+        ParentFont = False
+        TabOrder = 1
+        OnClick = clbDelphiVersionClick
+      end
+    end
     object wizPgConfiguracao: TJvWizardInteriorPage
       Header.Visible = False
       Header.ParentFont = False
@@ -1067,36 +1134,9 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      object Label4: TLabel
-        Left = 17
-        Top = 68
-        Width = 84
-        Height = 13
-        Caption = 'Vers'#245'es do delphi'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label5: TLabel
-        Left = 195
-        Top = 50
-        Width = 52
-        Height = 13
-        Caption = 'Plataforma'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Visible = False
-      end
       object Label2: TLabel
-        Left = 17
-        Top = 13
+        Left = 6
+        Top = 21
         Width = 321
         Height = 13
         Caption = 
@@ -1110,8 +1150,8 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object btnSelecDirInstall: TSpeedButton
-        Left = 510
-        Top = 27
+        Left = 499
+        Top = 35
         Width = 26
         Height = 24
         Hint = 'Clique para procurar pelo diret'#243'rio onde deseja instalar'
@@ -1121,8 +1161,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label8: TLabel
-        Left = 211
-        Top = 111
+        Left = 22
+        Top = 87
         Width = 316
         Height = 13
         Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
@@ -1151,59 +1191,9 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         WordWrap = True
       end
-      object Label23: TLabel
-        Left = 373
-        Top = 50
-        Width = 93
-        Height = 13
-        Caption = 'ComboBox Invisivel'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Visible = False
-      end
-      object edtDelphiVersion: TComboBox
-        Left = 373
-        Top = 66
-        Width = 172
-        Height = 21
-        Style = csDropDownList
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 2
-        Visible = False
-        OnChange = edtDelphiVersionChange
-      end
-      object edtPlatform: TComboBox
-        Left = 195
-        Top = 66
-        Width = 172
-        Height = 21
-        Style = csDropDownList
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ItemIndex = 0
-        ParentFont = False
-        TabOrder = 1
-        Text = 'Win32'
-        Visible = False
-        Items.Strings = (
-          'Win32'
-          'Win64')
-      end
       object edtDirDestino: TEdit
-        Left = 17
-        Top = 29
+        Left = 6
+        Top = 37
         Width = 487
         Height = 21
         Font.Charset = DEFAULT_CHARSET
@@ -1216,8 +1206,8 @@ object frmPrincipal: TfrmPrincipal
         Text = 'C:\ACBr'
       end
       object rdgDLL: TRadioGroup
-        Left = 195
-        Top = 329
+        Left = 6
+        Top = 305
         Width = 350
         Height = 126
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1226,12 +1216,12 @@ object frmPrincipal: TfrmPrincipal
           'Diret'#243'rio system do Windows (Recomendado)'
           'Diret'#243'rio bin'#225'rio do Delphi'
           'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 14
+        TabOrder = 11
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
-        Left = 195
-        Top = 306
+        Left = 6
+        Top = 282
         Width = 350
         Height = 17
         Hint = 
@@ -1240,69 +1230,59 @@ object frmPrincipal: TfrmPrincipal
         Caption = 
           'Copiar todas as DLL'#39's requeridas (exceto as marcadas '#39'n'#227'o utiliz' +
           'ar'#39')'
-        TabOrder = 13
+        TabOrder = 10
       end
       object ckbBCB: TCheckBox
-        Left = 195
-        Top = 95
+        Left = 6
+        Top = 71
         Width = 278
         Height = 17
         Caption = 'Generate all C++Builder files (including package libs) '
-        TabOrder = 3
+        TabOrder = 1
       end
       object chkDeixarSomenteLIB: TCheckBox
-        Left = 195
-        Top = 127
+        Left = 6
+        Top = 103
         Width = 350
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
-        TabOrder = 4
+        TabOrder = 2
       end
       object ckbRemoverArquivosAntigos: TCheckBox
-        Left = 195
-        Top = 150
+        Left = 6
+        Top = 126
         Width = 379
         Height = 17
         Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
-        TabOrder = 5
-      end
-      object clbDelphiVersion: TCheckListBox
-        Left = 17
-        Top = 84
-        Width = 172
-        Height = 371
-        Color = clBtnFace
-        ItemHeight = 13
-        TabOrder = 11
-        OnClick = clbDelphiVersionClick
+        TabOrder = 3
       end
       object ckbRemoveOpenSSL: TCheckBox
-        Left = 195
-        Top = 173
+        Left = 6
+        Top = 149
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar OpenSSL'
-        TabOrder = 6
+        TabOrder = 4
       end
       object ckbRemoveCapicom: TCheckBox
-        Left = 195
-        Top = 196
+        Left = 6
+        Top = 172
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar Capicom'
-        TabOrder = 7
+        TabOrder = 5
       end
       object ckbCargaDllTardia: TCheckBox
-        Left = 195
-        Top = 239
+        Left = 6
+        Top = 215
         Width = 379
         Height = 17
         Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
-        TabOrder = 9
+        TabOrder = 7
       end
       object ckbRemoverCastWarnings: TCheckBox
-        Left = 195
-        Top = 260
+        Left = 6
+        Top = 236
         Width = 379
         Height = 17
         Hint = 
@@ -1311,25 +1291,25 @@ object frmPrincipal: TfrmPrincipal
         Caption = 
           'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
           'ng'
-        TabOrder = 10
+        TabOrder = 8
       end
       object ckbUsarArquivoConfig: TCheckBox
-        Left = 195
-        Top = 283
+        Left = 6
+        Top = 259
         Width = 305
         Height = 17
         Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
-        TabOrder = 12
+        TabOrder = 9
       end
       object ckbRemoveXMLSec: TCheckBox
-        Left = 195
-        Top = 214
+        Left = 6
+        Top = 190
         Width = 379
         Height = 17
         Caption = 'N'#227'o utilizar XMLSec'
         Checked = True
         State = cbChecked
-        TabOrder = 8
+        TabOrder = 6
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1374,6 +1354,256 @@ object frmPrincipal: TfrmPrincipal
         inherited ScrollBox1: TScrollBox
           Width = 548
           Height = 452
+          VertScrollBar.Position = 0
+          inherited Label1: TLabel
+            Top = 1
+          end
+          inherited Label2: TLabel
+            Top = 90
+          end
+          inherited Label3: TLabel
+            Top = 107
+          end
+          inherited Label4: TLabel
+            Top = 381
+          end
+          inherited Label8: TLabel
+            Top = 364
+          end
+          inherited Label9: TLabel
+            Top = 719
+          end
+          inherited Label5: TLabel
+            Top = 737
+          end
+          inherited Label6: TLabel
+            Top = 754
+          end
+          inherited Label7: TLabel
+            Top = 771
+          end
+          inherited Label10: TLabel
+            Top = 788
+          end
+          inherited Label11: TLabel
+            Top = 805
+          end
+          inherited Label12: TLabel
+            Top = 822
+          end
+          inherited Label13: TLabel
+            Top = 869
+          end
+          inherited Label14: TLabel
+            Top = 903
+          end
+          inherited Label15: TLabel
+            Top = 886
+          end
+          inherited Label16: TLabel
+            Top = 920
+          end
+          inherited Label17: TLabel
+            Top = 937
+          end
+          inherited Label18: TLabel
+            Top = 971
+          end
+          inherited Label19: TLabel
+            Top = 954
+          end
+          inherited Label20: TLabel
+            Top = 835
+          end
+          inherited Label21: TLabel
+            Top = 209
+          end
+          inherited Label22: TLabel
+            Top = 158
+          end
+          inherited Label23: TLabel
+            Top = 313
+          end
+          inherited Label24: TLabel
+            Top = 192
+          end
+          inherited Label25: TLabel
+            Top = 260
+          end
+          inherited Label26: TLabel
+            Top = 330
+          end
+          inherited Label27: TLabel
+            Top = 852
+          end
+          inherited ACBr_synapse_dpk: TCheckBox
+            Top = 0
+          end
+          inherited ACBr_Comum_dpk: TCheckBox
+            Top = 17
+          end
+          inherited ACBr_Diversos_dpk: TCheckBox
+            Top = 52
+          end
+          inherited ACBr_Serial_dpk: TCheckBox
+            Top = 86
+          end
+          inherited ACBr_TCP_dpk: TCheckBox
+            Top = 292
+          end
+          inherited ACBr_BPe_dpk: TCheckBox
+            Top = 615
+          end
+          inherited ACBr_TEFD_dpk: TCheckBox
+            Top = 699
+          end
+          inherited ACBr_Boleto_dpk: TCheckBox
+            Top = 309
+          end
+          inherited ACBr_Sintegra_dpk: TCheckBox
+            Top = 188
+          end
+          inherited ACBr_SPED_dpk: TCheckBox
+            Top = 205
+          end
+          inherited ACBr_PAF_dpk: TCheckBox
+            Top = 154
+          end
+          inherited ACBr_OpenSSL_dpk: TCheckBox
+            Top = 35
+          end
+          inherited ACBr_PCNComum_dpk: TCheckBox
+            Top = 69
+          end
+          inherited ACBr_NFe_dpk: TCheckBox
+            Top = 377
+          end
+          inherited ACBr_CTe_dpk: TCheckBox
+            Top = 428
+          end
+          inherited ACBr_NFSe_dpk: TCheckBox
+            Top = 445
+          end
+          inherited ACBr_MDFe_dpk: TCheckBox
+            Top = 462
+          end
+          inherited ACBr_GNRE_dpk: TCheckBox
+            Top = 479
+          end
+          inherited ACBr_Convenio115_dpk: TCheckBox
+            Top = 120
+          end
+          inherited ACBr_SEF2_dpk: TCheckBox
+            Top = 171
+          end
+          inherited ACBr_SAT_dpk: TCheckBox
+            Top = 530
+          end
+          inherited ACBr_NFeDanfeESCPOS_dpk: TCheckBox
+            Top = 411
+          end
+          inherited ACBr_SATExtratoESCPOS_dpk: TCheckBox
+            Top = 564
+          end
+          inherited ACBr_LFD_dpk: TCheckBox
+            Top = 137
+          end
+          inherited ACBr_SPEDImportar_dpk: TCheckBox
+            Top = 222
+          end
+          inherited ACBr_DFeComum_dpk: TCheckBox
+            Top = 360
+          end
+          inherited ACBr_NFCeECFVirtual_dpk: TCheckBox
+            Top = 394
+          end
+          inherited ACBr_SATECFVirtual_dpk: TCheckBox
+            Top = 547
+          end
+          inherited ACBr_TXTComum_dpk: TCheckBox
+            Top = 103
+          end
+          inherited ACBr_NFeDanfeFR_dpk: TCheckBox
+            Top = 733
+          end
+          inherited ACBr_CTeDacteFR_dpk: TCheckBox
+            Top = 750
+          end
+          inherited ACBr_NFSeDanfseFR_dpk: TCheckBox
+            Top = 767
+          end
+          inherited ACBr_BoletoFR_dpk: TCheckBox
+            Top = 784
+          end
+          inherited ACBr_MDFeDamdfeFR_dpk: TCheckBox
+            Top = 801
+          end
+          inherited ACBr_GNREGuiaFR_dpk: TCheckBox
+            Top = 818
+          end
+          inherited ACBr_NFeDanfeRL_dpk: TCheckBox
+            Top = 865
+          end
+          inherited ACBr_CTeDacteRL_dpk: TCheckBox
+            Top = 899
+          end
+          inherited ACBr_NFSeDanfseRL_dpk: TCheckBox
+            Top = 882
+          end
+          inherited ACBr_BoletoRL_dpk: TCheckBox
+            Top = 916
+          end
+          inherited ACBr_MDFeDamdfeRL_dpk: TCheckBox
+            Top = 933
+          end
+          inherited ACBr_SATExtratoRL_dpk: TCheckBox
+            Top = 950
+          end
+          inherited ACBr_GNREGuiaRL_dpk: TCheckBox
+            Top = 967
+          end
+          inherited ACBr_BlocoX_dpk: TCheckBox
+            Top = 598
+          end
+          inherited ACBr_DeSTDA_dpk: TCheckBox
+            Top = 239
+          end
+          inherited ACBr_Ponto_dpk: TCheckBox
+            Top = 256
+          end
+          inherited ACBr_MTER_dpk: TCheckBox
+            Top = 326
+          end
+          inherited ACBr_SATWS_dpk: TCheckBox
+            Top = 581
+          end
+          inherited ACBr_ANe_dpk: TCheckBox
+            Top = 648
+          end
+          inherited ACBr_Integrador_dpk: TCheckBox
+            Top = 343
+          end
+          inherited ACBre_Social_dpk: TCheckBox
+            Top = 496
+          end
+          inherited ACBr_Reinf_dpk: TCheckBox
+            Top = 513
+          end
+          inherited ACBr_BPeDabpeESCPOS_dpk: TCheckBox
+            Top = 631
+          end
+          inherited ACBr_DFeReportRL_dpk: TCheckBox
+            Top = 848
+          end
+          inherited ACBr_CIOT_dpk: TCheckBox
+            Top = 665
+          end
+          inherited ACBr_LCDPR_dpk: TCheckBox
+            Top = 275
+          end
+          inherited ACBr_ONE_dpk: TCheckBox
+            Top = 682
+          end
         end
       end
     end
@@ -1419,7 +1649,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnVisualizarLogCompilacaoClick
       end
       object lstMsgInstalacao: TListBox
-        Left = 20
+        Left = 21
         Top = 72
         Width = 516
         Height = 362
@@ -1644,7 +1874,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

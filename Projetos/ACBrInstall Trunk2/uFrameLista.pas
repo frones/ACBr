@@ -271,15 +271,16 @@ end;
 // rotina de verificação de dependência e marcação dos pacotes base
 procedure TframePacotes.VerificarCheckboxes(Sender: TObject);
 begin
-  // pacotes base não podem ser desmarcados
-  // instalação mínima do ACBr
-  ACBr_synapse_dpk.Checked := True;
-  ACBr_Comum_dpk.Checked := True;
-  ACBr_Diversos_dpk.Checked := True;
-
+  //If necessário para evitar stackoverflow
   if not FUtilizarBotoesMarcar then
   begin
     FUtilizarBotoesMarcar := True;
+
+    // pacotes base não podem ser desmarcados
+    // instalação mínima do ACBr
+    ACBr_synapse_dpk.Checked := True;
+    ACBr_Comum_dpk.Checked := True;
+    ACBr_Diversos_dpk.Checked := True;
 
     /// caso algum evento abaixo dispare novamente
     try

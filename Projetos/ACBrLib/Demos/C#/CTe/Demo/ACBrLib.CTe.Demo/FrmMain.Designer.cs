@@ -128,8 +128,8 @@
             this.btnCarregarIni = new System.Windows.Forms.Button();
             this.btnStatusServ = new System.Windows.Forms.Button();
             this.btnInutilizar = new System.Windows.Forms.Button();
-            this.btnEnviar = new System.Windows.Forms.Button();
-            this.btnCancelarCTe = new System.Windows.Forms.Button();
+            this.btnGerarXml = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnConsultarRecibo = new System.Windows.Forms.Button();
             this.btnConsultaXml = new System.Windows.Forms.Button();
@@ -1276,25 +1276,25 @@
             this.btnInutilizar.UseVisualStyleBackColor = true;
             this.btnInutilizar.Click += new System.EventHandler(this.btnInutilizar_Click);
             // 
-            // btnEnviar
+            // btnGerarXml
             // 
-            this.btnEnviar.Location = new System.Drawing.Point(6, 6);
-            this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(118, 23);
-            this.btnEnviar.TabIndex = 10;
-            this.btnEnviar.Text = "Criar e Enviar";
-            this.btnEnviar.UseVisualStyleBackColor = true;
-            this.btnEnviar.Click += new System.EventHandler(this.btnEnviar_Click);
+            this.btnGerarXml.Location = new System.Drawing.Point(6, 6);
+            this.btnGerarXml.Name = "btnGerarXml";
+            this.btnGerarXml.Size = new System.Drawing.Size(118, 23);
+            this.btnGerarXml.TabIndex = 10;
+            this.btnGerarXml.Text = "Gerar Xml";
+            this.btnGerarXml.UseVisualStyleBackColor = true;
+            this.btnGerarXml.Click += new System.EventHandler(this.btnGerarXml_Click);
             // 
-            // btnCancelarCTe
+            // btnCancelar
             // 
-            this.btnCancelarCTe.Location = new System.Drawing.Point(6, 6);
-            this.btnCancelarCTe.Name = "btnCancelarCTe";
-            this.btnCancelarCTe.Size = new System.Drawing.Size(118, 23);
-            this.btnCancelarCTe.TabIndex = 16;
-            this.btnCancelarCTe.Text = "Cancelar CTe";
-            this.btnCancelarCTe.UseVisualStyleBackColor = true;
-            this.btnCancelarCTe.Click += new System.EventHandler(this.btnCancelarCTe_Click);
+            this.btnCancelar.Location = new System.Drawing.Point(6, 6);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(118, 23);
+            this.btnCancelar.TabIndex = 16;
+            this.btnCancelar.Text = "Cancelar CTe";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnImprimir
             // 
@@ -1377,7 +1377,7 @@
             this.tabPage5.Controls.Add(this.btnEnviarSincrono);
             this.tabPage5.Controls.Add(this.btnCarregarXml);
             this.tabPage5.Controls.Add(this.btnValidarRegra);
-            this.tabPage5.Controls.Add(this.btnEnviar);
+            this.tabPage5.Controls.Add(this.btnGerarXml);
             this.tabPage5.Controls.Add(this.btnCarregarIni);
             this.tabPage5.Controls.Add(this.btnAssinar);
             this.tabPage5.Controls.Add(this.btnImprimir);
@@ -1473,7 +1473,7 @@
             this.tabPage7.Controls.Add(this.btnImprimirEvento);
             this.tabPage7.Controls.Add(this.btnEnviarEmailEvento);
             this.tabPage7.Controls.Add(this.btnCarregarEvento);
-            this.tabPage7.Controls.Add(this.btnCancelarCTe);
+            this.tabPage7.Controls.Add(this.btnCancelar);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(378, 153);
@@ -1705,8 +1705,8 @@
         private System.Windows.Forms.RichTextBox rtbRespostas;
         private System.Windows.Forms.Button btnStatusServ;
         private System.Windows.Forms.Button btnInutilizar;
-        private System.Windows.Forms.Button btnEnviar;
-        private System.Windows.Forms.Button btnCancelarCTe;
+        private System.Windows.Forms.Button btnGerarXml;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Button btnConsultarRecibo;
         private System.Windows.Forms.Button btnConsultaXml;

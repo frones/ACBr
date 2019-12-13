@@ -44,17 +44,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\Shared\FrmWait.cs">
+      <Link>FrmWait.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\..\..\Shared\FrmWait.Designer.cs">
+      <DependentUpon>FrmWait.cs</DependentUpon>
+    </Compile>
     <Compile Include="..\..\..\Shared\Helpers.cs">
       <Link>Helpers.cs</Link>
     </Compile>
     <Compile Include="..\..\..\Shared\InputBox.cs">
       <Link>InputBox.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\Shared\ISplash.cs">
+      <Link>ISplash.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\Shared\ItemData.cs">
       <Link>ItemData.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\Shared\SplashInfo.cs">
+      <Link>SplashInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Shared\SplashScreenManager.cs">
+      <Link>SplashScreenManager.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\Shared\UIExtensions.cs">
       <Link>UIExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Shared\User32.cs">
+      <Link>User32.cs</Link>
     </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -64,6 +83,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="..\..\..\Shared\FrmWait.resx">
+      <DependentUpon>FrmWait.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>

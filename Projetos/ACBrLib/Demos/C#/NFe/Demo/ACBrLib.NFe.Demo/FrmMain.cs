@@ -42,8 +42,8 @@ namespace ACBrLib.NFe.Demo
             try
             {
                 cmbFormaEmissao.EnumDataSource(TipoEmissao.teNormal);
-                cmbModeloDocumento.EnumDataSource(ModeloDF.moNFe);
-                cmbVersaoDF.EnumDataSource(VersaoDFe.ve400);
+                cmbModeloDocumento.EnumDataSource(ModeloNFe.moNFe);
+                cmbVersaoDF.EnumDataSource(VersaoNFe.ve400);
                 cmbCrypt.EnumDataSource(SSLCryptLib.cryWinCrypt);
                 cmbHttp.EnumDataSource(SSLHttpLib.httpWinHttp);
                 cmbXmlSign.EnumDataSource(SSLXmlSignLib.xsLibXml2);
@@ -100,8 +100,8 @@ namespace ACBrLib.NFe.Demo
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "FormatoAlerta", txtFormatoAlerta.Text);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "FormaEmissao",
                     cmbFormaEmissao.GetSelectedValue<TipoEmissao>());
-                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "ModeloDF", cmbModeloDocumento.GetSelectedValue<ModeloDF>());
-                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "VersaoDF", cmbVersaoDF.GetSelectedValue<VersaoDFe>());
+                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "ModeloDF", cmbModeloDocumento.GetSelectedValue<ModeloNFe>());
+                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "VersaoDF", cmbVersaoDF.GetSelectedValue<VersaoNFe>());
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "RetirarAcentos", ckbRetirarAcentos.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvar.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "PathSalvar", txtLogs.Text);
@@ -118,9 +118,9 @@ namespace ACBrLib.NFe.Demo
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "Visualizar", ckbVisualizar.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "SalvarWS", ckbSalvarSOAP.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "AjustaAguardaConsultaRet", ckbAjustarAut.Checked);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "AguardarConsultaRet", (int) nudAguardar.Value);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "Tentativas", (int) nudTentativas.Value);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "IntervaloTentativas", (int) nudIntervalos.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "AguardarConsultaRet", (int)nudAguardar.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "Tentativas", (int)nudTentativas.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.NFe, "IntervaloTentativas", (int)nudIntervalos.Value);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Servidor", txtProxyServidor.Text);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Porta", nudProxyPorta.Text);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
@@ -160,10 +160,10 @@ namespace ACBrLib.NFe.Demo
                 AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "Modelo",
                     cbbModelo.GetSelectedValue<ACBrPosPrinterModelo>());
                 AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "Porta", cbbPortas.Text);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", (int) nudColunas.Value);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", (int) nudEspacos.Value);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", (int) nudBuffer.Value);
-                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", (int) nudLinhasPular.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "ColunasFonteNormal", (int)nudColunas.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "EspacoEntreLinhas", (int)nudEspacos.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasBuffer", (int)nudBuffer.Value);
+                AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "LinhasEntreCupons", (int)nudLinhasPular.Value);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "ControlePorta", cbxControlePorta.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "CortaPapel", cbxCortarPapel.Checked);
                 AcbrNFe.ConfigGravarValor(ACBrSessao.PosPrinter, "TraduzirTags", cbxTraduzirTags.Checked);
@@ -193,14 +193,14 @@ namespace ACBrLib.NFe.Demo
         private void LoadConfig()
         {
             AcbrNFe.ConfigLer();
-            
+
             //Config Geral
-            ckbAtualizarXML.Checked= AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");
+            ckbAtualizarXML.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");
             ckbExibirErroSchema.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "ExibirErroSchema");
             txtFormatoAlerta.Text = AcbrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "FormatoAlerta");
             cmbFormaEmissao.SetSelectedValue(AcbrNFe.ConfigLerValor<TipoEmissao>(ACBrSessao.NFe, "FormaEmissao"));
-            cmbModeloDocumento.SetSelectedValue(AcbrNFe.ConfigLerValor<ModeloDF>(ACBrSessao.NFe, "ModeloDF"));
-            cmbVersaoDF.SetSelectedValue(AcbrNFe.ConfigLerValor<VersaoDFe>(ACBrSessao.NFe, "VersaoDF"));
+            cmbModeloDocumento.SetSelectedValue(AcbrNFe.ConfigLerValor<ModeloNFe>(ACBrSessao.NFe, "ModeloDF"));
+            cmbVersaoDF.SetSelectedValue(AcbrNFe.ConfigLerValor<VersaoNFe>(ACBrSessao.NFe, "VersaoDF"));
             ckbRetirarAcentos.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "RetirarAcentos");
             ckbSalvar.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
             txtLogs.Text = AcbrNFe.ConfigLerValor<string>(ACBrSessao.NFe, "PathSalvar");
@@ -217,7 +217,7 @@ namespace ACBrLib.NFe.Demo
             rdbHomologacao.Checked = ambiente == TipoAmbiente.taHomologacao;
             rdbProducao.Checked = ambiente == TipoAmbiente.taProducao;
 
-            ckbVisualizar.Checked= AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "Visualizar");
+            ckbVisualizar.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "Visualizar");
             ckbSalvarSOAP.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "SalvarWS");
             ckbAjustarAut.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AjustaAguardaConsultaRet");
             nudAguardar.Value = AcbrNFe.ConfigLerValor<int>(ACBrSessao.NFe, "AguardarConsultaRet");
@@ -283,6 +283,33 @@ namespace ACBrLib.NFe.Demo
             ckbTLS.Checked = AcbrNFe.ConfigLerValor<bool>(ACBrSessao.Email, "TLS");
         }
 
+        private void CheckNFeLista(bool xml = false)
+        {
+            if (MessageBox.Show(@"Limpar a lista ?", @"ACBrLibNFe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                AcbrNFe.LimparLista();
+
+            if (xml)
+                CarregarNFeXml();
+            else
+                CarregarNFeIni();
+        }
+
+        private void CarregarNFeIni()
+        {
+            var arquivoIni = Helpers.OpenFile("Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(arquivoIni)) return;
+
+            AcbrNFe.CarregarINI(arquivoIni);
+        }
+
+        private void CarregarNFeXml()
+        {
+            var arquivoIni = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+            if (string.IsNullOrEmpty(arquivoIni)) return;
+
+            AcbrNFe.CarregarXML(arquivoIni);
+        }
+
         #endregion Methods
 
         #region EventHandlers
@@ -317,6 +344,26 @@ namespace ACBrLib.NFe.Demo
             txtDadosPFX.Text = Convert.ToBase64String(dados);
         }
 
+        private void btnArqNFe_Click(object sender, EventArgs e)
+        {
+            txtArqNFe.Text = Helpers.SelectFolder();
+        }
+
+        private void btnArqEvento_Click(object sender, EventArgs e)
+        {
+            txtArqEvento.Text = Helpers.SelectFolder();
+        }
+
+        private void btnArqInu_Click(object sender, EventArgs e)
+        {
+            txtArqInu.Text = Helpers.SelectFolder();
+        }
+
+        private void btnLogomarca_Click(object sender, EventArgs e)
+        {
+            txtLogomarca.Text = Helpers.OpenFile("Image files (*.bmp, *.jpeg, *.png) | *.bmp; *.jpeg; *.png");
+        }
+
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
             try
@@ -329,7 +376,7 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnStatusServ_Click(object sender, EventArgs e)
+        private void btnStatusServ_Click(object sender, EventArgs e)
         {
             try
             {
@@ -341,17 +388,15 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnEnviar_Click(object sender, EventArgs e)
+        private void btnGerarXml_Click(object sender, EventArgs e)
         {
             try
             {
-                var arquivoIni = Helpers.OpenFile("Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
-                if (string.IsNullOrEmpty(arquivoIni)) return;
-
                 AcbrNFe.LimparLista();
-                AcbrNFe.CarregarINI(arquivoIni);
+                CarregarNFeIni();
 
-                var ret = AcbrNFe.Enviar(1);
+                AcbrNFe.Assinar();
+                var ret = AcbrNFe.ObterXml(0);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
@@ -360,7 +405,80 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnImprimir_Click(object sender, EventArgs e)
+        private void btnEnviarSincrono_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista();
+
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = AcbrNFe.Enviar(aLote, sincrono: true);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarAssincrono_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista();
+
+                var aLote = 1;
+                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
+
+                var ret = AcbrNFe.Enviar(aLote);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarIni_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarXml_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista(true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimparLista_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(@"Limpar a lista ?", @"ACBrLibNFe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    AcbrNFe.LimparLista();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
         {
             try
             {
@@ -369,7 +487,71 @@ namespace ACBrLib.NFe.Demo
 
                 AcbrNFe.LimparLista();
                 AcbrNFe.CarregarXML(arquivoXml);
-                AcbrNFe.Imprimir();
+                AcbrNFe.Imprimir(bMostrarPreview: true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                AcbrNFe.LimparLista();
+                AcbrNFe.CarregarXML(arquivoXml);
+                AcbrNFe.Imprimir(bMostrarPreview: true);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarEmail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                var destinatario = "";
+                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
+                if (string.IsNullOrEmpty(destinatario)) return;
+
+                AcbrNFe.EnviarEmail(destinatario, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAssinar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista(true);
+
+                AcbrNFe.Assinar();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnValidarRegra_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CheckNFeLista(true);
+
+                rtbRespostas.AppendText(AcbrNFe.ValidarRegrasdeNegocios());
             }
             catch (Exception exception)
             {
@@ -395,7 +577,7 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnConsultaChave_Click(object sender, EventArgs e)
+        private void btnConsultaChave_Click(object sender, EventArgs e)
         {
             try
             {
@@ -413,31 +595,12 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnEnviarEmail_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var arquivoXml = Helpers.OpenFile("Arquivo Xmnl NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
-                if (string.IsNullOrEmpty(arquivoXml)) return;
-
-                var destinatario = "";
-                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
-                if (string.IsNullOrEmpty(destinatario)) return;
-
-                AcbrNFe.EnviarEmail(destinatario, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void BtnConsultarRecibo_Click(object sender, EventArgs e)
+        private void btnConsultarRecibo_Click(object sender, EventArgs e)
         {
             try
             {
                 var aRecibo = "";
-                if (InputBox.Show("WebServices Consultar: Recib", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Consultar: Recibo", "Número do recibo.", ref aRecibo) != DialogResult.OK) return;
 
                 var ret = AcbrNFe.ConsultarRecibo(aRecibo);
                 rtbRespostas.AppendText(ret);
@@ -448,7 +611,28 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnCancelarNFe_Click(object sender, EventArgs e)
+        private void btnConsultarCadastro_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var uf = "SP";
+                var documento = "";
+                var ie = false;
+
+                if (InputBox.Show("WebServices Consultar: Cadastro", "UF", ref uf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices Consultar: Cadastro", "Documento", ref documento) != DialogResult.OK) return;
+                ie = MessageBox.Show(@"O documento é uma inscrição estadual ?", @"WebServices Consultar: Cadastro", MessageBoxButtons.YesNo) != DialogResult.OK;
+
+                var ret = AcbrNFe.ConsultaCadastro(uf, documento, ie);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -470,24 +654,126 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void BtnInutilizar_Click(object sender, EventArgs e)
+        private void btnEnviarEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var idLote = 1;
+                if (InputBox.Show("WebServices Eventos: Enviar", "Identificador de controle do Lote de envio do Evento", ref idLote) != DialogResult.OK) return;
+
+                var ret = AcbrNFe.EnviarEvento(idLote);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnCarregarEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoIni = Helpers.OpenFile("Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoIni)) return;
+
+                AcbrNFe.CarregarEventoINI(arquivoIni);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimparListaEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(@"Limpar a lista de eventos ?", @"ACBrLibNFe", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    AcbrNFe.LimparListaEventos();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                AcbrNFe.ImprimirEvento(arquivoXml, arquivoXmlEvento);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirEventoPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                AcbrNFe.ImprimirEventoPDF(arquivoXml, arquivoXmlEvento);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnEnviarEmailEvento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXmlEvento = Helpers.OpenFile("Arquivo Xml Evento (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXmlEvento)) return;
+
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                var destinatario = "";
+                if (InputBox.Show("Envio email", "Digite o email do destinatario", ref destinatario) != DialogResult.OK) return;
+                if (string.IsNullOrEmpty(destinatario)) return;
+
+                AcbrNFe.EnviarEmailEvento(destinatario, arquivoXmlEvento, arquivoXml, true, txtAssunto.Text, txtMensagem.Text);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnInutilizar_Click(object sender, EventArgs e)
         {
             try
             {
                 var ano = 1;
-                var modelo = 55;
+                var modelo = 57;
                 var serie = 1;
                 var numeroInicial = 1;
                 var numeroFinal = 1;
                 var aJustificativa = "";
                 var eCNPJ = "";
-                if (InputBox.Show("WebServices Inutilização", "Ano", ref ano) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Modelo", ref modelo) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Serie", ref serie) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Número Inicial", ref numeroInicial) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Número Final", ref numeroFinal) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "CNPJ ou o CPF do autor do Emitente", ref eCNPJ) != DialogResult.OK) return;
-                if (InputBox.Show("WebServices Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Ano", ref ano) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Modelo", ref modelo) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Serie", ref serie) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Número Inicial", ref numeroInicial) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Número Final", ref numeroFinal) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "CNPJ ou o CPF do emitente", ref eCNPJ) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Inutilização", "Justificativa", ref aJustificativa) != DialogResult.OK) return;
 
                 var ret = AcbrNFe.Inutilizar(eCNPJ, aJustificativa, ano, modelo, serie, numeroInicial, numeroFinal);
                 rtbRespostas.AppendText(ret);
@@ -498,12 +784,83 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void btnImprimirInut_Click(object sender, EventArgs e)
+        private void btnImprimirInutilizacao_Click(object sender, EventArgs e)
         {
-            var arquivoXml = Helpers.OpenFile("Arquivo Xml NFe (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
-            if (string.IsNullOrEmpty(arquivoXml)) return;
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml Inutilização (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
 
-            AcbrNFe.ImprimirInutilizacaoPDF(arquivoXml);
+                AcbrNFe.ImprimirInutilizacao(arquivoXml);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImprimirInutilizacaoPDF_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var arquivoXml = Helpers.OpenFile("Arquivo Xml Inutilização (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*");
+                if (string.IsNullOrEmpty(arquivoXml)) return;
+
+                AcbrNFe.ImprimirInutilizacaoPDF(arquivoXml);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDFePorChave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var codUf = 35;
+                var cnpj = "";
+                var chave = "";
+
+                if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+                if (InputBox.Show("WebServices: Distribuição DFe", "Chave da NFe", ref chave) != DialogResult.OK) return;
+
+                var ret = AcbrNFe.DistribuicaoDFePorChave(codUf, cnpj, chave);
+                rtbRespostas.AppendText(ret);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDFePorNSU_Click(object sender, EventArgs e)
+        {
+            var codUf = 35;
+            var cnpj = "";
+            var eNsu = "";
+
+            if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "Número do NSU", ref eNsu) != DialogResult.OK) return;
+
+            var ret = AcbrNFe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
+            rtbRespostas.AppendText(ret);
+        }
+
+        private void btnDFePorUltNSU_Click(object sender, EventArgs e)
+        {
+            var codUf = 35;
+            var cnpj = "";
+            var eNsu = "";
+
+            if (InputBox.Show("WebServices: Distribuição DFe", "Código da UF", ref codUf) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "CNPJ do autor", ref cnpj) != DialogResult.OK) return;
+            if (InputBox.Show("WebServices: Distribuição DFe", "Número do último NSU", ref eNsu) != DialogResult.OK) return;
+
+            var ret = AcbrNFe.DistribuicaoDFePorNSU(codUf, cnpj, eNsu);
+            rtbRespostas.AppendText(ret);
         }
 
         #endregion EventHandlers

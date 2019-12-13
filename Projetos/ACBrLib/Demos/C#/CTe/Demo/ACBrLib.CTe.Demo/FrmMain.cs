@@ -81,7 +81,6 @@ namespace ACBrLib.CTe.Demo
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Usuario", txtProxyUsuario.Text);
             ACBrCTe.ConfigGravarValor(ACBrSessao.Proxy, "Senha", txtProxySenha.Text);
 
-
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SalvarGer", ckbSalvarArqs.Checked);
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "SepararPorMes", ckbPastaMensal.Checked);
             ACBrCTe.ConfigGravarValor(ACBrSessao.CTe, "AdicionarLiteral", ckbAdicionaLiteral.Checked);
@@ -165,7 +164,7 @@ namespace ACBrLib.CTe.Demo
             if (MessageBox.Show(@"Limpar a lista ?", @"ACBrLibCTe", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 ACBrCTe.LimparLista();
 
-            if(xml)
+            if (xml)
                 CarregarCTeXml();
             else
                 CarregarCTeIni();
@@ -175,7 +174,7 @@ namespace ACBrLib.CTe.Demo
         {
             var arquivoIni = Helpers.OpenFile("Arquivo Ini CTe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
             if (string.IsNullOrEmpty(arquivoIni)) return;
-            
+
             ACBrCTe.CarregarINI(arquivoIni);
         }
 
@@ -233,7 +232,7 @@ namespace ACBrLib.CTe.Demo
 
         private void btnLogomarca_Click(object sender, EventArgs e)
         {
-            txtLogomarca.Text = Helpers.OpenFile("");
+            txtLogomarca.Text = Helpers.OpenFile("Image files (*.bmp, *.jpeg, *.png) | *.bmp; *.jpeg; *.png");
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -241,29 +240,15 @@ namespace ACBrLib.CTe.Demo
             SalvarConfig();
         }
 
-        private void btnStatusServ_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                rtbRespostas.AppendText(ACBrCTe.StatusServico());
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnEnviar_Click(object sender, EventArgs e)
+        private void btnGerarXml_Click(object sender, EventArgs e)
         {
             try
             {
                 ACBrCTe.LimparLista();
                 CarregarCTeIni();
 
-                var aLote = 1;
-                if (InputBox.Show("WebServices Enviar", "Número do Lote", ref aLote) != DialogResult.OK) return;
-
-                var ret = ACBrCTe.Enviar(aLote);
+                ACBrCTe.Assinar();
+                var ret = ACBrCTe.ObterXml(0);
                 rtbRespostas.AppendText(ret);
             }
             catch (Exception exception)
@@ -343,7 +328,6 @@ namespace ACBrLib.CTe.Demo
             {
                 MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
@@ -427,6 +411,18 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
+        private void btnStatusServ_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                rtbRespostas.AppendText(ACBrCTe.StatusServico());
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnConsultaXml_Click(object sender, EventArgs e)
         {
             try
@@ -500,7 +496,7 @@ namespace ACBrLib.CTe.Demo
             }
         }
 
-        private void btnCancelarCTe_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             try
             {

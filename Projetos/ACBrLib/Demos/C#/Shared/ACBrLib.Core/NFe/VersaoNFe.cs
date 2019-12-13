@@ -1,6 +1,6 @@
 ﻿namespace ACBrLib.Core.NFe
 {
-    public enum VersaoDFe
+    public enum VersaoNFe
     {
         ve200 = 0,
         ve300 = 1,

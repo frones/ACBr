@@ -1,6 +1,6 @@
 ﻿namespace ACBrLib.Core.NFe
 {
-    public enum ModeloDF
+    public enum ModeloNFe
     {
         moNFe = 0,
         moNFCe = 1

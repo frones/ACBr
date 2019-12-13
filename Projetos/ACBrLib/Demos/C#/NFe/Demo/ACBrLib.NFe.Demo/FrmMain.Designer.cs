@@ -121,6 +121,35 @@
             this.ckbPastaMensal = new System.Windows.Forms.CheckBox();
             this.ckbSalvarArqs = new System.Windows.Forms.CheckBox();
             this.tbpDocumentoAuxiliar = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.cbbPaginaCodigo = new System.Windows.Forms.ComboBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.cbxIgnorarTags = new System.Windows.Forms.CheckBox();
+            this.cbxTraduzirTags = new System.Windows.Forms.CheckBox();
+            this.cbxCortarPapel = new System.Windows.Forms.CheckBox();
+            this.cbxControlePorta = new System.Windows.Forms.CheckBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.nudLinhasPular = new System.Windows.Forms.NumericUpDown();
+            this.label40 = new System.Windows.Forms.Label();
+            this.nudBuffer = new System.Windows.Forms.NumericUpDown();
+            this.label41 = new System.Windows.Forms.Label();
+            this.nudEspacos = new System.Windows.Forms.NumericUpDown();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.nudColunas = new System.Windows.Forms.NumericUpDown();
+            this.cbbPortas = new System.Windows.Forms.ComboBox();
+            this.cbbModelo = new System.Windows.Forms.ComboBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.rdbFortesA4 = new System.Windows.Forms.RadioButton();
+            this.rdbEscPos = new System.Windows.Forms.RadioButton();
+            this.rdbFortes = new System.Windows.Forms.RadioButton();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.rdbPaisagem = new System.Windows.Forms.RadioButton();
+            this.rdbRetrato = new System.Windows.Forms.RadioButton();
+            this.txtLogomarca = new System.Windows.Forms.TextBox();
+            this.btnLogomarca = new System.Windows.Forms.Button();
+            this.label37 = new System.Windows.Forms.Label();
             this.tbpEmail = new System.Windows.Forms.TabPage();
             this.txtMensagem = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
@@ -142,52 +171,42 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnInutilizar = new System.Windows.Forms.Button();
-            this.btnCancelarNFe = new System.Windows.Forms.Button();
-            this.btnConsultarRecibo = new System.Windows.Forms.Button();
-            this.btnEnviarEmail = new System.Windows.Forms.Button();
-            this.btnConsultaChave = new System.Windows.Forms.Button();
-            this.btnConsultaXml = new System.Windows.Forms.Button();
-            this.btnImprimir = new System.Windows.Forms.Button();
-            this.btnEnviar = new System.Windows.Forms.Button();
-            this.btnStatusServ = new System.Windows.Forms.Button();
-            this.btnImprimirInut = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnLimparLista = new System.Windows.Forms.Button();
+            this.btnImprimirPDF = new System.Windows.Forms.Button();
+            this.btnEnviarAssincrono = new System.Windows.Forms.Button();
+            this.btnEnviarSincrono = new System.Windows.Forms.Button();
+            this.btnCarregarXml = new System.Windows.Forms.Button();
+            this.btnValidarRegra = new System.Windows.Forms.Button();
+            this.btnGerarXml = new System.Windows.Forms.Button();
+            this.btnCarregarIni = new System.Windows.Forms.Button();
+            this.btnAssinar = new System.Windows.Forms.Button();
+            this.btnImprimir = new System.Windows.Forms.Button();
+            this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.btnConsultarCadastro = new System.Windows.Forms.Button();
+            this.btnStatusServ = new System.Windows.Forms.Button();
+            this.btnConsultaXml = new System.Windows.Forms.Button();
+            this.btnConsultaChave = new System.Windows.Forms.Button();
+            this.btnConsultarRecibo = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.btnEnviarEvento = new System.Windows.Forms.Button();
+            this.btnImprimirEventoPDF = new System.Windows.Forms.Button();
+            this.btnLimparListaEvento = new System.Windows.Forms.Button();
+            this.btnImprimirEvento = new System.Windows.Forms.Button();
+            this.btnEnviarEmailEvento = new System.Windows.Forms.Button();
+            this.btnCarregarEvento = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.btnImprimirInutilizacaoPDF = new System.Windows.Forms.Button();
+            this.btnImprimirInutilizacao = new System.Windows.Forms.Button();
+            this.btnInutilizar = new System.Windows.Forms.Button();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.rdbPaisagem = new System.Windows.Forms.RadioButton();
-            this.rdbRetrato = new System.Windows.Forms.RadioButton();
-            this.txtLogomarca = new System.Windows.Forms.TextBox();
-            this.btnLogomarca = new System.Windows.Forms.Button();
-            this.label37 = new System.Windows.Forms.Label();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.rdbFortes = new System.Windows.Forms.RadioButton();
-            this.rdbEscPos = new System.Windows.Forms.RadioButton();
-            this.rdbFortesA4 = new System.Windows.Forms.RadioButton();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.cbbPaginaCodigo = new System.Windows.Forms.ComboBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.cbxIgnorarTags = new System.Windows.Forms.CheckBox();
-            this.cbxTraduzirTags = new System.Windows.Forms.CheckBox();
-            this.cbxCortarPapel = new System.Windows.Forms.CheckBox();
-            this.cbxControlePorta = new System.Windows.Forms.CheckBox();
-            this.label39 = new System.Windows.Forms.Label();
-            this.nudLinhasPular = new System.Windows.Forms.NumericUpDown();
-            this.label40 = new System.Windows.Forms.Label();
-            this.nudBuffer = new System.Windows.Forms.NumericUpDown();
-            this.label41 = new System.Windows.Forms.Label();
-            this.nudEspacos = new System.Windows.Forms.NumericUpDown();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.nudColunas = new System.Windows.Forms.NumericUpDown();
-            this.cbbPortas = new System.Windows.Forms.ComboBox();
-            this.cbbModelo = new System.Windows.Forms.ComboBox();
-            this.label44 = new System.Windows.Forms.Label();
+            this.btnDFePorUltNSU = new System.Windows.Forms.Button();
+            this.btnDFePorNSU = new System.Windows.Forms.Button();
+            this.btnDFePorChave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -205,6 +224,13 @@
             this.groupBox4.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tbpDocumentoAuxiliar.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLinhasPular)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuffer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEspacos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColunas)).BeginInit();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.tbpEmail.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPorta)).BeginInit();
@@ -214,13 +240,7 @@
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLinhasPular)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBuffer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudEspacos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColunas)).BeginInit();
+            this.tabPage9.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbRespostas
@@ -1100,6 +1120,7 @@
             this.btnArqEvento.TabIndex = 33;
             this.btnArqEvento.Text = "...";
             this.btnArqEvento.UseVisualStyleBackColor = true;
+            this.btnArqEvento.Click += new System.EventHandler(this.btnArqEvento_Click);
             // 
             // label34
             // 
@@ -1126,6 +1147,7 @@
             this.btnArqInu.TabIndex = 30;
             this.btnArqInu.Text = "...";
             this.btnArqInu.UseVisualStyleBackColor = true;
+            this.btnArqInu.Click += new System.EventHandler(this.btnArqInu_Click);
             // 
             // label35
             // 
@@ -1152,6 +1174,7 @@
             this.btnArqNFe.TabIndex = 27;
             this.btnArqNFe.Text = "...";
             this.btnArqNFe.UseVisualStyleBackColor = true;
+            this.btnArqNFe.Click += new System.EventHandler(this.btnArqNFe_Click);
             // 
             // label36
             // 
@@ -1249,511 +1272,6 @@
             this.tbpDocumentoAuxiliar.TabIndex = 1;
             this.tbpDocumentoAuxiliar.Text = "Documento Auxiliar";
             this.tbpDocumentoAuxiliar.UseVisualStyleBackColor = true;
-            // 
-            // tbpEmail
-            // 
-            this.tbpEmail.Controls.Add(this.txtMensagem);
-            this.tbpEmail.Controls.Add(this.label25);
-            this.tbpEmail.Controls.Add(this.txtAssunto);
-            this.tbpEmail.Controls.Add(this.label24);
-            this.tbpEmail.Controls.Add(this.groupBox6);
-            this.tbpEmail.Location = new System.Drawing.Point(4, 22);
-            this.tbpEmail.Name = "tbpEmail";
-            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
-            this.tbpEmail.Size = new System.Drawing.Size(293, 458);
-            this.tbpEmail.TabIndex = 3;
-            this.tbpEmail.Text = "Email";
-            this.tbpEmail.UseVisualStyleBackColor = true;
-            // 
-            // txtMensagem
-            // 
-            this.txtMensagem.Location = new System.Drawing.Point(6, 327);
-            this.txtMensagem.Multiline = true;
-            this.txtMensagem.Name = "txtMensagem";
-            this.txtMensagem.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtMensagem.Size = new System.Drawing.Size(281, 80);
-            this.txtMensagem.TabIndex = 34;
-            this.txtMensagem.WordWrap = false;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(3, 311);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(67, 13);
-            this.label25.TabIndex = 35;
-            this.label25.Text = "Mensagem";
-            // 
-            // txtAssunto
-            // 
-            this.txtAssunto.Location = new System.Drawing.Point(6, 288);
-            this.txtAssunto.Name = "txtAssunto";
-            this.txtAssunto.Size = new System.Drawing.Size(281, 20);
-            this.txtAssunto.TabIndex = 32;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(3, 272);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(52, 13);
-            this.label24.TabIndex = 33;
-            this.label24.Text = "Assunto";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.txtSenha);
-            this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Controls.Add(this.label22);
-            this.groupBox6.Controls.Add(this.label20);
-            this.groupBox6.Controls.Add(this.txtUsuario);
-            this.groupBox6.Controls.Add(this.txtHost);
-            this.groupBox6.Controls.Add(this.label23);
-            this.groupBox6.Controls.Add(this.ckbSSL);
-            this.groupBox6.Controls.Add(this.label21);
-            this.groupBox6.Controls.Add(this.ckbTLS);
-            this.groupBox6.Controls.Add(this.nudPorta);
-            this.groupBox6.Controls.Add(this.txtNome);
-            this.groupBox6.Controls.Add(this.txtEmail);
-            this.groupBox6.Controls.Add(this.label18);
-            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(281, 263);
-            this.groupBox6.TabIndex = 31;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Configurações";
-            // 
-            // txtSenha
-            // 
-            this.txtSenha.Location = new System.Drawing.Point(9, 227);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(266, 20);
-            this.txtSenha.TabIndex = 28;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(6, 16);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(39, 13);
-            this.label19.TabIndex = 23;
-            this.label19.Text = "Nome";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(6, 211);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(43, 13);
-            this.label22.TabIndex = 30;
-            this.label22.Text = "Senha";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(6, 94);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(71, 13);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "Host SMTP";
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.Location = new System.Drawing.Point(9, 188);
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(266, 20);
-            this.txtUsuario.TabIndex = 27;
-            // 
-            // txtHost
-            // 
-            this.txtHost.Location = new System.Drawing.Point(9, 110);
-            this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(266, 20);
-            this.txtHost.TabIndex = 20;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(6, 172);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(50, 13);
-            this.label23.TabIndex = 29;
-            this.label23.Text = "Usuário";
-            // 
-            // ckbSSL
-            // 
-            this.ckbSSL.AutoSize = true;
-            this.ckbSSL.Location = new System.Drawing.Point(79, 136);
-            this.ckbSSL.Name = "ckbSSL";
-            this.ckbSSL.Size = new System.Drawing.Size(49, 17);
-            this.ckbSSL.TabIndex = 21;
-            this.ckbSSL.Text = "SSL";
-            this.ckbSSL.UseVisualStyleBackColor = true;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(9, 133);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(37, 13);
-            this.label21.TabIndex = 26;
-            this.label21.Text = "Porta";
-            // 
-            // ckbTLS
-            // 
-            this.ckbTLS.AutoSize = true;
-            this.ckbTLS.Location = new System.Drawing.Point(79, 152);
-            this.ckbTLS.Name = "ckbTLS";
-            this.ckbTLS.Size = new System.Drawing.Size(49, 17);
-            this.ckbTLS.TabIndex = 22;
-            this.ckbTLS.Text = "TLS";
-            this.ckbTLS.UseVisualStyleBackColor = true;
-            // 
-            // nudPorta
-            // 
-            this.nudPorta.Location = new System.Drawing.Point(12, 149);
-            this.nudPorta.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.nudPorta.Name = "nudPorta";
-            this.nudPorta.Size = new System.Drawing.Size(61, 20);
-            this.nudPorta.TabIndex = 25;
-            // 
-            // txtNome
-            // 
-            this.txtNome.Location = new System.Drawing.Point(9, 32);
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(266, 20);
-            this.txtNome.TabIndex = 17;
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.Location = new System.Drawing.Point(9, 71);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(266, 20);
-            this.txtEmail.TabIndex = 18;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(6, 55);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(37, 13);
-            this.label18.TabIndex = 24;
-            this.label18.Text = "Email";
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(76, 498);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(139, 23);
-            this.btnSalvar.TabIndex = 5;
-            this.btnSalvar.Text = "Salvar Configurações";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.BtnSalvar_Click);
-            // 
-            // btnInutilizar
-            // 
-            this.btnInutilizar.Location = new System.Drawing.Point(6, 6);
-            this.btnInutilizar.Name = "btnInutilizar";
-            this.btnInutilizar.Size = new System.Drawing.Size(118, 23);
-            this.btnInutilizar.TabIndex = 17;
-            this.btnInutilizar.Text = "Inutilizar Numeração";
-            this.btnInutilizar.UseVisualStyleBackColor = true;
-            this.btnInutilizar.Click += new System.EventHandler(this.BtnInutilizar_Click);
-            // 
-            // btnCancelarNFe
-            // 
-            this.btnCancelarNFe.Location = new System.Drawing.Point(6, 6);
-            this.btnCancelarNFe.Name = "btnCancelarNFe";
-            this.btnCancelarNFe.Size = new System.Drawing.Size(118, 23);
-            this.btnCancelarNFe.TabIndex = 16;
-            this.btnCancelarNFe.Text = "Cancelar NFe";
-            this.btnCancelarNFe.UseVisualStyleBackColor = true;
-            this.btnCancelarNFe.Click += new System.EventHandler(this.BtnCancelarNFe_Click);
-            // 
-            // btnConsultarRecibo
-            // 
-            this.btnConsultarRecibo.Location = new System.Drawing.Point(6, 35);
-            this.btnConsultarRecibo.Name = "btnConsultarRecibo";
-            this.btnConsultarRecibo.Size = new System.Drawing.Size(118, 23);
-            this.btnConsultarRecibo.TabIndex = 15;
-            this.btnConsultarRecibo.Text = "Consultar Recibo";
-            this.btnConsultarRecibo.UseVisualStyleBackColor = true;
-            this.btnConsultarRecibo.Click += new System.EventHandler(this.BtnConsultarRecibo_Click);
-            // 
-            // btnEnviarEmail
-            // 
-            this.btnEnviarEmail.Location = new System.Drawing.Point(6, 93);
-            this.btnEnviarEmail.Name = "btnEnviarEmail";
-            this.btnEnviarEmail.Size = new System.Drawing.Size(118, 23);
-            this.btnEnviarEmail.TabIndex = 14;
-            this.btnEnviarEmail.Text = "Enviar NFe Email";
-            this.btnEnviarEmail.UseVisualStyleBackColor = true;
-            this.btnEnviarEmail.Click += new System.EventHandler(this.BtnEnviarEmail_Click);
-            // 
-            // btnConsultaChave
-            // 
-            this.btnConsultaChave.Location = new System.Drawing.Point(254, 35);
-            this.btnConsultaChave.Name = "btnConsultaChave";
-            this.btnConsultaChave.Size = new System.Drawing.Size(118, 23);
-            this.btnConsultaChave.TabIndex = 13;
-            this.btnConsultaChave.Text = "Consultar com Chave";
-            this.btnConsultaChave.UseVisualStyleBackColor = true;
-            this.btnConsultaChave.Click += new System.EventHandler(this.BtnConsultaChave_Click);
-            // 
-            // btnConsultaXml
-            // 
-            this.btnConsultaXml.Location = new System.Drawing.Point(130, 35);
-            this.btnConsultaXml.Name = "btnConsultaXml";
-            this.btnConsultaXml.Size = new System.Drawing.Size(118, 23);
-            this.btnConsultaXml.TabIndex = 12;
-            this.btnConsultaXml.Text = "Consultar com Xml";
-            this.btnConsultaXml.UseVisualStyleBackColor = true;
-            this.btnConsultaXml.Click += new System.EventHandler(this.btnConsultaXml_Click);
-            // 
-            // btnImprimir
-            // 
-            this.btnImprimir.Location = new System.Drawing.Point(6, 64);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(118, 23);
-            this.btnImprimir.TabIndex = 11;
-            this.btnImprimir.Text = "Imprimir DANFe";
-            this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Click += new System.EventHandler(this.BtnImprimir_Click);
-            // 
-            // btnEnviar
-            // 
-            this.btnEnviar.Location = new System.Drawing.Point(6, 6);
-            this.btnEnviar.Name = "btnEnviar";
-            this.btnEnviar.Size = new System.Drawing.Size(118, 23);
-            this.btnEnviar.TabIndex = 10;
-            this.btnEnviar.Text = "Criar e Enviar";
-            this.btnEnviar.UseVisualStyleBackColor = true;
-            this.btnEnviar.Click += new System.EventHandler(this.BtnEnviar_Click);
-            // 
-            // btnStatusServ
-            // 
-            this.btnStatusServ.Location = new System.Drawing.Point(6, 6);
-            this.btnStatusServ.Name = "btnStatusServ";
-            this.btnStatusServ.Size = new System.Drawing.Size(118, 23);
-            this.btnStatusServ.TabIndex = 9;
-            this.btnStatusServ.Text = " Status de Serviço";
-            this.btnStatusServ.UseVisualStyleBackColor = true;
-            this.btnStatusServ.Click += new System.EventHandler(this.BtnStatusServ_Click);
-            // 
-            // btnImprimirInut
-            // 
-            this.btnImprimirInut.Location = new System.Drawing.Point(6, 35);
-            this.btnImprimirInut.Name = "btnImprimirInut";
-            this.btnImprimirInut.Size = new System.Drawing.Size(118, 23);
-            this.btnImprimirInut.TabIndex = 18;
-            this.btnImprimirInut.Text = "Imprimir Inutilização";
-            this.btnImprimirInut.UseVisualStyleBackColor = true;
-            this.btnImprimirInut.Click += new System.EventHandler(this.btnImprimirInut_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.rtbRespostas);
-            this.groupBox2.Location = new System.Drawing.Point(319, 231);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(386, 290);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Respostas";
-            // 
-            // tabControl3
-            // 
-            this.tabControl3.Controls.Add(this.tabPage5);
-            this.tabControl3.Controls.Add(this.tabPage6);
-            this.tabControl3.Controls.Add(this.tabPage7);
-            this.tabControl3.Controls.Add(this.tabPage8);
-            this.tabControl3.Controls.Add(this.tabPage9);
-            this.tabControl3.Location = new System.Drawing.Point(319, 15);
-            this.tabControl3.Name = "tabControl3";
-            this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(386, 210);
-            this.tabControl3.TabIndex = 20;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.btnEnviarEmail);
-            this.tabPage5.Controls.Add(this.btnEnviar);
-            this.tabPage5.Controls.Add(this.btnImprimir);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(378, 184);
-            this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Envios";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.btnStatusServ);
-            this.tabPage6.Controls.Add(this.btnConsultaXml);
-            this.tabPage6.Controls.Add(this.btnConsultaChave);
-            this.tabPage6.Controls.Add(this.btnConsultarRecibo);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(378, 184);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Consultas";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.btnCancelarNFe);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(378, 184);
-            this.tabPage7.TabIndex = 2;
-            this.tabPage7.Text = "Eventos";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.btnImprimirInut);
-            this.tabPage8.Controls.Add(this.btnInutilizar);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(378, 184);
-            this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "Inutilização";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // tabPage9
-            // 
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(378, 184);
-            this.tabPage9.TabIndex = 4;
-            this.tabPage9.Text = "Distribuição DFe";
-            this.tabPage9.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.rdbPaisagem);
-            this.groupBox7.Controls.Add(this.rdbRetrato);
-            this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox7.Location = new System.Drawing.Point(6, 51);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(281, 46);
-            this.groupBox7.TabIndex = 23;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "DANFe";
-            // 
-            // rdbPaisagem
-            // 
-            this.rdbPaisagem.AutoSize = true;
-            this.rdbPaisagem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbPaisagem.Location = new System.Drawing.Point(184, 19);
-            this.rdbPaisagem.Name = "rdbPaisagem";
-            this.rdbPaisagem.Size = new System.Drawing.Size(71, 17);
-            this.rdbPaisagem.TabIndex = 1;
-            this.rdbPaisagem.TabStop = true;
-            this.rdbPaisagem.Text = "Paisagem";
-            this.rdbPaisagem.UseVisualStyleBackColor = true;
-            // 
-            // rdbRetrato
-            // 
-            this.rdbRetrato.AutoSize = true;
-            this.rdbRetrato.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbRetrato.Location = new System.Drawing.Point(6, 19);
-            this.rdbRetrato.Name = "rdbRetrato";
-            this.rdbRetrato.Size = new System.Drawing.Size(60, 17);
-            this.rdbRetrato.TabIndex = 0;
-            this.rdbRetrato.TabStop = true;
-            this.rdbRetrato.Text = "Retrato";
-            this.rdbRetrato.UseVisualStyleBackColor = true;
-            // 
-            // txtLogomarca
-            // 
-            this.txtLogomarca.Location = new System.Drawing.Point(6, 25);
-            this.txtLogomarca.Name = "txtLogomarca";
-            this.txtLogomarca.Size = new System.Drawing.Size(258, 20);
-            this.txtLogomarca.TabIndex = 20;
-            // 
-            // btnLogomarca
-            // 
-            this.btnLogomarca.Location = new System.Drawing.Point(263, 24);
-            this.btnLogomarca.Name = "btnLogomarca";
-            this.btnLogomarca.Size = new System.Drawing.Size(27, 22);
-            this.btnLogomarca.TabIndex = 22;
-            this.btnLogomarca.Text = "...";
-            this.btnLogomarca.UseVisualStyleBackColor = true;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(6, 9);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(69, 13);
-            this.label37.TabIndex = 21;
-            this.label37.Text = "Logomarca";
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.rdbFortesA4);
-            this.groupBox8.Controls.Add(this.rdbEscPos);
-            this.groupBox8.Controls.Add(this.rdbFortes);
-            this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox8.Location = new System.Drawing.Point(6, 103);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(281, 43);
-            this.groupBox8.TabIndex = 24;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "DANFCe";
-            // 
-            // rdbFortes
-            // 
-            this.rdbFortes.AutoSize = true;
-            this.rdbFortes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbFortes.Location = new System.Drawing.Point(6, 19);
-            this.rdbFortes.Name = "rdbFortes";
-            this.rdbFortes.Size = new System.Drawing.Size(54, 17);
-            this.rdbFortes.TabIndex = 0;
-            this.rdbFortes.TabStop = true;
-            this.rdbFortes.Text = "Fortes";
-            this.rdbFortes.UseVisualStyleBackColor = true;
-            // 
-            // rdbEscPos
-            // 
-            this.rdbEscPos.AutoSize = true;
-            this.rdbEscPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbEscPos.Location = new System.Drawing.Point(97, 19);
-            this.rdbEscPos.Name = "rdbEscPos";
-            this.rdbEscPos.Size = new System.Drawing.Size(61, 17);
-            this.rdbEscPos.TabIndex = 1;
-            this.rdbEscPos.TabStop = true;
-            this.rdbEscPos.Text = "EscPos";
-            this.rdbEscPos.UseVisualStyleBackColor = true;
-            // 
-            // rdbFortesA4
-            // 
-            this.rdbFortesA4.AutoSize = true;
-            this.rdbFortesA4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbFortesA4.Location = new System.Drawing.Point(184, 19);
-            this.rdbFortesA4.Name = "rdbFortesA4";
-            this.rdbFortesA4.Size = new System.Drawing.Size(70, 17);
-            this.rdbFortesA4.TabIndex = 2;
-            this.rdbFortesA4.TabStop = true;
-            this.rdbFortesA4.Text = "Fortes A4";
-            this.rdbFortesA4.UseVisualStyleBackColor = true;
             // 
             // groupBox9
             // 
@@ -1980,6 +1498,722 @@
             this.label44.TabIndex = 19;
             this.label44.Text = "Modelo";
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.rdbFortesA4);
+            this.groupBox8.Controls.Add(this.rdbEscPos);
+            this.groupBox8.Controls.Add(this.rdbFortes);
+            this.groupBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox8.Location = new System.Drawing.Point(6, 103);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(281, 43);
+            this.groupBox8.TabIndex = 24;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "DANFCe";
+            // 
+            // rdbFortesA4
+            // 
+            this.rdbFortesA4.AutoSize = true;
+            this.rdbFortesA4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbFortesA4.Location = new System.Drawing.Point(184, 19);
+            this.rdbFortesA4.Name = "rdbFortesA4";
+            this.rdbFortesA4.Size = new System.Drawing.Size(70, 17);
+            this.rdbFortesA4.TabIndex = 2;
+            this.rdbFortesA4.TabStop = true;
+            this.rdbFortesA4.Text = "Fortes A4";
+            this.rdbFortesA4.UseVisualStyleBackColor = true;
+            // 
+            // rdbEscPos
+            // 
+            this.rdbEscPos.AutoSize = true;
+            this.rdbEscPos.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbEscPos.Location = new System.Drawing.Point(97, 19);
+            this.rdbEscPos.Name = "rdbEscPos";
+            this.rdbEscPos.Size = new System.Drawing.Size(61, 17);
+            this.rdbEscPos.TabIndex = 1;
+            this.rdbEscPos.TabStop = true;
+            this.rdbEscPos.Text = "EscPos";
+            this.rdbEscPos.UseVisualStyleBackColor = true;
+            // 
+            // rdbFortes
+            // 
+            this.rdbFortes.AutoSize = true;
+            this.rdbFortes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbFortes.Location = new System.Drawing.Point(6, 19);
+            this.rdbFortes.Name = "rdbFortes";
+            this.rdbFortes.Size = new System.Drawing.Size(54, 17);
+            this.rdbFortes.TabIndex = 0;
+            this.rdbFortes.TabStop = true;
+            this.rdbFortes.Text = "Fortes";
+            this.rdbFortes.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.rdbPaisagem);
+            this.groupBox7.Controls.Add(this.rdbRetrato);
+            this.groupBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox7.Location = new System.Drawing.Point(6, 51);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(281, 46);
+            this.groupBox7.TabIndex = 23;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "DANFe";
+            // 
+            // rdbPaisagem
+            // 
+            this.rdbPaisagem.AutoSize = true;
+            this.rdbPaisagem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbPaisagem.Location = new System.Drawing.Point(184, 19);
+            this.rdbPaisagem.Name = "rdbPaisagem";
+            this.rdbPaisagem.Size = new System.Drawing.Size(71, 17);
+            this.rdbPaisagem.TabIndex = 1;
+            this.rdbPaisagem.TabStop = true;
+            this.rdbPaisagem.Text = "Paisagem";
+            this.rdbPaisagem.UseVisualStyleBackColor = true;
+            // 
+            // rdbRetrato
+            // 
+            this.rdbRetrato.AutoSize = true;
+            this.rdbRetrato.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbRetrato.Location = new System.Drawing.Point(6, 19);
+            this.rdbRetrato.Name = "rdbRetrato";
+            this.rdbRetrato.Size = new System.Drawing.Size(60, 17);
+            this.rdbRetrato.TabIndex = 0;
+            this.rdbRetrato.TabStop = true;
+            this.rdbRetrato.Text = "Retrato";
+            this.rdbRetrato.UseVisualStyleBackColor = true;
+            // 
+            // txtLogomarca
+            // 
+            this.txtLogomarca.Location = new System.Drawing.Point(6, 25);
+            this.txtLogomarca.Name = "txtLogomarca";
+            this.txtLogomarca.Size = new System.Drawing.Size(258, 20);
+            this.txtLogomarca.TabIndex = 20;
+            // 
+            // btnLogomarca
+            // 
+            this.btnLogomarca.Location = new System.Drawing.Point(263, 24);
+            this.btnLogomarca.Name = "btnLogomarca";
+            this.btnLogomarca.Size = new System.Drawing.Size(27, 22);
+            this.btnLogomarca.TabIndex = 22;
+            this.btnLogomarca.Text = "...";
+            this.btnLogomarca.UseVisualStyleBackColor = true;
+            this.btnLogomarca.Click += new System.EventHandler(this.btnLogomarca_Click);
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(6, 9);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(69, 13);
+            this.label37.TabIndex = 21;
+            this.label37.Text = "Logomarca";
+            // 
+            // tbpEmail
+            // 
+            this.tbpEmail.Controls.Add(this.txtMensagem);
+            this.tbpEmail.Controls.Add(this.label25);
+            this.tbpEmail.Controls.Add(this.txtAssunto);
+            this.tbpEmail.Controls.Add(this.label24);
+            this.tbpEmail.Controls.Add(this.groupBox6);
+            this.tbpEmail.Location = new System.Drawing.Point(4, 22);
+            this.tbpEmail.Name = "tbpEmail";
+            this.tbpEmail.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpEmail.Size = new System.Drawing.Size(293, 458);
+            this.tbpEmail.TabIndex = 3;
+            this.tbpEmail.Text = "Email";
+            this.tbpEmail.UseVisualStyleBackColor = true;
+            // 
+            // txtMensagem
+            // 
+            this.txtMensagem.Location = new System.Drawing.Point(6, 327);
+            this.txtMensagem.Multiline = true;
+            this.txtMensagem.Name = "txtMensagem";
+            this.txtMensagem.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtMensagem.Size = new System.Drawing.Size(281, 80);
+            this.txtMensagem.TabIndex = 34;
+            this.txtMensagem.WordWrap = false;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(3, 311);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(67, 13);
+            this.label25.TabIndex = 35;
+            this.label25.Text = "Mensagem";
+            // 
+            // txtAssunto
+            // 
+            this.txtAssunto.Location = new System.Drawing.Point(6, 288);
+            this.txtAssunto.Name = "txtAssunto";
+            this.txtAssunto.Size = new System.Drawing.Size(281, 20);
+            this.txtAssunto.TabIndex = 32;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(3, 272);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(52, 13);
+            this.label24.TabIndex = 33;
+            this.label24.Text = "Assunto";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.txtSenha);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.label22);
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.txtUsuario);
+            this.groupBox6.Controls.Add(this.txtHost);
+            this.groupBox6.Controls.Add(this.label23);
+            this.groupBox6.Controls.Add(this.ckbSSL);
+            this.groupBox6.Controls.Add(this.label21);
+            this.groupBox6.Controls.Add(this.ckbTLS);
+            this.groupBox6.Controls.Add(this.nudPorta);
+            this.groupBox6.Controls.Add(this.txtNome);
+            this.groupBox6.Controls.Add(this.txtEmail);
+            this.groupBox6.Controls.Add(this.label18);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(281, 263);
+            this.groupBox6.TabIndex = 31;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Configurações";
+            // 
+            // txtSenha
+            // 
+            this.txtSenha.Location = new System.Drawing.Point(9, 227);
+            this.txtSenha.Name = "txtSenha";
+            this.txtSenha.PasswordChar = '*';
+            this.txtSenha.Size = new System.Drawing.Size(266, 20);
+            this.txtSenha.TabIndex = 28;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(6, 16);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(39, 13);
+            this.label19.TabIndex = 23;
+            this.label19.Text = "Nome";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(6, 211);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(43, 13);
+            this.label22.TabIndex = 30;
+            this.label22.Text = "Senha";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(6, 94);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(71, 13);
+            this.label20.TabIndex = 19;
+            this.label20.Text = "Host SMTP";
+            // 
+            // txtUsuario
+            // 
+            this.txtUsuario.Location = new System.Drawing.Point(9, 188);
+            this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.Size = new System.Drawing.Size(266, 20);
+            this.txtUsuario.TabIndex = 27;
+            // 
+            // txtHost
+            // 
+            this.txtHost.Location = new System.Drawing.Point(9, 110);
+            this.txtHost.Name = "txtHost";
+            this.txtHost.Size = new System.Drawing.Size(266, 20);
+            this.txtHost.TabIndex = 20;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(6, 172);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(50, 13);
+            this.label23.TabIndex = 29;
+            this.label23.Text = "Usuário";
+            // 
+            // ckbSSL
+            // 
+            this.ckbSSL.AutoSize = true;
+            this.ckbSSL.Location = new System.Drawing.Point(79, 136);
+            this.ckbSSL.Name = "ckbSSL";
+            this.ckbSSL.Size = new System.Drawing.Size(49, 17);
+            this.ckbSSL.TabIndex = 21;
+            this.ckbSSL.Text = "SSL";
+            this.ckbSSL.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(9, 133);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(37, 13);
+            this.label21.TabIndex = 26;
+            this.label21.Text = "Porta";
+            // 
+            // ckbTLS
+            // 
+            this.ckbTLS.AutoSize = true;
+            this.ckbTLS.Location = new System.Drawing.Point(79, 152);
+            this.ckbTLS.Name = "ckbTLS";
+            this.ckbTLS.Size = new System.Drawing.Size(49, 17);
+            this.ckbTLS.TabIndex = 22;
+            this.ckbTLS.Text = "TLS";
+            this.ckbTLS.UseVisualStyleBackColor = true;
+            // 
+            // nudPorta
+            // 
+            this.nudPorta.Location = new System.Drawing.Point(12, 149);
+            this.nudPorta.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.nudPorta.Name = "nudPorta";
+            this.nudPorta.Size = new System.Drawing.Size(61, 20);
+            this.nudPorta.TabIndex = 25;
+            // 
+            // txtNome
+            // 
+            this.txtNome.Location = new System.Drawing.Point(9, 32);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(266, 20);
+            this.txtNome.TabIndex = 17;
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(9, 71);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(266, 20);
+            this.txtEmail.TabIndex = 18;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(6, 55);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(37, 13);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Email";
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(76, 498);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(139, 23);
+            this.btnSalvar.TabIndex = 5;
+            this.btnSalvar.Text = "Salvar Configurações";
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.BtnSalvar_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.rtbRespostas);
+            this.groupBox2.Location = new System.Drawing.Point(319, 231);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(386, 290);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Respostas";
+            // 
+            // tabControl3
+            // 
+            this.tabControl3.Controls.Add(this.tabPage5);
+            this.tabControl3.Controls.Add(this.tabPage6);
+            this.tabControl3.Controls.Add(this.tabPage7);
+            this.tabControl3.Controls.Add(this.tabPage8);
+            this.tabControl3.Controls.Add(this.tabPage9);
+            this.tabControl3.Location = new System.Drawing.Point(322, 12);
+            this.tabControl3.Name = "tabControl3";
+            this.tabControl3.SelectedIndex = 0;
+            this.tabControl3.Size = new System.Drawing.Size(386, 213);
+            this.tabControl3.TabIndex = 24;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnLimparLista);
+            this.tabPage5.Controls.Add(this.btnImprimirPDF);
+            this.tabPage5.Controls.Add(this.btnEnviarAssincrono);
+            this.tabPage5.Controls.Add(this.btnEnviarSincrono);
+            this.tabPage5.Controls.Add(this.btnCarregarXml);
+            this.tabPage5.Controls.Add(this.btnValidarRegra);
+            this.tabPage5.Controls.Add(this.btnGerarXml);
+            this.tabPage5.Controls.Add(this.btnCarregarIni);
+            this.tabPage5.Controls.Add(this.btnAssinar);
+            this.tabPage5.Controls.Add(this.btnImprimir);
+            this.tabPage5.Controls.Add(this.btnEnviarEmail);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(378, 187);
+            this.tabPage5.TabIndex = 0;
+            this.tabPage5.Text = "Envio";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // btnLimparLista
+            // 
+            this.btnLimparLista.Location = new System.Drawing.Point(254, 35);
+            this.btnLimparLista.Name = "btnLimparLista";
+            this.btnLimparLista.Size = new System.Drawing.Size(118, 23);
+            this.btnLimparLista.TabIndex = 25;
+            this.btnLimparLista.Text = "Limpar Lista NFe";
+            this.btnLimparLista.UseVisualStyleBackColor = true;
+            this.btnLimparLista.Click += new System.EventHandler(this.btnLimparLista_Click);
+            // 
+            // btnImprimirPDF
+            // 
+            this.btnImprimirPDF.Location = new System.Drawing.Point(130, 65);
+            this.btnImprimirPDF.Name = "btnImprimirPDF";
+            this.btnImprimirPDF.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimirPDF.TabIndex = 24;
+            this.btnImprimirPDF.Text = "Imprimir PDF DANFe";
+            this.btnImprimirPDF.UseVisualStyleBackColor = true;
+            this.btnImprimirPDF.Click += new System.EventHandler(this.btnImprimirPDF_Click);
+            // 
+            // btnEnviarAssincrono
+            // 
+            this.btnEnviarAssincrono.Location = new System.Drawing.Point(254, 6);
+            this.btnEnviarAssincrono.Name = "btnEnviarAssincrono";
+            this.btnEnviarAssincrono.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarAssincrono.TabIndex = 23;
+            this.btnEnviarAssincrono.Text = "Enviar Assincrono";
+            this.btnEnviarAssincrono.UseVisualStyleBackColor = true;
+            this.btnEnviarAssincrono.Click += new System.EventHandler(this.btnEnviarAssincrono_Click);
+            // 
+            // btnEnviarSincrono
+            // 
+            this.btnEnviarSincrono.Location = new System.Drawing.Point(130, 6);
+            this.btnEnviarSincrono.Name = "btnEnviarSincrono";
+            this.btnEnviarSincrono.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarSincrono.TabIndex = 22;
+            this.btnEnviarSincrono.Text = "Enviar Sincrono";
+            this.btnEnviarSincrono.UseVisualStyleBackColor = true;
+            this.btnEnviarSincrono.Click += new System.EventHandler(this.btnEnviarSincrono_Click);
+            // 
+            // btnCarregarXml
+            // 
+            this.btnCarregarXml.Location = new System.Drawing.Point(130, 35);
+            this.btnCarregarXml.Name = "btnCarregarXml";
+            this.btnCarregarXml.Size = new System.Drawing.Size(118, 23);
+            this.btnCarregarXml.TabIndex = 21;
+            this.btnCarregarXml.Text = "Carregar Xml NFe";
+            this.btnCarregarXml.UseVisualStyleBackColor = true;
+            this.btnCarregarXml.Click += new System.EventHandler(this.btnCarregarXml_Click);
+            // 
+            // btnValidarRegra
+            // 
+            this.btnValidarRegra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarRegra.Location = new System.Drawing.Point(130, 122);
+            this.btnValidarRegra.Name = "btnValidarRegra";
+            this.btnValidarRegra.Size = new System.Drawing.Size(118, 23);
+            this.btnValidarRegra.TabIndex = 20;
+            this.btnValidarRegra.Text = "Val. Regra de Neg.";
+            this.btnValidarRegra.UseVisualStyleBackColor = true;
+            this.btnValidarRegra.Click += new System.EventHandler(this.btnValidarRegra_Click);
+            // 
+            // btnGerarXml
+            // 
+            this.btnGerarXml.Location = new System.Drawing.Point(6, 6);
+            this.btnGerarXml.Name = "btnGerarXml";
+            this.btnGerarXml.Size = new System.Drawing.Size(118, 23);
+            this.btnGerarXml.TabIndex = 10;
+            this.btnGerarXml.Text = "Gerar Xml";
+            this.btnGerarXml.UseVisualStyleBackColor = true;
+            this.btnGerarXml.Click += new System.EventHandler(this.btnGerarXml_Click);
+            // 
+            // btnCarregarIni
+            // 
+            this.btnCarregarIni.Location = new System.Drawing.Point(6, 35);
+            this.btnCarregarIni.Name = "btnCarregarIni";
+            this.btnCarregarIni.Size = new System.Drawing.Size(118, 23);
+            this.btnCarregarIni.TabIndex = 18;
+            this.btnCarregarIni.Text = "Carregar INI NFe";
+            this.btnCarregarIni.UseVisualStyleBackColor = true;
+            this.btnCarregarIni.Click += new System.EventHandler(this.btnCarregarIni_Click);
+            // 
+            // btnAssinar
+            // 
+            this.btnAssinar.Location = new System.Drawing.Point(6, 122);
+            this.btnAssinar.Name = "btnAssinar";
+            this.btnAssinar.Size = new System.Drawing.Size(118, 23);
+            this.btnAssinar.TabIndex = 19;
+            this.btnAssinar.Text = "Assinar NFe ";
+            this.btnAssinar.UseVisualStyleBackColor = true;
+            this.btnAssinar.Click += new System.EventHandler(this.btnAssinar_Click);
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Location = new System.Drawing.Point(6, 64);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimir.TabIndex = 11;
+            this.btnImprimir.Text = "Imprimir DANFe";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
+            // 
+            // btnEnviarEmail
+            // 
+            this.btnEnviarEmail.Location = new System.Drawing.Point(6, 93);
+            this.btnEnviarEmail.Name = "btnEnviarEmail";
+            this.btnEnviarEmail.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarEmail.TabIndex = 14;
+            this.btnEnviarEmail.Text = "Enviar NFe Email";
+            this.btnEnviarEmail.UseVisualStyleBackColor = true;
+            this.btnEnviarEmail.Click += new System.EventHandler(this.btnEnviarEmail_Click);
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.btnConsultarCadastro);
+            this.tabPage6.Controls.Add(this.btnStatusServ);
+            this.tabPage6.Controls.Add(this.btnConsultaXml);
+            this.tabPage6.Controls.Add(this.btnConsultaChave);
+            this.tabPage6.Controls.Add(this.btnConsultarRecibo);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(378, 187);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "Consultas";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // btnConsultarCadastro
+            // 
+            this.btnConsultarCadastro.Location = new System.Drawing.Point(130, 35);
+            this.btnConsultarCadastro.Name = "btnConsultarCadastro";
+            this.btnConsultarCadastro.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultarCadastro.TabIndex = 16;
+            this.btnConsultarCadastro.Text = "Consultar Cadastro";
+            this.btnConsultarCadastro.UseVisualStyleBackColor = true;
+            this.btnConsultarCadastro.Click += new System.EventHandler(this.btnConsultarCadastro_Click);
+            // 
+            // btnStatusServ
+            // 
+            this.btnStatusServ.Location = new System.Drawing.Point(6, 6);
+            this.btnStatusServ.Name = "btnStatusServ";
+            this.btnStatusServ.Size = new System.Drawing.Size(118, 23);
+            this.btnStatusServ.TabIndex = 9;
+            this.btnStatusServ.Text = " Status de Serviço";
+            this.btnStatusServ.UseVisualStyleBackColor = true;
+            this.btnStatusServ.Click += new System.EventHandler(this.btnStatusServ_Click);
+            // 
+            // btnConsultaXml
+            // 
+            this.btnConsultaXml.Location = new System.Drawing.Point(130, 6);
+            this.btnConsultaXml.Name = "btnConsultaXml";
+            this.btnConsultaXml.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultaXml.TabIndex = 12;
+            this.btnConsultaXml.Text = "Consultar com Xml";
+            this.btnConsultaXml.UseVisualStyleBackColor = true;
+            this.btnConsultaXml.Click += new System.EventHandler(this.btnConsultaXml_Click);
+            // 
+            // btnConsultaChave
+            // 
+            this.btnConsultaChave.Location = new System.Drawing.Point(254, 6);
+            this.btnConsultaChave.Name = "btnConsultaChave";
+            this.btnConsultaChave.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultaChave.TabIndex = 13;
+            this.btnConsultaChave.Text = "Consultar com Chave";
+            this.btnConsultaChave.UseVisualStyleBackColor = true;
+            this.btnConsultaChave.Click += new System.EventHandler(this.btnConsultaChave_Click);
+            // 
+            // btnConsultarRecibo
+            // 
+            this.btnConsultarRecibo.Location = new System.Drawing.Point(6, 35);
+            this.btnConsultarRecibo.Name = "btnConsultarRecibo";
+            this.btnConsultarRecibo.Size = new System.Drawing.Size(118, 23);
+            this.btnConsultarRecibo.TabIndex = 15;
+            this.btnConsultarRecibo.Text = "Consultar Recibo";
+            this.btnConsultarRecibo.UseVisualStyleBackColor = true;
+            this.btnConsultarRecibo.Click += new System.EventHandler(this.btnConsultarRecibo_Click);
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.btnEnviarEvento);
+            this.tabPage7.Controls.Add(this.btnImprimirEventoPDF);
+            this.tabPage7.Controls.Add(this.btnLimparListaEvento);
+            this.tabPage7.Controls.Add(this.btnImprimirEvento);
+            this.tabPage7.Controls.Add(this.btnEnviarEmailEvento);
+            this.tabPage7.Controls.Add(this.btnCarregarEvento);
+            this.tabPage7.Controls.Add(this.btnCancelar);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(378, 187);
+            this.tabPage7.TabIndex = 2;
+            this.tabPage7.Text = "Eventos";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // btnEnviarEvento
+            // 
+            this.btnEnviarEvento.Location = new System.Drawing.Point(130, 6);
+            this.btnEnviarEvento.Name = "btnEnviarEvento";
+            this.btnEnviarEvento.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarEvento.TabIndex = 31;
+            this.btnEnviarEvento.Text = "Enviar Evento";
+            this.btnEnviarEvento.UseVisualStyleBackColor = true;
+            this.btnEnviarEvento.Click += new System.EventHandler(this.btnEnviarEvento_Click);
+            // 
+            // btnImprimirEventoPDF
+            // 
+            this.btnImprimirEventoPDF.Location = new System.Drawing.Point(130, 65);
+            this.btnImprimirEventoPDF.Name = "btnImprimirEventoPDF";
+            this.btnImprimirEventoPDF.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimirEventoPDF.TabIndex = 30;
+            this.btnImprimirEventoPDF.Text = "Imprimir PDF Evento";
+            this.btnImprimirEventoPDF.UseVisualStyleBackColor = true;
+            this.btnImprimirEventoPDF.Click += new System.EventHandler(this.btnImprimirEventoPDF_Click);
+            // 
+            // btnLimparListaEvento
+            // 
+            this.btnLimparListaEvento.Location = new System.Drawing.Point(130, 35);
+            this.btnLimparListaEvento.Name = "btnLimparListaEvento";
+            this.btnLimparListaEvento.Size = new System.Drawing.Size(118, 23);
+            this.btnLimparListaEvento.TabIndex = 29;
+            this.btnLimparListaEvento.Text = "Limpar LIsta Eventos";
+            this.btnLimparListaEvento.UseVisualStyleBackColor = true;
+            this.btnLimparListaEvento.Click += new System.EventHandler(this.btnLimparListaEvento_Click);
+            // 
+            // btnImprimirEvento
+            // 
+            this.btnImprimirEvento.Location = new System.Drawing.Point(6, 64);
+            this.btnImprimirEvento.Name = "btnImprimirEvento";
+            this.btnImprimirEvento.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimirEvento.TabIndex = 28;
+            this.btnImprimirEvento.Text = "Imprimir Evento";
+            this.btnImprimirEvento.UseVisualStyleBackColor = true;
+            this.btnImprimirEvento.Click += new System.EventHandler(this.btnImprimirEvento_Click);
+            // 
+            // btnEnviarEmailEvento
+            // 
+            this.btnEnviarEmailEvento.Location = new System.Drawing.Point(6, 93);
+            this.btnEnviarEmailEvento.Name = "btnEnviarEmailEvento";
+            this.btnEnviarEmailEvento.Size = new System.Drawing.Size(118, 23);
+            this.btnEnviarEmailEvento.TabIndex = 27;
+            this.btnEnviarEmailEvento.Text = "Enviar Evento Email";
+            this.btnEnviarEmailEvento.UseVisualStyleBackColor = true;
+            this.btnEnviarEmailEvento.Click += new System.EventHandler(this.btnEnviarEmailEvento_Click);
+            // 
+            // btnCarregarEvento
+            // 
+            this.btnCarregarEvento.Location = new System.Drawing.Point(6, 35);
+            this.btnCarregarEvento.Name = "btnCarregarEvento";
+            this.btnCarregarEvento.Size = new System.Drawing.Size(118, 23);
+            this.btnCarregarEvento.TabIndex = 17;
+            this.btnCarregarEvento.Text = "Carregar Evento";
+            this.btnCarregarEvento.UseVisualStyleBackColor = true;
+            this.btnCarregarEvento.Click += new System.EventHandler(this.btnCarregarEvento_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(6, 6);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(118, 23);
+            this.btnCancelar.TabIndex = 16;
+            this.btnCancelar.Text = "Cancelar NFe";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.btnImprimirInutilizacaoPDF);
+            this.tabPage8.Controls.Add(this.btnImprimirInutilizacao);
+            this.tabPage8.Controls.Add(this.btnInutilizar);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(378, 187);
+            this.tabPage8.TabIndex = 3;
+            this.tabPage8.Text = "Inutilização";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // btnImprimirInutilizacaoPDF
+            // 
+            this.btnImprimirInutilizacaoPDF.Location = new System.Drawing.Point(130, 35);
+            this.btnImprimirInutilizacaoPDF.Name = "btnImprimirInutilizacaoPDF";
+            this.btnImprimirInutilizacaoPDF.Size = new System.Drawing.Size(133, 23);
+            this.btnImprimirInutilizacaoPDF.TabIndex = 32;
+            this.btnImprimirInutilizacaoPDF.Text = "Imprimir PDF Inutilização";
+            this.btnImprimirInutilizacaoPDF.UseVisualStyleBackColor = true;
+            this.btnImprimirInutilizacaoPDF.Click += new System.EventHandler(this.btnImprimirInutilizacaoPDF_Click);
+            // 
+            // btnImprimirInutilizacao
+            // 
+            this.btnImprimirInutilizacao.Location = new System.Drawing.Point(6, 35);
+            this.btnImprimirInutilizacao.Name = "btnImprimirInutilizacao";
+            this.btnImprimirInutilizacao.Size = new System.Drawing.Size(118, 23);
+            this.btnImprimirInutilizacao.TabIndex = 31;
+            this.btnImprimirInutilizacao.Text = "Imprimir Inutilização";
+            this.btnImprimirInutilizacao.UseVisualStyleBackColor = true;
+            this.btnImprimirInutilizacao.Click += new System.EventHandler(this.btnImprimirInutilizacao_Click);
+            // 
+            // btnInutilizar
+            // 
+            this.btnInutilizar.Location = new System.Drawing.Point(6, 6);
+            this.btnInutilizar.Name = "btnInutilizar";
+            this.btnInutilizar.Size = new System.Drawing.Size(118, 23);
+            this.btnInutilizar.TabIndex = 17;
+            this.btnInutilizar.Text = "Inutilizar Numeração";
+            this.btnInutilizar.UseVisualStyleBackColor = true;
+            this.btnInutilizar.Click += new System.EventHandler(this.btnInutilizar_Click);
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.btnDFePorUltNSU);
+            this.tabPage9.Controls.Add(this.btnDFePorNSU);
+            this.tabPage9.Controls.Add(this.btnDFePorChave);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(378, 187);
+            this.tabPage9.TabIndex = 4;
+            this.tabPage9.Text = "Distribuição DFe";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // btnDFePorUltNSU
+            // 
+            this.btnDFePorUltNSU.Location = new System.Drawing.Point(254, 6);
+            this.btnDFePorUltNSU.Name = "btnDFePorUltNSU";
+            this.btnDFePorUltNSU.Size = new System.Drawing.Size(118, 23);
+            this.btnDFePorUltNSU.TabIndex = 21;
+            this.btnDFePorUltNSU.Text = "Por Ult. NSU";
+            this.btnDFePorUltNSU.UseVisualStyleBackColor = true;
+            this.btnDFePorUltNSU.Click += new System.EventHandler(this.btnDFePorUltNSU_Click);
+            // 
+            // btnDFePorNSU
+            // 
+            this.btnDFePorNSU.Location = new System.Drawing.Point(130, 6);
+            this.btnDFePorNSU.Name = "btnDFePorNSU";
+            this.btnDFePorNSU.Size = new System.Drawing.Size(118, 23);
+            this.btnDFePorNSU.TabIndex = 20;
+            this.btnDFePorNSU.Text = "Por NSU";
+            this.btnDFePorNSU.UseVisualStyleBackColor = true;
+            this.btnDFePorNSU.Click += new System.EventHandler(this.btnDFePorNSU_Click);
+            // 
+            // btnDFePorChave
+            // 
+            this.btnDFePorChave.Location = new System.Drawing.Point(6, 6);
+            this.btnDFePorChave.Name = "btnDFePorChave";
+            this.btnDFePorChave.Size = new System.Drawing.Size(118, 23);
+            this.btnDFePorChave.TabIndex = 19;
+            this.btnDFePorChave.Text = "Por Chave";
+            this.btnDFePorChave.UseVisualStyleBackColor = true;
+            this.btnDFePorChave.Click += new System.EventHandler(this.btnDFePorChave_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2023,6 +2257,16 @@
             this.tabPage4.PerformLayout();
             this.tbpDocumentoAuxiliar.ResumeLayout(false);
             this.tbpDocumentoAuxiliar.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLinhasPular)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuffer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudEspacos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudColunas)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.tbpEmail.ResumeLayout(false);
             this.tbpEmail.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -2034,16 +2278,7 @@
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLinhasPular)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudBuffer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudEspacos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColunas)).EndInit();
+            this.tabPage9.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2063,15 +2298,6 @@
         private System.Windows.Forms.Button btnSelectLog;
         private System.Windows.Forms.ComboBox cmbModeloDocumento;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button btnInutilizar;
-        private System.Windows.Forms.Button btnCancelarNFe;
-        private System.Windows.Forms.Button btnConsultarRecibo;
-        private System.Windows.Forms.Button btnEnviarEmail;
-        private System.Windows.Forms.Button btnConsultaChave;
-        private System.Windows.Forms.Button btnConsultaXml;
-        private System.Windows.Forms.Button btnImprimir;
-        private System.Windows.Forms.Button btnEnviar;
-        private System.Windows.Forms.Button btnStatusServ;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TabPage tbpEmail;
         private System.Windows.Forms.TextBox txtSenha;
@@ -2093,15 +2319,11 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtMensagem;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Button btnImprimirInut;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabControl tabControl3;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox txtProxySenha;
         private System.Windows.Forms.Label label16;
@@ -2160,9 +2382,6 @@
         private System.Windows.Forms.Button btnSelectSchema;
         private System.Windows.Forms.CheckBox ckbSalvar;
         private System.Windows.Forms.CheckBox ckbRetirarAcentos;
-        private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TextBox txtArqEvento;
         private System.Windows.Forms.Button btnArqEvento;
         private System.Windows.Forms.Label label34;
@@ -2208,6 +2427,41 @@
         private System.Windows.Forms.RadioButton rdbFortesA4;
         private System.Windows.Forms.RadioButton rdbEscPos;
         private System.Windows.Forms.RadioButton rdbFortes;
+        private System.Windows.Forms.TabControl tabControl3;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnLimparLista;
+        private System.Windows.Forms.Button btnImprimirPDF;
+        private System.Windows.Forms.Button btnEnviarAssincrono;
+        private System.Windows.Forms.Button btnEnviarSincrono;
+        private System.Windows.Forms.Button btnCarregarXml;
+        private System.Windows.Forms.Button btnValidarRegra;
+        private System.Windows.Forms.Button btnGerarXml;
+        private System.Windows.Forms.Button btnCarregarIni;
+        private System.Windows.Forms.Button btnAssinar;
+        private System.Windows.Forms.Button btnImprimir;
+        private System.Windows.Forms.Button btnEnviarEmail;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Button btnConsultarCadastro;
+        private System.Windows.Forms.Button btnStatusServ;
+        private System.Windows.Forms.Button btnConsultaXml;
+        private System.Windows.Forms.Button btnConsultaChave;
+        private System.Windows.Forms.Button btnConsultarRecibo;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.Button btnEnviarEvento;
+        private System.Windows.Forms.Button btnImprimirEventoPDF;
+        private System.Windows.Forms.Button btnLimparListaEvento;
+        private System.Windows.Forms.Button btnImprimirEvento;
+        private System.Windows.Forms.Button btnEnviarEmailEvento;
+        private System.Windows.Forms.Button btnCarregarEvento;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.Button btnImprimirInutilizacaoPDF;
+        private System.Windows.Forms.Button btnImprimirInutilizacao;
+        private System.Windows.Forms.Button btnInutilizar;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.Button btnDFePorUltNSU;
+        private System.Windows.Forms.Button btnDFePorNSU;
+        private System.Windows.Forms.Button btnDFePorChave;
     }
 }
 

@@ -74,10 +74,11 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmWait.cs">
+    <Compile Include="..\..\..\Shared\FrmWait.cs">
+      <Link>FrmWait.cs</Link>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmWait.Designer.cs">
+    <Compile Include="..\..\..\Shared\FrmWait.Designer.cs">
       <DependentUpon>FrmWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -85,7 +86,7 @@
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmWait.resx">
+    <EmbeddedResource Include="..\..\..\Shared\FrmWait.resx">
       <DependentUpon>FrmWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

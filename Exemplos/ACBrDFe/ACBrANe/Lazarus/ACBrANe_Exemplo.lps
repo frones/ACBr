@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="10">
       <Unit0>
         <Filename Value="ACBrANe_Exemplo.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -38,15 +38,58 @@
       <Unit3>
         <Filename Value="Frm_Status.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
-        <EditorIndex Value="2"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="21" Y="8"/>
         <UsageCount Value="20"/>
-        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeDocumentos.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="78"/>
+        <CursorPos X="7" Y="89"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="95"/>
+        <CursorPos X="27" Y="107"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANe.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="88"/>
+        <CursorPos X="37" Y="100"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaRetEnvANe.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="141"/>
+        <CursorPos X="24" Y="154"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeW.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="21" Y="44"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeR.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="51" Y="48"/>
+        <UsageCount Value="10"/>
+      </Unit9>
     </Units>
-    <JumpHistory Count="13" HistoryIndex="12">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
         <Filename Value="Frm_ACBrANe.pas"/>
         <Caret Line="239" Column="43" TopLine="208"/>
@@ -79,25 +122,21 @@
         <Caret Line="936" Column="19" TopLine="924"/>
       </Position8>
       <Position9>
-        <Filename Value="Frm_Status.pas"/>
-        <Caret Line="8" Column="21"/>
+        <Filename Value="Frm_ACBrANe.pas"/>
+        <Caret Line="893" Column="14" TopLine="880"/>
       </Position9>
       <Position10>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="893" Column="14" TopLine="880"/>
+        <Caret Line="1025" Column="10" TopLine="1011"/>
       </Position10>
       <Position11>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="1025" Column="10" TopLine="1011"/>
+        <Caret Line="10" Column="31"/>
       </Position11>
       <Position12>
         <Filename Value="Frm_ACBrANe.pas"/>
-        <Caret Line="10" Column="31"/>
-      </Position12>
-      <Position13>
-        <Filename Value="Frm_ACBrANe.pas"/>
         <Caret Line="240" Column="49" TopLine="227"/>
-      </Position13>
+      </Position12>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

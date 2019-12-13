@@ -50,6 +50,7 @@ uses
   SysUtils, Classes, Contnrs, DateUtils, ACBrEFDBlocos;
 
 type
+  TRegistro0002 = class;
   TRegistro0005 = class;
   TRegistro0015List = class;
   TRegistro0100 = class;
@@ -136,6 +137,18 @@ type
     property Registro0460: TRegistro0460List read FRegistro0460 write FRegistro0460;
     property Registro0500: TRegistro0500List read FRegistro0500 write FRegistro0500;
     property Registro0600: TRegistro0600List read FRegistro0600 write FRegistro0600;
+  end;
+
+  /// REGISTRO 0002: CLASSIFICAÇÃO DO ESTABELECIMENTO INDUSTRIAL OU EQUIPARADO A INDUSTRIAL
+
+   TRegistro0002 = class
+
+  private
+    fCLAS_ESTAB_IND: string;  ///Informar a classificação do estabelecimento conforme tabela 4.5.5
+  public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+    property CLAS_ESTAB_IND: string read fCLAS_ESTAB_IND write fCLAS_ESTAB_IND;
   end;
 
   /// Registro 0005 - DADOS COMPLEMENTARES DA ENTIDADE
@@ -1314,6 +1327,16 @@ end;
 { TRegistro0600 }
 
 constructor TRegistro0600.Create(AOwner: TRegistro0001);
+begin
+end;
+
+{ TRegistro0002 }
+
+constructor TRegistro0002.Create;
+begin
+end;
+
+destructor TRegistro0002.Destroy;
 begin
 end;
 

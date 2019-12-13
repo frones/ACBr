@@ -353,7 +353,7 @@ type
 implementation
 
 uses
-  IniFiles,StrUtils,
+  IniFiles,
   ACBreSocial;
 
 { TS2299Collection }

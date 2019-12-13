@@ -496,7 +496,7 @@ uses
   StrUtils, Math,
   ACBrUtil, ACBrCompress, ACBrMDFe,
   pcnGerador, pcnLeitor, pcnConsStatServ, pcnRetConsStatServ,
-  pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc, pmdfeMDFeW;
+  pmdfeConsSitMDFe, pcnConsReciDFe, pmdfeConsMDFeNaoEnc;
 
 { TMDFeWebService }
 

@@ -39,11 +39,9 @@ unit ACBrMDFeDAMDFeRL;
 interface
 
 uses
-  Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls,
-  pmdfeMDFe,
-  ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeReportFortes,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
+  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
+  pmdfeMDFe, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeReportFortes;
 
 type
 
@@ -73,7 +71,7 @@ type
 implementation
 
 uses
-  MaskUtils, ACBrUtil;
+  ACBrUtil;
 
 {$ifdef FPC}
  {$R *.lfm}

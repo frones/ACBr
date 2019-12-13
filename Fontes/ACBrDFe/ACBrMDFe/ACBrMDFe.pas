@@ -41,13 +41,11 @@ unit ACBrMDFe;
 interface
 
 uses
-  Classes, SysUtils, ACBrBase,
-  ACBrDFe, ACBrDFeConfiguracoes,
+  Classes, SysUtils,
+  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrMDFeConfiguracoes, ACBrMDFeWebServices, ACBrMDFeManifestos,
-  ACBrMDFeDAMDFEClass,ACBrDFeException,
-  pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe,
-  pmdfeEnvEventoMDFe, 
-  ACBrUtil;
+  ACBrMDFeDAMDFEClass,
+  pmdfeMDFe, pcnConversao, pmdfeConversaoMDFe, pmdfeEnvEventoMDFe;
 
 const
   ACBRMDFE_NAMESPACE = 'http://www.portalfiscal.inf.br/mdfe';
@@ -145,8 +143,8 @@ type
 implementation
 
 uses
-  strutils, dateutils, math,
-  pcnAuxiliar, synacode, ACBrDFeSSL;
+  dateutils,
+  pcnAuxiliar, ACBrDFeSSL;
 
 {$IFDEF FPC}
  {$R ACBrMDFeServicos.rc}
@@ -250,10 +248,10 @@ function TACBrMDFe.GetURLQRCode(const CUF: integer;
 var
   idMDFe,
   sEntrada, urlUF, Passo2, sign: String;
-  VersaoDFe: TVersaoMDFe;
+//  VersaoDFe: TVersaoMDFe;
   ok: Boolean;
 begin
-  VersaoDFe := DblToVersaoMDFe(ok, Versao);
+//  VersaoDFe := DblToVersaoMDFe(ok, Versao);
 
   urlUF := LerURLDeParams('MDFe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
 

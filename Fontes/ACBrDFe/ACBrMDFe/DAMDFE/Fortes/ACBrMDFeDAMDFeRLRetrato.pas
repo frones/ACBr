@@ -39,10 +39,9 @@ unit ACBrMDFeDAMDFeRLRetrato;
 interface
 
 uses
-  Messages, SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter, pcnConversao,
-  pmdfeConversaoMDFe, ACBrMDFeDAMDFeRL, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFeRLClass,
-  RLFilters;
+  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
+  RLReport, RLBarcode, RLPDFFilter, RLFilters,
+  pcnConversao, pmdfeConversaoMDFe, ACBrMDFeDAMDFeRL, ACBrMDFeDAMDFeClass;
 
 type
 

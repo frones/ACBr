@@ -42,8 +42,7 @@ interface
 
 uses
   SysUtils, Classes,
-  ACBrBase, ACBrDFeReport,
-  pmdfeMDFe, pcnConversao;
+  ACBrBase, ACBrDFeReport, pmdfeMDFe, pcnConversao;
 
 type
   TDadosExtrasMDFe = (deValorTotal, deRelacaoDFe);

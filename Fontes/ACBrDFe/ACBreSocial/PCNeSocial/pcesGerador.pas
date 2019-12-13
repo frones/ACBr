@@ -219,13 +219,16 @@ type
 implementation
 
 uses
-  ACBreSocial, ACBreSocialEventos, ACBrDFeSSL, ACBrDFeUtil;
+  ACBreSocial, ACBrDFeSSL, ACBrDFeUtil;
 
 {TeSocialEvento}
 
 function TeSocialEvento.Assinar(const XMLEvento, NomeEvento: String): AnsiString;
 var
-  XMLAss, ArqXML, NomeEventoArquivo: string;
+  XMLAss, ArqXML: string;
+ {$IFDEF DEBUG}
+ NomeEventoArquivo: string;
+ {$ENDIF}
 begin
   Result := '';
 
@@ -250,14 +253,14 @@ begin
     XMLAss := StringReplace(XMLAss, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
     XMLAss := StringReplace(XMLAss, '<' + XML_V01 + '>', '', [rfReplaceAll]);
 
-    NomeEventoArquivo := NomeEvento + '.xml';
-
 //    if Configuracoes.Arquivos.Salvar then
 //      Gravar(NomeEvento, XMLAss, Configuracoes.Arquivos.PathSalvar);
 
     Result := AnsiString(XMLAss);
 
     {$IFDEF DEBUG}
+    NomeEventoArquivo := NomeEvento + '.xml';
+
     if Configuracoes.Arquivos.Salvar then
     begin
       With TStringList.Create do

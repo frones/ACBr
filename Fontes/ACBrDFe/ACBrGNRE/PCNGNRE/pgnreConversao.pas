@@ -50,7 +50,8 @@ unit pgnreConversao;
 interface
 
 uses
-  SysUtils, StrUtils, Classes, pcnConversao;
+  SysUtils, Classes,
+  pcnConversao;
 
 type
   TStatusACBrGNRE = ( stGNREIdle, stGNRERecepcao, stGNRERetRecepcao,

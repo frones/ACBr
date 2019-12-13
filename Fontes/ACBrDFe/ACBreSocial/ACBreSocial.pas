@@ -49,8 +49,8 @@ unit ACBreSocial;
 interface
 
 uses
-  Classes, SysUtils, ACBrUtil, ACBrBase,
-  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  Classes, SysUtils, ACBrUtil,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase,
   ACBreSocialConfiguracoes, ACBreSocialWebServices, ACBreSocialEventos,
   pcnConversao, pcesConversaoeSocial;
 

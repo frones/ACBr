@@ -62,7 +62,7 @@ end;
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrGNRE2, ACBrGNREGuiaRLRetrato;
+  Dialogs, ACBrUtil, ACBrGNRE2, ACBrGNREGuiaRLRetrato;
 
 constructor TACBrGNREGuiaRL.Create(AOwner: TComponent);
 begin

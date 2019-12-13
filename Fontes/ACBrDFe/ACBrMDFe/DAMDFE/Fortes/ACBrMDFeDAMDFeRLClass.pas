@@ -39,7 +39,8 @@ unit ACBrMDFeDAMDFeRLClass;
 interface
 
 uses
-  Forms, SysUtils, Classes, ACBrBase, ACBrMDFeDAMDFeClass, pmdfeMDFe;
+  Forms, SysUtils, Classes,
+  ACBrBase, ACBrMDFeDAMDFeClass, pmdfeMDFe;
 
 type
   {$IFDEF RTL230_UP}
@@ -63,7 +64,7 @@ end;
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrMDFe,
+  Dialogs, ACBrUtil, ACBrMDFe,
   ACBrMDFeDAMDFeRLRetrato, ACBrMDFeDAEventoRL, ACBrMDFeDAEventoRLRetrato;
 
 constructor TACBrMDFeDAMDFeRL.Create(AOwner: TComponent);

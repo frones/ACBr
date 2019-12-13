@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, pgnreConversao, pcnGerador;
+  pcnConversao, pgnreConversao;
 
 type
   TGNRE                     = class;

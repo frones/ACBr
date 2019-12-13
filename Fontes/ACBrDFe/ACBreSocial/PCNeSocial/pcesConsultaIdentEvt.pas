@@ -41,7 +41,8 @@ unit pcesConsultaIdentEvt;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcesConversaoeSocial, pcnGerador, pcnConsts;
+  SysUtils, Classes,
+  pcnConversao, pcesConversaoeSocial, pcnGerador;
 
 type
 

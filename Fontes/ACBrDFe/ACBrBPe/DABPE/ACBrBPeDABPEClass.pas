@@ -47,7 +47,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnBPe, pcnConversao, ACBrDFeReport;
+  ACBrBase, pcnBPe, pcnConversao, ACBrDFeReport;
 
 type
 

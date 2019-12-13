@@ -296,7 +296,8 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils, pGNReGNRe, ACBrUtil, ACBrDFeUtil, ACBrGNRE2;
+  StrUtils, DateUtils,
+  ACBrUtil, ACBrDFeUtil;
 
 {$ifdef FPC}
  {$R *.lfm}

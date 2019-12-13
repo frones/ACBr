@@ -47,7 +47,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
+  ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes, ACBrBase, 
   ACBrBPeConfiguracoes, ACBrBPeWebServices, ACBrBPeBilhetes, ACBrBPeDABPEClass,
   pcnBPe, pcnConversao, pcnConversaoBPe, pcnEnvEventoBPe, 
   ACBrUtil;

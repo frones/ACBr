@@ -50,11 +50,9 @@ unit pgnreGNRERetorno;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor,
+  SysUtils, Classes, pcnAuxiliar, pcnConversao,
   pgnreRetConsResLoteGNRE;
-(*
- pgnreConversao;
-*)
+
 type
   TGNRERetorno = class(TPersistent)
   private

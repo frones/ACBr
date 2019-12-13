@@ -32,8 +32,7 @@ unit ACBrMDFeDAEventoRL;
 interface
 
 uses
-  Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$IFDEF BORLAND}DB, DBClient, {$ELSE}BufDataset, DB, RLFilters, {$ENDIF}
   RLReport, RLPDFFilter, RLPrinters,
   ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrDFeReportFortes,
@@ -64,7 +63,7 @@ type
 implementation
 
 uses
-  MaskUtils, ACBrUtil;
+  ACBrUtil;
 
 {$ifdef FPC}
  {$R *.lfm}

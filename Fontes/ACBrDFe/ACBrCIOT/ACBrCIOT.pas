@@ -7,7 +7,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
+  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrCIOTConfiguracoes, ACBrCIOTWebServices, ACBrCIOTContratos,
   pcnConversao, pcnConversaoCIOT;
 

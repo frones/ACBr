@@ -51,8 +51,7 @@ interface
 uses
   SysUtils, Classes, Contnrs,
   ACBrUtil, pcnAuxiliar, pcnConversao, pcnLeitor,
-  pcesCommon, pcesRetornoClass, pcesConversaoeSocial,
-  pcesS5001, pcesS5011;
+  pcesRetornoClass, pcesConversaoeSocial;
 
 type
   TArquivoCollectionItem = class(TObject)

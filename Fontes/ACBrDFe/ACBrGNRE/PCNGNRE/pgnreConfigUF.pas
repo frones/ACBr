@@ -50,7 +50,7 @@ unit pgnreConfigUF;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao;
 
 type
   TInfReceita = class;

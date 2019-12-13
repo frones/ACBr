@@ -50,7 +50,7 @@ unit pgnreConsConfigUF;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
   TConsConfigUF = class(TPersistent)

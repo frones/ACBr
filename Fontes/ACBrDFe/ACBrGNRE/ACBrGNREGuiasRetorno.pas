@@ -51,7 +51,7 @@ interface
 uses
   Classes, Sysutils, Dialogs, Forms,
   ACBrGNREGuiaClass,
-  pgnreGNRERetorno, pgnreConversao, pcnConversao, pcnAuxiliar, pcnLeitor;
+  pgnreGNRERetorno, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
 
@@ -100,7 +100,7 @@ implementation
 
 uses
   synautil,
-  ACBrGNRE2, ACBrUtil, ACBrDFeUtil, pcnGerador;
+  ACBrGNRE2, ACBrUtil, ACBrDFeUtil;
 
 { GuiaRetorno }
 
@@ -382,7 +382,6 @@ end;
 function TGuiasRetorno.LoadFromFile(CaminhoArquivo: string): boolean;
 var
   XMLUTF8: AnsiString;
-  i, l: integer;
   MS: TMemoryStream;
   XMLString: string;
   ArquivoRetorno: TStringList;
@@ -395,7 +394,6 @@ begin
     MS.Free;
   end;
 
-  l := Self.Count;
   XMLString := String(XMLUTF8);
   // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
   XMLString := ConverteXMLtoNativeString(XMLString);

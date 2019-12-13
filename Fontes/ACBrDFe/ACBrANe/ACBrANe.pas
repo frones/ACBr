@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException,
+  ACBrUtil, ACBrDFe, ACBrDFeConfiguracoes, ACBrDFeException, ACBrBase,
   ACBrANeConfiguracoes, ACBrANeWebServices, ACBrANeDocumentos,
   pcnConversao, pcaConversao;
 

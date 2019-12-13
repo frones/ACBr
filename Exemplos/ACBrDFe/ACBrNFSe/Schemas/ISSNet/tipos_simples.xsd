@@ -259,7 +259,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsCompetencia">
 		<xsd:restriction base="xsd:nonNegativeInteger">
-			<xsd:pattern value="^20(?:09|[1-9]\d)(?:0[1-9]|1[0-2])$"></xsd:pattern>
+			<xsd:pattern value="^20(09|[1-9]\d)(0[1-9]|1[0-2])$"></xsd:pattern>
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>

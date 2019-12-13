@@ -394,6 +394,11 @@
 					<xs:documentation>Mapa de construção civil.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="Deducao de Valor">
+				<xs:annotation>
+					<xs:documentation>Deducao de Valor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="">
 				<xs:annotation>
 					<xs:documentation></xs:documentation>

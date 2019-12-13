@@ -1220,7 +1220,7 @@ begin
                raise EACBrLibException.Create(ErrArquivoNaoExiste, 'Arquivo MDFe inválido: ' + ChaveOuMDFe);
            end
            else if not ValidarChave(ChaveOuMDFe) then
-             raise EACBrLibException.Create(ErrChaveMDFe, 'Chave ou arquivo MDFe inválido: '+ ChaveOuMDFe);
+             raise EACBrLibException.Create(ErrChaveMDFe, 'Chave MDFe inválido: '+ ChaveOuMDFe);
 
 
            EventoMDFe.Evento.Clear;
@@ -1235,6 +1235,7 @@ begin
                  raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' inválido.');
              end;
 
+             infEvento.nSeqEvento := 1;
              infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ChaveOuMDFe), 1, 2), 0);
              infEvento.dhEvento := now;
              infEvento.tpEvento := teEncerramento;
@@ -1323,7 +1324,8 @@ begin
         if not ValidarCNPJouCPF(CNPJ) then
           raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' invalido.');
 
-        MDFeDM.ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc(CNPJ);
+        MDFeDM.ACBrMDFe1.WebServices.ConsMDFeNaoEnc.CNPJCPF := CNPJ;
+        MDFeDM.ACBrMDFe1.WebServices.ConsMDFeNaoEnc.Executar;
 
         Resposta := '';
         Resp := TNaoEncerradosResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);

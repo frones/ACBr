@@ -1442,7 +1442,7 @@ begin
       toRetornoBaixaPorProtesto                             : Result :='25';
       toRetornoInstrucaoRejeitada                           : Result :='26';
       toRetornoDadosAlterados                               : Result :='27';
-      toRetornoManutencaoTituloVencido                      : Result :='28';
+      toRetornoDebitoTarifas                                : Result :='28';
       toRetornoAlteracaoDadosRejeitados                     : Result :='30';
       toRetornoConfInstrucaoTransferenciaCarteiraModalidadeCobranca : Result :='48';
       toRetornoDespesasProtesto                             : Result :='96';
@@ -1483,7 +1483,7 @@ begin
       25: Result:='25-BAIXADO E PROTESTADO' ; 
       26: Result:='26-INSTRUÇÃO REJEITADA' ;
       27: Result:='27-CONFIRMAÇÃO ALTERAÇÃO DADOS' ;
-      28: Result:='28-MANUTENÇÃO TÍTULO VENCIDO' ;
+      28: Result:='28-DÉBITO DE TARIFAS/CUSTAS' ;
       30: Result:='30-ALTERAÇÃO DADOS REJEITADA' ;
       48: Result:='48-CONFIRMAÇÃO INSTR. TRANSFERENCIA DE CARTEIRA';
       96: Result:='96-DESPESAS DE PROTESTO' ;

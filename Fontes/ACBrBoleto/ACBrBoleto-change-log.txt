@@ -49,6 +49,11 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+13/12/2019
+-- ACBrBancoBancoob --
+[*] Ajuste na ocorrencia de retorno cód- 28 "DÉBITO DE TARIFAS/CUSTAS", baseado no Manual
+https://www.projetoacbr.com.br/forum/topic/55207-contribui%C3%A7%C3%A3o-ajuste-das-fun%C3%A7%C3%B5es-relacionadas-as-ocorr%C3%AAncias-do-bancoob/
+
 22/11/2019
 -- ACBrBoletoFCFortesFr --
 [*] Ajuste no Layout de impressão Carne, adicionado ordem correta dos dados Cedente

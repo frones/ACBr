@@ -1695,7 +1695,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     MargemInferior = 8.000000000000000000
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
-    MargemDireita = 5.100000000000000000
+    MargemDireita = 5.099999999999999000
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -1706,7 +1706,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
-    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
+    ImprimirDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
     Left = 432
     Top = 240

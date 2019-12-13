@@ -1,9 +1,9 @@
 object frmACBrGNRe: TfrmACBrGNRe
   Left = 249
   Top = 82
+  Width = 882
+  Height = 651
   Caption = 'ACBrGNRe - Programa Exemplo'
-  ClientHeight = 612
-  ClientWidth = 866
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -360,6 +360,7 @@ object frmACBrGNRe: TfrmACBrGNRe
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -369,6 +370,7 @@ object frmACBrGNRe: TfrmACBrGNRe
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -378,6 +380,7 @@ object frmACBrGNRe: TfrmACBrGNRe
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -387,6 +390,7 @@ object frmACBrGNRe: TfrmACBrGNRe
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 0
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -497,6 +501,7 @@ object frmACBrGNRe: TfrmACBrGNRe
                 Top = 104
                 Width = 248
                 Height = 21
+                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -535,6 +540,7 @@ object frmACBrGNRe: TfrmACBrGNRe
                 Top = 181
                 Width = 248
                 Height = 21
+                ItemHeight = 0
                 TabOrder = 7
               end
               object edtPathSchemas: TEdit
@@ -613,6 +619,7 @@ object frmACBrGNRe: TfrmACBrGNRe
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
+                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -685,6 +692,7 @@ object frmACBrGNRe: TfrmACBrGNRe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
+                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1205,6 +1213,8 @@ object frmACBrGNRe: TfrmACBrGNRe
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -1219,8 +1229,6 @@ object frmACBrGNRe: TfrmACBrGNRe
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
     end
   end
   object pnlCentral: TPanel

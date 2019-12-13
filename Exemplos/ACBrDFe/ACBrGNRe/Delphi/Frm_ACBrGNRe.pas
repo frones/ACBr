@@ -290,7 +290,7 @@ begin
     c16_razaoSocialEmitente := edtEmitRazao.Text;
     c17_inscricaoEstadualEmitente := '9023725557';
     c18_enderecoEmitente := edtEmitLogradouro.Text + ', ' + edtEmitNumero.Text;
-    c19_municipioEmitente := edtEmitCidade.Text;
+    c19_municipioEmitente := Copy(edtEmitCodCidade.Text, 3, 5);
     c20_ufEnderecoEmitente := edtEmitUF.Text;
     c21_cepEmitente := edtEmitCEP.Text;
     c22_telefoneEmitente := edtEmitFone.Text;

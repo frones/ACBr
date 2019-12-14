@@ -92,14 +92,25 @@ type
   TFindFileSortDirection = (fsdNone, fsdAscending, fsdDescending);
 
   TSplitResult = array of string;
-  {$IfNDef FPC}
+
+{$IfNDef FPC}
+const
+  ANYSIZE_ARRAY = 1;
+
+type
    TLibHandle = THandle;
 
    // Compatibilidade para compilar nas versões anteriores ao Delphi XE2
    {$IfNDef DELPHIXE2_UP}
     NativeUInt = Cardinal;
    {$EndIf}
-  {$EndIf}
+
+   LPVOID = Pointer;
+   SizeUInt = {$IFDEF COMPILER16_UP} NativeUInt {$ELSE} Longword {$ENDIF};
+   {$IfNDef COMPILER12_UP}
+    ULONG_PTR = SizeUInt;
+   {$EndIf}
+{$EndIf}
    
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
@@ -401,6 +412,9 @@ var BlockInputLoaded: Boolean;
 
 procedure LoadInpOut;
 procedure LoadBlockInput;
+
+function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
+
 {$ENDIF}
 
 implementation
@@ -4460,6 +4474,14 @@ begin
      xBlockInput := NIL ;
 
   BlockInputLoaded := True;
+end;
+
+function GetLastErrorAsHexaStr(WinErro: DWORD): String;
+begin
+  if WinErro = 0 then
+    WinErro := GetLastError;
+
+  Result := IntToHex(WinErro, 8);
 end;
 {$ENDIF}
 

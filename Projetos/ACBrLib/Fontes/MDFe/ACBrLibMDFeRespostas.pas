@@ -371,6 +371,8 @@ end;
 constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
+
+  FItems := TObjectList.Create(true);
 end;
 
 destructor TEventoResposta.Destroy;
@@ -473,6 +475,8 @@ constructor TNaoEncerradosResposta.Create(const ATipo: TACBrLibRespostaTipo;
   const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoNaoEncerrados, ATipo, AFormato);
+
+  FItems := TObjectList.Create(true);
 end;
 
 destructor TNaoEncerradosResposta.Destroy;

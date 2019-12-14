@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2019
+--- ACBrLibMDFeClass ---
+[-] Correção nos metodos MDFE_EncerrarMDFe e MDFE_ConsultaMDFeNaoEnc.
+    Por: Rafael Dias.
+
 19/09/2018
 --- ACBrLibMDFe ---
 [+] Inicio do projeto.
@@ -56,7 +61,6 @@ Por: Italo Jurisato Junior
 
 14/05/2018
 --- ACBrLibMDFe ---
-
 [+] Adicionado métodos para retorno de envio do XML do componente MDFe
  (Utilizado também pelo ACBrMonitorPlus).
 

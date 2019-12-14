@@ -1226,17 +1226,19 @@ begin
            EventoMDFe.Evento.Clear;
            with EventoMDFe.Evento.New do
            begin
-             infEvento.CNPJCPF := CNPJ;
-             if Trim(infEvento.CNPJCPF) = '' then
-               infEvento.CNPJCPF := copy(ChaveOuMDFe, 7, 14)
-             else
-             begin
-               if not ValidarCNPJouCPF(CNPJ) then
-                 raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' inválido.');
-             end;
 
+              if Trim(CNPJ) = '' then
+                CNPJ := copy(ChaveOuMDFe, 7, 14)
+              else
+              begin
+                if not ValidarCNPJouCPF(CNPJ) then
+                  raise EACBrLibException.Create(ErrCNPJ, 'CNPJ/CPF ' + CNPJ + ' inválido.');
+              end;
+
+             infEvento.CNPJCPF := CNPJ;
              infEvento.nSeqEvento := 1;
              infEvento.cOrgao := StrToIntDef(copy(OnlyNumber(ChaveOuMDFe), 1, 2), 0);
+             infEvento.tpAmb := Configuracoes.WebServices.Ambiente;
              infEvento.dhEvento := now;
              infEvento.tpEvento := teEncerramento;
              infEvento.chMDFe := ChaveOuMDFe;

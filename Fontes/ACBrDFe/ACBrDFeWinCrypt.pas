@@ -89,7 +89,6 @@ type
     property Certificado: PCCERT_CONTEXT read FpCertContext;
   end;
 
-function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
 function MsgErroGetCryptProvider(WinErro: DWORD = 0): String;
 
 function GetSerialNumber(ACertContext: PCCERT_CONTEXT): String;
@@ -135,14 +134,6 @@ uses
   strutils, typinfo, comobj,
   ACBrUtil,
   synautil, synacode;
-
-function GetLastErrorAsHexaStr(WinErro: DWORD): String;
-begin
-  if WinErro = 0 then
-    WinErro := GetLastError;
-
-  Result := IntToHex(WinErro, 8);
-end;
 
 function MsgErroGetCryptProvider(WinErro: DWORD): String;
 begin

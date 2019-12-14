@@ -44,8 +44,9 @@ interface
 uses
   Classes, SysUtils, Windows, IniFiles, contnrs
   {$IfDef FPC}
-  , dynlibs
-  {$EndIf};
+   ,dynlibs
+  {$EndIf}
+  ,ACBrUtil;
 
 const
   CUSBIDDataBaseResourceName = 'ACBrUSBID';
@@ -245,7 +246,7 @@ implementation
 uses
   Types,
   synautil,
-  ACBrUtil, ACBrConsts;
+  ACBrConsts;
 
 {$IFDEF FPC}
  {$R ACBrUSBID.rc}
@@ -579,10 +580,11 @@ begin
                                               RequiredSize, RequiredSize) then
       raise Exception.CreateFmt( sErrACBrWinUSBBufferRead, ['SetupDiGetDeviceRegistryProperty',  GetLastErrorAsHexaStr] );
 
+    //TODO: Ajustar atribuição de WideString no Delphi
     SetLength(AResult, RequiredSize-1);
     Move(Buffer^, AResult[1], RequiredSize-1);
 
-    Result := String(AResult);
+    Result := Trim(String(AResult));
   finally
     Freemem(Buffer);
   end;
@@ -636,9 +638,10 @@ begin
           DeviceInfoData.cbSize := SizeOf(TSPDevInfoData);
           if xSetupDiGetDeviceInterfaceDetail(DevInfo, @DeviceInterface, InterfaceDetail, RequiredSize, RequiredSize, @DeviceInfoData) then
           begin
+            //TODO: Ajustar atribuição de WideString no Delphi
             SetLength(InterfaceName, RequiredSize-1);
             Move(InterfaceDetail^.DevicePath[0], InterfaceName[1], RequiredSize-1);
-            PrinterInterface := String(InterfaceName);
+            PrinterInterface := Trim(String(InterfaceName));
           end;
         finally
           Freemem(InterfaceDetail);

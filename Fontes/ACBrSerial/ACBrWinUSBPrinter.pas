@@ -60,7 +60,7 @@ resourcestring
 
 type
 
-  { TACBrUSBIDDataBase }
+  { TACBrUSBIDDataBase - https://www.the-sz.com/products/usbid/index.php }
 
   TACBrUSBIDDataBase = class
   private
@@ -79,7 +79,8 @@ type
 
     property DataBaseFileName: String read FDataBaseFileName write SetDataBaseFileName;
     property ResourceName: String read FResourceName;
-    function GetDescription(AVendorID, AProductID: String; out AVendorName: String; out AProductModel: String): Boolean;
+    function FindDeviceByID(AVendorID, AProductID: String; out AVendorName: String;
+      out AProductModel: String; out AACBrProtocol: Integer): Boolean;
   end;
 
   TACBrUSBWinPrinterList = class;
@@ -88,6 +89,7 @@ type
 
   TACBrUSBWinPrinter = class
   private
+    FACBrProtocol: Integer;
     FFrendlyName: String;
     FGUID: String;
     FHardwareID: String;
@@ -118,6 +120,7 @@ type
     property GUID: String read FGUID write FGUID;
     property FrendlyName: String read FFrendlyName write FFrendlyName;
     property HardwareID: String read FHardwareID write FHardwareID;
+    property ACBrProtocol: Integer read FACBrProtocol write FACBrProtocol;
   end;
 
   { TACBrUSBWinPrinterList }
@@ -345,11 +348,30 @@ begin
   Result := LoadFromFile or LoadFromResource;
 end;
 
-function TACBrUSBIDDataBase.GetDescription(AVendorID, AProductID: String; out AVendorName: String; out AProductModel: String): Boolean;
+function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
+  AVendorName: String; out AProductModel: String; out AACBrProtocol: Integer): Boolean;
+
+  procedure GetACBrProtocol( var ADescription: String; out ACBrProtocol: Integer);
+  var
+    p: Integer;
+  begin
+    p := pos(';', ADescription);
+    if (p > 0) then
+    begin
+      ACBrProtocol := StrToIntDef(copy(ADescription, P+1, Length(ADescription)), 0);
+      ADescription := copy(ADescription,1, p-1);
+    end
+    else
+      ACBrProtocol := 0;
+  end;
+
+var
+  VendorProtocol, ModelProtocol: Integer;
 begin
   Result := False;
   AVendorName := '';
   AProductModel := '';
+  AACBrProtocol := 0;
 
   if not StrIsHexa(AVendorID) then
     raise Exception.CreateFmt(ACBrStr(sErrACBrWinUSBInvalidID), ['VendorID', AVendorID]);
@@ -362,6 +384,12 @@ begin
 
   AVendorName := FIni.ReadString(CSecVendors, AVendorID, '');
   AProductModel := FIni.ReadString(AVendorID, AProductID, '');
+  GetACBrProtocol(AVendorName, VendorProtocol);
+  GetACBrProtocol(AProductModel, ModelProtocol);
+  if (ModelProtocol = 0) then
+    AACBrProtocol := VendorProtocol
+  else
+    AACBrProtocol := ModelProtocol;
 
   Result := ((AVendorName + AProductModel) <> '');
 end;
@@ -388,6 +416,7 @@ begin
   FGUID := '';
   FFrendlyName := '';
   FHardwareID := '';
+  FACBrProtocol := 0;
   FDescriptionsLoaded := False;
 end;
 
@@ -438,7 +467,7 @@ procedure TACBrUSBWinPrinter.LoadDescriptions;
 begin
   FVendorName := '';
   FProductModel := '';
-  FOwner.Database.GetDescription(FVendorID, FProductID, FVendorName, FProductModel);
+  FOwner.Database.FindDeviceByID(FVendorID, FProductID, FVendorName, FProductModel, FACBrProtocol);
   FDescriptionsLoaded := True;
 end;
 
@@ -580,8 +609,11 @@ begin
                                               RequiredSize, RequiredSize) then
       raise Exception.CreateFmt( sErrACBrWinUSBBufferRead, ['SetupDiGetDeviceRegistryProperty',  GetLastErrorAsHexaStr] );
 
-    //TODO: Ajustar atribuição de WideString no Delphi
-    SetLength(AResult, RequiredSize-1);
+    {$IfDef UNICODE}
+     SetLength(AResult, Trunc(RequiredSize/2)-1);
+    {$Else}
+     SetLength(AResult, RequiredSize-1);
+    {$EndIf}
     Move(Buffer^, AResult[1], RequiredSize-1);
 
     Result := Trim(String(AResult));
@@ -604,18 +636,23 @@ var
   DeviceInfoData: TSPDevInfoData;
   InterfaceDetail: PSPDeviceInterfaceDetailData;
   MemberIndex, RequiredSize: DWORD;
-  {$IfDef UNICODE}
-   InterfaceName: WideString;
-  {$Else}
-   InterfaceName:AnsiString;
-  {$EndIf}
+  InterfaceName: {$IfDef UNICODE}WideString{$Else}AnsiString{$EndIf};
   PrinterInterface, PrinterClassGUID, PrinterLocation,
     PrinterFrendlyName, PrinterHardwareID, VendorId, ProductId: String;
   APrinter: TACBrUSBWinPrinter;
+
+  function TryGetDeviceRegistryPropertyString(AProp: Cardinal): String;
+  begin
+    try
+      Result := String( GetDeviceRegistryPropertyString(DevInfo, DeviceInfoData, AProp) );
+    except
+      Result := '';
+    end;
+  end;
+
 begin
   LoadAPI;
   Result := -1;
-  PrinterList.Clear;
 
   DevInfo := xSetupDiGetClassDevsA(@AGUID, nil, 0, DIGCF_PRESENT or DIGCF_DEVICEINTERFACE);
   if (DevInfo = Pointer(INVALID_HANDLE_VALUE)) then
@@ -623,6 +660,7 @@ begin
 
   try
     MemberIndex := 0;
+    Result := 0;
     DeviceInterface.cbSize := SizeOf(TSPDeviceInterfaceData);
     while (xSetupDiEnumDeviceInterfaces(DevInfo, Nil, AGUID, MemberIndex, DeviceInterface)) do
     begin
@@ -638,8 +676,12 @@ begin
           DeviceInfoData.cbSize := SizeOf(TSPDevInfoData);
           if xSetupDiGetDeviceInterfaceDetail(DevInfo, @DeviceInterface, InterfaceDetail, RequiredSize, RequiredSize, @DeviceInfoData) then
           begin
-            //TODO: Ajustar atribuição de WideString no Delphi
-            SetLength(InterfaceName, RequiredSize-1);
+            {$IfDef UNICODE}
+             SetLength(InterfaceName, Trunc(RequiredSize/2)-1);
+            {$Else}
+             SetLength(InterfaceName, RequiredSize-1);
+            {$EndIf}
+
             Move(InterfaceDetail^.DevicePath[0], InterfaceName[1], RequiredSize-1);
             PrinterInterface := Trim(String(InterfaceName));
           end;
@@ -653,14 +695,10 @@ begin
         ExtractVidAndPid( PrinterInterface, VendorId, ProductId);
         if (VendorId <> '') and (ProductId <> '') then
         begin
-          PrinterClassGUID := GetDeviceRegistryPropertyString(DevInfo, DeviceInfoData, SPDRP_CLASSGUID);
-          PrinterLocation := GetDeviceRegistryPropertyString(DevInfo, DeviceInfoData, SPDRP_LOCATION_INFORMATION);
-          PrinterHardwareID := GetDeviceRegistryPropertyString(DevInfo, DeviceInfoData, SPDRP_HARDWAREID);
-          try
-            PrinterFrendlyName := GetDeviceRegistryPropertyString(DevInfo, DeviceInfoData, SPDRP_FRIENDLYNAME);
-          except
-            PrinterFrendlyName := '';
-          end;
+          PrinterClassGUID := TryGetDeviceRegistryPropertyString(SPDRP_CLASSGUID);
+          PrinterLocation := TryGetDeviceRegistryPropertyString(SPDRP_LOCATION_INFORMATION);
+          PrinterHardwareID := TryGetDeviceRegistryPropertyString(SPDRP_HARDWAREID);
+          PrinterFrendlyName := TryGetDeviceRegistryPropertyString(SPDRP_FRIENDLYNAME);
 
           APrinter := PrinterList.New(VendorId, ProductId);
           APrinter.PrinterInterface := PrinterInterface;
@@ -668,6 +706,7 @@ begin
           APrinter.GUID := PrinterClassGUID;
           APrinter.FrendlyName := PrinterFrendlyName;
           APrinter.HardwareID := PrinterHardwareID;
+          Inc( Result );
         end;
       end;
 
@@ -676,8 +715,6 @@ begin
   finally
     xSetupDiDestroyDeviceInfoList(DevInfo);
   end;
-
-  Result := PrinterList.Count;
 end;
 
 

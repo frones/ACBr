@@ -37,7 +37,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrWinUSBPrinter;
+unit ACBrWinUSBDevice;
 
 interface
 
@@ -57,6 +57,7 @@ resourcestring
   sErrACBrWinUSBInvalidID = '%S inválido [%s]';
   sErrACBrWinUSBBufferSize = '%s: Falha ao obter Tamanho do Buffer. Erro: %s';
   sErrACBrWinUSBBufferRead = '%s: Falha ao Ler Buffer. Erro: %s';
+  sErrACBrWinUSBDeviceOutOfRange = 'Device %d não existe';
 
 type
 
@@ -65,57 +66,57 @@ type
   TACBrUSBIDDataBase = class
   private
     FIni: TMemIniFile;
-    FDataBaseFileName: String;
+    FFileName: String;
     FResourceName: String;
     FLoaded: Boolean;
     function LoadFromFile: Boolean;
     function LoadFromResource: Boolean;
-    procedure SetDataBaseFileName(AValue: String);
+    procedure SetFileName(AValue: String);
   public
     constructor Create(ADataBaseFileName: String = ''; AResourceName: String = '');
     destructor Destroy; override;
     procedure Clear;
     function Load: Boolean;
 
-    property DataBaseFileName: String read FDataBaseFileName write SetDataBaseFileName;
+    property FileName: String read FFileName write SetFileName;
     property ResourceName: String read FResourceName;
     function FindDeviceByID(AVendorID, AProductID: String; out AVendorName: String;
       out AProductModel: String; out AACBrProtocol: Integer): Boolean;
   end;
 
-  TACBrUSBWinPrinterList = class;
+  TACBrUSBWinDeviceList = class;
 
-  { TACBrUSBWinPrinter }
+  { TACBrUSBWinDevice }
 
-  TACBrUSBWinPrinter = class
+  TACBrUSBWinDevice = class
   private
     FACBrProtocol: Integer;
     FFrendlyName: String;
     FGUID: String;
     FHardwareID: String;
-    FOwner: TACBrUSBWinPrinterList;
-    FPrinterInterface: String;
+    FOwner: TACBrUSBWinDeviceList;
+    FDeviceInterface: String;
     FProductID, FProductModel: String;
     FUSBPort: String;
     FVendorID, FVendorName: String;
     FDescriptionsLoaded: Boolean;
 
-    function GetPrinterName: String;
+    function GetDeviceName: String;
     function GetProductModel: String;
     function GetVendorName: String;
     procedure SetProductID(AValue: String);
     procedure SetVendorID(AValue: String);
     procedure LoadDescriptions;
   public
-    constructor Create(AOwner: TACBrUSBWinPrinterList);
+    constructor Create(AOwner: TACBrUSBWinDeviceList);
     procedure Clear;
 
-    property PrinterName: String read GetPrinterName;
+    property DeviceName: String read GetDeviceName;
     property VendorID: String read FVendorID write SetVendorID;
     property VendorName: String read GetVendorName;
     property ProductID: String read FProductID write SetProductID;
     property ProductModel: String read GetProductModel;
-    property PrinterInterface: String read FPrinterInterface write FPrinterInterface;
+    property DeviceInterface: String read FDeviceInterface write FDeviceInterface;
     property USBPort: String read FUSBPort write FUSBPort;
     property GUID: String read FGUID write FGUID;
     property FrendlyName: String read FFrendlyName write FFrendlyName;
@@ -123,19 +124,19 @@ type
     property ACBrProtocol: Integer read FACBrProtocol write FACBrProtocol;
   end;
 
-  { TACBrUSBWinPrinterList }
+  { TACBrUSBWinDeviceList }
 
-  TACBrUSBWinPrinterList = class(TObjectList)
+  TACBrUSBWinDeviceList = class(TObjectList)
   private
     FDataBase: TACBrUSBIDDataBase;
 
-    function GetItem(Index: Integer): TACBrUSBWinPrinter;
+    function GetItem(Index: Integer): TACBrUSBWinDevice;
   public
     constructor Create(ADataBaseFileName: String = '');
     destructor Destroy; override;
 
-    function New(AVendorID, AProductID: String): TACBrUSBWinPrinter;
-    property Items[Index: Integer]: TACBrUSBWinPrinter read GetItem;
+    function New(AVendorID, AProductID: String): TACBrUSBWinDevice;
+    property Items[Index: Integer]: TACBrUSBWinDevice read GetItem;
     property Database: TACBrUSBIDDataBase read FDataBase;
   end;
 
@@ -201,6 +202,9 @@ type
   TACBrUSBWinSetupAPI = class
   private
     FLoaded: Boolean;
+    FDeviceList: TACBrUSBWinDeviceList;
+    FUSBHandle: THandle;
+    FDeviceIndex: Integer;
 
     xSetupDiEnumDeviceInfo: function(DeviceInfoSet: HDEVINFO; MemberIndex: DWORD;
       var DeviceInfoData: TSPDevInfoData): BOOL; stdcall;
@@ -226,10 +230,13 @@ type
     xSetupDiDestroyDeviceInfoList: function(DeviceInfoSet: HDEVINFO): BOOL; stdcall;
 
   private
-    procedure ExtractVidAndPid( APrinterInterface: String; out AVid: String; out APid: String);
+    procedure ExtractVidAndPid( ADeviceInterface: String; out AVid: String; out APid: String);
+    function GetActive: Boolean;
+    function GetDataBase: TACBrUSBIDDataBase;
 
     function GetDeviceRegistryPropertyString(DevInfo: HDEVINFO;
       DeviceInfoData: TSPDevInfoData; Prop: DWORD): AnsiString;
+    procedure SetDeviceIndex(AValue: Integer);
 
   public
     constructor Create;
@@ -239,9 +246,19 @@ type
     procedure UnLoadAPI;
 
     property Loaded: Boolean read FLoaded;
+    property DeviceList: TACBrUSBWinDeviceList read FDeviceList;
+    property DeviceIndex: Integer read FDeviceIndex write SetDeviceIndex;
+    property DataBase: TACBrUSBIDDataBase read GetDataBase;
 
-    function FindUSBPrinters(PrinterList: TACBrUSBWinPrinterList): Integer;
-    function FindUSBDevicesByGUID(AGUID: TGUID; PrinterList: TACBrUSBWinPrinterList): Integer;
+    property USBHandle: THandle read FUSBHandle;
+    property Active: Boolean read GetActive;
+
+    function FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
+    function FindUSBDevicesByGUID(AGUID: TGUID; ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
+
+    procedure Open(ADeviceIndex: Integer);
+    procedure Close;
+
   end;
 
 implementation
@@ -260,15 +277,15 @@ uses
 
 { TACBrUSBIDDataBase }
 
-procedure TACBrUSBIDDataBase.SetDataBaseFileName(AValue: String);
+procedure TACBrUSBIDDataBase.SetFileName(AValue: String);
 begin
-  if (FDataBaseFileName = AValue) then
+  if (FFileName = AValue) then
     Exit;
 
   if (AValue <> '') and (not FileExists(AValue)) then
     raise Exception.CreateFmt(ACBrStr(cACBrArquivoNaoEncontrado), [AValue]);
 
-  FDataBaseFileName := AValue;
+  FFileName := AValue;
   Load;
 end;
 
@@ -277,14 +294,14 @@ var
   SL: TStringList;
 begin
   Result := False;
-  if (FDataBaseFileName <> '') and FileExists(FDataBaseFileName) then
+  if (FFileName <> '') and FileExists(FFileName) then
   begin
     FIni.Free;
-    FIni.Create(FDataBaseFileName);
+    FIni.Create(FFileName);
 
     SL := TStringList.Create;
     try
-      SL.LoadFromFile(FDataBaseFileName);
+      SL.LoadFromFile(FFileName);
       FIni.SetStrings(SL);
       Result := True;
     finally
@@ -318,9 +335,9 @@ begin
   FIni := TMemIniFile.Create('');
 
   if ADataBaseFileName = '' then
-    FDataBaseFileName := ApplicationPath + CUSBIDDataBaseFileName
+    FFileName := ApplicationPath + CUSBIDDataBaseFileName
   else
-    FDataBaseFileName := ADataBaseFileName;
+    FFileName := ADataBaseFileName;
 
   if AResourceName = '' then
     FResourceName := CUSBIDDataBaseResourceName
@@ -395,9 +412,9 @@ begin
 end;
 
 
-{ TACBrUSBWinPrinter }
+{ TACBrUSBWinDevice }
 
-constructor TACBrUSBWinPrinter.Create(AOwner: TACBrUSBWinPrinterList);
+constructor TACBrUSBWinDevice.Create(AOwner: TACBrUSBWinDeviceList);
 begin
   inherited Create;
 
@@ -405,13 +422,13 @@ begin
   Clear;
 end;
 
-procedure TACBrUSBWinPrinter.Clear;
+procedure TACBrUSBWinDevice.Clear;
 begin
   FVendorID := '';
   FProductID := '';
   FVendorName := '';
   FProductModel := '';
-  FPrinterInterface := '';
+  FDeviceInterface := '';
   FUSBPort := '';
   FGUID := '';
   FFrendlyName := '';
@@ -420,14 +437,14 @@ begin
   FDescriptionsLoaded := False;
 end;
 
-function TACBrUSBWinPrinter.GetPrinterName: String;
+function TACBrUSBWinDevice.GetDeviceName: String;
 begin
   Result := IfEmptyThen( FrendlyName,
                          IfEmptyThen(VendorName, VendorID) + ' - ' +
                          IfEmptyThen(ProductModel, ProductID));
 end;
 
-function TACBrUSBWinPrinter.GetProductModel: String;
+function TACBrUSBWinDevice.GetProductModel: String;
 begin
   if not FDescriptionsLoaded then
     LoadDescriptions;
@@ -435,7 +452,7 @@ begin
   Result := FProductModel;
 end;
 
-function TACBrUSBWinPrinter.GetVendorName: String;
+function TACBrUSBWinDevice.GetVendorName: String;
 begin
   if not FDescriptionsLoaded then
     LoadDescriptions;
@@ -443,7 +460,7 @@ begin
   Result := FVendorName;
 end;
 
-procedure TACBrUSBWinPrinter.SetProductID(AValue: String);
+procedure TACBrUSBWinDevice.SetProductID(AValue: String);
 begin
   if FProductID = AValue then
     Exit;
@@ -453,7 +470,7 @@ begin
   FProductID := AValue;
 end;
 
-procedure TACBrUSBWinPrinter.SetVendorID(AValue: String);
+procedure TACBrUSBWinDevice.SetVendorID(AValue: String);
 begin
   if FVendorID = AValue then
     Exit;
@@ -463,7 +480,7 @@ begin
   FVendorID := AValue;
 end;
 
-procedure TACBrUSBWinPrinter.LoadDescriptions;
+procedure TACBrUSBWinDevice.LoadDescriptions;
 begin
   FVendorName := '';
   FProductModel := '';
@@ -472,29 +489,29 @@ begin
 end;
 
 
-{ TACBrUSBWinPrinterList }
+{ TACBrUSBWinDeviceList }
 
-function TACBrUSBWinPrinterList.GetItem(Index: Integer): TACBrUSBWinPrinter;
+function TACBrUSBWinDeviceList.GetItem(Index: Integer): TACBrUSBWinDevice;
 begin
-  Result := TACBrUSBWinPrinter(inherited Items[Index]);
+  Result := TACBrUSBWinDevice(inherited Items[Index]);
 end;
 
-constructor TACBrUSBWinPrinterList.Create(ADataBaseFileName: String);
+constructor TACBrUSBWinDeviceList.Create(ADataBaseFileName: String);
 begin
   inherited Create(True);
   FDataBase := TACBrUSBIDDataBase.Create(ADataBaseFileName);
 end;
 
-destructor TACBrUSBWinPrinterList.Destroy;
+destructor TACBrUSBWinDeviceList.Destroy;
 begin
   FDataBase.Free;
   inherited Destroy;
 end;
 
-function TACBrUSBWinPrinterList.New(AVendorID, AProductID: String
-  ): TACBrUSBWinPrinter;
+function TACBrUSBWinDeviceList.New(AVendorID, AProductID: String
+  ): TACBrUSBWinDevice;
 begin
-  Result := TACBrUSBWinPrinter.Create(Self);
+  Result := TACBrUSBWinDevice.Create(Self);
   try
     Result.VendorID := AVendorID;
     Result.ProductID := AProductID;
@@ -511,7 +528,11 @@ end;
 constructor TACBrUSBWinSetupAPI.Create;
 begin
   inherited Create;
+
+  FDeviceList := TACBrUSBWinDeviceList.Create();
   FLoaded := False;
+  FUSBHandle := INVALID_HANDLE_VALUE;
+
   xSetupDiEnumDeviceInfo := Nil;
   xSetupDiGetClassDevsA := Nil;
   xSetupDiGetDeviceRegistryProperty := Nil;
@@ -563,7 +584,7 @@ begin
   FLoaded := False;
 end;
 
-procedure TACBrUSBWinSetupAPI.ExtractVidAndPid(APrinterInterface: String; out
+procedure TACBrUSBWinSetupAPI.ExtractVidAndPid(ADeviceInterface: String; out
   AVid: String; out APid: String);
 var
   lowInt: String;
@@ -571,14 +592,19 @@ var
 begin
   AVid := '';
   APid := '';
-  lowInt := LowerCase(APrinterInterface);
+  lowInt := LowerCase(ADeviceInterface);
   p := pos('vid_', lowInt);
   if (p > 0) then
-    AVid := copy(APrinterInterface, p+4, 4);
+    AVid := copy(ADeviceInterface, p+4, 4);
 
   p := pos('pid_', lowInt);
   if (p > 0) then
-    APid := copy(APrinterInterface, p+4, 4);
+    APid := copy(ADeviceInterface, p+4, 4);
+end;
+
+function TACBrUSBWinSetupAPI.GetActive: Boolean;
+begin
+  Result := (FUSBHandle <> INVALID_HANDLE_VALUE);
 end;
 
 function TACBrUSBWinSetupAPI.GetDeviceRegistryPropertyString(DevInfo: HDEVINFO;
@@ -622,14 +648,42 @@ begin
   end;
 end;
 
-function TACBrUSBWinSetupAPI.FindUSBPrinters(PrinterList: TACBrUSBWinPrinterList
-  ): Integer;
+procedure TACBrUSBWinSetupAPI.SetDeviceIndex(AValue: Integer);
 begin
-  Result := FindUSBDevicesByGUID( GUID_DEVINTERFACE_USBPRINT, PrinterList);
+  if FDeviceIndex = AValue then Exit;
+
+  if AValue < 0 then
+    FDeviceIndex := -1
+  else if (AValue > FDeviceList.Count-1) then
+    raise Exception.CreateFmt(sErrACBrWinUSBDeviceOutOfRange, [AValue] );
+
+  Close;
+  FDeviceIndex := AValue;
+end;
+
+function TACBrUSBWinSetupAPI.GetDataBase: TACBrUSBIDDataBase;
+begin
+  Result := FDeviceList.Database;
+end;
+
+function TACBrUSBWinSetupAPI.FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList
+  ): Integer;
+var
+  ADeviceListToAdd: TACBrUSBWinDeviceList;
+begin
+  if (ADeviceList <> Nil) then
+    ADeviceListToAdd := ADeviceList
+  else
+    ADeviceListToAdd := FDeviceList;
+
+  ADeviceListToAdd.Clear;
+
+  Result := FindUSBDevicesByGUID( GUID_DEVINTERFACE_USBPRINT, ADeviceListToAdd);
+  Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PORT, ADeviceListToAdd);
 end;
 
 function TACBrUSBWinSetupAPI.FindUSBDevicesByGUID(AGUID: TGUID;
-  PrinterList: TACBrUSBWinPrinterList): Integer;
+  ADeviceList: TACBrUSBWinDeviceList): Integer;
 var
   DevInfo: HDEVINFO;
   DeviceInterface: TSPDeviceInterfaceData;
@@ -637,9 +691,10 @@ var
   InterfaceDetail: PSPDeviceInterfaceDetailData;
   MemberIndex, RequiredSize: DWORD;
   InterfaceName: {$IfDef UNICODE}WideString{$Else}AnsiString{$EndIf};
-  PrinterInterface, PrinterClassGUID, PrinterLocation,
-    PrinterFrendlyName, PrinterHardwareID, VendorId, ProductId: String;
-  APrinter: TACBrUSBWinPrinter;
+  DevInterface, DevClassGUID, DevLocation, DevFrendlyName, DevHardwareID,
+    VendorId, ProductId: String;
+  ADevice: TACBrUSBWinDevice;
+  ADeviceListToAdd: TACBrUSBWinDeviceList;
 
   function TryGetDeviceRegistryPropertyString(AProp: Cardinal): String;
   begin
@@ -653,6 +708,10 @@ var
 begin
   LoadAPI;
   Result := -1;
+  if (ADeviceList <> Nil) then
+    ADeviceListToAdd := ADeviceList
+  else
+    ADeviceListToAdd := FDeviceList;
 
   DevInfo := xSetupDiGetClassDevsA(@AGUID, nil, 0, DIGCF_PRESENT or DIGCF_DEVICEINTERFACE);
   if (DevInfo = Pointer(INVALID_HANDLE_VALUE)) then
@@ -664,7 +723,7 @@ begin
     DeviceInterface.cbSize := SizeOf(TSPDeviceInterfaceData);
     while (xSetupDiEnumDeviceInterfaces(DevInfo, Nil, AGUID, MemberIndex, DeviceInterface)) do
     begin
-      PrinterInterface := '';
+      DevInterface := '';
 
       RequiredSize := 0;
       xSetupDiGetDeviceInterfaceDetail(DevInfo, @DeviceInterface, Nil, 0, RequiredSize, Nil);
@@ -683,29 +742,29 @@ begin
             {$EndIf}
 
             Move(InterfaceDetail^.DevicePath[0], InterfaceName[1], RequiredSize-1);
-            PrinterInterface := Trim(String(InterfaceName));
+            DevInterface := Trim(String(InterfaceName));
           end;
         finally
           Freemem(InterfaceDetail);
         end;
       end;
 
-      if (PrinterInterface <> '') then
+      if (DevInterface <> '') then
       begin
-        ExtractVidAndPid( PrinterInterface, VendorId, ProductId);
+        ExtractVidAndPid( DevInterface, VendorId, ProductId);
         if (VendorId <> '') and (ProductId <> '') then
         begin
-          PrinterClassGUID := TryGetDeviceRegistryPropertyString(SPDRP_CLASSGUID);
-          PrinterLocation := TryGetDeviceRegistryPropertyString(SPDRP_LOCATION_INFORMATION);
-          PrinterHardwareID := TryGetDeviceRegistryPropertyString(SPDRP_HARDWAREID);
-          PrinterFrendlyName := TryGetDeviceRegistryPropertyString(SPDRP_FRIENDLYNAME);
+          DevClassGUID := TryGetDeviceRegistryPropertyString(SPDRP_CLASSGUID);
+          DevLocation := TryGetDeviceRegistryPropertyString(SPDRP_LOCATION_INFORMATION);
+          DevHardwareID := TryGetDeviceRegistryPropertyString(SPDRP_HARDWAREID);
+          DevFrendlyName := TryGetDeviceRegistryPropertyString(SPDRP_FRIENDLYNAME);
 
-          APrinter := PrinterList.New(VendorId, ProductId);
-          APrinter.PrinterInterface := PrinterInterface;
-          APrinter.USBPort := PrinterLocation;
-          APrinter.GUID := PrinterClassGUID;
-          APrinter.FrendlyName := PrinterFrendlyName;
-          APrinter.HardwareID := PrinterHardwareID;
+          ADevice := ADeviceListToAdd.New(VendorId, ProductId);
+          ADevice.DeviceInterface := DevInterface;
+          ADevice.USBPort := DevLocation;
+          ADevice.GUID := DevClassGUID;
+          ADevice.FrendlyName := DevFrendlyName;
+          ADevice.HardwareID := DevHardwareID;
           Inc( Result );
         end;
       end;
@@ -715,6 +774,30 @@ begin
   finally
     xSetupDiDestroyDeviceInfoList(DevInfo);
   end;
+end;
+
+procedure TACBrUSBWinSetupAPI.Open(ADeviceIndex: Integer);
+var
+  APort: String;
+begin
+  DeviceIndex := ADeviceIndex;
+  APort := FDeviceList.Items[DeviceIndex].DeviceInterface;
+
+  FUSBHandle := CreateFile( LPCSTR(APort),
+                            GENERIC_WRITE or GENERIC_READ,
+                            FILE_SHARE_READ,
+                            Nil,
+                            OPEN_ALWAYS,
+                            FILE_ATTRIBUTE_NORMAL or FILE_FLAG_SEQUENTIAL_SCAN or FILE_FLAG_OVERLAPPED,
+                            0);
+end;
+
+procedure TACBrUSBWinSetupAPI.Close;
+begin
+  if Active then
+    CloseHandle(FUSBHandle);
+
+  FUSBHandle := INVALID_HANDLE_VALUE;
 end;
 
 

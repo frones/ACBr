@@ -2,13 +2,13 @@ object framePacotes: TframePacotes
   Left = 0
   Top = 0
   Width = 727
-  Height = 1004
+  Height = 1034
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   TabOrder = 0
   object pnlBotoesMarcar: TPanel
     Left = 0
-    Top = 963
+    Top = 993
     Width = 727
     Height = 41
     Align = alBottom
@@ -99,7 +99,7 @@ object framePacotes: TframePacotes
     Left = 3
     Top = 3
     Width = 721
-    Height = 957
+    Height = 987
     Align = alClient
     BevelOuter = bvNone
     BorderStyle = bsNone

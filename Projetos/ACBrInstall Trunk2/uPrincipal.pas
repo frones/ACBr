@@ -127,7 +127,6 @@ type
     procedure btnVisualizarLogCompilacaoClick(Sender: TObject);
     procedure wizPgInstalacaoEnterPage(Sender: TObject;
       const FromPage: TJvWizardCustomPage);
-    procedure rdgDLLClick(Sender: TObject);
     procedure clbDelphiVersionClick(Sender: TObject);
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
@@ -138,7 +137,6 @@ type
     tPlatform: TJclBDSPlatform;
     sDirLibrary: string;
     sDirPackage: string;
-    sDestino   : TDestino;
     FPacoteAtual: TFileName;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
     procedure OutputCallLine(const Text: string);
@@ -176,13 +174,12 @@ uses
 
 procedure TfrmPrincipal.ExtrairDiretorioPacote(const NomePacote: string);
 
-  procedure FindDirPackage(sDir: String; const sPacote: String);
+  procedure FindDirPackage(const aDir: String; const sPacote: String);
   var
     oDirList: TSearchRec;
-//    iRet: Integer;
-//    sDirDpk: string;
+    sDir: String;
   begin
-    sDir := IncludeTrailingPathDelimiter(sDir);
+    sDir := IncludeTrailingPathDelimiter(aDir);
     if not DirectoryExists(sDir) then
       Exit;
 
@@ -190,12 +187,10 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(const NomePacote: string);
     begin
       try
         repeat
-
-          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history')
-          or (oDirList.Name = '__recovery')then
+          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') or
+             (oDirList.Name = '__recovery') or (oDirList.Name = 'backup') then
             Continue;
 
-          //if oDirList.Attr = faDirectory then
           if DirectoryExists(sDir + oDirList.Name) then
             FindDirPackage(sDir + oDirList.Name, sPacote)
           else
@@ -232,15 +227,6 @@ end;
 function TfrmPrincipal.PathArquivoLog(const NomeVersao: string): String;
 begin
   Result := PathApp + 'log_' + StringReplace(NomeVersao, ' ', '_', [rfReplaceAll]) + '.txt';
-end;
-
-procedure TfrmPrincipal.rdgDLLClick(Sender: TObject);
-begin
-  case rdgdll.ItemIndex of
-    0 : sDestino := tdSystem;
-    1 : sDestino := tdDelphi;
-    2 : sDestino := tdNone;
-  end;
 end;
 
 procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
@@ -559,8 +545,19 @@ var
   InstalacaoAtual: TJclBorRADToolInstallation;
   iListaVer: Integer;
   FCountErros: Integer;
+  sDestino   : TDestino;
+
 begin
   Result := False;
+
+  case rdgdll.ItemIndex of
+    0 : sDestino := tdSystem;
+    1 : sDestino := tdDelphi;
+    2 : sDestino := tdNone;
+  else
+    sDestino := tdNone;
+  end;
+
   ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
   try
     ACBrInstaladorAux.OnProgresso       := IncrementaBarraProgresso;
@@ -584,57 +581,65 @@ begin
     for iListaVer := 0 to clbDelphiVersion.Count - 1 do
     begin
       // só instala as versão marcadas para instalar.
-      if clbDelphiVersion.Checked[iListaVer] then
+      if (not clbDelphiVersion.Checked[iListaVer]) then
       begin
-        // seleciona a versão no combobox.
-        edtDelphiVersion.ItemIndex := iListaVer;
-        iVersion := edtDelphiVersion.ItemIndex;
-
-        // define dados da plataforna selecionada
-        SetPlatformSelected;
-        // limpar o log
-        lstMsgInstalacao.Clear;
-        // setar barra de progresso
-        pgbInstalacao.Position := 0;
-        pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 6;
-
-        FCountErros := 0;
-        MostraDadosVersao;
-
-        InstalacaoAtual := oACBr.Installations[iVersion];
-
-        ACBrInstaladorAux.FazInstalacaoInicial(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
-        
-        // *************************************************************************
-        // compilar os pacotes primeiramente
-        // *************************************************************************
-        Logar(sLineBreak+'COMPILANDO OS PACOTES...');
-        CompilarPacotes(InstalacaoAtual, FCountErros);
-
-        // *************************************************************************
-        // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
-        // *************************************************************************
-        if FCountErros > 0 then
-        begin
-          Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
-          Break;
-        end
-        else
-        if ( tPlatform = bpWin32) then
-        begin
-          Logar(sLineBreak+'INSTALANDO OS PACOTES...');
-          InstalarPacotes(InstalacaoAtual, FCountErros);
-        end
-        else
-        begin
-          Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
-        end;
-
-        ACBrInstaladorAux.InstalarOutrosRequisitos(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
+        Continue
       end;
+
+      // seleciona a versão no combobox.
+      edtDelphiVersion.ItemIndex := iListaVer;
+      iVersion := edtDelphiVersion.ItemIndex;
+
+      // define dados da plataforna selecionada
+      SetPlatformSelected;
+      // limpar o log
+      lstMsgInstalacao.Clear;
+      // setar barra de progresso
+      pgbInstalacao.Position := 0;
+      pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 6;
+
+      FCountErros := 0;
+      MostraDadosVersao;
+
+      InstalacaoAtual := oACBr.Installations[iVersion];
+
+      ACBrInstaladorAux.FazInstalacaoInicial(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
+
+      // *************************************************************************
+      // compilar os pacotes primeiramente
+      // *************************************************************************
+      Logar(sLineBreak+'COMPILANDO OS PACOTES...');
+      CompilarPacotes(InstalacaoAtual, FCountErros);
+
+      // *************************************************************************
+      // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
+      // *************************************************************************
+      if FCountErros > 0 then
+      begin
+        Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
+        Break;
+      end
+      else
+      if ( tPlatform = bpWin32) then
+      begin
+        Logar(sLineBreak+'INSTALANDO OS PACOTES...');
+        InstalarPacotes(InstalacaoAtual, FCountErros);
+      end
+      else
+      begin
+        Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
+      end;
+
+      ACBrInstaladorAux.InstalarOutrosRequisitos(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
+
+      if (FCountErros = 0) and (sDestino = tdDelphi) then
+      begin
+        ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, sDirRoot, IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
+      end;
+
     end;
 
-    if FCountErros = 0 then
+    if (FCountErros = 0) and (sDestino <> tdDelphi) then
     begin
       ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, sDirRoot, IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
     end;

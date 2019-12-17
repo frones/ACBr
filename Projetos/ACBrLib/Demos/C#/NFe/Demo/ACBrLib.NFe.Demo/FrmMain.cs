@@ -621,7 +621,7 @@ namespace ACBrLib.NFe.Demo
 
                 if (InputBox.Show("WebServices Consultar: Cadastro", "UF", ref uf) != DialogResult.OK) return;
                 if (InputBox.Show("WebServices Consultar: Cadastro", "Documento", ref documento) != DialogResult.OK) return;
-                ie = MessageBox.Show(@"O documento é uma inscrição estadual ?", @"WebServices Consultar: Cadastro", MessageBoxButtons.YesNo) != DialogResult.OK;
+                ie = MessageBox.Show(@"O documento é uma inscrição estadual ?", @"WebServices Consultar: Cadastro", MessageBoxButtons.YesNo) == DialogResult.Yes;
 
                 var ret = AcbrNFe.ConsultaCadastro(uf, documento, ie);
                 rtbRespostas.AppendText(ret);

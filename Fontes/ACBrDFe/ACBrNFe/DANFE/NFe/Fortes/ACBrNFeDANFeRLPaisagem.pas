@@ -977,7 +977,7 @@ begin
         vWidthAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Width;
         vLeftAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left;
         vAutoSizeAux := TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize;
-        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := True;
+//        TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := True;
         TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).AutoSize := vAutoSizeAux;
         TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Left := vLeftAux;
         if (TRLLabel(TRLBand(RLNFe.Controls[b]).Controls[i]).Alignment = taLeftJustify) then

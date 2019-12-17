@@ -183,16 +183,14 @@ type
   private
     FItems: TObjectList;
 
-    function GetItem(Index: Integer): TNaoEncerradosRespostaItem;
-
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const Control: TACBrMDFe); override;
-    function Gerar: Ansistring; override;
 
-    property Items[Index: Integer]: TNaoEncerradosRespostaItem read GetItem; default;
+  published
+    property Items: TObjectList read FItems;
 
   end;
 
@@ -314,20 +312,17 @@ type
     FcOrgao: Integer;
     FItems: TObjectList;
 
-    function GetItem(Index: Integer): TEventoItemResposta;
-
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const Control: TACBrMDFe); override;
-    function Gerar: Ansistring; override;
-
-    property Items[Index: Integer]: TEventoItemResposta read GetItem; default;
 
   published
     property idLote: Integer read FidLote write FidLote;
     property cOrgao: Integer read FcOrgao write FcOrgao;
+    property Items: TObjectList read FItems;
+
   end;
 
 implementation
@@ -381,22 +376,6 @@ begin
   FItems.Free;
 
   inherited Destroy;
-end;
-
-function TEventoResposta.GetItem(Index: Integer): TEventoItemResposta;
-begin
-  Result := TEventoItemResposta(FItems[Index]);
-end;
-
-function TEventoResposta.Gerar: Ansistring;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-  for i := 0 to FItems.Count - 1 do
-  begin
-    Result := Result + sLineBreak + TEventoItemResposta(FItems.Items[i]).Gerar;
-  end;
 end;
 
 procedure TEventoResposta.Processar(const Control: TACBrMDFe);
@@ -485,22 +464,6 @@ begin
   FItems.Free;
 
   inherited Destroy;
-end;
-
-function TNaoEncerradosResposta.GetItem(Index: Integer): TNaoEncerradosRespostaItem;
-begin
-  Result := TNaoEncerradosRespostaItem(FItems[Index]);
-end;
-
-function TNaoEncerradosResposta.Gerar: Ansistring;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-  for i := 0 to FItems.Count - 1 do
-  begin
-    Result := Result + sLineBreak + TNaoEncerradosRespostaItem(FItems.Items[i]).Gerar;
-  end;
 end;
 
 procedure TNaoEncerradosResposta.Processar(const Control: TACBrMDFe);

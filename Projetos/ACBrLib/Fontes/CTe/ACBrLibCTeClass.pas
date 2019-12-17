@@ -638,7 +638,7 @@ begin
         Erros := '';
         CTeDM.ACBrCTe1.Conhecimentos.ValidarRegrasdeNegocios(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;
@@ -668,7 +668,7 @@ begin
         Erros := '';
         CTeDM.ACBrCTe1.Conhecimentos.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;
@@ -704,7 +704,7 @@ begin
           ACBrCTe1.WebServices.StatusServico.Executar;
           Resposta.Processar(CTeDM.ACBrCTe1);
           MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          Result := SetRetorno(ErrOK, Resposta);
         end
       finally
         Resposta.Free;
@@ -950,7 +950,7 @@ begin
         end;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;
@@ -998,7 +998,7 @@ begin
           end;
 
           MoverStringParaPChar(Resposta, sResposta, esTamanho);
-          Result := SetRetorno(ErrOK, StrPas(sResposta));
+          Result := SetRetorno(ErrOK, Resposta);
         end;
       finally
         CTeDM.Destravar;
@@ -1085,7 +1085,7 @@ begin
         end;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;
@@ -1193,7 +1193,7 @@ begin
         end;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       end;
 
       CTeDM.Destravar;
@@ -1250,7 +1250,7 @@ begin
         end;
 
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, StrPas(sResposta));
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;

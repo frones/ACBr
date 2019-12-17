@@ -50,9 +50,10 @@ uses
   {$IFDEF FPC}
    LResources,
   {$ENDIF}
-  Messages, Variants, Graphics, Controls, Forms, Dialogs,
-  ACBrBase, ACBrNFeDANFEClass, RLReport, pcnNFe, ACBrNFe,
-  RLHTMLFilter, RLFilters, RLPDFFilter, ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador;
+  Variants, Graphics, Controls, Forms, Dialogs,
+  ACBrBase, ACBrNFeDANFEClass, pcnNFe, ACBrNFe,
+  RLReport, RLHTMLFilter, RLFilters, RLPDFFilter,
+  ACBrUtil, pcnConversao, ACBrDFeUtil, ACBrValidador;
 
 type
   TACBrNFeDANFCeFortesA4Filtro = (fiNenhum, fiPDF, fiHTML ) ;

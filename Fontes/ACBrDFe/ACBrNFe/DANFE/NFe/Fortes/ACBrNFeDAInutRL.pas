@@ -47,7 +47,7 @@ unit ACBrNFeDAInutRL;
 interface
 
 uses
-  SysUtils, Classes, StrUtils,
+  SysUtils, Classes,
   {$IFDEF CLX}
   QGraphics, QControls, QForms, QDialogs, QExtCtrls, Qt,
   {$ELSE}

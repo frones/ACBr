@@ -78,7 +78,6 @@ type
 implementation
 
 uses
-  Math,
   ACBrUtil;
 
 {$IfNDef FPC}

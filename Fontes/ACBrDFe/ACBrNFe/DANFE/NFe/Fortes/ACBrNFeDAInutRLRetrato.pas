@@ -128,7 +128,7 @@ type
 implementation
 
 uses
-  StrUtils, DateUtils,
+  DateUtils,
   pcnConversao,
   ACBrUtil, ACBrDFeReportFortes, ACBrNFeDANFeRLClass, ACBrValidador;
 

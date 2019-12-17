@@ -78,7 +78,6 @@ type
 implementation
 
 uses
-  StrUtils, Math,
   ACBrValidador, ACBrUtil, ACBrDFeReport, ACBrDelphiZXingQRCode;
 
 {$IfNDef FPC}

@@ -48,7 +48,7 @@ uses
   Classes, SysUtils, ACBrBase,
   ACBrUtil, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrONEConfiguracoes, ACBrONEWebServices,
-  pcnConversao, pcnConversaoONE, pcnEnvManutencaoEQP, pcnEnvRecepcaoLeitura;
+  pcnConversao, pcnConversaoONE;
 
 const
   ACBRONE_NAMESPACE = 'http://www.portalfiscal.inf.br/one';
@@ -130,8 +130,8 @@ Const
 implementation
 
 uses
-  strutils, dateutils,
-  pcnAuxiliar, synacode, ACBrDFeSSL;
+  dateutils,
+  pcnAuxiliar;
 
 {$IFDEF FPC}
  {$R ACBrONEServicos.rc}

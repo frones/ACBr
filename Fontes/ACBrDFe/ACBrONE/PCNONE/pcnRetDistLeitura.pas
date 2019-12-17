@@ -46,7 +46,7 @@ interface
 
 uses
   SysUtils, Classes, Contnrs,
-  pcnConversao, pcnLeitor, pcnEnvRecepcaoLeitura, synacode;
+  pcnConversao, pcnLeitor, pcnEnvRecepcaoLeitura;
 
 type
   TLeituraCollection     = class;
@@ -119,7 +119,7 @@ implementation
 
 uses
   pcnAuxiliar,
-  ACBrUtil, pcnGerador, pcnConversaoONE;
+  ACBrUtil, pcnConversaoONE;
 
 { TLeituraCollection }
 

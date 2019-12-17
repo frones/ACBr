@@ -45,7 +45,7 @@ unit ACBrONEWebServices;
 interface
 
 uses
-  Classes, SysUtils, dateutils, blcksock, synacode,
+  Classes, SysUtils, dateutils, blcksock,
   ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
   pcnAuxiliar, pcnConversao, pcnConversaoONE,
   pcnEnvManutencaoEQP, pcnRetManutencaoEQP,
@@ -265,7 +265,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrCompress, ACBrONE,
+  ACBrUtil, ACBrONE,
   pcnGerador, pcnLeitor;
 
 { TONEWebService }

@@ -41,8 +41,8 @@ unit ACBrNFSeConfiguracoes;
 interface
 
 uses
-  Classes, SysUtils, IniFiles, Contnrs,
-  ACBrDFeConfiguracoes, ACBrDFeSSL, pcnConversao, pnfsConversao;
+  Classes, SysUtils, IniFiles,
+  ACBrDFeConfiguracoes, pcnConversao, pnfsConversao;
 
 type
 
@@ -437,7 +437,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrNFSe,
+  ACBrUtil,
   DateUtils;
 
 { TEmitenteConfNFSe }

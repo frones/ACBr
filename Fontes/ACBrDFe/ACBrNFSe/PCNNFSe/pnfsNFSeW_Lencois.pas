@@ -40,10 +40,8 @@ uses
 
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pnfsNFSeW,
-  pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao, pnfsConsts;
+  ACBrConsts,
+  pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador, pnfsNFSe, pnfsConversao;
 
 type
   { TNFSeW_Lencois }
@@ -62,7 +60,7 @@ type
 implementation
 
 uses
-  ACBrUtil, MaskUtils;
+  ACBrUtil;
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }

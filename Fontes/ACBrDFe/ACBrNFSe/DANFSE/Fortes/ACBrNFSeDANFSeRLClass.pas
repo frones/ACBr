@@ -67,7 +67,7 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeDANFSeRLRetrato;
+  Dialogs, ACBrUtil, ACBrNFSe, ACBrNFSeDANFSeRLRetrato;
 
 constructor TACBrNFSeDANFSeRL.Create(AOwner: TComponent);
 begin

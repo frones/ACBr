@@ -34,7 +34,7 @@ unit pnfsEnvLoteRpsResposta;
 interface
 
 uses
-  SysUtils, Classes, Variants, Math, StrUtils, Contnrs,
+  SysUtils, Classes, Variants, StrUtils, Contnrs,
   ACBrUtil,
   pcnAuxiliar, pcnConversao, pcnLeitor, pnfsConversao, pnfsNFSe;
 

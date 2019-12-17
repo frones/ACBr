@@ -39,11 +39,9 @@ uses
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pnfsNFSeW,
-  pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao, pnfsConsts, pcnConsts;
+  SysUtils, Classes,
+  ACBrConsts,
+  pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador, pnfsNFSe, pnfsConversao;
 
 type
   { TNFSeW_SMARAPD }

@@ -39,11 +39,9 @@ uses
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pnfsNFSeW,
-  pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao, pnfsConsts;
+  SysUtils, Classes,
+  ACBrConsts,
+  pnfsNFSeW, pcnAuxiliar, pcnConversao, pcnGerador, pnfsNFSe, pnfsConversao;
 
 type
   { TNFSeW_WebFisco }
@@ -62,7 +60,7 @@ type
 implementation
 
 uses
-  ACBrUtil, MaskUtils;
+  ACBrUtil;
 
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }

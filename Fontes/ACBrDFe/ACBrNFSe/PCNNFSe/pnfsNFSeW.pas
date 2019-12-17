@@ -39,8 +39,8 @@ uses
 {$ELSE}
 
 {$ENDIF}
-  SysUtils, Classes, StrUtils,
-  synacode, pcnGerador, pnfsNFSe, pcnConversao, pnfsConversao;
+  SysUtils, Classes,
+  pcnGerador, pnfsNFSe, pcnConversao, pnfsConversao;
 
 type
 

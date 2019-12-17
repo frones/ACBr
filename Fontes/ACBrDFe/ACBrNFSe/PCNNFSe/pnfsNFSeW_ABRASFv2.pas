@@ -40,8 +40,7 @@ uses
 
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
-  pcnAuxiliar, pcnConsts, pcnConversao, pcnGerador,
+  ACBrConsts, pcnAuxiliar, pcnConsts, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsNFSeW, pnfsConversao, pnfsConsts;
 
 type

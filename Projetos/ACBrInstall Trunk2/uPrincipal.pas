@@ -149,15 +149,16 @@ type
     procedure ExtrairDiretorioPacote(const NomePacote: string);
     procedure MostraDadosVersao;
     function GetPathACBrInc: TFileName;
-    procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
+    procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; ListaPacotes: TPacotes);
     procedure IncrementaBarraProgresso;
     procedure Logar(const AString: String);
     function ProcedeInstalacao: Boolean;
-    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
-        FCountErros: Integer);
-    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var
-        FCountErros: Integer);
+    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
+        listaPacotes: TPacotes);
+    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
+        listaPacotes: TPacotes);
     procedure AbrirArquivoLogAtual;
+    function VersionNumberToNome(const AVersionStr: string): string;
   public
 
   end;
@@ -229,17 +230,17 @@ begin
   Result := PathApp + 'log_' + StringReplace(NomeVersao, ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
-procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean);
+procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean; ListaPacotes: TPacotes);
 var
   I: Integer;
   NomePacote: string;
 begin
   // verificar se os pacotes existem antes de seguir para o próximo paso
-  for I := 0 to framePacotes1.Pacotes.Count - 1 do
+  for I := 0 to ListaPacotes.Count - 1 do
   begin
-    if framePacotes1.Pacotes[I].Checked then
+    if ListaPacotes[I].Checked then
     begin
-      NomePacote := framePacotes1.Pacotes[I].Caption;
+      NomePacote := ListaPacotes[I].Caption;
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);
       if Trim(sDirPackage) = '' then
@@ -296,7 +297,7 @@ begin
 
   // mostrar ao usuário as informações de compilação
   lbInfo.Clear;
-  lbInfo.Items.Add(Cabecalho);
+  lbInfo.Items.Text := Cabecalho;
 end;
 
 // gravar as configurações efetuadas pelo usuário
@@ -442,6 +443,55 @@ begin
   end;
 end;
 
+function TfrmPrincipal.VersionNumberToNome(const AVersionStr: string): string;
+begin
+  if      AVersionStr = 'd3' then
+    Result := 'Delphi 3'
+  else if AVersionStr = 'd4' then
+    Result := 'Delphi 4'
+  else if AVersionStr = 'd5' then
+    Result := 'Delphi 5'
+  else if AVersionStr = 'd6' then
+    Result := 'Delphi 6'
+  else if AVersionStr = 'd7' then
+    Result := 'Delphi 7'
+  else if AVersionStr = 'd9' then
+    Result := 'Delphi 2005'
+  else if AVersionStr = 'd10' then
+    Result := 'Delphi 2006'
+  else if AVersionStr = 'd11' then
+    Result := 'Delphi 2007'
+  else if AVersionStr = 'd12' then
+    Result := 'Delphi 2009'
+  else if AVersionStr = 'd14' then
+    Result := 'Delphi 2010'
+  else if AVersionStr = 'd15' then
+    Result := 'Delphi XE'
+  else if AVersionStr = 'd16' then
+    Result := 'Delphi XE2'
+  else if AVersionStr = 'd17' then
+    Result := 'Delphi XE3'
+  else if AVersionStr = 'd18' then
+    Result := 'Delphi XE4'
+  else if AVersionStr = 'd19' then
+    Result := 'Delphi XE5'
+  else if AVersionStr = 'd20' then
+    Result := 'Delphi XE6'
+  else if AVersionStr = 'd21' then
+    Result := 'Delphi XE7'
+  else if AVersionStr = 'd22' then
+    Result := 'Delphi XE8'
+  else if AVersionStr = 'd23' then
+    Result := 'Delphi 10 Seattle'
+  else if AVersionStr = 'd24' then
+    Result := 'Delphi 10.1 Berlin'
+  else if AVersionStr = 'd25' then
+    Result := 'Delphi 10.2 Tokyo'
+  else if AVersionStr = 'd26' then
+    Result := 'Delphi 10.3 Rio'
+  else
+    Result := '';
+end;
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
   iFor: Integer;
@@ -457,56 +507,7 @@ begin
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to oACBr.Count - 1 do
   begin
-    if      oACBr.Installations[iFor].VersionNumberStr = 'd3' then
-      clbDelphiVersion.Items.Add('Delphi 3')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd4' then
-      clbDelphiVersion.Items.Add('Delphi 4')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd5' then
-      clbDelphiVersion.Items.Add('Delphi 5')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd6' then
-      clbDelphiVersion.Items.Add('Delphi 6')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd7' then
-      clbDelphiVersion.Items.Add('Delphi 7')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd9' then
-      clbDelphiVersion.Items.Add('Delphi 2005')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd10' then
-      clbDelphiVersion.Items.Add('Delphi 2006')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd11' then
-      clbDelphiVersion.Items.Add('Delphi 2007')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd12' then
-      clbDelphiVersion.Items.Add('Delphi 2009')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd14' then
-      clbDelphiVersion.Items.Add('Delphi 2010')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd15' then
-      clbDelphiVersion.Items.Add('Delphi XE')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd16' then
-      clbDelphiVersion.Items.Add('Delphi XE2')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd17' then
-      clbDelphiVersion.Items.Add('Delphi XE3')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd18' then
-      clbDelphiVersion.Items.Add('Delphi XE4')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd19' then
-      clbDelphiVersion.Items.Add('Delphi XE5')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd20' then
-      clbDelphiVersion.Items.Add('Delphi XE6')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd21' then
-      clbDelphiVersion.Items.Add('Delphi XE7')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd22' then
-      clbDelphiVersion.Items.Add('Delphi XE8')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd23' then
-      clbDelphiVersion.Items.Add('Delphi 10 Seattle')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd24' then
-      clbDelphiVersion.Items.Add('Delphi 10.1 Berlin')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd25' then
-      clbDelphiVersion.Items.Add('Delphi 10.2 Tokyo')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd26' then
-      clbDelphiVersion.Items.Add('Delphi 10.3 Rio');
-
-    // -- Evento disparado antes de iniciar a execução do processo.
-    oACBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
-
-    // -- Evento para saidas de mensagens.
-    oACBr.Installations[iFor].OutputCallback := OutputCallLine;
+    clbDelphiVersion.Items.Add(VersionNumberToNome(oACBr.Installations[iFor].VersionNumberStr));
   end;
   //
   edtDelphiVersion.Items.Text := clbDelphiVersion.Items.Text;
@@ -546,9 +547,11 @@ var
   iListaVer: Integer;
   FCountErros: Integer;
   sDestino   : TDestino;
-
+  JaCopiouDLLs: Boolean;
+  ListaPacotes: TPacotes;
 begin
   Result := False;
+  JaCopiouDLLs := False;
 
   case rdgdll.ItemIndex of
     0 : sDestino := tdSystem;
@@ -557,6 +560,8 @@ begin
   else
     sDestino := tdNone;
   end;
+
+  ListaPacotes := framePacotes1.Pacotes;
 
   ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
   try
@@ -578,14 +583,13 @@ begin
 
     ACBrInstaladorAux.DesligarDefines(GetPathACBrInc);
 
-    for iListaVer := 0 to clbDelphiVersion.Count - 1 do
+    for iListaVer := 0 to oACBr.Count - 1 do
     begin
       // só instala as versão marcadas para instalar.
       if (not clbDelphiVersion.Checked[iListaVer]) then
       begin
         Continue
       end;
-
       // seleciona a versão no combobox.
       edtDelphiVersion.ItemIndex := iListaVer;
       iVersion := edtDelphiVersion.ItemIndex;
@@ -596,12 +600,18 @@ begin
       lstMsgInstalacao.Clear;
       // setar barra de progresso
       pgbInstalacao.Position := 0;
-      pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 6;
+      pgbInstalacao.Max := (ListaPacotes.Count * 2) + 6;
 
       FCountErros := 0;
       MostraDadosVersao;
 
       InstalacaoAtual := oACBr.Installations[iVersion];
+
+      // -- Evento disparado antes de iniciar a execução do processo.
+      InstalacaoAtual.DCC32.OnBeforeExecute := BeforeExecute;
+      // -- Evento para saidas de mensagens.
+      InstalacaoAtual.OutputCallback := OutputCallLine;
+
 
       ACBrInstaladorAux.FazInstalacaoInicial(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
 
@@ -609,7 +619,7 @@ begin
       // compilar os pacotes primeiramente
       // *************************************************************************
       Logar(sLineBreak+'COMPILANDO OS PACOTES...');
-      CompilarPacotes(InstalacaoAtual, FCountErros);
+      CompilarPacotes(InstalacaoAtual, FCountErros, ListaPacotes);
 
       // *************************************************************************
       // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
@@ -618,12 +628,12 @@ begin
       begin
         Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
         Break;
-      end
-      else
+      end;
+
       if ( tPlatform = bpWin32) then
       begin
         Logar(sLineBreak+'INSTALANDO OS PACOTES...');
-        InstalarPacotes(InstalacaoAtual, FCountErros);
+        InstalarPacotes(InstalacaoAtual, FCountErros, ListaPacotes);
       end
       else
       begin
@@ -632,16 +642,15 @@ begin
 
       ACBrInstaladorAux.InstalarOutrosRequisitos(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
 
-      if (FCountErros = 0) and (sDestino = tdDelphi) then
+      if (FCountErros = 0) then
       begin
-        ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, sDirRoot, IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
+        if (sDestino = tdDelphi) or (not JaCopiouDLLs) then
+        begin
+          ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, sDirRoot, IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
+          JaCopiouDLLs := True;
+        end;
       end;
 
-    end;
-
-    if (FCountErros = 0) and (sDestino <> tdDelphi) then
-    begin
-      ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestino, sDirRoot, IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
     end;
 
   finally
@@ -669,17 +678,24 @@ begin
 
 end;
 
-procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer);
+procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
+      listaPacotes: TPacotes);
 var
   iDpk: Integer;
   NomePacote: string;
 begin
-  for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+  for iDpk := 0 to listaPacotes.Count - 1 do
   begin
-    NomePacote := framePacotes1.Pacotes[iDpk].Caption;
+    if (not listaPacotes[iDpk].Checked) then
+    begin
+      IncrementaBarraProgresso;
+      Continue;
+    end;
+
+    NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
     ExtrairDiretorioPacote(NomePacote);
-    if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDpk].Checked) then
+    if (IsDelphiPackage(NomePacote)) then
     begin
       WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
       FPacoteAtual := sDirPackage + NomePacote;
@@ -698,15 +714,16 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer);
+procedure TfrmPrincipal.InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
+      listaPacotes: TPacotes);
 var
   iDpk: Integer;
   NomePacote: string;
   bRunOnly: Boolean;
 begin
-  for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+  for iDpk := 0 to listaPacotes.Count - 1 do
   begin
-    NomePacote := framePacotes1.Pacotes[iDpk].Caption;
+    NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
     ExtrairDiretorioPacote(NomePacote);
     if IsDelphiPackage(NomePacote) then
@@ -717,7 +734,7 @@ begin
       if not bRunOnly then
       begin
         // se o pacote estiver marcado instalar, senão desinstalar
-        if framePacotes1.Pacotes[iDpk].Checked then
+        if listaPacotes[iDpk].Checked then
         begin
           WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
           if InstalacaoAtual.InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
@@ -863,6 +880,7 @@ begin
      if clbDelphiVersion.Checked[iFor] then
      begin
         lbInfo.Items.Add('Instalar : ' + clbDelphiVersion.Items[ifor] + ' ' + sPlatform);
+        Break
      end;
   end;
 end;
@@ -942,7 +960,7 @@ begin
   GravarConfiguracoesEmArquivoIni;
 
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-  ValidarSeExistemPacotesNasPastas(Stop);
+  ValidarSeExistemPacotesNasPastas(Stop, framePacotes1.Pacotes);
 end;
 
 procedure TfrmPrincipal.btnVisualizarLogCompilacaoClick(Sender: TObject);

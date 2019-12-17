@@ -638,7 +638,7 @@ begin
         Erros := '';
         CTeDM.ACBrCTe1.Conhecimentos.ValidarRegrasdeNegocios(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Erros);
       finally
         CTeDM.Destravar;
       end;
@@ -668,7 +668,7 @@ begin
         Erros := '';
         CTeDM.ACBrCTe1.Conhecimentos.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Erros);
       finally
         CTeDM.Destravar;
       end;
@@ -688,7 +688,8 @@ end;
 function CTE_StatusServico(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  Resposta: TStatusServicoResposta;
+  Resp: TStatusServicoResposta;
+  Resposta: String;
 begin
   try
     VerificarLibInicializada;
@@ -697,17 +698,18 @@ begin
     with TACBrLibCTe(pLib) do
     begin
       CTeDM.Travar;
-      Resposta := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
+      Resp := TStatusServicoResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try
         with CTeDM do
         begin
           ACBrCTe1.WebServices.StatusServico.Executar;
-          Resposta.Processar(CTeDM.ACBrCTe1);
-          MoverStringParaPChar(Resposta.Gerar, sResposta, esTamanho);
+          Resp.Processar(CTeDM.ACBrCTe1);
+          Resposta := Resp.Gerar;
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
           Result := SetRetorno(ErrOK, Resposta);
         end
       finally
-        Resposta.Free;
+        Resp.Free;
         CTeDM.Destravar;
       end;
     end;

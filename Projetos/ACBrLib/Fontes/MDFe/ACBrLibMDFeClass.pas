@@ -633,7 +633,7 @@ begin
         Erros := '';
         MDFeDM.ACBrMDFe1.Manifestos.ValidarRegrasdeNegocios(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Erros);
       finally
         MDFeDM.Destravar;
       end;
@@ -663,7 +663,7 @@ begin
         Erros := '';
         MDFeDM.ACBrMDFe1.Manifestos.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Resposta);
+        Result := SetRetorno(ErrOK, Erros);
       finally
         MDFeDM.Destravar;
       end;

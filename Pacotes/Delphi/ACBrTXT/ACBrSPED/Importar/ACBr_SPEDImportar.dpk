@@ -49,6 +49,8 @@ contains
   ACBrEFDBloco_0_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_0_Importar.pas',
   ACBrEFDBloco_C_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_C_Importar.pas',
   ACBrEFDBloco_D_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_D_Importar.pas',
-  ACBrEFDBloco_E_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_E_Importar.pas';
+  ACBrEFDBloco_E_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_E_Importar.pas',
+  ACBrEFDBloco_H_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_H_Importar.pas',
+  ACBrEFDBloco_1_Importar in '..\..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDBloco_1_Importar.pas';
 
 end.

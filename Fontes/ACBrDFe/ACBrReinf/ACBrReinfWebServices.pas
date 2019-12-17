@@ -49,7 +49,7 @@ uses
   pcnLeitor,
   ACBrReinfLoteEventos, ACBrReinfConfiguracoes,
   pcnConversaoReinf, pcnCommonReinf, pcnReinfRetEventos, pcnReinfConsulta,
-  pcnReinfRetConsulta, pcnReinfR5001;
+  pcnReinfRetConsulta;
 
 type
   { TReinfWebService }
@@ -200,7 +200,7 @@ type
 implementation
 
 uses
-  StrUtils, blcksock, DateUtils,
+  blcksock, DateUtils,
   pcnConversao, pcnGerador,
   ACBrReinf;
 

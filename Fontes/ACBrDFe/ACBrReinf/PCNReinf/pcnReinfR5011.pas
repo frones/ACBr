@@ -44,7 +44,7 @@ unit pcnReinfR5011;
 interface
 
 uses
-  Classes, Sysutils, Contnrs, pcnGerador, pcnLeitor,
+  Classes, Sysutils, Contnrs, pcnLeitor,
   pcnCommonReinf, pcnConversaoReinf;
 
 type

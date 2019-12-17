@@ -125,7 +125,7 @@ type
 implementation
 
 uses
-  ACBrReinf, ACBrReinfEventos, ACBrDFeSSL, ACBrDFeUtil;
+  ACBrReinf, ACBrDFeSSL, ACBrDFeUtil;
 
 {TReinfEvento}
 

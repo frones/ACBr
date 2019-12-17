@@ -45,7 +45,7 @@ interface
 
 uses
   SysUtils, Classes, Contnrs, synautil,
-  pcnGerador, pcnEventosReinf, pcnConversaoReinf;
+  pcnEventosReinf, pcnConversaoReinf;
 
 type
   TEventos = class;

@@ -38,7 +38,7 @@ unit pcnReinfConsulta;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnConversaoReinf, pcnGerador, pcnConsts;
+  SysUtils, Classes, pcnConversao, pcnConversaoReinf, pcnGerador;
 
 type
 

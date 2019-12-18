@@ -57,6 +57,7 @@ contains
   pnfsNFSeW_ABRASFv2 in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_ABRASFv2.pas',
   pnfsNFSeW_EGoverneISS in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_EGoverneISS.pas',
   pnfsNFSeW_EL in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_EL.pas',
+  pnfsNFSeW_Elotech in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Elotech.pas',
   pnfsNFSeW_Equiplano in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Equiplano.pas',
   pnfsNFSeW_Governa in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Governa.pas',
   pnfsNFSeW_Infisc in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Infisc.pas',

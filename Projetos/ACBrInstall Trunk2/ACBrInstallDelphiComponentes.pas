@@ -87,6 +87,20 @@ type
     procedure InformaSituacao(const Mensagem: string);
 
     function RetornaPath(const ADestino: TDestino; const APathBin: string): string;
+    procedure RemoverPacotesAntigos(InstalacaoAtual: TJclBorRADToolInstallation);
+    procedure RemoverDiretoriosACBrDoPath(InstalacaoAtual: TJclBorRADToolInstallation;
+      APlatform: TJclBDSPlatform);
+    procedure RemoverArquivosAntigosDoDisco;
+
+    procedure AdicionaLibraryPathNaDelphiVersaoEspecifica(UmaInstalacaoDelphiJcl: TJclBorRADToolInstallation;
+      const APath: string; const AProcurarRemover: string);
+    procedure AddLibrarySearchPath(InstalacaoAtual: TJclBorRADToolInstallation;
+        APlatform: TJclBDSPlatform; const ADirRoot: string; const ADirLibrary:
+        string);
+    procedure DeixarSomenteLib(InstalacaoAtual: TJclBorRADToolInstallation;
+        APlatform: TJclBDSPlatform; const ADirRoot: string);
+
+    procedure CopiarOutrosArquivos(const ADirRoot: string; const ADirLibrary: string);
   public
     Opcoes: TACBrInstallOpcoes;
     constructor Create(app: TApplication);
@@ -98,20 +112,6 @@ type
         const ADirRoot: string; const ADirLibrary: string);
     procedure FazInstalacaoDLLs(var FCountErros: Integer; ADestino : TDestino;
         const DirACBr: String; const APathBin: string);
-
-    procedure AdicionaLibraryPathNaDelphiVersaoEspecifica(UmaInstalacaoDelphiJcl: TJclBorRADToolInstallation;
-      const APath: string; const AProcurarRemover: string);
-
-    procedure AddLibrarySearchPath(InstalacaoAtual: TJclBorRADToolInstallation;
-        APlatform: TJclBDSPlatform; const ADirRoot: string; const ADirLibrary:
-        string);
-    procedure DeixarSomenteLib(InstalacaoAtual: TJclBorRADToolInstallation;
-        APlatform: TJclBDSPlatform; const ADirRoot: string);
-    procedure CopiarOutrosArquivos(const ADirRoot: string; const ADirLibrary: string);
-
-    procedure RemoverArquivosAntigosDoDisco;
-    procedure RemoverDiretoriosEPacotesAntigos(InstalacaoAtual: TJclBorRADToolInstallation;
-      APlatform: TJclBDSPlatform);
 
     property OnProgresso: TOnProgresso read FOnProgresso write FonProgresso;
     property OnInformaSituacao: TOnInformarSituacao read FOnInformaSituacao write FOnInformaSituacao;
@@ -201,7 +201,10 @@ begin
   end;
 
   InformaSituacao('Removendo instalação anterior do ACBr na IDE...');
-  RemoverDiretoriosEPacotesAntigos(InstalacaoAtual, APlatform);
+  RemoverDiretoriosACBrDoPath(InstalacaoAtual, APlatform);
+  RemoverPacotesAntigos(InstalacaoAtual);
+
+
   InformaSituacao('...OK');
   FezProgresso;
 
@@ -409,7 +412,7 @@ begin
   end;
 end;
 
-procedure TACBrInstallComponentes.RemoverDiretoriosEPacotesAntigos(InstalacaoAtual: TJclBorRADToolInstallation; APlatform: TJclBDSPlatform);
+procedure TACBrInstallComponentes.RemoverDiretoriosACBrDoPath(InstalacaoAtual: TJclBorRADToolInstallation; APlatform: TJclBDSPlatform);
 var
   ListaPaths: TStringList;
   I: Integer;
@@ -449,14 +452,18 @@ begin
   finally
     ListaPaths.Free;
   end;
+end;
 
+procedure TACBrInstallComponentes.RemoverPacotesAntigos(InstalacaoAtual: TJclBorRADToolInstallation);
+var
+  I: Integer;
+begin
   // remover pacotes antigos
   for I := InstalacaoAtual.IdePackages.Count - 1 downto 0 do
   begin
     if Pos('ACBR', AnsiUpperCase(InstalacaoAtual.IdePackages.PackageFileNames[I])) > 0 then
       InstalacaoAtual.IdePackages.RemovePackage(InstalacaoAtual.IdePackages.PackageFileNames[I]);
   end;
-
 end;
 
 procedure TACBrInstallComponentes.CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String;

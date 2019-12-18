@@ -136,17 +136,14 @@ type
     sPlatform: string;
     tPlatform: TJclBDSPlatform;
     sDirLibrary: string;
-    sDirPackage: string;
     FPacoteAtual: TFileName;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
     procedure OutputCallLine(const Text: string);
-    procedure SetPlatformSelected;
     procedure GravarConfiguracoesEmArquivoIni;
     procedure LerConfiguracoes;
     function PathApp: String;
     function PathArquivoIni: String;
     function PathArquivoLog(const NomeVersao: string): String;
-    procedure ExtrairDiretorioPacote(const NomePacote: string);
     procedure MostraDadosVersao;
     function GetPathACBrInc: TFileName;
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; ListaPacotes: TPacotes);
@@ -169,48 +166,9 @@ var
 implementation
 
 uses
-  ShellApi, IniFiles, StrUtils, Math, Registry;
+  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils;
 
 {$R *.dfm}
-
-procedure TfrmPrincipal.ExtrairDiretorioPacote(const NomePacote: string);
-
-  procedure FindDirPackage(const aDir: String; const sPacote: String);
-  var
-    oDirList: TSearchRec;
-    sDir: String;
-  begin
-    sDir := IncludeTrailingPathDelimiter(aDir);
-    if not DirectoryExists(sDir) then
-      Exit;
-
-    if SysUtils.FindFirst(sDir + '*.*', faAnyFile, oDirList) = 0 then
-    begin
-      try
-        repeat
-          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') or
-             (oDirList.Name = '__recovery') or (oDirList.Name = 'backup') then
-            Continue;
-
-          if DirectoryExists(sDir + oDirList.Name) then
-            FindDirPackage(sDir + oDirList.Name, sPacote)
-          else
-          begin
-            if UpperCase(oDirList.Name) = UpperCase(sPacote) then
-              sDirPackage := IncludeTrailingPathDelimiter(sDir);
-          end;
-
-        until SysUtils.FindNext(oDirList) <> 0;
-      finally
-        SysUtils.FindClose(oDirList);
-      end;
-    end;
-  end;
-
-begin
-   sDirPackage := '';
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
-end;
 
 // retornar o path do aplicativo
 function TfrmPrincipal.PathApp: String;
@@ -234,6 +192,7 @@ procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean; List
 var
   I: Integer;
   NomePacote: string;
+  sDirPackage: string;
 begin
   // verificar se os pacotes existem antes de seguir para o próximo paso
   for I := 0 to ListaPacotes.Count - 1 do
@@ -242,7 +201,7 @@ begin
     begin
       NomePacote := ListaPacotes[I].Caption;
       // Busca diretório do pacote
-      ExtrairDiretorioPacote(NomePacote);
+      sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
       if Trim(sDirPackage) = '' then
         raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
       if IsDelphiPackage(NomePacote) then
@@ -323,32 +282,6 @@ begin
   finally
     ArqIni.Free;
   end;
-end;
-
-// setar a plataforma de compilação
-procedure TfrmPrincipal.SetPlatformSelected;
-var
-  sVersao: String;
-  sTipo: String;
-begin
-  iVersion := edtDelphiVersion.ItemIndex;
-  sVersao  := AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
-  sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-
-  sTipo := 'Lib\Delphi\';
-
-//  if edtPlatform.ItemIndex = 0 then // Win32
-//  begin
-    tPlatform   := bpWin32;
-    sPlatform   := 'Win32';
-    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao;
-//  end
-//  else
-//  if edtPlatform.ItemIndex = 1 then // Win64
-//  begin
-//    tPlatform   := bpWin64;
-//    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao + 'x64';
-//  end;
 end;
 
 // Evento disparado a cada ação do instalador
@@ -499,7 +432,6 @@ begin
   iVersion    := -1;
   sDirRoot    := '';
   sDirLibrary := '';
-  sDirPackage := '';
   sPlatform   := 'Win32';
 
   oACBr := TJclBorRADToolInstallations.Create;
@@ -508,8 +440,10 @@ begin
   for iFor := 0 to oACBr.Count - 1 do
   begin
     clbDelphiVersion.Items.Add(VersionNumberToNome(oACBr.Installations[iFor].VersionNumberStr));
+    //Desabilitar versões não suportadas
+    clbDelphiVersion.ItemEnabled[iFor] := MatchText(oACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']);
   end;
-  //
+
   edtDelphiVersion.Items.Text := clbDelphiVersion.Items.Text;
 
   if edtDelphiVersion.Items.Count > 0 then
@@ -592,10 +526,22 @@ begin
       end;
       // seleciona a versão no combobox.
       edtDelphiVersion.ItemIndex := iListaVer;
-      iVersion := edtDelphiVersion.ItemIndex;
+      iVersion := iListaVer;
 
       // define dados da plataforna selecionada
-      SetPlatformSelected;
+      sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
+      sDirLibrary := sDirRoot + 'Lib\Delphi\Lib' + AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
+    //  if edtPlatform.ItemIndex = 0 then // Win32
+    //  begin
+        tPlatform   := bpWin32;
+        sPlatform   := 'Win32';
+    //  end
+    //  else
+    //  if edtPlatform.ItemIndex = 1 then // Win64
+    //  begin
+    //    tPlatform   := bpWin64;
+    //    sDirLibrary := sDirLibrary + 'x64';
+    //  end;
       // limpar o log
       lstMsgInstalacao.Clear;
       // setar barra de progresso
@@ -683,6 +629,7 @@ procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallat
 var
   iDpk: Integer;
   NomePacote: string;
+  sDirPackage: string;
 begin
   for iDpk := 0 to listaPacotes.Count - 1 do
   begin
@@ -694,7 +641,7 @@ begin
 
     NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
-    ExtrairDiretorioPacote(NomePacote);
+    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
     if (IsDelphiPackage(NomePacote)) then
     begin
       WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
@@ -720,12 +667,13 @@ var
   iDpk: Integer;
   NomePacote: string;
   bRunOnly: Boolean;
+  sDirPackage: string;
 begin
   for iDpk := 0 to listaPacotes.Count - 1 do
   begin
     NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
-    ExtrairDiretorioPacote(NomePacote);
+    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
     if IsDelphiPackage(NomePacote) then
     begin
       FPacoteAtual := sDirPackage + NomePacote;
@@ -733,10 +681,10 @@ begin
       GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
       if not bRunOnly then
       begin
+        WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
         // se o pacote estiver marcado instalar, senão desinstalar
         if listaPacotes[iDpk].Checked then
         begin
-          WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
           if InstalacaoAtual.InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
             Logar(Format('Pacote "%s" instalado com sucesso.', [NomePacote]))
           else
@@ -748,7 +696,6 @@ begin
         end
         else
         begin
-          WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
           if InstalacaoAtual.UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
             Logar(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
         end;
@@ -806,15 +753,6 @@ begin
   if clbDelphiVersion.ItemIndex < 0 then
   begin
     Exit
-  end;
-
-  if MatchText(oACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d3','d4','d5','d6']) then
-  begin
-    Application.MessageBox(
-      'Versão do delphi não suportada pelo ACBr.',
-      'Erro.',
-      MB_OK + MB_ICONERROR
-    );
   end;
 
   if MatchText(oACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d7','d9','d10','d11']) then

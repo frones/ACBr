@@ -41,7 +41,7 @@ uses SysUtils, Windows, Messages, Classes, Forms;
   procedure GetDriveLetters(AList: TStrings);
   function RegistrarActiveXServer(const AServerLocation: string; const ARegister: Boolean): Boolean;
   procedure DesligarDefineACBrInc(const ArquivoACBrInc: TFileName; const ADefineName: String; const ADesligar: Boolean);
-
+  function FindDirPackage(const aDir: String; const sPacote: String): string;
 
 implementation
 
@@ -177,4 +177,41 @@ begin
     F.Free;
   end;
 end;
+
+function FindDirPackage(const aDir: String; const sPacote: String): string;
+var
+  oDirList: TSearchRec;
+  sDir: String;
+begin
+  //Retorna uma string vazia caso não tenha encontrado o diretório do pacote.
+  Result := '';
+  sDir := IncludeTrailingPathDelimiter(aDir);
+  if not DirectoryExists(sDir) then
+    Exit;
+
+  if SysUtils.FindFirst(sDir + '*.*', faAnyFile, oDirList) = 0 then
+  begin
+    try
+      repeat
+        if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') or
+           (oDirList.Name = '__recovery') or (oDirList.Name = 'backup') then
+          Continue;
+
+        if DirectoryExists(sDir + oDirList.Name) then
+        begin
+          Result := FindDirPackage(sDir + oDirList.Name, sPacote);
+        end
+        else
+        begin
+          if UpperCase(oDirList.Name) = UpperCase(sPacote) then
+            Result := IncludeTrailingPathDelimiter(sDir);
+        end;
+
+      until (SysUtils.FindNext(oDirList) <> 0) or (Result <> '');
+    finally
+      SysUtils.FindClose(oDirList);
+    end;
+  end;
+end;
+
 end.

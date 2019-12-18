@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2019
+-- ACBrBPeWebServices --
+[+] Incluido a propriedade Protocolo no retorno de envio do BP-e.
+   Por: Italo Jurisato Junior
+
 19/11/2019
 -- ACBrBPeDABPeESCPOS --
 [*] Incluido o comando para avançar linhas após as mensagens do rodapé.

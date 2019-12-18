@@ -129,6 +129,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
+    FProtocolo: String;
     FMsgUnZip: String;
     FVersaoDF: TVersaoBPe;
 
@@ -159,6 +160,7 @@ type
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
+    property Protocolo: String read FProtocolo;
     property Lote: String read GetLote write FLote;
     property MsgUnZip: String read FMsgUnZip write FMsgUnZip;
 
@@ -577,12 +579,13 @@ begin
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
 
-  Fversao := '';
-  FTMed := 0;
-  FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
-  FdhRecbto := 0;
+  Fversao    := '';
+  FTMed      := 0;
+  FverAplic  := '';
+  FcStat     := 0;
+  FxMotivo   := '';
+  FdhRecbto  := 0;
+  FProtocolo := '';
 
   if Assigned(FPConfiguracoesBPe) then
   begin
@@ -738,10 +741,11 @@ begin
 
   if FBPeRetorno.ProtBPe.Count > 0 then
   begin
-    chBPe    := FBPeRetorno.ProtBPe[0].chBPe;
-    FcStat   := FBPeRetorno.protBPe[0].cStat;
-    FPMsg    := FBPeRetorno.protBPe[0].xMotivo;
-    FxMotivo := FBPeRetorno.protBPe[0].xMotivo;
+    chBPe      := FBPeRetorno.ProtBPe[0].chBPe;
+    FcStat     := FBPeRetorno.protBPe[0].cStat;
+    FPMsg      := FBPeRetorno.protBPe[0].xMotivo;
+    FxMotivo   := FBPeRetorno.protBPe[0].xMotivo;
+    FProtocolo := FBPeRetorno.ProtBPe[0].nProt;
   end;
 
   // Verificar se o BP-e foi autorizado com sucesso

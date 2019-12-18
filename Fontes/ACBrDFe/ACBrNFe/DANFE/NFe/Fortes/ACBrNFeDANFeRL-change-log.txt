@@ -47,7 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-20/11-2019
+18/12/2019
+-- ACBrNFeDANFeRLRetrato --
+[-] Ajuste para impressão do canhoto apenas na primeira página.
+  Por: BigWings
+
+20/11/2019
 -- ACBrDANFCeFortesFr --
 [*] Ajuste para impressão de "procNFe.xMsg" nas informações do Fisco, com QRCode
     Lateral

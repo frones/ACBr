@@ -29,9 +29,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 {******************************************************************************
 |* Historico
@@ -49,6 +48,12 @@ interface
 uses
   SysUtils, Classes,
   ACBrBase, ACBrSocket, ACBrIBGE;
+
+const
+  CURL_CAPTCH = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/captcha/gerarCaptcha.asp';
+  CURL_REFER = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_solicitacao3.asp';
+  CURL_POST = 'https://servicos.receita.fazenda.gov.br/Servicos/cnpjreva/valida.asp';
+
 
 type
   EACBrConsultaCNPJException = class ( Exception );
@@ -156,7 +161,7 @@ end;*)
 procedure TACBrConsultaCNPJ.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/captcha/gerarCaptcha.asp');  // GetCaptchaURL
+    HTTPGet(CURL_CAPTCH);  // GetCaptchaURL
     if HttpSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
@@ -201,7 +206,6 @@ var
   i : integer;
   linha: String;
 begin
-  NomeCampo := ACBrStr(NomeCampo);
   Result := '';
   for i := 0 to Texto.Count-1 do
   begin
@@ -244,8 +248,8 @@ begin
     WriteStrToStream( HTTPSend.Document, PostStr );
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
     HTTPSend.Cookies.Add('flag=1');
-    HTTPSend.Headers.Add('Referer: https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/Cnpjreva_solicitacao3.asp');
-    HTTPPost('https://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/valida.asp');
+    HTTPSend.Headers.Add('Referer: '+CURL_REFER);
+    HTTPPost(CURL_POST);
 
     //DEBUG:
     //RespHTTP.SaveToFile('c:\temp\cnpj1.txt');
@@ -272,38 +276,38 @@ begin
     //DEBUG:
     //Resposta.SaveToFile('c:\temp\cnpj2.txt');
 
-    FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
+    FCNPJ         := LerCampo(Resposta,ACBrStr('NÚMERO DE INSCRIÇÃO'));
     if FCNPJ <> '' then
       FEmpresaTipo  := LerCampo(Resposta,FCNPJ);
     FAbertura     := StringToDateTimeDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
     FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
-    FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
+    FFantasia     := LerCampo(Resposta,ACBrStr('TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)'));
     FPorte        := LerCampo(Resposta,'PORTE');
-    FCNAE1        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL');
+    FCNAE1        := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL'));
     FEndereco     := LerCampo(Resposta,'LOGRADOURO');
-    FNumero       := LerCampo(Resposta,'NÚMERO');
+    FNumero       := LerCampo(Resposta,ACBrStr('NÚMERO'));
     FComplemento  := LerCampo(Resposta,'COMPLEMENTO');
     FCEP          := OnlyNumber( LerCampo(Resposta,'CEP') ) ;
     if FCEP <> '' then
       FCEP        := copy(FCEP,1,5)+'-'+copy(FCEP,6,3) ;
     FBairro       := LerCampo(Resposta,'BAIRRO/DISTRITO');
-    FCidade       := LerCampo(Resposta,'MUNICÍPIO');
+    FCidade       := LerCampo(Resposta,ACBrStr('MUNICÍPIO'));
     FUF           := LerCampo(Resposta,'UF');
-    FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
-    FDataSituacao := StringToDateTimeDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
-    FNaturezaJuridica := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA');
-    FEndEletronico:= LerCampo(Resposta, 'ENDEREÇO ELETRÔNICO');
+    FSituacao     := LerCampo(Resposta,ACBrStr('SITUAÇÃO CADASTRAL'));
+    FDataSituacao := StringToDateTimeDef(LerCampo(Resposta,ACBrStr('DATA DA SITUAÇÃO CADASTRAL')),0);
+    FNaturezaJuridica := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA'));
+    FEndEletronico:= LerCampo(Resposta, ACBrStr('ENDEREÇO ELETRÔNICO'));
     if Trim(FEndEletronico) = 'TELEFONE' then
       FEndEletronico := '';
     FTelefone     := LerCampo(Resposta, 'TELEFONE');
-    FEFR          := LerCampo(Resposta, 'ENTE FEDERATIVO RESPONSÁVEL (EFR)');
-    FMotivoSituacaoCad := LerCampo(Resposta, 'MOTIVO DE SITUAÇÃO CADASTRAL');
+    FEFR          := LerCampo(Resposta, ACBrStr('ENTE FEDERATIVO RESPONSÁVEL (EFR)'));
+    FMotivoSituacaoCad := LerCampo(Resposta, ACBrStr('MOTIVO DE SITUAÇÃO CADASTRAL'));
 
     FCNAE2.Clear;
-    StrAux := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS');
+    StrAux := LerCampo(Resposta,ACBrStr('CÓDIGO E DESCRIÇÃO DAS ATIVIDADES ECONÔMICAS SECUNDÁRIAS'));
     FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
     repeat
-      strAux := LerCampo(Resposta, StrAux);
+      StrAux := LerCampo(Resposta, StrAux);
       if StrAux <> '' then
         FCNAE2.Add(ACBrUtil.RemoverEspacosDuplos(StrAux));
     until StrAux = '';

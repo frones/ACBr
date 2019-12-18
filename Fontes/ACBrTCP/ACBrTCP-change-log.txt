@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/12/2019
+-- ACBrConsultaCNPJ --
+[-] Correção de URLs, após mudança no servidor da SEFAZ
+    https://www.projetoacbr.com.br/forum/topic/55411-acbrconsultacnpj-erro-na-consulta/
+[-] Correção para ler corretamente os CNAEs secundários
+    (por: DSA, e Renato Gil)
 
 30/08/2019
 -- ACBrWinReqRespClass, ACBrWinHTTPReqResp --

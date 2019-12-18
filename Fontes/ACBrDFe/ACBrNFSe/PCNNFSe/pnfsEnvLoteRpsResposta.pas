@@ -368,10 +368,11 @@ begin
       inc(i);
     end;
 
-    if Provedor = proISSDigital then
+    if Provedor in [proISSDigital, proElotech] then
     begin
       i := 0;
-      while Leitor.rExtrai(1, 'ListaMensagemRetorno', '', i + 1) <> '' do
+      while (Leitor.rExtrai(1, 'ListaMensagemRetorno', '', i + 1) <> '') or
+            (Leitor.rExtrai(1, 'ListaMensagemRetornoLote', '', i + 1) <> '') do
       begin
         InfRec.FMsgRetorno.New;
         InfRec.FMsgRetorno[i].FIdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');

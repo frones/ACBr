@@ -940,6 +940,7 @@ begin
   MemoDados.Lines.Add('cStat: ' + IntToStr(ACBrBPe1.WebServices.Enviar.cStat));
   MemoDados.Lines.Add('cUF: ' + IntToStr(ACBrBPe1.WebServices.Enviar.cUF));
   MemoDados.Lines.Add('xMotivo: ' + ACBrBPe1.WebServices.Enviar.xMotivo);
+  MemoDados.Lines.Add('Protocolo: ' + ACBrBPe1.WebServices.Enviar.Protocolo);
   (*
   ACBrBPe1.WebServices.Retorno.BPeRetorno.ProtBPe.Items[0].tpAmb
   ACBrBPe1.WebServices.Retorno.BPeRetorno.ProtBPe.Items[0].verAplic

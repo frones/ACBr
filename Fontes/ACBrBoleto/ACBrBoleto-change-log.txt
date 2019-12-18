@@ -49,6 +49,12 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+18/12/2019
+-- ACBrBancoCecred --
+[*] Alterado a condição que determina se o Segmento R vai ser gerado ou não.
+https://www.projetoacbr.com.br/forum/topic/54821-seguimento-r-crecred-cobran%C3%A7a-com-multa/
+   Por: Filipe Natividade
+
 13/12/2019
 -- ACBrBancoBancoob --
 [*] Ajuste na ocorrencia de retorno cód- 28 "DÉBITO DE TARIFAS/CUSTAS", baseado no Manual

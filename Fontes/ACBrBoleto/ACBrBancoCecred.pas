@@ -505,7 +505,7 @@ begin
              StringOfChar(' ', 8);                                                      // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
     //SEGMENTO R
-    if (CodigoMoraJuros <> cjIsento) then
+    if (PercentualMulta > 0) then
     begin
       Inc(fCountRegR);
       Result:= Result + #13#10 +

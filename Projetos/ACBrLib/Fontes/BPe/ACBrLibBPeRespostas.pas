@@ -104,12 +104,14 @@ type
   private
     FtMed: integer;
     FnRec: string;
+    FNProt: String;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
+   property NProt: String read FNProt write FNProt;
   end;
 
   { TRetornoResposta }

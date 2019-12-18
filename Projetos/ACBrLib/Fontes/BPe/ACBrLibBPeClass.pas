@@ -739,6 +739,7 @@ begin
       Resp.DhRecbto := dhRecbto;
       Resp.Tmed := TMed;
       Resp.Msg := Msg;
+      Resp.NProt := Protocolo;
 
       Result := sLineBreak + Msg + sLineBreak + Resp.Gerar;
     end;

@@ -570,13 +570,13 @@ begin
   // Passo 3 e 4
   cCSC := Configuracoes.Geral.CSC;
 
-  if EstaVazio(cCSC) then
-    cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
-
   if VersaoQrCode >= veqr200 then
     cIdCSC := IntToStr(StrToIntDef(Configuracoes.Geral.IdCSC,0))
   else
     cIdCSC := IntToStrZero(StrToIntDef(Configuracoes.Geral.IdCSC,0),6);
+
+  if EstaVazio(cCSC) then
+    cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
 
   sCSC := cIdCSC + cCSC;
   sNF := FloatToString( ValorTotalNF, '.', FloatMask(2, False));

@@ -462,6 +462,7 @@ begin
       Resp.DhRecbto := dhRecbto;
       Resp.Tmed := TMed;
       Resp.Msg := Msg;
+      Resp.NProt := Protocolo;
 
       fpCmd.Resposta := fpCmd.Resposta + sLineBreak + Msg + sLineBreak;
       fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
@@ -497,8 +498,15 @@ begin
               'PDF='+ PathWithDelim(ACBrBPe.DABPe.PathPDF) + ArqPDF;
           end;
 
-          if (pImprimir) then
-            Bilhetes.Items[I].Imprimir;
+          if (Bilhetes.Items[I].Confirmada) and (pImprimir) then
+          begin
+//            try
+//              DoAntesDeImprimir((pPreview));
+              Bilhetes.Items[I].Imprimir;
+//            finally
+//              DoDepoisDeImprimir;
+//            end;
+          end;
 
           break;
         end;

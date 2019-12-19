@@ -1,9 +1,7 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
-  Left = 440
-  Height = 617
-  Top = 135
+  Left = 223
+  Top = 91
   Caption = 'Manifesto - Retrato'
-  ClientHeight = 617
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -644,6 +642,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Width = 742
       AutoExpand = False
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -996,6 +999,11 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       Top = 751
       Width = 742
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -1157,6 +1165,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      BeforePrint = rlb_7_Documentos_TitulosBeforePrint
       object rlLabel141: TRLLabel
         Left = 254
         Height = 12
@@ -1431,7 +1440,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLLabel27: TRLLabel
+      object rllTituloValorMerc: TRLLabel
         Left = 274
         Height = 14
         Top = 26
@@ -1710,6 +1719,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      BeforePrint = subItensBeforePrint
       OnDataRecord = subItensDataRecord
       object rlbItens: TRLBand
         Left = 1

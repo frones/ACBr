@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2019
+-- ACBrCTeWebServices --
+[+] Incluido a propriedade Protocolo no retorno de envio do CT-e.
+   Por: Italo Jurisato Junior
+
 11/12/2019
 -- ACBrCTeWebServices --
 [*] Rhttps://www.projetoacbr.com.br/forum/topic/55322-salvar-xml-do-evento-ap%C3%B3s-consulta/

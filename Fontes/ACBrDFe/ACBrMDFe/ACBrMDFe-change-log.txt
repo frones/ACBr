@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/12/2019
+-- ACBrMDFeWebServices --
+[+] Incluido a propriedade Protocolo no retorno de envio do MDF-e.
+   Por: Italo Jurisato Junior
+
 04/12/2019
 -- ACBrMDFeDAMDFeRLRetrato --
 [+] Implementado a propriedade de configuração: ImprimeDadosExtras onde podemos

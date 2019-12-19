@@ -131,6 +131,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: integer;
+    FProtocolo: string;
     FSincrono: Boolean;
     FZipado: Boolean;
     FVersaoDF: TpcnVersaoDF;
@@ -165,6 +166,7 @@ type
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: integer read FTMed;
+    property Protocolo: string read FProtocolo;
     property Lote: String read GetLote write FLote;
     property Sincrono: Boolean read FSincrono write FSincrono;
     property Zipado: Boolean read FZipado write FZipado;
@@ -928,13 +930,14 @@ begin
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
 
-  Fversao := '';
-  FTMed := 0;
-  FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
-  FRecibo   := '';
-  FdhRecbto := 0;
+  Fversao    := '';
+  FTMed      := 0;
+  FverAplic  := '';
+  FcStat     := 0;
+  FxMotivo   := '';
+  FRecibo    := '';
+  FdhRecbto  := 0;
+  FProtocolo := '';
 
   if Assigned(FPConfiguracoesNFe) then
   begin
@@ -1175,6 +1178,9 @@ begin
 
     if Result then
     begin
+      // Pega o numero do protocolo
+      FProtocolo := FNFeRetornoSincrono.protNFe.nProt;
+      
       for I := 0 to TACBrNFe(FPDFeOwner).NotasFiscais.Count - 1 do
       begin
         with TACBrNFe(FPDFeOwner).NotasFiscais.Items[I] do

@@ -127,6 +127,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
+    FProtocolo: String;
     FVersaoDF: TVersaoCTe;
     FSincrono: Boolean;
     FMsgUnZip: String;
@@ -161,6 +162,7 @@ type
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
+    property Protocolo: String read FProtocolo;
     property Lote: String read GetLote write FLote;
     property Sincrono: Boolean read FSincrono write FSincrono;
     property MsgUnZip: String read FMsgUnZip write FMsgUnZip;
@@ -788,13 +790,14 @@ begin
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
 
-  Fversao := '';
-  FTMed := 0;
-  FverAplic := '';
-  FcStat    := 0;
-  FxMotivo  := '';
-  FRecibo   := '';
-  FdhRecbto := 0;
+  Fversao    := '';
+  FTMed      := 0;
+  FverAplic  := '';
+  FcStat     := 0;
+  FxMotivo   := '';
+  FRecibo    := '';
+  FdhRecbto  := 0;
+  FProtocolo := '';
 
   if Assigned(FPConfiguracoesCTe) then
   begin
@@ -1034,6 +1037,9 @@ begin
 
     if Result then
     begin
+      // Pega o numero do protocolo
+      FProtocolo := FCTeRetornoOS.protCTe.nProt;
+
       for I := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
       begin
         with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
@@ -1138,6 +1144,9 @@ begin
 
       if Result then
       begin
+        // Pega o numero do protocolo
+        FProtocolo := FCTeRetornoSincrono.protCTe.nProt;
+        
         for I := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
         begin
           with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do

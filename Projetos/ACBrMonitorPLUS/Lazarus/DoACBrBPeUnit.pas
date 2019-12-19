@@ -1,11 +1,11 @@
 {*******************************************************************************}
-{ Projeto: ACBrMonitor                                                         }
+{ Projeto: ACBrMonitor                                                          }
 {  Executavel multiplataforma que faz uso do conjunto de componentes ACBr para  }
 { criar uma interface de comunicação com equipamentos de automacao comercial.   }
 {                                                                               }
 { Direitos Autorais Reservados (c) 2010 Daniel Simoes de Almeida                }
 {                                                                               }
-{ Colaboradores nesse arquivo:                                  }
+{ Colaboradores nesse arquivo:                                                  }
 {                                                                               }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr       }

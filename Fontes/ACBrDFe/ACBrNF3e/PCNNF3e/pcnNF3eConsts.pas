@@ -1,0 +1,146 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrNF3e                                                 }
+{  Nota Fiscal de Energia Eletrica Eletrônica - NF3e                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2019                                        }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{*******************************************************************************
+|* Historico
+|*
+|* 18/12/2019: Italo Jurisato Junior
+|*  - Doação do componente para o Projeto ACBr
+*******************************************************************************}
+
+{$I ACBr.inc}
+
+unit pcnNF3eConsts;
+
+interface
+
+uses
+  SysUtils;
+
+const
+  NAME_SPACE_NF3e = 'xmlns="http://www.portalfiscal.inf.br/nf3e"';
+
+  DSC_INFQRCODE = 'Texto com o QR-Code impresso no DANF3e NF3-e.';
+  DSC_FINNF3e = 'Finalidade de emissão da NF3e';
+  DSC_IDESTR = 'Documento de Identificação do Estrangeiro';
+  DSC_INDIEDEST = 'Indicador da IE do Destinatário';
+  DSC_IDACESSO = 'Código de Identificação da Unidade Consumidora';
+  DSC_IDCODCLIENTE = 'Código de Identificação do Cliente';
+  DSC_TPACESSO = 'Tipo de Acessante';
+  DSC_XNOMEUC = 'Nome da Unidade Consumidora';
+  DSC_TPCLASSE = 'Classe de Consumo da Unidade Consumidora';
+  DSC_TPSUBCLASSE = 'Subclasse de Consumo da Unidade Consumidora';
+  DSC_TPFASE = 'Tipo de Ligação';
+  DSC_TPGRPTENSAO = 'Grupo e Subgrupo de Tensão';
+  DSC_TPMODTAR = 'Modalidade Tarifária';
+  DSC_LATGPS = 'Latitude da localização da captura';
+  DSC_LONGGPS = 'Longitude da localização da captura';
+  DSC_CHNF3E = 'Chave da NF3e Referenciada';
+  DSC_COMPETEMIS = 'Ano e Mês da Emissão da NF';
+  DSC_COMPETAPUR = 'Ano e Mês da Apuração';
+  DSC_HASH115 = 'Hash do registro no arquivo do convênio 115';
+  DSC_MOTSUB = 'Motivo da Substituição';
+  DSC_NCONTRAT = 'Numero de Referência da quantidade contratada';
+  DSC_TPGRCONTRAT = 'Tipo de Grandeza Contratada';
+  DSC_TPPOSTAR = 'Tipo de Posto Tarifário Contratado';
+  DSC_QUNIDCONTRAT = 'Quantidade Contratada em kW ou kWh';
+  DSC_NMED = 'Numero de Referência da medição';
+  DSC_IDMEDIDOR = 'Identificação do Medidor';
+  DSC_DMEDANT = 'Data da leitura anterior';
+  DSC_DMEDATU = 'Data da leitura atual';
+  DSC_TPPARTCOMP = 'Tipo de Participação no Sistema de Compensação';
+  DSC_VPOTINST = 'Potência Instalada em kW';
+  DSC_IDACESSGER = 'Código Único de identificação da Unidade Geradora';
+  DSC_ENERALOC = 'Energia Alocada';
+  DSC_VSALDANT = 'Saldo Anterior';
+  DSC_VCREDEXPIRADO = 'Créditos Expirados';
+  DSC_VSALDATUAL = 'Saldo Atual';
+  DSC_VCREDEXPIRAR = 'Créditos a Expirar';
+  DSC_COMPETEXPIRAR = 'AAAA/MM que ocorrá a expiração';
+  DSC_TPAJUSTE = 'Tipo de Ajuste';
+  DSC_MOTAJUSTE = 'Motivo do Ajuste';
+  DSC_QFATURADA = 'Quantidade Faturada';
+  DSC_CCLASS = 'Código de Classificação';
+  DSC_NITEMANT = 'Numero do Item Anterior';
+  DSC_DINITARIF = 'Data de Inicio';
+  DSC_DFIMTARIF = 'Data de Fim';
+  DSC_TPATO = 'Tipo de Ato da ANEEL';
+  DSC_NATO = 'Numero do Ato';
+  DSC_ANOATO = 'Ano do Ato';
+  DSC_TPTARIF = 'Tarifa de Aplicação';
+  DSC_CPOSTARIF = 'Tipo de Posto Tarifário';
+  DSC_UMED = 'Unidade de Medida';
+  DSC_VTARIFHOM = 'Valor da Tarifa Homologada';
+  DSC_VTARIFAPLIC = 'Valor da Trarifa Aplicada';
+  DSC_MOTDIFTARIF = 'Motivo da Diferença de Tarifa';
+  DSC_TPBAND = 'Tipo de Bandeira';
+  DSC_VADBAND = 'Valor do Adicional';
+  DSC_VADBANDAPLIC = 'Valor Adicional Aplicado';
+  DSC_MOTDIFBAND = 'Motivo da Diferença do Adicional';
+  DSC_XGRANDFAT = 'Nome da Grandeza Faturada';
+  DSC_COMPETFAT = 'Ano e Mês do Faturamento';
+  DSC_VFAT = 'Valor Faturado';
+  DSC_DAPRESFAT = 'Data Apresentação da Fatura';
+  DSC_DPROXLEITURA = 'Data Prevista Próxima Leitura';
+  DSC_CODBARRAS = 'Código de Barras';
+  DSC_CODDEBAUTO = 'Código de Autorização de Débito em Conta';
+  DSC_CODBANCO = 'Numero do Banco para Débito em Conta';
+  DSC_CODAGENCIA = 'Numero da Agência Bancária para Débito em Conta';
+  DSC_VICMSDESON = 'Valor Total do ICMS Desonerado';
+  DSC_VFCP = 'Valor Total do Fundo de Combate a Pobreza';
+  DSC_VFCPST = 'Valor Total do FCP retido por Substituição Tributária';
+  DSC_INDORIGEMQTD = 'Indicador da Origem da Quantidade Faturada';
+  DSC_TPGRMED = 'Tipo de Grandeza Medida';
+  DSC_VMEDANT = 'Valor da Medição Anterior';
+  DSC_VMEDATU = 'Valor da Medição Atual';
+  DSC_VCONST = 'Fator de Multiplicação do Medidor';
+  DSC_VMED = 'Valor da Medição';
+  DSC_PPERDATRAN = 'Percentual da Perda de Transformação';
+  DSC_VMEDPERDATRAN = 'Valor Medido após perda de Transformação';
+  DSC_TPMOTNAOLEITURA = 'Tipo do Motivo da não Leitura';
+  DSC_PFCP = 'Percentual do Fundo de Combate a Pobreza';
+  DSC_PICMSST = 'Percentual do ICMS ST';
+  DSC_VICMSST = 'Valor do ICMS ST';
+  DSC_PFCPST = 'Percentual do Fundo de Combate a Pobreza ST';
+  DSC_CBENEF = 'Código de Beneficio Fiscal';
+  DSC_TPPROC = 'Tipo de Processo';
+  DSC_CCONTAB = 'Numero da Conta Contábil';
+  DSC_XCONTAB = 'Descrição da Conta Contábil';
+  DSC_VCONTAB = 'Valor do Lançamento na Conta Contábil';
+  DSC_TPLANC = 'Tipo de Lançamento Contábil';
+  DSC_CODROTEIROLEITURA = 'Código de Roteiro de Leitura';
+
+implementation
+
+end.
+

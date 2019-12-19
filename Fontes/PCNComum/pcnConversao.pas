@@ -130,7 +130,8 @@ type
                   teCancCteComplementar,teCTeSubstituicao,teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
                   teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
                   teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
-                  teComprEntrega, teCancComprEntrega, teInclusaoDFe);
+                  teComprEntrega, teCancComprEntrega, teInclusaoDFe,
+                  teAutorizadoSubstituicao, teAutorizadoAjuste, teLiberacaoPrazoCancelado);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);

@@ -131,7 +131,6 @@ type
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
     oACBr: TJclBorRADToolInstallations;
-    sDirRoot: string;
     iVersion: Integer;
     sPlatform: string;
     tPlatform: TJclBDSPlatform;
@@ -144,16 +143,17 @@ type
     function PathApp: String;
     function PathArquivoIni: String;
     function PathArquivoLog(const NomeVersao: string): String;
-    procedure MostraDadosVersao;
+    procedure MostraDadosVersao(const PastaACBr: string);
     function GetPathACBrInc: TFileName;
-    procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; ListaPacotes: TPacotes);
+    procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string; ListaPacotes:
+        TPacotes);
     procedure IncrementaBarraProgresso;
     procedure Logar(const AString: String);
     function ProcedeInstalacao: Boolean;
-    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
-        listaPacotes: TPacotes);
-    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
-        listaPacotes: TPacotes);
+    procedure CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer; const
+        PastaACBr:string; listaPacotes: TPacotes);
+    procedure InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer; const
+        PastaACBr: string; listaPacotes: TPacotes);
     procedure AbrirArquivoLogAtual;
     function VersionNumberToNome(const AVersionStr: string): string;
   public
@@ -188,20 +188,21 @@ begin
   Result := PathApp + 'log_' + StringReplace(NomeVersao, ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
-procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean; ListaPacotes: TPacotes);
+procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string;
+      ListaPacotes: TPacotes);
 var
   I: Integer;
   NomePacote: string;
   sDirPackage: string;
 begin
-  // verificar se os pacotes existem antes de seguir para o próximo paso
+  // verificar se os pacotes existem antes de seguir para o próximo passo
   for I := 0 to ListaPacotes.Count - 1 do
   begin
     if ListaPacotes[I].Checked then
     begin
       NomePacote := ListaPacotes[I].Caption;
       // Busca diretório do pacote
-      sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
+      sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
       if Trim(sDirPackage) = '' then
         raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
       if IsDelphiPackage(NomePacote) then
@@ -244,12 +245,12 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.MostraDadosVersao;
+procedure TfrmPrincipal.MostraDadosVersao(const PastaACBr: string);
 var
   Cabecalho: string;
 begin
   Cabecalho := 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion) + ')' + sPlatform + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-               'Dir. Instalação : ' + edtDirDestino.Text + sLineBreak +
+               'Dir. Instalação : ' + PastaACBr + sLineBreak +
                'Dir. Bibliotecas: ' + sDirLibrary;
 
   WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), Cabecalho + sLineBreak, False);
@@ -302,7 +303,7 @@ begin
   Sender.Options.Clear;
 
   // não utilizar o dcc32.cfg
-  if (oACBr.Installations[iVersion].SupportsNoConfig)and
+  if (oACBr.Installations[iVersion].SupportsNoConfig) and
      // -- Arquivo cfg agora opcional no caso de paths muito extensos
      (not ckbUsarArquivoConfig.Checked) then
     Sender.Options.Add('--no-config');
@@ -430,7 +431,6 @@ var
   iFor: Integer;
 begin
   iVersion    := -1;
-  sDirRoot    := '';
   sDirLibrary := '';
   sPlatform   := 'Win32';
 
@@ -449,7 +449,7 @@ begin
   if edtDelphiVersion.Items.Count > 0 then
   begin
     edtDelphiVersion.ItemIndex := 0;
-    iVersion := edtDelphiVersion.ItemIndex;
+    iVersion := 0;
   end;
 
   LerConfiguracoes;
@@ -483,6 +483,7 @@ var
   sDestino   : TDestino;
   JaCopiouDLLs: Boolean;
   ListaPacotes: TPacotes;
+  sDirRoot: string;
 begin
   Result := False;
   JaCopiouDLLs := False;
@@ -549,7 +550,7 @@ begin
       pgbInstalacao.Max := (ListaPacotes.Count * 2) + 6;
 
       FCountErros := 0;
-      MostraDadosVersao;
+      MostraDadosVersao(sDirRoot);
 
       InstalacaoAtual := oACBr.Installations[iVersion];
 
@@ -558,14 +559,13 @@ begin
       // -- Evento para saidas de mensagens.
       InstalacaoAtual.OutputCallback := OutputCallLine;
 
-
       ACBrInstaladorAux.FazInstalacaoInicial(InstalacaoAtual, tPlatform, sDirRoot, sDirLibrary);
 
       // *************************************************************************
       // compilar os pacotes primeiramente
       // *************************************************************************
       Logar(sLineBreak+'COMPILANDO OS PACOTES...');
-      CompilarPacotes(InstalacaoAtual, FCountErros, ListaPacotes);
+      CompilarPacotes(InstalacaoAtual, FCountErros, sDirRoot, ListaPacotes);
 
       // *************************************************************************
       // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
@@ -579,7 +579,7 @@ begin
       if ( tPlatform = bpWin32) then
       begin
         Logar(sLineBreak+'INSTALANDO OS PACOTES...');
-        InstalarPacotes(InstalacaoAtual, FCountErros, ListaPacotes);
+        InstalarPacotes(InstalacaoAtual, FCountErros, sDirRoot, ListaPacotes);
       end
       else
       begin
@@ -625,7 +625,7 @@ begin
 end;
 
 procedure TfrmPrincipal.CompilarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
-      listaPacotes: TPacotes);
+      const PastaACBr: string; listaPacotes: TPacotes);
 var
   iDpk: Integer;
   NomePacote: string;
@@ -641,7 +641,7 @@ begin
 
     NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
-    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
+    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
     if (IsDelphiPackage(NomePacote)) then
     begin
       WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
@@ -662,7 +662,7 @@ begin
 end;
 
 procedure TfrmPrincipal.InstalarPacotes(InstalacaoAtual: TJclBorRADToolInstallation; var FCountErros: Integer;
-      listaPacotes: TPacotes);
+      const PastaACBr: string; listaPacotes: TPacotes);
 var
   iDpk: Integer;
   NomePacote: string;
@@ -673,7 +673,7 @@ begin
   begin
     NomePacote := listaPacotes[iDpk].Caption;
     // Busca diretório do pacote
-    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Pacotes\Delphi', NomePacote);
+    sDirPackage := FindDirPackage(IncludeTrailingPathDelimiter(PastaACBr) + 'Pacotes\Delphi', NomePacote);
     if IsDelphiPackage(NomePacote) then
     begin
       FPacoteAtual := sDirPackage + NomePacote;
@@ -681,7 +681,6 @@ begin
       GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
       if not bRunOnly then
       begin
-        WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), '');
         // se o pacote estiver marcado instalar, senão desinstalar
         if listaPacotes[iDpk].Checked then
         begin
@@ -897,8 +896,7 @@ begin
   // Gravar as configurações em um .ini para utilizar depois
   GravarConfiguracoesEmArquivoIni;
 
-  sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-  ValidarSeExistemPacotesNasPastas(Stop, framePacotes1.Pacotes);
+  ValidarSeExistemPacotesNasPastas(Stop, IncludeTrailingPathDelimiter(edtDirDestino.Text), framePacotes1.Pacotes);
 end;
 
 procedure TfrmPrincipal.btnVisualizarLogCompilacaoClick(Sender: TObject);

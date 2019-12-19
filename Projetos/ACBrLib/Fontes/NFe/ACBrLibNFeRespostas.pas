@@ -131,6 +131,7 @@ type
   private
     FtMed: integer;
     FnRec: string;
+    FNProt: string;
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
 
@@ -139,6 +140,7 @@ type
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
+   property NProt: String read FNProt write FNProt;
   end;
 
   { TCancelamentoResposta }
@@ -895,6 +897,7 @@ begin
     DhRecbto := Enviar.dhRecbto;
     Tmed := Enviar.TMed;
     Msg := Enviar.Msg;
+    NProt := Enviar.Protocolo;
   end;
 end;
 

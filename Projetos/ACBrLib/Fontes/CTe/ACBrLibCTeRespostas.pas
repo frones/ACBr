@@ -125,6 +125,7 @@ type
   private
     FtMed: integer;
     FnRec: string;
+    FNProt: string;
     FXml: string;
     FItem: TRetornoItemResposta;
 
@@ -138,6 +139,7 @@ type
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
+   property NProt: String read FNProt write FNProt;
    property Xml: string read FXml write FXml;
    property Item: TRetornoItemResposta read FItem;
 
@@ -378,18 +380,19 @@ end;
 
 procedure TEnvioResposta.Processar(const ACBrCTe: TACBrCTe);
 begin
-  with ACBrCTe.WebServices do
+  with ACBrCTe.WebServices.Enviar do
   begin
-    Self.Versao := Enviar.verAplic;
-    Self.TpAmb := TpAmbToStr(Enviar.TpAmb);
-    Self.verAplic := Enviar.verAplic;
-    Self.CStat := Enviar.cStat;
-    Self.XMotivo := Enviar.xMotivo;
-    Self.CUF := Enviar.cUF;
-    Self.nRec := Enviar.Recibo;
-    Self.DhRecbto := Enviar.dhRecbto;
-    Self.Tmed := Enviar.TMed;
-    Self.Msg := Enviar.Msg;
+    Self.Versao := verAplic;
+    Self.TpAmb := TpAmbToStr(TpAmb);
+    Self.verAplic := verAplic;
+    Self.CStat := cStat;
+    Self.XMotivo := xMotivo;
+    Self.CUF := cUF;
+    Self.nRec := Recibo;
+    Self.DhRecbto := dhRecbto;
+    Self.Tmed := TMed;
+    Self.Msg := Msg;
+    Self.NProt := Protocolo;
   end;
 
   if ACBrCTe.WebServices.Enviar.Sincrono then

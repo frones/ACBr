@@ -219,7 +219,8 @@ begin
 
   // *************************************************************************
   // Adiciona os paths dos fontes na versão do delphi selecionada
-  // *************************************************************************  InformaSituacao('Adicionando library paths...');
+  // *************************************************************************
+  InformaSituacao('Adicionando library paths...');
   AddLibrarySearchPath(InstalacaoAtual, APlatform, ADirRoot, ADirLibrary);
   InformaSituacao('...OK');
   FezProgresso;
@@ -567,9 +568,8 @@ begin
   if ADestino <> tdNone then
   begin
     pathACBr := IncludeTrailingPathDelimiter(DirACBr);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.19\x86\libeay32.dll', pathACBr, APathBin);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.19\x86\ssleay32.dll', pathACBr, APathBin);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.19\x86\msvcr120.dll', pathACBr, APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.20\x86\libeay32.dll', pathACBr, APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.20\x86\ssleay32.dll', pathACBr, APathBin);
   end;
 end;
 

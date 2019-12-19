@@ -1,6 +1,6 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 455
-  Top = 184
+  Left = 228
+  Top = 5
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 634
   ClientWidth = 810
@@ -9205,6 +9205,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      BeforePrint = rlbReciboHeaderBeforePrint
       object rliCanhoto: TRLDraw
         Left = 0
         Height = 57

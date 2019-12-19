@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_NF3e"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti - Daniel Simões de Almeida"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3E;..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrNF3e\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Other>
+        <CompilerMessages>
+          <IgnoredMessages idx5024="True"/>
+        </CompilerMessages>
+      </Other>
+    </CompilerOptions>
+    <Description Value="ACBr - Nota Fiscal de Energia Elétrica Eletrônica - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="18">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3e.pas"/>
+        <UnitName Value="ACBrNF3e"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrNF3eReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eNotasFiscais.pas"/>
+        <UnitName Value="ACBrNF3eNotasFiscais"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eConfiguracoes.pas"/>
+        <UnitName Value="ACBrNF3eConfiguracoes"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\ACBrNF3eWebServices.pas"/>
+        <UnitName Value="ACBrNF3eWebServices"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\DANF3E\ACBrNF3eDANF3eClass.pas"/>
+        <UnitName Value="ACBrNF3eDANF3eClass"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConsSitNF3e.pas"/>
+        <UnitName Value="pcnConsSitNF3e"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEnvEventoNF3e.pas"/>
+        <UnitName Value="pcnEnvEventoNF3e"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnEventoNF3e.pas"/>
+        <UnitName Value="pcnEventoNF3e"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3e.pas"/>
+        <UnitName Value="pcnNF3e"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eR.pas"/>
+        <UnitName Value="pcnNF3eR"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eW.pas"/>
+        <UnitName Value="pcnNF3eW"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnProcNF3e.pas"/>
+        <UnitName Value="pcnProcNF3e"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetConsSitNF3e.pas"/>
+        <UnitName Value="pcnRetConsSitNF3e"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvEventoNF3e.pas"/>
+        <UnitName Value="pcnRetEnvEventoNF3e"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnRetEnvNF3e.pas"/>
+        <UnitName Value="pcnRetEnvNF3e"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnConversaoNF3e.pas"/>
+        <UnitName Value="pcnConversaoNF3e"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNF3e\PCNNF3e\pcnNF3eConsts.pas"/>
+        <UnitName Value="pcnNF3eConsts"/>
+      </Item18>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

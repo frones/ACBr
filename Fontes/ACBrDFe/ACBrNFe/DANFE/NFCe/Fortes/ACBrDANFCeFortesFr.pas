@@ -786,7 +786,6 @@ begin
 
       if ACBrNFeDANFCeFortes.ImprimeLogoLateral then
       begin
-        //21-11-2019 - volmir
         pLogo.AutoSize   := imgLogo.AutoSize;
         pLogo.AutoExpand := imgLogo.AutoSize;
 

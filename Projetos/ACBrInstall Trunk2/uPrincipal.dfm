@@ -1064,40 +1064,11 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Selecione as IDEs'
       OnNextButtonClick = wizPgSelectIDEsNextButtonClick
-      object Label23: TLabel
-        Left = 280
-        Top = 77
-        Width = 93
-        Height = 13
-        Caption = 'ComboBox Invisivel'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Visible = False
-      end
-      object edtDelphiVersion: TComboBox
-        Left = 379
-        Top = 74
-        Width = 172
-        Height = 21
-        Style = csDropDownList
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        Visible = False
-      end
       object clbDelphiVersion: TCheckListBox
         Left = 6
-        Top = 101
+        Top = 72
         Width = 539
-        Height = 388
+        Height = 417
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1106,7 +1077,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ItemHeight = 19
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 0
         OnClick = clbDelphiVersionClick
       end
     end
@@ -1623,7 +1594,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 5
+        FrameIndex = 3
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

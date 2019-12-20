@@ -44,6 +44,8 @@ uses SysUtils, Windows, Messages, Classes, Forms;
   procedure DesligarDefineACBrInc(const ArquivoACBrInc: TFileName; const ADefineName: String; const ADesligar: Boolean);
   function FindDirPackage(const aDir: String; const sPacote: String): string;
 
+  function VersionNumberToNome(const AVersionStr: string): string;
+
 implementation
 
 uses
@@ -244,4 +246,53 @@ begin
     raise EFileNotFoundException.Create('Ocorreu um erro ao tentar obter o diretório do windows.');
 end;
 
+function VersionNumberToNome(const AVersionStr: string): string;
+begin
+  if      AVersionStr = 'd3' then
+    Result := 'Delphi 3'
+  else if AVersionStr = 'd4' then
+    Result := 'Delphi 4'
+  else if AVersionStr = 'd5' then
+    Result := 'Delphi 5'
+  else if AVersionStr = 'd6' then
+    Result := 'Delphi 6'
+  else if AVersionStr = 'd7' then
+    Result := 'Delphi 7'
+  else if AVersionStr = 'd9' then
+    Result := 'Delphi 2005'
+  else if AVersionStr = 'd10' then
+    Result := 'Delphi 2006'
+  else if AVersionStr = 'd11' then
+    Result := 'Delphi 2007'
+  else if AVersionStr = 'd12' then
+    Result := 'Delphi 2009'
+  else if AVersionStr = 'd14' then
+    Result := 'Delphi 2010'
+  else if AVersionStr = 'd15' then
+    Result := 'Delphi XE'
+  else if AVersionStr = 'd16' then
+    Result := 'Delphi XE2'
+  else if AVersionStr = 'd17' then
+    Result := 'Delphi XE3'
+  else if AVersionStr = 'd18' then
+    Result := 'Delphi XE4'
+  else if AVersionStr = 'd19' then
+    Result := 'Delphi XE5'
+  else if AVersionStr = 'd20' then
+    Result := 'Delphi XE6'
+  else if AVersionStr = 'd21' then
+    Result := 'Delphi XE7'
+  else if AVersionStr = 'd22' then
+    Result := 'Delphi XE8'
+  else if AVersionStr = 'd23' then
+    Result := 'Delphi 10 Seattle'
+  else if AVersionStr = 'd24' then
+    Result := 'Delphi 10.1 Berlin'
+  else if AVersionStr = 'd25' then
+    Result := 'Delphi 10.2 Tokyo'
+  else if AVersionStr = 'd26' then
+    Result := 'Delphi 10.3 Rio'
+  else
+    Result := '';
+end;
 end.

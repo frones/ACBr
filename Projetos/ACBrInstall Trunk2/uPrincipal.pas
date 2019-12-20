@@ -107,8 +107,6 @@ type
     framePacotes1: TframePacotes;
     ckbRemoveXMLSec: TCheckBox;
     wizPgSelectIDEs: TJvWizardInteriorPage;
-    Label23: TLabel;
-    edtDelphiVersion: TComboBox;
     clbDelphiVersion: TCheckListBox;
 
     procedure imgPropaganda1Click(Sender: TObject);
@@ -131,22 +129,20 @@ type
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
     oACBr: TJclBorRADToolInstallations;
+    UltimoArquivoLog: string;
 
     procedure GravarConfiguracoesEmArquivoIni;
     procedure LerConfiguracoes;
-    function PathApp: String;
     function PathArquivoIni: String;
-    function PathArquivoLog(const NomeVersao: string): String;
-    procedure MostraDadosVersao(const PastaACBr: string; const sPlatform: string; iVersion: Integer; sDirLibrary:
-        string; tPlatform: TJclBDSPlatform);
     procedure ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string; ListaPacotes:
         TPacotes);
-    procedure IncrementaBarraProgresso;
-    procedure Logar(const AString: String);
     function ProcedeInstalacao: Boolean;
     procedure AbrirArquivoLogAtual;
-    function VersionNumberToNome(const AVersionStr: string): string;
-    procedure IniciaNovaInstalacao;
+
+    procedure IncrementaBarraProgresso;
+    procedure Logar(const AString: String);
+    procedure IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const NomeCaminhoArquivoLog: string;
+          const Cabecalho: string);
   public
 
   end;
@@ -157,26 +153,14 @@ var
 implementation
 
 uses
-  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils;
+  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils, Generics.Collections;
 
 {$R *.dfm}
-
-// retornar o path do aplicativo
-function TfrmPrincipal.PathApp: String;
-begin
-  Result := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
-end;
 
 // retornar o caminho completo para o arquivo .ini de configurações
 function TfrmPrincipal.PathArquivoIni: String;
 begin
   Result := ChangeFileExt(ParamStr(0), '.ini');
-end;
-
-// retornar o caminho completo para o arquivo de logs
-function TfrmPrincipal.PathArquivoLog(const NomeVersao: string): String;
-begin
-  Result := PathApp + 'log_' + StringReplace(NomeVersao, ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
 procedure TfrmPrincipal.ValidarSeExistemPacotesNasPastas(var Stop: Boolean; const PastaACBr: string;
@@ -236,22 +220,6 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.MostraDadosVersao(const PastaACBr: string; const sPlatform: string;
-    iVersion: Integer; sDirLibrary: string; tPlatform: TJclBDSPlatform);
-var
-  Cabecalho: string;
-begin
-  Cabecalho := 'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion) + ')' + sPlatform + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-               'Dir. Instalação : ' + PastaACBr + sLineBreak +
-               'Dir. Bibliotecas: ' + sDirLibrary;
-
-  WriteToTXT(PathArquivoLog(edtDelphiVersion.Text), Cabecalho + sLineBreak, False);
-
-  // mostrar ao usuário as informações de compilação
-  lbInfo.Clear;
-  lbInfo.Items.Text := Cabecalho;
-end;
-
 // gravar as configurações efetuadas pelo usuário
 procedure TfrmPrincipal.GravarConfiguracoesEmArquivoIni;
 var
@@ -277,63 +245,20 @@ begin
   end;
 end;
 
-
-function TfrmPrincipal.VersionNumberToNome(const AVersionStr: string): string;
-begin
-  if      AVersionStr = 'd3' then
-    Result := 'Delphi 3'
-  else if AVersionStr = 'd4' then
-    Result := 'Delphi 4'
-  else if AVersionStr = 'd5' then
-    Result := 'Delphi 5'
-  else if AVersionStr = 'd6' then
-    Result := 'Delphi 6'
-  else if AVersionStr = 'd7' then
-    Result := 'Delphi 7'
-  else if AVersionStr = 'd9' then
-    Result := 'Delphi 2005'
-  else if AVersionStr = 'd10' then
-    Result := 'Delphi 2006'
-  else if AVersionStr = 'd11' then
-    Result := 'Delphi 2007'
-  else if AVersionStr = 'd12' then
-    Result := 'Delphi 2009'
-  else if AVersionStr = 'd14' then
-    Result := 'Delphi 2010'
-  else if AVersionStr = 'd15' then
-    Result := 'Delphi XE'
-  else if AVersionStr = 'd16' then
-    Result := 'Delphi XE2'
-  else if AVersionStr = 'd17' then
-    Result := 'Delphi XE3'
-  else if AVersionStr = 'd18' then
-    Result := 'Delphi XE4'
-  else if AVersionStr = 'd19' then
-    Result := 'Delphi XE5'
-  else if AVersionStr = 'd20' then
-    Result := 'Delphi XE6'
-  else if AVersionStr = 'd21' then
-    Result := 'Delphi XE7'
-  else if AVersionStr = 'd22' then
-    Result := 'Delphi XE8'
-  else if AVersionStr = 'd23' then
-    Result := 'Delphi 10 Seattle'
-  else if AVersionStr = 'd24' then
-    Result := 'Delphi 10.1 Berlin'
-  else if AVersionStr = 'd25' then
-    Result := 'Delphi 10.2 Tokyo'
-  else if AVersionStr = 'd26' then
-    Result := 'Delphi 10.3 Rio'
-  else
-    Result := '';
-end;
-
-procedure TfrmPrincipal.IniciaNovaInstalacao;
+procedure TfrmPrincipal.IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const
+    NomeCaminhoArquivoLog: string; const Cabecalho: string);
 begin
   // limpar o log
   lstMsgInstalacao.Clear;
   // setar barra de progresso
   pgbInstalacao.Position := 0;
+
+  pgbInstalacao.Max := MaximoPassosProgresso;
+
+  // mostrar ao usuário as informações de compilação
+  UltimoArquivoLog := NomeCaminhoArquivoLog;
+  lbInfo.Clear;
+  lbInfo.Items.Text := Cabecalho;
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
@@ -341,6 +266,7 @@ var
   iFor: Integer;
 begin
   oACBr := TJclBorRADToolInstallations.Create;
+  UltimoArquivoLog := '';
 
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to oACBr.Count - 1 do
@@ -348,13 +274,6 @@ begin
     clbDelphiVersion.Items.Add(VersionNumberToNome(oACBr.Installations[iFor].VersionNumberStr));
     //Desabilitar versões não suportadas
     clbDelphiVersion.ItemEnabled[iFor] := MatchText(oACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']);
-  end;
-
-  edtDelphiVersion.Items.Text := clbDelphiVersion.Items.Text;
-
-  if edtDelphiVersion.Items.Count > 0 then
-  begin
-    edtDelphiVersion.ItemIndex := 0;
   end;
 
   LerConfiguracoes;
@@ -375,32 +294,28 @@ end;
 function TfrmPrincipal.ProcedeInstalacao: Boolean;
 var
   ACBrInstaladorAux: TACBrInstallComponentes;
-  iListaVer: Integer;
-  FCountErros: Integer;
-  sDestinoDLLs: TDestino;
-  JaCopiouDLLs: Boolean;
   ListaPacotes: TPacotes;
-  sPlatform: string;
-  sDirLibrary: string;
+  ListaVersoesInstalacao: TList<Integer>;
+  i: Integer;
 begin
-  Result := False;
-  JaCopiouDLLs := False;
-
-  case rdgdll.ItemIndex of
-    0 : sDestinoDLLs := tdSystem;
-    1 : sDestinoDLLs := tdDelphi;
-    2 : sDestinoDLLs := tdNone;
-  else
-    sDestinoDLLs := tdNone;
-  end;
-
   ListaPacotes := framePacotes1.Pacotes;
+
+  ListaVersoesInstalacao := TList<Integer>.Create;
+
+  for i := 0 to oACBr.Count - 1 do
+  begin
+    // só instala as versão marcadas para instalar.
+    if (clbDelphiVersion.Checked[i]) then
+    begin
+      ListaVersoesInstalacao.Add(i)
+    end;
+  end;
 
   ACBrInstaladorAux := TACBrInstallComponentes.Create(Application);
   try
-//    ACBrInstaladorAux.OnIniciaNovaInstalacao := IniciaNovaInstalacao;
-    ACBrInstaladorAux.OnProgresso       := IncrementaBarraProgresso;
-    ACBrInstaladorAux.OnInformaSituacao := Logar;
+    ACBrInstaladorAux.OnIniciaNovaInstalacao := IniciaNovaInstalacao;
+    ACBrInstaladorAux.OnProgresso            := IncrementaBarraProgresso;
+    ACBrInstaladorAux.OnInformaSituacao      := Logar;
 
     ACBrInstaladorAux.Opcoes.LimparArquivosACBrAntigos := ckbRemoverArquivosAntigos.Checked;
     ACBrInstaladorAux.Opcoes.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
@@ -412,67 +327,28 @@ begin
     ACBrInstaladorAux.Opcoes.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
     ACBrInstaladorAux.Opcoes.UsarCpp                   := ckbBCB.Checked;
     ACBrInstaladorAux.Opcoes.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
+    case rdgdll.ItemIndex of
+      0 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdSystem;
+      1 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdDelphi;
+      2 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdNone;
+    else
+      ACBrInstaladorAux.Opcoes.sDestinoDLLs     := tdNone;
+    end;
     ACBrInstaladorAux.Opcoes.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
-    ACBrInstaladorAux.DesligarDefines;
 
-    for iListaVer := 0 to oACBr.Count - 1 do
-    begin
-      // só instala as versão marcadas para instalar.
-      if (not clbDelphiVersion.Checked[iListaVer]) then
-      begin
-        Continue
-      end;
-
-      IniciaNovaInstalacao;
-      pgbInstalacao.Max := (ListaPacotes.Count * 2) + 6;
-
-      FCountErros := 0;
-      // seleciona a versão no combobox.
-      edtDelphiVersion.ItemIndex := iListaVer;
-      ACBrInstaladorAux.tPlatformAtual := bpWin32;
-      sPlatform                        := 'Win32';
-      ACBrInstaladorAux.InstalacaoAtual := oACBr.Installations[iListaVer];
-      sDirLibrary := ACBrInstaladorAux.Opcoes.DiretorioRaizACBr + 'Lib\Delphi\Lib' + AnsiUpperCase(ACBrInstaladorAux.InstalacaoAtual.VersionNumberStr);
-
-      ACBrInstaladorAux.ArquivoLog := PathArquivoLog(edtDelphiVersion.Text);
-      MostraDadosVersao(ACBrInstaladorAux.Opcoes.DiretorioRaizACBr, sPlatform, iListaVer,sDirLibrary, ACBrInstaladorAux.tPlatformAtual);
-
-      ACBrInstaladorAux.FazInstalacaoInicial(sDirLibrary);
-
-      ACBrInstaladorAux.CompilarEInstalarPacotes(FCountErros, ListaPacotes);
-
-      if (FCountErros <> 0) then
-      begin
-        Break;
-      end;
-
-      ACBrInstaladorAux.InstalarOutrosRequisitos(sDirLibrary);
-
-      if (FCountErros = 0) then
-      begin
-        if (sDestinoDLLs = tdDelphi) or (not JaCopiouDLLs) then
-        begin
-          ACBrInstaladorAux.FazInstalacaoDLLs(FCountErros, sDestinoDLLs,
-                IncludeTrailingPathDelimiter(ACBrInstaladorAux.InstalacaoAtual.BinFolderName));
-          JaCopiouDLLs := True;
-        end;
-      end;
-
-    end;
-
+    Result := ACBrInstaladorAux.Instalar(oACBr, ListaPacotes, ListaVersoesInstalacao);
   finally
     ACBrInstaladorAux.Free;
   end;
 
-  if FCountErros = 0 then
+  if Result then
   begin
-    Result := True;
     Application.MessageBox(PWideChar('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
                                      'Clique em "Próximo" para finalizar a instalação.'),
                            'Instalação', MB_ICONINFORMATION + MB_OK);
   end
-  else if FCountErros > 0 then
+  else
   begin
     if Application.MessageBox(PWideChar('Ocorreram erros durante o processo de instalação, ' + sLineBreak +
                                         'para maiores informações verifique o arquivo de log gerado.' +
@@ -480,7 +356,7 @@ begin
                                         'Deseja visualizar o arquivo de log gerado?'),
                               'Instalação', MB_ICONQUESTION + MB_YESNO) = ID_YES then
     begin
-      btnVisualizarLogCompilacao.Click;
+      AbrirArquivoLogAtual;
     end;
   end;
 
@@ -488,7 +364,11 @@ end;
 
 procedure TfrmPrincipal.AbrirArquivoLogAtual;
 begin
-  ShellExecute(Handle, 'open', PWideChar(PathArquivoLog(edtDelphiVersion.Text)), '', '', 1);
+  if UltimoArquivoLog = '' then
+  begin
+    Exit;
+  end;
+  ShellExecute(Handle, 'open', PWideChar(UltimoArquivoLog), '', '', 1);
 end;
 
 procedure TfrmPrincipal.IncrementaBarraProgresso;
@@ -504,6 +384,7 @@ var
 begin
   Instalou := False;
   btnInstalarACBr.Enabled := False;
+  btnVisualizarLogCompilacao.Enabled := False;
   wizPgInstalacao.EnableButton(bkBack, False);
   wizPgInstalacao.EnableButton(bkNext, False);
   wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
@@ -511,6 +392,7 @@ begin
     Instalou := ProcedeInstalacao;
   finally
     btnInstalarACBr.Enabled := True;
+    btnVisualizarLogCompilacao.Enabled := True;
     wizPgInstalacao.EnableButton(bkBack, True);
     wizPgInstalacao.EnableButton(bkNext, Instalou);
     wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), True);
@@ -583,8 +465,6 @@ end;
 
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
   const FromPage: TJvWizardCustomPage);
-var
-  iFor: Integer;
 begin
 //  // para 64 bit somente compilar
 //  if tPlatform = bpWin32 then // Win32
@@ -593,15 +473,8 @@ begin
 //    btnInstalarACBr.Caption := 'Compilar';
 //
   lbInfo.Clear;
-  for iFor := 0 to clbDelphiVersion.Count -1 do
-  begin
-     // Só pega os dados da 1a versão selecionada, para mostrar na tela qual vai iniciar
-     if clbDelphiVersion.Checked[iFor] then
-     begin
-        lbInfo.Items.Add('Instalar : ' + clbDelphiVersion.Items[ifor]);
-        Break
-     end;
-  end;
+  lbInfo.Items.Add('Pressione o botão "'+ btnInstalarACBr.Caption +'" para prosseguir.');
+  btnVisualizarLogCompilacao.Enabled := False;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoNextButtonClick(Sender: TObject;

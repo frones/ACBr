@@ -5,7 +5,8 @@ uses
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
   ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas',
-  ACBrInstallUtils in 'ACBrInstallUtils.pas';
+  ACBrInstallUtils in 'ACBrInstallUtils.pas',
+  ACBrPacotes in 'ACBrPacotes.pas';
 
 {$R *.res}
 

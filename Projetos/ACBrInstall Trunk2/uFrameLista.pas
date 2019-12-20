@@ -77,11 +77,9 @@ uses
   Generics.Collections, Generics.Defaults,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Buttons, ExtCtrls, StdCtrls, ComCtrls;
+  Dialogs, Buttons, ExtCtrls, StdCtrls, ComCtrls, ACBrPacotes;
 
 type
-  TPacotes = TList<TCheckBox>;
-
   TframePacotes = class(TFrame)
     pnlBotoesMarcar: TPanel;
     btnPacotesDesmarcarTodos: TSpeedButton;

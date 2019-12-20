@@ -38,6 +38,7 @@ interface
 uses SysUtils, Windows, Messages, Classes, Forms;
 
   function RunAsAdminAndWaitForCompletion(hWnd: HWND; const filename: string; Fapp: TApplication): Boolean;
+  function PathSystem: String;
   procedure GetDriveLetters(AList: TStrings);
   function RegistrarActiveXServer(const AServerLocation: string; const ARegister: Boolean): Boolean;
   procedure DesligarDefineACBrInc(const ArquivoACBrInc: TFileName; const ADefineName: String; const ADesligar: Boolean);
@@ -212,6 +213,35 @@ begin
       SysUtils.FindClose(oDirList);
     end;
   end;
+end;
+
+function PathSystem: String;
+var
+  strTmp: array[0..MAX_PATH] of char;
+  DirWindows: String;
+const
+  SYS_64 = 'SysWOW64';
+  SYS_32 = 'System32';
+begin
+// retorna o diretório de sistema atual
+  Result := '';
+
+  //SetLength(strTmp, MAX_PATH);
+  if Windows.GetWindowsDirectory(strTmp, MAX_PATH) > 0 then
+  begin
+    DirWindows := Trim(StrPas(strTmp));
+    DirWindows := IncludeTrailingPathDelimiter(DirWindows);
+
+    if DirectoryExists(DirWindows + SYS_64) then
+      Result := DirWindows + SYS_64
+    else
+    if DirectoryExists(DirWindows + SYS_32) then
+      Result := DirWindows + SYS_32
+    else
+      raise EFileNotFoundException.Create('Diretório de sistema não encontrado.');
+  end
+  else
+    raise EFileNotFoundException.Create('Ocorreu um erro ao tentar obter o diretório do windows.');
 end;
 
 end.

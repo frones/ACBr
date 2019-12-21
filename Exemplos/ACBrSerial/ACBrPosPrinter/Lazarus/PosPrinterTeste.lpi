@@ -9,17 +9,10 @@
       <Title Value="PosPrinterTeste"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <UseVersionInfo Value="True"/>
-      <MajorVersionNr Value="3"/>
-      <MinorVersionNr Value="2"/>
-      <RevisionNr Value="1"/>
-    </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">
@@ -131,7 +124,7 @@
     </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="8">
+    <Exceptions Count="11">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -156,6 +149,15 @@
       <Item8>
         <Name Value="EPosPrinterException"/>
       </Item8>
+      <Item9>
+        <Name Value="RunError(5)"/>
+      </Item9>
+      <Item10>
+        <Name Value="EInOutError"/>
+      </Item10>
+      <Item11>
+        <Name Value="RunError(103)"/>
+      </Item11>
     </Exceptions>
   </Debugging>
 </CONFIG>

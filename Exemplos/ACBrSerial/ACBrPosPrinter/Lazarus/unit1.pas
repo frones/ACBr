@@ -628,6 +628,9 @@ procedure TFrPosPrinterTeste.btInfoUSBClick(Sender: TObject);
 var
   i: Integer;
 begin
+  {$IfNDef MSWINDOWS}
+  MessageDlg('Disponível apenas em MS-Windows', mtError, [mbOK], 0);
+  {$Else}
   PageControl1.ActivePage := tsLog;
   mLog.Clear;
   mLog.Lines.Add('Procurando por Impressoras USB...');
@@ -648,6 +651,7 @@ begin
       mLog.Lines.Add('Class GUID: '+DeviceList.Items[i].ClassGUID);
     end;
   end;
+  {$EndIf}
 end;
 
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);

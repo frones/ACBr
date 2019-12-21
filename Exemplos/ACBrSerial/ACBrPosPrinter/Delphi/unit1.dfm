@@ -1,11 +1,13 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 536
   Top = 240
-  Width = 854
-  Height = 561
+  Width = 860
+  Height = 570
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
   Color = clBtnFace
+  Constraints.MinHeight = 570
+  Constraints.MinWidth = 860
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -20,18 +22,27 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 582
-    Height = 522
+    Width = 588
+    Height = 531
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Top = 348
-      Width = 580
+      Top = 357
+      Width = 586
       Height = 173
       Align = alBottom
       TabOrder = 0
+      object bTagQRCode: TButton
+        Left = 200
+        Top = 68
+        Width = 183
+        Height = 25
+        Caption = 'Tags de QRCode'
+        TabOrder = 6
+        OnClick = bTagQRCodeClick
+      end
       object bTagFormtacaoCaracter: TButton
         Left = 8
         Top = 44
@@ -49,15 +60,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Caption = 'Tags de Alinhamento'
         TabOrder = 1
         OnClick = bTagsAlinhamentoClick
-      end
-      object bTagQRCode: TButton
-        Left = 200
-        Top = 68
-        Width = 183
-        Height = 25
-        Caption = 'Tags de QRCode'
-        TabOrder = 6
-        OnClick = bTagQRCodeClick
       end
       object bTagsCodBarras: TButton
         Left = 200
@@ -125,17 +127,17 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 578
+        Width = 584
         Height = 39
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
         TabOrder = 13
         DesignSize = (
-          578
+          584
           39)
         object bLimpar: TBitBtn
-          Left = 389
+          Left = 387
           Top = 7
           Width = 83
           Height = 26
@@ -180,7 +182,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
         end
         object bImprimir: TBitBtn
-          Left = 484
+          Left = 482
           Top = 7
           Width = 92
           Height = 26
@@ -260,12 +262,21 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 8
         OnClick = Button1Click
       end
+      object btInfoUSB: TButton
+        Left = 392
+        Top = 140
+        Width = 183
+        Height = 25
+        Caption = 'Informa'#231#245'es USB'
+        TabOrder = 14
+        OnClick = btInfoUSBClick
+      end
     end
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 580
-      Height = 347
+      Width = 586
+      Height = 356
       ActivePage = tsImagens
       Align = alClient
       TabHeight = 40
@@ -275,8 +286,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 572
-          Height = 297
+          Width = 578
+          Height = 306
           Align = alClient
           ScrollBars = ssBoth
           TabOrder = 0
@@ -288,8 +299,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mLog: TMemo
           Left = 0
           Top = 0
-          Width = 572
-          Height = 297
+          Width = 578
+          Height = 306
           Align = alClient
           TabOrder = 0
         end
@@ -299,7 +310,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object Splitter1: TSplitter
           Left = 0
           Top = 137
-          Width = 572
+          Width = 578
           Height = 5
           Cursor = crVSplit
           Align = alTop
@@ -307,7 +318,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object gbCodBarrasConfig2: TGroupBox
           Left = 0
           Top = 208
-          Width = 572
+          Width = 578
           Height = 88
           Align = alTop
           Caption = 'LogoTipo'
@@ -432,7 +443,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object Panel5: TPanel
           Left = 0
           Top = 142
-          Width = 572
+          Width = 578
           Height = 66
           Align = alTop
           BevelInner = bvRaised
@@ -503,14 +514,14 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object ScrollBox1: TScrollBox
           Left = 0
           Top = 0
-          Width = 572
+          Width = 578
           Height = 137
           Align = alTop
           TabOrder = 2
           object Image1: TImage
             Left = 0
             Top = 0
-            Width = 568
+            Width = 574
             Height = 126
             Align = alTop
             Center = True
@@ -636,7 +647,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Left = 0
     Top = 0
     Width = 256
-    Height = 522
+    Height = 531
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -749,9 +760,9 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         ParentColor = False
       end
       object SbArqLog: TSpeedButton
-        Left = 220
+        Left = 225
         Top = 168
-        Width = 24
+        Width = 20
         Height = 22
         Hint = 'Abre Arquivo de Log'
         Caption = '...'
@@ -765,6 +776,51 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Caption = 'Linhas '#224' Pular'
         Color = clBtnFace
         ParentColor = False
+      end
+      object btSearchPorts: TSpeedButton
+        Left = 192
+        Top = 72
+        Width = 23
+        Height = 22
+        Hint = 'Procurar Impressoras USB'
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000005000000A6000000EF00000031000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000005000000AC000000FF000000FF00000053000000000000
+          000000000000000000010000003F0000008E000000B0000000AA0000007B0000
+          002100000005000000AC000000FF000000FF0000008C00000001000000000000
+          000000000019000000BB000000FF000000FF000000FF000000FF000000FF0000
+          00FB000000CF000000FF000000FF0000008C0000000100000000000000000000
+          0013000000DB000000FF000000FF000000D20000009C000000A5000000E90000
+          00FF000000FF000000FF0000008C000000010000000000000000000000000000
+          009F000000FF000000FB0000005E0000000100000000000000000000000A0000
+          009D000000FF000000FF00000053000000000000000000000000000000180000
+          00FC000000FF0000007100000000000000000000000000000000000000000000
+          0002000000C0000000FF000000C8000000000000000000000000000000580000
+          00FF000000F70000000900000000000000000000000000000000000000000000
+          000000000051000000FF000000FF0000000D00000000000000000000006F0000
+          00FF000000DB0000000000000000000000000000000000000000000000000000
+          00000000002C000000FF000000FF0000002200000000000000000000005E0000
+          00FF000000F20000000400000000000000000000000000000000000000000000
+          000000000046000000FF000000FF000000110000000000000000000000220000
+          00FF000000FF0000005800000000000000000000000000000000000000000000
+          0000000000A8000000FF000000D4000000000000000000000000000000000000
+          00B5000000FF000000F000000039000000000000000000000000000000010000
+          0075000000FF000000FF00000068000000000000000000000000000000000000
+          0022000000EE000000FF000000FC000000AA000000730000007B000000C80000
+          00FF000000FF000000BF00000003000000000000000000000000000000000000
+          00000000002F000000DC000000FF000000FF000000FF000000FF000000FF0000
+          00FF000000B00000000E00000000000000000000000000000000000000000000
+          0000000000000000000900000068000000B7000000D9000000D4000000A50000
+          0046000000010000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = btSearchPortsClick
       end
       object cbTraduzirTags: TCheckBox
         Left = 15
@@ -799,7 +855,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object cbxPorta: TComboBox
         Left = 16
         Top = 72
-        Width = 192
+        Width = 169
         Height = 21
         ItemHeight = 13
         TabOrder = 3
@@ -863,7 +919,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object edLog: TEdit
         Left = 127
         Top = 168
-        Width = 84
+        Width = 98
         Height = 21
         Cursor = crIBeam
         Hint = 'Arquivo de Log para gravar os comandos enviados e recebidos'
@@ -1150,9 +1206,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
     end
   end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Left = 16
+    Top = 448
+  end
   object ACBrPosPrinter1: TACBrPosPrinter
-    Modelo = ppEscPosEpson
-    Device.NomeDocumento = 'ACBrPorPrinterDemo'
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
@@ -1161,14 +1219,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    CortaPapel = False
-    VerificarImpressora = True
-    OnGravarLog = ACBrPosPrinter1GravarLog
-    Left = 120
-    Top = 456
-  end
-  object OpenPictureDialog1: TOpenPictureDialog
-    Left = 16
+    Left = 184
     Top = 448
   end
 end

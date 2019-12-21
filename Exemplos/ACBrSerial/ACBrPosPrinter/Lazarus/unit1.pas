@@ -34,11 +34,13 @@ type
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
     bTagsTestePageMode: TButton;
+    btSearchPorts: TSpeedButton;
     Button1: TButton;
     bCaregarImagem: TButton;
     bImprimirImagem: TButton;
     bGravarLogo: TButton;
     bConverter: TButton;
+    btInfoUSB: TButton;
     cbCortarPapel: TCheckBox;
     cbHRI: TCheckBox;
     cbGavetaSinalInvertido: TCheckBox;
@@ -136,7 +138,9 @@ type
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
     procedure bTagsTestePageModeClick(Sender: TObject);
+    procedure btSearchPortsClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure btInfoUSBClick(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
     procedure cbCortarPapelChange(Sender: TObject);
     procedure cbGavetaSinalInvertidoChange(Sender: TObject);
@@ -193,7 +197,6 @@ procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
 var
   I: TACBrPosPrinterModelo;
   J: TACBrPosPaginaCodigo;
-  K: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do
@@ -203,26 +206,7 @@ begin
   For J := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
      cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(J) ) ) ;
 
-  cbxPorta.Items.Clear;
-  ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
-  For K := 0 to Printer.Printers.Count-1 do
-    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
-
-  cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('USB:ELGIN') ;
-  cbxPorta.Items.Add('USB:EPSON') ;
-  cbxPorta.Items.Add('\\localhost\Epson') ;
-  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
-  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
-
-  {$IfNDef MSWINDOWS}
-   cbxPorta.Items.Add('/dev/ttyS0') ;
-   cbxPorta.Items.Add('/dev/ttyS1') ;
-   cbxPorta.Items.Add('/dev/ttyUSB0') ;
-   cbxPorta.Items.Add('/dev/ttyUSB1') ;
-   cbxPorta.Items.Add('/tmp/ecf.txt') ;
-  {$EndIf}
-
+  btSearchPortsClick(Sender);
   PageControl1.ActivePageIndex := 0;
 
   LerINI;
@@ -604,10 +588,66 @@ begin
   mImp.Lines.Add('</corte_total>');
 end;
 
+procedure TFrPosPrinterTeste.btSearchPortsClick(Sender: TObject);
+var
+  K: Integer;
+begin
+  cbxPorta.Items.Clear;
+  ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
+
+  {$IfDef MSWINDOWS}
+   ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters();
+   for K := 0 to ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
+     cbxPorta.Items.Add('USB:'+ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[K].DeviceName);
+  {$EndIf}
+
+  For K := 0 to Printer.Printers.Count-1 do
+    cbxPorta.Items.Add('RAW:'+Printer.Printers[K]);
+
+  cbxPorta.Items.Add('LPT1') ;
+  cbxPorta.Items.Add('\\localhost\Epson') ;
+  cbxPorta.Items.Add('c:\temp\ecf.txt') ;
+  cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
+
+  {$IfNDef MSWINDOWS}
+   cbxPorta.Items.Add('/dev/ttyS0') ;
+   cbxPorta.Items.Add('/dev/ttyS1') ;
+   cbxPorta.Items.Add('/dev/ttyUSB0') ;
+   cbxPorta.Items.Add('/dev/ttyUSB1') ;
+   cbxPorta.Items.Add('/tmp/ecf.txt') ;
+  {$EndIf}
+end;
+
 procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);
 begin
   LimparTexto;
   ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
+end;
+
+procedure TFrPosPrinterTeste.btInfoUSBClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  PageControl1.ActivePage := tsLog;
+  mLog.Clear;
+  mLog.Lines.Add('Procurando por Impressoras USB...');
+  ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters();
+  mLog.Lines.Add('  Encontrado '+IntToStr(ACBrPosPrinter1.Device.WinUSB.DeviceList.Count)+' impressora(s)');
+
+  for i := 0 to ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
+  begin
+    with ACBrPosPrinter1.Device.WinUSB do
+    begin
+      mLog.Lines.Add('----------------------------------------------');
+      mLog.Lines.Add('PrinterName: '+DeviceList.Items[i].DeviceName);
+      mLog.Lines.Add('GUID: '+DeviceList.Items[i].GUID);
+      mLog.Lines.Add('FrendlyName: '+DeviceList.Items[i].FrendlyName);
+      mLog.Lines.Add('HardwareID: '+DeviceList.Items[i].HardwareID);
+      mLog.Lines.Add('PrinterInterface: '+DeviceList.Items[i].DeviceInterface);
+      mLog.Lines.Add('USBPort: '+DeviceList.Items[i].USBPort);
+      mLog.Lines.Add('Class GUID: '+DeviceList.Items[i].ClassGUID);
+    end;
+  end;
 end;
 
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
@@ -948,6 +988,7 @@ begin
        ACBrPosPrinter1.Modelo := TACBrPosPrinterModelo( cbxModelo.ItemIndex );
        ACBrPosPrinter1.Porta  := cbxPorta.Text;
        ACBrPosPrinter1.ArqLOG := edLog.Text;
+       //ACBrPosPrinter1.Device.ArqLOG := ACBrPosPrinter1.ArqLOG;
        ACBrPosPrinter1.LinhasBuffer := seLinhasBuffer.Value;
        ACBrPosPrinter1.LinhasEntreCupons := seLinhasPular.Value;
        ACBrPosPrinter1.EspacoEntreLinhas := seEspLinhas.Value;

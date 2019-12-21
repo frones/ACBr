@@ -14,6 +14,12 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <MajorVersionNr Value="3"/>
+      <MinorVersionNr Value="2"/>
+      <RevisionNr Value="1"/>
+    </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
       <Item2 Name="Release">

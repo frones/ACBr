@@ -1,16 +1,18 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
-  Left = 637
+  Left = 404
   Height = 535
-  Top = 298
+  Top = 135
   Width = 838
   ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
   ClientHeight = 535
   ClientWidth = 838
+  Constraints.MinHeight = 535
+  Constraints.MinWidth = 838
   OnClose = FormClose
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '2.0.0.3'
+  LCLVersion = '2.0.6.0'
   object Panel1: TPanel
     Left = 256
     Height = 535
@@ -132,7 +134,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         ClientWidth = 578
         TabOrder = 13
         object bLimpar: TBitBtn
-          Left = 389
+          Left = 384
           Height = 26
           Top = 7
           Width = 83
@@ -179,7 +181,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           TabOrder = 1
         end
         object bImprimir: TBitBtn
-          Left = 484
+          Left = 480
           Height = 26
           Top = 7
           Width = 92
@@ -261,16 +263,25 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnClick = Button1Click
         TabOrder = 8
       end
+      object btInfoUSB: TButton
+        Left = 392
+        Height = 25
+        Top = 136
+        Width = 183
+        Caption = 'Informações USB'
+        OnClick = btInfoUSBClick
+        TabOrder = 14
+      end
     end
     object PageControl1: TPageControl
       Left = 1
       Height = 360
       Top = 1
       Width = 580
-      ActivePage = tsImprimir
+      ActivePage = tsLog
       Align = alClient
       TabHeight = 40
-      TabIndex = 0
+      TabIndex = 1
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
@@ -289,11 +300,11 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object tsLog: TTabSheet
         Caption = 'Eventos Log'
-        ClientHeight = 319
+        ClientHeight = 312
         ClientWidth = 572
         object mLog: TMemo
           Left = 0
-          Height = 319
+          Height = 312
           Top = 0
           Width = 572
           Align = alClient
@@ -723,8 +734,9 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 8
         Height = 23
         Top = 56
-        Width = 192
+        Width = 163
         ItemHeight = 15
+        ItemWidth = 250
         OnChange = cbxPortaChange
         TabOrder = 3
       end
@@ -948,6 +960,52 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         OnChange = cbCortarPapelChange
         State = cbChecked
         TabOrder = 12
+      end
+      object btSearchPorts: TSpeedButton
+        Left = 184
+        Height = 22
+        Hint = 'Procurar Impressoras USB'
+        Top = 56
+        Width = 23
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000064000000640000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000005000000A6000000EF00000031000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000005000000AC000000FF000000FF00000053000000000000
+          000000000000000000010000003F0000008E000000B0000000AA0000007B0000
+          002100000005000000AC000000FF000000FF0000008C00000001000000000000
+          000000000019000000BB000000FF000000FF000000FF000000FF000000FF0000
+          00FB000000CF000000FF000000FF0000008C0000000100000000000000000000
+          0013000000DB000000FF000000FF000000D20000009C000000A5000000E90000
+          00FF000000FF000000FF0000008C000000010000000000000000000000000000
+          009F000000FF000000FB0000005E0000000100000000000000000000000A0000
+          009D000000FF000000FF00000053000000000000000000000000000000180000
+          00FC000000FF0000007100000000000000000000000000000000000000000000
+          0002000000C0000000FF000000C8000000000000000000000000000000580000
+          00FF000000F70000000900000000000000000000000000000000000000000000
+          000000000051000000FF000000FF0000000D00000000000000000000006F0000
+          00FF000000DB0000000000000000000000000000000000000000000000000000
+          00000000002C000000FF000000FF0000002200000000000000000000005E0000
+          00FF000000F20000000400000000000000000000000000000000000000000000
+          000000000046000000FF000000FF000000110000000000000000000000220000
+          00FF000000FF0000005800000000000000000000000000000000000000000000
+          0000000000A8000000FF000000D4000000000000000000000000000000000000
+          00B5000000FF000000F000000039000000000000000000000000000000010000
+          0075000000FF000000FF00000068000000000000000000000000000000000000
+          0022000000EE000000FF000000FC000000AA000000730000007B000000C80000
+          00FF000000FF000000BF00000003000000000000000000000000000000000000
+          00000000002F000000DC000000FF000000FF000000FF000000FF000000FF0000
+          00FF000000B00000000E00000000000000000000000000000000000000000000
+          0000000000000000000900000068000000B7000000D9000000D4000000A50000
+          0046000000010000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000
+        }
+        OnClick = btSearchPortsClick
+        ShowHint = True
+        ParentShowHint = False
       end
     end
     object gbCodBarrasConfig: TGroupBox

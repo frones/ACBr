@@ -137,7 +137,7 @@ type
   TACBrPosPaginaCodigo = (pcNone, pc437, pc850, pc852, pc860, pcUTF8, pc1252);
   TACBrPosDirecao = (dirEsquerdaParaDireita, dirTopoParaBaixo, dirDireitaParaEsquerda, dirBaixoParaTopo);
 
-  TACBrPosTipoStatus = (stErro, stNaoSerial, stPoucoPapel, stSemPapel,
+  TACBrPosTipoStatus = (stErro, stApenasEscrita, stPoucoPapel, stSemPapel,
                         stGavetaAberta, stImprimindo, stOffLine, stTampaAberta,
                         stErroLeitura);
   TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
@@ -342,6 +342,7 @@ type
     function GetPorta: String;
     function GetTagsNaoSuportadas: TStringList;
     function GetTraduzirTags: Boolean;
+    function PodeLerDaPorta: Boolean;
     procedure SetAtivo(AValue: Boolean);
     procedure SetIgnorarTags(AValue: Boolean);
     procedure SetPorta(const AValue: String);
@@ -1072,14 +1073,12 @@ begin
     Exit;
 
 {(*}
-  if FDevice.IsTXTFilePort then
-    DadosDevice := '  - Arquivo: '+FDevice.Porta
-  else if FDevice.IsDLLPort then
-    DadosDevice := '  - DLL....: '+FDevice.Porta
-  else if FDevice.IsSerialPort then
-    DadosDevice := '  - Serial.: '+FDevice.Porta+' - '+FDevice.DeviceToString(False)
-  else
-    DadosDevice := '  - Porta..: '+FDevice.Porta;
+  DadosDevice := '  - Porta..: '+FDevice.Porta + sLineBreak +
+                 '  - Tipo...: '+copy(GetEnumName(TypeInfo(TACBrDeviceType), integer(FDevice.DeviceType)),3,20);
+
+  if FDevice.IsSerialPort then
+    DadosDevice := DadosDevice + sLineBreak +
+                   '  - Params.: '+FDevice.DeviceToString(False);
 
   GravarLog(AnsiString(sLineBreak + StringOfChar('-', 80) + sLineBreak +
             'ATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + sLineBreak +
@@ -1830,7 +1829,7 @@ begin
   if Assigned(FOnGravarLog) then
     FOnGravarLog(AString, Tratado);
 
-  if not Tratado then
+  if (not Tratado) and (FArqLog <> '') then
   begin
     if AdicionaTempo then
       AString := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + AString;
@@ -1909,17 +1908,18 @@ begin
   GravarLog('LerStatusImpressora( '+IntToStr(Tentativas)+' )');
 
   try
-    if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
+    if not PodeLerDaPorta then
     begin
-      Result := [stNaoSerial];
+      Result := [stApenasEscrita];
       Exit;
     end;
 
     OldAtivo := Ativo;
     try
-      Ativo := True;
-      Falhas := 0;
+      Ativar;
+      AtivarPorta;
 
+      Falhas := 0;
       while Falhas < Tentativas do
       begin
         Result := [];
@@ -1940,6 +1940,8 @@ begin
       end;
     finally
       Ativo := OldAtivo;
+      if ControlePorta then
+        DesativarPorta;
     end;
   finally
     AStr := '';
@@ -1963,16 +1965,19 @@ begin
 
   OldAtivo := Ativo;
   try
-    Ativo := True;
-
-    if not (FDevice.IsSerialPort or FDevice.IsTCPPort or FDevice.IsDLLPort) then
-      raise EPosPrinterException.Create(ACBrStr('Leitura de Informações só disponivel em Portas Seriais ou TCP'));
+    if not PodeLerDaPorta then
+      raise EPosPrinterException.Create(ACBrStr('Leitura de Informações não disponível na porta: ')+
+                                        GetEnumName(TypeInfo(TACBrDeviceType), integer(FDevice.DeviceType)));
+    Ativar;
+    AtivarPorta;
 
     Result := FPosPrinterClass.LerInfo;
     if (Result <> '') then
       GravarLog('   '+Result, True);
   finally
     Ativo := OldAtivo;
+    if ControlePorta then
+      DesativarPorta;
   end;
 end;
 
@@ -2112,6 +2117,11 @@ end;
 function TACBrPosPrinter.GetTraduzirTags: Boolean;
 begin
   Result := FTagProcessor.TraduzirTags;
+end;
+
+function TACBrPosPrinter.PodeLerDaPorta: Boolean;
+begin
+   Result := (FDevice.DeviceType in [dtSerial, dtTCP, dtHook, dtUSB] )
 end;
 
 procedure TACBrPosPrinter.SetAtivo(AValue: Boolean);

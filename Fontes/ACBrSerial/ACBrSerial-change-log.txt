@@ -38,6 +38,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/12/2019
+-- ACBrDevice, ACBrWinUSBDevice --
+[*] Proteção de algumas variáveis Públicas migradas para Properties
+[+] Adicionado suporte nativo a Impressoras USB no Windows, permitindo o uso da
+    sintaxe  Porta := 'USB:Marca, Modelo';
+    - Para detectar as Impressoras USB plugadas, use:
+      ACBrDevice.WinUSB.FindUSBPrinters();
+    - As Impressoras encontradas estarão disponíveis na lista de Objetos (interna):
+      ACBrDevice.WinUSB.DeviceList
+    - Para acessar equipamento por Hook com a DLL do fabricante, use a sintaxe:
+       Porta := 'DLL:Fabricante';
+
+-- ACBrPosPrinter --
+[*] Tipo enumerado TACBrPosTipoStatus.stNaoSerial modificado para:
+    TACBrPosTipoStatus.stApenasEscrita
+[-] Corrigido Bug de falha de leitura, em LerStatusImpressora e LerInfoImpressora,
+    quando ACBrPosPrinter estava Desativado e ControlePorta Ligado
+
+-- ACBrEscBematech --
+[*] Adicionada proteção contra A.V., caso a resposta da Impressora seja inválida
+    (por: DSA)
+
 Data: 02/12/2019
 -- ACBrETQPpla --
 [+] Implementado o método "BMP2HEX", que converte uma Imagem BitMap, no Formato

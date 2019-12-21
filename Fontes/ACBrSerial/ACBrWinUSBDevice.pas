@@ -106,6 +106,7 @@ type
   TACBrUSBWinDevice = class
   private
     FACBrProtocol: Integer;
+    FClassGUID: String;
     FDeviceKind: TACBrUSBHardwareType;
     FFrendlyName: String;
     FGUID: String;
@@ -121,6 +122,7 @@ type
     function GetDeviceName: String;
     function GetProductModel: String;
     function GetVendorName: String;
+    procedure SetClassGUID(AValue: String);
     procedure SetGUID(AValue: String);
     procedure SetProductID(AValue: String);
     procedure SetVendorID(AValue: String);
@@ -137,6 +139,7 @@ type
     property ProductModel: String read GetProductModel;
     property DeviceInterface: String read FDeviceInterface write FDeviceInterface;
     property USBPort: String read FUSBPort write FUSBPort;
+    property ClassGUID: String read FClassGUID write SetClassGUID;
     property GUID: String read FGUID write SetGUID;
     property FrendlyName: String read FFrendlyName write FFrendlyName;
     property HardwareID: String read FHardwareID write FHardwareID;
@@ -539,6 +542,12 @@ begin
   Result := FVendorName;
 end;
 
+procedure TACBrUSBWinDevice.SetClassGUID(AValue: String);
+begin
+  if FClassGUID = AValue then Exit;
+  FClassGUID := LowerCase(AValue);
+end;
+
 procedure TACBrUSBWinDevice.SetGUID(AValue: String);
 begin
   if FGUID = AValue then Exit;
@@ -934,6 +943,7 @@ begin
           DevFrendlyName := TryGetDeviceRegistryPropertyString(SPDRP_FRIENDLYNAME);
 
           ADevice := ADeviceListToAdd.New(VendorId, ProductId);
+          ADevice.ClassGUID := GUIDToString(AGUID);
           ADevice.DeviceInterface := DevInterface;
           ADevice.USBPort := DevLocation;
           ADevice.GUID :=  DevClassGUID;

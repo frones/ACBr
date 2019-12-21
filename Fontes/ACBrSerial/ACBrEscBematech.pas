@@ -263,8 +263,10 @@ var
 begin
   try
     Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
-    B := Ord(Ret[1]);
+    if Length(Ret) < 2 then
+      raise EPosPrinterException.Create( ACBrStr('Leitura Status, retorno inválido'));
 
+    B := Ord(Ret[1]);
     if TestBit(B, 2) then
       AStatus := AStatus + [stImprimindo];  // Overrun
     if TestBit(B, 3) then
@@ -316,8 +318,11 @@ begin
   AddInfo('Firmware', Ret);
 
   Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
-  B := Ord(Ret[3]);
-  Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
+  if Length(Ret) >= 3 then
+  begin
+    B := Ord(Ret[3]);
+    Info := Info + 'Guilhotina='+IfThen(TestBit(B, 2),'0','1') + sLineBreak ;
+  end;
 
   Result := Info;
 end;

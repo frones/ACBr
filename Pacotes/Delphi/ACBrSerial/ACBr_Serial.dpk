@@ -138,6 +138,7 @@ contains
   ACBrEscGPrinter in '..\..\..\Fontes\ACBrSerial\ACBrEscGPrinter.pas',
   ACBrEscPosHook in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHook.pas',
   ACBrEscPosHookEpsonDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookEpsonDLL.pas',
-  ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas';
+  ACBrEscPosHookElginDLL in '..\..\..\Fontes\ACBrSerial\ACBrEscPosHookElginDLL.pas',
+  ACBrWinUSBDevice in '..\..\..\Fontes\ACBrSerial\ACBrWinUSBDevice.pas';
 
 end.

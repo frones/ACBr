@@ -46,13 +46,12 @@ uses
   {$IfDef FPC}
    ,dynlibs
   {$EndIf}
-  ,ACBrUtil;
+  ,ACBrUtil, ACBrBase;
 
 const
   CUSBIDDataBaseResourceName = 'ACBrUSBID';
   CUSBIDDataBaseFileName = 'ACBrUSBID.ini';
   CSecVendors = 'Vendors';
-  CReceivePacketTimeOut = 200;
   CReceiveBufferSize = 1024;
 
 resourcestring
@@ -62,13 +61,19 @@ resourcestring
   sErrACBrWinUSBDeviceOutOfRange = 'Dispositivo USB num: %d não existe';
   sErrACBrWinUSBOpening = 'Erro %s ao abrir o Porta USB %s';
   sErrACBrWinUSBClosing = 'Erro %s ao fechar a Porta USB %s';
-  sErrACBrWinUSBDescriptionNotFound = 'Erro, dispositivo USB [%s] não encontrado';
+  sErrACBrWinUSBDescriptionNotFound = 'Erro, dispositivo [%s] não encontrado';
   sErrACBrWinUSBNotDeviceFound = 'Nenhum dispositivo USB encontrado';
-  sErrACBrWinUSBDeviceIsClosed = 'Dispositivo USB não foi aberto';
+  sErrACBrWinUSBDeviceIsClosed = 'Dispositivo USB não está aberto';
   sErrACBrWinUSBSendData = 'Erro %s, ao enviar %d bytes para USB';
   sErrACBrWinUSBReadData = 'Erro %s, ao ler da USB';
 
+  sDescDevPosPrinter = 'Impressora';
+  sDescDevLabelPrinter = 'Etiquetadora';
+  sDescDevFiscal = 'SAT';
+
 type
+
+  TACBrUSBHardwareType = (htUnknown, htPOSPrinter, htLabelPrinter, htFiscal);
 
   { TACBrUSBIDDataBase - https://www.usb.org/developers }
 
@@ -90,7 +95,8 @@ type
     property FileName: String read FFileName write SetFileName;
     property ResourceName: String read FResourceName;
     function FindDeviceByID(AVendorID, AProductID: String; out AVendorName: String;
-      out AProductModel: String; out AACBrProtocol: Integer): Boolean;
+      out AProductModel: String; out AACBrProtocol: Integer;
+      out ADeviceKind: TACBrUSBHardwareType): Boolean;
   end;
 
   TACBrUSBWinDeviceList = class;
@@ -100,6 +106,7 @@ type
   TACBrUSBWinDevice = class
   private
     FACBrProtocol: Integer;
+    FDeviceKind: TACBrUSBHardwareType;
     FFrendlyName: String;
     FGUID: String;
     FHardwareID: String;
@@ -110,6 +117,7 @@ type
     FVendorID, FVendorName: String;
     FDescriptionsLoaded: Boolean;
 
+    function GetDeviceKind: TACBrUSBHardwareType;
     function GetDeviceName: String;
     function GetProductModel: String;
     function GetVendorName: String;
@@ -121,6 +129,7 @@ type
     constructor Create(AOwner: TACBrUSBWinDeviceList);
     procedure Clear;
 
+    property DeviceKind: TACBrUSBHardwareType read GetDeviceKind;
     property DeviceName: String read GetDeviceName;
     property VendorID: String read FVendorID write SetVendorID;
     property VendorName: String read GetVendorName;
@@ -158,9 +167,13 @@ type
 const
   CSetupAPILibName = 'SetupApi.dll';
 
-  GUID_DEVCLASS_NET : TGUID = '{4D36E972-E325-11CE-BFC1-08002BE10318}';
+  GUID_DEVCLASS_NET : TGUID =  '{4D36E972-E325-11CE-BFC1-08002BE10318}';
   GUID_DEVCLASS_PORT : TGUID = '{4D36E978-E325-11CE-BFC1-08002BE10318}';
+  GUID_DEVCLASS_PRINTER : TGUID = '{4D36E979-E325-11CE-BFC1-08002BE10318}';
+  GUID_DEVCLASS_PNPPRINTERS: TGUID = '{4658EE7E-F050-11D1-B6BD-00C04FA372A7}';
+  GUID_DEVCLASS_NETCLIENT: TGUID = '{4D36E973-E325-11CE-BFC1-08002BE10318}';
   GUID_DEVINTERFACE_USBPRINT: TGUID = '{28D78FAD-5A12-11D1-AE5B-0000F803A8C2}';
+  GUID_DEVINTERFACE_USB_DEVICE: TGUID = '{A5DCBF10-6530-11D2-901F-00C04FB951ED}';
 
   DIGCF_PRESENT = $00000002;
   DIGCF_DEVICEINTERFACE = $00000010;
@@ -220,6 +233,9 @@ type
     FInterfaceName: String;
     FDeviceIndex: Integer;
     FTimeOut: Integer;
+    FInternalBuffer: AnsiString;
+    FLogFile: String;
+    FOnLog: TACBrGravarLog;
 
     xSetupDiEnumDeviceInfo: function(DeviceInfoSet: HDEVINFO; MemberIndex: DWORD;
       var DeviceInfoData: TSPDevInfoData): BOOL; stdcall;
@@ -268,26 +284,45 @@ type
     property USBHandle: THandle read FUSBHandle;
     property InterfaceName: String read FInterfaceName;
     property Active: Boolean read GetActive;
-    property TimeOut: Integer read FTimeOut write FTimeOut default 10000;
+    property TimeOut: Integer read FTimeOut write FTimeOut default 1000;
 
     function FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
+    function FindUSBKnownDevices(ADeviceList: TACBrUSBWinDeviceList = Nil;
+      ADeviceKind: TACBrUSBHardwareType = htUnknown): Integer;
     function FindUSBDevicesByGUID(AGUID: TGUID; ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
 
     procedure Connect(AInterfaceName: String);
     procedure Close;
     function SendData(AData: AnsiString; ATimeout: Integer = 0): Integer;
-    function ReceiveBufferLen(BytesToRead: Integer; ATimeout: Integer = 0): AnsiString;
+    function ReceiveNumBytes(BytesToRead: Integer; ATimeout: Integer = 0): AnsiString;
     function ReceiveTerminated(ATerminator: AnsiString; ATimeOut: Integer = 0): AnsiString;
-    function ReceivePacket(BytesToRead: Integer = 0; ATimeOut: Integer = 0): AnsiString;
+    function ReceivePacket(ATimeOut: Integer = 0): AnsiString;
 
+    property OnLog: TACBrGravarLog read FOnLog write FOnLog;
+    property LogFile: String read FLogFile write FLogFile;
+    procedure DoLog(AMessage: AnsiString; Translate: Boolean = False;
+      AddTimeStamp: Boolean = True);
   end;
+
+  function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
 
 implementation
 
 uses
-  Types, dateutils, strutils,
+  Types, dateutils, strutils, math,
   synautil,
   ACBrConsts;
+
+function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
+begin
+  case ADeviceKind of
+    htPOSPrinter: Result := sDescDevPosPrinter;
+    htLabelPrinter: Result := sDescDevLabelPrinter;
+    htFiscal: Result := sDescDevFiscal;
+  else
+    Result := '';
+  end;
+end;
 
 {$IFDEF FPC}
  {$R ACBrUSBID.rc}
@@ -384,32 +419,21 @@ function TACBrUSBIDDataBase.Load: Boolean;
 begin
   Clear;
   Result := LoadFromFile or LoadFromResource;
+  FLoaded := Result;
 end;
 
 function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
-  AVendorName: String; out AProductModel: String; out AACBrProtocol: Integer): Boolean;
-
-  procedure GetACBrProtocol( var ADescription: String; out ACBrProtocol: Integer);
-  var
-    p: Integer;
-  begin
-    p := pos(';', ADescription);
-    if (p > 0) then
-    begin
-      ACBrProtocol := StrToIntDef(copy(ADescription, P+1, Length(ADescription)), 0);
-      ADescription := copy(ADescription,1, p-1);
-    end
-    else
-      ACBrProtocol := 0;
-  end;
-
+  AVendorName: String; out AProductModel: String; out AACBrProtocol: Integer;
+  out ADeviceKind: TACBrUSBHardwareType): Boolean;
 var
-  VendorProtocol, ModelProtocol: Integer;
+  p, DeviceKind, ACBrProtocol: Integer;
+  SL: TStringList;
 begin
   Result := False;
   AVendorName := '';
   AProductModel := '';
   AACBrProtocol := 0;
+  ADeviceKind := htUnknown;
 
   if not StrIsHexa(AVendorID) then
     raise Exception.CreateFmt(ACBrStr(sErrACBrWinUSBInvalidID), ['VendorID', AVendorID]);
@@ -422,14 +446,24 @@ begin
 
   AVendorName := FIni.ReadString(CSecVendors, AVendorID, '');
   AProductModel := FIni.ReadString(AVendorID, AProductID, '');
-  GetACBrProtocol(AVendorName, VendorProtocol);
-  GetACBrProtocol(AProductModel, ModelProtocol);
-  if (ModelProtocol = 0) then
-    AACBrProtocol := VendorProtocol
-  else
-    AACBrProtocol := ModelProtocol;
 
-  Result := ((AVendorName + AProductModel) <> '');
+  SL := TStringList.Create;
+  try
+    AddDelimitedTextToList(AProductModel, ';', SL, #0);
+
+    if SL.Count > 0 then
+      AProductModel := SL[0];
+
+    if SL.Count > 1 then
+      ADeviceKind := TACBrUSBHardwareType(StrToIntDef(SL[1],0));
+
+    if SL.Count > 2 then
+      AACBrProtocol := StrToIntDef(SL[2],0);
+  finally
+    SL.Free;
+  end;
+
+  Result := (AVendorName <> '') or (AProductModel <> '');
 end;
 
 
@@ -455,30 +489,53 @@ begin
   FFrendlyName := '';
   FHardwareID := '';
   FACBrProtocol := 0;
+  FDeviceKind := htUnknown;
   FDescriptionsLoaded := False;
 end;
 
 function TACBrUSBWinDevice.GetDeviceName: String;
+
+  function ConcatDescription(ActualDescription, AddDescription: String): String;
+  begin
+    Result := ActualDescription;
+    if (Trim(AddDescription) = '') then
+      Exit;
+
+    if (Result <> '') then
+      Result := Result + ', ';
+
+    Result := Result + AddDescription;
+  end;
 begin
-  Result := IfEmptyThen( FrendlyName,
-                         IfThen( pos(',',ProductModel) > 0, ProductModel,
-                            IfEmptyThen(VendorName, VendorID) + ', ' +
-                            IfEmptyThen(ProductModel, ProductID)));
+  if (FrendlyName <> '') then
+    Result := FrendlyName
+  else
+  begin
+    Result := '';
+    LoadDescriptions;
+    if (pos(',',ProductModel) = 0) then
+      Result := ConcatDescription(Result, VendorName);
+
+    Result := ConcatDescription(Result, ProductModel);
+    //Result := ConcatDescription(Result, DeviceKindDescription(DeviceKind));
+  end;
+end;
+
+function TACBrUSBWinDevice.GetDeviceKind: TACBrUSBHardwareType;
+begin
+  LoadDescriptions;
+  Result := FDeviceKind;
 end;
 
 function TACBrUSBWinDevice.GetProductModel: String;
 begin
-  if not FDescriptionsLoaded then
-    LoadDescriptions;
-
+  LoadDescriptions;
   Result := FProductModel;
 end;
 
 function TACBrUSBWinDevice.GetVendorName: String;
 begin
-  if not FDescriptionsLoaded then
-    LoadDescriptions;
-
+  LoadDescriptions;
   Result := FVendorName;
 end;
 
@@ -510,9 +567,13 @@ end;
 
 procedure TACBrUSBWinDevice.LoadDescriptions;
 begin
+  if FDescriptionsLoaded then Exit;
+
   FVendorName := '';
   FProductModel := '';
-  FOwner.Database.FindDeviceByID(FVendorID, FProductID, FVendorName, FProductModel, FACBrProtocol);
+  FDeviceKind := htUnknown;
+  FOwner.Database.FindDeviceByID( FVendorID, FProductID,
+                                  FVendorName, FProductModel, FACBrProtocol, FDeviceKind);
   FDescriptionsLoaded := True;
 end;
 
@@ -575,6 +636,7 @@ var
   i, s: Integer;
   LDeviceName: String;
 begin
+  // Partial Search and Ignore Case
   Result := -1;
   if Count < 1 then Exit;
 
@@ -609,6 +671,7 @@ begin
   FUSBHandle := INVALID_HANDLE_VALUE;
   FInterfaceName := '';
   FTimeOut := 1000;
+  FInternalBuffer := '';
 
   xSetupDiEnumDeviceInfo := Nil;
   xSetupDiGetClassDevsA := Nil;
@@ -689,11 +752,7 @@ function TACBrUSBWinDeviceAPI.GetDeviceRegistryPropertyString(DevInfo: HDEVINFO;
 var
   Buffer: PByte;
   RequiredSize, PropertyRegDataTye: DWORD;
-  {$IfDef UNICODE}
-   AResult: WideString;
-  {$Else}
-   AResult: AnsiString;
-  {$EndIf}
+  AResult: {$IfDef UNICODE}WideString;{$Else}AnsiString;{$EndIf}
   Err: DWORD;
 begin
   // Obtendo o tamanho do Buffer em "RequiredSize"
@@ -757,6 +816,44 @@ begin
 
   Result := FindUSBDevicesByGUID( GUID_DEVINTERFACE_USBPRINT, ADeviceListToAdd);
   Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PORT, ADeviceListToAdd);
+  Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PRINTER, ADeviceListToAdd);
+  //Result := Result + FindUSBDevicesByGUID( GUID_DEVINTERFACE_USB_DEVICE, ADeviceListToAdd);
+  FindUSBKnownDevices(ADeviceListToAdd, htPOSPrinter);
+end;
+
+function TACBrUSBWinDeviceAPI.FindUSBKnownDevices(
+  ADeviceList: TACBrUSBWinDeviceList; ADeviceKind: TACBrUSBHardwareType
+  ): Integer;
+var
+  ADeviceListToAdd: TACBrUSBWinDeviceList;
+  i, j: Integer;
+  ok: Boolean;
+begin
+  if (ADeviceList <> Nil) then
+    ADeviceListToAdd := ADeviceList
+  else
+    ADeviceListToAdd := FDeviceList;
+
+  i := ADeviceListToAdd.Count;
+  FindUSBDevicesByGUID( GUID_DEVINTERFACE_USB_DEVICE, ADeviceListToAdd);
+  while i < ADeviceListToAdd.Count do
+  begin
+    with ADeviceListToAdd.Items[i] do
+    begin
+      ok := (ADeviceKind = htUnknown) or (ADeviceKind = DeviceKind);
+      ok := ok and (VendorName <> '');
+      if ok then
+      begin     // Remove if already exists
+        j := ADeviceListToAdd.FindDeviceByGUID(GUID);
+        ok := (j = i);
+      end;
+
+      if ok then
+        inc(i)
+      else
+        ADeviceListToAdd.Delete(i);
+    end;
+  end;
 end;
 
 function TACBrUSBWinDeviceAPI.FindUSBDevicesByGUID(AGUID: TGUID;
@@ -860,7 +957,7 @@ var
   procedure CheckListIsLoaded;
   begin
     if FDeviceList.Count < 1 then
-      FindUSBPrinters;
+      FindUSBPrinters();
   end;
 
 begin
@@ -868,27 +965,37 @@ begin
     Close;
 
   APort := Trim(AInterfaceName);
+  if UpperCase(copy(APort,1,3)) = 'USB' then  // USB ou USB:Nome
+    APort := copy(AInterfaceName, 5, Length(AInterfaceName));
+
+  CheckListIsLoaded;
+
   if (APort = '') then
   begin
-    CheckListIsLoaded;
     if FDeviceList.Count > 0 then
       DeviceIndex := 0
     else
       raise Exception.Create(sErrACBrWinUSBNotDeviceFound);
-
-    APort := FDeviceList.Items[DeviceIndex].DeviceInterface;
   end
-  else if UpperCase(copy(APort,1,3)) = 'USB' then
-  begin
-    CheckListIsLoaded;
-    DeviceIndex := FDeviceList.FindDeviceByDescription( copy(AInterfaceName, 5, Length(AInterfaceName) ) );
-    if (DeviceIndex < 0) then
-      raise Exception.CreateFmt(ACBrStr(sErrACBrWinUSBDescriptionNotFound), [GetLastErrorAsHexaStr(), AInterfaceName]);
 
-    APort := FDeviceList.Items[DeviceIndex].DeviceInterface;
+  else if (copy(APort,1,2) = '\\') then
+    DeviceIndex := -1
+
+  else
+  begin
+    DeviceIndex := FDeviceList.FindDeviceByDescription(APort);
+    if (DeviceIndex < 0) then
+      raise Exception.CreateFmt(ACBrStr(sErrACBrWinUSBDescriptionNotFound), [AInterfaceName]);
   end;
 
-  FUSBHandle := CreateFile( LPCSTR(APort),
+  if DeviceIndex >= 0 then
+    APort := FDeviceList.Items[DeviceIndex].DeviceInterface;
+
+  {$IfDef UNICODE}
+  FUSBHandle := CreateFileW( PWideChar(WideString(APort)),
+  {$Else}
+  FUSBHandle := CreateFileA( PAnsiChar(APort),
+  {$EndIf}
                             GENERIC_WRITE or GENERIC_READ,
                             FILE_SHARE_READ,
                             Nil,
@@ -899,6 +1006,7 @@ begin
   if FUSBHandle = INVALID_HANDLE_VALUE then
     raise Exception.CreateFmt(sErrACBrWinUSBOpening, [GetLastErrorAsHexaStr(), AInterfaceName]);
 
+  SetupComm(FUSBHandle, CReceiveBufferSize, CReceiveBufferSize);
   FInterfaceName := AInterfaceName;
 end;
 
@@ -930,7 +1038,7 @@ begin
   s := Length(AData);
   BytesWritten := 0;
   FillChar(AOverlapped, Sizeof(AOverlapped), 0);
-  if ( Not WriteFile(FUSBHandle, AData[1], s, BytesWritten, @AOverlapped) ) then
+  if ( Not WriteFile(FUSBHandle, AData[1], s, BytesWritten, @AOverlapped ) ) then
   begin
     Err := GetLastError;
     if Err = ERROR_IO_PENDING then
@@ -951,55 +1059,68 @@ begin
   Result := BytesWritten;
 end;
 
-function TACBrUSBWinDeviceAPI.ReceiveBufferLen(BytesToRead: Integer;
+function TACBrUSBWinDeviceAPI.ReceiveNumBytes(BytesToRead: Integer;
   ATimeout: Integer): AnsiString;
+var
+  TimeoutTime: TDateTime;
 begin
-  if BytesToRead <= 0 then
-    Result := ''
-  else
-    Result := ReceivePacket(BytesToRead, ATimeout);
+  Result := '';
+  if BytesToRead <= 0 then Exit;
+
+  if ATimeOut = 0 then
+    ATimeOut := FTimeOut;
+
+  DoLog('ReceiveNumBytes: BytesToRead: '+IntToStr(BytesToRead)+
+                         ', TimeOut: '+IntToStr(ATimeOut));
+
+  TimeoutTime := IncMilliSecond(Now, ATimeOut);
+  while (Length(FInternalBuffer) < BytesToRead) and (now < TimeoutTime) do
+    FInternalBuffer := FInternalBuffer + ReceivePacket(ATimeout);
+
+  Result := copy(FInternalBuffer, 1, BytesToRead);
+  if (Result <> '') then
+    Delete(FInternalBuffer, 1, Length(Result));
 end;
 
 function TACBrUSBWinDeviceAPI.ReceiveTerminated(ATerminator: AnsiString;
   ATimeOut: Integer): AnsiString;
 var
   TimeoutTime: TDateTime;
-  Buffer: AnsiString;
-  LenBuf, LenTer: Integer;
+  ABuffer: AnsiString;
+  LenBuf, LenTer, p: Integer;
 begin
+  Result := '';
   LenTer := Length(ATerminator);
   if (LenTer = 0) then
-    Result := ReceivePacket(0, ATimeOut)
-  else
-  begin
-    Result := '';
-    TimeoutTime := IncMilliSecond(Now, ATimeOut);
-    repeat
-      // Le de 1 em 1 Byte
-      Buffer := ReceivePacket(0, ATimeOut);
-      LenBuf := Length(Buffer);
-      if (LenBuf > 0) then
-      begin
-        if (RightStr(Buffer, LenTer) = ATerminator) then
-        begin
-          SetLength(Buffer, (LenBuf-LenTer));
-          TimeoutTime := 0; // força saida
-        end;
+    Exit;
 
-        Result := Result + Buffer;
-      end;
-    until (now > TimeoutTime) ;
+  if ATimeOut = 0 then
+    ATimeOut := FTimeOut;
+
+  DoLog('ReceiveTerminated: Terminator: '+ATerminator+
+                         ', TimeOut: '+IntToStr(ATimeOut), True);
+  p := pos(ATerminator, FInternalBuffer);
+  TimeoutTime := IncMilliSecond(Now, ATimeOut);
+  while (p < 1) and (now < TimeoutTime) do
+  begin
+    FInternalBuffer := FInternalBuffer + ReceivePacket(ATimeout);
+    p := pos(ATerminator, FInternalBuffer);
+  end;
+
+  if (p > 0) then
+  begin
+    Result := copy(FInternalBuffer, 1, p-1);
+    Delete(FInternalBuffer, 1, p + LenTer-1);
   end;
 end;
 
-function TACBrUSBWinDeviceAPI.ReceivePacket(BytesToRead: Integer;
-  ATimeOut: Integer): AnsiString;
+function TACBrUSBWinDeviceAPI.ReceivePacket(ATimeOut: Integer): AnsiString;
 var
-  Buffer: AnsiString;
+  ABuffer: AnsiString;
   AOverlapped: OVERLAPPED;
   BytesReaded, Err, x: DWORD;
   TimeoutTime: TDateTime;
-  BytesRemainingToRead: Integer;
+  stat: COMSTAT;
 
   procedure CalcOverallTimeOut;
   begin
@@ -1007,51 +1128,74 @@ var
   end;
 
 begin
-  if BytesToRead = 0 then
-    BytesRemainingToRead := CReceiveBufferSize
-  else
-    BytesRemainingToRead := BytesToRead;
+  if not Active then
+    raise Exception.Create(ACBrStr(sErrACBrWinUSBDeviceIsClosed));
 
   if ATimeOut = 0 then
     ATimeOut := FTimeOut;
 
+  DoLog('ReceivePacket: TimeOut: '+IntToStr(ATimeOut));
+
   Result := '';
   CalcOverallTimeOut;
-  SetLength(Buffer, CReceiveBufferSize);
   repeat
     BytesReaded := 0;
-    Buffer := #0;
+    ABuffer := StringOfChar(#0,CReceiveBufferSize);
     FillChar(AOverlapped, Sizeof(AOverlapped), 0);
-    ReadFile(FUSBHandle, Buffer[1], BytesRemainingToRead, BytesReaded, @AOverlapped);
+    ReadFile(FUSBHandle, ABuffer[1], CReceiveBufferSize, BytesReaded, @AOverlapped);
     Err := GetLastError;
+    DoLog('  ReadFile: Err: '+IntToStr(Err));
     if (Err = ERROR_IO_PENDING) then
     begin
-      x := WaitForSingleObject(FUSBHandle, min(ATimeOut, CReceivePacketTimeOut) );
+      x := WaitForSingleObject(FUSBHandle, ATimeOut);
       if (x = WAIT_TIMEOUT) then
       begin
+        DoLog('  ReadFile: TimeOut');
         PurgeComm(usbHandle, PURGE_RXABORT);
-        raise Exception.CreateFmt(sErrACBrWinUSBReadData, ['TimeOut']);
+        Break;
       end;
 
       GetOverlappedResult(FUSBHandle, AOverlapped, BytesReaded, False);
       Err := GetLastError;
     end;
 
-    if (Err = ERROR_IO_INCOMPLETE) then
-      CalcOverallTimeOut
-    else if (Err <> ERROR_SUCCESS) then
-      raise Exception.CreateFmt(sErrACBrWinUSBReadData, [GetLastErrorAsHexaStr(Err)]);
+    DoLog('  Err: '+IntToStr(Err)+ ', BytesReaded: '+IntToStr(BytesReaded));
 
     if (BytesReaded > 0) then
     begin
-      Result := Result + copy(Buffer, 1, BytesReaded);
-      if BytesToRead > 0 then
-        BytesRemainingToRead := BytesRemainingToRead - BytesReaded;
+      DoLog('  Buffer Lido: '+copy(ABuffer, 1, BytesReaded), True);
+      Result := Result + copy(ABuffer, 1, BytesReaded);
     end;
-  until (BytesReaded = 0) or (BytesRemainingToRead <= 0) or (now > TimeoutTime);
 
-  if (Result = '') and (now > TimeoutTime) then
-    raise Exception.CreateFmt(sErrACBrWinUSBReadData, ['TimeOut']);
+    if (Err = ERROR_IO_INCOMPLETE) then
+      CalcOverallTimeOut;
+
+  until (BytesReaded > 0) or (now > TimeoutTime);
+end;
+
+procedure TACBrUSBWinDeviceAPI.DoLog(AMessage: AnsiString; Translate: Boolean;
+  AddTimeStamp: Boolean);
+var
+  Handled: Boolean;
+  MessageToLog: String;
+begin
+  Handled := False;
+
+  if Translate then
+    MessageToLog := TranslateUnprintable(AMessage)
+  else
+    MessageToLog := String(AMessage);
+
+  if Assigned(FOnLog) then
+    FOnLog(MessageToLog, Handled);
+
+  if (not Handled) and (FLogFile <> '') then
+  begin
+    if AddTimeStamp then
+      MessageToLog := '-- ' + FormatDateTime('dd/mm hh:nn:ss:zzz', now) + ' - ' + MessageToLog;
+
+    WriteLog(FLogFile, MessageToLog);
+  end;
 end;
 
 end.

@@ -56,9 +56,6 @@ type
     FcUF: integer;
     FdhRecbto: TDateTime;
 
-  public
-    constructor Create(const ASessao: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-
   published
     property Msg: string read FMsg write FMsg;
     property Versao: string read Fversao write Fversao;
@@ -134,14 +131,13 @@ type
     destructor Destroy; override;
 
     procedure Processar(const ACBrCTe: TACBrCTe); override;
-    function Gerar: String; override;
 
   published
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
    property NProt: String read FNProt write FNProt;
    property Xml: string read FXml write FXml;
-   property Item: TRetornoItemResposta read FItem;
+   property Retorno: TRetornoItemResposta read FItem;
 
   end;
 
@@ -374,12 +370,13 @@ end;
 
 destructor TEnvioResposta.Destroy;
 begin
-  if Assigned(FItem) then
-    FItem.Free;
+  if Assigned(FItem) then FreeAndNil(FItem);
 end;
 
 procedure TEnvioResposta.Processar(const ACBrCTe: TACBrCTe);
 begin
+  if Assigned(FItem) then FreeAndNil(FItem);
+
   with ACBrCTe.WebServices.Enviar do
   begin
     Self.Versao := verAplic;
@@ -393,19 +390,30 @@ begin
     Self.Tmed := TMed;
     Self.Msg := Msg;
     Self.NProt := Protocolo;
+    Self.Xml := '';
   end;
 
-  if ACBrCTe.WebServices.Enviar.Sincrono then
-    Self.Xml := ACBrCTe.Conhecimentos.Items[0].XMLOriginal
-  else
-    Self.Xml := '';
-
-  if ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS then
+  if (ACBrCTe.Configuracoes.Geral.ModeloDF = moCTe) and
+     (ACBrCTe.WebServices.Enviar.Sincrono) and
+     (ACBrCTe.Conhecimentos.Count > 0) then
   begin
-    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(IntToStr(StrToInt(copy(
-                                                        ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe, 26, 9)))),
-                                                        Tipo, Formato);
+    Self.Xml := ACBrCTe.Conhecimentos.Items[0].XMLOriginal;
 
+    FItem := TRetornoItemResposta.Create('CTe' + Trim(ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.chCTe), Tipo, Formato);
+    FItem.Id := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.Id;
+    FItem.tpAmb := TpAmbToStr(ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.tpAmb);
+    FItem.verAplic := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.verAplic;
+    FItem.chDFe := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.chCTe;
+    FItem.dhRecbto := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.dhRecbto;
+    FItem.nProt := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.nProt;
+    FItem.digVal := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.digVal;
+    FItem.cStat := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.cStat;
+    FItem.xMotivo := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.xMotivo;
+    FItem.XML := ACBrCTe.Conhecimentos.Items[0].CTe.procCTe.XML_prot;
+  end
+  else if (ACBrCTe.Configuracoes.Geral.ModeloDF = moCTeOS) and (ACBrCTe.Conhecimentos.Count > 0) then
+  begin
+    FItem := TRetornoItemResposta.Create('CTeOS' + Trim(ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.chCTe), Tipo, Formato);
     FItem.Id := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.Id;
     FItem.tpAmb := TpAmbToStr(ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.tpAmb);
     FItem.verAplic := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.verAplic;
@@ -416,16 +424,6 @@ begin
     FItem.cStat := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.cStat;
     FItem.xMotivo := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.xMotivo;
     FItem.XML := ACBrCTe.WebServices.Enviar.CTeRetornoOS.protCTe.XML_prot;
-  end;
-end;
-
-function TEnvioResposta.Gerar: String;
-begin
-  Result :=  inherited Gerar;
-
-  if FItem <> nil then
-  begin
-    Result := Result + sLineBreak + FItem.Gerar;
   end;
 end;
 
@@ -498,13 +496,6 @@ begin
      Self.NProt := Consulta.Protocolo;
      Self.DigVal := Consulta.protCTe.digVal;
    end;
-end;
-
-{ TLibCTeResposta }
-constructor TLibCTeResposta.Create(const ASessao: String;
-  const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
-begin
-  inherited Create(ASessao, ATipo, AFormato);
 end;
 
 end.

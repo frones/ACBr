@@ -805,8 +805,8 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('MDFE_Enviar(' + IntToStr(ALote) + ','
-                                    + BoolToStr(AImprimir, 'Imprimir','')
-                                    + BoolToStr(ASincrono, 'Sincrono','') + ' )', logCompleto, True)
+                                    + BoolToStr(AImprimir, 'Imprimir ,',' , ')
+                                    + BoolToStr(ASincrono, 'Sincrono','  ') + ')', logCompleto, True)
     else
       pLib.GravarLog('MDFE_Enviar', logNormal);
 

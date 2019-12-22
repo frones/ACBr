@@ -40,7 +40,7 @@ interface
 uses
   SysUtils, Classes, contnrs,
   pcnEventoNFe, pcnRetEnvEventoNFe, pcnRetConsSitNFe,
-  ACBrLibResposta, ACBrNFe;
+  ACBrLibResposta, ACBrLibConsReciDFe, ACBrNFe;
 
 type
 
@@ -132,8 +132,11 @@ type
     FtMed: integer;
     FnRec: string;
     FNProt: string;
+    FItemRetorno: TRetornoItemResposta;
+
   public
     constructor Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
+    destructor Destroy; override;
 
     procedure Processar(const ACBrNFe: TACBrNFe); override;
 
@@ -141,10 +144,11 @@ type
    property TMed: integer read FtMed write FtMed;
    property NRec: string read FnRec write FnRec;
    property NProt: String read FNProt write FNProt;
+   property Retorno: TRetornoItemResposta read FItemRetorno;
+
   end;
 
   { TCancelamentoResposta }
-
   TCancelamentoResposta = class(TLibNFeServiceResposta)
   private
     FchNFe: string;
@@ -174,7 +178,6 @@ type
   end;
 
   { TEventoItemResposta }
-
   TEventoItemResposta = class(TACBrLibRespostaBase)
   private
     FtpAmb: String;
@@ -221,7 +224,6 @@ type
   end;
 
   { TEventoResposta }
-
   TEventoResposta = class(TLibNFeServiceResposta)
   private
     FidLote: Integer;
@@ -493,7 +495,6 @@ uses
   ACBrUtil, ACBrLibNFeConsts;
 
 { TLibNFeResposta }
-
 constructor TLibNFeResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -501,7 +502,6 @@ begin
 end;
 
 { TLibNFeServiceResposta }
-
 constructor TLibNFeServiceResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -509,7 +509,6 @@ begin
 end;
 
 { TConsultaNFeChNFePendResposta }
-
 constructor TConsultaNFeChNFePendResposta.Create(const AId, AIndex, ASIndex: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -523,7 +522,6 @@ begin
 end;
 
 { TConsultaNFeRetEventoResposta }
-
 constructor TConsultaNFeRetEventoResposta.Create(const AId, AIndex: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -592,7 +590,6 @@ begin
 end;
 
 { TConsultaNFeItemPedidoResposta }
-
 constructor TConsultaNFeItemPedidoResposta.Create(const AId, AIndex: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -606,7 +603,6 @@ begin
 end;
 
 { TConsultaNFeDetEventoResposta }
-
 constructor TConsultaNFeDetEventoResposta.Create(const AId: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -676,7 +672,6 @@ begin
 end;
 
 { TConsultaNFeProcEventoResposta }
-
 constructor TConsultaNFeProcEventoResposta.Create(const AId: Integer;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -739,7 +734,6 @@ begin
 end;
 
 { TConsultaNFeInfCanResposta }
-
 constructor TConsultaNFeInfCanResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespConsultaInfCan, ATipo, AFormato);
@@ -761,7 +755,6 @@ begin
 end;
 
 { TEventoItemResposta }
-
 constructor TEventoItemResposta.Create(const ASessao: String;
   const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
@@ -789,7 +782,6 @@ begin
 end;
 
 { TEventoResposta }
-
 constructor TEventoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEvento, ATipo, AFormato);
@@ -846,7 +838,6 @@ begin
 end;
 
 { TCancelamentoResposta }
-
 constructor TCancelamentoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespCancelamento, ATipo, AFormato);
@@ -877,14 +868,20 @@ begin
 end;
 
 { TEnvioResposta }
-
 constructor TEnvioResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespEnvio, ATipo, AFormato);
 end;
 
+destructor TEnvioResposta.Destroy;
+begin
+  if Assigned(FItemRetorno) then FreeAndNil(FItemRetorno);
+end;
+
 procedure TEnvioResposta.Processar(const ACBrNFe: TACBrNFe);
 begin
+  if Assigned(FItemRetorno) then FreeAndNil(FItemRetorno);
+
   with ACBrNFe.WebServices do
   begin
     Versao := Enviar.versao;
@@ -899,10 +896,24 @@ begin
     Msg := Enviar.Msg;
     NProt := Enviar.Protocolo;
   end;
+
+  if (ACBrNFe.WebServices.Enviar.Sincrono) and (ACBrNFe.NotasFiscais.Count > 0) then
+  begin
+    FItemRetorno := TRetornoItemResposta.Create('NFe' + Trim(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe), Tipo, Formato);
+    FItemRetorno.Id := 'ID' + ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
+    FItemRetorno.tpAmb := TpAmbToStr(ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.tpAmb);
+    FItemRetorno.verAplic := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.verAplic;
+    FItemRetorno.chDFe := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.chNFe;
+    FItemRetorno.dhRecbto := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.dhRecbto;
+    FItemRetorno.nProt := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.nProt;
+    FItemRetorno.digVal := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.digVal;
+    FItemRetorno.cStat := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.cStat;
+    FItemRetorno.xMotivo := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.xMotivo;
+    FItemRetorno.XML := ACBrNFe.NotasFiscais.Items[0].NFe.procNFe.XML_prot;
+  end;
 end;
 
 { TStatusServicoResposta }
-
 constructor TStatusServicoResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespStatus, ATipo, AFormato);
@@ -927,7 +938,6 @@ begin
 end;
 
 { TInutilizarNFeResposta }
-
 constructor TInutilizarNFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespInutilizacao, ATipo, AFormato);
@@ -953,7 +963,6 @@ begin
 end;
 
 { TConsultaNFeResposta }
-
 constructor TConsultaNFeResposta.Create(const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao);
 begin
   inherited Create(CSessaoRespConsulta, ATipo, AFormato);

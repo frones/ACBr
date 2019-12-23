@@ -281,7 +281,7 @@ end;
 
 function TBloco_0.Registro0015New: TRegistro0015;
 begin
-   Result := FRegistro0001.Registro0015.New(FRegistro0001);
+   Result := FRegistro0001.Registro0015.New;
 end;
 
 function TBloco_0.Registro0100New: TRegistro0100;
@@ -304,12 +304,12 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro 0175 deve ser filho do registro 0150, e não existe nenhum 0150 pai!');
 
    U0150 := FRegistro0001.Registro0150.Items[U0150Count];
-   Result  := U0150.Registro0175.New(U0150);
+   Result  := U0150.Registro0175.New;
 end;
 
 function TBloco_0.Registro0190New: TRegistro0190;
 begin
-   Result := FRegistro0001.Registro0190.New(FRegistro0001);
+   Result := FRegistro0001.Registro0190.New;
 end;
 
 function TBloco_0.Registro0200New: TRegistro0200;
@@ -327,7 +327,7 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro 0205 deve ser filho do registro 0200, e não existe nenhum 0200 pai!');
 
    U0200 := FRegistro0001.Registro0200.Items[U0200Count];
-   Result  := U0200.Registro0205.New(U0200);
+   Result  := U0200.Registro0205.New;
 end;
 
 function TBloco_0.Registro0206New: TRegistro0206;
@@ -340,7 +340,7 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro 0206 deve ser filho do registro 0200, e não existe nenhum 0200 pai!');
 
    U0200 := FRegistro0001.Registro0200.Items[U0200Count];
-   Result  := U0200.Registro0206.New(U0200);
+   Result  := U0200.Registro0206.New;
 end;
 
 function TBloco_0.Registro0210New: TRegistro0210;
@@ -353,7 +353,7 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro 0210 deve ser filho do registro 0200, e não existe nenhum 0200 pai!');
 
    U0200 := FRegistro0001.Registro0200.Items[U0200Count];
-   Result  := U0200.Registro0210.New(U0200);
+   Result  := U0200.Registro0210.New;
 end;
 
 function TBloco_0.Registro0220New: TRegistro0220;
@@ -366,12 +366,12 @@ begin
       raise EACBrSPEDFiscalException.Create('O registro 0220 deve ser filho do registro 0200, e não existe nenhum 0200 pai!');
 
    U0200 := FRegistro0001.Registro0200.Items[U0200Count];
-   Result  := U0200.Registro0220.New(U0200);
+   Result  := U0200.Registro0220.New;
 end;
 
 function TBloco_0.Registro0300New: TRegistro0300;
 begin
-   Result := FRegistro0001.Registro0300.New();
+   Result := FRegistro0001.Registro0300.New;
 end;
 
 function TBloco_0.Registro0305New: TRegistro0305;
@@ -381,27 +381,27 @@ end;
 
 function TBloco_0.Registro0400New: TRegistro0400;
 begin
-   Result := FRegistro0001.Registro0400.New(FRegistro0001);
+   Result := FRegistro0001.Registro0400.New;
 end;
 
 function TBloco_0.Registro0450New: TRegistro0450;
 begin
-   Result := FRegistro0001.Registro0450.New(FRegistro0001);
+   Result := FRegistro0001.Registro0450.New;
 end;
 
 function TBloco_0.Registro0460New: TRegistro0460;
 begin
-   Result := FRegistro0001.Registro0460.New(FRegistro0001);
+   Result := FRegistro0001.Registro0460.New;
 end;
 
 function TBloco_0.Registro0500New: TRegistro0500;
 begin
-   Result := FRegistro0001.Registro0500.New(FRegistro0001);
+   Result := FRegistro0001.Registro0500.New;
 end;
 
 function TBloco_0.Registro0600New: TRegistro0600;
 begin
-   Result := FRegistro0001.Registro0600.New(FRegistro0001);
+   Result := FRegistro0001.Registro0600.New;
 end;
 
 procedure TBloco_0.WriteRegistro0000 ;

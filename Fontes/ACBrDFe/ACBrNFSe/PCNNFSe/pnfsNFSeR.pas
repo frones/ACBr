@@ -2147,6 +2147,11 @@ begin
       NFSe.RpsSubstituido.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
     end;
   end;
+  
+  if NFSe.Status = srCancelado then
+    NFSe.Cancelada := snSim
+  else
+    NFSe.Cancelada := snNao;  
 
   if FProvedor = proSystemPro then
   begin

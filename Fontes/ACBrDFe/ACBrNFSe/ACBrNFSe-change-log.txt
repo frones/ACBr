@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/12/2019
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/55426-nfs-e-joinville-atualiza%C3%A7%C3%A3o-arquivo-ini-e-leitura-do-xml-de-retorno-da-consulta/
+   Por: Filipe Natividade
 -- pnfsNFSeW_SP --
 [*] https://www.projetoacbr.com.br/forum/topic/55483-quebra-de-linha/
    Por: Rogério

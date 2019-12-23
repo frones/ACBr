@@ -410,18 +410,17 @@ var
   RS: TResourceStream;
   SL: TStringList;
 begin
-  Result := False;
   RS := TResourceStream.Create(HInstance, FResourceName, Windows.RT_RCDATA);
   SL := TStringList.Create;
   try
     RS.Position := 0;
     SL.LoadFromStream(RS);
     FIni.SetStrings(SL);
-    Result := True;
   finally
     RS.Free;
     SL.Free;
   end;
+  Result := True;
 end;
 
 function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
@@ -430,7 +429,6 @@ function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
 var
   SL: TStringList;
 begin
-  Result := False;
   AVendorName := '';
   AProductModel := '';
   AACBrProtocol := 0;
@@ -1040,7 +1038,6 @@ var
   s: Integer;
   AOverlapped: OVERLAPPED;
 begin
-  Result := 0;
   if not Active then
     raise Exception.Create(ACBrStr(sErrACBrWinUSBDeviceIsClosed));
 

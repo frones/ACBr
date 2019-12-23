@@ -142,8 +142,10 @@ type
     FRegistroC790Count: Integer;
     FRegistroC791Count: Integer;
     FRegistroC800Count: Integer;
+    FRegistroC810Count: Integer;
     FRegistroC850Count: Integer;
     FRegistroC860Count: Integer;
+    FRegistroC870Count: Integer;
     FRegistroC890Count: Integer;
 
     procedure WriteRegistroC100(RegC001: TRegistroC001);
@@ -213,8 +215,12 @@ type
     procedure WriteRegistroC790(RegC700: TRegistroC700);
     procedure WriteRegistroC791(RegC790: TRegistroC790);
     procedure WriteRegistroC800(RegC001: TRegistroC001);
+    procedure WriteRegistroC810(RegC800: TRegistroC800);
+    procedure WriteRegistroC815(RegC810: TRegistroC810);
     procedure WriteRegistroC850(RegC800: TRegistroC800);
     procedure WriteRegistroC860(RegC001: TRegistroC001);
+    procedure WriteRegistroC870(RegC860: TRegistroC860);
+    procedure WriteRegistroC880(RegC870: TRegistroC870);
     procedure WriteRegistroC890(RegC860: TRegistroC860);
 
     procedure CriaRegistros;
@@ -375,8 +381,10 @@ type
     property RegistroC790Count: Integer read FRegistroC790Count write FRegistroC790Count;
     property RegistroC791Count: Integer read FRegistroC791Count write FRegistroC791Count;
     property RegistroC800Count: Integer read FRegistroC800Count write FRegistroC800Count;
+    property RegistroC810Count: Integer read FRegistroC810Count write FRegistroC810Count;
     property RegistroC850Count: Integer read FRegistroC850Count write FRegistroC850Count;
     property RegistroC860Count: Integer read FRegistroC860Count write FRegistroC860Count;
+    property RegistroC870Count: Integer read FRegistroC870Count write FRegistroC870Count;
     property RegistroC890Count: Integer read FRegistroC890Count write FRegistroC890Count;
 
 //    property OnBeforeWriteRegistroC111: TWriteRegistroEvent read FOnBeforeWriteRegistroC111 write FOnBeforeWriteRegistroC111;
@@ -491,8 +499,10 @@ begin
   FRegistroC790Count := 0;
   FRegistroC791Count := 0;
   FRegistroC800Count := 0;
+  FRegistroC810Count := 0;
   FRegistroC850Count := 0;
   FRegistroC860Count := 0;
+  FRegistroC870Count := 0;
   FRegistroC890Count := 0;
 
   FRegistroC990.QTD_LIN_C := 0;
@@ -3691,6 +3701,7 @@ begin
         end;
 
         /// Registros FILHOS
+        WriteRegistroC810( RegC001.RegistroC800.Items[intFor] );
         WriteRegistroC850( RegC001.RegistroC800.Items[intFor] );
 
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
@@ -3700,6 +3711,58 @@ begin
 
      RegC001.RegistroC800.Clear;
   end;
+end;
+
+procedure TBloco_C.WriteRegistroC810(RegC800: TRegistroC800);
+var
+  intFor: integer;
+begin
+  if Assigned( RegC800.RegistroC810 ) then
+  begin
+    for intFor := 0 to RegC800.RegistroC810.Count - 1 do
+    begin
+      with RegC800.RegistroC810.Items[intFor] do
+      begin
+        Add( LFill('C810') +
+             LFill( NUM_ITEM ) +
+             LFill( COD_ITEM ) +
+             LFill( QTD, 0, 5 ) +
+             LFill( UNID ) +
+             LFill( VL_ITEM ) +
+             LFill( CST_ICMS ) +
+             LFill( CFOP )
+           ) ;
+      end;
+      WriteRegistroC815(RegC800.RegistroC810.Items[intFor]);
+      RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroC810Count := FRegistroC810Count + RegC800.RegistroC810.Count;
+  end;
+end;
+
+procedure TBloco_C.WriteRegistroC815(RegC810: TRegistroC810);
+begin
+  with RegC810.RegistroC815 do
+  begin
+    Add( LFill('C815') +
+         LFill( COD_MOT_REST_COMPL ) +
+         LFill( QUANT_CONV, 0, 6 ) +
+         LFill( UNID ) +
+         LFill( VL_UNIT_CONV, 0, 6 ) +
+         VLFill( VL_UNIT_ICMS_NA_OPERACAO_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_OP_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
+         VLFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
+         VLFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
+       ) ;
+  end;
+
+  RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
 end;
 
 procedure TBloco_C.WriteRegistroC850(RegC800: TRegistroC800);
@@ -3747,6 +3810,7 @@ begin
                LFill( DOC_FIN ) ) ;
         end;
         /// Registros FILHOS
+        WriteRegistroC870( RegC001.RegistroC860.Items[intFor] );
         WriteRegistroC890( RegC001.RegistroC860.Items[intFor] );
 
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
@@ -3756,6 +3820,58 @@ begin
 
      RegC001.RegistroC860.Clear;
   end;
+end;
+
+procedure TBloco_C.WriteRegistroC870(RegC860: TRegistroC860);
+var
+  intFor: integer;
+begin
+  if Assigned( RegC860.RegistroC870 ) then
+  begin
+    for intFor := 0 to RegC860.RegistroC870.Count - 1 do
+    begin
+      with RegC860.RegistroC870.Items[intFor] do
+      begin
+        Add( LFill('C870') +
+             LFill( COD_ITEM ) +
+             LFill( QTD, 0, 5) +
+             LFill( UNID ) +
+             LFill( CST_ICMS ) +
+             LFill( CFOP )
+            ) ;
+      end;
+
+      WriteRegistroC880(RegC860.RegistroC870.Items[intFor]);
+      RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistroC870Count := FRegistroC870Count + RegC860.RegistroC870.Count;
+  end;
+
+end;
+
+procedure TBloco_C.WriteRegistroC880(RegC870: TRegistroC870);
+begin
+  with RegC870.RegistroC880 do
+  begin
+    Add( LFill('C880') +
+         LFill( COD_MOT_REST_COMPL ) +
+         LFill( QUANT_CONV, 0, 6 ) +
+         LFill( UNID ) +
+         LFill( VL_UNIT_CONV, 0, 6 ) +
+         VLFill( VL_UNIT_ICMS_NA_OPERACAO_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_OP_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_OP_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_CONV_REST, 6 ) +
+         VLFill( VL_UNIT_FCP_ST_CONV_REST, 6 ) +
+         VLFill( VL_UNIT_ICMS_ST_CONV_COMPL, 6 ) +
+         VLFill( VL_UNIT_FCP_ST_CONV_COMPL, 6 )
+       ) ;
+  end;
+
+  RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
 end;
 
 procedure TBloco_C.WriteRegistroC890(RegC860: TRegistroC860);

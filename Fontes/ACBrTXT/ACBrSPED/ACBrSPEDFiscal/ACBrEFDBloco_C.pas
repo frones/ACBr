@@ -114,10 +114,12 @@ type
   TRegistroC700List = class;
   TRegistroC790List = class;
   TRegistroC791List = class;
-  TRegistroC800List = class; {Alteração Versão 2.0.4 03Mar2011}
-  TRegistroC850List = class; {Alteração Versão 2.0.4 03Mar2011}
-  TRegistroC860List = class; {Alteração Versão 2.0.4 03Mar2011}
-  TRegistroC890List = class; {Alteração Versão 2.0.4 03Mar2011}
+  TRegistroC800List = class;
+  TRegistroC810List = class;
+  TRegistroC850List = class;
+  TRegistroC860List = class;
+  TRegistroC870List = class;
+  TRegistroC890List = class;
 
   /// Registro C001 - ABERTURA DO BLOCO C
 
@@ -2730,6 +2732,7 @@ type
     fVL_PIS_ST: currency;               /// Valor total do PIS retido por substituição tributária
     fVL_COFINS_ST: currency;            /// Valor total da COFINS retido por substituição tributária
 
+    FRegistroC810: TRegistroC810List;
     FRegistroC850: TRegistroC850List;   /// BLOCO C - Lista de RegistroC850 (FILHO)
   public
     constructor Create; virtual;  /// Create
@@ -2752,6 +2755,7 @@ type
     property VL_PIS_ST: currency read FVL_PIS_ST write FVL_PIS_ST;
     property VL_COFINS_ST: currency read FVL_COFINS_ST write FVL_COFINS_ST;
     /// Registros FILHOS
+    property RegistroC810: TRegistroC810List read FRegistroC810 write FRegistroC810;
     property RegistroC850: TRegistroC850List read FRegistroC850 write FRegistroC850;
   end;
 
@@ -2766,8 +2770,76 @@ type
     property Items[Index: Integer]: TRegistroC800 read GetItem write SetItem;
   end;
 
-  /// Registro C850 - REGISTRO ANALÍTICO DO CF-E (CODIGO 59)
+  /// REGISTRO C815: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À 
+  /// SUBSTITUIÇÃO TRIBUTÁRIA (CF-E-SAT) (CÓDIGO 59)
+  
+  TRegistroC815 = class
+  private
+    FCOD_MOT_REST_COMPL: string;
+    FQUANT_CONV: Extended;
+    FUNID: string;
+    FVL_UNIT_CONV: Extended;
+    FVL_UNIT_ICMS_NA_OPERACAO_CONV: Variant;
+    FVL_UNIT_ICMS_OP_CONV: Variant;
+    FVL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant;
+    FVL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant;
+    FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant;
+    FVL_UNIT_ICMS_ST_CONV_REST: Variant;
+    FVL_UNIT_FCP_ST_CONV_REST: Variant;
+    FVL_UNIT_ICMS_ST_CONV_COMPL: Variant;
+    FVL_UNIT_FCP_ST_CONV_COMPL: Variant;
+  public
+    property COD_MOT_REST_COMPL: string read FCOD_MOT_REST_COMPL write FCOD_MOT_REST_COMPL;
+    property QUANT_CONV: Extended read FQUANT_CONV write FQUANT_CONV;
+    property UNID: string read FUNID write FUNID;
+    property VL_UNIT_CONV: Extended read FVL_UNIT_CONV write FVL_UNIT_CONV;
+    property VL_UNIT_ICMS_NA_OPERACAO_CONV: Variant read FVL_UNIT_ICMS_NA_OPERACAO_CONV write FVL_UNIT_ICMS_NA_OPERACAO_CONV;
+    property VL_UNIT_ICMS_OP_CONV: Variant read FVL_UNIT_ICMS_OP_CONV write FVL_UNIT_ICMS_OP_CONV;
+    property VL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant read FVL_UNIT_ICMS_OP_ESTOQUE_CONV write FVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+    property VL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant read FVL_UNIT_ICMS_ST_ESTOQUE_CONV write FVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+    property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant read FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV write FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+    property VL_UNIT_ICMS_ST_CONV_REST: Variant read FVL_UNIT_ICMS_ST_CONV_REST write FVL_UNIT_ICMS_ST_CONV_REST;
+    property VL_UNIT_FCP_ST_CONV_REST: Variant read FVL_UNIT_FCP_ST_CONV_REST write FVL_UNIT_FCP_ST_CONV_REST;
+    property VL_UNIT_ICMS_ST_CONV_COMPL: Variant read FVL_UNIT_ICMS_ST_CONV_COMPL write FVL_UNIT_ICMS_ST_CONV_COMPL;
+    property VL_UNIT_FCP_ST_CONV_COMPL: Variant read FVL_UNIT_FCP_ST_CONV_COMPL write FVL_UNIT_FCP_ST_CONV_COMPL;
+  end;
 
+  /// REGISTRO C810: ITENS DO DOCUMENTO DO CUPOM FISCAL ELETRÔNICO – SAT (CFE-SAT) (CÓDIGO 59):
+
+  TRegistroC810 = class
+  private
+    FNUM_ITEM: string;
+    FCOD_ITEM: string;
+    FQTD: Extended;
+    FUNID: string;
+    FVL_ITEM: Currency;
+    FCST_ICMS: string;
+    FCFOP: string;
+    FRegistroC815: TRegistroC815;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property NUM_ITEM: string read FNUM_ITEM write FNUM_ITEM;
+    property COD_ITEM: string read FCOD_ITEM write FCOD_ITEM;
+    property QTD: Extended read FQTD write FQTD;
+    property UNID: string read FUNID write FUNID;
+    property VL_ITEM: Currency read FVL_ITEM write FVL_ITEM;
+    property CST_ICMS: string read FCST_ICMS write FCST_ICMS;
+    property CFOP: string read FCFOP write FCFOP;
+    property RegistroC815: TRegistroC815 read FRegistroC815 write FRegistroC815;
+  end;
+
+  TRegistroC810List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC810;
+    procedure SetItem(Index: Integer; const Value: TRegistroC810);
+  public
+    function New: TRegistroC810;
+    property Items[Index: Integer]: TRegistroC810 read GetItem write SetItem;
+  end;
+
+  /// Registro C850 - REGISTRO ANALÍTICO DO CF-E (CODIGO 59)
   TRegistroC850 = class
   private
     fCST_ICMS: String;            /// Código da Situação Tributária, conforme a tabela indicada no item 4.3.1
@@ -2808,6 +2880,7 @@ type
     fDT_DOC: TDateTime;                 /// Data de emissão dos documentos fiscais
     fDOC_INI: String;                   /// Número do documento inicial
     fDOC_FIN: String;                   /// Número do documento final
+    FRegistroC870: TRegistroC870List;
     FRegistroC890: TRegistroC890List;   /// BLOCO C - Lista de RegistroC890 (FILHO)
   public
     constructor Create; virtual; /// Create
@@ -2819,6 +2892,7 @@ type
     property DOC_INI: String read fDOC_INI write fDOC_INI;
     property DOC_FIN: String read fDOC_FIN write fDOC_FIN;
     /// Registros FILHOS
+    property RegistroC870: TRegistroC870List read FRegistroC870 write FRegistroC870;
     property RegistroC890: TRegistroC890List read FRegistroC890 write FRegistroC890;
   end;
 
@@ -2826,12 +2900,78 @@ type
 
   TRegistroC860List = class(TObjectList)
   private
-    function GetItem(Index: Integer): TRegistroC860; /// GetItem
-    procedure SetItem(Index: Integer; const Value: TRegistroC860); /// SetItem
+    function GetItem(Index: Integer): TRegistroC860;
+    procedure SetItem(Index: Integer; const Value: TRegistroC860);
   public
     function New: TRegistroC860;
     property Items[Index: Integer]: TRegistroC860 read GetItem write SetItem;
   end;
+
+  /// REGISTRO C880: INFORMAÇÕES COMPLEMENTARES DAS OPERAÇÕES DE SAÍDA DE MERCADORIAS SUJEITAS À 
+  ///SUBSTITUIÇÃO TRIBUTÁRIA (CF-E-SAT) (CÓDIGO 59)
+
+  TRegistroC880 = class
+  private
+    FCOD_MOT_REST_COMPL: string;
+    FQUANT_CONV: Extended;
+    FUNID: string;
+    FVL_UNIT_CONV: Extended;
+    FVL_UNIT_ICMS_NA_OPERACAO_CONV: Variant;
+    FVL_UNIT_ICMS_OP_CONV: Variant;
+    FVL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant;
+    FVL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant;
+    FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant;
+    FVL_UNIT_ICMS_ST_CONV_REST: Variant;
+    FVL_UNIT_FCP_ST_CONV_REST: Variant;
+    FVL_UNIT_ICMS_ST_CONV_COMPL: Variant;
+    FVL_UNIT_FCP_ST_CONV_COMPL: Variant;
+  public
+    property COD_MOT_REST_COMPL: string read FCOD_MOT_REST_COMPL write FCOD_MOT_REST_COMPL;
+    property QUANT_CONV: Extended read FQUANT_CONV write FQUANT_CONV;
+    property UNID: string read FUNID write FUNID;
+    property VL_UNIT_CONV: Extended read FVL_UNIT_CONV write FVL_UNIT_CONV;
+    property VL_UNIT_ICMS_NA_OPERACAO_CONV: Variant read FVL_UNIT_ICMS_NA_OPERACAO_CONV write FVL_UNIT_ICMS_NA_OPERACAO_CONV;
+    property VL_UNIT_ICMS_OP_CONV: Variant read FVL_UNIT_ICMS_OP_CONV write FVL_UNIT_ICMS_OP_CONV;
+    property VL_UNIT_ICMS_OP_ESTOQUE_CONV: Variant read FVL_UNIT_ICMS_OP_ESTOQUE_CONV write FVL_UNIT_ICMS_OP_ESTOQUE_CONV;
+    property VL_UNIT_ICMS_ST_ESTOQUE_CONV: Variant read FVL_UNIT_ICMS_ST_ESTOQUE_CONV write FVL_UNIT_ICMS_ST_ESTOQUE_CONV;
+    property VL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV: Variant read FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV write FVL_UNIT_FCP_ICMS_ST_ESTOQUE_CONV;
+    property VL_UNIT_ICMS_ST_CONV_REST: Variant read FVL_UNIT_ICMS_ST_CONV_REST write FVL_UNIT_ICMS_ST_CONV_REST;
+    property VL_UNIT_FCP_ST_CONV_REST: Variant read FVL_UNIT_FCP_ST_CONV_REST write FVL_UNIT_FCP_ST_CONV_REST;
+    property VL_UNIT_ICMS_ST_CONV_COMPL: Variant read FVL_UNIT_ICMS_ST_CONV_COMPL write FVL_UNIT_ICMS_ST_CONV_COMPL;
+    property VL_UNIT_FCP_ST_CONV_COMPL: Variant read FVL_UNIT_FCP_ST_CONV_COMPL write FVL_UNIT_FCP_ST_CONV_COMPL;
+  end;
+
+  /// REGISTRO C870: ITENS DO RESUMO DIÁRIO DOS DOCUMENTOS (CF-E-SAT) (CÓDIGO 59)
+  
+  TRegistroC870 = class
+  private
+    FCOD_ITEM: string;
+    FQTD: Extended;
+    FUNID: string;
+    FCST_ICMS: string;
+    FCFOP: string;
+    FRegistroC880: TRegistroC880;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property COD_ITEM: string read FCOD_ITEM write FCOD_ITEM;
+    property QTD: Extended read FQTD write FQTD;
+    property UNID: string read FUNID write FUNID;
+    property CST_ICMS: string read FCST_ICMS write FCST_ICMS;
+    property CFOP: string read FCFOP write FCFOP;
+    property RegistroC880: TRegistroC880 read FRegistroC880 write FRegistroC880;
+  end;
+
+  TRegistroC870List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroC870;
+    procedure SetItem(Index: Integer; const Value: TRegistroC870);
+  public
+    function New: TRegistroC870;
+    property Items[Index: Integer]: TRegistroC870 read GetItem write SetItem;
+  end;
+  
 
   /// Registro C890 - RESUMO DIÁRIO DO CF-E (CÓDIGO 59) POR EQUIPAMENTO SAT-CF-E
 
@@ -4318,11 +4458,13 @@ end;
 constructor TRegistroC800.Create;
 begin
   inherited Create;
+  FRegistroC810 := TRegistroC810List.Create;
   FRegistroC850 := TRegistroC850List.Create;
 end;
 
 destructor TRegistroC800.Destroy;
 begin
+  FRegistroC810.Free;
   FRegistroC850.Free;
   inherited;
 end;
@@ -4332,11 +4474,13 @@ end;
 constructor TRegistroC860.Create;
 begin
   inherited Create;
+  FRegistroC870 := TRegistroC870List.Create;
   FRegistroC890 := TRegistroC890List.Create;
 end;
 
 destructor TRegistroC860.Destroy;
 begin
+  FRegistroC870.Free;
   FRegistroC890.Free;
   inherited;
 end;
@@ -4606,6 +4750,70 @@ end;
 procedure TRegistroC597List.SetItem(Index: Integer; const Value: TRegistroC597);
 begin
    Put(Index, Value);
+end;
+
+{ TRegistroC810List }
+
+function TRegistroC810List.GetItem(Index: Integer): TRegistroC810;
+begin
+  Result := TRegistroC810(Inherited GetItem(Index));
+end;
+
+function TRegistroC810List.New: TRegistroC810;
+begin
+  Result := TRegistroC810.Create;
+  Add(Result);
+end;
+
+procedure TRegistroC810List.SetItem(Index: Integer; const Value: TRegistroC810);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRegistroC810 }
+
+constructor TRegistroC810.Create;
+begin
+  inherited;
+  FRegistroC815 := TRegistroC815.Create;
+end;
+
+destructor TRegistroC810.Destroy;
+begin
+  FRegistroC815.Free;
+  inherited;
+end;
+
+{ TRegistroC870 }
+
+constructor TRegistroC870.Create;
+begin
+  inherited;
+  FRegistroC880 := TRegistroC880.Create
+end;
+
+destructor TRegistroC870.Destroy;
+begin
+  FRegistroC880.Free;
+  inherited;
+end;
+
+{ TRegistroC870List }
+
+function TRegistroC870List.GetItem(Index: Integer): TRegistroC870;
+begin
+  Result := TRegistroC870(inherited GetItem(Index));
+end;
+
+function TRegistroC870List.New: TRegistroC870;
+begin
+  Result := TRegistroC870.Create;
+  Self.Add(Result);
+end;
+
+procedure TRegistroC870List.SetItem(Index: Integer; const Value: TRegistroC870);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

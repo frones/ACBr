@@ -804,7 +804,8 @@ begin
          QTD_REG_BLC := 1;
       end;
    end;
-   if (Bloco_0.Registro0000.IND_ATIV = atIndustrial) then
+   if (DT_INI >= EncodeDate(2020,01,01)) and 
+      (Bloco_0.Registro0000.IND_ATIV = atIndustrial) then
    begin 
      with Bloco_9.Registro9900 do
      begin

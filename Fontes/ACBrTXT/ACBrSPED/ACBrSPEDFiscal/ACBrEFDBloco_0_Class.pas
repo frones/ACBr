@@ -477,10 +477,10 @@ begin
         Add( LFill( '0001' ) +
              LFill( Integer(IND_MOV), 0 ) ) ;  
 
-        Check(not((FRegistro0000.IND_ATIV = atIndustrial) and (FRegistro0002.CLAS_ESTAB_IND = EmptyStr)),
+        Check((not((FRegistro0000.IND_ATIV = atIndustrial) and (DT_INI >= EncodeDate(2020,01,01))) and (FRegistro0002.CLAS_ESTAB_IND = EmptyStr)),
           '(0-0002) Contribuinte Industrial ou equiparado a industrial deve ser informada a classificação do estabelecimento conforme tabela 4.5.5!');
 
-        if Assigned(FRegistro0002)
+        if Assigned(FRegistro0002) and (DT_INI >= EncodeDate(2020,01,01))
         and( FRegistro0000.IND_ATIV = atIndustrial) then
            begin
               with FRegistro0002 do

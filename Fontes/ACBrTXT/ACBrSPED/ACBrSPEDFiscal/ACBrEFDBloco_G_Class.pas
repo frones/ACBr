@@ -380,12 +380,12 @@ begin
           Add( LFill('G140') +
                LFill( NUM_ITEM, 3) +
                LFill( COD_ITEM ) +
-               LFill( QTDE ) +
+               LFill( QTDE, 0, 2 ) +
                LFill( UNID ) +
-               LFill( VL_ICMS_OP_APLICADO ) +
-               LFill( VL_ICMS_ST_APLICADO ) +
-               LFill( VL_ICMS_FRT_APLICADO ) +
-               LFill( VL_ICMS_DIF_APLICADO )
+               LFill( VL_ICMS_OP_APLICADO, 0, 2 ) +
+               LFill( VL_ICMS_ST_APLICADO, 0, 2 ) +
+               LFill( VL_ICMS_FRT_APLICADO, 0, 2 ) +
+               LFill( VL_ICMS_DIF_APLICADO, 0, 2 )
              );
         end
         else

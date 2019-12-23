@@ -248,9 +248,11 @@ end;
 function TNFSeW_SP.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
-  Gerador.Opcoes.SuprimirDecimais := True;
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
+  
+  Gerador.Opcoes.SuprimirDecimais := True;
+  Gerador.Opcoes.QuebraLinha      := FQuebradeLinha;
 
   FDefTipos := FServicoEnviar;
 

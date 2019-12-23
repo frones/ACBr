@@ -854,6 +854,7 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  Integradora: TCIOTIntegradora;
 begin
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
@@ -889,6 +890,11 @@ begin
   for K := Low(TVersaoCIOT) to High(TVersaoCIOT) do
      cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TVersaoCIOT), integer(K) ) );
   cbVersaoDF.ItemIndex := 0;
+
+  cbbIntegradora.Items.Clear;
+  for Integradora := Low(TCIOTIntegradora) to High(TCIOTIntegradora) do
+     cbbIntegradora.Items.Add( GetEnumName(TypeInfo(TCIOTIntegradora), integer(Integradora) ) );
+  cbbIntegradora.ItemIndex := 0;
 
   LerConfiguracao;
   pgRespostas.ActivePageIndex := 2;

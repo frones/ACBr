@@ -312,8 +312,7 @@ type
 implementation
 
 uses
-  Types, dateutils, strutils, math,
-  synautil,
+  Types, dateutils, strutils, math, 
   ACBrConsts;
 
 function DeviceKindDescription(ADeviceKind: TACBrUSBHardwareType): String;
@@ -335,58 +334,6 @@ end;
 
 
 { TACBrUSBIDDataBase }
-
-procedure TACBrUSBIDDataBase.SetFileName(AValue: String);
-begin
-  if (FFileName = AValue) then
-    Exit;
-
-  if (AValue <> '') and (not FileExists(AValue)) then
-    raise Exception.CreateFmt(ACBrStr(cACBrArquivoNaoEncontrado), [AValue]);
-
-  FFileName := AValue;
-  Load;
-end;
-
-function TACBrUSBIDDataBase.LoadFromFile: Boolean;
-var
-  SL: TStringList;
-begin
-  Result := False;
-  if (FFileName <> '') and FileExists(FFileName) then
-  begin
-    FIni.Free;
-    FIni.Create(FFileName);
-
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile(FFileName);
-      FIni.SetStrings(SL);
-      Result := True;
-    finally
-      SL.Free;
-    end;
-  end;
-end;
-
-function TACBrUSBIDDataBase.LoadFromResource: Boolean;
-var
-  RS: TResourceStream;
-  SL: TStringList;
-begin
-  Result := False;
-  RS := TResourceStream.Create(HInstance, FResourceName, Windows.RT_RCDATA);
-  SL := TStringList.Create;
-  try
-    RS.Position := 0;
-    SL.LoadFromStream(RS);
-    FIni.SetStrings(SL);
-    Result := True;
-  finally
-    RS.Free;
-    SL.Free;
-  end;
-end;
 
 constructor TACBrUSBIDDataBase.Create(ADataBaseFileName: String; AResourceName: String);
 begin
@@ -425,11 +372,62 @@ begin
   FLoaded := Result;
 end;
 
+procedure TACBrUSBIDDataBase.SetFileName(AValue: String);
+begin
+  if (FFileName = AValue) then
+    Exit;
+
+  if (AValue <> '') and (not FileExists(AValue)) then
+    raise Exception.CreateFmt(ACBrStr(cACBrArquivoNaoEncontrado), [AValue]);
+
+  FFileName := AValue;
+  Load;
+end;
+
+function TACBrUSBIDDataBase.LoadFromFile: Boolean;
+var
+  SL: TStringList;
+begin
+  Result := False;
+  if (FFileName <> '') and FileExists(FFileName) then
+  begin
+    FIni.Free;
+    FIni := TMemIniFile.Create(FFileName);
+
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(FFileName);
+      FIni.SetStrings(SL);
+      Result := True;
+    finally
+      SL.Free;
+    end;
+  end;
+end;
+
+function TACBrUSBIDDataBase.LoadFromResource: Boolean;
+var
+  RS: TResourceStream;
+  SL: TStringList;
+begin
+  Result := False;
+  RS := TResourceStream.Create(HInstance, FResourceName, Windows.RT_RCDATA);
+  SL := TStringList.Create;
+  try
+    RS.Position := 0;
+    SL.LoadFromStream(RS);
+    FIni.SetStrings(SL);
+    Result := True;
+  finally
+    RS.Free;
+    SL.Free;
+  end;
+end;
+
 function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
   AVendorName: String; out AProductModel: String; out AACBrProtocol: Integer;
   out ADeviceKind: TACBrUSBHardwareType): Boolean;
 var
-  p, DeviceKind, ACBrProtocol: Integer;
   SL: TStringList;
 begin
   Result := False;
@@ -844,6 +842,7 @@ begin
     ADeviceListToAdd := FDeviceList;
 
   i := ADeviceListToAdd.Count;
+  Result := 0;
   FindUSBDevicesByGUID( GUID_DEVINTERFACE_USB_DEVICE, ADeviceListToAdd);
   while i < ADeviceListToAdd.Count do
   begin
@@ -858,7 +857,10 @@ begin
       end;
 
       if ok then
-        inc(i)
+      begin
+        inc(i);
+        inc(Result);
+      end
       else
         ADeviceListToAdd.Delete(i);
     end;
@@ -1096,8 +1098,7 @@ function TACBrUSBWinDeviceAPI.ReceiveTerminated(ATerminator: AnsiString;
   ATimeOut: Integer): AnsiString;
 var
   TimeoutTime: TDateTime;
-  ABuffer: AnsiString;
-  LenBuf, LenTer, p: Integer;
+  LenTer, p: Integer;
 begin
   Result := '';
   LenTer := Length(ATerminator);
@@ -1130,7 +1131,6 @@ var
   AOverlapped: OVERLAPPED;
   BytesReaded, Err, x: DWORD;
   TimeoutTime: TDateTime;
-  stat: COMSTAT;
 
   procedure CalcOverallTimeOut;
   begin

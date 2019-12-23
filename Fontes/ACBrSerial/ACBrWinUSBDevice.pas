@@ -689,6 +689,7 @@ end;
 destructor TACBrUSBWinDeviceAPI.Destroy;
 begin
   UnLoadAPI;
+  FDeviceList.Free;
   inherited Destroy;
 end;
 

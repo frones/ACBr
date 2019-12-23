@@ -86,8 +86,8 @@ begin
     Exit;
 
   { Shutdown libxslt/libxml }
-  xmlCleanupThreads();
   xmlCleanupParser();
+  xmlCleanupThreads();  
 
   LibXMLLoaded := False;
 end;

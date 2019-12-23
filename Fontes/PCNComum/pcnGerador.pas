@@ -672,13 +672,13 @@ begin
   if ((ocorrencias = 1) or (not EstaVazio)) then
   begin
     if ParseTextoXML then
-       ATag := '<' + tag + Atributo +  '>' +
-               FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos) +
-               '</' + tag + '>'
+      ATag := '<' + tag + Atributo +  '>' +
+              FiltrarTextoXML(FOpcoes.FRetirarEspacos, ConteudoProcessado, FOpcoes.FRetirarAcentos, True, FOpcoes.FQuebraLinha) +
+              '</' + tag + '>'
     else
-       ATag := '<' + tag + Atributo +  '>' +
-               ConteudoProcessado +
-               '</' + tag + '>';
+      ATag := '<' + tag + Atributo +  '>' +
+              ConteudoProcessado +
+              '</' + tag + '>';
 
     if FOpcoes.FIdentarXML then
       addStringArquivoXML(

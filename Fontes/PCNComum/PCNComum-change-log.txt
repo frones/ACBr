@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2019
+-- pcnGerador --
+[*] https://www.projetoacbr.com.br/forum/topic/55483-quebra-de-linha/
+  Por: Rogério
+
 22/11/2019
 -- pcnAuxiliar --
 [*] Ajuste para leitura dos campos "CDATA" no XML.

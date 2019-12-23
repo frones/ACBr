@@ -1979,9 +1979,9 @@ function TCTeConsulta.TratarResposta: Boolean;
 
 procedure SalvarEventos(Retorno: string);
 var
-  aEvento, aProcEvento, aIDEvento, sPathEvento, TipoEve: string;
+  aEvento, aProcEvento, aIDEvento, sPathEvento, sCNPJ: string;
   Inicio, Fim: Integer;
-  Tipo_Evento: TpcnTpEvento;
+  TipoEvento: TpcnTpEvento;
   Ok: Boolean;
 begin
   while Retorno <> '' do
@@ -2005,9 +2005,9 @@ begin
     else
       aIDEvento := Copy(aProcEvento, Inicio, Fim);
 
-    TipoEve := SeparaDados(aEvento, 'tpEvento');
-    Tipo_Evento := StrToTpEventoCTe(Ok, TipoEve);
-    sPathEvento := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathEvento(Tipo_Evento));
+    TipoEvento  := StrToTpEventoCTe(Ok, SeparaDados(aEvento, 'tpEvento'));
+    sCNPJ       := SeparaDados(aEvento, 'CNPJ');
+    sPathEvento := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathEvento(TipoEvento, sCNPJ));
 
     if (aProcEvento <> '') then
       FPDFeOwner.Gravar( aIDEvento + '-procEventoCTe.xml', aProcEvento, sPathEvento);
@@ -2017,7 +2017,7 @@ end;
 var
   CTeRetorno: TRetConsSitCTe;
   SalvarXML, CTCancelado, Atualiza: Boolean;
-  aEventos, sPathCTe, NomeXMLSalvo{, aEvento, aProcEvento, aIDEvento}: String;
+  aEventos, sPathCTe, NomeXMLSalvo: String;
   AProcCTe: TProcCTe;
   I, J, K, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
@@ -2307,12 +2307,13 @@ begin
       end
       else
       begin
-        if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
+        if FPConfiguracoesCTe.Arquivos.Salvar and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoCTe'))) then
         begin
           Inicio := Pos('<procEventoCTe', FPRetWS);
           Fim    := Pos('</retConsSitCTe', FPRetWS) -1;
 
           aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
           // Salva o XML de eventos retornados ao consultar um CT-e
           SalvarEventos(aEventos);
         end;

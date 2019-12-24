@@ -114,7 +114,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Size.Width = 183.000000000000000000
         Size.Height = 25.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 12
+        TabOrder = 13
         Text = 'Leitura de Status'
         OnClick = bLerStatusClick
       end
@@ -133,7 +133,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Size.Width = 594.000000000000000000
         Size.Height = 39.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 13
+        TabOrder = 14
         object bLimpar: TButton
           Anchors = [akTop, akRight]
           Images = ImageList1
@@ -200,6 +200,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Text = 'Senha'
         OnClick = Button1Click
       end
+      object btInfoUSB: TButton
+        Position.X = 392.000000000000000000
+        Position.Y = 140.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 12
+        Text = 'Informa'#231#245'es USB'
+        OnClick = btInfoUSBClick
+      end
     end
     object PageControl1: TTabControl
       Align = Client
@@ -238,8 +248,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Size.Height = 381.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          Viewport.Width = 594.000000000000000000
-          Viewport.Height = 381.000000000000000000
+          Viewport.Width = 590.000000000000000000
+          Viewport.Height = 377.000000000000000000
         end
       end
       object tsLog: TTabItem
@@ -263,8 +273,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           Size.Height = 381.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          Viewport.Width = 594.000000000000000000
-          Viewport.Height = 381.000000000000000000
+          Viewport.Width = 590.000000000000000000
+          Viewport.Height = 377.000000000000000000
         end
       end
       object tsImagens: TTabItem
@@ -776,7 +786,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         ItemIndex = -1
         Position.X = 16.000000000000000000
         Position.Y = 72.000000000000000000
-        Size.Width = 241.000000000000000000
+        Size.Width = 201.000000000000000000
         Size.Height = 25.000000000000000000
         Size.PlatformDefault = False
         OnChange = cbxPortaChange
@@ -886,6 +896,17 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Size.PlatformDefault = False
         TabOrder = 12
         Text = 'Cortar Papel'
+      end
+      object btSearchPorts: TButton
+        Position.X = 224.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 33.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'searchtoolbuttonbordered'
+        TabOrder = 13
+        Text = 'btSearchPorts'
+        OnClick = btSearchPortsClick
       end
     end
     object gbCodBarrasConfig: TGroupBox

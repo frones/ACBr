@@ -1204,7 +1204,7 @@ begin
     begin
       if CacheDiasValidade > 0 then
       begin
-         DataCache := FileDateToDateTime(FileAge(Arq));
+         FileAge(Arq, DataCache);
          if (DaysBetween(Now, DataCache) > CacheDiasValidade) then
          begin
            DeleteFile(Arq);

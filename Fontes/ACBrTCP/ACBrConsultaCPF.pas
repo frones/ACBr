@@ -257,7 +257,8 @@ begin
     end
     else
     begin
-      Result:= False;
+      //Se está sendo levantada uma exception, não faz sentido ter retorno na função.
+//      Result:= False;
       raise EACBrConsultaCPFException.Create(Erro);
     end;
   finally

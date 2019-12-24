@@ -57,6 +57,7 @@ contains
   ACBr_WinCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_WinCrypt.pas',
   ACBr_NCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_NCrypt.pas',
   ACBr_BCrypt in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_BCrypt.pas',
+  ACBr_NTStatus in '..\..\..\Fontes\Terceiros\CodeGear\ACBr_NTStatus.pas',
   ACBrFeriado in '..\..\..\Fontes\ACBrTCP\ACBrFeriado.pas',
   ACBrFeriadoWSClass in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSClass.pas',
   ACBrFeriadoWSCalendario in '..\..\..\Fontes\ACBrTCP\ACBrFeriadoWSCalendario.pas',

@@ -1509,7 +1509,7 @@ begin
            UmaPorta := 'COM'+IntToStr(I) ;
 
            BS.Connect( UmaPorta );
-           if BS.LastError <> 2 then
+           if not (BS.LastError in [2,5,13]) then
               AStringList.Add(UmaPorta) ;
 
            BS.CloseSocket;
@@ -1620,9 +1620,11 @@ var
   end;
 
   function RetornaPorta: Integer;
-  var
-    I: Integer;
-    VName: String;
+  {$IfDef MSWINDOWS}
+   var
+     I: Integer;
+     VName: String;
+  {$EndIf}
   begin
     {$IfDef FMX}
     Result := GetLabelPrinterIndex(PrnName);
@@ -1630,7 +1632,7 @@ var
     Result := Printer.Printers.IndexOf(PrnName);
     {$EndIf}
 
-    {$IFDEF MSWINDOWS}
+    {$IfDef MSWINDOWS}
     if Result < 0 then
     begin
       for I := 0 to Pred(Printer{$IfNDef FMX}.Printers{$EndIf}.Count) do
@@ -1646,7 +1648,7 @@ var
         end;
       end;
     end;
-    {$ENDIF}
+    {$EndIf}
   end;
 
 begin

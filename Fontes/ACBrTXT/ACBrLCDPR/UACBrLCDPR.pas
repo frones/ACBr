@@ -332,7 +332,7 @@ begin
             AddCampo(COD_MUN) +
             AddCampo(CEP) +
             AddCampo(TipoExploracaoToStr(TIPO_EXPLORACAO)) +
-            AddCampo(IntToStr(PARTICIPACAO), False)
+            AddCampo(formatNumeric(PARTICIPACAO), False)
           );
         end;
 
@@ -346,7 +346,7 @@ begin
                 AddCampo(TipoContraparteToStr(TIPO_CONTRAPARTE)) +
                 AddCampo(CPF_CONTRAPARTE) +
                 AddCampo(NOME_CONTRAPARTE) +
-                AddCampo(IntToStr(PERC_CONTRAPARTE), False)
+                AddCampo(formatNumeric(PERC_CONTRAPARTE), False)
               );
             end;
         end;

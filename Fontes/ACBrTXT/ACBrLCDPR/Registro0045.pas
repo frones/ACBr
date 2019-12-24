@@ -44,19 +44,19 @@ type
     FNOME_CONTRAPARTE: String;
     FTIPO_CONTRAPARTE: TTipoContraparte;
     FCOD_IMOVEL: Integer;
-    FPERC_CONTRAPARTE: Integer;
+    FPERC_CONTRAPARTE: Double;
     FCPF_CONTRAPARTE: String;
     procedure SetCOD_IMOVEL(const Value: Integer);
     procedure SetCPF_CONTRAPARTE(const Value: String);
     procedure SetNOME_CONTRAPARTE(const Value: String);
-    procedure SetPERC_CONTRAPARTE(const Value: Integer);
+    procedure SetPERC_CONTRAPARTE(const Value: Double);
     procedure SetTIPO_CONTRAPARTE(const Value: TTipoContraparte);
   public
     property COD_IMOVEL : Integer read FCOD_IMOVEL write SetCOD_IMOVEL;
     property TIPO_CONTRAPARTE : TTipoContraparte read FTIPO_CONTRAPARTE write SetTIPO_CONTRAPARTE;
     property CPF_CONTRAPARTE : String read FCPF_CONTRAPARTE write SetCPF_CONTRAPARTE;
     property NOME_CONTRAPARTE : String read FNOME_CONTRAPARTE write SetNOME_CONTRAPARTE;
-    property PERC_CONTRAPARTE : Integer read FPERC_CONTRAPARTE write SetPERC_CONTRAPARTE;
+    property PERC_CONTRAPARTE : Double read FPERC_CONTRAPARTE write SetPERC_CONTRAPARTE;
   End;
 
   TRegistro0045List = class(TObjectList)
@@ -99,7 +99,7 @@ begin
   FNOME_CONTRAPARTE := Value;
 end;
 
-procedure TRegistro0045.SetPERC_CONTRAPARTE(const Value: Integer);
+procedure TRegistro0045.SetPERC_CONTRAPARTE(const Value: Double);
 begin
   FPERC_CONTRAPARTE := Value;
 end;

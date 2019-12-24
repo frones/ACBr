@@ -53,7 +53,7 @@ type
     FCOMPL: String;
     FCOD_MUN: String;
     FINSCR_ESTADUAL: String;
-    FPARTICIPACAO: Integer;
+    FPARTICIPACAO: Double;
     FENDERECO: String;
     FPAIS: String;
     FCAEPF: string;
@@ -69,7 +69,7 @@ type
     procedure SetNOME_IMOVEL(const Value: String);
     procedure SetNUM(const Value: String);
     procedure SetPAIS(const Value: String);
-    procedure SetPARTICIPACAO(const Value: Integer);
+    procedure SetPARTICIPACAO(const Value: Double);
     procedure SetTIPO_EXPLORACAO(const Value: TTipoExploracao);
     procedure SetUF(const Value: String);
     procedure SetCAEPF(const Value: string);
@@ -89,7 +89,7 @@ type
     property COD_MUN : String read FCOD_MUN write SetCOD_MUN;
     property CEP : String read FCEP write SetCEP;
     property TIPO_EXPLORACAO : TTipoExploracao read FTIPO_EXPLORACAO write SetTIPO_EXPLORACAO;
-    property PARTICIPACAO : Integer read FPARTICIPACAO write SetPARTICIPACAO;
+    property PARTICIPACAO : Double read FPARTICIPACAO write SetPARTICIPACAO;
   End;
 
 implementation
@@ -207,7 +207,7 @@ begin
   FPAIS := Value;
 end;
 
-procedure TRegistro0040.SetPARTICIPACAO(const Value: Integer);
+procedure TRegistro0040.SetPARTICIPACAO(const Value: Double);
 begin
   FPARTICIPACAO := Value;
 end;

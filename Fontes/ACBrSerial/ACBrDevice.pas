@@ -1277,7 +1277,9 @@ begin
   if not (DeviceType in [dtSerial, dtUSB]) then
     Exit;
 
-  WinUSB.FindUSBPrinters;
+  if (WinUSB.DeviceList.Count < 1) then
+    WinUSB.FindUSBPrinters;
+
   if (WinUSB.DeviceList.Count < 1) then
     Exit;
 

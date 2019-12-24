@@ -48,6 +48,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2019
+-- ACBrBPeDABPeESCPOS --
+[*] Melhorias na impressão do DABPE.
+   Por: Italo Jurisato Junior
+-- ACBrBPeDABPEClass --
+[+] Incluido a propriedade de configuração: ImprimeLogoLateral
+   Por: Italo Jurisato Junior
+
 18/12/2019
 -- ACBrBPeWebServices --
 [+] Incluido a propriedade Protocolo no retorno de envio do BP-e.

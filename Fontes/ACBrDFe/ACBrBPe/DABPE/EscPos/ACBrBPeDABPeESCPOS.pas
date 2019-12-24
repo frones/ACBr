@@ -51,6 +51,9 @@ uses
   ACBrBPeDABPEClass, ACBrPosPrinter, ACBrBase,
   pcnBPe, pcnEnvEventoBPe;
 
+const
+  CLarguraRegiaoEsquerda = 270;
+
 type
   { TACBrBPeDABPeESCPOS }
   {$IFDEF RTL230_UP}
@@ -108,7 +111,7 @@ implementation
 
 uses
   strutils, Math,
-  ACBrBPe, ACBrValidador, ACBrUtil, ACBrDFeUtil,
+  ACBrBPe, ACBrValidador, ACBrUtil, ACBrDFeUtil, ACBrConsts,
   pcnConversao, pcnConversaoBPe, pcnAuxiliar;
 
 procedure Register;
@@ -168,13 +171,10 @@ procedure TACBrBPeDABPeESCPOS.GerarMensagemContingencia(CaracterDestaque: Char);
 begin
   // se homologação imprimir o texto de homologação
   if (FpBPe.ide.tpAmb = taHomologacao) then
-  begin
     FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
-  end;
 
   // se diferente de normal imprimir a emissão em contingência
-  if (FpBPe.ide.tpEmis <> teNormal) and
-     EstaVazio(FpBPe.procBPe.nProt) then
+  if (FpBPe.ide.tpEmis <> teNormal) and EstaVazio(FpBPe.procBPe.nProt) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('</c></ce><e><n>EMITIDA EM CONTINGÊNCIA</n></e>'));
     FPosPrinter.Buffer.Add(ACBrStr('<c><n>' + PadCenter('Pendente de autorização',
@@ -187,8 +187,6 @@ procedure TACBrBPeDABPeESCPOS.GerarCabecalhoAgencia;
 begin
   if trim(FpBPe.agencia.xNome) <> '' then
   begin
-    FPosPrinter.Buffer.Add('</zera></ce></logo>');
-
     FPosPrinter.Buffer.Add('</ce><c>' + FormatarCNPJ(FpBPe.agencia.CNPJ) + ' <n>' + FpBPe.agencia.xNome + '</n>');
 
     FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.agencia.EnderAgencia.xLgr) + ', ' +
@@ -198,41 +196,94 @@ begin
       Trim(FpBPe.agencia.EnderAgencia.xMun) + '-' + Trim(FpBPe.agencia.EnderAgencia.UF)
       , FPosPrinter.ColunasFonteCondensada)
     );
+
+    FPosPrinter.Buffer.Add('</linha_simples>');
   end;
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarCabecalhoEmitente;
+var
+  DadosCabecalho: TStringList;
+  Lateral: Boolean;
+  Altura: Integer;
+  TextoLateral: String;
 begin
-  FPosPrinter.Buffer.Add('</zera></ce></logo>');
+  Lateral := ImprimeLogoLateral and
+             (PosPrinter.TagsNaoSuportadas.IndexOf(cTagModoPaginaLiga) < 0);
 
-  if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
-     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpBPe.Emit.xFant + '</n>');
+  if Lateral then
+  begin
+    TextoLateral := '<c>';
+    if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
+       TextoLateral := TextoLateral +
+                       QuebraLinhas('<n>' + FpBPe.Emit.xFant + ' </n>',
+                        Trunc(FPosPrinter.ColunasFonteCondensada/2));
 
-  FPosPrinter.Buffer.Add('</ce><c>'+ FpBPe.Emit.xNome);
-  FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
-                         FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF));
+    TextoLateral := TextoLateral +
+                    QuebraLinhas('<n>' + FpBPe.Emit.xNome + '</n>'+
+                    ' CNPJ:' + FormatarCNPJ(FpBPe.Emit.CNPJ) +
+                    ' IE:' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF),
+                      Trunc(FPosPrinter.ColunasFonteCondensada/2)) + sLineBreak;
+
+    TextoLateral := TextoLateral +
+                    QuebraLinhas(Trim(Trim(FpBPe.Emit.EnderEmit.xLgr) +
+                    ifthen(Trim(FpBPe.Emit.EnderEmit.nro) <> '', ', ' + Trim(FpBPe.Emit.EnderEmit.nro), '') + ' ' +
+                    ifthen(Trim(FpBPe.Emit.EnderEmit.xCpl) <> '', Trim(FpBPe.Emit.EnderEmit.xCpl) + ' ', '') +
+                    ifthen(Trim(FpBPe.Emit.EnderEmit.xBairro) <> '', Trim(FpBPe.Emit.EnderEmit.xBairro) + ' ', '') +
+                    Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF) + ' ' +
+                    ifthen(Trim(FpBPe.Emit.EnderEmit.fone) <> '', '<n>' + FormatarFone(Trim(FpBPe.Emit.EnderEmit.fone)) + '</n>', '')),
+                      Trunc(FPosPrinter.ColunasFonteCondensada/2));
+
+    DadosCabecalho := TStringList.Create;
+    try
+      DadosCabecalho.Text := TextoLateral;
+      Altura := max(FPosPrinter.CalcularAlturaTexto(DadosCabecalho.Count), 250);
+    finally
+      DadosCabecalho.Free;
+    end;
+    FPosPrinter.Buffer.Add('</zera><mp>' +
+                           FPosPrinter.ConfigurarRegiaoModoPagina(0, 0, Altura, CLarguraRegiaoEsquerda) +
+                           '</logo>');
+    FPosPrinter.Buffer.Add(FPosPrinter.ConfigurarRegiaoModoPagina(CLarguraRegiaoEsquerda, 0, Altura, 325) +
+                           TextoLateral +
+                           '</mp>');
+  end
+  else
+  begin
+    FPosPrinter.Buffer.Add('</zera></ce></logo>');
+
+    if (Trim(FpBPe.Emit.xFant) <> '') and ImprimeNomeFantasia then
+      FPosPrinter.Buffer.Add('</ce><c><n>' +  FpBPe.Emit.xFant + '</n>');
+
+    FPosPrinter.Buffer.Add('</ce><c>'+ FpBPe.Emit.xNome);
+    FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpBPe.Emit.CNPJ) + ' I.E.: ' +
+                           FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF));
 
 
-  FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpBPe.Emit.EnderEmit.xLgr) + ', ' +
-    Trim(FpBPe.Emit.EnderEmit.nro) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xCpl) + '  ' +
-    Trim(FpBPe.Emit.EnderEmit.xBairro) +  ' ' +
-    Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF)
-    , FPosPrinter.ColunasFonteCondensada));
+    FPosPrinter.Buffer.Add('<c>' +
+      QuebraLinhas(Trim(FpBPe.Emit.EnderEmit.xLgr) + ', ' +
+        Trim(FpBPe.Emit.EnderEmit.nro) + '  ' +
+        Trim(FpBPe.Emit.EnderEmit.xCpl) + '  ' +
+        Trim(FpBPe.Emit.EnderEmit.xBairro) +  ' ' +
+        Trim(FpBPe.Emit.EnderEmit.xMun) + '-' + Trim(FpBPe.Emit.EnderEmit.UF),
+      FPosPrinter.ColunasFonteCondensada));
 
-   if not EstaVazio(FpBPe.Emit.EnderEmit.fone) then
-     FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>' + FormatarFone(FpBPe.Emit.EnderEmit.fone) +
-                            '</n> I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
-   else
-     FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: ' + FormatarIE(FpBPe.Emit.IE, FpBPe.Emit.EnderEmit.UF))
+    if not EstaVazio(FpBPe.Emit.EnderEmit.fone) then
+      FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>' +
+                             FormatarFone(FpBPe.Emit.EnderEmit.fone) + '</n>');
+  end;
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarIdentificacaodoDABPe;
 begin
+  FPosPrinter.Buffer.Add(' ');
+
   FPosPrinter.Buffer.Add('</ce><c><n>' +
     QuebraLinhas(ACBrStr('Documento Auxiliar do Bilhete de Passagem Eletrônico'), FPosPrinter.ColunasFonteCondensada) +
     '</n>');
   GerarMensagemContingencia('=');
+
+  FPosPrinter.Buffer.Add('</linha_simples>');
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarInformacoesViagem;
@@ -241,24 +292,58 @@ var
 begin
   for i := 0 to FpBPe.infViagem.Count -1 do
   begin
-    FPosPrinter.Buffer.Add('</ce><c>Origem: ' + FpBPe.infPassagem.xLocOrig + ' (' +
-                           FpBPe.Ide.UFIni + ')   Destino: ' +
-                           FpBPe.infPassagem.xLocDest + ' (' +
-                           FpBPe.Ide.UFFim + ')');
+    FPosPrinter.Buffer.Add('</ae><c>' +
+                           PadSpace('Origem : <n>' +
+                                    FpBPe.infPassagem.xLocOrig + ' (' +
+                                    FpBPe.Ide.UFIni + ')</n>', 64, ''));
+    FPosPrinter.Buffer.Add('</ae><c>' +
+                           PadSpace('Destino: <n>' +
+                                    FpBPe.infPassagem.xLocDest + ' (' +
+                                    FpBPe.Ide.UFFim + ')</n>', 64, ''));
 
     if i <> 0 then
-    FPosPrinter.Buffer.Add('</ce><c>-- CONEXÃO --');
+      FPosPrinter.Buffer.Add('</ce><c>-- CONEXÃO --');
 
-    FPosPrinter.Buffer.Add('</ce><c>Data: ' + DateToStr(FpBPe.infPassagem.dhEmb) +
-                           ' Horário: ' + TimeToStr(FpBPe.infPassagem.dhEmb));
+    FPosPrinter.Buffer.Add(' ');
+    {
+    FPosPrinter.Buffer.Add('</fn><c>' +
+                           PadSpace('Data: <n>' +
+                           DateToStr(FpBPe.infPassagem.dhEmb) + '</n>', 32, '') +
+                           PadSpace('Horário: <n>' +
+                           TimeToStr(FpBPe.infPassagem.dhEmb) + '</n>', 32, ''));
+    }
+    FPosPrinter.Buffer.Add('</fn>' +
+                           PadSpace('Data: <n>' +
+                           DateToStr(FpBPe.infPassagem.dhEmb) + '|Horário: <n>' +
+                           TimeToStr(FpBPe.infPassagem.dhEmb) + '</n>',
+                           FPosPrinter.ColunasFonteNormal, '|'));
 
-    FPosPrinter.Buffer.Add('</ce><c>Poltrona: ' + IntToStr(FpBPe.infViagem.Items[i].Poltrona) +
-                           ' Plataforma: ' + FpBPe.infViagem.Items[i].Plataforma);
+    FPosPrinter.Buffer.Add(' ');
+    FPosPrinter.Buffer.Add('</fn>' +
+                           PadSpace('Poltrona: <n>' +
+                           IntToStr(FpBPe.infViagem.Items[i].Poltrona) +
+                           '|Plataforma: <n>' +
+                           FpBPe.infViagem.Items[i].Plataforma + '</n>',
+                           FPosPrinter.ColunasFonteNormal, '|'));
 
-    FPosPrinter.Buffer.Add('</ce><c>Prefixo: ' + FpBPe.infViagem.Items[i].Prefixo +
-                           ' Linha: ' + FpBPe.infViagem.Items[i].xPercurso +
-                           ' Tipo: ' + tpServicoToDesc(FpBPe.infViagem.Items[i].tpServ));
+//    FPosPrinter.Buffer.Add('</ce><c>Poltrona: ' + IntToStr(FpBPe.infViagem.Items[i].Poltrona) +
+//                           ' Plataforma: ' + FpBPe.infViagem.Items[i].Plataforma);
+
+    FPosPrinter.Buffer.Add(' ');
+    FPosPrinter.Buffer.Add('</ce><c>' +
+                           PadSpace('Prefixo:', 32, '') + PadSpace('Tipo:', 32, ''));
+    FPosPrinter.Buffer.Add('</ce><c><n>' +
+                           PadSpace(FpBPe.infViagem.Items[i].Prefixo, 32, '') +
+                           PadSpace(tpServicoToDesc(FpBPe.infViagem.Items[i].tpServ), 32, '') +
+                           '</n>');
+
+    FPosPrinter.Buffer.Add('</ce><c>' + PadSpace('Linha:', 64, ''));
+    FPosPrinter.Buffer.Add('</ce><c><n>' +
+                           PadSpace(FpBPe.infViagem.Items[i].xPercurso, 64, '') +
+                           '</n>');
   end;
+
+  FPosPrinter.Buffer.Add('</linha_simples>');
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarInformacoesTotais;
@@ -269,44 +354,46 @@ begin
   Total := 0.0;
   for i := 0 to FpBPe.infValorBPe.Comp.Count -1 do
   begin
-    FPosPrinter.Buffer.Add('<c>' + PadSpace(tpComponenteToDesc(FpBpe.infValorBPe.Comp.Items[i].tpComp) + '|' +
-     FormatFloatBr(FpBpe.infValorBPe.Comp.Items[i].vComp), FPosPrinter.ColunasFonteCondensada, '|'));
+    FPosPrinter.Buffer.Add('</fn>' + PadSpace(tpComponenteToDesc(FpBpe.infValorBPe.Comp.Items[i].tpComp) + '|' +
+     FormatFloatBr(FpBpe.infValorBPe.Comp.Items[i].vComp), FPosPrinter.ColunasFonteNormal, '|'));
     Total := Total + FpBpe.infValorBPe.Comp.Items[i].vComp;
   end;
 
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('Valor Total R$|' +
-     FormatFloatBr(Total), FPosPrinter.ColunasFonteCondensada, '|'));
+  FPosPrinter.Buffer.Add('</fn>' + PadSpace('Valor Total R$|' +
+     FormatFloatBr(Total), FPosPrinter.ColunasFonteNormal, '|'));
 
   if FpBPe.infValorBPe.vDesconto > 0 then
-    FPosPrinter.Buffer.Add('<c>' + PadSpace('Desconto R$|' +
-       FormatFloatBr(FpBPe.infValorBPe.vDesconto), FPosPrinter.ColunasFonteCondensada, '|'));
+    FPosPrinter.Buffer.Add('</fn>' + PadSpace('Desconto R$|' +
+       FormatFloatBr(FpBPe.infValorBPe.vDesconto), FPosPrinter.ColunasFonteNormal, '|'));
 
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('Valor a Pagar R$|' +
-     FormatFloatBr(Total - FpBPe.infValorBPe.vDesconto), FPosPrinter.ColunasFonteCondensada, '|'));
+  FPosPrinter.Buffer.Add('</fn>' + PadSpace('Valor a Pagar R$|' +
+     FormatFloatBr(Total - FpBPe.infValorBPe.vDesconto), FPosPrinter.ColunasFonteNormal, '|'));
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarPagamentos;
 var
   i: Integer;
 begin
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | VALOR PAGO R$',
-     FPosPrinter.ColunasFonteCondensada, '|'));
+  FPosPrinter.Buffer.Add(' ');
+  FPosPrinter.Buffer.Add('</fn>' + PadSpace('FORMA DE PAGAMENTO | VALOR PAGO R$',
+     FPosPrinter.ColunasFonteNormal, '|'));
 
   for i := 0 to FpBPe.pag.Count - 1 do
   begin
-    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoBPeToDescricao(FpBPe.pag.Items[i].tPag) +
+    FPosPrinter.Buffer.Add('</fn>' + ACBrStr(PadSpace(FormaPagamentoBPeToDescricao(FpBPe.pag.Items[i].tPag) +
        '|' + FormatFloatBr(FpBPe.pag.Items[i].vPag),
-       FPosPrinter.ColunasFonteCondensada, '|')));
+       FPosPrinter.ColunasFonteNormal, '|')));
   end;
 
   if FpBPe.infValorBPe.vTroco > 0 then
-    FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
-       FormatFloatBr(FpBPe.infValorBPe.vTroco), FPosPrinter.ColunasFonteCondensada, '|'));
+    FPosPrinter.Buffer.Add('</fn>' + PadSpace('Troco R$|' +
+       FormatFloatBr(FpBPe.infValorBPe.vTroco), FPosPrinter.ColunasFonteNormal, '|'));
 end;
 
 procedure TACBrBPeDABPeESCPOS.GerarInformacoesConsultaChaveAcesso;
 begin
   // chave de acesso
+  FPosPrinter.Buffer.Add(' ');
   FPosPrinter.Buffer.Add('</ce><c><n>Consulte pela Chave de Acesso em</n>');
   FPosPrinter.Buffer.Add('</ce><c>'+TACBrBPe(ACBrBPe).GetURLConsultaBPe(FpBPe.ide.cUF, FpBPe.ide.tpAmb));
   FPosPrinter.Buffer.Add('</ce><c>' + FormatarChaveAcesso(OnlyNumber(FpBPe.infBPe.ID)));
@@ -316,6 +403,8 @@ procedure TACBrBPeDABPeESCPOS.GerarInformacoesPassageiro;
 var
   LinhaCmd: String;
 begin
+  FPosPrinter.Buffer.Add(' ');
+
   if (FpBPe.infPassagem.infPassageiro.xNome = '') then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('<c>PASSAGEIRO NÃO IDENTIFICADO'));
@@ -338,10 +427,13 @@ procedure TACBrBPeDABPeESCPOS.GerarInformacoesIdentificacaoBPe;
 var
   Via: String;
 begin
+  FPosPrinter.Buffer.Add(' ');
+
   if EstaVazio(Trim(FpBPe.procBPe.nProt)) then
     Via := IfThen(ViaConsumidor, '|Via Passageiro', '|Via Empresa')
   else
     Via := '';
+
   // dados da nota eletronica de consumidor
   FPosPrinter.Buffer.Add('</ce><c><n>' + StringReplace(QuebraLinhas(ACBrStr(
     'BP-e nº ' + IntToStrZero(FpBPe.Ide.nBP, 9) +
@@ -350,11 +442,13 @@ begin
     Via+'</n>')
     , FPosPrinter.ColunasFonteCondensada, '|'), '|', ' ', [rfReplaceAll]));
 
+  FPosPrinter.Buffer.Add(' ');
   // protocolo de autorização
   if (FpBPe.Ide.tpEmis <> teOffLine) or
      NaoEstaVazio(FpBPe.procBPe.nProt) then
   begin
     FPosPrinter.Buffer.Add(ACBrStr('<c><n>Protocolo de Autorização:</n> ')+Trim(FpBPe.procBPe.nProt));
+
     if (FpBPe.procBPe.dhRecbto <> 0) then
       FPosPrinter.Buffer.Add(ACBrStr('<c><n>Data de Autorização</n> '+DateTimeToStr(FpBPe.procBPe.dhRecbto)+'</fn>'));
   end;

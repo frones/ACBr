@@ -89,6 +89,7 @@ contains
   pcnCIOTW_eFrete in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_eFrete.pas',
   pcnCIOTW_REPOM in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_REPOM.pas',
   pcnConversaoCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnConversaoCIOT.pas',
-  pcnRetEnvCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnRetEnvCIOT.pas';
+  pcnRetEnvCIOT in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnRetEnvCIOT.pas',
+  pcnCIOTW_Pamcard in '..\..\..\..\Fontes\ACBrDFe\ACBrCIOT\PCNCIOT\pcnCIOTW_Pamcard.pas';
 
 end.

@@ -51,7 +51,6 @@ package ACBr_BlocoX;
 {$IMAGEBASE $400000}
 {$DESCRIPTION 'ACBr - Bloco X - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
-{$DEFINE DEBUG}
 
 requires
   rtl,
@@ -66,6 +65,7 @@ contains
   ACBrBlocoX_ReducaoZ in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas',
   ACBrBlocoX_WebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_WebServices.pas',
   ACBrBlocoX_Reg in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Reg.pas',
-  pcnRetEnvBlocoX in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX\pcnRetEnvBlocoX.pas';
+  pcnRetEnvBlocoX in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX\pcnRetEnvBlocoX.pas',
+  ACBrBlocoX_Consulta in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Consulta.pas';
 
 end.

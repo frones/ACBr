@@ -61,6 +61,7 @@ contains
    
     {$IfNDef DFE_SEM_LIBXML2}
       libxml2 in '..\..\..\Fontes\Terceiros\LibXmlSec\libxml2.pas',
+      ACBrLibXml2 in '..\..\..\Fontes\ACBrDFe\ACBrLibXml2.pas',
       ACBrDFeXsLibXml2 in '..\..\..\Fontes\ACBrDFe\ACBrDFeXsLibXml2.pas',
     {$EndIf}
   {$EndIf}

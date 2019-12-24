@@ -65,6 +65,9 @@ contains
   pnfsNFSeW_SP in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SP.pas',
   pnfsNFSeW_SMARAPD in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_SMARAPD.pas',
   pnfsNFSeW_IPM in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_IPM.pas',
-  pnfsNFSeW_AssessorPublico in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_AssessorPublico.pas';
+  pnfsNFSeW_AssessorPublico in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_AssessorPublico.pas',
+  pnfsNFSeW_WebFisco in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_WebFisco.pas',
+  pnfsNFSeW_Giap in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Giap.pas',
+  pnfsNFSeW_Lencois in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Lencois.pas';
 
 end.

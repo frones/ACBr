@@ -273,7 +273,7 @@ begin
   begin
     clbDelphiVersion.Items.Add(VersionNumberToNome(oACBr.Installations[iFor].VersionNumberStr));
     //Desabilitar versões não suportadas
-    clbDelphiVersion.ItemEnabled[iFor] := MatchText(oACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']);
+    clbDelphiVersion.ItemEnabled[iFor] := (not MatchText(oACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']));
   end;
 
   LerConfiguracoes;

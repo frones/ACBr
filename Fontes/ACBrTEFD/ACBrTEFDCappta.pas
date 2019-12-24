@@ -276,8 +276,8 @@ end;
 
 procedure TACBrTEFDCappta.Inicializar;
  Var
-   Sts : Integer ;
-   ParamAdic : AnsiString ;
+//   Sts : Integer ;
+//   ParamAdic : AnsiString ;
    Erro : String;
  begin
    if Inicializado then exit ;

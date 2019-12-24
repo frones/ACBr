@@ -1014,6 +1014,8 @@ function TACBrTEFDCliSiTef.ObtemDadoPinPadDiretoEx(Tipo_Doc: Integer; ChaveAcess
       begin
        Retorno := xObtemDadoPinPadDiretoEx(PAnsiChar(ChaveAcesso), PAnsiChar(Identificador), PAnsiChar(EntradaCelular), Saida);
       end;
+    else
+      Retorno := -1;
     end;
     if Retorno = 0 then
      begin

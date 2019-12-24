@@ -1,0 +1,1235 @@
+object FrPosPrinterTeste: TFrPosPrinterTeste
+  Left = 536
+  Top = 240
+  ActiveControl = bTagFormtacaoCaracter
+  Caption = 'ACBrPosPrinter - Teste'
+  ClientHeight = 594
+  ClientWidth = 899
+  Position = ScreenCenter
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnClose = FormClose
+  Left = 536
+  Top = 240
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 594.000000000000000000
+    Size.Height = 594.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Panel3: TPanel
+      Align = Bottom
+      Position.Y = 421.000000000000000000
+      Size.Width = 594.000000000000000000
+      Size.Height = 173.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object bTagFormtacaoCaracter: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 44.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Tags de Format. de Caracter'
+        OnClick = bTagFormtacaoCaracterClick
+      end
+      object bTagsAlinhamento: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 68.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Tags de Alinhamento'
+        OnClick = bTagsAlinhamentoClick
+      end
+      object bTagQRCode: TButton
+        Position.X = 200.000000000000000000
+        Position.Y = 68.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        Text = 'Tags de QRCode'
+        OnClick = bTagQRCodeClick
+      end
+      object bTagsCodBarras: TButton
+        Position.X = 200.000000000000000000
+        Position.Y = 44.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = 'Tags de Codigo de Barras'
+        OnClick = bTagsCodBarrasClick
+      end
+      object bTagsTesteInvalidas: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 92.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Teste de Tags Invalidas'
+        OnClick = bTagsTesteInvalidasClick
+      end
+      object bTagsTestePagCodigo: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 116.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Teste de P'#225'gina de C'#243'digo'
+        OnClick = bTagsTestePagCodigoClick
+      end
+      object bImpLinhaALinha: TButton
+        Position.X = 200.000000000000000000
+        Position.Y = 116.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        Text = 'Teste Impress'#227'o Linha a Linha'
+        OnClick = bImpLinhaALinhaClick
+      end
+      object bImpTagsValidas: TButton
+        Position.X = 392.000000000000000000
+        Position.Y = 44.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 9
+        Text = 'Ajuda - Tags Validas'
+        OnClick = bImpTagsValidasClick
+      end
+      object bLerStatus: TButton
+        Position.X = 392.000000000000000000
+        Position.Y = 116.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 12
+        Text = 'Leitura de Status'
+        OnClick = bLerStatusClick
+      end
+      object bLerInfo: TButton
+        Position.X = 392.000000000000000000
+        Position.Y = 92.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 11
+        Text = 'Leitura de Informa'#231#245'es'
+        OnClick = bLerInfoClick
+      end
+      object Panel4: TPanel
+        Align = Top
+        Size.Width = 594.000000000000000000
+        Size.Height = 39.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 13
+        object bLimpar: TButton
+          Anchors = [akTop, akRight]
+          Images = ImageList1
+          ImageIndex = 0
+          Position.X = 405.000000000000000000
+          Position.Y = 7.000000000000000000
+          Size.Width = 83.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'trashtoolbutton'
+          TabOrder = 1
+          Text = 'Limpar'
+          OnClick = bLimparClick
+        end
+        object bImprimir: TButton
+          Anchors = [akTop, akRight]
+          Position.X = 500.000000000000000000
+          Position.Y = 7.000000000000000000
+          Size.Width = 92.000000000000000000
+          Size.Height = 26.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'playtoolbuttonbordered'
+          TabOrder = 2
+          Text = 'Imprimir'
+          OnClick = bImprimirClick
+        end
+        object cbxLimparTexto: TCheckBox
+          Position.X = 16.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 217.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Limpar texto a cada teste selecionado'
+        end
+      end
+      object bTagGaveta: TButton
+        Position.X = 392.000000000000000000
+        Position.Y = 68.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 10
+        Text = 'Tag de Gaveta'
+        OnClick = bTagGavetaClick
+      end
+      object bTagsTestePageMode: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 140.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = 'Teste de Page Mode'
+        OnClick = bTagsTestePageModeClick
+      end
+      object Button1: TButton
+        Position.X = 200.000000000000000000
+        Position.Y = 140.000000000000000000
+        Size.Width = 183.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        Text = 'Senha'
+        OnClick = Button1Click
+      end
+    end
+    object PageControl1: TTabControl
+      Align = Client
+      Size.Width = 594.000000000000000000
+      Size.Height = 421.000000000000000000
+      Size.PlatformDefault = False
+      TabHeight = 40.000000000000000000
+      TabIndex = 2
+      TabOrder = 1
+      TabPosition = Top
+      Sizes = (
+        594s
+        381s
+        594s
+        381s
+        594s
+        381s)
+      object tsImprimir: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 106.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Texto a Imprimir'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object mImp: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 594.000000000000000000
+          Size.Height = 381.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 594.000000000000000000
+          Viewport.Height = 381.000000000000000000
+        end
+      end
+      object tsLog: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 85.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Eventos Log'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object mLog: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 594.000000000000000000
+          Size.Height = 381.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 594.000000000000000000
+          Viewport.Height = 381.000000000000000000
+        end
+      end
+      object tsImagens: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        Size.Width = 105.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Imagens e Logo'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object Splitter1: TSplitter
+          Align = Top
+          Cursor = crVSplit
+          MinSize = 20.000000000000000000
+          Position.Y = 161.000000000000000000
+          Size.Width = 594.000000000000000000
+          Size.Height = 12.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object gbCodBarrasConfig2: TGroupBox
+          Align = Top
+          Position.Y = 239.000000000000000000
+          Size.Width = 594.000000000000000000
+          Size.Height = 97.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'LogoTipo'
+          TabOrder = 0
+          object Label14: TLabel
+            AutoSize = True
+            Position.X = 16.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 21.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'KC1'
+          end
+          object Label15: TLabel
+            AutoSize = True
+            Position.X = 88.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 21.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'KC2'
+          end
+          object Label16: TLabel
+            AutoSize = True
+            Position.X = 160.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 34.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'FatorX'
+          end
+          object Label17: TLabel
+            AutoSize = True
+            Position.X = 225.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 34.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'FatorY'
+          end
+          object seLogoKC1: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 0
+            Cursor = crIBeam
+            Value = 32.000000000000000000
+            Position.X = 16.000000000000000000
+            Position.Y = 32.000000000000000000
+            Size.Width = 70.000000000000000000
+            Size.Height = 42.000000000000000000
+            Size.PlatformDefault = False
+            OnChange = seLogoKC1Change
+          end
+          object seLogoKC2: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 1
+            Cursor = crIBeam
+            Value = 32.000000000000000000
+            Position.X = 85.000000000000000000
+            Position.Y = 32.000000000000000000
+            Size.Width = 70.000000000000000000
+            Size.Height = 42.000000000000000000
+            Size.PlatformDefault = False
+            OnChange = seLogoKC2Change
+          end
+          object seLogoFatorX: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 2
+            Cursor = crIBeam
+            Value = 4.000000000000000000
+            Position.X = 154.000000000000000000
+            Position.Y = 32.000000000000000000
+            Size.Width = 70.000000000000000000
+            Size.Height = 42.000000000000000000
+            Size.PlatformDefault = False
+            OnChange = seLogoFatorXChange
+          end
+          object seLogoFatorY: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 3
+            Cursor = crIBeam
+            Value = 4.000000000000000000
+            Position.X = 224.000000000000000000
+            Position.Y = 32.000000000000000000
+            Size.Width = 70.000000000000000000
+            Size.Height = 42.000000000000000000
+            Size.PlatformDefault = False
+            OnChange = seLogoFatorYChange
+          end
+          object bGravarLogo: TButton
+            Position.X = 384.000000000000000000
+            Position.Y = 24.000000000000000000
+            Size.Width = 90.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 4
+            Text = 'Gravar Logo'
+            OnClick = bGravarLogoClick
+          end
+          object bTagLogo: TButton
+            Position.X = 456.000000000000000000
+            Position.Y = 56.000000000000000000
+            Size.Width = 118.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 5
+            Text = 'Tags de Logotipo'
+            OnClick = bTagLogoClick
+          end
+          object bImprimirLogo: TButton
+            Position.X = 304.000000000000000000
+            Position.Y = 24.000000000000000000
+            Size.Width = 72.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            Text = 'Imprimir'
+            OnClick = bImprimirLogoClick
+          end
+          object bApagarLogo: TButton
+            Position.X = 480.000000000000000000
+            Position.Y = 24.000000000000000000
+            Size.Width = 94.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 7
+            Text = 'Apagar Logo'
+            OnClick = bApagarLogoClick
+          end
+        end
+        object Panel5: TPanel
+          Align = Top
+          Position.Y = 173.000000000000000000
+          Size.Width = 594.000000000000000000
+          Size.Height = 66.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object bCaregarImagem: TButton
+            Position.X = 8.000000000000000000
+            Position.Y = 7.000000000000000000
+            Size.Width = 118.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Text = 'Carregar Imagem'
+            OnClick = bCaregarImagemClick
+          end
+          object bImprimirImagem: TButton
+            Position.X = 232.000000000000000000
+            Position.Y = 35.000000000000000000
+            Size.Width = 72.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+            Text = 'Imprimir'
+            OnClick = bImprimirImagemClick
+          end
+          object bTagBMP: TButton
+            Position.X = 394.000000000000000000
+            Position.Y = 35.000000000000000000
+            Size.Width = 168.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 3
+            Text = 'Tags de Impress'#227'o de BMP'
+            OnClick = bTagBMPClick
+          end
+          object edImagem: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 1
+            Position.X = 131.000000000000000000
+            Position.Y = 7.000000000000000000
+            Size.Width = 431.000000000000000000
+            Size.Height = 21.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object rbArquivo: TRadioButton
+            Position.X = 121.000000000000000000
+            Position.Y = 41.000000000000000000
+            Size.Width = 100.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 4
+            Text = 'De um Arquivo'
+          end
+          object rbStream: TRadioButton
+            IsChecked = True
+            Position.X = 16.000000000000000000
+            Position.Y = 41.000000000000000000
+            Size.Width = 95.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 5
+            Text = 'De um Stream'
+          end
+          object bConverter: TButton
+            Position.X = 310.000000000000000000
+            Position.Y = 35.000000000000000000
+            Size.Width = 78.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 6
+            Text = 'Converter'
+            OnClick = bConverterClick
+          end
+        end
+        object ScrollBox1: TScrollBox
+          Align = Top
+          Size.Width = 594.000000000000000000
+          Size.Height = 161.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Viewport.Width = 594.000000000000000000
+          Viewport.Height = 161.000000000000000000
+          object Image1: TImage
+            MultiResBitmap = <
+              item
+                Width = 0
+                Height = 0
+                PNG = {
+                  89504E470D0A1A0A0000000D49484452000000FA0000006D0806000000888F7C
+                  C6000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  08CE49444154785EED9D89721C370C44ADFCFF3F3B824A946118BC411220FB55
+                  4DA2DD9921AEEEE16A9DE3E3F727BF000057F3DFF7DF01001703A303F000F8E8
+                  7E091F1F1FDF3FD90059DC058C1E1C6B83D7805C6202A33B469A581BD56EA36B
+                  4042FE81D19D51326E6E541ECC9E809C7C02A33BA166D6DA983C999D80AC7C01
+                  A31FA4C79C2D63F266760E647616FCF1DA66C88CE998C1B3A9352C6A06E36047
+                  DFC4ACC8E598D27ADAF8A2180AD2DB0776F4C5ACDEC9A2985A2372EED180D117
+                  B1DAE02522ED9427FBF412F8E86ECC2AD1F231E562C851463410E4B806ECE846
+                  78DC99229AC6631F6F00469FC493306F32080C6F0B8C3EC12E21F6ECCC32A7E8
+                  1F8561761B60F4412209106607307A27243AEFC2BBD11811FAEE1918BD834842
+                  93B9DEF26D36CC3E068CDE40D4DDE466B3C3F07DC0E8156E13D42D662760F676
+                  60F460F48AFB7633C0EC6DC0E8194840B78848D641BB3A76F6B780D1156E14CE
+                  ED6680D9CBC0E8829B05236BBB69572760F63C303AE305A1DC6CF6DB1E5C96C0
+                  E8DFBCBC1B443508E5CD0F9007FF9AEA27DE4DCE476495AB1CBBE71EF44A34D5
+                  0269FFE179A39F16F8A8882D90B1BD987D4692B286C7E5FDC3D346DF2DEC55AD
+                  1EADE3B6D1E7FA00B33F6CF49D26DFD5E2919AA28D3FD528F3AED5FEA8CC7FC0
+                  97710B2171ED14D88D622603F38318A9B3F620B89D703BFACCC064A92B875F6A
+                  AB555C8B183B7B52A226C39497765D4FCEB538B7126A479F15E12E11E7C444F1
+                  2D7328AD174DD0A996DEFEF45EFF2AA176748BA1CA722D855232F80EB4F8B5D8
+                  2BFB314B4D9AA3B9D6D6BD91303BBA27016AE44CB6336F2D566451AFEA9D772D
+                  AD005FC65DC66D66CFF1A2596778CEE852201626906B508C9342BCC9045A2F2D
+                  EABBA9472D60479FC4EB6E29857CD3AE6E55CB4B660F6174EB81AC1A30ADEB49
+                  3C32979BCC6E85A779AD043BFA27A3068071F6F18A2157E1FE8FD7560D58963D
+                  1287AFE15988A55A2DFA40D46464D19F5CAEB5D8E0E11D5D0AAF572CD6E2A2F5
+                  4AC70C16269BC5AA1630063EBA1B306BA416F1C3206006D71FDD7B0D44A58CDC
+                  9368BD57B66CC6E823ED1F8997CBD9AA96D6F589D5317AD61FB957ABC93BD8D1
+                  0F1251302D70B3D0CF3DC66BE5E49A2B62AFE61AA35B9866648D5543A775D321
+                  69C993AEE187A4658D51646C8B58166B948868DE1EDC1A7D57E34F0D580A3799
+                  3A1D1CEDBD0437133F403BB9DEE688D85F7C74179C1862AFD0881943971E1CAB
+                  3915F7755C7E19372AFC44EFFDB205A5FB7BAE2D31926FEFA85AD6B5AA6725B5
+                  1C77D6D03B032F5CB1A3CF36BF269C28501DFCB8819D26BE992B3FBA5B1B95D6
+                  4B8705A3EB48917353DF6800EB39BE8C3BA39F12AC8C6B6D6E2B6E367622D7F7
+                  D3357BD3420FE177F4C8CD077DEC9A757AD0F078D175E6CAE8964FEC1583F1B0
+                  8B4A01DE48FAC4A2F57B65ED5A6F6FE977E81DDD7A009AB04AA23B4912E00D22
+                  2CB1DBECB772E59771AF71BBE161F679DC18DDDB8EE9919AB893E1F9710BABF5
+                  217B45F1D2710357EFE82342DF31D89DE2D965F814A774CCB2AB6F32CE0D66C7
+                  47F70A16025D01894F1E25A4E94ED4651DFB440D517161F49A487348A16BC708
+                  F23E2ECED135773053F36E3C99F485070676F40EB8E12D6959B3276E327C14D3
+                  F770634D3B386EF4570727EB2E1979E6E1920C2FE3ADECBBB6B69683052B1EBC
+                  1A2BFBB503ECE8195A076B29346D2DEDBD11D1ED324442E648F177E700FE00A3
+                  7760FD54D7D64B86C819C33A8715E47207E7386A74EFA2D5F2A3F7E4FB33A2EE
+                  E98155BFACD699C1430EBD44CC39811DDD012D028A2C3289652D37F56525C7FE
+                  0B33510624DBC3F3E6E73CD7D35A03E17D2E5ABEB335F4DC2FAF8D02767423BC
+                  0A20AA30812DA176F4D95447772B1997AF533AE7815A7EDEF397F07C53AEB335
+                  F4DE2FAF8FC0533BFA8E017912C1AC01BC11D1605E3862F468822BE51BDD3CE0
+                  0DC2ECE891764A3A7F325F2DFE6DBB391EB07D6C37BAD580689DD6C302AB754E
+                  103977E2E443F31642FE8E3E235C2BD1683B8CCC8BAED929522D5E6493E7EA89
+                  5CD329B61AFD850169356A82B524B77ED47EAFEED78B84D8D1A30D3D67306B01
+                  97D68B64F25447A91EE2858D62152EFFDF6B354606BEAACC522EA75ADBD39F08
+                  E3AFD5635DC3EE783B08697400401F21BF8C0300F401A303F000303A000F50FC
+                  1D7DE44B2F30871CC74B3378B9760B4A5FB7A93B3A35184D7E0B12093F4E00CD
+                  CD51F2ED3F4647B3DF4333F629E373FDED8C7B139A87FF323A4CFE1EAD66DA6D
+                  F804CC3E86F4F28FD161F2F718315132FC4E03C2EC63704F7F7D190793FB418A
+                  BA7536FCBE967B34F3C8FBB46B4A58EA68B40FE05FA8976E8D3E3BE8AFE29C8A
+                  63B6368E5C2B615D7B8A737ADDDAF5BBFA91E0F128867CED01CA8932D13B7318
+                  39B09EA6A57BBD347A25118466496DB6F2FCEE7E78ED3F65F2273327F0662578
+                  D372C3A4D7A57BE5B9DCFB09B95ECBF5442907A2F73C3FC7D172D328C5D3CE69
+                  94AEAF9D6BB927BD267AAFE7C8F37C2D7A2FB7B6F63EA1AD9390F769AFBD10E6
+                  9F8CCB0D42C29B4B3FA7D7E97EED3D0EBF9FCEF3D789B4463A72F0F35200F2DE
+                  74BE35CF56B4B884B626CF8790AF392D6BD1D1139FC3AF1D81D697B1253C46FA
+                  59BB2EADC3AFD1AEF38C6BA35B35B4262A494BCC2424B9B6164BD691BBB744CF
+                  B51AB59AE479ED7A9E436FFE1CD90F8D99F50919A365AD5ACC74BE769D47DC19
+                  9D375036D44B73791E52B02D024ED4AEAD91BB5FF62D1296FD21726BF0F779BF
+                  B4EBE93D8B5C4EE276474FCD2D35B926E8749EDF5FBBA79796F8B9982DF72672
+                  3D48A4EBE59AE93E79BEB69EC6EC3D3C87944789966B72F4C4A9C1D719E98107
+                  C2FC8E9EA086D79AAD9D6F7DCF829E58F2FDDE3C5BD66D8931436D3DEDBC750E
+                  354AF1F8394D5FF23CB13BFF59F00FCC2CA6E5C1B48A93B1811FBE7400A3AF81
+                  9A9BE8EDEFAC4179EC44E4196BF570A0DF325F7AFAFCCB5717D12C1F48518F3C
+                  2424B7CC56AB8D8076F3A49E85FB1D1DE4B9D9E404D5C28F44EE01F03ABC2F3F
+                  4647B36273BBC935B8E9A1DF327FEDE8D42C342C1E2F9A5CF25ABD25341FAB1F
+                  DD61F638C0E48093F36EF67774983D2630F99B905F4B9EFDF9D61D00702FF8D6
+                  1D800780D1017800181D80EBF9F5EB7FFAD01A3014A1A3E70000000049454E44
+                  AE426082}
+              end>
+            Align = Top
+            Size.Width = 594.000000000000000000
+            Size.Height = 145.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+      end
+    end
+  end
+  object Panel2: TPanel
+    Align = Left
+    Size.Width = 305.000000000000000000
+    Size.Height = 594.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object gbConfiguracao: TGroupBox
+      Align = Top
+      Size.Width = 305.000000000000000000
+      Size.Height = 273.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Configura'#231#227'o'
+      TabOrder = 0
+      object Label1: TLabel
+        AutoSize = True
+        Position.X = 16.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 42.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Modelo'
+      end
+      object Label4: TLabel
+        AutoSize = True
+        Position.X = 16.000000000000000000
+        Position.Y = 56.000000000000000000
+        Size.Width = 28.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Porta'
+      end
+      object Label2: TLabel
+        AutoSize = True
+        Position.X = 15.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 43.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Colunas'
+      end
+      object Label3: TLabel
+        AutoSize = True
+        Position.X = 80.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 42.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Espa'#231'os'
+      end
+      object Label5: TLabel
+        AutoSize = True
+        Position.X = 127.000000000000000000
+        Position.Y = 226.000000000000000000
+        Size.Width = 59.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Pag.codigo'
+      end
+      object btSerial: TSpeedButton
+        Position.X = 264.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 25.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        OnClick = btSerialClick
+        object btSerial_SubImage: TImage
+          MultiResBitmap = <
+            item
+              Width = 0
+              Height = 0
+              PNG = {
+                89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+                61000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                013C49444154384FA593B14E844010867FAC79000A738DC4C2125A72749A5879
+                098187D01CEA4BD05E7189CFC03596727624145A9CA1A2305624263C0015CDB9
+                332C8493F5BCE4BE64B33F4398997F76D1B6021CC19F09B4D90CD74D83AAAA64
+                A4E503136C37CFC0E20EB85FE244C647586589BAAE319F3FC2F33C388E03D334
+                F95D9AA6C0DB2BEBBD16A228429EE7AC57CD17504E58DF6E5C2CD76BE0EA45DD
+                01B54FAB6B7F25AC8C38BDE46D27411004705D17E74521AA812D7458E259459F
+                803E8CE398FD7DEA171CA304C3242A380155E6C14868CA3C6901D9A081D21055
+                7002AA1C86210786188621159065192CF225F8D61E80E289756F812A51271DB6
+                6D234992DE062DBA033DEF67ED4EC738643A9D4AA506D68D542DA30484EFFB52
+                FDCFCE3176FCBEBEFBE09B487E095DD7797034D44339FA6F545A381CE00770C1
+                F8E9F2483D710000000049454E44AE426082}
+            end>
+          Align = Left
+          HitTest = False
+          Size.Width = 32.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object Label6: TLabel
+        AutoSize = True
+        Position.X = 155.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 32.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Buffer'
+      end
+      object Label9: TLabel
+        AutoSize = True
+        Position.X = 132.000000000000000000
+        Position.Y = 184.000000000000000000
+        Size.Width = 44.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Arq.Log:'
+      end
+      object SbArqLog: TSpeedButton
+        Hint = 'Abre Arquivo de Log'
+        Position.X = 268.000000000000000000
+        Position.Y = 200.000000000000000000
+        Size.Width = 24.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'pagecurltoolbutton'
+        Text = '...'
+        TextSettings.WordWrap = True
+        OnClick = SbArqLogClick
+      end
+      object Label7: TLabel
+        AutoSize = True
+        Position.X = 226.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 73.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Linhas '#224' Pular'
+      end
+      object cbTraduzirTags: TCheckBox
+        Hint = 'Traduz as Tags de Formata'#231#227'o e Cod.Barras'
+        IsChecked = True
+        Position.X = 15.000000000000000000
+        Position.Y = 229.000000000000000000
+        Size.Width = 88.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'TraduzirTags'
+      end
+      object cbIgnorarTags: TCheckBox
+        Hint = 'N'#227'o processa as Tags, imprime-as como texto normal'
+        Position.X = 15.000000000000000000
+        Position.Y = 248.000000000000000000
+        Size.Width = 83.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'IgnorarTags'
+      end
+      object cbxModelo: TComboBox
+        Position.X = 16.000000000000000000
+        Position.Y = 32.000000000000000000
+        Size.Width = 185.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        OnChange = cbxModeloChange
+      end
+      object cbxPorta: TComboEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        ItemHeight = 19.000000000000000000
+        ItemIndex = -1
+        Position.X = 16.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 241.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = cbxPortaChange
+      end
+      object seColunas: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 4
+        Cursor = crIBeam
+        Value = 48.000000000000000000
+        Position.X = 15.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 70.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seColunasChange
+      end
+      object cbControlePorta: TCheckBox
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#243's o envio'
+        Position.X = 15.000000000000000000
+        Position.Y = 190.000000000000000000
+        Size.Width = 97.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = 'Controle Porta'
+      end
+      object seEspLinhas: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 6
+        Cursor = crIBeam
+        Position.X = 84.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 70.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seEspLinhasChange
+      end
+      object cbxPagCodigo: TComboBox
+        Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
+        Position.X = 127.000000000000000000
+        Position.Y = 242.000000000000000000
+        Size.Width = 117.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        OnChange = cbxPagCodigoChange
+      end
+      object seLinhasBuffer: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 8
+        Cursor = crIBeam
+        Position.X = 154.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 70.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seLinhasBufferChange
+      end
+      object edLog: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 9
+        Text = 'PosPrinter.log'
+        Position.X = 127.000000000000000000
+        Position.Y = 200.000000000000000000
+        Hint = 'Arquivo de Log para gravar os comandos enviados e recebidos'
+        Size.Width = 130.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object bAtivar: TButton
+        Anchors = [akTop, akRight]
+        StyledSettings = [FontColor]
+        ModalResult = 1
+        Position.X = 226.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 67.000000000000000000
+        Size.Height = 43.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 10
+        Text = 'Ativar'
+        TextSettings.Font.Family = 'MS Sans Serif'
+        TextSettings.Font.Size = 11.000000000000000000
+        OnClick = bAtivarClick
+      end
+      object seLinhasPular: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 11
+        Cursor = crIBeam
+        Position.X = 224.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 70.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seLinhasPularChange
+      end
+      object cbCortarPapel: TCheckBox
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#243's o envio'
+        IsChecked = True
+        Position.X = 15.000000000000000000
+        Position.Y = 210.000000000000000000
+        Size.Width = 85.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 12
+        Text = 'Cortar Papel'
+      end
+    end
+    object gbCodBarrasConfig: TGroupBox
+      Align = Top
+      Position.Y = 273.000000000000000000
+      Size.Width = 305.000000000000000000
+      Size.Height = 90.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Cod.Barras'
+      TabOrder = 1
+      object Label8: TLabel
+        AutoSize = True
+        Position.X = 8.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 41.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Largura'
+      end
+      object Label10: TLabel
+        AutoSize = True
+        Position.X = 104.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 32.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Altura'
+      end
+      object seBarrasLargura: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Cursor = crIBeam
+        Value = 1.000000000000000000
+        Position.X = 8.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seBarrasLarguraChange
+      end
+      object seBarrasAltura: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        Position.X = 108.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seBarrasAlturaChange
+      end
+      object cbHRI: TCheckBox
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#243's o envio'
+        Position.X = 200.000000000000000000
+        Position.Y = 40.000000000000000000
+        Size.Width = 97.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Exibe Numero'
+      end
+    end
+    object gbCodBarrasConfig1: TGroupBox
+      Align = Top
+      Position.Y = 363.000000000000000000
+      Size.Width = 305.000000000000000000
+      Size.Height = 88.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'QRCode'
+      TabOrder = 2
+      object Label11: TLabel
+        AutoSize = True
+        Position.X = 16.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 24.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Tipo'
+      end
+      object Label12: TLabel
+        AutoSize = True
+        Position.X = 112.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 71.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Largura Mod.'
+      end
+      object Label13: TLabel
+        AutoSize = True
+        Position.X = 207.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 53.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'ErrorLevel'
+      end
+      object seQRCodeTipo: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Cursor = crIBeam
+        Value = 2.000000000000000000
+        Position.X = 8.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seQRCodeTipoChange
+      end
+      object seQRCodeLarguraModulo: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        Value = 4.000000000000000000
+        Position.X = 108.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seQRCodeLarguraModuloChange
+      end
+      object seQRCodeErrorLevel: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Cursor = crIBeam
+        Position.X = 208.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seQRCodeErrorLevelChange
+      end
+    end
+    object gbGavetaConfig: TGroupBox
+      Align = Top
+      Position.Y = 451.000000000000000000
+      Size.Width = 305.000000000000000000
+      Size.Height = 120.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Gaveta'
+      TabOrder = 3
+      object Label18: TLabel
+        AutoSize = True
+        Position.X = 110.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 19.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'ON'
+      end
+      object Label19: TLabel
+        AutoSize = True
+        Position.X = 207.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 21.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'OFF'
+      end
+      object Label20: TLabel
+        AutoSize = True
+        Position.X = 23.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 37.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Gaveta'
+      end
+      object seGavetaTempoON: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        Value = 50.000000000000000000
+        Position.X = 108.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seGavetaTempoONChange
+      end
+      object cbGavetaSinalInvertido: TCheckBox
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#243's o envio'
+        Position.X = 104.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 105.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Invertido'
+      end
+      object seGavetaTempoOFF: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Cursor = crIBeam
+        Value = 100.000000000000000000
+        Position.X = 208.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 42.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = seGavetaTempoOFFChange
+      end
+      object seGavetaNum: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Cursor = crIBeam
+        Value = 1.000000000000000000
+        Position.X = 8.000000000000000000
+        Position.Y = 36.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 41.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+  end
+  object OpenPictureDialog1: TOpenDialog
+    Left = 816
+    Top = 56
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+        ResourcesBin = {
+          464D585F5354594C4520322E3501060D624174697661725374796C6531039906
+          005450463007544C61796F757400095374796C654E616D65060D624174697661
+          725374796C65310A506F736974696F6E2E580500000000000000BC07400A506F
+          736974696F6E2E590500000000000080BB07400A53697A652E57696474680500
+          000000000000B605400B53697A652E4865696768740500000000000000C00340
+          1453697A652E506C6174666F726D44656661756C7408000A5452656374616E67
+          6C6500095374796C654E616D65060A6261636B67726F756E6405416C69676E07
+          08436F6E74656E74730A46696C6C2E436F6C6F72070978464645464546454607
+          48697454657374080A53697A652E57696474680500000000000000B605400B53
+          697A652E4865696768740500000000000000C003401453697A652E506C617466
+          6F726D44656661756C74080B5374726F6B652E4B696E6407044E6F6E65075852
+          61646975730500000000000000C0004007595261646975730500000000000000
+          C00040000A5452656374616E676C650005416C69676E0708436F6E74656E7473
+          0946696C6C2E4B696E6407084772616469656E741446696C6C2E477261646965
+          6E742E506F696E74730E0105436F6C6F720709783234463446344634064F6666
+          7365740500000000000000000000000105436F6C6F7207097832344541454145
+          41064F6666736574050000000000EE7CFFFD3F000105436F6C6F720709783445
+          383638363836064F6666736574050000000000000080FE3F0000074869745465
+          7374080A53697A652E57696474680500000000000000B605400B53697A652E48
+          65696768740500000000000000C003401453697A652E506C6174666F726D4465
+          6661756C74080C5374726F6B652E436F6C6F7207097843383446344634460758
+          5261646975730500000000000000C00040075952616469757305000000000000
+          00C0004000000F54436F6C6F72416E696D6174696F6E00084475726174696F6E
+          050000000000CDCCCCFC3F0C50726F70657274794E616D65060A46696C6C2E43
+          6F6C6F720A537461727456616C756507097846464546454645460953746F7056
+          616C756507097846464135443946460754726967676572061049734D6F757365
+          4F7665723D7472756500000F54436F6C6F72416E696D6174696F6E0008447572
+          6174696F6E050000000000CDCCCCFC3F0C50726F70657274794E616D65060A46
+          696C6C2E436F6C6F720A537461727456616C7565070978464641354439464609
+          53746F7056616C75650709784646454645464546075472696767657206114973
+          4D6F7573654F7665723D66616C736500001054496E6E6572476C6F7745666665
+          63740008536F66746E657373050000000000CDCCCCFD3F09476C6F77436F6C6F
+          720709784646344634383438074F7061636974790500000000006666E6FE3F07
+          54726967676572060E4973507265737365643D7472756507456E61626C656408
+          00000A5452656374616E676C650005416C69676E0706436C69656E740946696C
+          6C2E4B696E6407044E6F6E65064C6F636B6564090748697454657374080C5061
+          6464696E672E4C656674050000000000000080FF3F0B50616464696E672E546F
+          70050000000000000080FF3F0D50616464696E672E5269676874050000000000
+          000080FF3F0E50616464696E672E426F74746F6D050000000000000080FF3F0A
+          53697A652E57696474680500000000000000B605400B53697A652E4865696768
+          740500000000000000C003401453697A652E506C6174666F726D44656661756C
+          74080C5374726F6B652E436F6C6F720709783936464346434643075852616469
+          7573050000000000000080004007595261646975730500000000000000800040
+          00000005545465787400095374796C654E616D6506047465787405416C69676E
+          0706436C69656E74064C6F636B6564090748697454657374080C50616464696E
+          672E4C6566740500000000000000A001400B50616464696E672E546F70050000
+          0000000000C000400D50616464696E672E52696768740500000000000000A001
+          400E50616464696E672E426F74746F6D0500000000000000C000400A53697A65
+          2E57696474680500000000000000B605400B53697A652E486569676874050000
+          0000000000C003401453697A652E506C6174666F726D44656661756C74080454
+          6578740606627574746F6E00000B54476C6F774566666563740008536F66746E
+          657373050000000000CDCCCCFC3F09476C6F77436F6C6F720709783832303035
+          414343074F7061636974790500000000006666E6FE3F0754726967676572060E
+          4973466F63757365643D7472756507456E61626C656408000000}
+      end>
+    Left = 736
+    Top = 48
+  end
+  object ImageList1: TImageList
+    Source = <
+      item
+        MultiResBitmap = <
+          item
+            Scale = 2.000000000000000000
+          end
+          item
+            Width = 16
+            Height = 16
+            PNG = {
+              89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+              61000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              024F49444154384F755331685351143D8D115E25C20FA4F203150D24433A35D0
+              C1884B3F64684487140723BA6492804BDDD241C441A16337C922248BB40ED208
+              42E2D60842141DE2204650FC190AF943307F283ECF7DFF3736520FDCFFDE7DF7
+              9EF3EE7DEF7D1CA17D25AFF7571D1DBA27220B68F76659D716EDD9BC76C1D1FA
+              75DB980885CB3330E4BB55ADDFF5B46E36F4563A65F22212702C0B187B80E7C1
+              B977DF5463582124A773BB0CBBE0008301105528C5C82122237EEACF77E13FAD
+              53801ECDB953417B2567445242BE5182BD4AF201E3072E860F3751FFF05EC298
+              934F8949458EB798A4D66416A0DB6CC04E2691929D0FB970E863F8AC81C6E73E
+              76244EBE111088C8BA8C2B39A8C25F912984FC62173B5F0668D015B22C4F0504
+              658A5CE5585AA648FE72B01862F8AA85BD6F033439EF1CE345C2D180C13937CA
+              494C01BE1F18771653090B5DC68E93053302A52874E5521E2AB314AE10A677C0
+              CA64514B6791674E10083055AB2AA5B7E53A137166738CC7E17D777965741792
+              C08837C08A7C5EF7FA0F172DDF375C53414DC82C1116C98AE59F25D975D1E355
+              F5699EB491E2852EC4A16C1B7BE9142A31652A39B5C1921E9F4BB0EF70E70BE7
+              E1FD1AA3FFB68B27BF818FB4A59F2EE63329A8457915C23A8DEB6762F834F61E
+              44486399F3C1C171176FECA3FFA6834DF6DD628B72B08F58FAE0658B0F956D5C
+              A48854CBD69272C8156ABA6C61B256D4936B45BD4F3F1FEC3303BE0CDD63B523
+              FE4C13DA577264CD04B73899F0E9F6B8983B817C0411EEB1F7D1724ED7FECDDB
+              B02C2D3F4DE8FE17395651656EE0017F007ECCEC3CE3A0BA990000000049454E
+              44AE426082}
+            FileName = 'C:\temp\Smart SAT\Cancel.png'
+          end>
+        Name = 'ImagensPosPrinter'
+      end>
+    Destination = <>
+    Left = 481
+    Top = 136
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 0
+    Left = 817
+    Top = 128
+  end
+end

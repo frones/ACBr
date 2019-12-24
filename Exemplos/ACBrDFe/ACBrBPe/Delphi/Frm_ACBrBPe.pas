@@ -217,6 +217,7 @@ type
     cbVersaoDF: TComboBox;
     btnStatusServ: TButton;
     btnAlteracaoPoltrona: TButton;
+    chkLogoLateral: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathBPeClick(Sender: TObject);
@@ -1678,6 +1679,7 @@ begin
     INI.WriteInteger('PosPrinter', 'EspacoLinhas',      seEspLinhas.Value);
     INI.WriteInteger('PosPrinter', 'LinhasEntreCupons', seLinhasPular.Value);
     Ini.WriteBool(   'PosPrinter', 'CortarPapel',       cbCortarPapel.Checked );
+    Ini.WriteBool(   'PosPrinter', 'LogoLateral',       chkLogoLateral.Checked );
 
     ConfigurarComponente;
   finally
@@ -1808,6 +1810,7 @@ begin
     seEspLinhas.Value             := INI.ReadInteger('PosPrinter', 'EspacoLinhas',      ACBrPosPrinter1.EspacoEntreLinhas);
     seLinhasPular.Value           := INI.ReadInteger('PosPrinter', 'LinhasEntreCupons', ACBrPosPrinter1.LinhasEntreCupons);
     cbCortarPapel.Checked         := Ini.ReadBool(   'PosPrinter', 'CortarPapel',       True);
+    chkLogoLateral.Checked        := Ini.ReadBool(   'PosPrinter', 'LogoLateral',       False);
 
     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter', 'ParamsString', '');
 
@@ -1896,10 +1899,11 @@ begin
     PathSalvar       := PathMensal;
   end;
 
-  if ACBrBPe1.DABPe <> nil then
+  if ACBrBPe1.DABPE <> nil then
   begin
-    ACBrBPe1.DABPe.TipoDABPe := StrToTpImp(OK, IntToStr(rgTipoDaBPe.ItemIndex + 1));
-    ACBrBPe1.DABPe.Logo      := edtLogoMarca.Text;
+    ACBrBPe1.DABPE.TipoDABPe := StrToTpImp(OK, IntToStr(rgTipoDaBPe.ItemIndex + 1));
+    ACBrBPe1.DABPE.Logo      := edtLogoMarca.Text;
+    ACBrBPe1.DABPE.ImprimeLogoLateral := chkLogoLateral.Checked;
   end;
 end;
 
@@ -1939,6 +1943,9 @@ begin
   ACBrPosPrinter1.LinhasEntreCupons  := seLinhasPular.Value;
   ACBrPosPrinter1.EspacoEntreLinhas  := seEspLinhas.Value;
   ACBrPosPrinter1.CortaPapel         := cbCortarPapel.Checked;
+
+  ACBrPosPrinter1.ApagarLogo(32, 32);
+  ACBrPosPrinter1.GravarLogoArquivo(edtLogoMarca.Text, 32, 32);
 
   ACBrPosPrinter1.Ativar;
 end;

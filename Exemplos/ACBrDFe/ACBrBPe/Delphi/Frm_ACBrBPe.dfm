@@ -360,7 +360,7 @@ object frmACBrBPe: TfrmACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -370,7 +370,7 @@ object frmACBrBPe: TfrmACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -380,7 +380,7 @@ object frmACBrBPe: TfrmACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -390,7 +390,7 @@ object frmACBrBPe: TfrmACBrBPe
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -501,7 +501,7 @@ object frmACBrBPe: TfrmACBrBPe
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -547,7 +547,7 @@ object frmACBrBPe: TfrmACBrBPe
                 Top = 149
                 Width = 248
                 Height = 21
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 8
               end
             end
@@ -692,7 +692,7 @@ object frmACBrBPe: TfrmACBrBPe
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
+                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1300,7 +1300,7 @@ object frmACBrBPe: TfrmACBrBPe
             Width = 233
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
           end
           object cbxPorta: TComboBox
@@ -1308,7 +1308,7 @@ object frmACBrBPe: TfrmACBrBPe
             Top = 88
             Width = 201
             Height = 21
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
           end
           object cbxPagCodigo: TComboBox
@@ -1317,7 +1317,7 @@ object frmACBrBPe: TfrmACBrBPe
             Width = 101
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
           object seColunas: TSpinEdit
@@ -1352,16 +1352,21 @@ object frmACBrBPe: TfrmACBrBPe
           end
           object cbCortarPapel: TCheckBox
             Left = 143
-            Top = 196
+            Top = 188
             Width = 85
             Height = 19
-            Hint = 
-              'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
-              'ta Serial ap'#243's o envio'
             Caption = 'Cortar Papel'
             Checked = True
             State = cbChecked
             TabOrder = 7
+          end
+          object chkLogoLateral: TCheckBox
+            Left = 143
+            Top = 212
+            Width = 85
+            Height = 19
+            Caption = 'Logo Lateral'
+            TabOrder = 8
           end
         end
         object rgComponenteDABPE: TRadioGroup

@@ -194,7 +194,6 @@ procedure TFrPosPrinterTeste.FormCreate(Sender: TObject);
 var
   I: TACBrPosPrinterModelo;
   J: TACBrPosPaginaCodigo;
-  K: Integer;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrPosPrinterModelo) to High(TACBrPosPrinterModelo) do

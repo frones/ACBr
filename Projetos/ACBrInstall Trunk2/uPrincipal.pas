@@ -128,8 +128,8 @@ type
     procedure clbDelphiVersionClick(Sender: TObject);
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
-    oACBr: TJclBorRADToolInstallations;
-    UltimoArquivoLog: string;
+    FoACBr: TJclBorRADToolInstallations;
+    FUltimoArquivoLog: string;
 
     procedure GravarConfiguracoesEmArquivoIni;
     procedure LerConfiguracoes;
@@ -256,7 +256,7 @@ begin
   pgbInstalacao.Max := MaximoPassosProgresso;
 
   // mostrar ao usuário as informações de compilação
-  UltimoArquivoLog := NomeCaminhoArquivoLog;
+  FUltimoArquivoLog := NomeCaminhoArquivoLog;
   lbInfo.Clear;
   lbInfo.Items.Text := Cabecalho;
 end;
@@ -265,15 +265,15 @@ procedure TfrmPrincipal.FormCreate(Sender: TObject);
 var
   iFor: Integer;
 begin
-  oACBr := TJclBorRADToolInstallations.Create;
-  UltimoArquivoLog := '';
+  FoACBr := TJclBorRADToolInstallations.Create;
+  FUltimoArquivoLog := '';
 
   // popular o combobox de versões do delphi instaladas na máquina
-  for iFor := 0 to oACBr.Count - 1 do
+  for iFor := 0 to FoACBr.Count - 1 do
   begin
-    clbDelphiVersion.Items.Add(VersionNumberToNome(oACBr.Installations[iFor].VersionNumberStr));
+    clbDelphiVersion.Items.Add(VersionNumberToNome(FoACBr.Installations[iFor].VersionNumberStr));
     //Desabilitar versões não suportadas
-    clbDelphiVersion.ItemEnabled[iFor] := (not MatchText(oACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']));
+    clbDelphiVersion.ItemEnabled[iFor] := (not MatchText(FoACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']));
   end;
 
   LerConfiguracoes;
@@ -281,7 +281,7 @@ end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  oACBr.Free;
+  FoACBr.Free;
 end;
 
 procedure TfrmPrincipal.Logar(const AString: String);
@@ -302,7 +302,7 @@ begin
 
   ListaVersoesInstalacao := TList<Integer>.Create;
 
-  for i := 0 to oACBr.Count - 1 do
+  for i := 0 to FoACBr.Count - 1 do
   begin
     // só instala as versão marcadas para instalar.
     if (clbDelphiVersion.Checked[i]) then
@@ -337,7 +337,7 @@ begin
     ACBrInstaladorAux.Opcoes.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
 
-    Result := ACBrInstaladorAux.Instalar(oACBr, ListaPacotes, ListaVersoesInstalacao);
+    Result := ACBrInstaladorAux.Instalar(FoACBr, ListaPacotes, ListaVersoesInstalacao);
   finally
     ACBrInstaladorAux.Free;
   end;
@@ -364,11 +364,11 @@ end;
 
 procedure TfrmPrincipal.AbrirArquivoLogAtual;
 begin
-  if UltimoArquivoLog = '' then
+  if FUltimoArquivoLog = '' then
   begin
     Exit;
   end;
-  ShellExecute(Handle, 'open', PWideChar(UltimoArquivoLog), '', '', 1);
+  ShellExecute(Handle, 'open', PWideChar(FUltimoArquivoLog), '', '', 1);
 end;
 
 procedure TfrmPrincipal.IncrementaBarraProgresso;
@@ -418,7 +418,7 @@ begin
     Exit
   end;
 
-  if MatchText(oACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d7','d9','d10','d11']) then
+  if MatchText(FoACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d7','d9','d10','d11']) then
   begin
     Application.MessageBox(
       'Atenção: Embora o ACBr continue suportando versões anteriores do Delphi, incentivamos que você atualize o quanto antes para versões mais recentes do Delphi ou considere migrar para o Lazarus.',
@@ -428,7 +428,7 @@ begin
   end;
 
   // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
-  ckbBCB.Enabled := MatchText(oACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26']);
+  ckbBCB.Enabled := MatchText(FoACBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d10','d11','d12','d14','d15','d16','d17','d18','d19','d20','d21','d22','d23','d24','d25','d26']);
   if not ckbBCB.Enabled then
      ckbBCB.Checked := False;
 end;
@@ -451,7 +451,7 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
 begin
   // Verificar se o delphi está aberto
   {$IFNDEF DEBUG}
-  if oACBr.AnyInstanceRunning then
+  if FoACBr.AnyInstanceRunning then
   begin
     Stop := True;
     Application.MessageBox(

@@ -843,6 +843,11 @@ begin
 
 end;
 procedure TACBrInstallComponentes.RemoverArquivosAntigosDoDisco;
+const
+  SMascaraArquivoQueSeraoRemovidos = 'ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl '+
+    'SYNA*.dcp SYNA*.dcu pnfs*.dcu pcte*.bpl pcte*.dcp pcte*.dcu pmdfe*.bpl pmdfe*.dcp pmdfe*.dcu pgnre*.dcp '+
+    'pgnre*.bpl pces*.bpl pgnre*.dcu pces*.dcp pces*.dcu pca*.dcp pca*.dcu';
+
 var
   PathBat: String;
   DriverList: TStringList;
@@ -860,7 +865,7 @@ begin
     begin
       ConteudoArquivo := ConteudoArquivo + StringReplace(DriverList[I], '\', '', []) + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + 'cd\' + sLineBreak;
-      ConteudoArquivo := ConteudoArquivo + 'del ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl SYNA*.dcp SYNA*.dcu pnfs*.dcu pcte*.bpl pcte*.dcp pcte*.dcu pmdfe*.bpl pmdfe*.dcp pmdfe*.dcu pgnre*.dcp pgnre*.dcu pces*.dcp pces*.dcu pca*.dcp pca*.dcu /s' + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + 'del '+ SMascaraArquivoQueSeraoRemovidos +' /s' + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + sLineBreak;
     end;
 

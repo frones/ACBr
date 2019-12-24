@@ -56,8 +56,6 @@ const
 
 resourcestring
   sErrACBrWinUSBInvalidID = '%S inválido [%s]';
-  sErrACBrWinUSBBufferSize = '%s: Falha ao obter Tamanho do Buffer. Erro: %s';
-  sErrACBrWinUSBBufferRead = '%s: Falha ao Ler Buffer. Erro: %s';
   sErrACBrWinUSBDeviceOutOfRange = 'Dispositivo USB num: %d não existe';
   sErrACBrWinUSBOpening = 'Erro %s ao abrir o Porta USB %s';
   sErrACBrWinUSBClosing = 'Erro %s ao fechar a Porta USB %s';
@@ -771,32 +769,33 @@ var
   AResult: {$IfDef UNICODE}WideString;{$Else}AnsiString;{$EndIf}
   Err: DWORD;
 begin
+  Result := '';
   // Obtendo o tamanho do Buffer em "RequiredSize"
   PropertyRegDataTye := 0;
   RequiredSize := 0;
   xSetupDiGetDeviceRegistryProperty( DevInfo, DeviceInfoData, Prop,
                                      PropertyRegDataTye, Nil, 0, RequiredSize);
   Err := GetLastError;
-  if (Err <> ERROR_INSUFFICIENT_BUFFER) or (RequiredSize < 1) then
-    raise Exception.CreateFmt( sErrACBrWinUSBBufferSize, ['SetupDiGetDeviceRegistryProperty',  GetLastErrorAsHexaStr(Err)] );
+  if ( (Err = ERROR_INSUFFICIENT_BUFFER) and (RequiredSize > 0) ) then
+  begin
+    Buffer := AllocMem(RequiredSize);
+    try
+      if xSetupDiGetDeviceRegistryProperty( DevInfo, DeviceInfoData, Prop,
+                                            PropertyRegDataTye, Buffer,
+                                            RequiredSize, RequiredSize) then
+      begin
+        {$IfDef UNICODE}
+         SetLength(AResult, Trunc(RequiredSize/2)-1);
+        {$Else}
+         SetLength(AResult, RequiredSize-1);
+        {$EndIf}
+        Move(Buffer^, AResult[1], RequiredSize-1);
 
-  Buffer := AllocMem(RequiredSize);
-  try
-    if not xSetupDiGetDeviceRegistryProperty( DevInfo, DeviceInfoData, Prop,
-                                              PropertyRegDataTye, Buffer,
-                                              RequiredSize, RequiredSize) then
-      raise Exception.CreateFmt( sErrACBrWinUSBBufferRead, ['SetupDiGetDeviceRegistryProperty',  GetLastErrorAsHexaStr] );
-
-    {$IfDef UNICODE}
-     SetLength(AResult, Trunc(RequiredSize/2)-1);
-    {$Else}
-     SetLength(AResult, RequiredSize-1);
-    {$EndIf}
-    Move(Buffer^, AResult[1], RequiredSize-1);
-
-    Result := Trim(String(AResult));
-  finally
-    Freemem(Buffer);
+        Result := Trim(String(AResult));
+      end;
+    finally
+      Freemem(Buffer);
+    end;
   end;
 end;
 

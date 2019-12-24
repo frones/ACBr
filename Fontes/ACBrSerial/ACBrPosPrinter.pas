@@ -45,7 +45,10 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDevice, ACBrBase, ACBrEscPosHook;
+  ACBrDevice, ACBrBase, ACBrEscPosHook
+  {$IfDef MSWINDOWS}
+   ,ACBrWinUSBDevice
+  {$EndIf};
 
 type
 
@@ -369,7 +372,6 @@ type
     procedure PosPrinterHookDesativar(const APort: String);
     procedure PosPrinterHookEnviaString(const cmd: AnsiString);
     procedure PosPrinterHookLeString(const NumBytes, ATimeOut: Integer; var Retorno: AnsiString);
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -840,6 +842,10 @@ begin
   {$IFDEF COMPILER6_UP}
   FDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
   {$ENDIF}
+  {$IfDef MSWINDOWS}
+  FDevice.WinUSB.HardwareType := htPOSPrinter;
+  {$EndIf}
+
   FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   FModelo := ppTexto;
   FHook := Nil;
@@ -1067,6 +1073,10 @@ end;
 
 procedure TACBrPosPrinter.Ativar;
 var
+  {$IfDef MSWINDOWS}
+  TipoHardware: TACBrUSBHardwareType;
+  ProtocoloACBr: Integer;
+  {$EndIf}
   DadosDevice: String;
 begin
   if FAtivo then
@@ -1090,6 +1100,17 @@ begin
   {*)}
 
   DetectarECriarHook;
+  {$IfDef MSWINDOWS}
+   ProtocoloACBr := 0;
+   TipoHardware := htPOSPrinter;
+   FDevice.DetectarTipoEProtocoloDispositivoUSB(TipoHardware, ProtocoloACBr);
+
+   if not (TipoHardware in [htUnknown, htPOSPrinter]) then
+     raise EPosPrinterException.Create(ACBrStr('Porta: '+FDevice.Porta+' não está conectada a uma Impressora'));
+
+   if (ProtocoloACBr > 0) then
+     Modelo := TACBrPosPrinterModelo(ProtocoloACBr);
+  {$EndIf}
 
   FDevice.Ativar;
   FAtivo := True;

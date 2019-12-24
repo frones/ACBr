@@ -239,6 +239,7 @@ type
     FInternalBuffer: AnsiString;
     FLogFile: String;
     FOnLog: TACBrGravarLog;
+    FHardwareType: TACBrUSBHardwareType;
 
     xSetupDiEnumDeviceInfo: function(DeviceInfoSet: HDEVINFO; MemberIndex: DWORD;
       var DeviceInfoData: TSPDevInfoData): BOOL; stdcall;
@@ -283,6 +284,7 @@ type
     property DeviceList: TACBrUSBWinDeviceList read FDeviceList;
     property DeviceIndex: Integer read FDeviceIndex write SetDeviceIndex;
     property DataBase: TACBrUSBIDDataBase read GetDataBase;
+    property HardwareType: TACBrUSBHardwareType read FHardwareType write FHardwareType;
 
     property USBHandle: THandle read FUSBHandle;
     property InterfaceName: String read FInterfaceName;
@@ -290,8 +292,7 @@ type
     property TimeOut: Integer read FTimeOut write FTimeOut default 1000;
 
     function FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
-    function FindUSBKnownDevices(ADeviceList: TACBrUSBWinDeviceList = Nil;
-      ADeviceKind: TACBrUSBHardwareType = htUnknown): Integer;
+    function FindUSBKnownDevices(ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
     function FindUSBDevicesByGUID(AGUID: TGUID; ADeviceList: TACBrUSBWinDeviceList = Nil): Integer;
 
     procedure Connect(AInterfaceName: String);
@@ -410,17 +411,20 @@ var
   RS: TResourceStream;
   SL: TStringList;
 begin
+  {$IfDef FPC}Result := False;{$EndIf}
   RS := TResourceStream.Create(HInstance, FResourceName, Windows.RT_RCDATA);
   SL := TStringList.Create;
   try
+    // Leitura do Resource pode falhar
     RS.Position := 0;
     SL.LoadFromStream(RS);
     FIni.SetStrings(SL);
+    Result := True;
   finally
     RS.Free;
     SL.Free;
   end;
-  Result := True;
+
 end;
 
 function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
@@ -429,6 +433,7 @@ function TACBrUSBIDDataBase.FindDeviceByID(AVendorID, AProductID: String; out
 var
   SL: TStringList;
 begin
+  {$IfDef FPC}Result := False;{$EndIf}
   AVendorName := '';
   AProductModel := '';
   AACBrProtocol := 0;
@@ -516,6 +521,10 @@ begin
       Result := ConcatDescription(Result, VendorName);
 
     Result := ConcatDescription(Result, ProductModel);
+
+    if (Result = '') then
+      Result := VendorID + ', '+ ProductID;
+
     //Result := ConcatDescription(Result, DeviceKindDescription(DeviceKind));
   end;
 end;
@@ -677,6 +686,7 @@ begin
   FInterfaceName := '';
   FTimeOut := 1000;
   FInternalBuffer := '';
+  FHardwareType := htUnknown;
 
   xSetupDiEnumDeviceInfo := Nil;
   xSetupDiGetClassDevsA := Nil;
@@ -808,8 +818,7 @@ begin
   Result := FDeviceList.Database;
 end;
 
-function TACBrUSBWinDeviceAPI.FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList
-  ): Integer;
+function TACBrUSBWinDeviceAPI.FindUSBPrinters(ADeviceList: TACBrUSBWinDeviceList): Integer;
 var
   ADeviceListToAdd: TACBrUSBWinDeviceList;
 begin
@@ -824,12 +833,10 @@ begin
   Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PORT, ADeviceListToAdd);
   Result := Result + FindUSBDevicesByGUID( GUID_DEVCLASS_PRINTER, ADeviceListToAdd);
   //Result := Result + FindUSBDevicesByGUID( GUID_DEVINTERFACE_USB_DEVICE, ADeviceListToAdd);
-  FindUSBKnownDevices(ADeviceListToAdd, htPOSPrinter);
+  Result := Result + FindUSBKnownDevices(ADeviceListToAdd);
 end;
 
-function TACBrUSBWinDeviceAPI.FindUSBKnownDevices(
-  ADeviceList: TACBrUSBWinDeviceList; ADeviceKind: TACBrUSBHardwareType
-  ): Integer;
+function TACBrUSBWinDeviceAPI.FindUSBKnownDevices(ADeviceList: TACBrUSBWinDeviceList): Integer;
 var
   ADeviceListToAdd: TACBrUSBWinDeviceList;
   i, j: Integer;
@@ -847,7 +854,7 @@ begin
   begin
     with ADeviceListToAdd.Items[i] do
     begin
-      ok := (ADeviceKind = htUnknown) or (ADeviceKind = DeviceKind);
+      ok := (HardwareType = htUnknown) or (HardwareType = DeviceKind);
       ok := ok and (VendorName <> '');
       if ok then
       begin     // Remove if already exists
@@ -945,7 +952,7 @@ begin
 
           ADevice := ADeviceListToAdd.New(VendorId, ProductId);
           ADevice.ClassGUID := GUIDToString(AGUID);
-          ADevice.DeviceInterface := DevInterface;
+          ADevice.DeviceInterface := Trim(DevInterface);
           ADevice.USBPort := DevLocation;
           ADevice.GUID :=  DevClassGUID;
           ADevice.FrendlyName := DevFrendlyName;
@@ -1039,6 +1046,7 @@ var
   s: Integer;
   AOverlapped: OVERLAPPED;
 begin
+  {$IfDef FPC}Result := 0;{$EndIf}
   if not Active then
     raise Exception.Create(ACBrStr(sErrACBrWinUSBDeviceIsClosed));
 

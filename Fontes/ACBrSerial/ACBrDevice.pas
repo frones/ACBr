@@ -408,6 +408,10 @@ TACBrDevice = class( TComponent )
 
     procedure AcharPortasSeriais( const AStringList : TStrings;
        UltimaPorta : Integer = 64 ) ;
+    {$IfDef MSWINDOWS}
+    procedure DetectarTipoEProtocoloDispositivoUSB(var TipoHardware: TACBrUSBHardwareType;
+       var ProtocoloACBr: Integer);
+    {$EndIf}
     function DeviceToString(OnlyException: Boolean): String;
 
     procedure GravaLog(AString: AnsiString; Traduz :Boolean = False);
@@ -1259,6 +1263,64 @@ begin
   if TemArqLog then
     GravaLog('  '+GetEnumName(TypeInfo(TACBrDeviceType), integer(Result)));
 end;
+
+{$IfDef MSWINDOWS}
+procedure TACBrDevice.DetectarTipoEProtocoloDispositivoUSB(
+  var TipoHardware: TACBrUSBHardwareType; var ProtocoloACBr: Integer);
+var
+  i, f: Integer;
+  uPorta, TipoPorta, DescPorta: String;
+  DispositivoUSB: TACBrUSBWinDevice;
+  Achou: Boolean;
+begin
+  ProtocoloACBr := 0;
+  if not (DeviceType in [dtSerial, dtUSB]) then
+    Exit;
+
+  WinUSB.FindUSBPrinters;
+  if (WinUSB.DeviceList.Count < 1) then
+    Exit;
+
+  DispositivoUSB := Nil;
+  uPorta := UpperCase(Porta);
+  TipoPorta := copy(uPorta, 1, 3);
+  DescPorta := copy(uPorta, 5, Length(uPorta));
+
+  i := 0;
+  Achou := False;
+  while (not Achou) and (i < WinUSB.DeviceList.Count) do
+  begin
+    DispositivoUSB := WinUSB.DeviceList.Items[i];
+
+    if (TipoPorta = 'COM') then
+      Achou := (pos('('+TipoPorta+')', UpperCase(DispositivoUSB.FrendlyName)) > 0)
+    else if (TipoPorta = '\\?') then
+      Achou := (uPorta = UpperCase(copy(DispositivoUSB.DeviceInterface,1, Length(uPorta))))
+    else if (TipoPorta = 'USB') then
+      Achou := (DescPorta = UpperCase(copy(DispositivoUSB.DeviceName, 1, Length(DescPorta))));
+
+    Inc(i);
+  end;
+
+  if Achou then
+  begin
+    TipoHardware := DispositivoUSB.DeviceKind;
+    ProtocoloACBr := DispositivoUSB.ACBrProtocol;
+
+    if (DeviceType = dtUSB) then
+    begin
+      // Se dispositivo Usa COM Virtual, prefira ela...
+      i := pos('(COM',DispositivoUSB.FrendlyName);
+      if (i > 0) then
+      begin
+        f := PosEx(')', DispositivoUSB.FrendlyName, i+1);
+        if (f > 0) then
+          Porta := copy(DispositivoUSB.FrendlyName, i+1, f-i-1);
+      end;
+    end;
+  end;
+end;
+{$EndIf}
 
 procedure TACBrDevice.SetTimeOut(const Value: Integer);
 begin

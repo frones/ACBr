@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/12/2019
+-- ACBrDevice, ACBrPosPrinter, ACBrETQ --
+[+] Adicionada a detectação de Tipo de Hardware, Porta e Protocolo, para
+    dispositivos USB, cadstrados em ACBrUSBID.ini
+    (por: DSA)
+
 Data: 21/12/2019
 -- ACBrDevice, ACBrWinUSBDevice --
 [*] Proteção de algumas variáveis Públicas migradas para Properties

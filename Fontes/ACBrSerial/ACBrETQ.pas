@@ -180,7 +180,10 @@ implementation
 uses
   math, typinfo,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
-  ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2;
+  ACBrUtil, ACBrETQPpla, ACBrETQZplII, ACBrETQEpl2
+  {$IfDef MSWINDOWS}
+  ,ACBrWinUSBDevice
+  {$EndIf};
 
 { TACBrETQCmdList }
 
@@ -216,6 +219,9 @@ begin
   {$ENDIF}
   fsDevice.Porta := 'LPT1';
   fsDevice.Serial.DeadlockTimeout := 1000;
+  {$IfDef MSWINDOWS}
+  fsDevice.WinUSB.HardwareType := htLabelPrinter;
+  {$EndIf}
 
   { Instanciando fsETQ com modelo Generico (TACBrETQClass) }
   fsETQ := TACBrETQClass.create(Self);
@@ -392,6 +398,11 @@ begin
 end;
 
 procedure TACBrETQ.Ativar;
+{$IfDef MSWINDOWS}
+var
+  TipoHardware: TACBrUSBHardwareType;
+  ProtocoloACBr: Integer;
+{$EndIf}
 begin
   if fsAtivo then
     Exit;
@@ -404,7 +415,21 @@ begin
     sLineBreak + StringOfChar('-', 80) + sLineBreak);
 
   if (fsDevice.Porta <> '') then
+  begin
+    {$IfDef MSWINDOWS}
+     ProtocoloACBr := 0;
+     TipoHardware := htLabelPrinter;
+     fsDevice.DetectarTipoEProtocoloDispositivoUSB(TipoHardware, ProtocoloACBr);
+
+     if not (TipoHardware in [htUnknown, htLabelPrinter]) then
+       raise Exception.Create(ACBrStr('Porta: '+fsDevice.Porta+' não está conectada a uma Impressora de Etiquetas'));
+
+     if (ProtocoloACBr > 0) then
+       Modelo := TACBrETQModelo(ProtocoloACBr);
+    {$EndIf}
+
     fsDevice.Ativar;
+  end;
 
   fsAtivo           := True;
   fsEtqFinalizada   := False;

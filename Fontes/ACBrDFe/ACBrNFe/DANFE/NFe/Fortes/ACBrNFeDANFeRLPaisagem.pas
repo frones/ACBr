@@ -1402,7 +1402,7 @@ begin
     TextoOriginal := rlmDadosAdicionaisAuxiliar.Lines.Text;
     sTexto := TextoOriginal;
     repeat
-      PosUltimoEspaco := LastDelimiter(' ', sTexto);
+      PosUltimoEspaco := LastDelimiter(' '+sLineBreak, sTexto);
       sTexto          := LeftStr(TextoOriginal, PosUltimoEspaco -1 );
       //Debug
       //TextoContinuacao  := RightStr(TextoOriginal, Length(TextoOriginal)- PosUltimoEspaco);

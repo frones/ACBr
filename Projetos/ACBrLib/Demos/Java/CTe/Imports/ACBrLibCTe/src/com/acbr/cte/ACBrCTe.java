@@ -248,14 +248,18 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
   }
 
   public String enviar( int aLote ) throws Exception {
-    return enviar( aLote, false );
+    return enviar( aLote, false, false );
+  }
+  
+  public String enviar( int aLote, boolean imprimir ) throws Exception {
+    return enviar( aLote, imprimir, false );
   }
 
-  public String enviar( int aLote, boolean imprimir ) throws Exception {
+  public String enviar( int aLote, boolean imprimir, boolean sincrono ) throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
     IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
 
-    int ret = ACBrCTeLib.INSTANCE.CTE_Enviar( aLote, imprimir, buffer, bufferLen );
+    int ret = ACBrCTeLib.INSTANCE.CTE_Enviar( aLote, imprimir, sincrono, buffer, bufferLen );
     checkResult( ret );
 
     return processResult( buffer, bufferLen );
@@ -431,7 +435,7 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
     int CTE_Inutilizar( String ACNPJ, String AJustificativa, int Ano, int Modelo, int Serie,
                         int NumeroInicial, int NumeroFinal, ByteBuffer buffer, IntByReference bufferSize );
 
-    int CTE_Enviar( int ALote, boolean Imprimir, ByteBuffer buffer, IntByReference bufferSize );
+    int CTE_Enviar( int ALote, boolean Imprimir, boolean Sincrono, ByteBuffer buffer, IntByReference bufferSize );
 
     int CTE_ConsultarRecibo( String aRecibo, ByteBuffer buffer, IntByReference bufferSize );
     

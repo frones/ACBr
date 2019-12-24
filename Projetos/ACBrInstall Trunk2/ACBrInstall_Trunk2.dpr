@@ -6,7 +6,8 @@ uses
   uFrameLista in 'uFrameLista.pas' {framePacotes: TFrame},
   ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas',
   ACBrInstallUtils in 'ACBrInstallUtils.pas',
-  ACBrPacotes in 'ACBrPacotes.pas';
+  ACBrPacotes in 'ACBrPacotes.pas',
+  ACBrUtil in '..\..\Fontes\ACBrComum\ACBrUtil.pas';
 
 {$R *.res}
 

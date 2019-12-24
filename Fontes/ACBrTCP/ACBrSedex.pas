@@ -50,6 +50,7 @@ uses
 
 const
   CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
+  CURL_SEDEXPrazo = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrazo?';
 
 type
   TACBrTpServico = (Tps04510PAC, Tps04014SEDEX, Tps40215SEDEX10,
@@ -57,7 +58,7 @@ type
     Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA,
     Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
     Tps04014SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
-    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo, Tps04669PACContrato, Tps04162SEDEXContrato);
+    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo, Tps04669PACContrato, Tps04162SEDEXContrato, Tps20150IMPRESSOContrato);
 
   TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
 
@@ -130,6 +131,8 @@ type
     fErro: Integer;
     fMsgErro: String;
     fRastreio: TACBrRastreioClass;
+    fDataMaxEntrega: String;
+    Function GetUrl(TpServico: String):String;
 
   public
     constructor Create(AOwner: TComponent); override;
@@ -155,7 +158,7 @@ type
     property retEntregaSabado: String read fEntregaSabado write fEntregaSabado;
     property retErro: Integer read fErro write fErro;
     property retMsgErro: String read fMsgErro write fMsgErro;
-
+    property retDataMaxEntrega: String read fDataMaxEntrega write fDataMaxEntrega;
     property retRastreio: TACBrRastreioClass read fRastreio write fRastreio;
 
   published
@@ -245,12 +248,29 @@ begin
   fEntregaSabado := '';
   fErro := 0;
   fMsgErro := '';
+  fDataMaxEntrega := '';
 end;
 
 destructor TACBrSedex.Destroy;
 begin
   fRastreio.Free;
   inherited Destroy;
+end;
+
+function TACBrSedex.GetUrl(TpServico: String): String;
+var
+  Servico:integer;
+begin
+  try
+    Servico := StrToInt(copy(TpServico,1,2));
+    case Servico of
+      4,40,81: Result:= CURL_SEDEX
+      else
+        Result:= CURL_SEDEXPrazo;
+    end;
+  except
+    raise EACBrSedexException.CreateACBrStr('Erro ao buscar a URL');
+  end;
 end;
 
 function TACBrSedex.Consultar: Boolean;
@@ -295,10 +315,14 @@ begin
     Tps04669PACContrato:
       TpServico := '04669';
     Tps04162SEDEXContrato:
-      TpServico := '04162'	  
+      TpServico := '04162';
+    Tps20150IMPRESSOContrato:
+      TpServico := '20150'
     else
       raise EACBrSedexException.CreateACBrStr('Tipo de Serviço Inválido');
   end;
+
+  fUrlConsulta := GetUrl(TpServico);
 
   case fnCdFormato of
     TpfCaixaPacote :
@@ -322,22 +346,29 @@ begin
     TpAvisoRecebimento := 'N';
 
   try
-    Self.HTTPGet(fUrlConsulta +
-      'nCdEmpresa=' + fsCodContrato +
-      '&sDsSenha=' + fsDsSenha +
-      '&sCepOrigem=' + OnlyNumber(fsCepOrigem) +
-      '&sCepDestino=' + OnlyNumber(fsCepDestino) +
-      '&nVlPeso=' + FloatToString(fnVlPeso) +
-      '&nCdFormato=' + TpFormato +
-      '&nVlComprimento=' + FloatToString(fnVlComprimento) +
-      '&nVlAltura=' + FloatToString(fnVlAltura) +
-      '&nVlLargura=' + FloatToString(fnVlLargura) +
-      '&sCdMaoPropria=' + TpMaoPropria +
-      '&nVlValorDeclarado=' + FloatToString(fnVlValorDeclarado) +
-      '&sCdAvisoRecebimento=' + TpAvisoRecebimento +
-      '&nCdServico=' + TpServico +
-      '&nVlDiametro=' + FloatToString(fnVlDiametro) +
-      '&StrRetorno=xml');
+    if fUrlConsulta = CURL_SEDEX then
+      Self.HTTPGet(fUrlConsulta +
+        'nCdEmpresa=' + fsCodContrato +
+        '&sDsSenha=' + fsDsSenha +
+        '&sCepOrigem=' + OnlyNumber(fsCepOrigem) +
+        '&sCepDestino=' + OnlyNumber(fsCepDestino) +
+        '&nVlPeso=' + FloatToString(fnVlPeso) +
+        '&nCdFormato=' + TpFormato +
+        '&nVlComprimento=' + FloatToString(fnVlComprimento) +
+        '&nVlAltura=' + FloatToString(fnVlAltura) +
+        '&nVlLargura=' + FloatToString(fnVlLargura) +
+        '&sCdMaoPropria=' + TpMaoPropria +
+        '&nVlValorDeclarado=' + FloatToString(fnVlValorDeclarado) +
+        '&sCdAvisoRecebimento=' + TpAvisoRecebimento +
+        '&nCdServico=' + TpServico +
+        '&nVlDiametro=' + FloatToString(fnVlDiametro) +
+        '&StrRetorno=xml')
+    else
+       Self.HTTPGet(fUrlConsulta +
+        '&nCdServico=' + TpServico +
+        '&sCepOrigem=' + OnlyNumber(fsCepOrigem) +
+        '&sCepDestino=' + OnlyNumber(fsCepDestino)+
+        '&StrRetorno=xml');
   except
     on E: Exception do
     begin
@@ -351,12 +382,25 @@ begin
   Buffer := Self.RespHTTP.Text;
 
   retCodigoServico         := LerTagXml(Buffer, 'Codigo', True);
-  retvalor                 := StringToFloatDef(LerTagXml(Buffer, 'Valor', True),-1);
   retPrazoEntrega          := StrToIntDef(LerTagXml(Buffer, 'PrazoEntrega', True),-1);
-  retValorSemAdicionais    := StringToFloatDef(LerTagXml(Buffer, 'ValorSemAdicionais', True),-1);
-  retValorMaoPropria       := StringToFloatDef(LerTagXml(Buffer, 'ValorMaoPropria', True),-1);
-  retValorAvisoRecebimento := StringToFloatDef(LerTagXml(Buffer, 'ValorAvisoRecebimento', True),-1);
-  retValorValorDeclarado   := StringToFloatDef(LerTagXml(Buffer, 'ValorValorDeclarado', True),-1);
+  if fUrlConsulta = CURL_SEDEX then
+  begin
+    retvalor                 := StringToFloatDef(LerTagXml(Buffer, 'Valor', True),-1);
+    retValorSemAdicionais    := StringToFloatDef(LerTagXml(Buffer, 'ValorSemAdicionais', True),-1);
+    retValorMaoPropria       := StringToFloatDef(LerTagXml(Buffer, 'ValorMaoPropria', True),-1);
+    retValorAvisoRecebimento := StringToFloatDef(LerTagXml(Buffer, 'ValorAvisoRecebimento', True),-1);
+    retValorValorDeclarado   := StringToFloatDef(LerTagXml(Buffer, 'ValorValorDeclarado', True),-1);
+    retDataMaxEntrega        := '';
+  end
+  else
+  begin
+    retDataMaxEntrega        := LerTagXml(Buffer, 'DataMaxEntrega', True);
+    retvalor                 := 0;
+    retValorSemAdicionais    := 0;
+    retValorMaoPropria       := 0;
+    retValorAvisoRecebimento := 0;
+    retValorValorDeclarado   := 0;
+  end;
   retEntregaDomiciliar     := LerTagXml(Buffer, 'EntregaDomiciliar', True);
   retEntregaSabado         := LerTagXml(Buffer, 'EntregaSabado', True);
   retErro                  := StrToIntDef(LerTagXml(Buffer, 'Erro', True),-1);
@@ -365,7 +409,10 @@ begin
   retMsgErro := StringReplace(retMsgErro, '<![CDATA[', '', [rfReplaceAll]);
   retMsgErro := StringReplace(retMsgErro, ']]>', '', [rfReplaceAll]);
 
-  Result := (retErro = 0);
+  if fUrlConsulta = CURL_SEDEX then
+    Result := (retErro = 0)
+  else
+    Result := (retErro = -1);
 end;
 
 //Código de erro Mensagem de erro

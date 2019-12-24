@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 478
   Top = 119
-  Width = 565
-  Height = 536
   Caption = 'Correios - C'#225'lculo de Pre'#231'os e Prazos de Encomendas'
+  ClientHeight = 497
+  ClientWidth = 549
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 549
-    Height = 498
+    Height = 497
     Align = alClient
     TabFont.Charset = DEFAULT_CHARSET
     TabFont.Color = clBtnText
@@ -732,7 +732,6 @@ object Form1: TForm1
           Width = 121
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 6
           Text = '1 - Caixa/Pacote'
@@ -747,7 +746,6 @@ object Form1: TForm1
           Width = 121
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 1
           TabOrder = 7
           Text = 'N'#227'o'
@@ -761,7 +759,6 @@ object Form1: TForm1
           Width = 121
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 1
           TabOrder = 8
           Text = 'N'#227'o'
@@ -784,13 +781,12 @@ object Form1: TForm1
           Width = 169
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 2
-          Text = '41106 PAC'
+          Text = '04510 PAC'
           Items.Strings = (
-            '41106 PAC'
-            '40010 SEDEX'
+            '04510 PAC'
+            '04014 SEDEX'
             '40215 SEDEX 10'
             '40290 SEDEX HOJE'
             '81019 e-SEDEX'
@@ -800,7 +796,15 @@ object Form1: TForm1
             '10014 CARTA REGISTRADA'
             '16012 CARTAO POSTAL'
             '20010 IMPRESSO'
-            '14010 MALA DIRETA')
+            '14010 MALA DIRETA'
+            '04014 SEDEX Varejo'
+            '40045 SEDEX a Cobrar Varejo'
+            '40215 SEDEX 10 Varejo'
+            '40290 SEDEX Hoje Varejo'
+            '04510 PAC Varejo'
+            '04669 PAC Contrato'
+            '04162 SEDEX Contrato'
+            '20150 IMPRESSO Contrato')
         end
         object EditValorDeclarado: TEdit
           Left = 176
@@ -887,6 +891,13 @@ object Form1: TForm1
           Height = 13
           Caption = 'Valor Aviso Declarado'
         end
+        object Label24: TLabel
+          Left = 336
+          Top = 101
+          Width = 87
+          Height = 13
+          Caption = 'Data Max Entrega'
+        end
         object retValorFrete: TEdit
           Left = 152
           Top = 24
@@ -955,6 +966,14 @@ object Form1: TForm1
           AutoSize = False
           TabOrder = 0
         end
+        object retDataMaxEntrega: TEdit
+          Left = 336
+          Top = 120
+          Width = 97
+          Height = 21
+          AutoSize = False
+          TabOrder = 8
+        end
       end
     end
     object TTabPage
@@ -963,7 +982,7 @@ object Form1: TForm1
       Caption = 'Rastreio'
       object DBGrid1: TDBGrid
         Left = 0
-        Top = 48
+        Top = 47
         Width = 541
         Height = 264
         Align = alBottom
@@ -1007,7 +1026,7 @@ object Form1: TForm1
       end
       object Panel3: TPanel
         Left = 0
-        Top = 312
+        Top = 311
         Width = 541
         Height = 158
         Align = alBottom
@@ -1025,6 +1044,7 @@ object Form1: TForm1
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 53
         end
         object Label23: TLabel
           Left = 1
@@ -1039,6 +1059,7 @@ object Form1: TForm1
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 70
         end
         object DBMemo2: TDBMemo
           Left = 1
@@ -1069,15 +1090,15 @@ object Form1: TForm1
   object ACBrSedex1: TACBrSedex
     ProxyPort = '8080'
     Formato = TpfCaixaPacote
-    Servico = Tps41106PAC
+    Servico = Tps04510PAC
     UrlConsulta = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?'
     Left = 488
     Top = 48
   end
   object DataSource1: TDataSource
     DataSet = ClientDataSet1
-    Left = 188
-    Top = 416
+    Left = 212
+    Top = 136
   end
   object ClientDataSet1: TClientDataSet
     Aggregates = <>

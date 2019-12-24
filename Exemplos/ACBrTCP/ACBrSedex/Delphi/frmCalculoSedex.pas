@@ -74,6 +74,8 @@ type
     DBMemo1: TDBMemo;
     Label22: TLabel;
     Label23: TLabel;
+    Label24: TLabel;
+    retDataMaxEntrega: TEdit;
     procedure btnConsultarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -101,7 +103,7 @@ begin
   ACBrSedex1.Comprimento := StrToFloatDef(EditComprimento.Text,0);
   ACBrSedex1.Largura := StrToFloatDef(EditLargura.Text,0);
   ACBrSedex1.Altura := StrToFloatDef(EditAltura.Text,0);
-  ACBrSedex1.Servico := TACBrTpServico(cbAvisoReceb.ItemIndex);
+  ACBrSedex1.Servico := TACBrTpServico(cbServico.ItemIndex);
   ACBrSedex1.Diametro := StrToFloatDef(EditDiametro.Text,0);
   ACBrSedex1.ValorDeclarado := StrToFloatDef(EditValorDeclarado.Text,0);
 
@@ -118,6 +120,7 @@ begin
     retEntregaDomiciliar.Text := ACBrSedex1.retEntregaDomiciliar;
     retEntregaSabado.Text := ACBrSedex1.retEntregaSabado;
     retPrzEntrega.Text := IntToStr(ACBrSedex1.retPrazoEntrega);
+    retDataMaxEntrega.Text :=  ACBrSedex1.retDataMaxEntrega;
   End;
 end;
 

@@ -276,7 +276,7 @@ begin
                'Dir. Instalação : ' + Opcoes.DiretorioRaizACBr + sLineBreak +
                'Dir. Bibliotecas: ' + sDirLibrary;
 
-  FazLog(Cabecalho + sLineBreak, False);
+  FazLog(Cabecalho + sLineBreak, True);
 
   if Assigned(OnIniciaNovaInstalacao) then
     FOnIniciaNovaInstalacao((ListaPacotes.Count * 2) + 6, ArquivoLog, Cabecalho);

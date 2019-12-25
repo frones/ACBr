@@ -1044,10 +1044,7 @@ begin
   BitmapToRasterStr(Image1.Bitmap, True, AWidth, AHeight, ARasterStr);
   MS := TMemoryStream.Create;
   try
-    WriteToFile('c:\temp\rst.txt', ARasterStr);
     RasterStrToBMPMono(ARasterStr, AWidth, True, MS);
-    MS.Position := 0;
-    MS.SaveToFile('c:\temp\img.bmp');
     MS.Position := 0;
     Image1.Bitmap.LoadFromStream(MS);
     ACBrPosPrinter1.ImprimirImagemStream(MS);

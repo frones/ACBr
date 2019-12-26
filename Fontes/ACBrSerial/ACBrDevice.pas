@@ -94,6 +94,8 @@ uses
      {$IfNDef NOGUI}
       OSPrinters,
      {$EndIf}
+  {$ELSEIF DEFINED(POSIX)}
+    Posix.Unistd,
   {$Else}
      Printers, WinSpool,
   {$IfEnd}
@@ -2062,11 +2064,11 @@ procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
 var
   PrnIndex: Integer;
   {$IfNDef FPC}
+   {$IfDef MSWINDOWS}
    PrnName: String;
    HandlePrn: THandle;
    N: DWORD;
    DocName: String;
-   {$IfDef MSWINDOWS}
     DocInfo1: TDocInfo1;
    {$Else}
     F: TextFile;
@@ -2115,7 +2117,7 @@ begin
    {$Else}
     {$IfDef FMX}
      if (PrnIndex < Printer.Count) then
-      SetPrinter(Printer.Printers[PrnIndex]);
+      Printer.ActivePrinter := Printer.Printers[PrnIndex];
     {$EndIf}
     AssignPrn(F);
     try

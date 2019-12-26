@@ -32,7 +32,7 @@
 {******************************************************************************
 |* 13/12/2019: Primeira Versao: Daniel Simoes de Almeida
 |* Fontes:
-|* //https://web.archive.org/web/20130126085547/http://peter.skarpetis.com/wiki/index.php/Usbprint.sys
+|* https://web.archive.org/web/20130126085547/http://peter.skarpetis.com/wiki/index.php/Usbprint.sys
 ******************************************************************************}
 
 {$I ACBr.inc}

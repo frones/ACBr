@@ -168,6 +168,7 @@ type
     ACBr_CIOT_dpk: TCheckBox;
     ACBr_LCDPR_dpk: TCheckBox;
     ACBr_ONE_dpk: TCheckBox;
+    ACBr_EDI_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

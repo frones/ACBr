@@ -1,0 +1,2969 @@
+object frmACBrNFe: TfrmACBrNFe
+  Left = 249
+  Top = 82
+  Caption = 'ACBrNFe - Programa Exemplo'
+  ClientHeight = 651
+  ClientWidth = 882
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  Left = 249
+  Top = 82
+  DesignerMasterStyle = 0
+  object pnlMenus: TPanel
+    Align = Left
+    Size.Width = 297.000000000000000000
+    Size.Height = 651.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lblColaborador: TLabel
+      AutoSize = True
+      Cursor = crHandPoint
+      StyledSettings = []
+      Position.X = 18.000000000000000000
+      Position.Y = 540.000000000000000000
+      Size.Width = 236.000000000000000000
+      Size.Height = 15.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'MS Sans Serif'
+      TextSettings.Font.Size = 11.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claNavy
+      TextSettings.WordWrap = False
+      Text = 'Veja a lista de Colaboradores do Projeto ACBr'
+      OnClick = lblColaboradorClick
+    end
+    object lblPatrocinador: TLabel
+      AutoSize = True
+      Cursor = crHandPoint
+      StyledSettings = []
+      Position.X = 16.000000000000000000
+      Position.Y = 555.000000000000000000
+      Size.Width = 238.000000000000000000
+      Size.Height = 15.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'MS Sans Serif'
+      TextSettings.Font.Size = 11.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claGreen
+      TextSettings.WordWrap = False
+      Text = 'Veja a lista de Patrocinadores do Projeto ACBr'
+      OnClick = lblPatrocinadorClick
+    end
+    object lblDoar1: TLabel
+      AutoSize = True
+      Cursor = crHandPoint
+      StyledSettings = []
+      Position.X = 21.000000000000000000
+      Position.Y = 570.000000000000000000
+      Size.Width = 230.000000000000000000
+      Size.Height = 15.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'MS Sans Serif'
+      TextSettings.Font.Size = 11.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claRed
+      TextSettings.WordWrap = False
+      Text = 'Para se tornar Patrocinador do Projeto ACBr,'
+      OnClick = lblDoar1Click
+    end
+    object lblDoar2: TLabel
+      AutoSize = True
+      Cursor = crHandPoint
+      StyledSettings = []
+      Position.X = 117.000000000000000000
+      Position.Y = 583.000000000000000000
+      Size.Width = 57.000000000000000000
+      Size.Height = 15.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'MS Sans Serif'
+      TextSettings.Font.Size = 11.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claRed
+      TextSettings.WordWrap = False
+      Text = 'clique aqui'
+      OnClick = lblDoar2Click
+    end
+    object PageControl1: TTabControl
+      Position.X = 1.000000000000000000
+      Position.Y = 1.000000000000000000
+      Size.Width = 295.000000000000000000
+      Size.Height = 504.000000000000000000
+      Size.PlatformDefault = False
+      TabIndex = 1
+      TabOrder = 0
+      TabPosition = Top
+      Sizes = (
+        295s
+        478s
+        295s
+        478s
+        295s
+        478s)
+      object TabSheet1: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 96.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Configura'#231#245'es'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object PageControl4: TTabControl
+          Align = Client
+          Size.Width = 295.000000000000000000
+          Size.Height = 478.000000000000000000
+          Size.PlatformDefault = False
+          TabIndex = 2
+          TabOrder = 0
+          TabPosition = Top
+          Sizes = (
+            295s
+            452s
+            295s
+            452s
+            295s
+            452s
+            295s
+            452s
+            295s
+            452s)
+          object TabSheet3: TTabItem
+            CustomIcon = <
+              item
+              end>
+            IsSelected = False
+            Size.Width = 78.000000000000000000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = ''
+            TabOrder = 0
+            Text = 'Certificado'
+            ExplicitSize.cx = 50.000000000000000000
+            ExplicitSize.cy = 50.000000000000000000
+            object lSSLLib: TLabel
+              AutoSize = True
+              Position.X = 39.000000000000000000
+              Position.Y = 16.000000000000000000
+              Size.Width = 35.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'SSLLib'
+              TabOrder = 13
+            end
+            object lCryptLib: TLabel
+              AutoSize = True
+              Position.X = 29.000000000000000000
+              Position.Y = 43.000000000000000000
+              Size.Width = 45.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'CryptLib'
+              TabOrder = 14
+            end
+            object lHttpLib: TLabel
+              AutoSize = True
+              Position.X = 35.000000000000000000
+              Position.Y = 70.000000000000000000
+              Size.Width = 40.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'HttpLib'
+              TabOrder = 15
+            end
+            object lXmlSign: TLabel
+              AutoSize = True
+              Position.X = 17.000000000000000000
+              Position.Y = 97.000000000000000000
+              Size.Width = 63.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'XMLSignLib'
+              TabOrder = 16
+            end
+            object gbCertificado: TGroupBox
+              Position.X = 2.000000000000000000
+              Position.Y = 118.000000000000000000
+              Size.Width = 263.000000000000000000
+              Size.Height = 144.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Certificado'
+              TabOrder = 0
+              object Label1: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 48.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Caminho'
+              end
+              object Label2: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 56.000000000000000000
+                Size.Width = 33.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Senha'
+              end
+              object sbtnCaminhoCert: TSpeedButton
+                Position.X = 235.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 23.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = sbtnCaminhoCertClick
+                object sbtnCaminhoCert_SubImage: TImage
+                  MultiResBitmap = <
+                    item
+                      Width = 0
+                      Height = 0
+                      PNG = {
+                        89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                        59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                        017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                        5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                        33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                        6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                        27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                        080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                        50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                        C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                        31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                        A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                        ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                        53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                        8D3E4D34D60000000049454E44AE426082}
+                    end>
+                  Align = Left
+                  HitTest = False
+                  Size.Width = 32.000000000000000000
+                  Size.Height = 24.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object Label25: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 96.000000000000000000
+                Size.Width = 90.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'N'#250'mero de S'#233'rie'
+              end
+              object sbtnGetCert: TSpeedButton
+                Position.X = 235.000000000000000000
+                Position.Y = 110.000000000000000000
+                Size.Width = 23.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = sbtnGetCertClick
+                object sbtnGetCert_SubImage: TImage
+                  MultiResBitmap = <
+                    item
+                      Width = 0
+                      Height = 0
+                      PNG = {
+                        89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                        59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                        017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                        5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                        33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                        6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                        27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                        080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                        50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                        C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                        31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                        A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                        ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                        53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                        8D3E4D34D60000000049454E44AE426082}
+                    end>
+                  Align = Left
+                  HitTest = False
+                  Size.Width = 32.000000000000000000
+                  Size.Height = 24.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object sbtnNumSerie: TSpeedButton
+                Position.X = 206.000000000000000000
+                Position.Y = 110.000000000000000000
+                Size.Width = 23.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = sbtnNumSerieClick
+                object sbtnNumSerie_SubImage: TImage
+                  MultiResBitmap = <
+                    item
+                      Width = 0
+                      Height = 0
+                      PNG = {
+                        89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                        59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                        017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                        5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                        33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                        6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                        27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                        080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                        50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                        C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                        31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                        A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                        ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                        53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                        8D3E4D34D60000000049454E44AE426082}
+                    end>
+                  Align = Left
+                  HitTest = False
+                  Size.Width = 32.000000000000000000
+                  Size.Height = 24.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object edtCaminho: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 0
+                Position.X = 8.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 225.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtSenha: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 1
+                Password = True
+                Position.X = 8.000000000000000000
+                Position.Y = 72.000000000000000000
+                Size.Width = 249.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtNumSerie: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 2
+                Position.X = 8.000000000000000000
+                Position.Y = 112.000000000000000000
+                Size.Width = 193.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object btnDataValidade: TButton
+              Position.X = 8.000000000000000000
+              Position.Y = 266.000000000000000000
+              Size.Width = 99.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = 'Data de Validade'
+              OnClick = btnDataValidadeClick
+            end
+            object btnNumSerie: TButton
+              Position.X = 112.000000000000000000
+              Position.Y = 266.000000000000000000
+              Size.Width = 73.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = 'Num.S'#233'rie'
+              OnClick = btnNumSerieClick
+            end
+            object btnSubName: TButton
+              Position.X = 8.000000000000000000
+              Position.Y = 298.000000000000000000
+              Size.Width = 99.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = 'Subject Name'
+              OnClick = btnSubNameClick
+            end
+            object btnCNPJ: TButton
+              Position.X = 112.000000000000000000
+              Position.Y = 298.000000000000000000
+              Size.Width = 73.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'CNPJ'
+              OnClick = btnCNPJClick
+            end
+            object btnIssuerName: TButton
+              Position.X = 188.000000000000000000
+              Position.Y = 298.000000000000000000
+              Size.Width = 76.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+              Text = 'Issuer Name'
+              OnClick = btnIssuerNameClick
+            end
+            object GroupBox1: TGroupBox
+              Position.X = 2.000000000000000000
+              Position.Y = 328.000000000000000000
+              Size.Width = 263.000000000000000000
+              Size.Height = 69.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Calculo de Hash e assinatura'
+              TabOrder = 6
+              object Edit1: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 0
+                Text = '0548133600013704583493000190'
+                Position.X = 3.000000000000000000
+                Position.Y = 14.000000000000000000
+                Size.Width = 249.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object btnSha256: TButton
+                Position.X = 8.000000000000000000
+                Position.Y = 41.000000000000000000
+                Size.Width = 99.000000000000000000
+                Size.Height = 25.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Text = 'SHA256+RSA'
+                OnClick = btnSha256Click
+              end
+              object cbAssinar: TCheckBox
+                IsChecked = True
+                Position.X = 144.000000000000000000
+                Position.Y = 41.000000000000000000
+                Size.Width = 54.000000000000000000
+                Size.Height = 19.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                Text = 'Assinar'
+              end
+            end
+            object btnHTTPS: TButton
+              Position.X = 8.000000000000000000
+              Position.Y = 403.000000000000000000
+              Size.Width = 128.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 7
+              Text = 'HTTPS sem Certificado'
+              OnClick = btnHTTPSClick
+            end
+            object btnLeituraX509: TButton
+              Position.X = 144.000000000000000000
+              Position.Y = 403.000000000000000000
+              Size.Width = 115.000000000000000000
+              Size.Height = 25.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 8
+              Text = 'Leitura de X509'
+              OnClick = btnLeituraX509Click
+            end
+            object cbSSLLib: TComboBox
+              Position.X = 80.000000000000000000
+              Position.Y = 8.000000000000000000
+              Size.Width = 160.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 9
+              OnChange = cbSSLLibChange
+            end
+            object cbCryptLib: TComboBox
+              Position.X = 80.000000000000000000
+              Position.Y = 35.000000000000000000
+              Size.Width = 160.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 10
+              OnChange = cbCryptLibChange
+            end
+            object cbHttpLib: TComboBox
+              Position.X = 80.000000000000000000
+              Position.Y = 62.000000000000000000
+              Size.Width = 160.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 11
+              OnChange = cbHttpLibChange
+            end
+            object cbXmlSignLib: TComboBox
+              Position.X = 80.000000000000000000
+              Position.Y = 89.000000000000000000
+              Size.Width = 160.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 12
+              OnChange = cbXmlSignLibChange
+            end
+          end
+          object TabSheet4: TTabItem
+            CustomIcon = <
+              item
+              end>
+            IsSelected = False
+            ImageIndex = 1
+            Size.Width = 48.000000000000000000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = ''
+            TabOrder = 0
+            Text = 'Geral'
+            ExplicitSize.cx = 50.000000000000000000
+            ExplicitSize.cy = 50.000000000000000000
+            object GroupBox3: TGroupBox
+              Position.X = 3.000000000000000000
+              Position.Y = 12.000000000000000000
+              Size.Width = 265.000000000000000000
+              Size.Height = 389.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Geral'
+              TabOrder = 0
+              object sbtnPathSalvar: TSpeedButton
+                Position.X = 238.000000000000000000
+                Position.Y = 236.000000000000000000
+                Size.Width = 23.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = sbtnPathSalvarClick
+                object sbtnPathSalvar_SubImage: TImage
+                  MultiResBitmap = <
+                    item
+                      Width = 0
+                      Height = 0
+                      PNG = {
+                        89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                        59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                        017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                        5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                        33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                        6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                        27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                        080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                        50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                        C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                        31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                        A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                        ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                        53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                        8D3E4D34D60000000049454E44AE426082}
+                    end>
+                  Align = Left
+                  HitTest = False
+                  Size.Width = 32.000000000000000000
+                  Size.Height = 24.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object Label29: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 88.000000000000000000
+                Size.Width = 97.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Forma de Emiss'#227'o'
+              end
+              object Label31: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 50.000000000000000000
+                Size.Width = 80.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Formato Alerta'
+              end
+              object Label30: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 126.000000000000000000
+                Size.Width = 139.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Modelo Documento Fiscal'
+              end
+              object Label32: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 165.000000000000000000
+                Size.Width = 133.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Vers'#227'o Documento Fiscal'
+              end
+              object Label33: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 299.000000000000000000
+                Size.Width = 199.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'IdToken/IdCSC (Somente para NFC-e)'
+              end
+              object Label34: TLabel
+                AutoSize = True
+                Position.X = 7.000000000000000000
+                Position.Y = 339.000000000000000000
+                Size.Width = 179.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Token/CSC (Somente para NFC-e)'
+              end
+              object Label42: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 260.000000000000000000
+                Size.Width = 221.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Diret'#243'rios com os arquivos XSD(Schemas)'
+              end
+              object spPathSchemas: TSpeedButton
+                Position.X = 238.000000000000000000
+                Position.Y = 276.000000000000000000
+                Size.Width = 23.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                OnClick = spPathSchemasClick
+                object spPathSchemas_SubImage: TImage
+                  MultiResBitmap = <
+                    item
+                      Width = 0
+                      Height = 0
+                      PNG = {
+                        89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                        59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                        017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                        5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                        33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                        6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                        27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                        080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                        50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                        C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                        31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                        A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                        ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                        53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                        8D3E4D34D60000000049454E44AE426082}
+                    end>
+                  Align = Left
+                  HitTest = False
+                  Size.Width = 32.000000000000000000
+                  Size.Height = 24.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+              object edtPathLogs: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 0
+                Position.X = 8.000000000000000000
+                Position.Y = 239.000000000000000000
+                Size.Width = 228.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object ckSalvar: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 223.000000000000000000
+                Size.Width = 209.000000000000000000
+                Size.Height = 15.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Text = 'Salvar Arquivos de Envio e Resposta'
+              end
+              object cbFormaEmissao: TComboBox
+                Position.X = 8.000000000000000000
+                Position.Y = 104.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+              end
+              object cbxAtualizarXML: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 97.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 3
+                Text = 'Atualizar XML'
+              end
+              object cbxExibirErroSchema: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 129.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 4
+                Text = 'Exibir Erro Schema'
+              end
+              object edtFormatoAlerta: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 5
+                Position.X = 8.000000000000000000
+                Position.Y = 66.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object cbModeloDF: TComboBox
+                Position.X = 8.000000000000000000
+                Position.Y = 142.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 6
+              end
+              object cbxRetirarAcentos: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 205.000000000000000000
+                Size.Width = 193.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 7
+                Text = 'Retirar Acentos dos XMLs enviados'
+              end
+              object cbVersaoDF: TComboBox
+                Position.X = 8.000000000000000000
+                Position.Y = 181.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 8
+              end
+              object edtIdToken: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 9
+                Position.X = 8.000000000000000000
+                Position.Y = 315.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtToken: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 10
+                Position.X = 7.000000000000000000
+                Position.Y = 355.000000000000000000
+                Size.Width = 248.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtPathSchemas: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 11
+                Position.X = 8.000000000000000000
+                Position.Y = 276.000000000000000000
+                Size.Width = 228.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+          end
+          object TabSheet7: TTabItem
+            CustomIcon = <
+              item
+              end>
+            IsSelected = True
+            ImageIndex = 2
+            Size.Width = 82.000000000000000000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = ''
+            TabOrder = 0
+            Text = 'WebService'
+            ExplicitSize.cx = 50.000000000000000000
+            ExplicitSize.cy = 50.000000000000000000
+            object GroupBox4: TGroupBox
+              Position.X = 5.000000000000000000
+              Position.Y = 4.000000000000000000
+              Size.Width = 265.000000000000000000
+              Size.Height = 190.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'WebService'
+              TabOrder = 0
+              object Label6: TLabel
+                AutoSize = True
+                StyledSettings = []
+                Position.X = 8.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 120.000000000000000000
+                Size.Height = 15.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.Font.Family = 'MS Sans Serif'
+                TextSettings.Font.Size = 11.000000000000000000
+                TextSettings.WordWrap = False
+                Text = 'Selecione UF de Destino:'
+              end
+              object lTimeOut: TLabel
+                AutoSize = True
+                Position.X = 167.000000000000000000
+                Position.Y = 116.000000000000000000
+                Size.Width = 46.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'TimeOut'
+              end
+              object lSSLLib1: TLabel
+                AutoSize = True
+                Position.X = 19.000000000000000000
+                Position.Y = 168.000000000000000000
+                Size.Width = 43.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'SSLType'
+              end
+              object cbxVisualizar: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 118.000000000000000000
+                Size.Width = 153.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Text = 'Visualizar Mensagem'
+              end
+              object cbUF: TComboBox
+                Items.Strings = (
+                  'AC'
+                  'AL'
+                  'AP'
+                  'AM'
+                  'BA'
+                  'CE'
+                  'DF'
+                  'ES'
+                  'GO'
+                  'MA'
+                  'MT'
+                  'MS'
+                  'MG'
+                  'PA'
+                  'PB'
+                  'PR'
+                  'PE'
+                  'PI'
+                  'RJ'
+                  'RN'
+                  'RS'
+                  'RO'
+                  'RR'
+                  'SC'
+                  'SP'
+                  'SE'
+                  'TO')
+                ItemHeight = 16.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 249.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+              end
+              object rgTipoAmb: TPanel
+                Position.X = 8.000000000000000000
+                Position.Y = 61.000000000000000000
+                Size.Width = 249.000000000000000000
+                Size.Height = 52.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                object rbProducao: TRadioButton
+                  GroupName = 'Amb'
+                  Position.X = 8.000000000000000000
+                  Position.Y = 16.000000000000000000
+                  Size.Width = 105.000000000000000000
+                  Size.Height = 19.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Text = 'Produ'#231#227'o'
+                end
+                object rbHomologacao: TRadioButton
+                  GroupName = 'Amb'
+                  IsChecked = True
+                  Position.X = 128.000000000000000000
+                  Position.Y = 16.000000000000000000
+                  Size.Width = 105.000000000000000000
+                  Size.Height = 19.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 1
+                  Text = 'Homologa'#231#227'o'
+                end
+              end
+              object cbxSalvarSOAP: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 136.000000000000000000
+                Size.Width = 153.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 3
+                Text = 'Salvar envelope SOAP'
+              end
+              object seTimeOut: TSpinBox
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 4
+                Cursor = crIBeam
+                Value = 100.000000000000000000
+                Increment = 10.000000000000000000
+                Position.X = 167.000000000000000000
+                Position.Y = 132.000000000000000000
+                Size.Width = 66.000000000000000000
+                Size.Height = 22.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object cbSSLType: TComboBox
+                Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
+                Position.X = 72.000000000000000000
+                Position.Y = 160.000000000000000000
+                Size.Width = 160.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 5
+                OnChange = cbSSLTypeChange
+              end
+            end
+            object gbProxy: TGroupBox
+              Position.X = 5.000000000000000000
+              Position.Y = 283.000000000000000000
+              Size.Width = 265.000000000000000000
+              Size.Height = 104.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Proxy'
+              TabOrder = 1
+              object Label8: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 25.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Host'
+              end
+              object Label9: TLabel
+                AutoSize = True
+                Position.X = 208.000000000000000000
+                Position.Y = 16.000000000000000000
+                Size.Width = 28.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Porta'
+              end
+              object Label10: TLabel
+                AutoSize = True
+                Position.X = 8.000000000000000000
+                Position.Y = 56.000000000000000000
+                Size.Width = 41.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Usu'#225'rio'
+              end
+              object Label11: TLabel
+                AutoSize = True
+                Position.X = 138.000000000000000000
+                Position.Y = 56.000000000000000000
+                Size.Width = 33.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Senha'
+              end
+              object edtProxyHost: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 0
+                Position.X = 8.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 193.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtProxyPorta: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 1
+                Position.X = 208.000000000000000000
+                Position.Y = 32.000000000000000000
+                Size.Width = 50.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtProxyUser: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 2
+                Position.X = 8.000000000000000000
+                Position.Y = 72.000000000000000000
+                Size.Width = 123.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtProxySenha: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 3
+                Password = True
+                Position.X = 135.000000000000000000
+                Position.Y = 72.000000000000000000
+                Size.Width = 123.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object gbxRetornoEnvio: TGroupBox
+              Position.X = 5.000000000000000000
+              Position.Y = 200.000000000000000000
+              Size.Width = 265.000000000000000000
+              Size.Height = 77.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'Retorno de Envio'
+              TabOrder = 2
+              object Label36: TLabel
+                AutoSize = True
+                Position.X = 93.000000000000000000
+                Position.Y = 27.000000000000000000
+                Size.Width = 53.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Tentativas'
+              end
+              object Label37: TLabel
+                AutoSize = True
+                Position.X = 176.000000000000000000
+                Position.Y = 27.000000000000000000
+                Size.Width = 47.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Intervalo'
+              end
+              object Label38: TLabel
+                AutoSize = True
+                Hint = 
+                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
+                  'nvio'
+                Position.X = 8.000000000000000000
+                Position.Y = 27.000000000000000000
+                Size.Width = 50.000000000000000000
+                Size.Height = 16.000000000000000000
+                Size.PlatformDefault = False
+                TextSettings.WordWrap = False
+                Text = 'Aguardar'
+              end
+              object cbxAjustarAut: TCheckBox
+                Position.X = 8.000000000000000000
+                Position.Y = 12.000000000000000000
+                Size.Width = 234.000000000000000000
+                Size.Height = 17.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                Text = 'Ajustar Automaticamente prop. "Aguardar"'
+              end
+              object edtTentativas: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 2
+                Position.X = 93.000000000000000000
+                Position.Y = 43.000000000000000000
+                Size.Width = 57.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtIntervalo: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 3
+                Position.X = 176.000000000000000000
+                Position.Y = 43.000000000000000000
+                Size.Width = 57.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object edtAguardar: TEdit
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                TabOrder = 1
+                Position.X = 8.000000000000000000
+                Position.Y = 43.000000000000000000
+                Hint = 
+                  'Aguardar quantos segundos para primeira consulta de retorno de e' +
+                  'nvio'
+                Size.Width = 57.000000000000000000
+                Size.Height = 21.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+          end
+          object TabSheet12: TTabItem
+            CustomIcon = <
+              item
+              end>
+            IsSelected = False
+            ImageIndex = 3
+            Size.Width = 67.000000000000000000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = ''
+            TabOrder = 0
+            Text = 'Emitente'
+            ExplicitSize.cx = 50.000000000000000000
+            ExplicitSize.cy = 50.000000000000000000
+            object Label12: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 4.000000000000000000
+              Size.Width = 27.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'CNPJ'
+              TabOrder = 13
+            end
+            object Label13: TLabel
+              AutoSize = True
+              Position.X = 136.000000000000000000
+              Position.Y = 4.000000000000000000
+              Size.Width = 42.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Insc.Est.'
+              TabOrder = 14
+            end
+            object Label14: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 44.000000000000000000
+              Size.Width = 66.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Raz'#227'o Social'
+              TabOrder = 15
+            end
+            object Label15: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 84.000000000000000000
+              Size.Width = 43.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Fantasia'
+              TabOrder = 16
+            end
+            object Label16: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 164.000000000000000000
+              Size.Width = 63.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Logradouro'
+              TabOrder = 17
+            end
+            object Label17: TLabel
+              AutoSize = True
+              Position.X = 208.000000000000000000
+              Position.Y = 164.000000000000000000
+              Size.Width = 44.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'N'#250'mero'
+              TabOrder = 18
+            end
+            object Label18: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 204.000000000000000000
+              Size.Width = 76.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Complemento'
+              TabOrder = 19
+            end
+            object Label19: TLabel
+              AutoSize = True
+              Position.X = 136.000000000000000000
+              Position.Y = 204.000000000000000000
+              Size.Width = 32.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Bairro'
+              TabOrder = 20
+            end
+            object Label20: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 244.000000000000000000
+              Size.Width = 68.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'C'#243'd. Cidade '
+              TabOrder = 21
+            end
+            object Label21: TLabel
+              AutoSize = True
+              Position.X = 76.000000000000000000
+              Position.Y = 244.000000000000000000
+              Size.Width = 37.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Cidade'
+              TabOrder = 22
+            end
+            object Label22: TLabel
+              AutoSize = True
+              Position.X = 225.000000000000000000
+              Position.Y = 244.000000000000000000
+              Size.Width = 15.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'UF'
+              TabOrder = 23
+            end
+            object Label23: TLabel
+              AutoSize = True
+              Position.X = 136.000000000000000000
+              Position.Y = 124.000000000000000000
+              Size.Width = 21.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'CEP'
+              TabOrder = 24
+            end
+            object Label24: TLabel
+              AutoSize = True
+              Position.X = 8.000000000000000000
+              Position.Y = 124.000000000000000000
+              Size.Width = 26.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Fone'
+              TabOrder = 25
+            end
+            object edtEmitCNPJ: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 0
+              Position.X = 8.000000000000000000
+              Position.Y = 20.000000000000000000
+              Size.Width = 123.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitIE: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 1
+              Position.X = 137.000000000000000000
+              Position.Y = 20.000000000000000000
+              Size.Width = 123.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitRazao: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 2
+              Position.X = 8.000000000000000000
+              Position.Y = 60.000000000000000000
+              Size.Width = 252.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitFantasia: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 3
+              Position.X = 8.000000000000000000
+              Position.Y = 100.000000000000000000
+              Size.Width = 252.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitFone: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 4
+              Position.X = 8.000000000000000000
+              Position.Y = 140.000000000000000000
+              Size.Width = 125.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitCEP: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 5
+              Position.X = 137.000000000000000000
+              Position.Y = 140.000000000000000000
+              Size.Width = 123.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitLogradouro: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 6
+              Position.X = 8.000000000000000000
+              Position.Y = 180.000000000000000000
+              Size.Width = 196.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitNumero: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 7
+              Position.X = 210.000000000000000000
+              Position.Y = 180.000000000000000000
+              Size.Width = 50.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitComp: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 8
+              Position.X = 8.000000000000000000
+              Position.Y = 220.000000000000000000
+              Size.Width = 123.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitBairro: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 9
+              Position.X = 137.000000000000000000
+              Position.Y = 220.000000000000000000
+              Size.Width = 123.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitCodCidade: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 10
+              Position.X = 8.000000000000000000
+              Position.Y = 260.000000000000000000
+              Size.Width = 61.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitCidade: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 11
+              Position.X = 76.000000000000000000
+              Position.Y = 260.000000000000000000
+              Size.Width = 142.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtEmitUF: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 12
+              Position.X = 225.000000000000000000
+              Position.Y = 260.000000000000000000
+              Size.Width = 35.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+          object TabSheet13: TTabItem
+            CustomIcon = <
+              item
+              end>
+            IsSelected = False
+            ImageIndex = 4
+            Size.Width = 67.000000000000000000
+            Size.Height = 26.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = ''
+            TabOrder = 0
+            Text = 'Arquivos'
+            ExplicitSize.cx = 50.000000000000000000
+            ExplicitSize.cy = 50.000000000000000000
+            object sbPathNFe: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 131.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathNFeClick
+              object sbPathNFe_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object Label35: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 116.000000000000000000
+              Size.Width = 102.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos NFe'
+              TabOrder = 27
+            end
+            object Label39: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 154.000000000000000000
+              Size.Width = 157.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos Cancelamento'
+              TabOrder = 28
+            end
+            object sbPathCan: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 169.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathCanClick
+              object sbPathCan_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object Label46: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 192.000000000000000000
+              Size.Width = 214.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
+              TabOrder = 30
+            end
+            object sbPathCCe: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 207.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathCCeClick
+              object sbPathCCe_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object Label40: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 230.000000000000000000
+              Size.Width = 141.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos Inutiliza'#231#227'o'
+              TabOrder = 32
+            end
+            object sbPathInu: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 245.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathInuClick
+              object sbPathInu_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object Label41: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 268.000000000000000000
+              Size.Width = 110.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos DPEC'
+              TabOrder = 34
+            end
+            object sbPathDPEC: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 283.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathDPECClick
+              object sbPathDPEC_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object Label47: TLabel
+              AutoSize = True
+              Position.X = 6.000000000000000000
+              Position.Y = 306.000000000000000000
+              Size.Width = 117.000000000000000000
+              Size.Height = 16.000000000000000000
+              Size.PlatformDefault = False
+              TextSettings.WordWrap = False
+              Text = 'Pasta Arquivos Evento'
+              TabOrder = 36
+            end
+            object sbPathEvento: TSpeedButton
+              Position.X = 247.000000000000000000
+              Position.Y = 321.000000000000000000
+              Size.Width = 23.000000000000000000
+              Size.Height = 24.000000000000000000
+              Size.PlatformDefault = False
+              OnClick = sbPathEventoClick
+              object sbPathEvento_SubImage: TImage
+                MultiResBitmap = <
+                  item
+                    Width = 0
+                    Height = 0
+                    PNG = {
+                      89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                      59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                      017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                      5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                      33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                      6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                      27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                      080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                      50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                      C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                      31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                      A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                      ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                      53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                      8D3E4D34D60000000049454E44AE426082}
+                  end>
+                Align = Left
+                HitTest = False
+                Size.Width = 32.000000000000000000
+                Size.Height = 24.000000000000000000
+                Size.PlatformDefault = False
+              end
+            end
+            object cbxSalvarArqs: TCheckBox
+              Position.X = 6.000000000000000000
+              Size.Width = 210.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = 'Salvar Arquivos em Pastas Separadas'
+            end
+            object cbxPastaMensal: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 16.000000000000000000
+              Size.Width = 210.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = 'Criar Pastas Mensalmente'
+            end
+            object cbxAdicionaLiteral: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 32.000000000000000000
+              Size.Width = 210.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = 'Adicionar Literal no nome das pastas'
+            end
+            object cbxEmissaoPathNFe: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 48.000000000000000000
+              Size.Width = 251.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = 'Salvar Documento pelo campo Data de Emiss'#227'o'
+            end
+            object cbxSalvaPathEvento: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 64.000000000000000000
+              Size.Width = 233.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'Salvar Arquivos de Eventos'
+            end
+            object cbxSepararPorCNPJ: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 80.000000000000000000
+              Size.Width = 233.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+              Text = 'Separar Arqs pelo CNPJ do Certificado'
+            end
+            object edtPathCCe: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 6
+              Position.X = 6.000000000000000000
+              Position.Y = 208.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtPathNFe: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 7
+              Position.X = 6.000000000000000000
+              Position.Y = 132.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtPathCan: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 8
+              Position.X = 6.000000000000000000
+              Position.Y = 170.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtPathInu: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 9
+              Position.X = 6.000000000000000000
+              Position.Y = 246.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtPathDPEC: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 10
+              Position.X = 6.000000000000000000
+              Position.Y = 284.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object edtPathEvento: TEdit
+              Touch.InteractiveGestures = [LongTap, DoubleTap]
+              TabOrder = 11
+              Position.X = 6.000000000000000000
+              Position.Y = 322.000000000000000000
+              Size.Width = 235.000000000000000000
+              Size.Height = 21.000000000000000000
+              Size.PlatformDefault = False
+            end
+            object cbxSepararPorModelo: TCheckBox
+              Position.X = 6.000000000000000000
+              Position.Y = 96.000000000000000000
+              Size.Width = 251.000000000000000000
+              Size.Height = 17.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 12
+              Text = 'Separar Arqs pelo Modelo do Documento'
+            end
+          end
+        end
+      end
+      object TabSheet2: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        ImageIndex = 1
+        Size.Width = 125.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Documento Auxiliar'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object Label7: TLabel
+          AutoSize = True
+          Position.X = 8.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 63.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Logo Marca'
+          TabOrder = 4
+        end
+        object sbtnLogoMarca: TSpeedButton
+          Position.X = 238.000000000000000000
+          Position.Y = 22.000000000000000000
+          Size.Width = 23.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          OnClick = sbtnLogoMarcaClick
+          object sbtnLogoMarca_SubImage: TImage
+            MultiResBitmap = <
+              item
+                Width = 0
+                Height = 0
+                PNG = {
+                  89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+                  59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  017B49444154484BAD950B6EC4200C05A1EDC1F666909BED9E8C7A809778A989
+                  5AA9234501DBF10F27C9ADA5761C29A49494763A405F6B4939C746ADED7580FE
+                  33E75471F478A4F47A4DCD045924973DC9E5FCEA8E4CD2D7EF985120BFEC8F94
+                  6B4D0D214E2D9910B339C10ED6CE0CA731D51C1CC7702E3B64702600C89A9D89
+                  27CFACD0ED820B9CCBB1380359B56B7092FAE8AB05823E9FCFB91B49C9EFDD4C
+                  080270A96AD65170081320E083437620DB1DD10AD512A894AB9B7E18151CB61D
+                  50EBC1EF6701B7E828EE3A20FA0CE86C89B1CEC00A8978138E44CE418155BD5F
+                  C38F04CCD9A95502BE7A90ECBA0FF91A1C08F023C81C403F88D0EDEC6ABA4C66
+                  31EEC1A65849FE39811CBC4C48261BF1D5535950074C7FAE817DC43554A33AAA
+                  A4BAF78ACBB41B7B3DB37D0B144CEB5DF008FF1668ADFD4A98C07F4085AA526B
+                  ED3DBFFA14AFD08CBF7C8A23E84CBF9380FFC47A47B50E23FE781EC995849EE9
+                  53EDD07E272789B77F4104C9ADD50AAFD3F9AE6DD640AE72EC6BADE91B06C660
+                  8D3E4D34D60000000049454E44AE426082}
+              end>
+            Align = Left
+            HitTest = False
+            Size.Width = 32.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object edtLogoMarca: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 0
+          Position.X = 8.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 228.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object rgTipoDanfe: TPanel
+          Position.X = 8.000000000000000000
+          Position.Y = 56.000000000000000000
+          Size.Width = 257.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object rbRetrato: TRadioButton
+            GroupName = 'Danfe'
+            Position.X = 16.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 89.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Text = 'Retrato'
+          end
+          object rbPaisagem: TRadioButton
+            GroupName = 'Danfe'
+            Position.X = 128.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 89.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Text = 'Paisagem'
+          end
+        end
+        object gbEscPos: TGroupBox
+          Position.X = 8.000000000000000000
+          Position.Y = 120.000000000000000000
+          Size.Width = 257.000000000000000000
+          Size.Height = 233.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'EscPos'
+          TabOrder = 2
+          object Label43: TLabel
+            AutoSize = True
+            Position.X = 8.000000000000000000
+            Position.Y = 24.000000000000000000
+            Size.Width = 42.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Modelo'
+          end
+          object Label44: TLabel
+            AutoSize = True
+            Position.X = 8.000000000000000000
+            Position.Y = 72.000000000000000000
+            Size.Width = 28.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Porta'
+          end
+          object Label45: TLabel
+            AutoSize = True
+            Position.X = 8.000000000000000000
+            Position.Y = 184.000000000000000000
+            Size.Width = 61.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Pag.Codigo'
+          end
+          object Label48: TLabel
+            AutoSize = True
+            Position.X = 8.000000000000000000
+            Position.Y = 136.000000000000000000
+            Size.Width = 43.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Colunas'
+          end
+          object Label49: TLabel
+            AutoSize = True
+            Position.X = 80.000000000000000000
+            Position.Y = 120.000000000000000000
+            Size.Width = 42.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Espa'#231'os'#13#10'Linhas'
+          end
+          object Label50: TLabel
+            AutoSize = True
+            Position.X = 144.000000000000000000
+            Position.Y = 120.000000000000000000
+            Size.Width = 34.000000000000000000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Linhas'#13#10'Pular'
+          end
+          object btSerial: TButton
+            ModalResult = 1
+            Position.X = 216.000000000000000000
+            Position.Y = 88.000000000000000000
+            Size.Width = 22.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            OnClick = btSerialClick
+            object btSerial_SubImage: TImage
+              MultiResBitmap = <
+                item
+                  Width = 0
+                  Height = 0
+                  PNG = {
+                    89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
+                    61000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                    013C49444154384FA593B14E844010867FAC79000A738DC4C2125A72749A5879
+                    098187D01CEA4BD05E7189CFC03596727624145A9CA1A2305624263C0015CDB9
+                    332C8493F5BCE4BE64B33F4398997F76D1B6021CC19F09B4D90CD74D83AAAA64
+                    A4E503136C37CFC0E20EB85FE244C647586589BAAE319F3FC2F33C388E03D334
+                    F95D9AA6C0DB2BEBBD16A228429EE7AC57CD17504E58DF6E5C2CD76BE0EA45DD
+                    01B54FAB6B7F25AC8C38BDE46D27411004705D17E74521AA812D7458E259459F
+                    803E8CE398FD7DEA171CA304C3242A380155E6C14868CA3C6901D9A081D21055
+                    7002AA1C86210786188621159065192CF225F8D61E80E289756F812A51271DB6
+                    6D234992DE062DBA033DEF67ED4EC738643A9D4AA506D68D542DA30484EFFB52
+                    FDCFCE3176FCBEBEFBE09B487E095DD7797034D44339FA6F545A381CE00770C1
+                    F8E9F2483D710000000049454E44AE426082}
+                end>
+              Align = Left
+              HitTest = False
+              Size.Width = 32.000000000000000000
+              Size.Height = 22.000000000000000000
+              Size.PlatformDefault = False
+            end
+          end
+          object cbxModeloPosPrinter: TComboBox
+            Position.X = 8.000000000000000000
+            Position.Y = 40.000000000000000000
+            Size.Width = 233.000000000000000000
+            Size.Height = 21.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+          end
+          object cbxPorta: TComboEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 2
+            ItemHeight = 19.000000000000000000
+            ItemIndex = -1
+            Position.X = 8.000000000000000000
+            Position.Y = 88.000000000000000000
+            Size.Width = 201.000000000000000000
+            Size.Height = 21.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object cbxPagCodigo: TComboBox
+            Position.X = 8.000000000000000000
+            Position.Y = 200.000000000000000000
+            Size.Width = 101.000000000000000000
+            Size.Height = 21.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 3
+          end
+          object seColunas: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 4
+            Cursor = crIBeam
+            Position.X = 8.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 49.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object seEspLinhas: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 5
+            Cursor = crIBeam
+            Position.X = 80.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 49.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object seLinhasPular: TSpinBox
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 6
+            Cursor = crIBeam
+            Position.X = 144.000000000000000000
+            Position.Y = 152.000000000000000000
+            Size.Width = 49.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+          end
+          object cbCortarPapel: TCheckBox
+            Hint = 
+              'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+              'ta Serial ap'#243's o envio'
+            IsChecked = True
+            Position.X = 143.000000000000000000
+            Position.Y = 196.000000000000000000
+            Size.Width = 85.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 7
+            Text = 'Cortar Papel'
+          end
+        end
+        object rgDANFCE: TPanel
+          Position.X = 8.000000000000000000
+          Position.Y = 361.000000000000000000
+          Size.Width = 257.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          object rbFortes: TRadioButton
+            GroupName = 'DANFCe'
+            IsChecked = True
+            Position.X = 16.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 105.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            Text = 'Fortes Report'
+          end
+          object rbEscPos: TRadioButton
+            GroupName = 'DANFCe'
+            Position.X = 128.000000000000000000
+            Position.Y = 16.000000000000000000
+            Size.Width = 89.000000000000000000
+            Size.Height = 19.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+            Text = 'Fortes Report'
+          end
+        end
+      end
+      object TabSheet14: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 2
+        Size.Width = 49.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Email'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object Label3: TLabel
+          AutoSize = True
+          Position.X = 8.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 78.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Servidor SMTP'
+          TabOrder = 7
+        end
+        object Label4: TLabel
+          AutoSize = True
+          Position.X = 206.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 28.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Porta'
+          TabOrder = 8
+        end
+        object Label5: TLabel
+          AutoSize = True
+          Position.X = 8.000000000000000000
+          Position.Y = 48.000000000000000000
+          Size.Width = 41.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Usu'#225'rio'
+          TabOrder = 9
+        end
+        object Label26: TLabel
+          AutoSize = True
+          Position.X = 137.000000000000000000
+          Position.Y = 48.000000000000000000
+          Size.Width = 33.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Senha'
+          TabOrder = 10
+        end
+        object Label27: TLabel
+          AutoSize = True
+          Position.X = 8.000000000000000000
+          Position.Y = 88.000000000000000000
+          Size.Width = 138.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Assunto do email enviado'
+          TabOrder = 11
+        end
+        object Label28: TLabel
+          AutoSize = True
+          Position.X = 8.000000000000000000
+          Position.Y = 160.000000000000000000
+          Size.Width = 108.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Mensagem do Email'
+          TabOrder = 12
+        end
+        object edtSmtpHost: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 0
+          Position.X = 8.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 193.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object edtSmtpPort: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 1
+          Position.X = 206.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 51.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object edtSmtpUser: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 2
+          Position.X = 8.000000000000000000
+          Position.Y = 64.000000000000000000
+          Size.Width = 120.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object edtSmtpPass: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 3
+          Position.X = 137.000000000000000000
+          Position.Y = 64.000000000000000000
+          Size.Width = 120.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object edtEmailAssunto: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 4
+          Position.X = 8.000000000000000000
+          Position.Y = 104.000000000000000000
+          Size.Width = 249.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object cbEmailSSL: TCheckBox
+          Position.X = 10.000000000000000000
+          Position.Y = 136.000000000000000000
+          Size.Width = 167.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          Text = 'SMTP exige conex'#227'o segura'
+        end
+        object mmEmailMsg: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Position.X = 8.000000000000000000
+          Position.Y = 176.000000000000000000
+          Size.Width = 249.000000000000000000
+          Size.Height = 130.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 6
+          Viewport.Width = 249.000000000000000000
+          Viewport.Height = 130.000000000000000000
+        end
+      end
+    end
+    object btnSalvarConfig: TButton
+      Position.X = 78.000000000000000000
+      Position.Y = 515.000000000000000000
+      Size.Width = 153.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Salvar Configura'#231#245'es'
+      OnClick = btnSalvarConfigClick
+      object btnSalvarConfig_SubImage: TImage
+        MultiResBitmap = <
+          item
+            Width = 0
+            Height = 0
+            PNG = {
+              89504E470D0A1A0A0000000D494844520000002000000010080600000077007D
+              59000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              015749444154484BA59501B283200C44A1F30FA627034FA637B36CC8628CA04E
+              FFEB3024A46D96359DC610C25ED6859C357860DF934667625C34BA4704146AA6
+              C488E32A2275842CE60C02B253CB1C227A02ADB88FEED274DB36CD4495084033
+              AC9C8E2FEA894253AC65A1F82CCDD1CC0BB4A29A00349CA649B30A4580274BD9
+              28A5C34D3A0051FEF37CDFC9015A0F6CEE2ED0858FC23B00EC8D3D78F765062E
+              18611E3C1A36E6AD6C0CFC23B03401F6F680676DD7730B668337F74D683FF71E
+              F8CC6906ECE219B1930F7CCE19E0820338A3135E2072998D12973E8703365ED7
+              35CCF38C53C941A9961773587D76C0DEF8EEF6160818725747AD0890B8F4971D
+              D898F51EA8350746700E7AA0460738FD1E3830AAA326026AFA1B10F01F22ECD2
+              B84BA9DF823A07AD076763C49FEE8F60202D75382B23FB2BD5212F8479FB19BE
+              C136FD05CE8215FC5A00FFA8B0DB3FADB7F0C6183CAC4A085FFD344C9D9396DE
+              820000000049454E44AE426082}
+          end>
+        Align = Left
+        HitTest = False
+        Size.Width = 32.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+  end
+  object pnlCentral: TPanel
+    Align = Client
+    Size.Width = 585.000000000000000000
+    Size.Height = 651.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object pgcBotoes: TTabControl
+      Align = Top
+      Size.Width = 585.000000000000000000
+      Size.Height = 197.000000000000000000
+      Size.PlatformDefault = False
+      TabIndex = 0
+      TabOrder = 0
+      TabPosition = Top
+      Sizes = (
+        585s
+        171s
+        585s
+        171s
+        585s
+        171s
+        585s
+        171s
+        585s
+        171s)
+      object tsEnvios: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        ImageIndex = 2
+        Size.Width = 54.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Envios'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object btnCriarEnviar: TButton
+          Position.X = 376.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Criar e Enviar'
+          OnClick = btnCriarEnviarClick
+        end
+        object btnValidarRegrasNegocio: TButton
+          Position.X = 9.000000000000000000
+          Position.Y = 71.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Validar Regras de Neg'#243'cio'
+          OnClick = btnValidarRegrasNegocioClick
+        end
+        object btnGerarTXT: TButton
+          Position.X = 190.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Gerar TXT'
+          OnClick = btnGerarTXTClick
+        end
+        object btnGerarXML: TButton
+          Position.X = 7.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Gerar NFe'
+          OnClick = btnGerarXMLClick
+        end
+        object btnImportarXML: TButton
+          Position.X = 191.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = 'Importar TXT/XML'
+          OnClick = btnImportarXMLClick
+        end
+        object btnGerarPDF: TButton
+          Position.X = 375.000000000000000000
+          Position.Y = 102.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          Text = 'Gerar PDF'
+          OnClick = btnGerarPDFClick
+        end
+        object btnValidarXML: TButton
+          Position.X = 192.000000000000000000
+          Position.Y = 71.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 6
+          Text = 'Validar XML'
+          OnClick = btnValidarXMLClick
+        end
+        object btnImprimir: TButton
+          Position.X = 192.000000000000000000
+          Position.Y = 102.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 7
+          Text = 'Imprimir DANFE'
+          OnClick = btnImprimirClick
+        end
+        object btnEnviarEmail: TButton
+          Position.X = 9.000000000000000000
+          Position.Y = 133.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 8
+          Text = 'Enviar NFe Email'
+          OnClick = btnEnviarEmailClick
+        end
+        object btnAdicionarProtocolo: TButton
+          Position.X = 9.000000000000000000
+          Position.Y = 102.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 9
+          Text = 'Adicionar Protocolo ao XML'
+          OnClick = btnAdicionarProtocoloClick
+        end
+        object btnCarregarXMLEnviar: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 10
+          Text = 'Carregar XML e Enviar'
+          OnClick = btnCarregarXMLEnviarClick
+        end
+        object btnValidarAssinatura: TButton
+          Position.X = 375.000000000000000000
+          Position.Y = 71.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 11
+          Text = 'Validar Assinatura'
+          OnClick = btnValidarAssinaturaClick
+        end
+        object btnImprimirDANFCE: TButton
+          Position.X = 192.000000000000000000
+          Position.Y = 133.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 12
+          Text = 'Imprimir DANFCE'
+          OnClick = btnImprimirDANFCEClick
+        end
+        object btnImprimirDANFCEOffline: TButton
+          Position.X = 375.000000000000000000
+          Position.Y = 133.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 13
+          Text = 'Imprimir DANFCE Offline'
+          OnClick = btnImprimirDANFCEOfflineClick
+        end
+      end
+      object tsConsultas: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 3
+        Size.Width = 72.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Consultas'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object btnConsultar: TButton
+          Position.X = 191.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Consultar carregando XML'
+          OnClick = btnConsultarClick
+        end
+        object btnConsultarChave: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Consultar pela Chave'
+          OnClick = btnConsultarChaveClick
+        end
+        object btnConsCad: TButton
+          Position.X = 192.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Consulta Cadastro'
+          OnClick = btnConsCadClick
+        end
+        object btnConsultarRecibo: TButton
+          Position.X = 376.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Consultar Recibo Lote'
+          OnClick = btnConsultarReciboClick
+        end
+        object btnStatusServ: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = ' Status de Servi'#231'o'
+          OnClick = btnStatusServClick
+        end
+      end
+      object tsEventos: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 4
+        Size.Width = 62.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Eventos'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object btnCancelarXML: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Cancelamento com XML'
+          OnClick = btnCancelarXMLClick
+        end
+        object btnCancelarChave: TButton
+          Position.X = 191.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Cancelamento pela Chave'
+          OnClick = btnCancelarChaveClick
+        end
+        object btnCartadeCorrecao: TButton
+          Position.X = 374.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Carta de Corre'#231#227'o'
+          OnClick = btnCartadeCorrecaoClick
+        end
+        object btnImprimirEvento: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          Text = 'Imprimir Evento'
+          OnClick = btnImprimirEventoClick
+        end
+        object btnEnviarEventoEmail: TButton
+          Position.X = 191.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 4
+          Text = 'Enviar Evento Email'
+          OnClick = btnEnviarEventoEmailClick
+        end
+      end
+      object tsInutilizacao: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 5
+        Size.Width = 80.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Inutiliza'#231#227'o'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object btnInutilizar: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Inutilizar Numera'#231#227'o'
+          OnClick = btnInutilizarClick
+        end
+        object btnInutilizarImprimir: TButton
+          Position.X = 191.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 177.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Inutilizar Imprimir'
+          OnClick = btnInutilizarImprimirClick
+        end
+      end
+      object tsDistribuicao: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 5
+        Size.Width = 107.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Distribui'#231#227'o DFe'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object btnManifDestConfirmacao: TButton
+          Position.X = 192.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 178.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Manif. Dest. - Conf. Opera'#231#227'o'
+          OnClick = btnManifDestConfirmacaoClick
+        end
+        object btnDistribuicaoDFe: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 9.000000000000000000
+          Size.Width = 178.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Distribui'#231#227'o Documentos Fiscais'
+          OnClick = btnDistribuicaoDFeClick
+        end
+      end
+    end
+    object pgRespostas: TTabControl
+      Align = Client
+      Size.Width = 585.000000000000000000
+      Size.Height = 454.000000000000000000
+      Size.PlatformDefault = False
+      TabIndex = 5
+      TabOrder = 1
+      TabPosition = Top
+      Sizes = (
+        585s
+        428s
+        585s
+        428s
+        585s
+        428s
+        585s
+        428s
+        585s
+        428s
+        585s
+        428s)
+      object tsRespostas: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 73.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Respostas'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object MemoResp: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 585.000000000000000000
+          Viewport.Height = 428.000000000000000000
+        end
+      end
+      object tsRespostaXML: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 1
+        Size.Width = 95.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'XML Resposta'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object WBResposta: TWebBrowser
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+      object tsLog: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 2
+        Size.Width = 40.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Log'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object memoLog: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 585.000000000000000000
+          Viewport.Height = 428.000000000000000000
+        end
+      end
+      object TabSheet9: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 3
+        Size.Width = 83.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Documento'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object trvwDocumento: TTreeView
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 585.000000000000000000
+          Viewport.Height = 428.000000000000000000
+        end
+      end
+      object TabSheet10: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        ImageIndex = 4
+        Size.Width = 139.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Retorno Completo WS'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object memoRespWS: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 585.000000000000000000
+          Viewport.Height = 428.000000000000000000
+        end
+      end
+      object tsDados: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        ImageIndex = 5
+        Size.Width = 63.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'tsDados'
+        ExplicitSize.cx = 50.000000000000000000
+        ExplicitSize.cy = 50.000000000000000000
+        object MemoDados: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Lines.Strings = (
+            '')
+          Align = Client
+          Size.Width = 585.000000000000000000
+          Size.Height = 428.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 585.000000000000000000
+          Viewport.Height = 428.000000000000000000
+        end
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = '*-nfe.XML'
+    Filter = 
+      'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
+      'dos os Arquivos (*.*)|*.*'
+    Title = 'Selecione a NFe'
+    Left = 411
+    Top = 343
+  end
+  object ACBrNFe1: TACBrNFe
+    MAIL = ACBrMail1
+    Integrador = ACBrIntegrador1
+    OnStatusChange = ACBrNFe1StatusChange
+    OnGerarLog = ACBrNFe1GerarLog
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormaEmissao = teContingencia
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Geral.AtualizarXMLCancelado = True
+    Configuracoes.Geral.VersaoQRCode = veqr000
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 15000
+    Configuracoes.WebServices.AjustaAguardaConsultaRet = True
+    Configuracoes.WebServices.TimeOut = 20000
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    Configuracoes.RespTec.IdCSRT = 0
+    DANFE = ACBrNFeDANFeRL1
+    Left = 330
+    Top = 239
+  end
+  object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 0.700000000000000000
+    MargemSuperior = 0.700000000000000000
+    MargemEsquerda = 0.700000000000000000
+    MargemDireita = 0.700000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 4
+    CasasDecimais.vUnCom = 4
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    ACBrNFe = ACBrNFe1
+    ExibeResumoCanhoto = False
+    ExibeCampoFatura = False
+    Left = 411
+    Top = 239
+  end
+  object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 2
+    CasasDecimais.vUnCom = 2
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    TipoDANFE = tiSemGeracao
+    ImprimeNomeFantasia = True
+    FonteLinhaItem.Charset = DEFAULT_CHARSET
+    FonteLinhaItem.Color = clWindowText
+    FonteLinhaItem.Height = -9
+    FonteLinhaItem.Name = 'Lucida Console'
+    FonteLinhaItem.Style = []
+    Left = 530
+    Top = 239
+  end
+  object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
+    Sistema = 'Projeto ACBr - www.projetoacbr.com.br'
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    CasasDecimais.Formato = tdetInteger
+    CasasDecimais.qCom = 4
+    CasasDecimais.vUnCom = 4
+    CasasDecimais.MaskqCom = '###,###,###,##0.00'
+    CasasDecimais.MaskvUnCom = '###,###,###,##0.00'
+    TipoDANFE = tiSemGeracao
+    PosPrinter = ACBrPosPrinter1
+    Left = 529
+    Top = 287
+  end
+  object ACBrPosPrinter1: TACBrPosPrinter
+    Modelo = ppEscPosEpson
+    Porta = 'COM9'
+    EspacoEntreLinhas = 30
+    ConfigBarras.MostrarCodigo = False
+    ConfigBarras.LarguraLinha = 0
+    ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
+    ConfigQRCode.Tipo = 2
+    ConfigQRCode.LarguraModulo = 4
+    ConfigQRCode.ErrorLevel = 0
+    LinhasEntreCupons = 5
+    Left = 409
+    Top = 287
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 330
+    Top = 287
+  end
+  object ACBrIntegrador1: TACBrIntegrador
+    PastaInput = 'C:\Integrador\Input\'
+    PastaOutput = 'C:\Integrador\Output\'
+    Left = 334
+    Top = 342
+  end
+end

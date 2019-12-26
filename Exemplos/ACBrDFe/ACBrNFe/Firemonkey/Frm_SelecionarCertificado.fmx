@@ -1,0 +1,69 @@
+object frmSelecionarCertificado: TfrmSelecionarCertificado
+  Left = 355
+  Top = 229
+  ActiveControl = StringGrid1
+  Caption = 'Selecionar Certificado'
+  ClientHeight = 237
+  ClientWidth = 658
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  Left = 355
+  Top = 229
+  DesignerMasterStyle = 0
+  object StringGrid1: TStringGrid
+    Align = Client
+    CanFocus = True
+    ClipChildren = True
+    Size.Width = 658.000000000000000000
+    Size.Height = 192.000000000000000000
+    Size.PlatformDefault = False
+    RowCount = 2
+    Options = [ColumnResize, ColumnMove, ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+    Viewport.Width = 654.000000000000000000
+    Viewport.Height = 167.000000000000000000
+    object StringColumn1: TStringColumn
+    end
+    object StringColumn2: TStringColumn
+    end
+    object StringColumn3: TStringColumn
+    end
+    object StringColumn4: TStringColumn
+    end
+    object StringColumn5: TStringColumn
+    end
+  end
+  object Panel1: TPanel
+    Align = Bottom
+    Position.Y = 192.000000000000000000
+    Size.Width = 658.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object BitBtn1: TButton
+      Anchors = [akTop, akRight]
+      ModalResult = 1
+      Position.X = 436.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'playtoolbuttonbordered'
+      TabOrder = 0
+      TextSettings.WordWrap = True
+    end
+    object BitBtn2: TButton
+      Anchors = [akTop, akRight]
+      ModalResult = 2
+      Position.X = 548.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'stoptoolbuttonbordered'
+      TabOrder = 1
+      TextSettings.WordWrap = True
+    end
+  end
+end

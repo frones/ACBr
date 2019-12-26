@@ -1,0 +1,221 @@
+object frmConfiguraSerial: TfrmConfiguraSerial
+  Left = 322
+  Top = 155
+  ActiveControl = cmbPortaSerial
+  BorderIcons = [biSystemMenu]
+  Caption = 'Porta Serial'
+  ClientHeight = 347
+  ClientWidth = 187
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  Left = 322
+  Top = 155
+  DesignerMasterStyle = 0
+  object Label5: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 52.000000000000000000
+    Size.Width = 153.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Baud rate (Bits por Segundo)'
+  end
+  object Label6: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 97.000000000000000000
+    Size.Width = 131.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Data Bits (Bits de Dados)'
+  end
+  object Label7: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 141.000000000000000000
+    Size.Width = 86.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Parity (Paridade)'
+  end
+  object Label11: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 184.000000000000000000
+    Size.Width = 132.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Stop Bits (Bits de Parada)'
+  end
+  object Label8: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 231.000000000000000000
+    Size.Width = 174.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Handshaking (Controle de Fluxo)'
+  end
+  object Label4: TLabel
+    AutoSize = True
+    Position.X = 8.000000000000000000
+    Position.Y = 11.000000000000000000
+    Size.Width = 60.000000000000000000
+    Size.Height = 16.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.WordWrap = False
+    Text = '&Porta Serial'
+  end
+  object cmbBaudRate: TComboBox
+    Items.Strings = (
+      '110'
+      '300'
+      '600'
+      '1200'
+      '2400'
+      '4800'
+      '9600'
+      '14400'
+      '19200'
+      '38400'
+      '56000'
+      '57600'
+      '115200')
+    Position.X = 8.000000000000000000
+    Position.Y = 70.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    OnChange = cmbBaudRateChange
+  end
+  object cmbDataBits: TComboBox
+    Items.Strings = (
+      '5'
+      '6'
+      '7'
+      '8')
+    Position.X = 8.000000000000000000
+    Position.Y = 113.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    OnChange = cmbDataBitsChange
+  end
+  object cmbParity: TComboBox
+    Items.Strings = (
+      'None'
+      'Odd'
+      'Even'
+      'Mark'
+      'Space')
+    Position.X = 8.000000000000000000
+    Position.Y = 158.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    OnChange = cmbParityChange
+  end
+  object cmbStopBits: TComboBox
+    Items.Strings = (
+      '1'
+      '1,5'
+      '2')
+    Position.X = 8.000000000000000000
+    Position.Y = 202.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    OnChange = cmbStopBitsChange
+  end
+  object cmbHandShaking: TComboBox
+    Items.Strings = (
+      'Nenhum'
+      'XON/XOFF'
+      'RTS/CTS'
+      'DTR/DSR')
+    Position.X = 8.000000000000000000
+    Position.Y = 249.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    OnChange = cmbHandShakingChange
+  end
+  object cmbPortaSerial: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    DropDownCount = 10
+    ItemHeight = 19.000000000000000000
+    Items.Strings = (
+      'COM1'
+      'COM2'
+      'COM3'
+      'COM4'
+      'COM5'
+      'COM6'
+      'COM7'
+      'COM8'
+      'COM9')
+    ItemIndex = -1
+    Position.X = 8.000000000000000000
+    Position.Y = 27.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 21.000000000000000000
+    Size.PlatformDefault = False
+    OnChange = cmbPortaSerialChange
+  end
+  object BitBtn1: TButton
+    Position.X = 8.000000000000000000
+    Position.Y = 312.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = '&OK'
+    TextSettings.WordWrap = True
+  end
+  object BitBtn2: TButton
+    Position.X = 94.000000000000000000
+    Position.Y = 312.000000000000000000
+    Size.Width = 75.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'Cancelar'
+    TextSettings.WordWrap = True
+  end
+  object chHardFlow: TCheckBox
+    Position.X = 8.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 71.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Text = 'HardFlow'
+    OnClick = chHardFlowClick
+  end
+  object chSoftFlow: TCheckBox
+    Position.X = 96.000000000000000000
+    Position.Y = 280.000000000000000000
+    Size.Width = 67.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = 'SoftFlow'
+    OnClick = chSoftFlowClick
+  end
+end

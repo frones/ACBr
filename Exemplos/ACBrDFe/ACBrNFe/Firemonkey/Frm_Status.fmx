@@ -1,0 +1,62 @@
+object frmStatus: TfrmStatus
+  Left = 231
+  Top = 166
+  BorderIcons = []
+  Caption = 'Status'
+  ClientHeight = 45
+  ClientWidth = 481
+  Position = MainFormCenter
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop, iPhone, iPad]
+  Left = 231
+  Top = 166
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 481.000000000000000000
+    Size.Height = 45.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'Panel1Style1'
+    TabOrder = 0
+    object lbl1: TLabel
+      Align = Top
+      StyledSettings = []
+      Size.Width = 481.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = 'Tahoma'
+      TextSettings.Font.Size = 13.000000000000000000
+      TextSettings.FontColor = claWhite
+      TextSettings.HorzAlign = Center
+      TextSettings.WordWrap = False
+      Text = 'Status do componente'
+    end
+    object lblStatus: TLabel
+      Align = Client
+      AutoSize = True
+      StyledSettings = [Family, Size, Style]
+      Size.Width = 481.000000000000000000
+      Size.Height = 28.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.FontColor = claWhite
+      TextSettings.HorzAlign = Center
+    end
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+        ResourcesBin = {
+          464D585F5354594C4520322E3501060C50616E656C315374796C653103B70000
+          545046300A5452656374616E676C6500095374796C654E616D65060C50616E65
+          6C315374796C65310A46696C6C2E436F6C6F720708636C61426C61636B074869
+          7454657374080A506F736974696F6E2E580500000000000000C607400A506F73
+          6974696F6E2E590500000000000080D707400A53697A652E5769647468050000
+          0000000000C804400B53697A652E4865696768740500000000000000C8044014
+          53697A652E506C6174666F726D44656661756C74080000}
+      end>
+    Left = 8
+    Top = 8
+  end
+end

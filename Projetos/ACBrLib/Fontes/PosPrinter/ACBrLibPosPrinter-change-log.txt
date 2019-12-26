@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/12/2019
+--- ACBrLibPosPrinter ---
+[-] Arrumado ordem dos parametos do metodo POS_RetornarTags.  Por: (Rafael Dias)
+[+] Adicionado metodo para achar as portas seriais e as impressoras USB(impressoras USB funciona apenas no windows).  Por: (Rafael Dias)
+
 18/04/2018
 --- ACBrLibPosPrinter ---
 [+] Adicionado a propriedade TimeOut do componente PosPrinter.  Por: (Rafael Dias)

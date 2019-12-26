@@ -67,6 +67,7 @@ type
     procedure DefinirValoresPadroes;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
+    procedure ImportarSerialParams(const SerialParams: String);
     procedure Apply(const AACBrDevice: TACBrDevice);
 
     property Baud: Integer read FBaud write FBaud;
@@ -142,6 +143,31 @@ begin
   AIni.WriteBool(FSessao, CChaveHardFlow, FSoftFlow);
 end;
 
+procedure TDeviceConfig.ImportarSerialParams(const SerialParams: String);
+Var
+  Device: TACBrDevice;
+begin
+  Device := TACBrDevice.Create(nil);
+
+  try
+    Device.ParamsString := SerialParams;
+
+    Baud := Device.Baud;
+    Data := Device.Data;
+    TimeOut := Device.TimeOut;
+    Parity := Device.Parity;
+    Stop := Device.Stop;
+    MaxBandwidth := Device.MaxBandwidth;
+    SendBytesCount := Device.SendBytesCount;
+    SendBytesInterval := Device.SendBytesInterval;
+    HandShake := Device.HandShake;
+    HardFlow := Device.HardFlow;
+    SoftFlow := Device.SoftFlow;
+  finally
+    FreeAndNil(Device);
+  end;
+end;
+
 procedure TDeviceConfig.Apply(const AACBrDevice: TACBrDevice);
 begin
   AACBrDevice.Baud := Baud;
@@ -150,7 +176,7 @@ begin
   AACBrDevice.Parity := Parity;
   AACBrDevice.Stop := Stop;
   AACBrDevice.MaxBandwidth := MaxBandwidth;
-  AACBrDevice.SendBytesCount :=SendBytesCount;
+  AACBrDevice.SendBytesCount := SendBytesCount;
   AACBrDevice.SendBytesInterval := SendBytesInterval;
   AACBrDevice.HandShake := HandShake;
   AACBrDevice.HardFlow := HardFlow;

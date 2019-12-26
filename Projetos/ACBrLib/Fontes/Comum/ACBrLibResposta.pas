@@ -352,12 +352,6 @@ begin
               end;
             end;
           end;
-        tkArray:
-          begin
-          end;
-        tkDynArray:
-          begin
-          end;
         tkSet:
             AIni.WriteString(ASessao, PI^.Name, GetSetProp(Target, PI, True));
         tkBool,

@@ -86,6 +86,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -200,6 +201,11 @@ begin
 
   if Assigned(Owner) then
     TACBrLibMDFe(Owner).MDFeDM.AplicarConfiguracoes;
+end;
+
+procedure TLibMDFeConfig.ImportarIni(FIni: TIniFile);
+begin
+  //ToDo: Implementar importação de config do ACBrMonitor
 end;
 
 procedure TLibMDFeConfig.Travar;

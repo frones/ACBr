@@ -223,6 +223,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -698,6 +699,11 @@ begin
 
   if Assigned(Owner) then
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
+end;
+
+procedure TLibNFeConfig.ImportarIni(FIni: TIniFile);
+begin
+
 end;
 
 procedure TLibNFeConfig.Travar;

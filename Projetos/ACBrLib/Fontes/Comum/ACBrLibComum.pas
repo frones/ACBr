@@ -115,6 +115,7 @@ function LIB_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): long
 {%endregion}
 
 {%region Ler/Gravar Config }
+function LIB_ImportarConfig(const eArqConfig: PChar): longint;
 function LIB_ConfigLer(const eArqConfig: PChar): longint;
 function LIB_ConfigGravar(const eArqConfig: PChar): longint;
 function LIB_ConfigLerValor(const eSessao, eChave: PChar; sValor: PChar; var esTamanho: longint): longint;
@@ -398,6 +399,29 @@ end;
 {%endregion}
 
 {%region Ler/Gravar Config }
+
+function LIB_ImportarConfig(const eArqConfig: PChar): longint;
+var
+  ArqConfig: String;
+begin
+  try
+    VerificarLibInicializada;
+    ArqConfig := strpas(eArqConfig);
+    pLib.GravarLog('LIB_ImportarConfig(' + ArqConfig + ')', logNormal);
+
+    if NaoEstaVazio(ArqConfig) then
+      pLib.Config.Importar(ArqConfig);
+
+    pLib.Config.Gravar;
+    Result := SetRetorno(ErrOK);
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrConfigLer, E.Message);
+  end;
+end;
 
 function LIB_ConfigLer(const eArqConfig: PChar): longint;
 var

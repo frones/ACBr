@@ -54,6 +54,7 @@ exports
   NFE_Nome,
   NFE_Versao,
   NFE_UltimoRetorno,
+  NFE_ImportarConfig,
   NFE_ConfigLer,
   NFE_ConfigGravar,
   NFE_ConfigLerValor,

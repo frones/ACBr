@@ -22,6 +22,7 @@ exports
   POS_Nome,
   POS_Versao,
   POS_UltimoRetorno,
+  POS_ImportarConfig,
   POS_ConfigLer,
   POS_ConfigGravar,
   POS_ConfigLerValor,
@@ -52,6 +53,7 @@ exports
   POS_LerInfoImpressora,
   POS_LerStatusImpressora,
   POS_RetornarTags,
+  POS_AcharPortas,
 
   // Componente Handler
   POS_GetPosPrinter;

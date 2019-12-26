@@ -51,6 +51,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -66,7 +67,7 @@ type
 implementation
 
 uses
-  ACBrLibPosPrinterClass, ACBrLibConsts, ACBrLibComum,
+  ACBrLibPosPrinterClass, ACBrLibConsts, ACBrMonitorConsts, ACBrLibComum,
   ACBrUtil;
 
 { TLibPosPrinterConfig }
@@ -103,6 +104,11 @@ procedure TLibPosPrinterConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibPosPrinter(Owner).PosDM.AplicarConfiguracoes;
+end;
+
+procedure TLibPosPrinterConfig.ImportarIni(FIni: TIniFile);
+begin
+  DeviceConfig.ImportarSerialParams(FIni.ReadString(CSecPosPrinter, CKeyPosPrinterSerialParams, ''));
 end;
 
 procedure TLibPosPrinterConfig.Travar;

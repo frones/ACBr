@@ -38,7 +38,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -80,7 +80,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -122,7 +122,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -164,7 +164,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -205,7 +205,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -246,7 +246,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+            <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -319,7 +319,7 @@
         <PackageName Value="FCL"/>
       </Item9>
     </RequiredPackages>
-    <Units Count="19">
+    <Units Count="20">
       <Unit0>
         <Filename Value="ACBrLibNFe.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -399,6 +399,10 @@
         <Filename Value="..\Comum\ACBrLibConsultaCadastro.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit18>
+      <Unit19>
+        <Filename Value="..\..\..\ACBrMonitorPLUS\Lazarus\ACBrMonitorConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -409,7 +413,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-      <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter"/>
+      <OtherUnitFiles Value="..\Comum;..\Mail;..\PosPrinter;..\..\..\ACBrMonitorPLUS\Lazarus"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

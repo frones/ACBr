@@ -77,6 +77,8 @@ function POS_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_ConfigGravar(const eArqConfig: PChar): longint;
@@ -127,7 +129,9 @@ function POS_LerInfoImpressora(const sResposta: PChar; var esTamanho: longint): 
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_LerStatusImpressora(Tentativas: Integer; var status: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function POS_GetPosPrinter: Pointer;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -209,6 +213,12 @@ function POS_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+end;
+
+function POS_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ImportarConfig(eArqConfig);
 end;
 
 function POS_ConfigLer(const eArqConfig: PChar): longint;
@@ -830,11 +840,11 @@ begin
   end;
 end;
 
-function POS_RetornarTags(const sResposta: PChar; var esTamanho: longint; IncluiAjuda: Boolean): longint;
+function POS_RetornarTags(IncluiAjuda: Boolean; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 Var
-  TagList: TStringList;
-  Tags: string;
+  Tags: TStringList;
+  Resposta: string;
 begin
   try
     VerificarLibInicializada;
@@ -847,14 +857,58 @@ begin
     with TACBrLibPosPrinter(pLib) do
     begin
       PosDM.Travar;
-      TagList := TStringList.Create;
+      Tags := TStringList.Create;
       try
-        PosDM.ACBrPosPrinter1.RetornarTags(TagList, IncluiAjuda);
-        Tags := StringReplace(TagList.Text, sLineBreak, '|', [rfReplaceAll]);
-        MoverStringParaPChar(Tags, sResposta, esTamanho);
-        Result := SetRetorno(ErrOK, Tags);
+        PosDM.ACBrPosPrinter1.RetornarTags(Tags, IncluiAjuda);
+        Resposta := StringReplace(Tags.Text, sLineBreak, '|', [rfReplaceAll]);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
-        TagList.Free;
+        Tags.Free;
+        PosDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function POS_AcharPortas(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  i: Integer;
+  Portas: TStringList;
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('POS_AcharPortas', logNormal);
+
+    with TACBrLibPosPrinter(pLib) do
+    begin
+      PosDM.Travar;
+
+      Resposta := '';
+      Portas := TStringList.Create;
+      try
+        PosDM.ACBrPosPrinter1.Device.AcharPortasSeriais( Portas );
+
+        {$IfDef MSWINDOWS}
+        PosDM.ACBrPosPrinter1.Device.WinUSB.FindUSBPrinters();
+        for i := 0 to PosDM.ACBrPosPrinter1.Device.WinUSB.DeviceList.Count-1 do
+          Portas.Add('USB:'+PosDM.ACBrPosPrinter1.Device.WinUSB.DeviceList.Items[i].DeviceName);
+        {$EndIf}
+
+        Resposta := StringReplace(Portas.Text, sLineBreak, '|', [rfReplaceAll]);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        Portas.Free;
         PosDM.Destravar;
       end;
     end;

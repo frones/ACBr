@@ -73,6 +73,8 @@ function NFE_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ConfigGravar(const eArqConfig: PChar): longint;
@@ -250,6 +252,12 @@ function NFE_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+end;
+
+function NFE_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ImportarConfig(eArqConfig);
 end;
 
 function NFE_ConfigLer(const eArqConfig: PChar): longint;

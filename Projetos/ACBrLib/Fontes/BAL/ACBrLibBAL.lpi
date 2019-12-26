@@ -33,7 +33,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -75,7 +75,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -117,7 +117,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -159,7 +159,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -200,7 +200,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -242,7 +242,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-            <OtherUnitFiles Value="..\Comum"/>
+            <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <Parsing>
@@ -298,7 +298,7 @@
         <PackageName Value="ACBrTCP"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="10">
       <Unit0>
         <Filename Value="ACBrLibBAL.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -338,6 +338,10 @@
         <Filename Value="..\Comum\ACBrDeviceConfig.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\ACBrMonitorPLUS\Lazarus\ACBrMonitorConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -348,7 +352,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Comum"/>
-      <OtherUnitFiles Value="..\Comum"/>
+      <OtherUnitFiles Value="..\Comum;..\..\..\ACBrMonitorPLUS\Lazarus"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>

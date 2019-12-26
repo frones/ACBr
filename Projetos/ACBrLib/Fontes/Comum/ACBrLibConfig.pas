@@ -297,7 +297,8 @@ type
 
     procedure INIParaClasse; virtual;
     procedure ClasseParaINI; virtual;
-    procedure ClasseParaComponentes; virtual;
+    procedure ClasseParaComponentes; virtual; abstract;
+    procedure ImportarIni(FIni: TIniFile); virtual; abstract;
 
     procedure Travar; virtual;
     procedure Destravar; virtual;
@@ -311,6 +312,7 @@ type
     procedure Ler; virtual;
     procedure Gravar; virtual;
 
+    procedure Importar(AConfig: String);
     procedure GravarValor(ASessao, AChave, AValor: String);
     function LerValor(ASessao, AChave: String): String;
 
@@ -337,7 +339,8 @@ implementation
 
 uses
   TypInfo, strutils,
-  ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrLibConsts, ACBrLibComum,
+  ACBrMonitorConsts, ACBrUtil;
 
 { TSistemaConfig }
 
@@ -899,11 +902,6 @@ begin
   FEmissor.GravarIni(FIni);
 end;
 
-procedure TLibConfig.ClasseParaComponentes;
-begin
-  {}
-end;
-
 procedure TLibConfig.Travar;
 begin
   {}
@@ -912,6 +910,79 @@ end;
 procedure TLibConfig.Destravar;
 begin
   {}
+end;
+
+procedure TLibConfig.Importar(AConfig: String);
+Var
+  FMIni: TIniFile;
+  CriptStr: String;
+begin
+  FMIni := TIniFile.Create(AConfig);
+
+  try
+    //Proxy
+    ProxyInfo.FPorta := FMIni.ReadInteger(CSecProxy, CKeyProxyPorta, ProxyInfo.Porta);
+    ProxyInfo.FServidor := FMIni.ReadString(CSecProxy, CKeyProxyHost, ProxyInfo.Servidor);
+    ProxyInfo.FUsuario := FMIni.ReadString(CSecProxy, CKeyProxyUser, ProxyInfo.Usuario);
+
+    CriptStr := '';
+    CriptStr := FMIni.ReadString(CSecProxy, CKeyProxyPass, '');
+    if(CriptStr <> '') then
+      ProxyInfo.FSenha := StringToB64Crypt(B64CryptToString(CriptStr), FChaveCrypt);
+
+    // Email
+    Email.FNome := FMIni.ReadString(CSecEmail, CKeyEmailNomeExibicao, Email.Nome);
+    Email.FServidor := FMIni.ReadString(CSecEmail, CKeyEmailEndereco, Email.Servidor);
+    Email.FPorta := FMIni.ReadInteger(CSecEmail, CKeyEmailPorta, Email.Porta);
+    Email.FUsuario := FMIni.ReadString(CSecEmail, CKeyEmailUsuario, Email.Usuario);
+
+    CriptStr := '';
+    CriptStr := FMIni.ReadString(CSecEmail, CKeyEmailSenha, '');
+    if(CriptStr <> '') then
+      Email.FSenha := StringToB64Crypt(B64CryptToString(CriptStr), FChaveCrypt);
+
+    Email.FSSL := FMIni.ReadBool(CSecEmail, CKeyEmailExigeSSL, Email.SSL);
+    Email.FTLS := FMIni.ReadBool(CSecEmail, CKeyEmailExigeTLS, Email.TLS);
+    Email.FSegundoPlano := FMIni.ReadBool(CSecEmail, CKeyEmailSegundoPlano, Email.SegundoPlano);
+    Email.FConfirmacao := FMIni.ReadBool(CSecEmail, CKeyEmailConfirmacao, Email.Confirmacao);
+    Email.FIsHTML := FMIni.ReadBool(CSecEmail, CKeyEmailHTML, Email.IsHTML);
+    Email.FCodificacao := TMimeChar(FMIni.ReadInteger(CSecEmail, CKeyEmailConfirmacao, Integer(Email.Codificacao)));
+
+    //PosPrinter
+    PosPrinter.Modelo := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterModelo, PosPrinter.Modelo);
+    PosPrinter.Porta := FMIni.ReadString(CSecPosPrinter, CKeyPosPrinterPorta, PosPrinter.Porta);
+    PosPrinter.ColunasFonteNormal := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterColunas, PosPrinter.ColunasFonteNormal);
+    PosPrinter.EspacoEntreLinhas := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterEspacoEntreLinhas, PosPrinter.EspacoEntreLinhas);
+    PosPrinter.LinhasBuffer := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterLinhasBuffer, PosPrinter.LinhasBuffer);
+    PosPrinter.LinhasEntreCupons := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterLinhasPular, PosPrinter.LinhasEntreCupons);
+    PosPrinter.PaginaDeCodigo := FMIni.ReadInteger(CSecPosPrinter, CKeyPosPrinterPaginaDeCodigo, PosPrinter.PaginaDeCodigo);
+    PosPrinter.ControlePorta := FMIni.ReadBool(CSecPosPrinter, CKeyPosPrinterControlePorta, PosPrinter.ControlePorta);
+    PosPrinter.CortaPapel := FMIni.ReadBool(CSecPosPrinter, CKeyPosPrinterCortarPapel, PosPrinter.CortaPapel);
+    PosPrinter.TraduzirTags := FMIni.ReadBool(CSecPosPrinter, CKeyPosPrinterTraduzirTags, PosPrinter.TraduzirTags);
+    PosPrinter.IgnorarTags := FMIni.ReadBool(CSecPosPrinter, CKeyPosPrinterIgnorarTags, PosPrinter.IgnorarTags);
+    PosPrinter.ArqLog := FMIni.ReadString(CSecPosPrinter, CKeyPosPrinterArqLog, PosPrinter.ArqLog);
+
+    PosPrinter.BcLarguraLinha := FMIni.ReadInteger(CSecBarras, CKeyBarrasLargura, PosPrinter.BcLarguraLinha);
+    PosPrinter.BcAltura := FMIni.ReadInteger(CSecBarras, CKeyBarrasAltura, PosPrinter.BcAltura);
+
+    PosPrinter.QrTipo := FMIni.ReadInteger(CSecQRCode, CKeyQRCodeTipo, PosPrinter.QrTipo);
+    PosPrinter.QrLarguraModulo := FMIni.ReadInteger(CSecQRCode, CKeyQRCodeLarguraModulo, PosPrinter.QrLarguraModulo);
+    PosPrinter.QrErrorLevel := FMIni.ReadInteger(CSecQRCode, CKeyQRCodeErrorLevel, PosPrinter.QrErrorLevel);
+
+    PosPrinter.LgIgnorarLogo := not FMIni.ReadBool(CSecLogo, CKeyLogoImprimir, not PosPrinter.LgIgnorarLogo);
+    PosPrinter.LgKeyCode1 := FMIni.ReadInteger(CSecLogo, CKeyLogoKC1, PosPrinter.LgKeyCode1);
+    PosPrinter.LgKeyCode2 := FMIni.ReadInteger(CSecLogo, CKeyLogoKC2, PosPrinter.LgKeyCode2);
+    PosPrinter.LgFatorX := FMIni.ReadInteger(CSecLogo, CKeyLogoFatorX, PosPrinter.LgFatorX);
+    PosPrinter.LgFatorY := FMIni.ReadInteger(CSecLogo, CKeyLogoFatorY, PosPrinter.LgFatorY);
+
+    PosPrinter.GvTempoON := FMIni.ReadInteger(CSecGaveta, CKeyGavetaTempoON, PosPrinter.GvTempoON);
+    PosPrinter.GvTempoOFF := FMIni.ReadInteger(CSecGaveta, CKeyGavetaTempoOFF, PosPrinter.GvTempoOFF);
+    PosPrinter.GvSinalInvertido := FMIni.ReadBool(CSecGaveta, CKeyGavSinalInvertido, PosPrinter.GvSinalInvertido);
+
+    ImportarIni(FMIni);
+  finally
+    FreeAndNil(FMIni);
+  end;
 end;
 
 procedure TLibConfig.GravarValor(ASessao, AChave, AValor: String);

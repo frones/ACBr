@@ -47,7 +47,9 @@ uses
    {$IfDef FPC}
     ,LCLType, InterfaceBase
    {$Else}
-    ,windows
+    {$IfDef MSWINDOWS}
+     ,windows
+    {$EndIf}
    {$EndIf}
    {$IfDef FMX}
     ,FMX.Graphics, System.UITypes, FMX.Types

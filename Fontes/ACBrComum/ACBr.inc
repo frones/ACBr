@@ -184,10 +184,11 @@
 {$ENDIF}
 
 {$IFDEF DELPHILANGUAGE}
-  {$IFDEF LINUX}
-    {$IFNDEF FPC} // Suporte ao FreePascal 
-      {$DEFINE VisualCLX}
-    {$ENDIF}
+  {$IFDEF POSIX}
+    {$DEFINE FMX}
+    {$UNDEF CLX}
+    {$UNDEF VisualCLX}
+    {$UNDEF VCL}
   {$ENDIF}
 
   {$IFDEF CLX}
@@ -286,12 +287,4 @@
 {$Else}
  {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
 {$EndIf}
-
-// Compatibilização de Tipos inexistentes em Delphi Linux (POSIX)
-{$IFDEF POSIX}
-  AnsiString = UTF8String;
-  AnsiChar = UTF8Char;
-  PAnsiChar = PUTF8Char;
-  PPAnsiChar = ^PUTF8Char;
-{$ENDIF}
 

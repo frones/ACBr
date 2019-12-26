@@ -104,6 +104,33 @@ const
   {$ENDIF};
 {$ENDIF}
 
+{$IfNDef FPC}
+const
+  ANYSIZE_ARRAY = 1;
+
+type
+   TLibHandle = THandle;
+
+   // Compatibilidade para compilar nas versões anteriores ao Delphi XE2
+   {$IfNDef DELPHIXE2_UP}
+    NativeUInt = Cardinal;
+   {$EndIf}
+
+   LPVOID = Pointer;
+   SizeUInt = {$IFDEF COMPILER16_UP} NativeUInt {$ELSE} Longword {$ENDIF};
+   {$IfNDef COMPILER12_UP}
+    ULONG_PTR = SizeUInt;
+   {$EndIf}
+
+  // Compatibilização de Tipos inexistentes em Delphi Linux (POSIX)
+//  {$IFDEF POSIX}
+//    AnsiString = UTF8String;
+//    AnsiChar = UTF8Char;
+//    PAnsiChar = PUTF8Char;
+//    PPAnsiChar = ^PUTF8Char;
+//  {$ENDIF}
+{$EndIf}
+
 type
 
 TACBrAboutInfo = (ACBrAbout);

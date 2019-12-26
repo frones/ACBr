@@ -393,7 +393,9 @@ type
     cobCitiBank,
     cobBancoABCBrasil,
     cobDaycoval,
-    cobUniprimeNortePR
+    cobUniprimeNortePR,
+    cobBancoPine,
+    cobBancoPineBradesco
     );
 
   TACBrTitulo = class;
@@ -914,7 +916,7 @@ type
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite, tbBancoPreEmite);
-  TACBrCaracTitulo = (tcSimples,tcVinculada,tcCaucionada,tcDescontada,tcVendor);
+  TACBrCaracTitulo = (tcSimples,tcVinculada,tcCaucionada,tcDescontada,tcVendor, tcDireta);
   TACBrPessoa = (pFisica,pJuridica,pOutras);
   TACBrPessoaCedente = pFisica..pJuridica;
 
@@ -1107,6 +1109,39 @@ type
     property Fone        : String  read fFone        write fFone;
   end;
 
+  { TACBrDadosNFe }
+
+  TACBrDadosNFe = class
+  private
+    fACBrTitulo: TACBrTitulo;
+    fChaveNFe: String;
+    fEmissaoNFe: TDate;
+    fNumNFe: String;
+    fValorNFe: Currency;
+  public
+   constructor Create(ACBrTitulo:TACBrTitulo);
+   destructor Destroy; override;
+
+   property ACBrTitulo : TACBrTitulo read fACBrTitulo write fACBrTitulo;
+   property NumNFe     : String read fNumNFe write fNumNFe;
+   property ValorNFe   : Currency read fValorNFe write fValorNFe;
+   property EmissaoNFe : TDate read fEmissaoNFe write fEmissaoNFe;
+   property ChaveNFe   : String read fChaveNFe write fChaveNFe;
+  end;
+
+  { TListadeNFes }
+  TACBrListadeNFes = class(TObjectList)
+  protected
+    procedure SetObject (Index: Integer; Item: TACBrDadosNFe);
+    function  GetObject (Index: Integer): TACBrDadosNFe;
+    procedure Insert (Index: Integer; Obj: TACBrDadosNFe);
+  public
+    function Add (Obj: TACBrDadosNFe): Integer;
+    property Objects [Index: Integer]: TACBrDadosNFe
+      read GetObject write SetObject; default;
+  end;
+
+
   { TACBrTitulo }
 
   TACBrTitulo = class
@@ -1134,6 +1169,7 @@ type
     fAceite            : TACBrAceiteTitulo;
     fDataProcessamento : TDateTime;
     fNossoNumero       : String;
+    fNossoNumeroCorrespondente: String;
     fUsoBanco          : String;
     fCarteira          : String;
     fEspecieMod        : String;
@@ -1191,6 +1227,8 @@ type
     fValorPago            : Currency;
     fCaracTitulo          :TACBrCaracTitulo;
 
+    fListaDadosNFe        : TACBrListadeNFes;
+
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(const AValue: String);
     procedure SetDiasDeProtesto(AValue: Integer);
@@ -1221,6 +1259,7 @@ type
      property Aceite            : TACBrAceiteTitulo   read fAceite           write fAceite      default atNao;
      property DataProcessamento : TDateTime   read fDataProcessamento write fDataProcessamento;
      property NossoNumero       : String      read fNossoNumero       write SetNossoNumero;
+     property NossoNumeroCorrespondente : String  read fNossoNumeroCorrespondente write fNossoNumeroCorrespondente;
      property UsoBanco          : String      read fUsoBanco          write fUsoBanco;
      property Carteira          : String      read fCarteira          write SetCarteira;
      property CarteiraEnvio     : TACBrCarteiraEnvio read fCarteiraEnvio write fCarteiraEnvio default tceCedente;
@@ -1292,6 +1331,11 @@ type
      property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
      property Liquidacao: TACBrTituloLiquidacao read fLiquidacao write fLiquidacao;
      property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
+
+     property ListaDadosNFe : TACBrListadeNFes read fListaDadosNFe write fListaDadosNFe;
+
+     function CriarNFeNaLista: TACBrDadosNFe;
+
    end;
 
   { TListadeBoletos }
@@ -1467,7 +1511,44 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
-     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR;
+     ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
+     ACBrBancoPine, ACBrBancoPineBradesco;
+
+{ TListadeNFes }
+
+function TACBrListadeNFes.GetObject(Index: Integer): TACBrDadosNFe;
+begin
+   Result := inherited GetItem(Index) as TACBrDadosNFe ;
+end;
+
+procedure TACBrListadeNFes.SetObject(Index: Integer; Item: TACBrDadosNFe);
+begin
+   inherited SetItem (Index, Item) ;
+end;
+
+procedure TACBrListadeNFes.Insert(Index: Integer; Obj: TACBrDadosNFe);
+begin
+   inherited Insert(Index, Obj);
+end;
+
+function TACBrListadeNFes.Add(Obj: TACBrDadosNFe): Integer;
+begin
+   Result := inherited Add(Obj) ;
+end;
+
+{ TACBrDadosNFe }
+
+constructor TACBrDadosNFe.Create(ACBrTitulo: TACBrTitulo);
+begin
+  inherited Create;
+
+  fACBrTitulo := ACBrTitulo;
+end;
+
+destructor TACBrDadosNFe.Destroy;
+begin
+  inherited Destroy;
+end;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -1835,6 +1916,14 @@ begin
     PictureLogo.LoadFromFile( ArquivoLogoEmp );
 end;
 
+function TACBrTitulo.CriarNFeNaLista: TACBrDadosNFe;
+var
+  I: Integer;
+begin
+   I      := fListaDadosNFe.Add(TACBrDadosNFe.Create(Self));
+   Result := fListaDadosNFe[I];
+end;
+
 constructor TACBrTitulo.Create(ACBrBoleto:TACBrBoleto);
 begin
    inherited Create;
@@ -1848,6 +1937,7 @@ begin
    fAceite            := atNao;
    fDataProcessamento := now;
    fNossoNumero       := '';
+   fNossoNumeroCorrespondente:= '';
    fUsoBanco          := '';
    fCarteira          := '';
    fEspecieMod        := '';
@@ -1905,6 +1995,8 @@ begin
      fCarteiraEnvio := tceCedente
    else
      fCarteiraEnvio := tceBanco;
+
+   fListaDadosNFe := TACBrListadeNFes.Create(true);
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -1918,6 +2010,8 @@ begin
    fOcorrenciaOriginal.Free;
    fMotivoRejeicaoComando.Free;
    fDescricaoMotivoRejeicaoComando.Free;
+
+   fListaDadosNFe.Free;
 
    inherited;
 end;
@@ -2444,8 +2538,9 @@ begin
      cobCitiBank            : fBancoClass := TACBrBancoCitiBank.Create(Self);       {745}
      cobBancoABCBrasil      : fBancoClass := TACBrBancoABCBrasil.Create(Self);      {246}
      cobDaycoval            : fBancoClass := TACBrBancoDaycoval.Create(Self);       {745}
-     cobUniprimeNortePR     : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}   
-
+     cobUniprimeNortePR     : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
+     cobBancoPine           : fBancoClass := TACBrBancoPine.create(Self);
+     cobBancoPineBradesco   : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

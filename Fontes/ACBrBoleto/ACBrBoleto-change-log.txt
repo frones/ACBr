@@ -49,6 +49,14 @@ Símbolo : Significado
 
 ver: 0.1.0
 
+26/12/2019
+-- ACBrBoleto --
+[*] Inclusão de classe DadosNFe como filha do ACBrTitulo devido a remessa do Pine incluir 
+ests informações no layout
+
+-- ACBrBancoPine / ACBrBancoPineBradesco
+[+] Inclusão do Banco Pine com cobrança direta e também por correspondente
+
 18/12/2019
 -- ACBrBancoCecred --
 [*] Alterado a condição que determina se o Segmento R vai ser gerado ou não.

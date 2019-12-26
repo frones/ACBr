@@ -44,11 +44,10 @@ interface
 uses
   Windows, Messages, FileCtrl, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage,
-  uFrameLista, IOUtils, UITypes,
-  JclIDEUtils, JclCompilerUtils, ACBrUtil,
+  IOUtils, UITypes, JclIDEUtils, JclCompilerUtils,
   Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
   JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst,
-  ACBrInstallDelphiComponentes, ACBrPacotes;
+  uFrameLista, ACBrUtil, ACBrPacotes;
 
 type
 
@@ -126,6 +125,7 @@ type
     procedure wizPgInstalacaoEnterPage(Sender: TObject;
       const FromPage: TJvWizardCustomPage);
     procedure clbDelphiVersionClick(Sender: TObject);
+    procedure wizPgPacotesNextButtonClick(Sender: TObject; var Stop: Boolean);
     procedure wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);
   private
     FoACBr: TJclBorRADToolInstallations;
@@ -153,7 +153,8 @@ var
 implementation
 
 uses
-  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils, Generics.Collections;
+  ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils, Generics.Collections,
+  ACBrInstallDelphiComponentes;
 
 {$R *.dfm}
 
@@ -230,7 +231,7 @@ begin
   try
     ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
     ArqIni.WriteInteger('CONFIG','DestinoDLL', rdgDLL.ItemIndex);
-    ArqIni.WriteBool('CONFIG','C++Builder',ckbBCB.Checked);
+    ArqIni.WriteBool('CONFIG','C++Builder', ckbBCB.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
     ArqIni.WriteBool('CONFIG','RemoveOpenSSL', ckbRemoveOpenSSL.Checked);
     ArqIni.WriteBool('CONFIG','RemoveCapicom', ckbRemoveCapicom.Checked);
@@ -556,15 +557,18 @@ begin
     end;
   end;
 
-  // Gravar as configurações em um .ini para utilizar depois
-  GravarConfiguracoesEmArquivoIni;
-
   ValidarSeExistemPacotesNasPastas(Stop, IncludeTrailingPathDelimiter(edtDirDestino.Text), framePacotes1.Pacotes);
 end;
 
 procedure TfrmPrincipal.btnVisualizarLogCompilacaoClick(Sender: TObject);
 begin
   AbrirArquivoLogAtual;
+end;
+
+procedure TfrmPrincipal.wizPgPacotesNextButtonClick(Sender: TObject; var Stop: Boolean);
+begin
+  // Gravar as configurações em um .ini para utilizar depois
+  GravarConfiguracoesEmArquivoIni;
 end;
 
 procedure TfrmPrincipal.wizPgSelectIDEsNextButtonClick(Sender: TObject; var Stop: Boolean);

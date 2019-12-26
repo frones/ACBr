@@ -1302,6 +1302,7 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
+      OnNextButtonClick = wizPgPacotesNextButtonClick
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0

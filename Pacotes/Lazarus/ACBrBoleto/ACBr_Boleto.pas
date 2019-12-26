@@ -4,6 +4,7 @@
 
 unit ACBr_Boleto;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -12,7 +13,7 @@ uses
   ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
   ACBrBancoBic, ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, 
   ACBrBancoCaixaSICOB, ACBrBancoBrasilSicoob, ACBrBancoCitiBank, 
-  LazarusPackageIntf;
+  ACBrBancoPine, ACBrBancoPineBradesco, LazarusPackageIntf;
 
 implementation
 

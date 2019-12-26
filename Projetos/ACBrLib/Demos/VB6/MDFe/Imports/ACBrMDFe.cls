@@ -512,7 +512,7 @@ Public Function DistribuicaoDFePorChave(ByVal acUFAutor As String, ByVal eCnpjcp
     bufferLen = BUFFER_LENGTH
     buffer = String$(bufferLen, " ")
     
-    retorno = MDFE_DistribuicaoDFePorNSU(acUFAutor, eCnpjcpf, echNFe, buffer, bufferLen)
+    retorno = MDFE_DistribuicaoDFePorChave(acUFAutor, eCnpjcpf, echNFe, buffer, bufferLen)
     CheckResult retorno
     
     DistribuicaoDFePorChave = processResult(buffer, bufferLen)

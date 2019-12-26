@@ -17,8 +17,8 @@
 16=#P0#=mb	#P1#=Cancelar	#P2#=ACBrLibNFeDemo/ACBrNFe/Cancelar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135811	#P7#=0	#P8#=6	.
 17=#P0#=mb	#P1#=EnviarEvento	#P2#=ACBrLibNFeDemo/ACBrNFe/EnviarEvento	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135809	#P7#=0	#P8#=5	.
 18=#P0#=mb	#P1#=DistribuicaoDFePorUltNSU	#P2#=ACBrLibNFeDemo/ACBrNFe/DistribuicaoDFePorUltNSU	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135807	#P7#=0	#P8#=5	.
-19=#P0#=mb	#P1#=DistribuicaoDFePorNSU	#P2#=ACBrLibNFeDemo/ACBrNFe/DistribuicaoDFePorNSU	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135805	#P7#=0	#P8#=6	.
-20=#P0#=mb	#P1#=DistribuicaoDFePorChave	#P2#=ACBrLibNFeDemo/ACBrNFe/DistribuicaoDFePorChave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135801	#P7#=0	#P8#=5	.
+19=#P0#=mb	#P1#=DistribuicaoDFePorNSU	#P2#=ACBrLibNFeDemo/ACBrNFe/DistribuicaoDFePorNSU	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135805	#P7#=0	#P8#=8	.
+20=#P0#=mb	#P1#=DistribuicaoDFePorChave	#P2#=ACBrLibNFeDemo/ACBrNFe/DistribuicaoDFePorChave	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135801	#P7#=0	#P8#=8	.
 21=#P0#=mb	#P1#=EnviarEmail	#P2#=ACBrLibNFeDemo/ACBrNFe/EnviarEmail	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135753	#P7#=0	#P8#=3	.
 22=#P0#=mb	#P1#=EnviarEmailEvento	#P2#=ACBrLibNFeDemo/ACBrNFe/EnviarEmailEvento	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135748	#P7#=0	#P8#=7	.
 23=#P0#=mb	#P1#=ImprimirPDF	#P2#=ACBrLibNFeDemo/ACBrNFe/ImprimirPDF	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191104135736	#P7#=0	#P8#=4	.

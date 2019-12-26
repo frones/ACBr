@@ -1115,7 +1115,7 @@ type
   private
     fACBrTitulo: TACBrTitulo;
     fChaveNFe: String;
-    fEmissaoNFe: TDate;
+    fEmissaoNFe: TDateTime;
     fNumNFe: String;
     fValorNFe: Currency;
   public
@@ -1125,7 +1125,7 @@ type
    property ACBrTitulo : TACBrTitulo read fACBrTitulo write fACBrTitulo;
    property NumNFe     : String read fNumNFe write fNumNFe;
    property ValorNFe   : Currency read fValorNFe write fValorNFe;
-   property EmissaoNFe : TDate read fEmissaoNFe write fEmissaoNFe;
+   property EmissaoNFe : TDateTime read fEmissaoNFe write fEmissaoNFe;
    property ChaveNFe   : String read fChaveNFe write fChaveNFe;
   end;
 

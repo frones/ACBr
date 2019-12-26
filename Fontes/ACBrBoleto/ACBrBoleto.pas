@@ -1,4 +1,4 @@
-{******************************************************************************}
+
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -1113,16 +1113,14 @@ type
 
   TACBrDadosNFe = class
   private
-    fACBrTitulo: TACBrTitulo;
     fChaveNFe: String;
     fEmissaoNFe: TDateTime;
     fNumNFe: String;
     fValorNFe: Currency;
   public
-   constructor Create(ACBrTitulo:TACBrTitulo);
+   constructor Create;
    destructor Destroy; override;
 
-   property ACBrTitulo : TACBrTitulo read fACBrTitulo write fACBrTitulo;
    property NumNFe     : String read fNumNFe write fNumNFe;
    property ValorNFe   : Currency read fValorNFe write fValorNFe;
    property EmissaoNFe : TDateTime read fEmissaoNFe write fEmissaoNFe;
@@ -1332,7 +1330,7 @@ type
      property Liquidacao: TACBrTituloLiquidacao read fLiquidacao write fLiquidacao;
      property CaracTitulo: TACBrCaracTitulo read fCaracTitulo  write fCaracTitulo default tcSimples;
 
-     property ListaDadosNFe : TACBrListadeNFes read fListaDadosNFe write fListaDadosNFe;
+     property ListaDadosNFe : TACBrListadeNFes read fListaDadosNFe;
 
      function CriarNFeNaLista: TACBrDadosNFe;
 
@@ -1538,11 +1536,10 @@ end;
 
 { TACBrDadosNFe }
 
-constructor TACBrDadosNFe.Create(ACBrTitulo: TACBrTitulo);
+constructor TACBrDadosNFe.Create;
 begin
   inherited Create;
 
-  fACBrTitulo := ACBrTitulo;
 end;
 
 destructor TACBrDadosNFe.Destroy;
@@ -1920,7 +1917,7 @@ function TACBrTitulo.CriarNFeNaLista: TACBrDadosNFe;
 var
   I: Integer;
 begin
-   I      := fListaDadosNFe.Add(TACBrDadosNFe.Create(Self));
+   I      := fListaDadosNFe.Add(TACBrDadosNFe.Create);
    Result := fListaDadosNFe[I];
 end;
 

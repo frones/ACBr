@@ -1,0 +1,74 @@
+Exemplo de uso E. D. I. notafis ( notas fiscias )
+
+procedure TForm1.Button6Click(Sender: TObject);
+var
+  e, i, n, c, p, r: Integer ;
+begin
+  NotaFis.LipaRegistros ;
+  NotaFis.Versao := ve50 ;
+  NotaFis.LerArquivo( 'C:\TRANSPORTES\EDI\IMPORT\LC_NOTFIS.TXT')  ;
+  Memo1.Lines.Clear ;
+  Memo1.Lines.Add(NotaFis.Cabecalho.IdRegistro+' - '+NotaFis.Cabecalho.Remetente) ;
+  Memo1.Lines.Add(NotaFis.InfoDocto.Items[0].IdRegistro+' - '+NotaFis.InfoDocto.Items[0].IdDocto) ;
+
+  for e := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Count - 1 do
+  begin
+    Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].idRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].Razao) ;
+    if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].LocalColeta.idRegistro = '' then
+      Memo1.Lines.Add('Registro 502 não Informado (Condicional)')
+    else
+      Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].LocalColeta.idRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].LocalColeta.Razao) ;
+    for i := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Count - 1 do
+    begin
+      Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].idRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].Razao) ;
+      if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].LocalEntrega.idRegistro = '' then
+        Memo1.Lines.Add('Registro 504 não Informado (Condicional)')
+      else
+        Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].LocalEntrega.idRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].LocalEntrega.Razao) ;
+      for n := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Count - 1 do
+      begin
+        Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].IdRegsitro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].chNFe ) ;
+        Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ValoresNF.IdRegistro+' - '+FormatFloat('#0.00', NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ValoresNF.vTotalNF)) ;
+        Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].CalculoFrete.IdRegistro+' - '+FormatFloat('#0.00', NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].CalculoFrete.vTotFrete)) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].IdCargas.Count = 0 then
+          Memo1.Lines.Add('Registro 508 não Informado (Condicional)')
+        else
+          for c := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].IdCargas.Count - 1 do
+             Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].IdCargas.Items[0].IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].IdCargas.Items[c].xMarca) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoEntrega.Count = 0 then
+          Memo1.Lines.Add('Registro 509 não Informado (Condicional)')
+        else
+          for r := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoEntrega.Count - 1 do
+            Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoEntrega.Items[r].IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoEntrega.Items[r].CNPJEmissorNF1) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ItensNF.Count = 0 then
+          Memo1.Lines.Add('Registro 511 não Informado (Condicional)')
+        else
+          for p := 0 to NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ItensNF.Count - 1 do
+            Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ItensNF.Items[p].IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].ItensNF.Items[p].xDescricao) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoConsignatario.idRegistro = '' then
+          Memo1.Lines.Add('Registro 513 não Informado (Condicional)')
+        else
+          Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoConsignatario.IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoConsignatario.Razao) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoRedespacho.idRegistro = '' then
+          Memo1.Lines.Add('Registro 514 não Informado (Condicional)')
+        else
+          Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoRedespacho.IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoRedespacho.Razao) ;
+
+        if NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoTomador.idRegistro = '' then
+          Memo1.Lines.Add('Registro 515 não Informado (Condicional)')
+        else
+          Memo1.Lines.Add(NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoTomador.IdRegistro+' - '+NotaFis.InfoDocto.items[0].InfoEmbarcadora.Items[e].InfoDestinatario.Items[i].InfoNotas.Items[n].InfoTomador.Razao) ;
+      end;
+    end;
+  end;
+  Memo1.Lines.Add(NotaFis.TotalNotas.IdRegistro+' - '+FormatFloat('#0.00', NotaFis.TotalNotas.vTotal)+' - '+
+                                                      FormatFloat('#0.00', NotaFis.TotalNotas.vCobrado)+' - '+
+                                                      FormatFloat('#0.00', NotaFis.TotalNotas.qVolumes)+' - '+
+                                                      FormatFloat('0000', NotaFis.TotalNotas.qNotas)) ;
+
+end;

@@ -1,0 +1,99 @@
+Exemplo de uso do E. D. I. de OCOR ( Ocorrencias )
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  Ocor.LimpaRegistros ;
+  Ocor.Versao := ve31 ;    // informar => ve30 -> 3.0, ve30a -> 3.0a, ve31 -> 3.01 ou ve50 -> 5.0
+  with Ocor.Cabecalho do   // informação obrigatória
+  begin
+    IdRegistro   := '000' ;
+    Remetente    := 'TESTE DE OCORRENCIA' ;
+    Destinatario := 'DESTINO OCORRENCIA' ;
+    Data         := now ;
+    Hora         := Time ;
+    ID           := '' ;      // se não preenchido será informado no formato sugerido
+    Sequencia    := 0 ;
+    Filler       := '' ;      // preencher somente se tiver informações extras no registro
+  end;
+  with Ocor.InfoOcor.New do   // informação obrigatória
+  begin
+    IdRegistro := '340' ;     // Informar a Identificação do Registro no EDI conforme a versão
+    IdDocto    := '' ;        // se não preenchido será informado no formato sugerido
+    Filler     := '' ;
+    with Transportadora do    // informação obrigatória
+    begin
+      IdRegistro := '341' ;
+      CNPJ       := '99.999.999/9999-99' ;
+      Razao      := 'TRANSPORTADORA TESTE' ;
+      Filler     := '' ;
+      with OcorEntrega.New do      // informação obrigatória
+      begin
+        IdRegistro       := '342' ;
+        CNPJEmissorNF    := '99.999.999/9999-99' ;
+        SerieNF          := '1' ;
+        nNF              := '12345' ;
+        cOcorrencia      := 1 ;
+        dtOcorrencia     := date ;
+        hrOcorrencia     := time ;
+        cObsOcorrencia   := 1 ;
+        FilialEmissorCT  := 'MATRIZ' ;
+        SerieCT          := '1' ;
+        nCT              := '1234' ;
+        indTipoEntrega   := 1 ;
+        codEmissorNF     := '' ;
+        cFilialEmissorNF := '' ;
+        Romaneio         := '' ;
+        NumeroSAP        := '' ;
+        OutroNumeroSAP   := '' ;
+        OutroNumeroSAP2  := '' ;
+        dtChegadaDestino := 0 ;
+        hrChegadaDestino := 0 ;
+        dtInicioDescarga := 0 ;
+        hrInicioDescarga := 0 ;
+        dtTerminoDescarga:= 0 ;
+        hrTerminoDescarga:= 0 ;
+        dtSaidaDestino   := 0 ;
+        hrSaidaDestino   := 0 ;
+        CNPJDevolucao    := '' ;
+        SerieNFDevolucao := '' ;
+        nNFDevolucao     := '' ;
+        TextoLivre       := '' ;
+        Filler           := '' ;
+        with InfoCompl do       // Informar apenas se existir Versão 5.0 Condicional
+        begin
+          IdRegistro := '543' ;
+          xMotivo1   := '12312' ;
+          xMotivo2   := '' ;
+          xMotivo3   := '' ;
+          Filler     := '' ;
+        end;
+        with InfoItemNF.New do  // Informar apenas se existir Versão 5.0  Condicional
+        begin
+          IdRegistro := '544' ;
+          cItem      := '1' ;
+          xDescricao := 'ITEM TESTE' ;
+          qVolumeNF  := 5 ;
+          qVolEntreg := 5 ;
+          Filler     := '' ;
+        end;
+        with Redespacho do  // informação condicional
+        begin
+          IdRegistro      := '343' ;
+          CNPJContratante := '99.999.999/9999-99' ;
+          CNPJEmissor     := '99.999.999/9999-99' ;   // Apenas versão 5.0
+          FilialEmissor   := 'MATRIZ' ;
+          Serie           := '1' ;
+          nCTe            := '25412' ;
+          Filler          := '' ;
+        end;
+      end;
+    end;
+    with TotOcorrencias do   // apenas versão 5.0  (total de ocorrências) Obrigatória
+    begin
+      IdRegistro := '549' ;
+      nQtde      := 1 ;
+      Filler     := '' ;
+    end;
+  end;
+  Ocor.GravarArquivo('C:\TRANSPORTES\EDI\OCORRE\OCORRENCIA.TXT');
+end;

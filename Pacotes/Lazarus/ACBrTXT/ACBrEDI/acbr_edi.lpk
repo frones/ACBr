@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_EDI"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="9">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrEDI"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas"/>
+        <UnitName Value="ACBrEDIClass"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDICobranca.pas"/>
+        <UnitName Value="ACBrEDICobranca"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIConEmb.pas"/>
+        <UnitName Value="ACBrEDIConEmb"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIConhectos.pas"/>
+        <UnitName Value="ACBrEDIConhectos"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
+        <UnitName Value="ACBrEDINotaFiscal"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFisClass.pas"/>
+        <UnitName Value="ACBrEDINotaFisClass"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIOcorrencia.pas"/>
+        <UnitName Value="ACBrEDIOcorrencia"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas"/>
+        <UnitName Value="pediConversao"/>
+      </Item9>
+    </Files>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="PCNComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

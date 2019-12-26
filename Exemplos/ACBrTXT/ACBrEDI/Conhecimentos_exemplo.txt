@@ -1,0 +1,144 @@
+Exemplo de uso do E. D. I. de CONEMB ( Conhecimentos Embarcados )
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  ConEmb.LipaRegistros ;
+  ConEmb.Versao := ve50 ;
+  with ConEmb.Cabecalho do   // informação obrigatória
+  begin
+    IdRegistro   := '000' ;
+    Remetente    := 'TESTE DE CONEMB' ;
+    Destinatario := 'DESTINO CONEMB' ;
+    Data         := now ;
+    Hora         := Time ;
+    ID           := '' ;      // se não preenchido será informado no formato sugerido
+    Sequencia    := 0 ;
+    Filler       := '' ;      // preencher somente se tiver informações extras no registro
+  end;
+  with ConEmb.InfoConEmb.New do   // informação obrigatória
+  begin
+    IdRegistro := '520' ;     // Informar a Identificação do Registro no EDI conforme a versão
+    IdDocto    := '' ;        // se não preenchido será informado no formato sugerido
+    Filler     := '' ;
+    with Transportadora do    // informação obrigatória
+    begin
+      IdRegistro := '521' ;
+      CNPJ       := '99.999.999/9999-99' ;
+      Razao      := 'TRANSPORTADORA TESTE' ;
+      Filler     := '' ;
+      with ConhectoEmbarcado.New do
+      begin
+        IdRegistro        := '522' ;
+        Filial            := 'MATRIZ' ;
+        Serie             := '1' ;
+        nCTe              := '1254' ;
+        dtEmissao         := date ;
+        tpFrete           := tcfFOB ;
+        vPeso             := 1500 ;
+        vTotFrete         := 600 ;
+        vBcIcms           := 600 ;
+        pIcms             := 12 ;
+        vIcms             := 72 ;
+        vFretePeso        := 600 ;
+        vFrete            := 0 ;
+        vSecCat           := 0 ;
+        vITR              := 0 ;
+        vDespacho         := 0 ;
+        vPedagio          := 0 ;
+        vAdeme            := 0 ;
+        ST                := tstNao ;
+        Continua          := 'U' ;
+        CNPJEmissor       := '99.999.999/9999-99' ;
+        CNPJEmbarq        := '99.999.999/9999-99' ;
+        Acao              := tpaInclusao;
+        TipoCTe           := tpcNormalDeSaida ;
+        CFOP              := '5-353' ;
+        CNPJDevolucao     := '99.999.999/9999-99' ;
+        CNPJConsignatario := '99.999.999/9999-99' ;
+        CNPJDestinatario  := '99.999.999/9999-99' ;
+        PlacaVeiculo      := 'FNN-1401' ;
+        Romaneio          := '' ;
+        NumeroSAP1        := '' ;
+        NumeroSAP2        := '' ;
+        NumeroSAP3        := '' ;
+        IdDocAutorizacao  := '' ;
+        ChaveCTe          := '123456789012345678901234567890123456789012345' ;
+        ProtocoloCTe      := '123456789012345' ;
+        cCTe              := '123456789' ;
+        MeioTransporte    := tmTocoFechado ;
+        TranspContratante := 'teste' ;
+        SerieContratante  := '1' ;
+        CTeContratante    := '123' ;
+        TipoFrete         := tpfNormal ;
+        FreteDiferenciado := tediNao ;
+        TabelaFrete       := '' ;
+        CargaRapida       := tediNao;
+        UFEmbarcador      := 'SP' ;
+        UFEmissorCTe      := 'SP' ;
+        UFDestinatario    := 'SP' ;
+        Filler     := '' ;
+        with ValoresConhecto do
+        begin
+          IdRegistro     := '523' ;
+          qTotVolumes    := 1 ;
+          qTotPesoBruto  := 10 ;
+          qTotPesoCubado := 3 ;
+          qPesoDensidade := 5 ;
+          ST             := tstNao ;
+          IDescAcrescimo := tdaNormal ;
+          DireitoFiscal  := tdfSemST ;
+          TipoImposto    := tpiSemST ;
+          Filler         := '' ;
+        end;
+        with NotasConEmb.New do
+        begin
+          IdRegistro     := '524' ;
+          qVolume        := 2 ;
+          qPesoCubado    := 0 ;
+          qPesoDensidade := 0 ;
+          IdPedido       := '' ;
+          TipoNF         := 1 ;
+          Bonificacao    := tediNao ;
+          CFOP           := '5101' ;
+          UFGerador      := 'SP' ;
+          Desdobro       := '' ;
+          xSerie         := '1' ;
+          xNumero        := '12543' ;
+          CNPJEmissor    := '99.999.999/9999-99' ;
+          dtEmissao      := date ;
+          vNF            := 1500 ;
+          qPesoNF        := 1500 ;
+          Devolucao      := tediNao ;
+          Filler         := '' ;
+        end;
+        with InfoEntrega.New do
+        begin
+          IdRegistro     := '525' ;
+          CNPJEmissorNF1 := '99.999.999/9999-99' ;
+          NomeEmissorNF1 := 'RAZAO TESTE' ;
+          SerieNF1       := '1' ;
+          NumeroNF1      := 2514 ;
+          Filler         := '' ;
+        end;
+        with Consignatario do
+        begin
+          IdRegistro := '527' ;
+          Razao      := 'Razao Teste' ;
+          CNPJ       := '99.999.999/9999-99' ;
+          IE         := '999.999.999.999' ;
+          Endereco   := 'Endereco Teste' ;
+          Bairro     := 'TESTE' ;
+          Filler     := '' ;
+        end;
+      end;
+    end;
+    with TotConEmb do
+    begin
+      IdRegistro := '529' ;
+      nQtde      := 1 ;
+      vTotal     := 200 ;
+      Filler     := '' ;
+    end;
+  end;
+  ConEmb.GravarArquivo('C:\TRANSPORTES\EDI\CONEMB\CONHECTOS.TXT');
+end;

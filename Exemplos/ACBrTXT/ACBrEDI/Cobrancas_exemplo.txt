@@ -1,0 +1,124 @@
+Exemplo de uso E. D. I. DocCob ( Cobrança )
+
+procedure TForm1.Button9Click(Sender: TObject);
+begin
+  DocCob.LimpaRegistros ;
+  DocCob.Versao := ve50 ;
+  with DocCob.Cabecalho do   // informação obrigatória
+  begin
+    IdRegistro   := '000' ;
+    Remetente    := 'TESTE DE COBRANCA' ;
+    Destinatario := 'DESTINO COBRANCA' ;
+    Data         := now ;
+    Hora         := Time ;
+    ID           := '' ;      // se não preenchido será informado no formato sugerido
+    Sequencia    := 0 ;
+    Filler       := '' ;      // preencher somente se tiver informações extras no registro
+  end;
+  with DocCob.InfoDocCob.New do   // informação obrigatória
+  begin
+    IdRegistro := '550' ;     // Informar a Identificação do Registro no EDI conforme a versão
+    IdDocto    := '' ;        // se não preenchido será informado no formato sugerido
+    Filler     := '' ;
+    with Transportadora do    // informação obrigatória
+    begin
+      IdRegistro := '551' ;
+      CNPJ       := '99.999.999/9999-99' ;
+      Razao      := 'TRANSPORTADORA TESTE' ;
+      Filler     := '' ;
+      with DoctoCobranca.New do
+      begin
+        IdRegistro    := '552' ;
+        EmissorDocto  := 'MATRIZ' ;
+        TipoDocto     := '1' ;     // usado na versão 5.0
+        SerieDocto    := '1' ;
+        NumeroDocto   := '12345' ;
+        dtFatura      := date ;    // na versão 3 data de Emissão
+        dtVencimento  := date + 20 ;
+        vDocto        := 1000 ;
+        vICMS         := 0 ;
+        TipoCobranca  := 'BCO' ;
+        pMulta        := 0 ;
+        vJurosDiario  := 0 ;
+        dtLimetePag   := date + 21 ;
+        vDescto       := 0 ;
+        cBanco        := 341 ;
+        xBanco        := 'BANCO ITAU SA' ;
+        nAgencia      := 1234 ;
+        dvAgencia     := 'X' ;
+        nConta        := 45621 ;
+        dvConta       := '6' ;
+        Acao          := tpaInclusao ;
+        //  Tags usadas na versão 5.0
+        idPreFatura   := 0 ;
+        idComplFatura := '' ;
+        CFOP          := '5-353' ;
+        cNFe          := 123456789 ;
+        chNFe         := '123456789012345678901234567890123456789012345' ;
+        xProtocoloNFe := '123456789012345' ;
+        //////////////////////////////
+        Filler        := '' ;
+        with Impostos do
+        begin
+          IdRegistro  := '553' ;
+          vBCIcms     := 0 ;
+          pAliqIcms   := 12 ;
+          vIcms       := 0 ;
+          ST          := tstNao ;
+          vBCIcmsST   := 0 ;
+          pAliqIcmsST := 0 ;
+          vIcmsST     := 0 ;
+          vBcISS      := 0 ;
+          pAliqISS    := 0 ;
+          vISS        := 0 ;
+          vIR         := 0 ;
+          Filler      := '' ;
+        end;
+        with Conhectos.New do
+        begin
+          IdRegistro     := '555'  ;
+          EmissorCTe     := 'MATRIZ' ;
+          SerieCTe       := '1' ;
+          nCTe           := '12' ;
+          dtEmissao      := date ;
+          vFrete         := 1000 ;
+          Romaneio       := '' ;
+          NumeroSAP1     := '' ;
+          NumeroSAP2     := '' ;
+          NumeroSAP3     := '' ;
+          UFEmbarcador   := 'SP' ;
+          UFEmissorCTe   := 'SP' ;
+          UFDestinatario := 'SP' ;
+          ContaRazao     := '422619' ;
+          cIva           := 'Z3' ;
+          CTDevolucao    := tediNao ;
+          Filler     := '' ;
+        end;
+        with NotasFiscais.New do
+        begin
+          IdRegistro  := '556'  ;
+          xSerie      := '1' ;
+          xNumero     := '12' ;
+          dtEmissao   := date ;
+          qPesoNF     := 1000 ;
+          vNF         := 2000 ;
+          CNPJEmissor := '99.999.999/9999-99' ;
+          Romaneio    := '1232131' ;
+          NumeroSAP1  := '1245' ;
+          NumeroSAP2  := '' ;
+          NumeroSAP3  := '' ;
+          Devolucao   := tediSim ;
+          Filler      := '' ;
+        end;
+      end;
+      with TotCobranca do
+      begin
+        IdRegistro := '559' ;
+        nQtde      := 1 ;
+        vTotal     := 1000 ;
+        Filler     := '' ;
+      end;
+    end;
+  end;
+  DocCob.GravarArquivo('C:\TRANSPORTES\EDI\DOCCOB\COBRANCA.TXT');
+end;

@@ -69,8 +69,7 @@ type
     FOnProgresso: TOnProgresso;
     FOnInformaSituacao: TOnInformarSituacao;
 
-    procedure FindDirs(InstalacaoAtual: TJclBorRADToolInstallation; APlatform:
-        TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
+    procedure FindDirs(APlatform:TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
     procedure CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String; const APathBin: string);
 
     procedure InstalarCapicom(ADestino : TDestino; const APathBin: string);
@@ -256,7 +255,7 @@ end;
 procedure TACBrInstallComponentes.DeixarSomenteLib;
 begin
   // remover os path com o segundo parametro
-  FindDirs(InstalacaoAtual, tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes', False);
+  FindDirs(tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes', False);
 end;
 
 procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; UmaInstalacaoAtual:
@@ -419,15 +418,14 @@ begin
     FOnProgresso;
 end;
 
-procedure TACBrInstallComponentes.FindDirs(InstalacaoAtual: TJclBorRADToolInstallation;
-    APlatform: TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
+procedure TACBrInstallComponentes.FindDirs(APlatform: TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
 
   function ExisteArquivoPasNoDir(const ADir: string): Boolean;
   var
     oDirList: TSearchRec;
   begin
     Result := False;
-    if FindFirst(ADir + '*.pas', faNormal, oDirList) = 0 then
+    if FindFirst(IncludeTrailingPathDelimiter(ADir) + '*.pas', faNormal, oDirList) = 0 then
     begin
       try
         Result := True;
@@ -476,13 +474,13 @@ begin
           begin
             if (not EProibido(oDirList.Name)) then
             begin
-              if ExisteArquivoPasNoDir(oDirList.Name) then
+              if ExisteArquivoPasNoDir(ADirRoot + oDirList.Name) then
               begin
                 InstalacaoAtual.AddToLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
                 InstalacaoAtual.AddToLibraryBrowsingPath(ADirRoot + oDirList.Name, APlatform);
               end;
               //-- Procura subpastas
-              FindDirs(InstalacaoAtual, APlatform, ADirRoot + oDirList.Name, bAdicionar);
+              FindDirs(APlatform, ADirRoot + oDirList.Name, bAdicionar);
             end;
           end;
         end;
@@ -499,7 +497,7 @@ var
 begin
 // adicionar o paths ao library path do delphi
 
-  FindDirs(InstalacaoAtual, tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes');
+  FindDirs(tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes');
 
   InstalacaoAtual.AddToLibraryBrowsingPath(sDirLibrary, tPlatformAtual);
   InstalacaoAtual.AddToLibrarySearchPath(sDirLibrary, tPlatformAtual);
@@ -842,6 +840,7 @@ begin
   DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not Opcoes.DeveInstalarXMLSec);
 
 end;
+
 procedure TACBrInstallComponentes.RemoverArquivosAntigosDoDisco;
 const
   SMascaraArquivoQueSeraoRemovidos = 'ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl '+

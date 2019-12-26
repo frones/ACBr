@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2019
+-- ACBrLibNFeDataModule --
+[-] Correção para acatar o layout de impressão quando é PDF e caso não o layout não seja nenhum fortes setar por padrão a impressão em fortes.
+    Por: Rafael Dias
+
 19/12/2019
 --- ACBrLibNFeRespostas ---
 [+] Incluido a propriedade Protocolo no retorno do Envio.

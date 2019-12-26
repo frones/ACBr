@@ -16,6 +16,6 @@ Function Main ()
    ?nfe:Nome
    ?nfe:Versao
 
-   nfe := nil
+   nfe:Destroy()
     
 return NIL

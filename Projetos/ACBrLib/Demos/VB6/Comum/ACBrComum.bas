@@ -1,6 +1,17 @@
 Attribute VB_Name = "ACBrComum"
 Option Explicit
 
+' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
+Const CP_UTF8 As Long = 65001
+
+Private Declare Function MultiByteToWideChar _
+                Lib "kernel32" (ByVal CodePage As Long, _
+                                ByVal dwFlags As Long, _
+                                ByVal lpMultiByteStr As Long, _
+                                ByVal cchMultiByte As Long, _
+                                ByVal lpWideCharStr As Long, _
+                                ByVal cchWideChar As Long) As Long
+
 Public Const SESSAO_PRINCIPAL                 As String = "Principal"
 Public Const SESSAO_VERSAO                    As String = "Versao"
 Public Const SESSAO_SISTEMA                   As String = "Sistema"
@@ -503,17 +514,6 @@ Public Enum ACBrBALModelo
     balDigitron_UL = 27
 End Enum
 
-' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
-Const CP_UTF8       As Long = 65001
-
-Private Declare Function MultiByteToWideChar _
-                Lib "kernel32" (ByVal CodePage As Long, _
-                                ByVal dwFlags As Long, _
-                                ByVal lpMultiByteStr As Long, _
-                                ByVal cchMultiByte As Long, _
-                                ByVal lpWideCharStr As Long, _
-                                ByVal cchWideChar As Long) As Long
-
 Public Function HasPosTipoStatus(Check As ACBrPosTipoStatus, Flag As ACBrPosTipoStatus) As Boolean
     HasPosTipoStatus = (Check And Flag) = Flag
 End Function
@@ -534,7 +534,7 @@ ErrorHandler:
     ' if an error occurs, this function returns False
 End Function
 
-Private Function FromUTF8(ByRef utf8STR As String) As String
+Public Function FromUTF8(ByRef utf8STR As String) As String
     
     Dim length As Long
     Dim UTF8() As Byte

@@ -15,17 +15,6 @@ Option Explicit
 
 Const BUFFER_LENGTH As Long = 1024
 
-' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
-Const CP_UTF8 As Long = 65001
-
-Private Declare Function MultiByteToWideChar _
-                Lib "kernel32" (ByVal CodePage As Long, _
-                                ByVal dwFlags As Long, _
-                                ByVal lpMultiByteStr As Long, _
-                                ByVal cchMultiByte As Long, _
-                                ByVal lpWideCharStr As Long, _
-                                ByVal cchWideChar As Long) As Long
-
 Private Declare Function POS_Inicializar _
                 Lib "ACBrPosPrinter32.dll" (ByVal eArqConfig As String, _
                                             ByVal eChaveCrypt As String) As Long
@@ -43,6 +32,9 @@ Private Declare Function POS_Versao _
 Private Declare Function POS_UltimoRetorno _
                 Lib "ACBrPosPrinter32.dll" (ByVal buffer As String, _
                                             ByRef bufferLen As Long) As Long
+                                            
+Private Declare Function POS_ImportarConfig _
+                Lib "ACBrPosPrinter32.dll" (ByVal eArqConfig As String) As Long
                    
 Private Declare Function POS_ConfigLer _
                 Lib "ACBrPosPrinter32.dll" (ByVal eArqConfig As String) As Long
@@ -125,6 +117,11 @@ Private Declare Function POS_LerStatusImpressora _
                                             ByRef status As Long) As Long
                                             
 Private Declare Function POS_RetornarTags _
+                Lib "ACBrPosPrinter32.dll" (ByVal IncluiAjuda As Boolean, _
+                                            ByVal buffer As String, _
+                                            ByRef bufferLen As Long) As Long
+                                            
+Private Declare Function POS_AcharPortas _
                 Lib "ACBrPosPrinter32.dll" (ByVal buffer As String, _
                                             ByRef bufferLen As Long) As Long
                    
@@ -145,7 +142,15 @@ Public Sub FinalizarLib()
     CheckResult (retorno)
 End Sub
 
-Public Sub ConfigLer(Optional eArqConfig As String = "")
+Public Sub ImportarConfig(ByVal eArqConfig As String)
+
+    Dim retorno As Long
+
+    retorno = POS_ImportarConfig(eArqConfig)
+    CheckResult (retorno)
+End Sub
+
+Public Sub ConfigLer(Optional ByVal eArqConfig As String = "")
 
     Dim retorno As Long
 
@@ -153,7 +158,7 @@ Public Sub ConfigLer(Optional eArqConfig As String = "")
     CheckResult (retorno)
 End Sub
 
-Public Sub ConfigGravar(Optional eArqConfig As String = "")
+Public Sub ConfigGravar(Optional ByVal eArqConfig As String = "")
 
     Dim retorno As Long
 
@@ -192,9 +197,7 @@ End Sub
 Public Function Nome() As String
 
     Dim retorno   As Long
-
     Dim buffer    As String
-
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
@@ -210,9 +213,7 @@ End Function
 Public Function Versao() As String
 
     Dim retorno   As Long
-
     Dim buffer    As String
-
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
@@ -321,9 +322,7 @@ Public Function TxRx(ByVal aString As String, _
                      Optional ByVal waitForTerminator As Boolean = False) As String
 
     Dim retorno   As Long
-
     Dim buffer    As String
-
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
@@ -387,9 +386,7 @@ End Sub
 Public Function LerInfoImpressora() As String
 
     Dim retorno As Long
-    
     Dim buffer    As String
-
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
@@ -414,22 +411,36 @@ Public Function LerStatusImpressora(Optional ByVal tentativas As Long = 1) As AC
     LerStatusImpressora = CInt(status)
 End Function
 
-Public Function RetornarTags() As String()
+Public Function RetornarTags(Optional ByVal InclueAjuda As Boolean = True) As String()
 
     Dim retorno As Long
-    
     Dim buffer    As String
-
     Dim bufferLen As Long
 
     bufferLen = BUFFER_LENGTH
     
     buffer = String$(bufferLen, " ")
 
-    retorno = POS_RetornarTags(buffer, bufferLen)
+    retorno = POS_RetornarTags(InclueAjuda, buffer, bufferLen)
     CheckResult (retorno)
     
     RetornarTags = Split(Trim$(FromUTF8(buffer)), "|")
+End Function
+
+Public Function AcharPortas() As String()
+
+    Dim retorno As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    
+    buffer = String$(bufferLen, " ")
+
+    retorno = POS_AcharPortas(buffer, bufferLen)
+    CheckResult (retorno)
+    
+    AcharPortas = Split(Trim$(FromUTF8(buffer)), "|")
 End Function
 
 Private Sub CheckResult(ByVal Resultado As Long)
@@ -455,25 +466,4 @@ Private Function processResult(ByRef buffer As String, ByRef bufferLen As Long) 
     End If
 
     processResult = Trim$(FromUTF8(buffer))
-End Function
-
-Private Function FromUTF8(ByRef utf8STR As String) As String
-    
-    Dim length As Long
-
-    length = Len(utf8STR)
-    
-    Dim UTF8() As Byte
-
-    UTF8 = StrConv(utf8STR, vbFromUnicode)
-    
-    Dim lDataLength As Long
-    
-    ' Get the length of the data.
-    lDataLength = MultiByteToWideChar(CP_UTF8, 0, VarPtr(UTF8(0)), length, 0, 0)
-    
-    ' Create array big enough
-    FromUTF8 = String$(lDataLength, 0)
-    
-    MultiByteToWideChar CP_UTF8, 0, VarPtr(UTF8(0)), length, StrPtr(FromUTF8), lDataLength
 End Function

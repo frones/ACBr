@@ -45,7 +45,7 @@ namespace ACBrLibPosPrinter.Demo
             cbbModelo.EnumDataSource(ACBrPosPrinterModelo.ppTexto);
             cbbPaginaCodigo.EnumDataSource(PosPaginaCodigo.pc850);
 
-            cbbPortas.Items.AddRange(SerialPort.GetPortNames());
+            cbbPortas.Items.AddRange(posPrinter.AcharPortas());
 
             cbbPortas.Items.Add("LPT1");
             cbbPortas.Items.Add("LPT2");

@@ -1,8 +1,8 @@
 VERSION 5.00
-Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "msmask32.ocx"
-Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "comctl32.ocx"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Object = "{6B7E6392-850A-101B-AFC0-4210102A8DA7}#1.3#0"; "COMCTL32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "ACBrLibPosPrinter Demo VB6"
@@ -289,6 +289,15 @@ Begin VB.Form FrmMain
          Width           =   3375
       End
       Begin VB.ComboBox ComModelo 
+         BeginProperty DataFormat 
+            Type            =   0
+            Format          =   "0"
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   1046
+            SubFormatType   =   0
+         EndProperty
          Height          =   315
          ItemData        =   "FrmMain.frx":25CA
          Left            =   120
@@ -563,10 +572,11 @@ Private Sub Form_Load()
     ComModelo.AddItem "ppEscDiebold", ACBrPosPrinterModelo.ppEscDiebold
     ComModelo.AddItem "ppEscEpsonP2", ACBrPosPrinterModelo.ppEscEpsonP2
     ComModelo.AddItem "ppCustomPos", ACBrPosPrinterModelo.ppCustomPos
+    ComModelo.AddItem "ppEscPosStar", ACBrPosPrinterModelo.ppEscPosStar
     ComModelo.AddItem "ppEscZJiang", ACBrPosPrinterModelo.ppEscZJiang
     ComModelo.AddItem "ppEscGPrinter", ACBrPosPrinterModelo.ppEscGPrinter
     
-    ComModelo.ListIndex = ACBrPosPrinterModelo.Texto
+    ComModelo.ListIndex = ACBrPosPrinterModelo.ppTexto
     
     ComPorta.AddItem "COM1"
     ComPorta.AddItem "COM2"
@@ -595,20 +605,21 @@ Private Sub Form_Load()
     updBuffer.Value = 0
     updLinhasPular.Value = 0
     
-    Set posPrinter = CreatePosPrinter
     Dim LogPath As String
     
     LogPath = App.Path & "\Docs\"
     
-    If Dir(LogPath) = "" Then
+    If Not DirExists(LogPath) Then
         MkDir LogPath
     End If
     
-    LoadConfig
-    
+    Set posPrinter = CreatePosPrinter
+          
     posPrinter.ConfigGravarValor SESSAO_PRINCIPAL, "LogNivel", "4"
     posPrinter.ConfigGravarValor SESSAO_PRINCIPAL, "LogPath", LogPath
     posPrinter.ConfigGravar
+    
+    LoadConfig
 End Sub
 
 Private Sub Form_Terminate()

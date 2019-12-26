@@ -30,6 +30,9 @@ namespace ACBrLibPosPrinter
             public delegate int POS_UltimoRetorno(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_ImportarConfig(string eArqConfig);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int POS_ConfigLer(string eArqConfig);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -87,7 +90,10 @@ namespace ACBrLibPosPrinter
             public delegate int POS_LerStatusImpressora(int tentativas, ref int status);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int POS_RetornarTags(StringBuilder buffer, ref int bufferSize, bool incluiAjuda);
+            public delegate int POS_RetornarTags(bool incluiAjuda, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int POS_AcharPortas(StringBuilder buffer, ref int bufferSize);
         }
 
         #endregion InnerTypes
@@ -100,7 +106,7 @@ namespace ACBrLibPosPrinter
 
         #region Constructors
 
-        public ACBrPosPrinter(string eArqConfig = "", string eChaveCrypt = "") : base(Environment.Is64BitProcess ? "ACBrPosPrinter64.dll" : "ACBrPosPrinter32.dll")
+        public ACBrPosPrinter(string eArqConfig = "", string eChaveCrypt = "") : base("ACBrPosPrinter64.dll", "ACBrPosPrinter32.dll")
         {
             var inicializar = GetMethod<Delegates.POS_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));
@@ -146,7 +152,7 @@ namespace ACBrLibPosPrinter
 
         #endregion Properties
 
-        #region Configurações
+        #region Metodos
 
         #region Ini
 
@@ -154,6 +160,14 @@ namespace ACBrLibPosPrinter
         {
             var gravarIni = GetMethod<Delegates.POS_ConfigGravar>();
             var ret = ExecuteMethod(() => gravarIni(ToUTF8(eArqConfig)));
+
+            CheckResult(ret);
+        }
+
+        public void ImportarConfig(string eArqConfig)
+        {
+            var lerIni = GetMethod<Delegates.POS_ImportarConfig>();
+            var ret = ExecuteMethod(() => lerIni(ToUTF8(eArqConfig)));
 
             CheckResult(ret);
         }
@@ -292,7 +306,20 @@ namespace ACBrLibPosPrinter
             var buffer = new StringBuilder(bufferLen);
 
             var method = GetMethod<Delegates.POS_RetornarTags>();
-            var ret = ExecuteMethod(() => method(buffer, ref bufferLen, incluiAjuda));
+            var ret = ExecuteMethod(() => method(incluiAjuda, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen).Split('|');
+        }
+
+        public string[] AcharPortas()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.POS_AcharPortas>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
 
             CheckResult(ret);
 
@@ -366,6 +393,7 @@ namespace ACBrLibPosPrinter
             AddMethod<Delegates.POS_Nome>("POS_Nome");
             AddMethod<Delegates.POS_Versao>("POS_Versao");
             AddMethod<Delegates.POS_UltimoRetorno>("POS_UltimoRetorno");
+            AddMethod<Delegates.POS_ImportarConfig>("POS_ImportarConfig");
             AddMethod<Delegates.POS_ConfigLer>("POS_ConfigLer");
             AddMethod<Delegates.POS_ConfigGravar>("POS_ConfigGravar");
             AddMethod<Delegates.POS_ConfigLerValor>("POS_ConfigLerValor");
@@ -386,6 +414,7 @@ namespace ACBrLibPosPrinter
             AddMethod<Delegates.POS_LerInfoImpressora>("POS_LerInfoImpressora");
             AddMethod<Delegates.POS_LerStatusImpressora>("POS_LerStatusImpressora");
             AddMethod<Delegates.POS_RetornarTags>("POS_RetornarTags");
+            AddMethod<Delegates.POS_AcharPortas>("POS_AcharPortas");
         }
 
         protected override string GetUltimoRetorno(int iniBufferLen = 0)
@@ -408,6 +437,6 @@ namespace ACBrLibPosPrinter
 
         #endregion Private Methods
 
-        #endregion Configurações
+        #endregion Metodos
     }
 }

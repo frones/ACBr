@@ -66,6 +66,8 @@
     <Compile Include="ETQ\ETQOrientacao.cs" />
     <Compile Include="ETQ\ETQUnidade.cs" />
     <Compile Include="ETQ\TipoCodBarra.cs" />
+    <Compile Include="Ini\ACBrIniFile.cs" />
+    <Compile Include="Ini\ACBrIniSection.cs" />
     <Compile Include="Mail\MailAttachmentDisposition.cs" />
     <Compile Include="Mail\MessPriority.cs" />
     <Compile Include="Mail\MimeChar.cs" />

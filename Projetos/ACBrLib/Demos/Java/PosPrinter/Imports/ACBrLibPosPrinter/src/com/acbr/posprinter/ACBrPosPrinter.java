@@ -50,6 +50,8 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         int POS_UltimoRetorno(ByteBuffer buffer, IntByReference bufferSize);
 
         int POS_ConfigLer(String eArqConfig);
+        
+        int POS_ImportarConfig(String eArqConfig);
 
         int POS_ConfigGravar(String eArqConfig);
 
@@ -95,7 +97,9 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
 
         int POS_LerStatusImpressora(int tentativas, IntByReference status);
 
-        int POS_RetornarTags(ByteBuffer buffer, IntByReference bufferSize, boolean incluiAjuda);
+        int POS_RetornarTags(boolean incluiAjuda, ByteBuffer buffer, IntByReference bufferSize);
+        
+        int POS_AcharPortas(ByteBuffer buffer, IntByReference bufferSize);
 
     }
 
@@ -153,9 +157,14 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
     public void configLer() throws Exception {
         configLer("");
     }
-
+    
     public void configLer(String eArqConfig) throws Exception {
         int ret = PosPrinterLib.INSTANCE.POS_ConfigLer(toUTF8(eArqConfig));
+        checkResult(ret);
+    }
+
+    public void importarConfig(String eArqConfig) throws Exception {
+        int ret = PosPrinterLib.INSTANCE.POS_ImportarConfig(toUTF8(eArqConfig));
         checkResult(ret);
     }
 
@@ -262,7 +271,17 @@ public final class ACBrPosPrinter extends ACBrLibBase implements AutoCloseable  
         ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
         IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
 
-        int ret = PosPrinterLib.INSTANCE.POS_RetornarTags(buffer, bufferLen, incluiAjuda);
+        int ret = PosPrinterLib.INSTANCE.POS_RetornarTags(incluiAjuda, buffer, bufferLen);
+        checkResult(ret);
+
+        return processResult(buffer, bufferLen).split("|");
+    }
+    
+    public String[] AcharPortas() throws Exception {
+        ByteBuffer buffer = ByteBuffer.allocate(STR_BUFFER_LEN);
+        IntByReference bufferLen = new IntByReference(STR_BUFFER_LEN);
+
+        int ret = PosPrinterLib.INSTANCE.POS_AcharPortas(buffer, bufferLen);
         checkResult(ret);
 
         return processResult(buffer, bufferLen).split("|");

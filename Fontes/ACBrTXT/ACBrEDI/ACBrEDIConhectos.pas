@@ -40,8 +40,8 @@ uses SysUtils, Classes, ACBrBase,
 
 type
 
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
    TComplConhecto = class( TPersistent ) // Usado nas Versões 3.0 a 3.1
@@ -413,10 +413,6 @@ type
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
-
-{$IFNDEF FPC}
- {$R ACBrEDIConhectos.dcr}
-{$ENDIF}
 
 procedure Register;
 begin

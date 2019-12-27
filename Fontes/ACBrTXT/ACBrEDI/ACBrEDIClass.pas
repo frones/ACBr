@@ -34,7 +34,7 @@ unit ACBrEDIClass ;
 
 interface
 
-uses Classes, Contnrs, SysUtils, pediConversao ;
+uses Classes, SysUtils, pediConversao ;
 
 type
 

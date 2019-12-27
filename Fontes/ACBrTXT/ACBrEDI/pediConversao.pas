@@ -37,6 +37,13 @@ interface
 uses pcnConversao, SysUtils, ACBrUtil ;
 
 type
+  {$IFNDEF FPC}
+    {$IFDEF DELPHI7}
+    TDate = TDateTime;
+    TTime = TDateTime;
+    {$ENDIF}
+  {$ENDIF}
+
 
   tveEdi            = (ve30, ve30a, ve31, ve50) ;
   tediSimNao        = (tediSim,tediNao) ;

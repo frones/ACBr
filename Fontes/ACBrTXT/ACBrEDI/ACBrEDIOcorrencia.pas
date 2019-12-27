@@ -41,8 +41,8 @@ uses SysUtils, Classes, ACBrBase,
 
 type
 
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
    TInfoCompl = class // Usado nas Versão 5.0 Registro 543
@@ -271,10 +271,6 @@ type
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
-
-{$IFNDEF FPC}
- {$R ACBrEDIOcorrencia.dcr}
-{$ENDIF}
 
 procedure Register;
 begin

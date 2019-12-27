@@ -34,14 +34,14 @@ unit ACBrEDI;
 
 interface
 
-uses SysUtils, Classes, Contnrs, ACBrEDIConhectos, ACBrEDIOcorrencia,
+uses SysUtils, Classes, ACBrEDIConhectos, ACBrEDIOcorrencia,
      ACBrEDICobranca, ACBrBase ;
 
 type
 
   { TACBrEDI }
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
   TACBrEDI = class(TComponent)

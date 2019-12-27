@@ -42,8 +42,8 @@ uses SysUtils, Classes, ACBrBase,
 
 type
 
-	{$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
   {$ENDIF RTL230_UP}
 
    TImpostos = class // Usado no EDI 5.0
@@ -301,10 +301,6 @@ type
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
-
-{$IFNDEF FPC}
- {$R ACBrEDICobranca.dcr}
-{$ENDIF}
 
 procedure Register;
 begin

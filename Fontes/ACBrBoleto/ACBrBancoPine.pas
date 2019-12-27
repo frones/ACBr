@@ -57,6 +57,7 @@ type
     function CalcularNossoNumero(const ACBrTitulo:TACBrTitulo): String; virtual;
     function CalcularCarteira(const ACBrTitulo:TACBrTitulo): String; virtual;
     function LerNossoNumero(const aLinha:String; ACBrTitulo : TACBrTitulo ):String;  virtual;
+    function GetLocalPagamento: string;  override;
   public
     Constructor create(AOwner: TACBrBanco);
     function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
@@ -85,6 +86,15 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 function TACBrBancoPine.LerNossoNumero(const aLinha: String; ACBrTitulo : TACBrTitulo): String;
 begin
    ACBrTitulo.NossoNumero:= Copy(aLinha, 63, 10);
+end;
+
+function TACBrBancoPine.GetLocalPagamento: string;
+begin
+   if fCorrespondente then
+      Result:= ACBrStr('Pagável preferencialmente na Rede Bradesco ou Bradesco Expresso')
+   else
+      Result:= ACBrStr('Canais eletrônicos, agências ou correspondentes bancários de todo o BRASIL');
+
 end;
 
 function TACBrBancoPine.TipoOcorrenciaRemessaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;

@@ -34,29 +34,10 @@ unit ACBrEDI;
 
 interface
 
-uses SysUtils, Classes, ACBrEDIConhectos, ACBrEDIOcorrencia,
-     ACBrEDICobranca, ACBrBase ;
+uses SysUtils, Classes, ACBrEDIConhectos, ACBrEDIOcorrencia, ACBrEDINotaFiscal,
+     ACBrEDICobranca;
 
-type
-
-  { TACBrEDI }
-  {$IFDEF RTL230_UP}
-  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
-  {$ENDIF RTL230_UP}
-
-  TACBrEDI = class(TComponent)
-  private
-    FConEmb: TACBrEDIConhectos ;
-    FOcor  : TACBrEDIOcorrencia ;
-    FDocCob: TACBrEDICobranca ;
-  public
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
-
-    property ConEmb: TACBrEDIConhectos  read FConEmb write FConEmb ;
-    property DocCob: TACBrEDICobranca   read FDocCob write FDocCob ;
-    property Ocor  : TACBrEDIOcorrencia read FOcor   write FOcor   ;
-  end;
+//type
 
 procedure Register;
 
@@ -68,25 +49,7 @@ implementation
 
 procedure Register;
 begin
-  RegisterComponents('ACBrEDI', [TACBrEDI]);
-end;
-
-{ TACBrEDI }
-
-constructor TACBrEDI.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner) ;
-  FConEmb := TACBrEDIConhectos.Create(Self);
-  FDocCob := TACBrEDICobranca.Create(Self);
-  FOcor   := TACBrEDIOcorrencia.Create(Self);
-end;
-
-destructor TACBrEDI.Destroy;
-begin
-  FConEmb.Free ;
-  FDocCob.Free ;
-  FOcor.Free ;
-  inherited;
+  RegisterComponents('ACBrEDI', [TACBrEDIConhectos, TACBrEDICobranca, TACBrEDINotaFiscais, TACBrEDIOcorrencia]);
 end;
 
 end.

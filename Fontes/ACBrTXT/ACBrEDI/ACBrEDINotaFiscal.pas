@@ -568,8 +568,6 @@ type
      procedure LimpaRegistros ;
    end;
 
-   procedure Register;
-
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
@@ -577,11 +575,6 @@ uses pcnAuxiliar, ACBrUtil ;
 {$IFNDEF FPC}
  {$R ACBrEDINotaFiscais.dcr}
 {$ENDIF}
-
-procedure Register;
-begin
-  RegisterComponents('ACBrEDI', [TACBrEDINotaFiscais]);
-end;
 
 { TNotaFiscais }
 

@@ -408,16 +408,9 @@ type
      procedure LimpaRegistros ;
    end;
 
-   procedure Register;
-
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
-
-procedure Register;
-begin
-  RegisterComponents('ACBrEDI', [TACBrEDIConhectos]);
-end;
 
 { TConhectoEmbarcado }
 

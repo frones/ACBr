@@ -296,16 +296,9 @@ type
      procedure LimpaRegistros;
    end;
 
-   procedure Register;
-
 implementation
 
 uses pcnAuxiliar, ACBrUtil ;
-
-procedure Register;
-begin
-  RegisterComponents('ACBrEDI', [TACBrEDICobranca]);
-end;
 
 { TDoctoCobranca }
 

@@ -1390,7 +1390,7 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    property ListadeBoletos : TListadeBoletos read fListadeBoletos write fListadeBoletos ;
+    property ListadeBoletos : TListadeBoletos read fListadeBoletos;
 
     function CriarTituloNaLista: TACBrTitulo;
 
@@ -1410,7 +1410,7 @@ type
     procedure ChecarDadosObrigatorios;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
-    function GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
+    function GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
     function LerArqIni(const AIniBoletos: String): Boolean;
     procedure GravarArqIni(DirIniRetorno: string; const NomeArquivo: String);
 
@@ -3152,7 +3152,7 @@ begin
   end;
 end;
 
-function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
+function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer; Carteira: String = ''): TACBrTipoCobranca;
 begin
   case NumeroBanco of
     001: Result := cobBancoDoBrasil;
@@ -3180,6 +3180,12 @@ begin
     246: Result := cobBancoABCBrasil;
     707: Result := cobDaycoval;
     084: Result := cobUniprimeNortePR;
+    643: begin
+          if (Carteira = '4') or ( Carteira = '7') then
+             Result := cobBancoPineBradesco
+           else
+             Result := cobBancoPine;
+         end;
   else
     raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
       sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));

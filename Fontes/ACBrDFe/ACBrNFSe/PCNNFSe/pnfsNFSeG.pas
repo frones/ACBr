@@ -337,6 +337,7 @@ begin
               end;
 
     proActcon,
+    proBelford,
     proBethav2,
     proIssDSF,
     proSIAPNet,

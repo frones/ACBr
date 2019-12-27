@@ -537,6 +537,7 @@ begin
 
       proNotaInteligente: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, DSC_CLISTSERV);
 
+      proISSJoinville,
       proVitoria:
         begin
           if copy(NFSe.Servico.ItemListaServico, 1, 1) = '0' then

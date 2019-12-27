@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/12/2019
+-- pnfsNFSeG --
+[*] Incluido o enumerador proBelford na lista de provedores que devem gerar
+    o ID do lote de forma alfanumerica
+-- pnfsNFSeW_ABRASFv2 --
+[*] Incluido o enumerador proISSJoinville na lista de provedor que devem gerar
+    o ItemListaServico sem o zero a esquerda.
+   Por: Italo Jurisato Junior
+
 23/12/2019
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/55426-nfs-e-joinville-atualiza%C3%A7%C3%A3o-arquivo-ini-e-leitura-do-xml-de-retorno-da-consulta/

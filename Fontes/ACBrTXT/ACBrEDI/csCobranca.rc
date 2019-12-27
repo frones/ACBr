@@ -1,3 +1,3 @@
-TACBrEDICobranca BITMAP C:\Componentes\ACBr\Fontes\Imagens\bmp\ACBr_EDICobranca.BMP
-TACBrEDIOcorrencia BITMAP C:\Componentes\ACBr\Fontes\Imagens\bmp\TACBrEDIOcorrencia.BMP
-TACBrEDIConhectos BITMAP C:\Componentes\ACBr\Fontes\Imagens\bmp\TACBrCTe.BMP
+TACBrEDICobranca BITMAP ..\..\Imagens\bmp\ACBr_EDICobranca.BMP
+TACBrEDIOcorrencia BITMAP ..\..\Imagens\bmp\TACBrEDIOcorrencia.BMP
+TACBrEDIConhectos BITMAP ..\..\Imagens\bmp\TACBrCTe.BMP

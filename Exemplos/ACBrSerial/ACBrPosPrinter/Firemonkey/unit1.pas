@@ -689,7 +689,7 @@ var
   i: Integer;
 begin
   {$IfNDef MSWINDOWS}
-  MessageDlg('Disponível apenas em MS-Windows', mtError, [mbOK], 0);
+  MessageDlg('Disponível apenas em MS-Windows', TMsgDlgType.mtError, [TMsgDlgBtn.mbOK], 0);
   {$Else}
   PageControl1.ActiveTab := tsLog;
   mLog.Lines.Clear;

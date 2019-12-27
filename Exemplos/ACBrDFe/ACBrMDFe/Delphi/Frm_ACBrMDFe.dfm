@@ -1706,7 +1706,7 @@ object frmACBrMDFe: TfrmACBrMDFe
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
-    ImprimirDadosExtras = [deValorTotal, deRelacaoDFe]
+    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = True
     Left = 432
     Top = 240

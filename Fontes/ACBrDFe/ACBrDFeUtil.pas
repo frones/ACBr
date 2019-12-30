@@ -232,16 +232,26 @@ begin
   //       NNNNNNN Número sequencial dentro do AnoData ( 7 dígitos )
   //       SSS Serie do RE (001, 002, ...)
 
-  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
-
-  if Result then
+  if (AValue = '000000000000') or (AValue = '') then
   begin
-    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
-    AnoValue := StrToInt(Copy(AValue, 1, 2));
-    SerieRE  := StrToInt(Copy(AValue,10, 3));
+    // Deve aceitar doze zeros, pois há casos onde a RE é gerada somente depois
+    // http://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=81446&visao=anotado
+    // No link acima diz que o DUE substitui o RE.
+    Result := True;
+  end
+  else
+  begin
+    Result := StrIsNumber(AValue) and (Length(AValue) = 12);
 
-    Result := ((AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1))) and
-              ((SerieRE >= 1) and (SerieRE <= 999));
+    if Result then
+    begin
+      AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+      AnoValue := StrToInt(Copy(AValue,  1, 2));
+      SerieRE  := StrToInt(Copy(AValue, 10, 3));
+
+      Result := ((AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1))) and
+                ((SerieRE >= 1) and (SerieRE <= 999));
+    end;
   end;
 end;
 

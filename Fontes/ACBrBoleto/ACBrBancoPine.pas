@@ -462,7 +462,7 @@ begin
             IntToStrZero( round(ACBrTitulo.ValorIOF * 100 ), 13)           + {193 a 205 - Valor IOF}
             IntToStrZero( round(ACBrTitulo.ValorAbatimento * 100 ), 13)    + {206 a 218 - Valor de abatimento a ser concedido}
             IfThen(ACBrTitulo.Sacado.Pessoa = pFisica, '01', '02')         + {219 a 220 - Tipo Inscrição do Pagaador}
-            PadLeft(ACBrTitulo.Sacado.CNPJCPF, 14, '0')                    + {221 a 234 - CPF/CNPJ do pagador}
+            PadLeft(OnlyNumber(ACBrTitulo.Sacado.CNPJCPF), 14, '0')        + {221 a 234 - CPF/CNPJ do pagador}
             PadRight(ACBrTitulo.Sacado.NomeSacado, 30)                     + {235 a 264 - Nome do pagador}
             StringOfChar(' ', 10)                                          + {265 a 274 - Brancos}
             PadRight(ACBrTitulo.Sacado.Logradouro + ' ' +

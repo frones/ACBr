@@ -3181,7 +3181,7 @@ begin
     707: Result := cobDaycoval;
     084: Result := cobUniprimeNortePR;
     643: begin
-          if (Carteira = '4') or ( Carteira = '7') then
+          if StrToInt(Carteira) = 9 then
              Result := cobBancoPineBradesco
            else
              Result := cobBancoPine;

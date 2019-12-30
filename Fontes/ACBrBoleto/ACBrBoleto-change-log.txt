@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 ver: 0.1.0
+30/12/2019
+-- ACBrBancoPine/ ACBrBancoPineBradesco --
+[*] Adicionado remoção de mascará ao incluir o CNPJ do Sacado/Avalista na remessa.
+
+-- ACBrBancoPineBradesco --
+[*] Remoção de métodos não utilizados
+
 
 26/12/2019
 -- ACBrBoleto --

@@ -317,6 +317,8 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseRpsResposta') <> '');
     if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ConsultarNfseRpsRespostaV110') <> '');
+    if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'ConsultarNfsePorRpsResult') <> '');
 
     if not Nivel1 then

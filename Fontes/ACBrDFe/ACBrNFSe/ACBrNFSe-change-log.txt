@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 30/12/2019
+-- pnfsLerListaNFSe --
+[*] Incluido a condição para identificar o grupo <ConsultarNfseRpsRespostaV110>.
+   Por: Natan Andreolla
+
+30/12/2019
 -- pnfsNFSeW_ABRASFv2 --
 [*] Segundo o provedor Pronimv2 a tag Aliquota sempre deve ser gerada se o 
     contribuinte for do Simples Nacional, alteração feita para atender essa

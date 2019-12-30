@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/12/2019
+-- pcnNFeW -- 
+[*] https://www.projetoacbr.com.br/forum/topic/47753-notas-de-exporta%C3%A7%C3%A3o-ind-obrigando-campo-nre/?do=findComment&comment=363645
+   Por: Fernando Bolson
+
 19/12/2019
 -- ACBrNFeWebServices --
 [+] Incluido a propriedade Protocolo no retorno de envio do NF-e.

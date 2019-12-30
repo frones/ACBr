@@ -999,7 +999,7 @@ begin
     if (nfe.Det[i].Prod.detExport[j].nRE <> '') or (nfe.Det[i].Prod.detExport[j].chNFe <> '') then
     begin
       Gerador.wGrupo('exportInd', 'I52');
-      Gerador.wCampo(tcStr, 'I53', 'nRE    ', 12, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);
+      Gerador.wCampo(tcStr, 'I53', 'nRE    ', 00, 12, 1, nfe.Det[i].Prod.detExport[j].nRE, DSC_NRE);
       if not ValidaRE(nfe.Det[i].Prod.detExport[j].nRE) then
         Gerador.wAlerta('I53', 'nRE', DSC_NRE, ERR_MSG_INVALIDO);
       Gerador.wCampo(tcEsp, 'I54', 'chNFe  ', 44, 44, 1, OnlyNumber(nfe.Det[i].Prod.detExport[j].chNFe), DSC_REFNFE);
@@ -1176,21 +1176,21 @@ begin
       if nfe.Det[i].Prod.comb.cProdANP = 210203001 then
       begin
         if nfe.Det[i].Prod.comb.pGLP = 100 then
-    	  Gerador.wCampo(tcDe2, 'LA03a', 'pGLP', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
+          Gerador.wCampo(tcDe2, 'LA03a', 'pGLP', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP)
         else
-	  Gerador.wCampo(tcDe4, 'LA03a', 'pGLP', 01,  7, 1, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
+          Gerador.wCampo(tcDe4, 'LA03a', 'pGLP', 01,  7, 1, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
 
         if nfe.Det[i].Prod.comb.pGNn = 100 then
-	  Gerador.wCampo(tcDe2, 'LA03b', 'pGNn', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
+          Gerador.wCampo(tcDe2, 'LA03b', 'pGNn', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN)
         else
-	  Gerador.wCampo(tcDe4, 'LA03b', 'pGNn', 01,  7, 1, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+          Gerador.wCampo(tcDe4, 'LA03b', 'pGNn', 01,  7, 1, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
 
         if nfe.Det[i].Prod.comb.pGNi = 100 then
-    	  Gerador.wCampo(tcDe2, 'LA03c', 'pGNi', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
+          Gerador.wCampo(tcDe2, 'LA03c', 'pGNi', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI)
         else
-	  Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
+          Gerador.wCampo(tcDe4, 'LA03c', 'pGNi', 01,  7, 1, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
 
-        Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 1, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
+        Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
       end;
     end;
 
@@ -1506,7 +1506,7 @@ begin
                cst51 :
                   begin
                     //Esse bloco fica a critério de cada UF a obrigação das informações, conforme o manual
-                    // Alterado de opcional para obrigatório as tags abaixo (27/09/2019 - Italo)
+                    // Alterado de opcional para obrigatório as tags abaixo (27/09/2019)
                     if nfe.Det[i].Imposto.ICMS.modBC <> dbiNenhum then
                       Gerador.wCampo(tcStr, 'N13', 'modBC', 01, 01, 1, modBCToStr(nfe.Det[i].Imposto.ICMS.modBC), DSC_MODBC);
 

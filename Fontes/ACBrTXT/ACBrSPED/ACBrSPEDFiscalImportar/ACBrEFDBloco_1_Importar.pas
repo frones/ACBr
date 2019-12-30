@@ -54,6 +54,12 @@ type
   private
     procedure Reg1001;
     procedure Reg1010;
+    procedure Reg1300;
+    procedure Reg1310;
+    procedure Reg1320;
+    procedure Reg1350;
+    procedure Reg1360;
+    procedure Reg1370;
     procedure Reg1600;
   public
     procedure AnalisaRegistro(const inDelimitador: TStrings); override;
@@ -72,11 +78,23 @@ begin
 
   vHead := Head;
 
-  if vHead = '1001' then
+  if (vHead = '1001') then 
     Reg1001
-  else if vHead = '1010' then
+  else if (vHead = '1010') then
     Reg1010
-  else if vHead = '1600' then
+  else if (vHead = '1300') then
+    Reg1300
+  else if (vHead = '1310') then
+    Reg1310
+  else if (vHead = '1320') then
+    Reg1320
+  else if (vHead = '1350') then
+    Reg1350
+  else if (vHead = '1360') then
+    Reg1360
+  else if (vHead = '1370') then
+    Reg1370
+  else if (vHead = '1600') then
     Reg1600;
 end;
 
@@ -104,6 +122,86 @@ begin
     IND_GIAF1 := Valor;
     IND_GIAF3 := Valor;
     IND_GIAF4 := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1300;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1300New do
+  begin
+    COD_ITEM := Valor;
+    DT_FECH := ValorD;
+    ESTQ_ABERT := ValorF;
+    VOL_ENTR := ValorF;
+    VOL_DISP := ValorF;
+    VOL_SAIDAS := ValorF;
+    ESTQ_ESCR := ValorF;
+    VAL_AJ_PERDA := ValorF;
+    VAL_AJ_GANHO := ValorF;
+    FECH_FISICO := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1310;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1310New do
+  begin
+    NUM_TANQUE := Valor;
+    ESTQ_ABERT := ValorF;
+    VOL_ENTR := ValorF;
+    VOL_DISP := ValorF;
+    VOL_SAIDAS := ValorF;
+    ESTQ_ESCR := ValorF;
+    VAL_AJ_PERDA := ValorF;
+    VAL_AJ_GANHO := ValorF;
+    FECH_FISICO := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1320;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1320New do
+  begin
+    NUM_BICO := Valor;
+    NR_INTERV := Valor;
+    MOT_INTERV := Valor;
+    NOM_INTERV := Valor;
+    CNPJ_INTERV := Valor;
+    CPF_INTERV := Valor;
+    VAL_FECHA := ValorF;
+    VAL_ABERT := ValorF;
+    VOL_AFERI := ValorF;
+    VOL_VENDAS := ValorF;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1350;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1350New do
+  begin
+    SERIE := Valor;
+    FABRICANTE := Valor;
+    MODELO := Valor;
+    TIPO_MEDICAO := TACBrMedicao(ValorI);
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1360;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1360New do
+  begin
+    NUM_LACRE := Valor;
+    DT_APLICACAO := ValorD;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco1.Reg1370;
+begin
+  with ACBrSpedFiscal.Bloco_1.Registro1370New do
+  begin
+    NUM_BICO := Valor;
+    COD_ITEM := Valor;
+    NUM_TANQUE := Valor;
   end;
 end;
 

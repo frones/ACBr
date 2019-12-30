@@ -411,6 +411,8 @@ procedure TACBrSpedFiscalImportar_BlocoC.RegC171;
 begin
   with ACBrSpedFiscal.Bloco_C.RegistroC171New do
   begin
+    NUM_TANQUE := Valor;
+    QTDE := ValorF;
   end;
 end;
 

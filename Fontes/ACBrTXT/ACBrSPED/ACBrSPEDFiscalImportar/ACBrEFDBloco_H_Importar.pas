@@ -55,6 +55,7 @@ type
     procedure RegH005;
     procedure RegH010;
     procedure RegH020;
+    procedure RegH990; 
   public
     procedure AnalisaRegistro(const inDelimitador: TStrings); override;
   end;
@@ -71,6 +72,7 @@ begin
   else if (vHead = 'H005') then RegH005
   else if (vHead = 'H010') then RegH010
   else if (vHead = 'H020') then RegH020
+  else if (vHead = 'H990') then RegH990;
 end;
 
 
@@ -123,5 +125,12 @@ begin
   end;
 end;
 
+procedure TACBrSpedFiscalImportar_BlocoH.RegH990;
+begin
+  with ACBrSpedFiscal.Bloco_H.RegistroH990 do
+  begin
+    QTD_LIN_H := ValorI;
+  end;
+end;
 
 end.

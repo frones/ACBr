@@ -3,9 +3,10 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2009   Isaque Pinheiro                      }
+{ Direitos Autorais Reservados (c) 2009 Daniel Simoes de Almeida               }
 {                                                                              }
-{ Colaboradores nesse arquivo:                                                 }
+{ Colaboradores nesse arquivo:          Isaque Pinheiro                        }
+{                                       Juliomar Marchetti                     }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
@@ -26,9 +27,8 @@
 { Você também pode obter uma copia da licença em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
-{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
 {******************************************************************************}
 
 {******************************************************************************
@@ -241,15 +241,15 @@ begin
         with RegK100.RegistroK210.Items[intFor] do
         begin
           if ((COD_DOC_OS <> '') or (DT_FIN_OS > 0)) and (DT_INI_OS <= 0) then
-            raise Exception.Create('O campo DT_INI_OS será obrigatório conforme informação do campo COD_DOC_OS ou DT_FIN_OS');
-          if ((DT_INI_OS > 0) or (DT_FIN_OS > 0)) and (COD_DOC_OS = '') then
-            raise Exception.Create('O campo COD_DOC_OS será obrigatório conforme informação do campo DT_INI_OS ou DT_FIN_OS');
-          if (DT_INI_OS < RegK100.DT_INI) or (DT_INI_OS > RegK100.DT_FIN) then
-           raise Exception.Create('A data inicial deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
-          if (DT_FIN_OS < RegK100.DT_INI) or (DT_FIN_OS > RegK100.DT_FIN) then
-           raise Exception.Create('A data final deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+            raise EACBrSPEDFiscalException.Create('O campo DT_INI_OS será obrigatório quando informado o campo COD_DOC_OS ou DT_FIN_OS');
+          if (DT_INI_OS > 0) and (COD_DOC_OS = '') then
+            raise EACBrSPEDFiscalException.Create('O campo COD_DOC_OS será obrigatório quando informado o campo DT_INI_OS.');
+          if (COD_DOC_OS <> '') and (DT_INI_OS > RegK100.DT_FIN) then
+           raise EACBrSPEDFiscalException.Create('O campo DT_INI_OS deve ser menor ou igual a DT_FIN do registro K100.');
+          if (COD_DOC_OS <> '') and ((DT_FIN_OS < RegK100.DT_INI) or (DT_FIN_OS > RegK100.DT_FIN)) then
+           raise EACBrSPEDFiscalException.Create('O campo DT_FIN_OS deve estar compreendido no período de apuração do Registro K100');
           if DT_INI_OS > DT_FIN_OS then
-            raise Exception.Create('O campo DT_INI_OS não pode ser maior do que o campo DT_FIN_OS');
+            raise EACBrSPEDFiscalException.Create('O campo DT_INI_OS não pode ser maior do que o campo DT_FIN_OS');
 
           Add( LFill('K210') +
                LFill( DT_INI_OS ) +

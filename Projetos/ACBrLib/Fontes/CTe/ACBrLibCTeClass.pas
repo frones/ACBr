@@ -94,6 +94,10 @@ function CTE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: lo
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
@@ -417,6 +421,101 @@ begin
           Result := SetRetorno(ErrOK)
         else
           Result := SetRetorno(ErrGerarXml);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: String;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_ObterIni(' + IntToStr(AIndex) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_ObterIni', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        if (AIndex >= CTeDM.ACBrCTe1.Conhecimentos.Count) and (CTeDM.ACBrCTe1.Conhecimentos.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        if EstaVazio(CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].XMLOriginal) then
+          CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarXML;
+
+        Resposta := CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarCTeIni;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ACTeIni, ANomeArquivo, APathArquivo: String;
+begin
+  try
+    VerificarLibInicializada;
+    ANomeArquivo := String(eNomeArquivo);
+    APathArquivo := String(ePathArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_GravarIni(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_GravarIni', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+      try
+        if (AIndex >= CTeDM.ACBrCTe1.Conhecimentos.Count) and (CTeDM.ACBrCTe1.Conhecimentos.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        ANomeArquivo := ExtractFileName(ANomeArquivo);
+
+        if EstaVazio(ANomeArquivo) then
+          raise EACBrLibException.Create(ErrExecutandoMetodo, 'Nome de arquivo não informado');
+
+        if EstaVazio(APathArquivo) then
+          APathArquivo := ExtractFilePath(ANomeArquivo);
+        if EstaVazio(APathArquivo) then
+          APathArquivo := CTeDM.ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+        APathArquivo := PathWithDelim(APathArquivo);
+
+        if EstaVazio(CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].XMLOriginal) then
+          CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarXML;
+
+        ACTeIni := CTeDM.ACBrCTe1.Conhecimentos.Items[AIndex].GerarCTeIni;
+
+        if not DirectoryExists(APathArquivo) then
+          ForceDirectories(APathArquivo);
+
+        WriteToTXT(APathArquivo + ANomeArquivo, ACTeIni, False, False);
       finally
         CTeDM.Destravar;
       end;

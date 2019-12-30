@@ -244,9 +244,9 @@ type
 implementation
 
 uses
-  typinfo, strutils, synacode,
-  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrLibComum,
-  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
+  typinfo, strutils, synacode, blcksock,
+  ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
+  ACBrLibComum, ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
 
 { TDANFeNFeConfig }
@@ -702,8 +702,26 @@ begin
 end;
 
 procedure TLibNFeConfig.ImportarIni(FIni: TIniFile);
+Var
+  CriptStr: String;
 begin
+  //Sessão Certificado
+  FNFeConfig.Certificados.ArquivoPFX := FIni.ReadString(CSecCertificado, CKeyArquivoPFX, FNFeConfig.Certificados.ArquivoPFX);
+  FNFeConfig.Certificados.NumeroSerie := FIni.ReadString(CSecCertificado, CKeyNumeroSerie, FNFeConfig.Certificados.NumeroSerie);
 
+  CriptStr := '';
+  CriptStr := FIni.ReadString(CSecCertificado, CKeySenha, '');
+  if(CriptStr <> '') then
+    FNFeConfig.Certificados.Senha := CriptStr;
+
+  FNFeConfig.Geral.SSLCryptLib := TSSLCryptLib(FIni.ReadInteger(CSecCertificado, CKeyCryptLib,
+                                                                Integer(FNFeConfig.Geral.SSLCryptLib)));
+  FNFeConfig.Geral.SSLHttpLib := TSSLHttpLib(FIni.ReadInteger(CSecCertificado, CKeyHttpLib,
+                                                                Integer(FNFeConfig.Geral.SSLHttpLib)));
+  FNFeConfig.Geral.SSLXmlSignLib := TSSLXmlSignLib(FIni.ReadInteger(CSecCertificado, CKeyXmlSignLib,
+                                                                Integer(FNFeConfig.Geral.SSLXmlSignLib)));
+  FNFeConfig.WebServices.SSLType := TSSLType(FIni.ReadInteger(CSecCertificado, CKeySSLType,
+                                                                Integer(FNFeConfig.WebServices.SSLType)));
 end;
 
 procedure TLibNFeConfig.Travar;

@@ -53,6 +53,8 @@ exports
   CTE_CarregarINI,
   CTE_ObterXml,
   CTE_GravarXml,
+  CTE_ObterIni,
+  CTE_GravarIni,
   CTE_CarregarEventoXML,
   CTE_CarregarEventoINI,
   CTE_LimparLista,

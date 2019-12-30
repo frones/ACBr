@@ -95,6 +95,10 @@ function NFE_ObterXml(AIndex: longint; const sResposta: PChar; var esTamanho: lo
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_GravarXml(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
     {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_CarregarEventoXML(const eArquivoOuXML: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_CarregarEventoINI(const eArquivoOuINI: PChar): longint;
@@ -176,7 +180,7 @@ function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
 implementation
 
 uses
-  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
+  IniFiles, ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
   ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil,
@@ -430,6 +434,101 @@ begin
           Result := SetRetorno(ErrOK)
         else
           Result := SetRetorno(ErrGerarXml);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_ObterIni(AIndex: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: String;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_ObterIni(' + IntToStr(AIndex) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_ObterIni', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        if EstaVazio(NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].XMLOriginal) then
+          NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].GerarXML;
+
+        Resposta := NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].GerarNFeIni;
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_GravarIni(AIndex: longint; const eNomeArquivo, ePathArquivo: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ANFeIni, ANomeArquivo, APathArquivo: String;
+begin
+  try
+    VerificarLibInicializada;
+    ANomeArquivo := String(eNomeArquivo);
+    APathArquivo := String(ePathArquivo);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_GravarIni(' + IntToStr(AIndex) + ',' + ANomeArquivo + ',' + APathArquivo + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_GravarIni', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+      try
+        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+          raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
+
+        ANomeArquivo := ExtractFileName(ANomeArquivo);
+
+        if EstaVazio(ANomeArquivo) then
+          raise EACBrLibException.Create(ErrExecutandoMetodo, 'Nome de arquivo não informado');
+
+        if EstaVazio(APathArquivo) then
+          APathArquivo := ExtractFilePath(ANomeArquivo);
+        if EstaVazio(APathArquivo) then
+          APathArquivo := NFeDM.ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+
+        APathArquivo := PathWithDelim(APathArquivo);
+
+        if EstaVazio(NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].XMLOriginal) then
+          NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].GerarXML;
+
+        ANFeIni := NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].GerarNFeIni;
+
+        if not DirectoryExists(APathArquivo) then
+          ForceDirectories(APathArquivo);
+
+        WriteToTXT(APathArquivo + ANomeArquivo, ANFeIni, False, False);
       finally
         NFeDM.Destravar;
       end;
@@ -1379,7 +1478,7 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('NFe_DistribuicaoDFePorUltNSU(' + IntToStr(AcUFAutor) + ',' +
-                     ACNPJCPF + ',' + AultNSU + ',' + ' )', logCompleto, True)
+                     ACNPJCPF + ',' + AultNSU + ')', logCompleto, True)
     else
       pLib.GravarLog('NFe_DistribuicaoDFePorUltNSU', logNormal);
 
@@ -1444,7 +1543,7 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('NFe_DistribuicaoDFePorNSU(' + IntToStr(AcUFAutor) + ',' +
-                     ACNPJCPF + ',' + ANSU + ',' + ' )', logCompleto, True)
+                     ACNPJCPF + ',' + ANSU + ')', logCompleto, True)
     else
       pLib.GravarLog('NFe_DistribuicaoDFePorNSU', logNormal);
 
@@ -1509,7 +1608,7 @@ begin
 
     if pLib.Config.Log.Nivel > logNormal then
       pLib.GravarLog('NFe_DistribuicaoDFePorChave(' + IntToStr(AcUFAutor) + ',' +
-                     ACNPJCPF + ',' + AchNFe + ' )', logCompleto, True)
+                     ACNPJCPF + ',' + AchNFe + ')', logCompleto, True)
     else
       pLib.GravarLog('NFe_DistribuicaoDFePorChave', logNormal);
 

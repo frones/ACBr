@@ -86,6 +86,8 @@ exports
   NFE_CarregarINI,
   NFE_ObterXml,
   NFE_GravarXml,
+  NFE_ObterIni,
+  NFE_GravarIni,
   NFE_CarregarEventoXML,
   NFE_CarregarEventoINI,
   NFE_LimparLista,

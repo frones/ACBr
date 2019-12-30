@@ -763,7 +763,7 @@ begin
       else
         MDFeDM.ACBrMDFe1.WebServices.Consulta.MDFeChave := StringReplace(
           MDFeDM.ACBrMDFe1.Manifestos.Items[MDFeDM.ACBrMDFe1.Manifestos.Count - 1].MDFe.infMDFe.ID,
-          'NFe','',[rfIgnoreCase]);
+          'MDFe','',[rfIgnoreCase]);
 
       Resp := TConsultaResposta.Create(pLib.Config.TipoResposta, pLib.Config.CodResposta);
       try

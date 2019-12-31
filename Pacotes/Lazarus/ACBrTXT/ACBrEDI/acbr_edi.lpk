@@ -9,10 +9,10 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI"/>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="9">
+    <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas"/>
         <HasRegisterProc Value="True"/>
@@ -27,29 +27,21 @@
         <UnitName Value="ACBrEDICobranca"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIConEmb.pas"/>
-        <UnitName Value="ACBrEDIConEmb"/>
-      </Item4>
-      <Item5>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIConhectos.pas"/>
         <UnitName Value="ACBrEDIConhectos"/>
-      </Item5>
-      <Item6>
+      </Item4>
+      <Item5>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFiscal.pas"/>
         <UnitName Value="ACBrEDINotaFiscal"/>
-      </Item6>
-      <Item7>
-        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFisClass.pas"/>
-        <UnitName Value="ACBrEDINotaFisClass"/>
-      </Item7>
-      <Item8>
+      </Item5>
+      <Item6>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIOcorrencia.pas"/>
         <UnitName Value="ACBrEDIOcorrencia"/>
-      </Item8>
-      <Item9>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas"/>
         <UnitName Value="pediConversao"/>
-      </Item9>
+      </Item7>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>

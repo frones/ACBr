@@ -572,10 +572,6 @@ implementation
 
 uses pcnAuxiliar, ACBrUtil ;
 
-{$IFNDEF FPC}
- {$R ACBrEDINotaFiscais.dcr}
-{$ENDIF}
-
 { TNotaFiscais }
 
 procedure TACBrEDINotaFiscais.LerCabecalho;

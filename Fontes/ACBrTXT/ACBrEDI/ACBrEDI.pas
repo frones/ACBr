@@ -43,8 +43,11 @@ procedure Register;
 
 implementation
 
-{$IFNDEF FPC}
- {$R ACBrEDI.dcr}
+{$IFNDEF FPC}            // Necessário para carregar as imagens dos componentes
+ {$R ACBr_EDI.dcr}
+// {$R ACBrEDICobranca.dcr}
+// {$R ACBrEDINotaFiscais.dcr}
+// {$R ACBrEDIOcorrencia.dcr}
 {$ENDIF}
 
 procedure Register;

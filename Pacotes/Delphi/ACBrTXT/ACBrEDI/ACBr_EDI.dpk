@@ -41,9 +41,7 @@ contains
   ACBrEDIOcorrencia in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIOcorrencia.pas',
   pediConversao in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\pediConversao.pas',
   ACBrEDIClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIClass.pas',
-  ACBrEDI in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas',
-  ACBrEDIConEmb in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDIConEmb.pas',
-  ACBrEDINotaFisClass in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDINotaFisClass.pas';
+  ACBrEDI in '..\..\..\..\Fontes\ACBrTXT\ACBrEDI\ACBrEDI.pas';
 
 end.
 

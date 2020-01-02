@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/12/2019
+-- ACBrBPeBilhetes --
+[+] Implementado os métodos: GerarBPeIni e GerarIni, métodos a serem utilizados 
+    pelo ACBrMonitor e ACBrLibBPe para gerar o arquivo INI com base no XML
+    carregado.
+   Por: Italo Jurisato Junior
+
 24/12/2019
 -- ACBrBPeDABPeESCPOS --
 [*] Melhorias na impressão do DABPE.

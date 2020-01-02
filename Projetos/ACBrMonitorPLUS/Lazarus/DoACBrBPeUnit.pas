@@ -821,28 +821,35 @@ var
 begin
   INIRec := TMemIniFile.Create('BPe.ini');
 
-  fACBrBPe.Bilhetes.Clear;
-  if FilesExists(XML) then
-    fACBrBPe.Bilhetes.LoadFromFile(XML)
-  else
-  begin
-    LocBPeR := TBPeR.Create(fACBrBPe.Bilhetes.Add.BPe);
-    try
-      LocBPeR.Leitor.Arquivo := ConvertStrRecived(XML);
-      LocBPeR.LerXml;
-      fACBrBPe.Bilhetes.Items[0].XML := LocBPeR.Leitor.Arquivo;
-      fACBrBPe.Bilhetes.GerarBPe;
-    finally
-      LocBPeR.Free;
-    end;
-  end;
+  try
+    fACBrBPe.Bilhetes.Clear;
 
-  IniBPe := TStringList.Create;
-// falta implementar no componente  IniBPe.Text := fACBrBPe.Bilhetes.GerarIni();
-  INIRec.SetStrings(IniBPe);
-  INIRec.Free;
-  Result := IniBPe.Text;
-  IniBPe.Free;
+    if FilesExists(XML) then
+      fACBrBPe.Bilhetes.LoadFromFile(XML)
+    else
+    begin
+      LocBPeR := TBPeR.Create(fACBrBPe.Bilhetes.Add.BPe);
+      try
+        LocBPeR.Leitor.Arquivo := ConvertStrRecived(XML);
+        LocBPeR.LerXml;
+        fACBrBPe.Bilhetes.Items[0].XML := LocBPeR.Leitor.Arquivo;
+        fACBrBPe.Bilhetes.GerarBPe;
+      finally
+        LocBPeR.Free;
+      end;
+    end;
+
+    IniBPe := TStringList.Create;
+    try
+      IniBPe.Text := fACBrBPe.Bilhetes.GerarIni();
+      INIRec.SetStrings(IniBPe);
+      Result := IniBPe.Text;
+    finally
+      IniBPe.Free;
+    end;
+  finally
+    INIRec.Free;
+  end;
 end;
 
 { TACBrCarregarBPe }

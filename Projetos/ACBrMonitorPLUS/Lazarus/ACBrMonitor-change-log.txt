@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/01/2020
+[*] DoACBrBPeUnit e DoACBrMDFeUnit
+Alterado a implementação dos métodos: GerarBPeIni e GerarMDFeIni visando se utilizar
+do método GerarIni implementado nos códigos dos componentes.
+
 18/12/2019
 [*] DoACBrBPeUnit
 Incluido o parametro Protocolo no retorno do Envio e corrigido a impressão do DABPE

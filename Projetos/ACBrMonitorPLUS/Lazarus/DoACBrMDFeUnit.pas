@@ -862,210 +862,40 @@ end;
 
 function TACBrObjetoMDFe.GerarMDFeIni(XML: string): string;
 var
-  I, j, y: integer;
-  sSecao: string;
   INIRec: TMemIniFile;
   IniMDFe: TStringList;
   LocMDFeR: TMDFeR;
 begin
   INIRec := TMemIniFile.Create('MDFe.ini');
-  fACBrMDFe.Manifestos.Clear;
-  if FilesExists(XML) then
-    fACBrMDFe.Manifestos.LoadFromFile(XML)
-  else
-  begin
-    LocMDFeR := TMDFeR.Create(fACBrMDFe.Manifestos.Add.MDFe);
-    try
-      LocMDFeR.Leitor.Arquivo := ConvertStrRecived(XML);
-      LocMDFeR.LerXml;
-      fACBrMDFe.Manifestos.Items[0].XML := LocMDFeR.Leitor.Arquivo;
-      fACBrMDFe.Manifestos.GerarMDFe;
-    finally
-      LocMDFeR.Free;
+
+  try
+    fACBrMDFe.Manifestos.Clear;
+
+    if FilesExists(XML) then
+      fACBrMDFe.Manifestos.LoadFromFile(XML)
+    else
+    begin
+      LocMDFeR := TMDFeR.Create(fACBrMDFe.Manifestos.Add.MDFe);
+      try
+        LocMDFeR.Leitor.Arquivo := ConvertStrRecived(XML);
+        LocMDFeR.LerXml;
+        fACBrMDFe.Manifestos.Items[0].XML := LocMDFeR.Leitor.Arquivo;
+        fACBrMDFe.Manifestos.GerarMDFe;
+      finally
+        LocMDFeR.Free;
+      end;
     end;
 
-  end;
-
-  with fACBrMDFe do
-  begin
+    IniMDFe := TStringList.Create;
     try
-      with Manifestos.Items[0].MDFe do
-      begin
-        INIRec.WriteInteger('ide', 'cUF', Ide.cUF);
-        INIRec.WriteString('ide', 'tpEmit', TpEmitenteToStr(Ide.tpEmit));
-        INIRec.WriteString('ide', 'mod', Ide.modelo);
-        INIRec.WriteInteger('ide', 'serie', Ide.serie);
-        INIRec.WriteInteger('ide', 'nMDF', Ide.nMDF);
-        INIRec.WriteInteger('ide', 'cMDF', Ide.cMDF);
-        INIRec.WriteString('ide', 'modal', ModalToStr(Ide.modal));
-        INIRec.WriteString('ide', 'dhEmi', DateToStr(Ide.dhEmi));
-        INIRec.WriteString('ide', 'tpEmis', TpEmisToStr(Ide.tpEmis));
-        INIRec.WriteString('ide', 'procEmi', procEmiToStr(Ide.procEmi));
-        INIRec.WriteString('ide', 'verProc', Ide.verProc);
-        INIRec.WriteString('ide', 'UFIni', Ide.UFIni);
-        INIRec.WriteString('ide', 'UFFim', Ide.UFFim);
-        INIRec.WriteString('ide', 'dhIniViagem', DateToStr(Ide.dhIniViagem));
-        INIRec.WriteString('ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp));
-        for i := 0 to ide.infMunCarrega.Count - 1 do
-        begin
-          sSecao := 'CARR' + IntToStrZero(I + 1, 3);
-          with ide.infMunCarrega.Items[i] do
-          begin
-            INIRec.WriteInteger(sSecao, 'cMunCarrega', cMunCarrega);
-            INIRec.WriteString(sSecao, 'xMunCarrega', xMunCarrega);
-          end;
-        end;
-        for i := 0 to ide.infPercurso.Count - 1 do
-        begin
-          sSecao := 'PERC' + IntToStrZero(I + 1, 3);
-          with ide.infPercurso.Items[i] do
-          begin
-            INIRec.WriteString(sSecao, 'UFPer', UFPer);
-          end;
-        end;
-        INIRec.WriteString('emit', 'CNPJ', Emit.CNPJCPF);
-        INIRec.WriteString('emit', 'IE', Emit.IE);
-        INIRec.WriteString('emit', 'xNome', Emit.xNome);
-        INIRec.WriteString('emit', 'xFant', Emit.xFant);
-        INIRec.WriteString('emit', 'xLgr', Emit.enderEmit.xLgr);
-        INIRec.WriteString('emit', 'nro', Emit.enderEmit.nro);
-        INIRec.WriteString('emit', 'xCpl', Emit.enderEmit.xCpl);
-        INIRec.WriteString('emit', 'xBairro', Emit.enderEmit.xBairro);
-        INIRec.WriteInteger('emit', 'cMun', Emit.enderEmit.cMun);
-        INIRec.WriteString('emit', 'xMun', Emit.enderEmit.xMun);
-        INIRec.WriteInteger('emit', 'CEP', Emit.enderEmit.CEP);
-        INIRec.WriteString('emit', 'UF', Emit.enderEmit.UF);
-        INIRec.WriteString('emit', 'fone', Emit.enderEmit.fone);
-        INIRec.WriteString('emit', 'email', Emit.enderEmit.email);
-        case Ide.modal of
-          moRodoviario:
-          begin
-            INIRec.WriteString('Rodo', 'RNTRC', Rodo.RNTRC);
-            INIRec.WriteString('Rodo', 'CIOT', Rodo.CIOT);
-            INIRec.WriteString('Rodo', 'tpRod',
-              TpRodadoToStr(Rodo.veicTracao.tpRod));
-            INIRec.WriteString('Rodo', 'tpCar',
-              TpCarroceriaToStr(Rodo.veicTracao.tpCar));
-            INIRec.WriteString('Rodo', 'UF', Rodo.veicTracao.UF);
-            if (Rodo.veicTracao.placa <> '') then
-            begin
-              INIRec.WriteString('veicTracao',
-                'clInt', Rodo.veicTracao.cInt);
-              INIRec.WriteString('veicTracao',
-                'placa', Rodo.veicTracao.placa);
-              INIRec.WriteString('veicTracao',
-                'RENAVAN', Rodo.veicTracao.RENAVAM);
-              INIRec.WriteInteger('veicTracao',
-                'tara', Rodo.veicTracao.tara);
-              INIRec.WriteInteger('veicTracao',
-                'capKG', Rodo.veicTracao.capKG);
-              INIRec.WriteInteger('veicTracao',
-                'clInt', Rodo.veicTracao.capM3);
-            end;
-            if (Rodo.veicTracao.prop.CNPJCPF <> '') then
-            begin
-              INIRec.WriteString('prop', 'CPFCNPJ',
-                Rodo.veicTracao.prop.CNPJCPF);
-              INIRec.WriteString(
-                'prop', 'RNTRC', Rodo.veicTracao.prop.RNTRC);
-              INIRec.WriteString(
-                'prop', 'xNome', Rodo.veicTracao.prop.xNome);
-              INIRec.WriteString('prop', 'IE', Rodo.veicTracao.prop.IE);
-              INIRec.WriteString('prop', 'UF', Rodo.veicTracao.prop.UF);
-              INIRec.WriteString(
-                'prop', 'tpProp', TpPropToStr(Rodo.veicTracao.prop.tpProp));
-            end;
-            for y := 1 to Rodo.veicTracao.condutor.Count - 1 do
-            begin
-              sSecao := 'moto' + IntToStrZero(y + 1, 3);
-              IniRec.WriteString(
-                sSecao, 'CPF', Rodo.veicTracao.condutor.Items[y].CPF);
-              IniRec.WriteString(
-                sSecao, 'xNome', Rodo.veicTracao.condutor.Items[y].xNome);
-            end;
-          end;
-          moAereo:
-          begin
-
-          end;
-          moAquaviario:
-          begin
-
-          end;
-          moFerroviario:
-          begin
-
-          end;
-        end;
-        for i := 0 to infDoc.infMunDescarga.Count - 1 do
-        begin
-          sSecao := 'DESC' + IntToStrZero(I + 1, 3);
-          with infDoc.infMunDescarga.Items[i] do
-          begin
-            INIRec.WriteInteger(sSecao, 'cMunDescarga', cMunDescarga);
-            INIRec.WriteString(sSecao, 'xMunDescarga', xMunDescarga);
-            for j := 0 to infDoc.infMunDescarga.Items[i].infCTe.Count - 1 do
-            begin
-              sSecao := 'infCTe' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
-              with infDoc.infMunDescarga.Items[i].infCTe.Items[j] do
-              begin
-                INIRec.WriteString(sSecao, 'chCTe', chCTe);
-                INIRec.WriteString(sSecao, 'SegCodBarra', SegCodBarra);
-              end;
-            end;
-            for j := 0 to infDoc.infMunDescarga.Items[i].infNFe.Count - 1 do
-            begin
-              sSecao := 'infNFe' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
-              with infDoc.infMunDescarga.Items[i].infNFe.Items[j] do
-              begin
-                INIRec.WriteString(sSecao, 'chNFe', chNFe);
-                INIRec.WriteString(sSecao, 'SegCodBarra', SegCodBarra);
-              end;
-            end;
-            for j := 0 to infDoc.infMunDescarga.Items[i].infMDFeTransp.Count - 1 do
-            begin
-              sSecao := 'infMDFeTransp' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
-              with infDoc.infMunDescarga.Items[i].infMDFeTransp.Items[j] do
-              begin
-                INIRec.WriteString(sSecao, 'chMDFe', chMDFe);
-              end;
-            end;
-          end;
-        end;
-        INIRec.WriteInteger('tot', 'qCTe', tot.qCTe);
-        INIRec.WriteInteger('tot', 'qNFe', tot.qNFe);
-        INIRec.WriteInteger('tot', 'qMDFe', tot.qMDFe);
-        INIRec.WriteFloat('tot', 'vCarga', tot.vCarga);
-        INIRec.WriteString('tot', 'cUnid', UnidMedToStr(tot.cUnid));
-        INIRec.WriteFloat('tot', 'qCarga', tot.qCarga);
-        for i := 0 to lacres.Count - 1 do
-        begin
-          sSecao := 'lacres' + IntToStrZero(I + 1, 3);
-          with lacres.Items[i] do
-          begin
-            INIRec.WriteString(sSecao, 'nLacre', nLacre);
-          end;
-        end;
-        for i := 0 to autXML.Count - 1 do
-        begin
-          sSecao := 'autXML' + IntToStrZero(I + 1, 3);
-          with autXML.Items[i] do
-          begin
-            INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
-          end;
-        end;
-        INIRec.WriteString('infAdic', 'infAdFisco', infAdic.infAdFisco);
-        INIRec.WriteString('infAdic', 'infCpl', infAdic.infCpl);
-      end;
-
+      IniMDFe.Text := fACBrMDFe.Manifestos.GerarIni();
+      INIRec.SetStrings(IniMDFe);
+      Result := IniMDFe.Text;
     finally
-      IniMDFe := TStringList.Create;
-      INIRec.GetStrings(IniMDFe);
-      INIRec.Free;
-      Result := StringReplace(IniMDFe.Text, sLineBreak + sLineBreak,
-        sLineBreak, [rfReplaceAll]);
       IniMDFe.Free;
     end;
+  finally
+    INIRec.Free;
   end;
 end;
 

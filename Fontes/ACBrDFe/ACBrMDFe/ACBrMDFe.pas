@@ -249,7 +249,7 @@ var
   idMDFe,
   sEntrada, urlUF, Passo2, sign: String;
 //  VersaoDFe: TVersaoMDFe;
-  ok: Boolean;
+//  ok: Boolean;
 begin
 //  VersaoDFe := DblToVersaoMDFe(ok, Versao);
 
@@ -273,8 +273,6 @@ begin
 
     sEntrada := sEntrada + Passo2;
   end;
-
-
 
   Result := urlUF + sEntrada;
 end;

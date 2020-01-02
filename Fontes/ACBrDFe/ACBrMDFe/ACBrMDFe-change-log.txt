@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/12/2019
+-- ACBrMDFeManifestos --
+[+] Implementado os métodos: GerarMDFeIni e GerarIni, métodos a serem utilizados 
+    pelo ACBrMonitor e ACBrLibMDFe para gerar o arquivo INI com base no XML
+    carregado.
+   Por: Italo Jurisato Junior
+
 19/12/2019
 -- ACBrMDFeWebServices --
 [+] Incluido a propriedade Protocolo no retorno de envio do MDF-e.

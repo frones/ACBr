@@ -1,4 +1,4 @@
-FrmMain = 25, 25, 641, 419, Z, 100, 100, 712, 468, C
-ACBrPosPrinter = 78, 78, 1218, 606, 
-ACBrPosPrinterUtils = 78, 78, 1218, 606, 
-ACBrComum = 104, 104, 1244, 632, 
+FrmMain = 26, 26, 1338, 619, Z, 78, 78, 1319, 619, C
+ACBrPosPrinter = 0, 0, 0, 0, C
+ACBrPosPrinterUtils = 0, 0, 0, 0, C
+ACBrComum = 52, 52, 1293, 593, 

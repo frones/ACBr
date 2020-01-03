@@ -9,7 +9,6 @@ import com.sun.jna.ptr.IntByReference;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
 /**
@@ -27,9 +26,6 @@ import java.nio.file.Paths;
  */
 
 public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
-
-  private static final Charset UTF8 = Charset.forName( "UTF-8" );
-  private static final int STR_BUFFER_LEN = 256;
 
   public ACBrCTe() throws Exception {
     File iniFile = Paths.get( System.getProperty( "user.dir" ), "ACBrLib.ini" ).toFile();
@@ -122,20 +118,42 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
   }
 
   public String obterXml( int AIndex ) throws Exception {
-      ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-      IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
-      int ret = ACBrCTeLib.INSTANCE.CTE_ObterXml(AIndex, buffer, bufferLen );
-      checkResult( ret );
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    int ret = ACBrCTeLib.INSTANCE.CTE_ObterXml(AIndex, buffer, bufferLen );
+    checkResult( ret );
       
-      return processResult( buffer, bufferLen );
+    return processResult( buffer, bufferLen );
   }
   
   public void gravarXml ( int AIndex ) throws Exception {
-      gravarXml(AIndex, "", "");
+    gravarXml(AIndex, "", "");
+  }
+  
+  public void gravarXml ( int AIndex, String eNomeArquivo ) throws Exception {
+    gravarXml(AIndex, eNomeArquivo, "");
   }
   
   public void gravarXml ( int AIndex, String eNomeArquivo, String ePathArquivo ) throws Exception {
-      int ret = ACBrCTeLib.INSTANCE.CTE_GravarXml( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
+    int ret = ACBrCTeLib.INSTANCE.CTE_GravarXml( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
+    checkResult( ret );
+  }
+  
+  public String obterIni( int AIndex ) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    int ret = ACBrCTeLib.INSTANCE.CTE_ObterIni(AIndex, buffer, bufferLen );
+    checkResult( ret );
+      
+    return processResult( buffer, bufferLen );
+  }
+  
+  public void gravarIni ( int AIndex, String eNomeArquivo ) throws Exception {
+    gravarIni(AIndex, eNomeArquivo, "");
+  }
+  
+  public void gravarIni ( int AIndex, String eNomeArquivo, String ePathArquivo ) throws Exception {
+    int ret = ACBrCTeLib.INSTANCE.CTE_GravarIni( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
     checkResult( ret );
   }
   
@@ -411,6 +429,10 @@ public final class ACBrCTe extends ACBrLibBase implements AutoCloseable {
     int CTE_ObterXml( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
     
     int CTE_GravarXml( Integer AIndex, String eNomeArquivo, String ePathArquivo );
+    
+    int CTE_ObterIni( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int CTE_GravarIni( Integer AIndex, String eNomeArquivo, String ePathArquivo );
 
     int CTE_LimparLista();
 

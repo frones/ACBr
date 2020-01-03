@@ -52,6 +52,12 @@ namespace ACBrLib.NFe
             public delegate int NFE_GravarXml(int AIndex, string eNomeArquivo, string ePathArquivo);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ObterIni(int AIndex, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_GravarIni(int AIndex, string eNomeArquivo, string ePathArquivo);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_CarregarEventoXML(string eArquivoOuXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -268,6 +274,27 @@ namespace ACBrLib.NFe
         public void GravarXml(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
         {
             var method = GetMethod<Delegates.NFE_GravarXml>();
+            var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
+
+            CheckResult(ret);
+        }
+
+        public string ObterIni(int aIndex)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_ObterIni>();
+            var ret = ExecuteMethod(() => method(aIndex, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void GravarIni(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
+        {
+            var method = GetMethod<Delegates.NFE_GravarIni>();
             var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
 
             CheckResult(ret);
@@ -604,6 +631,8 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_CarregarINI>("NFE_CarregarINI");
             AddMethod<Delegates.NFE_ObterXml>("NFE_ObterXml");
             AddMethod<Delegates.NFE_GravarXml>("NFE_GravarXml");
+            AddMethod<Delegates.NFE_ObterIni>("NFE_ObterIni");
+            AddMethod<Delegates.NFE_GravarIni>("NFE_GravarIni");
             AddMethod<Delegates.NFE_CarregarEventoXML>("NFE_CarregarEventoXML");
             AddMethod<Delegates.NFE_CarregarEventoINI>("NFE_CarregarEventoINI");
             AddMethod<Delegates.NFE_LimparLista>("NFE_LimparLista");

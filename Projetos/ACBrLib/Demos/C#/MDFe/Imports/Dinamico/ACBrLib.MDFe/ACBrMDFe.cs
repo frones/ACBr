@@ -51,6 +51,12 @@ namespace ACBrLib.MDFe
             public delegate int MDFE_GravarXml(int AIndex, string eNomeArquivo, string ePathArquivo);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ObterIni(int AIndex, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_GravarIni(int AIndex, string eNomeArquivo, string ePathArquivo);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_CarregarEventoXML(string eArquivoOuXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -256,6 +262,27 @@ namespace ACBrLib.MDFe
         public void GravarXml(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
         {
             var method = GetMethod<Delegates.MDFE_GravarXml>();
+            var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
+
+            CheckResult(ret);
+        }
+
+        public string ObterIni(int aIndex)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_ObterIni>();
+            var ret = ExecuteMethod(() => method(aIndex, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void GravarIni(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
+        {
+            var method = GetMethod<Delegates.MDFE_GravarIni>();
             var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
 
             CheckResult(ret);
@@ -548,6 +575,8 @@ namespace ACBrLib.MDFe
             AddMethod<Delegates.MDFE_CarregarINI>("MDFE_CarregarINI");
             AddMethod<Delegates.MDFE_ObterXml>("MDFE_ObterXml");
             AddMethod<Delegates.MDFE_GravarXml>("MDFE_GravarXml");
+            AddMethod<Delegates.MDFE_ObterIni>("MDFE_ObterIni");
+            AddMethod<Delegates.MDFE_GravarIni>("MDFE_GravarIni");
             AddMethod<Delegates.MDFE_CarregarEventoXML>("MDFE_CarregarEventoXML");
             AddMethod<Delegates.MDFE_CarregarEventoINI>("MDFE_CarregarEventoINI");
             AddMethod<Delegates.MDFE_LimparLista>("MDFE_LimparLista");

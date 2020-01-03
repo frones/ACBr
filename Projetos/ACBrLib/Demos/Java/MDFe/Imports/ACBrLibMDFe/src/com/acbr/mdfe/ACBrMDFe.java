@@ -9,7 +9,6 @@ import com.sun.jna.ptr.IntByReference;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
 /**
@@ -27,9 +26,6 @@ import java.nio.file.Paths;
  */
 
 public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
-
-  private static final Charset UTF8 = Charset.forName( "UTF-8" );
-  private static final int STR_BUFFER_LEN = 256;
 
   public ACBrMDFe() throws Exception {
     File iniFile = Paths.get( System.getProperty( "user.dir" ), "ACBrLib.ini" ).toFile();
@@ -122,20 +118,46 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
   }
 
   public String obterXml( int AIndex ) throws Exception {
-      ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
-      IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
-      int ret = ACBrMDFeLib.INSTANCE.MDFE_ObterXml(AIndex, buffer, bufferLen );
-      checkResult( ret );
-      
-      return processResult( buffer, bufferLen );
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_ObterXml(AIndex, buffer, bufferLen );
+    checkResult( ret );
+    
+    return processResult( buffer, bufferLen );
   }
   
   public void gravarXml ( int AIndex ) throws Exception {
-      gravarXml(AIndex, "", "");
+    gravarXml(AIndex, "", "");
+  }
+  
+  public void gravarXml ( int AIndex, String eNomeArquivo ) throws Exception {
+    gravarXml(AIndex, eNomeArquivo, "");
   }
   
   public void gravarXml ( int AIndex, String eNomeArquivo, String ePathArquivo ) throws Exception {
-      int ret = ACBrMDFeLib.INSTANCE.MDFE_GravarXml( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_GravarXml( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
+    checkResult( ret );
+  }
+  
+  public String obterIni( int AIndex ) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_ObterIni(AIndex, buffer, bufferLen );
+    checkResult( ret );
+      
+    return processResult( buffer, bufferLen );
+  }
+  
+  public void gravarIni ( int AIndex ) throws Exception {
+    gravarIni(AIndex, "", "");
+  }
+  
+  public void gravarIni ( int AIndex, String eNomeArquivo ) throws Exception {
+    gravarIni(AIndex, eNomeArquivo, "");
+  }
+  
+  public void gravarIni ( int AIndex, String eNomeArquivo, String ePathArquivo ) throws Exception {
+    int ret = ACBrMDFeLib.INSTANCE.MDFE_GravarIni( AIndex, toUTF8( eNomeArquivo ), toUTF8( ePathArquivo ) );
     checkResult( ret );
   }
   
@@ -378,6 +400,10 @@ public final class ACBrMDFe extends ACBrLibBase implements AutoCloseable {
     int MDFE_ObterXml( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
     
     int MDFE_GravarXml( Integer AIndex, String eNomeArquivo, String ePathArquivo );
+    
+    int MDFE_ObterIni( Integer AIndex, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int MDFE_GravarIni( Integer AIndex, String eNomeArquivo, String ePathArquivo );
 
     int MDFE_LimparLista();
 

@@ -76,6 +76,16 @@ Private Declare Function MDFE_GravarXml _
                 Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
+                                     
+Private Declare Function MDFE_ObterIni _
+                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function MDFE_GravarIni _
+                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                                     ByVal eNomeArquivo As String, _
+                                     ByVal ePathArquivo As String) As Long
                 
 Private Declare Function MDFE_CarregarEventoXML _
                 Lib "ACBrMDFe32.dll" (ByVal eArquivoOuXml As String) As Long
@@ -309,6 +319,29 @@ Public Sub GravarXml(ByVal AIndex As Long, _
                      Optional ByVal ePathArquivo As String = "")
     Dim retorno   As Long
     retorno = MDFE_GravarXml(AIndex, eNomeArquivo, ePathArquivo)
+    CheckResult retorno
+End Sub
+
+Public Function ObterIni(ByVal AIndex As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_ObterIni(AIndex, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterIni = processResult(buffer, bufferLen)
+End Function
+
+Public Sub GravarIni(ByVal AIndex As Long, _
+                     ByVal eNomeArquivo As String, _
+                     Optional ByVal ePathArquivo As String = "")
+    Dim retorno   As Long
+    retorno = MDFE_GravarIni(AIndex, eNomeArquivo, ePathArquivo)
     CheckResult retorno
 End Sub
 

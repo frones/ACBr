@@ -51,6 +51,12 @@ namespace ACBrLib.CTe
             public delegate int CTE_GravarXml(int AIndex, string eNomeArquivo, string ePathArquivo);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_ObterIni(int AIndex, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_GravarIni(int AIndex, string eNomeArquivo, string ePathArquivo);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_CarregarEventoXML(string eArquivoOuXml);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -263,6 +269,27 @@ namespace ACBrLib.CTe
         public void GravarXml(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
         {
             var method = GetMethod<Delegates.CTE_GravarXml>();
+            var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
+
+            CheckResult(ret);
+        }
+
+        public string ObterIni(int aIndex)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.CTE_ObterIni>();
+            var ret = ExecuteMethod(() => method(aIndex, buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public void GravarIni(int aIndex, string eNomeArquivo = "", string ePathArquivo = "")
+        {
+            var method = GetMethod<Delegates.CTE_GravarIni>();
             var ret = ExecuteMethod(() => method(aIndex, ToUTF8(eNomeArquivo), ToUTF8(ePathArquivo)));
 
             CheckResult(ret);
@@ -573,6 +600,8 @@ namespace ACBrLib.CTe
             AddMethod<Delegates.CTE_CarregarEventoINI>("CTE_CarregarEventoINI");
             AddMethod<Delegates.CTE_ObterXml>("CTE_ObterXml");
             AddMethod<Delegates.CTE_GravarXml>("CTE_GravarXml");
+            AddMethod<Delegates.CTE_ObterIni>("CTE_ObterIni");
+            AddMethod<Delegates.CTE_GravarIni>("CTE_GravarIni");
             AddMethod<Delegates.CTE_LimparLista>("CTE_LimparLista");
             AddMethod<Delegates.CTE_LimparListaEventos>("CTE_LimparListaEventos");
             AddMethod<Delegates.CTE_Assinar>("CTE_Assinar");

@@ -76,6 +76,16 @@ Private Declare Function NFE_GravarXml _
                 Lib "ACBrNFE32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
+                                     
+Private Declare Function NFE_ObterIni _
+                Lib "ACBrNFE32.dll" (ByVal AIndex As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function NFE_GravarIni _
+                Lib "ACBrNFE32.dll" (ByVal AIndex As Long, _
+                                     ByVal eNomeArquivo As String, _
+                                     ByVal ePathArquivo As String) As Long
                 
 Private Declare Function NFE_CarregarEventoXML _
                 Lib "ACBrNFE32.dll" (ByVal eArquivoOuXml As String) As Long
@@ -349,6 +359,29 @@ Public Sub GravarXml(ByVal AIndex As Long, _
                      Optional ByVal ePathArquivo As String = "")
     Dim retorno   As Long
     retorno = NFE_GravarXml(AIndex, eNomeArquivo, ePathArquivo)
+    CheckResult retorno
+End Sub
+
+Public Function ObterIni(ByVal AIndex As Long) As String
+
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_ObterIni(AIndex, buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterIni = processResult(buffer, bufferLen)
+End Function
+
+Public Sub GravarIni(ByVal AIndex As Long, _
+                     ByVal eNomeArquivo As String, _
+                     Optional ByVal ePathArquivo As String = "")
+    Dim retorno   As Long
+    retorno = NFE_GravarIni(AIndex, eNomeArquivo, ePathArquivo)
     CheckResult retorno
 End Sub
 
@@ -681,22 +714,4 @@ Private Function processResult(ByRef buffer As String, ByRef bufferLen As Long) 
     End If
 
     processResult = Trim$(FromUTF8(buffer))
-End Function
-
-Private Function FromUTF8(ByRef utf8STR As String) As String
-    
-    Dim length As Long
-    Dim UTF8() As Byte
-    Dim lDataLength As Long
-
-    length = Len(utf8STR)
-    UTF8 = StrConv(utf8STR, vbFromUnicode)
-    
-    ' Get the length of the data.
-    lDataLength = MultiByteToWideChar(CP_UTF8, 0, VarPtr(UTF8(0)), length, 0, 0)
-    
-    ' Create array big enough
-    FromUTF8 = String$(lDataLength, 0)
-    
-    MultiByteToWideChar CP_UTF8, 0, VarPtr(UTF8(0)), length, StrPtr(FromUTF8), lDataLength
 End Function

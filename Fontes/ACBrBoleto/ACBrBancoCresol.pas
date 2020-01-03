@@ -81,7 +81,7 @@ begin
    fpNome                   := 'Bradesco';
    fpNumero                 := 237;
    fpTamanhoMaximoNossoNum  := 11;   
-   fpTamanhoAgencia         := 4;
+   fpTamanhoAgencia         := 5;
    fpTamanhoConta           := 7;
    fpTamanhoCarteira        := 2;
 end;
@@ -109,7 +109,7 @@ begin
 
       CodigoBarras := IntToStr(Numero) + '9' + FatorVencimento +
                       IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
-                      PadLeft(OnlyNumber(Cedente.Agencia), fpTamanhoAgencia, '0') +
+                      PadLeft(OnlyNumber(Cedente.Agencia), 4, '0') +
                       ACBrTitulo.Carteira +
                       ACBrTitulo.NossoNumero +
                       PadLeft(RightStr(Cedente.Conta, 7), 7, '0') + '0';
@@ -229,8 +229,8 @@ begin
         DigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
       end;
 
-      aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia), 0), 5);
-      aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta), 0), 7);
+      aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia), 0), fpTamanhoAgencia);
+      aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta), 0), fpTamanhoConta);
       aCarteira:= IntToStrZero(StrToIntDef(trim(Carteira), 0), 3);
 
       {Pegando Código da Ocorrencia}

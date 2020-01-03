@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibBALClass ---
+--- ACBrLibBALConfig ---
+[+] Adicionado o metodo BAL_ImportarConfig.
+   Por: Rafael Teno Dias
+
 19/03/2019
 --- ACBrLibBAL ---
 [+] Adicionado classe com as configurações da porta serial.

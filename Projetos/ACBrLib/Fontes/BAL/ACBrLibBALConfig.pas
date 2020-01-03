@@ -79,6 +79,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -94,7 +95,8 @@ type
 implementation
 
 uses
-  ACBrLibBALClass, ACBrLibBALConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrMonitorConsts, ACBrLibConsts, ACBrLibBALConsts,
+  ACBrLibBALClass, ACBrLibComum, ACBrUtil;
 
 { TBALConfig }
 
@@ -174,6 +176,16 @@ procedure TLibBALConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibBAL(Owner).BALDM.AplicarConfiguracoes;
+end;
+
+procedure TLibBALConfig.ImportarIni(FIni: TCustomIniFile);
+begin
+  BALConfig.ArqLog    := FIni.ReadString(CSecBAL, CKeyBALArqLog, BALConfig.ArqLog);
+  BALConfig.Porta     := FIni.ReadString(CSecBAL, CKeyBALPorta, BALConfig.Porta);
+  BALConfig.Modelo    := TACBrBALModelo(FIni.ReadInteger(CSecBAL, CKeyBALModelo, Integer(BALConfig.Modelo)));
+  BALConfig.Intervalo := FIni.ReadInteger(CSecBAL, CKeyBALIntervalo, BALConfig.Intervalo);
+
+  DeviceConfig.ImportarSerialParams(FIni.ReadString(CSecBAL, CKeyBALDevice, ''));
 end;
 
 procedure TLibBALConfig.Travar;

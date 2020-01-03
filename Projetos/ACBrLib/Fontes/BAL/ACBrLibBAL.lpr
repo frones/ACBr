@@ -54,6 +54,7 @@ exports
   BAL_Nome,
   BAL_Versao,
   BAL_UltimoRetorno,
+  BAL_ImportarConfig,
   BAL_ConfigLer,
   BAL_ConfigGravar,
   BAL_ConfigLerValor,

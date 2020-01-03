@@ -298,7 +298,7 @@ type
     procedure INIParaClasse; virtual;
     procedure ClasseParaINI; virtual;
     procedure ClasseParaComponentes; virtual; abstract;
-    procedure ImportarIni(FIni: TIniFile); virtual; abstract;
+    procedure ImportarIni(FIni: TCustomIniFile); virtual; abstract;
 
     procedure Travar; virtual;
     procedure Destravar; virtual;

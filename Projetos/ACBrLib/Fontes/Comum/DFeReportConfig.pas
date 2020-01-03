@@ -153,10 +153,10 @@ begin
 
   //Geral
   Impressora := AIni.ReadString(CSecGeral, CKeyImpressora, Impressora);
-  PathPDF := AIni.ReadString(CSecGeral, CKeyPathSalvar, PathPDF);
   Logo := AIni.ReadString(CSecGeral, CKeyLogomarca, Logo);
 
   //DANFe
+  PathPDF := AIni.ReadString(CSecDANFE, CKeyDANFEPathPDF, PathPDF);
   MargemInferior := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargem, MargemInferior);
   MargemSuperior := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargemSup, MargemSuperior);
   MargemEsquerda := AIni.ReadFloat(CSecDANFE, CKeyDANFEMargemEsq, MargemEsquerda);

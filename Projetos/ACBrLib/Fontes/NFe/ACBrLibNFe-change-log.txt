@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibNFeClass ---
+[+] Adicionado o metodo NFE_ImportarConfig.
+   Por: Rafael Dias
+
 30/12/2019
 --- ACBrLibNFeClass ---
 [+] Adicionado os metodos NFE_ObterIni e NFE_GravarIni.

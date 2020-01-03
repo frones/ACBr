@@ -915,7 +915,7 @@ end;
 procedure TLibConfig.Importar(AConfig: String);
 Var
   FMIni: TIniFile;
-  CriptStr: String;
+  AuxStr: String;
 begin
   FMIni := TIniFile.Create(AConfig);
 
@@ -925,10 +925,10 @@ begin
     ProxyInfo.FServidor := FMIni.ReadString(CSecProxy, CKeyProxyHost, ProxyInfo.Servidor);
     ProxyInfo.FUsuario := FMIni.ReadString(CSecProxy, CKeyProxyUser, ProxyInfo.Usuario);
 
-    CriptStr := '';
-    CriptStr := FMIni.ReadString(CSecProxy, CKeyProxyPass, '');
-    if(CriptStr <> '') then
-      ProxyInfo.FSenha := StringToB64Crypt(B64CryptToString(CriptStr), FChaveCrypt);
+    AuxStr := '';
+    AuxStr := FMIni.ReadString(CSecProxy, CKeyProxyPass, '');
+    if(AuxStr <> '') then
+      ProxyInfo.FSenha := StringToB64Crypt(B64CryptToString(AuxStr), FChaveCrypt);
 
     // Email
     Email.FNome := FMIni.ReadString(CSecEmail, CKeyEmailNomeExibicao, Email.Nome);
@@ -936,10 +936,10 @@ begin
     Email.FPorta := FMIni.ReadInteger(CSecEmail, CKeyEmailPorta, Email.Porta);
     Email.FUsuario := FMIni.ReadString(CSecEmail, CKeyEmailUsuario, Email.Usuario);
 
-    CriptStr := '';
-    CriptStr := FMIni.ReadString(CSecEmail, CKeyEmailSenha, '');
-    if(CriptStr <> '') then
-      Email.FSenha := StringToB64Crypt(B64CryptToString(CriptStr), FChaveCrypt);
+    AuxStr := '';
+    AuxStr := FMIni.ReadString(CSecEmail, CKeyEmailSenha, '');
+    if(AuxStr <> '') then
+      Email.FSenha := StringToB64Crypt(B64CryptToString(AuxStr), FChaveCrypt);
 
     Email.FSSL := FMIni.ReadBool(CSecEmail, CKeyEmailExigeSSL, Email.SSL);
     Email.FTLS := FMIni.ReadBool(CSecEmail, CKeyEmailExigeTLS, Email.TLS);

@@ -386,7 +386,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+        if (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) or (AIndex < 0) or (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) then
           raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
 
         if EstaVazio(NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].XMLOriginal) then
@@ -427,7 +427,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+        if (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) or (AIndex < 0) or (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) then
           raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
 
         if NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].GravarXML(ANomeArquivo, APathArquivo) then
@@ -464,7 +464,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+        if (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) or (AIndex < 0) or (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) then
           raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
 
         if EstaVazio(NFeDM.ACBrNFe1.NotasFiscais.Items[AIndex].XMLOriginal) then
@@ -505,7 +505,7 @@ begin
     begin
       NFeDM.Travar;
       try
-        if (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) and (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) then
+        if (NFeDM.ACBrNFe1.NotasFiscais.Count < 1) or (AIndex < 0) or (AIndex >= NFeDM.ACBrNFe1.NotasFiscais.Count) then
           raise EACBrLibException.Create(ErrIndex, Format(SErrIndex, [AIndex]));
 
         ANomeArquivo := ExtractFileName(ANomeArquivo);

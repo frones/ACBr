@@ -62,6 +62,7 @@ const
   CChaveImprimeDescPorPercentual = 'ImprimeDescPorPercentual';
   CChaveImprimeDetalhamentoEspecifico = 'ImprimeDetalhamentoEspecifico';
   CChavePosCanhoto = 'PosCanhoto';
+  CChavePosCanhotoLayout = 'PosCanhotoLayout';
   CChaveExibeResumoCanhoto = 'ExibeResumoCanhoto';
   CChaveTextoResumoCanhoto = 'TextoResumoCanhoto';
   CChaveExibeCampoFatura = 'ExibeCampoFatura';

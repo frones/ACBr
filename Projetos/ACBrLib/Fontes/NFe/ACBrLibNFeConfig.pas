@@ -56,6 +56,7 @@ type
     FImprimeValor: TImprimirUnidQtdeValor;
     FImprimeDetalhamentoEspecifico: Boolean;
     FPosCanhoto: TPosRecibo;
+    FPosCanhotoLayout: TPosReciboLayout;
     FExibeResumoCanhoto: Boolean;
     FTextoResumoCanhoto: String;
     FExibeCampoFatura: Boolean;
@@ -91,7 +92,7 @@ type
     procedure DefinirValoresPadroes;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
-    procedure Assign(const DFeReport: TACBrNFeDANFeRL);
+    procedure Apply(const DFeReport: TACBrNFeDANFeRL);
 
   published
     property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo;
@@ -99,6 +100,7 @@ type
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual;
     property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico;
     property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto;
+    property PosCanhotoLayout: TPosReciboLayout read FPosCanhotoLayout write FPosCanhotoLayout;
     property ExibeResumoCanhoto: Boolean read FExibeResumoCanhoto write FExibeResumoCanhoto;
     property TextoResumoCanhoto: String read FTextoResumoCanhoto write FTextoResumoCanhoto;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;
@@ -150,7 +152,7 @@ type
     procedure DefinirValoresPadroes;
     procedure LerIni(const AIni: TCustomIniFile);
     procedure GravarIni(const AIni: TCustomIniFile);
-    procedure Assign(const DFeReport: TACBrNFeDANFCEClass);
+    procedure Apply(const DFeReport: TACBrNFeDANFCEClass);
 
     property TipoRelatorioBobina: TTipoRelatorioBobina read FTipoRelatorioBobina write FTipoRelatorioBobina;
     property TipoRelatorioEvento: TTipoRelatorioEvento read FTipoRelatorioEvento write FTipoRelatorioEvento;
@@ -188,6 +190,7 @@ type
     FNFCeConfig: TDANFeNFCeConfig;
 
   protected
+    procedure ImportChild(const AIni: TCustomIniFile); override;
     procedure LerIniChild(const AIni: TCustomIniFile); override;
     procedure GravarIniChild(const AIni: TCustomIniFile); override;
     procedure ApplyChild(const DFeReport: TACBrDFeDANFeReport); override;
@@ -223,7 +226,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
-    procedure ImportarIni(FIni: TIniFile); override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -244,7 +247,7 @@ type
 implementation
 
 uses
-  typinfo, strutils, synacode, blcksock,
+  typinfo, strutils, synacode, blcksock, pcnAuxiliar, pcnConversaoNFe,
   ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
   ACBrLibComum, ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
@@ -269,6 +272,7 @@ begin
   FImprimeValor := iuComercial;
   FImprimeDetalhamentoEspecifico := True;
   FPosCanhoto := prCabecalho;
+  FPosCanhotoLayout := prlPadrao;
   FExibeResumoCanhoto := True;
   FTextoResumoCanhoto := '';
   FImprimeDescPorPercentual := False;
@@ -308,6 +312,7 @@ begin
   ImprimeDescPorPercentual := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeDescPorPercentual, ImprimeDescPorPercentual);
   ImprimeDetalhamentoEspecifico := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeDetalhamentoEspecifico, ImprimeDetalhamentoEspecifico);
   PosCanhoto := TPosRecibo(AIni.ReadInteger(CSessaoDANFENFE, CChavePosCanhoto, Integer(PosCanhoto)));
+  PosCanhotoLayout := TPosReciboLayout(AIni.ReadInteger(CSessaoDANFENFE, CChavePosCanhoto, Integer(PosCanhotoLayout)));
   ExibeResumoCanhoto := AIni.ReadBool(CSessaoDANFENFE, CChaveExibeResumoCanhoto, ExibeResumoCanhoto);
   TextoResumoCanhoto := AIni.ReadString(CSessaoDANFENFE, CChaveTextoResumoCanhoto, TextoResumoCanhoto);
   ExibeCampoFatura := AIni.ReadBool(CSessaoDANFENFE, CChaveExibeCampoFatura, ExibeCampoFatura);
@@ -355,6 +360,7 @@ begin
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeDescPorPercentual, ImprimeDescPorPercentual);
   AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeDetalhamentoEspecifico, ImprimeDetalhamentoEspecifico);
   AIni.WriteInteger(CSessaoDANFENFE, CChavePosCanhoto, Integer(PosCanhoto));
+  AIni.WriteInteger(CSessaoDANFENFE, CChavePosCanhotoLayout, Integer(PosCanhotoLayout));
   AIni.WriteBool(CSessaoDANFENFE, CChaveExibeResumoCanhoto, ExibeResumoCanhoto);
   AIni.WriteString(CSessaoDANFENFE, CChaveTextoResumoCanhoto, TextoResumoCanhoto);
   AIni.WriteBool(CSessaoDANFENFE, CChaveExibeCampoFatura, ExibeCampoFatura);
@@ -396,7 +402,7 @@ begin
   end;
 end;
 
-procedure TDANFeNFeConfig.Assign(const DFeReport: TACBrNFeDANFeRL);
+procedure TDANFeNFeConfig.Apply(const DFeReport: TACBrNFeDANFeRL);
 begin
 
   if not Assigned(DFeReport) then Exit;
@@ -408,6 +414,7 @@ begin
     ImprimeDescPorPercentual := FImprimeDescPorPercentual;
     ImprimeDetalhamentoEspecifico := FImprimeDetalhamentoEspecifico;
     PosCanhoto := FPosCanhoto;
+    PosCanhotoLayout := FPosCanhotoLayout;
     ExibeResumoCanhoto := FExibeResumoCanhoto;
     TextoResumoCanhoto := FTextoResumoCanhoto;
     ExibeCampoFatura := FExibeCampoFatura;
@@ -502,7 +509,7 @@ begin
   AIni.WriteInteger(CSessaoDANFENFCE, CChaveTamanhoLogoWidth, TamanhoLogoWidth);
 end;
 
-procedure TDANFeNFCeConfig.Assign(const DFeReport: TACBrNFeDANFCEClass);
+procedure TDANFeNFCeConfig.Apply(const DFeReport: TACBrNFeDANFCEClass);
 begin
 
   if not Assigned(DFeReport) then Exit;
@@ -570,6 +577,71 @@ begin
 
 end;
 
+procedure TDANFeReportConfig.ImportChild(const AIni: TCustomIniFile);
+begin
+  //DANFE
+  TipoDANFE := TpcnTipoImpressao(AIni.ReadInteger(CKeyDANFE, CKeyDANFEModelo, Integer(TipoDANFE)));
+  ExibeInforAdicProduto := TinfAdcProd(AIni.ReadInteger(CKeyDANFE, CKeyDANFEExibirBandInforAdicProduto, Integer(ExibeInforAdicProduto)));
+  QuebraLinhaEmDetalhamentos := AIni.ReadBool(CKeyDANFE, CKeyDANFEQuebrarLinhasDetalheItens, QuebraLinhaEmDetalhamentos);
+  ImprimeTotalLiquido := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirValLiq, ImprimeTotalLiquido);
+  ImprimeTributos := TpcnTributos(AIni.ReadInteger(CKeyDANFE, CKeyDANFEImprimirTributosItem, Integer(ImprimeTributos)));
+
+  //DANFCe
+  ImprimeEmUmaLinha := AIni.ReadBool(CSecNFCe, CKeyNFCeImprimirItem1Linha, ImprimeEmUmaLinha);
+  ImprimeCodigoEan := AIni.ReadBool(CSecNFCe, CKeyNFCeUsaCodigoEanImpressao, ImprimeCodigoEan);
+  ImprimeNomeFantasia := AIni.ReadBool(CSecNFCe, CKeyNFCeImprimeNomeFantasia, ImprimeNomeFantasia);
+  ExibeTotalTributosItem := AIni.ReadBool(CSecNFCe, CKeyNFCeExibeTotalTributosItem, ExibeTotalTributosItem);
+
+  FvTribFed := AIni.ReadFloat(CSessaoDANFE, CChavevTribFed, FvTribFed);
+  FvTribEst := AIni.ReadFloat(CSessaoDANFE, CChavevTribEst, FvTribEst);
+  FvTribMun := AIni.ReadFloat(CSessaoDANFE, CChavevTribMun, FvTribMun);
+  FFonteTributos := AIni.ReadString(CSessaoDANFE, CChaveFonteTributos, FFonteTributos);
+  FChaveTributos := AIni.ReadString(CSessaoDANFE, CChaveChaveTributos, FChaveTributos);
+
+  with NFe do
+  begin
+    //DANFE
+    FormularioContinuo := AIni.ReadBool(CKeyDANFE, CKeyDANFEPreImpresso, FormularioContinuo);
+    ImprimeDescPorPercentual := AIni.ReadBool(CKeyDANFE, CKeyDANFEImpDescPorc, ImprimeDescPorPercentual);
+    LarguraCodProd := AIni.ReadInteger(CKeyDANFE, CKeyDANFELarguraCodigoProduto, LarguraCodProd);
+    AltLinhaComun := AIni.ReadInteger(CKeyDANFE, CKeyDANFEAlturaCampos, AltLinhaComun);
+    ExibeEAN := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibirEAN, ExibeEAN);
+    ExibeResumoCanhoto := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibeResumo, ExibeResumoCanhoto);
+    TextoResumoCanhoto := AIni.ReadString(CKeyDANFE, CKeyDANFETextoResumoCanhoto, TextoResumoCanhoto);
+    PosCanhoto := TPosRecibo(AIni.ReadInteger(CKeyDANFE, CKeyDANFELocalCanhoto, Integer(PosCanhoto)));
+    PosCanhotoLayout := TPosReciboLayout(AIni.ReadInteger(CKeyDANFE, CKeyDANFELayoutCanhoto, Integer(PosCanhotoLayout)));
+    ExibeCampoFatura := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibirCampoFatura, ExibeCampoFatura);
+    ExibeDadosDocReferenciados := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDadosDocReferenciados, ExibeDadosDocReferenciados);
+    ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
+    ImprimeDetalhamentoEspecifico := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDetalhamentoEspecifico, ImprimeDetalhamentoEspecifico);
+    ImprimeValor := TImprimirUnidQtdeValor(AIni.ReadInteger(CKeyDANFE, CKeyDANFEUNComercialETributavel, Integer(ImprimeValor)));
+    ExpandirDadosAdicionaisAuto := AIni.ReadBool(CKeyDANFE, CKeyDANFEExpandirDadosAdicionaisAuto, FExpandirDadosAdicionaisAuto);
+
+    with Fonte do
+    begin
+      Nome := TNomeFonte(AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonte, Integer(Nome)));
+      TamanhoFonteRazaoSocial := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteRazao, TamanhoFonteRazaoSocial);
+      TamanhoFonteEndereco := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteEndereco, TamanhoFonteEndereco);
+      TamanhoFonteDemaisCampos := AIni.ReadInteger(CKeyDANFE, CKeyDANFEFonteCampos, TamanhoFonteDemaisCampos);
+    end;
+  end;
+
+  with NFCe do
+  begin
+    //DANFE
+    TipoRelatorioBobina := TTipoRelatorioBobina(AIni.ReadInteger(CKeyDANFE, CKeyDANFEModelo, Integer(TipoRelatorioBobina)));
+    ImprimeDescAcrescItem := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeDescAcrescItemNFe, ImprimeDescAcrescItem);
+
+    //DANFCe
+    LarguraBobina := AIni.ReadInteger(CSecDANFCe, CKeyDANFCeLarguraBobina, LarguraBobina);
+
+    //NFCe
+    TipoRelatorioEvento := TTipoRelatorioEvento(AIni.ReadInteger(CSecNFCe, CKeyNFCeModoImpressaoEvento, Integer(TipoRelatorioEvento)));
+    ImprimeQRCodeLateral := AIni.ReadBool(CSecNFCe, CKeyNFCeQRCodeLateral, ImprimeQRCodeLateral);
+    ImprimeLogoLateral := AIni.ReadBool(CSecNFCe, CKeyNFCeLogoLateral, ImprimeLogoLateral);
+  end;
+end;
+
 procedure TDANFeReportConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
   FTipoDANFE := TpcnTipoImpressao(AIni.ReadInteger(CSessaoDANFE, CChaveTipoDANFE, Integer(FTipoDANFE)));
@@ -589,7 +661,6 @@ begin
 
   FNFeConfig.LerIni(AIni);
   FNFCeConfig.LerIni(AIni);
-
 end;
 
 procedure TDANFeReportConfig.GravarIniChild(const AIni: TCustomIniFile);
@@ -640,11 +711,11 @@ begin
 
   if DFeReport is TACBrNFeDANFeRL then
   begin
-    pLibConfig.DANFe.NFe.Assign(TACBrNFeDANFeRL(DFeReport));
+    pLibConfig.DANFe.NFe.Apply(TACBrNFeDANFeRL(DFeReport));
   end
   else if DFeReport is TACBrNFeDANFCEClass then
   begin
-    pLibConfig.DANFe.NFCe.Assign(TACBrNFeDANFCEClass(DFeReport));
+    pLibConfig.DANFe.NFCe.Apply(TACBrNFeDANFCEClass(DFeReport));
   end;
 end;
 
@@ -701,27 +772,111 @@ begin
     TACBrLibNFe(Owner).NFeDM.AplicarConfiguracoes;
 end;
 
-procedure TLibNFeConfig.ImportarIni(FIni: TIniFile);
+procedure TLibNFeConfig.ImportarIni(FIni: TCustomIniFile);
 Var
-  CriptStr: String;
+  AuxStr: String;
+  Ok: Boolean;
 begin
-  //Sessão Certificado
-  FNFeConfig.Certificados.ArquivoPFX := FIni.ReadString(CSecCertificado, CKeyArquivoPFX, FNFeConfig.Certificados.ArquivoPFX);
-  FNFeConfig.Certificados.NumeroSerie := FIni.ReadString(CSecCertificado, CKeyNumeroSerie, FNFeConfig.Certificados.NumeroSerie);
+  with NFe.Certificados do
+  begin
+    //Sessão Certificado
+    ArquivoPFX := FIni.ReadString(CSecCertificado, CKeyArquivoPFX, ArquivoPFX);
+    NumeroSerie := FIni.ReadString(CSecCertificado, CKeyNumeroSerie, NumeroSerie);
 
-  CriptStr := '';
-  CriptStr := FIni.ReadString(CSecCertificado, CKeySenha, '');
-  if(CriptStr <> '') then
-    FNFeConfig.Certificados.Senha := CriptStr;
+    AuxStr := '';
+    AuxStr := FIni.ReadString(CSecCertificado, CKeySenha, '');
+    if NaoEstaVazio(AuxStr) then
+      Senha := AuxStr;
+  end;
 
-  FNFeConfig.Geral.SSLCryptLib := TSSLCryptLib(FIni.ReadInteger(CSecCertificado, CKeyCryptLib,
-                                                                Integer(FNFeConfig.Geral.SSLCryptLib)));
-  FNFeConfig.Geral.SSLHttpLib := TSSLHttpLib(FIni.ReadInteger(CSecCertificado, CKeyHttpLib,
-                                                                Integer(FNFeConfig.Geral.SSLHttpLib)));
-  FNFeConfig.Geral.SSLXmlSignLib := TSSLXmlSignLib(FIni.ReadInteger(CSecCertificado, CKeyXmlSignLib,
-                                                                Integer(FNFeConfig.Geral.SSLXmlSignLib)));
-  FNFeConfig.WebServices.SSLType := TSSLType(FIni.ReadInteger(CSecCertificado, CKeySSLType,
-                                                                Integer(FNFeConfig.WebServices.SSLType)));
+  with NFe.Geral do
+  begin
+    //Sessão Certificado
+    SSLCryptLib := TSSLCryptLib(FIni.ReadInteger(CSecCertificado, CKeyCryptLib, Integer(SSLCryptLib)));
+    SSLHttpLib := TSSLHttpLib(FIni.ReadInteger(CSecCertificado, CKeyHttpLib, Integer(SSLHttpLib)));
+    SSLXmlSignLib := TSSLXmlSignLib(FIni.ReadInteger(CSecCertificado, CKeyXmlSignLib, Integer(SSLXmlSignLib)));
+
+    //ACBrNFeMonitor
+    RetirarAcentos := FIni.ReadBool(CSecACBrNFeMonitor, CKeyRetirarAcentos,RetirarAcentos);
+    ValidarDigest := FIni.ReadBool(CSecACBrNFeMonitor, CKeyValidarDigest, ValidarDigest);
+
+    //Webservices
+    FormaEmissao := TpcnTipoEmissao(FIni.ReadInteger(CSecWebService, CKeyFormaEmissaoNFe, Integer(FormaEmissao)));
+    VersaoDF := StrToVersaoDF(Ok, FIni.ReadString(CSecWebService, CKeyVersao, VersaoDFToStr(VersaoDF)));
+    VersaoQRCode := TpcnVersaoQrCode(FIni.ReadInteger(CSecWebService, CKeyVersaoQRCode, Integer(VersaoQRCode)));
+    CamposFatObrigatorios := FIni.ReadBool(CSecWebService, CKeyCamposFatObrig, CamposFatObrigatorios);
+    ForcarGerarTagRejeicao938 := TForcarGeracaoTag(FIni.ReadInteger(CSecWebService, CKeyTagRejeicao938, Integer(ForcarGerarTagRejeicao938)));
+
+    //Arquivos
+    AtualizarXMLCancelado := FIni.ReadBool(CSecArquivos, CKeyArquivosAtualizarXMLCancelado, AtualizarXMLCancelado);
+
+    //NFCe
+    IdCSC := FIni.ReadString(CSecNFCe, CKeyNFCeIdToken, IdCSC);
+    CSC := FIni.ReadString(CSecNFCe, CKeyNFCeToken, CSC);
+  end;
+
+  with NFe.Arquivos do
+  begin
+    //ACBrNFeMonitor
+    IniServicos := FIni.ReadString(CSecACBrNFeMonitor, CKeyArquivoWebServices, IniServicos);
+
+    //Arquivos
+    Salvar := FIni.ReadBool(CSecArquivos, CKeyArquivosSalvar, Salvar);
+    SepararPorMes := FIni.ReadBool(CSecArquivos, CKeyArquivosPastaMensal, SepararPorMes);
+    SepararPorCNPJ := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorCNPJ, SepararPorCNPJ);
+    SepararPorModelo := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
+    SepararPorModelo := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorModelo, SepararPorModelo);
+    AdicionarLiteral := FIni.ReadBool(CSecArquivos, CKeyArquivosAddLiteral, AdicionarLiteral);
+    SalvarApenasNFeProcessadas := FIni.ReadBool(CSecArquivos, CKeyArquivosSalvarApenasNFesAutorizadas, SalvarApenasNFeProcessadas);
+    NormatizarMunicipios := FIni.ReadBool(CSecArquivos, CKeyArquivosNormatizarMunicipios, NormatizarMunicipios);
+    EmissaoPathNFe := FIni.ReadBool(CSecArquivos, CKeyArquivosEmissaoPathNFe, EmissaoPathNFe);
+    PathNFe := FIni.ReadString(CSecArquivos, CKeyArquivosPathNFe, PathNFe);
+    PathInu := FIni.ReadString(CSecArquivos, CKeyArquivosPathInu, PathInu);
+    PathEvento := FIni.ReadString(CSecArquivos, CKeyArquivosPathEvento, PathEvento);
+
+    AuxStr := FIni.ReadString(CSecArquivos, CKeyArquivosPathSchemasDFe, '');
+    if NaoEstaVazio(AuxStr) then
+      PathSchemas := PathWithDelim(AuxStr) + 'NFe';
+
+    with DownloadDFe do
+    begin
+      SepararPorNome := FIni.ReadBool(CSecArquivos, CKeyArquivosSepararPorNome, SepararPorNome);
+      PathDownload := FIni.ReadString(CSecArquivos, CKeyArquivosPathDownload, PathDownload);
+    end;
+  end;
+
+  with NFe.WebServices do
+  begin
+    // ACBrNFeMonitor
+    TimeOut := FIni.ReadInteger(CSecACBrNFeMonitor, CKeyTimeoutWebService, TimeOut);
+
+    // Certificado
+    SSLType := TSSLType(FIni.ReadInteger(CSecCertificado, CKeySSLType, Integer(SSLType)));
+
+    //Webservices
+    Ambiente := TpcnTipoAmbiente(FIni.ReadInteger(CSecWebService, CKeyAmbiente, Integer(Ambiente)));
+    UF := FIni.ReadString(CSecWebService, CKeyUF, UF);
+    AjustaAguardaConsultaRet := FIni.ReadBool(CSecWebService, CKeyAjustarAut, AjustaAguardaConsultaRet);
+    AguardarConsultaRet := FIni.ReadInteger(CSecWebService, CKeyAguardar, AguardarConsultaRet);
+    Tentativas := FIni.ReadInteger(CSecWebService, CKeyTentativas, Tentativas);
+    IntervaloTentativas := FIni.ReadInteger(CSecWebService, CKeyWebServiceIntervalo, IntervaloTentativas);
+
+    with TimeZoneConf do
+    begin
+      ModoDeteccao := TTimeZoneModoDeteccao(FIni.ReadInteger(CSecWebService, CKeyTimeZoneMode, Integer(ModoDeteccao)));
+      TimeZoneStr := FIni.ReadString(CSecWebService, CKeyTimeZoneStr, TimeZoneStr);
+    end;
+  end;
+
+  with NFe.RespTec do
+  begin
+    // RespTecnico
+    IdCSRT := FIni.ReadInteger(CSecRespTecnico, CKeyidCSRT, IdCSRT);
+    CSRT := FIni.ReadString(CSecRespTecnico, CKeyCSRT, CSRT);
+  end;
+
+  //Impressão
+  DANFe.Import(FIni);
 end;
 
 procedure TLibNFeConfig.Travar;

@@ -319,7 +319,7 @@ begin
 
       VersaoArquivo := LayoutVersaoArquivo;
 
-      if not (VersaoArquivo in [030, 040, 080, 082, 083, 084]) then
+      if not (VersaoArquivo in [030, 040, 080, 082, 083, 084, 087]) then
         VersaoArquivo := 030;
 
       {
@@ -356,13 +356,11 @@ begin
                FormatDateTime('hhmmss', Now)                   + // 152 a 157 - Hora de geração do arquivo
                PadLeft(IntToStr(NumeroRemessa), 6, '0')        + // 158 a 163 - Número seqüencial do arquivo
                PadLeft(IntToStr(VersaoArquivo), 3, '0')        + // 164 a 166 - Número da versão do layout do arquivo
-//               '030'                                           + // 164 a 166 - Número da versão do layout do arquivo
                StringOfChar('0', 5)                            + // 167 a 171 - Densidade de gravação do arquivo (BPI)
                StringOfChar(' ', 20)                           + // 172 a 191 - Uso reservado do banco
                StringOfChar('0', 20)                           + // 192 a 211 - Uso reservado da empresa
                StringOfChar(' ', 11)                           + // 212 a 222 - 11 brancos
                PadLeft(aCSP, 3, ' ')                           + // 223 a 225 - Informar 'CSP' se a versão for 030, caso contrario informar branco
-//               'CSP'                                           + // 223 a 225 - 'CSP'
                StringOfChar('0', 3)                            + // 226 a 228 - Uso exclusivo de Vans
                StringOfChar(' ', 2)                            + // 229 a 230 - Tipo de servico
                StringOfChar(' ', 10);                            // 231 a 240 - titulo em carteira de cobranca
@@ -381,12 +379,13 @@ begin
       VersaoLote := LayoutVersaoLote;
 
       case VersaoArquivo of
-        030: if VersaoLote <> 020 then VersaoLote := 020;
-        040: if VersaoLote <> 030 then VersaoLote := 030;
-        080: if VersaoLote <> 040 then VersaoLote := 040;
-        082: if VersaoLote <> 041 then VersaoLote := 041;
-        083: if VersaoLote <> 042 then VersaoLote := 042;
-        084: if VersaoLote <> 043 then VersaoLote := 043;
+        030: VersaoLote := 020;
+        040: VersaoLote := 030;
+        080: VersaoLote := 040;
+        082: VersaoLote := 041;
+        083: VersaoLote := 042;
+        084: VersaoLote := 043;
+        087: VersaoLote := 045;
       else
         VersaoLote := 000;
       end;
@@ -399,7 +398,6 @@ begin
                '01'                                            + // 10 a 11 - Tipo de serviço: 01 (Cobrança)
                '00'                                            + // 12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
                PadLeft(IntToStr(VersaoLote), 3, '0')           + // 14 a 16 - Número da versão do layout do lote
-//               '020'                                           + // 14 a 16 - Número da versão do layout do lote
                ' '                                             + // 17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                                  + // 18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 15, '0')           + // 19 a 32 -Número de inscrição do cedente

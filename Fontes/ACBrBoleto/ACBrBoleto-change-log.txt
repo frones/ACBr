@@ -47,10 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2020
+-- ACBrBancoBrasil --
+[*] https://www.projetoacbr.com.br/forum/topic/55348-n%C2%BA-da-vers%C3%A3o-do-layout-do-arquivo-e-n%C2%BA-da-vers%C3%A3o-do-layout-do-lote-remessa-banco-do-brasil-240-posi%C3%A7%C3%B5es/?do=findComment&comment=364860
+   Por: Mailson Dragon
+
 03/01/2020
 -- ACBrBancoBrasil --
 [*] https://www.projetoacbr.com.br/forum/topic/55348-n%C2%BA-da-vers%C3%A3o-do-layout-do-arquivo-e-n%C2%BA-da-vers%C3%A3o-do-layout-do-lote-remessa-banco-do-brasil-240-posi%C3%A7%C3%B5es/
-   Por: Maison Dragon
+   Por: Mailson Dragon
 -- ACBrBancoCresol --
 [*] https://www.projetoacbr.com.br/forum/topic/55473-leitura-arquivo-retorno-cresol/
    Por: Filipe Natividade

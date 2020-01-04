@@ -53,6 +53,7 @@ exports
   Boleto_Nome,
   Boleto_Versao,
   Boleto_UltimoRetorno,
+  Boleto_ImportarConfig,
   Boleto_ConfigLer,
   Boleto_ConfigGravar,
   Boleto_ConfigLerValor,

@@ -45,7 +45,6 @@ uses
 type
 
   { TBoletoDiretorioConfig }
-
   TBoletoDiretorioConfig = class
   private
     FDataArquivo: TDateTime;
@@ -81,7 +80,6 @@ type
   end;
 
   { TBoletoBancoConfig  }
-
   TBoletoBancoConfig = class
   private
     FDigito: Integer;
@@ -113,7 +111,6 @@ type
   end;
 
   { TBoletoCedenteConfig }
-
   TBoletoCedenteConfig = class
   private
     FAgencia: String;
@@ -175,7 +172,6 @@ type
   end;
 
   { TBoletoFCFortesConfig }
-
   TBoletoFCFortesConfig = class
   private
     FDirLogo: String;
@@ -209,7 +205,6 @@ type
   end;
 
   { TBoletoConfig }
-
   TBoletoConfig = class
   private
     FemailAssuntoBoleto  : String ;
@@ -227,7 +222,6 @@ type
   end;
 
   { TLibBoletoConfig }
-
   TLibBoletoConfig = class(TLibConfig)
   private
     FBoletoDiretorioConfig: TBoletoDiretorioConfig;
@@ -240,6 +234,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -260,11 +255,10 @@ type
 implementation
 
 uses
-  ACBrLibBoletoConsts, ACBrLibComum,
+  ACBrMonitorConsts, ACBrLibBoletoConsts, ACBrLibComum,
   ACBrUtil, ACBrConsts, ACBrLibConsts, ACBrLibBoletoClass;
 
 { TLibBoletoConfig }
-
 procedure TLibBoletoConfig.INIParaClasse;
 begin
   inherited INIParaClasse;
@@ -292,6 +286,66 @@ procedure TLibBoletoConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibBoleto(Owner).BoletoDM.AplicarConfiguracoes;
+end;
+
+procedure TLibBoletoConfig.ImportarIni(FIni: TCustomIniFile);
+begin
+
+  with BoletoConfig do
+  begin
+    emailAssuntoBoleto:= FIni.ReadString(CSecBOLETO, CKeyBOLETOEmailAssuntoBoleto, emailAssuntoBoleto );
+    emailMensagemBoleto:= FIni.ReadString(CSecBOLETO, CKeyBOLETOEmailMensagemBoleto, emailMensagemBoleto );
+  end;
+
+  with BoletoCedenteConfig do
+  begin
+    Agencia:= FIni.ReadString(CSecBOLETO, CKeyBOLETOAgencia, Agencia);
+    AgenciaDigito:= FIni.ReadString(CSecBOLETO, CKeyBOLETODigitoAgencia, AgenciaDigito );
+    Bairro:= FIni.ReadString(CSecBOLETO, CKeyBOLETOBairro, Bairro );
+    CEP:= FIni.ReadString(CSecBOLETO, CKeyBOLETOCEP, CEP );
+    Cidade:= FIni.ReadString(CSecBOLETO, CKeyBOLETOCidade, Cidade );
+    CNPJCPF:= FIni.ReadString(CSecBOLETO, CKeyBOLETOCNPJCPF, CNPJCPF );
+    CodigoCedente:= FIni.ReadString(CSecBOLETO, CKeyBOLETOCodCedente, CodigoCedente );
+    CodigoTransmissao:= FIni.ReadString(CSecBOLETO, CKeyBOLETOCodTransmissao, CodigoTransmissao );
+    Complemento:= FIni.ReadString(CSecBOLETO, CKeyBOLETOComplemento, Complemento );
+    Conta:= FIni.ReadString(CSecBOLETO, CKeyBOLETOConta, Conta );
+    ContaDigito:= FIni.ReadString(CSecBOLETO, CKeyBOLETODigitoConta, ContaDigito);
+    Convenio:= FIni.ReadString(CSecBOLETO, CKeyBOLETOConvenio, Convenio );
+    Logradouro:= FIni.ReadString(CSecBOLETO, CKeyBOLETOLogradouro, Logradouro );
+    Modalidade:= FIni.ReadString(CSecBOLETO, CKeyBOLETOModalidade, Modalidade );
+    Nome:= FIni.ReadString(CSecBOLETO, CKeyBOLETONome, Nome );
+    NumeroRes:= FIni.ReadString(CSecBOLETO, CKeyBOLETONumero, NumeroRes );
+    ResponEmissao:= TACBrResponEmissao(FIni.ReadInteger(CSecBOLETO, CKeyBOLETORespEmis, integer(ResponEmissao) ));
+    TipoInscricao:= TACBrPessoaCedente( FIni.ReadInteger(CSecBOLETO, CKeyBOLETOPessoa, integer(TipoInscricao) ));
+    UF:= FIni.ReadString(CSecBOLETO, CKeyBOLETOUF, UF );
+    DigitoVerificadorAgenciaConta:= FIni.ReadString(CSecBOLETO, CKeyBOLETODigitoAgenciaConta, DigitoVerificadorAgenciaConta );
+  end;
+
+  with BoletoBancoConfig do
+  begin
+    LocalPagamento:= FIni.ReadString(CSecBOLETO, CKeyBOLETOLocalPagamento, LocalPagamento );
+    TipoCobranca:= TACBrTipoCobranca( FIni.ReadInteger(CSecBOLETO, CKeyBOLETOBanco, integer(TipoCobranca) ));
+  end;
+
+  with BoletoDiretorioConfig do
+  begin
+    DirArqRemessa := FIni.ReadString(CSecBOLETO, CKeyBOLETODirArquivoRemessa, DirArqRemessa);
+    DirArqRetorno := FIni.ReadString(CSecBOLETO, CKeyBOLETODirArquivoRetorno, DirArqRetorno);
+    LayoutRemessa := TACBrLayoutRemessa(FIni.ReadInteger(CSecBOLETO, CKeyBOLETOCNAB, integer(LayoutRemessa)));
+    LeCedenteRetorno := FIni.ReadBool(CSecBOLETO, CKeyBOLETOLerCedenteRetorno, LeCedenteRetorno);
+  end;
+
+  with BoletoFCFortesConfig do
+  begin
+    DirLogo:= FIni.ReadString(CSecBOLETO, CKeyBOLETODirLogos, DirLogo );
+    Filtro:= TACBrBoletoFCFiltro( FIni.Readinteger(CSecBOLETO, CKeyBOLETOFiltro, integer(Filtro)) );
+    Layout:= TACBrBolLayOut( FIni.ReadInteger(CSecBOLETO, CKeyBOLETOLayout, integer(Layout)) );
+    MostrarPreview:= FIni.ReadBool(CSecBOLETO, CKeyBOLETOPreview, MostrarPreview );
+    MostrarProgresso:= FIni.ReadBool(CSecBOLETO, CKeyBOLETOProgresso, MostrarProgresso );
+    MostrarSetup:= FIni.ReadBool(CSecBOLETO, CKeyBOLETOSetup, MostrarSetup );
+    NomeArquivo:= FIni.ReadString(CSecBOLETO, CKeyBOLETONomeArquivoBoleto, NomeArquivo );
+  end;
+
 end;
 
 procedure TLibBoletoConfig.Travar;
@@ -336,7 +390,6 @@ begin
 end;
 
 { TBoletoConfig }
-
 constructor TBoletoConfig.Create;
 begin
   FemailAssuntoBoleto  := '';
@@ -357,7 +410,6 @@ begin
 end;
 
 { TBoletoFCFortesConfig }
-
 constructor TBoletoFCFortesConfig.Create;
 begin
   FDirLogo:= '';
@@ -403,7 +455,6 @@ begin
 end;
 
 { TBoletoCedenteConfig }
-
 constructor TBoletoCedenteConfig.Create;
 begin
   FAgencia:= '';
@@ -492,7 +543,6 @@ begin
 end;
 
 { TBoletoBancoConfig }
-
 constructor TBoletoBancoConfig.Create;
 begin
   FDigito:= 0;
@@ -535,7 +585,6 @@ begin
 end;
 
 { TBoletoDiretorioConfig }
-
 constructor TBoletoDiretorioConfig.Create;
 begin
   FDataArquivo := 0;

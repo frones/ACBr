@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibBoleto --
+[+] Adicionado o metodo Boleto_ImportarConfig.
+    (Por; Rafael Dias)
+
 15/04/2018
 --- ACBrLibBoleto --
 [*] Ajustes no tratamento de retornos dos métodos LibBoleto

@@ -1118,8 +1118,6 @@ type
     fNumNFe: String;
     fValorNFe: Currency;
   public
-   constructor Create;
-   destructor Destroy; override;
 
    property NumNFe     : String read fNumNFe write fNumNFe;
    property ValorNFe   : Currency read fValorNFe write fValorNFe;
@@ -1534,18 +1532,6 @@ begin
    Result := inherited Add(Obj) ;
 end;
 
-{ TACBrDadosNFe }
-
-constructor TACBrDadosNFe.Create;
-begin
-  inherited Create;
-
-end;
-
-destructor TACBrDadosNFe.Destroy;
-begin
-  inherited Destroy;
-end;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}

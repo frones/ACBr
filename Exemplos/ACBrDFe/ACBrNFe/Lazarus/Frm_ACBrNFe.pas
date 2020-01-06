@@ -3242,7 +3242,6 @@ begin
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('LPT2') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
@@ -3257,7 +3256,9 @@ begin
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
   LerConfiguracao;
-  pgRespostas.ActivePageIndex := 2;
+  pgRespostas.ActivePageIndex := 0;
+  PageControl1.ActivePageIndex := 0;
+  PageControl4.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;

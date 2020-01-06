@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2020
+--- ACBrLibCHQConfig, ACBrLibCHQClass ---
+[+] Adicionaodo o metodo CHQ_ImportarConfig.
+    (Por: Rafael Dias.)
+[+] Adicionaodo o metodo CHQ_SetArquivoBemaFiINI.
+    (Por: Rafael Dias.)
+
 17/10/2019
 --- ACBrLibCHQConfig, ACBrLibCHQDataModule ---
 [+] Adicionado as configurações serial.

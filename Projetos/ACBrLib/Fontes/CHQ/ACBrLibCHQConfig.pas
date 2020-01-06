@@ -71,6 +71,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -86,10 +87,10 @@ type
 implementation
 
 uses
-  ACBrLibCHQClass, ACBrLibCHQConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrMonitorConsts, ACBrLibCHQClass, ACBrLibCHQConsts,
+  ACBrLibConsts, ACBrLibComum, ACBrUtil;
 
 { TCHQConfig }
-
 constructor TCHQConfig.Create;
 begin
   FPorta            := '';
@@ -117,7 +118,6 @@ begin
 end;
 
 { TLibCHQConfig }
-
 constructor TLibCHQConfig.Create(AOwner: TObject; ANomeArquivo: String; AChaveCrypt: AnsiString);
 begin
   inherited Create(AOwner, ANomeArquivo, AChaveCrypt);
@@ -154,6 +154,14 @@ procedure TLibCHQConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibCHQ(Owner).CHQDM.AplicarConfiguracoes;
+end;
+
+procedure TLibCHQConfig.ImportarIni(FIni: TCustomIniFile);
+begin
+  FCHQConfig.Porta := FIni.ReadString(CSecCHQ, CKeyCHQPorta, FCHQConfig.Porta);
+  FCHQConfig.Modelo := TACBrCHQModelo(FIni.ReadInteger(CSecCHQ, CKeyCHQModelo, Integer(FCHQConfig.Modelo)));
+
+  FDeviceConfig.ImportarSerialParams(FIni.ReadString(CSecCHQ, CKeyCHQSerialParams, FCHQConfig.Porta));
 end;
 
 procedure TLibCHQConfig.Travar;

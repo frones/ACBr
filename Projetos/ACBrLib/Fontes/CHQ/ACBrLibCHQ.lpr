@@ -54,6 +54,7 @@ exports
   CHQ_Nome,
   CHQ_Versao,
   CHQ_UltimoRetorno,
+  CHQ_ImportarConfig,
   CHQ_ConfigLer,
   CHQ_ConfigGravar,
   CHQ_ConfigLerValor,
@@ -73,7 +74,8 @@ exports
   CHQ_SetCidade,
   CHQ_SetFavorecido,
   CHQ_SetObservacao,
-  CHQ_SetBomPara;
+  CHQ_SetBomPara,
+  CHQ_SetArquivoBemaFiINI;
 
 begin
   {$IFDEF DEBUG}

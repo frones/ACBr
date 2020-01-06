@@ -74,6 +74,8 @@ function CHQ_Versao(const sVersao: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CHQ_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_ConfigLer(const eArqConfig: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_ConfigGravar(const eArqConfig: PChar): longint;
@@ -106,7 +108,7 @@ function CHQ_SetBanco(const eBanco: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_SetValor(const Valor: Double): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CHQ_SetData(const Data: TDateTime): longint;
+function CHQ_SetData(const eData: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_SetCidade(const eCidade: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
@@ -114,8 +116,10 @@ function CHQ_SetFavorecido(const eFavorecido: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CHQ_SetObservacao(const eObservacao: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
-function CHQ_SetBomPara(const BomPara: TDateTime): longint;
+function CHQ_SetBomPara(const eBomPara: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CHQ_SetArquivoBemaFiINI(const eArquivoBemaFiINI: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%endregion}
@@ -189,6 +193,12 @@ function CHQ_UltimoRetorno(const sMensagem: PChar; var esTamanho: longint): long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 begin
   Result := LIB_UltimoRetorno(sMensagem, esTamanho);
+end;
+
+function CHQ_ImportarConfig(const eArqConfig: PChar): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+begin
+  Result := LIB_ImportarConfig(eArqConfig);
 end;
 
 function CHQ_ConfigLer(const eArqConfig: PChar): longint;
@@ -487,10 +497,14 @@ begin
   end;
 end;
 
-function CHQ_SetData(const Data: TDateTime): longint;
+function CHQ_SetData(const eData: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Data: TDateTime;
 begin
   try
+    Data := StrToDateTime(eData);
+
     VerificarLibInicializada;
 
     if pLib.Config.Log.Nivel > logNormal then
@@ -616,10 +630,14 @@ begin
   end;
 end;
 
-function CHQ_SetBomPara(const BomPara: TDateTime): longint;
+function CHQ_SetBomPara(const eBomPara: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  BomPara: TDateTime;
 begin
   try
+    BomPara := StrToDateTime(eBomPara);
+
     VerificarLibInicializada;
 
     if pLib.Config.Log.Nivel > logNormal then
@@ -645,6 +663,41 @@ begin
       Result := SetRetorno(ErrExecutandoMetodo, E.Message);
   end;
 end;
+
+function CHQ_SetArquivoBemaFiINI(const eArquivoBemaFiINI: PChar): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  ArquivoBemaFiINI: String;
+begin
+  try
+    ArquivoBemaFiINI := String(eArquivoBemaFiINI);
+
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CHQ_SetArquivoBemaFiINI( ' + ArquivoBemaFiINI + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CHQ_SetArquivoBemaFiINI', logNormal);
+
+    with TACBrLibCHQ(pLib) do
+    begin
+      CHQDM.Travar;
+      try
+        CHQDM.ACBrCHQ1.ArquivoBemaFiINI := ArquivoBemaFiINI;
+        Result := SetRetorno(ErrOK);
+      finally
+        CHQDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%endregion}

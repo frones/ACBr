@@ -74,13 +74,14 @@ type
 
     FGerador: TGerador;
     FSchema: TeSocialSchema;
-//    FXML: AnsiString;
-    FXML: String;
 
 //    procedure SetXML(const Value: AnsiString);
     procedure SetXML(const Value: String);
   protected
     {Geradores de Uso Comum}
+//    FXML: AnsiString;
+    FXML: String;
+
     procedure GerarCabecalho(const Namespace: String);
     procedure GerarRodape;
     procedure GerarAliqGilRat(pEmp: TIdeEmpregador; pAliqRat: TAliqGilRat; const GroupName: string = 'aliqGilRat');

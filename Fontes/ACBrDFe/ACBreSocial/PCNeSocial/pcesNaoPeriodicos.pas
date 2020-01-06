@@ -105,7 +105,9 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
 
-    procedure GerarXMLs;
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure SaveToFiles;
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
@@ -238,7 +240,7 @@ begin
             self.S3000.Count;
 end;
 
-procedure TNaoPeriodicos.GerarXMLs;
+procedure TNaoPeriodicos.Gerar;
 var
   i: Integer;
 begin
@@ -298,6 +300,149 @@ begin
 
   for I := 0 to Self.S3000.Count - 1 do
     Self.S3000.Items[i].EvtExclusao.GerarXML;
+end;
+
+procedure TNaoPeriodicos.Assinar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S2190.Count - 1 do
+    Self.S2190.Items[i].EvtAdmPrelim.XML :=
+    Self.S2190.Items[i].EvtAdmPrelim.Assinar(Self.S2190.Items[i].EvtAdmPrelim.XML, 'evtAdmPrelim');
+
+  for I := 0 to Self.S2200.Count - 1 do
+    Self.S2200.Items[i].EvtAdmissao.XML :=
+    Self.S2200.Items[i].EvtAdmissao.Assinar(Self.S2200.Items[i].EvtAdmissao.XML, 'evtAdmissao');
+
+  for I := 0 to Self.S2205.Count - 1 do
+    Self.S2205.Items[i].EvtAltCadastral.XML :=
+    Self.S2205.Items[i].EvtAltCadastral.Assinar(Self.S2205.Items[i].EvtAltCadastral.XML, 'evtAltCadastral');
+
+  for I := 0 to Self.S2206.Count - 1 do
+    Self.S2206.Items[i].EvtAltContratual.XML :=
+    Self.S2206.Items[i].EvtAltContratual.Assinar(Self.S2206.Items[i].EvtAltContratual.XML, 'evtAltContratual');
+
+  for I := 0 to Self.S2210.Count - 1 do
+    Self.S2210.Items[i].EvtCAT.XML :=
+    Self.S2210.Items[i].EvtCAT.Assinar(Self.S2210.Items[i].EvtCAT.XML, 'evtCAT');
+
+  for I := 0 to Self.S2220.Count - 1 do
+    Self.S2220.Items[i].evtMonit.XML :=
+    Self.S2220.Items[i].evtMonit.Assinar(Self.S2220.Items[i].evtMonit.XML, 'evtMonit');
+
+  for I := 0 to Self.S2221.Count - 1 do
+    Self.S2221.Items[i].evtToxic.XML :=
+    Self.S2221.Items[i].evtToxic.Assinar(Self.S2221.Items[i].evtToxic.XML, 'evtToxic');
+
+  for I := 0 to Self.S2230.Count - 1 do
+    Self.S2230.Items[i].EvtAfastTemp.XML :=
+    Self.S2230.Items[i].EvtAfastTemp.Assinar(Self.S2230.Items[i].EvtAfastTemp.XML, 'evtAfastTemp');
+
+  for I := 0 to Self.S2240.Count - 1 do
+    Self.S2240.Items[i].EvtExpRisco.XML :=
+    Self.S2240.Items[i].EvtExpRisco.Assinar(Self.S2240.Items[i].EvtExpRisco.XML, 'evtExpRisco');
+
+  for I := 0 to Self.S2245.Count - 1 do
+    Self.S2245.Items[i].EvtTreiCap.XML :=
+    Self.S2245.Items[i].EvtTreiCap.Assinar(Self.S2245.Items[i].EvtTreiCap.XML, 'evtTreiCap');
+
+  for I := 0 to Self.S2250.Count - 1 do
+    Self.S2250.Items[i].EvtAvPrevio.XML :=
+    Self.S2250.Items[i].EvtAvPrevio.Assinar(Self.S2250.Items[i].EvtAvPrevio.XML, 'evtAvPrevio');
+
+  for I := 0 to Self.S2260.Count - 1 do
+    Self.S2260.Items[i].EvtConvInterm.XML :=
+    Self.S2260.Items[i].EvtConvInterm.Assinar(Self.S2260.Items[i].EvtConvInterm.XML, 'evtConvInterm');
+
+  for I := 0 to Self.S2298.Count - 1 do
+    Self.S2298.Items[i].EvtReintegr.XML :=
+    Self.S2298.Items[i].EvtReintegr.Assinar(Self.S2298.Items[i].EvtReintegr.XML, 'evtReintegr');
+
+  for I := 0 to Self.S2299.Count - 1 do
+    Self.S2299.Items[i].EvtDeslig.XML :=
+    Self.S2299.Items[i].EvtDeslig.Assinar(Self.S2299.Items[i].EvtDeslig.XML, 'evtDeslig');
+
+  for I := 0 to Self.S2300.Count - 1 do
+    Self.S2300.Items[i].EvtTSVInicio.XML :=
+    Self.S2300.Items[i].EvtTSVInicio.Assinar(Self.S2300.Items[i].EvtTSVInicio.XML, 'evtTSVInicio');
+
+  for I := 0 to Self.S2306.Count - 1 do
+    Self.S2306.Items[i].EvtTSVAltContr.XML :=
+    Self.S2306.Items[i].EvtTSVAltContr.Assinar(Self.S2306.Items[i].EvtTSVAltContr.XML, 'evtTSVAltContr');
+
+  for I := 0 to Self.S2399.Count - 1 do
+    Self.S2399.Items[i].EvtTSVTermino.XML :=
+    Self.S2399.Items[i].EvtTSVTermino.Assinar(Self.S2399.Items[i].EvtTSVTermino.XML, 'evtTSVTermino');
+
+  for I := 0 to Self.S2400.Count - 1 do
+    Self.S2400.Items[i].EvtCdBenPrRP.XML :=
+    Self.S2400.Items[i].EvtCdBenPrRP.Assinar(Self.S2400.Items[i].EvtCdBenPrRP.XML, 'evtCdBenPrRP');
+
+  for I := 0 to Self.S3000.Count - 1 do
+    Self.S3000.Items[i].EvtExclusao.XML :=
+    Self.S3000.Items[i].EvtExclusao.Assinar(Self.S3000.Items[i].EvtExclusao.XML, 'evtExclusao');
+end;
+
+procedure TNaoPeriodicos.Validar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S2190.Count - 1 do
+    Self.S2190.Items[i].EvtAdmPrelim.Validar(schevtAdmPrelim);
+
+  for I := 0 to Self.S2200.Count - 1 do
+    Self.S2200.Items[i].EvtAdmissao.Validar(schevtAdmissao);
+
+  for I := 0 to Self.S2205.Count - 1 do
+    Self.S2205.Items[i].EvtAltCadastral.Validar(schevtAltCadastral);
+
+  for I := 0 to Self.S2206.Count - 1 do
+    Self.S2206.Items[i].EvtAltContratual.Validar(schevtAltContratual);
+
+  for I := 0 to Self.S2210.Count - 1 do
+    Self.S2210.Items[i].EvtCAT.Validar(schevtCAT);
+
+  for I := 0 to Self.S2220.Count - 1 do
+    Self.S2220.Items[i].evtMonit.Validar(schevtMonit);
+
+  for I := 0 to Self.S2221.Count - 1 do
+    Self.S2221.Items[i].evtToxic.Validar(schEvtToxic);
+
+  for I := 0 to Self.S2230.Count - 1 do
+    Self.S2230.Items[i].EvtAfastTemp.Validar(schevtAfastTemp);
+
+  for I := 0 to Self.S2240.Count - 1 do
+    Self.S2240.Items[i].EvtExpRisco.Validar(schevtExpRisco);
+
+  for I := 0 to Self.S2245.Count - 1 do
+    Self.S2245.Items[i].EvtTreiCap.Validar(schEvtTreiCap);
+
+  for I := 0 to Self.S2250.Count - 1 do
+    Self.S2250.Items[i].EvtAvPrevio.Validar(schevtAvPrevio);
+
+  for I := 0 to Self.S2260.Count - 1 do
+    Self.S2260.Items[i].EvtConvInterm.Validar(schevtConvInterm);
+
+  for I := 0 to Self.S2298.Count - 1 do
+    Self.S2298.Items[i].EvtReintegr.Validar(schevtReintegr);
+
+  for I := 0 to Self.S2299.Count - 1 do
+    Self.S2299.Items[i].EvtDeslig.Validar(schevtDeslig);
+
+  for I := 0 to Self.S2300.Count - 1 do
+    Self.S2300.Items[i].EvtTSVInicio.Validar(schevtTSVInicio);
+
+  for I := 0 to Self.S2306.Count - 1 do
+    Self.S2306.Items[i].EvtTSVAltContr.Validar(schevtTSVAltContr);
+
+  for I := 0 to Self.S2399.Count - 1 do
+    Self.S2399.Items[i].EvtTSVTermino.Validar(schevtTSVTermino);
+
+  for I := 0 to Self.S2400.Count - 1 do
+    Self.S2400.Items[i].EvtCdBenPrRP.Validar(schevtCdBenPrRP);
+
+  for I := 0 to Self.S3000.Count - 1 do
+    Self.S3000.Items[i].EvtExclusao.Validar(schevtExclusao);
 end;
 
 procedure TNaoPeriodicos.SaveToFiles;

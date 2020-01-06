@@ -426,9 +426,10 @@ begin
     Gerador.wGrupo('/evtAqProd');
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAqProd');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtAqProd');
 
-    Validar(schevtAqProd);
+//    Validar(schevtAqProd);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -662,22 +663,20 @@ begin
 
                 Inc(K);
               end;
-
             end;
 
             Inc(J);
           end;
-
         end;
 
         Inc(I);
       end;
-
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

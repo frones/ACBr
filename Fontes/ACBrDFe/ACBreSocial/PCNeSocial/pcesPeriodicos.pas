@@ -90,7 +90,9 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
 
-    procedure GerarXMLs;
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure SaveToFiles;
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
@@ -188,7 +190,7 @@ begin
             self.S1300.Count;
 end;
 
-procedure TPeriodicos.GerarXMLs;
+procedure TPeriodicos.Gerar;
 var
   i: Integer;
 begin
@@ -227,6 +229,100 @@ begin
 
   for I := 0 to Self.S1300.Count - 1 do
     Self.S1300.Items[i].EvtContrSindPatr.GerarXML;
+end;
+
+procedure TPeriodicos.Assinar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1200.Count - 1 do
+    Self.S1200.Items[i].evtRemun.XML :=
+    Self.S1200.Items[i].evtRemun.Assinar(Self.S1200.Items[i].evtRemun.XML, 'evtRemun');
+
+  for I := 0 to Self.S1202.Count - 1 do
+    Self.S1202.Items[i].EvtRmnRPPS.XML :=
+    Self.S1202.Items[i].EvtRmnRPPS.Assinar(Self.S1202.Items[i].EvtRmnRPPS.XML, 'evtRmnRPPS');
+
+  for I := 0 to Self.S1207.Count - 1 do
+    Self.S1207.Items[i].evtBenPrRP.XML :=
+    Self.S1207.Items[i].evtBenPrRP.Assinar(Self.S1207.Items[i].evtBenPrRP.XML, 'evtBenPrRP');
+
+  for I := 0 to Self.S1210.Count - 1 do
+    Self.S1210.Items[i].evtPgtos.XML :=
+    Self.S1210.Items[i].evtPgtos.Assinar(Self.S1210.Items[i].evtPgtos.XML, 'evtPgtos');
+
+  for I := 0 to Self.S1250.Count - 1 do
+    Self.S1250.Items[i].EvtAqProd.XML :=
+    Self.S1250.Items[i].EvtAqProd.Assinar(Self.S1250.Items[i].EvtAqProd.XML, 'evtAqProd');
+
+  for I := 0 to Self.S1260.Count - 1 do
+    Self.S1260.Items[i].EvtComProd.XML :=
+    Self.S1260.Items[i].EvtComProd.Assinar(Self.S1260.Items[i].EvtComProd.XML, 'evtComProd');
+
+  for I := 0 to Self.S1270.Count - 1 do
+    Self.S1270.Items[i].EvtContratAvNP.XML :=
+    Self.S1270.Items[i].EvtContratAvNP.Assinar(Self.S1270.Items[i].EvtContratAvNP.XML, 'evtContratAvNP');
+
+  for I := 0 to Self.S1280.Count - 1 do
+    Self.S1280.Items[i].EvtInfoComplPer.XML :=
+    Self.S1280.Items[i].EvtInfoComplPer.Assinar(Self.S1280.Items[i].EvtInfoComplPer.XML, 'evtInfoComplPer');
+
+  for I := 0 to Self.S1295.Count - 1 do
+    Self.S1295.Items[i].evtTotConting.XML :=
+    Self.S1295.Items[i].evtTotConting.Assinar(Self.S1295.Items[i].evtTotConting.XML, 'evtTotConting');
+
+  for I := 0 to Self.S1298.Count - 1 do
+    Self.S1298.Items[i].EvtReabreEvPer.XML :=
+    Self.S1298.Items[i].EvtReabreEvPer.Assinar(Self.S1298.Items[i].EvtReabreEvPer.XML, 'evtReabreEvPer');
+
+  for I := 0 to Self.S1299.Count - 1 do
+    Self.S1299.Items[i].EvtFechaEvPer.XML :=
+    Self.S1299.Items[i].EvtFechaEvPer.Assinar(Self.S1299.Items[i].EvtFechaEvPer.XML, 'evtFechaEvPer');
+
+  for I := 0 to Self.S1300.Count - 1 do
+    Self.S1300.Items[i].EvtContrSindPatr.XML :=
+    Self.S1300.Items[i].EvtContrSindPatr.Assinar(Self.S1300.Items[i].EvtContrSindPatr.XML, 'evtContrSindPatr');
+end;
+
+procedure TPeriodicos.Validar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1200.Count - 1 do
+    Self.S1200.Items[i].evtRemun.Validar(schevtRemun);
+
+  for I := 0 to Self.S1202.Count - 1 do
+    Self.S1202.Items[i].EvtRmnRPPS.Validar(schevtRmnRPPS);
+
+  for I := 0 to Self.S1207.Count - 1 do
+    Self.S1207.Items[i].evtBenPrRP.Validar(schevtBenPrRP);
+
+  for I := 0 to Self.S1210.Count - 1 do
+    Self.S1210.Items[i].evtPgtos.Validar(schevtPgtos);
+
+  for I := 0 to Self.S1250.Count - 1 do
+    Self.S1250.Items[i].EvtAqProd.Validar(schevtAqProd);
+
+  for I := 0 to Self.S1260.Count - 1 do
+    Self.S1260.Items[i].EvtComProd.Validar(schevtComProd);
+
+  for I := 0 to Self.S1270.Count - 1 do
+    Self.S1270.Items[i].EvtContratAvNP.Validar(schevtContratAvNP);
+
+  for I := 0 to Self.S1280.Count - 1 do
+    Self.S1280.Items[i].EvtInfoComplPer.Validar(schevtInfoComplPer);
+
+  for I := 0 to Self.S1295.Count - 1 do
+    Self.S1295.Items[i].evtTotConting.Validar(schevtTotConting);
+
+  for I := 0 to Self.S1298.Count - 1 do
+    Self.S1298.Items[i].EvtReabreEvPer.Validar(schevtReabreEvper);
+
+  for I := 0 to Self.S1299.Count - 1 do
+    Self.S1299.Items[i].EvtFechaEvPer.Validar(schevtFechaEvPer);
+
+  for I := 0 to Self.S1300.Count - 1 do
+    Self.S1300.Items[i].EvtContrSindPatr.Validar(schevtContrSindPatr);
 end;
 
 procedure TPeriodicos.SaveToFiles;

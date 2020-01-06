@@ -578,9 +578,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCAT');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtCAT');
 
-    Validar(schevtCAT);
+//    Validar(schevtCAT);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -725,8 +726,9 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

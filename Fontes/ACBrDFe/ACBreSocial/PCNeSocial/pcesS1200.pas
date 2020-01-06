@@ -1063,9 +1063,10 @@ begin
     Gerador.wGrupo('/evtRemun');
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRemun');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtRemun');
 
-    Validar(schevtRemun);
+//    Validar(schevtRemun);
   except on e: Exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -1469,8 +1470,9 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

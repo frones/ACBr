@@ -96,6 +96,9 @@ type
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;//verificar se será necessário, se TIniciais for TComponent;
 
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
@@ -178,14 +181,41 @@ begin
   inherited;
 end;
 
-procedure TEventos.GerarXMLs;
+procedure TEventos.Gerar;
 begin
   FTipoEmpregador := TACBreSocial(Self.FOwner).Configuracoes.Geral.TipoEmpregador;
 
-  Self.Iniciais.GerarXMLs;
-  Self.Tabelas.GerarXMLs;
-  Self.NaoPeriodicos.GerarXMLs;
-  Self.Periodicos.GerarXMLs;
+  Self.Iniciais.Gerar;
+  Self.Tabelas.Gerar;
+  Self.NaoPeriodicos.Gerar;
+  Self.Periodicos.Gerar;
+end;
+
+procedure TEventos.Assinar;
+begin
+  FTipoEmpregador := TACBreSocial(Self.FOwner).Configuracoes.Geral.TipoEmpregador;
+
+  Self.Iniciais.Assinar;
+  Self.Tabelas.Assinar;
+  Self.NaoPeriodicos.Assinar;
+  Self.Periodicos.Assinar;
+end;
+
+procedure TEventos.Validar;
+begin
+  FTipoEmpregador := TACBreSocial(Self.FOwner).Configuracoes.Geral.TipoEmpregador;
+
+  Self.Iniciais.Validar;
+  Self.Tabelas.Validar;
+  Self.NaoPeriodicos.Validar;
+  Self.Periodicos.Validar;
+end;
+
+procedure TEventos.GerarXMLs;
+begin
+  Gerar;
+  Assinar;
+  Validar;
 end;
 
 function TEventos.GetCount: integer;

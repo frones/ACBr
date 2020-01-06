@@ -399,9 +399,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabRubrica');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTabRubrica');
 
-    Validar(schevtTabRubrica);
+//    Validar(schevtTabRubrica);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -542,8 +543,9 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

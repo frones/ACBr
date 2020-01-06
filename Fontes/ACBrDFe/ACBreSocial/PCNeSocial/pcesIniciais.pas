@@ -68,7 +68,9 @@ type
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
 
-    procedure GerarXMLs;
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure SaveToFiles;
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
@@ -115,7 +117,7 @@ begin
             self.S1005.Count;
 end;
 
-procedure TIniciais.GerarXMLs;
+procedure TIniciais.Gerar;
 var
   i: Integer;
 begin
@@ -124,6 +126,30 @@ begin
 
   for I := 0 to Self.S1005.Count - 1 do
     Self.S1005.Items[i].evtTabEstab.GerarXML;
+end;
+
+procedure TIniciais.Assinar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.XML :=
+      Self.S1000.Items[i].evtInfoEmpregador.Assinar(Self.S1000.Items[i].evtInfoEmpregador.XML, 'evtInfoEmpregador');
+
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.XML :=
+      Self.S1005.Items[i].evtTabEstab.Assinar(Self.S1005.Items[i].evtTabEstab.XML, 'evtTabEstab');
+end;
+
+procedure TIniciais.Validar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1000.Count - 1 do
+    Self.S1000.Items[i].evtInfoEmpregador.Validar(schevtInfoEmpregador);
+
+  for I := 0 to Self.S1005.Count - 1 do
+    Self.S1005.Items[i].evtTabEstab.Validar(schevtTabEstab);
 end;
 
 procedure TIniciais.SaveToFiles;

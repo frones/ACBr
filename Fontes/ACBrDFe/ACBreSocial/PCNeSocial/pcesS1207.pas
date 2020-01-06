@@ -318,9 +318,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtBenPrRP');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtBenPrRP');
 
-    Validar(schevtBenPrRP);
+//    Validar(schevtBenPrRP);
   except
     on e: Exception do
       raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
@@ -404,12 +405,12 @@ begin
 
         Inc(I);
       end;
-
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

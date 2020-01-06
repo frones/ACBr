@@ -875,9 +875,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtDeslig');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtDeslig');
 
-    Validar(schevtDeslig);
+//    Validar(schevtDeslig);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -1208,17 +1209,14 @@ begin
 
                             Inc(N);
                           end;
-
                         end;
 
                         Inc(M);
                       end;
-
                     end;
 
                     Inc(L);
                   end;
-
                 end;
 
                 Inc(K);
@@ -1253,7 +1251,6 @@ begin
 
             Inc(J);
           end;
-
         end;
 
         Inc(I);
@@ -1333,12 +1330,12 @@ begin
 
         Inc(I);
       end;
-
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

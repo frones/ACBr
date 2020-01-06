@@ -297,10 +297,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTreiCap');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTreiCap');
 
-    Validar(schevtTreiCap);
-
+//    Validar(schevtTreiCap);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -383,6 +383,7 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
     INIRec.Free;
   end;

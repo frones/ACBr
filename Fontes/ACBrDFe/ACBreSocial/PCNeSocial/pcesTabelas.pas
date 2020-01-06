@@ -81,7 +81,9 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
 
-    procedure GerarXMLs;
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure SaveToFiles;
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
@@ -162,7 +164,7 @@ begin
             self.S1080.Count;
 end;
 
-procedure TTabelas.GerarXMLs;
+procedure TTabelas.Gerar;
 var
   i: Integer;
 begin
@@ -192,6 +194,79 @@ begin
 
   for I := 0 to Self.S1080.Count - 1 do
     Self.S1080.Items[i].EvtTabOperPortuario.GerarXML;
+end;
+
+procedure TTabelas.Assinar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1010.Count - 1 do
+    Self.S1010.Items[i].EvtTabRubrica.XML :=
+    Self.S1010.Items[i].EvtTabRubrica.Assinar(Self.S1010.Items[i].EvtTabRubrica.XML, 'evtTabRubrica');
+
+  for I := 0 to Self.S1020.Count - 1 do
+    Self.S1020.Items[i].EvtTabLotacao.XML :=
+    Self.S1020.Items[i].EvtTabLotacao.Assinar(Self.S1020.Items[i].EvtTabLotacao.XML, 'evtTabLotacao');
+
+  for I := 0 to Self.S1030.Count - 1 do
+    Self.S1030.Items[i].EvtTabCargo.XML :=
+    Self.S1030.Items[i].EvtTabCargo.Assinar(Self.S1030.Items[i].EvtTabCargo.XML, 'evtTabCargo');
+
+  for I := 0 to Self.S1035.Count - 1 do
+    Self.S1035.Items[i].evtTabCarreira.XML :=
+    Self.S1035.Items[i].evtTabCarreira.Assinar(Self.S1035.Items[i].evtTabCarreira.XML, 'evtTabCarreira');
+
+  for I := 0 to Self.S1040.Count - 1 do
+    Self.S1040.Items[i].EvtTabFuncao.XML :=
+    Self.S1040.Items[i].EvtTabFuncao.Assinar(Self.S1040.Items[i].EvtTabFuncao.XML, 'evtTabFuncao');
+
+  for I := 0 to Self.S1050.Count - 1 do
+    Self.S1050.Items[i].EvtTabHorContratual.XML :=
+    Self.S1050.Items[i].EvtTabHorContratual.Assinar(Self.S1050.Items[i].EvtTabHorContratual.XML, 'evtTabHorTur');
+
+  for I := 0 to Self.S1060.Count - 1 do
+    Self.S1060.Items[i].EvtTabAmbiente.XML :=
+    Self.S1060.Items[i].EvtTabAmbiente.Assinar(Self.S1060.Items[i].EvtTabAmbiente.XML, 'evtTabAmbiente');
+
+  for I := 0 to Self.S1070.Count - 1 do
+    Self.S1070.Items[i].EvtTabProcesso.XML :=
+    Self.S1070.Items[i].EvtTabProcesso.Assinar(Self.S1070.Items[i].EvtTabProcesso.XML, 'evtTabProcesso');
+
+  for I := 0 to Self.S1080.Count - 1 do
+    Self.S1080.Items[i].EvtTabOperPortuario.XML :=
+    Self.S1080.Items[i].EvtTabOperPortuario.Assinar(Self.S1080.Items[i].EvtTabOperPortuario.XML, 'evtTabOperPort');
+end;
+
+procedure TTabelas.Validar;
+var
+  i: Integer;
+begin
+  for I := 0 to Self.S1010.Count - 1 do
+    Self.S1010.Items[i].EvtTabRubrica.Validar(schevtTabRubrica);
+
+  for I := 0 to Self.S1020.Count - 1 do
+    Self.S1020.Items[i].EvtTabLotacao.Validar(schevtTabLotacao);
+
+  for I := 0 to Self.S1030.Count - 1 do
+    Self.S1030.Items[i].EvtTabCargo.Validar(schevtTabCargo);
+
+  for I := 0 to Self.S1035.Count - 1 do
+    Self.S1035.Items[i].evtTabCarreira.Validar(schevtTabCarreira);
+
+  for I := 0 to Self.S1040.Count - 1 do
+    Self.S1040.Items[i].EvtTabFuncao.Validar(schevtTabFuncao);
+
+  for I := 0 to Self.S1050.Count - 1 do
+    Self.S1050.Items[i].EvtTabHorContratual.Validar(schevtTabHorTur);
+
+  for I := 0 to Self.S1060.Count - 1 do
+    Self.S1060.Items[i].EvtTabAmbiente.Validar(schevtTabAmbiente);
+
+  for I := 0 to Self.S1070.Count - 1 do
+    Self.S1070.Items[i].EvtTabProcesso.Validar(schevtTabProcesso);
+
+  for I := 0 to Self.S1080.Count - 1 do
+    Self.S1080.Items[i].EvtTabOperPortuario.Validar(schevtTabOperPort);
 end;
 
 procedure TTabelas.SaveToFiles;

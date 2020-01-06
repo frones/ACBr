@@ -383,9 +383,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtTSVTermino');
 
-    Validar(schevtTSVTermino);
+//    Validar(schevtTSVTermino);
   except on e:exception do
     raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
@@ -554,12 +555,10 @@ begin
 
                 Inc(K);
               end;
-
             end;
 
             Inc(J);
           end;
-
         end;
 
         inc(I);
@@ -618,8 +617,9 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
-     INIRec.Free;
+    INIRec.Free;
   end;
 end;
 

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2020
+[+] DoACBrECFUnit, ACBrMonitorConfig
+Adicionado os métodos novos de Processamento, Consultas, Cancelamento, Download ref. BlocoX
+
 02/01/2020
 [*] DoACBrBPeUnit e DoACBrMDFeUnit
 Alterado a implementação dos métodos: GerarBPeIni e GerarMDFeIni visando se utilizar

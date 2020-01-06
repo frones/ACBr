@@ -5539,19 +5539,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
               HelpType = htKeyword
               HelpKeyword = 'ACBrMonitor/RemessaRetorno.htm'
               Caption = 'Relatorio Retorno'
-              ClientHeight = 297
-              ClientWidth = 981
+              ClientHeight = 348
+              ClientWidth = 1007
               Font.Height = -13
               ParentFont = False
               object GroupBox3: TGroupBox
                 Left = 0
                 Height = 276
                 Top = 8
-                Width = 396
+                Width = 422
                 Anchors = [akTop, akLeft, akRight]
                 Caption = 'Arquivos de Retorno Encontrados'
                 ClientHeight = 254
-                ClientWidth = 392
+                ClientWidth = 418
                 Font.Height = -13
                 ParentFont = False
                 TabOrder = 0
@@ -5559,7 +5559,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 8
                   Height = 25
                   Top = 16
-                  Width = 350
+                  Width = 376
                   ShowHidden = False
                   ButtonWidth = 23
                   NumGlyphs = 1
@@ -5599,7 +5599,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 10
                   Height = 17
                   Top = 0
-                  Width = 270
+                  Width = 296
                   Anchors = [akTop, akLeft, akRight]
                   Caption = 'Diretório Arquivo Retorno'
                   Font.Height = -13
@@ -5611,7 +5611,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideLeft.Control = GroupBox3
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideTop.Control = GroupBox3
-                Left = 401
+                Left = 427
                 Height = 281
                 Top = 8
                 Width = 572
@@ -9339,11 +9339,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 348
                 Top = 0
                 Width = 1007
-                ActivePage = tsImpGeralDFe
+                ActivePage = TabSheet1
                 Align = alClient
                 Font.Height = -13
                 ParentFont = False
-                TabIndex = 0
+                TabIndex = 2
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
@@ -16375,7 +16375,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Banco.LayoutVersaoArquivo = 0
     Banco.LayoutVersaoLote = 0
     Banco.CasasDecimaisMoraJuros = 2
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     Cedente.IdentDistribuicao = tbBancoDistribui
     NumeroArquivo = 0
@@ -17623,6 +17622,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     TamanhoPapel = tpA4
     Cancelada = False
     Encerrado = False
+    ImprimeDadosExtras = [deValorTotal, deRelacaoDFe]
     PrintDialog = False
     left = 456
     top = 488

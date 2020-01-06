@@ -1484,10 +1484,322 @@ public
   procedure Executar; override;
 end;
 
+{ TMetodoTransmitirArquivo }
+
+TMetodoTransmitirArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarProcessamentoArquivo }
+
+TMetodoConsultarProcessamentoArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoCancelarArquivo }
+
+TMetodoCancelarArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarHistoricoArq }
+
+TMetodoConsultarHistoricoArq = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarPendenciasContrib }
+
+TMetodoConsultarPendenciasContrib = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoConsultarPendenciasDevPafEcf }
+
+TMetodoConsultarPendenciasDevPafEcf = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoDownloadArquivo }
+
+TMetodoDownloadArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoListarArquivos }
+
+TMetodoListarArquivos = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
+{ TMetodoReprocessarArquivo }
+
+TMetodoReprocessarArquivo = class(TACBrMetodo)
+public
+  procedure Executar; override;
+end;
+
 // //
 implementation
 
 uses StrUtils, ACBrUtil, UtilUnit, DoACBrUnit;
+
+{ TMetodoReprocessarArquivo }
+
+{params: 0 - cRecibo: Número do Recibo}
+procedure TMetodoReprocessarArquivo.Executar;
+var
+  cRecibo: String;
+  wXML: String;
+begin
+  cRecibo := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ReprocessarArquivo.Recibo:= cRecibo;
+    ACBrBlocoX.ReprocessarArquivo.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.ReprocessarArquivo.GerarXML(True);
+    wXML:= ACBrBlocoX.ReprocessarArquivo.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ReprocessarArquivoBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ReprocessarArquivoBlocoX.XML:= wXML;
+    ACBrBlocoX.WebServices.ReprocessarArquivoBlocoX.Executar;
+
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ReprocessarArquivoBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoListarArquivos }
+
+{params: 0 - cIE: Número da Inscrição Estadual   }
+procedure TMetodoListarArquivos.Executar;
+var
+  cIE: String;
+  wXML: String;
+begin
+  cIE := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ListarArquivos.InscricaoEstadual:= cIE;
+    ACBrBlocoX.ListarArquivos.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.ListarArquivos.GerarXML(True);
+    wXML:= ACBrBlocoX.ListarArquivos.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ListarArquivosBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ListarArquivosBlocoX.XML:= wXML;
+    ACBrBlocoX.WebServices.ListarArquivosBlocoX.Executar;
+
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ListarArquivosBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoDownloadArquivo }
+
+{params: 0 - cRecibo: Número do Recibo para processamento   }
+procedure TMetodoDownloadArquivo.Executar;
+var
+  cRecibo: String;
+  wXML: String;
+begin
+  cRecibo := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.DownloadArquivo.Recibo:= cRecibo;
+    ACBrBlocoX.DownloadArquivo.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.DownloadArquivo.GerarXML(True);
+    wXML:= ACBrBlocoX.DownloadArquivo.XMLAssinado;
+
+    ACBrBlocoX.WebServices.DownloadArquivoBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.DownloadArquivoBlocoX.XML:= wXML;
+    ACBrBlocoX.WebServices.DownloadArquivoBlocoX.Executar;
+
+    fpCmd.Resposta := ACBrBlocoX.WebServices.DownloadArquivoBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoConsultarPendenciasDevPafEcf }
+
+{params: 0 - cCNPJ: Consultar Pend. Desenvolvedor PAF-ECF   }
+procedure TMetodoConsultarPendenciasDevPafEcf.Executar;
+var
+  cCNPJ: String;
+  wXML: String;
+begin
+  cCNPJ := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ConsultarPendenciasDesenvolvedorPafEcf.CNPJ:= cCNPJ;
+    ACBrBlocoX.ConsultarPendenciasDesenvolvedorPafEcf.RemoverEncodingXMLAssinado:= True;
+    ACBRBlocoX.ConsultarPendenciasDesenvolvedorPafEcf.GerarXML(True);
+    wXML:= ACBrBlocoX.ConsultarPendenciasDesenvolvedorPafEcf.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ConsultarPendenciasDesenvolvedorPafEcfBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ConsultarPendenciasDesenvolvedorPafEcfBlocoX.XML:= wXML;
+
+    ACBrBlocoX.WebServices.ConsultarPendenciasDesenvolvedorPafEcfBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ConsultarPendenciasDesenvolvedorPafEcfBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoConsultarPendenciasContrib }
+
+{params: 0 - cIE: Numero da Inscrição Estadual     }
+procedure TMetodoConsultarPendenciasContrib.Executar;
+var
+  cIE: String;
+  wXML: String;
+begin
+  cIE := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ConsultarPendenciasContribuinte.InscricaoEstadual:= cIE;
+    ACBrBlocoX.ConsultarPendenciasContribuinte.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.ConsultarPendenciasContribuinte.GerarXML( True );
+    wXML:= ACBrBlocoX.ConsultarPendenciasContribuinte.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ConsultarPendenciasContribuinteBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ConsultarPendenciasContribuinteBlocoX.XML:= wXML;
+
+    ACBrBlocoX.WebServices.ConsultarPendenciasContribuinteBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ConsultarPendenciasContribuinteBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoConsultarHistoricoArq }
+
+{params: 0 - cRecibo: Numero do Recibo     }
+procedure TMetodoConsultarHistoricoArq.Executar;
+var
+  cRecibo: String;
+  wXML: String;
+begin
+  cRecibo := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ConsultarHistoricoArquivo.Recibo:= cRecibo;
+    ACBrBlocoX.ConsultarHistoricoArquivo.RemoverEncodingXMLAssinado:= False;
+    ACBrBlocoX.ConsultarHistoricoArquivo.GerarXML(True);
+    wXML:= ACBrBlocoX.CancelarArquivo.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ConsultarHistoricoArquivoBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ConsultarHistoricoArquivoBlocoX.XML:= wXML;
+
+    ACBrBlocoX.WebServices.ConsultarHistoricoArquivoBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ConsultarHistoricoArquivoBlocoX.RetWS;
+
+  end;
+end;
+
+{ TMetodoCancelarArquivo }
+
+{params: 0 - cRecibo: Numero do Recibo
+         1 - cMotivoCanc: Motivo do Cancelamento}
+procedure TMetodoCancelarArquivo.Executar;
+var
+  cRecibo: String;
+  cMotivoCancelamento: String;
+  wXML: String;
+begin
+  cRecibo := fpCmd.Params(0);
+  cMotivoCancelamento := fpCmd.Params(1);
+  wXML := '';
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.CancelarArquivo.Recibo := cRecibo;
+    ACBrBlocoX.CancelarArquivo.Motivo := cMotivoCancelamento;
+    ACBrBlocoX.CancelarArquivo.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.CancelarArquivo.GerarXML(True);
+    wXML:= ACBrBlocoX.CancelarArquivo.XMLAssinado;
+
+    ACBrBlocoX.WebServices.CancelarArquivoBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.CancelarArquivoBlocoX.XML:= wXML;
+
+    ACBrBlocoX.WebServices.CancelarArquivoBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.CancelarArquivoBlocoX.RetWS;
+
+  end;
+
+end;
+
+{ TMetodoConsultarProcessamentoArquivo }
+
+{params: 0 - cRecibo: Numero do Recibo}
+procedure TMetodoConsultarProcessamentoArquivo.Executar;
+var
+  cRecibo: String;
+  wXML: String;
+begin
+  cRecibo := fpCmd.Params(0);
+  wXML := '';
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    ACBrBlocoX.ConsultarProcessamentoArquivo.Recibo:= cRecibo;
+    ACBrBlocoX.ConsultarProcessamentoArquivo.RemoverEncodingXMLAssinado:= True;
+    ACBrBlocoX.ConsultarProcessamentoArquivo.GerarXML(True);
+    wXML := ACBrBlocoX.ConsultarProcessamentoArquivo.XMLAssinado;
+
+    ACBrBlocoX.WebServices.ConsultarProcessamentoArquivoBlocoX.UsarCData:= True;
+    ACBrBlocoX.WebServices.ConsultarProcessamentoArquivoBlocoX.XML:= wXML;
+
+    ACBrBlocoX.WebServices.ConsultarProcessamentoArquivoBlocoX.Executar;
+    fpCmd.Resposta := ACBrBlocoX.WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
+
+  end;
+
+end;
+
+{ TMetodoTransmitirArquivo }
+
+{params: 0 - cPath: Caminho do XML ou conteúdo do arquivo XML}
+procedure TMetodoTransmitirArquivo.Executar;
+var
+  cPath: String;
+  FXMLOriginal: TStringList;
+begin
+  cPath  := fpCmd.Params(0);
+
+  with TACBrObjetoECF(fpObjetoDono) do
+  begin
+    if FileExists(cPath) then
+    begin
+      FXMLOriginal := TStringList.Create;
+      try
+        FXMLOriginal.LoadFromFile(cPath);
+        ACBrBlocoX.WebServices.TransmitirArquivoBlocoX.XML := FXMLOriginal.Text;
+      finally
+        FXMLOriginal.Free;
+      end;
+    end
+    else
+      ACBrBlocoX.WebServices.TransmitirArquivoBlocoX.XML := cPath;
+
+    if ACBrBlocoX.WebServices.TransmitirArquivoBlocoX.Executar then
+      fpCmd.Resposta := ACBrBlocoX.WebServices.TransmitirArquivoBlocoX.RetWS
+    else
+      fpCmd.Resposta := 'Erro ao enviar' + sLineBreak + ACBrBlocoX.WebServices.TransmitirArquivoBlocoX.Msg;
+  end;
+
+end;
 
 { TMetodoPafMF_ArqMFD_Binario }
 
@@ -4985,6 +5297,15 @@ begin
   ListaDeMetodos.Add( CMetodoECFpafmf_arqmfd_binario );
   ListaDeMetodos.Add( CMetodoECFpafmf_arquivomfd );
   ListaDeMetodos.Add( CMetodoECFpafmf_arqmfd );
+  ListaDeMetodos.Add( CMetodoECFTransmitirArquivo );
+  ListaDeMetodos.Add( CMetodoECFConsultarProcessamentoArq );
+  ListaDeMetodos.Add( CMetodoECFCancelarArquivo );
+  ListaDeMetodos.Add( CMetodoECFConsultarHistoricoArq );
+  ListaDeMetodos.Add( CMetodoECFConsultarPendenciasContrib );
+  ListaDeMetodos.Add( CMetodoECFConsultarPendenciasDevPAFECF );
+  ListaDeMetodos.Add( CMetodoECFDownloadArquivo );
+  ListaDeMetodos.Add( CMetodoECFListarArquivos );
+  ListaDeMetodos.Add( CMetodoECFReprocessarArquivo );
 
 end;
 
@@ -5208,8 +5529,18 @@ begin
     205  : AMetodoClass := TMetodopafmf_arqmfd_binario;
     206  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
     207  : AMetodoClass := TMetodopafmf_arqmfd_binario; //Utiliza mesmo método
+    208  : AMetodoClass := TMetodoTransmitirArquivo;
+    209  : AMetodoClass := TMetodoConsultarProcessamentoArquivo;
+    210  : AMetodoClass := TMetodoCancelarArquivo;
+    211  : AMetodoClass := TMetodoConsultarHistoricoArq;
+    212  : AMetodoClass := TMetodoConsultarPendenciasContrib;
+    213  : AMetodoClass := TMetodoConsultarPendenciasDevPafEcf;
+    214  : AMetodoClass := TMetodoDownloadArquivo;
+    215  : AMetodoClass := TMetodoListarArquivos;
+    216  : AMetodoClass := TMetodoReprocessarArquivo;
 
-    208..222 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

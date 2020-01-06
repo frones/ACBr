@@ -338,6 +338,15 @@ const
   CMetodoECFpafmf_arqmfd_binario =                       'pafmf_arqmfd_binario';
   CMetodoECFpafmf_arquivomfd =                           'pafmf_arquivomfd';
   CMetodoECFpafmf_arqmfd =                               'pafmf_arqmfd';
+  CMetodoECFTransmitirArquivo =                          'transmitirarquivo';
+  CMetodoECFConsultarProcessamentoArq =                  'consultarprocessamentoarq';
+  CMetodoECFCancelarArquivo =                            'cancelararquivo';
+  CMetodoECFConsultarHistoricoArq =                      'consultarhistoricoarq';
+  CMetodoECFConsultarPendenciasContrib =                 'consultarpendenciascontrib';
+  CMetodoECFConsultarPendenciasDevPAFECF =               'consultarpendenciasdevpafecf';
+  CMetodoECFDownloadArquivo =                            'dowloadarquivo';
+  CMetodoECFListarArquivos =                             'listararquivos';
+  CMetodoECFReprocessarArquivo =                         'reprocessararquivo';
 
   CMetodostatusservico =               'statusservico';
   CMetodoValidarmdfe =                 'validarmdfe';

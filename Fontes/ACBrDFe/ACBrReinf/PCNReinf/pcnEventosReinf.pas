@@ -86,7 +86,9 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     destructor Destroy; override;
 
-    procedure GerarXMLs;
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure SaveToFiles;
     procedure Clear;
     function LoadFromString(const AXMLString: String): Boolean;
@@ -180,7 +182,7 @@ begin
             Self.R9000.Count;
 end;
 
-procedure TReinfEventos.GerarXMLs;
+procedure TReinfEventos.Gerar;
 var
   i: Integer;
 begin
@@ -222,6 +224,109 @@ begin
 
   for i := 0 to Self.R9000.Count - 1 do
     Self.R9000.Items[i].evtExclusao.GerarXML;
+end;
+
+procedure TReinfEventos.Assinar;
+var
+  i: Integer;
+begin
+  for i := 0 to Self.R1000.Count - 1 do
+    Self.R1000.Items[i].evtInfoContri.XML :=
+    Self.R1000.Items[i].evtInfoContri.Assinar(Self.R1000.Items[i].evtInfoContri.XML, 'evtInfoContri');
+
+  for i := 0 to Self.R1070.Count - 1 do
+    Self.R1070.Items[i].evtTabProcesso.XML :=
+    Self.R1070.Items[i].evtTabProcesso.Assinar(Self.R1070.Items[i].evtTabProcesso.XML, 'evtTabProcesso');
+
+  for i := 0 to Self.R2010.Count - 1 do
+    Self.R2010.Items[i].evtServTom.XML :=
+    Self.R2010.Items[i].evtServTom.Assinar(Self.R2010.Items[i].evtServTom.XML, 'evtServTom');
+
+  for i := 0 to Self.R2020.Count - 1 do
+    Self.R2020.Items[i].evtServPrest.XML :=
+    Self.R2020.Items[i].evtServPrest.Assinar(Self.R2020.Items[i].evtServPrest.XML, 'evtServPrest');
+
+  for i := 0 to Self.R2030.Count - 1 do
+    Self.R2030.Items[i].evtAssocDespRec.XML :=
+    Self.R2030.Items[i].evtAssocDespRec.Assinar(Self.R2030.Items[i].evtAssocDespRec.XML, 'evtAssocDespRec');
+
+  for i := 0 to Self.R2040.Count - 1 do
+    Self.R2040.Items[i].evtAssocDespRep.XML :=
+    Self.R2040.Items[i].evtAssocDespRep.Assinar(Self.R2040.Items[i].evtAssocDespRep.XML, 'evtAssocDespRep');
+
+  for i := 0 to Self.R2050.Count - 1 do
+    Self.R2050.Items[i].evtComProd.XML :=
+    Self.R2050.Items[i].evtComProd.Assinar(Self.R2050.Items[i].evtComProd.XML, 'evtComProd');
+
+  for i := 0 to Self.R2060.Count - 1 do
+    Self.R2060.Items[i].evtCPRB.XML :=
+    Self.R2060.Items[i].evtCPRB.Assinar(Self.R2060.Items[i].evtCPRB.XML, 'evtCPRB');
+
+  for i := 0 to Self.R2070.Count - 1 do
+    Self.R2070.Items[i].evtPgtosDivs.XML :=
+    Self.R2070.Items[i].evtPgtosDivs.Assinar(Self.R2070.Items[i].evtPgtosDivs.XML, 'evtPgtosDivs');
+
+  for i := 0 to Self.R2098.Count - 1 do
+    Self.R2098.Items[i].evtReabreEvPer.XML :=
+    Self.R2098.Items[i].evtReabreEvPer.Assinar(Self.R2098.Items[i].evtReabreEvPer.XML, 'evtReabreEvPer');
+
+  for i := 0 to Self.R2099.Count - 1 do
+    Self.R2099.Items[i].evtFechaEvPer.XML :=
+    Self.R2099.Items[i].evtFechaEvPer.Assinar(Self.R2099.Items[i].evtFechaEvPer.XML, 'evtFechaEvPer');
+
+  for i := 0 to Self.R3010.Count - 1 do
+    Self.R3010.Items[i].evtEspDesportivo.XML :=
+    Self.R3010.Items[i].evtEspDesportivo.Assinar(Self.R3010.Items[i].evtEspDesportivo.XML, 'evtEspDesportivo');
+
+  for i := 0 to Self.R9000.Count - 1 do
+    Self.R9000.Items[i].evtExclusao.XML :=
+    Self.R9000.Items[i].evtExclusao.Assinar(Self.R9000.Items[i].evtExclusao.XML, 'evtExclusao');
+end;
+
+procedure TReinfEventos.Validar;
+var
+  i: Integer;
+begin
+  for i := 0 to Self.R1000.Count - 1 do
+    Self.R1000.Items[i].evtInfoContri.Validar(schevtInfoContribuinte);
+
+  for i := 0 to Self.R1070.Count - 1 do
+    Self.R1070.Items[i].evtTabProcesso.Validar(schevtTabProcesso);
+
+  for i := 0 to Self.R2010.Count - 1 do
+    Self.R2010.Items[i].evtServTom.Validar(schevtTomadorServicos);
+
+  for i := 0 to Self.R2020.Count - 1 do
+    Self.R2020.Items[i].evtServPrest.Validar(schevtPrestadorServicos);
+
+  for i := 0 to Self.R2030.Count - 1 do
+    Self.R2030.Items[i].evtAssocDespRec.Validar(schevtRecursoRecebidoAssociacao);
+
+  for i := 0 to Self.R2040.Count - 1 do
+    Self.R2040.Items[i].evtAssocDespRep.Validar(schevtRecursoRepassadoAssociacao);
+
+  for i := 0 to Self.R2050.Count - 1 do
+    Self.R2050.Items[i].evtComProd.Validar(schevtInfoProdRural);
+
+  for i := 0 to Self.R2060.Count - 1 do
+    Self.R2060.Items[i].evtCPRB.Validar(schevtInfoCPRB);
+
+  // Não encontra-se disponivel o schema para validação desse evento
+  // somente da versão 1.01.01
+//  for i := 0 to Self.R2070.Count - 1 do
+//    Self.R2070.Items[i].evtPgtosDivs.Validar(schevtPgtosDivs);
+
+  for i := 0 to Self.R2098.Count - 1 do
+    Self.R2098.Items[i].evtReabreEvPer.Validar(schevtReabreEvPer);
+
+  for i := 0 to Self.R2099.Count - 1 do
+    Self.R2099.Items[i].evtFechaEvPer.Validar(schevtFechamento);
+
+  for i := 0 to Self.R3010.Count - 1 do
+    Self.R3010.Items[i].evtEspDesportivo.Validar(schevtEspDesportivo);
+
+  for i := 0 to Self.R9000.Count - 1 do
+    Self.R9000.Items[i].evtExclusao.Validar(schevtExclusao);
 end;
 
 procedure TReinfEventos.SaveToFiles;

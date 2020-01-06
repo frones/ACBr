@@ -203,9 +203,10 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
+    XML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtExclusao');
 
-    Validar(schevtExclusao);
+//    Validar(schevtExclusao);
   except on e:exception do
     raise Exception.Create(e.Message);
   end;

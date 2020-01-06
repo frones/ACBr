@@ -64,8 +64,20 @@ type
 
     FGerador: TGerador;
     FSchema: TReinfSchema;
-    FXML: AnsiString;
     procedure SetXML(const Value: AnsiString);
+  protected
+    {Geradores de Uso Comum}
+    FXML: AnsiString;
+
+    procedure GerarCabecalho(const Namespace: String);
+    procedure GerarRodape;
+    procedure GerarIdeEvento(pEvt: TIdeEvento; const GeraGrupo: boolean = True);
+    procedure GerarIdeEvento2(pEvt: TIdeEvento2; const GeraGrupo: boolean = True; GeraRetif: Boolean = True);
+    procedure GerarIdeEvento3(pEvt: TIdeEvento3);
+    procedure GerarModoAbertura(pModo: TTipoOperacao);
+    procedure GerarModoFechamento(pModo: TTipoOperacao);
+    procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
+    procedure GerarIdeContri(pEmp: TIdeContri; const GeraGrupo: boolean = True);
   public
     FACBrReinf: TObject; //alimenta no Create
 
@@ -88,17 +100,6 @@ type
     property Gerador: TGerador  read FGerador write FGerador;
     property schema: TReinfSchema read Fschema write Fschema;
     property XML: AnsiString read FXML write SetXML;
-  protected
-    {Geradores de Uso Comum}
-    procedure GerarCabecalho(const Namespace: String);
-    procedure GerarRodape;
-    procedure GerarIdeEvento(pEvt: TIdeEvento; const GeraGrupo: boolean = True);
-    procedure GerarIdeEvento2(pEvt: TIdeEvento2; const GeraGrupo: boolean = True; GeraRetif: Boolean = True);
-    procedure GerarIdeEvento3(pEvt: TIdeEvento3);
-    procedure GerarModoAbertura(pModo: TTipoOperacao);
-    procedure GerarModoFechamento(pModo: TTipoOperacao);
-    procedure GerarIdePeriodo(pIdePeriodo: TidePeriodo; const GroupName: string = 'idePeriodo');
-    procedure GerarIdeContri(pEmp: TIdeContri; const GeraGrupo: boolean = True);
   end;
 
   TGeradorOpcoes = class(TObject)

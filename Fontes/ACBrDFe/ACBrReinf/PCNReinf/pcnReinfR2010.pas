@@ -673,11 +673,12 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtServTom');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtServTom');
 
-    Validar(schevtTomadorServicos);
+//    Validar(schevtTomadorServicos);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '');
@@ -825,6 +826,7 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
     INIRec.Free;
   end;

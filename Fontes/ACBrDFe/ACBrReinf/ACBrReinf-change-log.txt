@@ -50,6 +50,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2020
+-- Diversos --
+[+] Implementado os métodos: Gerar, Assinar e Validar desta forma o desenvolvedor 
+    poderá apenas gerar o XML do evento sem realizar a assinatura.
+    O método GerarXMLs ainda continua realizando a sua função que é gerar, assinar e
+    validar o XML gerado.
+   Por: Italo Jurisato Junior
+
 09/12/2019
 -- ACBrReinf --
 [*] Alterado de AnsiString para String o parametro AXML da procedure TNotifyEventoReinf.

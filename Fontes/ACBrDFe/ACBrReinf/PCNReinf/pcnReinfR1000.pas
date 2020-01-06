@@ -445,11 +445,12 @@ begin
 
     GerarRodape;
 
-    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoContri');
+    FXML := Gerador.ArquivoFormatoXML;
+//    XML := Assinar(Gerador.ArquivoFormatoXML, 'evtInfoContri');
 
-    Validar(schevtInfoContribuinte);
+//    Validar(schevtInfoContribuinte);
   except on e:exception do
-    raise Exception.Create(e.Message);
+    raise Exception.Create('ID: ' + Self.Id + sLineBreak + ' ' + e.Message);
   end;
 
   Result := (Gerador.ArquivoFormatoXML <> '');
@@ -543,6 +544,7 @@ begin
     end;
 
     GerarXML;
+    XML := FXML;
   finally
     INIRec.Free;
   end;

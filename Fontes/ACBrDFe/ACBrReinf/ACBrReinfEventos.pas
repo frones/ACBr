@@ -89,6 +89,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;//verificar se será necessário, se TReinfEventos for TComponent;
 
+    procedure Gerar;
+    procedure Assinar;
+    procedure Validar;
     procedure GerarXMLs;
     procedure SaveToFiles;
     procedure Clear;
@@ -159,15 +162,37 @@ begin
   inherited;
 end;
 
-procedure TEventos.GerarXMLs;
+procedure TEventos.Gerar;
 begin
   FTipoContribuinte := TACBrReinf(Self.Owner).Configuracoes.Geral.TipoContribuinte;
-  Self.ReinfEventos.GerarXMLs;
+
+  Self.ReinfEventos.Gerar;
+end;
+
+procedure TEventos.Assinar;
+begin
+  FTipoContribuinte := TACBrReinf(Self.Owner).Configuracoes.Geral.TipoContribuinte;
+
+  Self.ReinfEventos.Assinar;
+end;
+
+procedure TEventos.Validar;
+begin
+  FTipoContribuinte := TACBrReinf(Self.Owner).Configuracoes.Geral.TipoContribuinte;
+
+  Self.ReinfEventos.Validar;
+end;
+
+procedure TEventos.GerarXMLs;
+begin
+  Gerar;
+  Assinar;
+  Validar;
 end;
 
 function TEventos.GetCount: integer;
 begin
-  Result :=  Self.ReinfEventos.Count;
+  Result := Self.ReinfEventos.Count;
 end;
 
 procedure TEventos.SaveToFiles;

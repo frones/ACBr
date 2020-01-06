@@ -883,7 +883,14 @@ begin
 
   ACBrReinf1.Eventos.Clear;
   PreencherXMLEventos;
-  ACBrReinf1.AssinarEventos;
+
+  ACBrReinf1.Eventos.Gerar;    // Somente Gera os XMLs dos Eventos
+  ACBrReinf1.Eventos.Assinar;  // Somente Assina os XMLs
+  ACBrReinf1.Eventos.Validar;  // Somente Valida os XMLs
+
+//  ACBrReinf1.Eventos.GerarXMLs; // Gera, Assina e Valida os XMLs dos Eventos
+
+  ACBrReinf1.Eventos.SaveToFiles; // Salva em Disco os XMLs dos Eventos
 
   ShowMessage('XML dos Eventos Selecionados Gerados.');
 

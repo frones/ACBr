@@ -1439,7 +1439,7 @@ object frmACBreSocial: TfrmACBreSocial
       Top = 273
       Width = 800
       Height = 338
-      ActivePage = tsFormaEnvio
+      ActivePage = tsComandos
       Align = alClient
       TabOrder = 1
       object tsFormaEnvio: TTabSheet

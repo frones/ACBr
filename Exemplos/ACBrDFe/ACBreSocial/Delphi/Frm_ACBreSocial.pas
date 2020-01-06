@@ -4706,8 +4706,13 @@ var
 begin
   SelecionaEventos;
 
-  ACBreSocial1.Eventos.GerarXMLs;
-  ACBreSocial1.Eventos.SaveToFiles;
+  ACBreSocial1.Eventos.Gerar;   // Somente Gera os XMLs dos Eventos
+  ACBreSocial1.Eventos.Assinar; // Somente Assina os XMLs
+  ACBreSocial1.Eventos.Validar; // Somente Valida os XMLs
+
+//  ACBreSocial1.Eventos.GerarXMLs; // Gera, Assina e Valida os XMLs dos Eventos
+
+  ACBreSocial1.Eventos.SaveToFiles; // Salva os XMLs em Disco
 
   memoLog.Lines.Add('XML de Eventos Gerados, Assinados e Validados com Sucesso!');
   memoLog.Lines.Add(' ');

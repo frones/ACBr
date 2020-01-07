@@ -32,7 +32,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     OnDataRecord = LayoutBoletoDataRecord
     object txtSwHouse: TRLAngleLabel
       Left = 3
-      Top = 677
+      Top = 682
       Width = 12
       Height = 53
       Alignment = taCenter
@@ -4176,6 +4176,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object RLDBText18: TRLDBText
         Left = 570
@@ -4190,6 +4191,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        Text = ''
       end
       object RLLabel16: TRLLabel
         Left = 644
@@ -9058,10 +9060,1538 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       ParentFont = False
     end
   end
+  object LayoutTermica: TRLReport
+    Left = 216
+    Top = 158
+    Width = 907
+    Height = 302
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
+    PageSetup.PaperSize = fpCustom
+    PageSetup.Orientation = poLandscape
+    PageSetup.PaperWidth = 80.000000000000000000
+    PageSetup.PaperHeight = 240.000000000000000000
+    ParentFont = True
+    PreviewOptions.ShowModal = True
+    RealBounds.UsedUnit = buMilimeters
+    BeforePrint = LayoutTermicaBeforePrint
+    OnDataCount = LayoutTermicaDataCount
+    OnDataRecord = LayoutTermicaDataRecord
+    object RLAngleLabel1: TRLAngleLabel
+      Left = 3
+      Top = 701
+      Width = 12
+      Height = 4
+      Alignment = taCenter
+      Angle = 90.000000000000000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -9
+      Font.Name = 'Arial'
+      Font.Pitch = fpFixed
+      Font.Style = []
+      Layout = tlCenter
+      ParentFont = False
+    end
+    object RLBand7: TRLBand
+      Left = 8
+      Top = 8
+      Width = 891
+      Height = 286
+      RealBounds.UsedUnit = buMilimeters
+      BeforePrint = RLBand7BeforePrint
+      object RLDraw197: TRLDraw
+        Left = 704
+        Top = 165
+        Width = 172
+        Height = 5
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        Transparent = False
+      end
+      object RLDraw201: TRLDraw
+        Left = 168
+        Top = 235
+        Width = 708
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw203: TRLDraw
+        Left = 707
+        Top = 206
+        Width = 169
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw204: TRLDraw
+        Left = 704
+        Top = 181
+        Width = 172
+        Height = 5
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw205: TRLDraw
+        Left = 704
+        Top = 150
+        Width = 172
+        Height = 5
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw207: TRLDraw
+        Left = 10
+        Top = 127
+        Width = 866
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw208: TRLDraw
+        Left = 351
+        Top = 119
+        Width = 17
+        Height = 17
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw209: TRLDraw
+        Left = 10
+        Top = 111
+        Width = 866
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw210: TRLDraw
+        Left = 559
+        Top = 90
+        Width = 17
+        Height = 46
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw211: TRLDraw
+        Left = 486
+        Top = 90
+        Width = 17
+        Height = 30
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw212: TRLDraw
+        Left = 413
+        Top = 90
+        Width = 17
+        Height = 46
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw213: TRLDraw
+        Left = 289
+        Top = 90
+        Width = 17
+        Height = 46
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLDraw214: TRLDraw
+        Left = 10
+        Top = 82
+        Width = 866
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLDraw216: TRLDraw
+        Left = 172
+        Top = 60
+        Width = 704
+        Height = 17
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object lTerImgBanco: TRLImage
+        Left = 172
+        Top = 11
+        Width = 174
+        Height = 38
+        Scaled = True
+      end
+      object RLDraw217: TRLDraw
+        Left = 341
+        Top = 15
+        Width = 17
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object lTertxtLinhaDigitavel: TRLLabel
+        Left = 414
+        Top = 30
+        Width = 462
+        Height = 20
+        AutoSize = False
+        Caption = '00000.0000 00000.000000 00000.000000 0 00000000000000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -16
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw218: TRLDraw
+        Left = 409
+        Top = 16
+        Width = 11
+        Height = 36
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object lTertxtNumeroBanco: TRLLabel
+        Left = 350
+        Top = 23
+        Width = 64
+        Height = 25
+        Alignment = taCenter
+        AutoSize = False
+        Caption = '000-0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -24
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel251: TRLLabel
+        Left = 172
+        Top = 54
+        Width = 77
+        Height = 10
+        Caption = 'Local de Pagamento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTerlblLocalPagto: TRLMemo
+        Left = 248
+        Top = 54
+        Width = 447
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtDataVencimento: TRLLabel
+        Left = 755
+        Top = 53
+        Width = 121
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Vencimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw219: TRLDraw
+        Left = 691
+        Top = 55
+        Width = 17
+        Height = 188
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLLabel264: TRLLabel
+        Left = 172
+        Top = 70
+        Width = 46
+        Height = 10
+        Caption = 'Benefici'#225'rio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtNomeCedente: TRLLabel
+        Left = 216
+        Top = 69
+        Width = 481
+        Height = 13
+        AutoSize = False
+        Caption = 'Nome do Cedente'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel268: TRLLabel
+        Left = 702
+        Top = 74
+        Width = 53
+        Height = 10
+        Caption = 'Ag./C'#243'd. Ben.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtCodCedente: TRLLabel
+        Left = 755
+        Top = 72
+        Width = 121
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel271: TRLLabel
+        Left = 172
+        Top = 92
+        Width = 77
+        Height = 10
+        Caption = 'Data do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtDataDocumento: TRLLabel
+        Left = 172
+        Top = 102
+        Width = 124
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Data do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel275: TRLLabel
+        Left = 299
+        Top = 92
+        Width = 90
+        Height = 10
+        Caption = 'N'#250'mero do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtNumeroDocumento: TRLLabel
+        Left = 299
+        Top = 102
+        Width = 122
+        Height = 14
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'N'#250'mero do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel281: TRLLabel
+        Left = 424
+        Top = 92
+        Width = 49
+        Height = 10
+        Caption = 'Esp'#233'cie Doc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtEspecieDoc: TRLLabel
+        Left = 424
+        Top = 103
+        Width = 68
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Esp'#233'cie Doc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel284: TRLLabel
+        Left = 497
+        Top = 91
+        Width = 24
+        Height = 10
+        Caption = 'Aceite'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtAceite: TRLLabel
+        Left = 497
+        Top = 102
+        Width = 66
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Aceite'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel286: TRLLabel
+        Left = 571
+        Top = 91
+        Width = 90
+        Height = 10
+        Caption = 'Data do Processamento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtDataProcessamento: TRLLabel
+        Left = 571
+        Top = 103
+        Width = 124
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'Data do Processamento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel289: TRLLabel
+        Left = 702
+        Top = 93
+        Width = 48
+        Height = 10
+        Caption = 'Nosso N'#250'm.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtNossoNumero: TRLLabel
+        Left = 714
+        Top = 103
+        Width = 162
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Nosso N'#250'mero'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel295: TRLLabel
+        Left = 171
+        Top = 122
+        Width = 55
+        Height = 10
+        Caption = 'Uso do Banco'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtUsoBanco: TRLLabel
+        Left = 226
+        Top = 121
+        Width = 70
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Uso do Banco'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object RLLabel299: TRLLabel
+        Left = 299
+        Top = 122
+        Width = 31
+        Height = 10
+        Caption = 'Carteira'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtCarteira: TRLLabel
+        Left = 328
+        Top = 121
+        Width = 29
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Carteira'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel302: TRLLabel
+        Left = 362
+        Top = 122
+        Width = 27
+        Height = 10
+        Caption = 'Moeda'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtEspecie: TRLLabel
+        Left = 393
+        Top = 120
+        Width = 27
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Esp'#233'cie'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel305: TRLLabel
+        Left = 424
+        Top = 122
+        Width = 45
+        Height = 10
+        Caption = 'Quantidade'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtQuantidade: TRLLabel
+        Left = 470
+        Top = 121
+        Width = 94
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = ' '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel307: TRLLabel
+        Left = 571
+        Top = 122
+        Width = 20
+        Height = 10
+        Caption = 'Valor'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel308: TRLLabel
+        Left = 608
+        Top = 121
+        Width = 87
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel309: TRLLabel
+        Left = 702
+        Top = 120
+        Width = 96
+        Height = 10
+        Caption = '( = ) Valor do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object ltertxtValorDocumento: TRLLabel
+        Left = 798
+        Top = 120
+        Width = 78
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor do Documento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLMemo3: TRLMemo
+        Left = 172
+        Top = 141
+        Width = 491
+        Height = 10
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Lines.Strings = (
+          'Instru'#231#240'es (Texto de responsabilidade do benefici'#225'rio.)')
+        ParentFont = False
+      end
+      object lTertxtInstrucoes: TRLMemo
+        Left = 173
+        Top = 152
+        Width = 524
+        Height = 42
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Courier New'
+        Font.Style = [fsBold]
+        Lines.Strings = (
+          'Linha 1'
+          'Linha 2'
+          'Linha 3')
+        ParentFont = False
+      end
+      object RLLabel311: TRLLabel
+        Left = 702
+        Top = 138
+        Width = 102
+        Height = 10
+        Caption = '( - ) Desconto / Abatimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel312: TRLLabel
+        Left = 831
+        Top = 137
+        Width = 45
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel313: TRLLabel
+        Left = 702
+        Top = 169
+        Width = 92
+        Height = 10
+        Caption = '( + ) Mora / Multa / Juros'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel314: TRLLabel
+        Left = 797
+        Top = 168
+        Width = 79
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel315: TRLLabel
+        Left = 702
+        Top = 201
+        Width = 73
+        Height = 10
+        Caption = '( = ) Valor Cobrado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel316: TRLLabel
+        Left = 776
+        Top = 201
+        Width = 100
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel317: TRLLabel
+        Left = 172
+        Top = 199
+        Width = 43
+        Height = 14
+        Caption = 'Pagador'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtNomePagador: TRLLabel
+        Left = 221
+        Top = 199
+        Width = 477
+        Height = 14
+        AutoSize = False
+        Caption = 'Nome do Pagador'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel319: TRLLabel
+        Left = 702
+        Top = 216
+        Width = 45
+        Height = 10
+        Caption = 'CPF / CNPJ'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtEndPagador: TRLLabel
+        Left = 221
+        Top = 211
+        Width = 476
+        Height = 14
+        AutoSize = False
+        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel322: TRLLabel
+        Left = 702
+        Top = 232
+        Width = 63
+        Height = 10
+        Caption = 'C'#243'digo de Baixa'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtNomeSacado: TRLLabel
+        Left = 221
+        Top = 224
+        Width = 476
+        Height = 14
+        AutoSize = False
+        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel324: TRLLabel
+        Left = 839
+        Top = 228
+        Width = 37
+        Height = 16
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabel325: TRLLabel
+        Left = 698
+        Top = 246
+        Width = 143
+        Height = 10
+        Caption = 'Autentica'#231#227'o - Ficha de Compensa'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel326: TRLLabel
+        Left = 761
+        Top = 228
+        Width = 36
+        Height = 16
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object lTertxtCodBarras: TRLBarcode
+        Left = 172
+        Top = 244
+        Width = 414
+        Height = 46
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+        Behavior = [beSiteExpander]
+        Caption = '00000000000000000000000000000000000000000000'
+        CheckSumMethod = cmNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        InvalidCode = icDrawAnyway
+        ParentFont = False
+        Ratio = 3.000000000000000000
+        RealBounds.UsedUnit = buMilimeters
+        RealBounds.Width = 103.000000000000000000
+        RealBounds.Height = 13.000000000000000000
+      end
+      object RLLabel327: TRLLabel
+        Left = 584
+        Top = 525
+        Width = 76
+        Height = 10
+        Caption = '( - ) Outras Dedu'#231#240'es'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel328: TRLLabel
+        Left = 584
+        Top = 537
+        Width = 172
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel329: TRLLabel
+        Left = 584
+        Top = 578
+        Width = 84
+        Height = 10
+        Caption = '( + ) Outros Acrescimos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel330: TRLLabel
+        Left = 600
+        Top = 587
+        Width = 172
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw220: TRLDraw
+        Left = 579
+        Top = 600
+        Width = 223
+        Height = 3
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object RLLabel331: TRLLabel
+        Left = 702
+        Top = 154
+        Width = 81
+        Height = 10
+        Caption = '( - ) Outras Deducoes'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel332: TRLLabel
+        Left = 702
+        Top = 185
+        Width = 89
+        Height = 10
+        Caption = '( + ) Outros Acrescimos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw221: TRLDraw
+        Left = 10
+        Top = 195
+        Width = 866
+        Height = 4
+        DrawKind = dkLine
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+      end
+      object RLLabel333: TRLLabel
+        Left = 172
+        Top = 222
+        Width = 47
+        Height = 14
+        Caption = 'Sacador/'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtEndCedente: TRLMemo
+        Left = 216
+        Top = 80
+        Width = 479
+        Height = 10
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Pitch = fpVariable
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtOrientacoesBanco: TRLMemo
+        Left = 10
+        Top = 254
+        Width = 158
+        Height = 22
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel255: TRLLabel
+        Left = 10
+        Top = 51
+        Width = 28
+        Height = 10
+        Caption = 'Parcela'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel269: TRLLabel
+        Left = 92
+        Top = 51
+        Width = 46
+        Height = 10
+        Caption = 'Vencimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw229: TRLDraw
+        Left = 88
+        Top = 49
+        Width = 1
+        Height = 25
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLLabel272: TRLLabel
+        Left = 10
+        Top = 79
+        Width = 53
+        Height = 10
+        Caption = 'Ag./C'#243'd. Ben.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel280: TRLLabel
+        Left = 10
+        Top = 92
+        Width = 18
+        Height = 10
+        Caption = 'Esp.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel282: TRLLabel
+        Left = 29
+        Top = 90
+        Width = 34
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'R$'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtQuantidade2: TRLLabel
+        Left = 92
+        Top = 92
+        Width = 21
+        Height = 10
+        Caption = ' '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLDraw230: TRLDraw
+        Left = 88
+        Top = 91
+        Width = 1
+        Height = 12
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+      end
+      object RLLabel288: TRLLabel
+        Left = 10
+        Top = 106
+        Width = 63
+        Height = 10
+        Caption = '(=)Valor do Doc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel293: TRLLabel
+        Left = 10
+        Top = 122
+        Width = 52
+        Height = 10
+        Caption = '(-)Desc./Abat.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel298: TRLLabel
+        Left = 10
+        Top = 136
+        Width = 55
+        Height = 10
+        Caption = '(+)Mora/Multa'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel301: TRLLabel
+        Left = 10
+        Top = 152
+        Width = 67
+        Height = 10
+        Caption = '(=)Valor Cobrado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw232: TRLDraw
+        Left = 10
+        Top = 150
+        Width = 158
+        Height = 1
+        DrawKind = dkLine
+      end
+      object RLLabel303: TRLLabel
+        Left = 10
+        Top = 185
+        Width = 48
+        Height = 10
+        Caption = 'Nosso N'#250'm.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel310: TRLLabel
+        Left = 10
+        Top = 276
+        Width = 73
+        Height = 10
+        Caption = 'Recibo do Pagador'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLLabel318: TRLLabel
+        Left = 95
+        Top = 276
+        Width = 75
+        Height = 10
+        Caption = 'Autenticar no Verso'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw234: TRLDraw
+        Left = 169
+        Top = 11
+        Width = 2
+        Height = 272
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        Pen.Style = psDot
+      end
+      object lTerImgBanco2: TRLImage
+        Left = 10
+        Top = 8
+        Width = 158
+        Height = 42
+        Center = True
+        Scaled = True
+      end
+      object lTertxtTotPar: TRLLabel
+        Left = 61
+        Top = 60
+        Width = 13
+        Height = 14
+        Caption = '/X'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtDataVencimento2: TRLLabel
+        Left = 88
+        Top = 60
+        Width = 80
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtCodCedente2: TRLLabel
+        Left = 60
+        Top = 78
+        Width = 108
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object ltertxtValorDocumento2: TRLLabel
+        Left = 72
+        Top = 103
+        Width = 96
+        Height = 13
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtNossoNumero2: TRLLabel
+        Left = 53
+        Top = 184
+        Width = 115
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtCpfCnpjPagador2: TRLLabel
+        Left = 10
+        Top = 243
+        Width = 158
+        Height = 11
+        AutoSize = False
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTertxtParcela: TRLLabel
+        Left = -8
+        Top = 60
+        Width = 69
+        Height = 14
+        Alignment = taRightJustify
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lTertxtNomePagador2: TRLMemo
+        Left = 10
+        Top = 229
+        Width = 158
+        Height = 15
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lTerMemoCedente: TRLMemo
+        Left = 10
+        Top = 198
+        Width = 154
+        Height = 32
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          '1'
+          '2'
+          '3')
+        ParentFont = False
+      end
+      object RLLabel338: TRLLabel
+        Left = 10
+        Top = 168
+        Width = 41
+        Height = 10
+        Caption = 'N'#250'm. Doc.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw235: TRLDraw
+        Left = 10
+        Top = 165
+        Width = 158
+        Height = 1
+        DrawKind = dkLine
+      end
+      object lTertxtNumeroDocumento2: TRLLabel
+        Left = 54
+        Top = 168
+        Width = 114
+        Height = 12
+        Alignment = taRightJustify
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLDraw215: TRLDraw
+        Left = 10
+        Top = 102
+        Width = 158
+        Height = 1
+        DrawKind = dkLine
+      end
+      object RLDraw222: TRLDraw
+        Left = 10
+        Top = 182
+        Width = 158
+        Height = 1
+        DrawKind = dkLine
+      end
+      object lTertxtCpfCnpjPagador: TRLLabel
+        Left = 747
+        Top = 215
+        Width = 129
+        Height = 14
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'CPF / CNPJ'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw223: TRLDraw
+        Left = 10
+        Top = 76
+        Width = 158
+        Height = 1
+        DrawKind = dkLine
+      end
+      object RLLabel260: TRLLabel
+        Left = 702
+        Top = 54
+        Width = 53
+        Height = 10
+        Caption = 'Vencimento'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object txtSwHouse80mm: TRLAngleLabel
+      Left = 3
+      Top = 195
+      Width = 12
+      Height = 80
+      Alignment = taCenter
+      Angle = 90.000000000000000000
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -9
+      Font.Name = 'Arial'
+      Font.Pitch = fpFixed
+      Font.Style = []
+      Layout = tlCenter
+      ParentFont = False
+    end
+  end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'Filtro HTML'
-    Left = 158
+    Left = 254
     Top = 8
   end
   object RLPDFFilter1: TRLPDFFilter
@@ -9069,7 +10599,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
       'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#174' 1999-200' +
       '8 Fortes Inform'#225'tica'
     DisplayName = 'Filtro PDF'
-    Left = 128
+    Left = 208
     Top = 8
   end
 end

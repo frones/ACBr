@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/01/2020
+-- ACBrBoleto --
+[+] Implementado o modelo lTermica80mm para imprimir em Fortes o Boleto em uma impressora termica
+   Por: Guilerme km
+
+07/01/2020
 -- ACBrBanrisul --
 [*] Melhorias para evitar erros de acesso a campos ou tamanho indevidos
 https://www.projetoacbr.com.br/forum/topic/55348-n%C2%BA-da-vers%C3%A3o-do-layout-do-arquivo-e-n%C2%BA-da-vers%C3%A3o-do-layout-do-lote-remessa-banco-do-brasil-240-posi%C3%A7%C3%B5es/?do=findComment&comment=364860

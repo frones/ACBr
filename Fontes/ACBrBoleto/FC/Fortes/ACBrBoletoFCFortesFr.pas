@@ -45,11 +45,11 @@ interface
 
 uses
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs, RLReport, RLBarcode,
-  RLPDFFilter, RLHTMLFilter, RLFilters, RLPrinters,
+  RLPDFFilter, RLHTMLFilter, RLFilters, RLPrinters, RLUtils,
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto, ACBrBase;
+  ACBrBoleto, RLRichText , ACBrBase;
 
 type
 
@@ -827,6 +827,125 @@ type
     RLDraw180: TRLDraw;
     RLLabel190: TRLLabel;
     txtLinhaDigitavelComprovanteRec: TRLLabel;
+    LayoutTermica: TRLReport;
+    RLAngleLabel1: TRLAngleLabel;
+    RLBand7: TRLBand;
+    RLDraw197: TRLDraw;
+    RLDraw201: TRLDraw;
+    RLDraw203: TRLDraw;
+    RLDraw204: TRLDraw;
+    RLDraw205: TRLDraw;
+    RLDraw207: TRLDraw;
+    RLDraw208: TRLDraw;
+    RLDraw209: TRLDraw;
+    RLDraw210: TRLDraw;
+    RLDraw211: TRLDraw;
+    RLDraw212: TRLDraw;
+    RLDraw213: TRLDraw;
+    RLDraw214: TRLDraw;
+    RLDraw216: TRLDraw;
+    lTerImgBanco: TRLImage;
+    RLDraw217: TRLDraw;
+    lTertxtLinhaDigitavel: TRLLabel;
+    RLDraw218: TRLDraw;
+    lTertxtNumeroBanco: TRLLabel;
+    RLLabel251: TRLLabel;
+    lTerlblLocalPagto: TRLMemo;
+    lTertxtDataVencimento: TRLLabel;
+    RLLabel260: TRLLabel;
+    RLDraw219: TRLDraw;
+    RLLabel264: TRLLabel;
+    lTertxtNomeCedente: TRLLabel;
+    RLLabel268: TRLLabel;
+    lTertxtCodCedente: TRLLabel;
+    RLLabel271: TRLLabel;
+    lTertxtDataDocumento: TRLLabel;
+    RLLabel275: TRLLabel;
+    lTertxtNumeroDocumento: TRLLabel;
+    RLLabel281: TRLLabel;
+    lTertxtEspecieDoc: TRLLabel;
+    RLLabel284: TRLLabel;
+    lTertxtAceite: TRLLabel;
+    RLLabel286: TRLLabel;
+    lTertxtDataProcessamento: TRLLabel;
+    RLLabel289: TRLLabel;
+    lTertxtNossoNumero: TRLLabel;
+    RLLabel295: TRLLabel;
+    lTertxtUsoBanco: TRLLabel;
+    RLLabel299: TRLLabel;
+    lTertxtCarteira: TRLLabel;
+    RLLabel302: TRLLabel;
+    lTertxtEspecie: TRLLabel;
+    RLLabel305: TRLLabel;
+    lTertxtQuantidade: TRLLabel;
+    RLLabel307: TRLLabel;
+    RLLabel308: TRLLabel;
+    RLLabel309: TRLLabel;
+    ltertxtValorDocumento: TRLLabel;
+    RLMemo3: TRLMemo;
+    lTertxtInstrucoes: TRLMemo;
+    RLLabel311: TRLLabel;
+    RLLabel312: TRLLabel;
+    RLLabel313: TRLLabel;
+    RLLabel314: TRLLabel;
+    RLLabel315: TRLLabel;
+    RLLabel316: TRLLabel;
+    RLLabel317: TRLLabel;
+    lTertxtNomePagador: TRLLabel;
+    RLLabel319: TRLLabel;
+    lTertxtCpfCnpjPagador: TRLLabel;
+    lTertxtEndPagador: TRLLabel;
+    RLLabel322: TRLLabel;
+    lTertxtNomeSacado: TRLLabel;
+    RLLabel324: TRLLabel;
+    RLLabel325: TRLLabel;
+    RLLabel326: TRLLabel;
+    lTertxtCodBarras: TRLBarcode;
+    RLLabel327: TRLLabel;
+    RLLabel328: TRLLabel;
+    RLLabel329: TRLLabel;
+    RLLabel330: TRLLabel;
+    RLDraw220: TRLDraw;
+    RLLabel331: TRLLabel;
+    RLLabel332: TRLLabel;
+    RLDraw221: TRLDraw;
+    RLLabel333: TRLLabel;
+    lTertxtEndCedente: TRLMemo;
+    lTertxtOrientacoesBanco: TRLMemo;
+    RLLabel255: TRLLabel;
+    RLLabel269: TRLLabel;
+    RLDraw229: TRLDraw;
+    RLLabel272: TRLLabel;
+    RLLabel280: TRLLabel;
+    RLLabel282: TRLLabel;
+    lTertxtQuantidade2: TRLLabel;
+    RLDraw230: TRLDraw;
+    RLLabel288: TRLLabel;
+    RLLabel293: TRLLabel;
+    RLLabel298: TRLLabel;
+    RLLabel301: TRLLabel;
+    RLDraw232: TRLDraw;
+    RLLabel303: TRLLabel;
+    RLLabel310: TRLLabel;
+    RLLabel318: TRLLabel;
+    RLDraw234: TRLDraw;
+    lTerImgBanco2: TRLImage;
+    lTertxtTotPar: TRLLabel;
+    lTertxtDataVencimento2: TRLLabel;
+    lTertxtCodCedente2: TRLLabel;
+    ltertxtValorDocumento2: TRLLabel;
+    lTertxtNossoNumero2: TRLLabel;
+    lTertxtCpfCnpjPagador2: TRLLabel;
+    lTertxtParcela: TRLLabel;
+    lTertxtNomePagador2: TRLMemo;
+    lTerMemoCedente: TRLMemo;
+    RLLabel338: TRLLabel;
+    RLDraw235: TRLDraw;
+    lTertxtNumeroDocumento2: TRLLabel;
+    RLDraw215: TRLDraw;
+    RLDraw222: TRLDraw;
+    RLDraw223: TRLDraw;
+    txtSwHouse80mm: TRLAngleLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -857,6 +976,14 @@ type
       var PrintIt: Boolean);
     procedure RLBand6BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLBand8BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLBand7BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure LayoutTermicaBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure LayoutTermicaDataCount(Sender: TObject;
+      var DataCount: Integer);
+    procedure LayoutTermicaDataRecord(Sender: TObject; RecNo,
+      CopyNo: Integer; var Eof: Boolean;
+      var RecordAction: TRLRecordAction);
   private
      MensagemPadrao: TStringList;
      Detalhamento  : TStringList;
@@ -905,6 +1032,8 @@ var
   frACBrBoletoFortes : TACBRBoletoFCFortesFr;
   RLFiltro : TRLCustomSaveFilter;
   RLLayout: TRLReport;
+  i: Integer;
+  Bitmap: TBitmap;
 begin
   inherited Imprimir;    // Executa verificações padroes
 
@@ -916,6 +1045,7 @@ begin
            lCarne       : RLLayout := BoletoCarne;
            lReciboTopo  : RLLayout := BoletoReciboTopo;
            lFaturaDetal : RLLayout := LayoutFaturaDetal;
+           lTermica80mm : RLLayout := LayoutTermica;
         else
            RLLayout:= LayoutBoleto;
         end;
@@ -952,6 +1082,25 @@ begin
                case Filtro of
                  fiPDF  : RLFiltro := RLPDFFilter1;
                  fiHTML : RLFiltro := RLHTMLFilter1;
+                 fiJPG:
+                 begin
+                   for i := 0 to RLLayout.Pages.PageCount - 1 do
+                   begin
+                     Bitmap := NeedAuxBitmap;
+                     Bitmap.Width := RLLayout.Pages.Pages[i].Width;
+                     Bitmap.Height := RLLayout.Pages.Pages[i].Height;
+                     Bitmap.PixelFormat := pf32bit;
+
+                     Bitmap.Canvas.Brush.Color := clWhite;
+                     Bitmap.Canvas.Brush.Style := bsSolid;
+                     Bitmap.Canvas.FillRect(Rect(0, 0, bitmap.Width, bitmap.Height));
+
+                     RLLayout.Pages.Pages[i].PaintTo(bitmap.Canvas, Rect(0, 0, Bitmap.Width, Bitmap.Height));
+                     NomeArquivo := ChangeFileExt(NomeArquivo, '');
+                     bitmap.SaveToFile(NomeArquivo + FormatCurr('000', I+1) + '.bmp');
+                  end;
+                  exit;
+               end
                else
                  exit ;
                end ;
@@ -1082,6 +1231,29 @@ begin
 
   Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
   RecordAction := raUseIt ;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutTermicaBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+   fIndice := 0 ;
+   txtSwHouse80mm.Caption := BoletoFC.SoftwareHouse;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutTermicaDataCount(Sender: TObject;
+  var DataCount: Integer);
+begin
+   DataCount := fBoletoFC.ACBrBoleto.ListadeBoletos.Count ;
+end;
+
+procedure TACBrBoletoFCFortesFr.LayoutTermicaDataRecord(Sender: TObject;
+  RecNo, CopyNo: Integer; var Eof: Boolean;
+  var RecordAction: TRLRecordAction);
+begin
+   fIndice := RecNo - 1 ;
+
+   Eof := (RecNo > fBoletoFC.ACBrBoleto.ListadeBoletos.Count) ;
+   RecordAction := raUseIt ;
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand1BeforePrint(Sender: TObject;
@@ -1495,6 +1667,110 @@ begin
     txtEndPagadorRecPagDet.Caption     := Titulo.Sacado.Logradouro + ' ' + Titulo.Sacado.Numero + Titulo.Sacado.Complemento +
                                           '  CEP: '+Titulo.Sacado.CEP + ', ' + Titulo.Sacado.Bairro + ', ' + Titulo.Sacado.Cidade + ' ' + Titulo.Sacado.UF;
   end;
+end;
+
+procedure TACBrBoletoFCFortesFr.RLBand7BeforePrint(Sender: TObject; var PrintIt: Boolean);
+Var
+   NossoNum,CodCedente,TipoDoc, Carteira : String;
+     CodBarras, LinhaDigitavel: string;
+begin
+   with fBoletoFC.ACBrBoleto do
+   begin
+      NossoNum    := Banco.MontarCampoNossoNumero( Titulo );
+      CodCedente  := Banco.MontarCampoCodigoCedente(titulo);
+      Carteira    := Banco.MontarCampoCarteira(Titulo);
+
+      CodBarras       := Banco.MontarCodigoBarras(Titulo);
+      LinhaDigitavel  := Banco.MontarLinhaDigitavel(CodBarras, Titulo);
+
+      case Cedente.TipoInscricao of
+         pFisica   : TipoDoc:= 'CPF: ';
+         pJuridica : TipoDoc:= 'CNPJ: ';
+      else
+         TipoDoc := 'DOC.: ';
+      end;
+
+      lTertxtLinhaDigitavel.Caption   := LinhaDigitavel;
+      lTertxtCodBarras.Caption        := CodBarras;
+
+      MensagemPadrao.Clear;
+      MensagemPadrao.Text := Titulo.Mensagem.Text;
+      ACBrBoletoFC.ACBrBoleto.AdicionarMensagensPadroes(Titulo,MensagemPadrao);
+
+      fBoletoFC.CarregaLogo( lTerImgBanco.Picture, Banco.Numero );
+      fBoletoFC.CarregaLogo( lTerImgBanco2.Picture, Banco.Numero );
+      lTertxtNumeroBanco.Caption         := IntToStrZero(Banco.Numero, 3)+ '-' +
+                                         IfThen(Banco.Digito >= 10,'X',
+                                         IntToStrZero(Banco.Digito, 1));
+      lTerlblLocalPagto.Lines.Text       := Titulo.LocalPagamento;
+      lTertxtDataVencimento.Caption      := IfThen(Titulo.Vencimento > 0,FormatDateTime('dd/mm/yyyy', Titulo.Vencimento));
+      lTertxtNomeCedente.Caption         := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
+      lTertxtCodCedente.Caption          := CodCedente;
+      lTertxtDataDocumento.Caption       := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
+      lTertxtNumeroDocumento.Caption     := Titulo.NumeroDocumento;
+      lTertxtEspecieDoc.Caption          := Titulo.EspecieDoc;
+      lTertxtAceite.Caption              := ifThen(Titulo.Aceite = atSim,'S','N');
+      lTertxtDataProcessamento.Caption   := IfThen(Titulo.DataProcessamento = 0,
+                                                FormatDateTime('dd/mm/yyyy',Now),
+                                                FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
+      lTertxtNossoNumero.Caption      := NossoNum;
+      lTertxtUsoBanco.Caption         := Titulo.UsoBanco;
+      lTertxtCarteira.Caption         := Carteira;
+      lTertxtEspecie.Caption          := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
+      ltertxtValorDocumento.Caption   := IfThen(Titulo.ValorDocumento > 0,FormatFloat(',0.00',Titulo.ValorDocumento));
+
+      with Titulo.Sacado do
+      begin
+        lTertxtNomePagador.Caption    := NomeSacado;
+        lTertxtEndPagador.Caption     := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+                                         Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        lTertxtCpfCnpjPagador.Caption := CNPJCPF;
+      end;
+
+      with Titulo.Sacado.SacadoAvalista do
+      begin
+        case Pessoa of
+           pFisica   : TipoDoc:= 'CPF: ';
+           pJuridica : TipoDoc:= 'CNPJ: ';
+        else
+           TipoDoc := 'DOC.: ';
+        end;
+
+        if NomeAvalista <> '' then
+        begin
+          lTertxtNomeSacado.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF+
+                                          Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+                                          Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        end
+        else
+        begin
+          lTertxtNomeSacado.Caption   := '';
+        end;
+      end;
+
+      lTertxtInstrucoes.Lines.Text       := MensagemPadrao.Text;
+      lTertxtOrientacoesBanco.Lines.Text := Banco.OrientacoesBanco.Text;
+
+      lTertxtParcela.Caption             := IntToStrZero(Titulo.Parcela,3)+' /';
+      lTertxtTotPar.Caption              := IntToStrZero(Titulo.TotalParcelas,3);
+
+      lTertxtDataVencimento2.Caption     := lTertxtDataVencimento.Caption;
+      lTertxtCodCedente2.Caption         := lTertxtCodCedente.Caption;
+      ltertxtValorDocumento2.Caption     := lTertxtValorDocumento.Caption;
+      lTertxtNumeroDocumento2.Caption    := lTertxtNumeroDocumento.Caption;
+      lTertxtNossoNumero2.Caption        := lTertxtNossoNumero.Caption;
+      lTerMemoCedente.Lines.Text         := lTertxtNomeCedente.Caption + ' ' + lTertxtEndCedente.Caption;
+      lTertxtNomePagador2.Caption        := lTertxtNomePagador.Caption;
+      lTertxtCpfCnpjPagador2.Caption      := lTertxtCpfCnpjPagador.Caption;
+
+
+
+      with Titulo.ACBrBoleto.Cedente do
+      begin
+        lTertxtEndCedente.lines.text := Logradouro+' '+NumeroRes+' '+Complemento+' '+
+                                  Bairro+' '+Cidade+' '+ UF+' '+CEP;
+      end;
+   end;
 end;
 
 procedure TACBrBoletoFCFortesFr.RLBand8BeforePrint(Sender: TObject;

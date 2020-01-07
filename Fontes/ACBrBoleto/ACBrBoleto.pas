@@ -1,4 +1,4 @@
-
+{******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
@@ -1346,7 +1346,7 @@ type
       read GetObject write SetObject; default;
   end;
 
-  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal) ;
+  TACBrBolLayOut = (lPadrao, lCarne, lFatura, lPadraoEntrega, lReciboTopo, lPadraoEntrega2, lFaturaDetal, lTermica80mm);
 
   {TACBrTipoOcorrenciaRemessa}
   TACBrOcorrenciaRemessa = Record

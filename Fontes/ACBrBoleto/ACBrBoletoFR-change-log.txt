@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2020
+ACBrBoletoFCFortesFr
+[+] Implementado o modelo Termica80mm para imprimir o Boleto em uma impressora termica
+   Por: Guilerme km
+[*] Ajustes nas propriedades BeforePrint, OnDataCount e OnDataRecord do modelo Termica80mm
+   Por: Douglas DelaBite
+
 10/12/2019
 ACBrBoletoFCFortesFr
 [*] Ajustes no DFM e LFM

@@ -47,7 +47,6 @@ type
 
   TACBrBanrisul=class(TACBrBancoClass)
   private
-     
     FiQtdSegmentoR: integer;
   Protected
   Public
@@ -93,7 +92,7 @@ begin
   fpNumero                := 041;
   fpTamanhoMaximoNossoNum := 8;
   fpTamanhoAgencia        := 4;
-  fpTamanhoConta          := 7;
+  fpTamanhoConta          := 12;
   fpTamanhoCarteira       := 1;
   fpCodigosMoraAceitos    :='01';
   fpOrientacoesBanco.Clear;
@@ -404,7 +403,7 @@ begin
                PadLeft(trim(Instrucao2), 2)                                        + // 2ª Instrução
                PadLeft(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
 
-               ifthen(ValorMoraJuros >= 0,
+               ifthen(ValorMoraJuros > 0,
                        IntToStrZero(Round(ValorMoraJuros*100), 12), Space(12))  + // Valor ao dia ou Taxa Mensal de juros
                IfThen(DataDesconto = 0, space(6),                                 //se nao tem valor deve ser branco os campos numéricos
                       FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto
@@ -481,7 +480,7 @@ begin
                Space(7) +                                         //  46 -  52   Brancos
                '0'+                                               //  53 -  53   Zeros
                PadLeft(OnlyNumber(Agencia), 4, '0') +             //  54 -  57   Agência (Não considerado)
-               Space(1) +                                         //  58 -  58   Dígito agência (Não considerado)
+               PadLeft(AgenciaDigito, 1, ' ') +                   //  58 -  58   Dígito agência (Não considerado)
                PadLeft(OnlyNumber(Conta), 12, '0') +              //  59 -  70   Número da conta (Não considerado)
                ContaDigito +                                      //  71 -  71   Dígito da conta (Não considerado)
                Space(1) +                                         //  72 -  72   Dígito verificador da agência/conta (Não considerado)
@@ -505,15 +504,15 @@ begin
                '020'+                                             //  14 -  16   Número da versão do layout do lote
                Space(1) +                                         //  17 -  17   Uso exclusivo FEBRABAN/CNAB
                TipoInsc +                                         //  18 -  18   Tipo de inscrição da empresa
-               PadLeft(OnlyNumber(CNPJCPF), 15, '0') +               //  19 -  33   Número de inscrição da empresa
-               PadLeft(OnlyNumber(Convenio), 13, '0') +              //  34 -  46   Código do convênio
+               PadLeft(OnlyNumber(CNPJCPF), 15, '0') +            //  19 -  33   Número de inscrição da empresa
+               PadLeft(OnlyNumber(Convenio), 13, '0') +           //  34 -  46   Código do convênio
                Space(7) +                                         //  47 -  53   Brancos
-               PadLeft(OnlyNumber(Agencia), 5, '0') +                //  54 -  58   Agência
-               AgenciaDigito +                                    //  59 -  59   Dígito da agência
-               PadLeft(OnlyNumber(Conta), 12, '0') +                 //  60 -  71   Número da conta
+               PadLeft(OnlyNumber(Agencia), 5, '0') +             //  54 -  58   Agência
+               PadLeft(AgenciaDigito, 1, ' ') +                   //  59 -  59   Dígito da agência
+               PadLeft(OnlyNumber(Conta), 12, '0') +              //  60 -  71   Número da conta
                ContaDigito +                                      //  72 -  72   Dígito da conta
                Space(1) +                                         //  73 -  73   Dígito verificador da agência/conta
-               PadLeft(Nome, 30) +                                   //  74 - 103   Nome da empresa
+               PadLeft(Nome, 30) +                                //  74 - 103   Nome da empresa
                Space(80) +                                        // 104 - 183   Mensagens
                IntToStrZero(NumeroRemessa, 8) +                   // 184 - 191   Número sequencial do arquivo
                FormatDateTime('ddmmyyyy', Now) +                  // 192 - 199   Data de geração do arquivo
@@ -530,12 +529,12 @@ var Valor: Currency;
 begin
    Valor := 0.00;
    Ps := 1;
-   for i := 0 to ARemessa.Count - 1 do 
+   for i := 0 to ARemessa.Count - 1 do
    begin
       if (ARemessa.Strings[i][14] = 'P') then
          Valor := Valor + (StrToCurr(Copy(ARemessa.Strings[i], 86, 15)) / 100);
 
-      while (Pos('*****', ARemessa.Strings[i]) > 0) do 
+      while (Pos('*****', ARemessa.Strings[i]) > 0) do
       begin
          ARemessa.Strings[i] := StringReplace(ARemessa.Strings[i], '*****', IntToStrZero(Ps, 5), []);
          Inc(Ps);
@@ -731,27 +730,35 @@ begin
 
   rCedente       := trim(copy(ARetorno[0], 73, 30));
   rConvenio      := trim(Copy(ARetorno.Strings[1], 34, 13));
-  rAgencia       := trim(Copy(ARetorno.Strings[1], 55,  4));
+  rAgencia       := trim(Copy(ARetorno.Strings[1], 54,  5));
   rAgenciaDigito := trim(Copy(ARetorno.Strings[1], 59,  1));
-  rConta         := trim(Copy(ARetorno.Strings[1], 65,  7));
+  rConta         := trim(Copy(ARetorno.Strings[1], 60, 12));
   rContaDigito   := trim(Copy(ARetorno.Strings[1], 72,  1));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 158, 6), 0);
 
-  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 144, 2) +'/'+
+  try
+    ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno.Strings[0], 144, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 146, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 148, 4),
                                                             0, 'dd/mm/yyyy');
-
-  ACBrBanco.ACBrBoleto. DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno.Strings[1], 200, 2) +'/'+
-                                                               Copy(ARetorno.Strings[1], 202, 2) +'/'+
-                                                               Copy(ARetorno.Strings[1], 204, 4),
-                                                               0, 'dd/mm/yyyy');
-
-  rCNPJCPF := OnlyNumber(copy(ARetorno[0], 19, 14));
+  except
+    ACBrBanco.ACBrBoleto.DataArquivo   := 0;
+  end;
 
   try
-    ValidarDadosRetorno(rAgencia, rConta, OnlyNumber(rCNPJCPF));
+    ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno.Strings[1], 200, 2) +'/'+
+                                                                 Copy(ARetorno.Strings[1], 202, 2) +'/'+
+                                                                 Copy(ARetorno.Strings[1], 204, 4),
+                                                                 0, 'dd/mm/yyyy');
+  except
+    ACBrBanco.ACBrBoleto.DataCreditoLanc := 0;
+  end;
+
+  rCNPJCPF := OnlyNumber(copy(ARetorno[1], 20, 14));
+
+  try
+    ValidarDadosRetorno(rAgencia, rConta, rCNPJCPF);
     with ACBrBanco.ACBrBoleto do
     begin
 
@@ -808,7 +815,8 @@ begin
             NumeroDocumento      := Trim(Copy(FSegT, 59, 15));
             SeuNumero            := NumeroDocumento;
             Carteira             := Copy(FSegT, 58, 1);
-            NossoNumero          := Trim(Copy(FSegT, 38, 8));
+            NossoNumero          := Trim(Copy(FSegT, 38, TamanhoMaximoNossoNum));
+//            NossoNumero          := Trim(Copy(FSegT, 38, 20));
             Vencimento           := StringToDateTimeDef(Copy(FSegT, 74, 2) +'/'+
                                                         Copy(FSegT, 76, 2) +'/'+
                                                         Copy(FSegT, 78, 4), 0, 'dd/mm/yyyy');
@@ -821,12 +829,22 @@ begin
             ValorRecebido        := StrToInt64Def(Copy(FSegU,  93, 15), 0) / 100;
             ValorOutrasDespesas  := StrToInt64Def(Copy(FSegU, 108, 15), 0) / 100;
             ValorOutrosCreditos  := StrToInt64Def(Copy(FSegU, 123, 15), 0) / 100;
-            DataOcorrencia       := StringToDateTimeDef(Copy(FSegU, 138, 2) +'/'+
+
+            try
+              DataOcorrencia     := StringToDateTimeDef(Copy(FSegU, 138, 2) +'/'+
                                                         Copy(FSegU, 140, 2) +'/'+
                                                         Copy(FSegU, 142, 4), 0, 'dd/mm/yyyy');
-            DataCredito          := StringToDateTimeDef(Copy(FSegU, 146, 2) +'/'+
+            except
+              DataOcorrencia     := 0;
+            end;
+
+            try
+              DataCredito        := StringToDateTimeDef(Copy(FSegU, 146, 2) +'/'+
                                                         Copy(FSegU, 148, 2) +'/'+
                                                         Copy(FSegU, 150, 4), 0, 'dd/mm/yyyy');
+            except
+              DataCredito        := 0;
+            end;
 
             if(Copy(FSegT, 16, 2) = 'AB')then
               OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(999)
@@ -878,6 +896,8 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
+  fpTamanhoMaximoNossoNum:=10;
+
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
   rConvenio      := ''; //Não possui essa info
   rAgencia       := trim(Copy(ARetorno.Strings[0], 27, 4));
@@ -891,10 +911,15 @@ begin
   end;
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
-  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
+
+  try
+    ACBrBanco.ACBrBoleto.DataArquivo := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 97, 2) +'/'+
                                                             Copy(ARetorno.Strings[0], 99, 2),
                                                             0, 'dd/mm/yy');
+  except
+    ACBrBanco.ACBrBoleto.DataArquivo := 0;
+  end;
 
   with ACBrBanco.ACBrBoleto do
   begin
@@ -930,7 +955,7 @@ begin
     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
     with Titulo do
     begin
-      NossoNumero          := Copy(Linha,63,08);
+      NossoNumero          := Copy(Linha,63,10);
       SeuNumero            := copy(Linha,117,10);
       NumeroDocumento      := copy(Linha,117,10);
 
@@ -949,13 +974,23 @@ begin
                                            Copy(Linha,151,2),0, 'DD/MM/YY' );
 
       if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
-        DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
-                                          Copy(Linha,298,2)+'/'+
-                                          Copy(Linha,300,2),0, 'DD/MM/YY' );
+      begin
+        try
+          DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
+                                            Copy(Linha,298,2)+'/'+
+                                            Copy(Linha,300,2),0, 'DD/MM/YY' );
+        except
+          DataCredito := 0;
+        end;
+      end;
 
-      DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                            Copy(Linha,113,2)+'/'+
-                                            Copy(Linha,115,2),0, 'DD/MM/YY' );
+      try
+        DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                              Copy(Linha,113,2)+'/'+
+                                              Copy(Linha,115,2),0, 'DD/MM/YY' );
+      except
+        DataOcorrencia := 0;
+      end;
 
       OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(Copy(Linha,109,2),0));
       CodOcorrencia := StrToIntDef(Copy(Linha,109,2), 0);
@@ -977,7 +1012,7 @@ begin
 end;
 
 function TACBrBanrisul.CodMotivoRejeicaoToDescricao(
-  const TipoOcorrencia: TACBrTipoOcorrencia; const CodMotivo: String): String;
+  const TipoOcorrencia: TACBrTipoOcorrencia; Const CodMotivo: String): String;
 begin
   case TipoOcorrencia of
 
@@ -1064,7 +1099,9 @@ begin
       end;
     end;
 
-    toRetornoRegistroRecusado:
+    toRetornoRegistroRecusado,
+    toRetornoInstrucaoRejeitada,
+    toRetornoAlteracaoDadosRejeitados:
     begin
       case StrToIntDef(CodMotivo, 0) of
         01: Result := '01-Código do Banco inválido';
@@ -1139,6 +1176,7 @@ begin
     case CodOcorrencia of
       04: Result := toRetornoTransferenciaCarteira;
       05: Result := toRetornoReembolsoDevolucaoDescontoVendor;
+      07: Result := toRetornoLiquidadoParcialmente;                  //Liquidação Parcial
       09: Result := toRetornoBaixado;
       11: Result := toRetornoTituloEmSer;
       15: Result := toRetornoProtestoImediatoFalencia;

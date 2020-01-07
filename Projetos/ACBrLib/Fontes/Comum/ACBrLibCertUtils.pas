@@ -1,5 +1,5 @@
 {*******************************************************************************}
-{ Projeto: ACBrLib                                                              }
+{ Projeto: Componentes ACBr                                                     }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa-  }
 { mentos de Automação Comercial utilizados no Brasil                            }
 {                                                                               }
@@ -33,81 +33,40 @@
 
 {$I ACBr.inc}
 
-library ACBrLibNFe;
-
+unit ACBrLibCertUtils;
+  
+interface
+ 
 uses
-  Interfaces, sysutils, Classes, Forms, ACBrLibNFeClass, ACBrLibConfig,
-  ACBrLibComum, ACBrLibConsts, ACBrLibNFeConfig, ACBrLibResposta,
-  DFeReportConfig, ACBrLibNFeRespostas;
+  Classes, SysUtils,
+  ACBrDFeSSL, ACBrUtil;
 
-{$R *.res}
+const
+  CCertFormat = '%s|%s|%s|%s|%s';
+ 
+function ObterCerticados(const SSL: TDFeSSL): ansistring;
 
-{$IFDEF DEBUG}
+implementation
+
+function ObterCerticados(const SSL: TDFeSSL): ansistring;
 var
-   HeapTraceFile : String ;
-{$ENDIF}
-
-exports
-  // Importadas de ACBrLibComum
-  NFE_Inicializar,
-  NFE_Finalizar,
-  NFE_Nome,
-  NFE_Versao,
-  NFE_UltimoRetorno,
-  NFE_ImportarConfig,
-  NFE_ConfigLer,
-  NFE_ConfigGravar,
-  NFE_ConfigLerValor,
-  NFE_ConfigGravarValor,
-
-  // Servicos
-  NFE_StatusServico,
-  NFE_Inutilizar,
-  NFE_Enviar,
-  NFE_ConsultarRecibo,
-  NFE_Consultar,
-  NFE_Cancelar,
-  NFE_EnviarEvento,
-  NFE_ConsultaCadastro,
-  NFE_DistribuicaoDFePorUltNSU,
-  NFE_DistribuicaoDFePorNSU,
-  NFE_DistribuicaoDFePorChave,
-  NFE_EnviarEmail,
-  NFE_EnviarEmailEvento,
-  NFE_Imprimir,
-  NFE_ImprimirPDF,
-  NFE_ImprimirEvento,
-  NFE_ImprimirEventoPDF,
-  NFE_ImprimirInutilizacao,
-  NFE_ImprimirInutilizacaoPDF,
-
-  // Arquivos
-  NFE_CarregarXML,
-  NFE_CarregarINI,
-  NFE_ObterXml,
-  NFE_GravarXml,
-  NFE_ObterIni,
-  NFE_GravarIni,
-  NFE_CarregarEventoXML,
-  NFE_CarregarEventoINI,
-  NFE_LimparLista,
-  NFE_LimparListaEventos,
-  NFE_Assinar,
-  NFE_Validar,
-  NFE_ValidarRegrasdeNegocios,
-  NFE_VerificarAssinatura,
-  NFE_GerarChave,
-  NFE_ObterCertificados;
-
+  I: Integer;
 begin
-  {$IFDEF DEBUG}
-   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
-   DeleteFile( HeapTraceFile );
-   SetHeapTraceOutput( HeapTraceFile );
-  {$ENDIF}
+  Result := '';
+  SSL.LerCertificadosStore;
 
-  pLibClass := TACBrLibNFe; // Ajusta a classe a ser criada
+  for I := 0 to SSL.ListaCertificados.Count-1 do
+  begin
+    with SSL.ListaCertificados[I] do
+    begin
+      if (CNPJ <> '') then
+      begin
+        Result := Result +
+                  Format(CCertFormat, [NumeroSerie, RazaoSocial, CNPJ, FormatDateBr(DataVenc), Certificadora]) +
+                  sLineBreak;
+      end;
+    end;
+  end;
+end;
 
-  MainThreadID := GetCurrentThreadId();
-  Application.Initialize;
 end.

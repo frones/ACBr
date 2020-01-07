@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibETQClass ---
+[+] Adicionado o metodo ETQ_ImportarConfig.
+   Por: Rafael Dias
+
 16/08/2018
 --- ACBrLibETQ ---
 [+] Inicio do projeto.

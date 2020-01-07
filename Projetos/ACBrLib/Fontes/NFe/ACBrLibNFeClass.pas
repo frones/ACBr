@@ -118,6 +118,8 @@ function NFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint)
 function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
   AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -183,7 +185,7 @@ uses
   IniFiles, ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
-  ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil,
+  ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil, ACBrLibCertUtils,
   pcnConversao, pcnAuxiliar, blcksock;
 
 { TACBrLibNFe }
@@ -837,6 +839,38 @@ begin
   end;
 end;
 
+function NFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('NFE_ObterCertificados', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := ObterCerticados(NFeDM.ACBrNFe1.SSL);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%region Servicos}
@@ -1017,7 +1051,7 @@ var
   RespEnvio: TEnvioResposta;
   RespRetorno: TRetornoResposta;
   ImpResp: TLibImpressaoResposta;
-  i, j, ImpCount: Integer;
+  i, ImpCount: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -1083,18 +1117,6 @@ begin
                                     WebServices.Retorno.Protocolo,
                                     WebServices.Retorno.ChaveNFe);
 
-              // Preenche o xml completo no retorno se tiver a nota de carregada no componente
-              for i := 0 to WebServices.Recibo.NFeRetorno.ProtDFe.Count - 1 do
-              begin
-                for j := 0 to NotasFiscais.Count - 1 do
-                begin
-                  if WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe = NotasFiscais.Items[J].NFe.infNFe.ID then
-                  begin
-                    RespRetorno.Items[i].XML := NotasFiscais.Items[J].XML;
-                  end;
-                end;
-              end;
-
               Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
             finally
               RespRetorno.Free;
@@ -1146,7 +1168,6 @@ function NFE_ConsultarRecibo(ARecibo: PChar; const sResposta: PChar; var esTaman
 var
   Resp: TReciboResposta;
   sRecibo, Resposta: string;
-  i, j: Integer;
 begin
   try
     VerificarLibInicializada;
@@ -1172,18 +1193,6 @@ begin
           try
             Resp.Processar(WebServices.Recibo.NFeRetorno,
                            WebServices.Recibo.Recibo);
-
-            // Preenche o xml completo no retorno se tiver a nota de carregada no componente
-            for i := 0 to WebServices.Recibo.NFeRetorno.ProtDFe.Count - 1 do
-            begin
-              for j := 0 to NotasFiscais.Count - 1 do
-              begin
-                if WebServices.Recibo.NFeRetorno.ProtDFe.Items[i].chDFe = NotasFiscais.Items[J].NFe.infNFe.ID then
-                begin
-                  Resp.Items[i].XML := NotasFiscais.Items[J].XML;
-                end;
-              end;
-            end;
 
             Resposta := Resp.Gerar;
           finally

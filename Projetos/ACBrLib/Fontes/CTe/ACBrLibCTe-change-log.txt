@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibCTeClass ---
+[+] Adicionado o metodo CTE_ImportarConfig.
+   Por: Rafael Dias
+
 30/12/2019
 --- ACBrLibCTeClass ---
 [+] Adicionado os metodos CTE_ObterIni e CTE_GravarIni.

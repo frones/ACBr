@@ -94,16 +94,11 @@ type
     FChaveDFe: string;
     FItems: TObjectList;
 
-    function GetItem(Index: Integer): TRetornoItemResposta;
-
   public
     constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo, Msg, Protocolo, ChaveDFe: String);
-    function Gerar: Ansistring; override;
-
-    property Items[Index: Integer]: TRetornoItemResposta read GetItem; default;
 
   published
     property Msg: string read FMsg write FMsg;
@@ -119,6 +114,7 @@ type
     property xMsg: String read FxMsg write FxMsg;
     property Protocolo: String read FProtocolo write FProtocolo;
     property ChaveDFe: String read FChaveDFe write FChaveDFe;
+    property Items: TObjectList read FItems write FItems;
 
   end;
 
@@ -135,16 +131,11 @@ type
     FnRec: string;
     FItens: TObjectList;
 
-    function GetItem(Index: Integer): TRetornoItemResposta;
-
   public
     constructor Create(const APrefix: String; const ATipo: TACBrLibRespostaTipo; const AFormato: TACBrLibCodificacao); reintroduce;
     destructor Destroy; override;
 
     procedure Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo: String);
-    function Gerar: Ansistring; override;
-
-    property Items[Index: Integer]: TRetornoItemResposta read GetItem; default;
 
   published
     property Versao: string read Fversao write Fversao;
@@ -154,6 +145,7 @@ type
     property XMotivo: string read FxMotivo write FxMotivo;
     property CUF: integer read FcUF write FcUF;
     property nRec: string read FnRec write FnRec;
+    property Items: TObjectList read FItens write FItens;
 
   end;
 
@@ -198,22 +190,6 @@ begin
   FItems.Free;
 
   Inherited Destroy;
-end;
-
-function TRetornoResposta.GetItem(Index: Integer): TRetornoItemResposta;
-begin
-  Result := TRetornoItemResposta(FItems[Index]);
-end;
-
-function TRetornoResposta.Gerar: Ansistring;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-  for i := 0 to FItems.Count - 1 do
-  begin
-    Result := Result + sLineBreak + TRetornoItemResposta(FItems.Items[i]).Gerar;
-  end;
 end;
 
 procedure TRetornoResposta.Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo, Msg, Protocolo, ChaveDFe: String);
@@ -261,22 +237,6 @@ begin
   FItens.Free;
 
   Inherited Destroy;
-end;
-
-function TReciboResposta.GetItem(Index: Integer): TRetornoItemResposta;
-begin
-  Result := TRetornoItemResposta(FItens[Index]);
-end;
-
-function TReciboResposta.Gerar: Ansistring;
-Var
-  i: Integer;
-begin
-  Result := Inherited Gerar;
-  for i := 0 to FItens.Count - 1 do
-  begin
-    Result := Result + sLineBreak + TRetornoItemResposta(FItens.Items[i]).Gerar;
-  end;
 end;
 
 procedure TReciboResposta.Processar(const RetConsReciDFe: TRetConsReciDFe; const Recibo: String);

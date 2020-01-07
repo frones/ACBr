@@ -294,25 +294,22 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="6">
+    <RequiredPackages Count="5">
       <Item1>
         <PackageName Value="ACBr_CTe_DaCTeRL"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="LCL"/>
       </Item4>
       <Item5>
-        <PackageName Value="LCL"/>
-      </Item5>
-      <Item6>
         <PackageName Value="FCL"/>
-      </Item6>
+      </Item5>
     </RequiredPackages>
     <Units Count="16">
       <Unit0>

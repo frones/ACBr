@@ -54,6 +54,7 @@ exports
   ETQ_Nome,
   ETQ_Versao,
   ETQ_UltimoRetorno,
+  ETQ_ImportarConfig,
   ETQ_ConfigLer,
   ETQ_ConfigGravar,
   ETQ_ConfigLerValor,

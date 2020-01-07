@@ -92,6 +92,7 @@ type
     procedure INIParaClasse; override;
     procedure ClasseParaINI; override;
     procedure ClasseParaComponentes; override;
+    procedure ImportarIni(FIni: TCustomIniFile); override;
 
     procedure Travar; override;
     procedure Destravar; override;
@@ -107,7 +108,8 @@ type
 implementation
 
 uses
-  ACBrLibETQClass, ACBrLibETQConsts, ACBrLibConsts, ACBrLibComum, ACBrUtil;
+  ACBrMonitorConsts, ACBrLibConsts, ACBrLibETQConsts,
+  ACBrLibETQClass, ACBrLibComum, ACBrUtil;
 
 { TETQConfig }
 
@@ -205,6 +207,21 @@ procedure TLibETQConfig.ClasseParaComponentes;
 begin
   if Assigned(Owner) then
     TACBrLibETQ(Owner).ETQDM.AplicarConfiguracoes;
+end;
+
+procedure TLibETQConfig.ImportarIni(FIni: TCustomIniFile);
+begin
+  FETQConfig.Porta          := FIni.ReadString(CSecETQ, CKeyETQPorta, FETQConfig.Porta);
+  FETQConfig.Temperatura    := FIni.ReadInteger(CSecETQ, CKeyETQTemperatura, FETQConfig.Temperatura);
+  FETQConfig.Velocidade     := FIni.ReadInteger(CSecETQ, CKeyETQVelocidade, FETQConfig.Velocidade);
+  FETQConfig.Avanco         := FIni.ReadInteger(CSecETQ, CKeyETQAvanco, FETQConfig.Avanco);
+  FETQConfig.MargemEsquerda := FIni.ReadInteger(CSecETQ, CKeyETQMargemEsquerda, FETQConfig.MargemEsquerda);
+  FETQConfig.LimparMemoria  := FIni.ReadBool(CSecETQ, CKeyETQLimparMemoria, FETQConfig.LimparMemoria);
+  FETQConfig.Modelo         := TACBrETQModelo(FIni.ReadInteger(CSecETQ, CKeyETQModelo, Integer(FETQConfig.Modelo)));
+  FETQConfig.Unidade        := TACBrETQUnidade(FIni.ReadInteger(CSecETQ, CKeyETQUnidade, Integer(FETQConfig.Unidade)));
+  FETQConfig.BackFeed       := TACBrETQBackFeed(FIni.ReadInteger(CSecETQ, CKeyETQBackFeed, Integer(FETQConfig.BackFeed)));
+  FETQConfig.Origem         := TACBrETQOrigem(FIni.ReadInteger(CSecETQ, CKeyETQOrigem, Integer(FETQConfig.Origem)));
+  FETQConfig.DPI            := TACBrETQDPI(FIni.ReadInteger(CSecETQ, CKeyETQDPI, Integer(FETQConfig.DPI)));
 end;
 
 procedure TLibETQConfig.Travar;

@@ -55,6 +55,7 @@ exports
   MAIL_Nome,
   MAIL_Versao,
   MAIL_UltimoRetorno,
+  MAIL_ImportarConfig,
   MAIL_ConfigLer,
   MAIL_ConfigGravar,
   MAIL_ConfigLerValor,

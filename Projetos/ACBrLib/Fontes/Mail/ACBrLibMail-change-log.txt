@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2020
+--- ACBrLibMailClass ---
+[+] Adicionado o metodo MAIL_ImportarConfig.
+   Por: Rafael Dias
+
 23/08/2018
 --- ACBrLibMail ---
 [+] Adicionado a nova propriedade para confirmação de entrega.

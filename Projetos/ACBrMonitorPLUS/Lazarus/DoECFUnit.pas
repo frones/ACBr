@@ -2431,7 +2431,7 @@ begin
   begin
     if pos(DateSeparator, Ini) > 0 then
        ACBrECF.PafMF_LMFC_Impressao(
-               StringToDateTime(Fim),            { Dt.Inicial }
+               StringToDateTime(Ini),            { Dt.Inicial }
                StringToDateTime(Fim) )           { Dt.Final }
     else
        ACBrECF.PafMF_LMFC_Impressao(

@@ -8,7 +8,7 @@ uses
   Spin, Buttons, ComCtrls, OleCtrls, SHDocVw, ACBrMail,
   ACBrPosPrinter, ACBrNFeDANFeESCPOS, ACBrNFeDANFEClass, ACBrDANFCeFortesFr,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFeRLClass, ACBrBase, ACBrDFe,
-  ACBrNFe, ACBrUtil, ACBrIntegrador, ShellAPI, XMLIntf, XMLDoc, zlib;
+  ACBrNFe, ACBrUtil, ShellAPI, XMLIntf, XMLDoc, zlib, ACBrIntegrador;
 
 type
   TfrmACBrNFe = class(TForm)
@@ -244,8 +244,8 @@ type
     btnImprimirDANFCE: TButton;
     btnImprimirDANFCEOffline: TButton;
     rgDANFCE: TRadioGroup;
-    ACBrIntegrador1: TACBrIntegrador;
     btnStatusServ: TButton;
+    ACBrIntegrador1: TACBrIntegrador;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -675,22 +675,10 @@ begin
           vAliqProd := 0;
           vCOFINS   := 0;
         end;
-
-        //Grupo para serviços
-        (*
-        with ISSQN do
-        begin
-          vBC       := 0;
-          vAliq     := 0;
-          vISSQN    := 0;
-          cMunFG    := 0;
-          cListServ := 1402; // Preencha este campo usando a tabela disponível
-                             // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-        end;
-        *)
       end;
     end;
 
+    (*
     //Adicionando Serviços
     with Det.New do
     begin
@@ -718,7 +706,6 @@ begin
       infAdProd      := 'Informação Adicional do Serviço';
 
       //Grupo para serviços
-      (*
       with Imposto.ISSQN do
       begin
         cSitTrib  := ISSQNcSitTribNORMAL;
@@ -726,11 +713,11 @@ begin
         vAliq     := 2;
         vISSQN    := 2;
         cMunFG    := 3554003;
-        cListServ := 1402; // Preencha este campo usando a tabela disponível
-                           // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
+        cListServ := '14.02'; // Preencha este campo usando a tabela disponível
+                              // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
       end;
-      *)
     end;
+    *)
 
     Total.ICMSTot.vBC     := 100;
     Total.ICMSTot.vICMS   := 18;
@@ -1162,19 +1149,7 @@ begin
   Produto.Imposto.COFINSST.vAliqProd := 0;
   Produto.Imposto.COFINSST.vCOFINS   := 0;
 
-//Grupo para serviços
-
-  Produto.Imposto.ISSQN.vBC       := 0;
-  Produto.Imposto.ISSQN.vAliq     := 0;
-  Produto.Imposto.ISSQN.vISSQN    := 0;
-  Produto.Imposto.ISSQN.cMunFG    := 0;
-  // Preencha este campo usando a tabela disponível
-  // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-  Produto.Imposto.ISSQN.cListServ := '1402';
-
-
-
-//Adicionando Serviços
+  //Adicionando Serviços
   (*
   Servico := NotaF.Nfe.Det.Add;
   Servico.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
@@ -1200,7 +1175,7 @@ begin
 
   Servico.infAdProd      := 'Informação Adicional do Serviço';
 
-//Grupo para serviços
+  //Grupo para serviços
   Servico.Imposto.ISSQN
   Servico.Imposto.cSitTrib  := ISSQNcSitTribNORMAL;
   Servico.Imposto.vBC       := 100;
@@ -1210,7 +1185,6 @@ begin
   // Preencha este campo usando a tabela disponível
   // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
   Servico.Imposto.cListServ := '1402';
-
   *)
 
   NotaF.NFe.Total.ICMSTot.vBC     := 100;

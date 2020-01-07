@@ -1107,7 +1107,7 @@ object frmPrincipal: TfrmPrincipal
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
       object Label2: TLabel
         Left = 6
-        Top = 21
+        Top = 6
         Width = 321
         Height = 13
         Caption = 
@@ -1122,7 +1122,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object btnSelecDirInstall: TSpeedButton
         Left = 499
-        Top = 35
+        Top = 19
         Width = 26
         Height = 24
         Hint = 'Clique para procurar pelo diret'#243'rio onde deseja instalar'
@@ -1131,32 +1131,18 @@ object frmPrincipal: TfrmPrincipal
         ShowHint = True
         OnClick = btnSelecDirInstallClick
       end
-      object Label8: TLabel
-        Left = 22
-        Top = 87
-        Width = 316
-        Height = 13
-        Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
       object Label22: TLabel
-        Left = 17
-        Top = 461
-        Width = 517
-        Height = 26
+        Left = 6
+        Top = 459
+        Width = 525
+        Height = 34
         AutoSize = False
         Caption = 
-          'NOTA: Seguindo o aviso feito no f'#243'rum sobre n'#227'o suportar vers'#245'es' +
-          ' n'#227'o UNICODE, vers'#245'es pr'#233' Delphi 2009 n'#227'o ser'#227'o mais suportadas,' +
-          ' atualize sua vers'#227'o do Delphi se necess'#225'rio.'
+          'NOTA: Se voc'#234' utiliza uma vers'#227'o pr'#233' Delphi 2009, por favor atua' +
+          'lize seu Delphi ou mude para Lazarus. '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
@@ -1164,7 +1150,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object edtDirDestino: TEdit
         Left = 6
-        Top = 37
+        Top = 22
         Width = 487
         Height = 21
         Font.Charset = DEFAULT_CHARSET
@@ -1176,110 +1162,140 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 0
         Text = 'C:\ACBr'
       end
-      object rdgDLL: TRadioGroup
+      object grpCompilacao: TGroupBox
         Left = 6
-        Top = 305
-        Width = 350
-        Height = 126
-        Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
-        ItemIndex = 0
-        Items.Strings = (
-          'Diret'#243'rio system do Windows (Recomendado)'
-          'Diret'#243'rio bin'#225'rio do Delphi'
-          'N'#227'o copiar (N'#227'o recomendado)')
-        TabOrder = 11
-      end
-      object ckbCopiarTodasDll: TCheckBox
-        Left = 6
-        Top = 282
-        Width = 350
-        Height = 17
-        Hint = 
-          'Copia todas as DLL'#180's "Extras" para o destino selecionado (CLX, D' +
-          'iversos, MSVCR, LibXml, etc...)'
-        Caption = 
-          'Copiar todas as DLL'#39's requeridas (exceto as marcadas '#39'n'#227'o utiliz' +
-          'ar'#39')'
-        TabOrder = 10
-      end
-      object ckbBCB: TCheckBox
-        Left = 6
-        Top = 71
-        Width = 278
-        Height = 17
-        Caption = 'Generate all C++Builder files (including package libs) '
+        Top = 49
+        Width = 531
+        Height = 121
+        Caption = 'Op'#231#245'es de Compila'#231#227'o do ACBr'
         TabOrder = 1
+        object ckbRemoveOpenSSL: TCheckBox
+          Left = 6
+          Top = 59
+          Width = 379
+          Height = 17
+          Caption = 'N'#227'o utilizar OpenSSL'
+          TabOrder = 0
+        end
+        object ckbRemoveCapicom: TCheckBox
+          Left = 6
+          Top = 80
+          Width = 379
+          Height = 17
+          Caption = 'N'#227'o utilizar Capicom'
+          TabOrder = 1
+        end
+        object ckbRemoveXMLSec: TCheckBox
+          Left = 6
+          Top = 37
+          Width = 379
+          Height = 17
+          Caption = 'N'#227'o utilizar XMLSec'
+          Checked = True
+          State = cbChecked
+          TabOrder = 2
+        end
+        object ckbCargaDllTardia: TCheckBox
+          Left = 6
+          Top = 16
+          Width = 379
+          Height = 17
+          Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
+          TabOrder = 3
+        end
+        object ckbRemoverCastWarnings: TCheckBox
+          Left = 6
+          Top = 101
+          Width = 379
+          Height = 17
+          Hint = 
+            'Sugerimos marcar caso n'#227'o esteja resolvendo problemas com string' +
+            's.'
+          Caption = 
+            'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
+            'ng'
+          TabOrder = 4
+        end
       end
-      object chkDeixarSomenteLIB: TCheckBox
+      object grpInstalacao: TGroupBox
         Left = 6
-        Top = 103
-        Width = 350
-        Height = 17
-        Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
+        Top = 176
+        Width = 531
+        Height = 279
+        Caption = 'Op'#231#245'es de Instala'#231#227'o'
         TabOrder = 2
-      end
-      object ckbRemoverArquivosAntigos: TCheckBox
-        Left = 6
-        Top = 126
-        Width = 379
-        Height = 17
-        Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
-        TabOrder = 3
-      end
-      object ckbRemoveOpenSSL: TCheckBox
-        Left = 6
-        Top = 149
-        Width = 379
-        Height = 17
-        Caption = 'N'#227'o utilizar OpenSSL'
-        TabOrder = 4
-      end
-      object ckbRemoveCapicom: TCheckBox
-        Left = 6
-        Top = 172
-        Width = 379
-        Height = 17
-        Caption = 'N'#227'o utilizar Capicom'
-        TabOrder = 5
-      end
-      object ckbCargaDllTardia: TCheckBox
-        Left = 6
-        Top = 215
-        Width = 379
-        Height = 17
-        Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
-        TabOrder = 7
-      end
-      object ckbRemoverCastWarnings: TCheckBox
-        Left = 6
-        Top = 236
-        Width = 379
-        Height = 17
-        Hint = 
-          'Sugerimos marcar caso n'#227'o esteja resolvendo problemas com string' +
-          's.'
-        Caption = 
-          'Remover Warnings de CAST causados por WideString/String/AnsiStri' +
-          'ng'
-        TabOrder = 8
-      end
-      object ckbUsarArquivoConfig: TCheckBox
-        Left = 6
-        Top = 259
-        Width = 305
-        Height = 17
-        Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
-        TabOrder = 9
-      end
-      object ckbRemoveXMLSec: TCheckBox
-        Left = 6
-        Top = 190
-        Width = 379
-        Height = 17
-        Caption = 'N'#227'o utilizar XMLSec'
-        Checked = True
-        State = cbChecked
-        TabOrder = 6
+        object Label8: TLabel
+          Left = 279
+          Top = 16
+          Width = 249
+          Height = 39
+          Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          WordWrap = True
+        end
+        object ckbBCB: TCheckBox
+          Left = 6
+          Top = 15
+          Width = 267
+          Height = 17
+          Caption = 'Generate all C++Builder files (including package libs) '
+          TabOrder = 0
+        end
+        object chkDeixarSomenteLIB: TCheckBox
+          Left = 6
+          Top = 45
+          Width = 350
+          Height = 17
+          Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
+          TabOrder = 1
+        end
+        object ckbRemoverArquivosAntigos: TCheckBox
+          Left = 6
+          Top = 68
+          Width = 379
+          Height = 17
+          Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
+          TabOrder = 2
+        end
+        object ckbUsarArquivoConfig: TCheckBox
+          Left = 6
+          Top = 92
+          Width = 305
+          Height = 17
+          Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
+          TabOrder = 3
+        end
+        object ckbCopiarTodasDll: TCheckBox
+          Left = 6
+          Top = 137
+          Width = 350
+          Height = 17
+          Hint = 
+            'Copia todas as DLL'#180's "Extras" para o destino selecionado (CLX, D' +
+            'iversos, MSVCR, LibXml, etc...)'
+          Caption = 
+            'Copiar todas as DLL'#39's requeridas (exceto as marcadas '#39'n'#227'o utiliz' +
+            'ar'#39')'
+          TabOrder = 4
+        end
+        object rdgDLL: TRadioGroup
+          Left = 6
+          Top = 160
+          Width = 350
+          Height = 105
+          Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
+          ItemIndex = 0
+          Items.Strings = (
+            'Diret'#243'rio system do Windows (Recomendado)'
+            'Diret'#243'rio bin'#225'rio do Delphi'
+            'N'#227'o copiar (N'#227'o recomendado)')
+          TabOrder = 5
+        end
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage

@@ -48,19 +48,22 @@ type
   TOnInformarSituacao = reference to procedure (const Mensagem: string);
   TOnProgresso  = TProc;
 
-  TACBrInstallOpcoes = record
-    LimparArquivosACBrAntigos: Boolean;
-    DeixarSomentePastasLib: Boolean;
+  TACBrCompilerOpcoes = record
     DeveInstalarCapicom: Boolean;
     DeveInstalarOpenSSL: Boolean;
-    DeveCopiarOutrasDLLs: Boolean;
     DeveInstalarXMLSec: Boolean;
     UsarCargaTardiaDLL: Boolean;
     RemoverStringCastWarnings: Boolean;
+  end;
+
+  TACBrInstallOpcoes = record
+    LimparArquivosACBrAntigos: Boolean;
+    DeixarSomentePastasLib: Boolean;
     UsarCpp: Boolean;
     UsarUsarArquivoConfig: Boolean;
     sDestinoDLLs: TDestino;
     DiretorioRaizACBr: string;
+    DeveCopiarOutrasDLLs: Boolean;
   end;
 
   TACBrInstallComponentes = class(TObject)
@@ -119,7 +122,8 @@ type
     procedure FazInstalacaoDLLs(const APathBin: string);
 
   public
-    Opcoes: TACBrInstallOpcoes;
+    OpcoesInstall: TACBrInstallOpcoes;
+    OpcoesCompilacao: TACBrCompilerOpcoes;
 
     constructor Create(app: TApplication);
 
@@ -162,7 +166,7 @@ begin
   // não utilizar o dcc32.cfg
   if (InstalacaoAtual.SupportsNoConfig) and
      // -- Arquivo cfg agora opcional no caso de paths muito extensos
-     (not Opcoes.UsarUsarArquivoConfig) then
+     (not OpcoesInstall.UsarUsarArquivoConfig) then
     Sender.Options.Add('--no-config');
 
   // -B = Build all units
@@ -197,7 +201,7 @@ begin
   Sender.AddPathOption('LN', sDirLibrary);
 
   // ************ C++ Builder *************** //
-  if Opcoes.UsarCpp then
+  if OpcoesInstall.UsarCpp then
   begin
      // -JL compila c++ builder
      Sender.AddPathOption('JL', sDirLibrary);
@@ -222,7 +226,7 @@ begin
   if MatchText(InstalacaoAtual.VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25','d26']) then
     Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
 
-  if (Opcoes.UsarUsarArquivoConfig) then
+  if (OpcoesInstall.UsarUsarArquivoConfig) then
   begin
     LArquivoCfg := ChangeFileExt(FPacoteAtual, '.cfg');
     Sender.Options.SaveToFile(LArquivoCfg);
@@ -235,18 +239,19 @@ constructor TACBrInstallComponentes.Create(app: TApplication);
 begin
   inherited Create;
   //Valores padrões das opções
-  Opcoes.LimparArquivosACBrAntigos := False;
-  Opcoes.DeixarSomentePastasLib    := True;
-  Opcoes.DeveInstalarCapicom       := False;
-  Opcoes.DeveInstalarOpenSSL       := True;
-  Opcoes.DeveCopiarOutrasDLLs      := True;
-  Opcoes.DeveInstalarXMLSec        := False;
-  Opcoes.UsarCargaTardiaDLL        := False;
-  Opcoes.RemoverStringCastWarnings := False;
-  Opcoes.UsarCpp                   := False;
-  Opcoes.UsarUsarArquivoConfig     := True;
-  Opcoes.sDestinoDLLs              := tdNone;
-  Opcoes.DiretorioRaizACBr         := 'C:\ACBr\';
+  OpcoesInstall.LimparArquivosACBrAntigos := False;
+  OpcoesInstall.DeixarSomentePastasLib    := True;
+  OpcoesInstall.UsarCpp                   := False;
+  OpcoesInstall.UsarUsarArquivoConfig     := True;
+  OpcoesInstall.sDestinoDLLs              := tdNone;
+  OpcoesInstall.DiretorioRaizACBr         := 'C:\ACBr\';
+  OpcoesInstall.DeveCopiarOutrasDLLs      := True;
+
+  OpcoesCompilacao.DeveInstalarCapicom       := False;
+  OpcoesCompilacao.DeveInstalarOpenSSL       := True;
+  OpcoesCompilacao.DeveInstalarXMLSec        := False;
+  OpcoesCompilacao.UsarCargaTardiaDLL        := False;
+  OpcoesCompilacao.RemoverStringCastWarnings := False;
 
   ArquivoLog := '';
   FNivelLog  := nlMedio;
@@ -258,7 +263,7 @@ end;
 procedure TACBrInstallComponentes.DeixarSomenteLib;
 begin
   // remover os path com o segundo parametro
-  FindDirs(tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes', False);
+  FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes', False);
 end;
 
 procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; UmaInstalacaoAtual:
@@ -270,12 +275,12 @@ begin
   InstalacaoAtual := UmaInstalacaoAtual;
   tPlatformAtual  := bpWin32;
   sPlatform       := 'Win32';
-  sDirLibrary     := Opcoes.DiretorioRaizACBr + 'Lib\Delphi\Lib' + AnsiUpperCase(InstalacaoAtual.VersionNumberStr);
+  sDirLibrary     := OpcoesInstall.DiretorioRaizACBr + 'Lib\Delphi\Lib' + AnsiUpperCase(InstalacaoAtual.VersionNumberStr);
   NomeVersao      := VersionNumberToNome(InstalacaoAtual.VersionNumberStr);
 
   ArquivoLog := PathArquivoLog(NomeVersao);
   Cabecalho := 'Versão do delphi: ' + NomeVersao + ' ' + sPlatform + sLineBreak +
-               'Dir. Instalação : ' + Opcoes.DiretorioRaizACBr + sLineBreak +
+               'Dir. Instalação : ' + OpcoesInstall.DiretorioRaizACBr + sLineBreak +
                'Dir. Bibliotecas: ' + sDirLibrary;
 
   FazLog(Cabecalho + sLineBreak, nlMinimo, True);
@@ -291,7 +296,7 @@ begin
   InstalacaoAtual.OutputCallback := OutputCallLine;
 
 
-  if Opcoes.LimparArquivosACBrAntigos then
+  if OpcoesInstall.LimparArquivosACBrAntigos then
   begin
     InformaSituacao('Removendo arquivos ACBr antigos dos discos...');
     RemoverArquivosAntigosDoDisco;
@@ -364,16 +369,16 @@ begin
   // instalar capicom
   // *************************************************************************
   try
-    if Opcoes.DeveInstalarCapicom then
+    if OpcoesCompilacao.DeveInstalarCapicom then
     begin
-      InstalarCapicom(Opcoes.sDestinoDLLs, APathBin);
-      InformaSituacao('CAPICOM instalado com sucesso em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin));
+      InstalarCapicom(OpcoesInstall.sDestinoDLLs, APathBin);
+      InformaSituacao('CAPICOM instalado com sucesso em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin));
     end;
   except
     on E: Exception do
     begin
       Inc(FCountErros);
-      InformaSituacao('Ocorreu erro ao instalar a CAPICOM em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin) + sLineBreak +
+      InformaSituacao('Ocorreu erro ao instalar a CAPICOM em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin) + sLineBreak +
             'Erro: ' + E.Message);
     end;
   end;
@@ -381,41 +386,41 @@ begin
   // instalar OpenSSL
   // *************************************************************************
   try
-    if Opcoes.DeveInstalarOpenSSL then
+    if OpcoesCompilacao.DeveInstalarOpenSSL then
     begin
-      InstalarOpenSSL(Opcoes.sDestinoDLLs, APathBin);
-      InformaSituacao('OPENSSL instalado com sucesso em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin));
+      InstalarOpenSSL(OpcoesInstall.sDestinoDLLs, APathBin);
+      InformaSituacao('OPENSSL instalado com sucesso em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin));
     end;
   except
     on E: Exception do
     begin
       Inc(FCountErros);
-      InformaSituacao('Ocorreu erro ao instalar a OPENSSL em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin) + sLineBreak +
+      InformaSituacao('Ocorreu erro ao instalar a OPENSSL em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin) + sLineBreak +
             'Erro: ' + E.Message);
     end;
   end;
   // *************************************************************************
   //instalar todas as "OUTRAS" DLLs
   // *************************************************************************
-  if Opcoes.DeveCopiarOutrasDLLs then
+  if OpcoesInstall.DeveCopiarOutrasDLLs then
   begin
     try
-      InstalarLibXml2(Opcoes.sDestinoDLLs, APathBin);
-      InformaSituacao('LibXml2 instalado com sucesso em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin));
+      InstalarLibXml2(OpcoesInstall.sDestinoDLLs, APathBin);
+      InformaSituacao('LibXml2 instalado com sucesso em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin));
 
-      InstalarDiversos(Opcoes.sDestinoDLLs, APathBin);
-      InformaSituacao('DLLs diversas instalado com sucesso em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin));
+      InstalarDiversos(OpcoesInstall.sDestinoDLLs, APathBin);
+      InformaSituacao('DLLs diversas instalado com sucesso em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin));
 
-      if Opcoes.DeveInstalarXMLSec then
+      if OpcoesCompilacao.DeveInstalarXMLSec then
       begin
-        InstalarXMLSec(Opcoes.sDestinoDLLs, APathBin);
-        InformaSituacao('XMLSec instalado com sucesso em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin));
+        InstalarXMLSec(OpcoesInstall.sDestinoDLLs, APathBin);
+        InformaSituacao('XMLSec instalado com sucesso em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin));
       end;
     except
       on E: Exception do
       begin
         Inc(FCountErros);
-        InformaSituacao('Ocorreu erro ao instalar Outras DLL´s em '+ RetornaPath(Opcoes.sDestinoDLLs, APathBin) + sLineBreak +
+        InformaSituacao('Ocorreu erro ao instalar Outras DLL´s em '+ RetornaPath(OpcoesInstall.sDestinoDLLs, APathBin) + sLineBreak +
               'Erro: ' + E.Message);
       end;
     end;
@@ -512,7 +517,7 @@ var
 begin
 // adicionar o paths ao library path do delphi
 
-  FindDirs(tPlatformAtual, Opcoes.DiretorioRaizACBr + 'Fontes');
+  FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes');
 
   InstalacaoAtual.AddToLibraryBrowsingPath(sDirLibrary, tPlatformAtual);
   InstalacaoAtual.AddToLibrarySearchPath(sDirLibrary, tPlatformAtual);
@@ -523,7 +528,7 @@ begin
   AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
 
   //-- ************ C++ Builder *************** //
-  if Opcoes.UsarCpp then
+  if OpcoesInstall.UsarCpp then
   begin
      if InstalacaoAtual is TJclBDSInstallation then
      begin
@@ -608,7 +613,7 @@ begin
   else
     raise EFileNotFoundException.Create('Diretório de sistema não encontrado.');
 
-  PathOrigem  := Opcoes.DiretorioRaizACBr + 'DLLs\' + ANomeArquivo;
+  PathOrigem  := OpcoesInstall.DiretorioRaizACBr + 'DLLs\' + ANomeArquivo;
   PathDestino := DirSystem + ExtractFileName(ANomeArquivo);
 
   if FileExists(PathOrigem) and not(FileExists(PathDestino)) then
@@ -721,7 +726,7 @@ begin
   // *************************************************************************
   // deixar somente a pasta lib se for configurado assim
   // *************************************************************************
-  if Opcoes.DeixarSomentePastasLib then
+  if OpcoesInstall.DeixarSomentePastasLib then
   begin
     try
       DeixarSomenteLib;
@@ -747,7 +752,7 @@ begin
 
   if (FCountErros = 0) then
   begin
-    if (Opcoes.sDestinoDLLs = tdDelphi) or (not JaCopiouDLLs) then
+    if (OpcoesInstall.sDestinoDLLs = tdDelphi) or (not JaCopiouDLLs) then
     begin
       FazInstalacaoDLLs(
             IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
@@ -828,7 +833,7 @@ procedure TACBrInstallComponentes.CopiarOutrosArquivosParaPastaLibrary;
     Arquivo : string;
     i: integer;
   begin
-    ListArquivos := TDirectory.GetFiles(Opcoes.DiretorioRaizACBr + 'Fontes', Mascara, TSearchOption.soAllDirectories ) ;
+    ListArquivos := TDirectory.GetFiles(OpcoesInstall.DiretorioRaizACBr + 'Fontes', Mascara, TSearchOption.soAllDirectories ) ;
     for i := Low(ListArquivos) to High(ListArquivos) do
     begin
       Arquivo := ExtractFileName(ListArquivos[i]);
@@ -847,12 +852,12 @@ procedure TACBrInstallComponentes.DesligarDefines;
 var
   ArquivoACBrInc: TFileName;
 begin
-  ArquivoACBrInc := Opcoes.DiretorioRaizACBr + 'Fontes\ACBrComum\ACBr.inc';
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_OPENSSL', not Opcoes.DeveInstalarOpenSSL);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_CAPICOM', not Opcoes.DeveInstalarCapicom);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_DELAYED', Opcoes.UsarCargaTardiaDLL);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'REMOVE_CAST_WARN', Opcoes.RemoverStringCastWarnings);
-  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not Opcoes.DeveInstalarXMLSec);
+  ArquivoACBrInc := OpcoesInstall.DiretorioRaizACBr + 'Fontes\ACBrComum\ACBr.inc';
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_OPENSSL', not OpcoesCompilacao.DeveInstalarOpenSSL);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_CAPICOM', not OpcoesCompilacao.DeveInstalarCapicom);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'USE_DELAYED', OpcoesCompilacao.UsarCargaTardiaDLL);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'REMOVE_CAST_WARN', OpcoesCompilacao.RemoverStringCastWarnings);
+  DesligarDefineACBrInc(ArquivoACBrInc, 'DFE_SEM_XMLSEC', not OpcoesCompilacao.DeveInstalarXMLSec);
 
 end;
 
@@ -897,7 +902,7 @@ begin
   // compilar os pacotes primeiramente
   // *************************************************************************
   InformaSituacao(sLineBreak+'COMPILANDO OS PACOTES...');
-  CompilarPacotes(Opcoes.DiretorioRaizACBr, ListaPacotes);
+  CompilarPacotes(OpcoesInstall.DiretorioRaizACBr, ListaPacotes);
 
   // *************************************************************************
   // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
@@ -911,7 +916,7 @@ begin
   if ( tPlatformAtual = bpWin32) then
   begin
     InformaSituacao(sLineBreak+'INSTALANDO OS PACOTES...');
-    InstalarPacotes(Opcoes.DiretorioRaizACBr, ListaPacotes);
+    InstalarPacotes(OpcoesInstall.DiretorioRaizACBr, ListaPacotes);
   end
   else
   begin

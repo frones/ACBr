@@ -89,24 +89,26 @@ type
     btnVisualizarLogCompilacao: TSpeedButton;
     pnlInfoCompilador: TPanel;
     wizPgPacotes: TJvWizardInteriorPage;
-    rdgDLL: TRadioGroup;
-    ckbCopiarTodasDll: TCheckBox;
-    ckbBCB: TCheckBox;
     lbInfo: TListBox;
+    JvCreateProcess1: TJvCreateProcess;
+    Label22: TLabel;
+    framePacotes1: TframePacotes;
+    wizPgSelectIDEs: TJvWizardInteriorPage;
+    clbDelphiVersion: TCheckListBox;
+    grpCompilacao: TGroupBox;
+    grpInstalacao: TGroupBox;
+    ckbRemoveOpenSSL: TCheckBox;
+    ckbRemoveCapicom: TCheckBox;
+    ckbRemoveXMLSec: TCheckBox;
+    ckbCargaDllTardia: TCheckBox;
+    ckbRemoverCastWarnings: TCheckBox;
+    ckbBCB: TCheckBox;
     Label8: TLabel;
     chkDeixarSomenteLIB: TCheckBox;
     ckbRemoverArquivosAntigos: TCheckBox;
-    JvCreateProcess1: TJvCreateProcess;
-    Label22: TLabel;
-    ckbRemoveOpenSSL: TCheckBox;
-    ckbRemoveCapicom: TCheckBox;
-    ckbCargaDllTardia: TCheckBox;
-    ckbRemoverCastWarnings: TCheckBox;
     ckbUsarArquivoConfig: TCheckBox;
-    framePacotes1: TframePacotes;
-    ckbRemoveXMLSec: TCheckBox;
-    wizPgSelectIDEs: TJvWizardInteriorPage;
-    clbDelphiVersion: TCheckListBox;
+    ckbCopiarTodasDll: TCheckBox;
+    rdgDLL: TRadioGroup;
 
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -336,24 +338,24 @@ begin
     ACBrInstaladorAux.OnProgresso            := IncrementaBarraProgresso;
     ACBrInstaladorAux.OnInformaSituacao      := Logar;
 
-    ACBrInstaladorAux.Opcoes.LimparArquivosACBrAntigos := ckbRemoverArquivosAntigos.Checked;
-    ACBrInstaladorAux.Opcoes.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
-    ACBrInstaladorAux.Opcoes.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
-    ACBrInstaladorAux.Opcoes.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
-    ACBrInstaladorAux.Opcoes.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
-    ACBrInstaladorAux.Opcoes.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
-    ACBrInstaladorAux.Opcoes.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
-    ACBrInstaladorAux.Opcoes.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
-    ACBrInstaladorAux.Opcoes.UsarCpp                   := ckbBCB.Checked;
-    ACBrInstaladorAux.Opcoes.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
+    ACBrInstaladorAux.OpcoesInstall.LimparArquivosACBrAntigos := ckbRemoverArquivosAntigos.Checked;
+    ACBrInstaladorAux.OpcoesInstall.DeixarSomentePastasLib    := chkDeixarSomenteLIB.Checked;
+    ACBrInstaladorAux.OpcoesInstall.DeveCopiarOutrasDLLs      := ckbCopiarTodasDll.Checked;
+    ACBrInstaladorAux.OpcoesInstall.UsarCpp                   := ckbBCB.Checked;
+    ACBrInstaladorAux.OpcoesInstall.UsarUsarArquivoConfig     := ckbUsarArquivoConfig.Checked;
+    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarCapicom       := not ckbRemoveCapicom.Checked;
+    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarOpenSSL       := not ckbRemoveOpenSSL.Checked;
+    ACBrInstaladorAux.OpcoesCompilacao.DeveInstalarXMLSec        := not ckbRemoveXMLSec.Checked;
+    ACBrInstaladorAux.OpcoesCompilacao.UsarCargaTardiaDLL        := ckbCargaDllTardia.Checked;
+    ACBrInstaladorAux.OpcoesCompilacao.RemoverStringCastWarnings := ckbRemoverCastWarnings.Checked;
     case rdgdll.ItemIndex of
-      0 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdSystem;
-      1 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdDelphi;
-      2 : ACBrInstaladorAux.Opcoes.sDestinoDLLs := tdNone;
+      0 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdSystem;
+      1 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdDelphi;
+      2 : ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs := tdNone;
     else
-      ACBrInstaladorAux.Opcoes.sDestinoDLLs     := tdNone;
+      ACBrInstaladorAux.OpcoesInstall.sDestinoDLLs     := tdNone;
     end;
-    ACBrInstaladorAux.Opcoes.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
+    ACBrInstaladorAux.OpcoesInstall.DiretorioRaizACBr := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
 
     Result := ACBrInstaladorAux.Instalar(FoACBr, ListaPacotes, ListaVersoesInstalacao);
@@ -363,17 +365,16 @@ begin
 
   if Result then
   begin
-    Application.MessageBox(PWideChar('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
-                                     'Clique em "Próximo" para finalizar a instalação.'),
-                           'Instalação', MB_ICONINFORMATION + MB_OK);
+    MessageDlg('Pacotes compilados e instalados com sucesso! ' + sLineBreak +
+               'Clique em "Próximo" para finalizar a instalação.', mtInformation, [mbOK] , 0, mbOK);
   end
   else
   begin
-    if Application.MessageBox(PWideChar('Ocorreram erros durante o processo de instalação, ' + sLineBreak +
-                                        'para maiores informações verifique o arquivo de log gerado.' +
-                                        sLineBreak + sLineBreak +
-                                        'Deseja visualizar o arquivo de log gerado?'),
-                              'Instalação', MB_ICONQUESTION + MB_YESNO) = ID_YES then
+    if MessageDlg('Ocorreram erros durante o processo de instalação, ' + sLineBreak +
+                  'para maiores informações verifique o arquivo de log gerado.' +
+                  sLineBreak + sLineBreak +
+                  'Deseja visualizar o arquivo de log gerado?', mtWarning, mbYesNo, 0, mbYes
+                  ) = mrYes then
     begin
       AbrirArquivoLogAtual;
     end;

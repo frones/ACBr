@@ -191,7 +191,7 @@ begin
 
    // dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
 
-    if cbxLayOut.ItemIndex = 4 then
+    if cbxLayOut.ItemIndex = 6 then
     begin
       for i:=0 to 3 do
       begin

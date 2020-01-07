@@ -143,6 +143,7 @@ type
     procedure Logar(const AString: String);
     procedure IniciaNovaInstalacao(const MaximoPassosProgresso: Integer; const NomeCaminhoArquivoLog: string;
           const Cabecalho: string);
+    procedure MontaListaIDEsSuportadas;
   public
 
   end;
@@ -154,7 +155,7 @@ implementation
 
 uses
   ShellApi, IniFiles, StrUtils, Math, Registry, ACBrInstallUtils, Generics.Collections,
-  ACBrInstallDelphiComponentes;
+  ACBrInstallDelphiComponentes, DelphiData;
 
 {$R *.dfm}
 
@@ -262,20 +263,37 @@ begin
   lbInfo.Items.Text := Cabecalho;
 end;
 
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
+procedure TfrmPrincipal.MontaListaIDEsSuportadas;
 var
   iFor: Integer;
+//  tcpt: TCompileTargetList;
 begin
-  FoACBr := TJclBorRADToolInstallations.Create;
-  FUltimoArquivoLog := '';
+
+//  tcpt := TCompileTargetList.Create;
+//
+//  for iFor := 0 to tcpt.Count - 1 do
+//  begin
+//
+//    clbDelphiVersion.Items.Add(tcpt.Items[iFor].DisplayName);
+//    //Desabilitar versões não suportadas
+//    clbDelphiVersion.ItemEnabled[iFor] := tcpt.Items[iFor].IsValid and (tcpt.Items[iFor].Version >= 7);
+//  end;
 
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to FoACBr.Count - 1 do
   begin
     clbDelphiVersion.Items.Add(VersionNumberToNome(FoACBr.Installations[iFor].VersionNumberStr));
     //Desabilitar versões não suportadas
-    clbDelphiVersion.ItemEnabled[iFor] := (not MatchText(FoACBr.Installations[iFor].VersionNumberStr, ['d3','d4','d5','d6']));
+    clbDelphiVersion.ItemEnabled[iFor] := (not MatchText(FoACBr.Installations[iFor].VersionNumberStr, ['d3', 'd4', 'd5', 'd6']));
   end;
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  FoACBr := TJclBorRADToolInstallations.Create;
+  FUltimoArquivoLog := '';
+
+  MontaListaIDEsSuportadas;
 
   LerConfiguracoes;
 end;

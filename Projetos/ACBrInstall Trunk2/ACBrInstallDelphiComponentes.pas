@@ -41,6 +41,7 @@ uses
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
+  TNivelLog = (nlNenhumLog, nlMinimo, nlMedio, nlMaximo);
 
   TOnIniciaNovaInstalacao = reference to procedure (const MaximoPassosProgresso: Integer;
         const NomeCaminhoArquivoLog: string; const Cabecalho: string);
@@ -69,6 +70,19 @@ type
     FOnProgresso: TOnProgresso;
     FOnInformaSituacao: TOnInformarSituacao;
 
+    InstalacaoAtual: TJclBorRADToolInstallation;
+    tPlatformAtual: TJclBDSPlatform;
+    sPlatform: string;
+    sDirLibrary: string;
+
+    FPacoteAtual: TFileName;
+
+    ArquivoLog: string;
+    FNivelLog: TNivelLog;
+
+    FCountErros: Integer;
+    JaCopiouDLLs: Boolean;
+
     procedure FindDirs(APlatform:TJclBDSPlatform; ADirRoot: String; bAdicionar: Boolean = True);
     procedure CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String; const APathBin: string);
 
@@ -78,7 +92,7 @@ type
     procedure InstalarOpenSSL(ADestino: TDestino; const APathBin: string);
     procedure InstalarXMLSec(ADestino: TDestino; const APathBin: string);
 
-    procedure FazLog(const Texto: string; const ReiniciaArquivo: Boolean = False);
+    procedure FazLog(const Texto: string; const ANivelLog: TNivelLog = nlMedio; const ReiniciaArquivo: Boolean = False);
     procedure InformaSituacao(const Mensagem: string);
     procedure InformaProgresso;
 
@@ -106,18 +120,6 @@ type
 
   public
     Opcoes: TACBrInstallOpcoes;
-
-    InstalacaoAtual: TJclBorRADToolInstallation;
-    tPlatformAtual: TJclBDSPlatform;
-    sPlatform: string;
-    sDirLibrary: string;
-
-    FPacoteAtual: TFileName;
-
-    ArquivoLog: string;
-
-    FCountErros: Integer;
-    JaCopiouDLLs: Boolean;
 
     constructor Create(app: TApplication);
 
@@ -247,6 +249,7 @@ begin
   Opcoes.DiretorioRaizACBr         := 'C:\ACBr\';
 
   ArquivoLog := '';
+  FNivelLog  := nlMedio;
 
   FApp := app;
 end;
@@ -275,7 +278,7 @@ begin
                'Dir. Instalação : ' + Opcoes.DiretorioRaizACBr + sLineBreak +
                'Dir. Bibliotecas: ' + sDirLibrary;
 
-  FazLog(Cabecalho + sLineBreak, True);
+  FazLog(Cabecalho + sLineBreak, nlMinimo, True);
 
   if Assigned(OnIniciaNovaInstalacao) then
     FOnIniciaNovaInstalacao((ListaPacotes.Count * 2) + 6, ArquivoLog, Cabecalho);
@@ -293,8 +296,9 @@ begin
     InformaSituacao('Removendo arquivos ACBr antigos dos discos...');
     RemoverArquivosAntigosDoDisco;
     InformaSituacao('...OK');
-    InformaProgresso;
   end;
+  //se a opção não estiver marcada deve informar o progresso também...
+  InformaProgresso;
 
   InformaSituacao('Removendo instalação anterior do ACBr na IDE...');
   RemoverDiretoriosACBrDoPath;
@@ -331,8 +335,14 @@ begin
             'log_' + StringReplace(NomeVersao, ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
-procedure TACBrInstallComponentes.FazLog(const Texto: string; const ReiniciaArquivo: Boolean = False);
+procedure TACBrInstallComponentes.FazLog(const Texto: string; const ANivelLog: TNivelLog = nlMedio; const
+    ReiniciaArquivo: Boolean = False);
 begin
+  if ANivelLog > FNivelLog then
+  begin
+    Exit
+  end;
+
   if ArquivoLog <> EmptyStr then
     WriteToTXT(ArquivoLog, Texto, not ReiniciaArquivo);
 end;
@@ -455,9 +465,10 @@ procedure TACBrInstallComponentes.FindDirs(APlatform: TJclBDSPlatform; ADirRoot:
 
 var
   oDirList: TSearchRec;
+  Conseguiu: Boolean;
 begin
   ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
-  
+
   if FindFirst(ADirRoot + '*.*', faDirectory, oDirList) = 0 then
   begin
     try
@@ -468,7 +479,11 @@ begin
         begin
           if not bAdicionar then
           begin
-            InstalacaoAtual.RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
+            Conseguiu := InstalacaoAtual.RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, APlatform);
+            FazLog('Conseguiu remover do Library Search Path: '+ ADirRoot + oDirList.Name + '....' +
+                    BoolToStr(Conseguiu, True), nlMaximo);
+            //-- Procura subpastas
+            FindDirs(APlatform, ADirRoot + oDirList.Name, bAdicionar);
           end
           else
           begin

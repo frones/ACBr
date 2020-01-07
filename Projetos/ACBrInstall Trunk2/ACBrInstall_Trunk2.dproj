@@ -62,7 +62,7 @@
         <SanitizedProjectName>ACBrInstall_Trunk2</SanitizedProjectName>
         <DCC_N>false</DCC_N>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
-        <DCC_UnitSearchPath>..\..\Fontes\ACBrComum\;..\..\Fontes\Terceiros\synalist;..\..\Fontes\Terceiros\GZIPUtils;..\..\Fontes\Terceiros\FastStringReplace;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\Fontes\ACBrComum\;..\..\Fontes\Terceiros\synalist;..\..\Fontes\Terceiros\GZIPUtils;..\..\Fontes\Terceiros\FastStringReplace;..\..\..\JVCL\jvcl\install\JVCLInstall;..\..\..\JVCL\jvcl\devtools\Common;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>

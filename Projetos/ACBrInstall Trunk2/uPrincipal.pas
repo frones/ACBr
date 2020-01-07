@@ -469,17 +469,16 @@ procedure TfrmPrincipal.wizPgInicioNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
   // Verificar se o delphi está aberto
-  {$IFNDEF DEBUG}
   if FoACBr.AnyInstanceRunning then
   begin
+  {$IFDEF DEBUG}
+    Stop := MessageDlg('Feche a IDE do delphi antes de continuar.', mtWarning, mbAbortIgnore, 0,
+                       mbAbort) <> mrIgnore;
+  {$ELSE}
     Stop := True;
-    Application.MessageBox(
-      'Feche a IDE do delphi antes de continuar.',
-      PWideChar(Application.Title),
-      MB_ICONERROR + MB_OK
-    );
-  end;
+    MessageDlg('Feche a IDE do delphi antes de continuar.', mtWarning, [mbOK], 0, mbOK);
   {$ENDIF}
+  end;
 end;
 
 procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;

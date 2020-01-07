@@ -14,18 +14,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Const BUFFER_LENGTH As Long = 1024
-
-' UTF-8 Code Page'Sys call to convert multiple byte chars to a charPrivate
-Const CP_UTF8       As Long = 65001
-
-Private Declare Function MultiByteToWideChar _
-                Lib "kernel32" (ByVal CodePage As Long, _
-                                ByVal dwFlags As Long, _
-                                ByVal lpMultiByteStr As Long, _
-                                ByVal cchMultiByte As Long, _
-                                ByVal lpWideCharStr As Long, _
-                                ByVal cchWideChar As Long) As Long
-                                
+                               
 Private Declare Function NFE_Inicializar _
                 Lib "ACBrNFE32.dll" (ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
@@ -241,6 +230,7 @@ Private Declare Function NFE_ImprimirInutilizacaoPDF _
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
+    SetLibPath
     Dim retorno As Long
 
     retorno = NFE_Inicializar(eArqConfig, eChaveCrypt)

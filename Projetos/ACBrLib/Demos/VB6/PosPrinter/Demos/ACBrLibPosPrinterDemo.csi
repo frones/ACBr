@@ -1,3 +1,4 @@
 [History]
-1=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191226001747	#P7#=0	#P8#=10	.
-2=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibPosPrinterDemo/ACBrComum/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20191226001535	#P7#=-2147483640	#P8#=12	.
+1=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibPosPrinterDemo/ACBrPosPrinter/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107150140	#P7#=0	#P8#=-1	.
+2=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibPosPrinterDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191226001747	#P7#=0	#P8#=10	.
+3=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibPosPrinterDemo/ACBrComum/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20191226001535	#P7#=-2147483640	#P8#=12	.

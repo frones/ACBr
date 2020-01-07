@@ -127,6 +127,8 @@ Private Declare Function POS_AcharPortas _
                    
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
+                          
+    SetLibPath
 
     Dim retorno As Long
 

@@ -70,6 +70,8 @@ Private Declare Function BAL_InterpretarRespostaPeso _
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
+    SetLibPath
+    
     Dim retorno As Long
 
     retorno = BAL_Inicializar(eArqConfig, eChaveCrypt)

@@ -1,7 +1,7 @@
 [History]
-1=#P0#=mb	#P1#=EnviarEmail	#P2#=ACBrLibSatDemo/ACBrSat/EnviarEmail	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191011023126	#P7#=0	#P8#=7	.
-2=#P0#=mb	#P1#=AssociarAssinatura	#P2#=ACBrLibSatDemo/ACBrSat/AssociarAssinatura	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191011023016	#P7#=0	#P8#=10	.
-3=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibSatDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191011023312	#P7#=-2147483640	#P8#=62	.
+1=#P0#=mb	#P1#=Form_Load	#P2#=ACBrLibSatDemo/FrmMain/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191011023312	#P7#=-2147483640	#P8#=62	.
+2=#P0#=mb	#P1#=EnviarEmail	#P2#=ACBrLibSatDemo/ACBrSat/EnviarEmail	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191011023126	#P7#=0	#P8#=7	.
+3=#P0#=mb	#P1#=AssociarAssinatura	#P2#=ACBrLibSatDemo/ACBrSat/AssociarAssinatura	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20191011023016	#P7#=0	#P8#=10	.
 4=#P0#=mb	#P1#=btnImprimirPDFCFe_Click	#P2#=ACBrLibSatDemo/FrmMain/btnImprimirPDFCFe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191011020818	#P7#=0	#P8#=4	.
 5=#P0#=mb	#P1#=btnEnviarCFe_Click	#P2#=ACBrLibSatDemo/FrmMain/btnEnviarCFe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191011020807	#P7#=0	#P8#=4	.
 6=#P0#=mb	#P1#=btnImprimirCFe_Click	#P2#=ACBrLibSatDemo/FrmMain/btnImprimirCFe_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20191011020755	#P7#=0	#P8#=4	.
@@ -16,7 +16,7 @@
 15=#P0#=mb	#P1#=btnIniDesini_Click	#P2#=ACBrLibSatDemo/FrmMain/btnIniDesini_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20181129135308	#P7#=0	#P8#=1	.
 16=#P0#=mb	#P1#=HasPosTipoStatus	#P2#=ACBrLibSatDemo/ACBrComum/HasPosTipoStatus	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129125654	#P7#=0	#P8#=-2	.
 17=#P0#=mb	#P1#=SetResposta	#P2#=ACBrLibSatDemo/FrmMain/SetResposta	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129124639	#P7#=0	#P8#=4	.
-18=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibSatDemo/ACBrSat/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129124118	#P7#=0	#P8#=-2	.
+18=#P0#=mb	#P1#=InicializarLib	#P2#=ACBrLibSatDemo/ACBrSat/InicializarLib	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107150221	#P7#=0	#P8#=3	.
 19=#P0#=mb	#P1#=SAT_BloquearSAT	#P2#=ACBrLibSatDemo/ACBrSat/SAT_BloquearSAT	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129113808	#P7#=0	#P8#=67	.
 20=#P0#=mb	#P1#=FromUTF8	#P2#=ACBrLibSatDemo/ACBrSat/FromUTF8	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129113616	#P7#=0	#P8#=0	.
 21=#P0#=mb	#P1#=GerarImpressaoFiscalMFe	#P2#=ACBrLibSatDemo/ACBrSat/GerarImpressaoFiscalMFe	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129113519	#P7#=0	#P8#=18	.
@@ -40,7 +40,7 @@
 39=#P0#=mb	#P1#=DesInicializar	#P2#=ACBrLibSatDemo/ACBrSat/DesInicializar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111550	#P7#=0	#P8#=7	.
 40=#P0#=mb	#P1#=Versao	#P2#=ACBrLibSatDemo/ACBrSat/Versao	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111523	#P7#=0	#P8#=-1	.
 41=#P0#=mb	#P1#=Inicializar	#P2#=ACBrLibSatDemo/ACBrSat/Inicializar	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111438	#P7#=0	#P8#=5	.
-42=#P0#=mb	#P1#=processResult	#P2#=ACBrLibSatDemo/ACBrSat/processResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111248	#P7#=0	#P8#=7	.
+42=#P0#=mb	#P1#=processResult	#P2#=ACBrLibSatDemo/ACBrSat/processResult	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20200107150228	#P7#=0	#P8#=8	.
 43=#P0#=mb	#P1#=Nome	#P2#=ACBrLibSatDemo/ACBrSat/Nome	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111229	#P7#=0	#P8#=11	.
 44=#P0#=mb	#P1#=ConfigLerValor	#P2#=ACBrLibSatDemo/ACBrSat/ConfigLerValor	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129111219	#P7#=0	#P8#=-1	.
 45=#P0#=mb	#P1#=CreateSat	#P2#=ACBrLibSatDemo/ACBrSatUtils/CreateSat	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20181129105741	#P7#=0	#P8#=0	.

@@ -156,6 +156,8 @@ Private Declare Function Boleto_RetornaCodigoBarras _
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
+    SetLibPath
+
     Dim retorno As Long
 
     retorno = Boleto_Inicializar(eArqConfig, eChaveCrypt)
@@ -510,22 +512,3 @@ Private Function processResult(ByRef buffer As String, ByRef bufferLen As Long) 
 
     processResult = Trim$(FromUTF8(buffer))
 End Function
-
-Private Function FromUTF8(ByRef utf8STR As String) As String
-    
-    Dim length As Long
-    Dim UTF8() As Byte
-    Dim lDataLength As Long
-
-    length = Len(utf8STR)
-    UTF8 = StrConv(utf8STR, vbFromUnicode)
-    
-    ' Get the length of the data.
-    lDataLength = MultiByteToWideChar(CP_UTF8, 0, VarPtr(UTF8(0)), length, 0, 0)
-    
-    ' Create array big enough
-    FromUTF8 = String$(lDataLength, 0)
-    
-    MultiByteToWideChar CP_UTF8, 0, VarPtr(UTF8(0)), length, StrPtr(FromUTF8), lDataLength
-End Function
-

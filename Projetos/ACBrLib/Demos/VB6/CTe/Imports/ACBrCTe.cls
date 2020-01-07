@@ -214,6 +214,8 @@ Private Declare Function CTE_ImprimirInutilizacaoPDF _
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
 
+    SetLibPath
+    
     Dim retorno As Long
 
     retorno = CTE_Inicializar(eArqConfig, eChaveCrypt)

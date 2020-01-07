@@ -169,8 +169,8 @@ namespace ACBrLib.Core
         protected ACBrLibHandle(string dllName)
             : base(IntPtr.Zero, true)
         {
-            var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase);
-            var path = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path) + uri.Fragment);
+            var uri = new Uri(Assembly.GetExecutingAssembly().CodeBase);
+            var path = Path.GetDirectoryName(!uri.IsFile ? uri.ToString() : uri.LocalPath + Uri.UnescapeDataString(uri.Fragment));
             path += Environment.Is64BitProcess ? "\\ACBrLib\\x64\\" : "\\ACBrLib\\x86\\";
             Environment.SetEnvironmentVariable("PATH", path);
 

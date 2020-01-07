@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form FrmMain 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "ACBrLibNFe Demo"
@@ -55,6 +55,22 @@ Begin VB.Form FrmMain
       TabIndex        =   15
       Top             =   120
       Width           =   6255
+      Begin VB.CommandButton cmdGravarXml 
+         Caption         =   "Gravar Xml"
+         Height          =   360
+         Left            =   2160
+         TabIndex        =   78
+         Top             =   1800
+         Width           =   1935
+      End
+      Begin VB.CommandButton cmdGerarXMl 
+         Caption         =   "Gerar XMl"
+         Height          =   360
+         Left            =   120
+         TabIndex        =   77
+         Top             =   1800
+         Width           =   1935
+      End
       Begin VB.CommandButton btnInutilizar 
          Caption         =   "Inutilizar Numeração"
          Height          =   360
@@ -354,7 +370,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtPorta"
-            BuddyDispid     =   196627
+            BuddyDispid     =   196629
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
@@ -673,7 +689,7 @@ Begin VB.Form FrmMain
             _Version        =   393216
             Value           =   5000
             BuddyControl    =   "txtProxyPorta"
-            BuddyDispid     =   196653
+            BuddyDispid     =   196655
             OrigLeft        =   3960
             OrigTop         =   720
             OrigRight       =   4215
@@ -824,7 +840,7 @@ Begin VB.Form FrmMain
          Value           =   5000
          AutoBuddy       =   -1  'True
          BuddyControl    =   "txtTimeOut"
-         BuddyDispid     =   196662
+         BuddyDispid     =   196664
          OrigLeft        =   3960
          OrigTop         =   720
          OrigRight       =   4215
@@ -1222,7 +1238,7 @@ Private Sub btnEnviar_Click()
     SetResposta nfe.Enviar(1)
     
 Erro:
-    MsgBox Err.Description
+    'MsgBox Err.Description
     Exit Sub
 End Sub
 
@@ -1323,6 +1339,34 @@ Private Sub btnStatusServ_Click()
     End If
     On Error GoTo 0
 
+End Sub
+
+Private Sub cmdGerarXMl_Click()
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+                
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+        
+    nfe.LimparLista
+    nfe.CarregarINI (CommonDialog1.FileName)
+    SetResposta nfe.ObterXml(0)
+End Sub
+
+Private Sub cmdGravarXml_Click()
+    CommonDialog1.DialogTitle = "Selecione o arquivo ini"
+    CommonDialog1.InitDir = App.Path
+    CommonDialog1.Filter = "Arquivo Ini NFe (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*"
+    CommonDialog1.FileName = vbNullString
+    CommonDialog1.ShowOpen
+                
+    If CommonDialog1.FileName = vbNullString Then Exit Sub
+        
+    nfe.LimparLista
+    nfe.CarregarINI (CommonDialog1.FileName)
+    nfe.GravarXml 0, "Teste.xml", App.Path
 End Sub
 
 Private Sub cmdSalvar_Click()

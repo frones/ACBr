@@ -11,6 +11,10 @@ Private Declare Function MultiByteToWideChar _
                                 ByVal cchMultiByte As Long, _
                                 ByVal lpWideCharStr As Long, _
                                 ByVal cchWideChar As Long) As Long
+                                
+Private Declare Function SetEnvironmentVariable Lib "kernel32" Alias "SetEnvironmentVariableA" _
+                                (ByVal lpName As String, _
+                                ByVal lpValue As String) As Long
 
 Public Const SESSAO_PRINCIPAL                 As String = "Principal"
 Public Const SESSAO_VERSAO                    As String = "Versao"
@@ -533,6 +537,13 @@ Function FileExists(ByVal sFileName As String) As Boolean
 ErrorHandler:
     ' if an error occurs, this function returns False
 End Function
+
+Public Sub SetLibPath()
+    Dim Path As String
+    
+    Path = App.Path + "\ACBrLib\x86\"
+    SetEnvironmentVariable "PATH", Path
+End Sub
 
 Public Function FromUTF8(ByRef utf8STR As String) As String
     

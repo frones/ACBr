@@ -149,8 +149,7 @@ namespace ACBrLib.NFe
 
         #region Constructors
 
-        public ACBrNFe(string eArqConfig = "", string eChaveCrypt = "") :
-            base(Environment.Is64BitProcess ? "ACBrNFe64.dll" : "ACBrNFe32.dll")
+        public ACBrNFe(string eArqConfig = "", string eChaveCrypt = "") : base("ACBrNFe64.dll", "ACBrNFe32.dll")
         {
             var inicializar = GetMethod<Delegates.NFE_Inicializar>();
             var ret = ExecuteMethod(() => inicializar(ToUTF8(eArqConfig), ToUTF8(eChaveCrypt)));

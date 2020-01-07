@@ -1,4 +1,7 @@
-﻿namespace ACBrLib
+﻿using System;
+using System.ComponentModel;
+
+namespace ACBrLib
 {
     public sealed class ItemData<T> where T : struct
     {
@@ -18,6 +21,13 @@
         {
             Content = value;
             Description = value.ToString();
+
+            if (!(value is Enum)) return;
+
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var atributos = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            Description = atributos.Length > 0 ? atributos[0].Description ?? "Nulo" : value.ToString();
         }
 
         #endregion Constructors

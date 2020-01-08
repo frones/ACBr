@@ -51,6 +51,8 @@ Símbolo : Significado
 ACBrBoletoFCFR
 [*] https://www.projetoacbr.com.br/forum/topic/54585-propriedades-do-arquivo-pdf-exportado-em-preview-fastreport/
    Por: Gustavo Costa
+[*] https://www.projetoacbr.com.br/forum/topic/54727-sugest%C3%A3o-de-altera%C3%A7%C3%A3o-no-fonte-de-boletos-para-telefone-do-cedente/
+   Por: César A. S. Cardoso
 
 20/02/2019
 ACBrBoletoFCFR

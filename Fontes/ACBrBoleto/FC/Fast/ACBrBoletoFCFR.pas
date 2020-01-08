@@ -212,7 +212,7 @@ begin
     FieldDefs.Add('Cidade', ftString, 100);
     FieldDefs.Add('UF', ftString, 2);
     FieldDefs.Add('CEP', ftString, 9);
-    FieldDefs.Add('Telefone', ftString, 10);
+    FieldDefs.Add('Telefone', ftString, 15);
     CreateDataSet;
   end;
   // Titulo

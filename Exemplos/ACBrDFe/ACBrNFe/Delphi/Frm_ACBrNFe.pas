@@ -171,10 +171,6 @@ type
     cbEmailSSL: TCheckBox;
     mmEmailMsg: TMemo;
     btnSalvarConfig: TBitBtn;
-    lblColaborador: TLabel;
-    lblPatrocinador: TLabel;
-    lblDoar1: TLabel;
-    lblDoar2: TLabel;
     pgcBotoes: TPageControl;
     tsEnvios: TTabSheet;
     tsConsultas: TTabSheet;
@@ -246,6 +242,7 @@ type
     rgDANFCE: TRadioGroup;
     btnStatusServ: TButton;
     ACBrIntegrador1: TACBrIntegrador;
+    btVersao: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -275,10 +272,6 @@ type
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure ACBrNFe1StatusChange(Sender: TObject);
-    procedure lblColaboradorClick(Sender: TObject);
-    procedure lblPatrocinadorClick(Sender: TObject);
-    procedure lblDoar1Click(Sender: TObject);
-    procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
     procedure btnStatusServClick(Sender: TObject);
@@ -311,6 +304,7 @@ type
     procedure btSerialClick(Sender: TObject);
     procedure btnImprimirDANFCEClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
+    procedure btVersaoClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -886,7 +880,7 @@ begin
   NotaF.NFe.Emit.IEST              := '';
   NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
   NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
-                                // a inclusão de serviços na NFe
+                                                 // a inclusão de serviços na NFe
   NotaF.NFe.Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
 //Para NFe Avulsa preencha os campos abaixo
@@ -1103,6 +1097,8 @@ begin
   Produto.Imposto.ICMSUFDest.vICMSUFDest    := 0.00;
   Produto.Imposto.ICMSUFDest.vICMSUFRemet   := 0.00;
 
+  (*
+  // IPI, se hpouver...
   Produto.Imposto.IPI.CST      := ipi99;
   Produto.Imposto.IPI.clEnq    := '999';
   Produto.Imposto.IPI.CNPJProd := '';
@@ -1115,6 +1111,7 @@ begin
   Produto.Imposto.IPI.vUnid  := 0;
   Produto.Imposto.IPI.pIPI   := 5;
   Produto.Imposto.IPI.vIPI   := 5;
+  *)
 
   Produto.Imposto.II.vBc      := 0;
   Produto.Imposto.II.vDespAdu := 0;
@@ -1185,7 +1182,14 @@ begin
   // Preencha este campo usando a tabela disponível
   // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
   Servico.Imposto.cListServ := '1402';
-  *)
+
+  NotaF.NFe.Total.ISSQNtot.vServ   := 100;
+  NotaF.NFe.Total.ISSQNTot.vBC     := 100;
+  NotaF.NFe.Total.ISSQNTot.vISS    := 2;
+  NotaF.NFe.Total.ISSQNTot.vPIS    := 0;
+  NotaF.NFe.Total.ISSQNTot.vCOFINS := 0;
+
+*)
 
   NotaF.NFe.Total.ICMSTot.vBC     := 100;
   NotaF.NFe.Total.ICMSTot.vICMS   := 18;
@@ -1209,12 +1213,6 @@ begin
   NotaF.NFe.Total.ICMSTot.vFCPUFDest   := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFDest  := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFRemet := 0.00;
-
-  NotaF.NFe.Total.ISSQNtot.vServ   := 100;
-  NotaF.NFe.Total.ISSQNTot.vBC     := 100;
-  NotaF.NFe.Total.ISSQNTot.vISS    := 2;
-  NotaF.NFe.Total.ISSQNTot.vPIS    := 0;
-  NotaF.NFe.Total.ISSQNTot.vCOFINS := 0;
 
   NotaF.NFe.Total.retTrib.vRetPIS    := 0;
   NotaF.NFe.Total.retTrib.vRetCOFINS := 0;
@@ -1265,19 +1263,19 @@ begin
   Lacre.nLacre := '';
   *)
 
-  NotaF.NFe.Cobr.Fat.nFat  := 'Numero da Fatura';
+  NotaF.NFe.Cobr.Fat.nFat  := '1001'; // 'Numero da Fatura'
   NotaF.NFe.Cobr.Fat.vOrig := 100;
   NotaF.NFe.Cobr.Fat.vDesc := 0;
   NotaF.NFe.Cobr.Fat.vLiq  := 100;
 
   Duplicata := NotaF.NFe.Cobr.Dup.New;
-  Duplicata.nDup  := '1234';
+  Duplicata.nDup  := '001';
   Duplicata.dVenc := now+10;
   Duplicata.vDup  := 50;
 
   Duplicata := NotaF.NFe.Cobr.Dup.New;
-  Duplicata.nDup  := '1235';
-  Duplicata.dVenc := now+10;
+  Duplicata.nDup  := '002';
+  Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
   NotaF.NFe.InfAdic.infCpl     :=  '';
@@ -1377,6 +1375,7 @@ procedure TfrmACBrNFe.btnCancelarChaveClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, Protocolo, Justificativa: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Cancelamento', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -1440,6 +1439,7 @@ begin
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Identificador de controle do Lote de envio do Evento', idLote)) then
        exit;
 
+    vAux := '';
     if not(InputQuery('WebServices Eventos: Cancelamento', 'Justificativa', vAux)) then
        exit;
 
@@ -1529,6 +1529,7 @@ procedure TfrmACBrNFe.btnCartadeCorrecaoClick(Sender: TObject);
 var
   Chave, idLote, CNPJ, nSeqEvento, Correcao: string;
 begin
+  Chave := '';
   if not(InputQuery('WebServices Eventos: Carta de Correção', 'Chave da NF-e', Chave)) then
      exit;
   Chave := Trim(OnlyNumber(Chave));
@@ -1572,10 +1573,12 @@ procedure TfrmACBrNFe.btnConsCadClick(Sender: TObject);
 var
   UF, Documento: String;
 begin
- if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:',    UF)) then
+  UF := '';
+  if not(InputQuery('WebServices Consulta Cadastro ', 'UF do Documento a ser Consultado:', UF)) then
     exit;
 
- if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)',    Documento)) then
+  Documento := '';
+  if not(InputQuery('WebServices Consulta Cadastro ', 'Documento(CPF/CNPJ)', Documento)) then
     exit;
 
   Documento :=  Trim(OnlyNumber(Documento));
@@ -1608,6 +1611,7 @@ procedure TfrmACBrNFe.btnConsultarChaveClick(Sender: TObject);
 var
   vChave: String;
 begin
+  vChave := '';
   if not(InputQuery('WebServices Consultar', 'Chave da NF-e:', vChave)) then
     exit;
 
@@ -1645,6 +1649,7 @@ procedure TfrmACBrNFe.btnConsultarReciboClick(Sender: TObject);
 var
   aux: String;
 begin
+  aux := '';
   if not(InputQuery('Consultar Recibo Lote', 'Número do Recibo', aux)) then
     exit;
 
@@ -1675,9 +1680,11 @@ var
   vAux, vNumLote, vSincrono: String;
   Sincrono: Boolean;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1812,6 +1819,7 @@ var
   Para: String;
   CC: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1858,6 +1866,7 @@ var
   Para: String;
   CC, Evento: Tstrings;
 begin
+  Para := '';
   if not(InputQuery('Enviar Email', 'Email de destino', Para)) then
     exit;
 
@@ -1906,7 +1915,7 @@ procedure TfrmACBrNFe.btnGerarPDFClick(Sender: TObject);
 var
   CarregarMaisXML: Boolean;
 begin
-	CarregarMaisXML := true;
+  CarregarMaisXML := true;
   OpenDialog1.Title := 'Selecione a NFe';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFe (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
@@ -1929,9 +1938,11 @@ procedure TfrmACBrNFe.btnGerarTXTClick(Sender: TObject);
 var
   vAux, vNumLote: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
+  vNumLote := '1';
   if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote)) then
     exit;
 
@@ -1954,6 +1965,7 @@ procedure TfrmACBrNFe.btnGerarXMLClick(Sender: TObject);
 var
   vAux: String;
 begin
+  vAux := '';
   if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 
@@ -2766,16 +2778,22 @@ procedure TfrmACBrNFe.btnInutilizarClick(Sender: TObject);
 var
   Modelo, Serie, Ano, NumeroInicial, NumeroFinal, Justificativa: String;
 begin
+ Ano := '';
  if not(InputQuery('WebServices Inutilização ', 'Ano',    Ano)) then
     exit;
+ Modelo := '';
  if not(InputQuery('WebServices Inutilização ', 'Modelo', Modelo)) then
     exit;
+ Serie := '';
  if not(InputQuery('WebServices Inutilização ', 'Serie',  Serie)) then
     exit;
+ NumeroInicial := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroInicial)) then
     exit;
+ NumeroFinal := '';
  if not(InputQuery('WebServices Inutilização ', 'Número Inicial', NumeroFinal)) then
     exit;
+ Justificativa := '';
  if not(InputQuery('WebServices Inutilização ', 'Justificativa', Justificativa)) then
     exit;
 
@@ -3077,6 +3095,15 @@ begin
   end;
 end;
 
+procedure TfrmACBrNFe.btVersaoClick(Sender: TObject);
+begin
+  pgRespostas.ActivePageIndex := 0;
+  if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
+    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
+  else
+    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+end;
+
 procedure TfrmACBrNFe.cbCryptLibChange(Sender: TObject);
 begin
   try
@@ -3188,7 +3215,6 @@ begin
   cbxPorta.Items.Clear;
   ACBrPosPrinter1.Device.AcharPortasSeriais( cbxPorta.Items );
   cbxPorta.Items.Add('LPT1') ;
-  cbxPorta.Items.Add('LPT2') ;
   cbxPorta.Items.Add('\\localhost\Epson') ;
   cbxPorta.Items.Add('c:\temp\ecf.txt') ;
   cbxPorta.Items.Add('TCP:192.168.0.31:9100') ;
@@ -3203,7 +3229,9 @@ begin
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
   LerConfiguracao;
-  pgRespostas.ActivePageIndex := 2;
+  pgRespostas.ActivePageIndex := 0;
+  PageControl1.ActivePageIndex := 0;
+  PageControl4.ActivePageIndex := 0;
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;
@@ -3212,7 +3240,7 @@ var
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  IniFile := ChangeFileExt(ParamStr(0), '.ini');
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3290,7 +3318,7 @@ begin
 
     StreamMemo := TMemoryStream.Create;
     mmEmailMsg.Lines.SaveToStream(StreamMemo);
-    StreamMemo.Seek(0,soFromBeginning);
+    StreamMemo.Seek(0,soBeginning);
 
     Ini.WriteBinaryStream('Email', 'Mensagem', StreamMemo);
 
@@ -3315,21 +3343,6 @@ begin
   end;
 end;
 
-procedure TfrmACBrNFe.lblColaboradorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
-end;
-
-procedure TfrmACBrNFe.lblDoar1Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
-procedure TfrmACBrNFe.lblDoar2Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
 procedure TfrmACBrNFe.lblMouseEnter(Sender: TObject);
 begin
   TLabel(Sender).Font.Style := [fsBold,fsUnderline];
@@ -3340,18 +3353,13 @@ begin
   TLabel(Sender).Font.Style := [fsBold];
 end;
 
-procedure TfrmACBrNFe.lblPatrocinadorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
-end;
-
 procedure TfrmACBrNFe.LerConfiguracao;
 var
   IniFile: String;
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  IniFile := ChangeFileExt(ParamStr(0), '.ini');
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3578,7 +3586,7 @@ var
   Dir: string;
 begin
   if Length(TEdit(Sender).Text) <= 0 then
-     Dir := ExtractFileDir(application.ExeName)
+     Dir := ApplicationPath
   else
      Dir := TEdit(Sender).Text;
 
@@ -3638,7 +3646,7 @@ begin
   OpenDialog1.DefaultExt := '*.pfx';
   OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
 
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  OpenDialog1.InitialDir := ApplicationPath;
 
   if OpenDialog1.Execute then
     edtCaminho.Text := OpenDialog1.FileName;
@@ -3655,7 +3663,7 @@ begin
   OpenDialog1.DefaultExt := '*.bmp';
   OpenDialog1.Filter := 'Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
 
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  OpenDialog1.InitialDir := ApplicationPath;
 
   if OpenDialog1.Execute then
     edtLogoMarca.Text := OpenDialog1.FileName;
@@ -3664,7 +3672,7 @@ end;
 procedure TfrmACBrNFe.sbtnNumSerieClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
+//  ASerie: String;
   AddRow: Boolean;
 begin
   ACBrNFe1.SSL.LerCertificadosStore;
@@ -3689,7 +3697,7 @@ begin
   begin
     with ACBrNFe1.SSL.ListaCertificados[I] do
     begin
-      ASerie := NumeroSerie;
+//      ASerie := NumeroSerie;
 
       if (CNPJ <> '') then
       begin

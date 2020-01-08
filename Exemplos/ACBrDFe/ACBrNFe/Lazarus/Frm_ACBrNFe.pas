@@ -18,6 +18,7 @@ type
   { TfrmACBrNFe }
 
   TfrmACBrNFe = class(TForm)
+    bVersao: TButton;
     pnlMenus: TPanel;
     pnlCentral: TPanel;
     PageControl1: TPageControl;
@@ -178,10 +179,6 @@ type
     cbEmailSSL: TCheckBox;
     mmEmailMsg: TMemo;
     btnSalvarConfig: TBitBtn;
-    lblColaborador: TLabel;
-    lblPatrocinador: TLabel;
-    lblDoar1: TLabel;
-    lblDoar2: TLabel;
     pgcBotoes: TPageControl;
     tsEnvios: TTabSheet;
     tsConsultas: TTabSheet;
@@ -253,6 +250,7 @@ type
     rgDANFCE: TRadioGroup;
     ACBrIntegrador1: TACBrIntegrador;
     btnStatusServ: TButton;
+    procedure bVersaoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -282,10 +280,6 @@ type
     procedure cbHttpLibChange(Sender: TObject);
     procedure cbXmlSignLibChange(Sender: TObject);
     procedure ACBrNFe1StatusChange(Sender: TObject);
-    procedure lblColaboradorClick(Sender: TObject);
-    procedure lblPatrocinadorClick(Sender: TObject);
-    procedure lblDoar1Click(Sender: TObject);
-    procedure lblDoar2Click(Sender: TObject);
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
     procedure btnStatusServClick(Sender: TObject);
@@ -344,7 +338,8 @@ uses
   pcnAuxiliar, pcnNFe, pcnConversao, pcnConversaoNFe, pcnNFeRTXT,
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes,
-  Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial;
+  Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial,
+  ACBrDFeOpenSSL;
 
 const
   SELDIRHELP = 1000;
@@ -357,7 +352,6 @@ procedure TfrmACBrNFe.ACBrNFe1GerarLog(const ALogLine: string;
   var Tratado: Boolean);
 begin
   memoLog.Lines.Add(ALogLine);
-  Tratado := True;
 end;
 
 procedure TfrmACBrNFe.ACBrNFe1StatusChange(Sender: TObject);
@@ -683,22 +677,10 @@ begin
           vAliqProd := 0;
           vCOFINS   := 0;
         end;
-
-        //Grupo para serviços
-        (*
-        with ISSQN do
-        begin
-          vBC       := 0;
-          vAliq     := 0;
-          vISSQN    := 0;
-          cMunFG    := 0;
-          cListServ := 1402; // Preencha este campo usando a tabela disponível
-                             // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-        end;
-        *)
       end;
     end;
 
+    (*
     //Adicionando Serviços
     with Det.New do
     begin
@@ -726,7 +708,6 @@ begin
       infAdProd      := 'Informação Adicional do Serviço';
 
       //Grupo para serviços
-      (*
       with Imposto.ISSQN do
       begin
         cSitTrib  := ISSQNcSitTribNORMAL;
@@ -734,11 +715,11 @@ begin
         vAliq     := 2;
         vISSQN    := 2;
         cMunFG    := 3554003;
-        cListServ := 1402; // Preencha este campo usando a tabela disponível
-                           // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
+        cListServ := '14.02'; // Preencha este campo usando a tabela disponível
+                              // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
       end;
-      *)
     end;
+    *)
 
     Total.ICMSTot.vBC     := 100;
     Total.ICMSTot.vICMS   := 18;
@@ -907,7 +888,7 @@ begin
   NotaF.NFe.Emit.IEST              := '';
   NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
   NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
-                                // a inclusão de serviços na NFe
+                                                 // a inclusão de serviços na NFe
   NotaF.NFe.Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
 //Para NFe Avulsa preencha os campos abaixo
@@ -1124,6 +1105,8 @@ begin
   Produto.Imposto.ICMSUFDest.vICMSUFDest    := 0.00;
   Produto.Imposto.ICMSUFDest.vICMSUFRemet   := 0.00;
 
+  (*
+  // IPI, se hpouver...
   Produto.Imposto.IPI.CST      := ipi99;
   Produto.Imposto.IPI.clEnq    := '999';
   Produto.Imposto.IPI.CNPJProd := '';
@@ -1136,6 +1119,7 @@ begin
   Produto.Imposto.IPI.vUnid  := 0;
   Produto.Imposto.IPI.pIPI   := 5;
   Produto.Imposto.IPI.vIPI   := 5;
+  *)
 
   Produto.Imposto.II.vBc      := 0;
   Produto.Imposto.II.vDespAdu := 0;
@@ -1170,19 +1154,7 @@ begin
   Produto.Imposto.COFINSST.vAliqProd := 0;
   Produto.Imposto.COFINSST.vCOFINS   := 0;
 
-//Grupo para serviços
-
-  Produto.Imposto.ISSQN.vBC       := 0;
-  Produto.Imposto.ISSQN.vAliq     := 0;
-  Produto.Imposto.ISSQN.vISSQN    := 0;
-  Produto.Imposto.ISSQN.cMunFG    := 0;
-  // Preencha este campo usando a tabela disponível
-  // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-  Produto.Imposto.ISSQN.cListServ := '1402';
-
-
-
-//Adicionando Serviços
+  //Adicionando Serviços
   (*
   Servico := NotaF.Nfe.Det.Add;
   Servico.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
@@ -1208,7 +1180,7 @@ begin
 
   Servico.infAdProd      := 'Informação Adicional do Serviço';
 
-//Grupo para serviços
+  //Grupo para serviços
   Servico.Imposto.ISSQN
   Servico.Imposto.cSitTrib  := ISSQNcSitTribNORMAL;
   Servico.Imposto.vBC       := 100;
@@ -1219,7 +1191,13 @@ begin
   // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
   Servico.Imposto.cListServ := '1402';
 
-  *)
+  NotaF.NFe.Total.ISSQNtot.vServ   := 100;
+  NotaF.NFe.Total.ISSQNTot.vBC     := 100;
+  NotaF.NFe.Total.ISSQNTot.vISS    := 2;
+  NotaF.NFe.Total.ISSQNTot.vPIS    := 0;
+  NotaF.NFe.Total.ISSQNTot.vCOFINS := 0;
+
+*)
 
   NotaF.NFe.Total.ICMSTot.vBC     := 100;
   NotaF.NFe.Total.ICMSTot.vICMS   := 18;
@@ -1243,12 +1221,6 @@ begin
   NotaF.NFe.Total.ICMSTot.vFCPUFDest   := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFDest  := 0.00;
   NotaF.NFe.Total.ICMSTot.vICMSUFRemet := 0.00;
-
-  NotaF.NFe.Total.ISSQNtot.vServ   := 100;
-  NotaF.NFe.Total.ISSQNTot.vBC     := 100;
-  NotaF.NFe.Total.ISSQNTot.vISS    := 2;
-  NotaF.NFe.Total.ISSQNTot.vPIS    := 0;
-  NotaF.NFe.Total.ISSQNTot.vCOFINS := 0;
 
   NotaF.NFe.Total.retTrib.vRetPIS    := 0;
   NotaF.NFe.Total.retTrib.vRetCOFINS := 0;
@@ -1299,19 +1271,19 @@ begin
   Lacre.nLacre := '';
   *)
 
-  NotaF.NFe.Cobr.Fat.nFat  := 'Numero da Fatura';
+  NotaF.NFe.Cobr.Fat.nFat  := '1001'; // 'Numero da Fatura'
   NotaF.NFe.Cobr.Fat.vOrig := 100;
   NotaF.NFe.Cobr.Fat.vDesc := 0;
   NotaF.NFe.Cobr.Fat.vLiq  := 100;
 
   Duplicata := NotaF.NFe.Cobr.Dup.New;
-  Duplicata.nDup  := '1234';
+  Duplicata.nDup  := '001';
   Duplicata.dVenc := now+10;
   Duplicata.vDup  := 50;
 
   Duplicata := NotaF.NFe.Cobr.Dup.New;
-  Duplicata.nDup  := '1235';
-  Duplicata.dVenc := now+10;
+  Duplicata.nDup  := '002';
+  Duplicata.dVenc := now+20;
   Duplicata.vDup  := 50;
 
   NotaF.NFe.InfAdic.infCpl     :=  '';
@@ -3261,13 +3233,22 @@ begin
   PageControl4.ActivePageIndex := 0;
 end;
 
+procedure TfrmACBrNFe.bVersaoClick(Sender: TObject);
+begin
+  pgRespostas.ActivePageIndex := 0;
+  if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
+    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
+  else
+    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+end;
+
 procedure TfrmACBrNFe.GravarConfiguracao;
 var
   IniFile: String;
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  IniFile := ChangeFileExt(ParamStr(0), '.ini');
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3345,7 +3326,7 @@ begin
 
     StreamMemo := TMemoryStream.Create;
     mmEmailMsg.Lines.SaveToStream(StreamMemo);
-    StreamMemo.Seek(0,soFromBeginning);
+    StreamMemo.Seek(0,soBeginning);
 
     Ini.WriteBinaryStream('Email', 'Mensagem', StreamMemo);
 
@@ -3370,21 +3351,6 @@ begin
   end;
 end;
 
-procedure TfrmACBrNFe.lblColaboradorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
-end;
-
-procedure TfrmACBrNFe.lblDoar1Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
-procedure TfrmACBrNFe.lblDoar2Click(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/14');
-end;
-
 procedure TfrmACBrNFe.lblMouseEnter(Sender: TObject);
 begin
   TLabel(Sender).Font.Style := [fsBold,fsUnderline];
@@ -3395,18 +3361,13 @@ begin
   TLabel(Sender).Font.Style := [fsBold];
 end;
 
-procedure TfrmACBrNFe.lblPatrocinadorClick(Sender: TObject);
-begin
-  OpenURL('http://acbr.sourceforge.net/drupal/?q=node/5');
-end;
-
 procedure TfrmACBrNFe.LerConfiguracao;
 var
   IniFile: String;
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  IniFile := ChangeFileExt(ParamStr(0), '.ini');
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3512,6 +3473,7 @@ end;
 procedure TfrmACBrNFe.ConfigurarComponente;
 var
   Ok: Boolean;
+  PathMensal: string;
 begin
   ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
   ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
@@ -3595,17 +3557,24 @@ begin
     SalvarEvento     := cbxSalvaPathEvento.Checked;
     SepararPorCNPJ   := cbxSepararPorCNPJ.Checked;
     SepararPorModelo := cbxSepararPorModelo.Checked;
-    PathSalvar       := edtPathLogs.Text;
     PathSchemas      := edtPathSchemas.Text;
     PathNFe          := edtPathNFe.Text;
     PathInu          := edtPathInu.Text;
     PathEvento       := edtPathEvento.Text;
+    PathMensal       := GetPathNFe(0);
+    PathSalvar       := PathMensal;
   end;
 
   if ACBrNFe1.DANFE <> nil then
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo      := edtLogoMarca.Text;
+    ACBrNFe1.DANFE.PathPDF   := PathMensal;
+
+    ACBrNFe1.DANFE.MargemDireita  := 7;
+    ACBrNFe1.DANFE.MargemEsquerda := 7;
+    ACBrNFe1.DANFE.MargemSuperior := 5;
+    ACBrNFe1.DANFE.MargemInferior := 5;
   end;
 end;
 
@@ -3631,7 +3600,7 @@ var
   Dir: string;
 begin
   if Length(TEdit(Sender).Text) <= 0 then
-     Dir := ExtractFileDir(application.ExeName)
+     Dir := ApplicationPath
   else
      Dir := TEdit(Sender).Text;
 
@@ -3691,7 +3660,7 @@ begin
   OpenDialog1.DefaultExt := '*.pfx';
   OpenDialog1.Filter := 'Arquivos PFX (*.pfx)|*.pfx|Todos os Arquivos (*.*)|*.*';
 
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  OpenDialog1.InitialDir := ApplicationPath;
 
   if OpenDialog1.Execute then
     edtCaminho.Text := OpenDialog1.FileName;
@@ -3708,7 +3677,7 @@ begin
   OpenDialog1.DefaultExt := '*.bmp';
   OpenDialog1.Filter := 'Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
 
-  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  OpenDialog1.InitialDir := ApplicationPath;
 
   if OpenDialog1.Execute then
     edtLogoMarca.Text := OpenDialog1.FileName;

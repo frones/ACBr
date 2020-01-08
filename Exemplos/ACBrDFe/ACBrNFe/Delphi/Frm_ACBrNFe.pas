@@ -3097,11 +3097,11 @@ end;
 
 procedure TfrmACBrNFe.btVersaoClick(Sender: TObject);
 begin
-  pgRespostas.ActivePageIndex := 0;
-  if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
-    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
-  else
-    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+//  pgRespostas.ActivePageIndex := 0;
+// if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
+//    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
+//  else
+//    MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
 end;
 
 procedure TfrmACBrNFe.cbCryptLibChange(Sender: TObject);

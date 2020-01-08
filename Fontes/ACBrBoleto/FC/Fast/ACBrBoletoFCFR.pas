@@ -56,7 +56,7 @@ interface
 
 uses
   SysUtils, Classes, DB, DBClient, ACBrBase, ACBrBoleto, StrUtils,
-  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage;
+  frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF, frxExportImage, frxExportBaseDialog;
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -211,7 +211,7 @@ begin
     FieldDefs.Add('Bairro', ftString, 100);
     FieldDefs.Add('Cidade', ftString, 100);
     FieldDefs.Add('UF', ftString, 2);
-    FieldDefs.Add('CEP', ftString, 8);
+    FieldDefs.Add('CEP', ftString, 9);
     FieldDefs.Add('Telefone', ftString, 10);
     CreateDataSet;
   end;
@@ -246,7 +246,7 @@ begin
     FieldDefs.Add('DataAbatimento', ftDateTime);
     FieldDefs.Add('DataProtesto', ftDateTime);
     FieldDefs.Add('PercentualMulta', ftFloat);
-    FieldDefs.Add('Mensagem', ftString, 400);
+    FieldDefs.Add('Mensagem', ftString, 600);
     FieldDefs.Add('OcorrenciaOriginal', ftInteger);
     FieldDefs.Add('Instrucao1', ftString, 300);
     FieldDefs.Add('Instrucao2', ftString, 300);
@@ -261,7 +261,7 @@ begin
     FieldDefs.Add('Sacado_Bairro', ftString, 100);
     FieldDefs.Add('Sacado_Cidade', ftString, 100);
     FieldDefs.Add('Sacado_UF', ftString, 2);
-    FieldDefs.Add('Sacado_CEP', ftString, 8);
+    FieldDefs.Add('Sacado_CEP', ftString, 9);
     FieldDefs.Add('Sacado_Avalista', ftString, 100);
     FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
     FieldDefs.Add('Sacado_Fone', ftString, 100);
@@ -332,10 +332,19 @@ begin
             begin
               if (MostrarPreview) and (not FModoThread) then
               begin
-                frxPDFExport.Keywords       := frxPDFExport.Title;
-                frxPDFExport.Background     := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
-                frxPDFExport.EmbeddedFonts  := IncorporarFontesPdf;
-                frxReport.Engine.Report.FileName := NomeArquivo; //nome do arquivo a ser exportado
+                frxPDFExport.Keywords      := frxPDFExport.Title;
+                frxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
+                frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+                frxPDFExport.Author        := SoftwareHouse;
+                frxPDFExport.Creator       := SoftwareHouse;
+                frxPDFExport.Producer      := SoftwareHouse;
+                frxPDFExport.Title         := 'Boleto';
+                frxPDFExport.Subject       := frxPDFExport.Title;
+                frxPDFExport.Keywords      := frxPDFExport.Title;
+                frxPDFExport.Background    := IncorporarBackgroundPdf; // False diminui 70% do tamanho do pdf
+                frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
+
+                frxReport.Engine.Report.FileName := NomeArquivo; // Nome do arquivo a ser exportado
                 frxReport.ShowReport(false)
               end else
                 frxReport.Print;

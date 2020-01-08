@@ -36,7 +36,7 @@ Agradecimentos:
 - Juliana Tamizou, Daniel Simões de Almeida - Doação do componente ao projeto ACBr
 
 {******************************************************************************
-|* ACBrBoletoFC - Componentes para impressão dos boletos
+|* ACBrBoletoFC - Componentes para impressão dos boletos em Fast Report
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -47,17 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-07/01/2020
-ACBrBoletoFCFortesFr
-[+] Implementado o modelo Termica80mm para imprimir o Boleto em uma impressora termica
-   Por: Guilerme km
-[*] Ajustes nas propriedades BeforePrint, OnDataCount e OnDataRecord do modelo Termica80mm
-   Por: Douglas DelaBite
-
-10/12/2019
-ACBrBoletoFCFortesFr
-[*] Ajustes no DFM e LFM
-   por: Olavo Jr
+08/01/2020
+ACBrBoletoFCFR
+[*] https://www.projetoacbr.com.br/forum/topic/54585-propriedades-do-arquivo-pdf-exportado-em-preview-fastreport/
+   Por: Gustavo Costa
 
 20/02/2019
 ACBrBoletoFCFR
@@ -93,3 +86,62 @@ ACBrBoletoFCFR
 		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/
 		por Juliomar Marchetti
 
+13/06/2016
+-- ACBrBoletoFCFR
+[*] Melhoria para funcionamento em threads
+		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/#comment-201083
+		(Juliomar Marchetti)
+
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
+29/02/2016
+-- ACBrBoletoFCFR --
+[-] acerto na montagem do codigo do cedente para FastReport.
+    por: Carlos Nascimento
+
+10/09/2015
+-- ACBrBoletoFCFR --
+[+] Adicionadas as orientações do Banco.
+[*] Acerto na data de vencimento da remessa Caixa.
+    http://www.projetoacbr.com.br/forum/topic/24039-remessa-240-cef/#comment-156598
+
+Data: 27/08/2013
+--ACBrBoletoFCFR -- 
+[-] Passado a utilizar a função MontarCampoCedente na impressão dos boletos.
+    (OsvaldoKalvaitir)
+
+Data: 14/06/2013
+-- ACBrBoletoFCFR ver. 0.0.13a --
+[-] Corrigido problema com a impressão das logomarcas dos bancos. (por: Solivan Araujo)
+
+Data: 09/01/2013
+-- ACBrBoletoFCFR ver 0.0.12a --
+[-] Alterado componente para respeitar a propriedade MostrarSetup.(NazarenoNeto)
+
+Data: 08/01/2013
+-- ACBrBoletoFCFR ver 0.0.11a -
+[*] Adicionado impressão do complemento do endereço do sacado.(Juliana Tamizou)	
+	
+Alterações anteriores a 01/01/2013
+	
+-- ACBrBoletoFC --
+[+] Adicionado novo tipo de Layout: lPadraoEntrega, para substituir a
+    propriedade: ComprovanteEntrega   (DSA)
+
+Versao 0.0.10a do FastReport 13/08/2012
+[+] Adicionado suporte a impressão de boletos em carnê.(Rodrigo Rodrigues)
+[*] Efetuado ajuste para que todas as versões do Delphi consigam ler corretamente
+    a propriedade displayformat dos componentes utilizados para data.(Fábio)
+	
+Versao 0.0.10a do FastReport 13/10/2012
+[+] Corrigida impressão do DV da Agência quando o mesmo for superior a 9.(Leonardo)	
+
+Versao 0.0.09a do FastReport 02/07/2012
+[+] Lançado a 1a versão para impressão dos boletos em FastReport.
+    (por: Isaque Pinheiro)	
+
+Versao 0.0.1 do FastReport 05/08/2011
+[-] Lançado a 1a versão para impressão dos boletos em FastReport.
+    (por: Isaque Pinheiro)

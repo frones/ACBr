@@ -36,7 +36,7 @@ Agradecimentos:
 - Juliana Tamizou, Daniel Simões de Almeida - Doação do componente ao projeto ACBr
 
 {******************************************************************************
-|* ACBrBoletoFC - Componentes para impressão dos boletos
+|* ACBrBoletoFC - Componentes para impressão dos boletos em Fortes Report
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -46,6 +46,18 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+
+07/01/2020
+ACBrBoletoFCFortesFr
+[+] Implementado o modelo Termica80mm para imprimir o Boleto em uma impressora termica
+   Por: Guilerme km
+[*] Ajustes nas propriedades BeforePrint, OnDataCount e OnDataRecord do modelo Termica80mm
+   Por: Douglas DelaBite
+
+10/12/2019
+ACBrBoletoFCFortesFr
+[*] Ajustes no DFM e LFM
+   por: Olavo Jr
 
 12/06/2019
 --ACBrBoletoFCFortesFr--
@@ -117,12 +129,6 @@ Símbolo : Significado
 		http://www.projetoacbr.com.br/forum/topic/31813-corre%C3%A7%C3%A3o-layout-boleto-fortes-carn%C3%AA/
 		(Juliomar Marchetti)
 		
-13/06/2016
--- ACBrBoletoFCFR
-[*] Melhoria para funcionamento em threads
-		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/#comment-201083
-		(Juliomar Marchetti)
-		
 04/05/16
 -- ACBrBoletoFCFortes ver. 0.0.30a --
 [*] Ajuste para impressão do CNPJ do emitente no carnê. (OlavoJr)
@@ -135,19 +141,10 @@ http://www.projetoacbr.com.br/forum/topic/29757-boleto-tipo-carne-sair-o-cnpj-do
     (Juliana Tamizou)
 
 
-12/03/2016
-[*] Modificado para deixar alguns botões fora do preview em fast report
-		por: Juliomar Marchetti
-
 [*] correção do endereço sacador/avalista
 		http://www.projetoacbr.com.br/forum/topic/28421-melhoria-no-layout-de-boletos-fortesreport-endere%C3%A7o-sacadoravalista/
 		por: Juliomar Marchetti
 		
-29/02/2016
--- ACBrBoletoFR --
-[-] acerto na montagem do codigo do cedente para FastReport.
-    por: Carlos Nascimento
-
 23/10/2015
 -- ACBrBoletoFCFortes --
 [*] Ajuste para não exibir a janela de Progresso na geração de PDF se
@@ -158,12 +155,6 @@ http://www.projetoacbr.com.br/forum/topic/29757-boleto-tipo-carne-sair-o-cnpj-do
 [-] layout Carne - Ajuste para imprimir 3 boletos por página. (por: Emerson Teixeira)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=24460
 
-10/09/2015
--- ACBrBoletoFR --
-[+] Adicionadas as orientações do Banco.
-[*] Acerto na data de vencimento da remessa Caixa.
-    http://www.projetoacbr.com.br/forum/topic/24039-remessa-240-cef/#comment-156598
-
 Data: 10/09/2015
 -- ACBrBoletoFCFortesFr --  (por: DSA)
 [*] Ajuste para nomear o Título de Relatório
@@ -172,7 +163,6 @@ Data: 10/09/2015
 [*] Ajuste para nomear o Título de Relatório
 [-] Correção para impressão sem Preview e Setup
 [-] Correção para configurar a Impressora especificada
-
 
 Data: 02/06/2015 ver. 0.0.132a
 -- ACBrBoletoFCFortes --
@@ -188,7 +178,6 @@ Data: 14/04/2015 ver. 0.0.26a
 [*] Ajuste para que a linha pontilhada não seja cortada ao imprimir com layout carnê. 
     (Juliana Tamizou)
 
-
 Data: 26/03/2015 ver. 0.0.26a
 -- ACBrBoletoFCFortes --
 [*] Compatibilização dos campos restantes com a nova nomeclatura para 
@@ -199,52 +188,35 @@ Data: 20/03/2015 ver. 0.0.25a
 [*] Ajuste para que seja possível imprimir 3 boletos por página ao utilizar o
     layout carnê. (adilsonpazzini)
 
-		
 Data: 18/11/2014
 [*] Modificação do boleto em fortes para trocar de pagador para sacador
     http://www.projetoacbr.com.br/forum/index.php?/topic/18680-trocar-pagador-avalista-por-sacadoravalista/
 	
-
 Data: 28/09/2014
 -- ACBrBoletoFCClass --
 [+] Adicionada a propriedade "PrinterName"
 
--- ACBrBoletoFcFortes --
+-- ACBrBoletoFCFortes --
 [*] Adicionado tratamento para a propriedade: "PrinterName"
 [-] Correção de exception ao listar o relatorio
 
--- ACBrBoletoFcFortes ver. 0.0.24a
+-- ACBrBoletoFCFortes ver. 0.0.24a
 [+] Adicionado impressão do nome do avalista no boleto.
     (por Juliana Tamizou)
-
 
 Data: 29/08/2013
 -- ACBrBoletoFCFortesFr ver. 0.0.22 --
 [*] Modificado tamanho do espaço para impressão do local de pagamento dos boletos e
     reduzida a fonte do mesmo para suportar um texto maior.(Juliana Tamizou)
 
-
-Data: 27/08/2013
---ACBrBoletoFCFR -- 
-[-] Passado a utilizar a função MontarCampoCedente na impressão dos boletos.
-    (OsvaldoKalvaitir)
-
-
-
 Data: 08/07/2013
 -- ACBrBoletoFCFortesFR 0.0.21a --
 [-] Aplicados modificações para os textos Cedente e Sacado conforme exigência do Itau.
     (por: Carlos Nascimento)
 
-
-Data: 14/06/2013
--- ACBrBoletoFCFR ver. 0.0.13a --
-[-] Corrigido problema com a impressão das logomarcas dos bancos. (por: Solivan Araujo)
-
 Data: 10/04/2013
 -- ACBrBoletoFCFortesFR ver. 0.0.20a --
 [*] Alterado impressão do boleto em carnê para imprimir as mensagens.(AndersonH) 
-
 
 Data: 02/04/2013
 -- ACBrBoletoFC_Quick ver. 0.0.14a --
@@ -259,7 +231,6 @@ http://www.projetoacbr.com.br/forum/index.php?/topic/9256-campo-bairro-n%C3%A3o-
 [-] Efetuado correção para que seja impresso no boleto o conteúdo dos campos EspecieMOD e DataProcessamento
     informados para o titulo, caso nada seja informado continuam sendo impressas as informações padrão.
     (por: Juliana Tamizou)
-
 
 Data: 16/01/13
 -- ACBrBoletoFCFortes ver. 0.0.18a --
@@ -287,22 +258,6 @@ Data: 10/01/13
 -- ACBrBoletoFCFortes ver 0.0.16a --
 [-] Corrigida impressão do número da parcela atual no layout carnê.(Daniel simões)	
 
-Data: 09/01/13
--- ACBrBoletoFCFR ver 0.0.12a --
-[-] Alterado componente para respeitar a propriedade MostrarSetup.(NazarenoNeto)
-
-
-Data: 08/01/13
--- ACBrBoletoFCFR ver 0.0.11a -
-[*] Adicionado impressão do complemento do endereço do sacado.(Juliana Tamizou)	
-
-	
-Alterações anteriores a 01/01/2013
-	
--- ACBrBoletoFC --
-[+] Adicionado novo tipo de Layout: lPadraoEntrega, para substituir a
-    propriedade: ComprovanteEntrega   (DSA)
-
 -- ACBrBoletoFCLazReport --
 [*] Layouts de relatório corrigidos para suportar a versão do Trunk do LazReport
     (DSA)
@@ -312,24 +267,6 @@ Alterações anteriores a 01/01/2013
 [*] Modificado para permitir ler os relatórios (FCLazReport_Carne.lrf,
     FCLazReport_CompEntrega.lrf, FCLazReport_Padrao.lrf) do disco caso os mesmos
     estejam na mesma pasta do aplicativo.   (DSA)
-
-Versao 0.0.1 do FastReport 05/08/11
-[-] Lançado a 1a versão para impressão dos boletos em FastReport.
-    (por: Isaque Pinheiro)
-
-Versao 0.0.10a do FastReport 13/08/12
-[+] Adicionado suporte a impressão de boletos em carnê.(Rodrigo Rodrigues)
-[*] Efetuado ajuste para que todas as versões do Delphi consigam ler corretamente
-    a propriedade displayformat dos componentes utilizados para data.(Fábio)
-
-	
-Versao 0.0.10a do FastReport 13/10/12
-[+] Corrigida impressão do DV da Agência quando o mesmo for superior a 9.(Leonardo)	
-
-Versao 0.0.09a do FastReport 02/07/12
-[+] Lançado a 1a versão para impressão dos boletos em FastReport.
-    (por: Isaque Pinheiro)	
-
 
 Versao 0.0.13a do QuickReport 26/11/12
 [*] Corrigido layout Carnê para imprimir o Local de Pagamento.(José)
@@ -381,7 +318,6 @@ Versao 0.0.10a do FortesReport 06/07/11
 [-] Corrigido problema com componentes não encontrados no dfm do Fortes.
     (Juliana Tamizou)
 	
-	
 Versao 0.0.27a 24/06/2011
 [+] Adicionado ao componengte de impressão dos boletos em QuickReport, a 
     impressão de carnês. (Alessandro Del Ri)
@@ -391,18 +327,15 @@ Versao 0.0.27a 24/06/2011
 
 [*] Efetuado ajustes na imppressão do carnê no Fortes Report. (Thiago Gabotti)
 
-[-] Corrigido propriedade do componente de Codigo de Barras doFortes Report.
+[-] Corrigido propriedade do componente de Codigo de Barras do Fortes Report.
     (Juliana Tamizou).
 
 [-] Corrigido impressão das mensagens no boleto impresso em Carnê, para o Fortes.
     (Dionatan)
 
-
-
 Versão 0.0.23a 19/02/2011
 
 [-] Aumentado tamanho do código de barras  para o QuickReport.(Juliana Tamizou)
-
 
 Versão 0.0.22a 12/02/2011
 
@@ -433,13 +366,11 @@ Versão 0.0.18a 23/12/2010
 
 Versão 0.0.16a 27/07/2010
 [*] Alterado componente de impressão dos boletos para apenas imprimir as mensagens 
-    padrão (não são necessárias no arquivo Remessa). (JUliana Tamizou)
-
+    padrão (não são necessárias no arquivo Remessa). (Juliana Tamizou)
 
 Versão 0.0.15a 06/07/2010
 [*] Alterado relatorio no Fortes para imprimir o CNPJ e Endereço do cedente, conforme manda
     a legislação.(Juliana Tamizou)
-
 
 Versão 0.0.12a 26/06/2010
 [*] Alterado layout do carnê para imprimir essas informações e também o Codigo de Barras e o numero do banco.
@@ -447,18 +378,15 @@ Versão 0.0.12a 26/06/2010
 Versão 0.0.11a 05/06/2010
 [+] Adicionado impressao de carnes, para tanto basta informar a propriedade layout como layoutCarne 
 
-Versão 0.0.6a 04/05/10
+Versão 0.0.6a 04/05/2010
 [-] Adicionado Logos dos bancos no formato '.BMP', corrigindo o problema 
     ao imprimir o boleto, onde o logo não era encontrado, mesmo sendo informado
     o diretório dos arquivos. EMBarbosa 
 
-Versão 0.0.5a   03/05/09
+Versão 0.0.5a   03/05/2009
 ---------------
 [+] Início do Projeto
 [+] Primeira Versao lançada baseado no componente fornecido por:
     Daniel Simões de Almeida
 [+] Componente desenvolvido usando como base os projetos GBBoleto, RLBoleto,
     FreeBoleto, OpenBoleto, JFMBoleto.
-
-
-

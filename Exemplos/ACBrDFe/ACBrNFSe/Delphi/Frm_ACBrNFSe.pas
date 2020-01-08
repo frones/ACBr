@@ -534,7 +534,7 @@ begin
 
       PrestadorServico.Contato.Telefone := '1633224455';
 
-      Tomador.IdentificacaoTomador.CpfCnpj := '55.555.555/5555-55';
+      Tomador.IdentificacaoTomador.CpfCnpj := '55555555555555';
       Tomador.IdentificacaoTomador.InscricaoMunicipal := '17331600';
 
       Tomador.RazaoSocial := 'INSCRICAO DE TESTE';

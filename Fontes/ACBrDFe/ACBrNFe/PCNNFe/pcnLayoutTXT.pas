@@ -419,9 +419,9 @@ begin
     LoadLayout('<G01>  GA02|CNPJ¨');
     LoadLayout('<G01>  GA03|CPF¨');
     LoadLayout('<H01>     H|NItem¨|InfAdProd¨');
-    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|CEST¨|indEscala¨|CNPJFab¨|cBenef¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨');
+    LoadLayout('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨|indEscala¨|CNPJFab¨|cBenef¨');
     LoadLayout('<I05A> I05a|NVE¨');
-    LoadLayout('<I05c> I05c|CEST¨|indEscala¨|CNPJFab¨');
+    LoadLayout('<I05c> I05c|CEST¨');
     LoadLayout('<I18>   I18|NDI¨|DDI¨|XLocDesemb¨|UFDesemb¨|DDesemb¨|tpViaTransp¨|vAFRMM¨|tpIntermedio¨|CNPJ¨|UFTerceiro¨|CExportador¨');
     LoadLayout('<I25>   I25|NAdicao¨|NSeqAdic¨|CFabricante¨|VDescDI¨|nDraw¨');
     LoadLayout('<I50>   I50|nDraw¨');
@@ -435,7 +435,7 @@ begin
     LoadLayout('<LA11> LA11|nBico¨|nBomba¨|nTanque¨|vEncIni¨|vEncFin¨');
     LoadLayout('<LB>     LB|nRECOPI¨');
     LoadLayout('<M01>     M|VTotTrib¨');
-    LoadLayout('<N01>     N'); //ok
+    LoadLayout('<N01>     N|'); //ok
     LoadLayout('<N02>   N02|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨|pFCP¨|vFCP¨');
     LoadLayout('<N03>   N03|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨|vBCFCP¨|pFCP¨|vFCP¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|vBCFCPST¨|pFCPST¨|vFCPST¨');
     LoadLayout('<N04>   N04|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMS¨|vBCFCP¨|pFCP¨|vFCP¨|VICMSDeson¨|MotDesICMS¨');
@@ -481,9 +481,13 @@ begin
     LoadLayout('<T01>   T02|VBC¨|PCOFINS¨');
     LoadLayout('<T01>   T04|QBCProd¨|VAliqProd¨');
     LoadLayout('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨|VDeducao¨|VOutro¨|VDescIncond¨|VDescCond¨|VISSRet¨|IndISS¨|CServico¨|CMun¨|CPais¨|NProcesso¨|IndIncentivo¨'); //ok
-    LoadLayout('<UA>     UA|ImpostoDevol¨|PDevol¨|IPI¨|VIPIDevol¨');  //VERIFICAR
+    LoadLayout('<U50>     UA|PDevol¨');
+    LoadLayout('<U60>    UA3|vIPIDevol¨');
     LoadLayout('<W01>     W'); //ok
-    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCP¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨|vBCST¨|vST¨|vFCPST¨|vFCPSTRet¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vIPIDevol¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
+    LoadLayout('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vFCP¨|vBCST¨|vST¨|vFCPST¨|vFCPSTRet¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vIPIDevol¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨');
+    LoadLayout('<W04c> W04c|vFCPUFDest¨');
+    LoadLayout('<W04e> W04e|vICMSUFDest¨');
+    LoadLayout('<W04g> W04g|vICMSUFRemet¨');
     LoadLayout('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨|dCompet¨|vDeducao¨|vOutro¨|vDescIncond¨|vDescCond¨|vISSRet¨|cRegTrib¨');
     LoadLayout('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨');
     LoadLayout('<X01>     X|ModFrete¨');
@@ -492,13 +496,17 @@ begin
     LoadLayout('<X03>   X05|CPF¨');
     LoadLayout('<X11>   X11|VServ¨|VBCRet¨|PICMSRet¨|VICMSRet¨|CFOP¨|CMunFG¨');
     LoadLayout('<X18>   X18|Placa¨|UF¨|RNTC¨');
-    LoadLayout('<X22>   X22|Placa¨|UF¨|RNTC¨|Vagao¨|Balsa¨');  //VERIFICAR
+    LoadLayout('<X22>   X22|Placa¨|UF¨|RNTC¨');
+    LoadLayout('<X25a>   X25a|Vagao¨');
+    LoadLayout('<X25b>   X25b|Balsa¨');
     LoadLayout('<X26>   X26|QVol¨|Esp¨|Marca¨|NVol¨|PesoL¨|PesoB¨');
     LoadLayout('<X26>   X33|NLacre¨');
     LoadLayout('<Y01>     Y'); //ok
     LoadLayout('<Y02>   Y02|NFat¨|VOrig¨|VDesc¨|VLiq¨');
     LoadLayout('<Y07>   Y07|NDup¨|DVenc¨|VDup¨');
-    LoadLayout('<YA>     YA|indPag¨|TPag¨|VPag¨|Card¨|CNPJ¨|TBand¨|CAut¨');
+    LoadLayout('<YA01>   YA'); //ok
+    LoadLayout('<YA01a>YA01|indPag¨|tPag¨|vPag¨');
+    LoadLayout('<YA04> YA04|CNPJ¨|tBand¨|cAut¨');
     LoadLayout('<YA09> YA09|vTroco¨');
     LoadLayout('<Z01>     Z|InfAdFisco¨|InfCpl¨');
     LoadLayout('<Z04>   Z04|XCampo¨|XTexto¨');

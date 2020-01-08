@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2020
+-- pcnLayoutTXT -- 
+[*] Atualização do Layout TXT compatibilizando com a versão 4.0 disponibilizada pelo SEBRAE
+-- pcnNFeRTXT -- 
+[*] Atualização na leitura do Layout TXT compatibilizando com a versão 4.0 disponibilizada pelo SEBRAE
+   Por: José M S Junior
+
 30/12/2019
 -- pcnNFeW -- 
 [*] https://www.projetoacbr.com.br/forum/topic/47753-notas-de-exporta%C3%A7%C3%A3o-ind-obrigando-campo-nre/?do=findComment&comment=363645

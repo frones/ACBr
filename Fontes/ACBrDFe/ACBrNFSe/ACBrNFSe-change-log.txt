@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2020
+-- pnfsNFSeW_Infisc --
+[*] Alterações visando a validação do Lote de RPS antes do seu envio.
+   Por: Italo Jurisato Junior
+
 30/12/2019
 -- pnfsLerListaNFSe --
 [*] Incluido a condição para identificar o grupo <ConsultarNfseRpsRespostaV110>.

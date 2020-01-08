@@ -273,7 +273,7 @@ begin
     FdTotBCISS := FdTotBCISS + NFSe.Servico.ItemServico.Items[i].BaseCalculo;
     FdTotISS   := FdTotISS   + NFSe.Servico.ItemServico.Items[i].ValorIss;
 
-    Gerador.wCampoNFSe(tcDe2, '', 'pRed', 01, 15, 1, 0, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'pRed', 01, 15, 0, 0, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vRed', 01, 15, 0, 0, '');
 
     // Retenção INSS
@@ -311,9 +311,12 @@ begin
     Gerador.wGrupoNFSe('/serv');
 
     // Retenção ISSQN
-    Gerador.wGrupoNFSe('ISSST');
-    Gerador.wCampoNFSe(tcDe2, '', 'vISSST', 01, 15, 1, 0, '');
-    Gerador.wGrupoNFSe('/ISSST');
+    if NFSe.Servico.ItemServico.Items[i].ValorISSST > 0 then
+    begin
+      Gerador.wGrupoNFSe('ISSST');
+      Gerador.wCampoNFSe(tcDe2, '', 'vISSST', 01, 15, 0, NFSe.Servico.ItemServico.Items[i].ValorISSST, '');
+      Gerador.wGrupoNFSe('/ISSST');
+    end;
 
     Gerador.wGrupoNFSe('/det');
   end;
@@ -324,11 +327,11 @@ begin
   Gerador.wGrupoNFSe('total');
   Gerador.wCampoNFSe(tcDe2, '', 'vServ' , 01, 15, 0, NFSe.Servico.Valores.ValorServicos, '');
   Gerador.wCampoNFSe(tcDe2, '', 'vDesc' , 01, 15, 0, NFSe.Servico.Valores.DescontoIncondicionado, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'vOutro', 01, 15, 1, 0, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'vOutro', 01, 15, 0, 0, '');
   Gerador.wCampoNFSe(tcDe2, '', 'vtNF'  , 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
   Gerador.wCampoNFSe(tcDe2, '', 'vtLiq' , 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
 
-  Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15, 1, 0, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTribServ', 01, 15, 0, 0, '');
 
   // Total Retenção IRRF
   if (NFSe.Servico.Valores.ValorIr + NFSe.Servico.Valores.ValorPis +
@@ -376,8 +379,8 @@ begin
   Gerador.wGrupoNFSe('ISS');
   Gerador.wCampoNFSe(tcDe2, '', 'vBCISS'  , 01, 15, 0, FdTotBCISS, '');
   Gerador.wCampoNFSe(tcDe2, '', 'vISS'    , 01, 15, 0, FdTotISS, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'vBCSTISS', 01, 15, 1, 0, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'vSTISS'  , 01, 15, 1, NFSe.Servico.Valores.ValorIssRetido, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'vBCSTISS', 01, 15, 0, 0, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'vSTISS'  , 01, 15, 0, NFSe.Servico.Valores.ValorIssRetido, '');
   Gerador.wGrupoNFSe('/ISS');
 
   Gerador.wGrupoNFSe('/total');

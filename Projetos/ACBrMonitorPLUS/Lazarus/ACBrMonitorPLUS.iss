@@ -38,7 +38,7 @@
 #define MyAppVersion GetFileVersion(MyAppExeName)
 
 #define MyAppVerName MyAppName + "-" + MyAppVersion + "-" + MyAppTarget
-#define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.0.2.19\" + MyAppTarget
+#define OpenSSLDir ACBrDIR + "\DLLs\OpenSSL\1.1.1.4\" + MyAppTarget
 #define LibXML2Dir ACBrDIR + "\DLLs\LibXml2\" + MyAppTarget
 #define VCRedistInstaller "vcredist_" + MyAppTarget + ".exe"
 
@@ -151,9 +151,9 @@ Source: {#ACBrDIR}\DLLs\Diversos\{#MyAppTarget}\{#VCRedistInstaller}; DestDir: {
 Source: {#ACBrDIR}\DLLs\Diversos\{#MyAppTarget}\msvcr120.dll; DestDir: {app}; Flags: ignoreversion ; Components: programa
 
 ;OpenSSL
-Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Components: programa; Flags: ignoreversion ;
-Source: {#OpenSSLDir}\libeay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
-Source: {#OpenSSLDir}\ssleay32.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+;Source: {#OpenSSLDir}\openssl.exe; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#OpenSSLDir}\libcrypto-1_1*.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
+Source: {#OpenSSLDir}\libssl-1_1*.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;
 
 ;LibXML2
 Source: {#LibXML2Dir}\libexslt.dll; DestDir: {app}; Components: programa; Flags: ignoreversion ;

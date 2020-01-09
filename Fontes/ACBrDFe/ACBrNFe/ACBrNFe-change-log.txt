@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2020
+-- pcnNFeW -- 
+[*] Alterado as condições para a geração das tags: vBCSTRET, pST, 
+    vICMSSubstituto e vICMSSTRET quando o CST for 60 e CSOSN for 500.
+   Por: Italo Jurisato Junior
+
 08/01/2020
 -- pcnLayoutTXT -- 
 [*] Atualização do Layout TXT compatibilizando com a versão 4.0 disponibilizada pelo SEBRAE

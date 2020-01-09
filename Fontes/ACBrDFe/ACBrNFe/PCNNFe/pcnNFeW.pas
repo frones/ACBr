@@ -1537,7 +1537,14 @@ begin
                   begin
                      if NFe.infNFe.Versao >= 2 then
                       begin
-                        if (nfe.Ide.indFinal <> cfConsumidorFinal) and (nfe.Ide.modelo = 55) then
+//                        if (nfe.Ide.indFinal <> cfConsumidorFinal) and (nfe.Ide.modelo = 55) then
+
+                        // Se um dos campos abaixo for maior que zero os 4 devem ser
+                        // gerados no XML com exceção do vICMSSubstituto que é opcional
+                        if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or
+                           (nfe.Det[i].Imposto.ICMS.pST > 0) or
+                           (nfe.Det[i].Imposto.ICMS.vICMSSubstituto > 0) or
+                           (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
                         begin
                           Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
 
@@ -1671,37 +1678,40 @@ begin
                cstRep60:
                   begin
                      // ICMSST - Repasse
-                     Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRet, DSC_VBCICMSST );
 
-                     if (NFe.infNFe.Versao >= 4) then
-                     begin
-                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
-                       // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
-                       Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
-                     end;
+                    // Os 4 campos abaixo devem ser gerados mesmos com os seus
+                    // valores sendo zero com exceção do vICMSSubstituto que é opcional
+                    Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet   ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRet, DSC_VBCICMSST );
 
-                     Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRet, DSC_VICMSSTRET);
+                    if (NFe.infNFe.Versao >= 4) then
+                    begin
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(FUsar_tcDe4,07,05), OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.pST, DSC_PST);
+                      // Algumas UF estão exigindo o campo abaixo preenchido mesmo quando for zero.
+                      Gerador.wCampo(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, nfe.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO);
+                    end;
 
-                     if (nfe.Det[i].Imposto.ICMS.vBCFCPSTRet > 0) or
-                        (nfe.Det[i].Imposto.ICMS.pFCPSTRet > 0) or
-                        (nfe.Det[i].Imposto.ICMS.vFCPSTRet > 0) then
-                     begin
-                       Gerador.wCampo(tcDe2, 'N27a', 'vBCFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBCFCPSTRet, DSC_VBCFCP);
-                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N27b', 'pFCPSTRet', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pFCPSTRet, DSC_PFCP);
-                       Gerador.wCampo(tcDe2, 'N27c', 'vFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPSTRet, DSC_VFCP);
-                     end;
+                    Gerador.wCampo(tcDe2, 'N27', 'vICMSSTRet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTRet, DSC_VICMSSTRET);
 
-                     Gerador.wCampo(tcDe2, 'N31', 'vBCSTDest  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTDest, DSC_VBCICMSSTDEST);
-                     Gerador.wCampo(tcDe2, 'N32', 'vICMSSTDest', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTDest, DSC_VBCICMSSTDEST);
+                    if (nfe.Det[i].Imposto.ICMS.vBCFCPSTRet > 0) or
+                       (nfe.Det[i].Imposto.ICMS.pFCPSTRet > 0) or
+                       (nfe.Det[i].Imposto.ICMS.vFCPSTRet > 0) then
+                    begin
+                      Gerador.wCampo(tcDe2, 'N27a', 'vBCFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vBCFCPSTRet, DSC_VBCFCP);
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N27b', 'pFCPSTRet', 01, IIf(FUsar_tcDe4,07,05), 0, nfe.Det[i].Imposto.ICMS.pFCPSTRet, DSC_PFCP);
+                      Gerador.wCampo(tcDe2, 'N27c', 'vFCPSTRet ', 01, 15, 0, nfe.Det[i].Imposto.ICMS.vFCPSTRet, DSC_VFCP);
+                    end;
 
-                     if (nfe.Det[i].Imposto.ICMS.pRedBCEfet > 0) or (nfe.Det[i].Imposto.ICMS.vBCEfet > 0) or
-                        (nfe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (nfe.Det[i].Imposto.ICMS.vICMSEfet > 0) then
-                     begin
-                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N34', 'pRedBCEfet', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pRedBCEfet, DSC_PREDBCEFET);
-                       Gerador.wCampo(tcDe2, 'N35', 'vBCEfet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCEfet, DSC_VBCEFET);
-                       Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N36', 'pICMSEfet', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pICMSEfet, DSC_PICMSEFET);
-                       Gerador.wCampo(tcDe2, 'N37', 'vICMSEfet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSEfet, DSC_VICMSEFET);
-                     end;
+                    Gerador.wCampo(tcDe2, 'N31', 'vBCSTDest  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTDest, DSC_VBCICMSSTDEST);
+                    Gerador.wCampo(tcDe2, 'N32', 'vICMSSTDest', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSSTDest, DSC_VBCICMSSTDEST);
+
+                    if (nfe.Det[i].Imposto.ICMS.pRedBCEfet > 0) or (nfe.Det[i].Imposto.ICMS.vBCEfet > 0) or
+                       (nfe.Det[i].Imposto.ICMS.pICMSEfet > 0) or (nfe.Det[i].Imposto.ICMS.vICMSEfet > 0) then
+                    begin
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N34', 'pRedBCEfet', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pRedBCEfet, DSC_PREDBCEFET);
+                      Gerador.wCampo(tcDe2, 'N35', 'vBCEfet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCEfet, DSC_VBCEFET);
+                      Gerador.wCampo(IIf(FUsar_tcDe4,tcDe4,tcDe2), 'N36', 'pICMSEfet', 01, IIf(FUsar_tcDe4,07,05), 1, nfe.Det[i].Imposto.ICMS.pICMSEfet, DSC_PICMSEFET);
+                      Gerador.wCampo(tcDe2, 'N37', 'vICMSEfet ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vICMSEfet, DSC_VICMSEFET);
+                    end;
                   end;
             end;
             Gerador.wGrupo('/ICMS' + sTagTemp );
@@ -1767,7 +1777,14 @@ begin
                   end;
                csosn500 :
                   begin //10g
-                    if (nfe.Ide.indFinal <> cfConsumidorFinal) and (nfe.Ide.modelo = 55) then
+//                    if (nfe.Ide.indFinal <> cfConsumidorFinal) and (nfe.Ide.modelo = 55) then
+
+                    // Se um dos campos abaixo for maior que zero os 4 devem ser
+                    // gerados no XML com exceção do vICMSSubstituto que é opcional
+                    if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or
+                       (nfe.Det[i].Imposto.ICMS.pST > 0) or
+                       (nfe.Det[i].Imposto.ICMS.vICMSSubstituto > 0) or
+                       (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
                     begin
                       Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
 

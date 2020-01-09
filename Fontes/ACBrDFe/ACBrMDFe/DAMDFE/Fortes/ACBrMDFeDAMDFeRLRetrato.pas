@@ -241,18 +241,18 @@ begin
 
   if fpDAMDFe.ExpandeLogoMarca then
   begin
-    rliLogo.top     := 2;
+    rliLogo.top     := 3;
     rliLogo.Left    := 2;
-    rliLogo.Height  := 142;
-    rliLogo.Width   := 330;
-    rliLogo.Stretch := True;
+    rliLogo.Height  := 163;
+    rliLogo.Width   := 317;
+
+    TDFeReportFortes.AjustarLogo(rliLogo, fpDAMDFe.ExpandeLogoMarcaConfig);
 
     rlmEmitente.visible := False;
     rlmDadosEmitente.visible := False;
   end
   else
   begin
-    rliLogo.Stretch := true;
     rlmEmitente.Enabled := True;
     rlmDadosEmitente.Enabled := True;
     // Emitente

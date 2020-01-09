@@ -893,8 +893,8 @@ begin
     with rliLogo do
     begin
       Width := 450;
-      Scaled := False;
-      Stretch := True;
+
+      TDFeReportFortes.AjustarLogo(rliLogo, fpDANFe.ExpandeLogoMarcaConfig);
     end;
   end;
 

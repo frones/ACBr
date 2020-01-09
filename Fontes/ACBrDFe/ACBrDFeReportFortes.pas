@@ -50,7 +50,6 @@ uses
 
 type
   TDFeReportFortes = class
-  private
   public
     class procedure AjustarReport(FReport: TRLReport; AConfig: TACBrDFeReport);
     class procedure AjustarMargem(FReport: TRLReport; AConfig: TACBrDFeReport);
@@ -59,6 +58,7 @@ type
     class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer);
     class function EspacejarTextoGrafico(const AText: String; AWidth: Integer;
       AFonte: TFont): String;
+    class procedure AjustarLogo(ALogoImage: TRLImage; APropExpandeLogoMarca: TExpandeLogoMarcaConfig); static;
   end;
 
 
@@ -186,6 +186,22 @@ begin
     Result := ACBrStr(PadSpace(AText, LenText-1, '|'));
   finally
     ABMP.Free;
+  end;
+end;
+
+class procedure TDFeReportFortes.AjustarLogo(ALogoImage: TRLImage; APropExpandeLogoMarca: TExpandeLogoMarcaConfig);
+begin
+  ALogoImage.Scaled  := APropExpandeLogoMarca.Dimensionar;
+  ALogoImage.Stretch := APropExpandeLogoMarca.Esticar;
+
+  // Se não for configurado, permanece o padrão.
+  if ( APropExpandeLogoMarca.Altura > 0 ) or ( APropExpandeLogoMarca.Esquerda > 0 ) or
+     ( APropExpandeLogoMarca.Topo > 0 ) or ( APropExpandeLogoMarca.Largura > 0 ) then
+  begin
+    ALogoImage.Top    := APropExpandeLogoMarca.Topo;
+    ALogoImage.Left   := APropExpandeLogoMarca.Esquerda;
+    ALogoImage.Height := APropExpandeLogoMarca.Altura;
+    ALogoImage.Width  := APropExpandeLogoMarca.Largura;
   end;
 end;
 

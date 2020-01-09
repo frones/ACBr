@@ -1,37 +1,37 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componente ACBrCTe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Conhecimen-}
-{ to de Transporte eletrÙnico - CTe - http://www.cte.fazenda.gov.br            }
+{  Biblioteca multiplataforma de componentes Delphi para emiss√£o de Conhecimen-}
+{ to de Transporte eletr√¥nico - CTe - http://www.cte.fazenda.gov.br            }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2014 Mark dos Santos GonÁalves              }
+{ Direitos Autorais Reservados (c) 2014 Mark dos Santos Gon√ßalves              }
 {                                        Juliomar Marchetti                     }
 {                                       Daniel Simoes de Almeida               }
-{                                       AndrÈ Ferreira de Moraes               }
+{                                       Andr√© Ferreira de Moraes               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -763,8 +763,8 @@ begin
   begin
     rllTituloCNPJ1.Caption := 'CNPJ/CPF EMITENTE';
     rllTituloCNPJ2.Caption := 'CNPJ/CPF EMITENTE';
-    rllTituloSerie1.Caption := 'S…RIE/NRO. DOCUMENTO';
-    rllTituloSerie2.Caption := 'S…RIE/NRO. DOCUMENTO';
+    rllTituloSerie1.Caption := 'S√âRIE/NRO. DOCUMENTO';
+    rllTituloSerie2.Caption := 'S√âRIE/NRO. DOCUMENTO';
   end;
 
   if (fpCTe.infCTeNorm.infDoc.infNFe.Count > 0) or
@@ -848,7 +848,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_1').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_1').AsString :=
-              ACBrStr('DeclaraÁ„o Doc.: ') + nDoc;
+              ACBrStr('Declara√ß√£o Doc.: ') + nDoc;
           end;
           tdCFeSAT:
           begin
@@ -871,7 +871,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_1').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_1').AsString :=
-              ACBrStr('Dutovi·rio Doc.: ') + nDoc;
+              ACBrStr('Dutovi√°rio Doc.: ') + nDoc;
           end;
           tdOutros:
           begin
@@ -893,7 +893,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_2').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_2').AsString :=
-              ACBrStr('DeclaraÁ„o Doc.: ') + nDoc;
+              ACBrStr('Declara√ß√£o Doc.: ') + nDoc;
           end;
           tdDutoviario:
           begin
@@ -901,7 +901,7 @@ begin
             cdsDocumentos.FieldByName('CNPJCPF_2').AsString :=
               FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
             cdsDocumentos.FieldByName('DOCUMENTO_2').AsString :=
-              ACBrStr('Dutovi·rio Doc.: ') + nDoc;
+              ACBrStr('Dutovi√°rio Doc.: ') + nDoc;
           end;
           tdCFeSAT:
           begin
@@ -1000,7 +1000,7 @@ begin
       end;
     end;
 
-    // EletrÙnico
+    // Eletr√¥nico
     for J := 0 to (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].idDocAnt.Count - 1) do
     begin
       for K := 0 to (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].idDocAnt.Items[
@@ -1104,11 +1104,12 @@ begin
   begin
     rlmEmitente.Visible := False;
     rlmDadosEmitente.Visible := False;
-    rliLogo.Stretch := True;
-    rliLogo.top := 5;
-    rliLogo.Left := 3;
-    rliLogo.Height := 115;//91;
-    rliLogo.Width := 324;//321
+    rliLogo.top := 3;
+    rliLogo.Left := 2;
+    rliLogo.Height := 121;
+    rliLogo.Width := 311;
+
+    TDFeReportFortes.AjustarLogo(rliLogo, fpDACTe.ExpandeLogoMarcaConfig);
   end
   else
   begin
@@ -1131,7 +1132,7 @@ begin
           ' - ' + XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
-      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRI«√O ESTADUAL: ') + IE);
+      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRI√á√ÉO ESTADUAL: ') + IE);
       rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
       if Trim(fpDACTe.Site) <> '' then
@@ -1154,9 +1155,9 @@ begin
 
   // CTe 3.0 **************************************************************
 
-  if (fpCTe.infCTe.versao >= 3.00) then   //Campos referente a vers„o 3.00
+  if (fpCTe.infCTe.versao >= 3.00) then   //Campos referente a vers√£o 3.00
     cabecalhoVersao30()
-  else                                   //Campos referente a vers„o 2.00
+  else                                   //Campos referente a vers√£o 2.00
   begin
     if fpCTe.Ide.Toma4.xNome = '' then
       rllTomaServico.Caption := TpTomadorToStrText(fpCTe.Ide.Toma03.Toma)
@@ -1174,13 +1175,13 @@ begin
     RLBarcode1.Visible := False;
 
     if fpCTe.procCTe.cStat = 100 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA«√O DE USO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA√á√ÉO DE USO');
 
     if fpCTe.procCTe.cStat = 101 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA«√O DE CANCELAMENTO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA√á√ÉO DE CANCELAMENTO');
 
     if fpCTe.procCTe.cStat = 110 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA«√O DE USO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA√á√ÉO DE USO');
 
     if FProtocoloCTE <> '' then
       rllProtocolo.Caption := FProtocoloCTE
@@ -1200,13 +1201,13 @@ begin
       RLBarcode1.Visible := False;
 
       if fpCTe.procCTe.cStat = 100 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA«√O DE USO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA√á√ÉO DE USO');
 
       if fpCTe.procCTe.cStat = 101 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA«√O DE CANCELAMENTO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA√á√ÉO DE CANCELAMENTO');
 
       if fpCTe.procCTe.cStat = 110 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA«√O DE USO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA√á√ÉO DE USO');
 
       if FProtocoloCTE <> '' then
         rllProtocolo.Caption := FProtocoloCTE
@@ -1743,7 +1744,7 @@ begin
   begin
     if not (fpCTe.procCTe.cStat in [100, 101, 110]) then
       rlmObs.Lines.Add(ACBrStr(
-        'DACTE em ContingÍncia - Impresso em decorrÍncia de problemas tÈcnicos.'));
+        'DACTE em Conting√™ncia - Impresso em decorr√™ncia de problemas t√©cnicos.'));
   end;
 
   if (fpCTe.Ide.tpEmis = teDPEC) and (fpDACTe.EPECEnviado) then
@@ -1765,7 +1766,7 @@ begin
           rlmObs.Lines.Add('');
        rlmObs.Lines.EndUpdate;
     end;
-    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL');
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end
@@ -1796,7 +1797,7 @@ begin
     end
     else
     begin
-      rllMsgTeste.Caption := ACBrStr('CT-E N√O ENVIADO PARA SEFAZ');
+      rllMsgTeste.Caption := ACBrStr('CT-E N√ÉO ENVIADO PARA SEFAZ');
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;
     end;
@@ -1818,7 +1819,7 @@ begin
 
   PrintIt := RLCTe.PageNumber = 1;
 
-  // Imprime as InformaÁıes Especificas do Modal se o Tipo de CTe for Normal
+  // Imprime as Informa√ß√µes Especificas do Modal se o Tipo de CTe for Normal
   rlb_10_ModRodFracionado.Enabled :=
     (fpCTe.Ide.tpCTe = tcNormal) and (fpCTe.Ide.modal = mdRodoviario);
   if not (rlb_10_ModRodFracionado.Enabled) then
@@ -1845,13 +1846,13 @@ begin
           ltNao:
           begin
             rllTituloLotacao.Caption :=
-              ACBrStr('DADOS ESPECÕFICOS DO MODAL RODOVI¡RIO - CARGA FRACIONADA');
-            rllLotacao.Caption := ACBrStr('N√O');
+              ACBrStr('DADOS ESPEC√çFICOS DO MODAL RODOVI√ÅRIO - CARGA FRACIONADA');
+            rllLotacao.Caption := ACBrStr('N√ÉO');
           end;
           ltsim:
           begin
             rllTituloLotacao.Caption :=
-              ACBrStr('DADOS ESPECÕFICOS DO MODAL RODOVI¡RIO - LOTA«√O');
+              ACBrStr('DADOS ESPEC√çFICOS DO MODAL RODOVI√ÅRIO - LOTA√á√ÉO');
             rllLotacao.Caption := 'SIM';
             if Versao = 103 then
               rlb_11_ModRodLot103.Enabled := True
@@ -1893,7 +1894,7 @@ begin
   for i := 0 to (fpCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
     if fpCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo.Lines.Add(ACBrStr('TraÁ„o'))
+      rlmTipo.Lines.Add(ACBrStr('Tra√ß√£o'))
     else
       rlmTipo.Lines.Add('Reboque');
     rlmPlaca.Lines.Add(fpCTe.infCTeNorm.Rodo.veic.Items[i].placa);
@@ -1927,7 +1928,7 @@ begin
   if (fpCTe.ide.modelo <> 67) then   //67-CTeOS
   begin
     rlLabel28.Caption := ACBrStr('INDICADOR DO CT-E GLOBALIZADO');
-    rllabel78.Caption := ACBrStr('INFORMA«’ES DO CT-E GLOBALIZADO');
+    rllabel78.Caption := ACBrStr('INFORMA√á√ïES DO CT-E GLOBALIZADO');
 
     if fpCTe.ide.indGlobalizado = tiSim then
     begin
@@ -1936,12 +1937,12 @@ begin
         rllFormaPagamento.Caption := fpCTe.infCTeNorm.infGlobalizado.xObs;
     end
     else
-      rllTomaServico.Caption := ACBrStr('N√O');
+      rllTomaServico.Caption := ACBrStr('N√ÉO');
   end
   else
   begin
     rlLabel28.Caption :=
-      ACBrStr('C”DIGO FISCAL DE OPERA«’ES E PRESTA«’ES - NATUREZA DA OPERA«√O');
+      ACBrStr('C√ìDIGO FISCAL DE OPERA√á√ïES E PRESTA√á√ïES - NATUREZA DA OPERA√á√ÉO');
     rllabel78.Caption := '';
     rlsLinhaV01.Height := 31;
     rllTomaServico.AutoSize := True;
@@ -1997,7 +1998,7 @@ end;
 
 procedure TfrmDACTeRLRetrato.dadosNotaFiscalVersao30;
 begin
-  //Valida a Vers„o para ocultar campos na tela
+  //Valida a Vers√£o para ocultar campos na tela
   with fpCTe.infCTe do
   begin
     rlLabel5.Visible := not (versao >= 3.00);
@@ -2014,7 +2015,7 @@ begin
     RLDraw8.Visible := not (versao >= 3.00);
   end;
 
-  //Valida a Vers„o para reposicionar campos na tela
+  //Valida a Vers√£o para reposicionar campos na tela
   if (fpCTe.infCTe.versao >= 3.00) then
   begin
     RLDraw58.Left := 148;
@@ -2051,7 +2052,7 @@ end;
 
 procedure TfrmDACTeRLRetrato.modalRodoviarioVersao30;
 begin
-  rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÕFICOS DO MODAL RODOVI¡RIO');
+  rllTituloLotacao.Caption := ACBrStr('DADOS ESPEC√çFICOS DO MODAL RODOVI√ÅRIO');
   rlsCIOT.Enabled := False;
   lblCIOT.Caption := '';
   rllCIOT.Caption := '';
@@ -2083,7 +2084,7 @@ begin
     end
     else
     begin
-      //PrÛprio
+      //Pr√≥prio
       lTAF := fpCTe.infCTeNorm.rodoOS.TAF;
       lREG := fpCTe.infCTeNorm.rodoOS.NroRegEstadual;
       lCNPJ := fpCTe.Emit.CNPJ;
@@ -2102,28 +2103,28 @@ begin
 
   RLLabel11.Visible := True;
   rllRntrcEmpresa.Visible := True;
-  RLLabel11.Caption := ACBrStr('TERMO AUTORIZA«√O DE FRETAMENTO');
+  RLLabel11.Caption := ACBrStr('TERMO AUTORIZA√á√ÉO DE FRETAMENTO');
   rllRntrcEmpresa.Caption := lTAF;
 
   lblCIOT.Visible := True;
   rllCIOT.Visible := True;
   lblCIOT.Left := 154;
   rllCIOT.Left := 154;
-  lblCIOT.Caption := ACBrStr('N∫ DE REGISTRO ESTADUAL');
+  lblCIOT.Caption := ACBrStr('N¬∫ DE REGISTRO ESTADUAL');
   rllCIOT.Caption := lREG;
 
   RLLabel83.Visible := True;
   rllLotacao.Visible := True;
   RLLabel83.Left := 301;
   rllLotacao.Left := 301;
-  RLLabel83.Caption := ACBrStr('PLACA DO VEÕCULO');
+  RLLabel83.Caption := ACBrStr('PLACA DO VE√çCULO');
   rllLotacao.Caption := fpCTe.infCTeNorm.rodoOS.veic.placa;
 
   RLLabel84.Visible := True;
   rllDtPrevEntrega.Visible := True;
   RLLabel84.Left := 449;
   rllDtPrevEntrega.Left := 449;
-  RLLabel84.Caption := ACBrStr('RENAVAM DO VEÕCULO');
+  RLLabel84.Caption := ACBrStr('RENAVAM DO VE√çCULO');
   rllDtPrevEntrega.Caption := fpCTe.infCTeNorm.rodoOS.veic.RENAVAM;
 
   RLLabel216.Visible := True;
@@ -2198,7 +2199,7 @@ begin
           rsRemetente: rllResponsavelSeguro.Lines.Add('Remetente');
           rsExpedidor: rllResponsavelSeguro.Lines.Add('Expedidor');
           rsRecebedor: rllResponsavelSeguro.Lines.Add('Recebedor');
-          rsDestinatario: rllResponsavelSeguro.Lines.Add('Destinat·rio');
+          rsDestinatario: rllResponsavelSeguro.Lines.Add('Destinat√°rio');
           rsEmitenteCTe: rllResponsavelSeguro.Lines.Add('Emitente');
           rsTomadorServico: rllResponsavelSeguro.Lines.Add('Tomador');
         end;
@@ -2237,7 +2238,7 @@ begin
   for i := 0 to (fpCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
     if fpCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo2.Lines.Add(ACBrStr('TraÁ„o'))
+      rlmTipo2.Lines.Add(ACBrStr('Tra√ß√£o'))
     else
       rlmTipo2.Lines.Add('Reboque');
     rlmPlaca2.Lines.Add(fpCTe.infCTeNorm.Rodo.veic.Items[i].placa);
@@ -2290,7 +2291,7 @@ begin
   if fpCTe.Ide.retira = rtSim then
     rllRetira.Caption := 'SIM'
   else
-    rllRetira.Caption := ACBrStr('N√O');
+    rllRetira.Caption := ACBrStr('N√ÉO');
   rllDadosRetira.Caption := fpCTe.Ide.xdetretira;
 end;
 
@@ -2544,17 +2545,17 @@ begin
     case fpCTe.Ide.tpCTe of
       tcAnulacao:
       begin
-        rlblChaveCteSubstituido.Caption := PadRight('N⁄MERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  ANUALADO';
+        rlblChaveCteSubstituido.Caption := PadRight('N√öMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  ANUALADO';
         rlChaveCteSerAnulSubst.Lines.Add(PadRight(copy(fpCTe.InfCTeAnu.chCTe, 26, 9), 17, ' ')+
                                          FormatarChaveAcesso(fpCTe.InfCTeAnu.chCTe));
       end;
       tcSubstituto:
       begin
-        rlblChaveCteSubstituido.Caption := PadRight('N⁄MERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  SUBSTITUÕDO';
+        rlblChaveCteSubstituido.Caption := PadRight('N√öMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  SUBSTITU√çDO';
         rlChaveCteSerAnulSubst.Lines.Add(PadRight(copy(fpCTe.infCTeNorm.infCTeSub.chCte, 26, 9), 17, ' ')+
                                          FormatarChaveAcesso(fpCTe.infCTeNorm.infCTeSub.chCte));
         rlblChaveCteAnulacao.Visible := True;
-        rlblChaveCteAnulacao.Caption := PadRight('N⁄MERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  DE ANULA«√O';
+        rlblChaveCteAnulacao.Caption := PadRight('N√öMERO', 24, ' ')+'CHAVE  '+ ModeloDoc +'  DE ANULA√á√ÉO';
         rlChaveCteAnulacao.Lines.Add(PadRight(copy(fpCTe.infCTeNorm.infCTeSub.refCteAnu, 26, 9), 17, ' ')+
                                      FormatarChaveAcesso(fpCTe.infCTeNorm.infCTeSub.refCteAnu));
       end;

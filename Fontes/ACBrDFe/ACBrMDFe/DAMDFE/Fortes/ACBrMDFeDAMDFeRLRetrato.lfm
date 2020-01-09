@@ -1843,6 +1843,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Scaled = True
       end
       object rlmEmitente: TRLMemo
         Left = 7

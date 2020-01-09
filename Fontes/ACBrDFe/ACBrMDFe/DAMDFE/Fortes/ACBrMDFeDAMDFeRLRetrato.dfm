@@ -1524,11 +1524,12 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
       ParentColor = False
       BeforePrint = rlb_1_DadosManifestoBeforePrint
       object rliLogo: TRLImage
-        Left = 6
+        Left = 7
         Top = 57
-        Width = 96
-        Height = 96
+        Width = 94
+        Height = 62
         Center = True
+        Scaled = True
       end
       object rlmEmitente: TRLMemo
         Left = 7

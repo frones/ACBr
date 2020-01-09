@@ -1,37 +1,37 @@
-{******************************************************************************}
+Ôªø{******************************************************************************}
 { Projeto: Componente ACBrCTe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Conhecimen-}
-{ to de Transporte eletrÙnico - CTe - http://www.cte.fazenda.gov.br            }
+{  Biblioteca multiplataforma de componentes Delphi para emiss√£o de Conhecimen-}
+{ to de Transporte eletr√¥nico - CTe - http://www.cte.fazenda.gov.br            }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2014 Mark dos Santos GonÁalves              }
+{ Direitos Autorais Reservados (c) 2014 Mark dos Santos Gon√ßalves              }
 {                                        Juliomar Marchetti                     }
 {                                       Daniel Simoes de Almeida               }
-{                                       AndrÈ Ferreira de Moraes               }
+{                                       Andr√© Ferreira de Moraes               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
+{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
+{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -527,7 +527,7 @@ implementation
 
 uses
   DateUtils, ACBrDFeUtil, ACBrUtil, ACBrValidador, pcteConversaoCTe,
-  pcteCTe;
+  pcteCTe, ACBrDFeReportFortes;
 
 {$IFnDEF FPC}
   {$R *.dfm}
@@ -614,13 +614,13 @@ begin
           begin
             cdsDocumentos.FieldByName('TIPO_1').AsString := 'DECLAR';
             cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
-            cdsDocumentos.FieldByName('DOCUMENTO_1').AsString := 'DeclaraÁ„o Doc.: ' + nDoc;
+            cdsDocumentos.FieldByName('DOCUMENTO_1').AsString := 'Declara√ß√£o Doc.: ' + nDoc;
           end;
           tdDutoviario:
           begin
             cdsDocumentos.FieldByName('TIPO_1').AsString := 'DUTO';
             cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
-            cdsDocumentos.FieldByName('DOCUMENTO_1').AsString := 'Dutovi·rio Doc.: ' + nDoc;
+            cdsDocumentos.FieldByName('DOCUMENTO_1').AsString := 'Dutovi√°rio Doc.: ' + nDoc;
           end;
           tdOutros:
           begin
@@ -638,13 +638,13 @@ begin
           begin
             cdsDocumentos.FieldByName('TIPO_2').AsString := 'DECLAR';
             cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
-            cdsDocumentos.FieldByName('DOCUMENTO_2').AsString := 'DeclaraÁ„o Doc.: ' + nDoc;
+            cdsDocumentos.FieldByName('DOCUMENTO_2').AsString := 'Declara√ß√£o Doc.: ' + nDoc;
           end;
           tdDutoviario:
           begin
             cdsDocumentos.FieldByName('TIPO_2').AsString := 'DUTO';
             cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarCNPJouCPF(fpCTe.Rem.CNPJCPF);
-            cdsDocumentos.FieldByName('DOCUMENTO_2').AsString := 'Dutovi·rio Doc.: ' + nDoc;
+            cdsDocumentos.FieldByName('DOCUMENTO_2').AsString := 'Dutovi√°rio Doc.: ' + nDoc;
           end;
           tdOutros:
           begin
@@ -725,7 +725,7 @@ begin
       end;
     end;
 
-    // EletrÙnico
+    // Eletr√¥nico
     for J := 0 to (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].idDocAnt.Count - 1) do
     begin
       for K := 0 to (fpCTe.infCTeNorm.docAnt.emiDocAnt.Items[I].idDocAnt.Items[
@@ -807,11 +807,14 @@ begin
 
   if fpDACTe.ExpandeLogoMarca then
   begin
-    rliLogo.top := 2;
+    rliLogo.top := 3;
     rliLogo.Left := 2;
-    rliLogo.Height := 142;
-    rliLogo.Width := 330;
-    rliLogo.Stretch := True;
+    rliLogo.Height := 110;
+    rliLogo.Width := 329;
+
+
+    TDFeReportFortes.AjustarLogo(rliLogo, fpDACTe.ExpandeLogoMarcaConfig);
+
     rlmEmitente.Enabled := False;
     rlmDadosEmitente.Enabled := False;
   end;
@@ -847,7 +850,7 @@ begin
           XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
-      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRI«√O ESTADUAL: ') + IE);
+      rlmDadosEmitente.Lines.Add(ACBrStr('INSCRI√á√ÉO ESTADUAL: ') + IE);
       rlmDadosEmitente.Lines.Add('TELEFONE: ' + FormatarFone(EnderEmit.Fone));
 
       if Trim(fpDACTe.Site) <> '' then
@@ -869,13 +872,13 @@ begin
     //rllVariavel1.Enabled := True;
     RLBarcode1.Enabled := False;
     if fpCTe.procCTe.cStat = 100 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA«√O DE USO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA√á√ÉO DE USO');
 
     if fpCTe.procCTe.cStat = 101 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA«√O DE CANCELAMENTO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA√á√ÉO DE CANCELAMENTO');
 
     if fpCTe.procCTe.cStat = 110 then
-      rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA«√O DE USO');
+      rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA√á√ÉO DE USO');
 
     if FProtocoloCTE <> '' then
       rllProtocolo.Caption := FProtocoloCTE
@@ -893,13 +896,13 @@ begin
       //      rllVariavel1.Enabled := True;
       RLBarcode1.Enabled := False;
       if fpCTe.procCTe.cStat = 100 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA«√O DE USO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZA√á√ÉO DE USO');
 
       if fpCTe.procCTe.cStat = 101 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA«√O DE CANCELAMENTO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE HOMOLOGA√á√ÉO DE CANCELAMENTO');
 
       if fpCTe.procCTe.cStat = 110 then
-        rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA«√O DE USO');
+        rllDescricao.Caption := ACBrStr('PROTOCOLO DE DENEGA√á√ÉO DE USO');
 
       if FProtocoloCTE <> '' then
         rllProtocolo.Caption := FProtocoloCTE
@@ -923,7 +926,7 @@ begin
   // DPEC ****************************************************************
   if fpCTe.Ide.tpEmis = teDPEC then
   begin
-    rllDescricao.Caption := ACBrStr('N⁄MERO DE REGISTRO DPEC');
+    rllDescricao.Caption := ACBrStr('N√öMERO DE REGISTRO DPEC');
     rllProtocolo.Caption := FProtocoloCTE;
   end;
 
@@ -1247,7 +1250,7 @@ procedure TfrmDACTerlRetratoA5.rlb_07_HeaderItensBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   inherited;
-  // Imprime os Documentos Origin·rios se o Tipo de CTe for Normal
+  // Imprime os Documentos Origin√°rios se o Tipo de CTe for Normal
 end;
 
 procedure TfrmDACTerlRetratoA5.rlb_08_ItensBeforePrint(Sender: TObject;
@@ -1257,7 +1260,7 @@ var
 begin
   inherited;
 
-  // Imprime os Documentos Origin·rios se o Tipo de CTe for Normal
+  // Imprime os Documentos Origin√°rios se o Tipo de CTe for Normal
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   rlb_08_Itens.Enabled := (fpCTe.Ide.tpCTe = tcNormal);
 
@@ -1292,7 +1295,7 @@ begin
     case Lota of
       ltNao:
       begin
-        rllLotacao.Caption := ACBrStr('N√O');
+        rllLotacao.Caption := ACBrStr('N√ÉO');
       end;
       ltsim:
       begin
@@ -1322,12 +1325,12 @@ begin
   begin
     if not (fpCTe.procCTe.cStat in [100, 101, 110]) then
       rlmObs.Lines.Add(ACBrStr(
-        'DACTE em ContingÍncia - Impresso em decorrÍncia de problemas tÈcnicos.'));
+        'DACTE em Conting√™ncia - Impresso em decorr√™ncia de problemas t√©cnicos.'));
   end;
 
   if fpCTe.Ide.tpEmis = teDPEC then
     rlmObs.Lines.Add(ACBrStr(
-      'DACTE em ContingÍncia - DPEC regularmente recebida pela Receita Federal do Brasil'));
+      'DACTE em Conting√™ncia - DPEC regularmente recebida pela Receita Federal do Brasil'));
 
   rlmObs.Lines.Text := StringReplace(rlmObs.Lines.Text, ';', #13, [rfReplaceAll]);
   rlmObs.Lines.EndUpdate;
@@ -1352,7 +1355,7 @@ begin
 
   if fpCTe.Ide.tpAmb = taHomologacao then
   begin
-    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL');
+    rllMsgTeste.Caption := ACBrStr('AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL');
     rllMsgTeste.Visible := True;
     rllMsgTeste.Enabled := True;
   end
@@ -1383,7 +1386,7 @@ begin
     end
     else
     begin
-      rllMsgTeste.Caption := ACBrStr('CT-E N√O ENVIADO PARA SEFAZ');
+      rllMsgTeste.Caption := ACBrStr('CT-E N√ÉO ENVIADO PARA SEFAZ');
       rllMsgTeste.Visible := True;
       rllMsgTeste.Enabled := True;
     end;
@@ -1416,7 +1419,7 @@ begin
   for i := 0 to (fpCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
     if fpCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo2.Lines.Add('TraÁ„o')
+      rlmTipo2.Lines.Add('Tra√ß√£o')
     else
       rlmTipo2.Lines.Add('Reboque');
     rlmPlaca2.Lines.Add(fpCTe.infCTeNorm.Rodo.veic.Items[i].placa);
@@ -1468,7 +1471,7 @@ begin
   if fpCTe.Ide.retira = rtSim then
     rllRetira.Caption := 'SIM'
   else
-    rllRetira.Caption := ACBrStr('N√O');
+    rllRetira.Caption := ACBrStr('N√ÉO');
   rllDadosRetira.Caption := fpCTe.Ide.xdetretira;
 end;
 

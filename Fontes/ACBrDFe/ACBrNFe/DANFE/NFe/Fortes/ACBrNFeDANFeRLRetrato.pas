@@ -974,8 +974,8 @@ begin
       Width := 268;
       Top := 14;
       Left := 2;
-      Scaled := False;
-      Stretch := True;
+
+      TDFeReportFortes.AjustarLogo(rliLogo, fpDANFe.ExpandeLogoMarcaConfig);
     end;
   end;
 

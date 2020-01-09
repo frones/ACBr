@@ -87,6 +87,43 @@ type
     property MaskvUnCom: String read FMaskvUnCom write FMaskvUnCom;
   end;
 
+  { TExpandeLogoMarcaConfig }
+  {@class TExpandeLogoMarcaConfig - Propriedades para configurar a logomarca se ExpandeLogoMarca = True
+   @links TACBrDFeReport.ExpandeLogoMarcaConfig }
+  {$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(piacbrAllPlatforms)]
+  {$ENDIF RTL230_UP}
+  TExpandeLogoMarcaConfig = class(TComponent)
+  private
+    FAltura: Integer;
+    FEsquerda: Integer;
+    FTopo: Integer;
+    FLargura: Integer;
+    FDimensionar: Boolean;
+    FEsticar: Boolean;
+  public
+    constructor Create(AOwner: TComponent); override;
+  published
+    {@prop Altura - Denife a altura da logomarca expandida
+     @links TExpandeLogoMarcaConfig.Altura :/}
+    property Altura: Integer read FAltura write FAltura;
+    {@prop Esquerda - Denife a posição a esquerda da logomarca expandida
+     @links TExpandeLogoMarcaConfig.Esquerda :/}
+    property Esquerda: Integer read FEsquerda write FEsquerda;
+    {@prop Topo - Denife a posição ao topo da logomarca expandida
+     @links TExpandeLogoMarcaConfig.Topo :/}
+    property Topo: Integer read FTopo write FTopo;
+    {@prop Largura - Denife a largura da logomarca expandida
+     @links TExpandeLogoMarcaConfig.Largura :/}
+    property Largura: Integer read FLargura write FLargura;
+    {@prop Dimensionar - Denife a logomarca expandida deve esticar no tamanho total ou não
+     @links TExpandeLogoMarcaConfig.Dimensionar :/}
+    property Dimensionar: Boolean read FDimensionar write FDimensionar;
+    {@prop Esticar - Denife a logomarca expandida deve esticar no tamanho total ou não
+     @links TExpandeLogoMarcaConfig.Esticar :/}
+    property Esticar: Boolean read FEsticar write FEsticar;
+  end;
+
   { TACBrDFeReport }
   {@class TACBrDFeReport - Classe base para os componentes de impressão dos documentos DFe.
    @links TACBrDFeReport }
@@ -114,6 +151,7 @@ type
     FMargemDireita: Double;
     FCasasDecimais: TCasasDecimais;
     FExpandeLogoMarca: Boolean;
+    FExpandeLogoMarcaConfig: TExpandeLogoMarcaConfig;
     FNomeDocumento: String;
 
     procedure SetNumCopias(const AValue: Integer);
@@ -194,6 +232,9 @@ type
     {@prop ExpandirLogoMarca - Define/retorna se de expandir a logomarca na impressão.
      @links TACBrDFeReport.ExpandeLogoMarca :/}
     property ExpandeLogoMarca: Boolean read FExpandeLogoMarca write FExpandeLogoMarca default False;
+    {@prop ExpandeLogoMarcaConfig - Configurações da logomarda expandida na impressão.
+     @links TACBrDFeReport.ExpandeLogoMarcaConfig :/}
+    property ExpandeLogoMarcaConfig: TExpandeLogoMarcaConfig read FExpandeLogoMarcaConfig;
     {@prop CasasDecimais - Configurações de impresão de números decimais.
      @links TACBrDFeReport.CasasDecimais :/}
     property CasasDecimais: TCasasDecimais read FCasasDecimais;
@@ -294,14 +335,19 @@ begin
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name := 'CasasDecimais';
 
+  FExpandeLogoMarcaConfig := TExpandeLogoMarcaConfig.Create(self);
+  FExpandeLogoMarcaConfig.Name := 'ExpandeLogoMarcaConfig';
+
   {$IFDEF COMPILER6_UP}
   FCasasDecimais.SetSubComponent(True);{ para gravar no DFM/XFM }
+  FExpandeLogoMarcaConfig.SetSubComponent(True);{ para gravar no DFM/XFM }
   {$ENDIF}
 end;
 
 destructor TACBrDFeReport.Destroy;
 begin
-  FCasasDecimais.Destroy;
+  FCasasDecimais.Free;
+  FExpandeLogoMarcaConfig.Free;
 
   inherited Destroy;
 end;
@@ -420,6 +466,20 @@ begin
   else
     Result := FormatFloatBr(dValor, FloatMask(CasasDecimais.vUnCom));
   end;
+end;
+
+{ TExpandeLogoMarcaConfig }
+
+constructor TExpandeLogoMarcaConfig.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  FAltura := 0;
+  FEsquerda := 0;
+  FTopo := 0;
+  FLargura := 0;
+  FDimensionar := False;
+  FEsticar := True;
 end;
 
 end.

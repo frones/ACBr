@@ -977,7 +977,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object rliLogo: TRLImage
         Left = 7
-        Top = 32
+        Top = 34
         Width = 94
         Height = 62
         Center = True

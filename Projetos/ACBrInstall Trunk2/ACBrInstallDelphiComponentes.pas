@@ -715,8 +715,8 @@ begin
 // arquivos e outras coisas mais
   if ADestino <> tdNone then
   begin
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.20\x86\libeay32.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.0.2.20\x86\ssleay32.dll', APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.4\x86\libcrypto-1_1.dll', APathBin);
+    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.4\x86\libssl-1_1.dll', APathBin);
   end;
 end;
 

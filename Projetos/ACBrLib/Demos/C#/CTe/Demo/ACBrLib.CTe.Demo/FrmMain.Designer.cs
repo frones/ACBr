@@ -159,6 +159,7 @@
             this.btnDFePorUltNSU = new System.Windows.Forms.Button();
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
+            this.btnObterCertificados = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -563,6 +564,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnObterCertificados);
             this.tabPage3.Controls.Add(this.groupBox4);
             this.tabPage3.Controls.Add(this.cmbXmlSign);
             this.tabPage3.Controls.Add(this.label6);
@@ -1615,6 +1617,16 @@
             this.btnDFePorChave.UseVisualStyleBackColor = true;
             this.btnDFePorChave.Click += new System.EventHandler(this.btnDFePorChave_Click);
             // 
+            // btnObterCertificados
+            // 
+            this.btnObterCertificados.Location = new System.Drawing.Point(6, 317);
+            this.btnObterCertificados.Name = "btnObterCertificados";
+            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
+            this.btnObterCertificados.TabIndex = 21;
+            this.btnObterCertificados.Text = "Obter Certificados";
+            this.btnObterCertificados.UseVisualStyleBackColor = true;
+            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1803,6 +1815,7 @@
         private System.Windows.Forms.Button btnDFePorUltNSU;
         private System.Windows.Forms.Button btnDFePorNSU;
         private System.Windows.Forms.Button btnDFePorChave;
+        private System.Windows.Forms.Button btnObterCertificados;
     }
 }
 

@@ -87,7 +87,7 @@ namespace ACBrLib
 
             if (!splashForm.InvokeRequired)
             {
-                ((ISplash)SplashForm).ShowInfo(tipo, args);
+                (SplashForm as ISplash)?.ShowInfo(tipo, args);
             }
             else
             {

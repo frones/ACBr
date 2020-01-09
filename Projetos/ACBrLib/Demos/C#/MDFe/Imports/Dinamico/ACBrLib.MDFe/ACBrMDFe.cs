@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.MDFe
 {
@@ -79,6 +81,13 @@ namespace ACBrLib.MDFe
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_VerificarAssinatura(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
+                int ATpEmi, string AEmissao, string CPFCNPJ, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_ObterCertificados(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_StatusServico(StringBuilder buffer, ref int bufferSize);
@@ -362,6 +371,36 @@ namespace ACBrLib.MDFe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string GerarChave(int aCodigoUf, int aCodigoNumerico, int aModelo, int aSerie, int aNumero,
+            int aTpEmi, DateTime aEmissao, string acpfcnpj)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_GerarChave>();
+            var ret = ExecuteMethod(() => method(aCodigoUf, aCodigoNumerico, aModelo, aSerie, aNumero,
+                aTpEmi, aEmissao.Date.ToString("dd/MM/yyyy"), ToUTF8(acpfcnpj),
+                buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public InfoCertificado[] ObterCertificados()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_ObterCertificados>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
+        }
+
         public string StatusServico()
         {
             var bufferLen = BUFFER_LEN;
@@ -585,6 +624,8 @@ namespace ACBrLib.MDFe
             AddMethod<Delegates.MDFE_Validar>("MDFE_Validar");
             AddMethod<Delegates.MDFE_ValidarRegrasdeNegocios>("MDFE_ValidarRegrasdeNegocios");
             AddMethod<Delegates.MDFE_VerificarAssinatura>("MDFE_VerificarAssinatura");
+            AddMethod<Delegates.MDFE_GerarChave>("MDFE_GerarChave");
+            AddMethod<Delegates.MDFE_ObterCertificados>("MDFE_ObterCertificados");
             AddMethod<Delegates.MDFE_StatusServico>("MDFE_StatusServico");
             AddMethod<Delegates.MDFE_Consultar>("MDFE_Consultar");
             AddMethod<Delegates.MDFE_Enviar>("MDFE_Enviar");

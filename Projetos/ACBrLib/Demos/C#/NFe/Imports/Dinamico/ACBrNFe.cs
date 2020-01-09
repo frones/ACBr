@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.NFe
 {
@@ -84,6 +86,9 @@ namespace ACBrLib.NFe
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
                 int ATpEmi, string AEmissao, string CPFCNPJ, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int NFE_ObterCertificados(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int NFE_StatusServico(StringBuilder buffer, ref int bufferSize);
@@ -389,6 +394,20 @@ namespace ACBrLib.NFe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public InfoCertificado[] ObterCertificados()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.NFE_ObterCertificados>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
+        }
+
         public string StatusServico()
         {
             var bufferLen = BUFFER_LEN;
@@ -641,6 +660,7 @@ namespace ACBrLib.NFe
             AddMethod<Delegates.NFE_ValidarRegrasdeNegocios>("NFE_ValidarRegrasdeNegocios");
             AddMethod<Delegates.NFE_VerificarAssinatura>("NFE_VerificarAssinatura");
             AddMethod<Delegates.NFE_GerarChave>("NFE_GerarChave");
+            AddMethod<Delegates.NFE_ObterCertificados>("NFE_ObterCertificados");
             AddMethod<Delegates.NFE_StatusServico>("NFE_StatusServico");
             AddMethod<Delegates.NFE_Consultar>("NFE_Consultar");
             AddMethod<Delegates.NFE_ConsultaCadastro>("NFE_ConsultaCadastro");

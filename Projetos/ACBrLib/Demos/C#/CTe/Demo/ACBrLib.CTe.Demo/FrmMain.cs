@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using ACBrLib.Core;
@@ -208,6 +209,12 @@ namespace ACBrLib.CTe.Demo
 
             var dados = File.ReadAllBytes(file);
             txtDadosPFX.Text = Convert.ToBase64String(dados);
+        }
+
+        private void btnObterCertificados_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrCTe.ObterCertificados();
+            rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
 
         private void btnSelectSchema_Click(object sender, EventArgs e)

@@ -110,6 +110,10 @@ Private Declare Function NFE_GerarChave _
                                      ByVal buffer As String, _
                                      ByRef bufferLen As Long) As Long
                                      
+Private Declare Function NFE_ObterCertificados _
+                Lib "ACBrNFE32.dll" (ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
 Private Declare Function NFE_StatusServico _
                 Lib "ACBrNFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
@@ -454,6 +458,20 @@ Public Function GerarChave(ByVal ACodigoUF As Long, ByVal ACodigoNumerico As Lon
     CheckResult retorno
     
     GerarChave = processResult(buffer, bufferLen)
+End Function
+
+Public Function ObterCertificados() As String()
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_ObterCertificados(buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
 End Function
 
 Public Function StatusServico() As String

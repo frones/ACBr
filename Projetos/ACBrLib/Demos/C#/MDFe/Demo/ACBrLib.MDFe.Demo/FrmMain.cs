@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using ACBrLib.Core;
@@ -274,6 +275,12 @@ namespace ACBrLib.MDFe.Demo
 
             var dados = File.ReadAllBytes(file);
             txtDadosPFX.Text = Convert.ToBase64String(dados);
+        }
+
+        private void btnObterCertificados_Click(object sender, EventArgs e)
+        {
+            var ret = ACBrMDFe.ObterCertificados();
+            rtbRespostas.AppendLine(ret.Select(x => x.ToString()).ToArray());
         }
 
         private void btnArqMDFe_Click(object sender, EventArgs e)

@@ -97,6 +97,22 @@ Private Declare Function MDFE_ValidarRegrasdeNegocios _
 Private Declare Function MDFE_VerificarAssinatura _
                 Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function MDFE_GerarChave _
+                Lib "ACBrMDFe32.dll" (ByVal ACodigoUF As Long, _
+                                     ByVal ACodigoNumerico As Long, _
+                                     ByVal AModelo As Long, _
+                                     ByVal ASerie As Long, _
+                                     ByVal ANumero As Long, _
+                                     ByVal ATpEmi As Long, _
+                                     ByVal AEmissao As String, _
+                                     ByVal ACNPJCPF As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferLen As Long) As Long
+                                     
+Private Declare Function MDFE_ObterCertificados _
+                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
                                     
 Private Declare Function MDFE_StatusServico _
                 Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
@@ -398,6 +414,37 @@ Public Function VerificarAssinatura() As String
     CheckResult retorno
     
     VerificarAssinatura = processResult(buffer, bufferLen)
+End Function
+
+Public Function GerarChave(ByVal ACodigoUF As Long, ByVal ACodigoNumerico As Long, _
+                           ByVal AModelo As Long, ByVal ASerie As Long, ByVal ANumero As Long, _
+                           ByVal ATpEmi As Long, ByVal AEmissao As Date, ByVal ACNPJCPF As String) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, _
+                             Format(AEmissao, "dd/MM/yyyy"), ACNPJCPF, buffer, bufferLen)
+    CheckResult retorno
+    
+    GerarChave = processResult(buffer, bufferLen)
+End Function
+
+Public Function ObterCertificados() As String()
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDE_ObterCertificados(buffer, bufferLen)
+    CheckResult retorno
+    
+    ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
 End Function
 
 Public Function StatusServico() As String

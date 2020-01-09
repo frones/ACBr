@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
+using ACBrLib.Core.DFe;
 
 namespace ACBrLib.CTe
 {
@@ -79,6 +81,13 @@ namespace ACBrLib.CTe
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_VerificarAssinatura(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
+                int ATpEmi, string AEmissao, string CPFCNPJ, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int CTE_ObterCertificados(StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int CTE_StatusServico(StringBuilder buffer, ref int bufferSize);
@@ -369,6 +378,36 @@ namespace ACBrLib.CTe
             return ProcessResult(buffer, bufferLen);
         }
 
+        public string GerarChave(int aCodigoUf, int aCodigoNumerico, int aModelo, int aSerie, int aNumero,
+            int aTpEmi, DateTime aEmissao, string acpfcnpj)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.CTE_GerarChave>();
+            var ret = ExecuteMethod(() => method(aCodigoUf, aCodigoNumerico, aModelo, aSerie, aNumero,
+                aTpEmi, aEmissao.Date.ToString("dd/MM/yyyy"), ToUTF8(acpfcnpj),
+                buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public InfoCertificado[] ObterCertificados()
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.CTE_ObterCertificados>();
+            var ret = ExecuteMethod(() => method(buffer, ref bufferLen));
+
+            CheckResult(ret);
+
+            var certificados = ProcessResult(buffer, bufferLen).Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
+        }
+
         public string StatusServico()
         {
             var bufferLen = BUFFER_LEN;
@@ -608,6 +647,8 @@ namespace ACBrLib.CTe
             AddMethod<Delegates.CTE_Validar>("CTE_Validar");
             AddMethod<Delegates.CTE_ValidarRegrasdeNegocios>("CTE_ValidarRegrasdeNegocios");
             AddMethod<Delegates.CTE_VerificarAssinatura>("CTE_VerificarAssinatura");
+            AddMethod<Delegates.CTE_GerarChave>("CTE_GerarChave");
+            AddMethod<Delegates.CTE_ObterCertificados>("CTE_ObterCertificados");
             AddMethod<Delegates.CTE_StatusServico>("CTE_StatusServico");
             AddMethod<Delegates.CTE_Consultar>("CTE_Consultar");
             AddMethod<Delegates.CTE_ConsultaCadastro>("CTE_ConsultaCadastro");

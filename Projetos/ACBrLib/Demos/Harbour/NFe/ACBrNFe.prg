@@ -45,6 +45,7 @@ VISIBLE:
     METHOD ValidarRegrasdeNegocios()
     METHOD VerificarAssinatura()
     METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF)
+    METHOD ObterCertificados()
 
     METHOD StatusServico()
     METHOD Consultar(eChaveOuNFe)
@@ -255,6 +256,14 @@ METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, 
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GerarChave", ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD ObterCertificados() CLASS ACBrNFe
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterCertificados", @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 

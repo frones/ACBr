@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace ACBrLib
+﻿namespace ACBrLib
 {
     public interface ISplash
     {

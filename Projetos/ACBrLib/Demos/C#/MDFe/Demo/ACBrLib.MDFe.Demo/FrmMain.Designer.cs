@@ -153,11 +153,13 @@
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnEnviarEmail = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnConsNaoEncerrados = new System.Windows.Forms.Button();
             this.btnStatusServ = new System.Windows.Forms.Button();
             this.btnConsultaXml = new System.Windows.Forms.Button();
             this.btnConsultaChave = new System.Windows.Forms.Button();
             this.btnConsultarRecibo = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnEncerrar = new System.Windows.Forms.Button();
             this.btnEnviarEvento = new System.Windows.Forms.Button();
             this.btnImprimirEventoPDF = new System.Windows.Forms.Button();
             this.btnLimparListaEvento = new System.Windows.Forms.Button();
@@ -169,8 +171,7 @@
             this.btnDFePorUltNSU = new System.Windows.Forms.Button();
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
-            this.btnConsNaoEncerrados = new System.Windows.Forms.Button();
-            this.btnEncerrar = new System.Windows.Forms.Button();
+            this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
@@ -800,6 +801,7 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.btnObterCertificados);
             this.tabPage7.Controls.Add(this.groupBox4);
             this.tabPage7.Controls.Add(this.cmbXmlSign);
             this.tabPage7.Controls.Add(this.label6);
@@ -1571,6 +1573,16 @@
             this.tabPage2.Text = "Consultas";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnConsNaoEncerrados
+            // 
+            this.btnConsNaoEncerrados.Location = new System.Drawing.Point(6, 64);
+            this.btnConsNaoEncerrados.Name = "btnConsNaoEncerrados";
+            this.btnConsNaoEncerrados.Size = new System.Drawing.Size(118, 23);
+            this.btnConsNaoEncerrados.TabIndex = 16;
+            this.btnConsNaoEncerrados.Text = "Consultar Não Enc.";
+            this.btnConsNaoEncerrados.UseVisualStyleBackColor = true;
+            this.btnConsNaoEncerrados.Click += new System.EventHandler(this.btnConsNaoEncerrados_Click);
+            // 
             // btnStatusServ
             // 
             this.btnStatusServ.Location = new System.Drawing.Point(6, 6);
@@ -1627,6 +1639,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Eventos";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnEncerrar
+            // 
+            this.btnEncerrar.Location = new System.Drawing.Point(130, 6);
+            this.btnEncerrar.Name = "btnEncerrar";
+            this.btnEncerrar.Size = new System.Drawing.Size(118, 23);
+            this.btnEncerrar.TabIndex = 32;
+            this.btnEncerrar.Text = "Encerrar MDFe";
+            this.btnEncerrar.UseVisualStyleBackColor = true;
+            this.btnEncerrar.Click += new System.EventHandler(this.btnEncerrar_Click);
             // 
             // btnEnviarEvento
             // 
@@ -1740,25 +1762,15 @@
             this.btnDFePorChave.UseVisualStyleBackColor = true;
             this.btnDFePorChave.Click += new System.EventHandler(this.btnDFePorChave_Click);
             // 
-            // btnConsNaoEncerrados
+            // btnObterCertificados
             // 
-            this.btnConsNaoEncerrados.Location = new System.Drawing.Point(6, 64);
-            this.btnConsNaoEncerrados.Name = "btnConsNaoEncerrados";
-            this.btnConsNaoEncerrados.Size = new System.Drawing.Size(118, 23);
-            this.btnConsNaoEncerrados.TabIndex = 16;
-            this.btnConsNaoEncerrados.Text = "Consultar Não Enc.";
-            this.btnConsNaoEncerrados.UseVisualStyleBackColor = true;
-            this.btnConsNaoEncerrados.Click += new System.EventHandler(this.btnConsNaoEncerrados_Click);
-            // 
-            // btnEncerrar
-            // 
-            this.btnEncerrar.Location = new System.Drawing.Point(130, 6);
-            this.btnEncerrar.Name = "btnEncerrar";
-            this.btnEncerrar.Size = new System.Drawing.Size(118, 23);
-            this.btnEncerrar.TabIndex = 32;
-            this.btnEncerrar.Text = "Encerrar MDFe";
-            this.btnEncerrar.UseVisualStyleBackColor = true;
-            this.btnEncerrar.Click += new System.EventHandler(this.btnEncerrar_Click);
+            this.btnObterCertificados.Location = new System.Drawing.Point(6, 315);
+            this.btnObterCertificados.Name = "btnObterCertificados";
+            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
+            this.btnObterCertificados.TabIndex = 21;
+            this.btnObterCertificados.Text = "Obter Certificados";
+            this.btnObterCertificados.UseVisualStyleBackColor = true;
+            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
             // 
             // FrmMain
             // 
@@ -1963,6 +1975,7 @@
         private System.Windows.Forms.Button btnDFePorChave;
         private System.Windows.Forms.Button btnConsNaoEncerrados;
         private System.Windows.Forms.Button btnEncerrar;
+        private System.Windows.Forms.Button btnObterCertificados;
     }
 }
 

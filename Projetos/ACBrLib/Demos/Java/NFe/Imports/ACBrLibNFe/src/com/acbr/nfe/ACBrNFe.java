@@ -234,6 +234,15 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
 
     return processResult( buffer, bufferLen );
   }
+  
+  public String obterCertificados() throws Exception {
+      ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+      IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+      
+      int ret = ACBrNFeLib.INSTANCE.NFE_ObterCertificados(buffer, bufferLen );
+      checkResult( ret );
+      return processResult( buffer, bufferLen );
+  }
 
   public String statusServico() throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
@@ -480,6 +489,8 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
     
     int NFE_GerarChave(int ACodigoUF, int ACodigoNumerico, int AModelo, int ASerie, int ANumero,
                 int ATpEmi, String AEmissao, String CPFCNPJ, ByteBuffer buffer, IntByReference bufferSize);
+    
+    int NFE_ObterCertificados( ByteBuffer buffer, IntByReference bufferSize );
 
     int NFE_StatusServico( ByteBuffer buffer, IntByReference bufferSize );
 

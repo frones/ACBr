@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2020
+-- libeay32 --
+[-] Unit Removida, pois agora Delphi e Lazarus usam OpenSSLExt.pas
+
+-- OpenSSLExt --
+[*] Atualizada de acordo com a última versão disponível no trunk do FPC
+[+] Adicionado Suporte a OpenSSL 1.1.1
+[+] Adicionado mecanismo de busca de Nomes possíveis de DLLs, dando preferencia
+    ao nome das DLLs do OpenSSL 1.1.1
+[+] Compatibilizada para compilação em Delphi 7-Rio, Win32/64, Linux FMX
+
 06/06/2017
 -- OpenSSLExt --
 [+] Adicionado suporte para os métodos:

@@ -5795,7 +5795,9 @@ var
   i, x: Integer;
   s: String;
 begin
-  Result:=False;
+  {$IFNDEF COMPILER25_UP}
+   Result := False;
+  {$ENDIF}
 
   for i := low(DLLUtilNames) to high(DLLUtilNames) do
   begin

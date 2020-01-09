@@ -208,10 +208,14 @@ begin
     LT_TLSv1_3:
       SSLMethod := ssl_openssl_lib.SslMethodTLSV13;
     LT_all:
-      SSLMethod := ssl_openssl_lib.SslMethodV23;
+      begin
+        SSLMethod := ssl_openssl_lib.SslMethodTLS;
+        if not Assigned(SSLMethod) then
+          SSLMethod := ssl_openssl_lib.SslMethodV23;
+      end;
   end;
 
-  if SSLMethod = Nil then
+  if not Assigned(SSLMethod) then
   begin
     OpenSSLVersion := String(ssl_openssl_lib.OpenSSLVersion( 0 ));
 

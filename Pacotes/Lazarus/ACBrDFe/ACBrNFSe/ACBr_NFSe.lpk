@@ -94,28 +94,28 @@
         <UnitName Value="pnfsNFSeW_EL"/>
       </Item19>
       <Item20>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Equiplano.pas"/>
-        <UnitName Value="pnfsNFSeW_Equiplano"/>
-      </Item20>
-      <Item21>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Infisc.pas"/>
-        <UnitName Value="pnfsNFSeW_Infisc"/>
-      </Item21>
-      <Item22>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_ISSDSF.pas"/>
-        <UnitName Value="pnfsNFSeW_ISSDSF"/>
-      </Item22>
-      <Item23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Giap.pas"/>
-        <UnitName Value="pnfsnfseW_Giap"/>
-      </Item23>
-      <Item24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas"/>
-        <UnitName Value="pnfsConsts"/>
-      </Item24>
-      <Item25>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Elotech.pas"/>
         <UnitName Value="pnfsNFSeW_Elotech"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Equiplano.pas"/>
+        <UnitName Value="pnfsNFSeW_Equiplano"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Infisc.pas"/>
+        <UnitName Value="pnfsNFSeW_Infisc"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_ISSDSF.pas"/>
+        <UnitName Value="pnfsNFSeW_ISSDSF"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_Giap.pas"/>
+        <UnitName Value="pnfsnfseW_Giap"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas"/>
+        <UnitName Value="pnfsConsts"/>
       </Item25>
     </Files>
     <RequiredPkgs Count="1">

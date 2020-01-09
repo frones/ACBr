@@ -5804,14 +5804,6 @@ begin
       break;
   end;
 
-  if (SSLUtilHandle <> 0) then
-  begin
-    SetLength(s, 1024);
-    x := GetModuleFilename(SSLUtilHandle, PChar(s), Length(s));
-    SetLength(s, x);
-    SSLUtilFile := s;
-  end;
-
   {$IfDef MSWINDOWS}
    if (i <= high(DLLSSLNames)) then
      SSLLibHandle := LoadLib(DLLSSLNames[i]);  // Use same DLL pair
@@ -5824,6 +5816,15 @@ begin
    end;
   {$EndIf}
 
+  {$IfDef MSWINDOWS}
+  if (SSLUtilHandle <> 0) then
+  begin
+    SetLength(s, 1024);
+    x := GetModuleFilename(SSLUtilHandle, PChar(s), Length(s));
+    SetLength(s, x);
+    SSLUtilFile := s;
+  end;
+
   if (SSLLibHandle <> 0) then
   begin
     SetLength(s, 1024);
@@ -5831,6 +5832,7 @@ begin
     SetLength(s, x);
     SSLLibFile := s;
   end;
+  {$EndIf}
 
   Result := (SSLLibHandle<>0) and (SSLUtilHandle<>0);
 end;

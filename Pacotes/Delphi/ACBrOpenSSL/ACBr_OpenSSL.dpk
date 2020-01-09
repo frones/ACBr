@@ -22,7 +22,7 @@ package ACBr_OpenSSL;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ACBr - OpenSSL através do LibXMLSec - (http://www.projetoacbr.com.br/)'}
+{$DESCRIPTION 'ACBr - Bind para OpenSSL 1.1.1 - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -30,7 +30,7 @@ requires
   ACBr_Comum;
 
 contains
-  libeay32 in '..\..\..\Fontes\ACBrOpenSSL\libeay32.pas',
+  OpenSSLExt in '..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas',
   ACBrEAD in '..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas',
   ACBrOpenSSLReg in '..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas';
 

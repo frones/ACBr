@@ -580,7 +580,7 @@ begin
                   FormatDateTime('ddmmyy', Now)        + // 95 a 100  - DATA DE GERAÇÃO DO ARQUIVO
                   space(294)                           + // 101 a 394 - COMPLEMENTO DO REGISTRO
                   IntToStrZero(1,6);                     // 395 a 400 - NÚMERO SEQÜENCIAL DO REGISTRO NO ARQUIVO
-      aRemessa.Text := aRemessa.Text + UpperCase(wLinha);
+      aRemessa.Add(UpperCase(wLinha));
    end;
 end;
 
@@ -918,7 +918,7 @@ begin
 
         end;
     end;
-    aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);
+    aRemessa.Add(UpperCase(wLinha));
   end;
 end;
 
@@ -930,7 +930,7 @@ begin
   wLinha:= '9' + Space(393) +                     // TIPO DE REGISTRO
            IntToStrZero( ARemessa.Count + 1, 6);  // NÚMERO SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
-  ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
+  ARemessa.Add(wLinha);
 end;
 
 procedure TACBrBancoItau.LerRetorno240(ARetorno: TStringList);

@@ -376,7 +376,7 @@ begin
       Arquivo (posições 164 a 166 do Header de Arquivo).
       }
 
-      VersaoLote := LayoutVersaoLote;
+    //  VersaoLote := LayoutVersaoLote;
 
       case VersaoArquivo of
         030: VersaoLote := 020;

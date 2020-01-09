@@ -378,7 +378,7 @@ end;
 
 procedure TACBrBancoPine.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  wLinha, wTipoInscricao, wNossoNumero, wMulta, wDiasMulta, wSeuNumero, wCodCarteira: String;
+  wLinha, wTipoInscricao, wNossoNumero, wMulta, wDiasMulta, wSeuNumero: String;
   wDiasProtesto, wCNPJCedente, wDataDesconto: String;
   wInstrucao94: Boolean;
   wTipoMulta: Char;

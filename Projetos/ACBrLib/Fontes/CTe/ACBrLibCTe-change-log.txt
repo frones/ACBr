@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/01/2020
+--- ACBrLibCTeClass ---
+[+] Adicionado o metodo CTE_GerarChave.
+   Por: Rafael Dias
+[+] Adicionado o metodo CTE_ObterCertificados.
+   Por: Rafael Dias
+
 03/01/2020
 --- ACBrLibCTeClass ---
 [+] Adicionado o metodo CTE_ImportarConfig.

@@ -93,7 +93,9 @@ exports
   MDFE_Assinar,
   MDFE_Validar,
   MDFE_ValidarRegrasdeNegocios,
-  MDFE_VerificarAssinatura;
+  MDFE_VerificarAssinatura,
+  MDFE_GerarChave,
+  MDFE_ObterCertificados;
 
 begin
   {$IFDEF DEBUG}

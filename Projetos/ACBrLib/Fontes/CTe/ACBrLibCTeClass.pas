@@ -116,6 +116,11 @@ function CTE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: long
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function CTE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function CTE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -179,8 +184,8 @@ implementation
 uses
   ACBrLibConsts, ACBrLibCTeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrLibConsultaCadastro,
-  ACBrLibCTeConfig, ACBrLibCTeRespostas, ACBrCTe, ACBrMail,
-  pcnConversao, pcnAuxiliar, pcteConversaoCTe, blcksock, ACBrUtil;
+  ACBrLibCTeConfig, ACBrLibCTeRespostas, ACBrCTe, ACBrMail, ACBrLibCertUtils,
+  pcnConversao, pcnAuxiliar, pcteConversaoCTe, blcksock, ACBrUtil, ACBrDFeUtil;
 
 { TACBrLibCTe }
 
@@ -776,6 +781,81 @@ begin
         CTeDM.ACBrCTe1.Conhecimentos.VerificarAssinatura(Erros);
         MoverStringParaPChar(Erros, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Erros);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta, CNPJCPF: string;
+  Emissao: TDateTime;
+begin
+  try
+    VerificarLibInicializada;
+
+    Emissao := StrToDate(AEmissao);
+    CNPJCPF := String(ACNPJCPF);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('CTE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
+                      IntToStr(AModelo)  + ',' + IntToStr(AModelo) + ',' + IntToStr(ASerie) + ',' +
+                      IntToStr(ANumero) + ',' + IntToStr(ATpEmi) + ',' + DateToStr(Emissao) + ',' +
+                      CNPJCPF + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('CTE_GerarChave', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        CTeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function CTE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('CTE_ObterCertificados', logNormal);
+
+    with TACBrLibCTe(pLib) do
+    begin
+      CTeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := ObterCerticados(CTeDM.ACBrCTe1.SSL);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
       finally
         CTeDM.Destravar;
       end;

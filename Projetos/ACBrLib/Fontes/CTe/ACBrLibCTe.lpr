@@ -62,7 +62,9 @@ exports
   CTE_Assinar,
   CTE_Validar,
   CTE_ValidarRegrasdeNegocios,
-  CTE_VerificarAssinatura;
+  CTE_VerificarAssinatura,
+  CTE_GerarChave,
+  CTE_ObterCertificados;
 
 begin
   {$IFDEF DEBUG}

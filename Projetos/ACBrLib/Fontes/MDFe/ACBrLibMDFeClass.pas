@@ -116,6 +116,11 @@ function MDFE_ValidarRegrasdeNegocios(const sResposta: PChar; var esTamanho: lon
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_VerificarAssinatura(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -174,7 +179,7 @@ implementation
 uses
   ACBrLibConsts, ACBrLibMDFeConsts, ACBrLibConfig, ACBrLibResposta,
   ACBrLibMDFeConfig, ACBrLibMDFeRespostas, ACBrMDFe, ACBrMail,
-  ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe,
+  ACBrLibConsReciDFe, ACBrLibDistribuicaoDFe, ACBrDFeUtil, ACBrLibCertUtils,
   pcnConversao, pcnAuxiliar, pMDFeConversaoMDFe, blcksock, ACBrUtil;
 
 { TACBrLibMDFe }
@@ -784,6 +789,81 @@ begin
   end;
 end;
 
+function MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi: longint;
+  AEmissao, ACNPJCPF: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta, CNPJCPF: string;
+  Emissao: TDateTime;
+begin
+  try
+    VerificarLibInicializada;
+
+    Emissao := StrToDate(AEmissao);
+    CNPJCPF := String(ACNPJCPF);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MDFE_GerarChave(' + IntToStr(ACodigoUF) + ',' + IntToStr(ACodigoNumerico) + ',' +
+                      IntToStr(AModelo)  + ',' + IntToStr(AModelo) + ',' + IntToStr(ASerie) + ',' +
+                      IntToStr(ANumero) + ',' + IntToStr(ATpEmi) + ',' + DateToStr(Emissao) + ',' +
+                      CNPJCPF + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('MDFE_GerarChave', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := GerarChaveAcesso(ACodigoUF, Emissao, CNPJCPF, ASerie, ANumero, ATpEmi, ACodigoNumerico, AModelo);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MDFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
+  {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+begin
+  try
+    VerificarLibInicializada;
+
+    pLib.GravarLog('MDFE_ObterCertificados', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        Resposta := '';
+        Resposta := ObterCerticados(MDFeDM.ACBrMDFe1.SSL);
+        MoverStringParaPChar(Resposta, sResposta, esTamanho);
+        Result := SetRetorno(ErrOK, Resposta);
+      finally
+        MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
 {%endregion}
 
 {%region Servicos}
@@ -963,18 +1043,6 @@ begin
                                     WebServices.Retorno.Protocolo,
                                     WebServices.Retorno.ChaveMDFe);
 
-              // Preenche o xml completo no retorno se tiver a nota de carregada no componente
-              for i := 0 to WebServices.Recibo.MDFeRetorno.ProtDFe.Count - 1 do
-              begin
-                for j := 0 to Manifestos.Count - 1 do
-                begin
-                  if WebServices.Recibo.MDFeRetorno.ProtDFe.Items[i].chDFe = Manifestos.Items[J].MDFe.infMDFe.Id then
-                  begin
-                    RespRetorno.Items[i].XML := Manifestos.Items[J].XML;
-                  end;
-                end;
-              end;
-
               Resposta := Resposta + sLineBreak + RespRetorno.Gerar;
             finally
                 RespRetorno.Free;
@@ -1052,18 +1120,6 @@ begin
           try
             Resp.Processar(WebServices.Recibo.MDFeRetorno,
                            WebServices.Recibo.Recibo);
-
-            // Preenche o xml completo no retorno se tiver a nota de carregada no componente
-            for i := 0 to WebServices.Recibo.MDFeRetorno.ProtDFe.Count - 1 do
-            begin
-              for j := 0 to Manifestos.Count - 1 do
-              begin
-                if WebServices.Recibo.MDFeRetorno.ProtDFe.Items[i].chDFe = Manifestos.Items[J].MDFe.infMDFe.ID then
-                begin
-                  Resp.Items[i].XML := Manifestos.Items[J].XML;
-                end;
-              end;
-            end;
 
             Resposta := Resp.Gerar;
           finally

@@ -52,7 +52,7 @@ const
   CChaveImprimeTributos = 'ImprimeTributos';
   CChaveExibeTotalTributosItem = 'ExibeTotalTributosItem';
   CChaveImprimeCodigoEan = 'ImprimeCodigoEan';
-  CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
+  CChaveImprimeNomeFantasia = 'ImprimeNomeFantasia';
   CChaveExibeInforAdicProduto = 'ExibeInforAdicProduto';
   CChaveQuebraLinhaEmDetalhamentos = 'QuebraLinhaEmDetalhamentos';
 
@@ -82,6 +82,7 @@ const
   CChaveAlternaCoresProdutos = 'AlternaCoresProdutos';
   CChaveCorDestaqueProdutos = 'CorDestaqueProdutos';
   CChaveTamanhoLogoHeight = 'TamanhoLogoHeight';
+  CChaveDescricaoPagamentos = 'DescricaoPagamentos';
   CChaveTamanhoLogoWidth = 'TamanhoLogoWidth';
   CChaveRecuoEndereco = 'RecuoEndereco';
   CChaveRecuoEmpresa = 'RecuoEmpresa';
@@ -105,6 +106,8 @@ const
   CChaveImprimeQRCodeLateral = 'ImprimeQRCodeLateral';
   CChaveImprimeLogoLateral = 'ImprimeLogoLateral';
   CChaveEspacoFinal = 'EspacoFinal';
+  CChaveImprimeEmUmaLinha = 'ImprimeEmUmaLinha';
+  CChaveImprimeEmDuasLinhas = 'ImprimeEmDuasLinhas';
 
   CSessaoRespStatus = 'Status';
   CSessaoRespInutilizacao = 'Inutilizacao';

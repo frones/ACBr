@@ -61,12 +61,11 @@ type
     FCasasDecimais: TCasasDecimais;
     FExpandeLogoMarca: Boolean;
     FNomeDocumento: String;
+    FSessao: String;
 
     procedure SetNumCopias(const Value: Integer);
 
  protected
-    FSessao: String;
-
     procedure DefinirValoresPadroesChild; virtual; abstract;
     procedure ImportChild(const AIni: TCustomIniFile); virtual; abstract;
     procedure LerIniChild(const AIni: TCustomIniFile); virtual; abstract;
@@ -83,6 +82,7 @@ type
    procedure GravarIni(const AIni: TCustomIniFile);
    procedure Apply(const DFeReport: T);
 
+   property Sessao: String read FSessao;
    property Impressora: String read FImpressora write FImpressora;
    property NomeDocumento: String read FNomeDocumento write FNomeDocumento;
    property NumCopias: Integer read FNumCopias write SetNumCopias;

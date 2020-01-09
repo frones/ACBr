@@ -43,7 +43,6 @@ uses
 type
 
   { TIntegradorConfig }
-
   TIntegradorConfig = class
   private
     FArqLOG: String;
@@ -72,7 +71,6 @@ uses
   ACBrUtil;
 
 { TIntegradorConfig }
-
 constructor TIntegradorConfig.Create;
 begin
   inherited Create;

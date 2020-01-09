@@ -58,7 +58,7 @@ type
     class procedure DiminuirFonteSeNecessario(ARLMemo: TRLMemo; TamanhoMinimo: Integer);
     class function EspacejarTextoGrafico(const AText: String; AWidth: Integer;
       AFonte: TFont): String;
-    class procedure AjustarLogo(ALogoImage: TRLImage; APropExpandeLogoMarca: TExpandeLogoMarcaConfig); static;
+    class procedure AjustarLogo(ALogoImage: TRLImage; APropExpandeLogoMarca: TExpandeLogoMarcaConfig);
   end;
 
 

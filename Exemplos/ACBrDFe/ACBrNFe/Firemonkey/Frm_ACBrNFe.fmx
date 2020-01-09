@@ -733,11 +733,13 @@ object frmACBrNFe: TfrmACBrNFe
                 Touch.InteractiveGestures = [LongTap, DoubleTap]
                 TabOrder = 4
                 Cursor = crIBeam
-                Value = 100.000000000000000000
+                Min = 1000.000000000000000000
+                Max = 999999.000000000000000000
+                Value = 1000.000000000000000000
                 Increment = 10.000000000000000000
-                Position.X = 167.000000000000000000
+                Position.X = 152.000000000000000000
                 Position.Y = 132.000000000000000000
-                Size.Width = 82.000000000000000000
+                Size.Width = 97.000000000000000000
                 Size.Height = 29.000000000000000000
                 Size.PlatformDefault = False
               end
@@ -1227,7 +1229,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos NFe'
-              TabOrder = 79
+              TabOrder = 118
             end
             object Label39: TLabel
               AutoSize = True
@@ -1238,7 +1240,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Cancelamento'
-              TabOrder = 80
+              TabOrder = 119
             end
             object sbPathCan: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1258,7 +1260,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos CC-e - Carta de Corre'#231#227'o'
-              TabOrder = 82
+              TabOrder = 121
             end
             object sbPathCCe: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1278,7 +1280,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Inutiliza'#231#227'o'
-              TabOrder = 84
+              TabOrder = 123
             end
             object sbPathInu: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1298,7 +1300,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos DPEC'
-              TabOrder = 86
+              TabOrder = 125
             end
             object sbPathDPEC: TSpeedButton
               Position.X = 247.000000000000000000
@@ -1318,7 +1320,7 @@ object frmACBrNFe: TfrmACBrNFe
               Size.PlatformDefault = False
               TextSettings.WordWrap = False
               Text = 'Pasta Arquivos Evento'
-              TabOrder = 88
+              TabOrder = 127
             end
             object sbPathEvento: TSpeedButton
               Position.X = 247.000000000000000000
@@ -2271,7 +2273,7 @@ object frmACBrNFe: TfrmACBrNFe
       Size.Width = 585.000000000000000000
       Size.Height = 454.000000000000000000
       Size.PlatformDefault = False
-      TabIndex = 5
+      TabIndex = 1
       TabOrder = 1
       TabPosition = Top
       Sizes = (
@@ -2303,6 +2305,7 @@ object frmACBrNFe: TfrmACBrNFe
         object MemoResp: TMemo
           Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
           DataDetectorTypes = []
+          TextSettings.WordWrap = True
           Align = Client
           Size.Width = 585.000000000000000000
           Size.Height = 428.000000000000000000
@@ -2316,7 +2319,7 @@ object frmACBrNFe: TfrmACBrNFe
         CustomIcon = <
           item
           end>
-        IsSelected = False
+        IsSelected = True
         ImageIndex = 1
         Size.Width = 95.000000000000000000
         Size.Height = 26.000000000000000000
@@ -2350,6 +2353,7 @@ object frmACBrNFe: TfrmACBrNFe
         object memoLog: TMemo
           Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
           DataDetectorTypes = []
+          TextSettings.WordWrap = True
           Align = Client
           Size.Width = 585.000000000000000000
           Size.Height = 428.000000000000000000
@@ -2400,7 +2404,10 @@ object frmACBrNFe: TfrmACBrNFe
         object memoRespWS: TMemo
           Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
           DataDetectorTypes = []
+          ShowSizeGrip = True
+          TextSettings.WordWrap = True
           Align = Client
+          EnabledScroll = False
           Size.Width = 585.000000000000000000
           Size.Height = 428.000000000000000000
           Size.PlatformDefault = False
@@ -2413,14 +2420,14 @@ object frmACBrNFe: TfrmACBrNFe
         CustomIcon = <
           item
           end>
-        IsSelected = True
+        IsSelected = False
         ImageIndex = 5
-        Size.Width = 63.000000000000000000
+        Size.Width = 54.000000000000000000
         Size.Height = 26.000000000000000000
         Size.PlatformDefault = False
         StyleLookup = ''
         TabOrder = 0
-        Text = 'tsDados'
+        Text = 'Dados'
         ExplicitSize.cx = 50.000000000000000000
         ExplicitSize.cy = 50.000000000000000000
         object MemoDados: TMemo
@@ -2447,6 +2454,12 @@ object frmACBrNFe: TfrmACBrNFe
     Title = 'Selecione a NFe'
     Left = 411
     Top = 343
+  end
+  object TimerInit: TTimer
+    Interval = 200
+    OnTimer = TimerInitTimer
+    Left = 690
+    Top = 261
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1

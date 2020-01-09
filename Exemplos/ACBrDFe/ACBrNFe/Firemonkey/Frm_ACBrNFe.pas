@@ -295,6 +295,7 @@ type
     rbFortes: TRadioButton;
     rbEscPos: TRadioButton;
     btVersao: TButton;
+    TimerInit: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathNFeClick(Sender: TObject);
@@ -357,8 +358,10 @@ type
     procedure btnImprimirDANFCEClick(Sender: TObject);
     procedure btnImprimirDANFCEOfflineClick(Sender: TObject);
     procedure btVersaoClick(Sender: TObject);
+    procedure TimerInitTimer(Sender: TObject);
   private
     { Private declarations }
+    procedure TratarExceptions(Sender: TObject; E: Exception);
     procedure GravarConfiguracao;
     procedure LerConfiguracao;
     procedure ConfigurarComponente;
@@ -368,6 +371,7 @@ type
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
     procedure AtualizarSSLLibsCombo;
     procedure PrepararImpressao;
+    function CalcularNomeArquivoConfiguracao: String;
   public
     { Public declarations }
   end;
@@ -3146,11 +3150,21 @@ end;
 
 procedure TfrmACBrNFe.btVersaoClick(Sender: TObject);
 begin
-  pgRespostas.ActivePageIndex := 0;
+  pgRespostas.ActiveTab := tsRespostas;
   if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
     MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
   else
     MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
+end;
+
+function TfrmACBrNFe.CalcularNomeArquivoConfiguracao: String;
+begin
+  {$IF Defined(FMX) and Defined(POSIX) and Defined(DEBUG)}
+   // Salva no diretório anterior, pois o PAServer sempre apaga a Pasta antes de executar
+   Result := ApplicationPath + '../' + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
+  {$Else}
+   Result := ChangeFileExt(ParamStr(0), '.ini');
+  {$IfEnd}
 end;
 
 procedure TfrmACBrNFe.cbCryptLibChange(Sender: TObject);
@@ -3213,6 +3227,8 @@ var
   O: TACBrPosPaginaCodigo;
   l: Integer;
 begin
+  FMX.Forms.Application.OnException := TratarExceptions;
+
   cbSSLLib.Items.Clear;
   for T := Low(TSSLLib) to High(TSSLLib) do
     cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) );
@@ -3277,10 +3293,9 @@ begin
   cbxPorta.Items.Add('/dev/ttyUSB1') ;
   cbxPorta.Items.Add('/tmp/ecf.txt') ;
 
-  LerConfiguracao;
-  pgRespostas.ActivePageIndex := 0;
-  PageControl1.ActivePageIndex := 0;
-  PageControl4.ActivePageIndex := 0;
+  pgRespostas.First;
+  PageControl1.First;
+  PageControl4.First;
 end;
 
 procedure TfrmACBrNFe.GravarConfiguracao;
@@ -3289,7 +3304,7 @@ var
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(ParamStr(0), '.ini');
+  IniFile := CalcularNomeArquivoConfiguracao;
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3409,7 +3424,7 @@ var
   Ini: TIniFile;
   StreamMemo: TMemoryStream;
 begin
-  IniFile := ChangeFileExt(ParamStr(0), '.ini');
+  IniFile := CalcularNomeArquivoConfiguracao;
 
   Ini := TIniFile.Create(IniFile);
   try
@@ -3642,13 +3657,15 @@ begin
 end;
 
 procedure TfrmACBrNFe.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+var
+  TempXML: string;
 begin
-  ACBrUtil.WriteToTXT(ApplicationPath + 'temp.xml',
-                      AnsiString(ACBrUtil.ConverteXMLtoUTF8(RetWS)), False, False);
+  TempXML := ApplicationPath + 'temp.xml';
+  ACBrUtil.WriteToTXT(TempXML, AnsiString(RetWS), False, False);
 
-  MyWebBrowser.Navigate(ApplicationPath + 'temp.xml');
+  MyWebBrowser.Navigate(TempXML);
 
-  if ACBrNFe1.NotasFiscais.Count > 0then
+  if (ACBrNFe1.NotasFiscais.Count > 0) then
     MemoResp.Lines.Add('Empresa: ' + ACBrNFe1.NotasFiscais.Items[0].NFe.Emit.xNome);
 end;
 
@@ -3801,6 +3818,20 @@ end;
 procedure TfrmACBrNFe.spPathSchemasClick(Sender: TObject);
 begin
   PathClick(edtPathSchemas);
+end;
+
+procedure TfrmACBrNFe.TimerInitTimer(Sender: TObject);
+begin
+  // Evita Erros no OnCreate, o que derruba a aplicação no Linux
+  TimerInit.Enabled := False;
+  LerConfiguracao;
+end;
+
+procedure TfrmACBrNFe.TratarExceptions(Sender: TObject; E: Exception);
+begin
+  pgRespostas.First;
+  MemoResp.Lines.Add(E.ClassName);
+  MemoResp.Lines.Add(E.Message);
 end;
 
 end.

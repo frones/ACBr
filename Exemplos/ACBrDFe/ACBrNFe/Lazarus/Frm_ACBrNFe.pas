@@ -339,7 +339,7 @@ uses
   ACBrDFeConfiguracoes, ACBrDFeUtil,
   ACBrNFeNotasFiscais, ACBrNFeConfiguracoes,
   Frm_Status, Frm_SelecionarCertificado, Frm_ConfiguraSerial,
-  ACBrDFeOpenSSL;
+  ACBrDFeOpenSSL, OpenSSLExt;
 
 const
   SELDIRHELP = 1000;
@@ -3237,7 +3237,11 @@ procedure TfrmACBrNFe.bVersaoClick(Sender: TObject);
 begin
   pgRespostas.ActivePageIndex := 0;
   if ACBrNFe1.SSL.SSLCryptLib = cryOpenSSL then
-    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion)
+  begin
+    MemoResp.Lines.Add(TDFeOpenSSL(ACBrNFe1.SSL.SSLCryptClass).OpenSSLVersion);
+    MemoResp.Lines.Add(SSLUtilFile);
+    MemoResp.Lines.Add(SSLLibFile);
+  end
   else
     MemoResp.Lines.Add('Biblioteca de Criptografia Selecionada não é OpenSSL');
 end;

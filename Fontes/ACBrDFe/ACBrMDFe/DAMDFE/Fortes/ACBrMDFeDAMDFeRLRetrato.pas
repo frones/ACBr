@@ -678,7 +678,7 @@ begin
   rlmChave2.AutoSize := rlmChave1.AutoSize;
 
   if not EstaVazio(Trim(fpMDFe.infMDFeSupl.qrCodMDFe)) then
-    PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture, qrUTF8NoBOM )
+    PintarQRCode( fpMDFe.infMDFeSupl.qrCodMDFe, imgQRCode.Picture.Bitmap, qrUTF8NoBOM )
   else
     imgQRCode.Visible := False;
 end;

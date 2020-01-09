@@ -1219,7 +1219,7 @@ begin
   begin
     qrCode := FCTe.infCTeSupl.qrCodCTe;
     if Assigned(Sender) and (Trim(qrCode) <> '') and (Sender.Name = 'ImgQrCode') then
-      PintarQRCode(qrCode, TfrxPictureView(Sender).Picture, qrUTF8NoBOM);
+      PintarQRCode(qrCode, TfrxPictureView(Sender).Picture.Bitmap, qrUTF8NoBOM);
   end;
 end;
 

@@ -479,7 +479,7 @@ begin
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
                                      signature.DigestValue,
                                      infNFe.Versao);
-    PintarQRCode(qrcode, imgQRCode.Picture, qrUTF8NoBOM);
+    PintarQRCode(qrcode, imgQRCode.Picture.Bitmap, qrUTF8NoBOM);
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
                            ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''));

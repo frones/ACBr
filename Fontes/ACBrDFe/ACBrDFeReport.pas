@@ -44,7 +44,12 @@ unit ACBrDFeReport;
 interface
 
 uses
-  Classes, SysUtils, Graphics,
+  Classes, SysUtils,
+  {$IfDef FMX}
+    FMX.Graphics, System.UITypes, System.UIConsts, FMX.Types,
+  {$Else}
+    Graphics,
+  {$EndIf}
   ACBrBase, ACBrDelphiZXingQRCode,
   pcnConversao;
 
@@ -241,7 +246,7 @@ type
 
   end;
   
-  procedure PintarQRCode(const QRCodeData: String; APict: TPicture; const AEncoding: TQRCodeEncoding);
+  procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap; const AEncoding: TQRCodeEncoding);
 
 implementation
 
@@ -249,12 +254,15 @@ uses
   Math,
   ACBrUtil;
   
-procedure PintarQRCode(const QRCodeData: String; APict: TPicture;
+procedure PintarQRCode(const QRCodeData: String; ABitMap: TBitmap;
   const AEncoding: TQRCodeEncoding);
 var
   QRCode: TDelphiZXingQRCode;
   QRCodeBitmap: TBitmap;
   Row, Column: Integer;
+  {$IfDef FMX}
+   BitMapData: TBitmapData;
+  {$EndIf}
 begin
   QRCode       := TDelphiZXingQRCode.Create;
   QRCodeBitmap := TBitmap.Create;
@@ -267,18 +275,34 @@ begin
     QRCodeBitmap.Width  := QRCode.Columns;
     QRCodeBitmap.Height := QRCode.Rows;
 
-    for Row := 0 to QRCode.Rows - 1 do
-    begin
-      for Column := 0 to QRCode.Columns - 1 do
+    {$IfDef FMX}
+    if QRCodeBitmap.Map(TMapAccess.Read, BitMapData) then
+    try
+    {$EndIf}
+      for Row := 0 to QRCode.Rows - 1 do
       begin
-        if (QRCode.IsBlack[Row, Column]) then
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
-        else
-          QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+        for Column := 0 to QRCode.Columns - 1 do
+        begin
+          {$IfDef FMX}
+            if (QRCode.IsBlack[Row, Column]) then
+              BitMapData.SetPixel(Column, Row, claBlack)
+            else
+              BitMapData.SetPixel(Column, Row, claWhite);
+          {$Else}
+            if (QRCode.IsBlack[Row, Column]) then
+              QRCodeBitmap.Canvas.Pixels[Column, Row] := clBlack
+            else
+              QRCodeBitmap.Canvas.Pixels[Column, Row] := clWhite;
+          {$EndIf}
+        end;
       end;
+    {$IfDef FMX}
+    finally
+      QRCodeBitmap.Unmap(BitMapData);
     end;
+    {$EndIf}
 
-    APict.Assign(QRCodeBitmap);
+    ABitMap.Assign(QRCodeBitmap);
   finally
     QRCode.Free;
     QRCodeBitmap.Free;

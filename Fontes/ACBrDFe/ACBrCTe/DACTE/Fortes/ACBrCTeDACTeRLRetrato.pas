@@ -2648,7 +2648,7 @@ begin
   RLCTe.Title := 'CT-e: ' + FormatFloat('000,000,000', fpCTe.Ide.nCT);
 
   if not EstaVazio(Trim(fpCTe.infCTeSupl.qrCodCTe)) then
-    PintarQRCode(fpCTe.infCTeSupl.qrCodCTe, imgQRCode.Picture, qrUTF8NoBOM)
+    PintarQRCode(fpCTe.infCTeSupl.qrCodCTe, imgQRCode.Picture.Bitmap, qrUTF8NoBOM)
   else
   begin
     rlsLinhaV07.Height    := 26;

@@ -171,10 +171,6 @@
   {$DEFINE HAS_REGEXPR}
 {$ENDIF}
 
-{$IFNDEF FPC}
- {$DEFINE USE_libeay32}
-{$ENDIF}
-
 // Definições multi-plataforma
 //------------------------------------------------------------------------------
 {$IFDEF WIN64}

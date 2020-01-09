@@ -38,6 +38,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM From distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -640,7 +641,7 @@ begin
     Secondary := 'plain';
     Description := 'Message text';
     Disposition := 'inline';
-    CharsetCode := IdealCharsetCoding(Value.Text, TargetCharset, IdealCharsets);
+    CharsetCode := IdealCharsetCoding(AnsiString(Value.Text), TargetCharset, IdealCharsets);
     EncodingCode := ME_QUOTED_PRINTABLE;
     EncodePart;
     EncodePartHeader;

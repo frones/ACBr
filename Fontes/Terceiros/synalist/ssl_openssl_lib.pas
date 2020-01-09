@@ -39,6 +39,7 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |   Tomas Hajny (OS2 support)                                                  |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -48,6 +49,9 @@
 Special thanks to Gregor Ibic <gregor.ibic@intelicom.si>
  (Intelicom d.o.o., http://www.intelicom.si)
  for good inspiration about begin with SSL programming.
+
+ Patch applied for OpenSSL 1.1 Windows loading, from:
+  https://sourceforge.net/p/synalist/feature-requests/19/
 }
 
 {$IFDEF FPC}
@@ -84,56 +88,68 @@ uses
   System.Runtime.InteropServices,
   System.Text,
 {$ENDIF}
-  SysUtils,
-  Classes,
+  SysUtils, Classes,
   synafpc
 {$IFNDEF MSWINDOWS}
   {$IFDEF FPC}
-   {$IFDEF UNIX}
-  , BaseUnix
-   {$ENDIF UNIX}
+    {$IFDEF UNIX}
+      ,BaseUnix
+    {$ENDIF UNIX}
   {$ELSE}
-  , Libc
+    {$IFNDEF POSIX}
+      ,Libc
+    {$ENDIF}
   {$ENDIF}
 {$ELSE}
-  , Windows
+ ,Windows
 {$ENDIF};
 
 
 {$IFDEF CIL}
 const
-  {$IFDEF LINUX}
-  DLLSSLName = 'libssl.so';
-  DLLUtilName = 'libcrypto.so';
-  {$ELSE}
-  DLLSSLName = 'ssleay32.dll';
-  DLLUtilName = 'libeay32.dll';
-  {$ENDIF}
+ {$IFDEF LINUX}
+  DLLSSLNames: array[1..1] of string = ('libssl.so');
+  DLLUtilNames: array[1..1] of string = ('libcrypto.so');
+ {$ELSE}
+  DLLSSLNames: array[1..1] of string = ('ssleay32.dll');
+  DLLUtilNames: array[1..1] of string = ('libeay32.dll');
+ {$ENDIF}
 {$ELSE}
 var
-  {$IFNDEF MSWINDOWS}
-    {$IFDEF DARWIN}
-    DLLSSLName: string = 'libssl.dylib';
-    DLLUtilName: string = 'libcrypto.dylib';
-    {$ELSE}
-     {$IFDEF OS2}
-      {$IFDEF OS2GCC}
-    DLLSSLName: string = 'kssl.dll';
-    DLLUtilName: string = 'kcrypto.dll';
-      {$ELSE OS2GCC}
-    DLLSSLName: string = 'ssl.dll';
-    DLLUtilName: string = 'crypto.dll';
-      {$ENDIF OS2GCC}
-     {$ELSE OS2}
-    DLLSSLName: string = 'libssl.so';
-    DLLUtilName: string = 'libcrypto.so';
-     {$ENDIF OS2}
-    {$ENDIF}
+ {$IFNDEF MSWINDOWS}
+  {$IFDEF DARWIN}
+   DLLSSLNames: array[1..1] of string = ('libssl.dylib');
+   DLLUtilNames: array[1..1] of string = ('libcrypto.dylib');
   {$ELSE}
-  DLLSSLName: string = 'ssleay32.dll';
-  DLLSSLName2: string = 'libssl32.dll';
-  DLLUtilName: string = 'libeay32.dll';
+   {$IFDEF OS2}
+    {$IFDEF OS2GCC}
+     DLLSSLNames: array[1..2] of string = ('kssl10.dll','kssl.dll');
+     DLLUtilNames: array[1..2] of string = ('kcrypt10.dll','kcrypto.dll');
+    {$ELSE OS2GCC}
+     DLLSSLNames: array[1..2] of string = ('emssl10.dll','ssl.dll');
+     DLLUtilNames: array[1..2] of string = ('emcrpt10.dll','crypto.dll');
+    {$ENDIF OS2GCC}
+   {$ELSE OS2}
+    DLLSSLNames: array[1..16] of string = ('libssl.so',  // this file only exist in dev-packages that are not installed by default on most distributions
+                                           'libssl.so.1.1', 'libssl.so.10', 'libssl.so.1.1.1', 'libssl.so.1.1.0',
+                                           'libssl.so.1.0.2', 'libssl.so.1.0.1', 'libssl.so.1.0.0',
+                                           'libssl.so.0.9.8', 'libssl.so.0.9.7', 'libssl.so.0.9.6', 'libssl.so.0.9.5',
+                                           'libssl.so.0.9.4', 'libssl.so.0.9.3', 'libssl.so.0.9.2', 'libssl.so.0.9.1'
+                                          );
+    DLLUtilNames: array[1..16] of string = ('libcrypto.so', // this file only exist in dev-packages that are not installed by default on most distributions
+                                            'libcrypto.so.1.1', 'libcrypto.so.10', 'libcrypto.so.1.1.1', 'libcrypto.so.1.1.0',
+                                            'libcrypto.so.1.0.2', 'libcrypto.so.1.0.1', 'libcrypto.so.1.0.0',
+                                            'libcrypto.so.0.9.8', 'libcrypto.so.0.9.7', 'libcrypto.so.0.9.6', 'libcrypto.so.0.9.5',
+                                            'libcrypto.so.0.9.4', 'libcrypto.so.0.9.3', 'libcrypto.so.0.9.2', 'libcrypto.so.0.9.1'
+                                           );
+   {$ENDIF OS2}
   {$ENDIF}
+ {$ELSE}
+  DLLSSLNames: array[1..4] of string = ({$IfDef CPU64}'libssl-1_1-x64.dll'{$Else}'libssl-1_1.dll'{$EndIf},
+                                        'ssleay32.dll', 'libssl32.dll', 'libssl.dll');
+  DLLUtilNames: array[1..4] of string = ({$IfDef CPU64}'libcrypto-1_1-x64.dll'{$Else}'libcrypto-1_1.dll'{$EndIf},
+                                         'libeay32.dll', 'libcrypto.dll', 'libeay.dll');
+ {$ENDIF}
 {$ENDIF}
 
 type
@@ -256,6 +272,11 @@ var
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
+    EntryPoint = 'OpenSSL_version')]
+    function OpenSSLVersion(t: cint): String; external;
+
+  [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
+    SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'SSL_library_init')]
     function SslLibraryInit: Integer; external;
 
@@ -308,6 +329,11 @@ var
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint = 'TLSv1_2_method')]
     function SslMethodTLSV12:PSSL_METHOD;  external;
+
+  [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
+    SetLastError = False, CallingConvention= CallingConvention.cdecl,
+    EntryPoint = 'TLSv1_3_method')]
+    function SslMethodTLSV13:PSSL_METHOD;  external;
 
   [DllImport(DLLSSLName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
@@ -719,9 +745,9 @@ var
 {$ELSE}
 // libssl.dll
   function SslGetError(s: PSSL; ret_code: Integer):Integer;
+  function OpenSSLVersion(t: Integer):AnsiString;
   function SslLibraryInit:Integer;
   procedure SslLoadErrorStrings;
-//  function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar):Integer;
   function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString):Integer;
   function SslCtxNew(meth: PSSL_METHOD):PSSL_CTX;
   procedure SslCtxFree(arg0: PSSL_CTX);
@@ -731,21 +757,19 @@ var
   function SslMethodTLSV1:PSSL_METHOD;
   function SslMethodTLSV11:PSSL_METHOD;
   function SslMethodTLSV12:PSSL_METHOD;
+  function SslMethodTLSV13:PSSL_METHOD;
   function SslMethodV23:PSSL_METHOD;
   function SslMethodTLS:PSSL_METHOD;
   function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):Integer;
   function SslCtxUsePrivateKeyASN1(pk: integer; ctx: PSSL_CTX; d: AnsiString; len: integer):Integer;
-//  function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer):Integer;
   function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
   function SslCtxUseCertificate(ctx: PSSL_CTX; x: SslPtr):Integer;
   function SslCtxUseCertificateASN1(ctx: PSSL_CTX; len: integer; d: AnsiString):Integer;
   function SslCtxUseCertificateFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
-//  function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar):Integer;
   function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString):Integer;
   function SslCtxCheckPrivateKeyFile(ctx: PSSL_CTX):Integer;
   procedure SslCtxSetDefaultPasswdCb(ctx: PSSL_CTX; cb: PPasswdCb);
   procedure SslCtxSetDefaultPasswdCbUserdata(ctx: PSSL_CTX; u: SslPtr);
-//  function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar):Integer;
   function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString):Integer;
   function SslCtxCtrl(ctx: PSSL_CTX; cmd: integer; larg: integer; parg: SslPtr): integer;
   function SslNew(ctx: PSSL_CTX):PSSL;
@@ -773,7 +797,6 @@ var
   function X509GetSubjectName(a: PX509):PX509_NAME;
   function X509GetIssuerName(a: PX509):PX509_NAME;
   function X509NameHash(x: PX509_NAME):Cardinal;
-//  function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger):Integer;
   function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer):Integer;
   function X509print(b: PBIO; a: PX509): integer;
   function X509SetVersion(x: PX509; version: integer): integer;
@@ -791,7 +814,6 @@ var
   function EvpPkeyAssign(pkey: EVP_PKEY; _type: integer; key: Prsa): integer;
   function EvpGetDigestByName(Name: AnsiString): PEVP_MD;
   procedure EVPcleanup;
-//  function ErrErrorString(e: integer; buf: PChar): PChar;
   function SSLeayversion(t: integer): Ansistring;
   procedure ErrErrorString(e: integer; var buf: Ansistring; len: integer);
   function ErrGetError: integer;
@@ -850,6 +872,7 @@ uses
 type
 // libssl.dll
   TSslGetError = function(s: PSSL; ret_code: Integer):Integer; cdecl;
+  TOpenSSLversion = function(arg: Integer):PAnsiChar; cdecl;
   TSslLibraryInit = function:Integer; cdecl;
   TSslLoadErrorStrings = procedure; cdecl;
   TSslCtxSetCipherList = function(arg0: PSSL_CTX; str: PAnsiChar):Integer; cdecl;
@@ -861,6 +884,7 @@ type
   TSslMethodTLSV1 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV11 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV12 = function:PSSL_METHOD; cdecl;
+  TSslMethodTLSV13 = function:PSSL_METHOD; cdecl;
   TSslMethodV23 = function:PSSL_METHOD; cdecl;
   TSslMethodTLS = function:PSSL_METHOD; cdecl;
   TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr):Integer; cdecl;
@@ -959,6 +983,7 @@ type
 var
 // libssl.dll
   _SslGetError: TSslGetError = nil;
+  _OpenSSLVersion: TOpenSSLversion = nil;
   _SslLibraryInit: TSslLibraryInit = nil;
   _SslLoadErrorStrings: TSslLoadErrorStrings = nil;
   _SslCtxSetCipherList: TSslCtxSetCipherList = nil;
@@ -970,6 +995,7 @@ var
   _SslMethodTLSV1: TSslMethodTLSV1 = nil;
   _SslMethodTLSV11: TSslMethodTLSV11 = nil;
   _SslMethodTLSV12: TSslMethodTLSV12 = nil;
+  _SslMethodTLSV13: TSslMethodTLSV13 = nil;
   _SslMethodV23: TSslMethodV23 = nil;
   _SslMethodTLS: TSslMethodTLS = nil;
   _SslCtxUsePrivateKey: TSslCtxUsePrivateKey = nil;
@@ -1080,6 +1106,14 @@ begin
     Result := SSL_ERROR_SSL;
 end;
 
+function OpenSSLVersion(t: Integer): AnsiString;
+begin
+  if InitSSLInterface and Assigned(_OpenSSLVersion) then
+    Result := _OpenSSLVersion(t)
+  else
+    Result := '';
+end;
+
 function SslLibraryInit:Integer;
 begin
   if InitSSLInterface and Assigned(_SslLibraryInit) then
@@ -1094,7 +1128,6 @@ begin
     _SslLoadErrorStrings;
 end;
 
-//function SslCtxSetCipherList(arg0: PSSL_CTX; str: PChar):Integer;
 function SslCtxSetCipherList(arg0: PSSL_CTX; var str: AnsiString):Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxSetCipherList) then
@@ -1165,6 +1198,14 @@ begin
     Result := nil;
 end;
 
+function SslMethodTLSV13:PSSL_METHOD;
+begin
+  if InitSSLInterface and Assigned(_SslMethodTLSV13) then
+    Result := _SslMethodTLSV13
+  else
+    Result := nil;
+end;
+
 function SslMethodV23:PSSL_METHOD;
 begin
   if InitSSLInterface and Assigned(_SslMethodV23) then
@@ -1197,7 +1238,6 @@ begin
     Result := 0;
 end;
 
-//function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: PChar; _type: Integer):Integer;
 function SslCtxUsePrivateKeyFile(ctx: PSSL_CTX; const _file: AnsiString; _type: Integer):Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUsePrivateKeyFile) then
@@ -1230,7 +1270,6 @@ begin
     Result := 0;
 end;
 
-//function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: PChar):Integer;
 function SslCtxUseCertificateChainFile(ctx: PSSL_CTX; const _file: AnsiString):Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxUseCertificateChainFile) then
@@ -1259,7 +1298,6 @@ begin
     _SslCtxSetDefaultPasswdCbUserdata(ctx, u);
 end;
 
-//function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: PChar; const CApath: PChar):Integer;
 function SslCtxLoadVerifyLocations(ctx: PSSL_CTX; const CAfile: AnsiString; const CApath: AnsiString):Integer;
 begin
   if InitSSLInterface and Assigned(_SslCtxLoadVerifyLocations) then
@@ -1314,7 +1352,6 @@ begin
     Result := -1;
 end;
 
-//function SslRead(ssl: PSSL; buf: PChar; num: Integer):Integer;
 function SslRead(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
 begin
   if InitSSLInterface and Assigned(_SslRead) then
@@ -1323,7 +1360,6 @@ begin
     Result := -1;
 end;
 
-//function SslPeek(ssl: PSSL; buf: PChar; num: Integer):Integer;
 function SslPeek(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
 begin
   if InitSSLInterface and Assigned(_SslPeek) then
@@ -1332,7 +1368,6 @@ begin
     Result := -1;
 end;
 
-//function SslWrite(ssl: PSSL; const buf: PChar; num: Integer):Integer;
 function SslWrite(ssl: PSSL; buf: SslPtr; num: Integer):Integer;
 begin
   if InitSSLInterface and Assigned(_SslWrite) then
@@ -1349,7 +1384,6 @@ begin
     Result := 0;
 end;
 
-//function SslGetVersion(ssl: PSSL):PChar;
 function SslGetVersion(ssl: PSSL):AnsiString;
 begin
   if InitSSLInterface and Assigned(_SslGetVersion) then
@@ -1384,7 +1418,6 @@ begin
     Result := nil;
 end;
 
-//function SSLCipherGetName(c: SslPtr):PChar;
 function SSLCipherGetName(c: SslPtr):AnsiString;
 begin
   if InitSSLInterface and Assigned(_SSLCipherGetName) then
@@ -1434,7 +1467,6 @@ begin
     _X509Free(x);
 end;
 
-//function SslX509NameOneline(a: PX509_NAME; buf: PChar; size: Integer):PChar;
 function X509NameOneline(a: PX509_NAME; var buf: AnsiString; size: Integer):AnsiString;
 begin
   if InitSSLInterface and Assigned(_X509NameOneline) then
@@ -1467,7 +1499,6 @@ begin
     Result := 0;
 end;
 
-//function SslX509Digest(data: PX509; _type: PEVP_MD; md: PChar; len: PInteger):Integer;
 function X509Digest(data: PX509; _type: PEVP_MD; md: AnsiString; var len: Integer):Integer;
 begin
   if InitSSLInterface and Assigned(_X509Digest) then
@@ -1591,7 +1622,6 @@ begin
     Result := 0;
 end;
 
-//function BioRead(b: PBIO; Buf: PChar; Len: integer): integer;
 function BioRead(b: PBIO; var Buf: AnsiString; Len: integer): integer;
 begin
   if InitSSLInterface and Assigned(_BioRead) then
@@ -1600,7 +1630,6 @@ begin
     Result := -2;
 end;
 
-//function BioWrite(b: PBIO; Buf: PChar; Len: integer): integer;
 function BioWrite(b: PBIO; Buf: AnsiString; Len: integer): integer;
 begin
   if InitSSLInterface and Assigned(_BioWrite) then
@@ -1825,7 +1854,7 @@ begin
     _DESecbencrypt(Input, output, ks, enc);
 end;
 
-procedure locking_callback(mode, ltype: integer; lfile: PChar; line: integer); cdecl;
+procedure locking_callback(mode, ltype: integer; lfile: PAnsiChar; line: integer); cdecl;
 begin
   if (mode and 1) > 0 then
     TCriticalSection(Locks[ltype]).Enter
@@ -1878,7 +1907,7 @@ end;
 function InitSSLInterface: Boolean;
 var
   s: string;
-  x: integer;
+  x, i: integer;
 begin
   {pf}
   if SSLLoaded then
@@ -1895,12 +1924,24 @@ begin
       SSLLibHandle := 1;
       SSLUtilHandle := 1;
 {$ELSE}
-      SSLUtilHandle := LoadLib(DLLUtilName);
-      SSLLibHandle := LoadLib(DLLSSLName);
-  {$IFDEF MSWINDOWS}
-      if (SSLLibHandle = 0) then
-        SSLLibHandle := LoadLib(DLLSSLName2);
-  {$ENDIF}
+      for i := low(DLLUtilNames) to high(DLLUtilNames) do
+      begin
+        SSLUtilHandle := LoadLib(DLLUtilNames[i]);
+        if SSLUtilHandle <> 0 then
+          break;
+      end;
+
+      {$IfDef MSWINDOWS}
+       if (i <= high(DLLSSLNames)) then
+         SSLLibHandle := LoadLib(DLLSSLNames[i]);  // Use same DLL pair
+      {$Else}
+       for i := low(DLLSSLNames) to high(DLLSSLNames) do
+       begin
+         SSLLibHandle := LoadLib(DLLSSLNames[i]);
+         if SSLLibHandle <> 0 then
+           break;
+       end;
+      {$EndIf}
 {$ENDIF}
       if (SSLLibHandle <> 0) and (SSLUtilHandle <> 0) then
       begin
@@ -1917,6 +1958,7 @@ begin
         _SslMethodTLSV1 := GetProcAddr(SSLLibHandle, 'TLSv1_method');
         _SslMethodTLSV11 := GetProcAddr(SSLLibHandle, 'TLSv1_1_method');
         _SslMethodTLSV12 := GetProcAddr(SSLLibHandle, 'TLSv1_2_method');
+        _SslMethodTLSV13 := GetProcAddr(SSLLibHandle, 'TLSv1_3_method');
         _SslMethodV23 := GetProcAddr(SSLLibHandle, 'SSLv23_method');
         _SslMethodTLS := GetProcAddr(SSLLibHandle, 'TLS_method');
         _SslCtxUsePrivateKey := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey');
@@ -1950,6 +1992,10 @@ begin
         _SslCipherGetBits := GetProcAddr(SSLLibHandle, 'SSL_CIPHER_get_bits');
         _SslGetVerifyResult := GetProcAddr(SSLLibHandle, 'SSL_get_verify_result');
         _SslCtrl := GetProcAddr(SSLLibHandle, 'SSL_ctrl');
+
+        _OpenSSLVersion := GetProcAddr(SSLUtilHandle, 'OpenSSL_version');
+        if not Assigned(_OpenSSLVersion) then
+          _OpenSSLVersion := GetProcAddr(SSLUtilHandle, 'SSLeay_version');  // Version 1.0.x
 
         _X509New := GetProcAddr(SSLUtilHandle, 'X509_new');
         _X509Free := GetProcAddr(SSLUtilHandle, 'X509_free');
@@ -2018,11 +2064,11 @@ begin
         RandScreen;
 {$ELSE}
         SetLength(s, 1024);
-        x := GetModuleFilename(SSLLibHandle,PChar(s),Length(s));
+        x := GetModuleFilename(SSLLibHandle, PChar(s), Length(s));
         SetLength(s, x);
         SSLLibFile := s;
         SetLength(s, 1024);
-        x := GetModuleFilename(SSLUtilHandle,PChar(s),Length(s));
+        x := GetModuleFilename(SSLUtilHandle, PChar(s), Length(s));
         SetLength(s, x);
         SSLUtilFile := s;
         //init library
@@ -2105,6 +2151,7 @@ begin
 
 {$IFNDEF CIL}
     _SslGetError := nil;
+    _SslGetVersion := nil;
     _SslLibraryInit := nil;
     _SslLoadErrorStrings := nil;
     _SslCtxSetCipherList := nil;
@@ -2116,6 +2163,7 @@ begin
     _SslMethodTLSV1 := nil;
     _SslMethodTLSV11 := nil;
     _SslMethodTLSV12 := nil;
+    _SslMethodTLSV13 := nil;
     _SslMethodV23 := nil;
     _SslMethodTLS := nil;
     _SslCtxUsePrivateKey := nil;

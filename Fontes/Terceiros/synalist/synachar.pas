@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -79,7 +80,9 @@ interface
 uses
 {$IFNDEF MSWINDOWS}
   {$IFNDEF FPC}
-  Libc,
+    {$IFNDEF POSIX}
+      Libc,
+    {$ENDIF}
   {$ENDIF}
 {$ELSE}
   Windows,
@@ -1500,13 +1503,13 @@ end;
 
 function GetCurCP: TMimeChar;
 begin
-  {$IFNDEF FPC}
+  {$If (NOT DEFINED(FPC)) AND (NOT DEFINED(POSIX))}
   Result := GetCPFromID(nl_langinfo(_NL_CTYPE_CODESET_NAME));
-  {$ELSE}
+  {$Else}
   //How to get system codepage without LIBC?
   Result := UTF_8;
 { TODO : Waiting for FPC 2.8 solution }
-  {$ENDIF}
+  {$IfEnd}
 end;
 
 function GetCurOEMCP: TMimeChar;

@@ -38,6 +38,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -434,6 +435,8 @@ begin
       Fctx := SslCtxNew(SslMethodTLSV11);
     LT_TLSv1_2:
       Fctx := SslCtxNew(SslMethodTLSV12);
+    LT_TLSv1_3:
+      Fctx := SslCtxNew(SslMethodTLSV13);
     LT_all:
       begin
         //try new call for OpenSSL 1.1.0 first

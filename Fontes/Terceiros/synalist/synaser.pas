@@ -38,6 +38,7 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |  (c)2002, Hans-Georg Joepgen (cpom Comport Ownership Manager and bugfixes)   |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -101,11 +102,19 @@ interface
 
 uses
 {$IFNDEF MSWINDOWS}
-  {$IFNDEF NO_LIBC}
-  Libc,
-  KernelIoctl,
+  {$IFDEF POSIX}
+    Posix.Termios, Posix.Fcntl, Posix.Unistd, Posix.Stropts, Posix.SysSelect,
+    Posix.SysTime,
+    {$IFDEF LINUX}
+      Linuxapi.KernelIoctl,
+    {$ENDIF}
   {$ELSE}
-  termio, baseunix, unix,
+    {$IFNDEF NO_LIBC}
+       Libc,
+       KernelIoctl,
+    {$ELSE}
+       termio, baseunix, unix,
+    {$ENDIF}
   {$ENDIF}
   {$IFNDEF FPC}
   Types,
@@ -260,6 +269,16 @@ const // From fcntl.h
 const
   sOK = 0;
   sErr = integer(-1);
+
+{$IFDEF POSIX}
+const
+  TIOCM_DTR = $002;
+  TIOCM_RTS = $004;
+  TIOCM_CTS = $020;
+  TIOCM_CAR = $040;
+  TIOCM_RNG = $080;
+  TIOCM_DSR = $100;
+{$ENDIF}
 
 type
 
@@ -878,7 +897,7 @@ begin
         sleep(x);
       end;
     end;
-    Next := GetTick + Trunc((Length / MaxB) * 1000);
+    Next := GetTick + LongWord(Trunc((Length / MaxB) * 1000));
   end;
 end;
 
@@ -949,11 +968,15 @@ begin
       RaiseSynaError(ErrAlreadyOwned);
       Exit;
     end;
-{$IFNDEF FPC}
-  FHandle := THandle(Libc.open(pchar(FDevice), O_RDWR or O_SYNC));
-{$ELSE}
-  FHandle := THandle(fpOpen(FDevice, O_RDWR or O_SYNC));
-{$ENDIF}
+  {$IFNDEF FPC}
+    {$IFDEF POSIX}
+      FHandle := open(MarshaledAString(AnsiString(FDevice)), O_RDWR or O_SYNC);
+    {$ELSE}
+      FHandle := THandle(Libc.open(pchar(FDevice), O_RDWR or O_SYNC));
+    {$ENDIF}
+  {$ELSE}
+    FHandle := THandle(fpOpen(FDevice, O_RDWR or O_SYNC));
+  {$ENDIF}
   if FHandle = INVALID_HANDLE_VALUE then  //because THandle is not integer on all platforms!
     SerialCheck(-1)
   else
@@ -1807,7 +1830,7 @@ end;
 {$IFNDEF MSWINDOWS}
 function TBlockSerial.CanRead(Timeout: integer): boolean;
 var
-  FDSet: TFDSet;
+  FDSet: {$IFDEF POSIX}FD_Set{$ELSE}TFDSet{$ENDIF};
   TimeVal: PTimeVal;
   TimeV: TTimeVal;
   x: Integer;
@@ -1819,7 +1842,7 @@ begin
     TimeVal := nil;
   {$IFNDEF FPC}
   FD_ZERO(FDSet);
-  FD_SET(FHandle, FDSet);
+  {$IFDEF POSIX}_FD_SET{$ELSE}FD_SET{$ENDIF}(FHandle, FDSet);
   x := Select(FHandle + 1, @FDSet, nil, nil, TimeVal);
   {$ELSE}
   fpFD_ZERO(FDSet);
@@ -1849,7 +1872,7 @@ end;
 {$IFNDEF MSWINDOWS}
 function TBlockSerial.CanWrite(Timeout: integer): boolean;
 var
-  FDSet: TFDSet;
+  FDSet: {$IFDEF POSIX}FD_Set{$ELSE}TFDSet{$ENDIF};
   TimeVal: PTimeVal;
   TimeV: TTimeVal;
   x: Integer;
@@ -1861,7 +1884,7 @@ begin
     TimeVal := nil;
   {$IFNDEF FPC}
   FD_ZERO(FDSet);
-  FD_SET(FHandle, FDSet);
+  {$IFDEF POSIX}_FD_SET{$ELSE}FD_SET{$ENDIF}(FHandle, FDSet);
   x := Select(FHandle + 1, nil, @FDSet, nil, TimeVal);
   {$ELSE}
   fpFD_ZERO(FDSet);
@@ -1878,8 +1901,10 @@ begin
 end;
 {$ELSE}
 function TBlockSerial.CanWrite(Timeout: integer): boolean;
+{$IFDEF WIN32}
 var
   t: LongWord;
+{$ENDIF}
 begin
   Result := SendingData = 0;
   if not Result then
@@ -2094,7 +2119,7 @@ begin
         break;
       if s = 'NO DIALTONE' then
         break;
-      if Pos('CONNECT', s) = 1 then
+      if Pos('CONNECT', string(s)) = 1 then
       begin
         FAtResult := True;
         break;
@@ -2259,7 +2284,7 @@ var
 begin
   Filename := LockfileName;
   {$IFNDEF FPC}
-  MyPid := Libc.getpid;
+  MyPid := {$IFNDEF POSIX}Libc.{$ENDIF}getpid;
   {$ELSE}
   MyPid := fpGetPid;
   {$ENDIF}
@@ -2276,7 +2301,7 @@ begin
   // Is port owned by orphan? Then it's time for error recovery.
   //FPC forgot to add getsid.. :-(
   {$IFNDEF FPC}
-  if Libc.getsid(ReadLockfile) = -1 then
+  if {$IFNDEF POSIX}Libc.{$ENDIF}getsid(ReadLockfile) = -1 then
   begin //  Lockfile was left from former desaster
     DeleteFile(Filename); // error recovery
     CreateLockfile(MyPid);
@@ -2326,13 +2351,15 @@ end;
 {$ENDIF}
 {$IFNDEF MSWINDOWS}
 function GetSerialPortNames: string;
+const
+  ATTR = {$IFDEF POSIX}$7FFFFFFF{$ELSE}$FFFFFFFF{$ENDIF};
 var
   sr : TSearchRec;
 begin
   Result := '';
-  if FindFirst('/dev/ttyS*', $FFFFFFFF, sr) = 0 then
+  if FindFirst('/dev/ttyS*', ATTR, sr) = 0 then
     repeat
-      if (sr.Attr and $FFFFFFFF) = Sr.Attr then
+      if (sr.Attr and ATTR) = Sr.Attr then
       begin
         if Result <> '' then
           Result := Result + ',';
@@ -2340,18 +2367,18 @@ begin
       end;
     until FindNext(sr) <> 0;
   FindClose(sr);
-  if FindFirst('/dev/ttyUSB*', $FFFFFFFF, sr) = 0 then begin
+  if FindFirst('/dev/ttyUSB*', ATTR, sr) = 0 then begin
     repeat
-      if (sr.Attr and $FFFFFFFF) = Sr.Attr then begin
+      if (sr.Attr and ATTR) = Sr.Attr then begin
         if Result <> '' then Result := Result + ',';
         Result := Result + '/dev/' + sr.Name;
       end;
     until FindNext(sr) <> 0;
   end;
   FindClose(sr);
-  if FindFirst('/dev/ttyAM*', $FFFFFFFF, sr) = 0 then begin
+  if FindFirst('/dev/ttyAM*', ATTR, sr) = 0 then begin
     repeat
-      if (sr.Attr and $FFFFFFFF) = Sr.Attr then begin
+      if (sr.Attr and ATTR) = Sr.Attr then begin
         if Result <> '' then Result := Result + ',';
         Result := Result + '/dev/' + sr.Name;
       end;

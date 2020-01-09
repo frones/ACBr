@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -954,7 +955,7 @@ begin
     else
       s := CharsetConversion(s, FCharsetCode, FTargetCharset);
   WriteStrToStream(FDecodedLines, s);
-  FDecodedLines.Seek(0, soFromBeginning);
+  FDecodedLines.Seek(0, soBeginning);
 end;
 
 {==============================================================================}
@@ -1035,7 +1036,7 @@ begin
     Encoding := 'base64';
   l := TStringList.Create;
   FPartBody.Clear;
-  FDecodedLines.Seek(0, soFromBeginning);
+  FDecodedLines.Seek(0, soBeginning);
   try
     case FPrimaryCode of
       MP_MULTIPART, MP_MESSAGE:

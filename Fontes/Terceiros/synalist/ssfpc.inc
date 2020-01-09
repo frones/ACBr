@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -755,7 +756,7 @@ var
 begin
   Result := 0;
   FillChar(Sin, Sizeof(Sin), 0);
-  Sin.sin_port := synsock.htons(Resolveport(port, family, SockProtocol, SockType));
+  Sin.sin_port := Resolveport(port, family, SockProtocol, SockType);
   TwoPass := False;
   if Family = AF_UNSPEC then
   begin
@@ -858,7 +859,7 @@ var
   ProtoEnt: TProtocolEntry;
   ServEnt: TServiceEntry;
 begin
-  Result := StrToIntDef(Port, 0);
+  Result := synsock.htons(StrToIntDef(Port, 0));
   if Result = 0 then
   begin
     ProtoEnt.Name := '';
@@ -866,7 +867,7 @@ begin
     begin
       ServEnt.port := 0;
       if GetServiceByName(Port, ProtoEnt.Name, ServEnt) then
-        Result := ServEnt.port;
+        Result := synsock.htons(ServEnt.port);
     end;
   end;
 end;

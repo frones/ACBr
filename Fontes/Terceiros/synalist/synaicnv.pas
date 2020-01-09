@@ -38,6 +38,7 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |   Tomas Hajny (OS2 support)                                                  |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -72,7 +73,9 @@ uses
   synafpc,
 {$IFNDEF MSWINDOWS}
   {$IFNDEF FPC}
-  Libc,
+    {$IFNDEF POSIX}
+      Libc,
+    {$ENDIF}
   {$ENDIF}
   SysUtils;
 {$ELSE}
@@ -103,9 +106,9 @@ type
 var
   iconvLibHandle: TLibHandle = 0;
 
-function SynaIconvOpen(const tocode, fromcode: Ansistring): iconv_t;
-function SynaIconvOpenTranslit(const tocode, fromcode: Ansistring): iconv_t;
-function SynaIconvOpenIgnore(const tocode, fromcode: Ansistring): iconv_t;
+function SynaIconvOpen(const tocode, fromcode: AnsiString): iconv_t;
+function SynaIconvOpenTranslit(const tocode, fromcode: AnsiString): iconv_t;
+function SynaIconvOpenIgnore(const tocode, fromcode: AnsiString): iconv_t;
 function SynaIconv(cd: iconv_t; inbuf: AnsiString; var outbuf: AnsiString): integer;
 function SynaIconvClose(var cd: iconv_t): integer;
 function SynaIconvCtl(cd: iconv_t; request: integer; argument: argptr): integer;
@@ -150,7 +153,7 @@ uses SyncObjs;
 
 {$ELSE}
 type
-  Ticonv_open = function(tocode: pAnsichar; fromcode: pAnsichar): iconv_t; cdecl;
+  Ticonv_open = function(tocode: PAnsiChar; fromcode: PAnsiChar): iconv_t; cdecl;
   Ticonv = function(cd: iconv_t; var inbuf: pointer; var inbytesleft: size_t;
     var outbuf: pointer; var outbytesleft: size_t): size_t; cdecl;
   Ticonv_close = function(cd: iconv_t): integer; cdecl;
@@ -167,7 +170,7 @@ var
   IconvCS: TCriticalSection;
   Iconvloaded: boolean = false;
 
-function SynaIconvOpen (const tocode, fromcode: Ansistring): iconv_t;
+function SynaIconvOpen (const tocode, fromcode: AnsiString): iconv_t;
 begin
 {$IFDEF CIL}
   try
@@ -184,12 +187,12 @@ begin
 {$ENDIF}
 end;
 
-function SynaIconvOpenTranslit (const tocode, fromcode: Ansistring): iconv_t;
+function SynaIconvOpenTranslit (const tocode, fromcode: AnsiString): iconv_t;
 begin
   Result := SynaIconvOpen(tocode + '//IGNORE//TRANSLIT', fromcode);
 end;
 
-function SynaIconvOpenIgnore (const tocode, fromcode: Ansistring): iconv_t;
+function SynaIconvOpenIgnore (const tocode, fromcode: AnsiString): iconv_t;
 begin
   Result := SynaIconvOpen(tocode + '//IGNORE', fromcode);
 end;
@@ -294,10 +297,10 @@ begin
       if (IconvLibHandle <> 0) then
       begin
 {$IFNDEF CIL}
-        _iconv_open := GetProcAddress(IconvLibHandle, PAnsiChar(AnsiString('libiconv_open')));
-        _iconv := GetProcAddress(IconvLibHandle, PAnsiChar(AnsiString('libiconv')));
-        _iconv_close := GetProcAddress(IconvLibHandle, PAnsiChar(AnsiString('libiconv_close')));
-        _iconvctl := GetProcAddress(IconvLibHandle, PAnsiChar(AnsiString('libiconvctl')));
+        _iconv_open := GetProcAddress(IconvLibHandle, PChar('libiconv_open'));
+        _iconv := GetProcAddress(IconvLibHandle, PChar('libiconv'));
+        _iconv_close := GetProcAddress(IconvLibHandle, PChar('libiconv_close'));
+        _iconvctl := GetProcAddress(IconvLibHandle, PChar('libiconvctl'));
 {$ENDIF}
         Result := True;
         Iconvloaded := True;

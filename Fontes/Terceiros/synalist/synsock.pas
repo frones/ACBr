@@ -38,6 +38,7 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |   Tomas Hajny (OS2 support)                                                  |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -72,14 +73,14 @@ unit synsock;
         {$I ssfpc.inc}
        {$ENDIF OS2}
       {$ELSE}
-        {$I sslinux.inc}
+        {$IFDEF POSIX}
+          {$I ssposix.inc} // not complete yet!
+        {$ELSE}
+          {$I sslinux.inc}
+        {$ENDIF}
       {$ENDIF}
     {$ENDIF}
   {$ENDIF}
-{$ENDIF}
-{$IFDEF POSIX}
-//Posix.SysSocket
-   {$I ssposix.inc} //experimental!
 {$ENDIF}
 
 end.

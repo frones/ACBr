@@ -38,6 +38,7 @@
 |==============================================================================|
 | Contributor(s):                                                              |
 |  Radek Cervinka                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -69,7 +70,7 @@ interface
 
 uses
   SyncObjs, SysUtils, Classes,
-  Posix.SysSocket, Posix.SysSelect, Posix.SysTime, Posix.NetinetIn,
+  Posix.SysSocket, Posix.SysSelect, Posix.SysTime,  Posix.NetinetIn,
   Posix.StrOpts, Posix.Errno;
 
 function InitSocketInterface(stack: string): Boolean;
@@ -101,14 +102,9 @@ type
 
 const
   //
-  FIONREAD = $4004667F; // oSX FIONREAD        = Posix.StrOpts.FIONREAD;
-
-  FIONBIO	 = $8004667E; //OSX FIONBIO         = Posix.StrOpts.FIONBIO;
-  FIOASYNC = $8004667D; //OSX  FIOASYNC        = Posix.StrOpts.FIOASYNC;  // not defined in XE2
-
-  {  FIONREAD        = $541B; // LINUX?
-  FIONBIO         = $5421;
-  FIOASYNC        = $5452;   }
+  FIONREAD = {$IFDEF LINUX}$541B{$ELSE}$4004667F{$ENDIF}; // OSX FIONREAD = Posix.StrOpts.FIONREAD;
+  FIONBIO  = {$IFDEF LINUX}$5421{$ELSE}$8004667E{$ENDIF}; //OSX FIONBIO   = Posix.StrOpts.FIONBIO;
+  FIOASYNC = {$IFDEF LINUX}$5452{$ELSE}$8004667D{$ENDIF}; //OSX  FIOASYNC = Posix.StrOpts.FIOASYNC;  // not defined in XE2
 
 const
   IPPROTO_IP     =   Posix.NetinetIn.IPPROTO_IP;		{ Dummy					}
@@ -352,7 +348,9 @@ var
   SockEnhancedApi: Boolean;
   SockWship6Api: Boolean;
 
+{$IFNDEF LINUX}
   {$DEFINE SOCK_HAS_SINLEN} // OSX
+{$ENDIF}
 
 type
   TVarSin = packed record
@@ -466,15 +464,13 @@ end;
 procedure SET_LOOPBACK_ADDR6 (const a: PInAddr6);
 begin
   FillChar(a^, sizeof(TInAddr6), 0);
-  a^.__s6_addr8[15] := 1;
+  a^.{$IFDEF LINUX}s6_addr{$ELSE}__s6_addr8{$ENDIF}[15] := 1;
 end;
 
 {$IFDEF NEXTGEN}
 function GetHostByName(const name: string):Phostent;
-var
-  h: Phostent;
 begin
-  h := Posix.NetDB.gethostbyname(MarshaledAString(TMarshal.AsAnsi(name)));
+  Result := Posix.NetDB.gethostbyname(MarshaledAString(TMarshal.AsAnsi(name)));
 end;
 {$ENDIF}
 {=============================================================================}
@@ -707,19 +703,6 @@ begin
     Result := (Family = AF_INET6) and SockWship6Api;
 end;
 
-{$IFDEF NEXTGEN}
-function GetAddrInfo(hostname, servname: string;
-  const hints: addrinfo; out res: Paddrinfo): Integer;
-begin
-
-end;
-{$ENDIF}
-
-function gethostbyname(const name: PAnsiChar): PHostEnt; cdecl;
-  external libc name _PU + 'gethostbyname';
-function gethostbyaddr(var addr; len: socklen_t; atype: integer): PHostEnt; cdecl;
-  external libc name _PU + 'gethostbyaddr';
-
 function SetVarSin(var Sin: TVarSin; IP, Port: string; Family, SockProtocol, SockType: integer; PreferIP4: Boolean): integer;
 var
   ProtoEnt: PProtoEnt;
@@ -913,7 +896,7 @@ var
   i: Integer;
   s: string;
   InAddr: TInAddr;
-  aby:TArray<Byte>;
+  aby: TArray<Byte>;
 begin
   IPList.Clear;
   if not IsNewApi(Family) then
@@ -939,9 +922,8 @@ begin
           while PAdrPtr^[i] <> nil do
           begin
             InAddr := PAdrPtr^[i]^;
-            aby := TArray<byte>(InAddr);
-            s := Format('%d.%d.%d.%d', [aby[0], aby[1],
-              aby[2], aby[3]]);
+            aby := TArray<Byte>(@InAddr); // address of address @InAddr?
+            s := Format('%d.%d.%d.%d', [aby[0], aby[1], aby[2], aby[3]]);
             IPList.Add(s);
             Inc(i);
           end;
@@ -1076,7 +1058,7 @@ begin
       try
         RemoteHost := GetHostByAddr(IPn, SizeOf(IPn), AF_INET);
         if RemoteHost <> nil then
-          Result := string(RemoteHost^.hname);
+          Result := string(RemoteHost^.{$IFDEF LINUX}h_name{$ELSE}hname{$ENDIF});
       finally
         SynSockCS.Leave;
       end;

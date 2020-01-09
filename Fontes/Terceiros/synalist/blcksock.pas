@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -104,11 +105,11 @@ uses
   SysUtils, Classes,
   synafpc,
   synsock, synautil, synacode, synaip
-{$IFDEF CIL}
-  ,System.Net
-  ,System.Net.Sockets
-  ,System.Text
-{$ENDIF}
+  {$IfDef CIL}
+    ,System.Net
+    ,System.Net.Sockets
+    ,System.Text
+  {$EndIf}
   ;
 
 const
@@ -245,6 +246,7 @@ type
     LT_TLSv1,
     LT_TLSv1_1,
     LT_TLSv1_2,
+    LT_TLSv1_3,
     LT_SSHv2
     );
 
@@ -1749,7 +1751,7 @@ begin
           synsock.SetSockOpt(FSocket, integer(IPPROTO_IP), integer(IP_MULTICAST_LOOP), buf, SizeOf(x));
       end;
   end;
-  Value.free;
+  Value.Free;
 end;
 
 procedure TBlockSocket.DelayedOption(const Value: TSynaOption);
@@ -2015,7 +2017,7 @@ begin
             sleep(250);
       end;
     end;
-    Next := GetTick + Trunc((Length / MaxB) * 1000);
+    Next := GetTick + LongWord(Trunc((Length / MaxB) * 1000));
   end;
 end;
 
@@ -3676,7 +3678,7 @@ begin
   begin
     ip6 := StrToIp6(MCastIP);
     for n := 0 to 15 do
-      Multicast6.ipv6mr_multiaddr.u6_addr8[n] := Ip6[n];
+      Multicast6.ipv6mr_multiaddr.{$IFDEF POSIX}s6_addr{$ELSE}u6_addr8{$ENDIF}[n] := Ip6[n];
     Multicast6.ipv6mr_interface := 0;
     SockCheck(synsock.SetSockOpt(FSocket, IPPROTO_IPV6, IPV6_JOIN_GROUP,
       PAnsiChar(@Multicast6), SizeOf(Multicast6)));
@@ -3703,7 +3705,7 @@ begin
   begin
     ip6 := StrToIp6(MCastIP);
     for n := 0 to 15 do
-      Multicast6.ipv6mr_multiaddr.u6_addr8[n] := Ip6[n];
+      Multicast6.ipv6mr_multiaddr.{$IFDEF POSIX}s6_addr{$ELSE}u6_addr8{$ENDIF}[n] := Ip6[n];
     Multicast6.ipv6mr_interface := 0;
     SockCheck(synsock.SetSockOpt(FSocket, IPPROTO_IPV6, IPV6_LEAVE_GROUP,
       PAnsiChar(@Multicast6), SizeOf(Multicast6)));

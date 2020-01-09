@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -57,14 +58,21 @@ For IPv6 support you must have new API!
 
 {$IFDEF FPC}
   {$MODE DELPHI}
+  {$H+}
 {$ENDIF}
-{$H+}
+
 interface
 
 uses
   SyncObjs, SysUtils, Classes,
   synafpc,
-  Libc;
+  {$IFDEF POSIX}
+    Posix.Errno,
+    Posix.Signal,
+    Posix.NetDB
+  {$ELSE}
+    Libc
+  {$ENDIF};
 
 function InitSocketInterface(stack: string): Boolean;
 function DestroySocketInterface: Boolean;
@@ -79,6 +87,9 @@ type
   u_long = Longint;
   pu_long = ^u_long;
   pu_short = ^u_short;
+  {$IFDEF POSIX}
+    uint32_t = UInt32;
+  {$ENDIF}
   TSocket = u_int;
   TAddrFamily = integer;
 
@@ -1214,7 +1225,11 @@ begin
     begin
       SockEnhancedApi := False;
       SockWship6Api := False;
-      Libc.Signal(Libc.SIGPIPE, TSignalHandler(Libc.SIG_IGN));
+      {$IfDef POSIX}
+        Signal(SIGPIPE, TSignalHandler(SIG_IGN));
+      {$Else}
+        Libc.Signal(Libc.SIGPIPE, TSignalHandler(Libc.SIG_IGN));
+      {$EndIf}
       LibHandle := LoadLibrary(PChar(Stack));
       if LibHandle <> 0 then
       begin

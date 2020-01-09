@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -273,6 +274,9 @@ constructor THTTPSend.Create;
 begin
   inherited Create;
   FHeaders := TStringList.Create;
+  {$IfNDef MSWINDOWS}
+    FHeaders.LineBreak := CRLF;
+  {$EndIf}
   FCookies := TStringList.Create;
   FDocument := TMemoryStream.Create;
   FSock := TTCPBlockSocket.Create;
@@ -334,11 +338,11 @@ begin
   if FProtocol = '0.9' then
     Result := FHeaders[0] + CRLF
   else
-{$IFNDEF MSWINDOWS}
-    Result := {$IFDEF UNICODE}AnsiString{$ENDIF}(AdjustLineBreaks(FHeaders.Text, tlbsCRLF));
-{$ELSE}
-    Result := FHeaders.Text;
-{$ENDIF}
+    {$IFNDEF MSWINDOWS}
+      Result := {$IFDEF UNICODE}AnsiString{$ENDIF}(AdjustLineBreaks(FHeaders.Text, tlbsCRLF));
+    {$ELSE}
+      Result := FHeaders.Text;
+    {$ENDIF}
 end;
 
 function THTTPSend.InternalDoConnect(needssl: Boolean): Boolean;
@@ -671,7 +675,7 @@ begin
         Result := ReadChunked;
     end;
 
-  FDocument.Seek(0, soFromBeginning);
+  FDocument.Seek(0, soBeginning);
   if ToClose then
   begin
     FSock.CloseSocket;
@@ -780,7 +784,7 @@ begin
     Result := HTTP.HTTPMethod('GET', URL);
     if Result then
     begin
-      Response.Seek(0, soFromBeginning);
+      Response.Seek(0, soBeginning);
       Response.CopyFrom(HTTP.Document, 0);
     end;
   finally
@@ -800,7 +804,7 @@ begin
     Data.Size := 0;
     if Result then
     begin
-      Data.Seek(0, soFromBeginning);
+      Data.Seek(0, soBeginning);
       Data.CopyFrom(HTTP.Document, 0);
     end;
   finally

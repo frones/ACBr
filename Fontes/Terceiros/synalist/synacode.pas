@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -389,7 +390,7 @@ type
     HashByte: array[0..19] of byte;
   end;
 
-  TMDTransform = procedure(var Buf: array of LongInt; const Data: array of LongInt);
+  TMDTransform = procedure(var Buf: array of Integer; const Data: array of Integer);
 
 {==============================================================================}
 
@@ -875,7 +876,7 @@ begin
   MDContext.State[3] := Integer($10325476);
 end;
 
-procedure MD5Transform(var Buf: array of LongInt; const Data: array of LongInt);
+procedure MD5Transform(var Buf: array of Integer; const Data: array of Integer);
 var
   A, B, C, D: LongInt;
 
@@ -1380,7 +1381,7 @@ end;
 
 {==============================================================================}
 
-procedure MD4Transform(var Buf: array of LongInt; const Data: array of LongInt);
+procedure MD4Transform(var Buf: array of Integer; const Data: array of Integer);
 var
   A, B, C, D: LongInt;
   function LRot32(a, b: longint): longint;

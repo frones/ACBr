@@ -37,6 +37,7 @@
 | All Rights Reserved.                                                         |
 |==============================================================================|
 | Contributor(s):                                                              |
+|   Silvio Clecio, Waldir Paim e DSA  (Delphi POSIX support)                   |
 |==============================================================================|
 | History: see HISTORY.HTM from distribution package                           |
 |          (Found at URL: http://www.ararat.cz/synapse/)                       |
@@ -730,6 +731,9 @@ begin
     SMTP.Password := Password;
     if SMTP.Login then
     begin
+      {$IfNDef MSWINDOWS}
+        MailData.LineBreak := CRLF;
+      {$EndIf}
       if SMTP.MailFrom(GetEmailAddr(MailFrom), Length(MailData.Text)) then
       begin
         s := MailTo;

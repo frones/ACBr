@@ -1200,7 +1200,7 @@ object frmPrincipal: TfrmPrincipal
           Top = 16
           Width = 379
           Height = 17
-          Caption = 'Usar carga de DLL tardia nas units do OpenSSL'
+          Caption = 'Usar carga de DLL tardia (em especial xmlSec)'
           TabOrder = 3
         end
         object ckbRemoverCastWarnings: TCheckBox
@@ -1227,8 +1227,8 @@ object frmPrincipal: TfrmPrincipal
         object Label8: TLabel
           Left = 279
           Top = 16
-          Width = 249
-          Height = 39
+          Width = 248
+          Height = 26
           Caption = 'BETA: A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clRed

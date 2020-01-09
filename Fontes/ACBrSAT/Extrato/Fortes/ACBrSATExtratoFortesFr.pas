@@ -697,7 +697,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode(qrcode, imgQRCode.Picture, qrUTF8BOM);
+      PintarQRCode(qrcode, imgQRCode.Picture.Bitmap, qrUTF8BOM);
     end;
 
     mSwHouseSite.Lines.Clear;
@@ -1268,7 +1268,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode(qrcode, imgQRCodeCan.Picture, qrUTF8BOM);
+      PintarQRCode(qrcode, imgQRCodeCan.Picture.Bitmap, qrUTF8BOM);
     end;
   end;
 
@@ -1291,7 +1291,7 @@ begin
                                                        Total.vCFe,
                                                        Trim(Dest.CNPJCPF),
                                                        ide.assinaturaQRCODE );
-      PintarQRCode(qrcode, imgQRCodeCanc2.Picture, qrUTF8BOM);
+      PintarQRCode(qrcode, imgQRCodeCanc2.Picture.Bitmap, qrUTF8BOM);
     end;
   end;
 

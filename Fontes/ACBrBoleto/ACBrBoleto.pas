@@ -916,7 +916,8 @@ type
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite, tbBancoPreEmite);
-  TACBrCaracTitulo = (tcSimples,tcVinculada,tcCaucionada,tcDescontada,tcVendor, tcDireta);
+  TACBrCaracTitulo = (tcSimples, tcVinculada, tcCaucionada, tcDescontada, tcVendor, tcDireta,  
+                      tcSimplesRapComReg, tcCaucionadaRapComReg, tcDiretaEspecial);
   TACBrPessoa = (pFisica,pJuridica,pOutras);
   TACBrPessoaCedente = pFisica..pJuridica;
 

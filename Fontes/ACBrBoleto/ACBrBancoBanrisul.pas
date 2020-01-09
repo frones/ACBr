@@ -826,6 +826,7 @@ begin
             ValorDesconto        := StrToInt64Def(Copy(FSegU,  33, 15), 0) / 100;
             ValorAbatimento      := StrToInt64Def(Copy(FSegU,  48, 15), 0) / 100;
             ValorIOF             := StrToInt64Def(Copy(FSegU,  63, 15), 0) / 100;
+            ValorPago            := StrToInt64Def(Copy(FSegU,  78, 15), 0) / 100;
             ValorRecebido        := StrToInt64Def(Copy(FSegU,  93, 15), 0) / 100;
             ValorOutrasDespesas  := StrToInt64Def(Copy(FSegU, 108, 15), 0) / 100;
             ValorOutrosCreditos  := StrToInt64Def(Copy(FSegU, 123, 15), 0) / 100;

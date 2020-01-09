@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2020
+-- Diversos --
+[*] https://www.projetoacbr.com.br/forum/topic/54904-alterações-de-boleto-para-avaliação/
+   Por: Lukas
+
 07/01/2020
 -- ACBrBoleto --
 [+] Implementado o modelo lTermica80mm para imprimir em Fortes o Boleto em uma impressora termica

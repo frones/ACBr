@@ -250,8 +250,8 @@ end;
 
 function TACBrBancoItau.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String;
 var
-   ATipoInscricao, ATipoOcorrencia, AEspecieDoc       :String;
-   ADataMoraJuros, ADataDesconto,ATipoAceite,  ACodigoNegativacao :String;
+   ATipoInscricao, ATipoOcorrencia, AEspecieDoc, ADataMoraJuros, ADataDesconto,
+   ATipoAceite, ACodigoNegativacao, DataProtestoNegativacao, DiasProtestoNegativacao: String;
    ATipoInscricaoAvalista: Char;
 begin
    ATipoInscricaoAvalista := ' ';
@@ -326,6 +326,24 @@ begin
         ACodigoNegativacao := '0';
       end;
 
+      if (ACodigoNegativacao = '7') then
+      begin
+        DataProtestoNegativacao := DateToStr(DataNegativacao);
+        DiasProtestoNegativacao := IntToStr(DiasDeNegativacao);
+      end
+      else
+      begin
+	    if ((ACodigoNegativacao <> '3') and (ACodigoNegativacao <> '8')) then
+        begin
+          DataProtestoNegativacao := DateToStr(DataProtesto);
+          DiasProtestoNegativacao := IntToStr(DiasDeProtesto);
+        end
+        else
+        begin
+          DataProtestoNegativacao := '';
+          DiasProtestoNegativacao := '0';
+        end;
+	  end;
 
       {Mora Juros}
       if (ValorMoraJuros > 0) then
@@ -392,8 +410,11 @@ begin
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                               + //196 a 220 - Identificação do título na empresa
                ACodigoNegativacao                                         + //221 - Código de protesto: Protestar em XX dias corridos
-               IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
-                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')      + //222 a 223 - Prazo para protesto
+//               IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
+//                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')      + //222 a 223 - Prazo para protesto
+               IfThen((DataProtestoNegativacao <> '') and
+                      (StrToDate(DataProtestoNegativacao) > Vencimento),
+                       PadLeft(DiasProtestoNegativacao , 2, '0'), '00')   + //222 a 223 - Prazo para protesto
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '0')  + // 224 - Código de Baixa
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
                        PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 2, '0'), '00')  + // 225 A 226 - Dias para baixa

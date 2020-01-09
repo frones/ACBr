@@ -346,12 +346,13 @@ begin
     sDigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
 
     case ACBrBoleto.Cedente.CaracTitulo of      
-      tcSimples     : sTipoCobranca  := '1'; {Cobrança Simples (Sem Registro e Eletrônica com Registro)}
-      tcCaucionada  : sTipoCobranca  := '3'; {Cobrança Caucionada (Eletrônica com Registro e Convencional com Registro)}
-      tcDescontada  : sTipoCobranca  := '4'; {Cobrança Descontada (Eletrônica com Registro)}
-      tcVinculada   : sTipoCobranca  := '5'; {Cobrança Simples (Rápida com Registro)}
+      tcSimples            : sTipoCobranca := '1'; {Cobrança Simples (Sem Registro e Eletrônica com Registro)}
+      tcCaucionada         : sTipoCobranca := '3'; {Cobrança Caucionada (Eletrônica com Registro e Convencional com Registro)}
+      tcDescontada         : sTipoCobranca := '4'; {Cobrança Descontada (Eletrônica com Registro)}
+      tcVinculada,
+      tcSimplesRapComReg   : sTipoCobranca := '5'; {Cobrança Simples (Rápida com Registro)}
+      tcCaucionadaRapComReg: sTipoCobranca := '6'; {Cobrança Caucionada (Rápida com Registro)}
       { TODO :
-          6 = Cobrança Caucionada (Rápida com Registro)
           8 = Cobranca Cessao (Eletronica com Registro)
       }
     end;

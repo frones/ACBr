@@ -431,6 +431,8 @@ var
    AMensagem                    : String;
    ACodProtesto                 : Char;
    BoletoEmail,GeraSegS         : Boolean;
+   DataProtestoNegativacao      : string;
+   DiasProtestoNegativacao      : string;
 
   function MontarInstrucoes2: string;
   begin
@@ -507,6 +509,26 @@ begin
           ACodProtesto := '3';
         end;
       end;
+
+      {Data e Dias de Protesto / Negativação}
+      if (ACodProtesto = '8') then
+      begin
+        DataProtestoNegativacao := DateToStr(DataNegativacao);
+        DiasProtestoNegativacao := IntToStr(DiasDeNegativacao);
+      end
+      else
+	  begin
+  	    if (ACodProtesto <> '3') then
+        begin
+          DataProtestoNegativacao := DateToStr(DataProtesto);
+          DiasProtestoNegativacao := IntToStr(DiasDeProtesto);
+        end
+        else
+        begin
+          DataProtestoNegativacao := '';
+          DiasProtestoNegativacao := '0';
+        end;
+	  end;
 
      {Pegando o Tipo de Ocorrencia}
      case OcorrenciaOriginal.Tipo of
@@ -615,11 +637,12 @@ begin
 
 //     ACaracTitulo := ' ';
      case CaracTitulo of
-       tcSimples     : ACaracTitulo  := '1';
-       tcVinculada   : ACaracTitulo  := '2';
-       tcCaucionada  : ACaracTitulo  := '3';
-       tcDescontada  : ACaracTitulo  := '4';
-       tcVendor      : ACaracTitulo  := '5';
+       tcSimples       : ACaracTitulo  := '1';
+       tcVinculada     : ACaracTitulo  := '2';
+       tcCaucionada    : ACaracTitulo  := '3';
+       tcDescontada    : ACaracTitulo  := '4';
+       tcVendor        : ACaracTitulo  := '5';
+       tcDiretaEspecial: ACaracTitulo  := '7';
      else
        ACaracTitulo  := '1';
      end;
@@ -706,9 +729,14 @@ begin
               IntToStrZero( round(ValorIOF * 100), 15)                                  + // 166 a 180 - Valor do IOF a ser recolhido
               IntToStrZero( round(ValorAbatimento * 100), 15)                           + // 181 a 195 - Valor do abatimento
               PadRight(SeuNumero, 25, ' ')                                              + // 196 a 220 - Identificação do título na empresa
-              IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0), ACodProtesto, '3')   + // 221 - Código de protesto
-              IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
-                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')                    + // 222 a 223 - Prazo para protesto (em dias)
+//              IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0), ACodProtesto, '3')   + // 221 - Código de protesto
+//              IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
+//                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')                    + // 222 a 223 - Prazo para protesto (em dias)
+              IfThen((DataProtestoNegativacao <> '') and
+                      (StrToInt(DiasProtestoNegativacao) > 0), ACodProtesto, '3')       + // 221 - Código de protesto
+              IfThen((DataProtestoNegativacao <> '') and
+                     (StrToInt(DiasProtestoNegativacao) > 0),
+                      PadLeft(DiasProtestoNegativacao, 2, '0'), '00')                   + // 222 a 223 - Prazo para protesto (em dias)
               '0'                                                                       + // 224 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
               '000'                                                                     + // 225 a 227 - Campo não tratado pelo BB [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
               '09'                                                                      + // 228 a 229 - Código da moeda: Real

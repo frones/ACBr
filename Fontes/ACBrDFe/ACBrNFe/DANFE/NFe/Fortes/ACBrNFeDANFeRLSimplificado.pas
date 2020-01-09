@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emiss√£o de Nota Fiscal}
-{ eletr√¥nica - NFe - http://www.nfe.fazenda.gov.br                             }
+{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Nota Fiscal}
+{ eletrÙnica - NFe - http://www.nfe.fazenda.gov.br                             }
 
 
 { Colaboradores nesse arquivo:                                                 }
 
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 
 
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 
 {******************************************************************************}
 
@@ -283,10 +283,10 @@ begin
 
   rllEntradaSaida.Caption := tpNFToStr(fpNFe.Ide.tpNF);
 
-  lblNumero.Caption := ACBrStr('N√∫mero: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
-    ' - S√©rie: ' + FormatFloat('000', fpNFe.Ide.serie));
+  lblNumero.Caption := ACBrStr('N˙mero: ' + FormatFloat('000,000,000', fpNFe.Ide.nNF) +
+    ' - SÈrie: ' + FormatFloat('000', fpNFe.Ide.serie));
 
-  rllEmissao.Caption := ACBrStr('Emiss√£o: ' + FormatDateTimeBr(fpNFe.Ide.dEmi));
+  rllEmissao.Caption := ACBrStr('Emiss„o: ' + FormatDateTimeBr(fpNFe.Ide.dEmi));
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb04_DestinatarioBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -311,7 +311,7 @@ begin
   rllMsgTipoEmissao.Visible := False;
   if (fpNFe.Ide.tpAmb = taHomologacao) then
   begin
-    rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGA√á√ÇO - SEM VALOR FISCAL');
+    rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGA«¬O - SEM VALOR FISCAL');
     rllMsgTipoEmissao.Enabled := True;
     rllMsgTipoEmissao.Visible := True;
   end;
@@ -440,10 +440,10 @@ begin
 
   if NaoEstaVazio(fpNFe.Cobr.Fat.nFat) then
   begin
-//    RLLabelNUmero.Caption := ACBrStr('N√öMERO');
+//    RLLabelNUmero.Caption := ACBrStr('N⁄MERO');
 //    RLLabelValor.Caption := ACBrStr('VALOR ORIGINAL');
 //    RLLabelDupl.Caption := ACBrStr('VALOR DESCONTO');
-//    RLLabelLIQ.Caption := ACBrStr('VALOR L√çQUIDO');
+//    RLLabelLIQ.Caption := ACBrStr('VALOR LÕQUIDO');
 //
 //    // Define a Coluna dos label's
 //    RLLabelNUmero.Left := 264;
@@ -514,13 +514,13 @@ begin
   if (fpNFe.Ide.tpEmis in [teNormal, teSCAN]) then
   begin
     if (fpNFe.procNFe.cStat = 100) then
-      rllDescricao.Caption := ACBrStr('Protocolo de Autoriza√ß√£o');
+      rllDescricao.Caption := ACBrStr('Protocolo de AutorizaÁ„o');
 
     if (fpNFe.procNFe.cStat in [101, 151, 155]) then
-      rllDescricao.Caption := ACBrStr('Protocolo de Homologa√ß√£o de Cancelamento');
+      rllDescricao.Caption := ACBrStr('Protocolo de HomologaÁ„o de Cancelamento');
 
     if (fpNFe.procNFe.cStat = 110) then
-      rllDescricao.Caption := ACBrStr('Protocolo de Denega√ß√£o de Uso');
+      rllDescricao.Caption := ACBrStr('Protocolo de DenegaÁ„o de Uso');
   end;
 
   if NaoEstaVazio(fpDANFe.Protocolo) then

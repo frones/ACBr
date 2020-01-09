@@ -659,9 +659,9 @@ type
   end;
 
 const
-  CMUN_EXTERIOR: Integer = 9999999;
-  XMUN_EXTERIOR: String = 'EXTERIOR';
-  UF_EXTERIOR: String = 'EX';
+  CMUN_EXTERIOR = 9999999;
+  XMUN_EXTERIOR = 'EXTERIOR';
+  UF_EXTERIOR = 'EX';
 
 implementation
 

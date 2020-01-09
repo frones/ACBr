@@ -38,7 +38,7 @@ uses pcnConversao, SysUtils, ACBrUtil ;
 
 type
   {$IFNDEF FPC}
-    {$IFDEF DELPHI7}
+    {$IFNDEF DELPHI2009_UP}
     TDate = TDateTime;
     TTime = TDateTime;
     {$ENDIF}

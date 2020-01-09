@@ -90,6 +90,7 @@ type
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
   TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
   TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete);
+  TpcnInformacoesDePagamento = (eipNunca, eipAdicionais, eipQuadro);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;

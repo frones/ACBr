@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2020
+-- pcnConversaoNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, ACBrNFeDANFEFRDM --
+[*] Criação de propriedade "ExibeCampoDePagamento" para controlar a impressão
+    dos pagamentos no DANFE.
+  Por: Henrique Leonardo (hleorj) / BigWings
+
 18/12/2019
 -- ACBrNFeDANFeRLRetrato --
 [-] Ajuste para impressão do canhoto apenas na primeira página.

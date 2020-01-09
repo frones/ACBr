@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 413
-  Top = 253
+  Left = 204
+  Top = 207
   Caption = 'frlDANFeRLPaisagem'
   ClientHeight = 634
   ClientWidth = 810
@@ -37,7 +37,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbContinuacaoInformacoesComplementares: TRLBand[1]
       Left = 99
       Height = 35
-      Top = 574
+      Top = 628
       Width = 998
       AutoSize = True
       BandType = btSummary
@@ -136,7 +136,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbCabecalhoItens: TRLBand[2]
       Left = 99
       Height = 35
-      Top = 389
+      Top = 443
       Width = 998
       AutoExpand = False
       Background.Arrange = baDistributed
@@ -1031,7 +1031,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbDadosAdicionais: TRLBand[3]
       Left = 99
       Height = 124
-      Top = 638
+      Top = 692
       Width = 998
       AlignToBottom = True
       AutoExpand = False
@@ -2957,7 +2957,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbImposto: TRLBand[6]
       Left = 99
       Height = 58
-      Top = 193
+      Top = 247
       Width = 998
       BandType = btTitle
       RealBounds.Left = 0
@@ -3607,7 +3607,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbTransp: TRLBand[7]
       Left = 99
       Height = 80
-      Top = 251
+      Top = 305
       Width = 998
       BandType = btTitle
       RealBounds.Left = 0
@@ -4383,7 +4383,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbISSQN: TRLBand[8]
       Left = 99
       Height = 29
-      Top = 609
+      Top = 663
       Width = 998
       BandType = btFooter
       RealBounds.Left = 0
@@ -4615,7 +4615,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbAvisoContingencia: TRLBand[9]
       Left = 99
       Height = 28
-      Top = 361
+      Top = 415
       Width = 998
       BandType = btColumnHeader
       RealBounds.Left = 0
@@ -4794,8 +4794,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object rllDataRecebimento: TRLAngleLabel
         Tag = 1
         Left = 28
-        Height = 88
-        Top = 646
+        Height = 87
+        Top = 647
         Width = 7
         Angle = 90
         Caption = 'DATA DE RECEBIMENTO'
@@ -5130,7 +5130,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object rlbCanceladaDenegada: TRLBand[13]
       Left = 99
       Height = 30
-      Top = 331
+      Top = 385
       Width = 998
       BandType = btColumnHeader
       RealBounds.Left = 0
@@ -5162,7 +5162,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     object subItens: TRLSubDetail[14]
       Left = 99
       Height = 150
-      Top = 424
+      Top = 478
       Width = 998
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -7664,6 +7664,798 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Height = -7
         Font.Name = 'Arial'
         HoldStyle = hsRelatively
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+    object rlbPagamentoReal: TRLBand[18]
+      Left = 99
+      Height = 54
+      Top = 193
+      Width = 998
+      BandType = btTitle
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      object rliPagamentoReal: TRLDraw
+        Left = 0
+        Height = 53
+        Top = 0
+        Width = 997
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel108: TRLLabel
+        Left = 33
+        Height = 11
+        Top = 1
+        Width = 962
+        AutoSize = False
+        Caption = '  '
+        Color = 14540253
+        ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rliPagamentoReal0: TRLDraw
+        Left = 32
+        Height = 53
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliPagamentoReal1: TRLDraw
+        Left = 225
+        Height = 53
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliPagamentoReal2: TRLDraw
+        Left = 418
+        Height = 53
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliPagamentoReal3: TRLDraw
+        Left = 611
+        Height = 53
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliPagamentoReal4: TRLDraw
+        Left = 804
+        Height = 53
+        Top = 0
+        Width = 1
+        Angle = 90
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rliPagamentoReal5: TRLDraw
+        Left = 32
+        Height = 1
+        Top = 12
+        Width = 965
+        Angle = 0
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllPagamento: TRLAngleLabel
+        Left = 16
+        Height = 46
+        Top = 3
+        Width = 7
+        Angle = 90
+        AngleBorders = True
+        Caption = 'PAGAMENTO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelDescricao01: TRLLabel
+        Tag = 10
+        Left = 39
+        Height = 7
+        Top = 3
+        Width = 90
+        Caption = 'DESCRIÇÃO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelValor01: TRLLabel
+        Tag = 10
+        Left = 140
+        Height = 7
+        Top = 3
+        Width = 80
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelDescricao02: TRLLabel
+        Tag = 10
+        Left = 232
+        Height = 7
+        Top = 3
+        Width = 90
+        Caption = 'DESCRIÇÃO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelValor02: TRLLabel
+        Tag = 10
+        Left = 329
+        Height = 7
+        Top = 3
+        Width = 80
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelDescricao03: TRLLabel
+        Tag = 10
+        Left = 422
+        Height = 7
+        Top = 3
+        Width = 90
+        Caption = 'DESCRIÇÃO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelValor03: TRLLabel
+        Tag = 10
+        Left = 520
+        Height = 7
+        Top = 3
+        Width = 80
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelDescricao04: TRLLabel
+        Tag = 10
+        Left = 616
+        Height = 7
+        Top = 3
+        Width = 90
+        Caption = 'DESCRIÇÃO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelValor04: TRLLabel
+        Tag = 10
+        Left = 710
+        Height = 7
+        Top = 3
+        Width = 80
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelDescricao05: TRLLabel
+        Tag = 10
+        Left = 810
+        Height = 7
+        Top = 3
+        Width = 44
+        Caption = 'DESCRIÇÃO'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabelValor05: TRLLabel
+        Tag = 10
+        Left = 904
+        Height = 7
+        Top = 3
+        Width = 80
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao0: TRLLabel
+        Left = 39
+        Height = 12
+        Top = 15
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagValor0: TRLLabel
+        Left = 140
+        Height = 12
+        Top = 15
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor01
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao1: TRLLabel
+        Left = 232
+        Height = 12
+        Top = 15
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor1: TRLLabel
+        Left = 329
+        Height = 10
+        Top = 15
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao2: TRLLabel
+        Left = 422
+        Height = 12
+        Top = 15
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor2: TRLLabel
+        Left = 520
+        Height = 10
+        Top = 15
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao3: TRLLabel
+        Left = 616
+        Height = 12
+        Top = 15
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao04
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor3: TRLLabel
+        Left = 710
+        Height = 10
+        Top = 16
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor04
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao5: TRLLabel
+        Left = 39
+        Height = 12
+        Top = 27
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagValor5: TRLLabel
+        Left = 140
+        Height = 12
+        Top = 27
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor01
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao6: TRLLabel
+        Left = 232
+        Height = 12
+        Top = 27
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor6: TRLLabel
+        Left = 329
+        Height = 10
+        Top = 27
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao7: TRLLabel
+        Left = 422
+        Height = 12
+        Top = 27
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor7: TRLLabel
+        Left = 520
+        Height = 10
+        Top = 27
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao8: TRLLabel
+        Left = 616
+        Height = 12
+        Top = 27
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao04
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor8: TRLLabel
+        Left = 710
+        Height = 10
+        Top = 28
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor04
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao11: TRLLabel
+        Left = 232
+        Height = 12
+        Top = 39
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor13: TRLLabel
+        Left = 710
+        Height = 10
+        Top = 40
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao13: TRLLabel
+        Left = 616
+        Height = 12
+        Top = 39
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor12: TRLLabel
+        Left = 520
+        Height = 10
+        Top = 39
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao12: TRLLabel
+        Left = 422
+        Height = 12
+        Top = 39
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao03
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor11: TRLLabel
+        Left = 329
+        Height = 10
+        Top = 39
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor02
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor10: TRLLabel
+        Left = 140
+        Height = 12
+        Top = 39
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor01
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao10: TRLLabel
+        Left = 39
+        Height = 12
+        Top = 39
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagDescricao4: TRLLabel
+        Left = 810
+        Height = 12
+        Top = 15
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao05
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor4: TRLLabel
+        Left = 904
+        Height = 10
+        Top = 16
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor05
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao9: TRLLabel
+        Left = 810
+        Height = 12
+        Top = 27
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao05
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor9: TRLLabel
+        Left = 904
+        Height = 10
+        Top = 28
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor05
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagDescricao14: TRLLabel
+        Left = 810
+        Height = 12
+        Top = 39
+        Width = 82
+        Caption = 'Duplicata Mercantil'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelDescricao05
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLPagValor14: TRLLabel
+        Left = 904
+        Height = 10
+        Top = 40
+        Width = 80
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Holder = RLLabelValor05
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0

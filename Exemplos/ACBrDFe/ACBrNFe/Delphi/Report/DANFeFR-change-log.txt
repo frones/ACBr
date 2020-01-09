@@ -53,6 +53,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2020
+-- DANFERetrato_2019.fr3, DANFEPaisagem_2019.fr3 --
+[*] Arquivos renomeados para DANFERetrato.fr3 e DANFEPaisagem.fr3, respectivamente.
+  Por: BigWings
+
 06/12/2019
 -- DANFeNFCe5_00.fr3 --
 [*] Impressão do desconto ou acréscimo por item de acordo com a propriedade 

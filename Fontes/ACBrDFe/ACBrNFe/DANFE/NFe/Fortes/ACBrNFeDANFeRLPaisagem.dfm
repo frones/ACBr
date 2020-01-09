@@ -34,7 +34,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbContinuacaoInformacoesComplementares: TRLBand
       Left = 99
-      Top = 574
+      Top = 628
       Width = 998
       Height = 35
       AutoSize = True
@@ -107,7 +107,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCabecalhoItens: TRLBand
       Left = 99
-      Top = 389
+      Top = 443
       Width = 998
       Height = 35
       AutoExpand = False
@@ -835,7 +835,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbDadosAdicionais: TRLBand
       Left = 99
-      Top = 638
+      Top = 692
       Width = 998
       Height = 124
       AlignToBottom = True
@@ -2448,7 +2448,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbImposto: TRLBand
       Left = 99
-      Top = 193
+      Top = 247
       Width = 998
       Height = 58
       BandType = btTitle
@@ -2970,7 +2970,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbTransp: TRLBand
       Left = 99
-      Top = 251
+      Top = 305
       Width = 998
       Height = 80
       BandType = btTitle
@@ -3597,7 +3597,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbISSQN: TRLBand
       Left = 99
-      Top = 609
+      Top = 663
       Width = 998
       Height = 29
       BandType = btFooter
@@ -3781,7 +3781,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbAvisoContingencia: TRLBand
       Left = 99
-      Top = 361
+      Top = 415
       Width = 998
       Height = 28
       BandType = btColumnHeader
@@ -3922,9 +3922,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object rllDataRecebimento: TRLAngleLabel
         Tag = 1
         Left = 28
-        Top = 646
+        Top = 647
         Width = 7
-        Height = 88
+        Height = 87
         Angle = 90.000000000000000000
         Caption = 'DATA DE RECEBIMENTO'
         Font.Charset = DEFAULT_CHARSET
@@ -4202,7 +4202,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object rlbCanceladaDenegada: TRLBand
       Left = 99
-      Top = 331
+      Top = 385
       Width = 998
       Height = 30
       BandType = btColumnHeader
@@ -4227,7 +4227,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
     object subItens: TRLSubDetail
       Left = 99
-      Top = 424
+      Top = 478
       Width = 998
       Height = 150
       Borders.Sides = sdCustom
@@ -6227,6 +6227,677 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Font.Name = 'Arial'
         Font.Style = []
         HoldStyle = hsRelatively
+        ParentFont = False
+      end
+    end
+    object rlbPagamentoReal: TRLBand
+      Left = 99
+      Top = 193
+      Width = 998
+      Height = 54
+      BandType = btTitle
+      object rliPagamentoReal: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 997
+        Height = 53
+      end
+      object RLLabel108: TRLLabel
+        Left = 33
+        Top = 1
+        Width = 962
+        Height = 11
+        AutoSize = False
+        Caption = '  '
+        Color = 14540253
+        ParentColor = False
+        Transparent = False
+      end
+      object rliPagamentoReal0: TRLDraw
+        Left = 32
+        Top = 0
+        Width = 1
+        Height = 53
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rliPagamentoReal1: TRLDraw
+        Left = 225
+        Top = 0
+        Width = 1
+        Height = 53
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rliPagamentoReal2: TRLDraw
+        Left = 418
+        Top = 0
+        Width = 1
+        Height = 53
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rliPagamentoReal3: TRLDraw
+        Left = 611
+        Top = 0
+        Width = 1
+        Height = 53
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rliPagamentoReal4: TRLDraw
+        Left = 804
+        Top = 0
+        Width = 1
+        Height = 53
+        Angle = 90.000000000000000000
+        DrawKind = dkLine
+        HoldStyle = hsVertically
+      end
+      object rliPagamentoReal5: TRLDraw
+        Left = 32
+        Top = 12
+        Width = 965
+        Height = 1
+        DrawKind = dkLine
+        HoldStyle = hsRelatively
+      end
+      object rllPagamento: TRLAngleLabel
+        Left = 16
+        Top = 3
+        Width = 7
+        Height = 46
+        Angle = 90.000000000000000000
+        AngleBorders = True
+        Caption = 'PAGAMENTO'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object RLLabelDescricao01: TRLLabel
+        Tag = 10
+        Left = 39
+        Top = 3
+        Width = 90
+        Height = 7
+        Caption = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelValor01: TRLLabel
+        Tag = 10
+        Left = 140
+        Top = 3
+        Width = 80
+        Height = 7
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelDescricao02: TRLLabel
+        Tag = 10
+        Left = 232
+        Top = 3
+        Width = 90
+        Height = 7
+        Caption = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelValor02: TRLLabel
+        Tag = 10
+        Left = 329
+        Top = 3
+        Width = 80
+        Height = 7
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelDescricao03: TRLLabel
+        Tag = 10
+        Left = 422
+        Top = 3
+        Width = 90
+        Height = 7
+        Caption = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelValor03: TRLLabel
+        Tag = 10
+        Left = 520
+        Top = 3
+        Width = 80
+        Height = 7
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelDescricao04: TRLLabel
+        Tag = 10
+        Left = 616
+        Top = 3
+        Width = 90
+        Height = 7
+        Caption = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelValor04: TRLLabel
+        Tag = 10
+        Left = 710
+        Top = 3
+        Width = 80
+        Height = 7
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelDescricao05: TRLLabel
+        Tag = 10
+        Left = 810
+        Top = 3
+        Width = 44
+        Height = 7
+        Caption = 'DESCRI'#199#195'O'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLLabelValor05: TRLLabel
+        Tag = 10
+        Left = 904
+        Top = 3
+        Width = 80
+        Height = 7
+        AutoSize = False
+        Caption = 'VALOR'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -7
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLPagDescricao0: TRLLabel
+        Left = 39
+        Top = 15
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagValor0: TRLLabel
+        Left = 140
+        Top = 15
+        Width = 80
+        Height = 12
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor01
+        ParentFont = False
+      end
+      object RLPagDescricao1: TRLLabel
+        Left = 232
+        Top = 15
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao02
+        ParentFont = False
+      end
+      object RLPagValor1: TRLLabel
+        Left = 329
+        Top = 15
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor02
+        ParentFont = False
+      end
+      object RLPagDescricao2: TRLLabel
+        Left = 422
+        Top = 15
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao03
+        ParentFont = False
+      end
+      object RLPagValor2: TRLLabel
+        Left = 520
+        Top = 15
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor03
+        ParentFont = False
+      end
+      object RLPagDescricao3: TRLLabel
+        Left = 616
+        Top = 15
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao04
+        ParentFont = False
+      end
+      object RLPagValor3: TRLLabel
+        Left = 710
+        Top = 16
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor04
+        ParentFont = False
+      end
+      object RLPagDescricao5: TRLLabel
+        Left = 39
+        Top = 27
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagValor5: TRLLabel
+        Left = 140
+        Top = 27
+        Width = 80
+        Height = 12
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor01
+        ParentFont = False
+      end
+      object RLPagDescricao6: TRLLabel
+        Left = 232
+        Top = 27
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao02
+        ParentFont = False
+      end
+      object RLPagValor6: TRLLabel
+        Left = 329
+        Top = 27
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor02
+        ParentFont = False
+      end
+      object RLPagDescricao7: TRLLabel
+        Left = 422
+        Top = 27
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao03
+        ParentFont = False
+      end
+      object RLPagValor7: TRLLabel
+        Left = 520
+        Top = 27
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor03
+        ParentFont = False
+      end
+      object RLPagDescricao8: TRLLabel
+        Left = 616
+        Top = 27
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao04
+        ParentFont = False
+      end
+      object RLPagValor8: TRLLabel
+        Left = 710
+        Top = 28
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor04
+        ParentFont = False
+      end
+      object RLPagDescricao11: TRLLabel
+        Left = 232
+        Top = 39
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao02
+        ParentFont = False
+      end
+      object RLPagValor13: TRLLabel
+        Left = 710
+        Top = 40
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLPagDescricao13: TRLLabel
+        Left = 616
+        Top = 39
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object RLPagValor12: TRLLabel
+        Left = 520
+        Top = 39
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor03
+        ParentFont = False
+      end
+      object RLPagDescricao12: TRLLabel
+        Left = 422
+        Top = 39
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao03
+        ParentFont = False
+      end
+      object RLPagValor11: TRLLabel
+        Left = 329
+        Top = 39
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor02
+        ParentFont = False
+      end
+      object RLPagValor10: TRLLabel
+        Left = 140
+        Top = 39
+        Width = 80
+        Height = 12
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor01
+        ParentFont = False
+      end
+      object RLPagDescricao10: TRLLabel
+        Left = 39
+        Top = 39
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        SecondHolder = RLLabelDescricao01
+      end
+      object RLPagDescricao4: TRLLabel
+        Left = 810
+        Top = 15
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao05
+        ParentFont = False
+      end
+      object RLPagValor4: TRLLabel
+        Left = 904
+        Top = 16
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor05
+        ParentFont = False
+      end
+      object RLPagDescricao9: TRLLabel
+        Left = 810
+        Top = 27
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao05
+        ParentFont = False
+      end
+      object RLPagValor9: TRLLabel
+        Left = 904
+        Top = 28
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor05
+        ParentFont = False
+      end
+      object RLPagDescricao14: TRLLabel
+        Left = 810
+        Top = 39
+        Width = 82
+        Height = 12
+        Caption = 'Duplicata Mercantil'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelDescricao05
+        ParentFont = False
+      end
+      object RLPagValor14: TRLLabel
+        Left = 904
+        Top = 40
+        Width = 80
+        Height = 10
+        AutoSize = False
+        Caption = '9.999.999,99'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Holder = RLLabelValor05
         ParentFont = False
       end
     end

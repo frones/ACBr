@@ -100,7 +100,7 @@ type
     FTributosPercentual: TpcnPercentualTributos;
     FTributosPercentualPersonalizado: Double;
     FExpandirDadosAdicionaisAuto: boolean;
-
+    FExibeCampoDePagamento: TpcnInformacoesDePagamento;
     procedure SetTributosPercentual(const AValue: TpcnPercentualTributos);
     procedure SetTributosPercentualPersonalizado(const AValue: Double);
 
@@ -121,7 +121,7 @@ type
     function ManterColunaDesconto( Value : Double): Boolean;
     function ManterProtocolo(aNFE: TNFe): String;
     function ManterSuframa(aNFE: TNFe): String;
-
+    function ManterPagamentos(aNFE: TNFe): String;
     function ManterInformacoesDadosAdicionais(aNFE: TNFe): String;
 
   published
@@ -145,6 +145,7 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write SetTributosPercentual default ptValorProdutos;
     property TributosPercentualPersonalizado: Double read FTributosPercentualPersonalizado write SetTributosPercentualPersonalizado;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto default False;
+    property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento default eipNunca;
   end;
 
 
@@ -220,6 +221,7 @@ begin
   FTributosPercentual              := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FExpandirDadosAdicionaisAuto     := False;
+  FExibeCampoDePagamento           := eipNunca;
 
 end;
 
@@ -763,6 +765,7 @@ function TACBrNFeDANFEClass.ManterInformacoesDadosAdicionais( aNFE: TNFe): Strin
 begin
   Result := ManterProtocolo( aNFE ) +
             ManterSuframa( aNFE ) +
+            ManterPagamentos(aNFE) +
             ManterDocreferenciados(aNFE) +
             ManterInfAdFisco(aNFE) +
             ManterObsFisco(aNFE) +
@@ -774,5 +777,43 @@ begin
   Result := FastStringReplace(Result, ';', sLineBreak, [rfReplaceAll]);
 end;
 
+function TACBrNFeDANFEClass.ManterPagamentos(aNFE: TNFe): String;
+  function MontaLadoALado(sResult: String; sInicio: String; sString: String): String;
+  begin
+    if sResult = '' then
+      Result := sInicio
+    else
+    begin
+      if pos(sInicio, sResult) = 0 then
+      Result := sResult + ', ' + sInicio
+      else
+      Result := sResult + ', ';
+    end;
+    Result := Result + sString ;
+  end;
+var
+  i: Integer;
+  lTemp,
+  lQuebraLinha: String;
+begin
+  Result := '';
+  if (not ( FExibeCampoDePagamento = eipAdicionais) ) or (ANFe.pag.Count < 1) then
+    Exit;
+
+  lQuebraLinha := SeparadorDetalhamentos;
+
+  for i := 0 to (ANFe.pag.Count - 1) do
+  begin
+    lTemp :=  ACBrStr(
+                FormaPagamentoToDescricao( ANFe.pag.Items[i].tPag)
+                ) + ' R$'+
+                FormatFloatBr( ANFe.pag.Items[i].vPag);
+
+    Result := MontaLadoALado(Result, 'Pagamento(s): (', lTemp );
+  end;
+
+  if (Result <> '') then
+    Result := Result+ ')' + lQuebraLinha;
+end;
 
 end.

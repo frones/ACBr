@@ -45,6 +45,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2020
+-- pcnConversaoNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, ACBrNFeDANFEFRDM --
+[*] Criação de propriedade "ExibeCampoDePagamento" para controlar a impressão
+    dos pagamentos no DANFE.
+  Por: Henrique Leonardo (hleorj) / BigWings
+
 21/11/2019
 -- ACBrNFeDANFERDM --
 [+] Implementado a impressão do conteúdo da tag xMsg nos DANFE da NF-e e NFC-e

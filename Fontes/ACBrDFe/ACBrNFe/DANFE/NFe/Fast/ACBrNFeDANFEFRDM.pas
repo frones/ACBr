@@ -1315,40 +1315,44 @@ var
   i: Integer;
   vTroco: Currency;
 begin
-  with cdsPagamento do
+  cdsPagamento.Close;
+  cdsPagamento.CreateDataSet;
+
+  if (FDANFEClassOwner is TACBrNFeDANFEFR)
+    and (TACBrNFeDANFEFR(FDANFEClassOwner).ExibeCampoDePagamento <> eipQuadro) then
   begin
-    Close;
-    CreateDataSet;
-    for i := 0 to NFe.Pag.Count - 1 do
-    begin
-      Append;
-      with FNFe.Pag[i] do
-      begin
-        if FDANFEClassOwner is TACBrNFeDANFCEClass then
-          FieldByName('tPag').AsString := TACBrNFeDANFCEClass(FDANFEClassOwner).ManterDescricaoPagamentos(FNFe.pag[i])
-        else
-          FieldByName('tPag').AsString := FormaPagamentoToDescricao(tPag);
-        FieldByName('vPag').AsFloat   := vPag;
-        // ver tpIntegra
-        FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
-        FieldByName('tBand').AsString := BandeiraCartaoToDescStr( tBand );
-        FieldByName('cAut').AsString  := cAut;
-      end;
-      Post;
-    end;
+    Exit;
+  end;
 
-    // acrescenta o troco
-    vTroco := FNFe.pag.vTroco;
-    if (vTroco = 0) and (FDANFEClassOwner is TACBrNFeDANFCEClass) then
-      vTroco := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
-
-    if vTroco > 0 then
+  for i := 0 to NFe.Pag.Count - 1 do
+  begin
+    cdsPagamento.Append;
+    with FNFe.Pag[i] do
     begin
-      Append;
-      FieldByName('tPag').AsString  := 'Troco R$';
-      FieldByName('vPag').AsFloat   := vTroco;
-      Post;
+      if FDANFEClassOwner is TACBrNFeDANFCEClass then
+        cdsPagamento.FieldByName('tPag').AsString := TACBrNFeDANFCEClass(FDANFEClassOwner).ManterDescricaoPagamentos(FNFe.pag[i])
+      else
+        cdsPagamento.FieldByName('tPag').AsString := FormaPagamentoToDescricao(tPag);
+      cdsPagamento.FieldByName('vPag').AsFloat   := vPag;
+      // ver tpIntegra
+      cdsPagamento.FieldByName('CNPJ').AsString  := FormatarCNPJ(CNPJ);
+      cdsPagamento.FieldByName('tBand').AsString := BandeiraCartaoToDescStr( tBand );
+      cdsPagamento.FieldByName('cAut').AsString  := cAut;
     end;
+    cdsPagamento.Post;
+  end;
+
+  // acrescenta o troco
+  vTroco := FNFe.pag.vTroco;
+  if (vTroco = 0) and (FDANFEClassOwner is TACBrNFeDANFCEClass) then
+    vTroco := TACBrNFeDANFCEClass(FDANFEClassOwner).vTroco;
+
+  if vTroco > 0 then
+  begin
+    cdsPagamento.Append;
+    cdsPagamento.FieldByName('tPag').AsString  := 'Troco R$';
+    cdsPagamento.FieldByName('vPag').AsFloat   := vTroco;
+    cdsPagamento.Post;
   end;
 end;
 
@@ -1432,6 +1436,7 @@ begin
     if (FDANFEClassOwner is TACBrNFeDANFEClass) then
     begin
       wObs := TACBrNFeDANFEClass(FDANFEClassOwner).ManterDocreferenciados(FNFe) +
+              TACBrNFeDANFEClass(FDANFEClassOwner).ManterPagamentos(FNFe) +
               FDANFEClassOwner.ManterInfAdFisco(FNFe) +
               FDANFEClassOwner.ManterObsFisco(FNFe) +
               FDANFEClassOwner.ManterProcreferenciado(FNFe) +
@@ -2110,7 +2115,7 @@ begin
   frxReport.OnPreview := frxReportPreview;
 
   if NaoEstaVazio(DANFEClassOwner.NomeDocumento) then
-  frxReport.FileName := DANFEClassOwner.NomeDocumento;
+    frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then
@@ -2185,7 +2190,7 @@ begin
   frxReport.OnPreview := frxReportPreview;
 
   if NaoEstaVazio(DANFEClassOwner.NomeDocumento) then
-  frxReport.FileName := DANFEClassOwner.NomeDocumento;
+    frxReport.FileName := DANFEClassOwner.NomeDocumento;
 
   // Define a impressora
   if NaoEstaVazio(DANFEClassOwner.Impressora) then

@@ -53,6 +53,11 @@ Símbolo : Significado
     vICMSSubstituto e vICMSSTRET quando o CST for 60 e CSOSN for 500.
    Por: Italo Jurisato Junior
 
+-- pcnConversaoNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, ACBrNFeDANFEFRDM --
+[*] Criação de propriedade "ExibeCampoDePagamento" para controlar a impressão
+    dos pagamentos no DANFE.
+  Por: Henrique Leonardo (hleorj) / BigWings
+
 08/01/2020
 -- pcnLayoutTXT -- 
 [*] Atualização do Layout TXT compatibilizando com a versão 4.0 disponibilizada pelo SEBRAE

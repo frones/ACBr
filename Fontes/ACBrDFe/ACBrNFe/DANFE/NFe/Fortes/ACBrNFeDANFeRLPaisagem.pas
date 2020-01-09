@@ -544,6 +544,56 @@ type
     rlbQuandoEntregaLinha2Memo5: TRLLabel;
     rlbQuandoRetiradaLinha2Memo5: TRLLabel;
     rlmDadosFisco: TRLMemo;
+    rlbPagamentoReal: TRLBand;
+    rliPagamentoReal: TRLDraw;
+    RLLabel108: TRLLabel;
+    rliPagamentoReal0: TRLDraw;
+    rliPagamentoReal1: TRLDraw;
+    rliPagamentoReal2: TRLDraw;
+    rliPagamentoReal3: TRLDraw;
+    rliPagamentoReal4: TRLDraw;
+    rliPagamentoReal5: TRLDraw;
+    rllPagamento: TRLAngleLabel;
+    RLLabelDescricao01: TRLLabel;
+    RLLabelValor01: TRLLabel;
+    RLLabelDescricao02: TRLLabel;
+    RLLabelValor02: TRLLabel;
+    RLLabelDescricao03: TRLLabel;
+    RLLabelValor03: TRLLabel;
+    RLLabelDescricao04: TRLLabel;
+    RLLabelValor04: TRLLabel;
+    RLLabelDescricao05: TRLLabel;
+    RLLabelValor05: TRLLabel;
+    RLPagDescricao0: TRLLabel;
+    RLPagValor0: TRLLabel;
+    RLPagDescricao1: TRLLabel;
+    RLPagValor1: TRLLabel;
+    RLPagDescricao2: TRLLabel;
+    RLPagValor2: TRLLabel;
+    RLPagDescricao3: TRLLabel;
+    RLPagValor3: TRLLabel;
+    RLPagDescricao5: TRLLabel;
+    RLPagValor5: TRLLabel;
+    RLPagDescricao6: TRLLabel;
+    RLPagValor6: TRLLabel;
+    RLPagDescricao7: TRLLabel;
+    RLPagValor7: TRLLabel;
+    RLPagDescricao8: TRLLabel;
+    RLPagValor8: TRLLabel;
+    RLPagDescricao11: TRLLabel;
+    RLPagValor13: TRLLabel;
+    RLPagDescricao13: TRLLabel;
+    RLPagValor12: TRLLabel;
+    RLPagDescricao12: TRLLabel;
+    RLPagValor11: TRLLabel;
+    RLPagValor10: TRLLabel;
+    RLPagDescricao10: TRLLabel;
+    RLPagDescricao4: TRLLabel;
+    RLPagValor4: TRLLabel;
+    RLPagDescricao9: TRLLabel;
+    RLPagValor9: TRLLabel;
+    RLPagDescricao14: TRLLabel;
+    RLPagValor14: TRLLabel;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -572,7 +622,6 @@ type
     procedure DefinirISSQN;
     procedure AdicionarFatura;
     procedure AdicionarFaturaReal;
-    function ManterDuplicatas: Integer;
     procedure AplicarParametros;
     procedure DefinirCabecalhoItens;
     function ManterBandinfAdProd(const sInforAdicProduto: String): String;
@@ -581,6 +630,13 @@ type
     procedure DefinirEntrega;
     procedure DefinirRetirada;
     procedure ControlaExibicaoColunaDesconto(var vWidthAux: Integer; var vLeftAux: Integer);
+    procedure AjustaQuadro(iQuantlinhas: Integer; var iAltQuadro,
+      iAltBand: Integer);
+    Procedure AtribuirDePara( ValueDe :  TRLDraw; ValuePara : array of TRLDraw  );
+    procedure limparLabels(ValueInicio,ValueRepeticao: Integer;
+      const ValueLbl1, ValueLbl2: String;
+      const ValueLbl3: String = 'VAZIO');
+    procedure AdicionarInformacoesPagamento;
   end;
 
 implementation
@@ -1011,6 +1067,7 @@ begin
   DefinirTransporte;
   AdicionarFaturaReal;
   AdicionarFatura;
+  AdicionarInformacoesPagamento;
   DefinirCabecalhoItens;
   DefinirObservacoes;
 
@@ -1441,60 +1498,6 @@ begin
   end;
 end;
 
-procedure TfrlDANFeRLPaisagem.AdicionarFatura;
-var
-  x, iQuantDup, iLinhas, iColunas, iPosQuadro, iAltLinha, iAltQuadro1Linha, iAltQuadro, iAltBand, iFolga: Integer;
-begin
-  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
-
-  if (fpNFe.Cobr.Dup.Count > 0) then
-  begin
-    if (fpNFe.Cobr.Dup.Count < 6) then
-      TRLLabel(FindComponent('rllFatura')).Caption := 'DUPL';
-
-    for x := 1 to 15 do
-    begin
-      TRLLabel(FindComponent('rllFatNum' + IntToStr(x))).Caption := '';
-      TRLLabel(FindComponent('rllFatData' + IntToStr(x))).Caption := '';
-      TRLLabel(FindComponent('rllFatValor' + IntToStr(x))).Caption := '';
-    end;
-
-    TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
-
-    iQuantDup := ManterDuplicatas;
-
-    {=============== Ajusta o tamanho do quadro das faturas ===============}
-
-    iColunas := 5;   // Quantidade de colunas
-    iAltLinha := 12;  // Altura de cada linha
-    iPosQuadro := 0;   // Posição (Top) do Quadro
-    iAltQuadro1Linha := 27;  // Altura do quadro com 1 linha
-    iFolga := 1;   // Distância entre o final da Band e o final do quadro
-
-    if ((iQuantDup mod iColunas) = 0) then // Quantidade de linhas
-      iLinhas := iQuantDup div iColunas
-    else
-      iLinhas := (iQuantDup div iColunas) + 1;
-
-    if (iLinhas = 1) then
-      iAltQuadro := iAltQuadro1Linha
-    else
-      iAltQuadro := iAltQuadro1Linha + ((iLinhas - 1) * iAltLinha);
-
-    iAltBand := iPosQuadro + iAltQuadro + iFolga;
-
-    rlbFatura.Height := iAltBand;
-    rliFatura.Height := iAltQuadro;
-    rliFatura1.Height := iAltQuadro;
-    rliFatura2.Height := iAltQuadro;
-    rliFatura3.Height := iAltQuadro;
-    rliFatura4.Height := iAltQuadro;
-    rliFatura5.Height := iAltQuadro;
-
-    {=============== Centraliza o label "DUPLICATA" ===============}
-    rllFatura.Top := (rlbFatura.Height - rllFatura.Height) div 2;
-  end;
-end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensAfterPrint(Sender: TObject);
 begin
@@ -1545,6 +1548,7 @@ begin
 
   if (fpNFe.infNFe.Versao >= 4) then
   begin
+    RLLabelPag.Caption := '';
     RlbDadoPagamento.Caption := ACBrStr('DADOS DA FATURA');
     rlbFaturaReal.Visible := NaoEstaVazio(fpNFe.Cobr.Fat.nFat) and fpDANFe.ExibeCampoFatura;
   end
@@ -1595,29 +1599,6 @@ begin
     RlbDadoValorOriginal.Caption := '';
     RlbDadoValorDesconto.Caption := '';
     RlbDadoValorLiquido.Caption := '';
-  end;
-end;
-
-function TfrlDANFeRLPaisagem.ManterDuplicatas: Integer;
-var
-  x: Integer;
-begin
-  with fpNFe.Cobr do
-  begin
-    if (Dup.Count > 15) then
-      Result := 15
-    else
-      Result := Dup.Count;
-
-    for x := 0 to (Result - 1) do
-    begin
-      with Dup[x] do
-      begin
-        TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption := NDup;
-        TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption := FormatFloatBr(VDup);
-      end;
-    end;
   end;
 end;
 
@@ -2257,6 +2238,186 @@ begin
   if (not fpDANFe.ImprimeContinuacaoDadosAdicionaisPrimeiraPagina) and (RLNFe.PageNumber = 1) then
   begin
     RLNFe.NewPageNeeded := True;
+  end;
+end;
+
+procedure TfrlDANFeRLPaisagem.AdicionarFatura;
+  function ManterDuplicatas( ValueMaximo : Integer ): Integer;
+  var
+    x: Integer;
+  begin
+    // ValueMaximo - > Quantidade de Label's Disponivel
+
+    Result := min(fpNFe.Cobr.Dup.Count, ValueMaximo);
+
+    if (Result < 6) then
+      TRLLabel(FindComponent('rllFatura')).Caption := 'DUPL';
+
+    for x := 0 to (Result - 1) do
+    begin
+      TRLLabel(FindComponent('rllFatNum' + IntToStr(x + 1))).Caption :=
+        fpNFe.Cobr.Dup[x].NDup;
+      TRLLabel(FindComponent('rllFatData' + IntToStr(x + 1))).Caption :=
+        FormatDateBr(fpNFe.Cobr.Dup[x].DVenc);
+      TRLLabel(FindComponent('rllFatValor' + IntToStr(x + 1))).Caption :=
+        FormatFloatBr(fpNFe.Cobr.Dup[x].VDup);
+    end;
+
+  end;
+var
+  iQuantidadedeLabel ,
+  iAltQuadro,
+  iAltBand: Integer;
+begin
+  rlbFatura.Visible := (fpNFe.Cobr.Dup.Count > 0);
+
+  if (fpNFe.Cobr.Dup.Count > 0) then
+  begin
+    iQuantidadedeLabel := 15;
+    limparLabels( 1,
+                  iQuantidadedeLabel ,
+                  'rllFatNum' ,
+                  'rllFatData' ,
+                  'rllFatValor');
+
+    TRLLabel(FindComponent('rllFatNum1')).AutoSize := True;
+
+    AjustaQuadro( ManterDuplicatas(iQuantidadedeLabel),
+                  iAltQuadro,
+                  iAltBand);
+
+
+    rlbFatura.Height := iAltBand;
+    rliFatura.Height := iAltQuadro;
+
+    AtribuirDePara( rliFatura,
+                    [ rliFatura1 ,
+                      rliFatura2 ,
+                      rliFatura3 ,
+                      rliFatura4 , rliFatura5]
+                    );
+
+    {=============== Centraliza o label "DUPLICATA" ===============}
+    rllFatura.Top := (rlbFatura.Height - rllFatura.Height) div 2;
+  end;
+end;
+
+procedure TfrlDANFeRLPaisagem.AdicionarInformacoesPagamento;
+  function ManterInformacoesPagamento(ValueMaximo : Integer ): Integer;
+  var
+    x: Integer;
+  begin
+    // ValueMaximo - > Quantidade de Label's Disponivel
+
+    Result := min(fpNFe.pag.Count, ValueMaximo);
+
+    if (Result < 6) then
+      TRLLabel(FindComponent('rllPagamento')).Caption := 'PAGT';
+
+    for x := 0 to (Result - 1) do
+    begin
+      TRLLabel(FindComponent('RLPagDescricao' + IntToStr(x))).Caption :=
+        ACBrStr(
+          FormaPagamentoToDescricao(fpNFe.pag.Items[x].tPag)
+                  );
+      TRLLabel(FindComponent('RLPagValor' + IntToStr(x))).Caption :=
+        FormatFloatBr(fpNFe.pag.Items[x].vPag);
+    end;
+
+  end;
+var
+  iQuantidadedeLabel,
+  iAltQuadro,
+  iAltBand: Integer;
+begin
+
+  rlbPagamentoReal.Visible := ( fpDANFe.ExibeCampoDePagamento = eipQuadro )
+                              and
+                              ( fpNFe.pag.Count > 0);
+
+  if ( rlbPagamentoReal.Visible ) then
+  begin
+    iQuantidadedeLabel := 15;
+
+    limparLabels( 0 ,
+                  ( iQuantidadedeLabel - 1 ),
+                  'RLPagDescricao',
+                  'RLPagValor');
+
+    AjustaQuadro( ManterInformacoesPagamento(iQuantidadedeLabel),
+                  iAltQuadro,
+                  iAltBand);
+
+    rlbPagamentoReal.Height := iAltBand;
+    rliPagamentoReal.Height := iAltQuadro;
+
+    AtribuirDePara( rliPagamentoReal,
+                    [ rliPagamentoReal0 ,
+                      rliPagamentoReal1 ,
+                      rliPagamentoReal2 ,
+                      rliPagamentoReal3 ,
+                      rliPagamentoReal4 ]
+                    );
+
+    {=============== Centraliza o label "DUPLICATA" ===============}
+    rllPagamento.Top := (rlbPagamentoReal.Height - rllPagamento.Height) div 2;
+  end;
+end;
+
+
+procedure TfrlDANFeRLPaisagem.AjustaQuadro(iQuantlinhas: Integer;
+                                          var iAltQuadro: Integer;
+                                          var iAltBand: Integer);
+var
+  iColunas: Integer;
+  iAltLinha: Integer;
+  iPosQuadro: Integer;
+  iAltQuadro1Linha: Integer;
+  iFolga: Integer;
+  iLinhas: Integer;
+begin
+  {=============== Ajusta o tamanho do quadro ===============}
+  iColunas := 5;          // Quantidade de colunas
+  iAltLinha := 12;        // Altura de cada linha
+  iPosQuadro := 0;        // Posição (Top) do Quadro
+  iAltQuadro1Linha := 27; // Altura do quadro com 1 linha
+  iFolga := 1;   // Distância entre o final da Band e o final do quadro
+
+  // Quantidade de linhas
+  if ((iQuantlinhas mod iColunas) = 0) then
+    iLinhas := iQuantlinhas div iColunas
+  else
+    iLinhas := (iQuantlinhas div iColunas) + 1;
+  if (iLinhas = 1) then
+    iAltQuadro := iAltQuadro1Linha
+  else
+    iAltQuadro := iAltQuadro1Linha + ((iLinhas - 1) * iAltLinha);
+  iAltBand := iPosQuadro + iAltQuadro + iFolga;
+end;
+
+procedure TfrlDANFeRLPaisagem.limparLabels(ValueInicio,ValueRepeticao: Integer;
+      const ValueLbl1, ValueLbl2: String;
+      const ValueLbl3: String = 'VAZIO');
+Var
+  x : Integer;
+Begin
+  for x := ValueInicio to ValueRepeticao do
+  begin
+    TRLLabel(FindComponent(ValueLbl1 + IntToStr(x))).Caption := '';
+    TRLLabel(FindComponent(ValueLbl2 + IntToStr(x))).Caption := '';
+    if ValueLbl3 <> 'VAZIO' then
+      TRLLabel(FindComponent(ValueLbl3 + IntToStr(x))).Caption := '';
+  end;
+End;
+
+Procedure TfrlDANFeRLPaisagem.AtribuirDePara( ValueDe :  TRLDraw; ValuePara : array of TRLDraw  );
+var
+  i : Integer;
+begin
+  for I := Low(ValuePara) to High(ValuePara) do
+  begin
+    ValuePara[i].Top := ValueDe.Top;
+    ValuePara[i].Height := ValueDe.Height;
   end;
 end;
 

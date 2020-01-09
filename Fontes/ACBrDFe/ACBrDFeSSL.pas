@@ -489,7 +489,9 @@ begin
 
   inherited Create(False);  // Executa agora
 
+  {$IfNDef POSIX}
   Priority := tpNormal;
+  {$EndIf}
 end;
 
 destructor TDFeSendThread.Destroy;

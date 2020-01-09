@@ -47,7 +47,7 @@ interface
 
 uses
    Classes, SysUtils, strutils, ACBrConsts, ACBrBase,
-   ACBrUtil, {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
+   ACBrUtil, OpenSSLExt;
 
 const
    CBufferSize = 32768;
@@ -94,6 +94,8 @@ type
     fsKey : pEVP_PKEY ;
     fsIsXMLeECFc : Boolean ;
     fsBufferSize: Integer;
+    fsVersao: String;
+    fsVersaoEhAntiga: Boolean;
 
     function GetOpenSSL_Version: String;
 
@@ -200,6 +202,7 @@ type
       overload ;
 
     property OpenSSL_Version : String read GetOpenSSL_Version ;
+    function OpenSSL_OldVersion: Boolean;
 
     function MD5FromFile(const APathArquivo: String): String;
     function MD5FromString(const AString: String): String;
@@ -243,12 +246,7 @@ begin
   if not OpenSSLLoaded then
     exit;
 
-  {$IFDEF USE_libeay32}
-   EVP_cleanup();
-  {$ELSE}
-   EVPcleanup();
-  {$ENDIF}
-
+  EVPcleanup();
   OpenSSLLoaded := False;
 end;
 
@@ -379,7 +377,8 @@ begin
 
    fsIsXMLeECFc := False ;
    fsBufferSize := CBufferSize ;
-
+   fsVersao := '';
+   fsVersaoEhAntiga := False;
    fsOnGetChavePrivada := Nil;
    fsOnGetChavePublica := Nil;
    fsOnProgress        := Nil ;
@@ -447,29 +446,16 @@ begin
 
   b := CriarMemBIO;
   try
-    {$IFDEF USE_libeay32}
-     BIO_write(b, PAnsiChar(PFXData), Length(PFXData));
-     p12 := d2i_PKCS12_bio(b, nil);
-    {$ELSE}
-     BioWrite(b, PFXData, Length(PFXData));
-     p12 := d2iPKCS12bio(b, nil);
-    {$ENDIF}
+    BioWrite(b, PFXData, Length(PFXData));
+    p12 := d2iPKCS12bio(b, nil);
     if not Assigned(p12) then
       raise EACBrEADException.Create( 'Erro ao ler PFX');
 
     try
       ca := nil;
-      {$IFDEF USE_libeay32}
-      if PKCS12_parse(p12, PAnsiChar(AnsiString( Senha )), fsKey, Cert, ca) > 0 then
-      {$ELSE}
       if PKCS12parse(p12, Senha, fsKey, Cert, ca) > 0 then
-      {$ENDIF}
       begin
-        {$IfDef USE_libeay32}
-         RsaKey := EVP_PKEY_get1_RSA(fsKey);
-        {$Else}
-         RsaKey := EvpPkeyGet1RSA(fsKey);
-        {$EndIf}
+        RsaKey := EvpPkeyGet1RSA(fsKey);
 
         // Lendo Conteudo da Chave
         BioKey := CriarMemBIO;
@@ -477,7 +463,7 @@ begin
           PEM_write_bio_RSAPrivateKey(BioKey, RsaKey, nil, nil, 0, nil, nil);
           AChavePrivada := AnsiString(BioToStr( BioKey ));
 
-          BIO_reset( BioKey );
+          BIOReset( BioKey );
           PEM_write_bio_PUBKEY( BioKey, fsKey);
           AChavePublica := AnsiString(BioToStr( BioKey ));
         finally
@@ -487,11 +473,7 @@ begin
       else
         raise EACBrEADException.Create( 'Erro ao interpretar PFX');
     finally
-      {$IFDEF USE_libeay32}
-       PKCS12_free(p12);
-      {$ELSE}
-       PKCS12free(p12);
-      {$ENDIF}
+      PKCS12free(p12);
     end;
   finally
     LiberarBIO(b);
@@ -503,49 +485,50 @@ var
   VersaoStr: String;
   P1, P2: Integer;
 begin
-   VersaoStr := String(SSLeay_version( 0 ));
+  if (fsVersao = '') then
+  begin
+    VersaoStr := String(SSLeay_version( 0 ));
 
-   P1 := pos(' ', VersaoStr);
-   P2 := Length(VersaoStr);
-   if P1 > 0 then
-   begin
+    P1 := pos(' ', VersaoStr);
+    P2 := Length(VersaoStr);
+    if P1 > 0 then
+    begin
       P2 := PosEx(' ', VersaoStr, P1+1 );
       if P2 = 0 then
         P2 := Length(VersaoStr);
-   end;
+    end;
 
-   Result := Trim(copy(VersaoStr, P1, P2-P1));
+    fsVersao := Trim(copy(VersaoStr, P1, P2-P1));
+    fsVersaoEhAntiga := (CompareVersions(fsVersao, '1.1.0') < 0);
+  end;
+
+  Result := fsVersao;
+end;
+
+function TACBrEAD.OpenSSL_OldVersion: Boolean;
+begin
+  if (fsVersao = '') then
+    GetOpenSSL_Version;
+
+  Result := fsVersaoEhAntiga;
 end;
 
 function TACBrEAD.BioToStr(ABio : pBIO) : String ;
 Var
-  {$IFDEF USE_libeay32}
-   Buf : array [0..1023] of AnsiChar;
-  {$ELSE}
-   Ret : Integer ;
-  {$ENDIF}
+  Ret : Integer ;
   Lin : AnsiString ;
 begin
   Result := '';
 
-  {$IFDEF USE_libeay32}
-   while BIO_eof( ABio ) = 0 do
-   begin
-     BIO_gets( ABio, Buf, 1024 );
-     Lin := StrPas( Buf );
-     Result := Result + String(Lin);
-   end ;
-  {$ELSE}
-   repeat
-      SetLength(Lin,1024);
-      Ret := BioRead( ABio, Lin, 1024);
-      if Ret > 0 then
-      begin
-         Lin := copy(Lin,1,Ret) ;
-         Result := Result + Lin;
-      end ;
-   until (Ret <= 0);
-  {$ENDIF}
+  repeat
+    SetLength(Lin,1024);
+    Ret := BioRead( ABio, Lin, 1024);
+    if Ret > 0 then
+    begin
+      Lin := copy(Lin,1,Ret) ;
+      Result := Result + Lin;
+    end ;
+  until (Ret <= 0);
 end ;
 
 procedure TACBrEAD.GerarChaves(var AChavePublica : AnsiString ;
@@ -585,11 +568,7 @@ begin
 
   // Gera a Chave RSA
   LiberarChave;
-  {$IFDEF USE_libeay32}
-   RSAKey := RSA_generate_key( 1024, RSA_F4, nil, nil);
-  {$ELSE}
-   RSAKey := RsaGenerateKey( 1024, RSA_F4, nil, nil);
-  {$ENDIF}
+  RSAKey := RsaGenerateKey( 1024, RSA_F4, nil, nil);
   if RSAKey = nil then
      raise EACBrEADException.Create( 'Erro ao gerar par de Chaves RSA');
 
@@ -601,7 +580,7 @@ begin
 
      LerChave( AChavePrivada, True );
 
-     BIO_reset( BioKey );
+     BIOReset( BioKey );
      PEM_write_bio_PUBKEY( BioKey, fsKey);
      AChavePublica := AnsiString(BioToStr( BioKey ));
   finally
@@ -720,21 +699,12 @@ begin
   if Erro < 1 then
      raise EACBrEADException.Create( ACBrStr('Erro: Modulo inválido') ) ;
 
-  {$IFDEF USE_libeay32}
-   fsKey := EVP_PKEY_new;
-  {$ELSE}
-   fsKey := EvpPkeyNew;
-  {$ENDIF}
-
+  fsKey := EvpPkeyNew;
   RSAKey := RSA_new;
   RSAKey^.e := bnMod;
   RSAKey^.d := bnExp;
 
-  {$IFDEF USE_libeay32}
-    Erro := EVP_PKEY_set1_RSA( fsKey, RSAKey );
-  {$ELSE}
-    Erro := EvpPkeyAssign( fsKey, EVP_PKEY_RSA, RSAKey );
-  {$ENDIF}
+  Erro := EvpPkeyAssign( fsKey, EVP_PKEY_RSA, RSAKey );
   if Erro < 1 then
      raise EACBrEADException.Create('Erro ao atribuir Chave lida');
 end ;
@@ -758,7 +728,7 @@ begin
   try
      A := nil ;
      if Privada then
-        fsKey := PEM_read_bio_PrivateKey( BioKey, {$IFDEF USE_libeay32}A{$ELSE}nil{$ENDIF}, nil, nil)
+        fsKey := PEM_read_bio_PrivateKey( BioKey, nil, nil, nil)
      else
         fsKey := PEM_read_bio_PUBKEY( BioKey, A, nil, nil) ;
   finally
@@ -780,20 +750,12 @@ end ;
 
 function TACBrEAD.CriarMemBIO : pBIO ;
 begin
-  {$IFDEF USE_libeay32}
-   Result := Bio_New(Bio_S_Mem());
-  {$ELSE}
-   Result := BioNew(BioSMem());
-  {$ENDIF}
+  Result := BioNew(BioSMem());
 end ;
 
 procedure TACBrEAD.LiberarBIO( Bio : pBIO);
 begin
-  {$IFDEF USE_libeay32}
-   BIO_free_all( Bio );
-  {$ELSE}
-   BioFreeAll( Bio );
-  {$ENDIF}
+  BioFreeAll( Bio );
 end ;
 
 function TACBrEAD.GerarXMLeECFc(const NomeSwHouse, Diretorio: String): Boolean;
@@ -843,18 +805,14 @@ begin
   Modulo   := '';
   Expoente := '';
   Bio := CriarMemBIO;
-  {$IfDef USE_libeay32}
-   RsaKey := EVP_PKEY_get1_RSA(fsKey);
-  {$Else}
-   RsaKey := EvpPkeyGet1RSA(fsKey);
-  {$EndIf}
+  RsaKey := EvpPkeyGet1RSA(fsKey);
   try
     if (RsaKey <> Nil) then
     begin
       BN_print( Bio, RsaKey^.e);
       Modulo := AnsiString(BioToStr( Bio ));
 
-      BIO_reset( Bio );
+      BIOReset( Bio );
       BN_print( Bio, RsaKey^.d);
       Expoente := AnsiString(BioToStr( Bio ));
     end
@@ -1080,6 +1038,7 @@ Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
+  pmd_ctx: PEVP_MD_CTX;
   md_value_bin, md_value_hex : array [0..1023] of AnsiChar;
   NameDgst : AnsiString;
   ABinStr, Base64Str: AnsiString;
@@ -1091,35 +1050,43 @@ begin
   NameDgst := GetDigestName(ADigest);
 
   if Assinar then
-     LerChavePrivada;
+    LerChavePrivada;
 
+  pmd_ctx := nil;
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, BufferSize);
   try
     md_len := 0;
     md := EVP_get_digestbyname( PAnsiChar(NameDgst) );
-    EVP_DigestInit( @md_ctx, md );
+
+    if OpenSSL_OldVersion then
+      pmd_ctx := @md_ctx
+    else
+      pmd_ctx := EVP_MD_CTX_new();
+
+    EVP_DigestInit( pmd_ctx, md );
+
     if Assigned( fsOnProgress ) then
-       fsOnProgress( PosStream, AStream.Size );
+      fsOnProgress( PosStream, AStream.Size );
 
     while (PosStream < AStream.Size) do
     begin
-       BytesRead := AStream.Read(Memory^,BufferSize);
-       if BytesRead <= 0 then
-          Break;
+      BytesRead := AStream.Read(Memory^,BufferSize);
+      if BytesRead <= 0 then
+        Break;
 
-       EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
-       PosStream := PosStream + BytesRead;
+      EVP_DigestUpdate( pmd_ctx, Memory, BytesRead );
+      PosStream := PosStream + BytesRead;
 
-       if Assigned( fsOnProgress ) then
-          fsOnProgress( PosStream, AStream.Size );
+      if Assigned( fsOnProgress ) then
+        fsOnProgress( PosStream, AStream.Size );
     end;
 
     if Assinar then
-       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, fsKey)
+      EVP_SignFinal( pmd_ctx, @md_value_bin, md_len, fsKey)
     else
-       EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+      EVP_DigestFinal( pmd_ctx, @md_value_bin, @md_len);
 
     case OutputType of
       outBase64:
@@ -1143,6 +1110,9 @@ begin
         end;
     end;
   finally
+    if (not OpenSSL_OldVersion) and (pmd_ctx <> nil) then
+      EVP_MD_CTX_free( pmd_ctx );
+
     Freemem(Memory);
     LiberarChave;
   end;
@@ -1154,6 +1124,7 @@ Var
   md: PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
+  pmd_ctx: PEVP_MD_CTX;
   Ret, BytesReaded : LongInt ;
   Memory: Pointer;
   PosStream: Int64;
@@ -1163,6 +1134,7 @@ begin
   NameDgst := GetDigestName(ADigest);
   LerChavePublica;
 
+  pmd_ctx := Nil;
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, BufferSize);
@@ -1172,27 +1144,36 @@ begin
     if md = Nil then
       raise EACBrEADException.Create('Erro ao carregar Digest: '+NameDgst);
 
-    EVP_DigestInit( @md_ctx, md ) ;
+    if OpenSSL_OldVersion then
+      pmd_ctx := @md_ctx
+    else
+      pmd_ctx := EVP_MD_CTX_new();
+
+    EVP_DigestInit( pmd_ctx, md );
+
     if Assigned( fsOnProgress ) then
-       fsOnProgress( PosStream, AStream.Size );
+      fsOnProgress( PosStream, AStream.Size );
 
     while (PosStream < AStream.Size) do
     begin
-       BytesReaded := AStream.Read(Memory^,BufferSize);
-       if BytesReaded <= 0 then
-          Break;
+      BytesReaded := AStream.Read(Memory^,BufferSize);
+      if BytesReaded <= 0 then
+        Break;
 
-       EVP_DigestUpdate( @md_ctx, Memory, BytesReaded ) ;
-       PosStream := PosStream + BytesReaded;
+      EVP_DigestUpdate( pmd_ctx, Memory, BytesReaded ) ;
+      PosStream := PosStream + BytesReaded;
 
-       if Assigned( fsOnProgress ) then
-          fsOnProgress( PosStream, AStream.Size );
+      if Assigned( fsOnProgress ) then
+        fsOnProgress( PosStream, AStream.Size );
     end;
 
-    Ret := EVP_VerifyFinal( @md_ctx, @BinarySignature[1], md_len, fsKey) ;
+    Ret := EVP_VerifyFinal( pmd_ctx, @BinarySignature[1], md_len, fsKey) ;
 
     Result := (Ret = 1);
   finally
+    if (not OpenSSL_OldVersion) and (pmd_ctx <> nil) then
+      EVP_MD_CTX_free( pmd_ctx );
+
     Freemem(Memory);
     LiberarChave;
   end ;
@@ -1358,6 +1339,7 @@ Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
+  pmd_ctx: PEVP_MD_CTX;
   EAD_crypt, EAD_decrypt : array [0..127] of AnsiChar;
   md5_bin : array [0..15] of AnsiChar;
   Ret, BytesToRead, BytesReaded : LongInt ;
@@ -1396,10 +1378,17 @@ begin
   AStream.Position := 0;
   GetMem(Memory, BufferSize);
   RsaKey := Nil;
+  pmd_ctx := Nil;
   try
     // Fazendo verificação tradicional de SignDigest
     md := EVP_get_digestbyname('md5');
-    EVP_DigestInit( @md_ctx, md ) ;
+    if OpenSSL_OldVersion then
+      pmd_ctx := @md_ctx
+    else
+      pmd_ctx := EVP_MD_CTX_new();
+
+     EVP_DigestInit( pmd_ctx, md );
+
     if Assigned( fsOnProgress ) then
        fsOnProgress( PosStream, StreamSize );
 
@@ -1419,31 +1408,26 @@ begin
        if BytesReaded <= 0 then
           Break;
 
-       EVP_DigestUpdate( @md_ctx, Memory, BytesReaded ) ;
+       EVP_DigestUpdate( pmd_ctx, Memory, BytesReaded ) ;
        PosStream := PosStream + BytesReaded;
 
        if Assigned( fsOnProgress ) then
           fsOnProgress( PosStream, StreamSize );
     end;
 
-    Ret := EVP_VerifyFinal( @md_ctx, @EAD_crypt, md_len, fsKey);
-
+    Ret := EVP_VerifyFinal( pmd_ctx, @EAD_crypt, md_len, fsKey);
     Result := (Ret = 1);
 
     // Se falhou, faz verificação manual do EAD
     if (not Result) then
     begin
        // Calculando o MD5 do arquivo sem a linha do EAD salva em "md5_bin" //
-       EVP_DigestFinal( @md_ctx, @md5_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+       EVP_DigestFinal( pmd_ctx, @md5_bin, @md_len);
        if md_len <> 16 then
           raise EACBrEADException.Create('Erro ao calcular MD5 do arquivo sem EAD');
 
        // Descriptografando o EAD //
-       {$IfDef USE_libeay32}
-        RsaKey := EVP_PKEY_get1_RSA(fsKey);
-       {$Else}
-        RsaKey := EvpPkeyGet1RSA(fsKey);
-       {$EndIf}
+       RsaKey := EvpPkeyGet1RSA(fsKey);
        md_len := RSA_public_decrypt( 128, @EAD_crypt, @EAD_decrypt,
                                      RsaKey, RSA_NO_PADDING);
        if md_len <> 128 then
@@ -1474,6 +1458,9 @@ begin
   finally
     if (RsaKey <> Nil) then
       RSA_free(RsaKey);
+
+    if (not OpenSSL_OldVersion) and (pmd_ctx <> nil) then
+      EVP_MD_CTX_free( pmd_ctx );
 
     Freemem(Memory);
     LiberarChave;

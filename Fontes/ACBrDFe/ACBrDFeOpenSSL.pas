@@ -43,7 +43,7 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL,
   {$IfDef MSWINDOWS}ACBrDFeWinCrypt, ACBr_WinCrypt,{$EndIf}
-  {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
+  OpenSSLExt;
 
 
 type
@@ -55,6 +55,8 @@ type
     FCertContextWinApi: Pointer;
     FPrivKey: pEVP_PKEY;
     FCert: pX509;
+    FVersion: String;
+    FOldVersion: Boolean;
 
     procedure GetCertInfo(cert: pX509);
 
@@ -64,9 +66,11 @@ type
 
     function GetCertContextWinApi: Pointer; override;
     function LerPFXInfo(const PFXData: Ansistring): Boolean;
+
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
+    procedure Clear; override;
 
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
@@ -81,6 +85,8 @@ type
     procedure DescarregarCertificado; override;
     function CarregarCertificadoPublico(const DadosX509Base64: Ansistring): Boolean; override;
 
+    function OpenSSLVersion: String;
+    function OpenSSLOldVersion: Boolean;
     property Certificado: pX509 read FCert;
   end;
 
@@ -109,23 +115,13 @@ var
   MemBio: PBIO;
   Buffer: AnsiString;
 begin
-  {$IFDEF USE_libeay32}
-   MemBio := Bio_New(Bio_S_Mem());
-   try
-     i2d_X509_bio(MemBio, cert);
-     Buffer := BioToStr( MemBio );
-   finally
-     BIO_free_all( MemBio );
-   end;
-  {$ELSE}
-   MemBio := BioNew(BioSMem());
-   try
-     i2dX509bio(MemBio, cert);
-     Buffer := BioToStr( MemBio );
-   finally
-     BioFreeAll( MemBio );
-   end;
-  {$ENDIF}
+  MemBio := BioNew(BioSMem());
+  try
+    i2dX509bio(MemBio, cert);
+    Buffer := BioToStr( MemBio );
+  finally
+    BioFreeAll( MemBio );
+  end;
 
   Result := EncodeBase64(Buffer);
 end;
@@ -135,13 +131,20 @@ var
   Validade: String;
   notAfter: PASN1_TIME;
 begin
-  notAfter := cert^.cert_info^.validity^.notAfter;
+  notAfter := X509GetNotAfter(cert);
+  if not Assigned(notAfter) then
+  begin
+    Result := 0;
+    Exit;
+  end;
+
   Validade := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(notAfter^.data) );
   SetLength(Validade, notAfter^.length);
   Validade := OnlyNumber(Validade);
-    if notAfter^.asn1_type = V_ASN1_UTCTIME then  // anos com 2 dígitos
+  if notAfter^.asn1_type = V_ASN1_UTCTIME then  // anos com 2 dígitos
     Validade :=  LeftStr(IntToStrZero(YearOf(Now),4),2) + Validade;
-    Result := StoD(Validade);
+
+  Result := StoD(Validade);
 end;
 
 function GetSerialNumber( cert: pX509 ): String;
@@ -149,11 +152,7 @@ var
   SN: PASN1_STRING;
   s: AnsiString;
 begin
-  {$IFDEF USE_libeay32}
-   SN := X509_get_serialNumber(cert);
-  {$ELSE}
-   SN := X509GetSerialNumber(cert);
-  {$ENDIF}
+  SN := X509GetSerialNumber(cert);
   s := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(SN^.data) );
   SetLength(s,SN^.length);
   Result := AsciiToHex(s);
@@ -162,17 +161,13 @@ end;
 function GetThumbPrint( cert: pX509 ): String;
 var
   md_type: PEVP_MD;
-  md_len: {$IFDEF USE_libeay32}Cardinal{$Else}Integer{$EndIf};
+  md_len: LongInt;
   md: AnsiString;
 begin
   md_type := EVP_get_digestbyname( 'sha1' );
   md_len  := 0;
   SetLength(md, EVP_MAX_MD_SIZE);
-  {$IFDEF USE_libeay32}
-   X509_digest(cert, md_type, @md[1], md_len);
-  {$ELSE}
-   X509Digest(cert, md_type, md, md_len);
-  {$ENDIF}
+  X509Digest(cert, md_type, md, md_len);
   SetLength(md, md_len);
   Result := AsciiToHex(md);
 end;
@@ -182,11 +177,7 @@ var
   X509SubjectName: PX509_NAME;
 begin
   Result := '';
-  {$IFDEF USE_libeay32}
-   X509SubjectName := X509_get_subject_name(cert);
-  {$ELSE}
-   X509SubjectName := X509GetSubjectName(cert);
-  {$ENDIF}
+  X509SubjectName := X509GetSubjectName(cert);
 
   if Assigned(X509SubjectName) then
     Result := X509NameToString(X509SubjectName);
@@ -201,11 +192,7 @@ var
 
   procedure LoadExtension;
   begin
-    {$IFDEF USE_libeay32}
-     ext := X509_get_ext( cert, ExtPos);
-    {$ELSE}
-     ext := X509GetExt( cert, ExtPos);
-    {$ENDIF}
+    ext := X509GetExt( cert, ExtPos);
   end;
 
   function AdjustAnsiOID(aOID: AnsiString): AnsiString;
@@ -278,11 +265,7 @@ var
   X509IssuerName: pX509_NAME;
 begin
   Result := '';
-  {$IFDEF USE_libeay32}
-   X509IssuerName := X509_get_issuer_name(cert);
-  {$ELSE}
-   X509IssuerName := X509GetIssuerName(cert);
-  {$ENDIF}
+  X509IssuerName := X509GetIssuerName(cert);
 
   if Assigned(X509IssuerName) then
     Result := X509NameToString(X509IssuerName);
@@ -292,57 +275,34 @@ function X509NameToString(AX509Name: PX509_NAME): AnsiString;
 var
   MemBio: PBIO;
 begin
-  {$IfDef USE_libeay32}
-   MemBio := Bio_New(BIO_s_mem());
-   try
-    X509_NAME_print_ex(MemBio, AX509Name, 0,
-    (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
-    {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
-     Result := BioToStr(MemBio);
-   finally
-     BIO_free_all(MemBio);
-   end;
-  {$Else}
-   MemBio := BioNew(BioSMem());
-   try
-     X509NAMEprintEx(MemBio, AX509Name, 0,
-     (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
-     {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
-     Result := BioToStr(MemBio);
-   finally
-     BioFreeAll(MemBio);
-   end;
-  {$EndIf}
+  MemBio := BioNew(BioSMem());
+  try
+    X509NAMEprintEx( MemBio, AX509Name, 0,
+                     (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
+                     {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf}
+                   );
+    Result := BioToStr(MemBio);
+  finally
+    BioFreeAll(MemBio);
+  end;
 end;
 
 { Método clonado de ACBrEAD }
 function BioToStr(ABio : pBIO) : AnsiString ;
 Var
-  {$IFDEF USE_libeay32}
-   Buf : array [0..1023] of AnsiChar;
-  {$ENDIF}
   Ret : Integer ;
-  Lin : String ;
+  Lin : AnsiString ;
 begin
   Result := '';
-    {$IFDEF USE_libeay32}
-   while BIO_eof( ABio ) = 0 do
-   begin
-     Ret := BIO_gets( ABio, Buf, 1024 );
-     SetString( Lin, Buf, Ret);
-     Result := Result + Lin;
-   end ;
-  {$ELSE}
-   repeat
-      SetLength(Lin,1024);
-      Ret := BioRead( ABio, Lin, 1024);
-      if Ret > 0 then
-      begin
-         Lin := copy(Lin,1,Ret) ;
-         Result := Result + Lin;
-      end ;
-   until (Ret <= 0);
-  {$ENDIF}
+  repeat
+    SetLength(Lin,1024);
+    Ret := BioRead( ABio, Lin, 1024);
+    if Ret > 0 then
+    begin
+      Lin := copy(Lin,1,Ret) ;
+      Result := Result + Lin;
+    end ;
+  until (Ret <= 0);
 end ;
 
 { TDFeOpenSSL }
@@ -363,15 +323,18 @@ begin
   inherited Destroy;
 end;
 
+procedure TDFeOpenSSL.Clear;
+begin
+  inherited Clear;
+  FVersion := '';
+  FOldVersion := False;
+end;
+
 procedure TDFeOpenSSL.DestroyKey;
 begin
   if (FPrivKey <> Nil) then
   begin
-    {$IfDef USE_libeay32}
-     EVP_PKEY_free(FPrivKey);
-    {$Else}
-     EvpPkeyFree(FPrivKey);
-    {$EndIf}
+    EvpPkeyFree(FPrivKey);
     FPrivKey := nil;
   end;
 end;
@@ -380,11 +343,7 @@ procedure TDFeOpenSSL.DestroyCert;
 begin
   if (FCert <> Nil) then
   begin
-    {$IfDef USE_libeay32}
-    X509_free(FCert);
-    {$Else}
     X509free(FCert);
-    {$EndIf}
     FCert := Nil;
   end;
 end;
@@ -426,6 +385,8 @@ var
   FS: TFileStream;
 begin
   DescarregarCertificado;
+  if not InitSSLInterface then
+    raise EACBrDFeException.Create('Erro ao carregar bibliotecas do OpenSSL');
 
   with FpDFeSSL do
   begin
@@ -495,19 +456,10 @@ begin
   Result := False;
   DestroyKey;
 
-  {$IFDEF USE_libeay32}
-   b := Bio_New(BIO_s_mem);
-  {$ELSE}
    b := BioNew(BioSMem);
-  {$ENDIF}
   try
-    {$IFDEF USE_libeay32}
-     BIO_write(b, PAnsiChar(PFXData), Length(PFXData));
-     p12 := d2i_PKCS12_bio(b, nil);
-    {$ELSE}
-     BioWrite(b, PFXData, Length(PFXData));
-     p12 := d2iPKCS12bio(b, nil);
-    {$ENDIF}
+    BioWrite(b, PFXData, Length(PFXData));
+    p12 := d2iPKCS12bio(b, nil);
     if not Assigned(p12) then
       Exit;
 
@@ -515,11 +467,7 @@ begin
       DestroyCert;
       DestroyKey;
       ca := nil;
-      {$IFDEF USE_libeay32}
-      if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FPrivKey, FCert, ca) > 0 then
-      {$ELSE}
       if PKCS12parse(p12, FpDFeSSL.Senha, FPrivKey, FCert, ca) > 0 then
-      {$ENDIF}
       begin
         if (FCert <> nil) then
         begin
@@ -528,18 +476,10 @@ begin
         end;
       end;
     finally
-      {$IFDEF USE_libeay32}
-       PKCS12_free(p12);
-      {$ELSE}
-       PKCS12free(p12);
-      {$ENDIF}
+      PKCS12free(p12);
     end;
   finally
-    {$IFDEF USE_libeay32}
-     BIO_free_all(b);
-    {$ELSE}
-     BioFreeAll(b);
-    {$ENDIF}
+    BioFreeAll(b);
   end;
 end;
 
@@ -553,31 +493,48 @@ begin
 
   BinaryX509 := DecodeBase64( DadosX509Base64 );
 
-  {$IFDEF USE_libeay32}
-   b := Bio_New(BIO_s_mem);
-  {$ELSE}
-   b := BioNew(BioSMem);
-  {$ENDIF}
+  b := BioNew(BioSMem);
   try
-    {$IFDEF USE_libeay32}
-     BIO_write(b, PAnsiChar(BinaryX509), Length(BinaryX509));
-     FCert := d2i_X509_bio(b, FCert);
-    {$ELSE}
-     BioWrite(b, BinaryX509, Length(BinaryX509));
-     FCert := d2iX509bio(b, FCert);
-    {$ENDIF}
+    BioWrite(b, BinaryX509, Length(BinaryX509));
+    FCert := d2iX509bio(b, FCert);
     if Assigned( FCert ) then
     begin
       GetCertInfo( FCert );
       Result := True;
     end;
   finally
-    {$IFDEF USE_libeay32}
-     BIO_free_all(b);
-    {$ELSE}
-     BioFreeAll(b);
-    {$ENDIF}
+    BioFreeAll(b);
   end;
+end;
+
+function TDFeOpenSSL.OpenSSLVersion: String;
+begin
+  Result := OpenSSLExt.OpenSSLVersion(0);
+end;
+
+function TDFeOpenSSL.OpenSSLOldVersion: Boolean;
+var
+  VersaoStr: String;
+  P1, P2: Integer;
+begin
+  if (FVersion = '') then
+  begin
+    VersaoStr := OpenSSLExt.OpenSSLVersion(0);
+
+    P1 := pos(' ', VersaoStr);
+    P2 := Length(VersaoStr);
+    if P1 > 0 then
+    begin
+      P2 := PosEx(' ', VersaoStr, P1+1 );
+      if P2 = 0 then
+        P2 := Length(VersaoStr);
+    end;
+
+    FVersion := Trim(copy(VersaoStr, P1, P2-P1));
+    FOldVersion := (CompareVersions(FVersion, '1.1.0') < 0);
+  end;
+
+  Result := FOldVersion;
 end;
 
 { Método clonado de ACBrEAD }
@@ -587,6 +544,7 @@ Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
+  pmd_ctx: PEVP_MD_CTX;
   md_value_bin : array [0..1023] of AnsiChar;
   NameDgst : PAnsiChar;
   ABinStr: AnsiString;
@@ -609,6 +567,7 @@ begin
   if Assina and (FPrivKey = Nil) then
     CarregarCertificado;
 
+  pmd_ctx := Nil;
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, CBufferSize);
@@ -618,7 +577,12 @@ begin
     if md = Nil then
       raise EACBrDFeException.Create('Erro ao carregar Digest: '+NameDgst);
 
-    EVP_DigestInit( @md_ctx, md );
+    if OpenSSLOldVersion then
+      pmd_ctx := @md_ctx
+    else
+      pmd_ctx := EVP_MD_CTX_new();
+
+    EVP_DigestInit( pmd_ctx, md );
 
     while (PosStream < AStream.Size) do
     begin
@@ -626,18 +590,21 @@ begin
        if BytesRead <= 0 then
           Break;
 
-       EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
+       EVP_DigestUpdate( pmd_ctx, Memory, BytesRead ) ;
        PosStream := PosStream + BytesRead;
     end;
 
     if Assina then
-       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, FPrivKey)
+       EVP_SignFinal( pmd_ctx, @md_value_bin, md_len, FPrivKey)
     else
-       EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+       EVP_DigestFinal( pmd_ctx, @md_value_bin, @md_len);
 
     SetString( ABinStr, md_value_bin, md_len);
     Result := ABinStr;
   finally
+    if (not OpenSSLOldVersion) and (pmd_ctx <> nil) then
+      EVP_MD_CTX_free( pmd_ctx );
+
     Freemem(Memory);
   end;
 end;
@@ -650,6 +617,7 @@ Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
+  pmd_ctx: PEVP_MD_CTX;
   md_value_bin : array [0..1023] of AnsiChar;
   NameDgst : PAnsiChar;
   HashResult: AnsiString;
@@ -685,7 +653,12 @@ begin
     if md = Nil then
       raise EACBrDFeException.Create('Erro ao carregar Digest: '+NameDgst);
 
-    EVP_DigestInit( @md_ctx, md );
+    if OpenSSLOldVersion then
+      pmd_ctx := @md_ctx
+    else
+      pmd_ctx := EVP_MD_CTX_new();
+
+    EVP_DigestInit( pmd_ctx, md );
 
     while (PosStream < AStream.Size) do
     begin
@@ -693,27 +666,26 @@ begin
       if BytesRead <= 0 then
         Break;
 
-      EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
+      EVP_DigestUpdate( pmd_ctx, Memory, BytesRead ) ;
       PosStream := PosStream + BytesRead;
     end;
 
     if Assinado then
     begin
-      {$IfDef USE_libeay32}
-      pubKey := X509_get_pubkey(FCert);
-      {$else}
       pubKey := X509GetPubkey(FCert);
-      {$endif}
-      Ret := EVP_VerifyFinal( @md_ctx, PAnsiChar(Hash), Length(Hash), pubKey) ;
+      Ret := EVP_VerifyFinal( pmd_ctx, PAnsiChar(Hash), Length(Hash), pubKey) ;
       Result := (Ret = 1);
     end
     else
     begin
-      EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+      EVP_DigestFinal( pmd_ctx, @md_value_bin, @md_len);
       SetString( HashResult, md_value_bin, md_len);
       Result := (Pos( HashResult, Hash ) > 0) ;
     end;
   finally
+    if (not OpenSSLOldVersion) and (pmd_ctx <> nil) then
+      EVP_MD_CTX_free( pmd_ctx );
+
     Freemem(Memory);
   end;
 end;

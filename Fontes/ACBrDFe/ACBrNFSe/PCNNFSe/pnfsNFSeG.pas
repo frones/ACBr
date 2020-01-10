@@ -1922,7 +1922,7 @@ begin
 
       Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 01, 1, CodigoCanc, '');
 
-      if Provedor in [proPublica, proTecnos, proFriburgo] then
+      if Provedor in [proPublica, proTecnos, proFriburgo, proModernizacaoPublica] then
         Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '')
       else if Provedor in [proISSNET] then
         Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 0, MotivoCanc, '');

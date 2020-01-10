@@ -397,6 +397,17 @@ begin
 
       inc(i);
     end;
+
+    i := 0;
+    while Leitor.rExtrai(iNivel, 'Erro', '', i + 1) <> '' do
+    begin
+      InfRec.FMsgRetorno.New;
+      InfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'ErroID');
+      InfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ErroMensagem');
+      InfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'ErroSolucao');
+
+      inc(i);
+    end;
     {
     i := 0;
     while (Leitor.rExtrai(1, 'Fault', '', i + 1) <> '') do

@@ -98,6 +98,11 @@ begin
       DAMDFeReport := Create(nil);
       DAMDFeReport.fpMDFe := AMDFes[i];
       DAMDFeReport.fpDAMDFe := ADAMDFe;
+      if ADAMDFe.AlterarEscalaPadrao then
+      begin
+        DAMDFeReport.Scaled := False;
+        DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+      end;
 
       DAMDFeReport.RLMDFe.CompositeOptions.ResetPageNumber := True;
       ReportArray[i] := DAMDFeReport;
@@ -149,6 +154,11 @@ begin
   try
     DAMDFeReport.fpMDFe := AMDFe;
     DAMDFeReport.fpDAMDFe := ADAMDFe;
+    if ADAMDFe.AlterarEscalaPadrao then
+    begin
+      DAMDFeReport.Scaled := False;
+      DAMDFeReport.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+    end;
 
     TDFeReportFortes.AjustarReport(DAMDFeReport.RLMDFe, DAMDFeReport.fpDAMDFe);
     TDFeReportFortes.AjustarFiltroPDF(DAMDFeReport.RLPDFFilter1, DAMDFeReport.fpDAMDFe, AFile);

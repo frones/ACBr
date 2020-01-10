@@ -158,6 +158,8 @@ type
     FExpandeLogoMarca: Boolean;
     FExpandeLogoMarcaConfig: TExpandeLogoMarcaConfig;
     FNomeDocumento: String;
+    FAlterarEscalaPadrao: Boolean;
+    FNovaEscala: Integer;
 
     procedure SetNumCopias(const AValue: Integer);
     procedure SetPathPDF(const AValue: String);
@@ -243,6 +245,12 @@ type
     {@prop CasasDecimais - Configurações de impresão de números decimais.
      @links TACBrDFeReport.CasasDecimais :/}
     property CasasDecimais: TCasasDecimais read FCasasDecimais;
+    {@prop AlterarEscalaPadrao - Configuração para permitir alterar escala da impressão.
+     @links TACBrDFeReport.AlterarEscalaPadrao :/}
+    property AlterarEscalaPadrao: Boolean read FAlterarEscalaPadrao write FAlterarEscalaPadrao default False;
+    {@prop NovaEscala - Configuração para alterar escala da impressão.
+     @links TACBrDFeReport.NovaEscala :/}
+    property NovaEscala: Integer read FNovaEscala write FNovaEscala default 96;
 
   end;
   
@@ -366,6 +374,8 @@ begin
   FCasasDecimais.SetSubComponent(True);{ para gravar no DFM/XFM }
   FExpandeLogoMarcaConfig.SetSubComponent(True);{ para gravar no DFM/XFM }
   {$ENDIF}
+  FAlterarEscalaPadrao := False;
+  FNovaEscala := 96;
 end;
 
 destructor TACBrDFeReport.Destroy;

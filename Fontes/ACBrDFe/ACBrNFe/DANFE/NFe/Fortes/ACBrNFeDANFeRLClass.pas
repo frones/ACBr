@@ -225,8 +225,8 @@ begin
       TfrlDANFeRLPaisagem.Imprimir(Self, Notas);
     tiSimplificado:
       TfrlDANFeRLSimplificado.Imprimir(Self, Notas);
-    else
-      TfrlDANFeRLRetrato.Imprimir(Self, Notas);
+  else
+    TfrlDANFeRLRetrato.Imprimir(Self, Notas);
   end;
 end;
 

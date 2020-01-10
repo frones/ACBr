@@ -119,9 +119,15 @@ begin
 
     for i := 0 to High(ACTes) do
     begin
-      DACTeReport := Create(nil);
+      DACTeReport := TfrmDACTeRL.Create(nil);
       DACTeReport.fpCTe := ACTes[i];
       DACTeReport.fpDACTe := aDACTe;
+      if aDACTe.AlterarEscalaPadrao then
+      begin
+        DACTeReport.Scaled := False;
+        DACTeReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+      end;
+
       DACTeReport.RLCTe.CompositeOptions.ResetPageNumber := True;
       ReportArray[i] := DACTeReport;
     end;
@@ -175,6 +181,11 @@ begin
   try
     DACTeReport.fpCTe := ACTe;
     DACTeReport.fpDACTe := aDACTe;
+    if aDACTe.AlterarEscalaPadrao then
+    begin
+      DACTeReport.Scaled := False;
+      DACTeReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
 
     TDFeReportFortes.AjustarReport(DACTeReport.RLCTe, DACTeReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeReport.RLCTe, DACTeReport.fpDACTe);

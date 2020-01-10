@@ -97,6 +97,12 @@ begin
   try
     DACTeInuReport.fpDACTe := aDACTe;
     DACTeInuReport.fpInutCTe := AInutCTe;
+    if aDACTe.AlterarEscalaPadrao then
+    begin
+      DACTeInuReport.Scaled := False;
+      DACTeInuReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
+
     TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
 
@@ -121,6 +127,11 @@ begin
   try
     DACTeInuReport.fpDACTe := aDACTe;
     DACTeInuReport.fpInutCTe := AInutCTe;
+    if aDACTe.AlterarEscalaPadrao then
+    begin
+      DACTeInuReport.Scaled := False;
+      DACTeInuReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
 
     TDFeReportFortes.AjustarReport(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeInuReport.RLCTeInut, DACTeInuReport.fpDACTe);

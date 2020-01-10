@@ -103,6 +103,11 @@ begin
   try
     DACTeEvReport.fpDACTe := aDACTe;
     DACTeEvReport.fpEventoCTe := AEventoCTe;
+    if aDACTe.AlterarEscalaPadrao then
+    begin
+      DACTeEvReport.Scaled := False;
+      DACTeEvReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
     TDFeReportFortes.AjustarReport(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
 
@@ -128,6 +133,11 @@ begin
   try
     DACTeEvReport.fpDACTe := aDACTe;
     DACTeEvReport.fpEventoCTe := AEventoCTe;
+    if aDACTe.AlterarEscalaPadrao then
+    begin
+      DACTeEvReport.Scaled := False;
+      DACTeEvReport.ScaleBy(aDACTe.NovaEscala , Screen.PixelsPerInch);
+    end;
     TDFeReportFortes.AjustarReport(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
     TDFeReportFortes.AjustarMargem(DACTeEvReport.RLCTeEvento, DACTeEvReport.fpDACTe);
     TDFeReportFortes.AjustarFiltroPDF(DACTeEvReport.RLPDFFilter1, DACTeEvReport.fpDACTe, AFile);

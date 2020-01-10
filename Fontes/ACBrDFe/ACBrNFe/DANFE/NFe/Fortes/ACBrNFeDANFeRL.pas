@@ -103,9 +103,14 @@ begin
 
     for i := 0 to High(ANotas) do
     begin
-      DANFeReport := Create(nil);
+      DANFeReport := TfrlDANFeRL.Create(nil);
       DANFeReport.fpNFe := ANotas[i];
       DANFeReport.fpDANFe := ADANFe;
+      if ADANFe.AlterarEscalaPadrao then
+      begin
+        DANFeReport.Scaled := False;
+        DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+      end;
 
       DANFeReport.RLNFe.CompositeOptions.ResetPageNumber := True;
       DANFeReport.fpAuxDiferencaPDF := 0;
@@ -156,6 +161,11 @@ begin
   try
     DANFeReport.fpNFe := ANFe;
     DANFeReport.fpDANFe := ADANFe;
+    if ADANFe.AlterarEscalaPadrao then
+    begin
+      DANFeReport.Scaled := False;
+      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+    end;
 
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFe, DANFeReport.fpDANFe);
     TDFeReportFortes.AjustarFiltroPDF(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe, AFile);

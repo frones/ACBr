@@ -88,6 +88,11 @@ begin
   try
     DANFeReport.fpDANFe := aDANFe;
     DANFeReport.fpInutNFe := AInutNFe;
+    if ADANFe.AlterarEscalaPadrao then
+    begin
+      DANFeReport.Scaled := False;
+      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+    end;
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFeInut, DANFeReport.fpDANFe);
 
     if ANFe <> nil then
@@ -111,6 +116,11 @@ begin
   try
     DANFeReport.fpDANFe := aDANFe;
     DANFeReport.fpInutNFe := AInutNFe;
+    if ADANFe.AlterarEscalaPadrao then
+    begin
+      DANFeReport.Scaled := False;
+      DANFeReport.ScaleBy(ADANFe.NovaEscala , Screen.PixelsPerInch);
+    end;
     TDFeReportFortes.AjustarReport(DANFeReport.RLNFeInut, DANFeReport.fpDANFe);
     TDFeReportFortes.AjustarFiltroPDF(DANFeReport.RLPDFFilter1, DANFeReport.fpDANFe, AFile);
 

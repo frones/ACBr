@@ -1307,6 +1307,12 @@ begin
   try
     with frACBrNFeDANFCeFortesFr do
     begin
+      if AlterarEscalaPadrao then
+      begin
+        frACBrNFeDANFCeFortesFr.Scaled := False;
+        frACBrNFeDANFCeFortesFr.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+      end;
+
       Filtro := AFiltro;
       if Cancelado then
         RLLayout := rlCancelamento

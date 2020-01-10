@@ -63,7 +63,6 @@ type
      FPrintDialog: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     procedure ImprimirDACTe(CTe: TCTe = nil); override;
     procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
     procedure ImprimirEVENTO(CTe: TCTe = nil); override;
@@ -86,11 +85,6 @@ constructor TACBrCTeDACTeRL.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FPrintDialog := True;
-end;
-
-destructor TACBrCTeDACTeRL.Destroy;
-begin
-  inherited Destroy;
 end;
 
 procedure TACBrCTeDACTeRL.ImprimirDACTe(CTe: TCTe = nil);

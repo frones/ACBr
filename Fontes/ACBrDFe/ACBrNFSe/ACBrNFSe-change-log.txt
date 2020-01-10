@@ -56,6 +56,11 @@ Símbolo : Significado
     MegaSoft.
    Por: Italo Jurisato Junior
 
+-- pnfsNFSeW_Agili --
+[*] Geração da tag "InscricaoEstadual" nos dados do tomador.
+    https://www.projetoacbr.com.br/forum/topic/55713-inscri%C3%A7%C3%A3o-estadual-tomador-nfse-provedor-agili/
+  Por: BigWings
+
 08/01/2020
 -- pnfsNFSeW_Infisc --
 [*] Alterações visando a validação do Lote de RPS antes do seu envio.

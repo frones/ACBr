@@ -292,6 +292,11 @@ begin
         Gerador.wCampoNFSe(tcStr, '#47', 'Email   ', 01, 120, 0, NFSe.Tomador.Contato.Email, '');
       end;
 
+      if VersaoNFSe = ve100 then
+        Gerador.wCampoNFSe(tcStr, '', 'InscricaoEstadual', 01, 20, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '')
+      else
+        Gerador.wCampoNFSe(tcStr, '', 'InscricaoEstadual', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual, '');
+
       Gerador.wGrupoNFSe('/Contato');
     end;
 

@@ -95,6 +95,8 @@ type
     ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     ACBrNFeDANFCEFR1: TACBrNFeDANFCEFR;
     ACBrNFe1: TACBrNFe;
+    Label11: TLabel;
+    cbExibeCampoDePagamento: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -115,6 +117,9 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+uses
+  pcnConversaoNFe;
 
 {$R *.dfm}
 
@@ -293,6 +298,8 @@ begin
   ACBrNFeDANFEFR1.QuebraLinhaEmDetalhamentos := ChkQuebraLinhaEmDetalhamentos.Checked;
     // Mostra Layout do Canhoto
   ACBrNFeDANFEFR1.PosCanhotoLayout := TPosReciboLayout(cbPosCanhotoLayout.ItemIndex);
+  // informações de pagamentos
+  ACBrNFeDANFEFR1.ExibeCampoDePagamento := TpcnInformacoesDePagamento(cbExibeCampoDePagamento.ItemIndex);
 
 end;
 

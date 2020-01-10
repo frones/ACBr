@@ -1342,8 +1342,10 @@ begin
 
       with Titulo.ACBrBoleto.Cedente do
       begin
-        txtEndCedente.lines.text := Logradouro+' '+NumeroRes+' '+Complemento+' '+
-                                  Bairro+' '+Cidade+' '+ UF+' '+CEP;
+        txtEndCedente.lines.text := Logradouro + ',' + NumeroRes + ' ' +
+                                    IfThen(Complemento <> '',Complemento+' ') +
+                                    Bairro + ', ' + Cidade + '/' + UF + ' ' +
+                                    CEP + ' Fone: ' + Telefone;
       end;
    end;
 end;

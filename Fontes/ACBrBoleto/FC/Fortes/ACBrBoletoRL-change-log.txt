@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2020
+ACBrBoletoFCFortesFr
+[+] Acrescentado a impressão do telefone do Cedente.
+   Por: Italo Jurisato Junior
+
 07/01/2020
 ACBrBoletoFCFortesFr
 [+] Implementado o modelo Termica80mm para imprimir o Boleto em uma impressora termica

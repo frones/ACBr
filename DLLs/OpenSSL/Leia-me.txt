@@ -1,0 +1,1 @@
+Lembrando que apesar de ter a ultima versão de cada seria da OpenSSL é recomendavel usar as serie 1.1.1, pois as anteriores foram descontinuadas.

@@ -53,7 +53,7 @@ uses Classes, Graphics, Contnrs, IniFiles,
        LResources,
      {$ENDIF}
      SysUtils, typinfo,
-     ACBrBase, ACBrMail, ACBrValidador;
+     ACBrBase, ACBrMail, ACBrValidador, ACBrConsts;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
@@ -3007,6 +3007,10 @@ begin
 
    SLRemessa := TStringList.Create;
    try
+     {$IfNDef MSWINDOWS}
+       SLRemessa.LineBreak := CRLF;
+     {$EndIf}
+
       if LayoutRemessa = c400 then
       begin
          Banco.GerarRegistroHeader400( NumeroRemessa, SLRemessa );

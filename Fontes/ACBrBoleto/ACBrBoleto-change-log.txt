@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2020
+-- ACBrBoleto --
+[*] Adicionado validação de quebra de linha CR+LF para geração de remessa em Linux
+
 09/01/2020
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/54904-alterações-de-boleto-para-avaliação/

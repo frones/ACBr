@@ -142,6 +142,7 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     btnBoletoRelatorioRetorno: TPanel;
+    btnCancNFeSubs: TButton;
     btnDFeRespTecnico: TPanel;
     btnIntegrador: TPanel;
     btnGerarAssinaturaSAT: TButton;
@@ -1278,6 +1279,7 @@ type
     procedure btnCancelarCTeClick(Sender: TObject);
     procedure btnCancMDFeClick(Sender: TObject);
     procedure btnCancNFClick(Sender: TObject);
+    procedure btnCancNFeSubsClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarCTeClick(Sender: TObject);
     procedure btnConsultarMDFeClick(Sender: TObject);
@@ -2961,6 +2963,53 @@ begin
       infEvento.dhEvento := now;
       infEvento.tpEvento := teCancelamento;
       infEvento.detEvento.xJust := vAux;
+    end;
+    ACBrNFe1.EnviarEvento(StrToInt(idLote));
+    ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);
+  end;
+end;
+
+procedure TFrmACBrMonitor.btnCancNFeSubsClick(Sender: TObject);
+var
+  idLote, vAux, chRef: string;
+begin
+  LimparResp;
+  OpenDialog1.Title := 'Selecione a NFE para Cancelamento';
+  OpenDialog1.DefaultExt := '*-nfe.XML';
+  OpenDialog1.Filter :=
+    'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.NotasFiscais.Clear;
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    idLote := '1';
+    vAux := '';
+    if not (InputQuery('WebServices Eventos: Cancelamento Subst',
+      'Identificador de controle do Lote de envio do Evento', idLote)) then
+      exit;
+
+    if not (InputQuery('WebServices Cancelamento Subst', 'Justificativa', vAux)) then
+      exit;
+
+    if not (InputQuery('WebServices Cancelamento Subst', 'Chave NFe Referencia', chRef)) then
+      exit;
+
+    ACBrNFe1.EventoNFe.Evento.Clear;
+    ACBrNFe1.EventoNFe.idLote := StrToInt(idLote);
+    with ACBrNFe1.EventoNFe.Evento.New do
+    begin
+      infEvento.dhEvento := now;
+
+      infEvento.chNFe    := Copy(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 4, 44);
+      infEvento.CNPJ     := ACBrNFe1.NotasFiscais.Items[0].NFe.emit.CNPJCPF;
+      infEvento.tpEvento := teCancSubst;
+      infEvento.nSeqEvento := 1;
+      infEvento.detEvento.xJust := vAux;
+      infEvento.detEvento.nProt := ACBrNFe1.NotasFiscais.Items[0].NFe.procNFe.nProt;
+      InfEvento.detEvento.chNFeRef := chRef;
+      InfEvento.detEvento.verAplic := '1.0';
+      InfEvento.detEvento.cOrgaoAutor:= ACBrNFe1.NotasFiscais.Items[0].NFe.Ide.cUF;
     end;
     ACBrNFe1.EnviarEvento(StrToInt(idLote));
     ExibeResp(ACBrNFe1.WebServices.EnvEvento.RetWS);

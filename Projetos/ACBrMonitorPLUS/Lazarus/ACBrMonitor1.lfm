@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1023
-        ActivePage = tsMonitor
+        ActivePage = tsACBrBoleto
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 0
+        TabIndex = 11
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7095,11 +7095,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1015
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsTestesDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 0
+            TabIndex = 7
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -11268,11 +11268,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 346
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteCTe
+                  ActivePage = tsTesteNFe
                   Align = alClient
                   Font.Height = -13
                   ParentFont = False
-                  TabIndex = 1
+                  TabIndex = 0
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
@@ -11294,7 +11294,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnValidarXML: TButton
                       Left = 12
                       Height = 22
-                      Top = 121
+                      Top = 146
                       Width = 140
                       Caption = 'Validar XML'
                       Font.Height = -13
@@ -11305,7 +11305,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnImprimir: TButton
                       Left = 12
                       Height = 22
-                      Top = 145
+                      Top = 170
                       Width = 140
                       Caption = 'Imprimir NFe'
                       Font.Height = -13
@@ -11316,7 +11316,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnInutilizar: TButton
                       Left = 12
                       Height = 22
-                      Top = 169
+                      Top = 194
                       Width = 140
                       Caption = 'Inutilizar NFe'
                       Font.Height = -13
@@ -11360,13 +11360,24 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     object btnEnviarEmail: TButton
                       Left = 12
                       Height = 22
-                      Top = 193
+                      Top = 218
                       Width = 140
                       Caption = 'Enviar Email'
                       Font.Height = -13
                       OnClick = btnEnviarEmailClick
                       ParentFont = False
                       TabOrder = 7
+                    end
+                    object btnCancNFeSubs: TButton
+                      Left = 12
+                      Height = 23
+                      Top = 121
+                      Width = 140
+                      Caption = 'Cancelamento Subst.'
+                      Font.Height = -13
+                      OnClick = btnCancNFeSubsClick
+                      ParentFont = False
+                      TabOrder = 8
                     end
                   end
                   object tsTesteCTe: TTabSheet

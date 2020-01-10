@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2020
+-- ACBrCIOTServicos --
+[*] Atualizado com as novas URLs do eFrete
+   Por: Italo Jurisato Junior
+
 12/09/2019
 -- Diversos --
 [+] https://www.projetoacbr.com.br/forum/topic/53471-ciot-pamcard/

@@ -2131,7 +2131,12 @@ begin
     NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissao');
     NFSe.Status         := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
 
-    if (Leitor.rExtrai(NivelTemp, 'IdentificacaoRps') <> '') then
+    if FProvedor = proISSJoinville then
+    begin
+      if (Leitor.rExtrai(NivelTemp, 'InfNfse') <> '') then
+        NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRps');
+    end
+    else if (Leitor.rExtrai(NivelTemp, 'IdentificacaoRps') <> '') then
     begin
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
@@ -4929,3 +4934,4 @@ begin
 end;
 
 end.
+

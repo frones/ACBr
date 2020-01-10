@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/01/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/55699-provedor-issjoinville-carregamento-atrav%C3%A9s-do-m%C3%A9todo-tnotasfiscaisloadfromstring/
+   Por: Henrique Sandri Zimermam
 -- Diversos --
 [*] Alterações visando gerar e enviar o RPS para o webservice do provedor
     MegaSoft.

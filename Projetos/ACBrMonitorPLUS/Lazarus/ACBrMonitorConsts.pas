@@ -396,6 +396,7 @@ const
   CMetodoBye  =                        'bye';
   CMetodoFim  =                        'fim';
   CMetodoSair =                        'sair';
+  CMetodoObterCertificados =           'obtercertificados';
 
   CMetodoValidarnfe =                  'validarnfe';
   CMetodoAssinarnfe =                  'assinarnfe';

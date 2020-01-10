@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2020
+[+] DoACBrUnit, DoACBrNFe, DoACBrCTe, DoACBrMDFe
+Adicionado novo método "ObterCertificados", retorna os dados de todos os certificados instalados na máquina.
+
+09/01/2020
+[+] ACBrMonitor1
+Adicionado botão para Cancelamento por Substituição da NFCe
+
 06/01/2020
 [+] DoACBrECFUnit, ACBrMonitorConfig
 Adicionado os métodos novos de Processamento, Consultas, Cancelamento, Download ref. BlocoX

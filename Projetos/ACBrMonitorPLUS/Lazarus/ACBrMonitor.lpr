@@ -21,7 +21,8 @@ uses
   DoACBreSocialUnit, lazreportpdfexport, ACBrLibeSocialConsts,
   ACBrLibeSocialRespostas, ACBrLibMDFeConsts, ACBrLibMDFeRespostas,
   ACBrLibReinfConsts, ACBrLibReinfRespostas, ACBrLibNFeRespostas,
-  ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas;
+  ACBrLibNFeConsts, ACBrLibSATConsts, ACBrLibSATRespostas, ACBrLibCEPRespostas,
+  ACBrLibCertUtils;
 
 {$R *.res}
 var

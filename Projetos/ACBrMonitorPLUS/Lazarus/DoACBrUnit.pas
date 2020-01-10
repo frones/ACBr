@@ -36,7 +36,7 @@
 unit DoACBrUnit ;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit, IniFiles;
+Uses Classes, TypInfo, SysUtils, CmdUnit, IniFiles, ACBrMonitorConsts, ACBrLibCertUtils;
 {$IFDEF MSWINDOWS}
   function BlockInput (fBlockInput: boolean): dword; stdcall; external 'user32.dll';
 {$ENDIF}
@@ -69,162 +69,162 @@ begin
            Cmd.Resposta := 'ATIVO'
 
         else if Cmd.Metodo = 'run' then
-         begin
-           VerificaPermiteComandosRemoto ;
+        begin
+          VerificaPermiteComandosRemoto ;
 
-           if Cmd.Params(0) = '' then
-              raise Exception.Create('Linha de comando não informada');
+          if Cmd.Params(0) = '' then
+             raise Exception.Create('Linha de comando não informada');
 
-           AltTab := StrToBoolDef(Cmd.Params(4),False) ; { Envia ALT-TAB quando Terminar ?}
-           RunCommand( Cmd.Params(0),                       { Linha de comando }
-                       Cmd.Params(1),                       { Parametros adicionais }
-                       StrToBoolDef(Cmd.Params(2),False), { Aguarda termino execuçao ? }
-                       StrToIntDef(Cmd.Params(3),1));
-           {$IFDEF MSWINDOWS}
-           if AltTab then
-              SendKeys(pchar('%{TAB}'), False);
-           {$ENDIF}
-         end
+          AltTab := StrToBoolDef(Cmd.Params(4),False) ; { Envia ALT-TAB quando Terminar ?}
+          RunCommand( Cmd.Params(0),                       { Linha de comando }
+                      Cmd.Params(1),                       { Parametros adicionais }
+                      StrToBoolDef(Cmd.Params(2),False), { Aguarda termino execuçao ? }
+                      StrToIntDef(Cmd.Params(3),1));
+          {$IFDEF MSWINDOWS}
+          if AltTab then
+             SendKeys(pchar('%{TAB}'), False);
+          {$ENDIF}
+        end
 
         {$IFNDEF NOGUI}
-          else if Cmd.Metodo = 'restaurar' then
-             Restaurar1Click( FrmACBrMonitor )
+        else if Cmd.Metodo = 'restaurar' then
+           Restaurar1Click( FrmACBrMonitor )
 
-          else if Cmd.Metodo = 'ocultar' then
-             Ocultar1Click( FrmACBrMonitor )
+        else if Cmd.Metodo = 'ocultar' then
+           Ocultar1Click( FrmACBrMonitor )
 
-          else if Cmd.Metodo = 'encerrarmonitor' then
-             Application.Terminate
+        else if Cmd.Metodo = 'encerrarmonitor' then
+           Application.Terminate
         {$ENDIF}
 
         {$IFDEF MSWINDOWS}
-         else if Cmd.Metodo = 'sendkeys' then
-            SendKeys( PChar(Cmd.Params(0)),                  { Teclas a Enviar }
-                      StrToBoolDef(Cmd.Params(1),False) )           { Espera ? }
-            
-         else if Cmd.Metodo = 'appactivate' then
-          begin
-            nWait := StrToIntDef( Cmd.Params(1), 0 ) ;
-            if nWait > 0 then
-               Sleep(nWait);
-            AppActivate( PChar(Cmd.Params(0)) ) ;
-          end
+        else if Cmd.Metodo = 'sendkeys' then
+           SendKeys( PChar(Cmd.Params(0)),                  { Teclas a Enviar }
+                     StrToBoolDef(Cmd.Params(1),False) )           { Espera ? }
 
-         else if Cmd.Metodo = 'appexists' then
-            Cmd.Resposta := BoolToStr( AppExists( PChar(Cmd.Params(0)) ), true )
+        else if Cmd.Metodo = 'appactivate' then
+        begin
+          nWait := StrToIntDef( Cmd.Params(1), 0 ) ;
+          if nWait > 0 then
+             Sleep(nWait);
+          AppActivate( PChar(Cmd.Params(0)) ) ;
+        end
 
-         else if Cmd.Metodo = 'blockinput' then
-           BlockInput( StrToBool(Cmd.Params(0)) )
+        else if Cmd.Metodo = 'appexists' then
+           Cmd.Resposta := BoolToStr( AppExists( PChar(Cmd.Params(0)) ), true )
+
+        else if Cmd.Metodo = 'blockinput' then
+          BlockInput( StrToBool(Cmd.Params(0)) )
         {$ENDIF}
 
         else if Cmd.Metodo = 'savetofile' then
-         begin
-           VerificaPermiteComandosRemoto ;
+        begin
+          VerificaPermiteComandosRemoto ;
 
-           Memo := TStringList.Create ;
-           try
-              Memo.Clear ;
-              Memo.Text := ConvertStrRecived( cmd.Params(1) );
-              Memo.SaveToFile( Cmd.Params(0) );
-           finally
-              Memo.Free ;
-           end ;
-         end
+          Memo := TStringList.Create ;
+          try
+             Memo.Clear ;
+             Memo.Text := ConvertStrRecived( cmd.Params(1) );
+             Memo.SaveToFile( Cmd.Params(0) );
+          finally
+             Memo.Free ;
+          end ;
+        end
 
         else if Cmd.Metodo = 'loadfromfile' then
-         begin
-           VerificaPermiteComandosRemoto ;
+        begin
+          VerificaPermiteComandosRemoto ;
 
-           Files := Cmd.Params(0) ;
-           dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),1) ) ;
-           while now <= dtFim do
-           begin
-              if FileExists( Files ) then
-              begin
-                 Memo  := TStringList.Create ;
-                 try
-                    Memo.Clear ;
-                    Memo.LoadFromFile( Files ) ;
-                    Cmd.Resposta := Memo.Text ;
-                    Break ;
-                 finally
-                    Memo.Free ;
-                 end ;
-              end ;
+          Files := Cmd.Params(0) ;
+          dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),1) ) ;
+          while now <= dtFim do
+          begin
+             if FileExists( Files ) then
+             begin
+                Memo  := TStringList.Create ;
+                try
+                   Memo.Clear ;
+                   Memo.LoadFromFile( Files ) ;
+                   Cmd.Resposta := Memo.Text ;
+                   Break ;
+                finally
+                   Memo.Free ;
+                end ;
+             end ;
 
-              {$IFNDEF NOGUI}
-               Application.ProcessMessages ;
-              {$ENDIF}
-              sleep(100) ;
-           end ;
+             {$IFNDEF NOGUI}
+              Application.ProcessMessages ;
+             {$ENDIF}
+             sleep(100) ;
+          end ;
 
-           if not FileExists( Cmd.Params(0) ) then
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado')
-         end
+          if not FileExists( Cmd.Params(0) ) then
+             raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado')
+        end
 
         else if Cmd.Metodo = 'filesexists' then
-         begin
-           VerificaPermiteComandosRemoto ;
+        begin
+          VerificaPermiteComandosRemoto ;
 
-           Files := Cmd.Params(0) ;
-           dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),0) ) ;
-           while (now <= dtFim) and ( not FileExists( Files ) ) do
-           begin
-              {$IFNDEF NOGUI}
-               Application.ProcessMessages ;
-              {$ENDIF}
-              sleep(100) ;
-           end ;
+          Files := Cmd.Params(0) ;
+          dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),0) ) ;
+          while (now <= dtFim) and ( not FileExists( Files ) ) do
+          begin
+             {$IFNDEF NOGUI}
+              Application.ProcessMessages ;
+             {$ENDIF}
+             sleep(100) ;
+          end ;
 
-           Cmd.Resposta := BoolToStr(FilesExists( Files ), True) ;
-         end
+          Cmd.Resposta := BoolToStr(FilesExists( Files ), True) ;
+        end
 
         else if Cmd.Metodo = 'deletefiles' then
-         begin
-           VerificaPermiteComandosRemoto ;
+        begin
+          VerificaPermiteComandosRemoto ;
 
-           Files := Trim(Cmd.Params(0)) ;
-           if (Files = '') or (Files = '*') or (Files = '*.*') then
-              raise Exception.Create( 'Mascara inválida: ['+Files+']') ;
+          Files := Trim(Cmd.Params(0)) ;
+          if (Files = '') or (Files = '*') or (Files = '*.*') then
+             raise Exception.Create( 'Mascara inválida: ['+Files+']') ;
 
-           DeleteFiles( Files ) ;
-           if FilesExists( Files ) then
-              raise Exception.Create('Arquivo(s) ['+Files+'] ainda existe(m)') ;
-         end
+          DeleteFiles( Files ) ;
+          if FilesExists( Files ) then
+             raise Exception.Create('Arquivo(s) ['+Files+'] ainda existe(m)') ;
+        end
 
         else if Cmd.Metodo = 'setcertificado' then //NFe.SetCertificado(cCertificado,cSenha)
-         begin
-           if (Cmd.Params(0)<>'') then
-            begin
-              if FileExists(Cmd.Params(0)) then
-               begin
-                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
-                 ACBrCTe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
-                 ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
-                 ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
-                 edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
-                 edtNumeroSerie.Text :=  '';
-               end
-              else
-               begin
-                 ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
-                 ACBrCTe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
-                 ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
-                 ACBrGNRE1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
-                 edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
-                 edtArquivoPFX.Text :=  '';
-               end;
+        begin
+          if (Cmd.Params(0)<>'') then
+           begin
+             if FileExists(Cmd.Params(0)) then
+              begin
+                ACBrNFe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
+                ACBrCTe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
+                ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
+                edtNumeroSerie.Text :=  '';
+              end
+             else
+              begin
+                ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                ACBrCTe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
+                ACBrGNRE1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
+                edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
+                edtArquivoPFX.Text :=  '';
+              end;
 
-              ACBrNFe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
-              ACBrCTe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
-              ACBrMDFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
-              ACBrGNRE1.Configuracoes.Certificados.Senha := Cmd.Params(1);
-              edtSenha.Text := ACBrNFe1.Configuracoes.Certificados.Senha;
-              SalvarIni;
-            end
-           else
-              raise Exception.Create('Certificado '+Cmd.Params(0)+' Inválido.');
-         end
+             ACBrNFe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
+             ACBrCTe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
+             ACBrMDFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+             ACBrGNRE1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+             edtSenha.Text := ACBrNFe1.Configuracoes.Certificados.Senha;
+             SalvarIni;
+           end
+          else
+             raise Exception.Create('Certificado '+Cmd.Params(0)+' Inválido.');
+        end
 
         else if Cmd.Metodo = 'setwebservice' then
         begin
@@ -254,6 +254,11 @@ begin
 
           cmd.Resposta := Format('WebService configurado %s',[Cmd.Params(0)]);
 	end
+
+        else if Cmd.Metodo = CMetodoObterCertificados then
+        begin
+          cmd.Resposta := ObterCerticados(ACBrNFe1.SSL);
+        end
 
         else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )
@@ -286,7 +291,7 @@ begin
          else if cmd.Metodo = 'versao' then
             Cmd.Resposta := VersaoACBr
 
-        ELSE
+        else
            raise Exception.Create('Comando inválido ('+ copy(Cmd.Comando,6,length(Cmd.Comando))+')') ;
 
      finally

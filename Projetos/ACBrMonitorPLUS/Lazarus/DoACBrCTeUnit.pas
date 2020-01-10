@@ -457,6 +457,7 @@ begin
   ListaDeMetodos.Add(CMetodoLoadfromfile);
   ListaDeMetodos.Add(CMetodoLerini);
   ListaDeMetodos.Add(CMetodoSetcertificado);
+  ListaDeMetodos.Add(CMetodoObterCertificados);
   ListaDeMetodos.Add(CMetodoRestaurar);
   ListaDeMetodos.Add(CMetodoOcultar);
   ListaDeMetodos.Add(CMetodoEncerrarmonitor);
@@ -531,7 +532,9 @@ begin
     46 : AMetodoClass := TMetodoCertificadoDataVencimento; // DataVencimentoCertificado
     47 : AMetodoClass := TMetodoSetTipoImpressao;
 
-    48..62 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
+
   end;
 
   if Assigned(AMetodoClass) then

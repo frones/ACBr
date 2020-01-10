@@ -557,7 +557,8 @@ begin
     6  : AMetodoClass := TMetodoSetIDContribuinte;
     7  : AMetodoClass := TMetodoSetIDTransmissor;
     8  : AMetodoClass := TMetodoConsultarReciboReinf;
-    9..23 : DoACbr(ACmd);
+    else
+      DoACbr(ACmd);
   end;
 
   if Assigned(AMetodoClass) then

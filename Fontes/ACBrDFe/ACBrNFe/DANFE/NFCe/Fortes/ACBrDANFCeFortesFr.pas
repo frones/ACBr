@@ -1310,7 +1310,7 @@ begin
       if AlterarEscalaPadrao then
       begin
         frACBrNFeDANFCeFortesFr.Scaled := False;
-        frACBrNFeDANFCeFortesFr.ScaleBy(ADAMDFe.NovaEscala , Screen.PixelsPerInch);
+        frACBrNFeDANFCeFortesFr.ScaleBy(NovaEscala , Screen.PixelsPerInch);
       end;
 
       Filtro := AFiltro;

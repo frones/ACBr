@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2020
+-- Diversos --
+[*] Alterações visando gerar e enviar o RPS para o webservice do provedor
+    MegaSoft.
+   Por: Italo Jurisato Junior
+
 08/01/2020
 -- pnfsNFSeW_Infisc --
 [*] Alterações visando a validação do Lote de RPS antes do seu envio.

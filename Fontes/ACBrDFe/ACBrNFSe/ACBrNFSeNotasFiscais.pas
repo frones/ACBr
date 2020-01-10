@@ -530,25 +530,33 @@ function NotaFiscal.CorrigirAssinatura(const AXML: string): string;
 var
   XML:string;
 begin
-  XML := StringReplace(AXML,
-      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>',
-      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
+  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+  begin
+    if Configuracoes.Geral.ConfigRemover.TagTransform then
+    begin
+      XML := StringReplace(AXML,
+          '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>',
+          '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
 
-  XML := StringReplace(XML,
-      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>',
-      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>', [rfReplaceAll]);
+      XML := StringReplace(XML,
+          '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>',
+          '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>', [rfReplaceAll]);
 
-  XML := StringReplace(XML,
-      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>',
-      '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>', [rfReplaceAll]);
+      XML := StringReplace(XML,
+          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>',
+          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>', [rfReplaceAll]);
 
-  XML := StringReplace(XML,
-      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>',
-      '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
+      XML := StringReplace(XML,
+          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>',
+          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>', [rfReplaceAll]);
 
-  XML := StringReplace(XML,
-      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>',
-      '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>', [rfReplaceAll]);
+      XML := StringReplace(XML,
+          '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>',
+          '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>', [rfReplaceAll]);
+    end
+    else
+      XML := AXML;
+  end;
 
   Result := XML;
 end;

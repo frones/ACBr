@@ -69,6 +69,7 @@ type
     EComercial: Boolean;
     Tabulacao: Boolean;
     TagQuebradeLinhaUnica: Boolean;
+    TagTransform:Boolean;
  end;
 
  TConfigNameSpace = record
@@ -646,6 +647,7 @@ begin
   FConfigRemover.EComercial            := FPIniParams.ReadBool('Remover', 'EComercial', False);
   FConfigRemover.Tabulacao             := FPIniParams.ReadBool('Remover', 'Tabulacao', False);
   FConfigRemover.TagQuebradeLinhaUnica := FPIniParams.ReadBool('Remover', 'TagQuebradeLinhaUnica', False);
+  FConfigRemover.TagTransform          := FPIniParams.ReadBool('Remover', 'TagTransfom', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);

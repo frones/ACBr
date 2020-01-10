@@ -18456,7 +18456,7 @@ begin
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
     proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan, proWebISS,
     proCIGA, proNFSeBrasil, proMetropolisWeb, proSilTecnologia, proDSFSJC,
-    progeNFe, proMegasoft: Result := loABRASFv1;
+    progeNFe: Result := loABRASFv1;
 
     proABRASFv2, pro4R, proABase, proActconv2, proBethav2, proCoplan, proDigifred,
     proEReceita, proFIntelISS, proFiorilli, proFriburgo, proGoiania, proGovDigital,
@@ -18467,7 +18467,7 @@ begin
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
     proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, proiiBrasilv2,
-    proSimplISSv2: Result := loABRASFv2;
+    proSimplISSv2, proMegasoft: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;
@@ -18490,7 +18490,7 @@ begin
     proElotech:     Result := loElotech;
     proWebFisco:    Result := loWebFisco;
     proLencois:     Result := loLencois;
-else
+  else
     Result := loNone;
   end;
 (*
@@ -18510,7 +18510,7 @@ begin
     proSH3, proSIAPNet, proBelford, proISSJoinville, proSmarAPDABRASF,
     proAsten, proELv2, proTiplanv2, proGiss, proDeISS, proTcheInfov2,
     proDataSmart, proDesenvolve, proCenti, proRLZ, proSigCorp, proGiap,
-    proSimplISSv2: Result := ve200;
+    proSimplISSv2, proMegasoft: Result := ve200;
 
     proInfiscv11, proLencois: Result := ve110;
   else

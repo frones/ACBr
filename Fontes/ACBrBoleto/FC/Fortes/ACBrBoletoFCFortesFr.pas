@@ -1132,6 +1132,11 @@ begin
    Detalhamento    := TStringList.Create;
    RLBand4.Visible := (fBoletoFC.LayOut = lPadraoEntrega) ;
    rlbndComprovanteEntrega2.Visible := (fBoletoFC.LayOut = lPadraoEntrega2) ;
+   if fBoletoFC.AlterarEscalaPadrao then
+   begin
+     Self.Scaled := False;
+     Self.ScaleBy(fBoletoFC.NovaEscala, Screen.PixelsPerInch );
+   end;
 
    {$IFDEF UNICODE}
    { // Fontes do ACBr estão em CP1252, convertendo textos para UTF-8 //

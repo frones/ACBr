@@ -1455,6 +1455,8 @@ type
     fOnObterLogo : TACBrBoletoFCOnObterLogo ;
     fSoftwareHouse  : String;
     FPdfSenha: string;
+    FAlterarEscalaPadrao: Boolean;
+    FNovaEscala: Integer;
     function ComponentStateDesigning: Boolean;
     function GetArquivoLogo: String;
     function GetDirLogo: String;
@@ -1494,6 +1496,9 @@ type
     property DirLogo         : String          read GetDirLogo        write SetDirLogo;
     property NomeArquivo     : String          read GetNomeArquivo    write SetNomeArquivo ;
     property PdfSenha        : string          read FPdfSenha         write SetPdfSenha;
+    property AlterarEscalaPadrao: Boolean      read FAlterarEscalaPadrao write FAlterarEscalaPadrao default False;
+    property NovaEscala      : Integer         read FNovaEscala       write FNovaEscala        default 96;
+
   end;
 
 
@@ -3490,18 +3495,20 @@ end;
 
 constructor TACBrBoletoFCClass.Create ( AOwner: TComponent ) ;
 begin
-   inherited Create ( AOwner ) ;
+  inherited Create ( AOwner ) ;
 
-   fACBrBoleto       := nil;
-   fLayOut           := lPadrao;
-   fNumCopias        := 1;
-   fMostrarPreview   := True;
-   fMostrarSetup     := True;
-   fMostrarProgresso := True;
-   fFiltro           := fiNenhum;
-   fNomeArquivo      := '' ;
-   fPathNomeArquivo  := '' ;
-   fPrinterName      := '' ;
+  fACBrBoleto          := nil;
+  fLayOut              := lPadrao;
+  fNumCopias           := 1;
+  fMostrarPreview      := True;
+  fMostrarSetup        := True;
+  fMostrarProgresso    := True;
+  fFiltro              := fiNenhum;
+  fNomeArquivo         := '' ;
+  fPathNomeArquivo     := '' ;
+  fPrinterName         := '' ;
+  FAlterarEscalaPadrao := False;
+  FNovaEscala          := 96;
 end;
 
 procedure TACBrBoletoFCClass.Notification ( AComponent: TComponent;

@@ -782,35 +782,18 @@ begin
 end;
 
 function TACBrObjetoNFe.GerarNFeIni(XML: string): string;
-var
-  INIRec: TMemIniFile;
-  IniNFe: TStringList;
-  LocNFeR: TNFeR;
 begin
-  INIRec := TMemIniFile.Create('NFe.ini');
-
   fACBrNFe.NotasFiscais.Clear;
   if FilesExists(XML) then
     fACBrNFe.NotasFiscais.LoadFromFile(XML)
   else
   begin
-    LocNFeR := TNFeR.Create(fACBrNFe.NotasFiscais.Add.NFe);
-    try
-      LocNFeR.Leitor.Arquivo := ConvertStrRecived(XML);
-      LocNFeR.LerXml;
-      fACBrNFe.NotasFiscais.Items[0].XML := LocNFeR.Leitor.Arquivo;
-      fACBrNFe.NotasFiscais.GerarNFe;
-    finally
-      LocNFeR.Free;
-    end;
+    fACBrNFe.NotasFiscais.LoadFromString(ConvertStrRecived(XML));
+    fACBrNFe.NotasFiscais.GerarNFe;
   end;
 
-  IniNFe := TStringList.Create;
-  IniNFe.Text := fACBrNFe.NotasFiscais.GerarIni();
-  INIRec.SetStrings(IniNFe);
-  INIRec.Free;
-  Result := IniNFe.Text;
-  IniNFe.Free;
+  Result := fACBrNFe.NotasFiscais.GerarIni();
+  WriteToTxt('NFe.ini', Result);
 end;
 
 procedure TACBrObjetoNFe.RespostaIntegrador;

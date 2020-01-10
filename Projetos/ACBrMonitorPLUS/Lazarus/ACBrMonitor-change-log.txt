@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2020
+[*] DoACBrNFe
+    Melhoria no metodo GerarNFeIni.
+
 09/01/2020
 [+] DoACBrUnit, DoACBrNFe, DoACBrCTe, DoACBrMDFe
 Adicionado novo método "ObterCertificados", retorna os dados de todos os certificados instalados na máquina.

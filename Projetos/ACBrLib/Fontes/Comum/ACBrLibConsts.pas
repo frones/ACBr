@@ -109,7 +109,16 @@ const
   CChaveMargemSuperior = 'MargemSuperior';
   CChaveMargemEsquerda = 'MargemEsquerda';
   CChaveMargemDireita = 'MargemDireita';
+  CChaveAlterarEscalaPadrao = 'AlterarEscalaPadrao';
+  CChaveNovaEscala = 'NovaEscala';
   CChaveExpandeLogoMarca = 'ExpandeLogoMarca';
+
+  CChaveExpandeLogoMarcaAltura = 'ExpandeLogoMarca.Altura';
+  CChaveExpandeLogoMarcaEsquerda = 'ExpandeLogoMarca.Esquerda';
+  CChaveExpandeLogoMarcaTopo = 'ExpandeLogoMarca.Topo';
+  CChaveExpandeLogoMarcaLargura = 'ExpandeLogoMarca.Largura';
+  CChaveExpandeLogoMarcaDimensionar = 'ExpandeLogoMarca.Dimensionar';
+  CChaveExpandeLogoMarcaEsticar = 'ExpandeLogoMarca.Esticar';
 
   CChaveCasasDecimaisFormato = 'CasasDecimais.Formato';
   CChaveCasasDecimaisMaskqCom = 'CasasDecimais.MaskqCom';

@@ -42,6 +42,8 @@ uses
 
 const
   CSessaoDANFE = 'DANFE';
+  CChaveProtocolo = 'Protocolo';
+  CChaveCancelada = 'Cancelada';
   CChaveTipoDANFE = 'TipoDANFE';
   CChaveImprimeTotalLiquido = 'ImprimeTotalLiquido';
   CChavevTribFed = 'vTribFed';
@@ -89,7 +91,8 @@ const
   CChaveLogoemCima = 'LogoemCima';
   CChaveRecuoLogo = 'RecuoLogo';
   CChaveExpandirDadosAdicionaisAuto = 'ExpandirDadosAdicionaisAuto';
-  CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina = 'ImprimeContDadosAdPrimeiraPagina';
+  CChaveImprimeContDadosAdPrimeiraPagina = 'ImprimeContDadosAdPrimeiraPagina';
+  CChaveExibeCampoDePagamento = 'ExibeCampoDePagamento';
   CChaveFonteNome = 'Fonte.Nome';
   CChaveFonteNegrito = 'Fonte.Negrito';
   CChaveFonteTamanhoFonteRazaoSocial = 'Fonte.TamanhoFonteRazaoSocial';

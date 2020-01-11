@@ -59,7 +59,10 @@ type
     FMargemEsquerda: Double;
     FMargemDireita: Double;
     FCasasDecimais: TCasasDecimais;
+    FAlterarEscalaPadrao: Boolean;
+    FNovaEscala: Integer;
     FExpandeLogoMarca: Boolean;
+    FExpandeLogoMarcaConfig: TExpandeLogoMarcaConfig;
     FNomeDocumento: String;
     FSessao: String;
 
@@ -96,7 +99,10 @@ type
    property MargemSuperior: Double read FMargemSuperior write FMargemSuperior;
    property MargemEsquerda: Double read FMargemEsquerda write FMargemEsquerda;
    property MargemDireita: Double read FMargemDireita write FMargemDireita;
+   property AlterarEscalaPadrao: Boolean read FAlterarEscalaPadrao write FAlterarEscalaPadrao;
+   property NovaEscala: Integer read FNovaEscala write FNovaEscala;
    property ExpandeLogoMarca: Boolean read FExpandeLogoMarca write FExpandeLogoMarca;
+   property ExpandeLogoMarcaConfig: TExpandeLogoMarcaConfig read FExpandeLogoMarcaConfig;
    property CasasDecimais: TCasasDecimais read FCasasDecimais;
  end;
 
@@ -113,7 +119,8 @@ end;
 
 destructor TDFeReportConfig<T>.Destroy;
 begin
-  FCasasDecimais.Destroy;
+  FCasasDecimais.Free;
+  FExpandeLogoMarcaConfig.Free;
 
   inherited Destroy;
 end;
@@ -138,9 +145,14 @@ begin
   FMargemSuperior := 8;
   FMargemEsquerda := 6;
   FMargemDireita := 5.1;
+  FAlterarEscalaPadrao := False;
+  FNovaEscala := 96;
   ExpandeLogoMarca := False;
 
-  if Assigned(FCasasDecimais) then FCasasDecimais.Free;
+  if Assigned(FExpandeLogoMarcaConfig) then FreeAndNil(FExpandeLogoMarcaConfig);
+  FExpandeLogoMarcaConfig := TExpandeLogoMarcaConfig.Create(nil);
+
+  if Assigned(FCasasDecimais) then FreeAndNil(FCasasDecimais);
   FCasasDecimais := TCasasDecimais.Create(nil);
 
   DefinirValoresPadroesChild;
@@ -171,28 +183,40 @@ end;
 
 procedure TDFeReportConfig<T>.LerIni(const AIni: TCustomIniFile);
 begin
-  FPathPDF := AIni.ReadString(FSessao, CChavePathPDF, FPathPDF);
-  FUsaSeparadorPathPDF := AIni.ReadBool(FSessao, CChaveUsaSeparadorPathPDF, FUsaSeparadorPathPDF);
-  FImpressora := AIni.ReadString(FSessao, CChaveImpressora, FImpressora);
-  FNomeDocumento := AIni.ReadString(FSessao, CChaveNomeDocumento, FNomeDocumento);
-  FMostraSetup := AIni.ReadBool(FSessao, CChaveMostraSetup, FMostraSetup);
-  FMostraPreview := AIni.ReadBool(FSessao, CChaveMostraPreview, FMostraPreview);
-  FMostraStatus := AIni.ReadBool(FSessao, CChaveMostraStatus, FMostraStatus);
-  FNumCopias := AIni.ReadInteger(FSessao, CChaveCopias, FNumCopias);
-  FLogo := AIni.ReadString(FSessao, CChavePathLogo, FLogo);
-  FMargemInferior := AIni.ReadFloat(FSessao, CChaveMargemInferior, FMargemInferior);
-  FMargemSuperior := AIni.ReadFloat(FSessao, CChaveMargemSuperior, FMargemSuperior);
-  FMargemEsquerda := AIni.ReadFloat(FSessao, CChaveMargemEsquerda, FMargemEsquerda);
-  FMargemDireita := AIni.ReadFloat(FSessao, CChaveMargemDireita, FMargemDireita);
-  FExpandeLogoMarca := AIni.ReadBool(FSessao, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+  FPathPDF := AIni.ReadString(Sessao, CChavePathPDF, FPathPDF);
+  FUsaSeparadorPathPDF := AIni.ReadBool(Sessao, CChaveUsaSeparadorPathPDF, FUsaSeparadorPathPDF);
+  FImpressora := AIni.ReadString(Sessao, CChaveImpressora, FImpressora);
+  FNomeDocumento := AIni.ReadString(Sessao, CChaveNomeDocumento, FNomeDocumento);
+  FMostraSetup := AIni.ReadBool(Sessao, CChaveMostraSetup, FMostraSetup);
+  FMostraPreview := AIni.ReadBool(Sessao, CChaveMostraPreview, FMostraPreview);
+  FMostraStatus := AIni.ReadBool(Sessao, CChaveMostraStatus, FMostraStatus);
+  FNumCopias := AIni.ReadInteger(Sessao, CChaveCopias, FNumCopias);
+  FLogo := AIni.ReadString(Sessao, CChavePathLogo, FLogo);
+  FMargemInferior := AIni.ReadFloat(Sessao, CChaveMargemInferior, FMargemInferior);
+  FMargemSuperior := AIni.ReadFloat(Sessao, CChaveMargemSuperior, FMargemSuperior);
+  FMargemEsquerda := AIni.ReadFloat(Sessao, CChaveMargemEsquerda, FMargemEsquerda);
+  FMargemDireita := AIni.ReadFloat(Sessao, CChaveMargemDireita, FMargemDireita);
+  FAlterarEscalaPadrao := AIni.ReadBool(Sessao, CChaveAlterarEscalaPadrao, FAlterarEscalaPadrao);
+  FNovaEscala := AIni.ReadInteger(Sessao, CChaveNovaEscala, FNovaEscala);
+  FExpandeLogoMarca := AIni.ReadBool(Sessao, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+
+  with FExpandeLogoMarcaConfig do
+  begin
+    Altura := AIni.ReadInteger(Sessao, CChaveExpandeLogoMarcaAltura, Altura);
+    Esquerda := AIni.ReadInteger(Sessao, CChaveExpandeLogoMarcaEsquerda, Esquerda);
+    Topo := AIni.ReadInteger(Sessao, CChaveExpandeLogoMarcaTopo, Topo);
+    Largura := AIni.ReadInteger(Sessao, CChaveExpandeLogoMarcaLargura, Largura);
+    Dimensionar := AIni.ReadBool(Sessao, CChaveExpandeLogoMarcaDimensionar, Dimensionar);
+    Esticar := AIni.ReadBool(Sessao, CChaveExpandeLogoMarcaEsticar, Esticar);
+  end;
 
   with FCasasDecimais do
   begin
-    Formato := TDetFormato(AIni.ReadInteger(FSessao, CChaveCasasDecimaisFormato, Integer(Formato)));
-    MaskqCom := AIni.ReadString(FSessao, CChaveCasasDecimaisMaskqCom, MaskqCom);
-    MaskvUnCom := AIni.ReadString(FSessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
-    qCom := AIni.ReadInteger(FSessao, CChaveCasasDecimaisqCom, qCom);
-    vUnCom := AIni.ReadInteger(FSessao, CChaveCasasDecimaisvUnCom, vUnCom);
+    Formato := TDetFormato(AIni.ReadInteger(Sessao, CChaveCasasDecimaisFormato, Integer(Formato)));
+    MaskqCom := AIni.ReadString(Sessao, CChaveCasasDecimaisMaskqCom, MaskqCom);
+    MaskvUnCom := AIni.ReadString(Sessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
+    qCom := AIni.ReadInteger(Sessao, CChaveCasasDecimaisqCom, qCom);
+    vUnCom := AIni.ReadInteger(Sessao, CChaveCasasDecimaisvUnCom, vUnCom);
   end;
 
   LerIniChild(AIni);
@@ -200,28 +224,40 @@ end;
 
 procedure TDFeReportConfig<T>.GravarIni(const AIni: TCustomIniFile);
 begin
-  AIni.WriteString(FSessao, CChavePathPDF, FPathPDF);
-  AIni.WriteBool(FSessao, CChaveUsaSeparadorPathPDF, FUsaSeparadorPathPDF);
-  AIni.WriteString(FSessao, CChaveImpressora, FImpressora);
-  AIni.WriteString(FSessao, CChaveNomeDocumento, FNomeDocumento);
-  AIni.WriteBool(FSessao, CChaveMostraSetup, FMostraSetup);
-  AIni.WriteBool(FSessao, CChaveMostraPreview, FMostraPreview);
-  AIni.WriteBool(FSessao, CChaveMostraStatus, FMostraStatus);
-  AIni.WriteInteger(FSessao, CChaveCopias, FNumCopias);
-  AIni.WriteString(FSessao, CChavePathLogo, FLogo);
-  AIni.WriteFloat(FSessao, CChaveMargemInferior, FMargemInferior);
-  AIni.WriteFloat(FSessao, CChaveMargemSuperior, FMargemSuperior);
-  AIni.WriteFloat(FSessao, CChaveMargemEsquerda, FMargemEsquerda);
-  AIni.WriteFloat(FSessao, CChaveMargemDireita, FMargemDireita);
-  AIni.WriteBool(FSessao, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+  AIni.WriteString(Sessao, CChavePathPDF, FPathPDF);
+  AIni.WriteBool(Sessao, CChaveUsaSeparadorPathPDF, FUsaSeparadorPathPDF);
+  AIni.WriteString(Sessao, CChaveImpressora, FImpressora);
+  AIni.WriteString(Sessao, CChaveNomeDocumento, FNomeDocumento);
+  AIni.WriteBool(Sessao, CChaveMostraSetup, FMostraSetup);
+  AIni.WriteBool(Sessao, CChaveMostraPreview, FMostraPreview);
+  AIni.WriteBool(Sessao, CChaveMostraStatus, FMostraStatus);
+  AIni.WriteInteger(Sessao, CChaveCopias, FNumCopias);
+  AIni.WriteString(Sessao, CChavePathLogo, FLogo);
+  AIni.WriteFloat(Sessao, CChaveMargemInferior, FMargemInferior);
+  AIni.WriteFloat(Sessao, CChaveMargemSuperior, FMargemSuperior);
+  AIni.WriteFloat(Sessao, CChaveMargemEsquerda, FMargemEsquerda);
+  AIni.WriteFloat(Sessao, CChaveMargemDireita, FMargemDireita);
+  AIni.WriteBool(Sessao, CChaveAlterarEscalaPadrao, FAlterarEscalaPadrao);
+  AIni.WriteInteger(Sessao, CChaveNovaEscala, FNovaEscala);
+  AIni.WriteBool(Sessao, CChaveExpandeLogoMarca, FExpandeLogoMarca);
+
+  with FExpandeLogoMarcaConfig do
+  begin
+    AIni.WriteInteger(Sessao, CChaveExpandeLogoMarcaAltura, Altura);
+    AIni.WriteInteger(Sessao, CChaveExpandeLogoMarcaEsquerda, Esquerda);
+    AIni.WriteInteger(Sessao, CChaveExpandeLogoMarcaTopo, Topo);
+    AIni.WriteInteger(Sessao, CChaveExpandeLogoMarcaLargura, Largura);
+    AIni.WriteBool(Sessao, CChaveExpandeLogoMarcaDimensionar, Dimensionar);
+    AIni.WriteBool(Sessao, CChaveExpandeLogoMarcaEsticar, Esticar);
+  end;
 
   with FCasasDecimais do
   begin
-    AIni.WriteInteger(FSessao, CChaveCasasDecimaisFormato, Integer(Formato));
-    AIni.WriteString(FSessao, CChaveCasasDecimaisMaskqCom, MaskqCom);
-    AIni.WriteString(FSessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
-    AIni.WriteInteger(FSessao, CChaveCasasDecimaisqCom, qCom);
-    AIni.WriteInteger(FSessao, CChaveCasasDecimaisvUnCom, vUnCom);
+    AIni.WriteInteger(Sessao, CChaveCasasDecimaisFormato, Integer(Formato));
+    AIni.WriteString(Sessao, CChaveCasasDecimaisMaskqCom, MaskqCom);
+    AIni.WriteString(Sessao, CChaveCasasDecimaisMaskvUnCom, MaskvUnCom);
+    AIni.WriteInteger(Sessao, CChaveCasasDecimaisqCom, qCom);
+    AIni.WriteInteger(Sessao, CChaveCasasDecimaisvUnCom, vUnCom);
   end;
 
   GravarIniChild(AIni);
@@ -244,6 +280,8 @@ begin
   DFeReport.MargemSuperior := FMargemSuperior;
   DFeReport.MargemEsquerda := FMargemEsquerda;
   DFeReport.MargemDireita := FMargemDireita;
+  DFeReport.AlterarEscalaPadrao := FAlterarEscalaPadrao;
+  DFeReport.NovaEscala := FNovaEscala;
   DFeReport.ExpandeLogoMarca := FExpandeLogoMarca;
 
   With DFeReport.CasasDecimais do

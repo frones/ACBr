@@ -39,7 +39,7 @@ interface
 
 uses
   Classes, Graphics, SysUtils, IniFiles,
-  pcnConversao,
+  pcnConversao, pcnConversaoNFe,
   ACBrNFeConfiguracoes, ACBrDFeReport, ACBrDFeDANFeReport,
   ACBrNFeDANFEClass, ACBrNFeDANFeRLClass, ACBrLibConfig,
   ACBrDeviceConfig, ACBrIntegradorConfig, DFeReportConfig;
@@ -83,7 +83,8 @@ type
     FLogoEmCima: Boolean;
     FRecuoLogo: Integer;
     FExpandirDadosAdicionaisAuto: boolean;
-    FImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean;
+    FImprimeContDadosAdPrimeiraPagina: Boolean;
+    FExibeCampoDePagamento: TpcnInformacoesDePagamento;
 
   public
     constructor Create;
@@ -127,7 +128,8 @@ type
     property LogoemCima: Boolean read FLogoEmCima write FLogoEmCima;
     property RecuoLogo: Integer read FRecuoLogo write FRecuoLogo;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
-    property ImprimeContinuacaoDadosAdicionaisPrimeiraPagina: Boolean read FImprimeContinuacaoDadosAdicionaisPrimeiraPagina write FImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
+    property ImprimeContDadosAdPrimeiraPagina: Boolean read FImprimeContDadosAdPrimeiraPagina write FImprimeContDadosAdPrimeiraPagina;
+    property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento;
 
   end;
 
@@ -220,7 +222,7 @@ type
     destructor Destroy; override;
 
     property Protocolo: String read FProtocolo write FProtocolo;
-    property Cancelada: Boolean read FCancelada write FCancelada default False;
+    property Cancelada: Boolean read FCancelada write FCancelada;
     property vTribFed: currency read FvTribFed write FvTribFed;
     property vTribEst: currency read FvTribEst write FvTribEst;
     property vTribMun: currency read FvTribMun write FvTribMun;
@@ -273,7 +275,7 @@ type
 implementation
 
 uses
-  typinfo, strutils, synacode, blcksock, pcnAuxiliar, pcnConversaoNFe,
+  typinfo, strutils, synacode, blcksock, pcnAuxiliar,
   ACBrLibNFeClass, ACBrLibNFeConsts, ACBrLibConsts, ACBrMonitorConsts,
   ACBrLibComum, ACBrDFeSSL,  ACBrDANFCeFortesFr, ACBrNFeDANFeESCPOS,
   ACBrUtil, ACBrDFeConfiguracoes;
@@ -324,7 +326,8 @@ begin
   FLogoEmCima := False;
   FRecuoLogo := 0;
   FExpandirDadosAdicionaisAuto := False;
-  FImprimeContinuacaoDadosAdicionaisPrimeiraPagina := False;
+  FImprimeContDadosAdPrimeiraPagina := False;
+  FExibeCampoDePagamento := eipNunca;
 
   if Assigned(FFonte) then FFonte.Free;
   FFonte := TFonte.Create(nil);
@@ -366,8 +369,9 @@ begin
   RecuoEmpresa := AIni.ReadInteger(CSessaoDANFENFE, CChaveRecuoEmpresa, RecuoEmpresa);
   LogoemCima := AIni.ReadBool(CSessaoDANFENFE, CChaveLogoemCima, LogoemCima);
   RecuoLogo := AIni.ReadInteger(CSessaoDANFENFE, CChaveRecuoLogo, RecuoLogo);
-  ExpandirDadosAdicionaisAuto := AIni.ReadBool(CSessaoDANFENFE, CChaveExpandirDadosAdicionaisAuto, FExpandirDadosAdicionaisAuto);
-  ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina, FImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
+  ExpandirDadosAdicionaisAuto := AIni.ReadBool(CSessaoDANFENFE, CChaveExpandirDadosAdicionaisAuto, ExpandirDadosAdicionaisAuto);
+  ImprimeContDadosAdPrimeiraPagina := AIni.ReadBool(CSessaoDANFENFE, CChaveImprimeContDadosAdPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
+  ExibeCampoDePagamento := TpcnInformacoesDePagamento(AIni.ReadInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento)));
 
   with Fonte do
   begin
@@ -415,8 +419,8 @@ begin
   AIni.WriteBool(CSessaoDANFENFE, CChaveLogoemCima, LogoemCima);
   AIni.WriteInteger(CSessaoDANFENFE, CChaveRecuoLogo, RecuoLogo);
   AIni.WriteBool(CSessaoDANFENFE, CChaveExpandirDadosAdicionaisAuto, ExpandirDadosAdicionaisAuto);
-  AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
-
+  AIni.WriteBool(CSessaoDANFENFE, CChaveImprimeContDadosAdPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
+  AIni.WriteInteger(CSessaoDANFENFE, CChaveExibeCampoDePagamento, Integer(ExibeCampoDePagamento));
 
   with Fonte do
   begin
@@ -466,7 +470,8 @@ begin
     LogoemCima := FLogoemCima;
     RecuoLogo := FRecuoLogo;
     ExpandirDadosAdicionaisAuto := FExpandirDadosAdicionaisAuto;
-    ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := FImprimeContinuacaoDadosAdicionaisPrimeiraPagina;
+    ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := FImprimeContDadosAdPrimeiraPagina;
+    ExibeCampoDePagamento := FExibeCampoDePagamento;
 
     with Fonte do
     begin
@@ -687,7 +692,7 @@ begin
     PosCanhotoLayout := TPosReciboLayout(AIni.ReadInteger(CKeyDANFE, CKeyDANFELayoutCanhoto, Integer(PosCanhotoLayout)));
     ExibeCampoFatura := AIni.ReadBool(CKeyDANFE, CKeyDANFEExibirCampoFatura, ExibeCampoFatura);
     ExibeDadosDocReferenciados := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDadosDocReferenciados, ExibeDadosDocReferenciados);
-    ImprimeContinuacaoDadosAdicionaisPrimeiraPagina := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina);
+    ImprimeContDadosAdPrimeiraPagina := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContDadosAdPrimeiraPagina);
     ImprimeDetalhamentoEspecifico := AIni.ReadBool(CKeyDANFE, CKeyDANFEImprimirDetalhamentoEspecifico, ImprimeDetalhamentoEspecifico);
     ImprimeValor := TImprimirUnidQtdeValor(AIni.ReadInteger(CKeyDANFE, CKeyDANFEUNComercialETributavel, Integer(ImprimeValor)));
     ExpandirDadosAdicionaisAuto := AIni.ReadBool(CKeyDANFE, CKeyDANFEExpandirDadosAdicionaisAuto, FExpandirDadosAdicionaisAuto);
@@ -720,6 +725,8 @@ end;
 
 procedure TDANFeReportConfig.LerIniChild(const AIni: TCustomIniFile);
 begin
+  FProtocolo := AIni.ReadString(CSessaoDANFE, CChaveProtocolo, FProtocolo);
+  FCancelada := AIni.ReadBool(CSessaoDANFE, CChaveCancelada, FCancelada);
   FTipoDANFE := TpcnTipoImpressao(AIni.ReadInteger(CSessaoDANFE, CChaveTipoDANFE, Integer(FTipoDANFE)));
   FImprimeTotalLiquido := AIni.ReadBool(CSessaoDANFE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
   FvTribFed := AIni.ReadFloat(CSessaoDANFE, CChavevTribFed, FvTribFed);
@@ -740,6 +747,8 @@ end;
 
 procedure TDANFeReportConfig.GravarIniChild(const AIni: TCustomIniFile);
 begin
+  AIni.WriteString(CSessaoDANFE, CChaveProtocolo, FProtocolo);
+  AIni.WriteBool(CSessaoDANFE, CChaveCancelada, FCancelada);
   AIni.WriteInteger(CSessaoDANFE, CChaveTipoDANFE, Integer(FTipoDANFE));
   AIni.WriteBool(CSessaoDANFE, CChaveImprimeTotalLiquido, FImprimeTotalLiquido);
   AIni.WriteFloat(CSessaoDANFE, CChavevTribFed, FvTribFed);
@@ -766,6 +775,8 @@ begin
 
   with DFeReport do
   begin
+    Protocolo := FProtocolo;
+    Cancelada := FCancelada;
     TipoDANFE := FTipoDANFE;
     ImprimeTotalLiquido := FImprimeTotalLiquido;
     vTribFed := FvTribFed;

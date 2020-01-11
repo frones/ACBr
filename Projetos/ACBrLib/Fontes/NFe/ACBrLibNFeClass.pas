@@ -182,7 +182,7 @@ function NFE_ImprimirInutilizacaoPDF(const eArquivoXml: PChar): longint;
 implementation
 
 uses
-  IniFiles, ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
+  ACBrLibConsts, ACBrLibNFeConsts, ACBrLibConfig,
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
   ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil, ACBrLibCertUtils,

@@ -31,10 +31,8 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-unit ACBrLibBoletoDataModule;
 
-//{$mode objfpc}{$H+}
-{$mode delphi}
+unit ACBrLibBoletoDataModule;
 
 interface
 

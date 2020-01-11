@@ -93,7 +93,7 @@ type
     procedure GerarInformacoesConsultaChaveAcesso;
     function GerarInformacoesConsumidor(Lateral: Boolean = False): String;
     function GerarInformacoesIdentificacaoNFCe(Lateral: Boolean = False): String;
-    procedure GerarMensagemFiscal;
+    function GerarMensagemFiscal: String;
     function GerarInformacoesQRCode(const DadosQRCode: String; Cancelamento: Boolean = False): String;
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
@@ -614,21 +614,25 @@ begin
   Result := Result + '</fn>';
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarMensagemFiscal;
-var
-  TextoObservacao: string;
+function TACBrNFeDANFeESCPOS.GerarMensagemFiscal: String;
+Var
+  TextoObservacao: String;
+  MensagemFiscal: TStringList;
 begin
-  TextoObservacao := Trim(FpNFe.InfAdic.infAdFisco);
-  if TextoObservacao <> '' then
-  begin
-    TextoObservacao := StringReplace(FpNFe.InfAdic.infAdFisco, ';', sLineBreak, [rfReplaceAll]);
-    FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
+  MensagemFiscal := TStringList.Create;
+
+  try
+    TextoObservacao := Trim(FpNFe.InfAdic.infAdFisco);
+    if TextoObservacao <> '' then
+      MensagemFiscal.Add('<c>' + StringReplace(TextoObservacao, ';', sLineBreak, [rfReplaceAll]));
+
+    TextoObservacao := Trim(FpNFe.procNFe.xMsg);
+    if TextoObservacao <> '' then
+      MensagemFiscal.Add('<c>' + TextoObservacao);
+  finally
+    Result := MensagemFiscal.Text;
+    MensagemFiscal.Free;
   end;
-
-  TextoObservacao := Trim(FpNFe.procNFe.xMsg);
-
-  if TextoObservacao <> '' then
-    FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
 end;
 
 function TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(const DadosQRCode: String;
@@ -684,7 +688,7 @@ procedure TACBrNFeDANFeESCPOS.MontarEnviarDANFE(NFE: TNFe;
 var
   AlturaMax, AlturaQRCode, EsquerdaQRCode: Integer;
   TextoLateral: TStringList;
-  MsgContingencia, DadosQRCode: String;
+  MsgContingencia, MsgFiscal, DadosQRCode: String;
 begin
   if NFE = nil then
   begin
@@ -716,6 +720,7 @@ begin
       TextoLateral.Text := sLineBreak +
                            GerarInformacoesConsumidor(True) +
                            GerarInformacoesIdentificacaoNFCe(True) +
+                           GerarMensagemFiscal +
                            GerarMensagemContingencia(#0);
 
       AjustaStringList(TextoLateral); // Ajusta corretamente o numero de Linhas
@@ -740,7 +745,10 @@ begin
   begin
     FPosPrinter.Buffer.Add(GerarInformacoesConsumidor(False));
     FPosPrinter.Buffer.Add(GerarInformacoesIdentificacaoNFCe);
-    GerarMensagemFiscal;
+
+    MsgFiscal := GerarMensagemFiscal;
+    if NaoEstaVazio(Trim(MsgFiscal)) then
+      FPosPrinter.Buffer.Add(MsgFiscal);
 
     MsgContingencia := GerarMensagemContingencia(' ');
     if NaoEstaVazio(Trim(MsgContingencia)) then

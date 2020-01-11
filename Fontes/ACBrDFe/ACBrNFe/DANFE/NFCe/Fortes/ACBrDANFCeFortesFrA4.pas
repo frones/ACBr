@@ -775,6 +775,12 @@ begin
   try
     with frACBrNFeDANFCeFortesFr do
     begin
+	  if AlterarEscalaPadrao then
+      begin
+        frACBrNFeDANFCeFortesFr.Scaled := False;
+        frACBrNFeDANFCeFortesFr.ScaleBy(NovaEscala , Screen.PixelsPerInch);
+      end;
+	
       Filtro := AFiltro;
       RLLayout := rlReportA4;
       Resumido := DanfeResumido;

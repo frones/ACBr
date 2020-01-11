@@ -103,7 +103,7 @@ begin
 
     for i := 0 to High(ANotas) do
     begin
-      DANFeReport := TfrlDANFeRL.Create(nil);
+      DANFeReport := Create(nil);
       DANFeReport.fpNFe := ANotas[i];
       DANFeReport.fpDANFe := ADANFe;
       if ADANFe.AlterarEscalaPadrao then

@@ -119,7 +119,7 @@ begin
 
     for i := 0 to High(ACTes) do
     begin
-      DACTeReport := TfrmDACTeRL.Create(nil);
+      DACTeReport := Create(nil);
       DACTeReport.fpCTe := ACTes[i];
       DACTeReport.fpDACTe := aDACTe;
       if aDACTe.AlterarEscalaPadrao then

@@ -52,7 +52,7 @@ procedure LibXmlShutDown();
 implementation
 
 uses
-  TypInfo, ACBrUtil;
+  TypInfo;
 
 var
   LibXMLLoaded: boolean;

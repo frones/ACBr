@@ -647,6 +647,7 @@ begin
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, CBufferSize);
+  pmd_ctx := Nil;
   try
     md_len := 0;
     md := EVP_get_digestbyname( NameDgst );

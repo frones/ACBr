@@ -189,8 +189,7 @@ implementation
 uses
   StrUtils, DateUtils,
   ACBrUtil, ACBrValidador, ACBrDFeUtil,
-  ACBrDFeReportFortes,
-  pcnNFe, pcnConversao, pcnConversaoNFe;
+  ACBrDFeReportFortes, pcnNFe, pcnConversao;
 
 {$IfNDef FPC}
   {$R *.dfm}

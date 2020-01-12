@@ -53,7 +53,7 @@ uses Classes, SysUtils,
        Forms, Graphics,
      {$EndIf}
      ACBrNFeDANFEClass, ACBrBase,
-     pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
+     pcnNFe, pcnConversao, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
      RLFilters, RLPrinters, RLTypes, Controls;
 

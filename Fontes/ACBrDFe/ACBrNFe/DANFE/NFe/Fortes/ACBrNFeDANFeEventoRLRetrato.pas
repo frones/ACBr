@@ -55,7 +55,6 @@ uses
    Graphics, Controls, Forms,
   {$ENDIF}
   RLReport, RLBarcode,
-  {$IFDEF BORLAND} XMLIntf, XMLDoc, {$ENDIF}
   ACBrNFeDANFeEventoRL, RLFilters, RLPDFFilter;
 
 type

@@ -47,8 +47,7 @@ uses
   Graphics, Controls, Forms,
   {$ENDIF}
   ACBrNFeDANFeRLClass, ACBrDFeReportFortes,
-  pcnNFe, pcnConversao,
-  RLReport, RLPDFFilter, RLFilters;
+  pcnNFe, RLReport, RLPDFFilter, RLFilters;
 
 type
 
@@ -78,7 +77,7 @@ type
 implementation
 
 uses
-  ACBrValidador, ACBrUtil, ACBrDFeReport, ACBrDelphiZXingQRCode;
+  StrUtils, Math, ACBrUtil;
 
 {$IfNDef FPC}
  {$R *.dfm}

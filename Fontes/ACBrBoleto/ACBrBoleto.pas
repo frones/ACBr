@@ -52,8 +52,11 @@ uses Classes, Graphics, Contnrs, IniFiles,
      {$IFDEF FPC}
        LResources,
      {$ENDIF}
+     {$IfNDef MSWINDOWS}
+       ACBrConsts,
+     {$ENDIF}
      SysUtils, typinfo,
-     ACBrBase, ACBrMail, ACBrValidador, ACBrConsts;
+     ACBrBase, ACBrMail, ACBrValidador;
 
 const
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
@@ -3007,7 +3010,9 @@ begin
 
    SLRemessa := TStringList.Create;
    try
+      {$IfNDef MSWINDOWS}
       SLRemessa.LineBreak := CRLF;
+      {$EndIf}
 
       if LayoutRemessa = c400 then
       begin

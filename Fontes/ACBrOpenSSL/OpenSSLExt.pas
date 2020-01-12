@@ -5792,8 +5792,11 @@ end;
 
 Function LoadLibraries : Boolean;
 var
-  i, x: Integer;
-  s: String;
+  i: Integer;
+  {$IfDef MSWINDOWS}
+   x: Integer;
+   s: String;
+  {$EndIf}
 begin
   {$IFNDEF COMPILER25_UP}
    Result := False;

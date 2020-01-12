@@ -3007,9 +3007,7 @@ begin
 
    SLRemessa := TStringList.Create;
    try
-     {$IfNDef MSWINDOWS}
-       SLRemessa.LineBreak := CRLF;
-     {$EndIf}
+      SLRemessa.LineBreak := CRLF;
 
       if LayoutRemessa = c400 then
       begin

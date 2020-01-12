@@ -45,6 +45,10 @@ uses
   Windows,
  {$ENDIF}
 {$ENDIF}
+{$IFDEF POSIX}
+  Posix.Stdio,
+  Posix.Unistd,
+{$ENDIF}
   Classes, SysUtils,
   pcnGerador, pcnLeitor, pcnVFPe, pcnVFPeW,
   ACBrBase, ACBrIntegradorResposta;

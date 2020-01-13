@@ -878,7 +878,7 @@ begin
                    IntToStrZero(aRemessa.Count + 1, 6);                                             // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
 
                    iSequencia := aRemessa.Count + 1;
-
+                   aRemessa.Add(UpperCase(wLinha));
                    //Registro Complemento Detalhe - Multa
                    if PercentualMulta > 0 then
                    begin
@@ -891,7 +891,7 @@ begin
                                    space(371)                                       + // Complemento
                                    IntToStrZero(iSequencia , 6);                      // Sequencial
 
-                     wLinha := wLinha + #13#10 + wLinhaMulta;
+                     aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
 
                    //OPCIONAL – COBRANÇA E-MAIL E/OU DADOS DO SACADOR AVALISTA
@@ -912,13 +912,11 @@ begin
                                    space(180)                                                   + // COMPLEMENTO DE REGISTRO
                                    IntToStrZero(iSequencia , 6);                                  // Sequencial
 
-                     wLinha := wLinha + #13#10 + wLinhaMulta;
-
+                     aRemessa.Add(UpperCase(wLinhaMulta));
                    end;
 
         end;
     end;
-    aRemessa.Add(UpperCase(wLinha));
   end;
 end;
 

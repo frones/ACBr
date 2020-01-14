@@ -412,12 +412,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 408
         Top = 1
         Width = 1023
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Font.Height = -13
         Images = ImageList1
         ParentFont = False
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
         OnChange = pgConfigChange
         object tsMonitor: TTabSheet
@@ -7095,11 +7095,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 378
             Top = 0
             Width = 1015
-            ActivePage = tsTestesDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
             Font.Height = -13
             ParentFont = False
-            TabIndex = 7
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               HelpType = htKeyword
@@ -11268,11 +11268,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 346
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteNFe
+                  ActivePage = tsTesteMDFe
                   Align = alClient
                   Font.Height = -13
                   ParentFont = False
-                  TabIndex = 0
+                  TabIndex = 2
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
@@ -16484,6 +16484,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -16502,6 +16508,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -16523,6 +16535,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.7
     MargemEsquerda = 0.7
     MargemDireita = 0.7
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 4
     CasasDecimais.vUnCom = 4
@@ -16532,6 +16550,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ExibeResumoCanhoto = False
     ExibeCampoFatura = False
     TributosPercentualPersonalizado = 0
+    EspacoEntreProdutos = 30
     left = 589
     top = 448
   end
@@ -17482,6 +17501,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Modelo = satDinamico_cdecl
     Extrato = ACBrSATExtratoFortes1
     NomeDLL = 'c:\sat\SAT.DLL'
+    ValidarNumeroSessaoResposta = True
     OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.06
     Config.ide_numeroCaixa = 0
@@ -17512,6 +17532,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -17529,6 +17555,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 2
     MargemEsquerda = 2
     MargemDireita = 2
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetMascara
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -17581,6 +17613,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -17622,6 +17660,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -17745,6 +17789,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 10
     MargemEsquerda = 10
     MargemDireita = 10
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2
@@ -17775,6 +17825,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2

@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/01/2020
+[*] DoACBrNFe, ACBrMonitorConfig
+Ajuste no método SetLogotipo, atualizado segundo parametro permitindo gravar Path do logo NFCe
+
+[*] DoACBrNFe
+Ajuste no método AssinarNFe, retornar o path correto da gravação do XML no caso de passar o conteúdo do XML como parâmetro
+
 10/01/2020
 [*] DoACBrNFe
     Melhoria no metodo GerarNFeIni.

@@ -1071,12 +1071,15 @@ end;
 { TMetodoSetLogoMarca }
 
 { Params: 0 - Logo: String com path da logo
+          1 - NFCe: 1 para atualizar Logo da NFCe
 }
 procedure TMetodoSetLogoMarca.Executar;
 var
   ALogo: String;
+  ANFCe: Boolean;
 begin
   ALogo := fpCmd.Params(0);
+  ANFCe := StrToBoolDef( fpCmd.Params(1), False);
 
   if not FileExists(ALogo) then
     raise Exception.Create('Arquivo não encontrado.');
@@ -1084,7 +1087,12 @@ begin
   with TACBrObjetoNFe(fpObjetoDono) do
   begin
     with MonitorConfig.DFE.Impressao.Geral do
-        Logomarca := ALogo;
+    begin
+      if not(ANFCe) then
+        Logomarca := ALogo
+      else
+        LogoMarcaNFCeSAT := ALogo ;
+    end;
 
     MonitorConfig.SalvarArquivo;
   end;
@@ -1399,7 +1407,7 @@ begin
       if NaoEstaVazio(ACBrNFe.NotasFiscais.Items[0].NomeArq) then
         fpCmd.Resposta := ACBrNFe.NotasFiscais.Items[0].NomeArq
       else
-        fpCmd.Resposta := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.PathSalvar)
+        fpCmd.Resposta := PathWithDelim(ACBrNFe.Configuracoes.Arquivos.GetPathNFe())
           + StringReplace(ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID,
           'NFe', '', [rfIgnoreCase]) + '-nfe.xml';
     finally

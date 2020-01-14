@@ -1127,6 +1127,7 @@ begin
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimirDadosDocReferenciados  , ImprimirDadosDocReferenciados );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEExibirBandInforAdicProduto  , ExibirBandInforAdicProduto );
       Ini.WriteInteger (CSecDANFE, CKeyDANFEImprimeDescAcrescItemNFe     , ImprimeDescAcrescItemNFe);
+      Ini.WriteBool( CSecDANFE,  CKeyDANFELogoEmCima                     , LogoEmCima );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEExpandirDadosAdicionaisAuto , ExpandirDadosAdicionaisAuto );
       Ini.WriteBool( CSecDANFE,  CKeyDANFEImprimeContinuacaoDadosAdicionaisPrimeiraPagina, ImprimeContinuacaoDadosAdicionaisPrimeiraPagina );
     end;

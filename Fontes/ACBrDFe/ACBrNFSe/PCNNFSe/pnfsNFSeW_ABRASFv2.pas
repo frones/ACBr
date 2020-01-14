@@ -751,7 +751,7 @@ begin
     proABase, proDigifred,proBethav2,  proEReceita, proFiorilli, proGovDigital,
     proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH, proSisPMJP,
     proCoplan, proSIAPNet, proSystemPro, proISSJoinville, proDesenvolve, proCenti,
-    proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft:
+    proBelford, proiiBrasilv2, proWebISSv2, proMegaSoft, proModernizacaoPublica:
          Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
 
     proDeISS,
@@ -765,7 +765,6 @@ begin
         // alterado em 09/05/2018 por italo (incluido novamente o namespace)
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
 
-    proModernizacaoPublica,
     proSaatri,
     proSiam:
         Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');

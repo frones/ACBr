@@ -48,11 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 14/01/2020
+-- pnfsNFSeW_ABRASFv2 --
+[*] Alteração no ID do provedor ModernizacaoPublica.
+   Por: Michel Ouriques
 -- pnfsNFSeW_ABRASFv1 --
 [*] https://www.projetoacbr.com.br/forum/topic/55744-quebra-de-linha/
    Por: Leandro ksc
 -- Diversos --
-[*] Acrescentado a linha para levar em consideração ao caracter de 
+[*] Acrescentado a linha para levar em consideração o caracter de 
     quebra de linha definido no arquivo INI do provedor ao gerar
     o XML do RPS.
    Por: Italo Jurisato Junior

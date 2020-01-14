@@ -1544,7 +1544,8 @@ begin
                         if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or
                            (nfe.Det[i].Imposto.ICMS.pST > 0) or
                            (nfe.Det[i].Imposto.ICMS.vICMSSubstituto > 0) or
-                           (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
+                           (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) or
+                           (OcorrenciasVICMSSubstituto > 0) then
                         begin
                           Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
 
@@ -1784,7 +1785,8 @@ begin
                     if (nfe.Det[i].Imposto.ICMS.vBCSTRET > 0) or
                        (nfe.Det[i].Imposto.ICMS.pST > 0) or
                        (nfe.Det[i].Imposto.ICMS.vICMSSubstituto > 0) or
-                       (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) then
+                       (nfe.Det[i].Imposto.ICMS.vICMSSTRET > 0) or
+                       (OcorrenciasVICMSSubstituto > 0) then
                     begin
                       Gerador.wCampo(tcDe2, 'N26', 'vBCSTRet  ', 01, 15, 1, nfe.Det[i].Imposto.ICMS.vBCSTRET, DSC_VBCSTRET);
 

@@ -280,6 +280,8 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
+
   FDefTipos := FServicoEnviar;
 
   GerarNotas;

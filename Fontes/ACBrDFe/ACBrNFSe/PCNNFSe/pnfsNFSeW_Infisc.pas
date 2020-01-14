@@ -111,8 +111,11 @@ end;
 function TNFSeW_Infisc.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo := FPrefixo4;
+  Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   FNFSe.InfID.ID  := FNFSe.Numero;
 

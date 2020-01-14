@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi                            }
 {                                                                              }
@@ -201,8 +201,12 @@ function TNFSeW_Giap.GerarXml: Boolean;
 //  Gerar: boolean;
 begin
   Gerador.ArquivoFormatoXML := '';
+
   Gerador.Prefixo := FPrefixo4;
+
   Gerador.Opcoes.DecimalChar := '.';
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
+
   Atributo := '';
 
   Gerador.wGrupo('notaFiscal');

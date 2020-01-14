@@ -343,6 +343,8 @@ begin
   //Gerador.wGrupoNFSe('SDTRPS');
   //GerarIdentificacaoRPS;
   Gerador.Opcoes.DecimalChar := ',';
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
+
   GerarListaServicos;
   //GerarValoresServico;
   //Gerador.wGrupoNFSe('/SDTRPS');

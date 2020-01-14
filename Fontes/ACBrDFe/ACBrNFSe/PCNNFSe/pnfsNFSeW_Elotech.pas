@@ -346,8 +346,11 @@ end;
 function TNFSeW_Elotech.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   FDefTipos := FServicoEnviar;
 

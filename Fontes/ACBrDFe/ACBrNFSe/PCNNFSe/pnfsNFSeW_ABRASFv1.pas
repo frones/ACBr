@@ -568,8 +568,11 @@ end;
 function TNFSeW_ABRASFv1.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   if (FProvedor in [proBHISS, proNatal, proProdemge, proPronim, proTinus,
                     proNFSEBrasil]) then

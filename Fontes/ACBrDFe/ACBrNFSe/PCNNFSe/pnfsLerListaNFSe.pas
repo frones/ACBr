@@ -1221,11 +1221,11 @@ begin
     if FProvedor in [proIPM] then
     begin
       try
-        if( Leitor.rExtrai( 1, 'retorno' ) <> '' )then
+        if (Leitor.rExtrai(1, 'retorno') <> '') then
         begin
-          if( Leitor.rExtrai( 2, 'mensagem' ) <> '' )then
+          if (Leitor.rExtrai(2, 'mensagem') <> '') then
           begin
-            if( Copy( Leitor.rCampo( tcStr, 'codigo' ), 1, 5 ) <> '00001' )then
+            if (Copy(Leitor.rCampo(tcStr, 'codigo'), 1, 5) <> '00001') then
             begin
               i := 0;
               while Leitor.rExtrai(3, 'codigo', '', i + 1 ) <> '' do
@@ -1240,7 +1240,7 @@ begin
           end;
         end;
 
-        if( ListaNfse.FMsgRetorno.Count = 0 )then
+        if (ListaNfse.FMsgRetorno.Count = 0) then
         begin
           if (Leitor.rExtrai(1, 'retorno') <> '') then
           begin
@@ -1296,7 +1296,18 @@ begin
             ListaNFSe.FChaveNFeRPS.SerieRPS  := Leitor.rCampo(tcStr, 'serie_recibo_provisorio');
           end;
         end;
-      except
+ 
+        // Quando o login e senha estiver invalido, não esta retornando um xml, e sim o erro como texto.
+        if ((leitor.rExtrai(1, 'retorno') = '') and (ListaNfse.FMsgRetorno.Count = 0)) then
+        begin
+          ListaNfse.FMsgRetorno.New;
+          ListaNfse.FMsgRetorno[i].FCodigo   := '00002'; // não tem codigo...
+          if (leitor.Arquivo.Contains('Nao foi encontrado na tb.dcarq.unico a cidade(codmun) do Usuario:')) then
+            ListaNfse.FMsgRetorno[i].FMensagem := 'Usuário e/ou senha informados são inválidos'
+          else
+            ListaNfse.FMsgRetorno[i].FMensagem := leitor.Arquivo;
+        end;
+     except
         Result := False;
       end;
     end;

@@ -248,6 +248,7 @@ end;
 function TNFSeW_SP.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
   

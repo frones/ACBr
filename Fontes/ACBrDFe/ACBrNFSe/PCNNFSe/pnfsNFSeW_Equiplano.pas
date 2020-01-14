@@ -240,8 +240,11 @@ end;
 function TNFSeW_Equiplano.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '') then
     FDefTipos := '/' + FDefTipos;

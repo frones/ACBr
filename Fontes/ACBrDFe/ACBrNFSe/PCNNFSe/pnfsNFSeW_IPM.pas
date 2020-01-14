@@ -124,7 +124,7 @@ begin
 
   if( NFSe.Status <> srCancelado )then
   begin
-    if (NFSe.PrestadorServico.Endereco.EnderecoInformado) then
+    if (NFSe.Tomador.Endereco.EnderecoInformado) then
       Gerador.wCampoNFSe(tcStr, '', 'endereco_informado', 1, 1, 0, 'S', '')
     else
       Gerador.wCampoNFSe(tcStr, '', 'endereco_informado', 1, 1, 0, 'N', '');
@@ -300,8 +300,11 @@ end;
 function TNFSeW_IPM.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   FDefTipos := FServicoEnviar;
 

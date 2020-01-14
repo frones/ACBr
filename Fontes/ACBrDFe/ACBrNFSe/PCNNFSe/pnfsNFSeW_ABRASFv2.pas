@@ -965,8 +965,11 @@ end;
 function TNFSeW_ABRASFv2.GerarXml: Boolean;
 begin
   Gerador.ListaDeAlertas.Clear;
+
   Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo := FPrefixo4;
+  Gerador.Prefixo           := FPrefixo4;
+
+  Gerador.Opcoes.QuebraLinha := FQuebradeLinha;
 
   if (FProvedor in [pro4R, proABase, proActcon, proAgili, proCoplan, proDigifred,
      profintelISS, proFiorilli, proGoiania, proGovDigital,

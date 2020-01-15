@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2020
+-- ACBrDANFCeFortesFr --
+[+] Adicionada a propriedade FormularioContinuo: Boolean default False
+    Para permitir gerar relatórios com quebras de Páginas, a fim de permitir a
+    impressão correta de DANFCEs longos, algumas Impressoras
+    https://www.projetoacbr.com.br/forum/topic/55422-extrato-forte-itens/
+    (por: DSA)
+
 13/01/2020
 -- pcnNFeW -- 
 [*] Acrescentado a condição (OcorrenciasVICMSSubstituto > 0) para a geração das tags: 

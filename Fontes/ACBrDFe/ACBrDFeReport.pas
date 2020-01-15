@@ -137,6 +137,7 @@ type
   {$ENDIF RTL230_UP}
   TACBrDFeReport = class(TACBrComponent)
   private
+    FFormularioContinuo: Boolean;
     FPathPDF: String;
     FUsaSeparadorPathPDF: Boolean;
     FImpressora: String;
@@ -177,6 +178,11 @@ type
 
     function FormatarQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String; virtual;
     function FormatarValorUnitario(dValor: Double): String; virtual;
+
+  protected
+    {@prop FormularioContinuo - Se True, não quebra a página durante a impressão, útil para Impressão em Bobinas
+     @links TACBrDFeReport.FormularioContinuo :/}
+    property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo default False;
 
   published
     {@prop Impressora - Define/retorna o nome da impressora onde será impresso o documento.
@@ -362,7 +368,10 @@ begin
   FMargemSuperior := 8;
   FMargemEsquerda := 6;
   FMargemDireita := 5.1;
-  ExpandeLogoMarca := False;
+  FExpandeLogoMarca := False;
+  FAlterarEscalaPadrao := False;
+  FNovaEscala := 96;
+  FFormularioContinuo := False;
 
   FCasasDecimais := TCasasDecimais.Create(self);
   FCasasDecimais.Name := 'CasasDecimais';
@@ -374,8 +383,6 @@ begin
   FCasasDecimais.SetSubComponent(True);{ para gravar no DFM/XFM }
   FExpandeLogoMarcaConfig.SetSubComponent(True);{ para gravar no DFM/XFM }
   {$ENDIF}
-  FAlterarEscalaPadrao := False;
-  FNovaEscala := 96;
 end;
 
 destructor TACBrDFeReport.Destroy;

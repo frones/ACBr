@@ -81,7 +81,6 @@ type
   TACBrNFeDANFEClass = class(TACBrDFeDANFeReport)
   private
     FImprimeDescPorPercentual: Boolean;
-    FFormularioContinuo: Boolean;
     FImprimeValor: TImprimirUnidQtdeValor;
     FImprimeDetalhamentoEspecifico: Boolean;
     FImprimeDescAcrescItem: TpcnImprimeDescAcrescItem;
@@ -125,7 +124,6 @@ type
     function ManterInformacoesDadosAdicionais(aNFE: TNFe): String;
 
   published
-    property FormularioContinuo: Boolean read FFormularioContinuo write FFormularioContinuo default False;
     property ImprimeValor: TImprimirUnidQtdeValor read FImprimeValor write FImprimeValor default iuComercial;
     property ImprimeDescPorPercentual: Boolean read FImprimeDescPorPercentual write FImprimeDescPorPercentual default False;
     property ImprimeDetalhamentoEspecifico: Boolean read FImprimeDetalhamentoEspecifico write FImprimeDetalhamentoEspecifico default True;
@@ -146,6 +144,7 @@ type
     property TributosPercentualPersonalizado: Double read FTributosPercentualPersonalizado write SetTributosPercentualPersonalizado;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto default False;
     property ExibeCampoDePagamento: TpcnInformacoesDePagamento read FExibeCampoDePagamento write FExibeCampoDePagamento default eipNunca;
+    property FormularioContinuo;
   end;
 
 
@@ -187,6 +186,7 @@ type
     property DescricaoPagamentos: TDescricaoPagamentos read FDescricaoPagamentos write FDescricaoPagamentos default [icaTipo, icaBandeira];
     property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha write setImprimeEmUmaLinha default False;
     property ImprimeEmDuasLinhas: Boolean read FImprimeEmDuasLinhas write setImprimeEmDuasLinhas default False;
+    property FormularioContinuo;
   end;
 
 implementation
@@ -201,7 +201,6 @@ constructor TACBrNFeDANFEClass.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
-  FFormularioContinuo              := False;
   FImprimeValor                    := iuComercial;
   FImprimeDetalhamentoEspecifico   := True;
   FImprimeDescAcrescItem           := idaiSempre;
@@ -670,6 +669,7 @@ begin
   FImprimeEmUmaLinha     := False;
   FImprimeEmDuasLinhas   := False;
 
+  FormularioContinuo := True;
 end;
 
 function TACBrNFeDANFCEClass.ManterDescricaoPagamentos(aPagto: TpagCollectionItem

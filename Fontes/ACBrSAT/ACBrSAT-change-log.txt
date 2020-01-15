@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2020
+-- ACBrSATExtratoReportClass, ACBrSATExtratoFortesFr --
+[+] Adicionada a propriedade FormularioContinuo: Boolean default False
+    Para permitir gerar relatórios com quebras de Páginas, a fim de permitir a
+    impressão correta de Extratos do SAT longos, em algumas Impressoras
+    https://www.projetoacbr.com.br/forum/topic/55422-extrato-forte-itens/
+[*] Ajuste na definição do Título do relatório, mais amigável para
+    a exportação de Arquivos
+    (por: DSA)
+
 06/12/2019
 -- ACBrSATExtratoESCPOS --
 [-] Correção para não imprimir "CONSUMIDOR NAO INFORMADO", com QRCode lateral,

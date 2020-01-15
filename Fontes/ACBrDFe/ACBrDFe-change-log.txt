@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/01/2020
+-- ACBrDFeReport --
+[+] TACBrDFeReport, adicionada a propriedade "FormularioContinuo: Boolea default False",
+    que foi migrada de TACBrNFeDANFEClass
+    (por: DSA)
+
 30/12/2019
 -- ACBrDFeUtil -- 
 [*] https://www.projetoacbr.com.br/forum/topic/47753-notas-de-exporta%C3%A7%C3%A3o-ind-obrigando-campo-nre/?do=findComment&comment=363645

@@ -12,7 +12,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.0.4'
+  LCLVersion = '2.0.6.0'
   object rlVenda: TRLReport
     Left = 40
     Height = 1512

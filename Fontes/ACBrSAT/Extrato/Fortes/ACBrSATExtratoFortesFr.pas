@@ -1317,6 +1317,12 @@ var
   RLLayout: TRLReport;
   RLFiltro: TRLCustomSaveFilter;
   FileExt, DirPDF: String;
+
+  function FormatarTitulo(Atitulo, AChave: String): String;
+  begin
+    Result := Atitulo + '-' +StringReplace(FormatarChaveAcesso(AChave),' ', '_', [rfReplaceAll]);
+  end;
+
 begin
   frACBrSATExtratoFortesFr := TACBrSATExtratoFortesFr.Create(Self);
   try
@@ -1325,12 +1331,12 @@ begin
       if LayOut = lCancelamento then
       begin
          RLLayout := rlCancelamento;
-         RLLayout.Title := 'CFeCan: '+FormatarChaveAcesso(CFeCanc.infCFe.ID);
+         RLLayout.Title := FormatarTitulo('CFeCan', CFeCanc.infCFe.ID);
       end
       else
       begin
         RLLayout := rlVenda;
-        RLLayout.Title := 'CFe: '+FormatarChaveAcesso(CFe.infCFe.ID);
+        RLLayout.Title := FormatarTitulo('CFe', CFe.infCFe.ID);
         Resumido := (LayOut = lResumido);
       end;
 
@@ -1360,8 +1366,9 @@ begin
       RLLayout.PageBreaking := pbNone;
       RLLayout.PageSetup.PaperSize   := fpCustom ;
       RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
+      //RLLayout.PageSetup.PaperHeight := 200;
 
-      RLLayout.UnlimitedHeight := True; // ****** ATENÇÃO ******
+      RLLayout.UnlimitedHeight := FormularioContinuo; // ****** ATENÇÃO ******
       // Se você recebeu um erro de compilação na linha ACIMA
       // Voce DEVE atualizar os fontes do seu Fortes Report CE
       // https://github.com/fortesinformatica/fortesreport-ce
@@ -1393,7 +1400,7 @@ begin
           end ;
 
           if (NomeDocumento = '') then
-            RLFiltro.FileName := OnlyAlphaNum(RLLayout.Title)
+            RLFiltro.FileName := RLLayout.Title
           else
             RLFiltro.FileName := NomeDocumento ;
 

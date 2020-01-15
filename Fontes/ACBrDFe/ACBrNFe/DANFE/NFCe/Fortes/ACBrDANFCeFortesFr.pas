@@ -1350,7 +1350,7 @@ begin
       RLLayout.PageSetup.PaperSize   := fpCustom ;
       RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
 
-      RLLayout.UnlimitedHeight := True; // ****** ATENÇÃO ******
+      RLLayout.UnlimitedHeight := FormularioContinuo; // ****** ATENÇÃO ******
       // Se você recebeu um erro de compilação na linha ACIMA
       // Voce DEVE atualizar os fontes do seu Fortes Report CE
       // https://github.com/fortesinformatica/fortesreport-ce

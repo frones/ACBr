@@ -136,6 +136,7 @@ type
     property ImprimeCodigoEan: Boolean read FImprimeCodigoEan write FImprimeCodigoEan default False;
     property ImprimeQRCodeLateral: Boolean read FImprimeQRCodeLateral write FImprimeQRCodeLateral default True;
     property ImprimeLogoLateral: Boolean read FImprimeLogoLateral write FImprimeLogoLateral default True;
+    property FormularioContinuo;
   end ;
 
 implementation
@@ -167,6 +168,8 @@ begin
   FImprimeCodigoEan := False;
   FImprimeQRCodeLateral := True;
   FImprimeLogoLateral := True;
+
+  FormularioContinuo := True;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;

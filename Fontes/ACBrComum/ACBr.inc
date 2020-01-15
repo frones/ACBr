@@ -153,6 +153,9 @@
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
 
+{$IFDEF POSIX}
+ {$UNDEF USE_DELAYED}
+{$ENDIF}
 {$IFNDEF SUPPORTS_DELAYED_LOADING}
  {$UNDEF USE_DELAYED}
 {$ENDIF}
@@ -185,6 +188,8 @@
     {$UNDEF CLX}
     {$UNDEF VisualCLX}
     {$UNDEF VCL}
+    {$DEFINE DFE_SEM_CAPICOM}
+    {$DEFINE DFE_SEM_MSXML}
   {$ENDIF}
 
   {$IFDEF CLX}

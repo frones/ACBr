@@ -1302,7 +1302,7 @@ begin
         begin
           ListaNfse.FMsgRetorno.New;
           ListaNfse.FMsgRetorno[i].FCodigo   := '00002'; // não tem codigo...
-          if (leitor.Arquivo.Contains('Nao foi encontrado na tb.dcarq.unico a cidade(codmun) do Usuario:')) then
+          if Pos('Nao foi encontrado na tb.dcarq.unico a cidade(codmun) do Usuario:', leitor.Arquivo) > 0 then
             ListaNfse.FMsgRetorno[i].FMensagem := 'Usuário e/ou senha informados são inválidos'
           else
             ListaNfse.FMsgRetorno[i].FMensagem := leitor.Arquivo;

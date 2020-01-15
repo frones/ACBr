@@ -109,22 +109,22 @@ type
   public
     constructor Create(AOwner: TComponent); override;
   published
-    {@prop Altura - Denife a altura da logomarca expandida
+    {@prop Altura - Define a altura da logomarca expandida
      @links TExpandeLogoMarcaConfig.Altura :/}
     property Altura: Integer read FAltura write FAltura;
-    {@prop Esquerda - Denife a posição a esquerda da logomarca expandida
+    {@prop Esquerda - Define a posição a esquerda da logomarca expandida
      @links TExpandeLogoMarcaConfig.Esquerda :/}
     property Esquerda: Integer read FEsquerda write FEsquerda;
-    {@prop Topo - Denife a posição ao topo da logomarca expandida
+    {@prop Topo - Define a posição ao topo da logomarca expandida
      @links TExpandeLogoMarcaConfig.Topo :/}
     property Topo: Integer read FTopo write FTopo;
-    {@prop Largura - Denife a largura da logomarca expandida
+    {@prop Largura - Define a largura da logomarca expandida
      @links TExpandeLogoMarcaConfig.Largura :/}
     property Largura: Integer read FLargura write FLargura;
-    {@prop Dimensionar - Denife a logomarca expandida deve esticar no tamanho total ou não
+    {@prop Dimensionar - Define a logomarca expandida deve esticar no tamanho total ou não
      @links TExpandeLogoMarcaConfig.Dimensionar :/}
     property Dimensionar: Boolean read FDimensionar write FDimensionar;
-    {@prop Esticar - Denife a logomarca expandida deve esticar no tamanho total ou não
+    {@prop Esticar - Define a logomarca expandida deve esticar no tamanho total ou não
      @links TExpandeLogoMarcaConfig.Esticar :/}
     property Esticar: Boolean read FEsticar write FEsticar;
   end;

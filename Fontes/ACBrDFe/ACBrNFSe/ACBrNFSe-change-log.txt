@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2020
+-- Diversos --
+[*] Ajustes realizados para gerar corretamente o pedido de cancelamento para o
+    provedor Sigep.
+   Por: Italo Jurisato Junior
+
 14/01/2020
 -- pnfsNFSeW_ABRASFv2 --
 [*] Alteração no ID do provedor ModernizacaoPublica.

@@ -1916,17 +1916,29 @@ begin
 
       if (Provedor <> proBetha) or (IM <> '') then
         Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
-      Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 01, 07, 1, CodMunicipio, '');
+
+      if Provedor = proSigep then
+        Gerador.wCampoNFSe(tcStr, '#2', 'codigoVerificacao', 01, 09, 1, CodVerificacaoRPS, '')
+      else
+        Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 01, 07, 1, CodMunicipio, '');
 
       Gerador.wGrupoNFSe('/IdentificacaoNfse');
 
-      Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 01, 1, CodigoCanc, '');
+      if Provedor = proSigep then
+        Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 02, 02, 1, CodigoCanc, '')
+      else
+        Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 01, 1, CodigoCanc, '');
 
-      if Provedor in [proPublica, proTecnos, proFriburgo, proModernizacaoPublica] then
-        Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '')
-      else if Provedor in [proISSNET] then
-        Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 0, MotivoCanc, '');
+      case Provedor of
+        proPublica, proTecnos, proFriburgo, proModernizacaoPublica:
+          Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
 
+        proISSNET:
+          Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamentoNfse', 01, 255, 0, MotivoCanc, '');
+
+        proSigep:
+          Gerador.wCampoNFSe(tcStr, '#1', 'DescricaoCancelamento', 15, 200, 0, MotivoCanc, '');
+      end;
 //      if (Provedor in [proPublica]) and (CodigoCanc = 'C999') then
 //        Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
     end;

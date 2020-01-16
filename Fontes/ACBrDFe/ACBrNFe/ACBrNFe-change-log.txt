@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2020
+-- ACBrNFeDANFeESCPOS, ACBrDANFCeFortesFr --
+[+] Ajuste para que Frete no Item, seja impresso destacado de Acréscimos
+    https://www.projetoacbr.com.br/forum/topic/55780-valor-do-frete-no-item-da-nfc-e/
+    (por: DSA)
+
 15/01/2020
 -- ACBrDANFCeFortesFr --
 [+] Adicionada a propriedade FormularioContinuo: Boolean default False

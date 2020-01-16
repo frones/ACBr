@@ -40,7 +40,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRCode: TRLBand
       Left = 4
       Height = 137
-      Top = 427
+      Top = 455
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -70,7 +70,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlsbDetItem: TRLSubDetail
       Left = 4
-      Height = 76
+      Height = 104
       Top = 112
       Width = 294
       AllowedBands = [btDetail, btSummary]
@@ -213,10 +213,99 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           end
         end
       end
-      object rlbOutroItem: TRLBand
+      object rlbFreteItem: TRLBand
         Left = 8
         Height = 24
         Top = 48
+        Width = 278
+        AutoSize = True
+        InsideMargins.LeftMargin = 3
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rlbFreteItemBeforePrint
+        object rlpFreteItemTit: TRLPanel
+          Left = 11
+          Height = 24
+          Top = 0
+          Width = 203
+          Align = faClientTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object lTitFreteItem: TRLLabel
+            Left = 0
+            Height = 12
+            Top = 0
+            Width = 203
+            Align = faTop
+            Caption = 'Frete'
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lTitFreteItemValLiq: TRLLabel
+            Left = 0
+            Height = 12
+            Top = 12
+            Width = 203
+            Align = faTop
+            Caption = 'Valor Líquido'
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+        object rlpFreteItemVal: TRLPanel
+          Left = 214
+          Height = 24
+          Top = 0
+          Width = 64
+          Align = faRightTop
+          AutoExpand = True
+          AutoSize = True
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          object lFreteItem: TRLLabel
+            Left = 0
+            Height = 12
+            Top = 0
+            Width = 64
+            Align = faTop
+            Alignment = taRightJustify
+            Caption = '99.999,99'
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+          object lFreteItemValLiq: TRLLabel
+            Left = 0
+            Height = 12
+            Top = 12
+            Width = 64
+            Align = faTop
+            Alignment = taRightJustify
+            Caption = '99.999,99'
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+          end
+        end
+      end
+      object rlbOutroItem: TRLBand
+        Left = 8
+        Height = 24
+        Top = 72
         Width = 278
         AutoSize = True
         InsideMargins.LeftMargin = 3
@@ -305,7 +394,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbGap: TRLBand
         Left = 8
         Height = 2
-        Top = 72
+        Top = 96
         Width = 278
         BandType = btSummary
         RealBounds.Left = 0
@@ -318,7 +407,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlsbPagamentos: TRLSubDetail
       Left = 4
       Height = 96
-      Top = 188
+      Top = 216
       Width = 294
       Margins.LeftMargin = 2
       Margins.RightMargin = 2
@@ -962,7 +1051,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbChaveDeAcesso: TRLBand
       Left = 4
       Height = 39
-      Top = 284
+      Top = 312
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1040,7 +1129,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbConsumidor: TRLBand
       Left = 4
       Height = 81
-      Top = 323
+      Top = 351
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1191,7 +1280,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbMensagemFiscal: TRLBand
       Left = 4
       Height = 23
-      Top = 404
+      Top = 432
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1236,7 +1325,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbRodape: TRLBand
       Left = 4
       Height = 72
-      Top = 684
+      Top = 712
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1344,7 +1433,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRLateral: TRLBand
       Left = 4
       Height = 120
-      Top = 564
+      Top = 592
       Width = 294
       AutoSize = True
       BandType = btSummary

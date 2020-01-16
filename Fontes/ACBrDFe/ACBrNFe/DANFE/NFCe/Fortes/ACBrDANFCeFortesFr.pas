@@ -125,7 +125,9 @@ type
     lContingencia1: TRLMemo;
     lObservacoes: TRLMemo;
     lOutro: TRLLabel;
+    lFreteItem: TRLLabel;
     lOutroValLiq: TRLLabel;
+    lFreteItemValLiq: TRLLabel;
     lProtocolo: TRLLabel;
     lProtocolo1: TRLMemo;
     lQtdItens: TRLLabel;
@@ -136,11 +138,13 @@ type
     lRazaoSocial: TRLMemo;
     lRazaoSocialCanc: TRLMemo;
     lTitAcrescimo: TRLLabel;
+    lTitFreteItem: TRLLabel;
     lTitDesconto: TRLLabel;
     lTitDescValLiq: TRLLabel;
     lTitFormaPagto: TRLLabel;
     lTitLei12741: TRLMemo;
     lTitOutroValLiq: TRLLabel;
+    lTitFreteItemValLiq: TRLLabel;
     lTitTotal: TRLLabel;
     lTitTotalAcrescimo: TRLLabel;
     lTitTotalAPagar: TRLLabel;
@@ -157,6 +161,7 @@ type
     rlbConsumidor: TRLBand;
     rlbMensagemFiscal: TRLBand;
     rlbMsgContingencia: TRLBand;
+    rlbFreteItem: TRLBand;
     rlbPagamentoTitulo: TRLBand;
     rlbQRLateral: TRLBand;
     rlbRodape: TRLBand;
@@ -164,8 +169,10 @@ type
     rlbTotalAPagar: TRLBand;
     rlbTotalDesconto: TRLBand;
     pLogo: TRLPanel;
+    rlpFreteItemTit: TRLPanel;
     rlpAcresItemVal: TRLPanel;
     rlpAcresItemTit: TRLPanel;
+    rlpFreteItemVal: TRLPanel;
     rlpTotTit: TRLPanel;
     rlpTotalVal: TRLPanel;
     rlpDescItemTit: TRLPanel;
@@ -247,6 +254,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbChaveDeAcessoBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbFreteItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbMsgContingenciaBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
     procedure rlbQRLateralBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -584,24 +592,6 @@ begin
       lCanceladaCanc.Caption := ACBrStr('NFC-e CANCELADA');
 
     rllFisco.Caption := ACBrStr(procNFe.xMsg);
-  end;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
-var
-  vAcrescimos: Double;
-begin
-  with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
-  begin
-    vAcrescimos := Prod.vFrete + Prod.vSeg + Prod.vOutro;
-    PrintIt := (not Resumido) and (vAcrescimos > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
-
-    if PrintIt then
-    begin
-      lOutro.Caption       := FormatFloatBr(vAcrescimos,'+,0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
-    end;
   end;
 end;
 
@@ -962,19 +952,19 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-  vAcrescimos : Double;
+  vAcrescimos: Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
     PrintIt := (not Resumido) and
-               (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem) and
-               ((Prod.vDesc > 0)  or (Prod.vFrete + Prod.vSeg + Prod.vOutro >0));
+               ACBrNFeDANFCeFortes.ImprimeDescAcrescItem and
+               (Prod.vDesc > 0);
 
     if PrintIt then
     begin
       lDesconto.Caption := FormatFloatBr(Prod.vDesc,'-,0.00');
       vAcrescimos       := Prod.vFrete + Prod.vSeg + Prod.vOutro;
-      if (vAcrescimos > 0) then
+      if (vAcrescimos > 0) then      // Imprimirá Valor líquido, na próxima Banda
       begin
         lTitDescValLiq.Visible := False;
         lDescValLiq.Visible := False;
@@ -985,8 +975,60 @@ begin
         rlbDescItem.Height := 24;
         lTitDescValLiq.Visible := True;
         lDescValLiq.Visible := True;
-        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
+        lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc);
       end;
+    end;
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbFreteItemBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  vOutros: Double;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
+  begin
+    PrintIt := (not Resumido) and
+               ACBrNFeDANFCeFortes.ImprimeDescAcrescItem and
+               (Prod.vFrete > 0);
+
+    if PrintIt then
+    begin
+      lFreteItem.Caption := FormatFloatBr(Prod.vFrete,'+,0.00');
+      vOutros            := Prod.vSeg + Prod.vOutro;
+      if (vOutros > 0) then       // Imprimirá Valor líquido, na próxima Banda
+      begin
+        lTitFreteItemValLiq.Visible := False;
+        lFreteItemValLiq.Visible := False;
+        rlbFreteItem.Height := 12;
+      end
+      else
+      begin
+        rlbFreteItem.Height := 24;
+        lTitFreteItemValLiq.Visible := True;
+        lFreteItemValLiq.Visible := True;
+        lFreteItemValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vFrete-Prod.vDesc);
+      end;
+    end;
+  end;
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  vOutros: Double;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
+  begin
+    vOutros := Prod.vSeg + Prod.vOutro;
+    PrintIt := (not Resumido) and
+               ACBrNFeDANFCeFortes.ImprimeDescAcrescItem and
+               (vOutros > 0);
+
+    if PrintIt then
+    begin
+      lOutro.Caption       := FormatFloatBr(vOutros,'+,0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+(vOutros+Prod.vFrete)-Prod.vDesc);
     end;
   end;
 end;

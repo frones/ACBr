@@ -336,14 +336,24 @@ begin
 
         if ImprimeDescAcrescItem then
         begin
-          VlrAcrescimo := Prod.vFrete + Prod.vSeg + Prod.vOutro;
-          VlrLiquido   := (Prod.qCom * Prod.vUnCom) + VlrAcrescimo - Prod.vDesc;
+          VlrAcrescimo := Prod.vSeg + Prod.vOutro;
+          VlrLiquido   := (Prod.qCom * Prod.vUnCom) + (VlrAcrescimo + Prod.vFrete) - Prod.vDesc;
 
           // desconto
           if Prod.vDesc > 0 then
           begin
             LinhaCmd := '</ae><c>' + padSpace(
-                'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-,0.00'), 15, ' ')
+                'Desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-,0.00'), 15, ' ')
+                +IIf((VlrAcrescimo+Prod.vFrete > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
+                FPosPrinter.ColunasFonteCondensada, '|');
+            FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
+          end;
+
+          // Frete
+          if Prod.vFrete > 0 then
+          begin
+            LinhaCmd := '</ae><c>' + padSpace(
+                'Frete ' + padLeft(FormatFloatBr(Prod.vFrete, '+,0.00'), 15, ' ')
                 +IIf((VlrAcrescimo > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 FPosPrinter.ColunasFonteCondensada, '|');
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
@@ -353,7 +363,7 @@ begin
           if VlrAcrescimo > 0 then
           begin
             LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
-                'acréscimo ' + padLeft(FormatFloatBr(VlrAcrescimo, '+,0.00'), 15, ' ')
+                'Acréscimo ' + padLeft(FormatFloatBr(VlrAcrescimo, '+,0.00'), 15, ' ')
                 + '|' + FormatFloatBr(VlrLiquido),
                 FPosPrinter.ColunasFonteCondensada, '|'));
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
@@ -373,26 +383,33 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesTotais;
+var
+  SufixoTitulo: String;
 begin
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('Qtde. Total de Itens|' +
+  if ImprimeDescAcrescItem then
+    SufixoTitulo := ' total'
+  else
+    SufixoTitulo := '';
+
+  FPosPrinter.Buffer.Add('<c>' + PadSpace('Qtde. total de itens|' +
      IntToStrZero(FpNFe.Det.Count, 3), FPosPrinter.ColunasFonteCondensada, '|'));
 
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('Valor Total R$|' +
+  FPosPrinter.Buffer.Add('<c>' + PadSpace('Valor total R$|' +
      FormatFloatBr(FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
      FPosPrinter.ColunasFonteCondensada, '|'));
 
   if (FpNFe.Total.ICMSTot.vDesc > 0) then
-    FPosPrinter.Buffer.Add('<c>' + PadSpace('Descontos|' +
+    FPosPrinter.Buffer.Add('<c>' + PadSpace('Desconto'+SufixoTitulo+'|' +
        FormatFloatBr(FpNFe.Total.ICMSTot.vDesc, '-,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|'));
 
   if (FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vSeg) > 0 then
-    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Acréscimos|' +
+    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Acréscimo'+SufixoTitulo+'|' +
        FormatFloatBr(FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vSeg, '+,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|')));
 
   if (FpNFe.Total.ICMSTot.vFrete) > 0 then
-    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Frete|' +
+    FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Frete'+SufixoTitulo+'|' +
        FormatFloatBr(FpNFe.Total.ICMSTot.vFrete, '+,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|')));
 

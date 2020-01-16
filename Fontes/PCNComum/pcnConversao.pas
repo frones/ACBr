@@ -131,7 +131,8 @@ type
                   teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
                   teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
                   teComprEntrega, teCancComprEntrega, teInclusaoDFe,
-                  teAutorizadoSubstituicao, teAutorizadoAjuste, teLiberacaoPrazoCancelado);
+                  teAutorizadoSubstituicao, teAutorizadoAjuste, teLiberacaoPrazoCancelado,
+                  tePagamentoOperacao);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -195,7 +196,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..57] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..58] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -214,7 +215,7 @@ const
                                                 '240170', '440130', '440140',
                                                 '440150', '440160', '110112',
                                                 '110116', '110180', '110181',
-                                                '110115');
+                                                '110115', '110116');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',

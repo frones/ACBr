@@ -129,6 +129,12 @@ function ExtrairDigitoChaveAcesso(AChave: string): Integer;
 function TimeZoneConf: TTimeZoneConf;
 
 function ValidarCodigoDFe(AcDF, AnDF: Integer): Boolean;
+function ValidarProtocolo(AProtocolo: string): Boolean;
+function ValidarRecibo(ARecibo: string): Boolean;
+
+function ExtrairChaveMsg(AMsg: String): String;
+function ExtrairProtocoloMsg(AMsg: String): String;
+function ExtrairReciboMsg(AMsg: String): String;
 
 var
   TimeZoneConfInstance: TTimeZoneConf;
@@ -985,6 +991,131 @@ begin
     Result := (AcDF <> CCodigosDFeInvalidos[i]);
     Inc(i);
   end;
+end;
+
+function ValidarProtocolo(AProtocolo: string): Boolean;
+var
+  cUF, Ano, AnoAtual: Integer;
+  Numero: Int64;
+begin
+  if Length(AProtocolo) <> 15 then
+    Result := False
+  else
+  begin
+    cUF := StrToIntDef(Copy(AProtocolo, 2, 2), 0);
+    Ano := 2000 + StrToIntDef(Copy(AProtocolo, 4, 2), 0);
+    AnoAtual := YearOf(Now);
+    Numero := StrToInt64Def(Copy(AProtocolo, 6, 10), 0);
+
+    Result := (Numero > 0) and (Ano > 2000) and (Ano <= AnoAtual) and
+              (AProtocolo[1] in ['1'..'5', '7'..'9']) and ValidarCodigoUF(cUF);
+  end;
+end;
+
+function ValidarRecibo(ARecibo: string): Boolean;
+var
+  cUF: Integer;
+  Numero: Int64;
+begin
+  if Length(ARecibo) <> 15 then
+    Result := False
+  else
+  begin
+    cUF := StrToIntDef(Copy(ARecibo, 1, 2), 0);
+    Numero := StrToInt64Def(Copy(ARecibo, 4, 12), 0);
+
+    Result := (Numero > 0) and (ARecibo[3] in ['0'..'4']) and ValidarCodigoUF(cUF);
+  end;
+end;
+
+function ExtrairChaveMsg(AMsg: String): String;
+var
+  xStr: string;
+  i: Integer;
+  Encontrado: Boolean;
+begin
+  xStr := '';
+  i := 0;
+  Encontrado := False;
+
+  repeat
+    Inc(i);
+
+    if AMsg[i] in ['0'..'9'] then
+    begin
+      xStr := OnlyNumber(Copy(AMsg, i, 44));
+      Inc(i, Length(xStr) -1);
+
+      if Length(xStr) = 44 then
+        Encontrado := ValidarChave(xStr);
+    end;
+
+  until (i >= Length(AMsg)) or Encontrado;
+
+  if not Encontrado then
+    Result := ''
+  else
+    Result := xStr;
+end;
+
+function ExtrairProtocoloMsg(AMsg: String): String;
+var
+  xStr: string;
+  i: Integer;
+  Encontrado: Boolean;
+begin
+  xStr := '';
+  i := 0;
+  Encontrado := False;
+
+  repeat
+    Inc(i);
+
+    if AMsg[i] in ['0'..'9'] then
+    begin
+      xStr := OnlyNumber(Copy(AMsg, i, 15));
+      Inc(i, Length(xStr) -1);
+
+      if Length(xStr) = 15 then
+        Encontrado := ValidarProtocolo(xStr);
+    end;
+
+  until (i >= Length(AMsg)) or Encontrado;
+
+  if not Encontrado then
+    Result := ''
+  else
+    Result := xStr;
+end;
+
+function ExtrairReciboMsg(AMsg: String): String;
+var
+  xStr: string;
+  i: Integer;
+  Encontrado: Boolean;
+begin
+  xStr := '';
+  i := 0;
+  Encontrado := False;
+
+  repeat
+    Inc(i);
+
+    if AMsg[i] in ['0'..'9'] then
+    begin
+      xStr := OnlyNumber(Copy(AMsg, i, 15));
+      Inc(i, Length(xStr) -1);
+
+      if Length(xStr) = 15 then
+        Encontrado := ValidarRecibo(xStr);
+    end;
+
+  until (i >= Length(AMsg)) or Encontrado;
+
+  if not Encontrado then
+    Result := ''
+  else
+    Result := xStr;
 end;
 
 initialization

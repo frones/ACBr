@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2020
+-- pcnAuxiliar --
+[*] Implementação das funções: ValidarProtocolo, ValidarRecibo, ExtrairChaveMsg,
+    ExtrairProtocoloMsg e ExtrairReciboMsg, com o objetivo de ajudar o 
+    desenvolvedor de uma forma ou outra automatizar algumas rotinas.
+  Por: Italo Jurisato Junior
+-- pcnConversao --
+[+] Incluido o enumerador: tePagamentoOperacao, que será utilizado pelo
+    novo evento do MDF-e (Evento de Pagamento da Operação de Transporte).
+  Por: Italo Jurisato Junior
+
 23/12/2019
 -- pcnGerador --
 [*] https://www.projetoacbr.com.br/forum/topic/55483-quebra-de-linha/

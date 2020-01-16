@@ -147,11 +147,13 @@ type
     lTitFreteItemValLiq: TRLLabel;
     lTitTotal: TRLLabel;
     lTitTotalAcrescimo: TRLLabel;
+    lTitTotalFrete: TRLLabel;
     lTitTotalAPagar: TRLLabel;
     lTitTotalDesconto: TRLLabel;
     lTitValorPago: TRLLabel;
     lTotal: TRLLabel;
     lTotalAcrescimo: TRLLabel;
+    lTotalFrete: TRLLabel;
     lTotalAPagar: TRLLabel;
     lTotalDesconto: TRLLabel;
     lURLConsulta: TRLMemo;
@@ -166,6 +168,7 @@ type
     rlbQRLateral: TRLBand;
     rlbRodape: TRLBand;
     rlbTotalAcrescimo: TRLBand;
+    rlbTotalFrete: TRLBand;
     rlbTotalAPagar: TRLBand;
     rlbTotalDesconto: TRLBand;
     pLogo: TRLPanel;
@@ -270,6 +273,7 @@ type
     procedure rlbTotalBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbTotalDescontoBeforePrint(Sender: TObject; var PrintIt: Boolean
       );
+    procedure rlbTotalFreteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTrocoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlVendaBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure FormCreate(Sender: TObject);
@@ -1066,11 +1070,11 @@ procedure TACBrNFeDANFCeFortesFr.rlbPagamentoBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   lMeioPagamento.Caption  := ACBrNFeDANFCeFortes.ManterDescricaoPagamentos(
-                          ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto]);
+                             ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto]);
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
-    lPagamento.Caption      := FormatFloatBr(vPag);
-    fTotalPagto             := fTotalPagto + vPag;
+    lPagamento.Caption := FormatFloatBr(vPag);
+    fTotalPagto        := fTotalPagto + vPag;
   end;
 end;
 
@@ -1078,21 +1082,6 @@ procedure TACBrNFeDANFCeFortesFr.rlbGapBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   PrintIt := not Resumido;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbTotalAcrescimoBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
-var
-  vAcrescimos: Double;
-begin
-  with ACBrNFeDANFCeFortes.FpNFe.Total do
-  begin
-    vAcrescimos := ICMSTot.vFrete + ICMSTot.vSeg + ICMSTot.vOutro;
-  end;
-  PrintIt := vAcrescimos > 0;
-
-  if PrintIt then
-    lTotalAcrescimo.Caption := '+' + FormatFloatBr(vAcrescimos);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalAPagarBeforePrint(Sender: TObject;
@@ -1203,10 +1192,34 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbTotalDescontoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0;
+  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0);
 
   if PrintIt then
     lTotalDesconto.Caption := '-' + FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalFreteBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := (ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vFrete > 0);
+
+  if PrintIt then
+    lTotalFrete.Caption := '+' + FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vFrete);
+end;
+
+procedure TACBrNFeDANFCeFortesFr.rlbTotalAcrescimoBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+var
+  vOutros: Double;
+begin
+  with ACBrNFeDANFCeFortes.FpNFe.Total do
+  begin
+    vOutros := ICMSTot.vSeg + ICMSTot.vOutro;
+  end;
+
+  PrintIt := (vOutros > 0);
+  if PrintIt then
+    lTotalAcrescimo.Caption := '+' + FormatFloatBr(vOutros);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;

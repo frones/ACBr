@@ -40,7 +40,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRCode: TRLBand
       Left = 4
       Height = 137
-      Top = 455
+      Top = 463
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -406,7 +406,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlsbPagamentos: TRLSubDetail
       Left = 4
-      Height = 96
+      Height = 104
       Top = 216
       Width = 294
       Margins.LeftMargin = 2
@@ -529,57 +529,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           end
         end
       end
-      object rlbTotalAcrescimo: TRLBand
-        Left = 8
-        Height = 12
-        Top = 24
-        Width = 278
-        AutoSize = True
-        BandType = btHeader
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        BeforePrint = rlbTotalAcrescimoBeforePrint
-        object lTitTotalAcrescimo: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 0
-          Width = 234
-          Align = faClientTop
-          Caption = 'Acréscimos R$'
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lTotalAcrescimo: TRLLabel
-          Left = 234
-          Height = 11
-          Top = 0
-          Width = 44
-          Align = faRightTop
-          Alignment = taRightJustify
-          Caption = '99.999,99'
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
       object rlbTotalDesconto: TRLBand
         Left = 8
         Height = 12
-        Top = 36
+        Top = 24
         Width = 278
         AutoSize = True
         BandType = btHeader
@@ -623,10 +576,104 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
       end
+      object rlbTotalFrete: TRLBand
+        Left = 8
+        Height = 12
+        Top = 36
+        Width = 278
+        AutoSize = True
+        BandType = btHeader
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rlbTotalFreteBeforePrint
+        object lTitTotalFrete: TRLLabel
+          Left = 0
+          Height = 12
+          Top = 0
+          Width = 234
+          Align = faClientTop
+          Caption = 'Frete R$'
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTotalFrete: TRLLabel
+          Left = 234
+          Height = 11
+          Top = 0
+          Width = 44
+          Align = faRightTop
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
+      object rlbTotalAcrescimo: TRLBand
+        Left = 8
+        Height = 12
+        Top = 48
+        Width = 278
+        AutoSize = True
+        BandType = btHeader
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = rlbTotalAcrescimoBeforePrint
+        object lTitTotalAcrescimo: TRLLabel
+          Left = 0
+          Height = 12
+          Top = 0
+          Width = 234
+          Align = faClientTop
+          Caption = 'Acréscimos R$'
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTotalAcrescimo: TRLLabel
+          Left = 234
+          Height = 11
+          Top = 0
+          Width = 44
+          Align = faRightTop
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
       object rlbTotalAPagar: TRLBand
         Left = 8
         Height = 11
-        Top = 48
+        Top = 60
         Width = 278
         AutoSize = True
         BandType = btHeader
@@ -674,7 +721,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbPagamentoTitulo: TRLBand
         Left = 8
         Height = 12
-        Top = 59
+        Top = 71
         Width = 278
         AutoSize = True
         BandType = btHeader
@@ -719,7 +766,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbPagamento: TRLBand
         Left = 8
         Height = 12
-        Top = 71
+        Top = 83
         Width = 278
         AutoSize = True
         RealBounds.Left = 0
@@ -764,7 +811,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbTroco: TRLBand
         Left = 8
         Height = 12
-        Top = 83
+        Top = 95
         Width = 278
         AutoSize = True
         BandType = btFooter
@@ -1051,7 +1098,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbChaveDeAcesso: TRLBand
       Left = 4
       Height = 39
-      Top = 312
+      Top = 320
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1129,7 +1176,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbConsumidor: TRLBand
       Left = 4
       Height = 81
-      Top = 351
+      Top = 359
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1280,7 +1327,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbMensagemFiscal: TRLBand
       Left = 4
       Height = 23
-      Top = 432
+      Top = 440
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1325,7 +1372,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbRodape: TRLBand
       Left = 4
       Height = 72
-      Top = 712
+      Top = 720
       Width = 294
       AutoSize = True
       BandType = btSummary
@@ -1433,7 +1480,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlbQRLateral: TRLBand
       Left = 4
       Height = 120
-      Top = 592
+      Top = 600
       Width = 294
       AutoSize = True
       BandType = btSummary

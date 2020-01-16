@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2020
+-- ACBrBancoSicredi --
+[-] Correção para leitura do valor da multa no retorno CNAB400.
+  Por: BigWings
+
 13/01/2020
 -- ACBrBoleto --
 [+] Adicionado campo Competencia, ArquivoLogoEmp, Verso na leitura de Título via arquivo .ini

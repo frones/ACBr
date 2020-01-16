@@ -680,7 +680,9 @@ begin
       ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-      ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+      PercentualMulta      := StrToFloatDef(Copy(Linha,280,13),0)/100;
+      MultaValorFixo       := True;
+      ValorOutrosCreditos  := 0;
       if StrToIntDef(Copy(Linha,329,8),0) <> 0 then
         DataCredito:= StringToDateTimeDef( Copy(Linha,335,2)+'/'+
                                           Copy(Linha,333,2)+'/'+

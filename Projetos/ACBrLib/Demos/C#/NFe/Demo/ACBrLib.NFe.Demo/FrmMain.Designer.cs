@@ -86,6 +86,7 @@
             this.cmbUfDestino = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnObterCertificados = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
             this.txtDadosPFX = new System.Windows.Forms.TextBox();
@@ -207,7 +208,7 @@
             this.btnDFePorUltNSU = new System.Windows.Forms.Button();
             this.btnDFePorNSU = new System.Windows.Forms.Button();
             this.btnDFePorChave = new System.Windows.Forms.Button();
-            this.btnObterCertificados = new System.Windows.Forms.Button();
+            this.btnCarregarConfiguracoes = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tbpConfiguracoes.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -773,12 +774,12 @@
             // 
             this.nudTimeOut.Location = new System.Drawing.Point(182, 19);
             this.nudTimeOut.Maximum = new decimal(new int[] {
-            999999,
+            999999999,
             0,
             0,
             0});
             this.nudTimeOut.Minimum = new decimal(new int[] {
-            1000,
+            1,
             0,
             0,
             0});
@@ -910,6 +911,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Certificados";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnObterCertificados
+            // 
+            this.btnObterCertificados.Location = new System.Drawing.Point(6, 315);
+            this.btnObterCertificados.Name = "btnObterCertificados";
+            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
+            this.btnObterCertificados.TabIndex = 20;
+            this.btnObterCertificados.Text = "Obter Certificados";
+            this.btnObterCertificados.UseVisualStyleBackColor = true;
+            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
             // 
             // groupBox4
             // 
@@ -1818,7 +1829,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(76, 498);
+            this.btnSalvar.Location = new System.Drawing.Point(174, 498);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(139, 23);
             this.btnSalvar.TabIndex = 5;
@@ -2216,21 +2227,22 @@
             this.btnDFePorChave.UseVisualStyleBackColor = true;
             this.btnDFePorChave.Click += new System.EventHandler(this.btnDFePorChave_Click);
             // 
-            // btnObterCertificados
+            // btnCarregarConfiguracoes
             // 
-            this.btnObterCertificados.Location = new System.Drawing.Point(6, 315);
-            this.btnObterCertificados.Name = "btnObterCertificados";
-            this.btnObterCertificados.Size = new System.Drawing.Size(118, 23);
-            this.btnObterCertificados.TabIndex = 20;
-            this.btnObterCertificados.Text = "Obter Certificados";
-            this.btnObterCertificados.UseVisualStyleBackColor = true;
-            this.btnObterCertificados.Click += new System.EventHandler(this.btnObterCertificados_Click);
+            this.btnCarregarConfiguracoes.Location = new System.Drawing.Point(12, 498);
+            this.btnCarregarConfiguracoes.Name = "btnCarregarConfiguracoes";
+            this.btnCarregarConfiguracoes.Size = new System.Drawing.Size(139, 23);
+            this.btnCarregarConfiguracoes.TabIndex = 25;
+            this.btnCarregarConfiguracoes.Text = "Carregar Configurações";
+            this.btnCarregarConfiguracoes.UseVisualStyleBackColor = true;
+            this.btnCarregarConfiguracoes.Click += new System.EventHandler(this.btnCarregarConfiguracoes_Click);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(716, 533);
+            this.Controls.Add(this.btnCarregarConfiguracoes);
             this.Controls.Add(this.tabControl3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSalvar);
@@ -2475,6 +2487,7 @@
         private System.Windows.Forms.Button btnDFePorNSU;
         private System.Windows.Forms.Button btnDFePorChave;
         private System.Windows.Forms.Button btnObterCertificados;
+        private System.Windows.Forms.Button btnCarregarConfiguracoes;
     }
 }
 

@@ -191,9 +191,9 @@ namespace ACBrLib.NFe.Demo
             }
         }
 
-        private void LoadConfig()
+        private void LoadConfig(string file = "ACBrLib.ini")
         {
-            ACBrNFe.ConfigLer();
+            ACBrNFe.ConfigLer(file);
 
             //Config Geral
             ckbAtualizarXML.Checked = ACBrNFe.ConfigLerValor<bool>(ACBrSessao.NFe, "AtualizarXMLCancelado");
@@ -315,6 +315,26 @@ namespace ACBrLib.NFe.Demo
 
         #region EventHandlers
 
+        private void btnCarregarConfiguracoes_Click(object sender, EventArgs e)
+        {
+            var file = Helpers.OpenFile("Arquivos Ini (*.ini)|*.ini|Todos os Arquivos (*.*)|*.*");
+            if (!File.Exists(file)) return;
+
+            LoadConfig(file);
+        }
+
+        private void BtnSalvar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SalvarConfig();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnSelectLog_Click(object sender, EventArgs e)
         {
             txtLogs.Text = Helpers.SaveFile("Arquivos Logs (*.log)|*.log|Todos os Arquivos (*.*)|*.*");
@@ -369,18 +389,6 @@ namespace ACBrLib.NFe.Demo
         private void btnLogomarca_Click(object sender, EventArgs e)
         {
             txtLogomarca.Text = Helpers.OpenFile("Image files (*.bmp, *.jpeg, *.png) | *.bmp; *.jpeg; *.png");
-        }
-
-        private void BtnSalvar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SalvarConfig();
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, @"Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnStatusServ_Click(object sender, EventArgs e)

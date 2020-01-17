@@ -117,24 +117,24 @@ function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
 function GetDataDaPascoa(const ano: Integer): TDateTime;
 
-function ExtrairModeloChaveAcesso(AChave: String): String;
-function ExtrairUFChaveAcesso(AChave: String): Integer;
-function ExtrairCNPJChaveAcesso(AChave: String): String;
-function ExtrairSerieChaveAcesso(AChave: String): Integer;
-function ExtrairNumeroChaveAcesso(AChave: String): Integer;
-function ExtrairCodigoChaveAcesso(AChave: String): Integer;
-function ExtrairTipoEmissaoChaveAcesso(AChave: String): Integer;
-function ExtrairDigitoChaveAcesso(AChave: string): Integer;
+function ExtrairModeloChaveAcesso(const AChave: String): String;
+function ExtrairUFChaveAcesso(const AChave: String): Integer;
+function ExtrairCNPJChaveAcesso(const AChave: String): String;
+function ExtrairSerieChaveAcesso(const AChave: String): Integer;
+function ExtrairNumeroChaveAcesso(const AChave: String): Integer;
+function ExtrairCodigoChaveAcesso(const AChave: String): Integer;
+function ExtrairTipoEmissaoChaveAcesso(const AChave: String): Integer;
+function ExtrairDigitoChaveAcesso(const AChave: string): Integer;
 
 function TimeZoneConf: TTimeZoneConf;
 
 function ValidarCodigoDFe(AcDF, AnDF: Integer): Boolean;
-function ValidarProtocolo(AProtocolo: string): Boolean;
-function ValidarRecibo(ARecibo: string): Boolean;
+function ValidarProtocolo(const AProtocolo: string): Boolean;
+function ValidarRecibo(const ARecibo: string): Boolean;
 
-function ExtrairChaveMsg(AMsg: String): String;
-function ExtrairProtocoloMsg(AMsg: String): String;
-function ExtrairReciboMsg(AMsg: String): String;
+function ExtrairChaveMsg(const AMsg: String): String;
+function ExtrairProtocoloMsg(const AMsg: String): String;
+function ExtrairReciboMsg(const AMsg: String): String;
 
 var
   TimeZoneConfInstance: TTimeZoneConf;
@@ -831,69 +831,77 @@ begin
   result :=  EncodeDate(ano, mes, dia);
 end;
 
-function ExtrairModeloChaveAcesso(AChave: String): String;
+function ExtrairModeloChaveAcesso(const AChave: String): String;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-  if ValidarChave(AChave) then
-    Result := copy(AChave, 21, 2)
+  VChave:= OnlyNumber(AChave);
+  if ValidarChave(VChave) then
+    Result := Copy(VChave, 21, 2)
   else
     Result := '';
 end;
 
-function ExtrairUFChaveAcesso(AChave: String): Integer;
+function ExtrairUFChaveAcesso(const AChave: String): Integer;
 begin
-  AChave := OnlyNumber(AChave);
-  Result := StrToIntDef(Copy(AChave,1,2), 0);
+  Result := StrToIntDef(Copy(OnlyNumber(AChave),1,2), 0);
 end;
 
-function ExtrairCNPJChaveAcesso(AChave: String): String;
+function ExtrairCNPJChaveAcesso(const AChave: String): String;
 begin
-  AChave := OnlyNumber(AChave);
-  Result := copy(AChave,7,14);
+  Result := Copy(OnlyNumber(AChave),7,14);
 end;
 
-function ExtrairSerieChaveAcesso(AChave: String): Integer;
+function ExtrairSerieChaveAcesso(const AChave: String): Integer;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-  if ExtrairModeloChaveAcesso(AChave) = '59' then  //SAT
-    Result := StrToIntDef(Copy(AChave, 23, 9), 0)
+  VChave:= OnlyNumber(AChave);
+  if ExtrairModeloChaveAcesso(VChave) = '59' then  //SAT
+    Result := StrToIntDef(Copy(VChave, 23, 9), 0)
   else
-    Result := StrToIntDef(Copy(AChave, 23, 3), 0);
+    Result := StrToIntDef(Copy(VChave, 23, 3), 0);
 end;
 
-function ExtrairNumeroChaveAcesso(AChave: String): Integer;
+function ExtrairNumeroChaveAcesso(const AChave: String): Integer;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-  if ExtrairModeloChaveAcesso(AChave) = '59' then  //SAT
-    Result := StrToIntDef(Copy(AChave, 32, 6), 0)
+  VChave:= OnlyNumber(AChave);
+  if ExtrairModeloChaveAcesso(VChave) = '59' then  //SAT
+    Result := StrToIntDef(Copy(VChave, 32, 6), 0)
   else
-    Result := StrToIntDef(Copy(AChave, 26, 9), 0);
+    Result := StrToIntDef(Copy(VChave, 26, 9), 0);
 end;
 
-function ExtrairCodigoChaveAcesso(AChave: String): Integer;
+function ExtrairCodigoChaveAcesso(const AChave: String): Integer;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-  if ExtrairModeloChaveAcesso(AChave) = '59' then  //SAT
-    Result := StrToIntDef(Copy(AChave, 38, 6), 0)
+  VChave:= OnlyNumber(AChave);
+  if ExtrairModeloChaveAcesso(VChave) = '59' then  //SAT
+    Result := StrToIntDef(Copy(VChave, 38, 6), 0)
   else
-    Result := StrToIntDef(Copy(AChave, 36, 8), 0);
+    Result := StrToIntDef(Copy(VChave, 36, 8), 0);
 end;
 
-function ExtrairTipoEmissaoChaveAcesso(AChave: String): Integer;
+function ExtrairTipoEmissaoChaveAcesso(const AChave: String): Integer;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-
-  if ExtrairModeloChaveAcesso(AChave) = '59' then  //SAT
+  VChave:= OnlyNumber(AChave);
+  if ExtrairModeloChaveAcesso(VChave) = '59' then  //SAT
     Result := 0
   else
-    Result := StrToIntDef(Copy(AChave, 35, 1), 0);
+    Result := StrToIntDef(Copy(VChave, 35, 1), 0);
 end;
 
-function ExtrairDigitoChaveAcesso(AChave: string): Integer;
+function ExtrairDigitoChaveAcesso(const AChave: string): Integer;
+var
+ VChave: string;
 begin
-  AChave := OnlyNumber(AChave);
-
-  Result := StrToInt(AChave[length(AChave)]);
+  VChave:= OnlyNumber(AChave);
+  Result := StrToIntDef(VChave[Length(VChave)], 0);
 end;
 
 { TTimeZoneConf }
@@ -993,7 +1001,7 @@ begin
   end;
 end;
 
-function ValidarProtocolo(AProtocolo: string): Boolean;
+function ValidarProtocolo(const AProtocolo: string): Boolean;
 var
   cUF, Ano, AnoAtual: Integer;
   Numero: Int64;
@@ -1008,11 +1016,11 @@ begin
     Numero := StrToInt64Def(Copy(AProtocolo, 6, 10), 0);
 
     Result := (Numero > 0) and (Ano > 2000) and (Ano <= AnoAtual) and
-              (AProtocolo[1] in ['1'..'5', '7'..'9']) and ValidarCodigoUF(cUF);
+              CharInSet(AProtocolo[1] , ['1'..'5', '7'..'9']) and ValidarCodigoUF(cUF);
   end;
 end;
 
-function ValidarRecibo(ARecibo: string): Boolean;
+function ValidarRecibo(const ARecibo: string): Boolean;
 var
   cUF: Integer;
   Numero: Int64;
@@ -1024,11 +1032,11 @@ begin
     cUF := StrToIntDef(Copy(ARecibo, 1, 2), 0);
     Numero := StrToInt64Def(Copy(ARecibo, 4, 12), 0);
 
-    Result := (Numero > 0) and (ARecibo[3] in ['0'..'4']) and ValidarCodigoUF(cUF);
+    Result := (Numero > 0) and CharInSet(ARecibo[3] , ['0'..'4']) and ValidarCodigoUF(cUF);
   end;
 end;
 
-function ExtrairChaveMsg(AMsg: String): String;
+function ExtrairChaveMsg(const AMsg: String): String;
 var
   xStr: string;
   i: Integer;
@@ -1041,7 +1049,7 @@ begin
   repeat
     Inc(i);
 
-    if AMsg[i] in ['0'..'9'] then
+    if CharInSet(AMsg[i] , ['0'..'9']) then
     begin
       xStr := OnlyNumber(Copy(AMsg, i, 44));
       Inc(i, Length(xStr) -1);
@@ -1058,7 +1066,7 @@ begin
     Result := xStr;
 end;
 
-function ExtrairProtocoloMsg(AMsg: String): String;
+function ExtrairProtocoloMsg(const AMsg: String): String;
 var
   xStr: string;
   i: Integer;
@@ -1071,7 +1079,7 @@ begin
   repeat
     Inc(i);
 
-    if AMsg[i] in ['0'..'9'] then
+    if CharInSet(AMsg[i], ['0'..'9']) then
     begin
       xStr := OnlyNumber(Copy(AMsg, i, 15));
       Inc(i, Length(xStr) -1);
@@ -1088,7 +1096,7 @@ begin
     Result := xStr;
 end;
 
-function ExtrairReciboMsg(AMsg: String): String;
+function ExtrairReciboMsg(const AMsg: String): String;
 var
   xStr: string;
   i: Integer;
@@ -1101,7 +1109,7 @@ begin
   repeat
     Inc(i);
 
-    if AMsg[i] in ['0'..'9'] then
+    if CharInSet(AMsg[i] , ['0'..'9']) then
     begin
       xStr := OnlyNumber(Copy(AMsg, i, 15));
       Inc(i, Length(xStr) -1);

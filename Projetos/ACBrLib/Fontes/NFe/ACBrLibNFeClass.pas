@@ -120,6 +120,10 @@ function NFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, AT
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function NFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function NFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -186,7 +190,7 @@ uses
   ACBrLibResposta, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe,
   ACBrLibConsultaCadastro, ACBrLibNFeConfig, ACBrLibNFeRespostas,
   ACBrDFeUtil, ACBrNFe, ACBrMail, ACBrUtil, ACBrLibCertUtils,
-  pcnConversao, pcnAuxiliar, blcksock;
+  pcnConversao, pcnConversaoNFe, pcnAuxiliar, blcksock;
 
 { TACBrLibNFe }
 
@@ -858,6 +862,93 @@ begin
         Resposta := ObterCerticados(NFeDM.ACBrNFe1.SSL);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+  ok: Boolean;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_GetPath(' + IntToStr(ATipo) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_GetPath', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+
+      try
+        with NFeDM do
+        begin
+          Resposta := '';
+
+          case ATipo of
+            0: Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathNFe();
+            1: Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathInu();
+            2: Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCCe);
+            3: Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
+          end;
+
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
+        end;
+      finally
+        NFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function NFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta, CodEvento: string;
+  ok: Boolean;
+begin
+  try
+    VerificarLibInicializada;
+
+    CodEvento := String(ACodEvento);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('NFE_GetPathEvento(' + CodEvento +' )', logCompleto, True)
+    else
+      pLib.GravarLog('NFE_GetPathEvento', logNormal);
+
+    with TACBrLibNFe(pLib) do
+    begin
+      NFeDM.Travar;
+
+      try
+        with NFeDM do
+        begin
+          Resposta := '';
+          Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoNFe(ok, CodEvento));
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
+        end;
       finally
         NFeDM.Destravar;
       end;

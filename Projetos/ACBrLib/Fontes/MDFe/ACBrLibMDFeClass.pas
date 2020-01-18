@@ -121,6 +121,10 @@ function MDFE_GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, A
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 function MDFE_ObterCertificados(const sResposta: PChar; var esTamanho: longint): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+function MDFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 {%endregion}
 
 {%region Servicos}
@@ -851,6 +855,91 @@ begin
         Resposta := ObterCerticados(MDFeDM.ACBrMDFe1.SSL);
         MoverStringParaPChar(Resposta, sResposta, esTamanho);
         Result := SetRetorno(ErrOK, Resposta);
+      finally
+        MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MDFE_GetPath(ATipo: longint; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta: string;
+  ok: Boolean;
+begin
+  try
+    VerificarLibInicializada;
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MDFE_GetPath(' + IntToStr(ATipo) + ' )', logCompleto, True)
+    else
+      pLib.GravarLog('MDFE_GetPath', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        with MDFeDM do
+        begin
+          Resposta := '';
+
+          case ATipo of
+            0: Resposta := ACBrMDFe1.Configuracoes.Arquivos.GetPathMDFe();
+            1: Resposta := ACBrMDFe1.Configuracoes.Arquivos.GetPathEvento(teCancelamento);
+          end;
+
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
+        end;
+      finally
+        MDFeDM.Destravar;
+      end;
+    end;
+  except
+    on E: EACBrLibException do
+      Result := SetRetorno(E.Erro, E.Message);
+
+    on E: Exception do
+      Result := SetRetorno(ErrExecutandoMetodo, E.Message);
+  end;
+end;
+
+function MDFE_GetPathEvento(ACodEvento: PChar; const sResposta: PChar; var esTamanho: longint): longint;
+    {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
+Var
+  Resposta, CodEvento: string;
+  ok: Boolean;
+begin
+  try
+    VerificarLibInicializada;
+
+    CodEvento := String(ACodEvento);
+
+    if pLib.Config.Log.Nivel > logNormal then
+      pLib.GravarLog('MDFE_GetPathEvento(' + CodEvento +' )', logCompleto, True)
+    else
+      pLib.GravarLog('MDFE_GetPathEvento', logNormal);
+
+    with TACBrLibMDFe(pLib) do
+    begin
+      MDFeDM.Travar;
+
+      try
+        with MDFeDM do
+        begin
+          Resposta := '';
+          Resposta := ACBrMDFe1.Configuracoes.Arquivos.GetPathEvento(StrToTpEventoMDFe(ok, CodEvento));
+          MoverStringParaPChar(Resposta, sResposta, esTamanho);
+          Result := SetRetorno(ErrOK, Resposta);
+        end;
       finally
         MDFeDM.Destravar;
       end;

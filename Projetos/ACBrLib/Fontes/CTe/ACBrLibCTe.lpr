@@ -64,7 +64,9 @@ exports
   CTE_ValidarRegrasdeNegocios,
   CTE_VerificarAssinatura,
   CTE_GerarChave,
-  CTE_ObterCertificados;
+  CTE_ObterCertificados,
+  CTE_GetPath,
+  CTE_GetPathEvento;
 
 begin
   {$IFDEF DEBUG}

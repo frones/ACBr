@@ -46,6 +46,8 @@ Símbolo : Significado
 
 17/01/2020
 --- ACBrLibMDFeClass ---
+[+] Adicionado o metodo MDFE_GetPath e MDFE_GetPathEvento.
+    Por: Rafael Dias
 [-] Corrigido erro ao enviar email com PDF.
     Por: Rafael Dias
 

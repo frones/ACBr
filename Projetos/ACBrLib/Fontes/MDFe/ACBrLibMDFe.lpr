@@ -95,7 +95,9 @@ exports
   MDFE_ValidarRegrasdeNegocios,
   MDFE_VerificarAssinatura,
   MDFE_GerarChave,
-  MDFE_ObterCertificados;
+  MDFE_ObterCertificados,
+  MDFE_GetPath,
+  MDFE_GetPathEvento;
 
 begin
   {$IFDEF DEBUG}

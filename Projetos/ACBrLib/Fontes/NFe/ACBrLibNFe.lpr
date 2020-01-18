@@ -97,7 +97,9 @@ exports
   NFE_ValidarRegrasdeNegocios,
   NFE_VerificarAssinatura,
   NFE_GerarChave,
-  NFE_ObterCertificados;
+  NFE_ObterCertificados,
+  NFE_GetPath,
+  NFE_GetPathEvento;
 
 begin
   {$IFDEF DEBUG}

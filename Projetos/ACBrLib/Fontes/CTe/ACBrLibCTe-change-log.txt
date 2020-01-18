@@ -46,6 +46,8 @@ Símbolo : Significado
 
 17/01/2020
 --- ACBrLibCTeClass ---
+[+] Adicionado o metodo CTE_GetPath e CTE_GetPathEvento.
+    Por: Rafael Dias
 [-] Corrigido erro ao enviar email com PDF.
     Por: Rafael Dias
 

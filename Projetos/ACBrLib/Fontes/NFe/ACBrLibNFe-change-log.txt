@@ -50,6 +50,8 @@ Símbolo : Significado
 
 17/01/2020
 --- ACBrLibNFeClass ---
+[+] Adicionado o metodo NFE_GetPath e NFE_GetPathEvento.
+    Por: Rafael Dias
 [-] Corrigido erro ao enviar email com PDF.
     Por: Rafael Dias
 

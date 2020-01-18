@@ -55,6 +55,7 @@
     <Compile Include="Boleto\BoletoTpSaida.cs" />
     <Compile Include="CTe\ModeloCTe.cs" />
     <Compile Include="CTe\TipoDACTE.cs" />
+    <Compile Include="CTe\TipoPathCTe.cs" />
     <Compile Include="CTe\VersaoCTe.cs" />
     <Compile Include="DFe\InfoCertificado.cs" />
     <Compile Include="DFe\TipoEmissao.cs" />
@@ -75,9 +76,11 @@
     <Compile Include="Mail\MimeChar.cs" />
     <Compile Include="DFe\TamanhoPapel.cs" />
     <Compile Include="MDFe\TipoDAMDFE.cs" />
+    <Compile Include="MDFe\TipoPathMDFe.cs" />
     <Compile Include="MDFe\VersaoMDFe.cs" />
     <Compile Include="NFe\ModeloNFe.cs" />
     <Compile Include="NFe\TipoDANFE.cs" />
+    <Compile Include="NFe\TipoPathNFe.cs" />
     <Compile Include="NFe\TipoRelatorioEvento.cs" />
     <Compile Include="NFe\VersaoNFe.cs" />
     <Compile Include="NivelLog.cs" />

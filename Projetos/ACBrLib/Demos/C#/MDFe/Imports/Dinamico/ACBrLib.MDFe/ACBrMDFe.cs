@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
 using ACBrLib.Core.DFe;
+using ACBrLib.Core.MDFe;
 
 namespace ACBrLib.MDFe
 {
@@ -88,6 +89,12 @@ namespace ACBrLib.MDFe
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_ObterCertificados(StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_GetPath(int tipo, StringBuilder buffer, ref int bufferSize);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate int MDFE_GetPathEvento(string aCodEvento, StringBuilder buffer, ref int bufferSize);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate int MDFE_StatusServico(StringBuilder buffer, ref int bufferSize);
@@ -401,6 +408,28 @@ namespace ACBrLib.MDFe
             return certificados.Length == 0 ? new InfoCertificado[0] : certificados.Select(x => new InfoCertificado(x)).ToArray();
         }
 
+        public string GetPath(TipoPathMDFe tipo)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_GetPath>();
+            var ret = ExecuteMethod(() => method((int)tipo, buffer, ref bufferLen));
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
+        public string GetPathEvento(string evento)
+        {
+            var bufferLen = BUFFER_LEN;
+            var buffer = new StringBuilder(bufferLen);
+
+            var method = GetMethod<Delegates.MDFE_GetPathEvento>();
+            var ret = ExecuteMethod(() => method(ToUTF8(evento), buffer, ref bufferLen));
+
+            return ProcessResult(buffer, bufferLen);
+        }
+
         public string StatusServico()
         {
             var bufferLen = BUFFER_LEN;
@@ -626,6 +655,8 @@ namespace ACBrLib.MDFe
             AddMethod<Delegates.MDFE_VerificarAssinatura>("MDFE_VerificarAssinatura");
             AddMethod<Delegates.MDFE_GerarChave>("MDFE_GerarChave");
             AddMethod<Delegates.MDFE_ObterCertificados>("MDFE_ObterCertificados");
+            AddMethod<Delegates.MDFE_GetPath>("MDFE_GetPath");
+            AddMethod<Delegates.MDFE_GetPathEvento>("MDFE_GetPathEvento");
             AddMethod<Delegates.MDFE_StatusServico>("MDFE_StatusServico");
             AddMethod<Delegates.MDFE_Consultar>("MDFE_Consultar");
             AddMethod<Delegates.MDFE_Enviar>("MDFE_Enviar");

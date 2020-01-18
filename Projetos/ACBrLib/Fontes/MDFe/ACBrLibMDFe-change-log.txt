@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2020
+--- ACBrLibMDFeClass ---
+[-] Corrigido erro ao enviar email com PDF.
+    Por: Rafael Dias
+
 08/01/2020
 --- ACBrLibMDFeClass ---
 [+] Adicionado o metodo MDFE_GerarChave.

@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2020
+--- ACBrLibNFeClass ---
+[-] Corrigido erro ao enviar email com PDF.
+    Por: Rafael Dias
+
 08/01/2020
 --- ACBrLibNFeConfig ---
 [+] Adicionado propriedades que estavam faltando na configuração de impressão.

@@ -1673,10 +1673,10 @@ function NFE_EnviarEmail(const ePara, eChaveNFe: PChar; const AEnviaPDF: Boolean
   const eAssunto, eCC, eAnexos, eMensagem: PChar): longint;
   {$IfDef STDCALL} stdcall{$Else} cdecl{$EndIf};
 var
-  APara, AChaveNFe, AAssunto, ACC, AAnexos, AMensagem: string;
+  Resposta, APara, AChaveNFe, AAssunto, ACC, AAnexos, AMensagem: string;
   slMensagemEmail, slCC, slAnexos: TStringList;
   EhArquivo: boolean;
-  Resposta: TLibNFeResposta;
+  Resp: TLibNFeResposta;
 begin
   try
     VerificarLibInicializada;
@@ -1716,9 +1716,9 @@ begin
             slMensagemEmail := TStringList.Create;
             slCC := TStringList.Create;
             slAnexos := TStringList.Create;
-            Resposta := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.CodResposta);
+            Resp := TLibNFeResposta.Create('EnviaEmail', pLib.Config.TipoResposta, pLib.Config.CodResposta);
             try
-              with ACBrNFe1.Mail do
+              with ACBrNFe1 do
               begin
                 slMensagemEmail.DelimitedText:= sLineBreak;
                 slMensagemEmail.Text := StringReplace(AMensagem, ';', sLineBreak, [rfReplaceAll]);
@@ -1729,7 +1729,10 @@ begin
                 slAnexos.DelimitedText := sLineBreak;
                 slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
-                NFeDM.ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
+                if(AEnviaPDF) then
+                  NFeDM.ConfigurarImpressao('', True);
+
+                NotasFiscais.Items[0].EnviarEmail(
                     APara,
                     AAssunto,
                     slMensagemEmail,
@@ -1737,11 +1740,13 @@ begin
                     slCC,      // Lista com emails que serão enviado cópias - TStrings
                     slAnexos); // Lista de slAnexos - TStrings
 
-                Resposta.Msg := 'Email enviado com sucesso';
-                Result := SetRetorno(ErrOK, Resposta.Gerar);
+                Resp.Msg := 'Email enviado com sucesso';
+                Resposta := Resp.Gerar;
+
+                Result := SetRetorno(ErrOK, Resposta);
               end;
             finally
-              Resposta.Free;
+              Resp.Free;
               slCC.Free;
               slAnexos.Free;
               slMensagemEmail.Free;
@@ -1827,6 +1832,7 @@ begin
               if AEnviaPDF then
               begin
                 try
+                  NFeDM.ConfigurarImpressao('', True);
                   ImprimirEventoPDF;
 
                   ArqPDF := OnlyNumber(EventoNFe.Evento[0].Infevento.id);

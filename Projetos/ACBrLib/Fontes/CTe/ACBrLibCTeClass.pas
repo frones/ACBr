@@ -1721,8 +1721,11 @@ begin
               slAnexos.DelimitedText := sLineBreak;
               slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
+              if AEnviaPDF then
+                CTeDM.ConfigurarImpressao('', True);
+
               try
-                CTeDM.ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(
+                ACBrCTe1.Conhecimentos.Items[0].EnviarEmail(
                   APara,
                   AAssunto,
                   slMensagemEmail,
@@ -1819,6 +1822,7 @@ begin
             if AEnviaPDF then
             begin
               try
+                CTeDM.ConfigurarImpressao('', True);
                 ImprimirEventoPDF;
 
                 ArqPDF := OnlyNumber(EventoCTe.Evento[0].Infevento.id);

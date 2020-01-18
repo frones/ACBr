@@ -1767,7 +1767,10 @@ begin
                 slAnexos.DelimitedText := sLineBreak;
                 slAnexos.Text := StringReplace(AAnexos, ';', sLineBreak, [rfReplaceAll]);
 
-                MDFeDM.ACBrMDFe1.Manifestos.Items[0].EnviarEmail(
+                if(AEnviaPDF) then
+                  MDFeDM.ConfigurarImpressao('', True);
+
+                ACBrMDFe1.Manifestos.Items[0].EnviarEmail(
                   APara,
                   AAssunto,
                   slMensagemEmail,
@@ -1864,6 +1867,7 @@ begin
               if AEnviaPDF then
               begin
                 try
+                  MDFeDM.ConfigurarImpressao('', True);
                   ImprimirEventoPDF;
 
                   ArqPDF := OnlyNumber(EventoMDFe.Evento[0].Infevento.id);

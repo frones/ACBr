@@ -481,6 +481,12 @@ begin
 end;
 
 function TACBrEAD.GetOpenSSL_Version: String;
+begin
+  OpenSSL_OldVersion;
+  Result := OpenSSLExt.OpenSSLVersion(0);
+end;
+
+function TACBrEAD.OpenSSL_OldVersion: Boolean;
 var
   VersaoStr: String;
   VersaoNum: Integer;
@@ -512,14 +518,6 @@ begin
 
     fsVersaoEhAntiga := (CompareVersions(fsVersao, '1.1.0') < 0);
   end;
-
-  Result := fsVersaoEhAntiga;
-end;
-
-function TACBrEAD.OpenSSL_OldVersion: Boolean;
-begin
-  if (fsVersao = '') then
-    GetOpenSSL_Version;
 
   Result := fsVersaoEhAntiga;
 end;

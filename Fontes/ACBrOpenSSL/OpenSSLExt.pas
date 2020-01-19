@@ -156,6 +156,14 @@ var
    cuint8 = Byte;
    cuchar = cuint8;
    pcuchar = ^cuchar;
+
+  // Compatibilização de Tipos inexistentes em compiladores NEXTGEN
+  {$IfDef NEXTGEN}
+    AnsiString = RawByteString;
+    AnsiChar = UTF8Char;
+    PAnsiChar = PUTF8Char;
+    PPAnsiChar = ^PUTF8Char;
+  {$EndIf}
  const
     LineEnding = #13#10;
 {$EndIf}
@@ -1115,6 +1123,7 @@ var
 
 // libssl.dll
   function OpenSSLVersion(t: cint): AnsiString;
+  function OpenSSLVersionNum(): cLong;
   function SSLeay_version(t: cInt): AnsiString;
   function SslGetError(s: PSSL; ret_code: cInt):cInt;
   function SslLibraryInit:cInt;
@@ -1623,7 +1632,8 @@ end;
 
 type
 // libssl.dll
-  TOpenSSLversion = function (arg : cint) : PAnsiChar; cdecl;
+  TOpenSSLVersion = function(arg : cint): PAnsiChar; cdecl;
+  TOpenSSLVersionNum = function(): cLong; cdecl;
   TSslGetError = function(s: PSSL; ret_code: cInt):cInt; cdecl;
   TSslLibraryInit = function:cInt; cdecl;
   TSslLoadErrorStrings = procedure; cdecl;
@@ -1878,7 +1888,8 @@ type
 
 var
 // libssl.dll
-  _OpenSSLVersion : TOpenSSLversion = Nil;
+  _OpenSSLVersion : TOpenSSLVersion = Nil;
+  _OpenSSLVersionNum : TOpenSSLVersionNum = Nil;
   _SslGetError: TSslGetError = nil;
   _SslLibraryInit: TSslLibraryInit = nil;
   _SslLoadErrorStrings: TSslLoadErrorStrings = nil;
@@ -2592,6 +2603,14 @@ begin
     Result := _OpenSSLVersion(t)
   else
     Result := '';
+end;
+
+function OpenSSLVersionNum(): cLong;
+begin
+  if InitSSLInterface and Assigned(_OpenSSLVersionNum) then
+    Result := _OpenSSLVersionNum()
+  else
+    Result := 0;
 end;
 
 function SSLeay_version(t: cInt): AnsiString;
@@ -5003,7 +5022,6 @@ begin
 end;
 
 Procedure LoadSSLEntryPoints;
-
 begin
   _SslGetError := GetProcAddr(SSLLibHandle, 'SSL_get_error');
   _SslLibraryInit := GetProcAddr(SSLLibHandle, 'SSL_library_init');
@@ -5057,8 +5075,10 @@ begin
 end;
 
 Procedure LoadUtilEntryPoints;
-
 begin
+  _OpenSSLVersionNum := GetProcAddr(SSLUtilHandle, 'OpenSSL_version_num');
+  if not Assigned(_OpenSSLVersionNum) then
+    _OpenSSLVersionNum := GetProcAddr(SSLUtilHandle, 'SSLeay');  // Version 1.0.x
   _OpenSSLVersion := GetProcAddr(SSLUtilHandle, 'OpenSSL_version');
   if not Assigned(_OpenSSLVersion) then
     _OpenSSLVersion := GetProcAddr(SSLUtilHandle, 'SSLeay_version');  // Version 1.0.x
@@ -5380,6 +5400,7 @@ end;
 Procedure ClearSSLEntryPoints;
 
 begin
+  _OpenSSLVersionNum := Nil;
   _OpenSSLVersion := Nil;
   _SslGetError := nil;
   _SslLibraryInit := nil;

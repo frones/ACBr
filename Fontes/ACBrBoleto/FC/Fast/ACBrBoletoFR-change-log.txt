@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2020
+-- ACBrBoletoFCFR --
+[-] Correção para geração do PDF após remoção da senha.
+    https://www.projetoacbr.com.br/forum/topic/55854-gerar-pdf-com-senha/
+  Por: BigWings
+
 08/01/2020
 ACBrBoletoFCFR
 [*] https://www.projetoacbr.com.br/forum/topic/54585-propriedades-do-arquivo-pdf-exportado-em-preview-fastreport/

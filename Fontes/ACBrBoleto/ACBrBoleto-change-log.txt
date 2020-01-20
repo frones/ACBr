@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2020
+-- ACBrBancoBrasil --
+[+] Adicionado código de ocorrencia de Inclusão de Negativação "85" e Exclusão de Negativação "86"
+  https://www.projetoacbr.com.br/forum/topic/55672-informa%C3%A7%C3%B5es-de-negativa%C3%A7%C3%A3o-cnab400-bb/
+
 16/01/2020
 -- ACBrBancoSicredi --
 [-] Correção para leitura do valor da multa no retorno CNAB400.

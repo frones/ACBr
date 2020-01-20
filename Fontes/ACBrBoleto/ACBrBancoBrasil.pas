@@ -1355,6 +1355,8 @@ begin
        toRetornoAlterarPrazoLimiteRecebimento      : Result := '39';
        toRetornoChequePendenteCompensacao          : Result := '46';
        toRetornoTipoCobrancaAlterado               : Result := '72';
+       toRetornoInclusaoNegativacao                : Result := '85';
+       toRetornoExclusaoNegativacao                : Result := '86';
        toRetornoDespesasProtesto                   : Result := '96';
        toRetornoDespesasSustacaoProtesto           : Result := '97';
        toRetornoDebitoCustasAntecipadas            : Result := '98';
@@ -1455,6 +1457,8 @@ begin
       44: Result:= '44-Título pago com cheque devolvido';
       46: Result:= '46-Título pago com cheque, aguardando compensação';
       72: Result:= '72-Alteração de tipo de cobrança';
+      85: Result:= '85 – Inclusão de Negativação';
+      86: Result:= '86 – Exclusão de Negativação';
       96: Result:= '96-Despesas de Protesto';
       97: Result:= '97-Despesas de Sustação de Protesto';
       98: Result:= '98-Débito de Custas Antecipadas';
@@ -1515,6 +1519,8 @@ begin
       39: Result := toRetornoAlterarPrazoLimiteRecebimento;
       46: Result := toRetornoChequePendenteCompensacao;
       72: Result := toRetornoTipoCobrancaAlterado;
+      85: Result := toRetornoInclusaoNegativacao;
+      86: Result := toRetornoExclusaoNegativacao;
       96: Result := toRetornoDespesasProtesto;
       97: Result := toRetornoProtestoSustado;
       98: Result := toRetornoDebitoCustasAntecipadas;
@@ -1671,6 +1677,37 @@ begin
         00: Result := '00-Transferência de título de cobrança simples para descontada ou vice-versa';
         52: Result := '52-Reembolso de título vendor ou descontado';
       end;
+    toRetornoConfirmacaoRecebPedidoNegativacao, toRetornoInclusaoNegativacao: //  85 – Inclusão de Negativação (Particularidades BB jan/2019)
+      case CodMotivo of
+        01: Result:='01-Negativação aceita no BB';
+        02: Result:='02-Negativação aceita no agente negativador';
+        03: Result:='03-Inclusão cancelada';
+        04: Result:='04-Negativação recusada - pagador menor de idade';
+        05: Result:='05-Negativação recusada - espécie do boleto não permitida';
+        06: Result:='06-Negativação recusada - beneficiário não é PJ';
+        07: Result:='07-Negativação recusada - moeda do boleto não é Real';
+        08: Result:='08-Negativação recusada - endereço do pagador inválido';
+        09: Result:='09-Negativação recusada pelo agente negativado';
+        10: Result:='10-Negativação recusada - situação do boleto não permite NGTV';
+        11: Result:='11-Negativação recusada - cadastro do benef. desatualizado';
+        12: Result:='12-Negativação recusada - boleto inexistente';
+        13: Result:='13-Negativação recusada - pagador não identificado';
+        14: Result:='14-Recusa de tarifação de negativação';
+        15: Result:='15-Negativação recusada - motivos diversos';
+      end;
+    toRetornoConfirmacaoPedidoExclNegativacao, toRetornoExclusaoNegativacao: //  86 – Exclusão de Negativação (Particularidades BB jan/2019)
+      case CodMotivo of
+        01: Result:='01-Exclusão cancelada';
+        02: Result:='02-Negativação excluída no agente negativador';
+        03: Result:='03-Negativação excluída - devolução pelos correios';
+        04: Result:='04-Negativação excluída - data de ocorrência decursada';
+        05: Result:='05-Negativação excluída - determinação judicial';
+        06: Result:='06-Negativação excluída - contestação do interessado';
+        07: Result:='07-Negativação excluída - carta não retornou do correio';
+        08: Result:='08-Exclusão negativação recusada - registro inexistente';
+        15: Result:='09-Exclusão negativação recusada - motivos diversos';
+      end;
+
     else
       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
@@ -1790,7 +1827,7 @@ begin
         19: Result:='19-Tarifa Sobre Arquivo mensal (Em Ser)';
         20: Result:='20-Tarifa Sobre Emissão de Bloqueto Pré-Emitido pelo Banco';
       end;
-      toRetornoConfirmacaoRecebPedidoNegativacao: //  85 – Inclusão de Negativação (Particularidades BB jan/2019)
+      toRetornoConfirmacaoRecebPedidoNegativacao, toRetornoInclusaoNegativacao: //  85 – Inclusão de Negativação (Particularidades BB jan/2019)
       case CodMotivo of
         01: Result:='01-Negativação aceita no BB';
         02: Result:='02-Negativação aceita no agente negativador';
@@ -1808,7 +1845,7 @@ begin
         14: Result:='14-Recusa de tarifação de negativação';
         15: Result:='15-Negativação recusada - motivos diversos';
       end;
-      toRetornoConfirmacaoPedidoExclNegativacao: //  86 – Exclusão de Negativação (Particularidades BB jan/2019)
+      toRetornoConfirmacaoPedidoExclNegativacao, toRetornoExclusaoNegativacao: //  86 – Exclusão de Negativação (Particularidades BB jan/2019)
       case CodMotivo of
         01: Result:='01-Exclusão cancelada';
         02: Result:='02-Negativação excluída no agente negativador';
@@ -1951,7 +1988,7 @@ begin
          CodigoLiquidacaoDescricao := TipoOcorrenciaToDescricao(OcorrenciaOriginal.Tipo);
        end;
 
-       if(CodOcorrencia >= 2) and (CodOcorrencia <= 10) then
+       if ((CodOcorrencia >= 2) and (CodOcorrencia <= 10)) or ( CodOcorrencia >= 85 )then
        begin
          MotivoLinha:= 81;
          CodMotivo:= StrToInt(copy(Linha,MotivoLinha,2));

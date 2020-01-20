@@ -634,6 +634,22 @@ begin
   end
   else
   begin
+
+    if (Length(OnlyNumber(Destinatario.CnpjCpf)) <= 11) then
+    begin
+      if (OnlyNumber(Destinatario.CnpjCpf) = '00000000000') then
+        IndicadorPessoa := ipmFisicaSemCpf
+      else
+        IndicadorPessoa := ipmCpf;
+    end
+    else
+      begin
+        if (OnlyNumber(Destinatario.CnpjCpf) = '00000000000000') then
+          IndicadorPessoa := ipmJuridicaSemCnpj
+        else
+          IndicadorPessoa := ipmCNPJ;
+      end;
+
     SRec := SRec +
           {23} IntToStr(Ord(IndicadorPessoa) + 1) +
           {24} _GetTab11_8_2 +
@@ -1177,7 +1193,16 @@ end;
 procedure TACBrConvenio115Destinatario.SetCnpjCpf(const Value: string);
 var
   OValidador: TACBrValidador;
+  lNumero: String;
 begin
+  lNumero := OnlyNumber(Value);
+
+  if (lNumero = '00000000000000') or (lNumero = '00000000000') then
+  begin
+    FCnpjCpf := Value;
+    Exit;
+  end;
+  
   OValidador := TACBrValidador.Create(nil);
   try
     with OValidador do

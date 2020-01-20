@@ -62,6 +62,7 @@ type
     procedure Reg0200;
     procedure Reg0205;
     procedure Reg0206;
+    procedure Reg0220;
     procedure Reg0400;
     procedure Reg0450;
     procedure Reg0460;
@@ -90,6 +91,7 @@ begin
   else if (vHead = '0200') then Reg0200
   else if (vHead = '0205') then Reg0205
   else if (vHead = '0206') then Reg0206
+  else if (vHead = '0220') then Reg0220
   else if (vHead = '0400') then Reg0400
   else if (vHead = '0450') then Reg0450
   else if (vHead = '0460') then Reg0460
@@ -255,6 +257,15 @@ begin
   with ACBrSpedFiscal.Bloco_0.Registro0206New do
   begin
     COD_COMB := Valor;
+  end;
+end;
+
+procedure TACBrSpedFiscalImportar_Bloco0.Reg0220;
+begin
+  with ACBrSpedFiscal.Bloco_0.Registro0220New do
+  begin
+    UNID_CONV := Valor;
+    FAT_CONV := ValorFV;
   end;
 end;
 

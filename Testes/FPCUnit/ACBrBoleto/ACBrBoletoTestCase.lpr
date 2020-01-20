@@ -3,7 +3,7 @@ program ACBrBoletoTestCase;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, acbrboletotest, GuiTestRunner, fpcunittestrunner;
+  Interfaces, Forms, ACBrrBoletoTest, GuiTestRunner, fpcunittestrunner;
 
 {$R *.res}
 

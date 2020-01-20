@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/01/2020
+-- pnfsNFSeR --
+[*] https://www.projetoacbr.com.br/forum/topic/55822-ajuste-na-al%C3%ADquota-para-o-provedor-thema/
+   Por: Leandro KSC
+
 16/01/2020
 -- Diversos --
 [*] Ajustes realizados para gerar corretamente o pedido de cancelamento para o

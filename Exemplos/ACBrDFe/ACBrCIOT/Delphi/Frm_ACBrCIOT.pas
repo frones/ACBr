@@ -309,13 +309,15 @@ begin
       7: Integradora.Operacao := opEncerrar; //Encerrar uma operação de transporte existente que não esteja cancelada.
     end;
 
+    Integradora.Token := '123456789';
+
     (****************  DADOS DO CONTRATO  **************)
     OperacaoTransporte.TipoViagem := TAC_Agregado;
     OperacaoTransporte.Integrador := edtHashIntegrador.text;
     OperacaoTransporte.EmissaoGratuita := True;
     OperacaoTransporte.BloquearNaoEquiparado := False;
     OperacaoTransporte.MatrizCNPJ := edtEmitCNPJ.text;
-    OperacaoTransporte.FilialCNPJ := '';
+    OperacaoTransporte.FilialCNPJ := edtEmitCNPJ.text;
     OperacaoTransporte.IdOperacaoCliente := '1'; //Id / Chave primária da Tabela do banco de dados do CIOT
     OperacaoTransporte.DataInicioViagem := Now;
     OperacaoTransporte.DataFimViagem := Now;
@@ -575,7 +577,7 @@ begin
 
     OperacaoTransporte.ObservacoesAoTransportador := 'teste de obsevação ao transportador';
     OperacaoTransporte.ObservacoesAoCredenciado := 'teste de obsevação ao Credenciado';
-    OperacaoTransporte.EntregaDocumentacao := ''; //Ver como funciona
+    OperacaoTransporte.EntregaDocumentacao := edRedeCredenciada; //Ver como funciona
     OperacaoTransporte.QuantidadeSaques := 0; //Quantidade saques que serão realizados pelo Contratado na operação de transporte.
     OperacaoTransporte.QuantidadeTransferencias := 0; //Quantidade de Transferências  Bancárias que serão solicitadas pelo Contratado na operação de transporte.
   end;

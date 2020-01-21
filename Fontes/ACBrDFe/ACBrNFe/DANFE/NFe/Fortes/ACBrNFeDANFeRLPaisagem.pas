@@ -683,7 +683,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.InicializarDados;
 var
-  i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
+  i, j, b, h, iAlturaCanhoto, vWidthAux, vLeftAux, iAlturaMinLinha: Integer;
   vAutoSizeAux: Boolean;
   CarregouLogo: Boolean;
 begin
@@ -864,10 +864,15 @@ begin
 
   case fpDANFe.Fonte.Nome of
     nfTimesNewRoman, nfArial:
-      rlbItens.Height := 11;
-    nfCourierNew:
-      rlbItens.Height := 10;
+      iAlturaMinLinha := 11;
+  else
+      iAlturaMinLinha := 10;
   end;
+
+  if fpDANFe.EspacoEntreProdutos > iAlturaMinLinha + 2 then
+    rlbItens.Height := fpDANFe.EspacoEntreProdutos
+  else
+    rlbItens.Height := iAlturaMinLinha;
 
   pnlItens.Height := rlbItens.Height;
   txtCodigo.Top := 0;

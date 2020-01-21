@@ -827,12 +827,18 @@ end;
 
 procedure TfrlDANFeRLRetrato.InicializarDados;
 var
-  i, b, h, iAlturaCanhoto, vWidthAux, vLeftAux: Integer;
+  i, b, h, iAlturaCanhoto, vWidthAux, vLeftAux, iAlturaMinLinha: Integer;
   vAutoSizeAux: Boolean;
   CarregouLogo: Boolean;
 begin
   TDFeReportFortes.AjustarMargem(RLNFe, fpDANFe);
   rlbCanceladaDenegada.Visible := False;
+
+  iAlturaMinLinha := 12;
+  if fpDANFe.EspacoEntreProdutos > iAlturaMinLinha then
+    rlbItens.Height := fpDANFe.EspacoEntreProdutos
+  else
+    rlbItens.Height := iAlturaMinLinha;
 
   CarregouLogo := TDFeReportFortes.CarregarLogo(rliLogo, fpDANFe.Logo);
   if not CarregouLogo then
@@ -1156,6 +1162,7 @@ begin
     rllSistema.Top  := RLDraw50.Top + RLDraw50.Height;
     rllUsuario.Top  := rllSistema.Top;
   end;
+
 end;
 
 procedure TfrlDANFeRLRetrato.DefinirCabecalho;

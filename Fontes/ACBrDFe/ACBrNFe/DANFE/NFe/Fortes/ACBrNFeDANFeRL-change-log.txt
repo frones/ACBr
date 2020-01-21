@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2020
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[+] Adicionado configuração para a propriedade "EspacoEntreProdutos" no DANFe
+  Por: José M S Junior
+
 20/01/2020
 -- pcnConversaoNFe, ACBrNFeDANFEClass, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato, ACBrNFeDANFEFRDM --
 [*] Criação de propriedade "ExibeCampoDePagamento" para controlar a impressão

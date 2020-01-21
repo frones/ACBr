@@ -5,7 +5,9 @@ unit ACBrrBoletoTest;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto, ACBrBancoCaixa, ACBrBancoUnicredRS, typinfo,
+  Classes, SysUtils, ACBrBoleto,
+  ACBrBancoCaixa, ACBrBancoUnicredRS, ACBrBancoUnicredES,
+  typinfo,
   {$ifdef FPC}
   fpcunit, testregistry, LConvEncoding
   {$else}
@@ -522,6 +524,27 @@ type
 
   {$ENDREGION}
 
+  {$REGION - Classes UnicredES}
+
+  { MontarCampoNossoNumero_UnicredES_Test}
+
+  MontarCampoNossoNumero_UnicredES_Test = class(TTestCase)
+  private
+    Boleto : TACBrBoleto;
+    Titulo : TACBrTitulo;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure MontarCampoNossoNumero_UnicredES_Padrao;
+    procedure MontarCampoNossoNumero_UnicredES_SemNossoNumero;
+    procedure MontarCampoNossoNumero_UnicredES_Alfa;
+    procedure MontarCampoNossoNumero_UnicredES_NossoNumeroInvalido;
+
+  end;
+
+  {$ENDREGION}
+
 procedure CriaBoletoPadrao(NomeArquivo: String; Diretorio: TTipoArquivo;
                            CNAB: TACBrLayoutRemessa; Banco: TACBrTipoCobranca);
 function GravaRetorno(NomeArquivo: String; Boleto: TACBrBoleto): String;
@@ -533,6 +556,61 @@ implementation
 
 uses
   dateutils, ACBrUtil, forms;
+
+{ MontarCampoNossoNumero_UnicredES_Test }
+
+procedure MontarCampoNossoNumero_UnicredES_Test.SetUp;
+begin
+  Boleto := TACBrBoleto.Create(nil);
+  Titulo := Boleto.CriarTituloNaLista;
+end;
+
+procedure MontarCampoNossoNumero_UnicredES_Test.TearDown;
+begin
+  FreeAndNil(Boleto);
+end;
+
+procedure MontarCampoNossoNumero_UnicredES_Test.MontarCampoNossoNumero_UnicredES_Padrao;
+begin
+  Boleto.Banco.TipoCobranca   := cobUnicredES;
+  Titulo.NossoNumero          := '1234567890';
+
+  CheckEquals('1234567890-0', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+
+end;
+
+procedure MontarCampoNossoNumero_UnicredES_Test.MontarCampoNossoNumero_UnicredES_SemNossoNumero;
+begin
+  Boleto.Banco.TipoCobranca   := cobUnicredES;
+  Titulo.NossoNumero          := '';
+
+  CheckEquals('0000000000-0', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+end;
+
+procedure MontarCampoNossoNumero_UnicredES_Test.MontarCampoNossoNumero_UnicredES_Alfa;
+begin
+  Boleto.Banco.TipoCobranca   := cobUnicredES;
+  Titulo.NossoNumero          := '12435A552x';
+
+  CheckEquals('0012435552-8', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+end;
+
+procedure MontarCampoNossoNumero_UnicredES_Test.MontarCampoNossoNumero_UnicredES_NossoNumeroInvalido;
+const
+  MSG = 'Tamanho Máximo do Nosso Número é: 10';
+begin
+  try
+    Boleto.Banco.TipoCobranca   := cobUnicredES;
+    Titulo.NossoNumero          := '12423423422335A552x';
+
+    CheckEquals('0012435552-9', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+
+  except on e: Exception do
+    CheckEquals( MSG, e.Message );
+  end;
+end;
+
+  {$REGION - Implementação Classes Banco Unicred }
 
 { GerarRetorno_Unicred_Test }
 
@@ -725,7 +803,7 @@ begin
   Titulo.Carteira             := '17';
   Titulo.NossoNumero          := '1234567890';
 
-  CheckEquals('017/1234567890-9', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+  CheckEquals('17/1234567890-9', Boleto.Banco.MontarCampoNossoNumero(Titulo));
 end;
 
 procedure MontarCampoNossoNumero_Unicred_Test.MontarCampoNossoNumero_Unicred_SemNossoNumero;
@@ -734,7 +812,7 @@ begin
   Titulo.Carteira             := '17';
   Titulo.NossoNumero          := '';
 
-  CheckEquals('017/0000000000-6', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+  CheckEquals('17/0000000000-6', Boleto.Banco.MontarCampoNossoNumero(Titulo));
 end;
 
 procedure MontarCampoNossoNumero_Unicred_Test.MontarCampoNossoNumero_Unicred_Alfa;
@@ -768,7 +846,7 @@ begin
   Titulo.Carteira             := '';
   Titulo.NossoNumero          := '123';
 
-  CheckEquals('/0000000123-6', Boleto.Banco.MontarCampoNossoNumero(Titulo));
+  CheckEquals('00/0000000123-6', Boleto.Banco.MontarCampoNossoNumero(Titulo));
 end;
 
 { MontarCampoCodigoCedente_Unicred_Test }
@@ -999,8 +1077,10 @@ begin
   Titulo.Carteira             := '1565';
   Titulo.NossoNumero          := '123';
 
-  CheckEquals('0', Boleto.Banco.CalcularDigitoVerificador(Titulo));
+  CheckEquals('1', Boleto.Banco.CalcularDigitoVerificador(Titulo));
 end;
+
+  {$ENDREGION}
 
   {$REGION - Implementação Classes Banco Bradesco}
 
@@ -3189,6 +3269,7 @@ initialization
   RegisterTest('ACBrBoleto.ACBrBoleto', MontarCodigoBarras_Unicred_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', GerarRemessa_Unicred_Test{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrBoleto.ACBrBoleto', GerarRetorno_Unicred_Test{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrBoleto.ACBrBoleto', MontarCampoNossoNumero_UnicredES_Test{$ifndef FPC}.Suite{$endif});
 
 
 end.

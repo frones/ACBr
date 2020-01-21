@@ -66,7 +66,7 @@ const
   CConta = 'CONTA';
   CTitulo = 'TITULO';
 
-  cACBrTipoOcorrenciaDecricao: array[0..293] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..296] of String = (
     'Remessa Registrar',
     'Remessa Baixar',
     'Remessa Debitar Em Conta',
@@ -138,6 +138,10 @@ const
     'Remessa Alterar Valor Mínimo', 
     'Remessa Alterar Valor Máximo',
     'Remessa Excluir Negativacao Serasa e Baixar',
+    'Remessa Pedido de negativação',
+    'Remessa Excluir negativação e baixar',
+    'Remessa Excluir negativação e manter em carteira',	
+	
     'Retorno Abatimento Cancelado',
     'Retorno Abatimento Concedido',
     'Retorno Acerto Controle Participante',
@@ -398,7 +402,8 @@ type
     cobDaycoval,
     cobUniprimeNortePR,
     cobBancoPine,
-    cobBancoPineBradesco
+    cobBancoPineBradesco,
+    cobUnicredSC
     );
 
   TACBrTitulo = class;
@@ -497,6 +502,10 @@ type
     toRemessaAlterarValorMinimo,
     toRemessaAlterarValorMaximo,
     toRemessaExcluirNegativacaoSerasaBaixar,
+    toRemessaPedidoNegativacao,
+    toRemessaExcluirNegativacaoBaixar,
+    toRemessaExcluirNegativacaoManterEmCarteira,
+	
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
     toRetornoAbatimentoConcedido,
@@ -1517,7 +1526,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob,
      ACBrUniprime, ACBrBancoUnicredRS, ACBrBancoBanese, ACBrBancoCredisis, ACBrBancoUnicredES,
      ACBrBancoCresol, ACBrBancoCitiBank, ACBrBancoABCBrasil, ACBrBancoDaycoval, ACBrUniprimeNortePR,
-     ACBrBancoPine, ACBrBancoPineBradesco;
+     ACBrBancoPine, ACBrBancoPineBradesco, ACBrBancoUnicredSC;
 
 { TListadeNFes }
 
@@ -2533,6 +2542,7 @@ begin
      cobUniprimeNortePR     : fBancoClass := TACBrUniprimeNortePR.Create(Self);     {084}
      cobBancoPine           : fBancoClass := TACBrBancoPine.create(Self);
      cobBancoPineBradesco   : fBancoClass := TACBrBancoPineBradesco.create(Self);   {643 + 237}
+     cobUnicredSC           : fBancoClass := TACBrBancoUnicredSC.Create(Self);      {136 + 237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

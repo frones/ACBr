@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2020
+-- ACBrBoleto, ACBrUnicredRS, ACBrUnicredES, ACBrUnicredSC --
+[+] Realizado Refactory nas classes do Banco Unicred, mantendo o Layout UnicredRS como base para as demais classes de Correspondentes desse Banco
+[+] Adicionado a classe UnicredSC baseado no refactory realizado na classe principal (UnicredRS) 
+
 20/01/2020
 -- ACBrBancoBrasil --
 [+] Adicionado código de ocorrencia de Inclusão de Negativação "85" e Exclusão de Negativação "86"

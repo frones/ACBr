@@ -52,12 +52,32 @@ begin
 end;
 
 function TRetornoEnvio.LerRetorno_eFrete: Boolean;
+var
+  ok: Boolean;
+  i: Integer;
 begin
-  Result := True;
+  Result := False;
   try
+    if leitor.rExtrai(1, 'AdicionarOperacaoTransporteResponse') <> '' then
+    begin
+      if leitor.rExtrai(2, 'AdicionarOperacaoTransporteResult') <> '' then
+      begin
+        with RetEnvio do
+        begin
+          Versao := leitor.rCampo(tcStr, 'Versao');
+          Sucesso := leitor.rCampo(tcStr, 'Sucesso');
+          ProtocoloServico := leitor.rCampo(tcStr, 'ProtocoloServico');
 
-    //.................. Implementar
+          if leitor.rExtrai(3, 'Excecao') <> '' then
+          begin
+            Mensagem := leitor.rCampo(tcStr, 'Mensagem');
+            Codigo := leitor.rCampo(tcStr, 'Codigo');
+          end;
+        end;
+      end;
 
+      Result := True;
+    end;
   except
     Result := False;
   end;

@@ -575,7 +575,7 @@ begin
         Gerador.wGrupo('AdicionarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP01');
 
         Gerador.wCampo(tcStr, 'AP02', 'TipoViagem', 01, 01, 1, TipoViagemCIOTToStr(CIOT.OperacaoTransporte.TipoViagem));
-        Gerador.wCampo(tcStr, 'AP03', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
+        Gerador.wCampo(tcStr, 'AP03', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
         Gerador.wCampo(tcInt, 'AP04', 'Versao', 01, 01, 1, versao);
 //        Gerador.wCampo(tcStr, 'AP05', 'Token', 01, 01, 1, '');  //ver de que forma pegar o tocken em caso de não usar certificado
         Gerador.wCampo(tcBoolStr, 'AP06', 'EmissaoGratuita', 01, 01, 1, CIOT.OperacaoTransporte.EmissaoGratuita);
@@ -689,7 +689,7 @@ begin
       begin
         Gerador.wGrupo('CancelarOperacaoTransporteRequest', 'KP01');
         Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
-        Gerador.wCampo(tcStr, 'KP03', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
+        Gerador.wCampo(tcStr, 'KP03', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
         Gerador.wCampo(tcStr, 'KP04', 'Motivo', 01, 01, 1, CIOT.OperacaoTransporte.Cancelamento.Motivo, '');
 //        Gerador.wCampo(tcStr, 'KP05', 'Token ', 01, 01, 1, '');
         Gerador.wCampo(tcInt, 'KP06', 'Versao', 01, 01, 1, 1);
@@ -886,7 +886,7 @@ begin
         Gerador.wCampo(tcDe2, 'QP10', 'SestSenat', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
         Gerador.wGrupo('/Impostos');
 
-        Gerador.wCampo(tcStr, 'QP11', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
+        Gerador.wCampo(tcStr, 'QP11', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
 //        Gerador.wCampo(tcStr, 'QP12', 'Token', 01, 01, 1, '');
         Gerador.wCampo(tcInt, 'QP13', 'Versao', 01, 01, 1, 1);
         Gerador.wCampo(tcStr, 'QP14', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);

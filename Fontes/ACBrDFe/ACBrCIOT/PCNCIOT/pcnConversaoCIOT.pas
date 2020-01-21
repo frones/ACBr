@@ -24,14 +24,12 @@ type
   TpCIOTTipoProprietario = (tpTAC, tpETC, tpCTC);
   TpCIOTTipoEmbalagem = (Nenhum, Bigbag, Pallet, Granel, Container, Saco, Caixa, Unitario, Fardo);
   TpCIOTOperacao = (opObterPdf, opAdicionar, opRetificar, opCancelar, opAdicionarViagem, opAdicionarPagamento, opCancelarPagamento, opEncerrar);
-
-
-
+  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
 
   TSchemaCIOT     = (schErro, schEnviar, schEnviarRetorno);
 
 const
-  NAME_SPACE_CIOT  = '';//'xmlns:urn="ATMWebSvr"';
+  NAME_SPACE_CIOT  = '';
 
 function LayOutToSchema(const t: TLayOutCIOT): TSchemaCIOT;
 
@@ -57,6 +55,7 @@ function TpProporcaoToStr(const t: TpCIOTTipoProporcao): string;
 function TpDifFreteToStr(const t: TpCIOTDiferencaFreteTipo): string;
 function TpDiferencaFreteBCToStr(const t: TpCIOTDiferencaFreteBaseCalculo): string;
 function TpCatPagToStr(const t: TpCIOTTipoCategoriaPagamento): string;
+function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 
@@ -214,6 +213,12 @@ function TpCatPagToStr(const t: TpCIOTTipoCategoriaPagamento): string;
 begin
   result := EnumeradoToStr(t, ['Adiantamento', 'Estadia', 'Quitacao', 'SemCategoria', 'Frota'],
                               [tcpAdiantamento, tcpEstadia, tcpQuitacao, tcpSemCategoria, tcpFrota]);
+end;
+
+function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
+begin
+  result := EnumeradoToStr(t, ['RedeCredenciada', 'Cliente'],
+                              [edRedeCredenciada, edCliente]);
 end;
 
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;

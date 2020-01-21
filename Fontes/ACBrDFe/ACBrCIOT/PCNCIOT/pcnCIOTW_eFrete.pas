@@ -23,7 +23,9 @@ type
   TCIOTW_eFrete = class(TCIOTWClass)
   private
     FVersaoDF: TVersaoCIOT;
+    versao: Integer;
   protected
+    procedure GerarIdentificacao(aVersao: Integer);
     procedure GerarViagem;
     procedure GerarImpostos;
     procedure GerarPagamentos;
@@ -87,320 +89,160 @@ begin
 //  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
-procedure TCIOTW_eFrete.GerarSubContratante;
+procedure TCIOTW_eFrete.GerarIdentificacao(aVersao: Integer);
+var
+  aPrefixo: string;
 begin
-  //É o transportador que contratar outro transportador para realização do transporte de
-  //cargas para o qual fora anteriormente contratado, indicado no cadastramento da Operação de Transporte.
-  //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj)) > 0 then
-  begin
-    Gerador.wGrupo('Subcontratante', 'AP135');
-    Gerador.wCampo(tcStr, 'AP136', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP137', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj);
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'obj1:';
+  versao := aVersao;
 
-    with CIOT.OperacaoTransporte.Subcontratante do
-    begin
-      Gerador.wGrupo('Endereco', 'AP138');
-      Gerador.wCampo(tcStr, 'AP139', 'Bairro', 01, 01, 1, Endereco.Bairro);
-      Gerador.wCampo(tcStr, 'AP140', 'Rua', 01, 01, 1, Endereco.Rua);
-      Gerador.wCampo(tcStr, 'AP141', 'Numero', 01, 01, 1, Endereco.Numero);
-      Gerador.wCampo(tcStr, 'AP142', 'Complemento', 01, 01, 1, Endereco.Complemento);
-      Gerador.wCampo(tcStr, 'AP143', 'CEP', 01, 09, 1, Endereco.CEP);
-      Gerador.wCampo(tcInt, 'AP144', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
-      Gerador.wGrupo('/Endereco');
-    end;
+  //ver de que forma pegar o tocken em caso de não usar certificado
+  Gerador.wCampoNFSe(tcStr, 'AP03', 'Token', 01, 01, 0, CIOT.Integradora.Token);
+  Gerador.wCampoNFSe(tcStr, 'AP04', 'Integrador', 01, 01, 0, CIOT.Integradora.Integrador);
+  Gerador.wCampoNFSe(tcInt, 'AP05', 'Versao', 01, 01, 1, versao);
 
-    Gerador.wCampo(tcStr, 'AP145', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.EMail);
-
-    with CIOT.OperacaoTransporte.Subcontratante.Telefones do
-    begin
-      Gerador.wGrupo('Telefones', 'AP146');
-
-      Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP147');
-      Gerador.wCampo(tcInt, 'AP148', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP149', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Celular');
-
-      Gerador.wGrupo('Fixo '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP150');
-      Gerador.wCampo(tcInt, 'AP151', 'DDD', 01, 02, 1, Fixo.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP152', 'Numero', 08, 09, 1, Fixo.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fixo');
-
-      Gerador.wGrupo('Fax '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP153');
-      Gerador.wCampo(tcInt, 'AP154', 'DDD', 01, 02, 1, Fax.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP155', 'Numero', 08, 09, 1, Fax.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fax');
-
-      Gerador.wGrupo('/Telefones');
-    end;
-
-    Gerador.wCampo(tcStr, 'AP156', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Subcontratante.ResponsavelPeloPagamento, true)));
-
-    Gerador.wGrupo('/Subcontratante');
-  end
-  else
-    Gerador.wCampo(tcStr, 'AP135', 'Subcontratante', 01, 01, 1, '');
+  Gerador.Prefixo := aPrefixo;
 end;
 
-procedure TCIOTW_eFrete.GerarTomadorServico;
+procedure TCIOTW_eFrete.GerarViagem;
+var
+  i, j: Integer;
+  aPrefixo: string;
 begin
-  //Pessoa (física ou jurídica) que contratou o frete pela transportadora.
-  //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
-  //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
-  if Length(Trim(CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj)) > 0 then
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'adic:';
+
+  Gerador.wGrupoNFSe('Viagens '{+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS}, 'AP16');
+
+  for I := 0 to CIOT.OperacaoTransporte.Viagens.Count -1 do
   begin
-    Gerador.wGrupo('TomadorServico', 'AP179');
-    Gerador.wCampo(tcStr, 'AP180', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP181', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj);
-
-    with CIOT.OperacaoTransporte.TomadorServico do
+    with CIOT.OperacaoTransporte.Viagens.Items[I] do
     begin
-      Gerador.wGrupo('Endereco', 'AP182');
-      Gerador.wCampo(tcStr, 'AP183', 'Bairro', 01, 01, 1, Endereco.Bairro);
-      Gerador.wCampo(tcStr, 'AP184', 'Rua', 01, 01, 1, Endereco.Rua);
-      Gerador.wCampo(tcStr, 'AP185', 'Numero', 01, 01, 1, Endereco.Numero);
-      Gerador.wCampo(tcStr, 'AP186', 'Complemento', 01, 01, 1, Endereco.Complemento);
-      Gerador.wCampo(tcStr, 'AP187', 'CEP', 01, 09, 1, Endereco.CEP);
-      Gerador.wCampo(tcInt, 'AP188', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
-      Gerador.wGrupo('/Endereco');
+      Gerador.wCampoNFSe(tcStr, 'AP17', 'DocumentoViagem', 01, 01, 1, DocumentoViagem, 'Exemplo: CT-e / Serie, CTRC / Serie, Ordem de Serviço.');
+      Gerador.wCampoNFSe(tcInt, 'AP18', 'CodigoMunicipioOrigem', 01, 07, 1, CodigoMunicipioOrigem);
+      Gerador.wCampoNFSe(tcInt, 'AP19', 'CodigoMunicipioDestino', 01, 07, 1, CodigoMunicipioDestino);
+
+      Gerador.wCampoNFSe(tcInt, 'AP19', 'DistanciaPercorrida', 01, 07, 1, 0);
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('Valores '{+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP20');
+
+      with Valores do
+      begin
+        Gerador.wCampoNFSe(tcDe2, 'AP21', 'TotalOperacao', 01, 01, 1, TotalOperacao);
+        Gerador.wCampoNFSe(tcDe2, 'AP22', 'TotalViagem', 01, 01, 1, TotalViagem);
+        Gerador.wCampoNFSe(tcDe2, 'AP23', 'TotalDeAdiantamento', 01, 01, 1, TotalDeAdiantamento);
+        Gerador.wCampoNFSe(tcDe2, 'AP24', 'TotalDeQuitacao', 01, 01, 1, TotalDeQuitacao);
+        Gerador.wCampoNFSe(tcDe2, 'AP25', 'Combustivel', 01, 01, 1, Combustivel);
+        Gerador.wCampoNFSe(tcDe2, 'AP26', 'Pedagio', 01, 01, 1, Pedagio);
+        Gerador.wCampoNFSe(tcDe2, 'AP27', 'OutrosCreditos', 01, 01, 1, OutrosCreditos);
+        Gerador.wCampoNFSe(tcStr, 'AP28', 'JustificativaOutrosCreditos', 01, 01, 0, JustificativaOutrosCreditos);
+        Gerador.wCampoNFSe(tcDe2, 'AP29', 'Seguro', 01, 01, 1, Seguro);
+        Gerador.wCampoNFSe(tcDe2, 'AP30', 'OutrosDebitos', 01, 01, 1, OutrosDebitos);
+        Gerador.wCampoNFSe(tcStr, 'AP31', 'JustificativaOutrosDebitos', 01, 01, 0, JustificativaOutrosDebitos);
+      end;
+      Gerador.wGrupoNFSe('/Valores');
+
+      Gerador.wCampoNFSe(tcStr, 'AP32', 'TipoPagamento' {+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
+
+      // Falta informações Bancarias
+
+      Gerador.Prefixo := 'adic:';
+      Gerador.wGrupoNFSe('NotasFiscais', 'AP33');
+
+      for J := 0 to NotasFiscais.Count -1 do
+      begin
+        with NotasFiscais.Items[J] do
+        begin
+          Gerador.wGrupoNFSe('NotaFiscal', 'AP34');
+          Gerador.wCampoNFSe(tcStr, 'AP35', 'Numero', 01, 01, 0, Numero);
+          Gerador.wCampoNFSe(tcStr, 'AP36', 'Serie', 01, 01, 0, Serie);
+          Gerador.wCampoNFSe(tcDat, 'AP37', 'Data', 01, 01, 1, Data);
+          Gerador.wCampoNFSe(tcDe2, 'AP38', 'ValorTotal', 01, 01, 1, ValorTotal);
+          Gerador.wCampoNFSe(tcDe4, 'AP39', 'ValorDaMercadoriaPorUnidade', 01, 01, 1, ValorDaMercadoriaPorUnidade);
+          Gerador.wCampoNFSe(tcInt, 'AP40', 'CodigoNCMNaturezaCarga', 01, 04, 1, CodigoNCMNaturezaCarga);
+          Gerador.wCampoNFSe(tcStr, 'AP41', 'DescricaoDaMercadoria', 01, 01, 0, DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
+          Gerador.wCampoNFSe(tcStr, 'AP42', 'UnidadeDeMedidaDaMercadoria', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
+          Gerador.wCampoNFSe(tcStr, 'AP43', 'TipoDeCalculo', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
+          Gerador.wCampoNFSe(tcDe4, 'AP44', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
+          Gerador.wCampoNFSe(tcDe4, 'AP45', 'QuantidadeDaMercadoriaNoEmbarque', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
+
+          if ToleranciaDePerdaDeMercadoria.Valor > 0 then
+          begin
+            Gerador.wGrupoNFSe('ToleranciaDePerdaDeMercadoria', 'AP46');
+            Gerador.wCampoNFSe(tcStr, 'AP47', 'Tipo', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
+            Gerador.wCampoNFSe(tcDe2, 'AP48', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
+            Gerador.wGrupoNFSe('/ToleranciaDePerdaDeMercadoria');
+          end;
+
+          if DiferencaDeFrete.Tipo <> SemDiferenca then
+          begin
+            Gerador.wGrupoNFSe('DiferencaDeFrete', 'AP49');
+            Gerador.Prefixo := 'obj:';
+
+            Gerador.wCampoNFSe(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
+            Gerador.wCampoNFSe(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
+
+            if DiferencaDeFrete.Tolerancia.Valor > 0 then
+            begin
+              Gerador.wGrupoNFSe('Tolerancia', 'AP52');
+              Gerador.wCampoNFSe(tcStr, 'AP53', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
+              Gerador.wCampoNFSe(tcDe2, 'AP54', 'Valor', 01, 01, 1, DiferencaDeFrete.Tolerancia.Valor);
+              Gerador.wGrupoNFSe('/Tolerancia');
+            end;
+
+            if DiferencaDeFrete.MargemGanho.Valor > 0 then
+            begin
+              Gerador.wGrupoNFSe('MargemGanho', 'AP55');
+              Gerador.wCampoNFSe(tcStr, 'AP56', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
+              Gerador.wCampoNFSe(tcDe2, 'AP57', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemGanho.Valor);
+              Gerador.wGrupoNFSe('/MargemGanho');
+            end;
+
+            if DiferencaDeFrete.MargemPerda.Valor > 0 then
+            begin
+              Gerador.wGrupoNFSe('MargemPerda', 'AP58');
+              Gerador.wCampoNFSe(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
+              Gerador.wCampoNFSe(tcDe2, 'AP60', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemPerda.Valor);
+              Gerador.wGrupoNFSe('/MargemPerda');
+            end;
+
+            Gerador.Prefixo := 'adic:';
+            Gerador.wGrupoNFSe('/DiferencaDeFrete');
+          end;
+          Gerador.wGrupoNFSe('/NotaFiscal');
+        end;
+      end;
+      Gerador.wGrupoNFSe('/NotasFiscais');
     end;
-
-    Gerador.wCampo(tcStr, 'AP189', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.EMail);
-
-    with CIOT.OperacaoTransporte.TomadorServico.Telefones do
-    begin
-      Gerador.wGrupo('Telefones', 'AP190');
-
-      Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP191');
-      Gerador.wCampo(tcInt, 'AP192', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP193', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Celular');
-
-      Gerador.wGrupo('Fixo '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP194');
-      Gerador.wCampo(tcInt, 'AP195', 'DDD', 01, 02, 1, Fixo.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP196', 'Numero', 08, 09, 1, Fixo.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fixo');
-
-      Gerador.wGrupo('Fax '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP197');
-      Gerador.wCampo(tcInt, 'AP198', 'DDD', 01, 02, 1, Fax.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP199', 'Numero', 08, 09, 1, Fax.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fax');
-
-      Gerador.wGrupo('/Telefones');
-    end;
-
-    Gerador.wCampo(tcStr, 'AP200', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.TomadorServico.ResponsavelPeloPagamento, true)));
-
-    Gerador.wGrupo('/TomadorServico');
-  end
-  else
-    Gerador.wCampo(tcStr, 'AP179', 'TomadorServico ', 01, 01, 1, '');
-end;
-
-procedure TCIOTW_eFrete.GerarConsignatario;
-begin
-  //Aquele que receberá as mercadorias transportadas em consignação,
-  //indicado no cadastramento da Operação de Transporte ou nos respectivos documentos fiscais.
-  //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj)) > 0 then
-  begin
-    Gerador.wGrupo('Consignatario', 'AP157');
-    Gerador.wCampo(tcStr, 'AP158', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP159', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj);
-
-    with CIOT.OperacaoTransporte.Consignatario do
-    begin
-      Gerador.wGrupo('Endereco', 'AP160');
-      Gerador.wCampo(tcStr, 'AP161', 'Bairro', 01, 01, 1, Endereco.Bairro);
-      Gerador.wCampo(tcStr, 'AP162', 'Rua', 01, 01, 1, Endereco.Rua);
-      Gerador.wCampo(tcStr, 'AP163', 'Numero', 01, 01, 1, Endereco.Numero);
-      Gerador.wCampo(tcStr, 'AP164', 'Complemento', 01, 01, 1, Endereco.Complemento);
-      Gerador.wCampo(tcStr, 'AP165', 'CEP', 01, 09, 1, Endereco.CEP);
-      Gerador.wCampo(tcInt, 'AP166', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
-      Gerador.wGrupo('/Endereco');
-    end;
-
-    Gerador.wCampo(tcStr, 'AP167', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.EMail);
-
-    with CIOT.OperacaoTransporte.Consignatario.Telefones do
-    begin
-      Gerador.wGrupo('Telefones', 'AP168');
-
-      Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP169');
-      Gerador.wCampo(tcInt, 'AP170', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP171', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Celular');
-
-      Gerador.wGrupo('Fixo '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP172');
-      Gerador.wCampo(tcInt, 'AP173', 'DDD', 01, 02, 1, Fixo.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP174', 'Numero', 08, 09, 1, Fixo.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fixo');
-
-      Gerador.wGrupo('Fax '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP175');
-      Gerador.wCampo(tcInt, 'AP176', 'DDD', 01, 02, 1, Fax.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP177', 'Numero', 08, 09, 1, Fax.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fax');
-
-      Gerador.wGrupo('/Telefones');
-    end;
-
-    Gerador.wCampo(tcStr, 'AP178', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Consignatario.ResponsavelPeloPagamento, true)));
-
-    Gerador.wGrupo('/Consignatario');
-  end
-  else
-    Gerador.wCampo(tcStr, 'AP157', 'Consignatario', 01, 01, 1, '');
-end;
-
-procedure TCIOTW_eFrete.GerarContratado;
-begin
-  //TAC ou seu Equiparado, que efetuar o transporte rodoviário de cargas por conta de terceiros e
-  //mediante remuneração, indicado no cadastramento da Operação de Transporte.
-  //Para o TipoViagem Frota o Contratado será a própria empresa que está declarando a operação.
-  Gerador.wGrupo('Contratado '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP81');
-  Gerador.wCampo(tcStr, 'AP82', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.CpfOuCnpj);
-  Gerador.wCampo(tcStr, 'AP83', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.RNTRC);
-  Gerador.wGrupo('/Contratado');
-end;
-
-procedure TCIOTW_eFrete.GerarContratante;
-begin
-  Gerador.wGrupo('Contratante', 'AP112');
-  Gerador.wCampo(tcStr, 'AP113', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.RNTRC);
-  Gerador.wCampo(tcStr, 'AP114', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.NomeOuRazaoSocial);
-  Gerador.wCampo(tcStr, 'AP115', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Contratante.CpfOuCnpj);
-
-  with CIOT.OperacaoTransporte.Contratante do
-  begin
-    Gerador.wGrupo('Endereco', 'AP116');
-    Gerador.wCampo(tcStr, 'AP117', 'Bairro', 01, 01, 1, Endereco.Bairro);
-    Gerador.wCampo(tcStr, 'AP118', 'Rua', 01, 01, 1, Endereco.Rua);
-    Gerador.wCampo(tcStr, 'AP119', 'Numero', 01, 01, 1, Endereco.Numero);
-    Gerador.wCampo(tcStr, 'AP120', 'Complemento', 01, 01, 1, Endereco.Complemento);
-    Gerador.wCampo(tcStr, 'AP121', 'CEP', 01, 09, 1, Endereco.CEP);
-    Gerador.wCampo(tcInt, 'AP122', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
-    Gerador.wGrupo('/Endereco');
   end;
 
-  Gerador.wCampo(tcStr, 'AP123', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.EMail);
+  Gerador.wGrupoNFSe('/Viagens');
 
-  with CIOT.OperacaoTransporte.Contratante.Telefones do
-  begin
-    Gerador.wGrupo('Telefones', 'AP124');
-
-    Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP125');
-    Gerador.wCampo(tcInt, 'AP126', 'DDD', 01, 02, 0, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wCampo(tcInt, 'AP127', 'Numero', 08, 09, 0, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wGrupo('/Celular');
-
-    Gerador.wGrupo('Fixo ' +NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP128');
-    Gerador.wCampo(tcInt, 'AP129', 'DDD', 01, 02, 0, Fixo.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wCampo(tcInt, 'AP130', 'Numero', 08, 09, 0, Fixo.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wGrupo('/Fixo');
-
-    Gerador.wGrupo('Fax '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP131');
-    Gerador.wCampo(tcInt, 'AP132', 'DDD', 01, 02, 0, Fax.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wCampo(tcInt, 'AP133', 'Numero', 08, 09, 0, Fax.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wGrupo('/Fax');
-
-    Gerador.wGrupo('/Telefones');
-  end;
-
-  Gerador.wCampo(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Contratante.ResponsavelPeloPagamento, true)));
-
-  Gerador.wGrupo('/Contratante');
-end;
-
-procedure TCIOTW_eFrete.GerarDestinatario;
-begin
-  //Destinatário da carga.
-  //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
-  //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
-  //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj)) > 0 then
-  begin
-    Gerador.wGrupo('Destinatario', 'AP90');
-    Gerador.wCampo(tcStr, 'AP91', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Destinatario.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP92', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj);
-
-    with CIOT.OperacaoTransporte.Destinatario do
-    begin
-      Gerador.wGrupo('Endereco', 'AP93');
-      Gerador.wCampo(tcStr, 'AP94', 'Bairro', 01, 01, 1, Endereco.Bairro);
-      Gerador.wCampo(tcStr, 'AP95', 'Rua', 01, 01, 1, Endereco.Rua);
-      Gerador.wCampo(tcStr, 'AP96', 'Numero', 01, 01, 1, Endereco.Numero);
-      Gerador.wCampo(tcStr, 'AP97', 'Complemento', 01, 01, 1, Endereco.Complemento);
-      Gerador.wCampo(tcStr, 'AP98', 'CEP', 08, 08, 1, Endereco.CEP);
-      Gerador.wCampo(tcInt, 'AP99', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
-      Gerador.wGrupo('/Endereco');
-    end;
-
-    Gerador.wCampo(tcStr, 'AP100', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Destinatario.EMail);
-
-    with CIOT.OperacaoTransporte.Destinatario.Telefones do
-    begin
-      Gerador.wGrupo('Telefones', 'AP101');
-
-      Gerador.wGrupo('Celular '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP102');
-      Gerador.wCampo(tcInt, 'AP103', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP104', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Celular');
-
-      Gerador.wGrupo('Fixo '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP105');
-      Gerador.wCampo(tcInt, 'AP106', 'DDD', 01, 02, 1, Fixo.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP107', 'Numero', 08, 09, 1, Fixo.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fixo');
-
-      Gerador.wGrupo('Fax ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP108');
-      Gerador.wCampo(tcInt, 'AP109', 'DDD', 01, 02, 1, Fax.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcInt, 'AP110', 'Numero', 08, 09, 1, Fax.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wGrupo('/Fax');
-
-      Gerador.wGrupo('/Telefones');
-    end;
-    Gerador.wCampo(tcStr, 'AP111', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Destinatario.ResponsavelPeloPagamento, true)), 'Informar se é o responsável pelo pagamento da Operação de Transporte. True = Sim. False = Não');
-
-    Gerador.wGrupo('/Destinatario');
-  end
-  else
-    Gerador.wCampo(tcStr, 'AP90', 'Destinatario', 01, 01, 1, '');
+  Gerador.Prefixo := aPrefixo;
 end;
 
 procedure TCIOTW_eFrete.GerarImpostos;
 begin
-  Gerador.wGrupo('Impostos', 'AP61');
-  Gerador.wCampo(tcDe2, 'AP62', 'IRRF', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF');
-  Gerador.wCampo(tcDe2, 'AP63', 'SestSenat', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT');
-  Gerador.wCampo(tcDe2, 'AP64', 'INSS', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS.');
-  Gerador.wCampo(tcDe2, 'AP65', 'ISSQN', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN.');
-  Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
-  Gerador.wCampo(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
-  Gerador.wGrupo('/Impostos');
-end;
-
-procedure TCIOTW_eFrete.GerarMotorista;
-begin
-  //É o condutor do veículo que irá realizar a operação de transporte,
-  //pode ser o proprietário do veículo ou não.
-  Gerador.wGrupo('Motorista '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP84');
-  Gerador.wCampo(tcStr, 'AP85', 'CpfOuCnpj', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CpfOuCnpj, 'CPF ou CNPJ do Motorista.');
-  Gerador.wCampo(tcStr, 'AP86', 'CNH', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CNH);
-
-  Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP87');
-  with CIOT.OperacaoTransporte.Motorista do
-  begin
-    Gerador.wCampo(tcInt, 'AP88', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-    Gerador.wCampo(tcInt, 'AP89', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-  end;
-
-  Gerador.wGrupo('/Celular');
-  Gerador.wGrupo('/Motorista');
+  Gerador.wGrupoNFSe('Impostos', 'AP61');
+  Gerador.wCampoNFSe(tcDe2, 'AP62', 'IRRF', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF');
+  Gerador.wCampoNFSe(tcDe2, 'AP63', 'SestSenat', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT');
+  Gerador.wCampoNFSe(tcDe2, 'AP64', 'INSS', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS.');
+  Gerador.wCampoNFSe(tcDe2, 'AP65', 'ISSQN', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN.');
+  Gerador.wCampoNFSe(tcDe2, 'AP66', 'OutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
+  Gerador.wCampoNFSe(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 0, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
+  Gerador.wGrupoNFSe('/Impostos');
 end;
 
 procedure TCIOTW_eFrete.GerarPagamentos;
 var
   i: Integer;
+  aPrefixo: string;
 begin
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'adic:';
+
   //Pagamentos registrados.
   //- Pode existir mais de 1 pagamento com uma mesma categoria (exceto para Quitacao).
   //- A soma dos pagamentos c/ categoria Adiantamento, deverá ter o mesmo valor apontado na
@@ -412,147 +254,459 @@ begin
   begin
     with CIOT.OperacaoTransporte.Pagamentos.Items[i] do
     begin
-      Gerador.wGrupo('Pagamentos '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP68');
-      Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
-      Gerador.wCampo(tcDat, 'AP70', 'DataDeLiberacao', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento será liberado para saque.');
-      Gerador.wCampo(tcDe2, 'AP71', 'Valor', 01, 01, 1, Valor, 'Valor do pagamento.');
-      Gerador.wCampo(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcStr, 'AP73', 'Categoria', 01, 01, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, -Quitacao, -SemCategoria, -Frota ', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-      Gerador.wCampo(tcStr, 'AP74', 'Documento', 01, 01, 1, Documento, 'Documento relacionado a viagem.');
+      Gerador.wGrupoNFSe('Pagamentos'{+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS}, 'AP68');
+      Gerador.wCampoNFSe(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 0, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
+      Gerador.wCampoNFSe(tcDat, 'AP70', 'DataDeLiberacao', 01, 01, 1, DataDeLiberacao, 'Data em que o pagamento será liberado para saque.');
+      Gerador.wCampoNFSe(tcDe2, 'AP71', 'Valor', 01, 01, 1, Valor, 'Valor do pagamento.');
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wCampoNFSe(tcStr, 'AP72', 'TipoPagamento', 01, 01, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wCampoNFSe(tcStr, 'AP73', 'Categoria', 01, 01, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, -Quitacao, -SemCategoria, -Frota ', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+
+      Gerador.Prefixo := 'adic:';
+      Gerador.wCampoNFSe(tcStr, 'AP74', 'Documento', 01, 01, 0, Documento, 'Documento relacionado a viagem.');
 
       //Preenchimento obrigatório para o TipoPagamento TransferenciaBancaria. Não deve ser preenchido para TipoPagamento eFRETE.
-      Gerador.wGrupo('InformacoesBancarias '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP75');
       with InformacoesBancarias do
       begin
-        Gerador.wCampo(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 1, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
-        Gerador.wCampo(tcStr, 'AP77', 'Agencia', 01, 01, 1, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
-        Gerador.wCampo(tcStr, 'AP78', 'Conta', 01, 01, 1, Conta, 'Conta do contratado com dígito. ');
+        if (InstituicaoBancaria <> '') or (Agencia <> '') or (Conta <> '') then
+        begin
+          Gerador.Prefixo := 'obj:';
+          Gerador.wGrupoNFSe('InformacoesBancarias'{+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP75');
+
+          Gerador.wCampoNFSe(tcStr, 'AP76', 'InstituicaoBancaria', 01, 01, 0, InstituicaoBancaria, 'Código de compensação da instituição bancária que será realizado o pagamento. ');
+          Gerador.wCampoNFSe(tcStr, 'AP77', 'Agencia', 01, 01, 0, Agencia, 'Agência na qual o contratado possui conta com dígito (se houver).');
+          Gerador.wCampoNFSe(tcStr, 'AP78', 'Conta', 01, 01, 0, Conta, 'Conta do contratado com dígito. ');
+
+          Gerador.wGrupoNFSe('/InformacoesBancarias');
+        end;
       end;
-      Gerador.wGrupo('/InformacoesBancarias');
 
-      Gerador.wCampo(tcStr, 'AP79', 'InformacaoAdicional', 01, 01, 1, InformacaoAdicional);
+      Gerador.wCampoNFSe(tcStr, 'AP79', 'InformacaoAdicional', 01, 01, 0, InformacaoAdicional);
+
       if Categoria = tcpFrota then
-        Gerador.wCampo(tcStr, 'AP80', 'CnpjFilialAbastecimento', 01, 01, 1, CnpjFilialAbastecimento);
+        Gerador.wCampoNFSe(tcStr, 'AP80', 'CnpjFilialAbastecimento', 01, 01, 1, CnpjFilialAbastecimento);
 
-      Gerador.wGrupo('/Pagamentos');
+      Gerador.Prefixo := 'adic:';
+      Gerador.wGrupoNFSe('/Pagamentos');
     end;
+  end;
+
+  Gerador.Prefixo := aPrefixo;
+end;
+
+procedure TCIOTW_eFrete.GerarContratado;
+var
+  aPrefixo: string;
+begin
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'adic:';
+
+  //TAC ou seu Equiparado, que efetuar o transporte rodoviário de cargas por conta de terceiros e
+  //mediante remuneração, indicado no cadastramento da Operação de Transporte.
+  //Para o TipoViagem Frota o Contratado será a própria empresa que está declarando a operação.
+  Gerador.wGrupoNFSe('Contratado'{+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS}, 'AP81');
+  Gerador.wCampoNFSe(tcStr, 'AP82', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.CpfOuCnpj);
+  Gerador.wCampoNFSe(tcStr, 'AP83', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.RNTRC);
+  Gerador.wGrupoNFSe('/Contratado');
+
+  Gerador.Prefixo := aPrefixo;
+end;
+
+procedure TCIOTW_eFrete.GerarMotorista;
+var
+  aPrefixo: string;
+begin
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'adic:';
+
+  //É o condutor do veículo que irá realizar a operação de transporte,
+  //pode ser o proprietário do veículo ou não.
+  Gerador.wGrupoNFSe('Motorista'{+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS}, 'AP84');
+  Gerador.wCampoNFSe(tcStr, 'AP85', 'CpfOuCnpj', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CpfOuCnpj, 'CPF ou CNPJ do Motorista.');
+  Gerador.wCampoNFSe(tcStr, 'AP86', 'CNH', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CNH);
+
+  Gerador.Prefixo := 'obj:';
+
+  Gerador.wGrupoNFSe('Celular'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP87');
+  with CIOT.OperacaoTransporte.Motorista do
+  begin
+    Gerador.Prefixo := 'obj1:';
+    Gerador.wCampoNFSe(tcInt, 'AP88', 'DDD', 01, 02, 1, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+    Gerador.wCampoNFSe(tcInt, 'AP89', 'Numero', 08, 09, 1, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+  end;
+
+  Gerador.Prefixo := 'obj:';
+  Gerador.wGrupoNFSe('/Celular');
+  Gerador.Prefixo := 'adic:';
+  Gerador.wGrupoNFSe('/Motorista');
+
+  Gerador.Prefixo := aPrefixo;
+end;
+
+procedure TCIOTW_eFrete.GerarDestinatario;
+begin
+  //Destinatário da carga.
+  //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
+  //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
+  //Não esperado para TipoViagem Frota.
+  if Length(Trim(CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj)) > 0 then
+  begin
+    Gerador.wGrupoNFSe('Destinatario', 'AP90');
+    Gerador.wCampoNFSe(tcStr, 'AP91', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Destinatario.NomeOuRazaoSocial);
+    Gerador.wCampoNFSe(tcStr, 'AP92', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj);
+
+    with CIOT.OperacaoTransporte.Destinatario do
+    begin
+      Gerador.wGrupoNFSe('Endereco', 'AP93');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampoNFSe(tcStr, 'AP94', 'Bairro', 01, 01, 1, Endereco.Bairro);
+      Gerador.wCampoNFSe(tcStr, 'AP95', 'Rua', 01, 01, 1, Endereco.Rua);
+      Gerador.wCampoNFSe(tcStr, 'AP96', 'Numero', 01, 01, 1, Endereco.Numero);
+      Gerador.wCampoNFSe(tcStr, 'AP97', 'Complemento', 01, 01, 1, Endereco.Complemento);
+      Gerador.wCampoNFSe(tcStr, 'AP98', 'CEP', 08, 08, 1, Endereco.CEP);
+      Gerador.wCampoNFSe(tcInt, 'AP99', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Endereco');
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP100', 'EMail', 01, 01, 0, CIOT.OperacaoTransporte.Destinatario.EMail);
+
+    with CIOT.OperacaoTransporte.Destinatario.Telefones do
+    begin
+      Gerador.wGrupoNFSe('Telefones', 'AP101');
+
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wGrupoNFSe('Celular'{+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP102');
+      Gerador.wCampoNFSe(tcInt, 'AP103', 'DDD', 01, 02, 1, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wCampoNFSe(tcInt, 'AP104', 'Numero', 08, 09, 1, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wGrupoNFSe('/Celular');
+
+      Gerador.wGrupoNFSe('Fixo'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP105');
+      Gerador.wCampoNFSe(tcInt, 'AP106', 'DDD', 01, 02, 1, Fixo.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wCampoNFSe(tcInt, 'AP107', 'Numero', 08, 09, 1, Fixo.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wGrupoNFSe('/Fixo');
+
+      Gerador.wGrupoNFSe('Fax' {+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP108');
+      Gerador.wCampoNFSe(tcInt, 'AP109', 'DDD', 01, 02, 1, Fax.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wCampoNFSe(tcInt, 'AP110', 'Numero', 08, 09, 1, Fax.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+      Gerador.wGrupoNFSe('/Fax');
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Telefones');
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP111', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Destinatario.ResponsavelPeloPagamento, true)), 'Informar se é o responsável pelo pagamento da Operação de Transporte. True = Sim. False = Não');
+
+    Gerador.wGrupoNFSe('/Destinatario');
+  end;
+end;
+
+procedure TCIOTW_eFrete.GerarContratante;
+begin
+  Gerador.wGrupoNFSe('Contratante', 'AP112');
+  Gerador.wCampoNFSe(tcStr, 'AP113', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.RNTRC);
+  Gerador.wCampoNFSe(tcStr, 'AP114', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.NomeOuRazaoSocial);
+  Gerador.wCampoNFSe(tcStr, 'AP115', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Contratante.CpfOuCnpj);
+
+  with CIOT.OperacaoTransporte.Contratante do
+  begin
+    Gerador.wGrupoNFSe('Endereco', 'AP116');
+    Gerador.Prefixo := 'obj1:';
+    Gerador.wCampoNFSe(tcStr, 'AP117', 'Bairro', 01, 01, 0, Endereco.Bairro);
+    Gerador.wCampoNFSe(tcStr, 'AP118', 'Rua', 01, 01, 0, Endereco.Rua);
+    Gerador.wCampoNFSe(tcStr, 'AP119', 'Numero', 01, 01, 0, Endereco.Numero);
+    Gerador.wCampoNFSe(tcStr, 'AP120', 'Complemento', 01, 01, 0, Endereco.Complemento);
+    Gerador.wCampoNFSe(tcStr, 'AP121', 'CEP', 01, 09, 0, Endereco.CEP);
+    Gerador.wCampoNFSe(tcInt, 'AP122', 'CodigoMunicipio', 07, 07, 1, Endereco.CodigoMunicipio);
+    Gerador.Prefixo := 'obj:';
+    Gerador.wGrupoNFSe('/Endereco');
+  end;
+
+  Gerador.wCampoNFSe(tcStr, 'AP123', 'EMail', 01, 01, 0, CIOT.OperacaoTransporte.Contratante.EMail);
+
+  with CIOT.OperacaoTransporte.Contratante.Telefones do
+  begin
+    if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+    begin
+      Gerador.wGrupoNFSe('Telefones', 'AP124');
+
+      Gerador.Prefixo := 'obj1:';
+
+      if Celular.Numero > 0 then
+      begin
+        Gerador.wGrupoNFSe('Celular'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP125');
+        Gerador.wCampoNFSe(tcInt, 'AP126', 'DDD', 01, 02, 0, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wCampoNFSe(tcInt, 'AP127', 'Numero', 08, 09, 0, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wGrupoNFSe('/Celular');
+      end;
+
+      if Fixo.Numero > 0 then
+      begin
+        Gerador.wGrupoNFSe('Fixo' {+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP128');
+        Gerador.wCampoNFSe(tcInt, 'AP129', 'DDD', 01, 02, 0, Fixo.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wCampoNFSe(tcInt, 'AP130', 'Numero', 08, 09, 0, Fixo.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wGrupoNFSe('/Fixo');
+      end;
+
+      if Fax.Numero > 0 then
+      begin
+        Gerador.wGrupoNFSe('Fax'{+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP131');
+        Gerador.wCampoNFSe(tcInt, 'AP132', 'DDD', 01, 02, 0, Fax.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wCampoNFSe(tcInt, 'AP133', 'Numero', 08, 09, 0, Fax.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+        Gerador.wGrupoNFSe('/Fax');
+      end;
+
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Telefones');
+    end;
+  end;
+
+  Gerador.wCampoNFSe(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Contratante.ResponsavelPeloPagamento, true)));
+
+  Gerador.wGrupoNFSe('/Contratante');
+end;
+
+procedure TCIOTW_eFrete.GerarSubContratante;
+begin
+  //É o transportador que contratar outro transportador para realização do transporte de
+  //cargas para o qual fora anteriormente contratado, indicado no cadastramento da Operação de Transporte.
+  //Não esperado para TipoViagem Frota.
+  if Length(Trim(CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj)) > 0 then
+  begin
+    Gerador.wGrupoNFSe('Subcontratante', 'AP135');
+    Gerador.wCampoNFSe(tcStr, 'AP136', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.NomeOuRazaoSocial);
+    Gerador.wCampoNFSe(tcStr, 'AP137', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj);
+
+    with CIOT.OperacaoTransporte.Subcontratante do
+    begin
+      Gerador.wGrupoNFSe('Endereco', 'AP138');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampoNFSe(tcStr, 'AP139', 'Bairro', 01, 01, 0, Endereco.Bairro);
+      Gerador.wCampoNFSe(tcStr, 'AP140', 'Rua', 01, 01, 0, Endereco.Rua);
+      Gerador.wCampoNFSe(tcStr, 'AP141', 'Numero', 01, 01, 0, Endereco.Numero);
+      Gerador.wCampoNFSe(tcStr, 'AP142', 'Complemento', 01, 01, 0, Endereco.Complemento);
+      Gerador.wCampoNFSe(tcStr, 'AP143', 'CEP', 01, 09, 0, Endereco.CEP);
+      Gerador.wCampoNFSe(tcInt, 'AP144', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Endereco');
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP145', 'EMail', 01, 01, 0, CIOT.OperacaoTransporte.Subcontratante.EMail);
+
+    with CIOT.OperacaoTransporte.Subcontratante.Telefones do
+    begin
+      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      begin
+        Gerador.wGrupoNFSe('Telefones', 'AP146');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Celular.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Celular'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP147');
+          Gerador.wCampoNFSe(tcInt, 'AP148', 'DDD', 01, 02, 1, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP149', 'Numero', 08, 09, 1, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Celular');
+        end;
+
+        if Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fixo'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP150');
+          Gerador.wCampoNFSe(tcInt, 'AP151', 'DDD', 01, 02, 1, Fixo.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP152', 'Numero', 08, 09, 1, Fixo.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fixo');
+        end;
+
+        if Fax.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fax'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP153');
+          Gerador.wCampoNFSe(tcInt, 'AP154', 'DDD', 01, 02, 1, Fax.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP155', 'Numero', 08, 09, 1, Fax.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Telefones');
+      end;
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP156', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Subcontratante.ResponsavelPeloPagamento, true)));
+
+    Gerador.wGrupoNFSe('/Subcontratante');
+  end;
+end;
+
+procedure TCIOTW_eFrete.GerarConsignatario;
+begin
+  //Aquele que receberá as mercadorias transportadas em consignação,
+  //indicado no cadastramento da Operação de Transporte ou nos respectivos documentos fiscais.
+  //Não esperado para TipoViagem Frota.
+  if Length(Trim(CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj)) > 0 then
+  begin
+    Gerador.wGrupoNFSe('Consignatario', 'AP157');
+    Gerador.wCampoNFSe(tcStr, 'AP158', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.NomeOuRazaoSocial);
+    Gerador.wCampoNFSe(tcStr, 'AP159', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj);
+
+    with CIOT.OperacaoTransporte.Consignatario do
+    begin
+      Gerador.wGrupoNFSe('Endereco', 'AP160');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampoNFSe(tcStr, 'AP161', 'Bairro', 01, 01, 0, Endereco.Bairro);
+      Gerador.wCampoNFSe(tcStr, 'AP162', 'Rua', 01, 01, 0, Endereco.Rua);
+      Gerador.wCampoNFSe(tcStr, 'AP163', 'Numero', 01, 01, 0, Endereco.Numero);
+      Gerador.wCampoNFSe(tcStr, 'AP164', 'Complemento', 01, 01, 0, Endereco.Complemento);
+      Gerador.wCampoNFSe(tcStr, 'AP165', 'CEP', 01, 09, 0, Endereco.CEP);
+      Gerador.wCampoNFSe(tcInt, 'AP166', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Endereco');
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP167', 'EMail', 01, 01, 0, CIOT.OperacaoTransporte.Consignatario.EMail);
+
+    with CIOT.OperacaoTransporte.Consignatario.Telefones do
+    begin
+      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      begin
+        Gerador.wGrupoNFSe('Telefones', 'AP168');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Celular.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Celular'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP169');
+          Gerador.wCampoNFSe(tcInt, 'AP170', 'DDD', 01, 02, 1, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP171', 'Numero', 08, 09, 1, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Celular');
+        end;
+
+        if Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fixo'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP172');
+          Gerador.wCampoNFSe(tcInt, 'AP173', 'DDD', 01, 02, 1, Fixo.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP174', 'Numero', 08, 09, 1, Fixo.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fixo');
+        end;
+
+        if Fax.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fax'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP175');
+          Gerador.wCampoNFSe(tcInt, 'AP176', 'DDD', 01, 02, 1, Fax.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP177', 'Numero', 08, 09, 1, Fax.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Telefones');
+      end;
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP178', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Consignatario.ResponsavelPeloPagamento, true)));
+
+    Gerador.wGrupoNFSe('/Consignatario');
+  end;
+end;
+
+procedure TCIOTW_eFrete.GerarTomadorServico;
+begin
+  //Pessoa (física ou jurídica) que contratou o frete pela transportadora.
+  //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
+  //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
+  if Length(Trim(CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj)) > 0 then
+  begin
+    Gerador.wGrupoNFSe('TomadorServico', 'AP179');
+    Gerador.wCampoNFSe(tcStr, 'AP180', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.NomeOuRazaoSocial);
+    Gerador.wCampoNFSe(tcStr, 'AP181', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj);
+
+    with CIOT.OperacaoTransporte.TomadorServico do
+    begin
+      Gerador.wGrupoNFSe('Endereco', 'AP182');
+      Gerador.Prefixo := 'obj1:';
+      Gerador.wCampoNFSe(tcStr, 'AP183', 'Bairro', 01, 01, 0, Endereco.Bairro);
+      Gerador.wCampoNFSe(tcStr, 'AP184', 'Rua', 01, 01, 0, Endereco.Rua);
+      Gerador.wCampoNFSe(tcStr, 'AP185', 'Numero', 01, 01, 0, Endereco.Numero);
+      Gerador.wCampoNFSe(tcStr, 'AP186', 'Complemento', 01, 01, 0, Endereco.Complemento);
+      Gerador.wCampoNFSe(tcStr, 'AP187', 'CEP', 01, 09, 0, Endereco.CEP);
+      Gerador.wCampoNFSe(tcInt, 'AP188', 'CodigoMunicipio', 01, 07, 1, Endereco.CodigoMunicipio);
+      Gerador.Prefixo := 'obj:';
+      Gerador.wGrupoNFSe('/Endereco');
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP189', 'EMail', 01, 01, 0, CIOT.OperacaoTransporte.TomadorServico.EMail);
+
+    with CIOT.OperacaoTransporte.TomadorServico.Telefones do
+    begin
+      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      begin
+        Gerador.wGrupoNFSe('Telefones', 'AP190');
+
+        Gerador.Prefixo := 'obj1:';
+
+        if Celular.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Celular'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP191');
+          Gerador.wCampoNFSe(tcInt, 'AP192', 'DDD', 01, 02, 1, Celular.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP193', 'Numero', 08, 09, 1, Celular.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Celular');
+        end;
+
+        if Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fixo'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP194');
+          Gerador.wCampoNFSe(tcInt, 'AP195', 'DDD', 01, 02, 1, Fixo.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP196', 'Numero', 08, 09, 1, Fixo.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fixo');
+        end;
+
+        if Fax.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fax'{+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP197');
+          Gerador.wCampoNFSe(tcInt, 'AP198', 'DDD', 01, 02, 1, Fax.DDD, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wCampoNFSe(tcInt, 'AP199', 'Numero', 08, 09, 1, Fax.Numero, '', True{, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE});
+          Gerador.wGrupoNFSe('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Telefones');
+      end;
+    end;
+
+    Gerador.wCampoNFSe(tcStr, 'AP200', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.TomadorServico.ResponsavelPeloPagamento, true)));
+
+    Gerador.wGrupoNFSe('/TomadorServico');
   end;
 end;
 
 procedure TCIOTW_eFrete.GerarVeiculos;
 var
   i: Integer;
+  aPrefixo: string;
 begin
+  aPrefixo := Gerador.Prefixo;
+  Gerador.Prefixo := 'adic:';
+
   //Registro dos veículos participantes da operação de transporte.
   for i := 0 to CIOT.OperacaoTransporte.Veiculos.Count -1 do
   begin
-    Gerador.wGrupo('Veiculos '+ NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP201');
-    Gerador.wCampo(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.OperacaoTransporte.Veiculos.Items[I].Placa);
-    Gerador.wGrupo('/Veiculos');
-  end;
-end;
-
-procedure TCIOTW_eFrete.GerarViagem;
-var
-  i, j: Integer;
-begin
-  Gerador.wGrupo('Viagens '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP16');
-
-  for I := 0 to CIOT.OperacaoTransporte.Viagens.Count -1 do
-  begin
-    with CIOT.OperacaoTransporte.Viagens.Items[I] do
-    begin
-      Gerador.wCampo(tcStr, 'AP17', 'DocumentoViagem', 01, 01, 1, DocumentoViagem, 'Exemplo: CT-e / Serie, CTRC / Serie, Ordem de Serviço.');
-      Gerador.wCampo(tcInt, 'AP18', 'CodigoMunicipioOrigem', 01, 07, 1, CodigoMunicipioOrigem);
-      Gerador.wCampo(tcInt, 'AP19', 'CodigoMunicipioDestino', 01, 07, 1, CodigoMunicipioDestino);
-
-      Gerador.wGrupo('Valores '+NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP20');
-      with Valores do
-      begin
-        Gerador.wCampo(tcDe2, 'AP21', 'TotalOperacao', 01, 01, 1, TotalOperacao);
-        Gerador.wCampo(tcDe2, 'AP22', 'TotalViagem', 01, 01, 1, TotalViagem);
-        Gerador.wCampo(tcDe2, 'AP23', 'TotalDeAdiantamento', 01, 01, 1, TotalDeAdiantamento);
-        Gerador.wCampo(tcDe2, 'AP24', 'TotalDeQuitacao', 01, 01, 1, TotalDeQuitacao);
-        Gerador.wCampo(tcDe2, 'AP25', 'Combustivel', 01, 01, 1, Combustivel);
-        Gerador.wCampo(tcDe2, 'AP26', 'Pedagio', 01, 01, 1, Pedagio);
-        Gerador.wCampo(tcDe2, 'AP27', 'OutrosCreditos', 01, 01, 1, OutrosCreditos);
-        Gerador.wCampo(tcStr, 'AP28', 'JustificativaOutrosCreditos', 01, 01, 1, JustificativaOutrosCreditos);
-        Gerador.wCampo(tcDe2, 'AP29', 'Seguro', 01, 01, 1, Seguro);
-        Gerador.wCampo(tcDe2, 'AP30', 'OutrosDebitos', 01, 01, 1, OutrosDebitos);
-        Gerador.wCampo(tcStr, 'AP31', 'JustificativaOutrosDebitos', 01, 01, 1, JustificativaOutrosDebitos);
-      end;
-      Gerador.wGrupo('/Valores');
-
-      Gerador.wCampo(tcStr, 'AP32', 'TipoPagamento' +NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE');
-
-      Gerador.wGrupo('NotasFiscais', 'AP33');
-
-      for J := 0 to NotasFiscais.Count -1 do
-      begin
-        with NotasFiscais.Items[J] do
-        begin
-          Gerador.wGrupo('NotaFiscal', 'AP34');
-          Gerador.wCampo(tcStr, 'AP35', 'Numero', 01, 01, 1, Numero);
-          Gerador.wCampo(tcStr, 'AP36', 'Serie', 01, 01, 1, Serie);
-          Gerador.wCampo(tcDat, 'AP37', 'Data', 01, 01, 1, Data);
-          Gerador.wCampo(tcDe2, 'AP38', 'ValorTotal', 01, 01, 1, ValorTotal);
-          Gerador.wCampo(tcDe4, 'AP39', 'ValorDaMercadoriaPorUnidade', 01, 01, 1, ValorDaMercadoriaPorUnidade);
-          Gerador.wCampo(tcInt, 'AP40', 'CodigoNCMNaturezaCarga', 01, 04, 1, CodigoNCMNaturezaCarga);
-          Gerador.wCampo(tcStr, 'AP41', 'DescricaoDaMercadoria', 01, 01, 1, DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
-          Gerador.wCampo(tcStr, 'AP42', 'UnidadeDeMedidaDaMercadoria', 01, 01, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-          Gerador.wCampo(tcStr, 'AP43', 'TipoDeCalculo', 01, 01, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-          Gerador.wCampo(tcDe4, 'AP44', 'ValorDoFretePorUnidadeDeMercadoria', 01, 01, 1, ValorDoFretePorUnidadeDeMercadoria);
-          Gerador.wCampo(tcDe4, 'AP45', 'QuantidadeDaMercadoriaNoEmbarque', 01, 01, 1, QuantidadeDaMercadoriaNoEmbarque);
-
-          Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP46');
-          Gerador.wCampo(tcStr, 'AP47', 'Tipo', 01, 01, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-          Gerador.wCampo(tcDe2, 'AP48', 'Valor', 01, 01, 1, ToleranciaDePerdaDeMercadoria.Valor);
-          Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
-
-          if DiferencaDeFrete.Tipo <> SemDiferenca then
-          begin
-            Gerador.wGrupo('DiferencaDeFrete', 'AP49');
-            Gerador.wCampo(tcStr, 'AP50', 'Tipo', 01, 01, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
-            Gerador.wCampo(tcStr, 'AP51', 'Base', 01, 01, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
-
-            Gerador.wGrupo('Tolerancia', 'AP52');
-            Gerador.wCampo(tcStr, 'AP53', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
-            Gerador.wCampo(tcDe2, 'AP54', 'Valor', 01, 01, 1, DiferencaDeFrete.Tolerancia.Valor);
-            Gerador.wGrupo('/Tolerancia');
-
-            Gerador.wGrupo('MargemGanho', 'AP55');
-            Gerador.wCampo(tcStr, 'AP56', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
-            Gerador.wCampo(tcDe2, 'AP57', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemGanho.Valor);
-            Gerador.wGrupo('/MargemGanho');
-
-            Gerador.wGrupo('MargemPerda', 'AP58');
-            Gerador.wCampo(tcStr, 'AP59', 'Tipo', 01, 01, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
-            Gerador.wCampo(tcDe2, 'AP60', 'Valor', 01, 01, 1, DiferencaDeFrete.MargemPerda.Valor);
-            Gerador.wGrupo('/MargemPerda');
-
-            Gerador.wGrupo('/DiferencaDeFrete');
-          end;
-          Gerador.wGrupo('/NotaFiscal');
-        end;
-      end;
-      Gerador.wGrupo('/NotasFiscais');
-    end;
+    Gerador.wGrupoNFSe('Veiculos'{+ NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS}, 'AP201');
+    Gerador.wCampoNFSe(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.OperacaoTransporte.Veiculos.Items[I].Placa);
+    Gerador.wGrupoNFSe('/Veiculos');
   end;
 
-  Gerador.wGrupo('/Viagens');
+  Gerador.Prefixo := aPrefixo;
 end;
 
 function TCIOTW_eFrete.GerarXml: Boolean;
 var
 //  Prefixo, NameSpaceServico, NameSpaceBase: string;
   Ok: Boolean;
-  versao: Integer;
 begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
+  Gerador.Prefixo := 'pef:';
 
   VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
   versao := VersaoCIOTToInt(VersaoDF);
@@ -560,48 +714,55 @@ begin
   case CIOT.Integradora.Operacao of
     opObterPdf:
       begin
-//        Gerador.wGrupo('ObterOperacaoTransportePdfRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//        Gerador.wCampo(tcStr, '', 'CodigoIdentificacaoOperacao', 01, 30, 1, CIOT.OperacaoTransporte.NumeroCIOT, '');
+//        Gerador.wGrupoNFSe('ObterOperacaoTransportePdfRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//        Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 01, 30, 1, CIOT.OperacaoTransporte.NumeroCIOT, '');
 ////        Gerador.wTexto('<DocumentoViagem ' +   NAME_SPACE_EFRETE_OBJECTS + '>'++'</DocumentoViagem >');
 //        Gerador.wTexto('<Integrador ' +   NAME_SPACE_EFRETE_OBJECTS + '>' + CIOT.Integradora.HashIntegrador + '</Integrador>');
 ////        Gerador.wTexto('<Token ' +   NAME_SPACE_EFRETE_OBJECTS + '>'++'</Token>');
 //        Gerador.wTexto('<Versao ' +   NAME_SPACE_EFRETE_OBJECTS + '>1</Versao>');
-//        Gerador.wGrupo('/ObterOperacaoTransportePdfRequest');
+//        Gerador.wGrupoNFSe('/ObterOperacaoTransportePdfRequest');
       end;
+
     opAdicionar:
       begin
-        Gerador.wGrupo('AdicionarOperacaoTransporte ' + NAME_SPACE_BASE, '');
+        Gerador.wGrupoNFSe('AdicionarOperacaoTransporte'{ + NAME_SPACE_BASE}, '');
 
-        Gerador.wGrupo('AdicionarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP01');
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('AdicionarOperacaoTransporteRequest' {+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE}, 'AP01');
 
-        Gerador.wCampo(tcStr, 'AP02', 'TipoViagem', 01, 01, 1, TipoViagemCIOTToStr(CIOT.OperacaoTransporte.TipoViagem));
-        Gerador.wCampo(tcStr, 'AP03', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
-        Gerador.wCampo(tcInt, 'AP04', 'Versao', 01, 01, 1, versao);
-//        Gerador.wCampo(tcStr, 'AP05', 'Token', 01, 01, 1, '');  //ver de que forma pegar o tocken em caso de não usar certificado
-        Gerador.wCampo(tcBoolStr, 'AP06', 'EmissaoGratuita', 01, 01, 1, CIOT.OperacaoTransporte.EmissaoGratuita);
+        GerarIdentificacao(5);
+
+        Gerador.wCampoNFSe(tcStr, 'AP02', 'TipoViagem', 01, 01, 1, TipoViagemCIOTToStr(CIOT.OperacaoTransporte.TipoViagem));
+        Gerador.wCampoNFSe(tcBoolStr, 'AP06', 'EmissaoGratuita', 01, 01, 1, CIOT.OperacaoTransporte.EmissaoGratuita);
+
         if CIOT.OperacaoTransporte.TipoViagem <> Frota then
-          Gerador.wCampo(tcStr, 'AP07', ' BloquearNaoEquiparado', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.BloquearNaoEquiparado)));
-        Gerador.wCampo(tcStr, 'AP08', 'MatrizCNPJ', 01, 14, 1, CIOT.OperacaoTransporte.MatrizCNPJ);
-        Gerador.wCampo(tcStr, 'AP09', 'FilialCNPJ', 01, 01, 1, CIOT.OperacaoTransporte.FilialCNPJ);
-        Gerador.wCampo(tcStr, 'AP10', 'IdOperacaoCliente', 01, 01, 1, CIOT.OperacaoTransporte.IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
-        if CIOT.OperacaoTransporte.TipoViagem <> TAC_Agregado then //Se TipoViagem for TAC_Agregado o campo não deve ser preenchido.
-          Gerador.wCampo(tcDat, 'AP11', 'DataInicioViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataInicioViagem)
-        else
-          Gerador.wCampo(tcStr, 'AP11', 'DataInicioViagem', 01, 01, 1, '');
-        Gerador.wCampo(tcDat, 'AP12', 'DataFimViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataFimViagem, 'Data prevista para o fim de viagem.');
+          Gerador.wCampoNFSe(tcStr, 'AP07', 'BloquearNaoEquiparado', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.BloquearNaoEquiparado, True)));
+
+        Gerador.wCampoNFSe(tcStr, 'AP08', 'MatrizCNPJ', 01, 14, 1, CIOT.OperacaoTransporte.MatrizCNPJ);
+        Gerador.wCampoNFSe(tcStr, 'AP09', 'FilialCNPJ', 01, 01, 1, CIOT.OperacaoTransporte.FilialCNPJ);
+        Gerador.wCampoNFSe(tcStr, 'AP10', 'IdOperacaoCliente', 01, 01, 0, CIOT.OperacaoTransporte.IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
+
+//        if CIOT.OperacaoTransporte.TipoViagem <> TAC_Agregado then //Se TipoViagem for TAC_Agregado o campo não deve ser preenchido.
+          Gerador.wCampoNFSe(tcDat, 'AP11', 'DataInicioViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataInicioViagem);
+//        else
+//          Gerador.wCampoNFSe(tcStr, 'AP11', 'DataInicioViagem', 01, 01, 1, '');
+
+        Gerador.wCampoNFSe(tcDat, 'AP12', 'DataFimViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataFimViagem, 'Data prevista para o fim de viagem.');
+
         case CIOT.OperacaoTransporte.TipoViagem of
-          Padrao: Gerador.wCampo(tcInt, 'AP13', 'CodigoNCMNaturezaCarga', 01, 04, 1, CIOT.OperacaoTransporte.CodigoNCMNaturezaCarga);
-          TAC_Agregado: Gerador.wCampo(tcStr, 'AP13', 'CodigoNCMNaturezaCarga', 01, 01, 1, '');
+          Padrao:
+            Gerador.wCampoNFSe(tcInt, 'AP13', 'CodigoNCMNaturezaCarga', 01, 04, 1, CIOT.OperacaoTransporte.CodigoNCMNaturezaCarga);
+//          TAC_Agregado:
+//            Gerador.wCampoNFSe(tcStr, 'AP13', 'CodigoNCMNaturezaCarga', 01, 01, 0, '');
         end;
+
         if CIOT.OperacaoTransporte.TipoViagem <> Frota then
-          Gerador.wCampo(tcDe4, 'AP14', 'PesoCarga ', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga);
+          Gerador.wCampoNFSe(tcDe4, 'AP14', 'PesoCarga', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga);
+
+        Gerador.wCampoNFSe(tcStr, 'AP15', 'TipoEmbalagem', 01, 01, 0, TipoEmbalagemCIOTToStr(CIOT.OperacaoTransporte.TipoEmbalagem));
 
         if CIOT.OperacaoTransporte.TipoViagem = Padrao then
-        begin
-          Gerador.wCampo(tcStr, 'AP15', 'TipoEmbalagem', 01, 01, 1, TipoEmbalagemCIOTToStr(CIOT.OperacaoTransporte.TipoEmbalagem));
-          //Adiciona a Viagem
           GerarViagem;
-        end;
 
         //Adiciona Impostos
         if CIOT.OperacaoTransporte.TipoViagem <> Frota then
@@ -641,258 +802,275 @@ begin
         //Informar um CIOT (se existente) que esteja relacionado à operação de transporte.
         //Por exemplo: No caso da presença de um Subcontratante na operação de transporte informar
         //o CIOT onde o Subcontratante foi o Contratado.
-        Gerador.wCampo(tcStr, 'AP203', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 1, CIOT.OperacaoTransporte.CodigoIdentificacaoOperacaoPrincipal);
+        Gerador.wCampoNFSe(tcStr, 'AP203', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 0, CIOT.OperacaoTransporte.CodigoIdentificacaoOperacaoPrincipal);
 
-        Gerador.wGrupo('ObservacoesAoTransportador', 'AP204');
-        Gerador.wCampo(tcStr, 'AP205', 'String', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoTransportador);
-        Gerador.wGrupo('/ObservacoesAoTransportador');
+        if CIOT.OperacaoTransporte.ObservacoesAoTransportador <> '' then
+        begin
+          Gerador.wGrupoNFSe('ObservacoesAoTransportador', 'AP204');
+          Gerador.wCampoNFSe(tcStr, 'AP205', 'string', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoTransportador);
+          Gerador.wGrupoNFSe('/ObservacoesAoTransportador');
+        end;
 
-        Gerador.wGrupo('ObservacoesAoCredenciado', 'AP206');
-        Gerador.wCampo(tcStr, 'AP207', 'String', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoCredenciado);
-        Gerador.wGrupo('/ObservacoesAoCredenciado');
+        if CIOT.OperacaoTransporte.ObservacoesAoCredenciado <> '' then
+        begin
+          Gerador.wGrupoNFSe('ObservacoesAoCredenciado', 'AP206');
+          Gerador.wCampoNFSe(tcStr, 'AP207', 'string', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoCredenciado);
+          Gerador.wGrupoNFSe('/ObservacoesAoCredenciado');
+        end;
 
-        Gerador.wCampo(tcStr, 'AP208', 'EntregaDocumentacao', 01, 01, 1, CIOT.OperacaoTransporte.EntregaDocumentacao);
-        Gerador.wCampo(tcInt, 'AP209', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
-        Gerador.wCampo(tcInt, 'AP210', 'QuantidadeTransferencias', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
+        Gerador.wCampoNFSe(tcStr, 'AP208', 'EntregaDocumentacao', 01, 01, 1, EntregaDocumentacaoToStr(CIOT.OperacaoTransporte.EntregaDocumentacao));
+        Gerador.wCampoNFSe(tcInt, 'AP209', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
+        Gerador.wCampoNFSe(tcInt, 'AP210', 'QuantidadeTransferencias', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
 
-        Gerador.wGrupo('/AdicionarOperacaoTransporteRequest');
+        Gerador.wCampoNFSe(tcDe2, 'AP211', 'ValorSaques', 01, 01, 1, CIOT.OperacaoTransporte.ValorSaques);
+        Gerador.wCampoNFSe(tcDe2, 'AP212', 'ValorTransferencias', 01, 01, 1, CIOT.OperacaoTransporte.ValorTransferencias);
+        Gerador.wCampoNFSe(tcInt, 'AP213', 'CodigoTipoCarga', 01, 01, 1, CIOT.OperacaoTransporte.CodigoTipoCarga);
 
-        Gerador.wGrupo('/AdicionarOperacaoTransporte');
+        Gerador.wGrupoNFSe('/AdicionarOperacaoTransporteRequest');
+
+        Gerador.Prefixo := 'pef:';
+        Gerador.wGrupoNFSe('/AdicionarOperacaoTransporte');
       end;
+
     opRetificar:
       begin
-//        Gerador.wGrupo('RetificarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'WP01');
+//        Gerador.wGrupoNFSe('RetificarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'WP01');
 //
-//        Gerador.wCampo(tcStr, 'WP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, FOperacaoTransporte.NumeroCIOT, '');
-//        Gerador.wCampo(tcInt, 'WP03', 'CodigoMunicipioDestino', 01, 07, 1, FOperacaoTransporte.Viagens.Items[0].CodigoMunicipioDestino); //0001
-//        Gerador.wCampo(tcInt, 'WP04', 'CodigoMunicipioOrigem', 01, 07, 1, FOperacaoTransporte.Viagens.Items[0].CodigoMunicipioOrigem); //0001
-//        Gerador.wCampo(tcInt, 'WP05', 'CodigoNCMNaturezaCarga', 01, 04, 1, FOperacaoTransporte.CodigoNCMNaturezaCarga); //0001
-//        Gerador.wCampo(tcDat, 'WP06', 'DataFimViagem', 01, 01, 1, FOperacaoTransporte.DataFimViagem); //0001
-//        Gerador.wCampo(tcDat, 'WP07', 'DataInicioViagem', 01, 01, 1, FOperacaoTransporte.DataInicioViagem); //0001
-//        Gerador.wCampo(tcStr, 'WP08', 'Integrador', 01, 01, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//        Gerador.wCampo(tcDe4, 'WP09', 'PesoCarga', 01, 01, 1, FOperacaoTransporte.PesoCarga); //0001
-//        Gerador.wCampo(tcStr, 'WP10', 'Token', 01, 01, 1, '');
+//        Gerador.wCampoNFSe(tcStr, 'WP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, FOperacaoTransporte.NumeroCIOT, '');
+//        Gerador.wCampoNFSe(tcInt, 'WP03', 'CodigoMunicipioDestino', 01, 07, 1, FOperacaoTransporte.Viagens.Items[0].CodigoMunicipioDestino); //0001
+//        Gerador.wCampoNFSe(tcInt, 'WP04', 'CodigoMunicipioOrigem', 01, 07, 1, FOperacaoTransporte.Viagens.Items[0].CodigoMunicipioOrigem); //0001
+//        Gerador.wCampoNFSe(tcInt, 'WP05', 'CodigoNCMNaturezaCarga', 01, 04, 1, FOperacaoTransporte.CodigoNCMNaturezaCarga); //0001
+//        Gerador.wCampoNFSe(tcDat, 'WP06', 'DataFimViagem', 01, 01, 1, FOperacaoTransporte.DataFimViagem); //0001
+//        Gerador.wCampoNFSe(tcDat, 'WP07', 'DataInicioViagem', 01, 01, 1, FOperacaoTransporte.DataInicioViagem); //0001
+//        Gerador.wCampoNFSe(tcStr, 'WP08', 'Integrador', 01, 01, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//        Gerador.wCampoNFSe(tcDe4, 'WP09', 'PesoCarga', 01, 01, 1, FOperacaoTransporte.PesoCarga); //0001
+//        Gerador.wCampoNFSe(tcStr, 'WP10', 'Token', 01, 01, 1, '');
 //
-//        Gerador.wCampo(tcStr, 'WP13', 'Versao', 001, 001, 1, 1, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//        Gerador.wCampoNFSe(tcStr, 'WP13', 'Versao', 001, 001, 1, 1, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
 //
-//        Gerador.wGrupo('Veiculos ' + NAME_SPACE_EFRETE_PEFRETIFICAR_OBJECTS, 'WP11');
+//        Gerador.wGrupoNFSe('Veiculos ' + NAME_SPACE_EFRETE_PEFRETIFICAR_OBJECTS, 'WP11');
 //        for I := 0 to FOperacaoTransporte.Veiculos.Count -1 do
 //        begin
 //          with FOperacaoTransporte.Veiculos.Items[I] do
-//            Gerador.wCampo(tcStr, 'WP12', 'Placa', 001, 001, 1, Placa, 'Placa do veículo conforme exemplo: AAA1234.');
+//            Gerador.wCampoNFSe(tcStr, 'WP12', 'Placa', 001, 001, 1, Placa, 'Placa do veículo conforme exemplo: AAA1234.');
 //        end;
-//        Gerador.wGrupo('/Veiculos');
+//        Gerador.wGrupoNFSe('/Veiculos');
 //
-//        Gerador.wGrupo('/RetificarOperacaoTransporteRequest');
+//        Gerador.wGrupoNFSe('/RetificarOperacaoTransporteRequest');
       end;
+
     opCancelar:
       begin
-        Gerador.wGrupo('CancelarOperacaoTransporteRequest', 'KP01');
-        Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
-        Gerador.wCampo(tcStr, 'KP03', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
-        Gerador.wCampo(tcStr, 'KP04', 'Motivo', 01, 01, 1, CIOT.OperacaoTransporte.Cancelamento.Motivo, '');
-//        Gerador.wCampo(tcStr, 'KP05', 'Token ', 01, 01, 1, '');
-        Gerador.wCampo(tcInt, 'KP06', 'Versao', 01, 01, 1, 1);
-        Gerador.wGrupo('/CancelarOperacaoTransporteRequest');
+        Gerador.wGrupoNFSe('CancelarOperacaoTransporteRequest', 'KP01');
+        Gerador.wCampoNFSe(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
+        Gerador.wCampoNFSe(tcStr, 'KP03', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
+        Gerador.wCampoNFSe(tcStr, 'KP04', 'Motivo', 01, 01, 1, CIOT.OperacaoTransporte.Cancelamento.Motivo, '');
+//        Gerador.wCampoNFSe(tcStr, 'KP05', 'Token ', 01, 01, 1, '');
+        Gerador.wCampoNFSe(tcInt, 'KP06', 'Versao', 01, 01, 1, 1);
+        Gerador.wGrupoNFSe('/CancelarOperacaoTransporteRequest');
       end;
+
     opAdicionarViagem:
       begin
 //        if FOperacaoTransporte.TipoViagem = TAC_Agregado then
 //        begin
-//          Gerador.wGrupo('AdicionarViagemRequest' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//          Gerador.wCampo(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'Versao', 001, 001, 1, 2, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
-//          Gerador.wGrupo('Viagens ' + NAME_SPACE_EFRETE_PEFADICIONAR_VIAGEM, '');
+//          Gerador.wGrupoNFSe('AdicionarViagemRequest' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//          Gerador.wCampoNFSe(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'Versao', 001, 001, 1, 2, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
+//          Gerador.wGrupoNFSe('Viagens ' + NAME_SPACE_EFRETE_PEFADICIONAR_VIAGEM, '');
 //
 //          for I := 0 to FOperacaoTransporte.Viagens.Count -1 do
 //          begin
-//            Gerador.wGrupo('Viagem');
+//            Gerador.wGrupoNFSe('Viagem');
 //            with FOperacaoTransporte.Viagens.Items[I] do
 //            begin
-//              Gerador.wCampo(tcInt, 'AP133', 'CodigoMunicipioDestino', 001, 007, 1, CodigoMunicipioDestino);
-//              Gerador.wCampo(tcInt, 'AP134', 'CodigoMunicipioOrigem', 001, 007, 1, CodigoMunicipioOrigem);
-//              Gerador.wCampo(tcStr, 'AP135', 'DocumentoViagem', 001, 001, 1, DocumentoViagem, 'Exemplo: CT-e / Serie, CTRC / Serie, Ordem de Serviço.');
+//              Gerador.wCampoNFSe(tcInt, 'AP133', 'CodigoMunicipioDestino', 001, 007, 1, CodigoMunicipioDestino);
+//              Gerador.wCampoNFSe(tcInt, 'AP134', 'CodigoMunicipioOrigem', 001, 007, 1, CodigoMunicipioOrigem);
+//              Gerador.wCampoNFSe(tcStr, 'AP135', 'DocumentoViagem', 001, 001, 1, DocumentoViagem, 'Exemplo: CT-e / Serie, CTRC / Serie, Ordem de Serviço.');
 //
 //              for J := 0 to NotasFiscais.Count -1 do
 //              begin
 //                with NotasFiscais.Items[J] do
 //                begin
-//                  Gerador.wGrupo('NotasFiscais');
-//                  Gerador.wCampo(tcInt, 'AP137', 'CodigoNCMNaturezaCarga', 001, 004, 1, CodigoNCMNaturezaCarga);
-//                  Gerador.wCampo(tcDat, 'AP138', 'Data', 001, 004, 1, Data);
-//                  Gerador.wCampo(tcStr, 'AP139', 'DescricaoDaMercadoria', 001, 060, 1, DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
-//                  Gerador.wCampo(tcStr, 'AP140', 'Numero', 001, 010, 1, Numero);
-//                  Gerador.wCampo(tcDe3, 'AP141', 'QuantidadeDaMercadoriaNoEmbarque', 001, 010, 1, QuantidadeDaMercadoriaNoEmbarque);
-//                  Gerador.wCampo(tcStr, 'AP142', 'Serie', 001, 001, 1, Serie);
-//                  Gerador.wCampo(tcStr, 'AP143', 'TipoDeCalculo', 001, 001, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
-//                  Gerador.wGrupo('ToleranciaDePerdaDeMercadoria', 'AP144');
-//                  Gerador.wCampo(tcStr, 'AP145', 'Tipo', 001, 001, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
-//                  Gerador.wCampo(tcDe2, 'AP146', 'Valor', 001, 001, 1, ToleranciaDePerdaDeMercadoria.Valor);
-//                  Gerador.wGrupo('/ToleranciaDePerdaDeMercadoria');
+//                  Gerador.wGrupoNFSe('NotasFiscais');
+//                  Gerador.wCampoNFSe(tcInt, 'AP137', 'CodigoNCMNaturezaCarga', 001, 004, 1, CodigoNCMNaturezaCarga);
+//                  Gerador.wCampoNFSe(tcDat, 'AP138', 'Data', 001, 004, 1, Data);
+//                  Gerador.wCampoNFSe(tcStr, 'AP139', 'DescricaoDaMercadoria', 001, 060, 1, DescricaoDaMercadoria, 'Descrição adicional ao código NCM.');
+//                  Gerador.wCampoNFSe(tcStr, 'AP140', 'Numero', 001, 010, 1, Numero);
+//                  Gerador.wCampoNFSe(tcDe3, 'AP141', 'QuantidadeDaMercadoriaNoEmbarque', 001, 010, 1, QuantidadeDaMercadoriaNoEmbarque);
+//                  Gerador.wCampoNFSe(tcStr, 'AP142', 'Serie', 001, 001, 1, Serie);
+//                  Gerador.wCampoNFSe(tcStr, 'AP143', 'TipoDeCalculo', 001, 001, 1, TpVgTipoCalculoToStr(TipoDeCalculo));
+//                  Gerador.wGrupoNFSe('ToleranciaDePerdaDeMercadoria', 'AP144');
+//                  Gerador.wCampoNFSe(tcStr, 'AP145', 'Tipo', 001, 001, 1, TpProporcaoToStr(ToleranciaDePerdaDeMercadoria.Tipo));
+//                  Gerador.wCampoNFSe(tcDe2, 'AP146', 'Valor', 001, 001, 1, ToleranciaDePerdaDeMercadoria.Valor);
+//                  Gerador.wGrupoNFSe('/ToleranciaDePerdaDeMercadoria');
 //
 //                  if DiferencaDeFrete.Tipo <> SemDiferenca then
 //                  begin
-//                    Gerador.wGrupo('DiferencaDeFrete', 'AP147');
-//                    Gerador.wCampo(tcStr, 'AP148', 'Tipo', 001, 001, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
-//                    Gerador.wCampo(tcStr, 'AP149', 'Base', 001, 001, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
-//                    Gerador.wGrupo('Tolerancia', 'AP150');
-//                    Gerador.wCampo(tcStr, 'AP151', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
-//                    Gerador.wCampo(tcDe2, 'AP152', 'Valor', 001, 001, 1, DiferencaDeFrete.Tolerancia.Valor);
-//                    Gerador.wGrupo('/Tolerancia');
-//                    Gerador.wGrupo('MargemGanho', 'AP153');
-//                    Gerador.wCampo(tcStr, 'AP154', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
-//                    Gerador.wCampo(tcDe2, 'AP155', 'Valor', 001, 001, 1, DiferencaDeFrete.MargemGanho.Valor);
-//                    Gerador.wGrupo('/MargemGanho');
-//                    Gerador.wGrupo('MargemPerda', 'AP156');
-//                    Gerador.wCampo(tcStr, 'AP157', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
-//                    Gerador.wCampo(tcDe2, 'AP158', 'Valor', 001, 001, 1, DiferencaDeFrete.MargemPerda.Valor);
-//                    Gerador.wGrupo('/MargemPerda');
-//                    Gerador.wGrupo('/DiferencaDeFrete');
+//                    Gerador.wGrupoNFSe('DiferencaDeFrete', 'AP147');
+//                    Gerador.wCampoNFSe(tcStr, 'AP148', 'Tipo', 001, 001, 1, TpDifFreteToStr(DiferencaDeFrete.Tipo));
+//                    Gerador.wCampoNFSe(tcStr, 'AP149', 'Base', 001, 001, 1, TpDiferencaFreteBCToStr(DiferencaDeFrete.Base));
+//                    Gerador.wGrupoNFSe('Tolerancia', 'AP150');
+//                    Gerador.wCampoNFSe(tcStr, 'AP151', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.Tolerancia.Tipo));
+//                    Gerador.wCampoNFSe(tcDe2, 'AP152', 'Valor', 001, 001, 1, DiferencaDeFrete.Tolerancia.Valor);
+//                    Gerador.wGrupoNFSe('/Tolerancia');
+//                    Gerador.wGrupoNFSe('MargemGanho', 'AP153');
+//                    Gerador.wCampoNFSe(tcStr, 'AP154', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.MargemGanho.Tipo));
+//                    Gerador.wCampoNFSe(tcDe2, 'AP155', 'Valor', 001, 001, 1, DiferencaDeFrete.MargemGanho.Valor);
+//                    Gerador.wGrupoNFSe('/MargemGanho');
+//                    Gerador.wGrupoNFSe('MargemPerda', 'AP156');
+//                    Gerador.wCampoNFSe(tcStr, 'AP157', 'Tipo', 001, 001, 1, TpProporcaoToStr(DiferencaDeFrete.MargemPerda.Tipo));
+//                    Gerador.wCampoNFSe(tcDe2, 'AP158', 'Valor', 001, 001, 1, DiferencaDeFrete.MargemPerda.Valor);
+//                    Gerador.wGrupoNFSe('/MargemPerda');
+//                    Gerador.wGrupoNFSe('/DiferencaDeFrete');
 //                  end;
 //
-//                  Gerador.wCampo(tcStr, 'AP159', 'UnidadeDeMedidaDaMercadoria', 001, 001, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
-//                  Gerador.wCampo(tcDe2, 'AP159', 'ValorDaMercadoriaPorUnidade', 001, 001, 1, ValorDaMercadoriaPorUnidade);
-//                  Gerador.wCampo(tcDe2, 'AP159', 'ValorDoFretePorUnidadeDeMercadoria', 001, 001, 1, ValorDoFretePorUnidadeDeMercadoria);
-//                  Gerador.wCampo(tcDe2, 'AP159', 'ValorTotal', 001, 001, 1, ValorTotal);
+//                  Gerador.wCampoNFSe(tcStr, 'AP159', 'UnidadeDeMedidaDaMercadoria', 001, 001, 1, TpUnMedMercToStr(UnidadeDeMedidaDaMercadoria));
+//                  Gerador.wCampoNFSe(tcDe2, 'AP159', 'ValorDaMercadoriaPorUnidade', 001, 001, 1, ValorDaMercadoriaPorUnidade);
+//                  Gerador.wCampoNFSe(tcDe2, 'AP159', 'ValorDoFretePorUnidadeDeMercadoria', 001, 001, 1, ValorDoFretePorUnidadeDeMercadoria);
+//                  Gerador.wCampoNFSe(tcDe2, 'AP159', 'ValorTotal', 001, 001, 1, ValorTotal);
 //
-//                  Gerador.wGrupo('/NotasFiscais');
+//                  Gerador.wGrupoNFSe('/NotasFiscais');
 //                end;
 //              end;
 //
-//              Gerador.wGrupo('Valores ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP163');
+//              Gerador.wGrupoNFSe('Valores ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP163');
 //              with Valores do
 //              begin
-//                Gerador.wCampo(tcDe2, 'AP164', 'Combustivel', 001, 001, 1, Combustivel);
-//                Gerador.wCampo(tcStr, 'AP165', 'JustificativaOutrosCreditos', 001, 001, 1, JustificativaOutrosCreditos);
-//                Gerador.wCampo(tcStr, 'AP166', 'JustificativaOutrosDebitos', 001, 001, 1, JustificativaOutrosDebitos);
-//                Gerador.wCampo(tcDe2, 'AP167', 'OutrosCreditos', 001, 001, 1, OutrosCreditos);
-//                Gerador.wCampo(tcDe2, 'AP168', 'OutrosDebitos', 001, 001, 1, OutrosDebitos);
-//                Gerador.wCampo(tcDe2, 'AP169', 'Pedagio', 001, 001, 1, Pedagio);
-//                Gerador.wCampo(tcDe2, 'AP170', 'Seguro', 001, 001, 1, Seguro);
-//                Gerador.wCampo(tcDe2, 'AP171', 'TotalDeAdiantamento', 001, 001, 1, TotalDeAdiantamento);
-//                Gerador.wCampo(tcDe2, 'AP172', 'TotalDeQuitacao', 001, 001, 1, TotalDeQuitacao);
-//                Gerador.wCampo(tcDe2, 'AP173', 'TotalOperacao', 001, 001, 1, TotalOperacao);
-//                Gerador.wCampo(tcDe2, 'AP174', 'TotalViagem', 001, 001, 1, TotalViagem);
+//                Gerador.wCampoNFSe(tcDe2, 'AP164', 'Combustivel', 001, 001, 1, Combustivel);
+//                Gerador.wCampoNFSe(tcStr, 'AP165', 'JustificativaOutrosCreditos', 001, 001, 1, JustificativaOutrosCreditos);
+//                Gerador.wCampoNFSe(tcStr, 'AP166', 'JustificativaOutrosDebitos', 001, 001, 1, JustificativaOutrosDebitos);
+//                Gerador.wCampoNFSe(tcDe2, 'AP167', 'OutrosCreditos', 001, 001, 1, OutrosCreditos);
+//                Gerador.wCampoNFSe(tcDe2, 'AP168', 'OutrosDebitos', 001, 001, 1, OutrosDebitos);
+//                Gerador.wCampoNFSe(tcDe2, 'AP169', 'Pedagio', 001, 001, 1, Pedagio);
+//                Gerador.wCampoNFSe(tcDe2, 'AP170', 'Seguro', 001, 001, 1, Seguro);
+//                Gerador.wCampoNFSe(tcDe2, 'AP171', 'TotalDeAdiantamento', 001, 001, 1, TotalDeAdiantamento);
+//                Gerador.wCampoNFSe(tcDe2, 'AP172', 'TotalDeQuitacao', 001, 001, 1, TotalDeQuitacao);
+//                Gerador.wCampoNFSe(tcDe2, 'AP173', 'TotalOperacao', 001, 001, 1, TotalOperacao);
+//                Gerador.wCampoNFSe(tcDe2, 'AP174', 'TotalViagem', 001, 001, 1, TotalViagem);
 //              end;
-//              Gerador.wGrupo('/Valores');
+//              Gerador.wGrupoNFSe('/Valores');
 //            end;
 //
-//            Gerador.wGrupo('/Viagem');
+//            Gerador.wGrupoNFSe('/Viagem');
 //          end;
 //
-//          Gerador.wGrupo('/Viagens');
+//          Gerador.wGrupoNFSe('/Viagens');
 //
-//          Gerador.wGrupo('Pagamentos ' + NAME_SPACE_EFRETE_PEFADICIONAR_VIAGEM, '');
+//          Gerador.wGrupoNFSe('Pagamentos ' + NAME_SPACE_EFRETE_PEFADICIONAR_VIAGEM, '');
 //
 //          for I := 0 to FOperacaoTransporte.Pagamentos.Count -1 do
 //          begin
 //            with FOperacaoTransporte.Pagamentos.Items[I] do
 //            begin
-//              Gerador.wGrupo('Pagamento');
-//              Gerador.wCampo(tcStr, 'AP92', 'Categoria', 001, 001, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, Quitacao, -SemCategoria ', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//              Gerador.wCampo(tcDat, 'AP93', 'DataDeLiberacao', 001, 001, 1, DataDeLiberacao);
-//              Gerador.wCampo(tcStr, 'AP94', 'Documento', 001, 020, 1, Documento, 'Documento relacionado a viagem.');
-//              Gerador.wCampo(tcStr, 'AP94', 'IdPagamentoCliente', 001, 020, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
-//              Gerador.wCampo(tcStr, 'AP95', 'InformacaoAdicional', 001, 000, 0, InformacaoAdicional, '');
+//              Gerador.wGrupoNFSe('Pagamento');
+//              Gerador.wCampoNFSe(tcStr, 'AP92', 'Categoria', 001, 001, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, Quitacao, -SemCategoria ', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//              Gerador.wCampoNFSe(tcDat, 'AP93', 'DataDeLiberacao', 001, 001, 1, DataDeLiberacao);
+//              Gerador.wCampoNFSe(tcStr, 'AP94', 'Documento', 001, 020, 1, Documento, 'Documento relacionado a viagem.');
+//              Gerador.wCampoNFSe(tcStr, 'AP94', 'IdPagamentoCliente', 001, 020, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
+//              Gerador.wCampoNFSe(tcStr, 'AP95', 'InformacaoAdicional', 001, 000, 0, InformacaoAdicional, '');
 //
-//              Gerador.wGrupo('InformacoesBancarias ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP97');
+//              Gerador.wGrupoNFSe('InformacoesBancarias ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP97');
 //              with InformacoesBancarias do
 //              begin
-//                Gerador.wCampo(tcStr, 'AP98', 'Agencia', 001, 001, 1, Agencia);
-//                Gerador.wCampo(tcStr, 'AP99', 'Conta', 001, 001, 1, Conta);
-//                Gerador.wCampo(tcStr, 'AP100', 'InstituicaoBancaria', 001, 001, 1, InstituicaoBancaria);
+//                Gerador.wCampoNFSe(tcStr, 'AP98', 'Agencia', 001, 001, 1, Agencia);
+//                Gerador.wCampoNFSe(tcStr, 'AP99', 'Conta', 001, 001, 1, Conta);
+//                Gerador.wCampoNFSe(tcStr, 'AP100', 'InstituicaoBancaria', 001, 001, 1, InstituicaoBancaria);
 //              end;
-//              Gerador.wGrupo('/InformacoesBancarias');
+//              Gerador.wGrupoNFSe('/InformacoesBancarias');
 //
-//              Gerador.wCampo(tcStr, 'AP101', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//              Gerador.wCampo(tcDe2, 'AP102', 'Valor', 001, 020, 1, Valor, 'Valor do pagamento.');
-//              Gerador.wGrupo('/Pagamento');
+//              Gerador.wCampoNFSe(tcStr, 'AP101', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//              Gerador.wCampoNFSe(tcDe2, 'AP102', 'Valor', 001, 020, 1, Valor, 'Valor do pagamento.');
+//              Gerador.wGrupoNFSe('/Pagamento');
 //            end;
 //          end;
 //
-//          Gerador.wGrupo('/Pagamentos');
+//          Gerador.wGrupoNFSe('/Pagamentos');
 //
-//          Gerador.wCampo(tcStr, '', 'NaoAdicionarParcialmente', 001, 001, 1, 'false', '');
-//          Gerador.wGrupo('/AdicionarViagemRequest');
+//          Gerador.wCampoNFSe(tcStr, '', 'NaoAdicionarParcialmente', 001, 001, 1, 'false', '');
+//          Gerador.wGrupoNFSe('/AdicionarViagemRequest');
 //        end;
       end;
+
     opAdicionarPagamento:
       begin
 //        if FOperacaoTransporte.TipoViagem = TAC_Agregado then
 //        begin
-//          Gerador.wGrupo('AdicionarPagamentoRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//          Gerador.wCampo(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'Versao', 001, 001, 1, 2, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
-//          Gerador.wGrupo('Pagamentos ' + NAME_SPACE_EFRETE_PEFADICIONAR_PAGAMENTOS, '');
+//          Gerador.wGrupoNFSe('AdicionarPagamentoRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//          Gerador.wCampoNFSe(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'Versao', 001, 001, 1, 2, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
+//          Gerador.wGrupoNFSe('Pagamentos ' + NAME_SPACE_EFRETE_PEFADICIONAR_PAGAMENTOS, '');
 //
 //          for I := 0 to FOperacaoTransporte.Pagamentos.Count -1 do
 //          begin
 //            with FOperacaoTransporte.Pagamentos.Items[I] do
 //            begin
-//              Gerador.wGrupo('Pagamento');
-//              Gerador.wCampo(tcStr, 'AP92', 'Categoria', 001, 001, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, Quitacao, -SemCategoria ', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//              Gerador.wCampo(tcDat, 'AP93', 'DataDeLiberacao', 001, 001, 1, DataDeLiberacao);
-//              Gerador.wCampo(tcStr, 'AP94', 'Documento', 001, 020, 1, Documento, 'Documento relacionado a viagem.');
-//              Gerador.wCampo(tcStr, 'AP94', 'IdPagamentoCliente', 001, 020, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
-//              Gerador.wCampo(tcStr, 'AP95', 'InformacaoAdicional', 001, 000, 0, InformacaoAdicional, '');
+//              Gerador.wGrupoNFSe('Pagamento');
+//              Gerador.wCampoNFSe(tcStr, 'AP92', 'Categoria', 001, 001, 1, TpCatPagToStr(Categoria), 'Categoria relacionada ao pagamento realizado. Restrita aos membros da ENUM: -Adiantamento, -Estadia, Quitacao, -SemCategoria ', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//              Gerador.wCampoNFSe(tcDat, 'AP93', 'DataDeLiberacao', 001, 001, 1, DataDeLiberacao);
+//              Gerador.wCampoNFSe(tcStr, 'AP94', 'Documento', 001, 020, 1, Documento, 'Documento relacionado a viagem.');
+//              Gerador.wCampoNFSe(tcStr, 'AP94', 'IdPagamentoCliente', 001, 020, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
+//              Gerador.wCampoNFSe(tcStr, 'AP95', 'InformacaoAdicional', 001, 000, 0, InformacaoAdicional, '');
 //
-//              Gerador.wGrupo('InformacoesBancarias ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP97');
+//              Gerador.wGrupoNFSe('InformacoesBancarias ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP97');
 //              with InformacoesBancarias do
 //              begin
-//                Gerador.wCampo(tcStr, 'AP98', 'Agencia', 001, 001, 1, Agencia);
-//                Gerador.wCampo(tcStr, 'AP99', 'Conta', 001, 001, 1, Conta);
-//                Gerador.wCampo(tcStr, 'AP100', 'InstituicaoBancaria', 001, 001, 1, InstituicaoBancaria);
+//                Gerador.wCampoNFSe(tcStr, 'AP98', 'Agencia', 001, 001, 1, Agencia);
+//                Gerador.wCampoNFSe(tcStr, 'AP99', 'Conta', 001, 001, 1, Conta);
+//                Gerador.wCampoNFSe(tcStr, 'AP100', 'InstituicaoBancaria', 001, 001, 1, InstituicaoBancaria);
 //              end;
-//              Gerador.wGrupo('/InformacoesBancarias');
+//              Gerador.wGrupoNFSe('/InformacoesBancarias');
 //
-//              Gerador.wCampo(tcStr, 'AP101', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//              Gerador.wCampo(tcDe2, 'AP102', 'Valor', 001, 020, 1, Valor, 'Valor do pagamento.');
-//              Gerador.wGrupo('/Pagamento');
+//              Gerador.wCampoNFSe(tcStr, 'AP101', 'TipoPagamento', 001, 020, 1, TpPagamentoToStr(TipoPagamento), 'Tipo de pagamento que será usado pelo contratante. Restrito aos itens da enum: -TransferenciaBancaria -eFRETE', ' ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//              Gerador.wCampoNFSe(tcDe2, 'AP102', 'Valor', 001, 020, 1, Valor, 'Valor do pagamento.');
+//              Gerador.wGrupoNFSe('/Pagamento');
 //            end;
 //          end;
 //
-//          Gerador.wGrupo('/Pagamentos');
-//          Gerador.wGrupo('/AdicionarPagamentoRequest');
+//          Gerador.wGrupoNFSe('/Pagamentos');
+//          Gerador.wGrupoNFSe('/AdicionarPagamentoRequest');
 //        end;
       end;
+
     opCancelarPagamento:
       begin
 //        if FOperacaoTransporte.TipoViagem = TAC_Agregado then
 //        begin
-//          Gerador.wGrupo('CancelarPagamentoRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
-//          Gerador.wCampo(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'Versao', 001, 001, 1, 1, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
-//          Gerador.wCampo(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
-//          Gerador.wCampo(tcStr, '', 'IdPagamentoCliente', 001, 020, 1, FOperacaoTransporte.Cancelamento.IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
-//          Gerador.wCampo(tcStr, 'KP04', 'Motivo', 001, 001, 1, FOperacaoTransporte.Cancelamento.Motivo, '');
-//          Gerador.wGrupo('/CancelarPagamentoRequest');
+//          Gerador.wGrupoNFSe('CancelarPagamentoRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
+//          Gerador.wCampoNFSe(tcStr, '', 'Integrador', 001, 001, 1, TAmsCIOT( FOperacaoTransporte.Owner ).Configuracoes.Integradora.Identificacao, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'Versao', 001, 001, 1, 1, '', ' ' + NAME_SPACE_EFRETE_OBJECTS);
+//          Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 001, 030, 1, FOperacaoTransporte.NumeroCIOT, '');
+//          Gerador.wCampoNFSe(tcStr, '', 'IdPagamentoCliente', 001, 020, 1, FOperacaoTransporte.Cancelamento.IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente. ');
+//          Gerador.wCampoNFSe(tcStr, 'KP04', 'Motivo', 001, 001, 1, FOperacaoTransporte.Cancelamento.Motivo, '');
+//          Gerador.wGrupoNFSe('/CancelarPagamentoRequest');
 //        end;
       end;
+
     opEncerrar:
       begin
-        Gerador.wGrupo('EncerrarOperacaoTransporteRequest', 'QP01');
+        Gerador.wGrupoNFSe('EncerrarOperacaoTransporteRequest', 'QP01');
 
-        Gerador.wCampo(tcStr, 'QP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
-        Gerador.wCampo(tcDe6, 'QP03', 'PesoCarga', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga, 'Peso da carga que foi transportado.');
+        Gerador.wCampoNFSe(tcStr, 'QP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
+        Gerador.wCampoNFSe(tcDe6, 'QP03', 'PesoCarga', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga, 'Peso da carga que foi transportado.');
 
-        Gerador.wGrupo('Impostos', 'QP04');
-        Gerador.wCampo(tcStr, 'QP05', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
-        Gerador.wCampo(tcDe2, 'QP06', 'INSS', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP07', 'IRRF', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP08', 'ISSQN', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP09', 'OutrosImpostos', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP10', 'SestSenat', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wGrupo('/Impostos');
+        Gerador.wGrupoNFSe('Impostos', 'QP04');
+        Gerador.wCampoNFSe(tcStr, 'QP05', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
+        Gerador.wCampoNFSe(tcDe2, 'QP06', 'INSS', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampoNFSe(tcDe2, 'QP07', 'IRRF', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampoNFSe(tcDe2, 'QP08', 'ISSQN', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampoNFSe(tcDe2, 'QP09', 'OutrosImpostos', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampoNFSe(tcDe2, 'QP10', 'SestSenat', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wGrupoNFSe('/Impostos');
 
-        Gerador.wCampo(tcStr, 'QP11', 'Integrador', 01, 01, 1, CIOT.Integradora.HashIntegrador);
-//        Gerador.wCampo(tcStr, 'QP12', 'Token', 01, 01, 1, '');
-        Gerador.wCampo(tcInt, 'QP13', 'Versao', 01, 01, 1, 1);
-        Gerador.wCampo(tcStr, 'QP14', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
-        Gerador.wCampo(tcStr, 'QP15', 'QuantidadeTransferencia', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
+        Gerador.wCampoNFSe(tcStr, 'QP11', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
+//        Gerador.wCampoNFSe(tcStr, 'QP12', 'Token', 01, 01, 1, '');
+        Gerador.wCampoNFSe(tcInt, 'QP13', 'Versao', 01, 01, 1, 1);
+        Gerador.wCampoNFSe(tcStr, 'QP14', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
+        Gerador.wCampoNFSe(tcStr, 'QP15', 'QuantidadeTransferencia', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
 
-        Gerador.wGrupo('/EncerrarOperacaoTransporteRequest');
+        Gerador.wGrupoNFSe('/EncerrarOperacaoTransporteRequest');
       end;
   end;
 

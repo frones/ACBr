@@ -117,9 +117,9 @@ begin
   begin
     FCIOTW.Integradora := Configuracoes.Geral.Integradora;
 
-    FCIOT.Integradora.usuario        := Configuracoes.Geral.Usuario;
-    FCIOT.Integradora.senha          := Configuracoes.Geral.Senha;
-    FCIOT.Integradora.HashIntegrador := Configuracoes.Geral.HashIntegrador;
+    FCIOT.Integradora.usuario    := Configuracoes.Geral.Usuario;
+    FCIOT.Integradora.senha      := Configuracoes.Geral.Senha;
+    FCIOT.Integradora.Integrador := Configuracoes.Geral.HashIntegrador;
   end;
 end;
 

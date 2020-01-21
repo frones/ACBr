@@ -42,18 +42,22 @@ type
 
   TIntegradora = class(TPersistent)
   private
+    FToken: string;
+    FIntegrador: string;
     FSenha: string;
-    FHashIntegrador: string;
     FUsuario: string;
+
     FIntegradora: TCIOTIntegradora;
     FOperacao: TpCIOTOperacao;
   public
     constructor Create;
   published
-    property Integradora: TCIOTIntegradora read FIntegradora write FIntegradora;
-    property HashIntegrador: string read FHashIntegrador write FHashIntegrador;
-    property Usuario: string read FUsuario write FUsuario;
+    property Token: string read FToken write FToken;
+    property Integrador: string read FIntegrador write FIntegrador;
     property Senha: string read FSenha write FSenha;
+    property Usuario: string read FUsuario write FUsuario;
+
+    property Integradora: TCIOTIntegradora read FIntegradora write FIntegradora;
     property Operacao: TpCIOTOperacao read FOperacao write FOperacao;
   end;
 
@@ -153,9 +157,12 @@ type
     FDataRetificacao: TDateTime;
     FProtocoloEncerramento: string;
     FTipoEmbalagem: TpCIOTTipoEmbalagem;
-    FEntregaDocumentacao: string;
+    FEntregaDocumentacao: TpEntregaDocumentacao;
     FQuantidadeSaques: Integer;
     FQuantidadeTransferencias: Integer;
+    FValorSaques: Double;
+    FValorTransferencias: Double;
+    FCodigoTipoCarga: Integer;
 
     FContratante: TContratante;
     FMotorista: TOptMotorista;
@@ -211,9 +218,12 @@ type
     property ObservacoesAoCredenciado: string read FObservacoesAoCredenciado write FObservacoesAoCredenciado;
     property Cancelamento: TCancelamento read FCancelamento write FCancelamento;
     property TipoEmbalagem: TpCIOTTipoEmbalagem read FTipoEmbalagem write FTipoEmbalagem;
-    property EntregaDocumentacao: string read FEntregaDocumentacao write FEntregaDocumentacao;
+    property EntregaDocumentacao: TpEntregaDocumentacao read FEntregaDocumentacao write FEntregaDocumentacao;
     property QuantidadeSaques: Integer read FQuantidadeSaques write FQuantidadeSaques;
     property QuantidadeTransferencias: Integer read FQuantidadeTransferencias write FQuantidadeTransferencias;
+    property ValorSaques: Double read FValorSaques write FValorSaques;
+    property ValorTransferencias: Double read FValorTransferencias write FValorTransferencias;
+    property CodigoTipoCarga: Integer read FCodigoTipoCarga write FCodigoTipoCarga;
 
     property NumeroCIOT: string read FNumeroCIOT write FNumeroCIOT;
     property DataRetificacao: TDateTime read FDataRetificacao write FDataRetificacao;
@@ -803,20 +813,30 @@ type
 
   TRetEnvio = class(TPersistent)
   private
-//    FHeader: THeader;
-    FCodRetorno: String;
-    FOriRetorno: String;
-    FMsgRetorno: String;
-    FDadosRet: TDadosRet;
+//    FCodRetorno: String;
+//    FOriRetorno: String;
+//    FMsgRetorno: String;
+//    FDadosRet: TDadosRet;
+
+    FVersao: Integer;
+    FSucesso: String;
+    FProtocoloServico: String;
+    FMensagem: String;
+    FCodigo: String;
   public
     constructor Create;
     destructor Destroy; override;
   published
-//    property Header: THeader     read FHeader     write FHeader;
-    property CodRetorno: String  read FCodRetorno write FCodRetorno;
-    property OriRetorno: String  read FOriRetorno write FOriRetorno;
-    property MsgRetorno: String  read FMsgRetorno write FMsgRetorno;
-    property DadosRet: TDadosRet read FDadosRet   write FDadosRet;
+//    property CodRetorno: String  read FCodRetorno write FCodRetorno;
+//    property OriRetorno: String  read FOriRetorno write FOriRetorno;
+//    property MsgRetorno: String  read FMsgRetorno write FMsgRetorno;
+//    property DadosRet: TDadosRet read FDadosRet   write FDadosRet;
+
+    property Versao: Integer  read FVersao write FVersao;
+    property Sucesso: String  read FSucesso write FSucesso;
+    property ProtocoloServico: String  read FProtocoloServico write FProtocoloServico;
+    property Mensagem: String  read FMensagem write FMensagem;
+    property Codigo: String  read FCodigo write FCodigo;
   end;
 
 implementation
@@ -840,7 +860,7 @@ begin
   FTipoEmbalagem := Nenhum;
   FIdOperacaoCliente := '';
   FObservacoesAoCredenciado := '';
-  FEntregaDocumentacao := '';
+  FEntregaDocumentacao := edRedeCredenciada;
   FQuantidadeSaques := 0;
   FQuantidadeTransferencias := 0;
 
@@ -1403,14 +1423,12 @@ end;
 
 constructor TRetEnvio.Create;
 begin
-//  FHeader := THeader.Create;  //Ver
-  FDadosRet  := TDadosRet.Create;
+//  FDadosRet  := TDadosRet.Create;
 end;
 
 destructor TRetEnvio.Destroy;
 begin
-//  FHeader.Free;
-  FDadosRet.Free;
+//  FDadosRet.Free;
 
   inherited;
 end;

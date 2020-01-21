@@ -12,7 +12,7 @@ uses
   pcnAuxiliar, pcnConversao, pcnConversaoCIOT, pcnCIOT, pcnRetEnvCIOT;
 
 const
-  CURL_WSDL = '';
+  CURL_WSDL = 'http://schemas.ipc.adm.br/efrete/pef/';
 
 type
 
@@ -126,15 +126,14 @@ begin
   inherited Create(AOwner);
 
   FPConfiguracoesCIOT := TConfiguracoesCIOT(FPConfiguracoes);
+
   FPLayout := LayCIOTOperacaoTransporte;
   FPStatus := stCIOTIdle;
 
-  FPSoapVersion := 'soap12';
   FPHeaderElement := '';
-  FPBodyElement := '';
-  FPSoapEnvelopeAtributtes := 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
-                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '+
-                              'xmlns:soap12="http://www.w3.org/2003/05/soap-envelope/"';
+  FPBodyElement   := '';
+  FPMimeType      := 'text/xml';
+  FPSoapVersion   := 'soap';
 end;
 
 procedure TCIOTWebService.Clear;
@@ -142,13 +141,14 @@ begin
   inherited Clear;
 
   FPStatus := stCIOTIdle;
-  FPMimeType := 'text/xml';
+
   FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 function TCIOTWebService.ExtrairModeloChaveAcesso(AChaveCIOT: String): String;
 begin
   AChaveCIOT := OnlyNumber(AChaveCIOT);
+
   if ValidarChave('CIOT' + AChaveCIOT) then
     Result := copy(AChaveCIOT, 21, 2)
   else
@@ -176,7 +176,7 @@ begin
   FPDadosMsg := RemoverDeclaracaoXML(FPDadosMsg);
 
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' + FPSoapEnvelopeAtributtes + '>';
-//  Texto := Texto + '<' + FPSoapVersion + ':Header/>';
+  Texto := Texto + '<' + FPSoapVersion + ':Header/>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
 //  Texto := Texto + '<' + FPBodyElement + '>';
   Texto := Texto + FPDadosMsg;
@@ -315,7 +315,7 @@ end;
 
 function TCIOTEnvioWebService.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
+  FPRetWS := SeparaDados(FPRetornoWS, FPSoapVersion + ':Body');
   Result := True;
 end;
 
@@ -394,6 +394,12 @@ var
 begin
   Servico  := 'http://schemas.ipc.adm.br/efrete/pef/';
 
+  FPSoapEnvelopeAtributtes := 'xmlns:' + FPSoapVersion +
+                              '="http://schemas.xmlsoap.org/soap/envelope/" ' +
+                              'xmlns:pef="http://schemas.ipc.adm.br/efrete/pef" ' +
+                              'xmlns:obj="http://schemas.ipc.adm.br/efrete/pef/objects" ' +
+                              'xmlns:obj1="http://schemas.ipc.adm.br/efrete/objects"';
+
   case FContratos.Items[0].CIOT.Integradora.Operacao of
     opObterPdf:           Acao := 'ObterOperacaoTransportePdf';
     opAdicionar:          Acao := 'AdicionarOperacaoTransporte';
@@ -405,8 +411,10 @@ begin
     opEncerrar:           Acao := 'EncerrarOperacaoTransporte';
   end;
 
+  FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:adic="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+
   FPServico := CURL_WSDL + Acao;
-//  FPURL := FPServico;
   FPSoapAction := Servico + Acao;
 end;
 
@@ -443,19 +451,22 @@ end;
 
 function TCIOTEnviar.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'soapenv:Body');
+  FPRetWS := SeparaDados(FPRetornoWS, 'soap:Body');
 
   RetornoEnvio.Integradora := FPConfiguracoesCIOT.Geral.Integradora;
   RetornoEnvio.Leitor.Arquivo := ParseText(FPRetWS);
   RetornoEnvio.LerXml;
 
   FPMsg := '';
-  CodRetorno := StrToInt(RetornoEnvio.RetEnvio.DadosRet.ControleNegocial.CodRetorno);
 
-  if CodRetorno <> 0 then
-    FPMsg := RetornoEnvio.RetEnvio.DadosRet.ControleNegocial.Retorno;
+  if RetornoEnvio.RetEnvio.Mensagem <> '' then
+    FPMsg := RetornoEnvio.RetEnvio.Mensagem + LineBreak +
+             RetornoEnvio.RetEnvio.Codigo
+  else
+    FPMsg := RetornoEnvio.RetEnvio.Sucesso + LineBreak +
+             RetornoEnvio.RetEnvio.ProtocoloServico;
 
-  Result := (StrToInt(RetornoEnvio.RetEnvio.CodRetorno) = 0);
+  Result := (RetornoEnvio.RetEnvio.Sucesso = 'true');
 end;
 
 end.

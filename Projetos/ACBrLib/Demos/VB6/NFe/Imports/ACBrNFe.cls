@@ -691,10 +691,6 @@ End Sub
 
 Public Sub ImprimirInutilizacaoPDF(ByVal eArquivoXml As String)
     Dim retorno   As Long
-
-    bufferLen = BUFFER_LENGTH
-    
-    buffer = String$(bufferLen, " ")
     
     retorno = NFE_ImprimirInutilizacaoPDF(eArquivoXml)
     CheckResult retorno

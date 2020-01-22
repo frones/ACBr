@@ -988,12 +988,7 @@ begin
   FPSoapEnvelopeAtributtes :=
     ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" ' +
     ' xmlns:v1="http://www.esocial.gov.br/servicos/empregador/download/solicitacao/v1_0_0"';
- {
-  if FTipoDownload = 'PorId' then
-    FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTID + '"'
-  else
-    FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes + ACBRESOCIAL_NAMESPACE_DOWEVTREC + '"';
-  }
+
   Texto := Texto + '<' + FPSoapVersion + ':Envelope ' +
     FPSoapEnvelopeAtributtes + '>';
   Texto := Texto + '<' + FPSoapVersion + ':Body>';
@@ -1012,6 +1007,7 @@ procedure TDownloadEventos.DefinirServicoEAction;
 begin
   FPServico :=
      'http://www.esocial.gov.br/servicos/empregador/download/solicitacao/v1_0_0/ServicoSolicitarDownloadEventos/SolicitarDownloadEventos' + FTipoDownload;
+
   FPSoapAction := Trim(FPServico);
 end;
 

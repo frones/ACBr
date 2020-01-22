@@ -319,19 +319,110 @@ type
     property lacRodo: TlacRodoCollection         read FlacRodo     write FlacRodo;
   end;
 
+  TCompCollectionItem = class(TObject)
+  private
+    FtpComp: TComp;
+    FvComp: Double;
+    FxComp: String;
+  public
+    property tpComp: TComp read FtpComp write FtpComp;
+    property vComp: Double read FvComp  write FvComp;
+    property xComp: String read FxComp  write FxComp;
+  end;
+
+  TCompCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TCompCollectionItem;
+    procedure SetItem(Index: Integer; Value: TCompCollectionItem);
+  public
+    function Add: TCompCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TCompCollectionItem;
+    property Items[Index: Integer]: TCompCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfPrazoCollectionItem = class(TObject)
+  private
+    FnParcela: Integer;
+    FdVenc: TDateTime;
+    FvParcela: Double;
+  public
+    property nParcela: Integer  read FnParcela   write FnParcela;
+    property dVenc: TDateTime   read FdVenc      write FdVenc;
+    property vParcela: Double   read FvParcela   write FvParcela;
+  end;
+
+  TInfPrazoCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TInfPrazoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfPrazoCollectionItem);
+  public
+    function Add: TInfPrazoCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TInfPrazoCollectionItem;
+    property Items[Index: Integer]: TInfPrazoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfBanc = class(TObject)
+  private
+    FcodBanco: String;
+    FcodAgencia: String;
+    FCNPJIPEF: String;
+  public
+    property codBanco: String   read FcodBanco   write FcodBanco;
+    property codAgencia: String read FcodAgencia write FcodAgencia;
+    property CNPJIPEF: String   read FCNPJIPEF   write FCNPJIPEF;
+  end;
+
+  TinfPagCollectionItem = class(TObject)
+  private
+    FxNome: String;
+    FCNPJCPF: String;
+    FidEstrangeiro: String;
+    FComp: TCompCollection;
+    FvContrato: Double;
+    FindPag: TIndPag;
+    FinfPrazo: TInfPrazoCollection;
+    FinfBanc: TinfBanc;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property xNome: String         read FxNome         write FxNome;
+    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
+    property Comp: TCompCollection read FComp          write FComp;
+    property vContrato: Double     read FvContrato     write FvContrato;
+    property indPag: TIndPag       read FindPag        write FindPag;
+
+    property infPrazo: TInfPrazoCollection read FinfPrazo write FinfPrazo;
+    property infBanc: TinfBanc             read FinfBanc  write FinfBanc;
+  end;
+
+  TinfPagCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TinfPagCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfPagCollectionItem);
+  public
+    function Add: TinfPagCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TinfPagCollectionItem;
+    property Items[Index: Integer]: TinfPagCollectionItem read GetItem write SetItem; default;
+  end;
+
   TinfANTT    = class(TObject)
   private
     FRNTRC: String;
     FinfCIOT: TinfCIOTCollection;
     FinfContratante: TinfContratanteCollection;
     FvalePed: TvalePed;
+    FinfPag: TinfPagCollection;
   public
     constructor Create;
     destructor Destroy; override;
+
     property RNTRC: String                             read FRNTRC          write FRNTRC;
     property infCIOT: TinfCIOTCollection               read FinfCIOT        write FinfCIOT;
     property infContratante: TinfContratanteCollection read FinfContratante write FinfContratante;
     property valePed: TvalePed                         read FvalePed        write FvalePed;
+    property infPag: TinfPagCollection                 read FinfPag         write FinfPag;
     (*
     property cInt: String                  read FcInt     write FcInt;
     property placa: String                 read Fplaca    write Fplaca;
@@ -378,9 +469,13 @@ type
 
   TinfContratanteCollectionItem = class(TObject)
   private
+    FxNome: String;
     FCNPJCPF: String;
+    FidEstrangeiro: String;
   public
-    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property xNome: String         read FxNome         write FxNome;
+    property CNPJCPF: String       read FCNPJCPF       write FCNPJCPF;
+    property idEstrangeiro: String read FidEstrangeiro write FidEstrangeiro;
   end;
 
   TveicTracao = class(TObject)
@@ -1127,6 +1222,38 @@ type
     property qrCodMDFe: String read FqrCodMDFe write FqrCodMDFe;
   end;
 
+  TinfLocal = class(TObject)
+  private
+    FCEP: Integer;
+    Flatitude: Double;
+    Flongitude: Double;
+  public
+    property CEP: Integer      read FCEP       write FCEP;
+    property latitude: Double  read Flatitude  write Flatitude;
+    property longitude: Double read Flongitude write Flongitude;
+  end;
+
+  TprodPred = class(TObject)
+  private
+    FtpCarga: TCarga;
+    FxProd: String;
+    FcEAN: String;
+    FNCM: String;
+    FinfLocalCarrega: TinfLocal;
+    FinfLocalDescarrega: TinfLocal;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property tpCarga: TCarga read FtpCarga write FtpCarga;
+    property xProd: String   read FxProd   write FxProd;
+    property cEAN: String    read FcEAN    write FcEAN;
+    property NCM: String     read FNCM     write FNCM;
+
+    property infLocalCarrega: TinfLocal    read FinfLocalCarrega    write FinfLocalCarrega;
+    property infLocalDescarrega: TinfLocal read FinfLocalDescarrega write FinfLocalDescarrega;
+  end;
+
   TMDFe = class(TObject)
   private
     FinfMDFe: TinfMDFe;
@@ -1146,6 +1273,7 @@ type
     FinfAdic: TinfAdic;
     FinfRespTec: TinfRespTec;
     FinfMDFeSupl: TinfMDFeSupl;
+    FprodPred: TprodPred;
 
     FProcMDFe: TProcMDFe;
     FSignature: TSignature;
@@ -1156,6 +1284,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+
     property infMDFe: TinfMDFe  read FinfMDFe write FinfMDFe;
     property Ide: TIde          read FIde     write FIde;
     property emit: Temit        read Femit    write Femit;
@@ -1172,8 +1301,9 @@ type
     property autXML: TautXMLCollection read FautXML  write SetautXML;
     property infAdic: TinfAdic         read FinfAdic write FinfAdic;
 
-    property infRespTec: TinfRespTec read FinfRespTec write FinfRespTec;
+    property infRespTec: TinfRespTec   read FinfRespTec  write FinfRespTec;
     property infMDFeSupl: TinfMDFeSupl read FinfMDFeSupl write FinfMDFeSupl;
+    property prodPred: TprodPred        read FprodPred    write FprodPred;
 
     property procMDFe: TProcMDFe   read FProcMDFe  write FProcMDFe;
     property signature: Tsignature read Fsignature write Fsignature;
@@ -1210,8 +1340,9 @@ begin
   FautXML  := TautXMLCollection.Create;
   FinfAdic := TinfAdic.Create;
 
-  FinfRespTec := TinfRespTec.Create;
+  FinfRespTec  := TinfRespTec.Create;
   FinfMDFeSupl := TinfMDFeSupl.Create;
+  FprodPred    := TprodPred.Create;
 
   FProcMDFe  := TProcMDFe.create;
   Fsignature := Tsignature.create;
@@ -1236,9 +1367,11 @@ begin
   FinfAdic.Free;
   FinfRespTec.Free;
   FinfMDFeSupl.Free;
+  FprodPred.Free;
 
   FProcMDFe.Free;
   Fsignature.Free;
+
   inherited;
 end;
 
@@ -2211,9 +2344,11 @@ end;
 constructor TinfANTT.Create;
 begin
   inherited Create;
+
   FinfCIOT        := TinfCIOTCollection.Create;
   FinfContratante := TinfContratanteCollection.Create;
   FvalePed        := TvalePed.Create;
+  FinfPag         := TinfPagCollection.Create;
 end;
 
 destructor TinfANTT.Destroy;
@@ -2221,6 +2356,8 @@ begin
   FinfCIOT.Free;
   FinfContratante.Free;
   FvalePed.Free;
+  FinfPag.Free;
+  
   inherited;
 end;
 
@@ -2295,6 +2432,117 @@ function TAverCollection.New: TAverCollectionItem;
 begin
   Result := TAverCollectionItem.Create;
   Self.Add(Result);
+end;
+
+{ TprodPred }
+
+constructor TprodPred.Create;
+begin
+  inherited Create;
+
+  FinfLocalCarrega    := TinfLocal.Create;
+  FinfLocalDescarrega := TinfLocal.Create;
+end;
+
+destructor TprodPred.Destroy;
+begin
+  FinfLocalCarrega.Free;
+  FinfLocalDescarrega.Free;
+
+  inherited;
+end;
+
+{ TinfPag }
+
+constructor TinfPagCollectionItem.Create;
+begin
+  inherited Create;
+
+  FComp     := TCompCollection.Create;
+  FinfPrazo := TInfPrazoCollection.Create;
+  FinfBanc  := TinfBanc.Create;
+end;
+
+destructor TinfPagCollectionItem.Destroy;
+begin
+  FComp.Free;
+  FinfPrazo.Free;
+  FinfBanc.Free;
+
+  inherited;
+end;
+
+{ TCompCollection }
+
+function TCompCollection.Add: TCompCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TCompCollection.GetItem(Index: Integer): TCompCollectionItem;
+begin
+  Result := TCompCollectionItem(inherited GetItem(Index));
+end;
+
+function TCompCollection.New: TCompCollectionItem;
+begin
+  Result := TCompCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TCompCollection.SetItem(Index: Integer;
+  Value: TCompCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfPrazoCollection }
+
+function TInfPrazoCollection.Add: TInfPrazoCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TInfPrazoCollection.GetItem(
+  Index: Integer): TInfPrazoCollectionItem;
+begin
+  Result := TInfPrazoCollectionItem(inherited GetItem(Index));
+end;
+
+function TInfPrazoCollection.New: TInfPrazoCollectionItem;
+begin
+  Result := TInfPrazoCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TInfPrazoCollection.SetItem(Index: Integer;
+  Value: TInfPrazoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfPagCollection }
+
+function TinfPagCollection.Add: TinfPagCollectionItem;
+begin
+  Result := Self.New;
+end;
+
+function TinfPagCollection.GetItem(Index: Integer): TinfPagCollectionItem;
+begin
+  Result := TinfPagCollectionItem(inherited GetItem(Index));
+end;
+
+function TinfPagCollection.New: TinfPagCollectionItem;
+begin
+  Result := TinfPagCollectionItem.Create;
+  Self.Add(Result);
+end;
+
+procedure TinfPagCollection.SetItem(Index: Integer;
+  Value: TinfPagCollectionItem);
+begin
+  inherited SetItem(Index, Value);
 end;
 
 end.

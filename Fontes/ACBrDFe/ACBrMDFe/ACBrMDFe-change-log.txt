@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2020
+-- Diversos --
+[+] Implementado os novos campos e grupos conforme consta na NT 2020/001.
+[+] Implementado o Evento de Pagamento da Operação de Transporte.
+   Por: Italo Jurisato Junior
+
 31/12/2019
 -- ACBrMDFeManifestos --
 [+] Implementado os métodos: GerarMDFeIni e GerarIni, métodos a serem utilizados 

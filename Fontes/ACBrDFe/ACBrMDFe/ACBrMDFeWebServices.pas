@@ -2048,7 +2048,7 @@ end;
 procedure TMDFeEnvEvento.DefinirDadosMsg;
 var
   EventoMDFe: TEventoMDFe;
-  I, J, F: Integer;
+  I, J, k, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   FErroValidacao: String;
   EventoEhValido: Boolean;
@@ -2112,6 +2112,53 @@ begin
               end;
             end;
           end;
+
+          tePagamentoOperacao:
+          begin
+            SchemaEventoMDFe := schevPagtoOperMDFe;
+            infEvento.detEvento.nProt := FEvento.Evento[i].InfEvento.detEvento.nProt;
+
+            infEvento.detEvento.infViagens.qtdViagens := FEvento.Evento[i].InfEvento.detEvento.infViagens.qtdViagens;
+            infEvento.detEvento.infViagens.nroViagem  := FEvento.Evento[i].InfEvento.detEvento.infViagens.nroViagem;
+
+            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag.Count - 1 do
+            begin
+              with EventoMDFe.Evento[i].InfEvento.detEvento.infPag.New do
+              begin
+                xNome         := FEvento.Evento[i].InfEvento.detEvento.infPag[j].xNome;
+                idEstrangeiro := FEvento.Evento[i].InfEvento.detEvento.infPag[j].idEstrangeiro;
+                CNPJCPF       := FEvento.Evento[i].InfEvento.detEvento.infPag[j].CNPJCPF;
+
+                for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp.Count - 1 do
+                begin
+                  EventoMDFe.Evento[i].InfEvento.detEvento.infPag[j].Comp.New;
+
+                  Comp[k].tpComp := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].tpComp;
+                  Comp[k].vComp  := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].vComp;
+                  Comp[k].xComp  := FEvento.Evento[i].InfEvento.detEvento.infPag[j].Comp[k].xComp;
+                end;
+
+                vContrato := FEvento.Evento[i].InfEvento.detEvento.infPag[j].vContrato;
+                indPag    := FEvento.Evento[i].InfEvento.detEvento.infPag[j].indPag;
+
+                if indPag = ipPrazo then
+                begin
+                  for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo.Count - 1 do
+                  begin
+                    EventoMDFe.Evento[i].InfEvento.detEvento.infPag[j].infPrazo.New;
+
+                    infPrazo[k].nParcela := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].nParcela;
+                    infPrazo[k].dVenc    := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].dVenc;
+                    infPrazo[k].vParcela := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infPrazo[k].vParcela;
+                  end;
+                end;
+
+                infBanc.CNPJIPEF   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.CNPJIPEF;
+                infBanc.codBanco   := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.codBanco;
+                infBanc.codAgencia := FEvento.Evento[i].InfEvento.detEvento.infPag[j].infBanc.codAgencia;
+              end;
+            end;
+          end;
         end;
       end;
     end;
@@ -2172,6 +2219,13 @@ begin
           AXMLEvento := '<evIncDFeMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
                           Trim(RetornarConteudoEntre(AXMLEvento, '<evIncDFeMDFe>', '</evIncDFeMDFe>')) +
                         '</evIncDFeMDFe>';
+        end;
+
+      schevPagtoOperMDFe:
+        begin
+          AXMLEvento := '<evPagtoOperMDFe xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+                          Trim(RetornarConteudoEntre(AXMLEvento, '<evPagtoOperMDFe>', '</evPagtoOperMDFe>')) +
+                        '</evPagtoOperMDFe>';
         end;
     end;
 

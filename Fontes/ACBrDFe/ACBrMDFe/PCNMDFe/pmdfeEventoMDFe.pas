@@ -45,7 +45,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao;
+  pcnAuxiliar, pcnConversao, pmdfeMDFe;
 
 type
   TInfEvento = class;
@@ -110,6 +110,16 @@ type
     property Items[Index: Integer]: TInfDocCollectionItem read GetItem write SetItem; default;
   end;
 
+  TInfViagens = class(TObject)
+  private
+    FqtdViagens: Integer;
+    FnroViagem: Integer;
+
+  public
+    property qtdViagens: Integer read FqtdViagens write FqtdViagens;
+    property nroViagem: Integer read FnroViagem write FnroViagem;
+  end;
+
   TDetEvento = class
   private
     FdescEvento: String;
@@ -124,6 +134,8 @@ type
     FcMunCarrega: Integer;
     FxMunCarrega: String;
     FinfDoc: TInfDocCollection;
+    FinfViagens: TInfViagens;
+    FinfPag: TinfPagCollection;
   public
     constructor Create;
     destructor Destroy; override;
@@ -140,6 +152,9 @@ type
     property cMunCarrega: Integer      read FcMunCarrega write FcMunCarrega;
     property xMunCarrega: String       read FxMunCarrega write FxMunCarrega;
     property infDoc: TInfDocCollection read FinfDoc      write FinfDoc;
+    // Pagamento Operação MDF-e
+    property infViagens: TInfViagens   read FinfViagens  write FinfViagens;
+    property infPag: TinfPagCollection read FinfPag      write FinfPag;
   end;
 
   { TRetInfEvento }
@@ -191,6 +206,7 @@ uses
 constructor TInfEvento.Create;
 begin
   inherited Create;
+
   FDetEvento  := TDetEvento.Create;
   FnSeqEvento := 0;
 end;
@@ -198,6 +214,7 @@ end;
 destructor TInfEvento.Destroy;
 begin
   FDetEvento.Free;
+
   inherited;
 end;
 
@@ -241,6 +258,7 @@ begin
     teMDFeCancelado2               : Desc := 'MDF-e Cancelado';
     teVistoriaSuframa              : Desc := 'Vistoria SUFRAMA';
     teConfInternalizacao           : Desc := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    tePagamentoOperacao            : Desc := 'Pagamento Operacao MDF-e';
   else
     Result := '';
   end;
@@ -260,31 +278,32 @@ end;
 function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
-    teCCe                      : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
-    teCancelamento             : Result := 'CANCELAMENTO DO MDF-e';
-    teManifDestConfirmacao     : Result := 'CONFIRMAÇÃO DA OPERAÇÃO';
-    teManifDestCiencia         : Result := 'CIÊNCIA DA OPERAÇÃO';
-    teManifDestDesconhecimento : Result := 'DESCONHECIMENTO DA OPERAÇÃO';
-    teManifDestOperNaoRealizada: Result := 'OPERAÇÃO NÃO REALIZADA';
-    teEPECNFe                  : Result := 'EPEC';
-    teEPEC                     : Result := 'EPEC';
-    teMultiModal               : Result := 'REGISTRO MULTIMODAL';
-    teRegistroPassagem         : Result := 'REGISTRO DE PASSAGEM';
-    teRegistroPassagemBRId     : Result := 'REGISTRO DE PASSAGEM BRId';
-    teEncerramento             : Result := 'ENCERRAMENTO';
-    teInclusaoCondutor         : Result := 'INCLUSAO CONDUTOR';
-    teInclusaoDFe              : Result := 'INCLUSAO DF-e';
-    teRegistroCTe              : Result := 'CT-e Autorizado para NF-e';
-    teRegistroPassagemNFeCancelado: Result := 'Registro de Passagem para NF-e Cancelado';
-    teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
-    teCTeAutorizado               : Result := 'CT-e Autorizado';
-    teCTeCancelado                : Result := 'CT-e Cancelado';
+    teCCe                          : Result := 'CARTA DE CORREÇÃO ELETRÔNICA';
+    teCancelamento                 : Result := 'CANCELAMENTO DO MDF-e';
+    teManifDestConfirmacao         : Result := 'CONFIRMAÇÃO DA OPERAÇÃO';
+    teManifDestCiencia             : Result := 'CIÊNCIA DA OPERAÇÃO';
+    teManifDestDesconhecimento     : Result := 'DESCONHECIMENTO DA OPERAÇÃO';
+    teManifDestOperNaoRealizada    : Result := 'OPERAÇÃO NÃO REALIZADA';
+    teEPECNFe                      : Result := 'EPEC';
+    teEPEC                         : Result := 'EPEC';
+    teMultiModal                   : Result := 'REGISTRO MULTIMODAL';
+    teRegistroPassagem             : Result := 'REGISTRO DE PASSAGEM';
+    teRegistroPassagemBRId         : Result := 'REGISTRO DE PASSAGEM BRId';
+    teEncerramento                 : Result := 'ENCERRAMENTO';
+    teInclusaoCondutor             : Result := 'INCLUSAO CONDUTOR';
+    teInclusaoDFe                  : Result := 'INCLUSAO DF-e';
+    teRegistroCTe                  : Result := 'CT-e Autorizado para NF-e';
+    teRegistroPassagemNFeCancelado : Result := 'Registro de Passagem para NF-e Cancelado';
+    teRegistroPassagemNFeRFID      : Result := 'Registro de Passagem para NF-e RFID';
+    teCTeAutorizado                : Result := 'CT-e Autorizado';
+    teCTeCancelado                 : Result := 'CT-e Cancelado';
     teMDFeAutorizado,
-    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado2              : Result := 'MDF-e Autorizado';
     teMDFeCancelado,
-    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
-    teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
-    teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    teMDFeCancelado2               : Result := 'MDF-e Cancelado';
+    teVistoriaSuframa              : Result := 'Vistoria SUFRAMA';
+    teConfInternalizacao           : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    tePagamentoOperacao            : Result := 'Pagamento Operacao MDF-e';
   else
     Result := 'Não Definido';
   end;
@@ -320,12 +339,16 @@ constructor TDetEvento.Create;
 begin
   inherited Create;
 
-  FinfDoc  := TInfDocCollection.Create;
+  FinfDoc     := TInfDocCollection.Create;
+  FinfViagens := TInfViagens.Create;
+  FinfPag     := TinfPagCollection.Create;
 end;
 
 destructor TDetEvento.Destroy;
 begin
   FinfDoc.Free;
+  FinfViagens.Free;
+  FinfPag.Free;
 
   inherited;
 end;

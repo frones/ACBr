@@ -62,7 +62,8 @@ type
                      schmdfeModalAereo, schmdfeModalAquaviario,
                      schmdfeModalFerroviario, schmdfeModalRodoviario,
                      schevCancMDFe, schevEncMDFe, schevIncCondutorMDFe,
-                     schdistDFeInt, schconsMDFeNaoEnc, schevInclusaoDFeMDFe);
+                     schdistDFeInt, schconsMDFeNaoEnc, schevInclusaoDFeMDFe,
+                     schevPagtoOperMDFe);
 
   TStatusACBrMDFe = (stMDFeIdle, stMDFeStatusServico, stMDFeRecepcao, stMDFeRetRecepcao,
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
@@ -71,6 +72,15 @@ type
   TTransportadorMDFe = (ttNenhum, ttETC, ttTAC, ttCTC);
 
   TRspSegMDFe = (rsEmitente, rsTomadorServico);
+
+  TCarga = (tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
+            tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
+            tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
+            tcPerigosaConteinerizada, tcPerigosaCargaGeral);
+
+  TIndPag = (ipVista, ipPrazo, ipNenhum);
+
+  TComp = (tcValePedagio, tcImpostos, tcDespesas, tcOutros);
 
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
@@ -107,6 +117,15 @@ function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
 function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
 
 function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
+
+function TCargaToStr(const t: TCarga): String;
+function StrToTCarga(out ok: Boolean; const s: String): TCarga;
+
+function TIndPagToStr(const t: TIndPag): String;
+function StrToTIndPag(out ok: Boolean; const s: String): TIndPag;
+
+function TCompToStr(const t: TComp): String;
+function StrToTComp(out ok: Boolean; const s: String): TComp;
 
 implementation
 
@@ -329,12 +348,56 @@ begin
                                   [rsEmitente, rsTomadorServico]);
 end;
 
+function TCargaToStr(const t: TCarga): String;
+begin
+  Result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08',
+                               '09', '10', '11'],
+            [tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
+             tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
+             tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
+             tcPerigosaConteinerizada, tcPerigosaCargaGeral]);
+end;
+
+function StrToTCarga(out ok: Boolean; const s: String): TCarga;
+begin
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07',
+                                   '08', '09', '10', '11'],
+            [tcGranelSolido, tcGranelLiquido, tcFrigorificada, tcConteinerizada,
+             tcCargaGeral, tcNeogranel, tcPerigosaGranelSolido,
+             tcPerigosaGranelLiquido, tcPerigosaCargaFrigorificada,
+             tcPerigosaConteinerizada, tcPerigosaCargaGeral]);
+end;
+
+function TIndPagToStr(const t: TIndPag): String;
+begin
+  Result := EnumeradoToStr(t, ['0', '1', ''],
+                              [ipVista, ipPrazo, ipNenhum]);
+end;
+
+function StrToTIndPag(out ok: Boolean; const s: String): TIndPag;
+begin
+  Result := StrToEnumerado(ok, s, ['0', '1', ''],
+                                  [ipVista, ipPrazo, ipNenhum]);
+end;
+
+function TCompToStr(const t: TComp): String;
+begin
+  Result := EnumeradoToStr(t, ['01', '02', '03', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+end;
+
+function StrToTComp(out ok: Boolean; const s: String): TComp;
+begin
+  Result := StrToEnumerado(ok, s, ['01', '02', '03', '99'],
+                             [tcValePedagio, tcImpostos, tcDespesas, tcOutros]);
+end;
+
 function StrToTpEventoMDFe(out ok: boolean; const s: string): TpcnTpEvento;
 begin
   Result := StrToEnumerado(ok, s,
-            ['-99999', '110111', '110112', '110114', '110115'],
+            ['-99999', '110111', '110112', '110114', '110115', '110116'],
             [teNaoMapeado, teCancelamento, teEncerramento, teInclusaoCondutor,
-             teInclusaoDFe]);
+             teInclusaoDFe, tePagamentoOperacao]);
 end;
 
 initialization

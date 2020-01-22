@@ -110,10 +110,23 @@ const
   DSC_NVAG        = 'Número de Identificação do vagão';
   DSC_NSEQ        = 'Sequência do vagão na composição';
   DSC_TU          = 'Tonelada Útil';
+  DSC_TPCARGA     = 'Tipo de Carga';
+  DSC_LATITUDE    = 'Latitude';
+  DSC_LONGITUDE   = 'Longitude';
+  DSC_VCONTRATO   = 'Valor do Contrato';
+  DSC_TPCOMP      = 'Tipo de Componente de Pagamento do Frete';
+  DSC_VCOMP       = 'Valor do Componente de Pagamento do Frete';
+  DSC_XCOMP       = 'Descrição do Componente de Pagamento do Frete (Outros)';
+  DSC_NPARCELA    = 'Numero da Parcela';
+  DSC_VPARCELA    = 'Valor da Parcela';
+  DSC_CNPJIPEF    = 'CNPJ da Instituição de pagamento Eletrônico do Frete';
+  DSC_CODBANCO    = 'Código do Banco';
+  DSC_CODAGENCIA  = 'Código da Agência';
 
   DSC_INDCANALVERDE = 'Indicador de Canal Verde';
   DSC_INDCARREGAPOSTERIOR = 'Indicador de Carregamento Posterior';
   DSC_INFQRCODMDFE  = 'Texto com o QR-Code impresso no DAMDFE';
+  DSC_IDESTRANGEIRO = 'Identificação do Estrangeiro';
 
 implementation
 

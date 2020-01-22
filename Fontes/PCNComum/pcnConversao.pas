@@ -113,26 +113,27 @@ type
 
   TpcteModeloNF = (moNF011AAvulsa, moNFProdutor);
 
-  TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento, teManifDestConfirmacao,
-                  teManifDestCiencia, teManifDestDesconhecimento, teManifDestOperNaoRealizada,
-                  teEncerramento, teEPEC, teInclusaoCondutor,
-                  teMultiModal, teRegistroPassagem, teRegistroPassagemBRId,
-                  teEPECNFe, teRegistroCTe, teRegistroPassagemNFeCancelado,
-                  teRegistroPassagemNFeRFID, teCTeCancelado, teMDFeCancelado,
-                  teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
-                  teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
-                  teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
-                  teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
-                  teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
-                  teNaoEmbarque, teMDFeCancelado2,teMDFeAutorizadoComCTe,
-                  teRegPasNfeProMDFe, teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte,
-                  teCancelamentoMDFeAutComCTe, teAverbacaoExportacao, teAutCteComplementar,
-                  teCancCteComplementar,teCTeSubstituicao,teCTeAnulacao,teLiberacaoEPEC,teLiberacaoPrazoCanc,
-                  teAutorizadoRedespacho,teautorizadoRedespIntermed,teAutorizadoSubcontratacao,
-                  teautorizadoServMultimodal, teCancSubst, teAlteracaoPoltrona,
-                  teComprEntrega, teCancComprEntrega, teInclusaoDFe,
-                  teAutorizadoSubstituicao, teAutorizadoAjuste, teLiberacaoPrazoCancelado,
-                  tePagamentoOperacao);
+  TpcnTpEvento = (teNaoMapeado, teCCe, teCancelamento,
+                  teManifDestConfirmacao, teManifDestCiencia, teManifDestDesconhecimento,
+                  teManifDestOperNaoRealizada, teEncerramento, teEPEC,
+                  teInclusaoCondutor, teMultiModal, teRegistroPassagem,
+                  teRegistroPassagemBRId, teEPECNFe, teRegistroCTe,
+                  teRegistroPassagemNFeCancelado, teRegistroPassagemNFeRFID, teCTeCancelado,
+                  teMDFeCancelado, teVistoriaSuframa, tePedProrrog1,
+                  tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2,
+                  teEventoFiscoPP1, teEventoFiscoPP2, teEventoFiscoCPP1,
+                  teEventoFiscoCPP2, teRegistroPassagemNFe, teConfInternalizacao,
+                  teCTeAutorizado, teMDFeAutorizado, tePrestDesacordo,
+                  teGTV, teMDFeAutorizado2, teNaoEmbarque,
+                  teMDFeCancelado2, teMDFeAutorizadoComCTe, teRegPasNfeProMDFe,
+                  teRegPasNfeProMDFeCte, teRegPasAutMDFeComCte, teCancelamentoMDFeAutComCTe,
+                  teAverbacaoExportacao, teAutCteComplementar, teCancCteComplementar,
+                  teCTeSubstituicao, teCTeAnulacao, teLiberacaoEPEC,
+                  teLiberacaoPrazoCanc, teAutorizadoRedespacho, teautorizadoRedespIntermed,
+                  teAutorizadoSubcontratacao, teautorizadoServMultimodal, teCancSubst,
+                  teAlteracaoPoltrona, teComprEntrega, teCancComprEntrega,
+                  teInclusaoDFe, teAutorizadoSubstituicao, teAutorizadoAjuste,
+                  teLiberacaoPrazoCancelado, tePagamentoOperacao);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -196,7 +197,7 @@ type
   end;
 
 const
-  TpcnTpEventoString : array[0..58] of String =('-99999', '110110', '110111',
+  TpcnTpEventoString : array[0..61] of String =('-99999', '110110', '110111',
                                                 '210200', '210210', '210220',
                                                 '210240', '110112', '110113',
                                                 '110114', '110160', '310620',
@@ -215,11 +216,13 @@ const
                                                 '240170', '440130', '440140',
                                                 '440150', '440160', '110112',
                                                 '110116', '110180', '110181',
-                                                '110115', '110116');
+                                                '110115', '240140', '240150',
+                                                '240170', '110116');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
    'PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO');
+
   DFeUFCodigo: array[0..26] of Integer =
   (12,27,16,13,29,23,53,32,52,21,51,50,31,15,25,41,26,22,33,24,43,11,14,42,35,28,17);
 

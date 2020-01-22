@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/01/2020
+-- pcnConversao --
+[+] Incluido os códigos dos eventos: teAutorizadoSubstituicao, 
+    teAutorizadoAjuste, teLiberacaoPrazoCancelado utilizados
+    pela NF3e (Nota Fiscal de Energia Elétrica Eletrônica).
+  Por: Italo Jurisato Junior
+
 16/01/2020
 -- pcnAuxiliar --
 [*] Implementação das funções: ValidarProtocolo, ValidarRecibo, ExtrairChaveMsg,

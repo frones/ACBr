@@ -1543,6 +1543,15 @@ object frmACBrMDFe: TfrmACBrMDFe
           TabOrder = 6
           OnClick = btnInclusaoDFeClick
         end
+        object btnPagOperacaoTransp: TButton
+          Left = 374
+          Top = 40
+          Width = 177
+          Height = 25
+          Caption = 'Pag. Opera'#231#227'o Transporte'
+          TabOrder = 7
+          OnClick = btnPagOperacaoTranspClick
+        end
       end
       object tsDistribuicao: TTabSheet
         Caption = 'Distribui'#231#227'o DFe'
@@ -1696,6 +1705,12 @@ object frmACBrMDFe: TfrmACBrMDFe
     MargemSuperior = 8.000000000000000000
     MargemEsquerda = 6.000000000000000000
     MargemDireita = 5.099999999999999000
+    ExpandeLogoMarcaConfig.Altura = 0
+    ExpandeLogoMarcaConfig.Esquerda = 0
+    ExpandeLogoMarcaConfig.Topo = 0
+    ExpandeLogoMarcaConfig.Largura = 0
+    ExpandeLogoMarcaConfig.Dimensionar = False
+    ExpandeLogoMarcaConfig.Esticar = True
     CasasDecimais.Formato = tdetInteger
     CasasDecimais.qCom = 2
     CasasDecimais.vUnCom = 2

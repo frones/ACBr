@@ -202,6 +202,7 @@ type
     btnInclusaoDFe: TButton;
     btnConsultarNaoEncerrados: TButton;
     ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
+    btnPagOperacaoTransp: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathMDFeClick(Sender: TObject);
@@ -258,6 +259,7 @@ type
     procedure btnConsultarNaoEncerradosClick(Sender: TObject);
     procedure btnInclusaoCondutorClick(Sender: TObject);
     procedure btnInclusaoDFeClick(Sender: TObject);
+    procedure btnPagOperacaoTranspClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -444,9 +446,100 @@ begin
     Emit.EnderEmit.fone    := edtEmitFone.Text;
     Emit.enderEmit.email   := 'endereco@provedor.com.br';
 
-    rodo.RNTRC := '12345678';
-    rodo.CIOT  := '123456789012';
+    rodo.infANTT.RNTRC := '12345678';
 
+    with rodo.infANTT.infCIOT.New do
+    begin
+      CIOT    := '123456789012';
+      CNPJCPF := edtEmitCNPJ.Text;
+    end;
+
+    with rodo.infANTT.valePed.disp.New do
+    begin
+      CNPJForn := edtEmitCNPJ.Text;
+      CNPJPg   := edtEmitCNPJ.Text;
+      nCompra  := '789';
+    end;
+
+    with rodo.infANTT.infContratante.New do
+    begin
+      CNPJCPF       := edtEmitCNPJ.Text;
+      // Campos Novos descomentar para fazer os testes
+//      idEstrangeiro := '';
+//      xNome         := 'Nome do Contatratante';
+    end;
+
+    {
+    Informações OPCIONAIS sobre o Pagamento do Frete
+    }
+    // Inicio dos Campos Novos descomentar para fazer os testes
+    (*
+    with rodo.infANTT.infPag.New do
+    begin
+      xNome         := 'Nome do Responsavel pelo Pagamento';
+      idEstrangeiro := '';
+      CNPJCPF       := edtEmitCNPJ.Text;
+
+      vContrato := 1000.00;
+      indPag    := ipPrazo;
+
+      with rodo.infANTT.infPag[0].Comp.New do
+      begin
+        tpComp := tcValePedagio;
+        vComp  := 250.00;
+        xComp  := '';
+      end;
+
+      with rodo.infANTT.infPag[0].Comp.New do
+      begin
+        tpComp := tcImpostos;
+        vComp  := 250.00;
+        xComp  := '';
+      end;
+
+      with rodo.infANTT.infPag[0].Comp.New do
+      begin
+        tpComp := tcDespesas;
+        vComp  := 250.00;
+        xComp  := '';
+      end;
+
+      with rodo.infANTT.infPag[0].Comp.New do
+      begin
+        tpComp := tcOutros;
+        vComp  := 250.00;
+        xComp  := 'Outros custos do Frete';
+      end;
+
+      if rodo.infANTT.infPag[0].indPag = ipPrazo then
+      begin
+        with rodo.infANTT.infPag[0].infPrazo.New do
+        begin
+          nParcela := 1;
+          dVenc    := StringToDateTime('10/03/2020');
+          vParcela := 500.00;
+        end;
+
+        with rodo.infANTT.infPag[0].infPrazo.New do
+        begin
+          nParcela := 2;
+          dVenc    := StringToDateTime('10/04/2020');
+          vParcela := 500.00;
+        end;
+      end;
+
+      // CNPJ da Instituição de pagamento Eletrônico do Frete
+      rodo.infANTT.infPag[0].infBanc.CNPJIPEF := '12345678000199';
+
+      if rodo.infANTT.infPag[0].infBanc.CNPJIPEF = '' then
+      begin
+        rodo.infANTT.infPag[0].infBanc.codBanco   := '001';
+        rodo.infANTT.infPag[0].infBanc.codAgencia := '00001';
+      end;
+    end;
+    *)
+
+    // Informações sobre o veiculo de tração
     rodo.veicTracao.cInt    := '001';
     rodo.veicTracao.placa   := 'ABC1234';
     rodo.veicTracao.RENAVAM := '123456789';
@@ -482,13 +575,6 @@ begin
       tpCar := tcFechada;
 
       UF := edtEmitUF.Text;
-    end;
-
-    with rodo.infANTT.valePed.disp.New do
-    begin
-      CNPJForn := '12345678000199';
-      CNPJPg   := '21543876000188';
-      nCompra  := '789';
     end;
 
     with infDoc.infMunDescarga.New do
@@ -568,6 +654,54 @@ begin
         end;
       end; // fim do with
     end;
+
+    {
+    Informações sobre o Seguro da Carga
+    }
+    if Ide.tpEmit = teTransportadora then
+    begin
+      with seg.New do
+      begin
+        respSeg := rsEmitente;
+
+        if respSeg = rsTomadorServico then
+          CNPJCPF := edtEmitCNPJ.Text; // CNPJ do Responsável pelo seguro
+
+        xSeg := 'Nome da Seguradora';
+
+        CNPJ := edtEmitCNPJ.Text; // CNPJ da Seguradora
+
+        nApol := '1234';
+
+        with aver.New do
+        begin
+          nAver := '67890';
+        end;
+      end;
+    end;
+
+    {
+    Informações OPCIONAIS sobre o produto predominante
+    }
+    // Inicio dos Campos Novos Descomentar para fazer os testes
+    (*
+    prodPred.tpCarga := tcGranelSolido;
+    prodPred.xProd   := 'Descricao do Produto';
+    prodPred.cEAN    := '78967142344650';
+    prodPred.NCM     := '01012100';
+
+    // Informações do Local de Carregamento
+    // Informar somente quando MDF-e for de carga lotação
+    prodPred.infLocalCarrega.CEP       := 14800000;
+    prodPred.infLocalCarrega.latitude  := 0;
+    prodPred.infLocalCarrega.longitude := 0;
+
+    // Informações do Local de Descarregamento
+    // Informar somente quando MDF-e for de carga lotação
+    prodPred.infLocalDescarrega.CEP       := 14800000;
+    prodPred.infLocalDescarrega.latitude  := 0;
+    prodPred.infLocalDescarrega.longitude := 0;
+    *)
 
     tot.qCTe := 2;
     tot.vCarga := 3500.00;
@@ -1320,6 +1454,136 @@ begin
         infEvento.detEvento.infDoc[0].cMunDescarga := StrToIntDef(cMunDescarrega, 0);
         infEvento.detEvento.infDoc[0].xMunDescarga := xMunDescarrega;
         infEvento.detEvento.infDoc[0].chNFe        := chaveNFe;
+      end;
+    end;
+
+    ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
+
+    MemoResp.Lines.Text := ACBrMDFe1.WebServices.EnvEvento.RetWS;
+    LoadXML(ACBrMDFe1.WebServices.EnvEvento.RetWS, WBResposta);
+  end;
+end;
+
+procedure TfrmACBrMDFe.btnPagOperacaoTranspClick(Sender: TObject);
+var
+  qtdViagens, nroViagem, xNomeContratante, idEstrang, sCNPJCPF,
+  vlrContrato, xindPag, xCNPJIPEF, xcodBanco, xcodAgencia: string;
+  ok: Boolean;
+begin
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-MDFe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+
+  qtdViagens := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                      'Quantidade de Viagens', qtdViagens)) then
+    exit;
+
+  nroViagem := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                           'Numero de Viagens', nroViagem)) then
+    exit;
+
+  xNomeContratante := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                  'Nome do Contratante', xNomeContratante)) then
+    exit;
+
+  idEstrang := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                'Identificação do Estrangeiro', idEstrang)) then
+    exit;
+
+  sCNPJCPF := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                      'CNPJ/CPF do Contratante', sCNPJCPF)) then
+    exit;
+
+  vlrContrato := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                         'Valor do Contrato', vlrContrato)) then
+    exit;
+
+  xindPag := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                  'Indicador de Pagamento (0=A Vista, 1=A Prazo)', xindPag)) then
+    exit;
+
+  xCNPJIPEF := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+        'CNPJ da Instituição de pagamento Eletrônico do Frete', xCNPJIPEF)) then
+    exit;
+
+  xcodBanco := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                             'Código do Banco', xcodBanco)) then
+    exit;
+
+  xcodAgencia := '';
+  if not(InputQuery('WebServices Eventos: Pagamento Operação Transporte',
+                                         'Código da Agência', xcodAgencia)) then
+    exit;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+
+    ACBrMDFe1.EventoMDFe.Evento.Clear;
+
+    with ACBrMDFe1.EventoMDFe.Evento.New do
+    begin
+      infEvento.chMDFe     := Copy(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 5, 44);
+      infEvento.CNPJCPF    := edtEmitCNPJ.Text;
+      infEvento.dhEvento   := now;
+      infEvento.tpEvento   := tePagamentoOperacao;
+      infEvento.nSeqEvento := 1;
+
+      infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+
+      infEvento.detEvento.infViagens.qtdViagens := StrToIntDef(qtdViagens, 0);
+      infEvento.detEvento.infViagens.nroViagem  := StrToIntDef(nroViagem, 0);
+
+      ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag.Clear;
+
+      with ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag.New do
+      begin
+        xNome         := xNomeContratante;
+        idEstrangeiro := idEstrang;
+
+        if idEstrangeiro = '' then
+          CNPJCPF := sCNPJCPF;
+
+        ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag[0].Comp.Clear;
+        with ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag[0].Comp.New do
+        begin
+          tpComp := tcValePedagio;
+          vComp  := StringToFloatDef(vlrContrato, 0);
+          xComp  := '';
+        end;
+
+        vContrato := StringToFloatDef(vlrContrato, 0);
+        indPag    := StrToTIndPag(ok, xindPag);
+
+        if indPag = ipPrazo then
+        begin
+          ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag[0].infPrazo.Clear;
+          with ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.detEvento.infPag[0].infPrazo.New do
+          begin
+            nParcela := 1;
+            dVenc    := Date + 30;
+            vParcela := StringToFloatDef(vlrContrato, 0);
+          end;
+        end;
+
+        infBanc.CNPJIPEF := xCNPJIPEF;
+
+        if infBanc.CNPJIPEF = '' then
+        begin
+          infBanc.codBanco   := xcodBanco;
+          infBanc.codAgencia := xcodAgencia;
+        end;
       end;
     end;
 

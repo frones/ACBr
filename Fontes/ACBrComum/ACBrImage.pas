@@ -195,7 +195,7 @@ begin
   PadByte := 0;
   if HasPadBits then
   begin
-    PadBits := AWidth - bWidth;
+    PadBits := Cardinal(AWidth) - bWidth;
     PadByte := 1;
     for j := 2 to PadBits do
     begin

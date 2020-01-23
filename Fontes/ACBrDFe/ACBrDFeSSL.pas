@@ -142,6 +142,7 @@ type
     destructor Destroy; override;
     procedure Clear; virtual;
 
+    function Versao: String; virtual;
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; virtual;
@@ -686,6 +687,11 @@ procedure TDFeSSLCryptClass.Clear;
 begin
   FpDadosCertificado.Clear;
   FpListaCertificados.Clear;
+end;
+
+function TDFeSSLCryptClass.Versao: String;
+begin
+  Result := '';
 end;
 
 function TDFeSSLCryptClass.CalcHash(const AStream: TStream; const Digest: TSSLDgst;

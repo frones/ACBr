@@ -68,6 +68,7 @@ type
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
 
+    function Versao: String; override;
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; override;
@@ -833,6 +834,11 @@ begin
   DescarregarCertificado;
 
   inherited Destroy;
+end;
+
+function TDFeWinCrypt.Versao: String;
+begin
+  Result := Crypt32 + ' '+ GetFileVersion(Crypt32);
 end;
 
 procedure TDFeWinCrypt.OpenSystemStore;

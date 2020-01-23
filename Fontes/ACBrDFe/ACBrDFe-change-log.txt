@@ -44,6 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2020
+-- ACBrDFeSSL --
+[+] Classe TDFeSSLCryptClass, Adicionado o método: "function Versao: String;"
+    - Retorna o número da versão da bibiolteca de Criptografia
+
+-- ACBrDFeWinCrypt, ACBrDFeOpenSSL --
+[+] Adicionado suporte ao método TDFeSSLCryptClass.Versao
+
+-- ACBrDFeOpenSSL --
+[-] Possível correção no método "GetCertExt", quando usando OpenSSL 1.1.1
+   https://www.projetoacbr.com.br/forum/topic/55859-erro-access-violation-ao-atualizar-openssl-11/
+   (por: DSA)
+
 15/01/2020
 -- ACBrDFeReport --
 [+] TACBrDFeReport, adicionada a propriedade "FormularioContinuo: Boolea default False",

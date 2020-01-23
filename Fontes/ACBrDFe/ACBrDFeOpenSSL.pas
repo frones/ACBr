@@ -69,6 +69,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
+    function Versao: String; override;
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
        const Assina: Boolean =  False): AnsiString; override;
@@ -189,7 +190,7 @@ var
 
   procedure LoadExtension;
   begin
-    ext := X509GetExt( cert, ExtPos);
+    ext := X509GetExt(cert, ExtPos);
   end;
 
   function AdjustAnsiOID(aOID: AnsiString): AnsiString;
@@ -223,17 +224,20 @@ begin
   LoadExtension;
   while (ext <> nil) do
   begin
-    prop := ext^.value;
-    propStr := PAnsiChar(prop^.data);
-    SetLength(propStr, prop^.length);
-    P := pos(FlagExt, propStr);
-    if P > 0 then
+    prop := X509ExtensionGetData(ext);
+    if Assigned(prop) then
     begin
-      Result := AdjustOID( AnsiString( copy(propStr,P+Length(FlagExt),Length(propStr))));
-      exit;
+      propStr := PAnsiChar(prop^.data);
+      SetLength(propStr, prop^.length);
+      P := pos(FlagExt, propStr);
+      if P > 0 then
+      begin
+        Result := AdjustOID( AnsiString( copy(propStr,P+Length(FlagExt),Length(propStr))));
+        exit;
+      end;
     end;
 
-    inc( ExtPos );
+    inc(ExtPos);
     LoadExtension;
   end;
 end;
@@ -325,6 +329,11 @@ begin
   inherited Clear;
   FVersion := '';
   FOldVersion := False;
+end;
+
+function TDFeOpenSSL.Versao: String;
+begin
+  Result := OpenSSLVersion;
 end;
 
 procedure TDFeOpenSSL.DestroyKey;
@@ -529,7 +538,6 @@ begin
       VersaoStr := OpenSSLExt.OpenSSLVersion(0);
 
       P1 := pos(' ', VersaoStr);
-      P2 := Length(VersaoStr);
       if P1 > 0 then
       begin
         P2 := PosEx(' ', VersaoStr, P1+1 );

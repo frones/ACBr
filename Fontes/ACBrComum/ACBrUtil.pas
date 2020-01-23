@@ -119,7 +119,7 @@ function SeparaDados(const AString: String; const Chave: String; const MantemCha
 function SeparaDadosArray(const AArray: Array of String; const AString: String; const MantemChave: Boolean = False;
   const PermitePrefixo: Boolean = True) : String;
 function RetornarConteudoEntre(const Frase, Inicio, Fim: String; IncluiInicioFim: Boolean = False): string;
-procedure EncontrarInicioFinalTag(const aText, ATag: ansistring;
+procedure EncontrarInicioFinalTag(const aText, ATag: String;
   var PosIni, PosFim: integer;const PosOffset: integer = 0);
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
@@ -177,8 +177,8 @@ Function AsciiToHex(const ABinaryString: AnsiString): String;
 function TryHexToAscii(const HextStr: String; out Value: AnsiString): Boolean;
 function HexToAsciiDef(const HexStr: String; const Default: AnsiString): AnsiString;
 
-function BinaryStringToString(const AString: AnsiString): AnsiString;
-function StringToBinaryString(const AString: AnsiString): AnsiString;
+function BinaryStringToString(const AString: AnsiString): String;
+function StringToBinaryString(const AString: String): AnsiString;
 
 function PadRight(const AString : String; const nLen : Integer;
    const Caracter : Char = ' ') : String;
@@ -225,7 +225,7 @@ function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True
 function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
 function RPos(const aSubStr, aString : AnsiString; const aStartPos: Integer): Integer; overload;
 function RPos(const aSubStr, aString : AnsiString): Integer; overload;
-function PosLast(const SubStr, S: AnsiString): Integer;
+function PosLast(const SubStr, S: String): Integer;
 function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
@@ -381,7 +381,7 @@ function IsWorkingDay(ADate: TDateTime): Boolean;
 function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
 function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
-procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString; AMemIni: TMemIniFile);
+procedure LerIniArquivoOuString(const IniArquivoOuString: String; AMemIni: TMemIniFile);
 function StringIsINI(const AString: String): Boolean;
 function StringIsAFile(const AString: String): Boolean;
 function StringIsXML(const AString: String): Boolean;
@@ -402,6 +402,7 @@ procedure LoadInpOut;
 procedure LoadBlockInput;
 
 function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
+function GetFileVersion(AFile: String): String;
 
 {$ENDIF}
 
@@ -576,7 +577,7 @@ begin
    {$EndIf}
 
    if Result = '' then 
-     Result := AUTF8String;
+     Result := String(AUTF8String);
   {$EndIf}
 end;
 
@@ -1566,7 +1567,7 @@ end;
 {-----------------------------------------------------------------------------
   Acha a Ultima "Ocorrencia" de "SubStr" em "S"
  ---------------------------------------------------------------------------- }
-function PosLast(const SubStr, S: AnsiString ): Integer;
+function PosLast(const SubStr, S: String ): Integer;
 Var P : Integer ;
 begin
   Result := 0 ;
@@ -1574,7 +1575,7 @@ begin
   while P <> 0 do
   begin
      Result := P ;
-     P := PosEx( String(SubStr), String(S), P+1) ;
+     P := PosEx( SubStr, S, P+1) ;
   end ;
 end ;
 
@@ -2422,7 +2423,7 @@ begin
   if Result = '' then
   begin
     if PadLinhas then
-      Result := Space(Colunas) + #10
+      Result := AnsiString(Space(Colunas)) + #10
     else
       Result := #10;
   end;
@@ -2585,7 +2586,7 @@ end;
  ASCII 127), de <AString> por sua representação em HEXA. (\xNN)
  Use StringToBinaryString para Converter para o valor original.
  ---------------------------------------------------------------------------- }
-function BinaryStringToString(const AString: AnsiString): AnsiString;
+function BinaryStringToString(const AString: AnsiString): String;
 var
    ASC : Integer;
    I, N : Integer;
@@ -2596,9 +2597,9 @@ begin
   begin
      ASC := Ord(AString[I]) ;
      if (ASC < 32) or (ASC > 127) then
-        Result := Result + AnsiString('\x'+Trim(IntToHex(ASC,2)))
+        Result := Result + '\x'+Trim(IntToHex(ASC,2))
      else
-        Result := Result + AString[I] ;
+        Result := Result + Char(AString[I]) ;
   end ;
 end ;
 
@@ -2607,13 +2608,13 @@ end ;
  é o valor em Hexa)).
  Retornana o Estado original, AString de BinaryStringToString.
  ---------------------------------------------------------------------------- }
-function StringToBinaryString(const AString: AnsiString): AnsiString;
+function StringToBinaryString(const AString: String): AnsiString;
 var
    P, I : LongInt;
    Hex : String;
    CharHex : AnsiString;
 begin
-  Result := AString ;
+  Result := AnsiString(AString);
 
   P := pos('\x',String(Result)) ;
   while P > 0 do
@@ -2628,7 +2629,7 @@ begin
           CharHex := ' ' ;
        end ;
 
-       Result := ReplaceString(Result, '\x'+Hex, String(CharHex) );
+       Result := ReplaceString(Result, AnsiString('\x'+Hex), CharHex );
        I := 1;
      end
      else
@@ -3270,7 +3271,7 @@ end ;
  end;
 {$Else}
  begin
-   FlushToDisk(sFile);
+   Result := FlushToDisk(sFile);
  end ;
 {$EndIf}
 
@@ -3429,6 +3430,7 @@ function ForceForeground(AppHandle: {$IfDef FPC}LCLType.HWND{$Else}THandle{$EndI
 begin
   {$IfDef FMX}
     Application.MainForm.BringToFront;
+    Result := True;
   {$Else}
     Application.Restore;
     Application.BringToFront;
@@ -4050,7 +4052,7 @@ end;
 {------------------------------------------------------------------------------
    Retorna a posição inicial e final da Tag do XML
  ------------------------------------------------------------------------------}
-procedure EncontrarInicioFinalTag(const aText, ATag: ansistring;
+procedure EncontrarInicioFinalTag(const aText, ATag: String;
   var PosIni, PosFim: integer; const PosOffset: integer = 0);
 begin
   PosFim := 0;
@@ -4079,7 +4081,7 @@ var
   function InternalStringReplace(const S, OldPatern, NewPattern: String ): String;
   begin
     if pos(OldPatern, S) > 0 then
-      Result := FastStringReplace(AnsiString(S), AnsiString(OldPatern), AnsiString(ACBrStr(NewPattern)), [rfReplaceAll])
+      Result := FastStringReplace(S, OldPatern, ACBrStr(NewPattern), [rfReplaceAll])
     else
       Result := S;
   end;
@@ -4272,7 +4274,7 @@ end;
    Valida se é um arquivo válido para carregar em um MenIniFile, caso contrário
    adiciona a String convertendo representações em Hexa.
  ------------------------------------------------------------------------------}
-procedure LerIniArquivoOuString(const IniArquivoOuString: AnsiString;
+procedure LerIniArquivoOuString(const IniArquivoOuString: String;
   AMemIni: TMemIniFile);
 var
   SL: TStringList;
@@ -4280,7 +4282,7 @@ begin
   SL := TStringList.Create;
   try
     if StringIsINI(IniArquivoOuString) then
-      SL.Text := StringToBinaryString( IniArquivoOuString )
+      SL.Text := String(StringToBinaryString( IniArquivoOuString ))
     else
     begin
       if not StringIsAFile(IniArquivoOuString) then
@@ -4439,6 +4441,41 @@ begin
 
   Result := IntToHex(WinErro, 8);
 end;
+
+function GetFileVersion(AFile: String): String;
+var
+  Major, Minor, Release, Build: Integer;
+  Zero, VersionInfoSize: DWORD;
+  PVersionData: Pointer;
+  lplBuffer: PVSFixedFileInfo;
+  puLen: Cardinal;
+begin
+  // http://www.planetadelphi.com.br/dica/688/pega-informacoes-de-versao-de-qualquer-exe-ou-dll
+  Result := '';
+  Zero := 0;
+  VersionInfoSize := GetFileVersionInfoSize(PChar(AFile), Zero);
+  if VersionInfoSize = 0 then
+     exit;
+  PVersionData := AllocMem(VersionInfoSize);
+  try
+    if GetFileVersionInfo(PChar(AFile), 0, VersionInfoSize, PVersionData) then
+    begin
+      lplBuffer := nil;
+      puLen := 0;
+      if VerQueryValue(PVersionData, '', pointer(lplBuffer), puLen) then
+      begin
+        Major   := HIWORD(lplBuffer^.dwFileVersionMS);
+        Minor   := LOWORD(lplBuffer^.dwFileVersionMS);
+        Release := HIWORD(lplBuffer^.dwFileVersionLS);
+        Build   := LOWORD(lplBuffer^.dwFileVersionLS);
+        Result  := IntToStr(Major)+'.'+IntToStr(Minor)+'.'+IntToStr(Release)+'.'+IntToStr(Build);
+      end;
+    end;
+  finally
+    FreeMem(PVersionData);
+  end;
+end;
+
 {$ENDIF}
 
 initialization

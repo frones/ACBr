@@ -37,6 +37,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/01/2020
+-- ACBrUtil --
+[*] Revisão de alguns métodos que usavam AnsiString desnecessáriamente
+[*] Otimização e remoção de Hints
+[+] Adicionado o método: function GetFileVersion(AFile: String): String;
+
+-- ACBrImage --
+[*] Otimização e remoção de Hints
+    (por: DSA)
+
 Data: 26/12/2019
 -- ACBrUtil, ACBrBase, ACBr.inc, ACBrImage --
 [*] Ajustes para compilação em FMX, Linux

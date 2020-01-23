@@ -45,7 +45,7 @@ type
   { TACBrBancoUnicredSC }
 
   TACBrBancoUnicredSC = class(TACBrBancoUnicredRS)
-  private
+  protected
     function DefineEspecieDoc(const ACBrTitulo: TACBrTitulo): String;
     function DefineCampoLivreCodigoBarras(const ACBrTitulo: TACBrTitulo):String; override;
 

@@ -49,7 +49,7 @@ type
     function CodMultaToStr(const pCodigoMulta : TACBrCodigoMulta): String;
     function CodJurosToStr(const pCodigoJuros : TACBrCodigoJuros; ValorMoraJuros : Currency): String;
     function CodDescontoToStr(const pCodigoDesconto : TACBrCodigoDesconto): String;
-
+  protected
     function DefineNumeroDocumentoModulo(const ACBrTitulo: TACBrTitulo): String; override;
   public
     Constructor create(AOwner: TACBrBanco);

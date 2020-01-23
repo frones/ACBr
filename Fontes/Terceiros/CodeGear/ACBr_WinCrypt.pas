@@ -75,6 +75,12 @@ interface
 uses
   Types, Windows, Messages, ACBr_BCrypt, ACBr_NCrypt;
 
+const
+  Crypt32 = 'crypt32.dll';
+  CryptNet = 'cryptnet.dll';
+  Advapi32 = 'advapi32.dll';
+  cryptuiapi = 'cryptui.dll';
+
 {$HPPEMIT '#include <wincrypt.h>'}
 
 //
@@ -20932,12 +20938,6 @@ implementation
 
 uses
   ShellAPI;
-
-const
-  Crypt32 = 'crypt32.dll';
-  CryptNet = 'cryptnet.dll';
-  Advapi32 = 'advapi32.dll';
-  cryptuiapi = 'cryptui.dll';
 
 { Macro functions }
 

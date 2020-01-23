@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/01/2020
+-- ACBrEAD --
+[*] Otimização e remoção de Hints
+
+-- OpenSSLExt --
+[+] Adicionado o método: function X509ExtensionGetData(ext: pX509_EXTENSION): pASN1_STRING;
+    (por: DSA)
+
 09/01/2020
 -- libeay32 --
 [-] Unit Removida, pois agora Delphi e Lazarus usam OpenSSLExt.pas

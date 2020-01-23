@@ -505,7 +505,6 @@ begin
       VersaoStr := OpenSSLExt.OpenSSLVersion(0);
 
       P1 := pos(' ', VersaoStr);
-      P2 := Length(VersaoStr);
       if P1 > 0 then
       begin
         P2 := PosEx(' ', VersaoStr, P1+1 );

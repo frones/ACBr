@@ -1207,6 +1207,7 @@ var
   function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509GetSerialNumber(x: PX509): PASN1_cInt;
   function X509GetExt(x: PX509; loc: integer): pX509_EXTENSION;
+  function X509ExtensionGetData(ext: pX509_EXTENSION): pASN1_STRING;
   function EvpPkeyNew: PEVP_PKEY;
   procedure EvpPkeyFree(pk: PEVP_PKEY);
   function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
@@ -1707,6 +1708,7 @@ type
   TX509SetNotAfter = function(x: PX509; tm: PASN1_UTCTIME): cInt; cdecl;
   TX509GetSerialNumber = function(x: PX509): PASN1_cInt; cdecl;
   TX509GetExt = function(x: PX509; loc: integer): pX509_EXTENSION; cdecl;
+  TX509ExtensionGetData = function (ext: pX509_EXTENSION): pASN1_STRING cdecl;
   TEvpPkeyNew = function: PEVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: PEVP_PKEY); cdecl;
   TEvpPkeyAssign = function(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt; cdecl;
@@ -1962,6 +1964,7 @@ var
   _X509SetNotAfter: TX509SetNotAfter = nil;
   _X509GetSerialNumber: TX509GetSerialNumber = nil;
   _X509GetExt: TX509GetExt = nil;
+  _X509ExtensionGetData: TX509ExtensionGetData = nil;
   _EvpPkeyNew: TEvpPkeyNew = nil;
   _EvpPkeyFree: TEvpPkeyFree = nil;
   _EvpPkeyAssign: TEvpPkeyAssign = nil;
@@ -3076,7 +3079,7 @@ end;
 function X509GetNotAfter(x: pX509): pASN1_TIME;
 begin
   Result := Nil;
-  if not InitSSLInterface or (not Assigned(x)) then
+  if (not InitSSLInterface) or (not Assigned(x)) then
     Exit;
 
   if Assigned(_X509GetNotAfter) then
@@ -3147,6 +3150,18 @@ begin
     Result := _X509GetExt(x, loc)
   else
     Result := nil;
+end;
+
+function X509ExtensionGetData(ext: pX509_EXTENSION): pASN1_STRING;
+begin
+  Result := Nil;
+  if (not InitSSLInterface) or (not Assigned(ext)) then
+    Exit;
+
+  if Assigned(_X509ExtensionGetData) then
+    Result := _X509ExtensionGetData(ext)
+  else
+    Result := ext^.value;
 end;
 
 // 3DES functions
@@ -5106,6 +5121,7 @@ begin
   _X509SetNotAfter := GetProcAddr(SSLUtilHandle, 'X509_set1_notAfter');
   _X509GetSerialNumber := GetProcAddr(SSLUtilHandle, 'X509_get_serialNumber');
   _X509GetExt := GetProcAddr(SSLUtilHandle, 'X509_get_ext');
+  _X509ExtensionGetData := GetProcAddr(SSLUtilHandle, 'X509_EXTENSION_get_data');
   _EvpPkeyNew := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_new');
   _EvpPkeyFree := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_free');
   _EvpPkeyAssign := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_assign');
@@ -5608,6 +5624,7 @@ begin
   _X509SetNotAfter := nil;
   _X509GetSerialNumber := nil;
   _X509GetExt := nil;
+  _X509ExtensionGetData := nil;
   _EvpPkeyNew := nil;
   _EvpPkeyFree := nil;
   _EvpPkeyAssign := nil;

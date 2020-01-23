@@ -1200,8 +1200,9 @@ begin
     (*Y10*)NFe.Cobr.Dup[i].vDup := LerCampo(tcDe2, 'vDup');
   end;
 
-  if (ID = 'YA01') or (ID = 'YA04') then
+  if (ID = 'YA') or (ID = 'YA01') or (ID = 'YA04') then
   begin
+
     if ID = 'YA01' then
     begin
       NFe.pag.New;
@@ -1219,6 +1220,19 @@ begin
       (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, LerCampo(tcStr, 'tBand'));
       (*YA07*)NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');
     end;
+
+    if ID = 'YA' then
+    begin
+      NFe.pag.New;
+      i := NFe.pag.Count - 1;
+      (*YA02*)NFe.pag[i].tPag :=  StrToFormaPagamento(ok, LerCampo(tcStr, 'tPag'));
+      (*YA03*)NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
+      (*YA04a*)NFe.pag[i].tpIntegra := StrTotpIntegra(ok, LerCampo(tcStr, 'card'));
+      (*YA05*)NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');
+      (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, LerCampo(tcStr, 'tBand'));
+      (*YA07*)NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');
+    end;
+
   end;
 
   if ID = 'YA09' then

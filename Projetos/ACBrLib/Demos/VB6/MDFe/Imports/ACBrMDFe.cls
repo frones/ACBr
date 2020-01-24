@@ -16,90 +16,90 @@ Option Explicit
 Const BUFFER_LENGTH As Long = 1024
                                 
 Private Declare Function MDFE_Inicializar _
-                Lib "ACBrMDFe32.dll" (ByVal eArqConfig As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function MDFE_Finalizar Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_Finalizar Lib "ACBrMDFE32.dll" () As Long
 
 Private Declare Function MDFE_Nome _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function MDFE_Versao _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function MDFE_UltimoRetorno _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function MDFE_ConfigLer _
-                Lib "ACBrMDFe32.dll" (ByVal eArqConfig As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArqConfig As String) As Long
 
 Private Declare Function MDFE_ConfigGravar _
-                Lib "ACBrMDFe32.dll" (ByVal eArqConfig As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArqConfig As String) As Long
                    
 Private Declare Function MDFE_ConfigLerValor _
-                Lib "ACBrMDFe32.dll" (ByVal eSessao As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function MDFE_ConfigGravarValor _
-                Lib "ACBrMDFe32.dll" (ByVal eSessao As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal valor As String) As Long
                                       
 Private Declare Function MDFE_CarregarXML _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoOuXml As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoOuXml As String) As Long
                 
 Private Declare Function MDFE_CarregarINI _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoOuIni As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoOuIni As String) As Long
                 
 Private Declare Function MDFE_ObterXml _
-                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal AIndex As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_GravarXml _
-                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
                                      
 Private Declare Function MDFE_ObterIni _
-                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal AIndex As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_GravarIni _
-                Lib "ACBrMDFe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
                 
 Private Declare Function MDFE_CarregarEventoXML _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoOuXml As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoOuXml As String) As Long
                 
 Private Declare Function MDFE_CarregarEventoINI _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoOuIni As String) As Long
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoOuIni As String) As Long
                 
-Private Declare Function MDFE_LimparLista Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_LimparLista Lib "ACBrMDFE32.dll" () As Long
 
-Private Declare Function MDFE_LimparListaEventos Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_LimparListaEventos Lib "ACBrMDFE32.dll" () As Long
 
-Private Declare Function MDFE_Assinar Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_Assinar Lib "ACBrMDFE32.dll" () As Long
 
-Private Declare Function MDFE_Validar Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_Validar Lib "ACBrMDFE32.dll" () As Long
 
 Private Declare Function MDFE_ValidarRegrasdeNegocios _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_VerificarAssinatura _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_GerarChave _
-                Lib "ACBrMDFe32.dll" (ByVal ACodigoUF As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal ACodigoUF As Long, _
                                      ByVal ACodigoNumerico As Long, _
                                      ByVal AModelo As Long, _
                                      ByVal ASerie As Long, _
@@ -111,32 +111,42 @@ Private Declare Function MDFE_GerarChave _
                                      ByRef bufferLen As Long) As Long
                                      
 Private Declare Function MDFE_ObterCertificados _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function MDFE_GetPath _
+                Lib "ACBrMDFE32.dll" (ByVal tipo As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function MDFE_GetPathEvento _
+                Lib "ACBrMDFE32.dll" (ByVal aCodEvento As String, _
+                                     ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                     
 Private Declare Function MDFE_StatusServico _
-                Lib "ACBrMDFe32.dll" (ByVal buffer As String, _
+                Lib "ACBrMDFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_Consultar _
-                Lib "ACBrMDFe32.dll" (ByVal eChaveOuNFe As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eChaveOuNFe As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_Enviar _
-                Lib "ACBrMDFe32.dll" (ByVal aLote As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal aLote As Long, _
                                      ByVal Imprimir As Boolean, _
                                      ByVal sincrono As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_ConsultarRecibo _
-                Lib "ACBrMDFe32.dll" (ByVal aRecibo As String, _
+                Lib "ACBrMDFE32.dll" (ByVal aRecibo As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_Cancelar _
-                Lib "ACBrMDFe32.dll" (ByVal eChave As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eChave As String, _
                                      ByVal eJustificativa As String, _
                                      ByVal eCNPJ As String, _
                                      ByVal aLote As Long, _
@@ -144,33 +154,33 @@ Private Declare Function MDFE_Cancelar _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_EnviarEvento _
-                Lib "ACBrMDFe32.dll" (ByVal aLote As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal aLote As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_DistribuicaoDFePorUltNSU _
-                Lib "ACBrMDFe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal eultNsu As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_DistribuicaoDFePorNSU _
-                Lib "ACBrMDFe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal eNsu As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_DistribuicaoDFePorChave _
-                Lib "ACBrMDFe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal echNFe As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function MDFE_EnviarEmail _
-                Lib "ACBrMDFe32.dll" (ByVal ePara As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal ePara As Long, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -179,7 +189,7 @@ Private Declare Function MDFE_EnviarEmail _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function MDFE_EnviarEmailEvento _
-                Lib "ACBrMDFe32.dll" (ByVal ePara As Long, _
+                Lib "ACBrMDFE32.dll" (ByVal ePara As Long, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -188,19 +198,19 @@ Private Declare Function MDFE_EnviarEmailEvento _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function MDFE_Imprimir _
-                Lib "ACBrMDFe32.dll" (ByVal cImpressora As String, _
+                Lib "ACBrMDFE32.dll" (ByVal cImpressora As String, _
                                      ByVal nNumCopias As Long, _
                                      ByVal cProtocolo As String, _
                                      ByVal bMostrarPreview As String) As Long
                                      
-Private Declare Function MDFE_ImprimirPDF Lib "ACBrMDFe32.dll" () As Long
+Private Declare Function MDFE_ImprimirPDF Lib "ACBrMDFE32.dll" () As Long
 
 Private Declare Function MDFE_ImprimirEvento _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoXmlNFe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
                                      
 Private Declare Function MDFE_ImprimirEventoPDF _
-                Lib "ACBrMDFe32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrMDFE32.dll" (ByVal eArquivoXmlNFe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
 
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
@@ -445,6 +455,34 @@ Public Function ObterCertificados() As String()
     CheckResult retorno
     
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
+End Function
+
+Public Function GetPath(ByVal tipo As Long) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_GetPath(tipo, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPath = processResult(buffer, bufferLen)
+End Function
+
+Public Function GetPathEvento(ByVal aCodEvento As String) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = MDFE_GetPathEvento(aCodEvento, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPathEvento = processResult(buffer, bufferLen)
 End Function
 
 Public Function StatusServico() As String

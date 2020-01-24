@@ -1,4 +1,4 @@
-#include 'acbrlib.ch'
+#include '..\Comum\acbrlib.ch'
 
 #ifdef __PLATFORM__WINDOWS
    #define ACBrLIB 'ACBrSAT32.dll'

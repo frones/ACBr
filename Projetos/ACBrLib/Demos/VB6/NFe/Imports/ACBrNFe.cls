@@ -114,6 +114,16 @@ Private Declare Function NFE_ObterCertificados _
                 Lib "ACBrNFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
+Private Declare Function NFE_GetPath _
+                Lib "ACBrNFE32.dll" (ByVal tipo As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function NFE_GetPathEvento _
+                Lib "ACBrNFE32.dll" (ByVal aCodEvento As String, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
 Private Declare Function NFE_StatusServico _
                 Lib "ACBrNFE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
@@ -472,6 +482,34 @@ Public Function ObterCertificados() As String()
     CheckResult retorno
     
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
+End Function
+
+Public Function GetPath(ByVal tipo As Long) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_GetPath(tipo, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPath = processResult(buffer, bufferLen)
+End Function
+
+Public Function GetPathEvento(ByVal aCodEvento As String) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = NFE_GetPathEvento(aCodEvento, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPathEvento = processResult(buffer, bufferLen)
 End Function
 
 Public Function StatusServico() As String

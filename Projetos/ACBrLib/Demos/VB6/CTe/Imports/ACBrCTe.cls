@@ -16,90 +16,90 @@ Option Explicit
 Const BUFFER_LENGTH As Long = 1024
                                 
 Private Declare Function CTE_Inicializar _
-                Lib "ACBrCTe32.dll" (ByVal eArqConfig As String, _
+                Lib "ACBrCTE32.dll" (ByVal eArqConfig As String, _
                                       ByVal eChaveCrypt As String) As Long
                    
-Private Declare Function CTE_Finalizar Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_Finalizar Lib "ACBrCTE32.dll" () As Long
 
 Private Declare Function CTE_Nome _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function CTE_Versao _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function CTE_UltimoRetorno _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
                    
 Private Declare Function CTE_ConfigLer _
-                Lib "ACBrCTe32.dll" (ByVal eArqConfig As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArqConfig As String) As Long
 
 Private Declare Function CTE_ConfigGravar _
-                Lib "ACBrCTe32.dll" (ByVal eArqConfig As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArqConfig As String) As Long
                    
 Private Declare Function CTE_ConfigLerValor _
-                Lib "ACBrCTe32.dll" (ByVal eSessao As String, _
+                Lib "ACBrCTE32.dll" (ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal buffer As String, _
                                       ByRef bufferLen As Long) As Long
 
 Private Declare Function CTE_ConfigGravarValor _
-                Lib "ACBrCTe32.dll" (ByVal eSessao As String, _
+                Lib "ACBrCTE32.dll" (ByVal eSessao As String, _
                                       ByVal eChave As String, _
                                       ByVal valor As String) As Long
                                       
 Private Declare Function CTE_CarregarXML _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoOuXml As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoOuXml As String) As Long
                 
 Private Declare Function CTE_CarregarINI _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoOuIni As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoOuIni As String) As Long
                 
 Private Declare Function CTE_ObterXml _
-                Lib "ACBrCTe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrCTE32.dll" (ByVal AIndex As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_GravarXml _
-                Lib "ACBrCTe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrCTE32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
                                      
 Private Declare Function CTE_ObterIni _
-                Lib "ACBrCTe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrCTE32.dll" (ByVal AIndex As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_GravarIni _
-                Lib "ACBrCTe32.dll" (ByVal AIndex As Long, _
+                Lib "ACBrCTE32.dll" (ByVal AIndex As Long, _
                                      ByVal eNomeArquivo As String, _
                                      ByVal ePathArquivo As String) As Long
                 
 Private Declare Function CTE_CarregarEventoXML _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoOuXml As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoOuXml As String) As Long
                 
 Private Declare Function CTE_CarregarEventoINI _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoOuIni As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoOuIni As String) As Long
                 
-Private Declare Function CTE_LimparLista Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_LimparLista Lib "ACBrCTE32.dll" () As Long
 
-Private Declare Function CTE_LimparListaEventos Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_LimparListaEventos Lib "ACBrCTE32.dll" () As Long
 
-Private Declare Function CTE_Assinar Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_Assinar Lib "ACBrCTE32.dll" () As Long
 
-Private Declare Function CTE_Validar Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_Validar Lib "ACBrCTE32.dll" () As Long
 
 Private Declare Function CTE_ValidarRegrasdeNegocios _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_VerificarAssinatura _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_GerarChave _
-                Lib "ACBrCTe32.dll" (ByVal ACodigoUF As Long, _
+                Lib "ACBrCTE32.dll" (ByVal ACodigoUF As Long, _
                                      ByVal ACodigoNumerico As Long, _
                                      ByVal AModelo As Long, _
                                      ByVal ASerie As Long, _
@@ -111,20 +111,30 @@ Private Declare Function CTE_GerarChave _
                                      ByRef bufferLen As Long) As Long
                                      
 Private Declare Function CTE_ObterCertificados _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function CTE_GetPath _
+                Lib "ACBrCTE32.dll" (ByVal tipo As Long, _
+                                     ByVal buffer As String, _
+                                     ByRef bufferSize As Long) As Long
+                                     
+Private Declare Function CTE_GetPathEvento _
+                Lib "ACBrCTE32.dll" (ByVal aCodEvento As String, _
+                                     ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                     
 Private Declare Function CTE_StatusServico _
-                Lib "ACBrCTe32.dll" (ByVal buffer As String, _
+                Lib "ACBrCTE32.dll" (ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_Consultar _
-                Lib "ACBrCTe32.dll" (ByVal eChaveOuNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eChaveOuNFe As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_Inutilizar _
-                Lib "ACBrCTe32.dll" (ByVal acnpj As String, _
+                Lib "ACBrCTE32.dll" (ByVal acnpj As String, _
                                      ByVal aJustificativa As String, _
                                      ByVal ano As Long, _
                                      ByVal modelo As Long, _
@@ -135,26 +145,26 @@ Private Declare Function CTE_Inutilizar _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_Enviar _
-                Lib "ACBrCTe32.dll" (ByVal aLote As Long, _
+                Lib "ACBrCTE32.dll" (ByVal aLote As Long, _
                                      ByVal Imprimir As Boolean, _
                                      ByVal sincrono As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_ConsultarRecibo _
-                Lib "ACBrCTe32.dll" (ByVal aRecibo As String, _
+                Lib "ACBrCTE32.dll" (ByVal aRecibo As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_ConsultaCadastro _
-                Lib "ACBrCTe32.dll" (ByVal cUF As String, _
+                Lib "ACBrCTE32.dll" (ByVal cUF As String, _
                                      ByVal nDocumento As String, _
                                      ByVal nIE As Boolean, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_Cancelar _
-                Lib "ACBrCTe32.dll" (ByVal eChave As String, _
+                Lib "ACBrCTE32.dll" (ByVal eChave As String, _
                                      ByVal eJustificativa As String, _
                                      ByVal eCNPJ As String, _
                                      ByVal aLote As Long, _
@@ -162,33 +172,33 @@ Private Declare Function CTE_Cancelar _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_EnviarEvento _
-                Lib "ACBrCTe32.dll" (ByVal aLote As Long, _
+                Lib "ACBrCTE32.dll" (ByVal aLote As Long, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_DistribuicaoDFePorUltNSU _
-                Lib "ACBrCTe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrCTE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal eultNsu As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_DistribuicaoDFePorNSU _
-                Lib "ACBrCTe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrCTE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal eNsu As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_DistribuicaoDFePorChave _
-                Lib "ACBrCTe32.dll" (ByVal acUFAutor As Long, _
+                Lib "ACBrCTE32.dll" (ByVal acUFAutor As Long, _
                                      ByVal eCnpjcpf As String, _
                                      ByVal echNFe As String, _
                                      ByVal buffer As String, _
                                      ByRef bufferSize As Long) As Long
                                      
 Private Declare Function CTE_EnviarEmail _
-                Lib "ACBrCTe32.dll" (ByVal ePara As Long, _
+                Lib "ACBrCTE32.dll" (ByVal ePara As Long, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -197,7 +207,7 @@ Private Declare Function CTE_EnviarEmail _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function CTE_EnviarEmailEvento _
-                Lib "ACBrCTe32.dll" (ByVal ePara As Long, _
+                Lib "ACBrCTE32.dll" (ByVal ePara As Long, _
                                      ByVal eChaveNFe As String, _
                                      ByVal aEnviaPDF As Boolean, _
                                      ByVal eAssunto As String, _
@@ -206,26 +216,26 @@ Private Declare Function CTE_EnviarEmailEvento _
                                      ByVal eMensagem As String) As Long
                                      
 Private Declare Function CTE_Imprimir _
-                Lib "ACBrCTe32.dll" (ByVal cImpressora As String, _
+                Lib "ACBrCTE32.dll" (ByVal cImpressora As String, _
                                      ByVal nNumCopias As Long, _
                                      ByVal cProtocolo As String, _
                                      ByVal bMostrarPreview As String) As Long
                                      
-Private Declare Function CTE_ImprimirPDF Lib "ACBrCTe32.dll" () As Long
+Private Declare Function CTE_ImprimirPDF Lib "ACBrCTE32.dll" () As Long
 
 Private Declare Function CTE_ImprimirEvento _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlNFe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
                                      
 Private Declare Function CTE_ImprimirEventoPDF _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoXmlNFe As String, _
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXmlNFe As String, _
                                      ByVal eArquivoXmlEvento As String) As Long
                                      
 Private Declare Function CTE_ImprimirInutilizacao _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoXml As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXml As String) As Long
                 
 Private Declare Function CTE_ImprimirInutilizacaoPDF _
-                Lib "ACBrCTe32.dll" (ByVal eArquivoXml As String) As Long
+                Lib "ACBrCTE32.dll" (ByVal eArquivoXml As String) As Long
 
 Public Sub InicializarLib(Optional ByVal eArqConfig As String = "", _
                           Optional ByVal eChaveCrypt As String = "")
@@ -469,6 +479,34 @@ Public Function ObterCertificados() As String()
     CheckResult retorno
     
     ObterCertificados = Split(processResult(buffer, bufferLen), vbCrLf)
+End Function
+
+Public Function GetPath(ByVal tipo As Long) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = CTE_GetPath(tipo, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPath = processResult(buffer, bufferLen)
+End Function
+
+Public Function GetPathEvento(ByVal aCodEvento As String) As String
+    Dim retorno   As Long
+    Dim buffer    As String
+    Dim bufferLen As Long
+
+    bufferLen = BUFFER_LENGTH
+    buffer = String$(bufferLen, " ")
+    
+    retorno = CTE_GetPathEvento(aCodEvento, buffer, bufferLen)
+    CheckResult retorno
+    
+    GetPathEvento = processResult(buffer, bufferLen)
 End Function
 
 Public Function StatusServico() As String

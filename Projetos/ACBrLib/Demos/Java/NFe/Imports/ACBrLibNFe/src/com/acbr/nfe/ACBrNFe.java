@@ -243,6 +243,26 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
       checkResult( ret );
       return processResult( buffer, bufferLen );
   }
+  
+  public String getPath(TipoPathNFe tipo) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+
+    int ret = ACBrNFeLib.INSTANCE.NFE_GetPath( tipo.asInt(), buffer, bufferLen );
+    checkResult( ret );
+
+    return processResult( buffer, bufferLen );
+  }
+  
+  public String getPathEvento(String aCodEvento) throws Exception {
+    ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
+    IntByReference bufferLen = new IntByReference( STR_BUFFER_LEN );
+
+    int ret = ACBrNFeLib.INSTANCE.NFE_GetPathEvento( toUTF8(aCodEvento), buffer, bufferLen );
+    checkResult( ret );
+
+    return processResult( buffer, bufferLen );
+  }
 
   public String statusServico() throws Exception {
     ByteBuffer buffer = ByteBuffer.allocate( STR_BUFFER_LEN );
@@ -491,6 +511,10 @@ public final class ACBrNFe extends ACBrLibBase implements AutoCloseable {
                 int ATpEmi, String AEmissao, String CPFCNPJ, ByteBuffer buffer, IntByReference bufferSize);
     
     int NFE_ObterCertificados( ByteBuffer buffer, IntByReference bufferSize );
+    
+    int NFE_GetPath( int tipo, ByteBuffer buffer, IntByReference bufferSize );
+    
+    int NFE_GetPathEvento( String aCodEvento, ByteBuffer buffer, IntByReference bufferSize );
 
     int NFE_StatusServico( ByteBuffer buffer, IntByReference bufferSize );
 

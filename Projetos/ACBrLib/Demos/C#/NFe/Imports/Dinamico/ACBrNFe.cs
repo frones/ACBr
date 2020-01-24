@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using ACBrLib.Core;
@@ -160,6 +161,10 @@ namespace ACBrLib.NFe
         #endregion InnerTypes
 
         #region Constructors
+
+        public ACBrNFe(string eChaveCrypt = "") : this("", eChaveCrypt)
+        {
+        }
 
         public ACBrNFe(string eArqConfig = "", string eChaveCrypt = "") : base("ACBrNFe64.dll", "ACBrNFe32.dll")
         {

@@ -46,6 +46,8 @@ VISIBLE:
     METHOD VerificarAssinatura()
     METHOD GerarChave(ACodigoUF, ACodigoNumerico, AModelo, ASerie, ANumero, ATpEmi, AEmissao, ACNPJCPF)
     METHOD ObterCertificados()
+    METHOD GetPath(tipo)
+    METHOD GetPathEvento(aCodEvento)
 
     METHOD StatusServico()
     METHOD Consultar(eChaveOuNFe)
@@ -264,6 +266,22 @@ METHOD ObterCertificados() CLASS ACBrNFe
     bufferLen := STR_LEN
     buffer := Space(bufferLen)
     hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_ObterCertificados", @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD GetPath(tipo)
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GetPath", tipo, @buffer, @bufferLen)
+    ::CheckResult(hResult)
+    RETURN ::ProcessResult(buffer, bufferLen)
+
+METHOD GetPathEvento(aCodEvento)
+    local hResult, buffer, bufferLen
+    bufferLen := STR_LEN
+    buffer := Space(bufferLen)
+    hResult := DllCall(::hHandle, DLL_OSAPI, "NFE_GetPathEvento", hb_StrToUTF8(aCodEvento), @buffer, @bufferLen)
     ::CheckResult(hResult)
     RETURN ::ProcessResult(buffer, bufferLen)
 

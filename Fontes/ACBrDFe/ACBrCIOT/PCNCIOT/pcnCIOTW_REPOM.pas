@@ -153,8 +153,8 @@ begin
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
 
-  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
-  versao := VersaoCIOTToInt(VersaoDF);
+//  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
+//  versao := VersaoCIOTToInt(VersaoDF);
 
   // Implementar
 

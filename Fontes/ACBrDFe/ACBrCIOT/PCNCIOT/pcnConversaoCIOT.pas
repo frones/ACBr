@@ -11,22 +11,40 @@ uses
 type
   TVersaoCIOT = (ve500);
   TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard);
-  TpCIOTTipoViagem = (Indefinido, Padrao, TAC_Agregado, Frota);
-  TpCIOTUnidadeDeMedidaDaMercadoria = (umIndefinido, umTonelada, umKg);
-  TpCIOTViagemTipoDeCalculo = (SemQuebra, QuebraSomenteUltrapassado, QuebraIntegral);
-  TpCIOTTipoProporcao = (tpNenhum, tpPorcentagem, tpValorAbsoluto);
-  TpCIOTDiferencaFreteTipo = (SemDiferenca, SomenteUltrapassado, Integral);
-  TpCIOTDiferencaFreteBaseCalculo = (QuantidadeDesembarque, QuantidadeMenor);
-  TpCIOTTipoPagamento = (TransferenciaBancaria, eFRETE);
-  TpCIOTTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao, tcpSemCategoria, tcpFrota);
-  TStatusACBrCIOT = (stCIOTIdle, stCIOTEnviar, stCIOTRetEnviar, stCIOTEmail, stCIOTEnvioWebService);
+  TStatusACBrCIOT = (stCIOTIdle, stCIOTEnviar, stCIOTRetEnviar, stCIOTEmail,
+                     stCIOTEnvioWebService);
   TLayOutCIOT = (LayCIOTOperacaoTransporte, LayCIOTRetEnviar);
-  TpCIOTTipoProprietario = (tpTAC, tpETC, tpCTC);
-  TpCIOTTipoEmbalagem = (Nenhum, Bigbag, Pallet, Granel, Container, Saco, Caixa, Unitario, Fardo);
-  TpCIOTOperacao = (opObterPdf, opAdicionar, opRetificar, opCancelar, opAdicionarViagem, opAdicionarPagamento, opCancelarPagamento, opEncerrar);
-  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
+  TSchemaCIOT = (schErro, schEnviar, schEnviarRetorno);
 
-  TSchemaCIOT     = (schErro, schEnviar, schEnviarRetorno);
+
+  tpTipoConta = (tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
+
+  tpTipoEmbalagem = (teBigbag, tePallet, teGranel, teContainer, teSaco);
+
+  TpTipoViagem = (Indefinido, Padrao, TAC_Agregado, Frota);
+
+  TpUnidadeDeMedidaDaMercadoria = (umIndefinido, umTonelada, umKg);
+
+  TpViagemTipoDeCalculo = (SemQuebra, QuebraSomenteUltrapassado, QuebraIntegral);
+
+  TpTipoProporcao = (tpNenhum, tpPorcentagem, tpValorAbsoluto);
+
+  TpDiferencaFreteTipo = (SemDiferenca, SomenteUltrapassado, Integral);
+
+  TpDiferencaFreteBaseCalculo = (QuantidadeDesembarque, QuantidadeMenor);
+
+  TpTipoPagamento = (TransferenciaBancaria, eFRETE);
+
+  TpTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao,
+                              tcpSemCategoria, tcpFrota);
+
+  TpTipoProprietario = (tpTAC, tpETC, tpCTC);
+
+  TpOperacao = (opObterPdf, opAdicionar, opRetificar, opCancelar,
+                opAdicionarViagem, opAdicionarPagamento, opCancelarPagamento,
+                opEncerrar);
+
+  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
 
 const
   NAME_SPACE_CIOT  = '';
@@ -46,15 +64,17 @@ function DblToVersaoCIOT(out ok: Boolean; const d: Double): TVersaoCIOT;
 function VersaoCIOTToint(const t: TVersaoCIOT): Integer;
 function VersaoCIOTToDbl(const t: TVersaoCIOT): Double;
 
-function TipoViagemCIOTToStr(const t: TpCIOTTipoViagem): string;
-function TipoEmbalagemCIOTToStr(const t: TpCIOTTipoEmbalagem): string;
-function TpPagamentoToStr(const t: TpCIOTTipoPagamento): string;
-function TpUnMedMercToStr(const t: TpCIOTUnidadeDeMedidaDaMercadoria): string;
-function TpVgTipoCalculoToStr(const t: TpCIOTViagemTipoDeCalculo): string;
-function TpProporcaoToStr(const t: TpCIOTTipoProporcao): string;
-function TpDifFreteToStr(const t: TpCIOTDiferencaFreteTipo): string;
-function TpDiferencaFreteBCToStr(const t: TpCIOTDiferencaFreteBaseCalculo): string;
-function TpCatPagToStr(const t: TpCIOTTipoCategoriaPagamento): string;
+function TipoContaToStr(const t: tpTipoConta): string;
+function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
+
+function TipoViagemCIOTToStr(const t: TpTipoViagem): string;
+function TpPagamentoToStr(const t: TpTipoPagamento): string;
+function TpUnMedMercToStr(const t: TpUnidadeDeMedidaDaMercadoria): string;
+function TpVgTipoCalculoToStr(const t: TpViagemTipoDeCalculo): string;
+function TpProporcaoToStr(const t: TpTipoProporcao): string;
+function TpDifFreteToStr(const t: TpDiferencaFreteTipo): string;
+function TpDiferencaFreteBCToStr(const t: TpDiferencaFreteBaseCalculo): string;
+function TpCatPagToStr(const t: TpTipoCategoriaPagamento): string;
 function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
@@ -144,7 +164,7 @@ begin
   end;
 end;
 
-function TipoViagemCIOTToStr(const t: TpCIOTTipoViagem): String;
+function TipoViagemCIOTToStr(const t: TpTipoViagem): String;
 begin
   Result := EnumeradoToStr(t, ['Padrao', 'TAC_Agregado', 'Frota'],
                               [Padrao, TAC_Agregado, Frota]);
@@ -159,57 +179,42 @@ begin
   end;
 end;
 
-function TipoEmbalagemCIOTToStr(const t: TpCIOTTipoEmbalagem): string;
-begin
-  case t of
-    Nenhum:    Result := '';
-    Bigbag:    Result := 'Bigbag';
-    Pallet:    Result := 'Pallet';
-    Granel:    Result := 'Granel';
-    Container: Result := 'Container';
-    Saco:      Result := 'Saco';
-    Caixa:     Result := 'Caixa';
-    Unitario:  Result := 'Unitario';
-    Fardo:     Result := 'Fardo';
-  end;
-end;
-
-function TpPagamentoToStr(const t: TpCIOTTipoPagamento): string;
+function TpPagamentoToStr(const t: TpTipoPagamento): string;
 begin
   result := EnumeradoToStr(t, ['TransferenciaBancaria', 'eFRETE'],
                               [TransferenciaBancaria, eFRETE]);
 end;
-function TpUnMedMercToStr(const t: TpCIOTUnidadeDeMedidaDaMercadoria): string;
+function TpUnMedMercToStr(const t: TpUnidadeDeMedidaDaMercadoria): string;
 begin
   result := EnumeradoToStr(t, ['Tonelada', 'Kg'],
                               [umTonelada, umKg]);
 end;
 
-function TpVgTipoCalculoToStr(const t: TpCIOTViagemTipoDeCalculo): string;
+function TpVgTipoCalculoToStr(const t: TpViagemTipoDeCalculo): string;
 begin
   result := EnumeradoToStr(t, ['SemQuebra', 'QuebraSomenteUltrapassado', 'QuebraIntegral'],
                               [SemQuebra, QuebraSomenteUltrapassado, QuebraIntegral]);
 end;
 
-function TpProporcaoToStr(const t: TpCIOTTipoProporcao): string;
+function TpProporcaoToStr(const t: TpTipoProporcao): string;
 begin
   result := EnumeradoToStr(t, ['Nenhum', 'Porcentagem', 'ValorAbsoluto'],
                               [tpNenhum, tpPorcentagem, tpValorAbsoluto]);
 end;
 
-function TpDifFreteToStr(const t: TpCIOTDiferencaFreteTipo): string;
+function TpDifFreteToStr(const t: TpDiferencaFreteTipo): string;
 begin
   result := EnumeradoToStr(t,['SemDiferenca', 'SomenteUltrapassado', 'Integral'],
                              [SemDiferenca, SomenteUltrapassado, Integral]);
 end;
 
-function TpDiferencaFreteBCToStr(const t: TpCIOTDiferencaFreteBaseCalculo): string;
+function TpDiferencaFreteBCToStr(const t: TpDiferencaFreteBaseCalculo): string;
 begin
   result := EnumeradoToStr(t, ['QuantidadeDesembarque', 'QuantidadeMenor'],
                               [QuantidadeDesembarque, QuantidadeMenor]);
 end;
 
-function TpCatPagToStr(const t: TpCIOTTipoCategoriaPagamento): string;
+function TpCatPagToStr(const t: TpTipoCategoriaPagamento): string;
 begin
   result := EnumeradoToStr(t, ['Adiantamento', 'Estadia', 'Quitacao', 'SemCategoria', 'Frota'],
                               [tcpAdiantamento, tcpEstadia, tcpQuitacao, tcpSemCategoria, tcpFrota]);
@@ -226,6 +231,18 @@ begin
   Result := StrToEnumerado(ok, s,
                           ['ieFrete', 'iRepom', 'iPamcard'],
                           [ieFrete, iRepom, iPamcard] );
+end;
+
+function TipoContaToStr(const t: tpTipoConta): string;
+begin
+  Result := EnumeradoToStr(t, ['ContaCorrente', 'ContaPoupanca', 'ContaPagamentos'],
+                          [tcContaCorrente, tcContaPoupanca, tcContaPagamentos]);
+end;
+
+function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
+begin
+  Result := EnumeradoToStr(t, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
+                          [teBigbag, tePallet, teGranel, teContainer, teSaco]);
 end;
 
 end.

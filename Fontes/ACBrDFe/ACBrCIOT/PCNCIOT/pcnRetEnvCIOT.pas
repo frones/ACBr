@@ -22,9 +22,9 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function LerRetorno_eFrete  : Boolean;
-    function LerRetorno_Repom   : Boolean;
-    function LerRetorno_Pamcard : Boolean;
+    function LerRetorno_eFrete: Boolean;
+    function LerRetorno_Repom: Boolean;
+    function LerRetorno_Pamcard: Boolean;
 
     function LerXml: Boolean;
   published
@@ -57,21 +57,71 @@ var
   i: Integer;
 begin
   Result := False;
+
   try
-    if leitor.rExtrai(1, 'AdicionarOperacaoTransporteResponse') <> '' then
+    if (leitor.rExtrai(1, 'AdicionarOperacaoTransporteResponse') <> '') or
+       (leitor.rExtrai(1, 'RetificarOperacaoTransporteResponse') <> '') or
+       (leitor.rExtrai(1, 'CancelarOperacaoTransporteResponse') <> '') or
+       (leitor.rExtrai(1, 'ObterOperacaoTransportePdfResponse') <> '') or
+       (leitor.rExtrai(1, 'AdicionarViagemResponse') <> '') or
+       (leitor.rExtrai(1, 'AdicionarPagamentoResponse') <> '') or
+       (leitor.rExtrai(1, 'CancelarPagamentoResponse') <> '') or
+       (leitor.rExtrai(1, 'EncerrarOperacaoTransporteResponse') <> '') then
     begin
-      if leitor.rExtrai(2, 'AdicionarOperacaoTransporteResult') <> '' then
+      if (leitor.rExtrai(2, 'AdicionarOperacaoTransporteResult') <> '') or
+         (leitor.rExtrai(2, 'RetificarOperacaoTransporteResult') <> '') or
+         (leitor.rExtrai(2, 'CancelarOperacaoTransporteResult') <> '') or
+         (leitor.rExtrai(2, 'ObterOperacaoTransportePdfResult') <> '') or
+         (leitor.rExtrai(2, 'AdicionarViagemResult') <> '') or
+         (leitor.rExtrai(2, 'AdicionarPagamentoResult') <> '') or
+         (leitor.rExtrai(2, 'CancelarPagamentoResult') <> '') or
+         (leitor.rExtrai(2, 'EncerrarOperacaoTransporteResult') <> '') then
       begin
         with RetEnvio do
         begin
-          Versao := leitor.rCampo(tcStr, 'Versao');
-          Sucesso := leitor.rCampo(tcStr, 'Sucesso');
+          Versao           := leitor.rCampo(tcStr, 'Versao');
+          Sucesso          := leitor.rCampo(tcStr, 'Sucesso');
           ProtocoloServico := leitor.rCampo(tcStr, 'ProtocoloServico');
+
+          PDF                         := leitor.rCampo(tcStr, 'Pdf');
+          CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
+          Data                        := leitor.rCampo(tcDatHor, 'Data');
+          Protocolo                   := leitor.rCampo(tcStr, 'Protocolo');
+          DataRetificacao             := leitor.rCampo(tcDatHor, 'DataRetificacao');
+          QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
+          QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
+          IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
+
+          if leitor.rExtrai(3, 'DocumentoViagem') <> '' then
+          begin
+            i := 0;
+            while Leitor.rExtrai(4, 'string', '', i + 1) <> '' do
+            begin
+              with DocumentoViagem.New do
+              begin
+                Mensagem := Leitor.rCampo(tcStr, 'string');
+              end;
+              inc(i);
+            end;
+          end;
+
+          if leitor.rExtrai(3, 'DocumentoPagamento') <> '' then
+          begin
+            i := 0;
+            while Leitor.rExtrai(4, 'string', '', i + 1) <> '' do
+            begin
+              with DocumentoPagamento.New do
+              begin
+                Mensagem := Leitor.rCampo(tcStr, 'string');
+              end;
+              inc(i);
+            end;
+          end;
 
           if leitor.rExtrai(3, 'Excecao') <> '' then
           begin
             Mensagem := leitor.rCampo(tcStr, 'Mensagem');
-            Codigo := leitor.rCampo(tcStr, 'Codigo');
+            Codigo   := leitor.rCampo(tcStr, 'Codigo');
           end;
         end;
       end;
@@ -85,7 +135,8 @@ end;
 
 function TRetornoEnvio.LerRetorno_Pamcard: Boolean;
 begin
-   Result := True;
+  Result := False;
+
   try
 
     //.................. Implementar
@@ -97,7 +148,8 @@ end;
 
 function TRetornoEnvio.LerRetorno_Repom: Boolean;
 begin
-  Result := True;
+  Result := False;
+
   try
 
     //.................. Implementar
@@ -112,9 +164,9 @@ begin
   Leitor.Grupo := Leitor.Arquivo;
 
   case Integradora of
-    ieFrete  :  Result := LerRetorno_eFrete;
-    iRepom   :  Result := LerRetorno_Repom;
-    iPamcard :  Result := LerRetorno_Pamcard;
+    ieFrete:  Result := LerRetorno_eFrete;
+    iRepom:   Result := LerRetorno_Repom;
+    iPamcard: Result := LerRetorno_Pamcard;
   else
     Result := False;
   end;

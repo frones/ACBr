@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2020
+-- Diversos --
+[*] Compatibilização com as novas versões dos serviços do eFrete
+   Por: Italo Jurisato Junior
+
 21/01/2020
 -- Diversos --
 [*] Ajustes diversos para eFrete

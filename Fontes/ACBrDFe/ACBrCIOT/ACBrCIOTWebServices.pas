@@ -365,8 +365,6 @@ begin
 
   FPStatus := stCIOTEnviar;
   FPLayout := LayCIOTOperacaoTransporte;
-  FPArqEnv := 'ped-CIOT';
-  FPArqResp := 'res-CIOT';
 
   FCodRetorno := 0;
 
@@ -401,18 +399,72 @@ begin
                               'xmlns:obj1="http://schemas.ipc.adm.br/efrete/objects"';
 
   case FContratos.Items[0].CIOT.Integradora.Operacao of
-    opObterPdf:           Acao := 'ObterOperacaoTransportePdf';
-    opAdicionar:          Acao := 'AdicionarOperacaoTransporte';
-    opRetificar:          Acao := 'RetificarOperacaoTransporte';
-    opCancelar:           Acao := 'CancelarOperacaoTransporte';
-    opAdicionarViagem:    Acao := 'AdicionarViagem';
-    opAdicionarPagamento: Acao := 'AdicionarPagamento';
-    opCancelarPagamento:  Acao := 'CancelarPagamento';
-    opEncerrar:           Acao := 'EncerrarOperacaoTransporte';
-  end;
+    opObterPdf:
+      begin
+        FPArqEnv  := 'ped-ObterOperTranspPDF';
+        FPArqResp := 'res-ObterOperTranspPDF';
+        Acao      := 'ObterOperacaoTransportePdf';
+      end;
 
-  FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+    opAdicionar:
+      begin
+        FPArqEnv  := 'ped-AdicOperTransp';
+        FPArqResp := 'res-AdicOperTransp';
+        Acao      := 'AdicionarOperacaoTransporte';
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
               ' xmlns:adic="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+      end;
+
+    opRetificar:
+      begin
+        FPArqEnv  := 'ped-RetifOperTransp';
+        FPArqResp := 'res-RetifOperTransp';
+        Acao      := 'RetificarOperacaoTransporte';
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:ret="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+      end;
+
+    opCancelar:
+      begin
+        FPArqEnv  := 'ped-CancOperTransp';
+        FPArqResp := 'res-CancOperTransp';
+        Acao := 'CancelarOperacaoTransporte';
+      end;
+
+    opAdicionarViagem:
+      begin
+        FPArqEnv  := 'ped-AdicViagem';
+        FPArqResp := 'res-AdicViagem';
+        Acao      := 'AdicionarViagem';
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:adic="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+      end;
+
+    opAdicionarPagamento:
+      begin
+        FPArqEnv  := 'ped-AdicPag';
+        FPArqResp := 'res-AdicPag';
+        Acao      := 'AdicionarPagamento';
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:adic="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+      end;
+
+    opCancelarPagamento:
+      begin
+        FPArqEnv  := 'ped-CancPag';
+        FPArqResp := 'res-CancPag';
+        Acao      := 'CancelarPagamento';
+      end;
+
+    opEncerrar:
+      begin
+        FPArqEnv  := 'ped-EncerOperTransp';
+        FPArqResp := 'res-EncerOperTransp';
+        Acao      := 'EncerrarOperacaoTransporte';
+        FPSoapEnvelopeAtributtes := FPSoapEnvelopeAtributtes +
+              ' xmlns:enc="http://schemas.ipc.adm.br/efrete/pef/' + Acao + '"';
+      end;
+  end;
 
   FPServico := CURL_WSDL + Acao;
   FPSoapAction := Servico + Acao;

@@ -92,13 +92,13 @@ begin
   //É o transportador que contratar outro transportador para realização do transporte de
   //cargas para o qual fora anteriormente contratado, indicado no cadastramento da Operação de Transporte.
   //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj)) > 0 then
+  if Length(Trim(CIOT.AdicionarOperacao.Subcontratante.CpfOuCnpj)) > 0 then
   begin
     Gerador.wGrupo('Subcontratante', 'AP135');
-    Gerador.wCampo(tcStr, 'AP136', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP137', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.CpfOuCnpj);
+    Gerador.wCampo(tcStr, 'AP136', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.AdicionarOperacao.Subcontratante.NomeOuRazaoSocial);
+    Gerador.wCampo(tcStr, 'AP137', 'CpfOuCnpj', 01, 01, 1, CIOT.AdicionarOperacao.Subcontratante.CpfOuCnpj);
 
-    with CIOT.OperacaoTransporte.Subcontratante do
+    with CIOT.AdicionarOperacao.Subcontratante do
     begin
       Gerador.wGrupo('Endereco', 'AP138');
       Gerador.wCampo(tcStr, 'AP139', 'Bairro', 01, 01, 1, Endereco.Bairro);
@@ -110,9 +110,9 @@ begin
       Gerador.wGrupo('/Endereco');
     end;
 
-    Gerador.wCampo(tcStr, 'AP145', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Subcontratante.EMail);
+    Gerador.wCampo(tcStr, 'AP145', 'EMail', 01, 01, 1, CIOT.AdicionarOperacao.Subcontratante.EMail);
 
-    with CIOT.OperacaoTransporte.Subcontratante.Telefones do
+    with CIOT.AdicionarOperacao.Subcontratante.Telefones do
     begin
       Gerador.wGrupo('Telefones', 'AP146');
 
@@ -134,7 +134,7 @@ begin
       Gerador.wGrupo('/Telefones');
     end;
 
-    Gerador.wCampo(tcStr, 'AP156', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Subcontratante.ResponsavelPeloPagamento, true)));
+    Gerador.wCampo(tcStr, 'AP156', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.Subcontratante.ResponsavelPeloPagamento, true)));
 
     Gerador.wGrupo('/Subcontratante');
   end
@@ -147,13 +147,13 @@ begin
   //Pessoa (física ou jurídica) que contratou o frete pela transportadora.
   //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
   //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
-  if Length(Trim(CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj)) > 0 then
+  if Length(Trim(CIOT.AdicionarOperacao.TomadorServico.CpfOuCnpj)) > 0 then
   begin
     Gerador.wGrupo('TomadorServico', 'AP179');
-    Gerador.wCampo(tcStr, 'AP180', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP181', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.CpfOuCnpj);
+    Gerador.wCampo(tcStr, 'AP180', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.AdicionarOperacao.TomadorServico.NomeOuRazaoSocial);
+    Gerador.wCampo(tcStr, 'AP181', 'CpfOuCnpj', 01, 01, 1, CIOT.AdicionarOperacao.TomadorServico.CpfOuCnpj);
 
-    with CIOT.OperacaoTransporte.TomadorServico do
+    with CIOT.AdicionarOperacao.TomadorServico do
     begin
       Gerador.wGrupo('Endereco', 'AP182');
       Gerador.wCampo(tcStr, 'AP183', 'Bairro', 01, 01, 1, Endereco.Bairro);
@@ -165,9 +165,9 @@ begin
       Gerador.wGrupo('/Endereco');
     end;
 
-    Gerador.wCampo(tcStr, 'AP189', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.TomadorServico.EMail);
+    Gerador.wCampo(tcStr, 'AP189', 'EMail', 01, 01, 1, CIOT.AdicionarOperacao.TomadorServico.EMail);
 
-    with CIOT.OperacaoTransporte.TomadorServico.Telefones do
+    with CIOT.AdicionarOperacao.TomadorServico.Telefones do
     begin
       Gerador.wGrupo('Telefones', 'AP190');
 
@@ -189,7 +189,7 @@ begin
       Gerador.wGrupo('/Telefones');
     end;
 
-    Gerador.wCampo(tcStr, 'AP200', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.TomadorServico.ResponsavelPeloPagamento, true)));
+    Gerador.wCampo(tcStr, 'AP200', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.TomadorServico.ResponsavelPeloPagamento, true)));
 
     Gerador.wGrupo('/TomadorServico');
   end
@@ -202,13 +202,13 @@ begin
   //Aquele que receberá as mercadorias transportadas em consignação,
   //indicado no cadastramento da Operação de Transporte ou nos respectivos documentos fiscais.
   //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj)) > 0 then
+  if Length(Trim(CIOT.AdicionarOperacao.Consignatario.CpfOuCnpj)) > 0 then
   begin
     Gerador.wGrupo('Consignatario', 'AP157');
-    Gerador.wCampo(tcStr, 'AP158', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP159', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.CpfOuCnpj);
+    Gerador.wCampo(tcStr, 'AP158', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.AdicionarOperacao.Consignatario.NomeOuRazaoSocial);
+    Gerador.wCampo(tcStr, 'AP159', 'CpfOuCnpj', 01, 01, 1, CIOT.AdicionarOperacao.Consignatario.CpfOuCnpj);
 
-    with CIOT.OperacaoTransporte.Consignatario do
+    with CIOT.AdicionarOperacao.Consignatario do
     begin
       Gerador.wGrupo('Endereco', 'AP160');
       Gerador.wCampo(tcStr, 'AP161', 'Bairro', 01, 01, 1, Endereco.Bairro);
@@ -220,9 +220,9 @@ begin
       Gerador.wGrupo('/Endereco');
     end;
 
-    Gerador.wCampo(tcStr, 'AP167', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Consignatario.EMail);
+    Gerador.wCampo(tcStr, 'AP167', 'EMail', 01, 01, 1, CIOT.AdicionarOperacao.Consignatario.EMail);
 
-    with CIOT.OperacaoTransporte.Consignatario.Telefones do
+    with CIOT.AdicionarOperacao.Consignatario.Telefones do
     begin
       Gerador.wGrupo('Telefones', 'AP168');
 
@@ -244,7 +244,7 @@ begin
       Gerador.wGrupo('/Telefones');
     end;
 
-    Gerador.wCampo(tcStr, 'AP178', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Consignatario.ResponsavelPeloPagamento, true)));
+    Gerador.wCampo(tcStr, 'AP178', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.Consignatario.ResponsavelPeloPagamento, true)));
 
     Gerador.wGrupo('/Consignatario');
   end
@@ -258,19 +258,19 @@ begin
   //mediante remuneração, indicado no cadastramento da Operação de Transporte.
   //Para o TipoViagem Frota o Contratado será a própria empresa que está declarando a operação.
   Gerador.wGrupo('Contratado '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP81');
-  Gerador.wCampo(tcStr, 'AP82', 'CpfOuCnpj', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.CpfOuCnpj);
-  Gerador.wCampo(tcStr, 'AP83', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratado.RNTRC);
+  Gerador.wCampo(tcStr, 'AP82', 'CpfOuCnpj', 01, 01, 1, CIOT.AdicionarOperacao.Contratado.CpfOuCnpj);
+  Gerador.wCampo(tcStr, 'AP83', 'RNTRC', 01, 01, 1, CIOT.AdicionarOperacao.Contratado.RNTRC);
   Gerador.wGrupo('/Contratado');
 end;
 
 procedure TCIOTW_Pamcard.GerarContratante;
 begin
   Gerador.wGrupo('Contratante', 'AP112');
-  Gerador.wCampo(tcStr, 'AP113', 'RNTRC', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.RNTRC);
-  Gerador.wCampo(tcStr, 'AP114', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.NomeOuRazaoSocial);
-  Gerador.wCampo(tcStr, 'AP115', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Contratante.CpfOuCnpj);
+  Gerador.wCampo(tcStr, 'AP113', 'RNTRC', 01, 01, 1, CIOT.AdicionarOperacao.Contratante.RNTRC);
+  Gerador.wCampo(tcStr, 'AP114', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.AdicionarOperacao.Contratante.NomeOuRazaoSocial);
+  Gerador.wCampo(tcStr, 'AP115', 'CpfOuCnpj', 11, 14, 1, CIOT.AdicionarOperacao.Contratante.CpfOuCnpj);
 
-  with CIOT.OperacaoTransporte.Contratante do
+  with CIOT.AdicionarOperacao.Contratante do
   begin
     Gerador.wGrupo('Endereco', 'AP116');
     Gerador.wCampo(tcStr, 'AP117', 'Bairro', 01, 01, 1, Endereco.Bairro);
@@ -282,9 +282,9 @@ begin
     Gerador.wGrupo('/Endereco');
   end;
 
-  Gerador.wCampo(tcStr, 'AP123', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Contratante.EMail);
+  Gerador.wCampo(tcStr, 'AP123', 'EMail', 01, 01, 1, CIOT.AdicionarOperacao.Contratante.EMail);
 
-  with CIOT.OperacaoTransporte.Contratante.Telefones do
+  with CIOT.AdicionarOperacao.Contratante.Telefones do
   begin
     Gerador.wGrupo('Telefones', 'AP124');
 
@@ -306,7 +306,7 @@ begin
     Gerador.wGrupo('/Telefones');
   end;
 
-  Gerador.wCampo(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Contratante.ResponsavelPeloPagamento, true)));
+  Gerador.wCampo(tcStr, 'AP134', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.Contratante.ResponsavelPeloPagamento, true)));
 
   Gerador.wGrupo('/Contratante');
 end;
@@ -317,13 +317,13 @@ begin
   //Na emissão com TipoViagem Padrão seu preenchimento é obrigatório.
   //Na emissão com TipoViagem TAC_Agregado o campo não deve ser preenchido.
   //Não esperado para TipoViagem Frota.
-  if Length(Trim(CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj)) > 0 then
+  if Length(Trim(CIOT.AdicionarOperacao.Destinatario.CpfOuCnpj)) > 0 then
   begin
     Gerador.wGrupo('Destinatario', 'AP90');
-    Gerador.wCampo(tcStr, 'AP91', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.OperacaoTransporte.Destinatario.NomeOuRazaoSocial);
-    Gerador.wCampo(tcStr, 'AP92', 'CpfOuCnpj', 11, 14, 1, CIOT.OperacaoTransporte.Destinatario.CpfOuCnpj);
+    Gerador.wCampo(tcStr, 'AP91', 'NomeOuRazaoSocial', 01, 01, 1, CIOT.AdicionarOperacao.Destinatario.NomeOuRazaoSocial);
+    Gerador.wCampo(tcStr, 'AP92', 'CpfOuCnpj', 11, 14, 1, CIOT.AdicionarOperacao.Destinatario.CpfOuCnpj);
 
-    with CIOT.OperacaoTransporte.Destinatario do
+    with CIOT.AdicionarOperacao.Destinatario do
     begin
       Gerador.wGrupo('Endereco', 'AP93');
       Gerador.wCampo(tcStr, 'AP94', 'Bairro', 01, 01, 1, Endereco.Bairro);
@@ -335,9 +335,9 @@ begin
       Gerador.wGrupo('/Endereco');
     end;
 
-    Gerador.wCampo(tcStr, 'AP100', 'EMail', 01, 01, 1, CIOT.OperacaoTransporte.Destinatario.EMail);
+    Gerador.wCampo(tcStr, 'AP100', 'EMail', 01, 01, 1, CIOT.AdicionarOperacao.Destinatario.EMail);
 
-    with CIOT.OperacaoTransporte.Destinatario.Telefones do
+    with CIOT.AdicionarOperacao.Destinatario.Telefones do
     begin
       Gerador.wGrupo('Telefones', 'AP101');
 
@@ -358,7 +358,7 @@ begin
 
       Gerador.wGrupo('/Telefones');
     end;
-    Gerador.wCampo(tcStr, 'AP111', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.Destinatario.ResponsavelPeloPagamento, true)), 'Informar se é o responsável pelo pagamento da Operação de Transporte. True = Sim. False = Não');
+    Gerador.wCampo(tcStr, 'AP111', 'ResponsavelPeloPagamento', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.Destinatario.ResponsavelPeloPagamento, true)), 'Informar se é o responsável pelo pagamento da Operação de Transporte. True = Sim. False = Não');
 
     Gerador.wGrupo('/Destinatario');
   end
@@ -369,12 +369,12 @@ end;
 procedure TCIOTW_Pamcard.GerarImpostos;
 begin
   Gerador.wGrupo('Impostos', 'AP61');
-  Gerador.wCampo(tcDe2, 'AP62', 'IRRF', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF');
-  Gerador.wCampo(tcDe2, 'AP63', 'SestSenat', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT');
-  Gerador.wCampo(tcDe2, 'AP64', 'INSS', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS.');
-  Gerador.wCampo(tcDe2, 'AP65', 'ISSQN', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN.');
-  Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
-  Gerador.wCampo(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
+  Gerador.wCampo(tcDe2, 'AP62', 'IRRF', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.IRRF, 'Valor destinado ao IRRF');
+  Gerador.wCampo(tcDe2, 'AP63', 'SestSenat', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT');
+  Gerador.wCampo(tcDe2, 'AP64', 'INSS', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.INSS, 'Valor destinado ao INSS.');
+  Gerador.wCampo(tcDe2, 'AP65', 'ISSQN', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.ISSQN, 'Valor destinado ao ISSQN.');
+  Gerador.wCampo(tcDe2, 'AP66', 'OutrosImpostos', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos.');
+  Gerador.wCampo(tcStr, 'AP67', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.DescricaoOutrosImpostos);
   Gerador.wGrupo('/Impostos');
 end;
 
@@ -383,11 +383,11 @@ begin
   //É o condutor do veículo que irá realizar a operação de transporte,
   //pode ser o proprietário do veículo ou não.
   Gerador.wGrupo('Motorista '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP84');
-  Gerador.wCampo(tcStr, 'AP85', 'CpfOuCnpj', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CpfOuCnpj, 'CPF ou CNPJ do Motorista.');
-  Gerador.wCampo(tcStr, 'AP86', 'CNH', 01, 11, 1, CIOT.OperacaoTransporte.Motorista.CNH);
+  Gerador.wCampo(tcStr, 'AP85', 'CpfOuCnpj', 01, 11, 1, CIOT.AdicionarOperacao.Motorista.CpfOuCnpj, 'CPF ou CNPJ do Motorista.');
+  Gerador.wCampo(tcStr, 'AP86', 'CNH', 01, 11, 1, CIOT.AdicionarOperacao.Motorista.CNH);
 
   Gerador.wGrupo('Celular '+ NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP87');
-  with CIOT.OperacaoTransporte.Motorista do
+  with CIOT.AdicionarOperacao.Motorista do
   begin
     Gerador.wCampo(tcInt, 'AP88', 'DDD', 01, 02, 1, Celular.DDD, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
     Gerador.wCampo(tcInt, 'AP89', 'Numero', 08, 09, 1, Celular.Numero, '', True, NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE);
@@ -408,9 +408,9 @@ begin
   //     deverá conter o mesmo valor da tag DocumentoViagem da tag Viagem .
   //- Se a viagem possuir a tag TotalQuitacao maior que zero, deverá ter um pagamento correspondente,
   //     com Categoria Quitacao e com o Documento o mesmo valor apontado na tag DocumentoViagem .
-  for i := 0 to CIOT.OperacaoTransporte.Pagamentos.Count -1 do
+  for i := 0 to CIOT.AdicionarOperacao.Pagamentos.Count -1 do
   begin
-    with CIOT.OperacaoTransporte.Pagamentos.Items[i] do
+    with CIOT.AdicionarOperacao.Pagamentos.Items[i] do
     begin
       Gerador.wGrupo('Pagamentos '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP68');
       Gerador.wCampo(tcStr, 'AP69', 'IdPagamentoCliente', 01, 01, 1, IdPagamentoCliente, 'Identificador do pagamento no sistema do Cliente.');
@@ -444,10 +444,10 @@ var
   i: Integer;
 begin
   //Registro dos veículos participantes da operação de transporte.
-  for i := 0 to CIOT.OperacaoTransporte.Veiculos.Count -1 do
+  for i := 0 to CIOT.AdicionarOperacao.Veiculos.Count -1 do
   begin
     Gerador.wGrupo('Veiculos '+ NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP201');
-    Gerador.wCampo(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.OperacaoTransporte.Veiculos.Items[I].Placa);
+    Gerador.wCampo(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.AdicionarOperacao.Veiculos.Items[I].Placa);
     Gerador.wGrupo('/Veiculos');
   end;
 end;
@@ -458,9 +458,9 @@ var
 begin
   Gerador.wGrupo('Viagens '+NAME_SPACE_EFRETE_PEFADICIONAR_OBJECTS, 'AP16');
 
-  for I := 0 to CIOT.OperacaoTransporte.Viagens.Count -1 do
+  for I := 0 to CIOT.AdicionarOperacao.Viagens.Count -1 do
   begin
-    with CIOT.OperacaoTransporte.Viagens.Items[I] do
+    with CIOT.AdicionarOperacao.Viagens.Items[I] do
     begin
       Gerador.wCampo(tcStr, 'AP17', 'DocumentoViagem', 01, 01, 1, DocumentoViagem, 'Exemplo: CT-e / Serie, CTRC / Serie, Ordem de Serviço.');
       Gerador.wCampo(tcInt, 'AP18', 'CodigoMunicipioOrigem', 01, 07, 1, CodigoMunicipioOrigem);
@@ -554,8 +554,8 @@ begin
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
 
-  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
-  versao := VersaoCIOTToInt(VersaoDF);
+//  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
+//  versao := VersaoCIOTToInt(VersaoDF);
 
   case CIOT.Integradora.Operacao of
     opObterPdf:
@@ -574,37 +574,37 @@ begin
 
         Gerador.wGrupo('AdicionarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'AP01');
 
-        Gerador.wCampo(tcStr, 'AP02', 'TipoViagem', 01, 01, 1, TipoViagemCIOTToStr(CIOT.OperacaoTransporte.TipoViagem));
+        Gerador.wCampo(tcStr, 'AP02', 'TipoViagem', 01, 01, 1, TipoViagemCIOTToStr(CIOT.AdicionarOperacao.TipoViagem));
         Gerador.wCampo(tcStr, 'AP03', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
         Gerador.wCampo(tcInt, 'AP04', 'Versao', 01, 01, 1, versao);
 //        Gerador.wCampo(tcStr, 'AP05', 'Token', 01, 01, 1, '');  //ver de que forma pegar o tocken em caso de não usar certificado
-        Gerador.wCampo(tcBoolStr, 'AP06', 'EmissaoGratuita', 01, 01, 1, CIOT.OperacaoTransporte.EmissaoGratuita);
-        if CIOT.OperacaoTransporte.TipoViagem <> Frota then
-          Gerador.wCampo(tcStr, 'AP07', ' BloquearNaoEquiparado', 01, 01, 1, LowerCase(BoolToStr(CIOT.OperacaoTransporte.BloquearNaoEquiparado)));
-        Gerador.wCampo(tcStr, 'AP08', 'MatrizCNPJ', 01, 14, 1, CIOT.OperacaoTransporte.MatrizCNPJ);
-        Gerador.wCampo(tcStr, 'AP09', 'FilialCNPJ', 01, 01, 1, CIOT.OperacaoTransporte.FilialCNPJ);
-        Gerador.wCampo(tcStr, 'AP10', 'IdOperacaoCliente', 01, 01, 1, CIOT.OperacaoTransporte.IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
-        if CIOT.OperacaoTransporte.TipoViagem <> TAC_Agregado then //Se TipoViagem for TAC_Agregado o campo não deve ser preenchido.
-          Gerador.wCampo(tcDat, 'AP11', 'DataInicioViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataInicioViagem)
+//        Gerador.wCampo(tcBoolStr, 'AP06', 'EmissaoGratuita', 01, 01, 1, CIOT.AdicionarOperacao.EmissaoGratuita);
+        if CIOT.AdicionarOperacao.TipoViagem <> Frota then
+          Gerador.wCampo(tcStr, 'AP07', ' BloquearNaoEquiparado', 01, 01, 1, LowerCase(BoolToStr(CIOT.AdicionarOperacao.BloquearNaoEquiparado)));
+        Gerador.wCampo(tcStr, 'AP08', 'MatrizCNPJ', 01, 14, 1, CIOT.AdicionarOperacao.MatrizCNPJ);
+        Gerador.wCampo(tcStr, 'AP09', 'FilialCNPJ', 01, 01, 1, CIOT.AdicionarOperacao.FilialCNPJ);
+        Gerador.wCampo(tcStr, 'AP10', 'IdOperacaoCliente', 01, 01, 1, CIOT.AdicionarOperacao.IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
+        if CIOT.AdicionarOperacao.TipoViagem <> TAC_Agregado then //Se TipoViagem for TAC_Agregado o campo não deve ser preenchido.
+          Gerador.wCampo(tcDat, 'AP11', 'DataInicioViagem', 01, 01, 1, CIOT.AdicionarOperacao.DataInicioViagem)
         else
           Gerador.wCampo(tcStr, 'AP11', 'DataInicioViagem', 01, 01, 1, '');
-        Gerador.wCampo(tcDat, 'AP12', 'DataFimViagem', 01, 01, 1, CIOT.OperacaoTransporte.DataFimViagem, 'Data prevista para o fim de viagem.');
-        case CIOT.OperacaoTransporte.TipoViagem of
-          Padrao: Gerador.wCampo(tcInt, 'AP13', 'CodigoNCMNaturezaCarga', 01, 04, 1, CIOT.OperacaoTransporte.CodigoNCMNaturezaCarga);
+        Gerador.wCampo(tcDat, 'AP12', 'DataFimViagem', 01, 01, 1, CIOT.AdicionarOperacao.DataFimViagem, 'Data prevista para o fim de viagem.');
+        case CIOT.AdicionarOperacao.TipoViagem of
+          Padrao: Gerador.wCampo(tcInt, 'AP13', 'CodigoNCMNaturezaCarga', 01, 04, 1, CIOT.AdicionarOperacao.CodigoNCMNaturezaCarga);
           TAC_Agregado: Gerador.wCampo(tcStr, 'AP13', 'CodigoNCMNaturezaCarga', 01, 01, 1, '');
         end;
-        if CIOT.OperacaoTransporte.TipoViagem <> Frota then
-          Gerador.wCampo(tcDe4, 'AP14', 'PesoCarga ', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga);
+        if CIOT.AdicionarOperacao.TipoViagem <> Frota then
+          Gerador.wCampo(tcDe4, 'AP14', 'PesoCarga ', 01, 01, 1, CIOT.AdicionarOperacao.PesoCarga);
 
-        if CIOT.OperacaoTransporte.TipoViagem = Padrao then
+        if CIOT.AdicionarOperacao.TipoViagem = Padrao then
         begin
-          Gerador.wCampo(tcStr, 'AP15', 'TipoEmbalagem', 01, 01, 1, TipoEmbalagemCIOTToStr(CIOT.OperacaoTransporte.TipoEmbalagem));
+          Gerador.wCampo(tcStr, 'AP15', 'TipoEmbalagem', 01, 01, 1, TipoEmbalagemToStr(CIOT.AdicionarOperacao.TipoEmbalagem));
           //Adiciona a Viagem
           GerarViagem;
         end;
 
         //Adiciona Impostos
-        if CIOT.OperacaoTransporte.TipoViagem <> Frota then
+        if CIOT.AdicionarOperacao.TipoViagem <> Frota then
           GerarImpostos;
 
         //Adiciona os Pagamentos
@@ -617,13 +617,13 @@ begin
         GerarMotorista;
 
         //Adiciona Destinatario
-        if CIOT.OperacaoTransporte.TipoViagem <> Frota then
+        if CIOT.AdicionarOperacao.TipoViagem <> Frota then
           GerarDestinatario;
 
         //Adiciona Contratante
         GerarContratante;
 
-        if CIOT.OperacaoTransporte.TipoViagem <> Frota then
+        if CIOT.AdicionarOperacao.TipoViagem <> Frota then
         begin
           //Adiciona SubContratante
           GerarSubContratante;
@@ -641,27 +641,27 @@ begin
         //Informar um CIOT (se existente) que esteja relacionado à operação de transporte.
         //Por exemplo: No caso da presença de um Subcontratante na operação de transporte informar
         //o CIOT onde o Subcontratante foi o Contratado.
-        Gerador.wCampo(tcStr, 'AP203', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 1, CIOT.OperacaoTransporte.CodigoIdentificacaoOperacaoPrincipal);
+        Gerador.wCampo(tcStr, 'AP203', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 1, CIOT.AdicionarOperacao.CodigoIdentificacaoOperacaoPrincipal);
 
         Gerador.wGrupo('ObservacoesAoTransportador', 'AP204');
-        Gerador.wCampo(tcStr, 'AP205', 'String', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoTransportador);
+        Gerador.wCampo(tcStr, 'AP205', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoTransportador);
         Gerador.wGrupo('/ObservacoesAoTransportador');
 
         Gerador.wGrupo('ObservacoesAoCredenciado', 'AP206');
-        Gerador.wCampo(tcStr, 'AP207', 'String', 01, 01, 1, CIOT.OperacaoTransporte.ObservacoesAoCredenciado);
+        Gerador.wCampo(tcStr, 'AP207', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoCredenciado);
         Gerador.wGrupo('/ObservacoesAoCredenciado');
 
-        Gerador.wCampo(tcStr, 'AP208', 'EntregaDocumentacao', 01, 01, 1, CIOT.OperacaoTransporte.EntregaDocumentacao);
-        Gerador.wCampo(tcInt, 'AP209', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
-        Gerador.wCampo(tcInt, 'AP210', 'QuantidadeTransferencias', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
+        Gerador.wCampo(tcStr, 'AP208', 'EntregaDocumentacao', 01, 01, 1, CIOT.AdicionarOperacao.EntregaDocumentacao);
+        Gerador.wCampo(tcInt, 'AP209', 'QuantidadeSaques', 01, 01, 1, CIOT.AdicionarOperacao.QuantidadeSaques);
+        Gerador.wCampo(tcInt, 'AP210', 'QuantidadeTransferencias', 01, 01, 1, CIOT.AdicionarOperacao.QuantidadeTransferencias);
 
-        Gerador.wGrupo('/AdicionarOperacaoTransporteRequest');
+        Gerador.wGrupo('/AdicionarAdicionarOperacaoRequest');
 
-        Gerador.wGrupo('/AdicionarOperacaoTransporte');
+        Gerador.wGrupo('/AdicionarAdicionarOperacao');
       end;
     opRetificar:
       begin
-//        Gerador.wGrupo('RetificarOperacaoTransporteRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'WP01');
+//        Gerador.wGrupo('RetificarAdicionarOperacaoRequest ' + NAME_SPACE_EFRETE_OPERACAOTRANSPORTE_EFRETE, 'WP01');
 //
 //        Gerador.wCampo(tcStr, 'WP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, FOperacaoTransporte.NumeroCIOT, '');
 //        Gerador.wCampo(tcInt, 'WP03', 'CodigoMunicipioDestino', 01, 07, 1, FOperacaoTransporte.Viagens.Items[0].CodigoMunicipioDestino); //0001
@@ -688,9 +688,9 @@ begin
     opCancelar:
       begin
         Gerador.wGrupo('CancelarOperacaoTransporteRequest', 'KP01');
-        Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
+//        Gerador.wCampo(tcStr, 'KP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.AdicionarOperacao.NumeroCIOT);
         Gerador.wCampo(tcStr, 'KP03', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
-        Gerador.wCampo(tcStr, 'KP04', 'Motivo', 01, 01, 1, CIOT.OperacaoTransporte.Cancelamento.Motivo, '');
+//        Gerador.wCampo(tcStr, 'KP04', 'Motivo', 01, 01, 1, CIOT.AdicionarOperacao.Cancelamento.Motivo, '');
 //        Gerador.wCampo(tcStr, 'KP05', 'Token ', 01, 01, 1, '');
         Gerador.wCampo(tcInt, 'KP06', 'Versao', 01, 01, 1, 1);
         Gerador.wGrupo('/CancelarOperacaoTransporteRequest');
@@ -874,23 +874,23 @@ begin
       begin
         Gerador.wGrupo('EncerrarOperacaoTransporteRequest', 'QP01');
 
-        Gerador.wCampo(tcStr, 'QP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.OperacaoTransporte.NumeroCIOT);
-        Gerador.wCampo(tcDe6, 'QP03', 'PesoCarga', 01, 01, 1, CIOT.OperacaoTransporte.PesoCarga, 'Peso da carga que foi transportado.');
+//        Gerador.wCampo(tcStr, 'QP02', 'CodigoIdentificacaoOperacao', 01, 01, 1, CIOT.AdicionarOperacao.NumeroCIOT);
+        Gerador.wCampo(tcDe6, 'QP03', 'PesoCarga', 01, 01, 1, CIOT.AdicionarOperacao.PesoCarga, 'Peso da carga que foi transportado.');
 
         Gerador.wGrupo('Impostos', 'QP04');
-        Gerador.wCampo(tcStr, 'QP05', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.OperacaoTransporte.Impostos.DescricaoOutrosImpostos);
-        Gerador.wCampo(tcDe2, 'QP06', 'INSS', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.INSS, 'Valor destinado ao INSS. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP07', 'IRRF', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.IRRF, 'Valor destinado ao IRRF. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP08', 'ISSQN', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.ISSQN, 'Valor destinado ao ISSQN. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP09', 'OutrosImpostos', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
-        Gerador.wCampo(tcDe2, 'QP10', 'SestSenat', 01, 20, 1, CIOT.OperacaoTransporte.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampo(tcStr, 'QP05', 'DescricaoOutrosImpostos', 01, 01, 1, CIOT.AdicionarOperacao.Impostos.DescricaoOutrosImpostos);
+        Gerador.wCampo(tcDe2, 'QP06', 'INSS', 01, 20, 1, CIOT.AdicionarOperacao.Impostos.INSS, 'Valor destinado ao INSS. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampo(tcDe2, 'QP07', 'IRRF', 01, 20, 1, CIOT.AdicionarOperacao.Impostos.IRRF, 'Valor destinado ao IRRF. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampo(tcDe2, 'QP08', 'ISSQN', 01, 20, 1, CIOT.AdicionarOperacao.Impostos.ISSQN, 'Valor destinado ao ISSQN. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampo(tcDe2, 'QP09', 'OutrosImpostos', 01, 20, 1, CIOT.AdicionarOperacao.Impostos.OutrosImpostos, 'Valor destinado a outros impostos não previstos. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
+        Gerador.wCampo(tcDe2, 'QP10', 'SestSenat', 01, 20, 1, CIOT.AdicionarOperacao.Impostos.SestSenat, 'Valor destinado ao SEST / SENAT. Este valor deverá fazer parte do valor de Adiantamento ou do valor de Quitação.');
         Gerador.wGrupo('/Impostos');
 
         Gerador.wCampo(tcStr, 'QP11', 'Integrador', 01, 01, 1, CIOT.Integradora.Integrador);
 //        Gerador.wCampo(tcStr, 'QP12', 'Token', 01, 01, 1, '');
         Gerador.wCampo(tcInt, 'QP13', 'Versao', 01, 01, 1, 1);
-        Gerador.wCampo(tcStr, 'QP14', 'QuantidadeSaques', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeSaques);
-        Gerador.wCampo(tcStr, 'QP15', 'QuantidadeTransferencia', 01, 01, 1, CIOT.OperacaoTransporte.QuantidadeTransferencias);
+        Gerador.wCampo(tcStr, 'QP14', 'QuantidadeSaques', 01, 01, 1, CIOT.AdicionarOperacao.QuantidadeSaques);
+        Gerador.wCampo(tcStr, 'QP15', 'QuantidadeTransferencia', 01, 01, 1, CIOT.AdicionarOperacao.QuantidadeTransferencias);
 
         Gerador.wGrupo('/EncerrarOperacaoTransporteRequest');
       end;

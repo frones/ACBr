@@ -96,7 +96,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Top = 0
           Width = 287
           Height = 476
-          ActivePage = TabSheet4
+          ActivePage = TabSheet12
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -1338,7 +1338,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Top = 3
           Width = 545
           Height = 208
-          Caption = 'Opera'#231#227'o'
+          Caption = ' Opera'#231#245'es do e-Frete '
           ItemIndex = 1
           Items.Strings = (
             'Obter Pdf Opera'#231#227'o Transporte'

@@ -365,6 +365,7 @@ type
     FItemListaServico: String;
     FCodigoCnae: String;
     FCodigoTributacaoMunicipio: String;
+    FxCodigoTributacaoMunicipio: String;
     FDiscriminacao: String;
     FCodigoMunicipio: String;
     FCodigoPais: Integer;
@@ -396,6 +397,7 @@ type
     property ItemListaServico: String read FItemListaServico write FItemListaServico;
     property CodigoCnae: String read FCodigoCnae write FCodigoCnae;
     property CodigoTributacaoMunicipio: String read FCodigoTributacaoMunicipio write FCodigoTributacaoMunicipio;
+    property xCodigoTributacaoMunicipio: String read FxCodigoTributacaoMunicipio write FxCodigoTributacaoMunicipio;
     property Discriminacao: String read FDiscriminacao write FDiscriminacao;
     property CodigoMunicipio: String read FCodigoMunicipio write FCodigoMunicipio;
     property CodigoPais: Integer read FCodigoPais write FCodigoPais;

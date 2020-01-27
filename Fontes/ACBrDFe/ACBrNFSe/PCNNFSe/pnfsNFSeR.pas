@@ -1704,9 +1704,9 @@ begin
       NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
       NFSe.Servico.Valores.Aliquota               := Leitor.rCampo(tcDe3, 'Aliquota');
 
-//      if (FProvedor in [proThema, proGINFES, proRJ, proPublica, proBHISS,
-//          proAbaco]) then
-//        NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
+      if (FProvedor in [proThema, proGINFES, proRJ, proPublica, proBHISS, proEL,
+          proWebISS, proAbaco]) then
+        NFSe.Servico.Valores.Aliquota := (NFSe.Servico.Valores.Aliquota * 100);
 
       if NFSe.Servico.Valores.Aliquota = 0 then
         NFSe.Servico.Valores.Aliquota := Leitor.rCampo(tcDe3, 'AliquotaServicos');

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2020
+-- pnfsNFSeR -- 
+[*] Alterado para que a multiplicação por 100 a aliquota passa a ser feita pela leitura do XML.
+   Por: Italo Jurisato Junior
+
 20/01/2020
 -- pnfsNFSeR --
 [*] https://www.projetoacbr.com.br/forum/topic/55822-ajuste-na-al%C3%ADquota-para-o-provedor-thema/

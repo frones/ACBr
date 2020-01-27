@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/01/2020
+-- ACBrNFSeDANFSeRLRetrato --
+[*] https://www.projetoacbr.com.br/forum/topic/55178-codigotributacaomunicipio-na-danfse-de-belo-horizonte/
+   Por: RonBrisola
+-- ACBrNFSeDANFSeFR -- 
+[*] Alterado para que a multiplicação por 100 a aliquota passa a ser feita pela leitura do XML.
+   Por: Italo Jurisato Junior
+
 04/12/2019
 -- ACBrNFSeDANFSeRLRetrato --
 [*] https://www.projetoacbr.com.br/forum/topic/53848-nfse-goi%C3%A1sgoi%C3%A2niatrindade/?do=findComment&comment=361859

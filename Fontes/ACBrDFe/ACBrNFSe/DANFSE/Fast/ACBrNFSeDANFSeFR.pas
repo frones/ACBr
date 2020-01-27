@@ -850,9 +850,10 @@ begin
         cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, '###,###,##0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
 
-        if Provedor = proEL then
-          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota * 100, '0.00')
-        else
+//        if Provedor = proEL then
+//          cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota * 100, '0.00')
+//        else
+        // A multiplicação por 100 agora é feita pela rotina que lê o XML
           cdsItensServico.FieldByName('Aliquota').AsString := FormatFloatBr( Aliquota, '0.00');
 
         cdsItensServico.FieldByName('Unidade').AsString              := Unidade;
@@ -1050,9 +1051,10 @@ begin
         FieldByName('ValorIss').AsFloat               := ValorIss;
         FieldByName('OutrasRetencoes').AsFloat        := OutrasRetencoes;
         FieldByName('BaseCalculo').AsFloat            := BaseCalculo;
-        if Provedor = proWebISS then
-          FieldByName('Aliquota').AsFloat := Aliquota * 100
-        else
+//        if Provedor = proWebISS then
+//          FieldByName('Aliquota').AsFloat := Aliquota * 100
+//        else
+        // Agora a multiplicação por 100 é feita pela rotina que lê o XML
           FieldByName('Aliquota').AsFloat := Aliquota;
 
         FieldByName('ValorLiquidoNfse').AsFloat       := ValorLiquidoNfse;

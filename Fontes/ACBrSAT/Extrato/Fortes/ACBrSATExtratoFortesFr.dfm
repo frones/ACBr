@@ -946,8 +946,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
+        Font.Name = 'Courier New'
+        Font.Style = [fsBold]
         Lines.Strings = (
           '<observa'#231#245'es do contribuinte>')
         ParentFont = False

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2020
+-- ACBrSATExtratoFortesFr --
+[*] Alterado o tipo da fonte do objeto mObsContrib.
+    https://www.projetoacbr.com.br/forum/topic/55894-mudan%C3%A7a-de-fonte-no-componente-tacbrsatextratofortes-campo-mobscontrib/
+   Por: tdp Sistemas
+
 15/01/2020
 -- ACBrSATExtratoReportClass, ACBrSATExtratoFortesFr --
 [+] Adicionada a propriedade FormularioContinuo: Boolean default False

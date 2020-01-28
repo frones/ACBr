@@ -1,11 +1,11 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 449
-  Height = 999
+  Left = 444
+  Height = 749
   Top = 7
-  Width = 748
+  Width = 781
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 999
-  ClientWidth = 748
+  ClientHeight = 749
+  ClientWidth = 781
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
@@ -1268,7 +1268,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
-        Font.Name = 'Arial'
+        Font.Name = 'Courier New'
+        Font.Style = [fsBold]
         Lines.Strings = (
           '<observações do contribuinte>'
         )
@@ -2981,11 +2982,12 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     DocumentStyle = dsCSS2
     DisplayName = 'ACBrBoleto - http://acbr.sf.net'
     left = 8
-    top = 56
+    top = 64
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'FortesReport (Open Source) v3.24(B14)  \251 Copyright © 1999-2008 Fortes Informática'
     DisplayName = 'ACBrBoleto - http://acbr.sf.net'
     left = 8
+    top = 8
   end
 end

@@ -74,6 +74,7 @@ type
                            /// 03 – Na solicitação da baixa cadastral, paralisação temporária e outras situações;
                            /// 04 – Na alteração de regime de pagamento – condição do contribuinte;
                            /// 05 – Por determinação dos fiscos.
+                           /// 06 - Para controle das mercadorias sujeitas ao regime de substituição tributária
 
     FRegistroH010: TRegistroH010List;  /// BLOCO H - Lista de RegistroH010 (FILHO)
   public

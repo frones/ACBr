@@ -228,11 +228,12 @@ begin
               if DT_FIN >= EncodeDate(2012,07,01) then
               begin
                 case MOT_INV of
-                  miFinalPeriodo:       strMotInv := '01';
-                  miMudancaTributacao:  strMotInv := '02';
-                  miBaixaCadastral:     strMotInv := '03';
-                  miRegimePagamento:    strMotInv := '04';
-                  miDeterminacaoFiscos: strMotInv := '05';
+                  miFinalPeriodo:               strMotInv := '01';
+                  miMudancaTributacao:          strMotInv := '02';
+                  miBaixaCadastral:             strMotInv := '03';
+                  miRegimePagamento:            strMotInv := '04';
+                  miDeterminacaoFiscos:         strMotInv := '05';
+                  miControleMercadoriaSujeitaST: strMotInv:= '06';
                 else
                   strMotInv := '01';
                 end;

@@ -412,7 +412,8 @@ type
                  miMudancaTributacao,
                  miBaixaCadastral,
                  miRegimePagamento,
-                 miDeterminacaoFiscos
+                 miDeterminacaoFiscos,
+                 miControleMercadoriaSujeitaST
                 );
   TACBrMotivoInventario = TACBrMotInv;
 
@@ -1030,6 +1031,9 @@ begin
    if AValue = '05' then
       Result := miDeterminacaoFiscos
    else
+   if AValue = '06' then
+      Result := miControleMercadoriaSujeitaST
+   else
      raise EACBrSPEDFiscalException.CreateFmt('O motivo do inventário "%s" não é um valor válido.', [AValue]);
 end;
 
@@ -1049,6 +1053,9 @@ begin
    else
    if AValue = miDeterminacaoFiscos then
       Result := '05'
+   else
+   if AValue = miControleMercadoriaSujeitaST then
+      Result := '06'
    else
      raise Exception.Create('Valor informado inválido para ser convertido em TACBrMotInv');
 end;

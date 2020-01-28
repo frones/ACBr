@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 28/01/2020
+-- ACBrEFDBlocos --
+[*] Inclusão de novo item para o tipo enumerado TACBrMotInv devido a versão 3.03 do Guia Prático EFD
+
 Data 03/08/2018
 -- ACBrEFDBlocos --
 [-] Correção na definição de tipo dos campos IND_VEIC e VEIC_ID no registro D140.

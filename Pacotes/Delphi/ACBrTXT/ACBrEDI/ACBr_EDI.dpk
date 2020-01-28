@@ -1,7 +1,6 @@
 package ACBr_EDI;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -24,7 +23,7 @@ package ACBr_EDI;
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
 {$DEFINE RELEASE}
-{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ACBr - Intercâmbio Eletrônico de Dados EDI - (http://www.projetoacbr.com.br/)'}
 {$IMPLICITBUILD ON}
 
 requires

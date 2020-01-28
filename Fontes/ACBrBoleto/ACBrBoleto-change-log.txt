@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2020
+-- ACBrBancoCaixa --
+[-] Ajuste na validação de DataProtesto para campo Instrução
+  https://www.projetoacbr.com.br/forum/topic/55919-remessa-cobran%C3%A7a-caixa-ec-federal-posicao-157-a-158/
+
+23/01/2020
+-- ACBrBancoSafra --
+[-] Ajuste na leitura de Retorno do Nosso Número- CNAB400
+  https://www.projetoacbr.com.br/forum/topic/48704-problema-ao-ler-nosso-numero-no-retorno-do-banco-safra/
+
 21/01/2020
 -- ACBrBoleto, ACBrUnicredRS, ACBrUnicredES, ACBrUnicredSC --
 [+] Realizado Refactory nas classes do Banco Unicred, mantendo o Layout UnicredRS como base para as demais classes de Correspondentes desse Banco

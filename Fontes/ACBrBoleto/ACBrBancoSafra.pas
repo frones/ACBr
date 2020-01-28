@@ -1167,7 +1167,7 @@ begin
     with Titulo do
     begin
       SeuNumero      := Copy(Linha,38,62);
-      NossoNumero    := Copy(Linha, 63, 8);
+      NossoNumero    := Copy(Linha, 63, 9);
       CodOcorrencia  := StrToIntDef(copy(Linha, 109, 2),0);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(CodOcorrencia);
 

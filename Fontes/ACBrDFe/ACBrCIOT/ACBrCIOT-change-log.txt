@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/01/2020
+-- Diversos --
+[*] Implementado os métodos dos serviços: Logon, Proprietarios, Veiculos e
+    Motoristas, refeito os métodos do serviço: Operação de Transporte.
+   Por: Italo Jurisato Junior
+
 24/01/2020
 -- Diversos --
 [*] Compatibilização com as novas versões dos serviços do eFrete

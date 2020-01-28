@@ -1,4 +1,3 @@
-
 {$I ACBr.inc}
 
 unit pcnCIOTW_eFrete;
@@ -26,6 +25,11 @@ type
     versao: Integer;
   protected
     procedure GerarIdentificacao(aVersao: Integer);
+
+    procedure GerarGravarProprietario;
+    procedure GerarGravarVeiculo;
+    procedure GerarGravarMotorista;
+
     procedure GerarViagem;
     procedure GerarImpostos;
     procedure GerarPagamentos;
@@ -100,6 +104,165 @@ begin
   Gerador.Prefixo := aPrefixo;
 end;
 
+procedure TCIOTW_eFrete.GerarGravarProprietario;
+begin
+  with CIOT.GravarProprietario do
+  begin
+    Gerador.wCampoNFSe(tcStr, 'AP06', 'CNPJ       ', 01, 01, 1, CNPJ);
+    Gerador.wCampoNFSe(tcStr, 'AP07', 'TipoPessoa ', 01, 01, 1, TipoPessoaToStr(TipoPessoa));
+    Gerador.wCampoNFSe(tcStr, 'AP08', 'RazaoSocial', 01, 01, 0, RazaoSocial);
+    Gerador.wCampoNFSe(tcStr, 'AP09', 'RNTRC      ', 01, 01, 1, RNTRC);
+
+    with Endereco do
+    begin
+      if CodigoMunicipio > 0 then
+      begin
+        Gerador.wGrupoNFSe('Endereco', 'AP11');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampoNFSe(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Bairro);
+        Gerador.wCampoNFSe(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Rua);
+        Gerador.wCampoNFSe(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Numero);
+        Gerador.wCampoNFSe(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Complemento);
+        Gerador.wCampoNFSe(tcStr, 'AP16', 'CEP            ', 08, 08, 0, CEP);
+        Gerador.wCampoNFSe(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Endereco');
+      end;
+    end;
+
+    with Telefones do
+    begin
+      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      begin
+        Gerador.wGrupoNFSe('Telefones', 'AP18');
+
+        Gerador.Prefixo := 'obj1:';
+        if Celular.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Celular', 'AP19');
+          Gerador.wCampoNFSe(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Celular.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP21', 'Numero', 08, 09, 1, Celular.Numero, '');
+          Gerador.wGrupoNFSe('/Celular');
+        end;
+
+        if Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fixo', 'AP22');
+          Gerador.wCampoNFSe(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP24', 'Numero', 08, 09, 1, Fixo.Numero, '');
+          Gerador.wGrupoNFSe('/Fixo');
+        end;
+
+        if Fax.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fax', 'AP25');
+          Gerador.wCampoNFSe(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Fax.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP27', 'Numero', 08, 09, 1, Fax.Numero, '');
+          Gerador.wGrupoNFSe('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Telefones');
+      end;
+    end;
+  end;
+end;
+
+procedure TCIOTW_eFrete.GerarGravarVeiculo;
+begin
+  with CIOT.GravarVeiculo do
+  begin
+    if Renavam <> '' then
+    begin
+      Gerador.wGrupoNFSe('Veiculo', 'AP06');
+
+      Gerador.wCampoNFSe(tcStr, 'AP07', 'Placa          ', 01, 01, 0, Placa);
+      Gerador.wCampoNFSe(tcStr, 'AP08', 'Renavam        ', 01, 01, 1, Renavam);
+      Gerador.wCampoNFSe(tcStr, 'AP09', 'Chassi         ', 01, 01, 0, Chassi);
+      Gerador.wCampoNFSe(tcStr, 'AP10', 'RNTRC          ', 01, 01, 1, RNTRC);
+      Gerador.wCampoNFSe(tcInt, 'AP11', 'NumeroDeEixos  ', 01, 01, 1, NumeroDeEixos);
+      Gerador.wCampoNFSe(tcInt, 'AP12', 'CodigoMunicipio', 01, 01, 1, CodigoMunicipio);
+      Gerador.wCampoNFSe(tcStr, 'AP13', 'Marca          ', 01, 01, 0, Marca);
+      Gerador.wCampoNFSe(tcStr, 'AP14', 'Modelo         ', 01, 01, 0, Modelo);
+      Gerador.wCampoNFSe(tcInt, 'AP15', 'AnoFabricacao  ', 01, 01, 1, AnoFabricacao);
+      Gerador.wCampoNFSe(tcInt, 'AP16', 'AnoModelo      ', 01, 01, 1, AnoModelo);
+      Gerador.wCampoNFSe(tcStr, 'AP17', 'Cor            ', 01, 01, 0, Cor);
+      Gerador.wCampoNFSe(tcInt, 'AP18', 'Tara           ', 01, 01, 1, Tara);
+      Gerador.wCampoNFSe(tcInt, 'AP19', 'CapacidadeKg   ', 01, 01, 1, CapacidadeKg);
+      Gerador.wCampoNFSe(tcInt, 'AP20', 'CapacidadeM3   ', 01, 01, 1, CapacidadeM3);
+      Gerador.wCampoNFSe(tcStr, 'AP21', 'TipoRodado     ', 01, 20, 1, TipoRodadoToStr(TipoRodado));
+      Gerador.wCampoNFSe(tcStr, 'AP22', 'TipoCarroceria ', 01, 20, 1, TipoCarroceriaToStr(TipoCarroceria));
+
+      Gerador.wGrupoNFSe('/Veiculo');
+    end;
+  end;
+end;
+
+procedure TCIOTW_eFrete.GerarGravarMotorista;
+begin
+  with CIOT.GravarMotorista do
+  begin
+    Gerador.wCampoNFSe(tcStr, 'AP06', 'CPF                ', 01, 01, 1, CPF);
+    Gerador.wCampoNFSe(tcStr, 'AP07', 'Nome               ', 01, 01, 0, Nome);
+    Gerador.wCampoNFSe(tcStr, 'AP08', 'CNH                ', 01, 01, 1, CNH);
+    Gerador.wCampoNFSe(tcDat, 'AP09', 'DataNascimento     ', 01, 01, 1, DataNascimento);
+    Gerador.wCampoNFSe(tcStr, 'AP10', 'NomeDeSolteiraDaMae', 01, 01, 0, NomeDeSolteiraDaMae);
+
+    with Endereco do
+    begin
+      if CodigoMunicipio > 0 then
+      begin
+        Gerador.wGrupoNFSe('Endereco', 'AP11');
+        Gerador.Prefixo := 'obj1:';
+        Gerador.wCampoNFSe(tcStr, 'AP12', 'Bairro         ', 01, 01, 0, Bairro);
+        Gerador.wCampoNFSe(tcStr, 'AP13', 'Rua            ', 01, 01, 0, Rua);
+        Gerador.wCampoNFSe(tcStr, 'AP14', 'Numero         ', 01, 01, 0, Numero);
+        Gerador.wCampoNFSe(tcStr, 'AP15', 'Complemento    ', 01, 01, 0, Complemento);
+        Gerador.wCampoNFSe(tcStr, 'AP16', 'CEP            ', 08, 08, 0, CEP);
+        Gerador.wCampoNFSe(tcInt, 'AP17', 'CodigoMunicipio', 07, 07, 1, CodigoMunicipio);
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Endereco');
+      end;
+    end;
+
+    with Telefones do
+    begin
+      if (Celular.Numero > 0) or (Fixo.Numero > 0) or (Fax.Numero > 0) then
+      begin
+        Gerador.wGrupoNFSe('Telefones', 'AP18');
+
+        Gerador.Prefixo := 'obj1:';
+        if Celular.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Celular', 'AP19');
+          Gerador.wCampoNFSe(tcInt, 'AP20', 'DDD   ', 01, 02, 1, Celular.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP21', 'Numero', 08, 09, 1, Celular.Numero, '');
+          Gerador.wGrupoNFSe('/Celular');
+        end;
+
+        if Fixo.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fixo', 'AP22');
+          Gerador.wCampoNFSe(tcInt, 'AP23', 'DDD   ', 01, 02, 1, Fixo.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP24', 'Numero', 08, 09, 1, Fixo.Numero, '');
+          Gerador.wGrupoNFSe('/Fixo');
+        end;
+
+        if Fax.Numero > 0 then
+        begin
+          Gerador.wGrupoNFSe('Fax', 'AP25');
+          Gerador.wCampoNFSe(tcInt, 'AP26', 'DDD   ', 01, 02, 1, Fax.DDD, '');
+          Gerador.wCampoNFSe(tcInt, 'AP27', 'Numero', 08, 09, 1, Fax.Numero, '');
+          Gerador.wGrupoNFSe('/Fax');
+        end;
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('/Telefones');
+      end;
+    end;
+  end;
+end;
+
 procedure TCIOTW_eFrete.GerarViagem;
 var
   i, j: Integer;
@@ -108,10 +271,10 @@ begin
   aPrefixo := Gerador.Prefixo;
   Gerador.Prefixo := 'adic:';
 
-  Gerador.wGrupoNFSe('Viagens', 'AP12');
-
   for I := 0 to CIOT.AdicionarOperacao.Viagens.Count -1 do
   begin
+    Gerador.wGrupoNFSe('Viagens', 'AP12');
+
     with CIOT.AdicionarOperacao.Viagens.Items[I] do
     begin
       Gerador.wCampoNFSe(tcStr, 'AP13', 'DocumentoViagem       ', 01, 01, 0, DocumentoViagem);
@@ -233,9 +396,9 @@ begin
         Gerador.wGrupoNFSe('/NotasFiscais');
       end;
     end;
-  end;
 
-  Gerador.wGrupoNFSe('/Viagens');
+    Gerador.wGrupoNFSe('/Viagens');
+  end;
 
   Gerador.Prefixo := aPrefixo;
 end;
@@ -926,10 +1089,17 @@ begin
 
   if xPrefixo = 'ret:' then
   begin
-    for i := 0 to CIOT.RetificarOperacao.Veiculos.Count -1 do
+    if CIOT.RetificarOperacao.Veiculos.Count > 0 then
     begin
       Gerador.wGrupoNFSe('Veiculos', 'AP201');
-      Gerador.wCampoNFSe(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.RetificarOperacao.Veiculos.Items[I].Placa);
+
+      for i := 0 to CIOT.RetificarOperacao.Veiculos.Count -1 do
+      begin
+        Gerador.wGrupoNFSe('Veiculo', 'AP201');
+        Gerador.wCampoNFSe(tcStr, 'AP202', 'Placa', 01, 07, 1, CIOT.RetificarOperacao.Veiculos.Items[I].Placa);
+        Gerador.wGrupoNFSe('/Veiculo');
+      end;
+
       Gerador.wGrupoNFSe('/Veiculos');
     end;
   end;
@@ -1003,13 +1173,12 @@ begin
       if NotasFiscais.Count > 0 then
       begin
         Gerador.Prefixo := 'adic:';
-        Gerador.wGrupoNFSe('NotasFiscais', 'AP37');
 
         for J := 0 to NotasFiscais.Count -1 do
         begin
           with NotasFiscais.Items[J] do
           begin
-            Gerador.wGrupoNFSe('NotaFiscal', 'AP38');
+            Gerador.wGrupoNFSe('NotasFiscais', 'AP38');
             Gerador.wCampoNFSe(tcStr, 'AP39', 'Numero                            ', 01, 01, 0, Numero);
             Gerador.wCampoNFSe(tcStr, 'AP40', 'Serie                             ', 01, 01, 0, Serie);
             Gerador.wCampoNFSe(tcDat, 'AP41', 'Data                              ', 01, 01, 1, Data);
@@ -1030,10 +1199,9 @@ begin
               Gerador.wGrupoNFSe('/ToleranciaDePerdaDeMercadoria');
             end;
 
-            Gerador.wGrupoNFSe('/NotaFiscal');
+            Gerador.wGrupoNFSe('/NotasFiscais');
           end;
         end;
-        Gerador.wGrupoNFSe('/NotasFiscais');
       end;
     end;
 
@@ -1187,6 +1355,8 @@ begin
 
   for I := 0 to CIOT.EncerrarOperacao.Viagens.Count -1 do
   begin
+    Gerador.wGrupoNFSe('Viagem', 'AP12');
+
     with CIOT.EncerrarOperacao.Viagens.Items[I] do
     begin
       Gerador.wCampoNFSe(tcStr, 'AP13', 'DocumentoViagem       ', 01, 01, 0, DocumentoViagem);
@@ -1273,6 +1443,8 @@ begin
         Gerador.wGrupoNFSe('/NotasFiscais');
       end;
     end;
+
+    Gerador.wGrupoNFSe('/Viagem');
   end;
 
   Gerador.wGrupoNFSe('/Viagens');
@@ -1354,7 +1526,7 @@ end;
 
 function TCIOTW_eFrete.GerarXml: Boolean;
 var
-  Ok: Boolean;
+  i: Integer;
 begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
@@ -1368,6 +1540,122 @@ begin
 //  versao := VersaoCIOTToInt(VersaoDF);
 
   case CIOT.Integradora.Operacao of
+    opLogin:
+      begin
+        Gerador.Prefixo := 'log:';
+        Gerador.wGrupoNFSe('Login');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('LoginRequest');
+
+        with CIOT.Integradora do
+        begin
+          Gerador.wCampoNFSe(tcStr, 'AP04', 'Integrador', 01, 01, 0, Integrador);
+          Gerador.wCampoNFSe(tcInt, 'AP05', 'Versao    ', 01, 01, 1, 1);
+          Gerador.wCampoNFSe(tcStr, 'AP04', 'Usuario   ', 01, 01, 0, Usuario);
+          Gerador.wCampoNFSe(tcStr, 'AP04', 'Senha     ', 01, 01, 0, Senha);
+        end;
+
+        Gerador.wGrupoNFSe('/LoginRequest');
+
+        Gerador.Prefixo := 'log:';
+        Gerador.wGrupoNFSe('/Login');
+      end;
+
+    opLogout:
+      begin
+        Gerador.Prefixo := 'log:';
+        Gerador.wGrupoNFSe('Logout');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('LogoutRequest');
+
+        with CIOT.Integradora do
+        begin
+          Gerador.wCampoNFSe(tcStr, 'AP04', 'Token     ', 01, 01, 0, Token);
+          Gerador.wCampoNFSe(tcStr, 'AP04', 'Integrador', 01, 01, 0, Integrador);
+          Gerador.wCampoNFSe(tcInt, 'AP05', 'Versao    ', 01, 01, 1, 1);
+        end;
+
+        Gerador.wGrupoNFSe('/LogoutRequest');
+
+        Gerador.Prefixo := 'log:';
+        Gerador.wGrupoNFSe('/Logout');
+      end;
+
+    opGravarProprietario:
+      begin
+        Gerador.Prefixo := 'prop:';
+        Gerador.wGrupoNFSe('Gravar');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('GravarRequest');
+
+        GerarIdentificacao(1);
+        GerarGravarProprietario;
+
+        Gerador.wGrupoNFSe('/GravarRequest');
+
+        Gerador.Prefixo := 'prop:';
+        Gerador.wGrupoNFSe('/Gravar');
+      end;
+
+    opGravarVeiculo:
+      begin
+        Gerador.Prefixo := 'veic:';
+        Gerador.wGrupoNFSe('Gravar');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('GravarRequest');
+
+        GerarIdentificacao(1);
+
+        GerarGravarVeiculo;
+
+        Gerador.wGrupoNFSe('/GravarRequest');
+
+        Gerador.Prefixo := 'veic:';
+        Gerador.wGrupoNFSe('/Gravar');
+      end;
+
+    opGravarMotorista:
+      begin
+        Gerador.Prefixo := 'mot:';
+        Gerador.wGrupoNFSe('Gravar');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('GravarRequest');
+
+        GerarIdentificacao(1);
+        GerarGravarMotorista;
+
+        Gerador.wGrupoNFSe('/GravarRequest');
+
+        Gerador.Prefixo := 'mot:';
+        Gerador.wGrupoNFSe('/Gravar');
+      end;
+
+    opObterCodigoIOT:
+      begin
+        Gerador.wGrupoNFSe('ObterCodigoIdentificacaoOperacaoTransportePorIdOperacaoCliente');
+
+        Gerador.Prefixo := 'obj:';
+        Gerador.wGrupoNFSe('ObterCodigoIdentificacaoOperacaoTransportePorIdOperacaoClienteRequest');
+
+        GerarIdentificacao(1);
+
+        with CIOT.ObterCodigoOperacaoTransporte do
+        begin
+          Gerador.wCampoNFSe(tcStr, '', 'MatrizCNPJ       ', 14, 14, 0, MatrizCNPJ, '');
+          Gerador.wCampoNFSe(tcStr, '', 'IdOperacaoCliente', 01, 30, 0, IdOperacaoCliente, '');
+        end;
+
+        Gerador.wGrupoNFSe('/ObterCodigoIdentificacaoOperacaoTransportePorIdOperacaoClienteRequest');
+
+        Gerador.Prefixo := 'pef:';
+        Gerador.wGrupoNFSe('/ObterCodigoIdentificacaoOperacaoTransportePorIdOperacaoCliente');
+      end;
+
     opObterPdf:
       begin
         Gerador.wGrupoNFSe('ObterOperacaoTransportePdf');
@@ -1377,9 +1665,11 @@ begin
 
         GerarIdentificacao(1);
 
-        Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 01, 30, 0, CIOT.ObterOperacaoTransportePDF.CodigoIdentificacaoOperacao, '');
-        Gerador.wCampoNFSe(tcStr, '', 'DocumentoViagem            ', 01, 30, 0, CIOT.ObterOperacaoTransportePDF.DocumentoViagem, '');
-
+        with CIOT.ObterOperacaoTransportePDF do
+        begin
+          Gerador.wCampoNFSe(tcStr, '', 'CodigoIdentificacaoOperacao', 01, 30, 0, CodigoIdentificacaoOperacao, '');
+          Gerador.wCampoNFSe(tcStr, '', 'DocumentoViagem            ', 01, 30, 0, DocumentoViagem, '');
+        end;
         Gerador.wGrupoNFSe('/ObterOperacaoTransportePdfRequest');
 
         Gerador.Prefixo := 'pef:';
@@ -1440,17 +1730,29 @@ begin
           //o CIOT onde o Subcontratante foi o Contratado.
           Gerador.wCampoNFSe(tcStr, 'AP248', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 0, CodigoIdentificacaoOperacaoPrincipal);
 
-          if ObservacoesAoTransportador <> '' then
+          if ObservacoesAoTransportador.Count > 0 then
           begin
             Gerador.wGrupoNFSe('ObservacoesAoTransportador', 'AP249');
-            Gerador.wCampoNFSe(tcStr, 'AP250', 'string', 01, 01, 1, ObservacoesAoTransportador);
+            for i := 0 to ObservacoesAoTransportador.Count -1 do
+            begin
+              with ObservacoesAoTransportador.Items[i] do
+              begin
+                Gerador.wCampoNFSe(tcStr, 'AP250', 'string', 01, 01, 1, Mensagem);
+              end;
+            end;
             Gerador.wGrupoNFSe('/ObservacoesAoTransportador');
           end;
 
-          if ObservacoesAoCredenciado <> '' then
+          if ObservacoesAoCredenciado.Count > 0 then
           begin
             Gerador.wGrupoNFSe('ObservacoesAoCredenciado', 'AP251');
-            Gerador.wCampoNFSe(tcStr, 'AP252', 'string', 01, 01, 1, ObservacoesAoCredenciado);
+            for i := 0 to ObservacoesAoCredenciado.Count -1 do
+            begin
+              with ObservacoesAoCredenciado.Items[i] do
+              begin
+                Gerador.wCampoNFSe(tcStr, 'AP252', 'string', 01, 01, 1, Mensagem);
+              end;
+            end;
             Gerador.wGrupoNFSe('/ObservacoesAoCredenciado');
           end;
 

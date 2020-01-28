@@ -10,12 +10,23 @@ uses
 
 type
   TVersaoCIOT = (ve500);
+
   TCIOTIntegradora = (iNone, ieFrete, iRepom, iPamcard);
+
   TStatusACBrCIOT = (stCIOTIdle, stCIOTEnviar, stCIOTRetEnviar, stCIOTEmail,
                      stCIOTEnvioWebService);
-  TLayOutCIOT = (LayCIOTOperacaoTransporte, LayCIOTRetEnviar);
+
+  TLayOutCIOT = (LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos,
+                 LayeFreteMotoristas, LayeFreteOperacaoTransporte,
+                 LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar);
+
   TSchemaCIOT = (schErro, schEnviar, schEnviarRetorno);
 
+  TpOperacao = (opLogin, opLogout,
+                opGravarProprietario, opGravarVeiculo, opGravarMotorista,
+                opAdicionar, opAdicionarViagem, opAdicionarPagamento,
+                opObterCodigoIOT, opObterPdf, opRetificar, opCancelar,
+                opCancelarPagamento, opEncerrar);
 
   tpTipoConta = (tcContaCorrente, tcContaPoupanca, tcContaPagamentos);
 
@@ -38,13 +49,18 @@ type
   TpTipoCategoriaPagamento = (tcpAdiantamento, tcpEstadia, tcpQuitacao,
                               tcpSemCategoria, tcpFrota);
 
+  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
+
+  TpTipoRodado = (trNaoAplicavel, trTruck, trToco, trCavalo);
+
+  TpTipoCarroceria = (tcNaoAplicavel, tcAberta, tcFechadaOuBau, tcGranelera,
+                      tcPortaContainer, tcSider);
+
+  tpTipoPessoa = (tpIndefinido, tpFisica, tpJuridica);
+
   TpTipoProprietario = (tpTAC, tpETC, tpCTC);
 
-  TpOperacao = (opObterPdf, opAdicionar, opRetificar, opCancelar,
-                opAdicionarViagem, opAdicionarPagamento, opCancelarPagamento,
-                opEncerrar);
-
-  TpEntregaDocumentacao = (edRedeCredenciada, edCliente);
+  tpEstadoCIOT = (ecEmViagem, ecEncerrado, ecCancelado);
 
 const
   NAME_SPACE_CIOT  = '';
@@ -77,6 +93,21 @@ function TpDiferencaFreteBCToStr(const t: TpDiferencaFreteBaseCalculo): string;
 function TpCatPagToStr(const t: TpTipoCategoriaPagamento): string;
 function EntregaDocumentacaoToStr(const t: TpEntregaDocumentacao): string;
 
+function TipoRodadoToStr(const t: TpTipoRodado): string;
+function StrToTipoRodado(out ok: Boolean; const s: String): TpTipoRodado;
+
+function TipoCarroceriaToStr(const t: TpTipoCarroceria): string;
+function StrToTipoCarroceria(out ok: Boolean; const s: String): TpTipoCarroceria;
+
+function TipoPessoaToStr(const t: tpTipoPessoa): string;
+function StrToTipoPessoa(out ok: Boolean; const s: String): tpTipoPessoa;
+
+function TipoProprietarioToStr(const t: TpTipoProprietario): string;
+function StrToTipoProprietario(out ok: Boolean; const s: String): TpTipoProprietario;
+
+function EstadoCIOTToStr(const t: TpEstadoCIOT): string;
+function StrToEstadoCIOT(out ok: Boolean; const s: String): TpEstadoCIOT;
+
 function StrToEnumIntegradora(out ok: Boolean; const s: String): TCIOTIntegradora;
 
 implementation
@@ -87,8 +118,14 @@ uses
 function LayOutToSchema(const t: TLayOutCIOT): TSchemaCIOT;
 begin
   case t of
-    LayCIOTOperacaoTransporte:    Result := schEnviar;
-    LayCIOTRetEnviar: Result := schEnviarRetorno;
+    LayeFreteLogon,
+    layeFreteProprietarios,
+    LayeFreteVeiculos,
+    LayeFreteMotoristas,
+    LayeFreteOperacaoTransporte,
+    LayeFreteFaturamentoTransportadora: Result := schEnviar;
+
+    LayCIOTRetEnviar:                   Result := schEnviarRetorno;
   else
     Result := schErro;
   end;
@@ -97,16 +134,20 @@ end;
 function LayOutToServico(const t: TLayOutCIOT): String;
 begin
   Result := EnumeradoToStr(t,
-    ['CIOTOperacaoTransporte', 'CIOTRetEnviar'],
-    [LayCIOTOperacaoTransporte, LayCIOTRetEnviar] );
+    ['eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
+     'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'CIOTRetEnviar'],
+    [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos, LayeFreteMotoristas,
+     LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCIOT;
 begin
   Result := StrToEnumerado(ok, s,
 //  ['CIOTEnviar', 'CIOTRetEnviar'],
-  ['CIOTOperacaoTransporte', 'CIOTRetEnviar'],
-  [LayCIOTOperacaoTransporte, LayCIOTRetEnviar] );
+  ['eFreteLogon', 'eFreteProprietarios', 'eFreteVeiculos', 'eFreteMotoristas',
+   'eFreteOperacaoTransporte', 'eFreteFaturamentoTransportadora', 'CIOTRetEnviar'],
+  [LayeFreteLogon, layeFreteProprietarios, LayeFreteVeiculos, LayeFreteMotoristas,
+   LayeFreteOperacaoTransporte, LayeFreteFaturamentoTransportadora, LayCIOTRetEnviar] );
 end;
 
 function SchemaCIOTToStr(const t: TSchemaCIOT): String;
@@ -243,6 +284,70 @@ function TipoEmbalagemToStr(const t: tpTipoEmbalagem): string;
 begin
   Result := EnumeradoToStr(t, ['Bigbag', 'Pallet', 'Granel', 'Container', 'Saco'],
                           [teBigbag, tePallet, teGranel, teContainer, teSaco]);
+end;
+
+function TipoRodadoToStr(const t: TpTipoRodado): string;
+begin
+  Result := EnumeradoToStr(t, ['NaoAplicavel', 'Truck', 'Toco', 'Cavalo'],
+                          [trNaoAplicavel, trTruck, trToco, trCavalo]);
+end;
+
+function StrToTipoRodado(out ok: Boolean; const s: String): TpTipoRodado;
+begin
+  Result := StrToEnumerado(ok, s, ['NaoAplicavel', 'Truck', 'Toco', 'Cavalo'],
+                                  [trNaoAplicavel, trTruck, trToco, trCavalo]);
+end;
+
+function TipoCarroceriaToStr(const t: TpTipoCarroceria): string;
+begin
+  Result := EnumeradoToStr(t, ['NaoAplicavel', 'Aberta', 'FechadaOuBau',
+                               'Granelera', 'PortaContainer', 'Sider'],
+                         [tcNaoAplicavel, tcAberta, tcFechadaOuBau, tcGranelera,
+                          tcPortaContainer, tcSider]);
+end;
+
+function StrToTipoCarroceria(out ok: Boolean; const s: String): TpTipoCarroceria;
+begin
+  Result := StrToEnumerado(ok, s, ['NaoAplicavel', 'Aberta', 'FechadaOuBau',
+                                   'Granelera', 'PortaContainer', 'Sider'],
+                         [tcNaoAplicavel, tcAberta, tcFechadaOuBau, tcGranelera,
+                          tcPortaContainer, tcSider]);
+end;
+
+function TipoPessoaToStr(const t: tpTipoPessoa): string;
+begin
+  Result := EnumeradoToStr(t, ['Indefinido', 'Fisica', 'Juridica'],
+                              [tpIndefinido, tpFisica, tpJuridica]);
+end;
+
+function StrToTipoPessoa(out ok: Boolean; const s: String): tpTipoPessoa;
+begin
+  Result := StrToEnumerado(ok, s, ['Indefinido', 'Fisica', 'Juridica'],
+                                  [tpIndefinido, tpFisica, tpJuridica]);
+end;
+
+function TipoProprietarioToStr(const t: TpTipoProprietario): string;
+begin
+  Result := EnumeradoToStr(t, ['TAC', 'ETC', 'CTC'],
+                              [tpTAC, tpETC, tpCTC]);
+end;
+
+function StrToTipoProprietario(out ok: Boolean; const s: String): TpTipoProprietario;
+begin
+  Result := StrToEnumerado(ok, s, ['TAC', 'ETC', 'CTC'],
+                                  [tpTAC, tpETC, tpCTC]);
+end;
+
+function EstadoCIOTToStr(const t: TpEstadoCIOT): string;
+begin
+  Result := EnumeradoToStr(t, ['EmViagem', 'Encerrado', 'Cancelado'],
+                              [ecEmViagem, ecEncerrado, ecCancelado]);
+end;
+
+function StrToEstadoCIOT(out ok: Boolean; const s: String): TpEstadoCIOT;
+begin
+  Result := StrToEnumerado(ok, s, ['EmViagem', 'Encerrado', 'Cancelado'],
+                                  [ecEmViagem, ecEncerrado, ecCancelado]);
 end;
 
 end.

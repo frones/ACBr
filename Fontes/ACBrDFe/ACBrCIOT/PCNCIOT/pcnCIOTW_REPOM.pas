@@ -143,9 +143,9 @@ begin
 end;
 
 function TCIOTW_REPOM.GerarXml: Boolean;
-var
-  Ok: Boolean;
-  versao: Integer;
+//var
+//  Ok: Boolean;
+//  versao: Integer;
 begin
   Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';

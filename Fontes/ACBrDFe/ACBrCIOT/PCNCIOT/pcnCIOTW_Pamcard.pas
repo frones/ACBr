@@ -545,7 +545,7 @@ end;
 function TCIOTW_Pamcard.GerarXml: Boolean;
 var
 //  Prefixo, NameSpaceServico, NameSpaceBase: string;
-  Ok: Boolean;
+//  Ok: Boolean;
   versao: Integer;
 begin
   Gerador.ListaDeAlertas.Clear;
@@ -553,7 +553,7 @@ begin
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
   Gerador.ArquivoFormatoTXT := '';
-
+  versao := 1;
 //  VersaoDF := DblToVersaoCIOT(Ok, CIOT.OperacaoTransporte.Versao);
 //  versao := VersaoCIOTToInt(VersaoDF);
 
@@ -644,11 +644,11 @@ begin
         Gerador.wCampo(tcStr, 'AP203', 'CodigoIdentificacaoOperacaoPrincipal', 01, 01, 1, CIOT.AdicionarOperacao.CodigoIdentificacaoOperacaoPrincipal);
 
         Gerador.wGrupo('ObservacoesAoTransportador', 'AP204');
-        Gerador.wCampo(tcStr, 'AP205', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoTransportador);
+     //   Gerador.wCampo(tcStr, 'AP205', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoTransportador);
         Gerador.wGrupo('/ObservacoesAoTransportador');
 
         Gerador.wGrupo('ObservacoesAoCredenciado', 'AP206');
-        Gerador.wCampo(tcStr, 'AP207', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoCredenciado);
+//        Gerador.wCampo(tcStr, 'AP207', 'String', 01, 01, 1, CIOT.AdicionarOperacao.ObservacoesAoCredenciado);
         Gerador.wGrupo('/ObservacoesAoCredenciado');
 
         Gerador.wCampo(tcStr, 'AP208', 'EntregaDocumentacao', 01, 01, 1, CIOT.AdicionarOperacao.EntregaDocumentacao);

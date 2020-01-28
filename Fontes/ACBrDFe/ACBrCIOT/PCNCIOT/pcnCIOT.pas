@@ -23,8 +23,6 @@ type
     FIntegradora: TCIOTIntegradora;
     FOperacao: TpOperacao;
   public
-
-  published
     property Token: string read FToken write FToken;
     property Integrador: string read FIntegrador write FIntegrador;
     property Senha: string read FSenha write FSenha;
@@ -39,8 +37,6 @@ type
     FDDD: integer;
     FNumero: integer;
   public
-
-  published
     property DDD: integer read FDDD write FDDD;
     property Numero: integer read FNumero write FNumero;
   end;
@@ -53,7 +49,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Celular: TTelefone read FCelular write FCelular;
     property Fixo: TTelefone read FFixo write FFixo;
     property Fax: TTelefone read FFax write FFax;
@@ -71,8 +67,6 @@ type
 
     procedure SetCEP(const Value: string);
   public
-
-  published
     property Rua: String read FRua    write FRua;
     property Numero: String read FNumero     write FNumero;
     property Complemento: String read FComplemento    write FComplemento;
@@ -96,7 +90,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -116,7 +110,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property CNH: string read FCNH write FCNH;
     property Celular: TTelefone read FCelular write FCelular;
@@ -135,7 +129,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -151,8 +145,6 @@ type
 
     procedure SetCpfOuCnpj(const Value: string);
   public
-
-  published
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property RNTRC: string read FRNTRC write FRNTRC;
   end;
@@ -170,7 +162,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -187,7 +179,7 @@ type
     FTipoConta: tpTipoConta;
   public
 
-  published
+
     property InstituicaoBancaria: string read FInstituicaoBancaria write FInstituicaoBancaria;
     property Agencia: string read FAgencia write FAgencia;
     property Conta: string read FConta write FConta;
@@ -208,7 +200,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property IdPagamentoCliente: string read FIdPagamentoCliente write FIdPagamentoCliente;
     property DataDeLiberacao: TDateTime read FDataDeLiberacao write FDataDeLiberacao;
     property Valor: Double read FValor write FValor;
@@ -236,7 +228,7 @@ type
 
     procedure SetPlaca(const Value: String);
   public
-  published
+
     property Placa: String read FPlaca write SetPlaca;
   end;
 
@@ -260,7 +252,7 @@ type
     FDescricaoOutrosImpostos: string;
   public
 
-  published
+
     property IRRF: Double read FIRRF write FIRRF;
     property SestSenat: Double read FSestSenat write FSestSenat;
     property INSS: Double read FINSS write FINSS;
@@ -284,7 +276,7 @@ type
     FJustificativaOutrosDebitos: string;
   public
 
-  published
+
     property TotalOperacao: Double read FTotalOperacao write FTotalOperacao;
     property TotalViagem: Double read FTotalViagem write FTotalViagem;
     property TotalDeAdiantamento: Double read FTotalDeAdiantamento write FTotalDeAdiantamento;
@@ -304,7 +296,7 @@ type
     FValor: Double;
   public
 
-  published
+
     property Tipo: TpTipoProporcao read FTipo write FTipo;
     property Valor: Double read FValor write FValor;
   end;
@@ -315,7 +307,7 @@ type
     FValor: Double;
   public
 
-  published
+
     property Tipo: TpTipoProporcao read FTipo write FTipo;
     property Valor: Double read FValor write FValor;
   end;
@@ -330,7 +322,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Tipo: TpDiferencaFreteTipo read FTipo write FTipo;
     property Base: TpDiferencaFreteBaseCalculo read FBase write FBase;
     property Tolerancia: TDiferencaFreteMargem read FTolerancia write FTolerancia;
@@ -357,7 +349,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Numero: string read FNumero write FNumero;
     property Serie: string read FSerie write FSerie;
     property Data: TDateTime read FData write FData;
@@ -401,7 +393,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property DocumentoViagem: string read FDocumentoViagem write FDocumentoViagem;
     property CodigoMunicipioOrigem: integer read FCodigoMunicipioOrigem write FCodigoMunicipioOrigem;
     property CodigoMunicipioDestino: integer read FCodigoMunicipioDestino write FCodigoMunicipioDestino;
@@ -437,7 +429,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -459,7 +451,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -481,7 +473,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -503,7 +495,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property NomeOuRazaoSocial: string read FNomeOuRazaoSocial write FNomeOuRazaoSocial;
     property CpfOuCnpj: string read FCpfOuCnpj write SetCpfOuCnpj;
     property Endereco: TEndereco read FEndereco write FEndereco;
@@ -520,11 +512,30 @@ type
     FIdPagamentoCliente: string;
   public
 
-  published
+
     property Motivo: string read FMotivo write FMotivo;
     property Data: TDateTime read FData write FData;
     property Protocolo: string read FProtocolo write FProtocolo;
     property IdPagamentoCliente: string read FIdPagamentoCliente write FIdPagamentoCliente;
+  end;
+
+  TMensagemCollectionItem = class(TObject)
+  private
+    FMensagem: string;
+  public
+
+
+    property Mensagem: string read FMensagem write FMensagem;
+  end;
+
+  TMensagemCollection = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TMensagemCollectionItem;
+    procedure SetItem(Index: Integer; Value: TMensagemCollectionItem);
+  public
+    function Add: TMensagemCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
+    function New: TMensagemCollectionItem;
+    property Items[Index: Integer]: TMensagemCollectionItem read GetItem write SetItem; default;
   end;
 
   TAdicionarOperacao = class(TObject)
@@ -554,8 +565,8 @@ type
     FProprietarioCarga: TProprietarioCarga;
     FVeiculos: TVeiculoCollection;
     FCodigoIdentificacaoOperacaoPrincipal: string;
-    FObservacoesAoTransportador: string;
-    FObservacoesAoCredenciado: string;
+    FObservacoesAoTransportador: TMensagemCollection;
+    FObservacoesAoCredenciado: TMensagemCollection;
     FEntregaDocumentacao: TpEntregaDocumentacao;
     FQuantidadeSaques: Integer;
     FQuantidadeTransferencias: Integer;
@@ -575,10 +586,12 @@ type
     procedure SetViagens(const Value: TViagemCollection);
     procedure SetPagamentos(const Value: TPagamentoCollection);
     procedure SetVeiculos(const Value: TVeiculoCollection);
+    procedure SetObservacoesAoCredenciado(const Value: TMensagemCollection);
+    procedure SetObservacoesAoTransportador(const Value: TMensagemCollection);
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property TipoViagem: TpTipoViagem read FTipoViagem write FTipoViagem;
     property TipoPagamento: TpTipoPagamento read FTipoPagamento write FTipoPagamento;
     property BloquearNaoEquiparado: Boolean read FBloquearNaoEquiparado write FBloquearNaoEquiparado;
@@ -604,8 +617,8 @@ type
     property ProprietarioCarga: TProprietarioCarga read FProprietarioCarga write FProprietarioCarga;
     property Veiculos: TVeiculoCollection read FVeiculos write SetVeiculos;
     property CodigoIdentificacaoOperacaoPrincipal: string read FCodigoIdentificacaoOperacaoPrincipal write FCodigoIdentificacaoOperacaoPrincipal;
-    property ObservacoesAoTransportador: string read FObservacoesAoTransportador write FObservacoesAoTransportador;
-    property ObservacoesAoCredenciado: string read FObservacoesAoCredenciado write FObservacoesAoCredenciado;
+    property ObservacoesAoTransportador: TMensagemCollection read FObservacoesAoTransportador write SetObservacoesAoTransportador;
+    property ObservacoesAoCredenciado: TMensagemCollection read FObservacoesAoCredenciado write SetObservacoesAoCredenciado;
     property EntregaDocumentacao: TpEntregaDocumentacao read FEntregaDocumentacao write FEntregaDocumentacao;
     property QuantidadeSaques: Integer read FQuantidadeSaques write FQuantidadeSaques;
     property QuantidadeTransferencias: Integer read FQuantidadeTransferencias write FQuantidadeTransferencias;
@@ -627,7 +640,7 @@ type
     FDocumentoViagem: string;
   public
 
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property DocumentoViagem: string read FDocumentoViagem write FDocumentoViagem;
   end;
@@ -655,7 +668,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property DataInicioViagem: TDateTime read FDataInicioViagem write FDataInicioViagem;
     property DataFimViagem: TDateTime read FDataFimViagem write FDataFimViagem;
@@ -679,7 +692,6 @@ type
     FCodigoIdentificacaoOperacao: string;
     FMotivo: string;
   public
-  published
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property Motivo: string read FMotivo write FMotivo;
   end;
@@ -696,7 +708,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property Viagens: TViagemCollection read FViagens write SetViagens;
     property Pagamentos: TPagamentoCollection read FPagamentos write SetPagamentos;
@@ -712,7 +724,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property Pagamentos: TPagamentoCollection read FPagamentos write SetPagamentos;
   end;
@@ -724,7 +736,7 @@ type
     FMotivo: string;
   public
 
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property IdPagamentoCliente: string read FIdPagamentoCliente write FIdPagamentoCliente;
     property Motivo: string read FMotivo write FMotivo;
@@ -747,7 +759,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
     property PesoCarga: double read FPesoCarga write FPesoCarga;
     property Viagens: TViagemCollection read FViagens write SetViagens;
@@ -759,9 +771,120 @@ type
     property ValorTransferencias: Double read FValorTransferencias write FValorTransferencias;
   end;
 
+  TGravarVeiculo = class(TObject)
+  private
+    FPlaca: string;
+    FRenavam: string;
+    FChassi: string;
+    FRNTRC: string;
+    FNumeroDeEixos: Integer;
+    FCodigoMunicipio: Integer;
+    FMarca: string;
+    FModelo: string;
+    FAnoFabricacao: Integer;
+    FAnoModelo: Integer;
+    FCor: string;
+    FTara: Integer;
+    FCapacidadeKg: Integer;
+    FCapacidadeM3: Integer;
+    FTipoRodado: TpTipoRodado;
+    FTipoCarroceria: TpTipoCarroceria;
+  public
+
+
+    property Placa: string read FPlaca write FPlaca;
+    property Renavam: string read FRenavam write FRenavam;
+    property Chassi: string read FChassi write FChassi;
+    property RNTRC: string read FRNTRC write FRNTRC;
+    property NumeroDeEixos: Integer read FNumeroDeEixos write FNumeroDeEixos;
+    property CodigoMunicipio: Integer read FCodigoMunicipio write FCodigoMunicipio;
+    property Marca: string read FMarca write FMarca;
+    property Modelo: string read FModelo write FModelo;
+    property AnoFabricacao: Integer read FAnoFabricacao write FAnoFabricacao;
+    property AnoModelo: Integer read FAnoModelo write FAnoModelo;
+    property Cor: string read FCor write FCor;
+    property Tara: Integer read FTara write FTara;
+    property CapacidadeKg: Integer read FCapacidadeKg write FCapacidadeKg;
+    property CapacidadeM3: Integer read FCapacidadeM3 write FCapacidadeM3;
+    property TipoRodado: TpTipoRodado read FTipoRodado write FTipoRodado;
+    property TipoCarroceria: TpTipoCarroceria read FTipoCarroceria write FTipoCarroceria;
+  end;
+
+  TGravarMotorista = class(TObject)
+  private
+    FCPF: string;
+    FNome: string;
+    FCNH: string;
+    FDataNascimento: TDateTime;
+    FNomeDeSolteiraDaMae: string;
+    FEndereco: TEndereco;
+    FTelefones: TTelefones;
+
+    procedure setCPF(const Value: string);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CPF: string read FCPF write setCPF;
+    property Nome: string read FNome write FNome;
+    property CNH: string read FCNH write FCNH;
+    property DataNascimento: TDateTime read FDataNascimento write FDataNascimento;
+    property NomeDeSolteiraDaMae: string read FNomeDeSolteiraDaMae write FNomeDeSolteiraDaMae;
+    property Endereco: TEndereco read FEndereco write FEndereco;
+    property Telefones: TTelefones read FTelefones write FTelefones;
+  end;
+
+  TGravarProprietario = class(TObject)
+  private
+    FCNPJ: string;
+    FTipoPessoa: tpTipoPessoa;
+    FRazaoSocial: string;
+    FRNTRC: string;
+    FEndereco: TEndereco;
+    FTelefones: TTelefones;
+    // Os campos abaixos são obtidos pelo retorno do envio.
+    FTipo: TpTipoProprietario;
+    FTACouEquiparado: Boolean;
+    FDataValidadeRNTRC: TDateTime;
+    FRNTRCAtivo: Boolean;
+
+    procedure setCNPJ(const Value: string);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    property CNPJ: string read FCNPJ write setCNPJ;
+    property TipoPessoa: tpTipoPessoa read FTipoPessoa write FTipoPessoa;
+    property RazaoSocial: string read FRazaoSocial write FRazaoSocial;
+    property RNTRC: string read FRNTRC write FRNTRC;
+    property Endereco: TEndereco read FEndereco write FEndereco;
+    property Telefones: TTelefones read FTelefones write FTelefones;
+    // Os campos abaixos são obtidos pelo retorno do envio.
+    property Tipo: TpTipoProprietario read FTipo write FTipo;
+    property TACouEquiparado: Boolean read FTACouEquiparado write FTACouEquiparado;
+    property DataValidadeRNTRC: TDateTime read FDataValidadeRNTRC write FDataValidadeRNTRC;
+    property RNTRCAtivo: Boolean read FRNTRCAtivo write FRNTRCAtivo;
+  end;
+
+  TObterCodigoOperacaoTransporte = class(TObject)
+  private
+    FMatrizCNPJ: string;
+    FIdOperacaoCliente: string;
+  public
+
+
+    property MatrizCNPJ: string read FMatrizCNPJ write FMatrizCNPJ;
+    property IdOperacaoCliente: string read FIdOperacaoCliente write FIdOperacaoCliente;
+  end;
+
   TCIOT = class(TObject)
   private
     FIntegradora: TIntegradora;
+
+    FGravarProprietario: TGravarProprietario;
+    FGravarVeiculo: TGravarVeiculo;
+    FGravarMotorista: TGravarMotorista;
+
     FAdicionarOperacao: TAdicionarOperacao;
     FObterOperacaoTransportePDF: TObterOperacaoTransportePDF;
     FRetificarOperacao: TRetificarOperacao;
@@ -770,11 +893,17 @@ type
     FAdicionarPagamento: TAdicionarPagamento;
     FCancelarPagamento: TCancelarPagamento;
     FEncerrarOperacao: TEncerrarOperacao;
+    FObterCodigoOperacaoTransporte: TObterCodigoOperacaoTransporte;
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Integradora: TIntegradora read FIntegradora write FIntegradora;
+
+    property GravarProprietario: TGravarProprietario read FGravarProprietario write FGravarProprietario;
+    property GravarVeiculo: TGravarVeiculo read FGravarVeiculo write FGravarVeiculo;
+    property GravarMotorista: TGravarMotorista read FGravarMotorista write FGravarMotorista;
+
     property AdicionarOperacao: TAdicionarOperacao read FAdicionarOperacao write FAdicionarOperacao;
     property ObterOperacaoTransportePDF: TObterOperacaoTransportePDF read FObterOperacaoTransportePDF write FObterOperacaoTransportePDF;
     property RetificarOperacao: TRetificarOperacao read FRetificarOperacao write FRetificarOperacao;
@@ -783,28 +912,10 @@ type
     property AdicionarPagamento: TAdicionarPagamento read FAdicionarPagamento write FAdicionarPagamento;
     property CancelarPagamento: TCancelarPagamento read FCancelarPagamento write FCancelarPagamento;
     property EncerrarOperacao: TEncerrarOperacao read FEncerrarOperacao write FEncerrarOperacao;
+    property ObterCodigoOperacaoTransporte: TObterCodigoOperacaoTransporte read FObterCodigoOperacaoTransporte write FObterCodigoOperacaoTransporte;
   end;
 
 // ************* Retorno
-
-  TMensagemCollectionItem = class(TObject)
-  private
-    FMensagem: string;
-  public
-
-  published
-    property Mensagem: string read FMensagem write FMensagem;
-  end;
-
-  TMensagemCollection = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TMensagemCollectionItem;
-    procedure SetItem(Index: Integer; Value: TMensagemCollectionItem);
-  public
-    function Add: TMensagemCollectionItem; overload; deprecated {$IfDef SUPPORTS_DEPRECATED_DETAILS} 'Obsoleta: Use a função New'{$EndIf};
-    function New: TMensagemCollectionItem;
-    property Items[Index: Integer]: TMensagemCollectionItem read GetItem write SetItem; default;
-  end;
 
   TRetEnvio = class(TObject)
   private
@@ -814,6 +925,12 @@ type
     FVersao: Integer;
     FSucesso: String;
     FProtocoloServico: String;
+
+    FToken: String;
+
+    FProprietario: TGravarProprietario;
+    FVeiculo: TGravarVeiculo;
+    FMotorista: TGravarMotorista;
 
     FPDF: String;
     FCodigoIdentificacaoOperacao: string;
@@ -825,19 +942,26 @@ type
     FDocumentoViagem: TMensagemCollection;
     FDocumentoPagamento: TMensagemCollection;
     FIdPagamentoCliente: string;
+    FEstadoCiot: tpEstadoCIOT;
 
     procedure SetDocumentoViagem(const Value: TMensagemCollection);
     procedure SetDocumentoPagamento(const Value: TMensagemCollection);
   public
     constructor Create;
     destructor Destroy; override;
-  published
+
     property Mensagem: String read FMensagem write FMensagem;
     property Codigo: String read FCodigo write FCodigo;
 
     property Versao: Integer read FVersao write FVersao;
     property Sucesso: String read FSucesso write FSucesso;
     property ProtocoloServico: String read FProtocoloServico write FProtocoloServico;
+
+    property Token: String read FToken write FToken;
+
+    property Proprietario: TGravarProprietario read FProprietario write FProprietario;
+    property Veiculo: TGravarVeiculo read FVeiculo write FVeiculo;
+    property Motorista: TGravarMotorista read FMotorista write FMotorista;
 
     property PDF: String read FPDF write FPDF;
     property CodigoIdentificacaoOperacao: string read FCodigoIdentificacaoOperacao write FCodigoIdentificacaoOperacao;
@@ -849,6 +973,7 @@ type
     property DocumentoViagem: TMensagemCollection read FDocumentoViagem write SetDocumentoViagem;
     property DocumentoPagamento: TMensagemCollection read FDocumentoPagamento write SetDocumentoPagamento;
     property IdPagamentoCliente: string read FIdPagamentoCliente write FIdPagamentoCliente;
+    property EstadoCiot: tpEstadoCIOT read FEstadoCiot write FEstadoCiot;
   end;
 
 implementation
@@ -860,20 +985,32 @@ begin
   inherited Create;
 
   FIntegradora := TIntegradora.Create;
-  FAdicionarOperacao := TAdicionarOperacao.Create;
-  FObterOperacaoTransportePDF := TObterOperacaoTransportePDF.Create;
-  FRetificarOperacao := TRetificarOperacao.Create;
-  FCancelarOperacao := TCancelarOperacao.Create;
-  FAdicionarViagem := TAdicionarViagem.Create;
-  FAdicionarPagamento := TAdicionarPagamento.Create;
-  FCancelarPagamento := TCancelarPagamento.Create;
-  FEncerrarOperacao := TEncerrarOperacao.Create;
+
+  FGravarProprietario := TGravarProprietario.Create;
+  FGravarVeiculo      := TGravarVeiculo.Create;
+  FGravarMotorista    := TGravarMotorista.Create;
+
+  FAdicionarOperacao             := TAdicionarOperacao.Create;
+  FObterCodigoOperacaoTransporte := TObterCodigoOperacaoTransporte.Create;
+  FObterOperacaoTransportePDF    := TObterOperacaoTransportePDF.Create;
+  FRetificarOperacao             := TRetificarOperacao.Create;
+  FCancelarOperacao              := TCancelarOperacao.Create;
+  FAdicionarViagem               := TAdicionarViagem.Create;
+  FAdicionarPagamento            := TAdicionarPagamento.Create;
+  FCancelarPagamento             := TCancelarPagamento.Create;
+  FEncerrarOperacao              := TEncerrarOperacao.Create;
 end;
 
 destructor TCIOT.Destroy;
 begin
   FIntegradora.Free;
+
+  FGravarProprietario.Free;
+  FGravarVeiculo.Free;
+  FGravarMotorista.Free;
+
   FAdicionarOperacao.Free;
+  FObterCodigoOperacaoTransporte.Free;
   FObterOperacaoTransportePDF.Free;
   FRetificarOperacao.Free;
   FCancelarOperacao.Free;
@@ -904,6 +1041,9 @@ begin
   FRemetente := TRemetente.Create;
   FProprietarioCarga := TProprietarioCarga.Create;
   FVeiculos := TVeiculoCollection.Create;
+  FObservacoesAoCredenciado := TMensagemCollection.Create;
+  FObservacoesAoTransportador := TMensagemCollection.Create;
+
 end;
 
 destructor TAdicionarOperacao.Destroy;
@@ -921,6 +1061,8 @@ begin
   FRemetente.Free;
   FProprietarioCarga.Free;
   FVeiculos.Free;
+  FObservacoesAoCredenciado.Free;
+  FObservacoesAoTransportador.Free;
 
   inherited Destroy;
 end;
@@ -933,6 +1075,18 @@ end;
 procedure TAdicionarOperacao.SetMatrizCNPJ(const Value: string);
 begin
   FMatrizCNPJ := {SomenteNumeros(}Value{)};
+end;
+
+procedure TAdicionarOperacao.SetObservacoesAoCredenciado(
+  const Value: TMensagemCollection);
+begin
+  FObservacoesAoCredenciado := Value;
+end;
+
+procedure TAdicionarOperacao.SetObservacoesAoTransportador(
+  const Value: TMensagemCollection);
+begin
+  FObservacoesAoTransportador := Value;
 end;
 
 procedure TAdicionarOperacao.SetPagamentos(const Value: TPagamentoCollection);
@@ -1153,14 +1307,16 @@ begin
 
   FTipoPagamento := TransferenciaBancaria;
 
-  FValores := TValoresOT.Create;
-  FNotasFiscais  := TNotaFiscalCollection.Create;
+  FValores              := TValoresOT.Create;
+  FInformacoesBancarias := TInformacoesBancarias.Create;
+  FNotasFiscais         := TNotaFiscalCollection.Create;
 end;
 
 destructor TViagemCollectionItem.Destroy;
 begin
-  FNotasFiscais.Free;
   FValores.Free;
+  FInformacoesBancarias.Free;
+  FNotasFiscais.Free;
 
   inherited Destroy;
 end;
@@ -1462,12 +1618,18 @@ constructor TRetEnvio.Create;
 begin
   inherited Create;
 
-  FDocumentoViagem := TMensagemCollection.Create;
+  FProprietario       := TGravarProprietario.Create;
+  FVeiculo            := TGravarVeiculo.Create;
+  FMotorista          := TGravarMotorista.Create;
+  FDocumentoViagem    := TMensagemCollection.Create;
   FDocumentoPagamento := TMensagemCollection.Create;
 end;
 
 destructor TRetEnvio.Destroy;
 begin
+  FProprietario.Free;
+  FVeiculo.Free;
+  FMotorista.Free;
   FDocumentoViagem.Free;
   FDocumentoPagamento.Free;
 
@@ -1503,6 +1665,52 @@ end;
 procedure TAdicionarPagamento.SetPagamentos(const Value: TPagamentoCollection);
 begin
   FPagamentos := Value;
+end;
+
+{ TGravarMotorista }
+
+constructor TGravarMotorista.Create;
+begin
+  inherited Create;
+
+  FTelefones := TTelefones.Create;
+  FEndereco  := TEndereco.Create;
+end;
+
+destructor TGravarMotorista.Destroy;
+begin
+  FTelefones.Free;
+  FEndereco.Free;
+
+  inherited Destroy;
+end;
+
+procedure TGravarMotorista.setCPF(const Value: string);
+begin
+  FCPF := {SomenteNumeros(}Value{)};
+end;
+
+{ TGravarProprietario }
+
+constructor TGravarProprietario.Create;
+begin
+  inherited Create;
+
+  FTelefones := TTelefones.Create;
+  FEndereco  := TEndereco.Create;
+end;
+
+destructor TGravarProprietario.Destroy;
+begin
+  FTelefones.Free;
+  FEndereco.Free;
+
+  inherited Destroy;
+end;
+
+procedure TGravarProprietario.setCNPJ(const Value: string);
+begin
+  FCNPJ := {SomenteNumeros(}Value{)};
 end;
 
 end.

@@ -1339,16 +1339,23 @@ object frmACBrCIOT: TfrmACBrCIOT
           Width = 545
           Height = 208
           Caption = ' Opera'#231#245'es do e-Frete '
-          ItemIndex = 1
+          Columns = 2
+          ItemIndex = 0
           Items.Strings = (
-            'Obter Pdf Opera'#231#227'o Transporte'
+            'Login'
+            'Cadastrar Propriet'#225'rio do Ve'#237'culo'
+            'Cadastrar Ve'#237'culo'
+            'Cadastrar Motorista'
             'Adicionar Opera'#231#227'o de Transporte'
+            'Adicionar Viagem a uma Opera'#231#227'o de Transporte'
+            'Adicionar Pagamento a uma Opera'#231#227'o de Trans.'
+            'Obter C'#243'digo Identifica'#231#227'o Opera'#231#227'o Transp.'
+            'Obter Pdf Opera'#231#227'o Transporte'
             'Retificar Opera'#231#227'o de Transporte'
             'Cancelar Opera'#231#227'o de Transporte'
-            'Adicionar Viagem a uma Opera'#231#227'o de Transporte'
-            'Adicionar Pagamento a uma opera'#231#227'o de transporte'
-            'Cancelar Pagamento Programado para uma Opera'#231#227'o de Transporte'
-            'Encerrar uma Opera'#231#227'o de Transporte')
+            'Cancelar Pag. Progr. para uma Oper. de Trans.'
+            'Encerrar uma Opera'#231#227'o de Transporte'
+            'Logout')
           TabOrder = 0
         end
       end
@@ -1400,7 +1407,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Width = 559
           Height = 334
           Align = alClient
-          ScrollBars = ssVertical
+          ScrollBars = ssBoth
           TabOrder = 0
         end
       end
@@ -1431,7 +1438,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Width = 559
           Height = 334
           Align = alClient
-          ScrollBars = ssVertical
+          ScrollBars = ssBoth
           TabOrder = 0
         end
       end
@@ -1457,7 +1464,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Width = 559
           Height = 334
           Align = alClient
-          ScrollBars = ssVertical
+          ScrollBars = ssBoth
           TabOrder = 0
         end
       end
@@ -1472,7 +1479,7 @@ object frmACBrCIOT: TfrmACBrCIOT
           Align = alClient
           Lines.Strings = (
             '')
-          ScrollBars = ssVertical
+          ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
         end

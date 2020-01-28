@@ -959,7 +959,7 @@ begin
          tbCliEmite        : ATipoBoleto := '2' + '0';
       end;
 
-      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
+      if (DataProtesto > Vencimento) then
         Instrucao1:= '01'    // Protestar
       else
         Instrucao1:='02'; //Devolver (Não Protestar)

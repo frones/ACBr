@@ -244,7 +244,6 @@
 																<xs:enumeration value="01"/>
 																<xs:enumeration value="02"/>
 																<xs:enumeration value="03"/>
-																<xs:enumeration value="04"/>
 																<xs:enumeration value="99"/>
 															</xs:restriction>
 														</xs:simpleType>

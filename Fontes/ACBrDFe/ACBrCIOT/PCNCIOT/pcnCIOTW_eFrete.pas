@@ -1591,7 +1591,7 @@ begin
         Gerador.Prefixo := 'obj:';
         Gerador.wGrupoNFSe('GravarRequest');
 
-        GerarIdentificacao(1);
+        GerarIdentificacao(3);
         GerarGravarProprietario;
 
         Gerador.wGrupoNFSe('/GravarRequest');
@@ -1626,7 +1626,7 @@ begin
         Gerador.Prefixo := 'obj:';
         Gerador.wGrupoNFSe('GravarRequest');
 
-        GerarIdentificacao(1);
+        GerarIdentificacao(2);
         GerarGravarMotorista;
 
         Gerador.wGrupoNFSe('/GravarRequest');
@@ -1784,7 +1784,7 @@ begin
         Gerador.Prefixo := 'obj:';
         Gerador.wGrupoNFSe('RetificarOperacaoTransporteRequest', 'WP01');
 
-        GerarIdentificacao(3);
+        GerarIdentificacao(2);
 
         with CIOT.RetificarOperacao do
         begin

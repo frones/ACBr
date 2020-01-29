@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2020
+-- pcnCIOTW_eFrete --
+[*] Ajustes na versão de alguns métodos.
+   Por: Italo Jurisato Junior
+
 28/01/2020
 -- Diversos --
 [*] Implementado os métodos dos serviços: Logon, Proprietarios, Veiculos e

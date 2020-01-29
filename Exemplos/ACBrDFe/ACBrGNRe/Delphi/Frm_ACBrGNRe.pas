@@ -171,10 +171,11 @@ type
     ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     btnGerarMDFe: TButton;
     btnCriarEnviar: TButton;
-    btnImprimir: TButton;
+    btnImprimirTXT: TButton;
     btnGerarPDF: TButton;
     btnConsultaConfigUF: TButton;
     btnConsultarRecibo: TButton;
+    btnImprimirXML: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnSalvarConfigClick(Sender: TObject);
     procedure sbPathGNREClick(Sender: TObject);
@@ -209,10 +210,11 @@ type
     procedure ACBrGNRE1StatusChange(Sender: TObject);
     procedure btnGerarMDFeClick(Sender: TObject);
     procedure btnCriarEnviarClick(Sender: TObject);
-    procedure btnImprimirClick(Sender: TObject);
+    procedure btnImprimirTXTClick(Sender: TObject);
     procedure btnGerarPDFClick(Sender: TObject);
     procedure btnConsultaConfigUFClick(Sender: TObject);
     procedure btnConsultarReciboClick(Sender: TObject);
+    procedure btnImprimirXMLClick(Sender: TObject);
   private
     { Private declarations }
     procedure GravarConfiguracao;
@@ -1028,7 +1030,7 @@ begin
   ACBrGNRE1.Guias.Clear;
 end;
 
-procedure TfrmACBrGNRe.btnImprimirClick(Sender: TObject);
+procedure TfrmACBrGNRe.btnImprimirTXTClick(Sender: TObject);
 begin
   OpenDialog1.Title := 'Selecione a Guia';
   OpenDialog1.DefaultExt := '*-gnre.txt';
@@ -1041,6 +1043,21 @@ begin
     ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
 //    TACBrGNREGuiaFR(ACBrGNRE1.GNREGuia).FastFile :=
 //      IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'Report\GNRE_GUIA.fr3' ;
+    ACBrGNRE1.GuiasRetorno.Imprimir;
+  end;
+end;
+
+procedure TfrmACBrGNRe.btnImprimirXMLClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione a Guia';
+  OpenDialog1.DefaultExt := '*-guia.xml';
+  OpenDialog1.Filter := 'Arquivos Guia (*-guia.xml)|*-guia.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrGNRE1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+  begin
+    ACBrGNRE1.GuiasRetorno.Clear;
+    ACBrGNRE1.GuiasRetorno.LoadFromFile(OpenDialog1.FileName);
     ACBrGNRE1.GuiasRetorno.Imprimir;
   end;
 end;

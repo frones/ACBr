@@ -66,8 +66,8 @@ procedure RawDeflateCompress(inStream, outStream: TStream;
                           level: Tcompressionlevel = cldefault);
 procedure RawDeflateDeCompress(inStream, outStream: TStream);
 
-function crc16(crc: word; S: TStream; len : Cardinal = 0): Word;
-function crc32(thecrc:cardinal; S: TStream; len : Cardinal = 0): Cardinal;
+function crc16(S: TStream; len : Cardinal = 0): Word;
+function crc32(S: TStream; len : Cardinal = 0): Cardinal;
 function adler32(adler : cardinal; S: TStream; len : Cardinal = 0): Cardinal;
 {$IfNDef FPC}
  function SwapEndian(const AValue: LongWord): LongWord;
@@ -92,7 +92,7 @@ begin
   if StreamType = zsGZip then //add GZip Header
   begin
     size := inStream.Size;
-    crc := crc32(0, inStream, size);
+    crc := crc32(inStream, size);
 
     w := $8b1f;  //GZip IDentification
     outStream.WriteBuffer(w,2);
@@ -234,7 +234,7 @@ begin
     end;
     if (FHCRC in flags) then // there is a CRC16 for the header immediately following the header
     begin
-      crcH := crc16(0, inStream, inStream.Position); // get crc16 checksum of the header
+      crcH := crc16(inStream, inStream.Position); // get crc16 checksum of the header
       inStream.ReadBuffer(crcHeader, 2); // 2 bytes CRC16 for the header
       if crcH<>crcHeader then
         ;// header checksum mistake
@@ -268,7 +268,7 @@ begin
 
   if (streamType = zsGZip) then // can check crc32 and size
   begin
-    crc := crc32(0, outStream, outStream.Size); // get result crc32 checksum
+    crc := crc32(outStream, outStream.Size); // get result crc32 checksum
     result := (crc = crcGZin) and (outStream.Size = sizeGZin); // compare with input checksum and size
   end
   else if (streamType = zsZLib) then // can check adler32 checksum
@@ -343,7 +343,7 @@ begin
   end;
 end;
 
-function crc16(crc: word; S: TStream; len: Cardinal): Word;
+function crc16(S: TStream; len: Cardinal): Word;
 var
   n, oldPos: Int64;
   b: Byte;
@@ -371,7 +371,7 @@ begin
   S.Position := oldPos;
 end;
 
-function crc32(thecrc: cardinal; S: TStream; len: Cardinal): Cardinal;
+function crc32(S: TStream; len: Cardinal): Cardinal;
 var
   n, oldPos: Int64;
   b: Byte;

@@ -195,10 +195,10 @@ function DecodeXX(const Value: AnsiString): AnsiString;
 function DecodeYEnc(const Value: AnsiString): AnsiString;
 
 {:Returns a new CRC32 value after adding a new byte of data.}
-function UpdateCrc32(Value: Byte; Crc32: Integer): Integer;
+function UpdateCrc32(Value: Byte; Crc32: Cardinal): Cardinal;
 
 {:return CRC32 from a value string.}
-function Crc32(const Value: AnsiString): Integer;
+function Crc32(const Value: AnsiString): Cardinal;
 
 {:Returns a new CRC16 value after adding a new byte of data.}
 function UpdateCrc16(Value: Byte; Crc16: Word): Word;
@@ -821,7 +821,7 @@ end;
 
 {==============================================================================}
 
-function UpdateCrc32(Value: Byte; Crc32: Integer): Integer;
+function UpdateCrc32(Value: Byte; Crc32: Cardinal): Cardinal;
 begin
   Result := (Crc32 shr 8)
     xor crc32tab[Byte(Value xor (Crc32 and Integer($000000FF)))];
@@ -829,11 +829,11 @@ end;
 
 {==============================================================================}
 
-function Crc32(const Value: AnsiString): Integer;
+function Crc32(const Value: AnsiString): Cardinal;
 var
   n: Integer;
 begin
-  Result := Integer($FFFFFFFF);
+  Result := $FFFFFFFF;
   for n := 1 to Length(Value) do
     Result := UpdateCrc32(Ord(Value[n]), Result);
   Result := not Result;

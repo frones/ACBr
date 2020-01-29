@@ -81,6 +81,9 @@ Uses ACBrReg, ACBrEnterTab, ACBrUtil, ACBrGIF, ACBrCargaBal,
 
 procedure Register;
 begin
+  {$IFDEF DELPHICOMPILER9_UP}
+  ForceDemandLoadState(dlDisable);
+  {$ENDIF}
   RegisterComponents('ACBrDiversos', [TACBrCalculadora, TACBrCMC7, TACBrExtenso, TACBrTroco,
      TACBrValidador, TACBrFala, TACBrEnterTab, TACBrGIF, TACBrBarCode, TACBrInStore, TACBrCargaBal]);
 

@@ -148,6 +148,9 @@ end;
 
 procedure Register;
 begin
+  {$IFDEF DELPHICOMPILER9_UP}
+  ForceDemandLoadState(dlDisable);
+  {$ENDIF}
   RegisterComponents('ACBrDiversos', [TACBrAAC]);
 
   RegisterPropertyEditor(TypeInfo(TACBrAboutInfo), nil, 'AboutACBr',

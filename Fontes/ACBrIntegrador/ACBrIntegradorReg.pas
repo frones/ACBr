@@ -39,7 +39,13 @@ interface
 
 uses
   Classes, SysUtils, ACBrIntegrador
-  {$IFDEF FPC}, LResources {$ENDIF} ;
+  {$IFDEF FPC}
+  , LResources
+  {$ELSE}
+     {$IFDEF COMPILER9_UP}
+      , DesignIntf
+     {$ENDIF}
+  {$ENDIF} ;
 
 procedure Register;
 
@@ -51,6 +57,9 @@ implementation
 
 procedure Register;
 begin
+  {$IFDEF DELPHICOMPILER9_UP}
+  ForceDemandLoadState(dlDisable);
+  {$ENDIF}
   RegisterComponents('ACBrIntegrador', [TACBrIntegrador]);
 end;
 

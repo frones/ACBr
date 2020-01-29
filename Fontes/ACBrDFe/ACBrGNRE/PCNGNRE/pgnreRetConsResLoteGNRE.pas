@@ -50,7 +50,7 @@ unit pgnreRetConsResLoteGNRE;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnLeitor, pgnreConversao;
 
 type
 
@@ -122,6 +122,8 @@ type
     // Versao 2.00
     FtipoGnre: string;
     FValorICMS: Currency;
+    FVersao: TVersaoGNRE;
+    FXML: string;
   published
     property Identificador: Integer read FIdentificador write FIdentificador;
     property SequencialGuia: Integer read FSequencialGuia write FSequencialGuia;
@@ -162,6 +164,8 @@ type
     // Versao 2.00
     property tipoGnre: string read FtipoGnre write FtipoGnre;
     property ValorICMS: Currency read FValorICMS write FValorICMS;
+    property Versao: TVersaoGNRE read FVersao write FVersao;
+    property XML: string read FXML write FXML;
   end;
 
   TGuiaCollection = class(TCollection)
@@ -221,6 +225,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrUtil;
 
 { TTResultLote_GNRE }
 
@@ -299,6 +306,7 @@ begin
         resGuia.Add;
         Inc(j);
 
+        resGuia.Items[j].Versao := ve100;
         resGuia.Items[j].Identificador          := StrToInt(Copy(SLResultGuia.Strings[i], 1, 1));
         resGuia.Items[j].SequencialGuia         := StrToInt(Copy(SLResultGuia.Strings[i], 2, 4));
         resGuia.Items[j].SituacaoGuia           := Trim(Copy(SLResultGuia.Strings[i], 6, 1));
@@ -359,6 +367,7 @@ end;
 function TTResultLote_GNRE.Ler_Versao_2: boolean;
 var
   i, j, k, l: Integer;
+  aXML: string;
 begin
   if Leitor.rExtrai(2, 'resultado') <> '' then
   begin
@@ -367,6 +376,13 @@ begin
     begin
       resGuia.Add;
 
+      aXML := '<guia versao="2.00" xmlns="http://www.gnre.pe.gov.br">' +
+                Leitor.Grupo +
+              '</guia>';
+
+      resGuia.Items[i].XML := InserirDeclaracaoXMLSeNecessario(aXML);
+
+      resGuia.Items[i].Versao := ve200;
       resGuia.Items[i].SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
       resGuia.Items[i].UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
       resGuia.Items[i].tipoGnre              := Leitor.rCampo(tcStr, 'tipoGnre');

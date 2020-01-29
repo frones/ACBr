@@ -257,7 +257,7 @@ end;
 function TGuiasRetorno.LerXML(AXML: String): Boolean;
 var
   GNRERetorno: TGNRERetorno;
-  i, j, k: Integer;
+  i, j, k, Nivel: Integer;
   Leitor: TLeitor;
 begin
   Result := False;
@@ -269,10 +269,12 @@ begin
   try
     GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
 
-    if Leitor.rExtrai(1, 'resultado') <> '' then
-    begin
+    Nivel := 1;
+//    if Leitor.rExtrai(1, 'resultado') <> '' then
+//    begin
+//     Nivel := 2;
       i := 0;
-      while Leitor.rExtrai(2, 'guia', '', i + 1) <> '' do
+      while Leitor.rExtrai(Nivel, 'guia', '', i + 1) <> '' do
       begin
         GNRERetorno.SituacaoGuia          := Leitor.rCampo(tcStr, 'situacaoGuia');
         GNRERetorno.UFFavorecida          := Leitor.rCampo(tcStr, 'ufFavorecida');
@@ -284,7 +286,8 @@ begin
         GNRERetorno.RepresentacaoNumerica := Leitor.rCampo(tcStr, 'linhaDigitavel');
         GNRERetorno.CodigoBarras          := Leitor.rCampo(tcStr, 'codigoBarras');
 
-        if Leitor.rExtrai(3, 'contribuinteEmitente') <> '' then
+        Inc(Nivel);
+        if Leitor.rExtrai(Nivel, 'contribuinteEmitente') <> '' then
         begin
           GNRERetorno.DocEmitente         := Leitor.rCampo(tcStr, 'CNPJ');
           GNRERetorno.RazaoSocialEmitente := Leitor.rCampo(tcStr, 'razaoSocial');
@@ -295,10 +298,11 @@ begin
           GNRERetorno.TelefoneEmitente    := Leitor.rCampo(tcStr, 'telefone');
         end;
 
-        if Leitor.rExtrai(3, 'itensGNRE') <> '' then
+        if Leitor.rExtrai(Nivel, 'itensGNRE') <> '' then
         begin
+          Inc(Nivel);
           j := 0;
-          while Leitor.rExtrai(4, 'item', '', j + 1) <> '' do
+          while Leitor.rExtrai(Nivel, 'item', '', j + 1) <> '' do
           begin
             GNRERetorno.CodReceita     := Leitor.rCampo(tcInt, 'receita');
             GNRERetorno.DataVencimento := DateToStr(Leitor.rCampo(tcDat, 'dataVencimento'));
@@ -306,7 +310,8 @@ begin
             if Leitor.rAtributo('tipo=', 'documentoOrigem') = '10' then
               GNRERetorno.NumDocOrigem := Leitor.rCampo(tcDe2, 'documentoOrigem');
 
-            if Leitor.rExtrai(5, 'referencia') <> '' then
+            Inc(Nivel);
+            if Leitor.rExtrai(Nivel, 'referencia') <> '' then
             begin
               GNRERetorno.PeriodoReferencia := Leitor.rCampo(tcStr, 'periodo');
               GNRERetorno.MesAnoReferencia := Leitor.rCampo(tcStr, 'mes') +
@@ -314,7 +319,7 @@ begin
             end;
 
             k := 0;
-            while Leitor.rExtrai(5, 'valor', '', k + 1) <> '' do
+            while Leitor.rExtrai(Nivel, 'valor', '', k + 1) <> '' do
             begin
               {
               11 - Valor Principal ICMS
@@ -346,7 +351,7 @@ begin
               Inc(k);
             end;
 
-            if Leitor.rExtrai(5, 'contribuinteDestinatario') <> '' then
+            if Leitor.rExtrai(Nivel, 'contribuinteDestinatario') <> '' then
             begin
               GNRERetorno.DocDestinatario       := Leitor.rCampo(tcStr, 'CNPJ');
               GNRERetorno.MunicipioDestinatario := Leitor.rCampo(tcStr, 'municipio');
@@ -355,10 +360,11 @@ begin
                 GNRERetorno.DocDestinatario := Leitor.rCampo(tcStr, 'CPF');
             end;
 
-            if Leitor.rExtrai(5, 'camposExtras') <> '' then
+            if Leitor.rExtrai(Nivel, 'camposExtras') <> '' then
             begin
+              Inc(Nivel);
               k := 0;
-              while Leitor.rExtrai(6, 'campoExtra', '', k + 1) <> '' do
+              while Leitor.rExtrai(Nivel, 'campoExtra', '', k + 1) <> '' do
               begin
                 GNRERetorno.InfoComplementares := GNRERetorno.InfoComplementares +
                                                   Leitor.rCampo(tcStr, 'valor');
@@ -372,7 +378,7 @@ begin
 
         Inc(i);
       end;
-    end
+//    end
   finally
     Leitor.Free;
     Result := True;

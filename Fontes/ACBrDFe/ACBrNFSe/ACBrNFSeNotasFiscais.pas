@@ -391,6 +391,11 @@ begin
     FNFSeR.PathIniCidades := Configuracoes.Geral.PathIniCidades;
     FNFSeR.TabServicosExt := Configuracoes.Arquivos.TabServicosExt;
     FNFSeR.VersaoXML      := Configuracoes.Geral.ConfigXML.VersaoXML; //Alterado Dalvan
+
+    if Configuracoes.WebServices.Ambiente = taProducao then
+      FNFSeR.Producao := snSim
+    else
+      FNFSeR.Producao := snNao;
   end;
   FNFSeR.LerXml;
 

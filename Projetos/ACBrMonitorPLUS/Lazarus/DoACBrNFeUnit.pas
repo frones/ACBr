@@ -60,7 +60,6 @@ public
   function GerarNFeIni(XML: string): string;
   procedure RespostaImpressao(pImprimir: Boolean; pImpressora: String;
             pPreview: String; pCopias: Integer; pPDF: Boolean);
-  procedure RespostaItensNFe(NotasFiscaisID: integer = 0; ItemID: integer = 0; Gerar: boolean = False);  //
   Procedure LerIniNFe(ArqINI: String);
   procedure ImprimirNFe(pImpressora: String; pPreview: String; pCopias: Integer; pPDF: Boolean);
   procedure RespostaIntegrador;
@@ -680,41 +679,6 @@ begin
         end;
       end;
     end;
-  end;
-end;
-
-procedure TACBrObjetoNFe.RespostaItensNFe(NotasFiscaisID: integer;
-  ItemID: integer; Gerar: boolean);
-var
-  Resp: TRetornoItemResposta;
-begin
-  Resp := TRetornoItemResposta.Create(
-    'NFe' + Trim(IntToStr(
-    fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.Ide.nNF)), TpResp, codUTF8);
-  try
-    with fACBrNFe.WebServices.Retorno.NFeRetorno.ProtDFe.Items[ItemID] do
-    begin
-      //Resp.Versao := verAplic;
-      Resp.TpAmb := TpAmbToStr(TpAmb);
-      Resp.VerAplic := VerAplic;
-      Resp.CStat := cStat;
-      Resp.XMotivo := XMotivo;
-      //Resp.CUF := fACBrNFe.WebServices.Retorno.NFeRetorno.cUF;
-      //Resp.ChNFe := chDFe;
-      Resp.DhRecbto := dhRecbto;
-      Resp.NProt := nProt;
-      Resp.DigVal := digVal;
-
-      //if Gerar then
-        //Resp.Arquivo := fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NomeArq+sLineBreak;
-          {PathWithDelim(fACBrNFe.Configuracoes.Arquivos.PathSalvar) +
-          OnlyNumber(fACBrNFe.NotasFiscais.Items[NotasFiscaisID].NFe.infNFe.ID) +
-          '-nfe.xml';}
-
-      fpCmd.Resposta := fpCmd.Resposta + Resp.Gerar;
-    end;
-  finally
-    Resp.Free;
   end;
 end;
 
@@ -1360,8 +1324,14 @@ begin
         Resposta.Processar(ACBrNFe);
         fpCmd.Resposta := Resposta.Msg + sLineBreak + Resposta.Gerar;
 
-        if  FilesExists( AXML ) then
-          fpCmd.Resposta :=  fpCmd.Resposta + sLineBreak + 'Arquivo=' + AXML;
+        if (ACBrNFe.NotasFiscais.Count > 0) then
+        begin
+          if NaoEstaVazio(ACBrNFe.NotasFiscais.Items[0].NomeArq) then
+            fpCmd.Resposta := fpCmd.Resposta + sLineBreak + 'Arquivo=' + ACBrNFe.NotasFiscais.Items[0].NomeArq;
+        end
+        else if ACBrNFe.Configuracoes.Geral.Salvar then
+            fpCmd.Resposta := fpCmd.Resposta + sLineBreak + 'Arquivo='
+            + PathWithDelim(ACBrNFe.Configuracoes.Arquivos.PathSalvar) + AXML + '-sit.xml';
 
       finally
         Resposta.Free;

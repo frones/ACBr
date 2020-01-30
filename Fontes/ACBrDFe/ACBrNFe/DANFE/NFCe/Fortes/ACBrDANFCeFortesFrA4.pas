@@ -702,14 +702,23 @@ procedure TfrmACBrDANFCeFortesFrA4.RLMemo2BeforePrint(Sender: TObject;
 var
   I:integer;
 begin
-  if self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.obsCont.Count > 0 then
+  with self.FACBrNFeDANFCeFortesA4.FpNFe do
+  begin
+    if InfAdic.obsCont.Count > 0 then
     begin
-      for I := 0 to self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.obsCont.Count - 1 do
-        Text := Text + StringReplace( self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.obsCont[i].xCampo + ': ' +
-                                      self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) + #13;
+      for I := 0 to InfAdic.obsCont.Count - 1 do
+        Text := Text + StringReplace(InfAdic.obsCont[i].xCampo + ': ' +
+                                     InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) + #13;
     end;
 
-  Text := Text + StringReplace(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl, ';', #13, [rfReplaceAll] ) ;
+    Text := Text + StringReplace(InfAdic.infCpl, ';', #13, [rfReplaceAll] ) + #13;
+
+    if procNFe.xMsg <> '' then
+    begin
+      Text := Text + 'Nota MS Premiada' + #13 + 'www.notamspremiada.ms.gov.br';
+      Text := Text + #13 + ACBrStr(procNFe.xMsg);
+    end;
+  end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLMemo3BeforePrint(Sender: TObject;

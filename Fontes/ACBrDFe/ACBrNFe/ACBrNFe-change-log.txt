@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/01/2020
+-- ACBrDANFCeFortesFrA4 --  
+[*] Incluido a impressão dos numeros dos bilhestes da Nota MS Premiada.
+Por: Italo Jurisato Junior
+
 23/01/2020
 -- pcnNFeRTXT --  
 [*] Atualizado leitura do grupo pagamento validando tag YA, disponivel na versão 3.10 da NFe

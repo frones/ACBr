@@ -49,7 +49,7 @@ Símbolo : Significado
 
 30/01/2020
 -- ACBrDANFCeFortesFrA4 --  
-[*] Incluido a impressão dos numeros dos bilhestes da Nota MS Premiada.
+[*] Incluído a impressão dos numeros dos bilhetes da Nota MS Premiada.
 Por: Italo Jurisato Junior
 
 23/01/2020

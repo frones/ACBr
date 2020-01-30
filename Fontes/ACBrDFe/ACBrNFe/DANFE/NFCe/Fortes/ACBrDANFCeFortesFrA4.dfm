@@ -16,7 +16,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   TextHeight = 13
   object rlReportA4: TRLReport
     Left = 8
-    Top = -300
+    Top = 0
     Width = 794
     Height = 1123
     Font.Charset = DEFAULT_CHARSET
@@ -496,9 +496,9 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail1: TRLSubDetail
       Left = 38
-      Top = 302
+      Top = 320
       Width = 718
-      Height = 78
+      Height = 59
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
       Borders.DrawTop = False
@@ -651,7 +651,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail2: TRLSubDetail
       Left = 38
-      Top = 380
+      Top = 379
       Width = 718
       Height = 446
       Borders.Sides = sdCustom
@@ -1277,7 +1277,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLBand14: TRLBand
       Left = 38
-      Top = 284
+      Top = 302
       Width = 718
       Height = 18
       BandType = btSummary
@@ -1318,6 +1318,48 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = [fsBold]
         Layout = tlCenter
         ParentFont = False
+      end
+    end
+    object RLBand17: TRLBand
+      Left = 38
+      Top = 284
+      Width = 718
+      Height = 18
+      BandType = btSummary
+      Transparent = False
+      BeforePrint = RLBand17BeforePrint
+      object RLLabel43: TRLLabel
+        Left = 422
+        Top = 0
+        Width = 134
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor Frete :'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+      end
+      object RLLabel52: TRLLabel
+        Left = 560
+        Top = 0
+        Width = 154
+        Height = 16
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlCenter
+        ParentFont = False
+        BeforePrint = RLLabel52BeforePrint
       end
     end
   end

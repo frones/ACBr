@@ -1,7 +1,7 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
-  Left = 437
+  Left = 0
   Height = 745
-  Top = 190
+  Top = 0
   Width = 1012
   Caption = 'frmACBrDANFCeFortesFrA4'
   ClientHeight = 745
@@ -15,7 +15,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
-    Top = -300
+    Top = 0
     Width = 794
     Font.Color = clBlack
     Font.Height = -13
@@ -584,8 +584,8 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     end
     object RLSubDetail1: TRLSubDetail
       Left = 38
-      Height = 78
-      Top = 302
+      Height = 59
+      Top = 320
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -770,7 +770,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLSubDetail2: TRLSubDetail
       Left = 38
       Height = 446
-      Top = 380
+      Top = 379
       Width = 718
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
@@ -1504,7 +1504,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
     object RLBand14: TRLBand
       Left = 38
       Height = 18
-      Top = 284
+      Top = 302
       Width = 718
       BandType = btSummary
       Borders.Sides = sdCustom
@@ -1556,17 +1556,67 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Height = 0
       end
     end
+    object RLBand17: TRLBand
+      Left = 38
+      Height = 18
+      Top = 284
+      Width = 718
+      BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      Transparent = False
+      BeforePrint = RLBand17BeforePrint
+      object RLLabel43: TRLLabel
+        Left = 422
+        Height = 16
+        Top = 0
+        Width = 134
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = 'Valor Frete :'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Layout = tlCenter
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel52: TRLLabel
+        Left = 560
+        Height = 16
+        Top = 0
+        Width = 154
+        Alignment = taRightJustify
+        AutoSize = False
+        Caption = '0000'
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Layout = tlCenter
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        BeforePrint = RLLabel52BeforePrint
+      end
+    end
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 'Projeto ACBr'
     DisplayName = 'Documento PDF'
     left = 818
-    top = 79
+    top = 72
   end
   object RLHTMLFilter1: TRLHTMLFilter
     DocumentStyle = dsCSS2
     DisplayName = 'HTML'
     left = 821
-    top = 131
+    top = 124
   end
 end

@@ -49,6 +49,9 @@ Símbolo : Significado
 
 30/01/2020
 -- ACBrDANFCeFortesFrA4 --  
+[*] Incluído a impressão do valor total do frete.
+Por: Italo Jurisato Junior
+-- ACBrDANFCeFortesFrA4 --  
 [*] Incluído a impressão dos numeros dos bilhetes da Nota MS Premiada.
 Por: Italo Jurisato Junior
 

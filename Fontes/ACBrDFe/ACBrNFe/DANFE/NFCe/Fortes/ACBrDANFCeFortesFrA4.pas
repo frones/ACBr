@@ -167,6 +167,9 @@ type
     RLLabel51: TRLLabel;
     lCancelada: TRLLabel;
     rllFisco: TRLLabel;
+    RLBand17: TRLBand;
+    RLLabel43: TRLLabel;
+    RLLabel52: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLBand9BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -258,6 +261,9 @@ type
     procedure RLLabel51BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLBand11BeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure RLLabel52BeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure RLBand17BeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     FNumItem: Integer;
     FNumPag: Integer;
@@ -419,6 +425,12 @@ procedure TfrmACBrDANFCeFortesFrA4.RLBand15BeforePrint(Sender: TObject;
 begin
   with self.FACBrNFeDANFCeFortesA4 do
     PrintIt := (ImprimeTributos = trbSeparadamente);
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLBand17BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete > 0;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
@@ -965,6 +977,12 @@ begin
 end;
 
 
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel52BeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+  Text := FormatFloat('R$ ,0.00;R$ -,0.00', self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vFrete);
+end;
+
 procedure TfrmACBrDANFCeFortesFrA4.RlPelosProdutosBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 Var
@@ -973,13 +991,11 @@ begin
   With self.FACBrNFeDANFCeFortesA4 do
   begin
     With FpNFe.Total.ICMSTot do
-      dPelosProdutos := ( VProd - VDesc + VOutro); // Valor Total
+      dPelosProdutos := (vProd - vDesc + vOutro + vFrete); // Valor Total
 
     dPelosProdutos := dPelosProdutos - ( vTribFed + vTribEst + vTribMun) ;
   end;
   Text  := FormatFloat('R$ ,0.00', dPelosProdutos );
-
-
 end;
 
 

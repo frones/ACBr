@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/01/2020
+[+] DoACBrUnit
+Adicionado método ACBr.CopyFile()
+contribuição: Fabio Souza
+https://www.projetoacbr.com.br/forum/topic/55876-sugest%C3%A3o-de-melhoria-fun%C3%A7%C3%A3o-acbrcopyfile/
+
+29/01/2020
+[*] DoACBrNFeUnit
+Validação no retorno do campo "Arquivo" no método ConsultarNFe.
+
 14/01/2020
 [*] DoACBrNFe, ACBrMonitorConfig
 Ajuste no método SetLogotipo, atualizado segundo parametro permitindo gravar Path do logo NFCe
@@ -52,7 +62,7 @@ Ajuste no método AssinarNFe, retornar o path correto da gravação do XML no caso 
 
 10/01/2020
 [*] DoACBrNFe
-    Melhoria no metodo GerarNFeIni.
+Melhoria no metodo GerarNFeIni.
 
 09/01/2020
 [+] DoACBrUnit, DoACBrNFe, DoACBrCTe, DoACBrMDFe

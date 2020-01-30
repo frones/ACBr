@@ -179,6 +179,26 @@ begin
           Cmd.Resposta := BoolToStr(FilesExists( Files ), True) ;
         end
 
+        else if Cmd.Metodo = 'copyfile' then
+        begin
+          VerificaPermiteComandosRemoto ;
+          if FileExists(Trim(Cmd.Params(0))) then
+          begin
+            if ( not FileExists(Trim(cmd.Params(1))) ) or ( StrToBoolDef(cmd.Params(2), False) ) then
+            begin
+              if StrToBoolDef(cmd.Params(3), False) then
+                if not ForceDirectories(ExtractFileDir(Trim(cmd.Params(1)))) then
+                  raise Exception.Create(' Falha ao criar a(s) pasta(s) de destino: ' + ExtractFileDir(Trim(cmd.Params(1))));
+
+              if not CopyFile(PAnsiChar(Trim(cmd.Params(0))), PAnsiChar(Trim(cmd.Params(1))), False) then
+                raise Exception.Create( 'Falha ao copiar o arquivo ' + Trim(cmd.Params(0)) + ' para ' + Trim(cmd.Params(1)) );
+            end;
+          end
+          else
+            raise Exception.Create('Arquivo '+Cmd.Params(0)+' não existe.');
+
+        end
+
         else if Cmd.Metodo = 'deletefiles' then
         begin
           VerificaPermiteComandosRemoto ;

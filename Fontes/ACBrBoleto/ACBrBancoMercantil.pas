@@ -271,7 +271,9 @@ begin
                   PadRight(Instrucao1,2,'0')                                  +  // instruçoes de cobrança
                   PadRight(Instrucao2,2,'0')                                  +  // instruçoes de cobrança
                   IntToStrZero(round(ValorMoraJuros * 100),13)            + // juros mora 11.2
-                  FormatDateTime( 'ddmmyy', DataDesconto)                 + // data limite desconto
+                  IfThen(DataDesconto > 0,
+                                      FormatDateTime( 'ddmmyy', DataDesconto),
+                                      PadRight('', 6, '0'))               + // data limite desconto
                   IntToStrZero(round(ValorDesconto * 100) ,13)            + // valor desconto
                   StringOfChar( '0', 13)                                  + // iof - caso seguro
                   StringOfChar( '0', 13)                                  + // valor abatimento ?????

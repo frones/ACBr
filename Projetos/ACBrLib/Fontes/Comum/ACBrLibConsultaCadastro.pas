@@ -47,7 +47,7 @@ type
   TConsultaCadastroItemResposta = class(TACBrLibRespostaBase)
   private
     Farquivo: string;
-    FCEP: Integer;
+    FCEP: string;
     FcMun: Integer;
     FCNAE: Integer;
     FcSit: Integer;
@@ -97,7 +97,7 @@ type
     property xBairro: String read FxBairro write FxBairro;
     property cMun: Integer read FcMun write FcMun;
     property xMun: String read FxMun write FxMun;
-    property CEP: Integer read FCEP write FCEP;
+    property CEP: String read FCEP write FCEP;
 
   end;
 
@@ -182,7 +182,7 @@ begin
   FxBairro := infCad.xBairro;
   FcMun := infCad.cMun;
   FxMun := infCad.xMun;
-  FCEP := infCad.CEP;
+  FCEP := IntToStrZero(infCad.CEP,8);
 end;
 
 { TConsultaCadastroResposta }

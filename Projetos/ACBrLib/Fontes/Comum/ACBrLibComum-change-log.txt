@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 16/01/2020
+--- ACBrLibConsultaCadastro
+[-] Ajuste na formatação de retorno do campo CEP
+   Por: José M S Junior
+
+16/01/2020
 --- ACBrLibCTeClass, ACBrLibConsultaCadastro, ACBrLibDistribuicaoDFe, ACBrLibConsReciDFe ---
 [-] Correção nos métodos Respostas da LibDFe devido alteração na nomenclatura do Retorno de Consulta
    Por: José M S Junior

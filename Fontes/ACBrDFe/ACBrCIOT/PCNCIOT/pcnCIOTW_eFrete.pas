@@ -1693,11 +1693,15 @@ begin
           Gerador.wCampoNFSe(tcStr, 'AP04', 'MatrizCNPJ            ', 14, 14, 1, MatrizCNPJ);
           Gerador.wCampoNFSe(tcStr, 'AP05', 'FilialCNPJ            ', 14, 14, 1, FilialCNPJ);
           Gerador.wCampoNFSe(tcStr, 'AP06', 'IdOperacaoCliente     ', 01, 01, 0, IdOperacaoCliente, 'Id / Chave primária da operação de transporte no sistema do Cliente.');
-          Gerador.wCampoNFSe(tcDat, 'AP07', 'DataInicioViagem      ', 10, 10, 1, DataInicioViagem);
+          if TipoViagem <> TAC_Agregado then
+            Gerador.wCampoNFSe(tcDat, 'AP07', 'DataInicioViagem      ', 10, 10, 1, DataInicioViagem);
           Gerador.wCampoNFSe(tcDat, 'AP08', 'DataFimViagem         ', 10, 10, 1, DataFimViagem, 'Data prevista para o fim de viagem.');
           Gerador.wCampoNFSe(tcInt, 'AP09', 'CodigoNCMNaturezaCarga', 01, 04, 1, CodigoNCMNaturezaCarga);
-          Gerador.wCampoNFSe(tcDe4, 'AP10', 'PesoCarga             ', 01, 01, 1, PesoCarga);
-          Gerador.wCampoNFSe(tcStr, 'AP11', 'TipoEmbalagem         ', 01, 01, 1, TipoEmbalagemToStr(TipoEmbalagem));
+          if TipoViagem <> TAC_Agregado then
+          begin
+            Gerador.wCampoNFSe(tcDe4, 'AP10', 'PesoCarga             ', 01, 01, 1, PesoCarga);
+            Gerador.wCampoNFSe(tcStr, 'AP11', 'TipoEmbalagem         ', 01, 01, 1, TipoEmbalagemToStr(TipoEmbalagem));
+          end;
 
           if TipoViagem = Padrao then
             GerarViagem;
@@ -1761,9 +1765,11 @@ begin
           Gerador.wCampoNFSe(tcInt, 'AP255', 'QuantidadeTransferencias', 01, 01, 1, QuantidadeTransferencias);
           Gerador.wCampoNFSe(tcDe2, 'AP256', 'ValorSaques             ', 01, 01, 1, ValorSaques);
           Gerador.wCampoNFSe(tcDe2, 'AP257', 'ValorTransferencias     ', 01, 01, 1, ValorTransferencias);
-          Gerador.wCampoNFSe(tcInt, 'AP258', 'CodigoTipoCarga         ', 01, 01, 1, CodigoTipoCarga);
-
-          Gerador.wCampoNFSe(tcBoolStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, True)));
+          if TipoViagem <> TAC_Agregado then
+          begin
+            Gerador.wCampoNFSe(tcInt, 'AP258', 'CodigoTipoCarga        ', 01, 01, 1, CodigoTipoCarga);
+            Gerador.wCampoNFSe(tcBoolStr, 'AP259', 'AltoDesempenho     ', 01, 01, 1, LowerCase(BoolToStr(AltoDesempenho, True)));
+          end;
           Gerador.wCampoNFSe(tcBoolStr, 'AP260', 'DestinacaoComercial', 01, 01, 1, LowerCase(BoolToStr(DestinacaoComercial, True)));
           Gerador.wCampoNFSe(tcBoolStr, 'AP261', 'FreteRetorno       ', 01, 01, 1, LowerCase(BoolToStr(FreteRetorno, True)));
 

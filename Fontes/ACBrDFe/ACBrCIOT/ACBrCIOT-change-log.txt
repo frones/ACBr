@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/01/2020
+-- pcnCIOTW_eFrete --
+[*] https://www.projetoacbr.com.br/forum/topic/55664-acbrciot/?do=findComment&comment=367376
+   Por: Alexandre Souza Pinheiro
+
 29/01/2020
 -- pcnCIOTW_eFrete --
 [*] Ajustes na versão de alguns métodos.

@@ -53,6 +53,10 @@ Símbolo : Significado
     Impressa ou não.
    Por: Italo Jurisato Junior
 
+-- ACBrNFSeDANFSeFR --
+[*] Impressão de mensagem indicativa do ambiente de homologação no DANFSE FastReport.
+  Por: BigWings
+
 28/01/2020
 -- ACBrNFSeDANFSeRLRetrato --
 [*] Ajustes na leitura das informações: Razão Social do Prestador e Insc. Estadual do

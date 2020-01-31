@@ -605,8 +605,8 @@ begin
         rllTomaEmail.Caption    := IfThen( Email    <> '' , Email , fpDANFSe.T_Email);
       end;
 
-      rllMsgTeste.Visible := not (Producao = snNao);
-      rllMsgTeste.Enabled := not (Producao = snNao);
+      rllMsgTeste.Visible := (Producao = snNao);
+      rllMsgTeste.Enabled := (Producao = snNao);
     end;
 
     if NfseCancelamento.DataHora<>0 then

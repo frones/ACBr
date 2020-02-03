@@ -94,7 +94,7 @@ var
 
   function FormatarDataPadraoAmericanoParaBrasileiro(Str: string): string;
   begin
-    if lenght(Str) = 10 then
+    if Length(Str) = 10 then
     begin
       // Já está formatado.
       //Veja: https://www.projetoacbr.com.br/forum/topic/55988-campo-data-invalido/

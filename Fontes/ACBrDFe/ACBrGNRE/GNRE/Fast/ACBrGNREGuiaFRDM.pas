@@ -92,9 +92,18 @@ procedure TdmACBrGNREFR.CarregaDados;
 var
   Referencia : String;
 
-  function FormatarData(Str: string): string;
+  function FormatarDataPadraoAmericanoParaBrasileiro(Str: string): string;
   begin
-    Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4);
+    if lenght(Str) = 10 then
+    begin
+      // Já está formatado.
+      //Veja: https://www.projetoacbr.com.br/forum/topic/55988-campo-data-invalido/
+      Result := Str;
+    end
+    else
+    begin
+      Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4);
+    end;
   end;
 
   function RemoverZeros(Str: string): string;
@@ -184,12 +193,12 @@ begin
       FieldByName('NumDocOrigem').AsString          := RemoverZeros(NumDocOrigem);
       FieldByName('Convenio').AsString              := Convenio;
       FieldByName('InfoComplementares').AsString    := InfoComplementares;
-      FieldByName('DataVencimento').AsDateTime      := StrToDate(FormatarData(DataVencimento));
+      FieldByName('DataVencimento').AsDateTime      := StrToDate(FormatarDataPadraoAmericanoParaBrasileiro(DataVencimento));
 
       if DataLimitePagamento = '00000000' then
         FieldByName('DataLimitePagamento').AsDateTime := FieldByName('DataVencimento').AsDateTime
       else
-        FieldByName('DataLimitePagamento').AsDateTime := StrToDate(FormatarData(DataLimitePagamento));
+        FieldByName('DataLimitePagamento').AsDateTime := StrToDate(FormatarDataPadraoAmericanoParaBrasileiro(DataLimitePagamento));
 
       FieldByName('PeriodoReferencia').AsString      := PeriodoReferencia;
       FieldByName('MesAnoReferencia').AsString       := MesAnoReferencia;

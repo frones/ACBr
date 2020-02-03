@@ -724,12 +724,6 @@ begin
     end;
 
     Text := Text + StringReplace(InfAdic.infCpl, ';', #13, [rfReplaceAll] ) + #13;
-
-    if procNFe.xMsg <> '' then
-    begin
-      Text := Text + 'Nota MS Premiada' + #13 + 'www.notamspremiada.ms.gov.br';
-      Text := Text + #13 + ACBrStr(procNFe.xMsg);
-    end;
   end;
 end;
 

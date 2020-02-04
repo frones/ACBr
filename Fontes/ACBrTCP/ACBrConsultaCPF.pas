@@ -101,7 +101,7 @@ var
   AURL, Html: String;
 begin
   try
-    Self.HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaSonoro.asp');
+    Self.HTTPGet('https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublicaSonoro.asp');
     Html := Self.RespHTTP.Text;
     //Debug
     //WriteToTXT('C:\TEMP\ACBrConsultaCPF-Captcha.TXT',Html);
@@ -207,7 +207,7 @@ begin
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
+    HTTPPost('https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
 
     //Debug
     //RespHTTP.SaveToFile('C:\TEMP\ACBrConsultaCPF-1.TXT');

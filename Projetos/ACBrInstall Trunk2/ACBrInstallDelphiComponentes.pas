@@ -37,7 +37,8 @@ interface
 
 uses
   SysUtils, Windows, Messages, Classes, Forms, System.Generics.Collections,
-  JclIDEUtils, JclCompilerUtils, ACBrPacotes;
+  JclIDEUtils, JclCompilerUtils, DelphiData,
+  ACBrPacotes, UACBrPlataformaInstalacaoAlvo;
 
 type
   TDestino = (tdSystem, tdDelphi, tdNone);
@@ -73,10 +74,7 @@ type
     FOnProgresso: TOnProgresso;
     FOnInformaSituacao: TOnInformarSituacao;
 
-    InstalacaoAtual: TJclBorRADToolInstallation;
-    tPlatformAtual: TJclBDSPlatform;
-    sPlatform: string;
-    sDirLibrary: string;
+    UmaPlataformaDestino: TPlataformaDestino;
 
     FPacoteAtual: TFileName;
 
@@ -117,18 +115,21 @@ type
     function PathArquivoLog(const NomeVersao: string): String;
 
     procedure DesligarDefines;
-    procedure FazInstalacaoInicial(ListaPacotes: TPacotes; UmaInstalacaoAtual: TJclBorRADToolInstallation);
+    procedure FazInstalacaoInicial(ListaPacotes: TPacotes; PlataformaDestino: TPlataformaDestino);
     procedure InstalarOutrosRequisitos;
     procedure FazInstalacaoDLLs(const APathBin: string);
+    procedure ConfiguraMetodosCompiladores;
 
   public
     OpcoesInstall: TACBrInstallOpcoes;
     OpcoesCompilacao: TACBrCompilerOpcoes;
 
     constructor Create(app: TApplication);
+    destructor Destroy; override;
 
-    function Instalar(oACBr: TJclBorRADToolInstallations; ListaPacotes: TPacotes; ListaVersoesInstalacao:
-        TList<Integer>): Boolean;
+
+    function Instalar(ListaPacotes: TPacotes; ListaVersoesInstalacao:TList<Integer>;
+      ListaPlataformasInstalacao: TListaPlataformasAlvos): Boolean;
 
     property OnIniciaNovaInstalacao: TOnIniciaNovaInstalacao read FOnIniciaNovaInstalacao write FOnIniciaNovaInstalacao;
     property OnProgresso: TOnProgresso read FOnProgresso write FonProgresso;
@@ -141,6 +142,56 @@ uses
   ShellApi, Types, IOUtils,
   ACBrUtil, ACBrInstallUtils;
 
+
+{ TACBrInstallComponentes }
+constructor TACBrInstallComponentes.Create(app: TApplication);
+begin
+  inherited Create;
+  //Valores padrões das opções
+  OpcoesInstall.LimparArquivosACBrAntigos := False;
+  OpcoesInstall.DeixarSomentePastasLib    := True;
+  OpcoesInstall.UsarCpp                   := False;
+  OpcoesInstall.UsarUsarArquivoConfig     := True;
+  OpcoesInstall.sDestinoDLLs              := tdNone;
+  OpcoesInstall.DiretorioRaizACBr         := 'C:\ACBr\';
+  OpcoesInstall.DeveCopiarOutrasDLLs      := True;
+
+  OpcoesCompilacao.DeveInstalarCapicom       := False;
+  OpcoesCompilacao.DeveInstalarOpenSSL       := True;
+  OpcoesCompilacao.DeveInstalarXMLSec        := False;
+  OpcoesCompilacao.UsarCargaTardiaDLL        := False;
+  OpcoesCompilacao.RemoverStringCastWarnings := False;
+
+  ArquivoLog := '';
+  FNivelLog  := nlMedio;
+
+  FApp := app;
+//  UmaPlataformaDestino := TPlataformaDestino.Create;
+//  oACBr := TJclBorRADToolInstallations.Create;
+//  tcpt  := TCompileTargetList.Create;
+
+end;
+
+destructor TACBrInstallComponentes.Destroy;
+begin
+//  tcpt.Free;
+//  oACBr.Free;
+//  UmaPlataformaDestino.Free;
+  inherited;
+end;
+
+procedure TACBrInstallComponentes.ConfiguraMetodosCompiladores;
+begin
+  // -- Evento disparado antes de iniciar a execução do processo.
+  UmaPlataformaDestino.InstalacaoAtual.DCC32.OnBeforeExecute := BeforeExecute;
+  if clDcc64 in UmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (UmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCC64.OnBeforeExecute := BeforeExecute;
+  if clDccOSX32 in UmaPlataformaDestino.InstalacaoAtual.CommandLineTools then
+    (UmaPlataformaDestino.InstalacaoAtual as TJclBDSInstallation).DCCOSX32.OnBeforeExecute := BeforeExecute;
+
+  // -- Evento para saidas de mensagens.
+  UmaPlataformaDestino.InstalacaoAtual.OutputCallback := OutputCallLine;
+end;
 
 procedure TACBrInstallComponentes.OutputCallLine(const Text: string);
 begin
@@ -155,9 +206,22 @@ begin
 end;
 
 procedure TACBrInstallComponentes.BeforeExecute(Sender: TJclBorlandCommandLineTool);
+const
+  VersoesComNamespaces: array[0..10] of string = ('d16', 'd17','d18','d19','d20','d21','d22','d23','d24','d25',
+                                                  'd26');
+  NamespacesBase = 'System;Xml;Data;Datasnap;Web;Soap;';
+  NamespacesWindows = 'Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Winapi;System.Win;';
+  NamespacesOSX = 'Macapi;Posix;System.Mac;';
+  NamespacesAndroid = '';
+  NamespacesiOS = '';
+  NamespacesVCL = 'Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;';
+  NamespacesFMX = 'FMX;FMX.ASE;FMX.Bind;FMX.Canvas;FMX.DAE;FMX.DateTimeControls;FMX.EmbeddedControls;FMX.Filter;FMX.ListView;FMX.MediaLibrary;';
 var
   LArquivoCfg: TFilename;
+  NamespacesTemp: string;
+
 begin
+with UmaPlataformaDestino do begin
   // Evento para setar os parâmetros do compilador antes de compilar
 
   // limpar os parâmetros do compilador
@@ -213,18 +277,41 @@ begin
      Sender.AddPathOption('NH', sDirLibrary);
   end;
 
-  // -- Path para instalar os pacotes do Rave no D7, nas demais versões
-  // -- o path existe.
-  if InstalacaoAtual.VersionNumberStr = 'd7' then
-    Sender.AddPathOption('U', InstalacaoAtual.RootDir + '\Rave5\Lib');
+  //Montar namespaces:
+  if MatchText(InstalacaoAtual.VersionNumberStr, VersoesComNamespaces) then
+  begin
+//    Namespaces := '';
 
-  // -- Na versão XE2 por motivo da nova tecnologia FireMonkey, deve-se adicionar
-  // -- os prefixos dos nomes, para identificar se será compilado para VCL ou FMX
-  if InstalacaoAtual.VersionNumberStr = 'd16' then
-    Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
+    NamespacesTemp := NamespacesBase;
 
-  if MatchText(InstalacaoAtual.VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25','d26']) then
-    Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell');
+    if tPlatformAtual in [bpWin32, bpWin64] then
+    begin
+      NamespacesTemp := NamespacesTemp + NamespacesWindows;
+
+      if tPlatformAtual = bpWin32 then
+      begin
+        NamespacesTemp := NamespacesTemp + 'Bde;';
+      end;
+    end;
+
+    if tPlatformAtual in [bpWin32, bpWin64] {and notFMX} then
+    begin
+      NamespacesTemp := NamespacesTemp + NamespacesVCL;
+    end;
+
+    if not (tPlatformAtual in [bpWin32, bpWin64]) {or FMX} then
+    begin
+      NamespacesTemp := NamespacesTemp + NamespacesFMX;
+    end;
+
+    if tPlatformAtual = bpOSX32 then
+    begin
+      NamespacesTemp := NamespacesTemp + NamespacesOSX;
+    end;
+
+    Sender.Options.Add('-NS'+NamespacesTemp);
+
+  end;
 
   if (OpcoesInstall.UsarUsarArquivoConfig) then
   begin
@@ -232,50 +319,22 @@ begin
     Sender.Options.SaveToFile(LArquivoCfg);
     Sender.Options.Clear;
   end;
+end;//<---End With Temporário
 end;
-
-{ TACBrInstallComponentes }
-constructor TACBrInstallComponentes.Create(app: TApplication);
-begin
-  inherited Create;
-  //Valores padrões das opções
-  OpcoesInstall.LimparArquivosACBrAntigos := False;
-  OpcoesInstall.DeixarSomentePastasLib    := True;
-  OpcoesInstall.UsarCpp                   := False;
-  OpcoesInstall.UsarUsarArquivoConfig     := True;
-  OpcoesInstall.sDestinoDLLs              := tdNone;
-  OpcoesInstall.DiretorioRaizACBr         := 'C:\ACBr\';
-  OpcoesInstall.DeveCopiarOutrasDLLs      := True;
-
-  OpcoesCompilacao.DeveInstalarCapicom       := False;
-  OpcoesCompilacao.DeveInstalarOpenSSL       := True;
-  OpcoesCompilacao.DeveInstalarXMLSec        := False;
-  OpcoesCompilacao.UsarCargaTardiaDLL        := False;
-  OpcoesCompilacao.RemoverStringCastWarnings := False;
-
-  ArquivoLog := '';
-  FNivelLog  := nlMedio;
-
-  FApp := app;
-end;
-
 
 procedure TACBrInstallComponentes.DeixarSomenteLib;
 begin
   // remover os path com o segundo parametro
-  FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes', False);
+  FindDirs(UmaPlataformaDestino.tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes', False);
 end;
 
-procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; UmaInstalacaoAtual:
-    TJclBorRADToolInstallation);
+procedure TACBrInstallComponentes.FazInstalacaoInicial(ListaPacotes: TPacotes; PlataformaDestino:
+   TPlataformaDestino);
 var
   Cabecalho: string;
   NomeVersao: string;
 begin
-  InstalacaoAtual := UmaInstalacaoAtual;
-  tPlatformAtual  := bpWin32;
-  sPlatform       := 'Win32';
-  sDirLibrary     := OpcoesInstall.DiretorioRaizACBr + 'Lib\Delphi\Lib' + AnsiUpperCase(InstalacaoAtual.VersionNumberStr);
+with UmaPlataformaDestino do begin
   NomeVersao      := VersionNumberToNome(InstalacaoAtual.VersionNumberStr);
 
   ArquivoLog := PathArquivoLog(NomeVersao);
@@ -290,10 +349,7 @@ begin
 
   FCountErros := 0;
 
-  // -- Evento disparado antes de iniciar a execução do processo.
-  InstalacaoAtual.DCC32.OnBeforeExecute := BeforeExecute;
-  // -- Evento para saidas de mensagens.
-  InstalacaoAtual.OutputCallback := OutputCallLine;
+  ConfiguraMetodosCompiladores;
 
 
   if OpcoesInstall.LimparArquivosACBrAntigos then
@@ -331,6 +387,7 @@ begin
   InformaProgresso;
 
   CompilarEInstalarPacotes(ListaPacotes);
+end; //<---- endwith
 end;
 
 // retornar o caminho completo para o arquivo de logs
@@ -472,6 +529,7 @@ var
   oDirList: TSearchRec;
   Conseguiu: Boolean;
 begin
+with UmaPlataformaDestino do begin
   ADirRoot := IncludeTrailingPathDelimiter(ADirRoot);
 
   if FindFirst(ADirRoot + '*.*', faDirectory, oDirList) = 0 then
@@ -509,6 +567,7 @@ begin
       SysUtils.FindClose(oDirList)
     end;
   end;
+end; //---endwith
 end;
 
 procedure TACBrInstallComponentes.AddLibrarySearchPath;
@@ -516,7 +575,7 @@ var
   InstalacaoAtualCpp: TJclBDSInstallation;
 begin
 // adicionar o paths ao library path do delphi
-
+with UmaPlataformaDestino do begin
   FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes');
 
   InstalacaoAtual.AddToLibraryBrowsingPath(sDirLibrary, tPlatformAtual);
@@ -539,6 +598,7 @@ begin
        InstalacaoAtualCpp.AddToCppIncludePath(sDirLibrary, tPlatformAtual);
      end;
   end;
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.RemoverDiretoriosACBrDoPath();
@@ -546,6 +606,8 @@ var
   ListaPaths: TStringList;
   I: Integer;
 begin
+with UmaPlataformaDestino do begin
+
   ListaPaths := TStringList.Create;
   try
     ListaPaths.StrictDelimiter := True;
@@ -581,18 +643,21 @@ begin
   finally
     ListaPaths.Free;
   end;
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.RemoverPacotesAntigos;
 var
   I: Integer;
 begin
+with UmaPlataformaDestino do begin
   // remover pacotes antigos
   for I := InstalacaoAtual.IdePackages.Count - 1 downto 0 do
   begin
     if Pos('ACBR', AnsiUpperCase(InstalacaoAtual.IdePackages.PackageFileNames[I])) > 0 then
       InstalacaoAtual.IdePackages.RemovePackage(InstalacaoAtual.IdePackages.PackageFileNames[I]);
   end;
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.CopiarArquivoDLLTo(ADestino : TDestino; const ANomeArquivo: String;
@@ -636,23 +701,22 @@ begin
     OnInformaSituacao(Mensagem);
 end;
 
-function TACBrInstallComponentes.Instalar(oACBr: TJclBorRADToolInstallations; ListaPacotes: TPacotes;
-      ListaVersoesInstalacao: TList<Integer>): Boolean;
+function TACBrInstallComponentes.Instalar(ListaPacotes: TPacotes; ListaVersoesInstalacao:TList<Integer>;
+    ListaPlataformasInstalacao: TListaPlataformasAlvos): Boolean;
 var
-  iListaVer: Integer;
+//  iListaVer: Integer;
+  I: Integer;
+//  J: Integer;
 begin
   DesligarDefines;
   JaCopiouDLLs := False;
 
-  for iListaVer := 0 to oACBr.Count - 1 do
+  for I := 0 to ListaVersoesInstalacao.Count -1 do
   begin
-    // só instala as versão marcadas para instalar.
-    if (not ListaVersoesInstalacao.Contains(iListaVer)) then
-    begin
-      Continue
-    end;
+    UmaPlataformaDestino := ListaPlataformasInstalacao[ListaVersoesInstalacao[i]];
+    UmaPlataformaDestino.sDirLibrary := OpcoesInstall.DiretorioRaizACBr + UmaPlataformaDestino.GetDirLibrary;
 
-    FazInstalacaoInicial(ListaPacotes, oACBr.Installations[iListaVer]);
+    FazInstalacaoInicial(ListaPacotes, UmaPlataformaDestino);
 
     if (FCountErros <> 0) then
     begin
@@ -722,6 +786,7 @@ end;
 
 procedure TACBrInstallComponentes.InstalarOutrosRequisitos;
 begin
+with UmaPlataformaDestino do begin
   InformaSituacao(sLineBreak+'INSTALANDO OUTROS REQUISITOS...');
   // *************************************************************************
   // deixar somente a pasta lib se for configurado assim
@@ -761,6 +826,7 @@ begin
   end;
 
 
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.InstalarXMLSec(ADestino: TDestino; const APathBin: string);
@@ -789,6 +855,7 @@ var
 const
   cs: PChar = 'Environment Variables';
 begin
+with UmaPlataformaDestino do begin
   // tentar ler o path configurado na ide do delphi, se não existir ler
   // a atual para complementar e fazer o override
   PathsAtuais := Trim(InstalacaoAtual.EnvironmentVariables.Values['PATH']);
@@ -824,6 +891,7 @@ begin
   finally
     ListaPaths.Free;
   end;
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.CopiarOutrosArquivosParaPastaLibrary;
@@ -833,12 +901,14 @@ procedure TACBrInstallComponentes.CopiarOutrosArquivosParaPastaLibrary;
     Arquivo : string;
     i: integer;
   begin
+  with UmaPlataformaDestino do begin
     ListArquivos := TDirectory.GetFiles(OpcoesInstall.DiretorioRaizACBr + 'Fontes', Mascara, TSearchOption.soAllDirectories ) ;
     for i := Low(ListArquivos) to High(ListArquivos) do
     begin
       Arquivo := ExtractFileName(ListArquivos[i]);
       CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary) + Arquivo), False);
     end;
+  end;//----endwith
   end;
 begin
   CopiarArquivosParaPastaLibrary('*.dcr');
@@ -898,9 +968,16 @@ end;
 
 procedure TACBrInstallComponentes.CompilarEInstalarPacotes(ListaPacotes: TPacotes);
 begin
+with UmaPlataformaDestino do begin
   // *************************************************************************
   // compilar os pacotes primeiramente
   // *************************************************************************
+  if tPlatformAtual <> bpWin32 then
+  begin
+    InformaSituacao(sLineBreak+'Não é necessário compilar os pacotes ' + sPlatform +'.');
+    Exit;
+  end;
+
   InformaSituacao(sLineBreak+'COMPILANDO OS PACOTES...');
   CompilarPacotes(OpcoesInstall.DiretorioRaizACBr, ListaPacotes);
 
@@ -923,6 +1000,7 @@ begin
     InformaSituacao('Para a plataforma de 64 bits os pacotes são somente compilados.');
   end;
 
+end;//---endwith
 end;
 
 
@@ -932,6 +1010,28 @@ var
   NomePacote: string;
   sDirPackage: string;
 begin
+with UmaPlataformaDestino do begin
+
+  if (InstalacaoAtual is TJclBDSInstallation) and (InstalacaoAtual.IDEVersionNumber >= 9) then
+  begin
+    case tPlatformAtual of
+      bpWin32:
+      begin
+        InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
+      end;
+      bpWin64:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCC64;
+      end;
+      bpOSX32:
+      begin
+        InstalacaoAtual.DCC := (InstalacaoAtual as TJclBDSInstallation).DCCOSX32;
+      end;
+    else
+      InstalacaoAtual.DCC := InstalacaoAtual.DCC32;
+    end;
+  end;
+
   for iDpk := 0 to listaPacotes.Count - 1 do
   begin
     if (not listaPacotes[iDpk].Checked) then
@@ -947,6 +1047,8 @@ begin
     begin
       FazLog('');
       FPacoteAtual := sDirPackage + NomePacote;
+      if InstalacaoAtual.RadToolKind = brBorlandDevStudio then
+        (InstalacaoAtual as TJclBDSInstallation).CleanPackageCache(BinaryFileName(sDirLibrary, FPacoteAtual));
       if InstalacaoAtual.CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
         InformaSituacao(Format('Pacote "%s" compilado com sucesso.', [NomePacote]))
       else
@@ -960,6 +1062,7 @@ begin
     end;
     InformaProgresso;
   end;
+end;//---endwith
 end;
 
 procedure TACBrInstallComponentes.InstalarPacotes(const PastaACBr: string; listaPacotes: TPacotes);
@@ -969,6 +1072,7 @@ var
   bRunOnly: Boolean;
   sDirPackage: string;
 begin
+with UmaPlataformaDestino do begin
   for iDpk := 0 to listaPacotes.Count - 1 do
   begin
     NomePacote := listaPacotes[iDpk].Caption;
@@ -1002,6 +1106,7 @@ begin
     end;
     InformaProgresso;
   end;
+end;//---endwith
 end;
 
 

@@ -7,7 +7,8 @@ uses
   ACBrInstallDelphiComponentes in 'ACBrInstallDelphiComponentes.pas',
   ACBrInstallUtils in 'ACBrInstallUtils.pas',
   ACBrPacotes in 'ACBrPacotes.pas',
-  ACBrUtil in '..\..\Fontes\ACBrComum\ACBrUtil.pas';
+  ACBrUtil in '..\..\Fontes\ACBrComum\ACBrUtil.pas',
+  UACBrPlataformaInstalacaoAlvo in 'UACBrPlataformaInstalacaoAlvo.pas';
 
 {$R *.res}
 

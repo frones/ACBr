@@ -100,6 +100,20 @@ begin
 
           Token := leitor.rCampo(tcStr, 'Token');
 
+          PDF := leitor.rCampo(tcStr, 'Pdf');
+
+          if PDF <> '' then
+            PDF := UnZip(DecodeBase64(PDF));
+
+          CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
+          Data                        := leitor.rCampo(tcDatHor, 'Data');
+          Protocolo                   := leitor.rCampo(tcStr, 'Protocolo');
+          DataRetificacao             := leitor.rCampo(tcDatHor, 'DataRetificacao');
+          QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
+          QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
+          IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
+          EstadoCiot                  := StrToEstadoCIOT(ok, leitor.rCampo(tcStr, 'EstadoCiot'));
+
           if (leitor.rExtrai(3, 'Proprietario') <> '') then
           begin
             With Proprietario do
@@ -223,20 +237,6 @@ begin
               end;
             end;
           end;
-
-          PDF := leitor.rCampo(tcStr, 'Pdf');
-
-          if PDF <> '' then
-            PDF := UnZip(DecodeBase64(PDF));
-
-          CodigoIdentificacaoOperacao := leitor.rCampo(tcStr, 'CodigoIdentificacaoOperacao');
-          Data                        := leitor.rCampo(tcDatHor, 'Data');
-          Protocolo                   := leitor.rCampo(tcStr, 'Protocolo');
-          DataRetificacao             := leitor.rCampo(tcDatHor, 'DataRetificacao');
-          QuantidadeViagens           := leitor.rCampo(tcInt, 'QuantidadeViagens');
-          QuantidadePagamentos        := leitor.rCampo(tcInt, 'QuantidadePagamentos');
-          IdPagamentoCliente          := leitor.rCampo(tcStr, 'IdPagamentoCliente');
-          EstadoCiot                  := StrToEstadoCIOT(ok, leitor.rCampo(tcStr, 'EstadoCiot'));
 
           if leitor.rExtrai(3, 'DocumentoViagem') <> '' then
           begin

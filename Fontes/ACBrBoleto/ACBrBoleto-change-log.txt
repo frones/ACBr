@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2020
+-- ACBrBoleto --
+[+] Ajuste na leitura do arquivo ini validando também a tag TipoCobranca
+
 30/01/2020
 -- ACBrBancoMercantil --
 [-] Ajuste na validação de data Desconto na remessa CNAB400

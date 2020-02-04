@@ -3264,7 +3264,7 @@ begin
       if IniBoletos.SectionExists('Banco') then
       begin
         wNumeroBanco := IniBoletos.ReadInteger(CBanco,'Numero', 0 );
-        wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr', 0 );
+        wIndiceACBr  := IniBoletos.ReadInteger(CBanco,'IndiceACBr', IniBoletos.ReadInteger(CBanco,'TipoCobranca', 0 ) );
         wCNAB        := IniBoletos.ReadInteger(CBanco,'CNAB', Integer(LayoutRemessa) );
         wNumeroCorrespondente  := IniBoletos.ReadInteger(CBanco,'NumeroCorrespondente', 0 );
         wVersaoArquivo := IniBoletos.ReadInteger(CBanco,'VersaoArquivo', 0 );

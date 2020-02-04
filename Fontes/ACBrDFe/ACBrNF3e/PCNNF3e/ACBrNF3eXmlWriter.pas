@@ -1,33 +1,33 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componente ACBrNF3e                                                 }
-{  Nota Fiscal de Energia Eletrica Eletr√¥nica - NF3e                           }
+{  Nota Fiscal de Energia Eletrica EletrÙnica - NF3e                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2019                                        }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -35,7 +35,7 @@
 |* Historico
 |*
 |* 18/12/2019: Italo Jurisato Junior
-|*  - Doa√ß√£o do componente para o Projeto ACBr
+|*  - DoaÁ„o do componente para o Projeto ACBr
 *******************************************************************************}
 
 {$I ACBr.inc}
@@ -513,7 +513,7 @@ var
 begin
   Result := nil;
   SetLength(Result, NF3e.ide.NFref.Count);
-  // Gera TAGs se N√ÉO for uma NF3e refer√™ncia
+  // Gera TAGs se N√O for uma NF3e referÍncia
   for i := 0 to NF3e.ide.NFref.Count - 1 do
   begin
     Result[i] := FDocument.CreateElement('NFref');
@@ -555,14 +555,14 @@ begin
     NF3e.Ide.NFref[i].RefNF.AAMM, DSC_AAMM));
 
   if not ValidarAAMM(NF3e.Ide.NFref[i].RefNF.AAMM) then
-    wAlerta('B16', 'AAMM', DSC_AAMM, 'Periodo inv√°lido');
+    wAlerta('B16', 'AAMM', DSC_AAMM, 'Periodo inv·lido');
 
   Result.AppendChild(AddNodeCNPJCPF('B17', 'B17', NF3e.Ide.NFref[i].RefNF.CNPJ));
   Result.AppendChild(AddNode(tcInt, 'B18', 'mod   ', 02, 02, 1,
     NF3e.Ide.NFref[i].RefNF.Modelo, DSC_MOD));
 
   if not ValidarMod(NF3e.Ide.NFref[i].RefNF.Modelo, NF3e.infNF3e.Versao) then
-    wAlerta('B18', 'mod', DSC_MOD, 'Modelo de documento inv√°lido');
+    wAlerta('B18', 'mod', DSC_MOD, 'Modelo de documento inv·lido');
 
   Result.AppendChild(AddNode(tcInt, 'B19', 'serie ', 01, 03, 1,
     NF3e.ide.NFref[i].RefNF.serie, DSC_SERIE));
@@ -583,7 +583,7 @@ begin
     NF3e.Ide.NFref[i].RefNFP.AAMM, DSC_AAMM));
 
   if not ValidarAAMM(NF3e.Ide.NFref[i].RefNFP.AAMM) then
-    wAlerta('B20c', 'AAMM', DSC_AAMM, 'Periodo inv√°lido');
+    wAlerta('B20c', 'AAMM', DSC_AAMM, 'Periodo inv·lido');
 
   Result.AppendChild(AddNodeCNPJCPF('B20d', 'B20e', NF3e.Ide.NFref[i].RefNFP.CNPJCPF));
   Result.AppendChild(AddNode(tcStr, 'B20f', 'IE   ', 01, 14, 1,
@@ -644,8 +644,8 @@ begin
   Result.AppendChild(AddNode(tcStr, 'C18', 'IEST   ', 02, 14, 0,
     NF3e.Emit.IEST, DSC_IEST));
   Result.AppendChild(AddNode(tcStr, 'C19', 'IM     ', 01, 15, 0, NF3e.Emit.IM, DSC_IM));
-  // NT 2013/005 vers√£o 1.03
-  // o CNAE passa ser opcional mesmo quando informado o IM, mas o CNAE s√≥ pode
+  // NT 2013/005 vers„o 1.03
+  // o CNAE passa ser opcional mesmo quando informado o IM, mas o CNAE sÛ pode
   // ser informado se o IM for informado.
   if Length(NF3e.Emit.IM) > 0 then
     Result.AppendChild(AddNode(tcStr, 'C20', 'CNAE ', 07, 07, 0,
@@ -771,7 +771,7 @@ begin
   begin
     if (NF3e.Dest.IE <> '') or (NF3e.infNF3e.Versao < 3) then
     begin
-      // Inscri√ß√£o Estadual
+      // InscriÁ„o Estadual
       if NF3e.Dest.IE = '' then
         Result.AppendChild(AddNode(tcStr, 'E17', 'IE ', 00, 14, 1, '', DSC_IE))
       else
@@ -982,7 +982,7 @@ begin
   Result.AppendChild(AddNode(tcStr, 'I02 ', 'cProd   ', 01, 60, 1,
     NF3e.Det[i].Prod.cProd, DSC_CPROD));
 
-  // Implementa√ß√£o futura - regra de valida√ß√£o somente em 01/12/2018
+  // ImplementaÁ„o futura - regra de validaÁ„o somente em 01/12/2018
   if (NF3e.infNF3e.Versao >= 4) and (trim(NF3e.Det[i].Prod.cEANTrib) = '') and
     (CompareDate(NF3e.Ide.dEmi, StringToDateTime('01/12/2018')) > 0) then
     NF3e.Det[i].Prod.cEANTrib := SEMGTIN;
@@ -1044,7 +1044,7 @@ begin
   Result.AppendChild(AddNode(tcDe2, 'I11 ', 'vProd   ', 00, 15, 1,
     NF3e.Det[i].Prod.vProd, DSC_VPROD));
 
-  // Implementa√ß√£o futura - regra de valida√ß√£o somente em 01/12/2018
+  // ImplementaÁ„o futura - regra de validaÁ„o somente em 01/12/2018
   if (NF3e.infNF3e.Versao >= 4) and (trim(NF3e.Det[i].Prod.cEANTrib) = '') and
     (CompareDate(NF3e.Ide.dEmi, StringToDateTime('01/12/2018')) > 0) then
     NF3e.Det[i].Prod.cEANTrib := SEMGTIN;
@@ -1211,10 +1211,10 @@ begin
       60, 1, NF3e.Det[i].Prod.DI[j].adi[k].cFabricante, DSC_CFABRICANTE));
     Result[k].AppendChild(AddNode(tcDe2, 'I29', 'vDescDI    ', 00,
       15, 0, NF3e.Det[i].Prod.DI[j].adi[k].vDescDI, DSC_VDESCDI));
-    // O n√∫mero do Ato Concess√≥rio de Suspens√£o deve ser preenchido com 11 d√≠gitos
-    // (AAAANNNNNND) e o n√∫mero do Ato Concess√≥rio de Drawback Isen√ß√£o deve ser
-    // preenchido com 9 d√≠gitos (AANNNNNND).
-    // (Observa√ß√£o inclu√≠da na NT 2013/005 v. 1.10)
+    // O n˙mero do Ato ConcessÛrio de Suspens„o deve ser preenchido com 11 dÌgitos
+    // (AAAANNNNNND) e o n˙mero do Ato ConcessÛrio de Drawback IsenÁ„o deve ser
+    // preenchido com 9 dÌgitos (AANNNNNND).
+    // (ObservaÁ„o incluÌda na NT 2013/005 v. 1.10)
     Result[k].AppendChild(AddNode(tcStr, 'I29a', 'nDraw     ', 09,
       11, 0, NF3e.Det[i].Prod.DI[j].adi[k].nDraw, DSC_NDRAW));
     if trim(NF3e.Det[i].Prod.DI[j].adi[k].nDraw) <> '' then
@@ -1254,10 +1254,10 @@ begin
   for j := 0 to NF3e.Det[i].Prod.detExport.Count - 1 do
   begin
     Result[i] := FDocument.CreateElement('detExport');
-    // O n√∫mero do Ato Concess√≥rio de Suspens√£o deve ser preenchido com 11 d√≠gitos
-    // (AAAANNNNNND) e o n√∫mero do Ato Concess√≥rio de Drawback Isen√ß√£o deve ser
-    // preenchido com 9 d√≠gitos (AANNNNNND).
-    // (Observa√ß√£o inclu√≠da na NT 2013/005 v. 1.10)
+    // O n˙mero do Ato ConcessÛrio de Suspens„o deve ser preenchido com 11 dÌgitos
+    // (AAAANNNNNND) e o n˙mero do Ato ConcessÛrio de Drawback IsenÁ„o deve ser
+    // preenchido com 9 dÌgitos (AANNNNNND).
+    // (ObservaÁ„o incluÌda na NT 2013/005 v. 1.10)
     Result[j].AppendChild(AddNode(tcStr, 'I51', 'nDraw      ', 09,
       11, 0, NF3e.Det[i].Prod.detExport[j].nDraw, DSC_NDRAW));
     if trim(NF3e.Det[i].Prod.detExport[j].nDraw) <> '' then
@@ -1872,7 +1872,7 @@ begin
         cst41,
         cst50:
         begin
-          //Esse bloco fica a crit√©rio de cada UF a obriga√ß√£o das informa√ß√µes, conforme o manual
+          //Esse bloco fica a critÈrio de cada UF a obrigaÁ„o das informaÁıes, conforme o manual
           if (NF3e.infNF3e.Versao >= 3.10) then
           begin
             if (NF3e.Det[i].Imposto.ICMS.vICMSDeson > 0) then
@@ -1897,7 +1897,7 @@ begin
         end;
         cst51:
         begin
-          //Esse bloco fica a crit√©rio de cada UF a obriga√ß√£o das informa√ß√µes, conforme o manual
+          //Esse bloco fica a critÈrio de cada UF a obrigaÁ„o das informaÁıes, conforme o manual
           if NF3e.Det[i].Imposto.ICMS.modBC <> dbiNenhum then
             xmlNode.AppendChild(AddNode(tcStr, 'N13', 'modBC',
               01, 01, 0, modBCToStr(NF3e.Det[i].Imposto.ICMS.modBC), DSC_MODBC));
@@ -2148,7 +2148,7 @@ begin
           if (NF3e.infNF3e.Versao >= 4) then
           begin
             xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N26a', 'pST', 01, IIf(Usar_tcDe4,07,05), OcorrenciasVICMSSubstituto, NF3e.Det[i].Imposto.ICMS.pST, DSC_PST));
-            // Algumas UF est√£o exigindo o campo abaixo preenchido mesmo quando for zero.
+            // Algumas UF est„o exigindo o campo abaixo preenchido mesmo quando for zero.
             xmlNode.AppendChild(AddNode(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, NF3e.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO));
           end;
 
@@ -2199,7 +2199,7 @@ begin
         csosn300,
         csosn400:
         begin
-          //Tags ORIG e CSON j√° criadas antes do case
+          //Tags ORIG e CSON j· criadas antes do case
         end;
         csosn201:
         begin  //10e
@@ -2282,7 +2282,7 @@ begin
             if (NF3e.infNF3e.Versao >= 4) then
             begin
               xmlNode.AppendChild(AddNode(IIf(Usar_tcDe4,tcDe4,tcDe2), 'N26.1', 'pST', 01, IIf(Usar_tcDe4,07,05), 1, NF3e.Det[i].Imposto.ICMS.pST, DSC_PST));
-              // Algumas UF est√£o exigindo o campo abaixo preenchido mesmo quando for zero.
+              // Algumas UF est„o exigindo o campo abaixo preenchido mesmo quando for zero.
               xmlNode.AppendChild(AddNode(tcDe2, 'N26b', 'vICMSSubstituto', 01, 15, OcorrenciasVICMSSubstituto, NF3e.Det[i].Imposto.ICMS.vICMSSubstituto, DSC_VICMSSUBSTITUTO));
             end;
 
@@ -2389,7 +2389,7 @@ var
 begin
   Result := nil;
 
-  if NF3e.Ide.modelo <> 55 then   //n√£o deve gerar grupo IPI para NFCe
+  if NF3e.Ide.modelo <> 55 then   //n„o deve gerar grupo IPI para NFCe
     Exit;
 
   // variavel CST00495099 usada para Ignorar Tag <IPI>
@@ -2400,12 +2400,12 @@ begin
   if (not Opcoes.FGerarTagIPIparaNaoTributado) and (not CST00495099) then
     Exit;
 
-  //se valores padr√£o de quando n√£o foi preenchido a TAG IPI
+  //se valores padr„o de quando n„o foi preenchido a TAG IPI
   if ((NF3e.Det[i].Imposto.IPI.cEnq = '') and (NF3e.Det[i].Imposto.IPI.CST = ipi00) and
     (NF3e.Det[i].Imposto.IPI.vBC = 0) and (NF3e.Det[i].Imposto.IPI.qUnid = 0) and
     (NF3e.Det[i].Imposto.IPI.vUnid = 0) and (NF3e.Det[i].Imposto.IPI.pIPI = 0) and
     (NF3e.Det[i].Imposto.IPI.vIPI = 0)) then
-    Exit; //n√£o deve preencher a TAG
+    Exit; //n„o deve preencher a TAG
 
   Result := FDocument.CreateElement('IPI');
 
@@ -2429,7 +2429,7 @@ begin
     if (NF3e.Det[i].Imposto.IPI.vBC + NF3e.Det[i].Imposto.IPI.pIPI > 0) and
       (NF3e.Det[i].Imposto.IPI.qUnid + NF3e.Det[i].Imposto.IPI.vUnid > 0) then
       wAlerta('O07', 'IPITrib', DSC_IPITrib,
-        'As TAG <vBC> e <pIPI> n√£o podem ser informadas em conjunto com as TAG <qUnid> e <vUnid>');
+        'As TAG <vBC> e <pIPI> n„o podem ser informadas em conjunto com as TAG <qUnid> e <vUnid>');
 
     if (NF3e.Det[i].Imposto.IPI.qUnid + NF3e.Det[i].Imposto.IPI.vUnid > 0) then
     begin
@@ -2495,7 +2495,7 @@ begin
     (NF3e.Det[i].Imposto.PIS.vAliqProd = 0) and
     (not (NF3e.Det[i].Imposto.PIS.CST in [pis04, pis05, pis06, pis07,
     pis08, pis09, pis49, pis99]))) then
-    //No caso da NFC-e, o grupo de tributa√ß√£o do PIS e o grupo de tributa√ß√£o da COFINS s√£o opcionais.
+    //No caso da NFC-e, o grupo de tributaÁ„o do PIS e o grupo de tributaÁ„o da COFINS s„o opcionais.
     exit;
 
   Result := FDocument.CreateElement('PIS');
@@ -2537,7 +2537,7 @@ begin
     if (NF3e.Det[i].Imposto.PIS.vBC + NF3e.Det[i].Imposto.PIS.pPIS > 0) and
       (NF3e.Det[i].Imposto.PIS.qBCProd + NF3e.Det[i].Imposto.PIS.vAliqProd > 0) then
       wAlerta('Q05', 'PISOutr', DSC_PISOUTR,
-        'As TAG <vBC> e <pPIS> n√£o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
+        'As TAG <vBC> e <pPIS> n„o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
 
     if (NF3e.Det[i].Imposto.PIS.qBCProd + NF3e.Det[i].Imposto.PIS.vAliqProd > 0) then
     begin
@@ -2577,7 +2577,7 @@ begin
     if (NF3e.Det[i].Imposto.PISST.vBc + NF3e.Det[i].Imposto.PISST.pPis > 0) and
       (NF3e.Det[i].Imposto.PISST.qBCProd + NF3e.Det[i].Imposto.PISST.vAliqProd > 0) then
       wAlerta('R01', 'PISST', DSC_PISOUTR,
-        'As TAG <vBC> e <pPIS> n√£o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
+        'As TAG <vBC> e <pPIS> n„o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
 
     if (NF3e.Det[i].Imposto.PISST.vBc + NF3e.Det[i].Imposto.PISST.pPis > 0) then
     begin
@@ -2614,7 +2614,7 @@ begin
     (NF3e.Det[i].Imposto.COFINS.vAliqProd = 0) and
     (not (NF3e.Det[i].Imposto.COFINS.CST in [cof04, cof05, cof06,
     cof07, cof08, cof09, cof49, cof99]))) then
-    //No caso da NFC-e, o grupo de tributa√ß√£o do PIS e o grupo de tributa√ß√£o da COFINS s√£o opcionais.
+    //No caso da NFC-e, o grupo de tributaÁ„o do PIS e o grupo de tributaÁ„o da COFINS s„o opcionais.
     exit;
 
   Result := FDocument.CreateElement('COFINS');
@@ -2658,7 +2658,7 @@ begin
     if (NF3e.Det[i].Imposto.COFINS.vBC + NF3e.Det[i].Imposto.COFINS.pCOFINS > 0) and
       (NF3e.Det[i].Imposto.COFINS.qBCProd + NF3e.Det[i].Imposto.COFINS.vAliqProd > 0) then
       wAlerta('S05', 'COFINSOutr', DSC_PISOUTR,
-        'As TAG <vBC> e <pCOFINS> n√£o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
+        'As TAG <vBC> e <pCOFINS> n„o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
 
     if (NF3e.Det[i].Imposto.COFINS.qBCProd + NF3e.Det[i].Imposto.COFINS.vAliqProd > 0) then
     begin
@@ -2701,7 +2701,7 @@ begin
     if (NF3e.Det[i].Imposto.COFINSST.vBC + NF3e.Det[i].Imposto.COFINSST.pCOFINS > 0) and
       (NF3e.Det[i].Imposto.COFINSST.qBCProd + NF3e.Det[i].Imposto.COFINSST.vAliqProd > 0) then
       wAlerta('T01', 'COFINSST', DSC_COFINSST,
-        'As TAG <vBC> e <pCOFINS> n√£o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
+        'As TAG <vBC> e <pCOFINS> n„o podem ser informadas em conjunto com as TAG <qBCProd> e <vAliqProd>');
 
     if (NF3e.Det[i].Imposto.COFINSST.vBC + NF3e.Det[i].Imposto.COFINSST.pCOFINS > 0) then
     begin
@@ -2820,7 +2820,7 @@ begin
     NF3e.Det[i].Imposto.ICMSUFDest.vBCUFDest, DSC_VBCUFDEST));
   if (NF3e.infNF3e.Versao >= 4) then
   begin
-    // tags marcadas novamente como obrigat√≥rias por algumas SEFAZ ainda n√£o terem implantado os schemas da NT 2016.002 v. 1.50
+    // tags marcadas novamente como obrigatÛrias por algumas SEFAZ ainda n„o terem implantado os schemas da NT 2016.002 v. 1.50
     // Result.AppendChild(AddNode(tcDe2, 'NA04', 'vBCFCPUFDest', 01, 15, 0, NF3e.Det[i].Imposto.ICMSUFDest.vBCFCPUFDest, DSC_VBCUFDEST));
     // Result.AppendChild(AddNode(IIf(Usar_tcDe4,tcDe4,tcDe2), 'NA05', 'pFCPUFDest', 01, IIf(Usar_tcDe4,07,05), 0, NF3e.Det[i].Imposto.ICMSUFDest.pFCPUFDest, DSC_PFCPUFDEST));
     Result.AppendChild(AddNode(tcDe2, 'NA04', 'vBCFCPUFDest', 01, 15,
@@ -2843,7 +2843,7 @@ begin
     'pICMSInterPart', 01, IIf(Usar_tcDe4, 07, 05), 1,
     NF3e.Det[i].Imposto.ICMSUFDest.pICMSInterPart, DSC_PICMSINTERPART));
   if (NF3e.infNF3e.Versao >= 4) then
-    // tag marcada novamente como obrigat√≥ria por algumas SEFAZ ainda n√£o terem implantado os schemas da NT 2016.002 v. 1.50
+    // tag marcada novamente como obrigatÛria por algumas SEFAZ ainda n„o terem implantado os schemas da NT 2016.002 v. 1.50
     // Result.AppendChild(AddNode(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15, 0, NF3e.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST))
     Result.AppendChild(AddNode(tcDe2, 'NA13', 'vFCPUFDest ', 01, 15,
       1, NF3e.Det[i].Imposto.ICMSUFDest.vFCPUFDest, DSC_VFCPUFDEST))

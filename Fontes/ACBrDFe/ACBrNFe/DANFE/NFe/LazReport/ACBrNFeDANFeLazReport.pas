@@ -1,35 +1,35 @@
-Ôªø{******************************************************************************}
+{******************************************************************************}
 { Projeto: Componente ACBrNFe                                                  }
-{  Biblioteca multiplataforma de componentes Delphi para emiss√£o de Nota Fiscal}
-{ eletr√¥nica - NFe - http://www.nfe.fazenda.gov.br                             }
+{  Biblioteca multiplataforma de componentes Delphi para emiss„o de Nota Fiscal}
+{ eletrÙnica - NFe - http://www.nfe.fazenda.gov.br                             }
 { Direitos Autorais Reservados (c) 2008 Wemerson Souto                         }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andr√© Ferreira de Moraes               }
+{                                       AndrÈ Ferreira de Moraes               }
 { Colaboradores nesse arquivo:                                                 }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
 |* 17/01/2018: Rafael Dias
-|*  - Cria√ß√£o do componente
+|*  - CriaÁ„o do componente
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -223,7 +223,7 @@ begin
     if FileExists(LazFile) then
       FdmDanfe.Report.LoadFromFile(LazFile)
     else
-      raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress√£o do DANFE "%s" inv√°lido.', [LazFile]);
+      raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress„o do DANFE "%s" inv·lido.', [LazFile]);
   end;
 
   FdmDanfe.NFe := NFE;
@@ -247,7 +247,7 @@ begin
       if FileExists(LazFileEvento) then
         FdmDanfe.Report.LoadFromFile(LazFileEvento)
       else
-        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress√£o do DANFE "%s" inv√°lido.', [LazFileEvento]);
+        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress„o do DANFE "%s" inv·lido.', [LazFileEvento]);
     end;
 
   FdmDanfe.Evento := EventoNFe;
@@ -271,7 +271,7 @@ begin
       if FileExists(LazFileInutilizacao) then
         FdmDanfe.Report.LoadFromFile(LazFileInutilizacao)
       else
-        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress√£o do DANFE "%s" inv√°lido.', [LazFileInutilizacao]);
+        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress„o do DANFE "%s" inv·lido.', [LazFileInutilizacao]);
     end;
 
   FdmDanfe.Inutilizacao := RetInutNFe;
@@ -350,11 +350,11 @@ begin
       if FileExists(LazFile) then
         FdmDanfe.Report.LoadFromFile(LazFile)
       else
-        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress√£o do DANFE "%s" inv√°lido.', [LazFile]);
+        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress„o do DANFE "%s" inv·lido.', [LazFile]);
     end;
   end
   else
-    raise EACBrNFeDANFELazReport.Create('Caminho do arquivo de impress√£o do DANFE n√£o assinalado.');
+    raise EACBrNFeDANFELazReport.Create('Caminho do arquivo de impress„o do DANFE n„o assinalado.');
 
   FdmDanfe.Report.ShowProgress := MostraStatus;
 
@@ -404,7 +404,7 @@ begin
       FdmDanfe.Report.CanRebuild := False;
     end
     else
-      raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n√£o assinalada.');
+      raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n„o assinalada.');
   end;
 end;
 
@@ -428,12 +428,12 @@ begin
         FdmDanfe.Report.LoadFromFile(LazFileEvento)
       else
         raise EACBrNFeDANFELazReport.CreateFmt(
-          'Caminho do arquivo de impress√£o do EVENTO "%s" inv√°lido.', [LazFileEvento]);
+          'Caminho do arquivo de impress„o do EVENTO "%s" inv·lido.', [LazFileEvento]);
     end;
   end
   else
     raise EACBrNFeDANFELazReport.Create(
-      'Caminho do arquivo de impress√£o do EVENTO n√£o assinalado.');
+      'Caminho do arquivo de impress„o do EVENTO n„o assinalado.');
 
   FdmDanfe.Report.ShowProgress := MostraStatus;
 
@@ -446,7 +446,7 @@ begin
       FdmDanfe.CarregaDadosEventos;
     end
     else
-      raise EACBrNFeDANFELazReport.Create('Evento n√£o foi assinalado.');
+      raise EACBrNFeDANFELazReport.Create('Evento n„o foi assinalado.');
 
     if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
     begin
@@ -459,7 +459,7 @@ begin
     Result := FdmDanfe.Report.PrepareReport;
   end
   else
-    raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n√£o assinalada.');
+    raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n„o assinalada.');
 end;
 
 function TACBrNFeDANFeLazReport.PrepareReportInutilizacao: boolean;
@@ -482,12 +482,12 @@ begin
       if FileExists(LazFileInutilizacao) then
         FdmDanfe.Report.LoadFromFile(LazFileInutilizacao)
       else
-        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress√£o de INUTILIZA√á√ÉO "%s" inv√°lido.', [LazFileInutilizacao]);
+        raise EACBrNFeDANFELazReport.CreateFmt('Caminho do arquivo de impress„o de INUTILIZA«√O "%s" inv·lido.', [LazFileInutilizacao]);
     end;
   end
   else
     raise EACBrNFeDANFELazReport.Create(
-      'Caminho do arquivo de impress√£o de INUTILIZA√á√ÉO n√£o assinalado.');
+      'Caminho do arquivo de impress„o de INUTILIZA«√O n„o assinalado.');
 
   FdmDanfe.Report.DefaultCopies := NumCopias;
   FdmDanfe.Report.ShowProgress := MostraStatus;
@@ -501,13 +501,13 @@ begin
       FdmDanfe.CarregaDadosInutilizacao;
     end
     else
-      raise EACBrNFeDANFELazReport.Create('INUTILIZA√á√ÉO n√£o foi assinalada.');
+      raise EACBrNFeDANFELazReport.Create('INUTILIZA«√O n„o foi assinalada.');
 
     AjustarMargensReportAtual;
     Result := FdmDanfe.Report.PrepareReport;
   end
   else
-    raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n√£o assinalada.');
+    raise EACBrNFeDANFELazReport.Create('Propriedade ACBrNFe n„o assinalada.');
 
 end;
 
@@ -1360,7 +1360,7 @@ begin
     end;
   end;
 
-  //bdsInutiliza√ß√£o
+  //bdsInutilizaÁ„o
   if not Assigned(bdsInutilizacao) then
   begin
     bdsInutilizacao := TBufDataset.Create(DummyDm);
@@ -1628,7 +1628,7 @@ end;
 
 procedure TACBrNFeLazReportClass.CarregaDestinatario;
 begin
-  { destinat√°rio }
+  { destinat·rio }
   with bdsDestinatario do
   begin
     Close;
@@ -1670,7 +1670,7 @@ begin
         else
         begin
           if (FieldByName('CNPJCPF').AsString = '') then
-            FieldByName('Consumidor').AsString := 'CONSUMIDOR N√ÉO IDENTIFICADO'
+            FieldByName('Consumidor').AsString := 'CONSUMIDOR N√O IDENTIFICADO'
           else
             FieldByName('Consumidor').AsString :=
               IfThen(Length(CNPJCPF) = 11, 'CPF: ', 'CNPJ: ') +
@@ -1814,7 +1814,7 @@ begin
       else
       begin
         case FNFe.Ide.indPag of
-          ipVista: FieldByName('Pagamento').AsString := 'PAGAMENTO √Ä VISTA';
+          ipVista: FieldByName('Pagamento').AsString := 'PAGAMENTO ¿ VISTA';
           ipPrazo: FieldByName('Pagamento').AsString := 'PAGAMENTO A PRAZO';
           ipOutras: FieldByName('Pagamento').AsString := 'OUTROS';
         end;
@@ -1907,14 +1907,14 @@ begin
     begin
       FieldByName('DEmi').AsString := FormatDateTimeBr(FNFe.Ide.DEmi);
       if FNFe.Ide.TpAmb = taHomologacao then
-        FieldByName('MensagemFiscal').AsString := 'EMITIDA EM AMBIENTE DE HOMOLOGA√á√ÉO - SEM VALOR FISCAL'
+        FieldByName('MensagemFiscal').AsString := 'EMITIDA EM AMBIENTE DE HOMOLOGA«√O - SEM VALOR FISCAL'
       else
       begin
         if FNFe.Ide.tpEmis <> teNormal then
           FieldByName('MensagemFiscal').AsString :=
-            'EMITIDA EM CONTING√äNCIA' + LineBreak + 'Pendente de autoriza√ß√£o'
+            'EMITIDA EM CONTING NCIA' + LineBreak + 'Pendente de autorizaÁ„o'
         else
-          FieldByName('MensagemFiscal').AsString := '√ÅREA DE MENSAGEM FISCAL';
+          FieldByName('MensagemFiscal').AsString := '¡REA DE MENSAGEM FISCAL';
       end;
 
       FieldByName('URL').AsString :=
@@ -2057,7 +2057,7 @@ var
   vStringStream: TStringStream;
   P: integer;
 begin
-  { par√¢metros }
+  { par‚metros }
   with bdsParametros do
   begin
     Close;
@@ -2078,7 +2078,7 @@ begin
       begin
         if EstaVazio(DANFE.TextoResumoCanhoto) then
           FieldByName('ResumoCanhoto').AsString :=
-            'Emiss√£o: ' + FormatDateBr(FNFe.Ide.DEmi) +
+            'Emiss„o: ' + FormatDateBr(FNFe.Ide.DEmi) +
             '  Dest/Reme: ' + FNFe.Dest.XNome + '  Valor Total: ' +
             FormatFloatBr(FNFe.Total.ICMSTot.VNF)
         else
@@ -2092,23 +2092,23 @@ begin
         begin
           if (FNFe.procNFe.cStat in [101, 135, 151, 155]) then
             FieldByName('Mensagem0').AsString :=
-              'NFe sem Valor Fiscal - HOMOLOGA√á√ÉO ' +
-              sLineBreak + 'NFe em Conting√™ncia - CANCELADA'
+              'NFe sem Valor Fiscal - HOMOLOGA«√O ' +
+              sLineBreak + 'NFe em ContingÍncia - CANCELADA'
           else
             FieldByName('Mensagem0').AsString :=
-              'NFe sem Valor Fiscal - HOMOLOGA√á√ÉO' +
-              sLineBreak + 'NFe em Conting√™ncia';
+              'NFe sem Valor Fiscal - HOMOLOGA«√O' +
+              sLineBreak + 'NFe em ContingÍncia';
         end
         else
           FieldByName('Mensagem0').AsString :=
-            'NFe sem Valor Fiscal - HOMOLOGA√á√ÉO';
+            'NFe sem Valor Fiscal - HOMOLOGA«√O';
       end
       else
       begin
         if not (FNFe.Ide.tpEmis in [teContingencia, teFSDA, teSVCAN,
           teSVCRS, teSVCSP]) then
         begin
-          //prioridade para op√ß√£o NFeCancelada
+          //prioridade para opÁ„o NFeCancelada
           if (FDANFE.Cancelada) or
             ((NaoEstaVazio(FNFe.procNFe.nProt)) and
             (FNFe.procNFe.cStat in [101, 135, 151, 155])) then
@@ -2119,9 +2119,9 @@ begin
           else if ((EstaVazio(FDANFE.Protocolo)) and
             (EstaVazio(FNFe.procNFe.nProt))) then
             FieldByName('Mensagem0').AsString :=
-              'NFe sem Autoriza√ß√£o de Uso da SEFAZ'
+              'NFe sem AutorizaÁ„o de Uso da SEFAZ'
           else if (FNFe.Ide.tpImp = tiSimplificado) then
-            FieldByName('Mensagem0').AsString := 'EMISS√ÉO NORMAL';
+            FieldByName('Mensagem0').AsString := 'EMISS√O NORMAL';
         end;
       end;
 
@@ -2138,20 +2138,20 @@ begin
           if ((FDANFE.Cancelada) or (FNFe.procNFe.cStat in
             [101, 151, 155])) then
             FieldByName('Contingencia_Descricao').AsString :=
-              'PROTOCOLO DE HOMOLOGA√á√ÉO DO CANCELAMENTO'
+              'PROTOCOLO DE HOMOLOGA«√O DO CANCELAMENTO'
           else if (FNFe.procNFe.cStat = 110) or (FNFe.procNFe.cStat = 301) or
             (FNFe.procNFe.cStat = 302) or (FNFe.procNFe.cStat = 303) then
             FieldByName('Contingencia_Descricao').AsString :=
-              'PROTOCOLO DE DENEGA√á√ÉO DE USO'
+              'PROTOCOLO DE DENEGA«√O DE USO'
           else
             FieldByName('Contingencia_Descricao').AsString :=
-              'PROTOCOLO DE AUTORIZA√á√ÉO DE USO';
+              'PROTOCOLO DE AUTORIZA«√O DE USO';
 
           if EstaVazio(FDANFE.Protocolo) then
           begin
             if EstaVazio(FNFe.procNFe.nProt) then
               FieldByName('Contingencia_Valor').AsString :=
-                'NFe sem Autoriza√ß√£o de Uso da SEFAZ'
+                'NFe sem AutorizaÁ„o de Uso da SEFAZ'
             else
             begin
               FieldByName('Contingencia_Valor').AsString :=
@@ -2204,7 +2204,7 @@ begin
           if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
           begin
             FieldByName('Contingencia_Descricao').AsString :=
-              'PROTOCOLO DE AUTORIZA√á√ÉO DE USO';
+              'PROTOCOLO DE AUTORIZA«√O DE USO';
             FieldByName('Contingencia_Valor').AsString :=
               FNFe.procNFe.nProt + ' ' + IfThen(FNFe.procNFe.dhRecbto <> 0,
               DateTimeToStr(FNFe.procNFe.dhRecbto), '');
@@ -2212,7 +2212,7 @@ begin
           else
           begin
             FieldByName('Contingencia_Descricao').AsString :=
-              'N√öMERO DE REGISTRO DPEC';
+              'N⁄MERO DE REGISTRO DPEC';
             if NaoEstaVazio(FDANFE.Protocolo) then
               FieldByName('Contingencia_Valor').AsString :=
                 FDANFE.Protocolo;
@@ -2251,7 +2251,7 @@ begin
     FieldByName('Desconto').AsString :=
       IfThen(FDANFE.ImprimeDescPorPercentual, '%', 'VALOR');
     FieldByName('TotalLiquido').AsString :=
-      IfThen(FDANFE.ImprimeTotalLiquido, 'L√çQUIDO', 'TOTAL');
+      IfThen(FDANFE.ImprimeTotalLiquido, 'LÕQUIDO', 'TOTAL');
     FieldByName('sDisplayFormat').AsString := '###,###,###,##0.%.*d';
     FieldByName('iFormato').AsInteger :=
       integer(FDANFE.CasasDecimais.Formato);
@@ -2414,13 +2414,13 @@ begin
         FieldByName('Barras').AsString := InfEvento.chNFe;
         FieldByName('ChaveAcesso').AsString := FormatarChaveAcesso(InfEvento.chNFe);
 
-        // Carta de corre√ß√£o eletr√¥nica
+        // Carta de correÁ„o eletrÙnica
         FieldByName('cOrgao').AsInteger := InfEvento.cOrgao;
 
         case InfEvento.tpAmb of
-          taProducao: FieldByName('tpAmb').AsString := 'PRODU√á√ÉO';
+          taProducao: FieldByName('tpAmb').AsString := 'PRODU«√O';
           taHomologacao: FieldByName('tpAmb').AsString :=
-              'HOMOLOGA√á√ÉO - SEM VALOR FISCAL';
+              'HOMOLOGA«√O - SEM VALOR FISCAL';
         end;
 
         FieldByName('dhEvento').AsDateTime := InfEvento.dhEvento;
@@ -2504,9 +2504,9 @@ begin
       FieldByName('cUF').AsString := CUFtoUF(cUF);
 
       case tpAmb of
-        taProducao: FieldByName('tpAmb').AsString := 'PRODU√á√ÉO';
+        taProducao: FieldByName('tpAmb').AsString := 'PRODU«√O';
         taHomologacao: FieldByName('tpAmb').AsString :=
-            'HOMOLOGA√á√ÉO - SEM VALOR FISCAL';
+            'HOMOLOGA«√O - SEM VALOR FISCAL';
       end;
 
       Post;

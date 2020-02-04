@@ -50,7 +50,8 @@ Function StringIsXML(AStr: AnsiString) : Boolean;
 implementation
 Uses ACBrUtil, DateUtils, pcnConversao, utilUnit,
   {$IFDEF MSWINDOWS}sndkey32, Windows,{$ENDIF}
-  {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
+  {$IFNDEF NOGUI}Forms, ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF},
+  FileUtil;
 
 Procedure DoACBr( Cmd : TACBrCmd ) ;
 Var AltTab : Boolean ;
@@ -190,7 +191,7 @@ begin
                 if not ForceDirectories(ExtractFileDir(Trim(cmd.Params(1)))) then
                   raise Exception.Create(' Falha ao criar a(s) pasta(s) de destino: ' + ExtractFileDir(Trim(cmd.Params(1))));
 
-              if not CopyFile(PAnsiChar(Trim(cmd.Params(0))), PAnsiChar(Trim(cmd.Params(1))), False) then
+              if not CopyFile(Trim(cmd.Params(0)), Trim(cmd.Params(1)), False) then
                 raise Exception.Create( 'Falha ao copiar o arquivo ' + Trim(cmd.Params(0)) + ' para ' + Trim(cmd.Params(1)) );
             end;
           end

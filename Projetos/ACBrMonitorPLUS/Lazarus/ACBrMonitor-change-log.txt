@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2020
+[-] DoACBrUnit
+Ajuste na chamada do método CopyFile a partir da classe FileUtil
+
 29/01/2020
 [+] DoACBrUnit
 Adicionado método ACBr.CopyFile()

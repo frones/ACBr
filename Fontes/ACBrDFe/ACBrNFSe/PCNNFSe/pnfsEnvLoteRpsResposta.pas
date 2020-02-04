@@ -1168,13 +1168,15 @@ begin
     end 
     else 
     begin
-      FInfRec.MsgRetorno.New;
-      FInfRec.FMsgRetorno[i].FCodigo   := '00002'; // não tem codigo...
+      with FInfRec.MsgRetorno.New do
+      begin
+        FCodigo   := '00002'; // não tem codigo...
 
-      if Pos('Nao foi encontrado na tb.dcarq.unico a cidade(codmun) do Usuario:', leitor.Arquivo) > 0 then
-        FInfRec.FMsgRetorno[i].FMensagem := 'Usuário e/ou senha informados são inválidos'
-      else
-        FInfRec.FMsgRetorno[i].FMensagem := leitor.Arquivo;
+        if Pos('Nao foi encontrado na tb.dcarq.unico a cidade(codmun) do Usuario:', leitor.Arquivo) > 0 then
+          FMensagem := 'Usuário e/ou senha informados são inválidos'
+        else
+          FMensagem := leitor.Arquivo;
+      end;
     end;
   except
     Result := False;

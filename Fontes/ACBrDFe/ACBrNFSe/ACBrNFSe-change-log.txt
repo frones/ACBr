@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/02/2020
+-- pnfsEnvLoteRpsResposta -- 
+[*] Retorno fazendo uso de variável que não foi regenerada o valor, corrigido.
+   Por: Antonio Gomes
+
 30/01/2020
 -- Diversos -- 
 [*] Ajustes para ser impresso a mensagem de Homologação no DANFSE.

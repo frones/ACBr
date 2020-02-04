@@ -1,7 +1,7 @@
 object frmCTeDAInutRL: TfrmCTeDAInutRL
-  Left = 183
+  Left = 251
   Height = 404
-  Top = 260
+  Top = 122
   Width = 880
   Caption = 'frmCTeDAInutRL'
   ClientHeight = 404
@@ -11,8 +11,8 @@ object frmCTeDAInutRL: TfrmCTeDAInutRL
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.6.2.0'
-  Visible = False
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.6.0'
   object RLCTeInut: TRLReport
     Left = 21
     Height = 1123
@@ -29,14 +29,14 @@ object frmCTeDAInutRL: TfrmCTeDAInutRL
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright Â© 1999-2009 Fortes InformÃ¡tica'
+    DocumentInfo.Author = 'FortesReport 3.23 - Copyright Ã‚Â© 1999-2009 Fortes InformÃƒÂ¡tica'
     DocumentInfo.Creator = 'Projeto ACBr (Componente CT-e)'
-    DisplayName = 'Documento PDF'
-    left = 369
-    top = 174
+    DisplayName = 'Documento  PDF'
+    left = 368
+    top = 176
   end
   object DataSource1: TDataSource
-    left = 428
-    top = 180
+    left = 448
+    top = 176
   end
 end

@@ -244,6 +244,8 @@ end;
 procedure TfrmCTeDAInutRL.FormDestroy(Sender: TObject);
 begin
   RLCTeInut.Free;
+  if Assigned(cdsItens) then
+    cdsItens.Free;
 end;
 
 end.

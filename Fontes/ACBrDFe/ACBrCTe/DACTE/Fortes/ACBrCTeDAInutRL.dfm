@@ -12,6 +12,7 @@ object frmCTeDAInutRL: TfrmCTeDAInutRL
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object RLCTeInut: TRLReport
@@ -33,11 +34,11 @@ object frmCTeDAInutRL: TfrmCTeDAInutRL
       'ca'
     DocumentInfo.Creator = 'Projeto ACBr (Componente CT-e)'
     DisplayName = 'Documento  PDF'
-    Left = 369
-    Top = 174
+    Left = 368
+    Top = 176
   end
   object DataSource1: TDataSource
-    Left = 428
-    Top = 180
+    Left = 440
+    Top = 176
   end
 end

@@ -50,7 +50,6 @@ const
 
   TWebServiceBlocoX = class(TDFeWebService)
   private
-    FURLWebService: TACBrBlocoX_URLWebService;
     FUsarTempuri: Boolean;
     FUsarCData: Boolean;
   protected
@@ -60,85 +59,6 @@ const
   public
     constructor Create(AOwner: TACBrDFe); override;
     property UsarCData: Boolean read FUsarCData write FUsarCData;
-  end;
-
-  { TEnviarBlocoX }
-
-  TEnviarBlocoX = class(TWebServiceBlocoX)
-  private
-    fSituacaoProcCod: Integer;
-    fSituacaoProcStr: AnsiString;
-    fRecibo: AnsiString;
-    fMensagem: AnsiString;
-    fTipo: AnsiString;
-    fVersao: AnsiString;
-    FXML : AnsiString;
-    FBlocoXRetorno: TRetEnvBlocoX;
-    FXMLZipado: AnsiString;
-
-    procedure SetXML(const AValue: AnsiString);
-    function GetXMLZipado: AnsiString;
-
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-
-  public
-    constructor Create(AOwner: TACBrDFe); override;
-    destructor Destroy; override;
-
-    procedure Clear; override;
-    property XML: AnsiString read FXML write SetXML;
-    property XMLZipado: AnsiString read GetXMLZipado write FXMLZipado;
-
-    property BlocoXRetorno  : TRetEnvBlocoX read FBlocoXRetorno;
-    property SituacaoProcCod: Integer       read fSituacaoProcCod;
-    property SituacaoProcStr: AnsiString    read fSituacaoProcStr;
-    property Recibo         : AnsiString    read fRecibo;
-    property Tipo           : AnsiString    read fTipo;
-    property Versao         : AnsiString    read fVersao;
-    property Mensagem       : AnsiString    read fMensagem;
-  end;
-
-  { TConsultarBlocoX }
-
-  TConsultarBlocoX = class(TWebServiceBlocoX)
-  private
-    FRecibo: String;
-    FSituacaoProcCod: integer;
-    FRetornoConsulta: TRetEnvBlocoX;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  public
-    destructor Destroy; override;
-    procedure Clear; override;
-    property Recibo: String read FRecibo write FRecibo;
-    property SituacaoProcCod: integer read FSituacaoProcCod write FSituacaoProcCod;
-    property BlocoXRetorno: TRetEnvBlocoX read FRetornoConsulta write FRetornoConsulta;
-  end;
-
-
-  { TValidarBlocoX }
-
-  TValidarBlocoX = class(TWebServiceBlocoX)
-  private
-    FXML : AnsiString;
-    FValidarPafEcfEEcf: Boolean;
-    FValidarAssinaturaDigital: Boolean;
-  protected
-    procedure DefinirURL; override;
-    procedure DefinirServicoEAction; override;
-    procedure DefinirDadosMsg; override;
-    function TratarResposta: Boolean; override;
-  public
-    property XML: AnsiString read FXML write FXML;
-    property ValidarPafEcfEEcf: Boolean read FValidarPafEcfEEcf write FValidarPafEcfEEcf;
-    property ValidarAssinaturaDigital: Boolean read FValidarAssinaturaDigital write FValidarAssinaturaDigital;
   end;
 
   { TTransmitirArquivoBlocoX }
@@ -257,7 +177,7 @@ const
   public
     destructor Destroy; override;
     procedure Clear; override;
-    function ExtrairArquivo(FileName: String): String;
+    function ExtrairArquivo(const FileName: String): String;
     property XML:             AnsiString read FXML write FXML;
     property SituacaoOperCod: Integer    read FSituacaoOperCod;
     property SituacaoOperStr: AnsiString read FSituacaoOperStr;
@@ -400,10 +320,6 @@ const
 
   TACBrBlocoX_WebServices = class
   private
-    FEnviarBlocoX: TEnviarBlocoX;
-    FConsultarBlocoX: TConsultarBlocoX;
-    FValidarBlocoX: TValidarBlocoX;
-
     FTransmitirArquivoBlocoX: TTransmitirArquivoBlocoX;
     FConsultarProcessamentoArquivoBlocoX: TConsultarProcessamentoArquivoBlocoX;
     FConsultarHistoricoArquivoBlocoX: TConsultarHistoricoArquivoBlocoX;
@@ -416,10 +332,6 @@ const
   public
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
-
-    property EnviarBlocoX:    TEnviarBlocoX    read FEnviarBlocoX    write FEnviarBlocoX;
-    property ConsultarBlocoX: TConsultarBlocoX read FConsultarBlocoX write FConsultarBlocoX;
-    property ValidarBlocoX:   TValidarBlocoX   read FValidarBlocoX   write FValidarBlocoX;
 
     property TransmitirArquivoBlocoX: TTransmitirArquivoBlocoX read FTransmitirArquivoBlocoX
       write FTransmitirArquivoBlocoX;
@@ -459,7 +371,6 @@ uses
 constructor TWebServiceBlocoX.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-  FURLWebService  := wsRecepcao;
   FUsarTempuri    := False;
   FUsarCData      := False;
   FPHeaderElement := '';
@@ -468,21 +379,10 @@ end;
 
 procedure TWebServiceBlocoX.DefinirURL;
 begin
-  { Será descontinuada em  01/01/2020 segun reunião ACATS }
-  if (FURLWebService = wsBlocoX) then
-  begin
-    if (FPConfiguracoes.WebServices.Ambiente = taProducao) then
-      FPURL := 'http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx'
-    else
-      FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx';
-  end
+  if (FPConfiguracoes.WebServices.Ambiente = taProducao) then
+    FPURL := 'http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx'
   else
-  begin
-    if (FPConfiguracoes.WebServices.Ambiente = taProducao) then
-      FPURL := 'http://webservices.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx'
-    else
-      FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx';
-  end;
+    FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx';
 end;
 
 procedure TWebServiceBlocoX.DefinirServicoEAction;
@@ -502,179 +402,6 @@ end;
 function TWebServiceBlocoX.GerarVersaoDadosSoap: String;
 begin
   Result := '';
-end;
-
-{ TEnviarBlocoX }
-
-destructor TEnviarBlocoX.Destroy;
-begin
-  FreeAndNil( FBlocoXRetorno );
-  inherited Destroy;
-end;
-
-procedure TEnviarBlocoX.Clear;
-begin
-  inherited Clear;
-
-  fSituacaoProcCod := 0;
-  fSituacaoProcStr := '';
-  fRecibo          := '';
-  fTipo            := '';
-  fVersao          := '';
-  fMensagem        := '';
-  if Assigned(FBlocoXRetorno) then
-    FreeAndNil(FBlocoXRetorno);
-  FBlocoXRetorno := TRetEnvBlocoX.Create;
-end;
-
-procedure TEnviarBlocoX.SetXML(const AValue: AnsiString);
-begin
-  if FXML = AValue then Exit;
-  FXML := AValue;
-  FXMLZipado := '';
-end;
-
-function TEnviarBlocoX.GetXMLZipado: AnsiString;
-var
-  AZip: AnsiString;
-begin
-  if FXMLZipado = '' then
-  begin
-    if FXML <> '' then
-    begin
-      AZip := ZipFile(FXML, FPBodyElement+'.xml');
-      if AZip = '' then
-        raise Exception.Create('O seu compilador não tem suporte nativo a ZipFile.'+sLineBreak+
-                               'Informe o XML já Zipado + Base64 em "XMLZipado"');
-
-      FXMLZipado := EncodeBase64(AZip);
-    end;
-  end;
-
-  Result := FXMLZipado;
-end;
-
-procedure TEnviarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
-end;
-
-procedure TEnviarBlocoX.DefinirServicoEAction;
-begin
-  FUsarTempuri := True;
-  inherited DefinirServicoEAction;
-  FPSoapAction := FPSoapAction + 'Enviar';
-end;
-
-procedure TEnviarBlocoX.DefinirURL;
-begin
-  FURLWebService := wsRecepcao;
-  inherited DefinirURL;
-  FPBodyElement := 'Enviar';
-end;
-
-function TEnviarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResponse')));
-
-  FBlocoXRetorno.Leitor.Arquivo := FPRetWS;
-  FBlocoXRetorno.LerXml;
-
-  fSituacaoProcCod := FBlocoXRetorno.SituacaoProcCod;
-  fSituacaoProcStr := FBlocoXRetorno.SituacaoProcStr;
-  fRecibo          := FBlocoXRetorno.Recibo;
-  fTipo            := FBlocoXRetorno.Tipo;
-  fVersao          := FBlocoXRetorno.Versao;
-  fMensagem        := FBlocoXRetorno.Mensagem;
-
-  Result := (FPRetWS <> '');
-end;
-
-constructor TEnviarBlocoX.Create(AOwner: TACBrDFe);
-begin
-  inherited Create(AOwner);
-end;
-
-{ TConsultarBlocoX }
-
-destructor TConsultarBlocoX.Destroy;
-begin
-  FRetornoConsulta.Free;
-  inherited Destroy;
-end;
-
-procedure TConsultarBlocoX.Clear;
-begin
-  inherited Clear;
-  SituacaoProcCod := 0;
-
-  if Assigned(FRetornoConsulta) then
-    FRetornoConsulta.Free;
-
-  FRetornoConsulta := TRetEnvBlocoX.Create;
-end;
-
-procedure TConsultarBlocoX.DefinirURL;
-begin
-  FURLWebService := wsRecepcao;
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=Consultar';
-  FPBodyElement := 'Consultar';
-end;
-
-procedure TConsultarBlocoX.DefinirServicoEAction;
-begin
-  FUsarTempuri := True;
-  inherited DefinirServicoEAction;
-  FPSoapAction := FPSoapAction + 'Consultar';
-end;
-
-procedure TConsultarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pRecibo>'+Recibo+'</pRecibo>';
-end;
-
-function TConsultarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ConsultarResponse')));
-
-  FRetornoConsulta.Leitor.Arquivo := FPRetWS;
-  FRetornoConsulta.LerXml;
-
-  Recibo := FRetornoConsulta.Recibo;
-  SituacaoProcCod := FRetornoConsulta.SituacaoProcCod;
-
-  Result := (FPRetWS <> '');
-end;
-
-{ TValidarBlocoX }
-
-procedure TValidarBlocoX.DefinirServicoEAction;
-begin
-  FUsarTempuri := True;
-  inherited DefinirServicoEAction;
-  FPSoapAction := FPSoapAction + 'Validar';
-end;
-
-procedure TValidarBlocoX.DefinirURL;
-begin
-  FURLWebService := wsRecepcao;
-  inherited DefinirURL;
-  FPURL := FPURL+'?op=Validar';
-  FPBodyElement := 'Validar';
-end;
-
-function TValidarBlocoX.TratarResposta: Boolean;
-begin
-  FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarResponse')));
-  Result  := (FPRetWS <> '');
-end;
-
-procedure TValidarBlocoX.DefinirDadosMsg;
-begin
-  FPDadosMsg := '<pXml>'+ParseText(XML,False)+'</pXml>'+
-                '<pValidarPafEcfEEcf>'+IfThen(FValidarPafEcfEEcf, 'true', 'false')+'</pValidarPafEcfEEcf>'+
-                '<pValidarAssinaturaDigital>'+IfThen(FValidarAssinaturaDigital, 'true', 'false')+'</pValidarAssinaturaDigital>';
 end;
 
 { TTransmitirArquivoBlocoX }
@@ -739,7 +466,6 @@ end;
 
 procedure TTransmitirArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=TransmitirArquivo';
   FPBodyElement := 'TransmitirArquivo';
@@ -790,7 +516,6 @@ end;
 
 procedure TConsultarProcessamentoArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ConsultarProcessamentoArquivo';
   FPBodyElement := 'ConsultarProcessamentoArquivo';
@@ -849,7 +574,6 @@ end;
 
 procedure TConsultarHistoricoArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ConsultarHistoricoArquivo';
   FPBodyElement := 'ConsultarHistoricoArquivo';
@@ -907,7 +631,6 @@ end;
 
 procedure TListarArquivosBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ListarArquivos';
   FPBodyElement := 'ListarArquivos';
@@ -963,7 +686,6 @@ end;
 
 procedure TDownloadArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=DownloadArquivo';
   FPBodyElement := 'DownloadArquivo';
@@ -998,7 +720,7 @@ begin
   Result := (FPRetWS <> '');
 end;
 
-function TDownloadArquivoBlocoX.ExtrairArquivo(FileName: String): String;
+function TDownloadArquivoBlocoX.ExtrairArquivo(const FileName: String): String;
 var
   AUnZip: AnsiString;
   ArquivoXML : TFileStream;
@@ -1053,7 +775,6 @@ end;
 
 procedure TCancelarArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=CancelarArquivo';
   FPBodyElement := 'CancelarArquivo';
@@ -1110,7 +831,6 @@ end;
 
 procedure TReprocessarArquivoBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ReprocessarArquivo';
   FPBodyElement := 'ReprocessarArquivo';
@@ -1168,7 +888,6 @@ end;
 
 procedure TConsultarPendenciasContribuinteBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ConsultarPendenciasContribuinte';
   FPBodyElement := 'ConsultarPendenciasContribuinte';
@@ -1227,7 +946,6 @@ end;
 
 procedure TConsultarPendenciasDesenvolvedorPafEcfBlocoX.DefinirURL;
 begin
-  FURLWebService := wsBlocoX;
   inherited DefinirURL;
   FPURL := FPURL+'?op=ConsultarPendenciasDesenvolvedorPafEcf';
   FPBodyElement := 'ConsultarPendenciasDesenvolvedorPafEcf';
@@ -1265,9 +983,6 @@ end;
 
 constructor TACBrBlocoX_WebServices.Create(AOwner: TACBrDFe);
 begin
-  FEnviarBlocoX    := TEnviarBlocoX.Create(AOwner);
-  FConsultarBlocoX := TConsultarBlocoX.Create(AOwner);
-  FValidarBlocoX   := TValidarBlocoX.Create(AOwner);
   FTransmitirArquivoBlocoX                      := TTransmitirArquivoBlocoX.Create(AOwner);
   FConsultarProcessamentoArquivoBlocoX          := TConsultarProcessamentoArquivoBlocoX.Create(AOwner);
   FConsultarHistoricoArquivoBlocoX              := TConsultarHistoricoArquivoBlocoX.Create(AOwner);
@@ -1281,9 +996,6 @@ end;
 
 destructor TACBrBlocoX_WebServices.Destroy;
 begin
-  FEnviarBlocoX.Free;
-  FConsultarBlocoX.Free;
-  FValidarBlocoX.Free;
   FTransmitirArquivoBlocoX.Free;
   FConsultarProcessamentoArquivoBlocoX.Free;
   FConsultarHistoricoArquivoBlocoX.Free;

@@ -940,6 +940,7 @@ end;
 
 constructor TRetECFBlocoX.Create;
 begin
+  inherited Create;
   FPendencias := TRetPendenciaBlocoXCollection.Create;
   FAvisos     := TRetAvisoBlocoXCollection.Create;
 end;
@@ -980,6 +981,7 @@ end;
 
 constructor TRetPendenciaBlocoX.Create;
 begin
+  inherited Create;
   FRecibos := TRetReciboBlocoXCollection.Create;
 end;
 
@@ -993,6 +995,7 @@ end;
 
 constructor TRetConsPendContrReducoesZBlocoX.Create;
 begin
+  inherited Create;
   FECFs := TRetECFBlocoXCollection.Create;
 end;
 
@@ -1006,6 +1009,7 @@ end;
 
 constructor TRetConsPendContrEstoqueBlocoX.Create;
 begin
+  inherited Create;
   FPendencias := TRetPendenciaBlocoXCollection.Create;
   FAvisos     := TRetAvisoBlocoXCollection.Create;
 end;

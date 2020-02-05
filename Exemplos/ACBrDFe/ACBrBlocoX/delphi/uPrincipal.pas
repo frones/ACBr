@@ -255,51 +255,54 @@ end;
 
 procedure TfrmPrincipal.btnValidarEnviarXMLClick(Sender: TObject);
 var
-  RespostaValidacao: String;
+  RespostaValidacao: string;
   Arquivo: TStringList;
+  TextoArquivo: string;
 begin
   if OpenDialog1.Execute then
   begin
     Arquivo := TStringList.Create;
     try
       Arquivo.LoadFromFile(OpenDialog1.FileName);
-
-      ACBrBlocoX1.WebServices.ValidarBlocoX.Clear;
-      ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Arquivo.Text;
-
-      ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
-      RespostaValidacao := ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
-
-      if Pos('VALIDADO COM SUCESSO', UpperCase(RespostaValidacao)) > 0 then
-      begin
-        ShowMessage(RespostaValidacao);
-
-        ACBrBlocoX1.WebServices.EnviarBlocoX.Clear;
-        ACBrBlocoX1.WebServices.EnviarBlocoX.XML := Arquivo.Text;
-
-        if ACBrBlocoX1.WebServices.EnviarBlocoX.Executar then
-        begin
-          ShowMessage(
-            'Arquivo enviado com sucesso!' +
-            sLineBreak +
-            sLineBreak +
-            ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS
-          );
-        end
-        else
-        begin
-          raise Exception.Create(
-            'Não foi possível transmitir o arquivo!' + sLineBreak +
-            ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS
-          );
-        end;
-      end
-      else
-        raise Exception.Create(RespostaValidacao);
+      TextoArquivo := Arquivo.Text;
     finally
       Arquivo.Free;
     end;
+
+      // Webservice de Validação não está mais disponível
+//    ACBrBlocoX1.WebServices.ValidarBlocoX.Clear;
+//    ACBrBlocoX1.WebServices.ValidarBlocoX.XML := TextoArquivo;
+//
+//    ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+//    RespostaValidacao := ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
+//
+//    if not (Pos('VALIDADO COM SUCESSO', UpperCase(RespostaValidacao)) > 0) then
+//      raise Exception.Create(RespostaValidacao);
+//
+//    ShowMessage(RespostaValidacao);
+
+    ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.Clear;
+    ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.XML := Arquivo.Text;
+
+    if ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.Executar then
+    begin
+      ShowMessage(
+        'Arquivo enviado com sucesso!' +
+        sLineBreak +
+        sLineBreak +
+        ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.RetWS
+      );
+    end
+    else
+    begin
+      raise Exception.Create(
+        'Não foi possível transmitir o arquivo!' + sLineBreak +
+        ACBrBlocoX1.WebServices.TransmitirArquivoBlocoX.RetWS
+      );
+    end;
   end;
+
+
 end;
 
 procedure TfrmPrincipal.ACBrBlocoX1AntesDeAssinar(var ConteudoXML: string;
@@ -317,33 +320,31 @@ procedure TfrmPrincipal.btnCancArquivoClick(Sender: TObject);
 begin
   if edtRecibo.Text = EmptyStr then
     Raise Exception.Create('Informe o recibo do arquivo transmitido antes de continuar!');
-  with ACBrBlocoX1 do
+
+  mmoRetWS.Clear;
+
+  ACBrBlocoX1.ConsultarProcessamentoArquivo.Recibo := Trim(edtRecibo.Text);
+  ACBrBlocoX1.ConsultarProcessamentoArquivo.RemoverEncodingXMLAssinado := True;
+  ACBrBlocoX1.ConsultarProcessamentoArquivo.GerarXML(True);
+
+  ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.XML := ACBrBlocoX1.ConsultarProcessamentoArquivo.XMLAssinado;
+  ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.UsarCData := True;
+  if ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.Executar then
   begin
-    mmoRetWS.Clear;
-
-    ConsultarProcessamentoArquivo.Recibo := Trim(edtRecibo.Text);
-    ConsultarProcessamentoArquivo.RemoverEncodingXMLAssinado := True;
-    ConsultarProcessamentoArquivo.GerarXML(True);
-
-    WebServices.ConsultarProcessamentoArquivoBlocoX.XML := ACBrBlocoX1.ConsultarProcessamentoArquivo.XMLAssinado;
-    WebServices.ConsultarProcessamentoArquivoBlocoX.UsarCData := True;
-    if WebServices.ConsultarProcessamentoArquivoBlocoX.Executar then
+    mmoRetWS.Lines.Text := ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
+    with ACBrBlocoX1.WebServices.ConsultarProcessamentoArquivoBlocoX do
     begin
-      mmoRetWS.Lines.Text := WebServices.ConsultarProcessamentoArquivoBlocoX.RetWS;
-      with WebServices.ConsultarProcessamentoArquivoBlocoX do
-      begin
-        with BlocoXRetorno do
-          if not SituacaoProcCod = 0 then
-            Raise Exception.Create('Recibo com situação diferente de "Sucesso" não pode ser cancelado: ' + SituacaoProcStr);
-        CancelarArquivo.Recibo := Trim(edtRecibo.Text);
-        CancelarArquivo.Motivo := Trim(edtMotivo.Text);
-        CancelarArquivo.RemoverEncodingXMLAssinado := True;
-        CancelarArquivo.GerarXML(True);
-        WebServices.CancelarArquivoBlocoX.XML := CancelarArquivo.XMLAssinado;
-        WebServices.CancelarArquivoBlocoX.UsarCData := True;
-        if WebServices.CancelarArquivoBlocoX.Executar then
-          mmoRetWS.Lines.Text := WebServices.CancelarArquivoBlocoX.RetWS;
-      end;
+      with BlocoXRetorno do
+        if not SituacaoProcCod = 0 then
+          Raise Exception.Create('Recibo com situação diferente de "Sucesso" não pode ser cancelado: ' + SituacaoProcStr);
+      ACBrBlocoX1.CancelarArquivo.Recibo := Trim(edtRecibo.Text);
+      ACBrBlocoX1.CancelarArquivo.Motivo := Trim(edtMotivo.Text);
+      ACBrBlocoX1.CancelarArquivo.RemoverEncodingXMLAssinado := True;
+      ACBrBlocoX1.CancelarArquivo.GerarXML(True);
+      ACBrBlocoX1.WebServices.CancelarArquivoBlocoX.XML := ACBrBlocoX1.CancelarArquivo.XMLAssinado;
+      ACBrBlocoX1.WebServices.CancelarArquivoBlocoX.UsarCData := True;
+      if ACBrBlocoX1.WebServices.CancelarArquivoBlocoX.Executar then
+        mmoRetWS.Lines.Text := ACBrBlocoX1.WebServices.CancelarArquivoBlocoX.RetWS;
     end;
   end;
 end;

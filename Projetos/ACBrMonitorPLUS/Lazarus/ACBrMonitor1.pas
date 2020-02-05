@@ -620,7 +620,7 @@ type
     spedtCasasDecimaisQtd: TSpinEdit;
     spedtSATCasasDecimaisQtd: TSpinEdit;
     spedtSATDecimaisVUnit: TSpinEdit;
-    speEspBorda: TSpinEdit;
+    speEspEntreProd: TSpinEdit;
     speFonteCampos: TSpinEdit;
     speFonteEndereco: TSpinEdit;
     speFonteRazao: TSpinEdit;
@@ -4898,7 +4898,7 @@ begin
       edtNumCopia.Value                   := Copias;
       edtNumCopiaNFCe.Value               := CopiasNFCe;
       speLargCodProd.Value                := LarguraCodigoProduto;
-      speEspBorda.Value                   := EspessuraBorda;
+      speEspEntreProd.Value               := EspacoEntreProdutos;
       speFonteRazao.Value                 := FonteRazao;
       speFonteEndereco.Value              := FonteEndereco;
       speFonteCampos.Value                := FonteCampos;
@@ -6072,7 +6072,7 @@ begin
         Copias                     := edtNumCopia.Value;
         CopiasNFCe                 := edtNumCopiaNFCe.Value;
         LarguraCodigoProduto       := speLargCodProd.Value;
-        EspessuraBorda             := speEspBorda.Value;
+        EspacoEntreProdutos        := speEspEntreProd.Value;
         FonteRazao                 := speFonteRazao.Value;
         FonteEndereco              := speFonteEndereco.Value;
         FonteCampos                := speFonteCampos.Value;
@@ -8931,6 +8931,7 @@ begin
       ACBrNFeDANFeRL1.ExibeCampoFatura := cbxExibirCampoFatura.Checked;
       ACBrNFeDANFeRL1.QuebraLinhaEmDetalhamentos := cbxQuebrarLinhasDetalhesItens.Checked;
       ACBrNFeDANFeRL1.Fonte.TamanhoFonteRazaoSocial := speFonteRazao.Value;
+      ACBrNFeDANFeRL1.EspacoEntreProdutos := speEspEntreProd.Value;
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
       ACBrNFeDANFeRL1.PosCanhotoLayout := TPosReciboLayout( rgLayoutCanhoto.ItemIndex );

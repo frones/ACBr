@@ -312,7 +312,7 @@ type
     Copias                           : Integer;
     CopiasNFCe                       : Integer;
     LarguraCodigoProduto             : Integer;
-    EspessuraBorda                   : Integer;
+    EspacoEntreProdutos              : Integer;
     FonteRazao                       : Integer;
     FonteEndereco                    : Integer;
     FonteCampos                      : Integer;
@@ -1097,7 +1097,7 @@ begin
       Ini.WriteInteger( CSecDANFE,  CKeyDANFECopias                 , Copias );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFECopiasNFCe             , CopiasNFCe );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFELarguraCodigoProduto   , LarguraCodigoProduto );
-      Ini.WriteInteger( CSecDANFE,  CKeyDANFEEspessuraBorda         , EspessuraBorda );
+      Ini.WriteInteger( CSecDANFE,  CKeyDANFEEspacoEntreProdutos    , EspacoEntreProdutos );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEFonteRazao             , FonteRazao );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEFonteEndereco          , FonteEndereco );
       Ini.WriteInteger( CSecDANFE,  CKeyDANFEFonteCampos            , FonteCampos );
@@ -1757,7 +1757,7 @@ begin
       Copias                    :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFECopias                         , Copias );
       CopiasNFCe                :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFECopiasNFCe                     , CopiasNFCe );
       LarguraCodigoProduto      :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFELarguraCodigoProduto           , LarguraCodigoProduto );
-      EspessuraBorda            :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEEspessuraBorda                 , EspessuraBorda );
+      EspacoEntreProdutos       :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEEspacoEntreProdutos            , EspacoEntreProdutos );
       FonteRazao                :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEFonteRazao                     , FonteRazao );
       FonteEndereco             :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEFonteEndereco                  , FonteEndereco );
       FonteCampos               :=  Ini.ReadInteger( CSecDANFE,  CKeyDANFEFonteCampos                    , FonteCampos );
@@ -2411,7 +2411,7 @@ begin
     Copias                    :=  1;
     CopiasNFCe                :=  1;
     LarguraCodigoProduto      :=  40;
-    EspessuraBorda            :=  1;
+    EspacoEntreProdutos       :=  11;
     FonteRazao                :=  8;
     FonteEndereco             :=  7;
     FonteCampos               :=  8;

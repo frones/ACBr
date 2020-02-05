@@ -965,7 +965,7 @@ const
   CKeyDANFECopias =                    'Copias';
   CKeyDANFECopiasNFCe =                'CopiasNFCe';
   CKeyDANFELarguraCodigoProduto =      'LarguraCodigoProduto';
-  CKeyDANFEEspessuraBorda =            'EspessuraBorda';
+  CKeyDANFEEspacoEntreProdutos =       'EspacoEntreProdutos';
   CKeyDANFEFonteRazao =                'FonteRazao';
   CKeyDANFEFonteEndereco =             'FonteEndereco';
   CKeyDANFEFonteCampos =               'FonteCampos';

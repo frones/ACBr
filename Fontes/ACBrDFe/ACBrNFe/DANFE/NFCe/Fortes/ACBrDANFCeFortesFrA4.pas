@@ -343,12 +343,9 @@ begin
   lNomeFantasia.Visible := FACBrNFeDANFCeFortesA4.ImprimeNomeFantasia;
 
   if lNomeFantasia.Visible then
-  begin
-    Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant;
-  end else
-  begin
-    Text := '';
-  end;
+     Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant
+  else
+     Text := '';
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand9BeforePrint(Sender: TObject;

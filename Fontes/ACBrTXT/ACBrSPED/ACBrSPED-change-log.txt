@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 05/02/2020
+-- ACBrSPEDFiscal --
+[-] Inclusão do registro 9900 pra totalizar as ocorrências do registro H030. (Ezequiel Brandalise)
+
 Data 28/01/2020
 -- ACBrEFDBlocos --
 [*] Inclusão de novo item para o tipo enumerado TACBrMotInv devido a versão 3.03 do Guia Prático EFD

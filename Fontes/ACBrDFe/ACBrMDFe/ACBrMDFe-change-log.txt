@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/02/2020
+-- ACBrMDFeManifestos --
+[*] Acrescentado o que estava faltando no método: GerarMDFeIni.
+   Por: Italo Jurisato Junior
+
 22/01/2020
 -- Diversos --
 [+] Implementado os novos campos e grupos conforme consta na NT 2020/001.

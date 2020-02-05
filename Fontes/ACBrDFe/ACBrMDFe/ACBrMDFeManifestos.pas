@@ -530,7 +530,7 @@ end;
 
 function Manifesto.GerarMDFeIni: String;
 var
-  i, y, j: integer;
+  i, j, k, l, m: integer;
   sSecao: string;
   INIRec: TMemIniFile;
   IniDFe: TStringList;
@@ -546,6 +546,7 @@ begin
     begin
       INIRec.WriteInteger('ide', 'cUF', Ide.cUF);
       INIRec.WriteString('ide', 'tpEmit', TpEmitenteToStr(Ide.tpEmit));
+      INIRec.WriteString('ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp));
       INIRec.WriteString('ide', 'mod', Ide.modelo);
       INIRec.WriteInteger('ide', 'serie', Ide.serie);
       INIRec.WriteInteger('ide', 'nMDF', Ide.nMDF);
@@ -559,6 +560,8 @@ begin
       INIRec.WriteString('ide', 'UFFim', Ide.UFFim);
       INIRec.WriteString('ide', 'dhIniViagem', DateToStr(Ide.dhIniViagem));
       INIRec.WriteString('ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp));
+      INIRec.WriteString('ide', 'indCanalVerde', TindicadorToStr(Ide.indCanalVerde));
+      INIRec.WriteString('ide', 'indCarregaPosterior', TindicadorToStr(Ide.indCarregaPosterior));
 
       for i := 0 to ide.infMunCarrega.Count - 1 do
       begin
@@ -597,11 +600,85 @@ begin
       case Ide.modal of
         moRodoviario:
         begin
-          INIRec.WriteString('Rodo', 'RNTRC', Rodo.RNTRC);
-          INIRec.WriteString('Rodo', 'CIOT', Rodo.CIOT);
-          INIRec.WriteString('Rodo', 'tpRod', TpRodadoToStr(Rodo.veicTracao.tpRod));
-          INIRec.WriteString('Rodo', 'tpCar', TpCarroceriaToStr(Rodo.veicTracao.tpCar));
-          INIRec.WriteString('Rodo', 'UF', Rodo.veicTracao.UF);
+          INIRec.WriteString('Rodo', 'codAgPorto', Rodo.codAgPorto);
+
+          INIRec.WriteString('infANTT', 'RNTRC', Rodo.infANTT.RNTRC);
+
+          for i := 0 to rodo.infANTT.infCIOT.Count - 1 do
+          begin
+            sSecao := 'infCIOT' + IntToStrZero(I + 1, 3);
+            with rodo.infANTT.infCIOT.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'CIOT', CIOT);
+              INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+            end;
+          end;
+
+          for i := 0 to rodo.infANTT.valePed.disp.Count - 1 do
+          begin
+            sSecao := 'valePed' + IntToStrZero(I + 1, 3);
+            with rodo.infANTT.valePed.disp.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'CNPJForn', CNPJForn);
+              INIRec.WriteString(sSecao, 'CNPJPg', CNPJPg);
+              INIRec.WriteString(sSecao, 'nCompra', nCompra);
+              INIRec.WriteFloat(sSecao, 'vValePed', vValePed);
+            end;
+          end;
+
+          for i := 0 to rodo.infANTT.infContratante.Count - 1 do
+          begin
+            sSecao := 'infContratante' + IntToStrZero(I + 1, 3);
+            with rodo.infANTT.infContratante.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+              INIRec.WriteString(sSecao, 'idEstrangeiro', idEstrangeiro);
+              INIRec.WriteString(sSecao, 'xNome', xNome);
+            end;
+          end;
+
+          for i := 0 to rodo.infANTT.infPag.Count - 1 do
+          begin
+            sSecao := 'infPag' + IntToStrZero(I + 1, 3);
+            with rodo.infANTT.infPag.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'xNome', xNome);
+              INIRec.WriteString(sSecao, 'idEstrangeiro', idEstrangeiro);
+              INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+              INIRec.WriteFloat(sSecao, 'vContrato', vContrato);
+              INIRec.WriteString(sSecao, 'indPag', TindPagToStr(indPag));
+
+              for j := 0 to rodo.infANTT.infPag[I].Comp.Count - 1 do
+              begin
+                sSecao := 'Comp' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
+                with rodo.infANTT.infPag.Items[i].Comp.Items[j] do
+                begin
+                  INIRec.WriteString(sSecao, 'tpComp', TCompToStr(tpComp));
+                  INIRec.WriteFloat(sSecao, 'vComp', vComp);
+                  INIRec.WriteString(sSecao, 'xComp', xComp);
+                end;
+              end;
+
+              for j := 0 to rodo.infANTT.infPag[I].infPrazo.Count - 1 do
+              begin
+                sSecao := 'infPrazo' + IntToStrZero(I + 1, 3) + IntToStrZero(J + 1, 3);
+                with rodo.infANTT.infPag.Items[i].infPrazo.Items[j] do
+                begin
+                  INIRec.WriteInteger(sSecao, 'nParcela', nParcela);
+                  INIRec.WriteString(sSecao, 'dVenc', DateToStr(dVenc));
+                  INIRec.WriteFloat(sSecao, 'vParcela', vParcela);
+                end;
+              end;
+
+              sSecao := 'infBanc' + IntToStrZero(I, 3);
+              with rodo.infANTT.infPag.Items[i].infBanc do
+              begin
+                INIRec.WriteString(sSecao, 'CNPJIPEF', CNPJIPEF);
+                INIRec.WriteString(sSecao, 'codBanco', codBanco);
+                INIRec.WriteString(sSecao, 'codAgencia', codAgencia);
+              end;
+            end;
+          end;
 
           if (Rodo.veicTracao.placa <> '') then
           begin
@@ -610,40 +687,159 @@ begin
             INIRec.WriteString('veicTracao', 'RENAVAN', Rodo.veicTracao.RENAVAM);
             INIRec.WriteInteger('veicTracao', 'tara', Rodo.veicTracao.tara);
             INIRec.WriteInteger('veicTracao', 'capKG', Rodo.veicTracao.capKG);
-            INIRec.WriteInteger('veicTracao', 'clInt', Rodo.veicTracao.capM3);
+            INIRec.WriteInteger('veicTracao', 'capM3', Rodo.veicTracao.capM3);
+            INIRec.WriteString('veicTracao', 'tpRod', TpRodadoToStr(Rodo.veicTracao.tpRod));
+            INIRec.WriteString('veicTracao', 'tpCar', TpCarroceriaToStr(Rodo.veicTracao.tpCar));
+            INIRec.WriteString('veicTracao', 'UF', Rodo.veicTracao.UF);
+            // Dados do proprietário do veículo de Tração (Opcional) - Nível 2
+            INIRec.WriteString('veicTracao', 'CNPJCPF', Rodo.veicTracao.prop.CNPJCPF);
+            INIRec.WriteString('veicTracao', 'RNTRC', Rodo.veicTracao.prop.RNTRC);
+            INIRec.WriteString('veicTracao', 'xNome', Rodo.veicTracao.prop.xNome);
+            INIRec.WriteString('veicTracao', 'IE', Rodo.veicTracao.prop.IE);
+            INIRec.WriteString('veicTracao', 'UFProp', Rodo.veicTracao.prop.UF);
+            INIRec.WriteString('veicTracao', 'tpProp', TpPropToStr(Rodo.veicTracao.prop.tpProp));
           end;
 
-          if (Rodo.veicTracao.prop.CNPJCPF <> '') then
+          for i := 0 to Rodo.veicTracao.condutor.Count - 1 do
           begin
-            INIRec.WriteString('prop', 'CPFCNPJ', Rodo.veicTracao.prop.CNPJCPF);
-            INIRec.WriteString('prop', 'RNTRC', Rodo.veicTracao.prop.RNTRC);
-            INIRec.WriteString('prop', 'xNome', Rodo.veicTracao.prop.xNome);
-            INIRec.WriteString('prop', 'IE', Rodo.veicTracao.prop.IE);
-            INIRec.WriteString('prop', 'UF', Rodo.veicTracao.prop.UF);
-            INIRec.WriteString('prop', 'tpProp', TpPropToStr(Rodo.veicTracao.prop.tpProp));
+            sSecao := 'moto' + IntToStrZero(i + 1, 3);
+            with rodo.veicTracao.condutor.Items[i] do
+            begin
+              IniRec.WriteString(sSecao, 'CPF', CPF);
+              IniRec.WriteString(sSecao, 'xNome', xNome);
+            end;
           end;
 
-          for y := 1 to Rodo.veicTracao.condutor.Count - 1 do
+          for i := 0 to Rodo.veicReboque.Count - 1 do
           begin
-            sSecao := 'moto' + IntToStrZero(y + 1, 3);
-            IniRec.WriteString(sSecao, 'CPF', Rodo.veicTracao.condutor.Items[y].CPF);
-            IniRec.WriteString(sSecao, 'xNome', Rodo.veicTracao.condutor.Items[y].xNome);
+            sSecao := 'reboque' + IntToStrZero(i + 1, 2);
+            with rodo.veicReboque.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'clInt', cInt);
+              INIRec.WriteString(sSecao, 'placa', placa);
+              INIRec.WriteString(sSecao, 'RENAVAN', RENAVAM);
+              INIRec.WriteInteger(sSecao, 'tara', tara);
+              INIRec.WriteInteger(sSecao, 'capKG', capKG);
+              INIRec.WriteInteger(sSecao, 'capM3', capM3);
+              INIRec.WriteString(sSecao, 'tpCar', TpCarroceriaToStr(tpCar));
+              INIRec.WriteString(sSecao, 'UF', UF);
+              // Dados do proprietário do veículo de Tração (Opcional) - Nível 2
+              INIRec.WriteString(sSecao, 'CNPJCPF', prop.CNPJCPF);
+              INIRec.WriteString(sSecao, 'RNTRC', prop.RNTRC);
+              INIRec.WriteString(sSecao, 'xNome', prop.xNome);
+              INIRec.WriteString(sSecao, 'IE', prop.IE);
+              INIRec.WriteString(sSecao, 'UFProp', prop.UF);
+              INIRec.WriteString(sSecao, 'tpProp', TpPropToStr(prop.tpProp));
+            end;
+          end;
+
+          for i := 0 to Rodo.lacRodo.Count - 1 do
+          begin
+            sSecao := 'lacRodo' + IntToStrZero(i + 1, 3);
+            with rodo.lacRodo.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'nLacre', nLacre);
+            end;
           end;
         end;
 
         moAereo:
         begin
-
+          sSecao := 'aereo';
+          INIRec.WriteInteger(sSecao, 'matr', Aereo.matr);
+          INIRec.WriteString(sSecao, 'nVoo', Aereo.nVoo);
+          INIRec.WriteString(sSecao, 'cAerEmb', Aereo.cAerEmb);
+          INIRec.WriteString(sSecao, 'cAerDes', Aereo.cAerDes);
+          INIRec.WriteString(sSecao, 'dVoo', DateToStr(Aereo.dVoo));
         end;
 
         moAquaviario:
         begin
+          sSecao := 'aquav';
+          INIRec.WriteString(sSecao, 'CNPJAgeNav', Aquav.CNPJAgeNav);
+          INIRec.WriteString(sSecao, 'irin', Aquav.irin);
+          INIRec.WriteString(sSecao, 'tpEmb', Aquav.tpEmb);
+          INIRec.WriteString(sSecao, 'cEmbar', Aquav.cEmbar);
+          INIRec.WriteString(sSecao, 'xEmbar', Aquav.xEmbar);
+          INIRec.WriteString(sSecao, 'cPrtEmb', Aquav.cPrtEmb);
+          INIRec.WriteString(sSecao, 'cPrtDest', Aquav.cPrtDest);
+          INIRec.WriteString(sSecao, 'prtTrans', Aquav.prtTrans);
+          INIRec.WriteString(sSecao, 'tpNav', TpNavegacaoToStr(Aquav.tpNav));
 
+          for i := 0 to Aquav.infTermCarreg.Count - 1 do
+          begin
+            sSecao := 'infTermCarreg' + IntToStrZero(i + 1, 1);
+            with Aquav.infTermCarreg.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'cTermCarreg', cTermCarreg);
+              INIRec.WriteString(sSecao, 'xTermCarreg', xTermCarreg);
+            end;
+          end;
+
+          for i := 0 to Aquav.infTermDescarreg.Count - 1 do
+          begin
+            sSecao := 'infTermDescarreg' + IntToStrZero(i + 1, 1);
+            with Aquav.infTermDescarreg.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'cTermDescarreg', cTermDescarreg);
+              INIRec.WriteString(sSecao, 'xTermDescarreg', xTermDescarreg);
+            end;
+          end;
+
+          for i := 0 to Aquav.infEmbComb.Count - 1 do
+          begin
+            sSecao := 'infEmbComb' + IntToStrZero(i + 1, 2);
+            with Aquav.infEmbComb.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'cEmbComb', cEmbComb);
+              INIRec.WriteString(sSecao, 'xBalsa', xBalsa);
+            end;
+          end;
+
+          for i := 0 to Aquav.infUnidCargaVazia.Count - 1 do
+          begin
+            sSecao := 'infUnidCargaVazia' + IntToStrZero(i + 1, 3);
+            with Aquav.infUnidCargaVazia.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'idUnidCargaVazia', idUnidCargaVazia);
+              INIRec.WriteString(sSecao, 'tpUnidCargaVazia', UnidCargaToStr(tpUnidCargaVazia));
+            end;
+          end;
+
+          for i := 0 to Aquav.infUnidTranspVazia.Count - 1 do
+          begin
+            sSecao := 'infUnidTranspVazia' + IntToStrZero(i + 1, 3);
+            with Aquav.infUnidTranspVazia.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'idUnidTranspVazia', idUnidTranspVazia);
+              INIRec.WriteString(sSecao, 'tpUnidTranspVazia', UnidTranspToStr(tpUnidTranspVazia));
+            end;
+          end;
         end;
 
         moFerroviario:
         begin
+          sSecao := 'ferrov';
+          INIRec.WriteString(sSecao, 'xPref', Ferrov.xPref);
+          INIRec.WriteString(sSecao, 'dhTrem', DateToStr(Ferrov.dhTrem));
+          INIRec.WriteString(sSecao, 'xOri', Ferrov.xOri);
+          INIRec.WriteString(sSecao, 'xDest', Ferrov.xDest);
+          INIRec.WriteInteger(sSecao, 'qVag', Ferrov.qVag);
 
+          for i := 0 to Ferrov.vag.Count - 1 do
+          begin
+            sSecao := 'vag' + IntToStrZero(i + 1, 3);
+            with Ferrov.vag.Items[i] do
+            begin
+              INIRec.WriteString(sSecao, 'serie', serie);
+              INIRec.WriteInteger(sSecao, 'nVag', nVag);
+              INIRec.WriteInteger(sSecao, 'nSeq', nSeq);
+              INIRec.WriteFloat(sSecao, 'TU', TU);
+              INIRec.WriteFloat(sSecao, 'pesoBC', pesoBC);
+              INIRec.WriteFloat(sSecao, 'pesoR', pesoR);
+              INIRec.WriteString(sSecao, 'tpVag', tpVag);
+            end;
+          end;
         end;
       end;
 
@@ -655,13 +851,83 @@ begin
           INIRec.WriteInteger(sSecao, 'cMunDescarga', cMunDescarga);
           INIRec.WriteString(sSecao, 'xMunDescarga', xMunDescarga);
 
-          for j := 0 to infDoc.infMunDescarga.Items[i].infCTe.Count - 1 do
+          for j := 0 to infCTe.Count - 1 do
           begin
             sSecao := 'infCTe' + IntToStrZero(I + 1, 3) + IntToStrZero(j + 1, 3);
-            with infDoc.infMunDescarga.Items[i].infCTe.Items[j] do
+            with infCTe.Items[j] do
             begin
               INIRec.WriteString(sSecao, 'chCTe', chCTe);
               INIRec.WriteString(sSecao, 'SegCodBarra', SegCodBarra);
+              INIRec.WriteString(sSecao, 'indReentrega', indReentrega);
+
+              for k := 0 to peri.Count - 1 do
+              begin
+                sSecao := 'peri' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with peri.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'nONU', nONU);
+                  INIRec.WriteString(sSecao, 'xNomeAE', xNomeAE);
+                  INIRec.WriteString(sSecao, 'xClaRisco', xClaRisco);
+                  INIRec.WriteString(sSecao, 'grEmb', grEmb);
+                  INIRec.WriteString(sSecao, 'qTotProd', qTotProd);
+                  INIRec.WriteString(sSecao, 'qVolTipo', qVolTipo);
+                end;
+              end;
+
+              sSecao := 'infEntregaParcial' + IntToStrZero(I + 1, 3) + IntToStrZero(j + 1, 3);
+              with infEntregaParcial do
+              begin
+                INIRec.WriteFloat(sSecao, 'qtdTotal', qtdTotal);
+                INIRec.WriteFloat(sSecao, 'qtdParcial', qtdParcial);
+              end;
+
+              for k := 0 to infUnidTransp.Count - 1 do
+              begin
+                sSecao := 'infUnidTransp' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with infUnidTransp.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+                  INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                  INIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+
+                  for l := 0 to lacUnidTransp.Count - 1 do
+                  begin
+                    sSecao := 'lacUnidTransp' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with lacUnidTransp.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                    end;
+                  end;
+
+                  for l := 0 to infUnidCarga.Count - 1 do
+                  begin
+                    sSecao := 'infUnidCarga' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with infUnidCarga.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                      INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                      INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+
+                      for m := 0 to lacUnidCarga.Count - 1 do
+                      begin
+                        sSecao := 'lacUnidCarga' + IntToStrZero(I + 1, 3) +
+                                   IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                                   IntToStrZero(l + 1, 3) + IntToStrZero(m + 1, 3);
+                        with lacUnidCarga.Items[m] do
+                        begin
+                          INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                        end;
+                      end;
+                    end;
+                  end;
+                end;
+              end;
             end;
           end;
 
@@ -672,6 +938,69 @@ begin
             begin
               INIRec.WriteString(sSecao, 'chNFe', chNFe);
               INIRec.WriteString(sSecao, 'SegCodBarra', SegCodBarra);
+              INIRec.WriteString(sSecao, 'indReentrega', indReentrega);
+
+              for k := 0 to peri.Count - 1 do
+              begin
+                sSecao := 'peri' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with peri.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'nONU', nONU);
+                  INIRec.WriteString(sSecao, 'xNomeAE', xNomeAE);
+                  INIRec.WriteString(sSecao, 'xClaRisco', xClaRisco);
+                  INIRec.WriteString(sSecao, 'grEmb', grEmb);
+                  INIRec.WriteString(sSecao, 'qTotProd', qTotProd);
+                  INIRec.WriteString(sSecao, 'qVolTipo', qVolTipo);
+                end;
+              end;
+
+              for k := 0 to infUnidTransp.Count - 1 do
+              begin
+                sSecao := 'infUnidTransp' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with infUnidTransp.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+                  INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                  INIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+
+                  for l := 0 to lacUnidTransp.Count - 1 do
+                  begin
+                    sSecao := 'lacUnidTransp' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with lacUnidTransp.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                    end;
+                  end;
+
+                  for l := 0 to infUnidCarga.Count - 1 do
+                  begin
+                    sSecao := 'infUnidCarga' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with infUnidCarga.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                      INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                      INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+
+                      for m := 0 to lacUnidCarga.Count - 1 do
+                      begin
+                        sSecao := 'lacUnidCarga' + IntToStrZero(I + 1, 3) +
+                                   IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                                   IntToStrZero(l + 1, 3) + IntToStrZero(m + 1, 3);
+                        with lacUnidCarga.Items[m] do
+                        begin
+                          INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                        end;
+                      end;
+                    end;
+                  end;
+                end;
+              end;
             end;
           end;
 
@@ -681,17 +1010,131 @@ begin
             with infDoc.infMunDescarga.Items[i].infMDFeTransp.Items[j] do
             begin
               INIRec.WriteString(sSecao, 'chMDFe', chMDFe);
+              INIRec.WriteString(sSecao, 'indReentrega', indReentrega);
+
+              for k := 0 to peri.Count - 1 do
+              begin
+                sSecao := 'peri' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with peri.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'nONU', nONU);
+                  INIRec.WriteString(sSecao, 'xNomeAE', xNomeAE);
+                  INIRec.WriteString(sSecao, 'xClaRisco', xClaRisco);
+                  INIRec.WriteString(sSecao, 'grEmb', grEmb);
+                  INIRec.WriteString(sSecao, 'qTotProd', qTotProd);
+                  INIRec.WriteString(sSecao, 'qVolTipo', qVolTipo);
+                end;
+              end;
+
+              for k := 0 to infUnidTransp.Count - 1 do
+              begin
+                sSecao := 'infUnidTransp' + IntToStrZero(I + 1, 3) +
+                                IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3);
+                with infUnidTransp.Items[k] do
+                begin
+                  INIRec.WriteString(sSecao, 'idUnidTransp', idUnidTransp);
+                  INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                  INIRec.WriteString(sSecao, 'tpUnidTransp', UnidTranspToStr(tpUnidTransp));
+
+                  for l := 0 to lacUnidTransp.Count - 1 do
+                  begin
+                    sSecao := 'lacUnidTransp' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with lacUnidTransp.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                    end;
+                  end;
+
+                  for l := 0 to infUnidCarga.Count - 1 do
+                  begin
+                    sSecao := 'infUnidCarga' + IntToStrZero(I + 1, 3) +
+                               IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                               IntToStrZero(l + 1, 3);
+                    with infUnidCarga.Items[l] do
+                    begin
+                      INIRec.WriteString(sSecao, 'idUnidCarga', idUnidCarga);
+                      INIRec.WriteFloat(sSecao, 'qtdRat', qtdRat);
+                      INIRec.WriteString(sSecao, 'tpUnidCarga', UnidCargaToStr(tpUnidCarga));
+
+                      for m := 0 to lacUnidCarga.Count - 1 do
+                      begin
+                        sSecao := 'lacUnidCarga' + IntToStrZero(I + 1, 3) +
+                                   IntToStrZero(j + 1, 3) + IntToStrZero(k + 1, 3) +
+                                   IntToStrZero(l + 1, 3) + IntToStrZero(m + 1, 3);
+                        with lacUnidCarga.Items[m] do
+                        begin
+                          INIRec.WriteString(sSecao, 'nLacre', nLacre);
+                        end;
+                      end;
+                    end;
+                  end;
+                end;
+              end;
             end;
           end;
         end;
       end;
 
-      INIRec.WriteInteger('tot', 'qCTe', tot.qCTe);
-      INIRec.WriteInteger('tot', 'qNFe', tot.qNFe);
-      INIRec.WriteInteger('tot', 'qMDFe', tot.qMDFe);
-      INIRec.WriteFloat('tot', 'vCarga', tot.vCarga);
-      INIRec.WriteString('tot', 'cUnid', UnidMedToStr(tot.cUnid));
-      INIRec.WriteFloat('tot', 'qCarga', tot.qCarga);
+      for i := 0 to seg.Count - 1 do
+      begin
+        sSecao := 'seg' + IntToStrZero(I + 1, 3);
+        with seg.Items[i] do
+        begin
+          INIRec.WriteString(sSecao, 'respSeg', RspSeguroMDFeToStr(respSeg));
+          INIRec.WriteString(sSecao, 'CNPJCPF', CNPJCPF);
+          INIRec.WriteString(sSecao, 'xSeg', xSeg);
+          INIRec.WriteString(sSecao, 'CNPJ', CNPJ);
+          INIRec.WriteString(sSecao, 'nApol', nApol);
+
+          for j := 0 to aver.Count - 1 do
+          begin
+            sSecao := 'aver' + IntToStrZero(I + 1, 3) + IntToStrZero(j + 1, 3);
+            with aver.Items[j] do
+            begin
+              INIRec.WriteString(sSecao, 'nAver', nAver);
+            end;
+          end;
+        end;
+      end;
+
+      sSecao := 'prodPred';
+      with prodPred do
+      begin
+        INIRec.WriteString(sSecao, 'tpCarga', TCargaToStr(tpCarga));
+        INIRec.WriteString(sSecao, 'xProd', xProd);
+        INIRec.WriteString(sSecao, 'cEAN', cEAN);
+        INIRec.WriteString(sSecao, 'NCM', NCM);
+
+        sSecao := 'infLocalCarrega';
+        with infLocalCarrega do
+        begin
+          INIRec.WriteInteger(sSecao, 'CEP', CEP);
+          INIRec.WriteFloat(sSecao, 'latitude', latitude);
+          INIRec.WriteFloat(sSecao, 'longitude', longitude);
+        end;
+
+        sSecao := 'infLocalDescarrega';
+        with infLocalDescarrega do
+        begin
+          INIRec.WriteInteger(sSecao, 'CEP', CEP);
+          INIRec.WriteFloat(sSecao, 'latitude', latitude);
+          INIRec.WriteFloat(sSecao, 'longitude', longitude);
+        end;
+      end;
+
+      sSecao := 'tot';
+      with tot do
+      begin
+        INIRec.WriteInteger(sSecao, 'qCTe', qCTe);
+        INIRec.WriteInteger(sSecao, 'qNFe', qNFe);
+        INIRec.WriteInteger(sSecao, 'qMDFe', qMDFe);
+        INIRec.WriteFloat(sSecao, 'vCarga', vCarga);
+        INIRec.WriteFloat(sSecao, 'qCarga', qCarga);
+        INIRec.WriteString(sSecao, 'cUnid', UnidMedToStr(cUnid));
+      end;
 
       for i := 0 to lacres.Count - 1 do
       begin
@@ -711,8 +1154,12 @@ begin
         end;
       end;
 
-      INIRec.WriteString('infAdic', 'infAdFisco', infAdic.infAdFisco);
-      INIRec.WriteString('infAdic', 'infCpl', infAdic.infCpl);
+      sSecao := 'infAdic';
+      with infAdic do
+      begin
+        INIRec.WriteString(sSecao, 'infAdFisco', infAdFisco);
+        INIRec.WriteString(sSecao, 'infCpl', infCpl);
+      end;
     end;
 
     IniDFe := TStringList.Create;

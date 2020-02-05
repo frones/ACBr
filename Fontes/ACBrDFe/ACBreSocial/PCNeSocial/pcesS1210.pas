@@ -1339,7 +1339,7 @@ begin
                   while true do
                   begin
                     // de 01 até 99
-                    sSecao := 'penAlim' + IntToStrZero(I, 2) + IntToStrZero(J, 3) +
+                    sSecao := 'penAlim' + IntToStrZero(I, 2) + IntToStrZero(J, 1) +
                                    IntToStrZero(K, 2) + IntToStrZero(L, 2);
                     sFim   := INIRec.ReadString(sSecao, 'cpfBenef', 'FIM');
 

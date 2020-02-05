@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+05/02/2020
+-- ACBrDANFCeFortesFrA4 --  
+[-] Parâmetro ImprimeNomeFantasia não estava sendo respeitado.
+Por: Fernanda Alves
+
 03/02/2020
 -- ACBrDANFCeFortesFrA4 --  
 [-] A impressão dos numeros dos bilhetes da Nota MS Premiada estavam

@@ -340,7 +340,15 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.lNomeFantasiaBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant;
+  lNomeFantasia.Visible := FACBrNFeDANFCeFortesA4.ImprimeNomeFantasia;
+
+  if lNomeFantasia.Visible then
+  begin
+    Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant;
+  end else
+  begin
+    Text := '';
+  end;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand9BeforePrint(Sender: TObject;

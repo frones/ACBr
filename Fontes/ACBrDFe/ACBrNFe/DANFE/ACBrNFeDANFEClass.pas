@@ -509,7 +509,7 @@ begin
         if (dr_dVal in FDetRastros) then
           Result := Result + 'VAL: ' + FormatDateBr(rastro.Items[i].dVal) + sQuebraLinha;
 
-        if (dr_cAgreg in FDetRastros) then
+        if (dr_cAgreg in FDetRastros) and NaoEstaVazio(rastro.Items[i].cAgreg) then
           Result := Result + ACBrStr('C.AGREGAÇÃO: ') + rastro.Items[i].cAgreg + sQuebraLinha;
       end;
     end;

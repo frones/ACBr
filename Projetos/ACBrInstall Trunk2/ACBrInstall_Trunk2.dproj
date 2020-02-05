@@ -86,10 +86,10 @@
         <VerInfo_MinorVer>3</VerInfo_MinorVer>
         <Manifest_File>ACBrInstall_Trunk2.manifest</Manifest_File>
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Build>2</VerInfo_Build>
+        <VerInfo_Build>3</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.3.0.2;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.3;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileVersion=1.3.0.3;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.3;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -142,9 +142,60 @@
                     <Source Name="MainSource">ACBrInstall_Trunk2.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\ACBr_Integrador.bpl">ACBr - Integrador - (http://www.projetoacbr.com.br/)</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Comum.bpl">ACBr - Biblioteca Comum, EAD, AAC  - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_OpenSSL.bpl">ACBr - Bind para OpenSSL 1.1.1 - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Diversos.bpl">ACBr - Calculadora, Extenso, Validador, Troco, CMC7, Fala, BarCode, EnterTab, GIF, QrCode, InStore, CargaBal - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Serial.bpl">ACBr - ECF, Balanças, Cheques, Displays, Etiquetas, Gavetas, Terminais, SMS, RFD, Leitores - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Convenio115.bpl">ACBr - Convênio ICMS 115 - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_LFD.bpl">ACBr - Livro Fiscal Digital - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_EDI.bpl">ACBr - Intercâmbio Eletrônico de Dados EDI - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_PAF.bpl">ACBr - Programa Aplicativo Fiscal ECF - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SEF2.bpl">ACBr - SEF2 (eDoc e SEF) - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Sintegra.bpl">ACBr - Sintegra (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SPED.bpl">ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SPEDImportar.bpl">ACBr - EFD ICMS/IPI, EFD Contribuições, EFD Contábil - Importação - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_DeSTDA.bpl">ACBr - DeSTDA - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Ponto.bpl">ACBr - Ponto Eletrônico - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_LCDPR.bpl">ACBr - LCDPR - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_TCP.bpl">ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail, Feriado - (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Boleto.bpl">ACBr - Boleto - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_MTER.bpl">ACBr - MTER Componente Servidor de Micro Terminais TCP/IP - (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Integrador.bpl">ACBr - Integrador - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFe.bpl">ACBr - Nota Fiscal Eletrônica - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFCeECFVirtual.bpl">ACBr - Implementação ECF Virtual NFCe. Permite usar ACBrECF para emitir NFCe como se fosse um ECF</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFeDanfeESCPOS.bpl">ACBr - DANFe para NFC-e Impressora Serial - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_CTe.bpl">ACBr - Conhecimento de Transporte Eletrônico - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFSe.bpl">ACBr - Nota Fiscal de Serviço Eletrônica - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_MDFe.bpl">ACBr - Manifesto de Documentos Fiscais Eletrônico - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_GNRE.bpl">ACBr - Guia Nacional de Recolhimento de Tributos Estaduais - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBre_Social.bpl">ACBr - eSocial - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_Reinf.bpl">ACBr - Reinf - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SAT.bpl">ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SATECFVirtual.bpl">ACBr - Implementação de ECF Virtual para o SAT. Permite usar ACBrECF para comandar o SAT como se fosse um ECF</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SATExtratoESCPOS.bpl">ACBr - Extrato Cupom Fiscal Eletrônico SAT para Serial - (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SATWS.bpl">ACBr - SATWS - Consulta de lotes enviados de CF-e-SAT - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_BlocoX.bpl">ACBr - Bloco X - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_BPe.bpl">ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_BPeDabpeESCPOS.bpl">ACBr - DABPe para BP-e Impressora Serial - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_ANe.bpl">ACBr - Averbação Eletrônica Nacional - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_CIOT.bpl">ACBr - CIOT - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_ONE.bpl">ACBr - Operador Nacional dos Estados - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_TEFD.bpl">ACBr - Transferência Eletrônica de Fundos (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFeDanfeFR.bpl">ACBr - DANFe em FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_CTeDacteFR.bpl">ACBr - DACTe em FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFSeDanfseFR.bpl">ACBr - DANFSe em FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_BoletoFR.bpl">ACBr - Boleto Impressão em  FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_MDFeDamdfeFR.bpl">ACBr - DAMDFe em FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_GNREGuiaFR.bpl">ACBr - GNRE Impressão da Guia em FastReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFeDanfeRL.bpl">ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_NFSeDanfseRL.bpl">ACBr - DANFSe em FortesReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_CTeDacteRL.bpl">ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_BoletoRL.bpl">ACBr - Boleto Impressão em FortesReport - (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_MDFeDamdfeRL.bpl">ACBr - DAMDFe em FortesReport - (http://www.projetoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_SATExtratoRL.bpl">ACBr - Extrato Cupom Fiscal Eletrônico SAT para Fortes Report - (http://www.projectoacbr.com.br/)</Excluded_Packages>
+                    <Excluded_Packages Name="D:\Componentes\ACBr\Lib\Delphi\LibD26\Win32\ACBr_GNREGuiaRL.bpl">ACBr - GNRE Impressão em FortesReport - (http://www.projectoacbr.com.br/)</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>

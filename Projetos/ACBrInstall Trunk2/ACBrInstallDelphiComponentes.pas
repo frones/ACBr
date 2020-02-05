@@ -337,7 +337,7 @@ begin
 with UmaPlataformaDestino do begin
   NomeVersao      := VersionNumberToNome(InstalacaoAtual.VersionNumberStr);
 
-  ArquivoLog := PathArquivoLog(NomeVersao);
+  ArquivoLog := PathArquivoLog(NomeVersao+ ' ' + sPlatform);
   Cabecalho := 'Versão do delphi: ' + NomeVersao + ' ' + sPlatform + sLineBreak +
                'Dir. Instalação : ' + OpcoesInstall.DiretorioRaizACBr + sLineBreak +
                'Dir. Bibliotecas: ' + sDirLibrary;
@@ -363,7 +363,8 @@ with UmaPlataformaDestino do begin
 
   InformaSituacao('Removendo instalação anterior do ACBr na IDE...');
   RemoverDiretoriosACBrDoPath;
-  RemoverPacotesAntigos;
+  if tPlatformAtual = bpWin32 then
+    RemoverPacotesAntigos;
 
 
   InformaSituacao('...OK');
@@ -576,14 +577,13 @@ var
 begin
 // adicionar o paths ao library path do delphi
 with UmaPlataformaDestino do begin
-  FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes');
-
   InstalacaoAtual.AddToLibraryBrowsingPath(sDirLibrary, tPlatformAtual);
   InstalacaoAtual.AddToLibrarySearchPath(sDirLibrary, tPlatformAtual);
   InstalacaoAtual.AddToDebugDCUPath(sDirLibrary, tPlatformAtual);
 
-  // -- adicionar a library path ao path do windows
+  FindDirs(tPlatformAtual, OpcoesInstall.DiretorioRaizACBr + 'Fontes');
 
+  // -- adicionar a library path ao path do windows
   AdicionaLibraryPathNaDelphiVersaoEspecifica('acbr');
 
   //-- ************ C++ Builder *************** //
@@ -681,7 +681,13 @@ begin
   PathOrigem  := OpcoesInstall.DiretorioRaizACBr + 'DLLs\' + ANomeArquivo;
   PathDestino := DirSystem + ExtractFileName(ANomeArquivo);
 
-  if FileExists(PathOrigem) and not(FileExists(PathDestino)) then
+  if not FileExists(PathOrigem) then
+  begin
+    InformaSituacao(Format('AVISO: Arquivo não encontrado na origem: "%s"', [PathOrigem]));
+    Exit;
+  end;
+
+  if not (FileExists(PathDestino)) then
   begin
     if not CopyFile(PWideChar(PathOrigem), PWideChar(PathDestino), True) then
     begin
@@ -756,9 +762,9 @@ procedure TACBrInstallComponentes.InstalarDiversos(ADestino: TDestino; const APa
 begin
   if ADestino <> tdNone then
   begin
-    CopiarArquivoDLLTo(ADestino,'Diversos\iconv.dll',    APathBin);
-    CopiarArquivoDLLTo(ADestino,'Diversos\inpout32.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'Diversos\msvcr71.dll',  APathBin);
+    CopiarArquivoDLLTo(ADestino,'Diversos\x86\iconv.dll',    APathBin);
+    CopiarArquivoDLLTo(ADestino,'Diversos\x86\inpout32.dll', APathBin);
+    CopiarArquivoDLLTo(ADestino,'Diversos\x86\msvcr71.dll',  APathBin);
   end;
 end;
 
@@ -766,10 +772,10 @@ procedure TACBrInstallComponentes.InstalarLibXml2(ADestino: TDestino; const APat
 begin
   if ADestino <> tdNone then
   begin
-    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxslt.dll',  APathBin);
     CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libexslt.dll', APathBin);
     CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libiconv.dll', APathBin);
     CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxml2.dll',  APathBin);
+    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxslt.dll',  APathBin);
   end;
 end;
 
@@ -817,7 +823,9 @@ with UmaPlataformaDestino do begin
 
   if (FCountErros = 0) then
   begin
-    if (OpcoesInstall.sDestinoDLLs = tdDelphi) or (not JaCopiouDLLs) then
+    // Copiar apenas dlls na plataforma da IDE Win32.
+    if (tPlatformAtual = bpWin32) and
+       ((OpcoesInstall.sDestinoDLLs = tdDelphi) or (not JaCopiouDLLs)) then
     begin
       FazInstalacaoDLLs(
             IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
@@ -869,7 +877,7 @@ with UmaPlataformaDestino do begin
     ListaPaths.StrictDelimiter := True;
     ListaPaths.DelimitedText := PathsAtuais;
     // verificar se existe algo do ACBr e remover do environment variable PATH do delphi
-    if Trim(AProcurarRemover) <> '' then
+    if (Trim(AProcurarRemover) <> '') and (tPlatformAtual = bpWin32) then
     begin
       for I := ListaPaths.Count - 1 downto 0 do
       begin
